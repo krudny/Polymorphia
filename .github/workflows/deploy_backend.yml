@@ -13,10 +13,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Copy files to Oracle Cloud VM
+      - name: Copy files to Oracle Cloud VM using SSH
         run: |
-          # Używamy scp do skopiowania plików do VM na Oracle Cloud
-          scp -i ${{ secrets.OCI_PRIVATE_KEY }} -o StrictHostKeyChecking=no -r ./ ${{ secrets.OCI_USERNAME }}@${{ secrets.OCI_VM_PUBLIC_IP }}:/home/ubuntu/polymorphia-backend
+          sudo apt-get update
+          sudo apt-get install -y rsync
+          
+          rsync -avz -e "ssh -i ${{ secrets.OCI_PRIVATE_KEY }} -o StrictHostKeyChecking=no" ./ ${{ secrets.OCI_USERNAME }}@${{ secrets.OCI_VM_PUBLIC_IP }}:/home/ubuntu/polymorphia-backend
 
       - name: Build Docker image on Oracle Cloud VM
         run: |
