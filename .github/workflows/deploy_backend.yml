@@ -1,14 +1,12 @@
 name: Deploy and Build Docker Image on Oracle Cloud VM
-
 on:
   push:
     branches:
-      - CI/CD-setup 
+      - CI/CD-setup
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -20,23 +18,19 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.OCI_VM_PUBLIC_IP }} >> ~/.ssh/known_hosts
 
-      - name: Copy files to Oracle Cloud VM using SSH
+      - name: Copy files to Oracle Cloud VM
         run: |
-          sudo apt-get update
-          sudo apt-get install -y rsync
-          
-          rsync -avz -e "ssh -i ${{ secrets.OCI_PRIVATE_KEY }} -o StrictHostKeyChecking=no" ./ ${{ secrets.OCI_USERNAME }}@${{ secrets.OCI_VM_PUBLIC_IP }}:/home/ubuntu/polymorphia-backend
+          rsync -avz -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" \
+            ./ ${{ secrets.OCI_USERNAME }}@${{ secrets.OCI_VM_PUBLIC_IP }}:/home/ubuntu/polymorphia-backend
 
       - name: Build Docker image on Oracle Cloud VM
         run: |
-          ssh -i ${{ secrets.OCI_PRIVATE_KEY }} -o StrictHostKeyChecking=no ${{ secrets.OCI_USERNAME }}@${{ secrets.OCI_VM_PUBLIC_IP }} << 'EOF'
-            cd /home/ubuntu/polymorphia-backend
-            docker build -t polymorphia-backend .
-          EOF
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no \
+            ${{ secrets.OCI_USERNAME }}@${{ secrets.OCI_VM_PUBLIC_IP }} \
+            "cd /home/ubuntu/polymorphia-backend && docker build -t polymorphia-backend ."
 
       - name: Run Docker container on Oracle Cloud VM
         run: |
-          ssh -i ${{ secrets.OCI_PRIVATE_KEY }} -o StrictHostKeyChecking=no ${{ secrets.OCI_USERNAME }}@${{ secrets.OCI_VM_PUBLIC_IP }} << 'EOF'
-            cd /home/ubuntu/polymorphia-backend
-            docker run -d --name polymorphia-backend-container -p 8080:8080 polymorphia-backend
-          EOF
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no \
+            ${{ secrets.OCI_USERNAME }}@${{ secrets.OCI_VM_PUBLIC_IP }} \
+            "cd /home/ubuntu/polymorphia-backend && docker run -d --name polymorphia-backend-container -p 8080:8080 polymorphia-backend"
