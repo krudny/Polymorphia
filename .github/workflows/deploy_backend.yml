@@ -23,14 +23,13 @@ jobs:
           rsync -avz -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" \
             ./ ${{ secrets.OCI_USERNAME }}@${{ secrets.OCI_VM_PUBLIC_IP }}:/home/ubuntu/polymorphia-backend
 
-      - name: Build Docker image on Oracle Cloud VM
+      - name: Build and Run Docker container on Oracle Cloud VM
         run: |
           ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no \
-            ${{ secrets.OCI_USERNAME }}@${{ secrets.OCI_VM_PUBLIC_IP }} \
-            "cd /home/ubuntu/polymorphia-backend && docker build -t polymorphia-backend ."
-
-      - name: Run Docker container on Oracle Cloud VM
-        run: |
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no \
-            ${{ secrets.OCI_USERNAME }}@${{ secrets.OCI_VM_PUBLIC_IP }} \
-            "cd /home/ubuntu/polymorphia-backend && docker run -d --name polymorphia-backend-container -p 8080:8080 polymorphia-backend"
+            ${{ secrets.OCI_USERNAME }}@${{ secrets.OCI_VM_PUBLIC_IP }} << 'EOF'
+            sudo usermod -aG docker $USER
+            sudo systemctl start docker
+            cd /home/ubuntu/polymorphia-backend
+            sudo docker build -t polymorphia-backend .
+            sudo docker run -d --name polymorphia-backend-container -p 8080:8080 polymorphia-backend
+          EOF
