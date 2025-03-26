@@ -31,6 +31,8 @@ jobs:
         run: |
           ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no \
             ${{ secrets.OCI_USERNAME }}@${{ secrets.OCI_VM_PUBLIC_IP }} << 'EOF'
+            sudo docker stop polymorphia-backend || true
+            sudo docker rm polymorphia-backend || true
             sudo usermod -aG docker $USER
             sudo systemctl start docker
             cd /home/ubuntu/polymorphia/polymorphia-backend
