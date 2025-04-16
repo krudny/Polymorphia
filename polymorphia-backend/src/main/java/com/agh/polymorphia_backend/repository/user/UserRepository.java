@@ -1,0 +1,8 @@
+package com.agh.polymorphia_backend.repository.user;
+
+import com.agh.polymorphia_backend.model.user.Student;
+import com.agh.polymorphia_backend.model.user.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository<T extends User> extends JpaRepository<T, Long> {
+}
