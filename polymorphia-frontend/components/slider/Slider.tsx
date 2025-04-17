@@ -1,28 +1,16 @@
 "use client"
 
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import NavigationArrow from "@/components/slider/NavigationArrow";
 import NavigationDots from "@/components/slider/NavigationDots";
-import {Slide} from "@/interfaces/slider/SliderInterfaces";
+import {SliderProps} from "@/interfaces/slider/SliderInterfaces";
 import SingleSlide from "@/components/slider/SingleSlide";
-import {fetchData} from "@/config";
 
-export default function Slider() {
+import Button from "@/components/button/Button";
+import Link from "next/link";
+
+export default function Slider({slides}: SliderProps) {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
-  const [slides, setSlides] = useState<Slide[]>([]);
-
-  useEffect(() => {
-    const fetchSlides = async () => {
-      try {
-        const data = await fetchData<{ characters: Slide[] }>('/animals');
-        setSlides(data.characters);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchSlides();
-  }, []);
 
   const nextSlide = () => {
     setCurrentSlide((prev: number) => (prev === slides.length - 1 ? 0 : prev + 1));
@@ -38,15 +26,28 @@ export default function Slider() {
 
   return (
       <div className="flex-1 text-[#212121]">
-        <div className="h-full relative">
+        <div className="relative h-full overflow-hidden">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 flex justify-center space-x-4 my-4 z-[999]">
+            <Link href="/faq/characters"><Button text="Postacie" /></Link>
+            <Link href="/faq/items"><Button text="Nagrody" /></Link>
+          </div>
           {slides.map((slide, index) => (
-              <SingleSlide key={index} slide={slide} isActive={currentSlide === index} />
+              <SingleSlide
+                  key={index}
+                  slide={slide}
+                  position={index - currentSlide}
+                  prevSlide={prevSlide}
+                  nextSlide={nextSlide}
+              />
           ))}
-        </div>
+          <div className="absolute bottom-0 w-full">
+            <NavigationDots slides={slides} currentSlide={currentSlide} goToSlide={goToSlide} />
+          </div>
 
-        <NavigationArrow direction="left" onClick={prevSlide} />
-        <NavigationArrow direction="right" onClick={nextSlide} />
-        <NavigationDots slides={slides} currentSlide={currentSlide} goToSlide={goToSlide} />
+          {/* Only desktop arrows */}
+          <NavigationArrow direction="left" onClick={prevSlide} className="hidden md:block" />
+          <NavigationArrow direction="right" onClick={nextSlide} className="hidden md:block" />
+        </div>
       </div>
   );
 }
