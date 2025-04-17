@@ -28,7 +28,7 @@ export default function Slider({slides}: SliderProps) {
       <div className="flex-1 text-[#212121]">
         <div className="relative h-full overflow-hidden">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 flex justify-center space-x-4 my-4 z-[999]">
-            <Link href="/faq/characters"><Button text="Postacie" /></Link>
+            <Link href="/faq/animals"><Button text="Postacie" /></Link>
             <Link href="/faq/items"><Button text="Nagrody" /></Link>
           </div>
           {slides.map((slide, index) => (

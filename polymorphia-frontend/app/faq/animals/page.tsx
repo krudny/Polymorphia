@@ -5,11 +5,11 @@ import {Slide} from "@/interfaces/slider/SliderInterfaces";
 import Slider from "@/components/slider/Slider";
 import FaqService from "@/services/faq/FaqService";
 
-export default function Items() {
+export default function Animals() {
   const [slides, setSlides] = useState<Slide[]>([]);
 
   useEffect(() => {
-    FaqService.getItems().then(response => setSlides(response));
+    FaqService.getAnimals().then(response => setSlides(response));
   }, []);
 
   return (

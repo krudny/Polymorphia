@@ -1,8 +1,7 @@
 import Image from "next/image";
-import Slider from "@/components/slider/Slider";
-import {SliderProps} from "@/interfaces/slider/SliderInterfaces";
+import {ReactNode} from "react";
 
-export default function FullScreenSliderWrapper({slides}: SliderProps) {
+export default function FaqLayout({children}: {children: ReactNode}) {
   return (
       <div className="w-screen h-screen relative bg-black">
         <Image
@@ -11,12 +10,13 @@ export default function FullScreenSliderWrapper({slides}: SliderProps) {
             fill
             className="absolute object-cover"
             priority
+            sizes="100%"
         />
         <div className="relative z-10 w-full h-full flex flex-col">
           <div className="w-full flex justify-center items-center h-10 md:h-16 text-center">
             <h3 className="text-2xl md:text-4xl">Polymorphia</h3>
           </div>
-          <Slider slides={slides} />
+          {children}
         </div>
       </div>
   )

@@ -23,20 +23,21 @@ export default function SingleSlide({ slide, position, prevSlide, nextSlide }: S
           className={`absolute top-0 left-0 w-full h-full md:px-10 lg:px-24 xl:px-32`}
           style={getTransformStyle()}
       >
-        <div className="h-full px-6 pb-4">
+        <div className="h-full px-6 py-4">
 
-          <div className="flex flex-col h-full md:flex-row">
-            <div className="relative w-full flex-grow flex-shrink min-h-0 mt-20 md:mt-0 md:mb-10">
+          <div className="flex flex-col h-full items-center md:flex-row">
+            <div className="relative aspect-square w-2/3 mx-auto mt-16 md:mx-16 md:mt-0 rounded-3xl overflow-hidden">
               <Image
                   src={`/${slide.img_url}`}
                   alt={slide.name}
                   priority
                   fill
-                  className="object-contain"
+                  className="object-cover"
+                  sizes="100%"
               />
             </div>
 
-            <div className="md:w-4xl 2xl:w-7xl   md:flex md:flex-col md:justify-center md:-mb-10">
+            <div className="md:w-4xl 2xl:w-7xl md:flex md:flex-col md:justify-center md:-mb-10">
               <div className="w-full flex flex-col justify-center items-center md:items-end relative my-4">
                 {/* Only mobile arrows */}
                 <NavigationArrow direction="left" onClick={prevSlide} className="md:hidden"/>
