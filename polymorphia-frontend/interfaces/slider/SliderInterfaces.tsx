@@ -1,7 +1,7 @@
 export interface Slide {
-  id: number,
-  bg: string,
-  content: string,
+  img_url: string,
+  name: string,
+  description: string,
 }
 
 export interface NavigationDotsProps {

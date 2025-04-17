@@ -12,8 +12,8 @@ export default function FullScreenSliderWrapper() {
             priority
         />
         <div className="relative z-10 w-full h-full flex flex-col">
-          <div className="w-full bg-green-200 h-10 text-center">
-            Navbar
+          <div className="w-full flex justify-center items-center h-10 md:h-16 text-center">
+            <h3 className="text-2xl md:text-4xl">Polymorphia</h3>
           </div>
           <Slider />
         </div>

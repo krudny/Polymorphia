@@ -1,4 +1,10 @@
 import "./globals.css";
+import { League_Gothic } from 'next/font/google';
+
+const leagueGothic = League_Gothic({
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export default function RootLayout({
   children,
@@ -7,7 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pl">
-      <body>
+      <body className={leagueGothic.className}>
         {children}
       </body>
     </html>
