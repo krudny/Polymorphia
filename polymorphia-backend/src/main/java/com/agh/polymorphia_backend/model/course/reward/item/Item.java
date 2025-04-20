@@ -1,12 +1,14 @@
-package com.agh.polymorphia_backend.model.course.prize;
+package com.agh.polymorphia_backend.model.course.reward.item;
 
 
+import com.agh.polymorphia_backend.model.course.reward.Chest;
 import com.agh.polymorphia_backend.model.event.EventSection;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
 
@@ -14,8 +16,10 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 @Table(name = "items")
+@ToString(exclude = {"chests"})
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

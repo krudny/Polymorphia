@@ -1,12 +1,10 @@
-package com.agh.polymorphia_backend.model.course.prize;
+package com.agh.polymorphia_backend.model.course.reward;
 
 
 import com.agh.polymorphia_backend.model.course.Course;
+import com.agh.polymorphia_backend.model.course.reward.item.Item;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
@@ -18,6 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Table(name = "chests")
+@ToString(exclude = {"items"})
 public class Chest {
     @ManyToMany(mappedBy = "chests", fetch = FetchType.LAZY)
     Set<Item> items;

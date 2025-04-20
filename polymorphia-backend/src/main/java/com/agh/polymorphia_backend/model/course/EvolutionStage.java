@@ -16,13 +16,20 @@ public class EvolutionStage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
     private String description;
+
     private int minXp;
+
     @Column(precision = 2, scale = 1)
     private BigDecimal grade;
+
     private String imageUrl;
+
     private String imageWithoutBgUrl;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     private Course course;

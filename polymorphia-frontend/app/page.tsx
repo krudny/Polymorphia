@@ -1,8 +1,8 @@
 import Image from "next/image";
-import {fetchData} from "@/config";
+// import {fetchData} from "@/config";
 
 export default async function Home() {
-  const data = await fetchData<{ message: string }>("/test");
+  const data = {message: "data"};
 
   return (
       <div className="w-screen h-[100dvh] flex flex-col justify-center items-center gap-y-8 px-4 text-center">

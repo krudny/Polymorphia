@@ -8,34 +8,46 @@ import com.agh.polymorphia_backend.service.InstructorService;
 import com.agh.polymorphia_backend.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
     private final StudentService studentService;
     private final CoordinatorService coordinatorService;
     private final InstructorService instructorService;
 
-    @PostMapping("/student/add")
+    @PostMapping("/students")
     public ResponseEntity<Void> addStudent(@RequestBody Student user) {
-        studentService.addUser(user);
-        return ResponseEntity.ok().build();
+        Long userId = studentService.addUser(user);
+        return Util.getCreatedResponseEntity(userId);
     }
 
-    @PostMapping("/instructor/add")
+    @PostMapping("/instructors")
     public ResponseEntity<Void> addInstructor(@RequestBody Instructor user) {
-        instructorService.addUser(user);
-        return ResponseEntity.ok().build();
+        Long userId = instructorService.addUser(user);
+        return Util.getCreatedResponseEntity(userId);
     }
 
-    @PostMapping("/coordinator/add")
+    @PostMapping("/coordinators")
     public ResponseEntity<Void> addCoordinator(@RequestBody Coordinator user) {
-        coordinatorService.addUser(user);
-        return ResponseEntity.ok().build();
+        Long userId = coordinatorService.addUser(user);
+        return Util.getCreatedResponseEntity(userId);
+    }
+
+    @GetMapping("/coordinators/{coordinatorId}")
+    public ResponseEntity<Coordinator> getCoordinator(@PathVariable Long coordinatorId) {
+        return ResponseEntity.ok(coordinatorService.getUserById(coordinatorId));
+    }
+
+    @GetMapping("/students/{studentId}")
+    public ResponseEntity<Student> getStudent(@PathVariable Long studentId) {
+        return ResponseEntity.ok(studentService.getUserById(studentId));
+    }
+
+    @GetMapping("/instructors/{instructorId}")
+    public ResponseEntity<Instructor> getInstructor(@PathVariable Long instructorId) {
+        return ResponseEntity.ok(instructorService.getUserById(instructorId));
     }
 }

@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.dto;
 
-import com.agh.polymorphia_backend.model.course.prize.ChestBehavior;
+import com.agh.polymorphia_backend.model.course.reward.ChestBehavior;
 import lombok.Builder;
 
 @Builder
