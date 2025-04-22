@@ -25,14 +25,11 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: Set up application.properties
+        run: |
+          mkdir -p ./polymorphia-backend/src/main/resources
+          echo "${{ secrets.APPLICATION_PROPERTIES }}" > ./polymorphia-backend/src/main/resources/application.properties
+
       - name: Maven Build and Test
         working-directory: ./polymorphia-backend
         run: mvn clean install
-
-      - name: Upload test results
-        uses: actions/upload-artifact@v3
-        if: success() || failure()
-        with:
-          name: test-results
-          path: polymorphia-backend/target/surefire-reports/
-
