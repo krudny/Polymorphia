@@ -3,7 +3,6 @@ on:
     branches:
       - main
       - develop
-      - CI/CD-update
     paths:
       - 'polymorphia-backend/**'
   pull_request:
@@ -28,7 +27,7 @@ jobs:
       - name: Set up application.properties
         run: |
           mkdir -p ./polymorphia-backend/src/main/resources
-          echo "${{ secrets.APPLICATION_PROPERTIES }}" > ./polymorphia-backend/src/main/resources/application.properties
+          printf "%s" "${{ secrets.APPLICATION_PROPERTIES }}" > ./polymorphia-backend/src/main/resources/application.properties
 
       - name: Maven Build and Test
         working-directory: ./polymorphia-backend
