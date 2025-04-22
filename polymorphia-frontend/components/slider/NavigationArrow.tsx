@@ -8,7 +8,7 @@ export default function NavigationArrow({ direction, onClick, className }: Navig
   return (
       <button
           onClick={onClick}
-          className={`absolute ${position} top-1/2 -translate-y-1/2 transform rounded-full transition-all group ${className}`}
+          className={`absolute ${position} top-1/2 -translate-y-1/2 transform rounded-full transition-all group ${className} hover:cursor-pointer`}
           aria-label={direction === "left" ? "Poprzedni slajd" : "Następny slajd"}
       >
         <Icon
