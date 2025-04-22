@@ -13,8 +13,8 @@ export default function Home() {
 
 
   return (
-      <BackgroundWrapper className="flex">
-        <div className="w-1/2 h-full relative [clip-path:polygon(0_0,_100%_0,_70%_100%,_0%_100%)]">
+      <BackgroundWrapper className="flex flex-col-reverse md:flex-row overflow-hidden">
+        <div className="w-full h-1/2 relative [clip-path:polygon(0_0,_100%_30%,_100%_100%,_0%_100%)] md:w-1/2 md:h-full md:[clip-path:polygon(0_0,_100%_0,_70%_100%,_0%_100%)] ">
           <Image
               src="/hero_bg.png"
               alt="Hero background"
@@ -23,32 +23,32 @@ export default function Home() {
               priority
           />
         </div>
-        <div className="w-1/2 h-full absolute overflow-y-clip">
-          <div className="w-full h-full relative flex items-center overflow-visible z-20">
+        <div className="w-full h-1/4 md:w-1/2 md:h-full absolute overflow-y-visible">
+          <div className="w-full h-full relative flex items-center justify-center  z-20 ">
             <Image
                 src="/owl.png"
                 alt="Hero owl"
                 width={1000}
                 height={1000}
-                className="object-contain transform scale-120 origin-top-left -mt-10"
+                className="object-contain transform scale-90 origin-bottom md:scale-120 md:origin-top-left md:-mt-10"
                 priority
             />
           </div>
         </div>
 
-        <div className="w-1/2 flex justify-center items-center relative overflow-hidden">
-          <div className={`flex flex-col justify-center text-[#262626] relative z-10 transition-opacity ease-in-out duration-300
+        <div className="w-full h-full md:w-1/2 flex justify-center pt-20 md:pt-0 items-center relative overflow-hidden ">
+          <div className={`flex flex-col justify text-[#262626] relative z-10 transition-opacity ease-in-out duration-300
                 ${isLoginFormVisible
                   ? 'opacity-0 pointer-events-none'
-                  : 'opacity-100 delay-[300ms] pointer-events-auto'}`}
+                  : 'opacity-100 delay-[200ms] pointer-events-auto'}`}
           >
-            <h1 className="text-9xl mb-14">Polymorphia</h1>
+            <h1 className="text-7xl mb-8 md:text-9xl md:mb-14">Polymorphia</h1>
             <ButtonWithBorder text="Zaloguj się" onClick={openLoginForm} />
           </div>
 
 
           <div
-              className={`absolute top-0 right-0 w-full h-full  flex justify-center items-center transition-transform duration-500 ease-in-out z-20 ${
+              className={`absolute top-0 right-0 w-full h-full  flex justify-center items-center transition-transform duration-400 ease-in-out z-20 ${
                   isLoginFormVisible ? 'translate-x-0' : 'translate-x-full'
               }`}
           >

@@ -28,12 +28,11 @@ export default function SingleSlide({ slide, position, prevSlide, nextSlide }: S
           <div className="flex flex-col h-full items-center md:flex-row">
             <div className="relative aspect-square w-2/3 mx-auto mt-16 md:mx-16 md:mt-0 rounded-3xl overflow-hidden">
               <Image
-                  src={`/${slide.img_url}`}
+                  src={`/${slide.imageUrl}`}
                   alt={slide.name}
                   priority
                   fill
                   className="object-cover"
-                  sizes="100%"
               />
             </div>
 

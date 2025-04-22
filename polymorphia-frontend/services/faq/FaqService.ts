@@ -1,13 +1,12 @@
 import {Slide} from "@/interfaces/slider/SliderInterfaces";
 
-const API_HOST = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080/polymorphia';
+const API_HOST = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080/courses/1';
 
 const FaqService = {
   getAnimals: async (): Promise<Slide[]> => {
     try {
-      const response = await fetch(`${API_HOST}/animals`);
-      const data = await response.json();
-      return data.animals;
+      const response = await fetch(`${API_HOST}/evolution-stages`);
+      return await response.json();
     } catch (error) {
       console.log(error);
       return [];
@@ -17,7 +16,8 @@ const FaqService = {
     try {
       const response = await fetch(`${API_HOST}/items`);
       const data = await response.json();
-      return data.items;
+      console.log(data);
+      return data;
     } catch (error) {
       console.log(error);
       return [];

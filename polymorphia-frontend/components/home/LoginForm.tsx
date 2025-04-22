@@ -24,8 +24,8 @@ export default function LoginForm({ onBack }: LoginFormProps) {
   };
 
   return (
-      <div className=" relative flex justify-center items-center w-full max-w-xl">
-        <NavigationArrow direction="left" onClick={onBack} className="cursor-pointer"/>
+      <div className="relative flex justify-center items-center w-full max-w-xl px-16 md:px-0">
+        <NavigationArrow direction="left" onClick={onBack} className="cursor-pointer left-0"/>
         <div className="w-full max-w-xs text-center text-[#262626] mt-20">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>

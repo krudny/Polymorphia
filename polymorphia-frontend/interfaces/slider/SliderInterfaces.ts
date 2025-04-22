@@ -1,5 +1,5 @@
 export interface Slide {
-  img_url: string,
+  imageUrl: string,
   name: string,
   description: string,
 }

@@ -6,8 +6,8 @@ import NavigationDots from "@/components/slider/NavigationDots";
 import {SliderProps} from "@/interfaces/slider/SliderInterfaces";
 import SingleSlide from "@/components/slider/SingleSlide";
 
-import Button from "@/components/button/Button";
 import Link from "next/link";
+import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 
 export default function Slider({slides}: SliderProps) {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
@@ -28,8 +28,8 @@ export default function Slider({slides}: SliderProps) {
       <div className="flex-1 text-[#212121]">
         <div className="relative h-full overflow-hidden">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 flex justify-center space-x-4 my-4 z-[999]">
-            <Link href="/faq/animals"><Button text="Postacie" /></Link>
-            <Link href="/faq/items"><Button text="Nagrody" /></Link>
+            <Link href="/faq/animals"><ButtonWithBorder text="Postacie" className="text-xl !px-6 !py-1" /></Link>
+            <Link href="/faq/items"><ButtonWithBorder text="Nagrody" className="text-xl !px-6 !py-1" /></Link>
           </div>
           {slides.map((slide, index) => (
               <SingleSlide
