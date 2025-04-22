@@ -25,14 +25,6 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Cache Maven dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys:
-            - ${{ runner.os }}-maven-
-
       - name: Maven Build and Test
         working-directory: ./polymorphia-backend
         run: mvn clean install

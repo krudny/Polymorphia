@@ -15,7 +15,7 @@ public class TestController {
     @GetMapping
     public ResponseEntity<Map<String, String>> testController() {
         Map<String, String> response = new HashMap<>();
-        response.put("message", "Jak to widzisz to znaczy, że backend też działa :)))");
+        response.put("message", "Jak to widzisz to znaczy, że backend też działa :))))");
 
         return ResponseEntity.ok(response);
     }
