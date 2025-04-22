@@ -43,5 +43,5 @@ jobs:
         if: success() || failure()
         with:
           name: test-results
-          path: polymorphia-backend/target/surefire-reports/ # Domyślna ścieżka dla surefire
+          path: polymorphia-backend/target/surefire-reports/
 
