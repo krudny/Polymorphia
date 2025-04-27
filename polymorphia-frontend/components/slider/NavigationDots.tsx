@@ -2,7 +2,7 @@ import {NavigationDotsProps} from "@/interfaces/slider/SliderInterfaces";
 
 export default function NavigationDots({slides, currentSlide, goToSlide}: NavigationDotsProps) {
   return (
-      <div className="w-full h-6 mb-2 flex items-center justify-center space-x-2">
+      <div className="w-full h-6 my-2 flex items-center justify-center space-x-2">
         {slides.map((_, index) => (
             <button
                 key={index}

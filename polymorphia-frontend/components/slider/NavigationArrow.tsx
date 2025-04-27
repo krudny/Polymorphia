@@ -3,7 +3,7 @@ import {NavigationArrowProps} from "@/interfaces/slider/SliderInterfaces";
 
 export default function NavigationArrow({ direction, onClick, className }: NavigationArrowProps) {
   const Icon = direction === "left" ? ChevronLeft : ChevronRight;
-  const position = direction === "left" ? "-left-4 md:left-4" : "-right-4 md:right-4";
+  const position = direction === "left" ? "-left-4 lg:left-4" : "-right-4 lg:right-4";
 
   return (
       <button

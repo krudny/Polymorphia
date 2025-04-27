@@ -5,9 +5,9 @@ import NavigationArrow from "@/components/slider/NavigationArrow";
 import NavigationDots from "@/components/slider/NavigationDots";
 import {SliderProps} from "@/interfaces/slider/SliderInterfaces";
 import SingleSlide from "@/components/slider/SingleSlide";
-
 import Link from "next/link";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+
 
 export default function Slider({slides}: SliderProps) {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
@@ -25,12 +25,15 @@ export default function Slider({slides}: SliderProps) {
   };
 
   return (
-      <div className="flex-1 text-[#212121]">
-        <div className="relative h-full overflow-hidden">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 flex justify-center space-x-4 my-4 z-[999]">
-            <Link href="/faq/animals"><ButtonWithBorder text="Postacie" className="text-xl !px-6 !py-1" /></Link>
+      <>
+      <div className="flex-1 flex flex-col text-[#212121] ">
+        <div className="relative w-full h-full flex-1 flex flex-col overflow-x-hidden">
+          <div className="flex justify-center w-full h-fit  space-x-4 z-[999]">
+            <Link href="/faq/evolution-stages"><ButtonWithBorder text="Postacie" className="text-xl !px-6 !py-1" /></Link>
             <Link href="/faq/items"><ButtonWithBorder text="Nagrody" className="text-xl !px-6 !py-1" /></Link>
           </div>
+
+
           {slides.map((slide, index) => (
               <SingleSlide
                   key={index}
@@ -40,14 +43,15 @@ export default function Slider({slides}: SliderProps) {
                   nextSlide={nextSlide}
               />
           ))}
-          <div className="absolute bottom-0 w-full">
-            <NavigationDots slides={slides} currentSlide={currentSlide} goToSlide={goToSlide} />
-          </div>
 
-          {/* Only desktop arrows */}
-          <NavigationArrow direction="left" onClick={prevSlide} className="hidden md:block" />
-          <NavigationArrow direction="right" onClick={nextSlide} className="hidden md:block" />
+          <NavigationArrow direction="left" onClick={prevSlide} className="hidden lg:block" />
+          <NavigationArrow direction="right" onClick={nextSlide} className="hidden lg:block" />
         </div>
       </div>
+
+      <div className="w-full">
+        <NavigationDots slides={slides} currentSlide={currentSlide} goToSlide={goToSlide} />
+      </div>
+      </>
   );
 }
