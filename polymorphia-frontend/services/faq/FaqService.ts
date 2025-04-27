@@ -15,7 +15,7 @@ const FaqService = {
             name: item.name,
             description: item.description,
             imageUrl: item.imageUrl,
-            textGrade: `Ocenę ${item.grade.toFixed(1)} odblokowuje ${item.minXp} XP`
+            textGrade: `${item.minXp} XP odblokowuje ocenę ${item.grade.toFixed(1)}`,
           }));
     } catch (error) {
       console.log(error);

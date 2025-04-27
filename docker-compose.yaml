@@ -1,0 +1,23 @@
+services:
+  backend:
+    build:
+      context: ./polymorphia-backend 
+    ports:
+      - "8080:8080" 
+  frontend:
+    build:
+      context: ./polymorphia-frontend
+    ports:
+      - "3000:3000" 
+    volumes:
+      - ./polymorphia-frontend:/app
+      - node_modules_volume:/app/node_modules
+    working_dir: /app 
+    command: ["npm", "run", "dev"]
+    environment:
+      - NEXT_PUBLIC_BACKEND_URL=http://localhost:8080 
+      - HOST=0.0.0.0 
+    depends_on:
+      - backend
+volumes:
+  node_modules_volume:

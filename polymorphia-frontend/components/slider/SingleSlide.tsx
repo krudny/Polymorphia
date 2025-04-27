@@ -4,18 +4,15 @@ import NavigationArrow from "@/components/slider/NavigationArrow";
 import DetailedSlideInfo from "@/components/slider/DetailedSlideInfo";
 
 export default function SingleSlide({ slide, position, prevSlide, nextSlide }: SingleSlideProps) {
-  console.log(slide);
   const getTransformStyle = () => {
+    console.log(window.innerWidth);
     return {
       transform: `translateX(${position * 100}%)`,
-      transition: 'all 700ms cubic-bezier(0.34, 1, 0.2, 1)',
+      transition: `all ${window.innerWidth < 1024 ? '700ms' : '450ms'} cubic-bezier(0.34, 1, 0.2, 1)`,
       opacity: position === 0 ? 1 : 0.3,
       filter: position === 0 ? 'blur(0)' : 'blur(2px)',
       scale: position === 0 ? '1' : '0.95',
-
-      '@media (maxWidth: 768px)': {
-        transition: 'all 700ms cubic-bezier(0.34, 1, 0.2, 1)',
-      }
+      willChange: 'transform, opacity, filter, scale'
     };
   };
 
@@ -32,13 +29,14 @@ export default function SingleSlide({ slide, position, prevSlide, nextSlide }: S
                 alt="Carrot image"
                 className="rounded-4xl shadow-2xl object-cover"
                 sizes="(max-width: 1024px) 400px, (max-width: 1920px) 50vw"
+                priority
             />
           </div>
         </div>
 
         <div className="w-full h-full  flex flex-col justify-start lg:justify-evenly items-center lg:ml-6 xl:ml-16 ">
           <div className="flex flex-col justify-between lg:h-[28rem] xl:h-[32rem] 2xl:h-fit">
-            <div className="w-full flex flex-col">
+            <div className="w-full flex flex-col ">
               <div className="relative text-center lg:text-right">
                 {/* Only mobile arrows */}
                 <NavigationArrow direction="left" onClick={prevSlide} className="lg:hidden"/>
