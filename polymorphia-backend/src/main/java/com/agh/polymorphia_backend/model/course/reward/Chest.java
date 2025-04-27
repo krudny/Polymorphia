@@ -5,8 +5,6 @@ import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.course.reward.item.Item;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.JdbcType;
-import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.util.Set;
 
@@ -29,8 +27,6 @@ public class Chest {
     private String imageUrl;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "behavior", columnDefinition = "chest_behavior")
-    @JdbcType(PostgreSQLEnumJdbcType.class)
     private ChestBehavior behavior;
 
     @ManyToOne(fetch = FetchType.LAZY)

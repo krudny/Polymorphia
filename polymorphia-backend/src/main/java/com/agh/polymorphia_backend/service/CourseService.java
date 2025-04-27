@@ -1,12 +1,16 @@
 package com.agh.polymorphia_backend.service;
 
 
-import com.agh.polymorphia_backend.dto.ChestDto;
-import com.agh.polymorphia_backend.dto.EvolutionStageDto;
-import com.agh.polymorphia_backend.dto.item.FlatBonusItemDto;
-import com.agh.polymorphia_backend.dto.item.ItemDto;
-import com.agh.polymorphia_backend.dto.item.ItemType;
-import com.agh.polymorphia_backend.dto.item.PercentageBonusItemDto;
+import com.agh.polymorphia_backend.dto.request.course.reward.ChestRequestDto;
+import com.agh.polymorphia_backend.dto.request.course.reward.item.FlatBonusRequestItemRequestDto;
+import com.agh.polymorphia_backend.dto.request.course.reward.item.ItemRequestDto;
+import com.agh.polymorphia_backend.dto.request.course.reward.item.ItemType;
+import com.agh.polymorphia_backend.dto.request.course.reward.item.PercentageBonusItemRequestDto;
+import com.agh.polymorphia_backend.dto.response.course.EvolutionStageResponseDto;
+import com.agh.polymorphia_backend.dto.response.course.reward.ChestResponseDto;
+import com.agh.polymorphia_backend.dto.response.course.reward.item.FlatBonusItemResponseDto;
+import com.agh.polymorphia_backend.dto.response.course.reward.item.ItemResponseDto;
+import com.agh.polymorphia_backend.dto.response.course.reward.item.PercentageBonusItemResponseDto;
 import com.agh.polymorphia_backend.exception.database.InvalidArgumentException;
 import com.agh.polymorphia_backend.exception.database.UnknownSubclassException;
 import com.agh.polymorphia_backend.model.course.Course;
@@ -28,6 +32,7 @@ import lombok.AllArgsConstructor;
 import org.hibernate.proxy.HibernateProxy;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 
@@ -51,49 +56,50 @@ public class CourseService {
     private final EventSectionRepository eventSectionRepository;
 
 
-    public List<EvolutionStageDto> getEvolutionStages(Long courseId) {
+    public List<EvolutionStageResponseDto> getEvolutionStages(Long courseId) {
         return evolutionStagesRepository.findAllByCourseId(courseId)
-                .stream().map(this::mapToEvolutionStageDto)
+                .stream().map(this::evolutionStageToEvolutionStageResponseDto)
+                .sorted(Comparator.comparingInt(EvolutionStageResponseDto::minXp))
                 .toList();
     }
 
-    public List<ChestDto> getAllChests(Long courseId) {
+    public List<ChestResponseDto> getAllChests(Long courseId) {
         List<Chest> chests = chestRepository.findAllByCourseId(courseId);
         return chests.stream().map(chest ->
-                mapToChestDto(courseId, chest)
+                chestToChestResponseDto(courseId, chest)
         ).toList();
     }
 
-    public List<ItemDto> getAllChestItems(long chestId) {
+    public List<ItemResponseDto> getAllChestItems(long chestId) {
         List<Item> items = itemRepository.findAllByChestId(chestId);
 
-        return items.stream().map(this::mapToItemDto).toList();
+        return items.stream().map(this::itemToResponseItemDto).toList();
     }
 
-    public List<ItemDto> getAllCourseItems(long courseId) {
+    public List<ItemResponseDto> getAllCourseItems(long courseId) {
         List<Item> items = itemRepository.findAllByCourseId(courseId);
-        return items.stream().map(this::mapToItemDto).toList();
+        return items.stream().map(this::itemToResponseItemDto).toList();
     }
 
-    public Long addChest(ChestDto chestDto) {
-        Course course = courseRepository.findById(chestDto.courseId())
+    public Long addChest(ChestRequestDto chestRequestDto) {
+        Course course = courseRepository.findById(chestRequestDto.courseId())
                 .orElseThrow(() -> new InvalidArgumentException(CHEST_NOT_FOUND));
         Chest chest = Chest.builder()
                 .course(course)
-                .behavior(chestDto.behavior())
-                .name(chestDto.name())
-                .imageUrl(chestDto.imageUrl())
-                .description(chestDto.description())
+                .behavior(chestRequestDto.behavior())
+                .name(chestRequestDto.name())
+                .imageUrl(chestRequestDto.imageUrl())
+                .description(chestRequestDto.description())
                 .build();
         return chestRepository.save(chest).getId();
     }
 
-    public Long addItem(ItemDto itemDto) {
-        return itemRepository.save(mapToItem(itemDto)).getId();
+    public Long addItem(ItemRequestDto itemRequestDto) {
+        return itemRepository.save(itemRequestDtoToItem(itemRequestDto)).getId();
     }
 
-    public ItemDto getItemById(Long itemId) {
-        return mapToItemDto(itemRepository.findById(itemId)
+    public ItemResponseDto getItemById(Long itemId) {
+        return itemToResponseItemDto(itemRepository.findById(itemId)
                 .orElseThrow(() -> new InvalidArgumentException(
                                 String.format(ITEM_NOT_FOUND, itemId
                                 )
@@ -102,10 +108,10 @@ public class CourseService {
         );
     }
 
-    public void addItemsToChest(List<Long> items, Long chestId) {
+    public void addItemsToChest(List<Long> itemIds, Long chestId) {
         Chest chest = chestRepository.findById(chestId).orElseThrow(() -> new InvalidArgumentException(String.format(CHEST_NOT_FOUND, chestId)));
 
-        items.forEach(item -> addItemToChest(item, chest));
+        itemIds.forEach(item -> addItemToChest(item, chest));
     }
 
     private void addItemToChest(Long itemId, Chest chest) {
@@ -115,8 +121,8 @@ public class CourseService {
         itemRepository.save(item);
     }
 
-    private EvolutionStageDto mapToEvolutionStageDto(EvolutionStage evolutionStage) {
-        return EvolutionStageDto.builder()
+    private EvolutionStageResponseDto evolutionStageToEvolutionStageResponseDto(EvolutionStage evolutionStage) {
+        return EvolutionStageResponseDto.builder()
                 .id(evolutionStage.getId())
                 .name(evolutionStage.getName())
                 .grade(evolutionStage.getGrade())
@@ -129,8 +135,8 @@ public class CourseService {
     }
 
 
-    private ChestDto mapToChestDto(Long courseId, Chest chest) {
-        return ChestDto.builder()
+    private ChestResponseDto chestToChestResponseDto(Long courseId, Chest chest) {
+        return ChestResponseDto.builder()
                 .id(chest.getId())
                 .name(chest.getName())
                 .imageUrl(chest.getImageUrl())
@@ -140,16 +146,16 @@ public class CourseService {
                 .build();
     }
 
-    private ItemDto mapToItemDto(Item item) {
+    private ItemResponseDto itemToResponseItemDto(Item item) {
 
-        ItemDto.ItemDtoBuilder<? extends ItemDto, ?> itemBuilder = item instanceof FlatBonusItem ?
-                FlatBonusItemDto.builder()
+        ItemResponseDto.ItemResponseDtoBuilder<? extends ItemResponseDto, ?> itemBuilder = item instanceof FlatBonusItem ?
+                FlatBonusItemResponseDto.builder()
                         .xpBonus(((FlatBonusItem) item).getXpBonus())
                         .behavior(((FlatBonusItem) item).getBehavior())
                         .textBehavior(((FlatBonusItem) item).getBehavior().getTextValue())
                         .textBonus(getFlatBonusItemText((FlatBonusItem) item)) :
 
-                PercentageBonusItemDto.builder()
+                PercentageBonusItemResponseDto.builder()
                         .percentageBonus(((PercentageBonusItem) item).getPercentageBonus())
                         .textBonus(getPercentageBonusItemText((PercentageBonusItem) item))
                         .textBehavior(PERCENTAGE_TEXT_BEHAVIOR);
@@ -161,7 +167,6 @@ public class CourseService {
                 .imageUrl(item.getImageUrl())
                 .limit(item.getLimit())
                 .eventSectionId(item.getEventSection().getId())
-                .type(ItemType.FLAT_BONUS)
                 .chestIds(item.getChests().stream().map(Chest::getId).toList())
                 .build();
 
@@ -182,21 +187,21 @@ public class CourseService {
         );
     }
 
-    private Item mapToItem(ItemDto itemDto) {
-        EventSection eventSection = eventSectionRepository.findById(itemDto.getEventSectionId())
+    private Item itemRequestDtoToItem(ItemRequestDto itemRequestDto) {
+        EventSection eventSection = eventSectionRepository.findById(itemRequestDto.getEventSectionId())
                 .orElseThrow(() -> new InvalidArgumentException(EVENT_SECTION_NOT_FOUND));
 
-        Item.ItemBuilder<? extends Item, ?> itemBuilder = itemDto.getType().equals(ItemType.FLAT_BONUS) ?
-                FlatBonusItem.builder().xpBonus(((FlatBonusItemDto) itemDto).getXpBonus())
-                        .behavior(((FlatBonusItemDto) itemDto).getBehavior())
+        Item.ItemBuilder<? extends Item, ?> itemBuilder = itemRequestDto.getType().equals(ItemType.FLAT_BONUS) ?
+                FlatBonusItem.builder().xpBonus(((FlatBonusRequestItemRequestDto) itemRequestDto).getXpBonus())
+                        .behavior(((FlatBonusRequestItemRequestDto) itemRequestDto).getBehavior())
                 : PercentageBonusItem.builder()
-                .percentageBonus(((PercentageBonusItemDto) itemDto).getPercentageBonus());
+                .percentageBonus(((PercentageBonusItemRequestDto) itemRequestDto).getPercentageBonus());
 
         return itemBuilder
-                .limit(itemDto.getLimit())
-                .name(itemDto.getName())
-                .imageUrl(itemDto.getImageUrl())
-                .description(itemDto.getDescription())
+                .limit(itemRequestDto.getLimit())
+                .name(itemRequestDto.getName())
+                .imageUrl(itemRequestDto.getImageUrl())
+                .description(itemRequestDto.getDescription())
                 .eventSection(eventSection)
                 .chests(new HashSet<>())
                 .build();

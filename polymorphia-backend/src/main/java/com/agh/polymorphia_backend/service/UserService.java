@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService<T extends User> {
-    private static final String USER_NOT_FOUND = "User of id % does not exist in the database";
+    private static final String USER_NOT_FOUND = "User of id %s does not exist in the database";
     private final UserRepository<T> userRepository;
 
 

@@ -13,7 +13,6 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-
 public class Student extends User {
 
     @Column(unique = true)

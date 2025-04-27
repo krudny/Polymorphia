@@ -1,12 +1,11 @@
-package com.agh.polymorphia_backend.dto;
+package com.agh.polymorphia_backend.dto.request.course;
 
 import lombok.Builder;
 
 import java.math.BigDecimal;
 
 @Builder
-public record EvolutionStageDto(
-        long id,
+public record EvolutionStageRequestDto(
         String name,
         String description,
         int minXp,

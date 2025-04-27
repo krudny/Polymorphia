@@ -1,11 +1,10 @@
-package com.agh.polymorphia_backend.dto;
+package com.agh.polymorphia_backend.dto.request.course.reward;
 
 import com.agh.polymorphia_backend.model.course.reward.ChestBehavior;
 import lombok.Builder;
 
 @Builder
-public record ChestDto(
-        Long id,
+public record ChestRequestDto(
         String name,
         String description,
         String imageUrl,

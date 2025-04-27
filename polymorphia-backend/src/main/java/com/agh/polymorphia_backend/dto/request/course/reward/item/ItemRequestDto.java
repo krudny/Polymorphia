@@ -1,0 +1,36 @@
+package com.agh.polymorphia_backend.dto.request.course.reward.item;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
+@SuperBuilder
+@Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@AllArgsConstructor
+@NoArgsConstructor
+
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY,
+        property = "type",
+        visible = true
+)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = FlatBonusRequestItemRequestDto.class, name = "FLAT_BONUS"),
+        @JsonSubTypes.Type(value = PercentageBonusItemRequestDto.class, name = "PERCENTAGE_BONUS")
+})
+public class ItemRequestDto {
+    private String name;
+    private String description;
+    private String imageUrl;
+    private int limit;
+    private String textBonus;
+    private ItemType type;
+    private long eventSectionId;
+    private String textBehavior;
+}

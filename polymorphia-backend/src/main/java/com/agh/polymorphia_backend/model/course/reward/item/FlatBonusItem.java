@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.JdbcType;
-import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 @Entity
 @Table(name = "flat_bonus_items")
@@ -20,7 +18,5 @@ public class FlatBonusItem extends Item {
     private Integer xpBonus;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "behavior", columnDefinition = "flat_bonus_item_behavior")
-    @JdbcType(PostgreSQLEnumJdbcType.class)
     private FlatBonusItemBehavior behavior;
 }
