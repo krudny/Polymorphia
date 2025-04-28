@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
       <BackgroundWrapper className="flex flex-col-reverse md:flex-row overflow-hidden">
-        <div className="w-full h-1/2 relative [clip-path:polygon(0_0,_100%_30%,_100%_100%,_0%_100%)] md:w-1/2 md:h-full md:[clip-path:polygon(0_0,_100%_0,_70%_100%,_0%_100%)] ">
+        <div className="w-full h-1/2 relative animate-slideInFromLeft [clip-path:polygon(0_0,_100%_30%,_100%_100%,_0%_100%)] md:w-1/2 md:h-full md:[clip-path:polygon(0_0,_100%_0,_70%_100%,_0%_100%)] ">
           <Image
               src="/hero_bg.png"
               alt="Hero background"
@@ -23,7 +23,7 @@ export default function Home() {
               sizes="60vw"
           />
         </div>
-        <div className="w-full h-1/4 md:w-1/2 md:h-full absolute overflow-y-visible">
+        <div className="w-full h-1/4 md:w-1/2 md:h-full absolute overflow-y-visible opacity-0 animate-slideInFromLeftOwl">
           <div className="w-full h-full relative flex items-center justify-center  z-20 ">
             <Image
                 src="/owl.png"
@@ -37,7 +37,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="w-full h-full md:w-1/2 flex justify-center pt-20 md:pt-0 items-center relative overflow-hidden ">
+        <div className="w-full h-full md:w-1/2 flex justify-center pt-20 md:pt-0 items-center relative overflow-hidden animate-slideInFromRight">
           <div className={`flex flex-col justify text-[#262626] relative z-10 transition-opacity ease-in-out duration-300
                 ${isLoginFormVisible
                   ? 'opacity-0 pointer-events-none'
@@ -49,8 +49,8 @@ export default function Home() {
 
 
           <div
-              className={`absolute top-0 right-0 w-full h-full  flex justify-center items-center transition-transform duration-400 ease-in-out z-20 ${
-                  isLoginFormVisible ? 'translate-x-0' : 'translate-x-full'
+              className={`absolute top-0 right-0 w-full h-full  flex justify-center items-center z-20 ${
+                  isLoginFormVisible ? 'animate-slideInFromRight' : 'animate-slideOutToRight'
               }`}
           >
             <LoginForm onBackAction={closeLoginForm} />

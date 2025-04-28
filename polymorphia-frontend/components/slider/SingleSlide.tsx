@@ -22,8 +22,8 @@ export default function SingleSlide({ slide, position, prevSlideAction, nextSlid
           className="absolute top-0 left-0 w-full h-fit flex flex-col py-2 px-6 lg:py-0 lg:h-full lg:flex-row lg:px-16 xl:px-26 2xl:px-36"
           style={getTransformStyle()}
       >
-        <div className="w-full h-fit flex items-center justify-center my-2 lg:justify-start lg:my-0 lg:w-fit lg:h-full 2xl:w-2/3 ">
-          <div className="relative w-xs aspect-square lg:w-md xl:w-lg 2xl:w-full">
+        <div className="w-full h-fit flex items-center justify-center  my-2 lg:justify-center lg:my-0 lg:w-fit lg:h-full 2xl:w-full">
+          <div className="relative w-xs aspect-square lg:w-md xl:w-lg 2xl:w-lg ">
             <Image
                 src={`/${slide.imageUrl}`}
                 fill
@@ -35,7 +35,7 @@ export default function SingleSlide({ slide, position, prevSlideAction, nextSlid
           </div>
         </div>
 
-        <div className="w-full h-full  flex flex-col justify-start lg:justify-evenly items-center lg:ml-6 xl:ml-16">
+        <div className="w-full h-full  flex flex-col justify-start  lg:justify-evenly items-center lg:ml-6 xl:ml-16">
           <div className="flex flex-col justify-center lg:h-[28rem] xl:h-[32rem] 2xl:h-fit">
             <div className="w-full flex flex-col">
               <div className="relative text-center lg:text-right">
@@ -51,7 +51,7 @@ export default function SingleSlide({ slide, position, prevSlideAction, nextSlid
                 )}
 
               </div>
-              <p className="text-justify mt-4 2xl:mt-8 max-w-xl lg:max-w-full text-xl xl:text-2xl 2xl:text-3xl">
+              <p className="text-justify mt-4 2xl:mt-8 max-w-xl lg:max-w-full text-xl xl:text-2xl 2xl:text-2xl">
                 {slide.description}
               </p>
             </div>
