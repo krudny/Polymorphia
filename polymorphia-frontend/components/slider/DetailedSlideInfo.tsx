@@ -8,7 +8,7 @@ export default function DetailedSlideInfo({type, ids}: {type: string, ids: numbe
 
   return (
       <div className="w-full flex flex-col items-center mt-4 lg:items-end">
-        <div className="flex items-center my-1 gap-x-1 text-neutral-600">
+        <div className="flex items-center my-1 gap-x-1 text-neutral-400">
           <SquareMousePointer size={20} />
           <h3 className="text-xl 2xl:text-2xl">{`Kliknij na ${type==='item' ? 'skrzynkę' : 'przedmiot'} aby dowiedzieć się więcej`}</h3>
         </div>
@@ -19,7 +19,7 @@ export default function DetailedSlideInfo({type, ids}: {type: string, ids: numbe
                     src="/chest1.png"
                     fill
                     alt="Chest image"
-                    className="rounded-xl object-cover shadow-2xl"
+                    className="rounded-xl object-cover shadow-md"
                 />
               </div>
           ))}

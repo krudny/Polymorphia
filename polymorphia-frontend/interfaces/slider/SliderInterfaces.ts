@@ -29,8 +29,8 @@ export interface ChestSlide {
 export interface SingleSlideProps {
   slide: SliderSlide;
   position: number;
-  prevSlide: () => void;
-  nextSlide: () => void;
+  prevSlideAction: () => void;
+  nextSlideAction: () => void;
 }
 
 export interface SliderProps {

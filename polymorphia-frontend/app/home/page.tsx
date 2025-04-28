@@ -11,7 +11,6 @@ export default function Home() {
   const openLoginForm = () => setIsLoginFormVisible(true);
   const closeLoginForm = () => setIsLoginFormVisible(false);
 
-
   return (
       <BackgroundWrapper className="flex flex-col-reverse md:flex-row overflow-hidden">
         <div className="w-full h-1/2 relative [clip-path:polygon(0_0,_100%_30%,_100%_100%,_0%_100%)] md:w-1/2 md:h-full md:[clip-path:polygon(0_0,_100%_0,_70%_100%,_0%_100%)] ">
@@ -21,6 +20,7 @@ export default function Home() {
               fill
               className="object-cover"
               priority
+              sizes="60vw"
           />
         </div>
         <div className="w-full h-1/4 md:w-1/2 md:h-full absolute overflow-y-visible">
@@ -32,6 +32,7 @@ export default function Home() {
                 height={1000}
                 className="object-contain transform scale-90 origin-bottom md:scale-120 md:origin-top-left md:-mt-10"
                 priority
+                sizes="(max-width: 1024px) 400px, (max-width: 1920px) 50vw"
             />
           </div>
         </div>
@@ -52,7 +53,7 @@ export default function Home() {
                   isLoginFormVisible ? 'translate-x-0' : 'translate-x-full'
               }`}
           >
-            <LoginForm onBack={closeLoginForm} />
+            <LoginForm onBackAction={closeLoginForm} />
           </div>
         </div>
       </BackgroundWrapper>

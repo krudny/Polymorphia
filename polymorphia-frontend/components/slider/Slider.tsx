@@ -27,20 +27,18 @@ export default function Slider({slides}: SliderProps) {
   return (
       <>
       <div className="flex-1 flex flex-col text-[#212121] ">
+        <div className="flex justify-center w-full h-fit  space-x-4 mb-3 z-[999]  relative">
+          <Link href="/faq/evolution-stages"><ButtonWithBorder text="Postacie" className="text-xl !px-6 !py-1" /></Link>
+          <Link href="/faq/items"><ButtonWithBorder text="Nagrody" className="text-xl !px-6 !py-1" /></Link>
+        </div>
         <div className="relative w-full h-full flex-1 flex flex-col overflow-x-hidden">
-          <div className="flex justify-center w-full h-fit  space-x-4 z-[999]">
-            <Link href="/faq/evolution-stages"><ButtonWithBorder text="Postacie" className="text-xl !px-6 !py-1" /></Link>
-            <Link href="/faq/items"><ButtonWithBorder text="Nagrody" className="text-xl !px-6 !py-1" /></Link>
-          </div>
-
-
           {slides.map((slide, index) => (
               <SingleSlide
                   key={index}
                   slide={slide}
                   position={index - currentSlide}
-                  prevSlide={prevSlide}
-                  nextSlide={nextSlide}
+                  prevSlideAction={prevSlide}
+                  nextSlideAction={nextSlide}
               />
           ))}
 

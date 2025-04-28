@@ -1,3 +1,3 @@
 export default interface LoginFormProps {
-  onBack: () => void;
+  onBackAction: () => void;
 }

@@ -1,18 +1,29 @@
 "use client"
 
-import {useEffect, useState} from "react";
 import Slider from "@/components/slider/Slider";
 import FaqService from "@/services/faq/FaqService";
-import {ItemSlide} from "@/interfaces/slider/SliderInterfaces";
+import {useQuery} from "@tanstack/react-query";
+import Loading from "@/components/general/Loading";
 
 export default function Items() {
-  const [slides, setSlides] = useState<ItemSlide[]>([]);
+  const { data: items, isLoading, error } = useQuery({
+    queryKey: ['items'],
+    queryFn: FaqService.getItems,
+  });
 
-  useEffect(() => {
-    FaqService.getItems().then(response => setSlides(response));
-  }, []);
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <div>Error loading rewards: {error.message}</div>;
+  }
+
+  if (!items || items.length === 0) {
+    return <div>No evolution stages found.</div>;
+  }
 
   return (
-      <Slider slides={slides}/>
+      <Slider slides={items}/>
   )
 }

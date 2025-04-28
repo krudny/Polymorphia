@@ -1,4 +1,4 @@
-export interface ApiItemResponse {
+export interface ApiRewardResponse {
   id: number;
   name: string;
   description: string;
