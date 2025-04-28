@@ -4,6 +4,8 @@ package com.agh.polymorphia_backend.dto.request.user;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -25,9 +27,18 @@ import lombok.experimental.SuperBuilder;
         @JsonSubTypes.Type(value = CoordinatorRequestDto.class, name = "COORDINATOR")
 })
 public class UserRequestDto {
+    @NotEmpty
     private String firstName;
+
+    @NotEmpty
     private String lastName;
+
+    @NotEmpty
     private String email;
+
+    @NotEmpty
     private String password;
+
+    @NotNull
     private UserType type;
 }

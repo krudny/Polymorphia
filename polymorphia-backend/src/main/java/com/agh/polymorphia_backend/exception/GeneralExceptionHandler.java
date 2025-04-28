@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.exception;
 
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +15,8 @@ public class GeneralExceptionHandler {
     private static final String INVALID_PARAMS = "Invalid request parameter type";
     private static final String MISSING_PARAMS = "Missing request parameter";
 
-    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<CustomExceptionResponse> handleArgumentNotValidException(MethodArgumentTypeMismatchException ex) {
+    @ExceptionHandler({MethodArgumentTypeMismatchException.class, ConstraintViolationException.class})
+    public ResponseEntity<CustomExceptionResponse> handleArgumentNotValidException(Exception ex) {
         CustomExceptionResponse response = CustomExceptionResponse.builder()
                 .title(INVALID_PARAMS)
                 .description(ex.getMessage())
@@ -32,4 +33,5 @@ public class GeneralExceptionHandler {
                 .build();
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
 }

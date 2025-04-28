@@ -2,24 +2,28 @@ package com.agh.polymorphia_backend.model.event;
 
 import com.agh.polymorphia_backend.model.course.Course;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotEmpty;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "event_sections")
 @Inheritance(strategy = InheritanceType.JOINED)
 
 @Data
-@AllArgsConstructor
+@SuperBuilder
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class EventSection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
+    @EqualsAndHashCode.Include
     private Long id;
 
+    @NotEmpty
     private String name;
-    private boolean shownInRoadMap;
+    private boolean shownInRoadMap = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
