@@ -5,6 +5,7 @@ import BackgroundWrapper from "@/components/general/BackgroundWrapper";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import LoginForm from "@/components/home/LoginForm";
 import {useState} from "react";
+import Link from "next/link";
 
 export default function Home() {
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
@@ -44,7 +45,11 @@ export default function Home() {
                   : 'opacity-100 delay-[200ms] pointer-events-auto'}`}
           >
             <h1 className="text-7xl mb-8 md:text-9xl md:mb-14">Polymorphia</h1>
-            <ButtonWithBorder text="Zaloguj się" onClick={openLoginForm} />
+            <div className="flex flex-col gap-4 ">
+              <ButtonWithBorder text="Zaloguj się" onClick={openLoginForm} />
+              <Link href="/faq/evolution-stages"><ButtonWithBorder text="FAQ" /></Link>
+            </div>
+
           </div>
 
 

@@ -1,4 +1,4 @@
-export interface ApiRewardResponse {
+export interface ApiItemsResponse {
   id: number;
   name: string;
   description: string;
@@ -6,10 +6,8 @@ export interface ApiRewardResponse {
   limit: number;
   textBonus: string;
   eventSectionId: number;
-  type: string; //TODO
   chestIds: number[];
   textBehavior: string;
-  percentageBonus: number;
 }
 
 export interface ApiEvolutionStagesResponse {
@@ -21,4 +19,15 @@ export interface ApiEvolutionStagesResponse {
   imageUrl: string;
   imageWithoutBgUrl: string | null;
   courseId: number;
+  gradingText: string;
+}
+
+export interface ApiChestsResponse {
+  id: number;
+  name: string;
+  description: string;
+  imageUrl: string;
+  behavior: string;
+  courseId: number;
+  itemIds: number[]
 }

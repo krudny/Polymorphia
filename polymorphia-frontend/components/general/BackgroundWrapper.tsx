@@ -4,7 +4,7 @@ import {BackgroundWrapperProps} from "@/interfaces/general/BackgroundWrapperInte
 
 export default function BackgroundWrapper({ children, className }: BackgroundWrapperProps) {
   return (
-      <div className={`w-screen h-screen relative ${className}`}>
+      <div className={`w-screen h-[100dvh] lg:h-screen relative ${className}`}>
         <Image
             src="/background.png"
             alt="White background"

@@ -1,6 +1,6 @@
 "use client"
 
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import NavigationArrow from "@/components/slider/NavigationArrow";
 import NavigationDots from "@/components/slider/NavigationDots";
 import {SliderProps} from "@/interfaces/slider/SliderInterfaces";
@@ -9,8 +9,14 @@ import Link from "next/link";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 
 
-export default function Slider({slides}: SliderProps) {
+export default function Slider({ slides, initialSlide=0}: SliderProps) {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
+
+  useEffect(() => {
+    setCurrentSlide(initialSlide);
+  }, [initialSlide]);
+
+  console.log(initialSlide);
 
   const nextSlide = () => {
     setCurrentSlide((prev: number) => (prev === slides.length - 1 ? 0 : prev + 1));
@@ -30,8 +36,9 @@ export default function Slider({slides}: SliderProps) {
         <div className="flex justify-center w-full h-fit  space-x-4 mb-3 z-[999]  relative">
           <Link href="/faq/evolution-stages"><ButtonWithBorder text="Postacie" className="text-xl !px-6 !py-1" /></Link>
           <Link href="/faq/items"><ButtonWithBorder text="Nagrody" className="text-xl !px-6 !py-1" /></Link>
+          <Link href="/faq/chests"><ButtonWithBorder text="Skrzynki" className="text-xl !px-6 !py-1" /></Link>
         </div>
-        <div className="relative w-full h-full flex-1 flex flex-col overflow-x-hidden animate-slideInFromLeft">
+        <div className="relative w-full h-full flex-1 flex flex-col overflow-x-hidden opacity-0 animate-fadeExpand">
           {slides.map((slide, index) => (
               <SingleSlide
                   key={index}

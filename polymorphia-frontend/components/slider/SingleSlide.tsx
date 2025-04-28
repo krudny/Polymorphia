@@ -5,11 +5,11 @@ import Image from "next/image";
 import NavigationArrow from "@/components/slider/NavigationArrow";
 import DetailedSlideInfo from "@/components/slider/DetailedSlideInfo";
 
-export default function SingleSlide({ slide, position, prevSlideAction, nextSlideAction }: SingleSlideProps) {
+export default function SingleSlide({ slide, position, prevSlideAction, nextSlideAction}: SingleSlideProps) {
   const getTransformStyle = () => {
     return {
       transform: `translateX(${position * 100}%)`,
-      transition: `all ${window.innerWidth < 1024 ? '700ms' : '450ms'} cubic-bezier(0.34, 1, 0.2, 1)`,
+      transition: `all 450ms cubic-bezier(0.34, 1, 0.2, 1)`,
       opacity: position === 0 ? 1 : 0.3,
       filter: position === 0 ? 'blur(0)' : 'blur(2px)',
       scale: position === 0 ? '1' : '0.95',
@@ -27,7 +27,7 @@ export default function SingleSlide({ slide, position, prevSlideAction, nextSlid
             <Image
                 src={`/${slide.imageUrl}`}
                 fill
-                alt="Carrot image"
+                alt={slide.name}
                 className="rounded-4xl shadow-md object-cover"
                 sizes="(max-width: 1024px) 400px, (max-width: 1920px) 50vw"
                 priority
@@ -44,10 +44,13 @@ export default function SingleSlide({ slide, position, prevSlideAction, nextSlid
                 <NavigationArrow direction="right" onClick={nextSlideAction} className="lg:hidden"/>
                 <h1 className="text-4xl md:text-6xl 2xl:text-8xl my-2">{slide.name}</h1>
                 {slide.type === 'item' && (
-                    <h2 className="text-2xl lg:text-4xl 2xl:text-5xl">+10% do kategorii zadaniowej</h2>
+                    <h2 className="text-2xl lg:text-4xl 2xl:text-5xl">{slide.textBonus.toLowerCase()}</h2>
                 )}
                 {slide.type === 'evolution-stage' && (
-                    <h2 className="text-2xl lg:text-4xl 2xl:text-5xl">{slide.textGrade}</h2>
+                    <h2 className="text-2xl lg:text-4xl 2xl:text-5xl">{slide.gradingText}</h2>
+                )}
+                {slide.type === 'chest' && (
+                    <h2 className="text-2xl lg:text-4xl 2xl:text-5xl">{slide.behavior}</h2>
                 )}
 
               </div>
@@ -56,12 +59,14 @@ export default function SingleSlide({ slide, position, prevSlideAction, nextSlid
               </p>
             </div>
 
-            {slide.type === 'item' && (
-              <DetailedSlideInfo
-                  type={slide.type}
-                  ids={slide.chestIds}
-              />
-            )}
+            <div className="relative">
+              {(slide.type === 'item' || slide.type === 'chest') && (
+                  <DetailedSlideInfo
+                      type={slide.type}
+                      ids={slide.type === 'item' ? slide.chestIds : slide.itemIds}
+                  />
+              )}
+            </div>
           </div>
         </div>
       </div>

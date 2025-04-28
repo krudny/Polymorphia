@@ -1,5 +1,5 @@
 import Image from "next/image";
-import {ReactNode} from "react";
+import {ReactNode, Suspense} from "react";
 import Link from "next/link";
 
 export default function FaqLayout({children}: {children: ReactNode}) {
@@ -17,7 +17,9 @@ export default function FaqLayout({children}: {children: ReactNode}) {
           <div className="w-full flex justify-center items-center h-16 text-center">
             <Link href="/home"><h3 className="text-4xl">Polymorphia</h3></Link>
           </div>
-          {children}
+          <Suspense>
+            {children}
+          </Suspense>
         </div>
       </div>
   )

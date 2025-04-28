@@ -5,11 +5,12 @@ export interface EvolutionStageSlide {
   name: string;
   description: string;
   imageUrl: string;
-  textGrade: string;
+  gradingText: string;
 }
 
 export interface ItemSlide {
   type: 'item';
+  id: number;
   name: string;
   description: string;
   imageUrl: string;
@@ -19,11 +20,12 @@ export interface ItemSlide {
 
 export interface ChestSlide {
   type: 'chest';
+  id: number;
   name: string;
   description: string;
   imageUrl: string;
-  textBonus: string;
-  rewardsId: number[];
+  behavior: string;
+  itemIds: number[];
 }
 
 export interface SingleSlideProps {
@@ -35,6 +37,7 @@ export interface SingleSlideProps {
 
 export interface SliderProps {
   slides: SliderSlide[];
+  initialSlide?: number;
 }
 
 export interface NavigationDotsProps {
