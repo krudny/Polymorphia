@@ -1,7 +1,8 @@
+"use client"
+
 import Image from "next/image";
 import {BackgroundWrapperProps} from "@/interfaces/general/BackgroundWrapperInterface";
 import clsx from "clsx";
-
 
 export default function BackgroundWrapper({ children, className }: BackgroundWrapperProps) {
   return (
@@ -10,8 +11,8 @@ export default function BackgroundWrapper({ children, className }: BackgroundWra
             src="/background.png"
             alt="White background"
             fill={true}
-            className="object-cover -z-10"
-            priority
+            className="object-cover inset-0 -z-10"
+            priority={true}
         />
         {children}
       </div>

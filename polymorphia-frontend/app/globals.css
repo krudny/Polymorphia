@@ -76,7 +76,6 @@
     --animate-fadeExpandHero: fadeExpand 0.7s cubic-bezier(0.34, 1, 0.2, 1) forwards;
     --animate-fadeShrink: fadeShrink 0.5s cubic-bezier(0.34, 1, 0.2, 1) forwards;
     --shadow-3xl: 0px 0px 12px 0px rgba(66, 68, 90, 0.5);
-
 }
 
 @utility flex-centered {
