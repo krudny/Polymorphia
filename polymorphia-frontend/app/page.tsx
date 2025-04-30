@@ -1,11 +1,56 @@
+"use client"
+
 import Image from "next/image";
-export default async function Home() {
+import BackgroundWrapper from "@/components/general/BackgroundWrapper";
+import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import LoginForm from "@/components/home/LoginForm";
+import {useState} from "react";
+import Link from "next/link";
+
+export default function Home() {
+  const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
+  const openLoginForm = () => setIsLoginFormVisible(true);
+  const closeLoginForm = () => setIsLoginFormVisible(false);
 
   return (
-      <div className="w-screen h-[100dvh] flex flex-col justify-center items-center gap-y-8 px-4 text-center">
-        <h1 className="text-6xl">Polymorphia</h1>
-        <h2 className="text-xl">W nagrodę za dotarcie tutaj otrzymujesz Ananasa i 3.14 punktów!</h2>
-        <Image src="/pineapple.png" width="400" height="400" alt="Pineapple" priority />
-      </div>
-  );
+      <BackgroundWrapper className="hero-background-wrapper">
+        <div className="hero-background-image">
+          <Image
+              src="/hero_bg.png"
+              alt="Hero background"
+              fill
+              className="object-cover"
+              priority
+              sizes="60vw"
+          />
+        </div>
+        <div className="hero-image-wrapper">
+          <div>
+            <Image
+                src="/owl.png"
+                alt="Hero owl"
+                width={1000}
+                height={1000}
+                priority
+                sizes="(max-width: 1024px) 400px, (max-width: 1920px) 50vw"
+            />
+          </div>
+        </div>
+        <div className="hero-right-wrapper">
+          <div className={`${isLoginFormVisible ? 'animate-fadeShrink' : 'opacity-0 animate-fadeExpandHero'}`}>
+            <h1>Polymorphia</h1>
+            <div className="hero-buttons">
+              <ButtonWithBorder text="Zaloguj się" onClick={openLoginForm} />
+              <Link href="/faq/evolution-stages">
+                <ButtonWithBorder text="FAQ" />
+              </Link>
+            </div>
+          </div>
+
+          <div className={`hero-login ${isLoginFormVisible ? 'animate-slideInFromRight' : 'animate-slideOutToRight'}`}>
+            <LoginForm onBackAction={closeLoginForm} />
+          </div>
+        </div>
+      </BackgroundWrapper>
+  )
 }

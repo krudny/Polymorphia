@@ -1,0 +1,65 @@
+.hero-background-wrapper {
+    @apply flex flex-col-reverse md:flex-row overflow-hidden;
+}
+
+.hero-background-image {
+    @apply w-full h-1/3 relative animate-slideInFromLeft [clip-path:polygon(0_0,_100%_30%,_100%_100%,_0%_100%)];
+    @apply md:w-1/2 md:h-full md:[clip-path:polygon(0_0,_100%_0,_70%_100%,_0%_100%)];
+}
+
+.hero-image-wrapper {
+    @apply w-full h-1/4 absolute overflow-y-visible opacity-0 animate-slideInFromLeftOwl;
+    @apply md:w-1/2 md:h-full;
+}
+
+.hero-image-wrapper > div {
+    @apply w-full h-full relative flex-centered z-20;
+}
+
+.hero-image-wrapper > div > img {
+    @apply object-contain transform scale-90 origin-bottom;
+    @apply md:scale-120 md:origin-top-left md:-mt-10;
+}
+
+.hero-right-wrapper {
+    @apply w-full h-full flex-centered relative pt-20 overflow-hidden animate-slideInFromRight;
+    @apply md:w-1/2 md:pt-0;
+}
+
+.hero-right-wrapper > div:first-child {
+    @apply flex-col-centered relative z-10;
+}
+
+.hero-right-wrapper > div > h1 {
+    @apply text-7xl mb-8 ;
+    @apply md:text-9xl md:mb-14;
+}
+
+.hero-buttons {
+    @apply flex-col-centered gap-4;
+}
+
+.hero-login {
+    @apply flex-centered absolute top-0 right-0 w-full h-full z-20;
+}
+
+.login-wrapper {
+    @apply relative flex-centered w-full max-w-xl px-16;
+    @apply md:px-0;
+}
+
+.login-wrapper > div {
+    @apply w-full max-w-xs text-center mt-20;
+}
+
+.login-form {
+    @apply space-y-4;
+}
+
+.login-form > div > input {
+    @apply w-full text-center text-4xl py-3 border-b-2 border-[#262626] focus:outline-none;
+}
+
+.forgot-password {
+    @apply mt-4 text-center text-xl hover:cursor-pointer;
+}

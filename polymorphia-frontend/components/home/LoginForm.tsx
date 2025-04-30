@@ -24,15 +24,14 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
   };
 
   return (
-      <div className="relative flex justify-center items-center w-full max-w-xl px-16 md:px-0">
+      <div className="login-wrapper">
         <NavigationArrow direction="left" onClick={onBackAction} className="cursor-pointer left-0"/>
-        <div className="w-full max-w-xs text-center text-[#262626] mt-20">
-          <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <form onSubmit={handleSubmit} className="login-form">
             <div>
               <input
                   type="email"
                   id="email"
-                  className="w-full text-center text-4xl py-3 border-b-2 border-[#262626] focus:outline-none"
                   placeholder="Twój email"
                   value={email}
                   onChange={handleEmailChange}
@@ -44,17 +43,15 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
               <input
                   type="password"
                   id="password"
-                  className="w-full text-center text-4xl py-3 border-b-2 border-[#262626] focus:outline-none"
                   placeholder="Twoje hasło"
                   value={password}
                   onChange={handlePasswordChange}
                   required
               />
             </div>
-
             <ButtonWithBorder text="Zaloguj się" className="mt-12"/>
           </form>
-          <div className="mt-4 text-center text-xl hover:cursor-pointer">
+          <div className="forgot-password">
             <p>Zapomniałeś hasła?</p>
           </div>
         </div>

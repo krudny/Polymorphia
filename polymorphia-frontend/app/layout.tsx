@@ -21,7 +21,7 @@ export default function RootLayout({
 
   return (
     <html lang="pl">
-      <body className={leagueGothic.className}>
+      <body className={`${leagueGothic.className} text-[#262626]`}>
         <QueryClientProvider client={queryClient}>
           {children}
         </QueryClientProvider>

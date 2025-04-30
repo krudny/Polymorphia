@@ -15,7 +15,7 @@ export default function FaqLayout({children}: {children: ReactNode}) {
         />
         <div className="relative z-10 w-full min-h-[100dvh] h-full flex flex-col ">
           <div className="w-full flex justify-center items-center h-16 text-center">
-            <Link href="/home"><h3 className="text-4xl">Polymorphia</h3></Link>
+            <Link href="/"><h3 className="text-4xl">Polymorphia</h3></Link>
           </div>
           <Suspense>
             {children}

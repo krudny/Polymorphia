@@ -1,3 +1,4 @@
+@import "../styles/home.css";
 @import "tailwindcss";
 
 @theme {
@@ -50,11 +51,50 @@
         }
     }
 
+    @keyframes fadeShrink {
+        0% {
+            opacity: 1;
+            transform: scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: scale(0.6);
+        }
+    }
+
     /*TODO: tragizm sytuacyjny */
     --animate-slideInFromLeft: slideInFromLeft 0.7s cubic-bezier(0.34, 1, 0.2, 1) forwards;
     --animate-slideInFromLeftOwl: slideInFromLeftOwl 0.9s 0.1s cubic-bezier(0.34, 1, 0.2, 1) forwards;
-    --animate-slideInFromRight: slideInFromRight 0.7s cubic-bezier(0.34, 1, 0.2, 1) forwards;
-    --animate-slideOutToRight: slideOutToRight 0.7s cubic-bezier(0.34, 1, 0.2, 1) forwards;
+    --animate-slideInFromRight: slideInFromRight 0.6s cubic-bezier(0.34, 1, 0.2, 1) forwards;
+    --animate-slideOutToRight: slideOutToRight 0.6s cubic-bezier(0.34, 1, 0.2, 1) forwards;
     --animate-fadeExpand: fadeExpand 0.5s 0.4s cubic-bezier(0.34, 1, 0.2, 1) forwards;
+    --animate-fadeExpandHero: fadeExpand 0.5s 0.2s cubic-bezier(0.34, 1, 0.2, 1) forwards;
+    --animate-fadeShrink: fadeShrink 0.5s cubic-bezier(0.34, 1, 0.2, 1) forwards;
     --shadow-3xl: 0px 0px 12px 0px rgba(66, 68, 90, 0.5);
+
 }
+
+@layer components {
+    .hero-background-wrapper {
+        @apply w-screen h-[100dvh] lg:h-screen relative;
+    }
+}
+
+@utility flex-centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@utility flex-col-centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+
+
+
