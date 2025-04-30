@@ -4,57 +4,49 @@ import {SingleSlideProps} from "@/interfaces/slider/SliderInterfaces";
 import Image from "next/image";
 import NavigationArrow from "@/components/slider/NavigationArrow";
 import DetailedSlideInfo from "@/components/slider/DetailedSlideInfo";
+import clsx from "clsx";
 
 export default function SingleSlide({ slide, position, prevSlideAction, nextSlideAction}: SingleSlideProps) {
-  const getTransformStyle = () => {
-    return {
-      transform: `translateX(${position * 100}%)`,
-      transition: `all 450ms cubic-bezier(0.34, 1, 0.2, 1)`,
-      opacity: position === 0 ? 1 : 0.3,
-      filter: position === 0 ? 'blur(0)' : 'blur(2px)',
-      scale: position === 0 ? '1' : '0.95',
-      willChange: 'transform, opacity, filter, scale'
-    };
-  };
-
   return (
       <div
-          className="absolute top-0 left-0 w-full h-fit flex flex-col py-2 px-6 lg:py-0 lg:h-full lg:flex-row lg:px-16 xl:px-26 2xl:px-36"
-          style={getTransformStyle()}
+          className={`carousel-item ${position === 0 ? 'carousel-item-active' : 'carousel-item-inactive'}`}
+          style={{ transform: `translateX(${position * 100}%)`}}
       >
-        <div className="w-full h-fit flex items-center justify-center  my-2 lg:justify-center lg:my-0 lg:w-fit lg:h-full 2xl:w-full">
-          <div className="relative w-xs aspect-square lg:w-md xl:w-lg 2xl:w-lg ">
+        <div className="carousel-image-wrapper">
+          <div>
             <Image
                 src={`/${slide.imageUrl}`}
                 fill
+                placeholder="blur"
+                blurDataURL="/blur.png"
                 alt={slide.name}
-                className="rounded-4xl shadow-md object-cover"
                 sizes="(max-width: 1024px) 400px, (max-width: 1920px) 50vw"
                 priority
             />
           </div>
         </div>
 
-        <div className="w-full h-full  flex flex-col justify-start  lg:justify-evenly items-center lg:ml-6 xl:ml-16">
-          <div className="flex flex-col justify-center lg:h-[28rem] xl:h-[32rem] 2xl:h-fit">
-            <div className="w-full flex flex-col">
-              <div className="relative text-center lg:text-right">
-                {/* Only mobile arrows */}
+        <div className={clsx("carousel-content-wrapper")}>
+          <div className="carousel-content-inner-wrapper">
+            <div className="carousel-content">
+              <div>
                 <NavigationArrow direction="left" onClick={prevSlideAction} className="lg:hidden"/>
                 <NavigationArrow direction="right" onClick={nextSlideAction} className="lg:hidden"/>
-                <h1 className="text-4xl md:text-6xl 2xl:text-8xl my-2">{slide.name}</h1>
-                {slide.type === 'item' && (
-                    <h2 className="text-2xl lg:text-4xl 2xl:text-5xl">{slide.textBonus.toLowerCase()}</h2>
-                )}
-                {slide.type === 'evolution-stage' && (
-                    <h2 className="text-2xl lg:text-4xl 2xl:text-5xl">{slide.gradingText}</h2>
-                )}
-                {slide.type === 'chest' && (
-                    <h2 className="text-2xl lg:text-4xl 2xl:text-5xl">{slide.behavior}</h2>
-                )}
-
+                <h1>{slide.name}</h1>
+                {(() => {
+                  switch (slide.type) {
+                    case 'item':
+                      return <h2>{slide.textBonus.toLowerCase()}</h2>;
+                    case 'evolution-stage':
+                      return <h2>{slide.gradingText}</h2>;
+                    case 'chest':
+                      return <h2>{slide.behavior}</h2>;
+                    default:
+                      return null;
+                  }
+                })()}
               </div>
-              <p className="text-justify mt-4 2xl:mt-8 max-w-xl lg:max-w-full text-xl xl:text-2xl 2xl:text-2xl">
+              <p>
                 {slide.description}
               </p>
             </div>

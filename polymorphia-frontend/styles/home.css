@@ -3,7 +3,7 @@
 }
 
 .hero-background-image {
-    @apply w-full h-1/3 relative animate-slideInFromLeft [clip-path:polygon(0_0,_100%_30%,_100%_100%,_0%_100%)];
+    @apply w-full h-1/3 relative opacity-0 animate-slideInFromLeft [clip-path:polygon(0_0,_100%_30%,_100%_100%,_0%_100%)];
     @apply md:w-1/2 md:h-full md:[clip-path:polygon(0_0,_100%_0,_70%_100%,_0%_100%)];
 }
 
@@ -57,7 +57,7 @@
 }
 
 .login-form > div > input {
-    @apply w-full text-center text-4xl py-3 border-b-2 border-[#262626] focus:outline-none;
+    @apply w-full text-center text-4xl py-3 border-b-2 border-b-neutral-800 focus:outline-none;
 }
 
 .forgot-password {

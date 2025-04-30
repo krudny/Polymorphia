@@ -2,14 +2,12 @@ import {NavigationDotsProps} from "@/interfaces/slider/SliderInterfaces";
 
 export default function NavigationDots({slides, currentSlide, goToSlide}: NavigationDotsProps) {
   return (
-      <div className="w-full h-6 my-2 flex items-center justify-center space-x-2">
+      <div className="slider-dots">
         {slides.map((_, index) => (
             <button
                 key={index}
                 onClick={() => goToSlide(index)}
-                className={`w-3 h-3 rounded-full ${
-                    currentSlide === index ? "bg-zinc-600" : "bg-[#212121]"
-                }`}
+                className={`${currentSlide === index ? "bg-neutral-600" : "bg-neutral-800"}`}
                 aria-label={`Przejdź do slajdu ${index + 1}`}
             />
         ))}

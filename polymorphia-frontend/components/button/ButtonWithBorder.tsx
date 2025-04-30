@@ -1,14 +1,25 @@
 import React from 'react';
-import {ButtonWithBorderProps} from "@/interfaces/button/ButtonInterfaces";
+import {ButtonWithBorderProps, VariantProps} from "@/interfaces/button/ButtonInterfaces";
+import clsx from "clsx";
+import {tv} from "tailwind-variants";
 
-export default function ButtonWithBorder({ text, className, onClick }: ButtonWithBorderProps) {
+const buttonWithBorder = tv({
+  base: "button-with-border",
+  variants: {
+    size: {
+      sm: "text-xl px-6 py-1",
+      md: "text-3xl px-8 py-2",
+      lg: "text-4xl px-10 py-3",
+    },
+  },
+  defaultVariants: {
+    size: "md",
+  },
+});
+
+export default function ButtonWithBorder({text, onClick, className, size = "md"}: ButtonWithBorderProps & VariantProps) {
   return (
-      <button
-          className={`subpixel-antialiased block mx-auto text-3xl py-2 px-8 border-2 border-solid border-[#262626] 
-          self-center w-auto transition-all duration-300 ease-in-out hover:bg-[#262626] 
-          hover:cursor-pointer hover:text-neutral-300 ${className}`}
-          onClick={onClick}
-      >
+      <button onClick={onClick} className={clsx(buttonWithBorder({ size }), className)}>
         {text}
       </button>
   );

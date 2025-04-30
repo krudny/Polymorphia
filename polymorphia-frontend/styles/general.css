@@ -1,0 +1,16 @@
+.hero-background-wrapper {
+    @apply w-screen h-[100dvh] lg:h-screen relative;
+}
+
+.button-with-border {
+    @apply block mx-auto border-2 border-neutral-800;
+    @apply transition-colors duration-400 ease-[cubic-bezier(0.34,1,0.2,1)] hover:bg-neutral-800 hover:text-neutral-300;
+}
+
+.loading-wrapper {
+    @apply w-screen h-screen flex-centered z-[1000];
+}
+
+.loading-wrapper > div {
+    @apply w-12 h-12 border-4 border-neutral-400 border-t-neutral-800 rounded-full animate-spin;
+}

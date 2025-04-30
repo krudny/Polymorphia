@@ -60,12 +60,12 @@ export default function DetailedSlideInfo({type, ids}: {type: string, ids: numbe
 
 
   return (
-      <div className={`w-full flex flex-col items-center mt-4 lg:items-end`}>
-        <div className="flex items-center my-1 gap-x-1 text-neutral-400">
+      <div className="slide-details">
+        <div className="slide-details-info">
           <SquareMousePointer size={20} />
           <h3 className="text-xl 2xl:text-2xl">{`Kliknij na ${type==='item' ? 'skrzynkę' : 'przedmiot'} aby dowiedzieć się więcej`}</h3>
         </div>
-        <div className="flex flex-wrap gap-4 justify-center lg:justify-end">
+        <div className="slide-details-content">
           {filteredData.map((element) => {
             const fullData = type === 'item' ? chestQueryResult.data : itemQueryResult.data;
             const goToSlide = fullData?.findIndex((el) => el.id === element.id) ?? 0;
@@ -75,12 +75,12 @@ export default function DetailedSlideInfo({type, ids}: {type: string, ids: numbe
                     href={`/faq/${type === 'item' ? 'chests' : 'items'}?slide=${goToSlide}`}
                     key={element.id}
                 >
-                  <div className="relative h-20 aspect-square cursor-pointer">
+                  <div className="slide-details-image">
                     <Image
                         src={`/${element.imageUrl}`}
                         fill
                         alt={element.name}
-                        className="rounded-xl object-cover shadow-md hover:shadow-3xl"
+                        sizes="10vw"
                     />
                   </div>
                 </Link>

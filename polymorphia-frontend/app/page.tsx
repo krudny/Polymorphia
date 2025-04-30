@@ -37,7 +37,7 @@ export default function Home() {
           </div>
         </div>
         <div className="hero-right-wrapper">
-          <div className={`${isLoginFormVisible ? 'animate-fadeShrink' : 'opacity-0 animate-fadeExpandHero'}`}>
+          <div className={`${isLoginFormVisible ? 'animate-fadeShrink' : 'animate-fadeExpandHero'}`}>
             <h1>Polymorphia</h1>
             <div className="hero-buttons">
               <ButtonWithBorder text="Zaloguj się" onClick={openLoginForm} />
