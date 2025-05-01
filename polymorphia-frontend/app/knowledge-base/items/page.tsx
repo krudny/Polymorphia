@@ -2,7 +2,6 @@
 
 import Slider from "@/components/slider/Slider";
 import {useQuery} from "@tanstack/react-query";
-import Loading from "@/components/general/Loading";
 import {useSearchParams} from "next/navigation";
 import KnowledgeBaseService from "@/services/knowledge-base/KnowledgeBaseService";
 
@@ -15,7 +14,7 @@ export default function Items() {
   });
 
   if (isLoading) {
-    return <Loading />;
+    return null;
   }
 
   if (error) {

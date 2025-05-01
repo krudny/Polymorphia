@@ -6,12 +6,46 @@ import NavigationArrow from "@/components/slider/NavigationArrow";
 import DetailedSlideInfo from "@/components/slider/DetailedSlideInfo";
 import clsx from "clsx";
 import "../../styles/slider.css";
+import {useEffect, useRef} from "react";
+import gsap from "gsap";
 
-export default function SingleSlide({ slide, position, prevSlideAction, nextSlideAction}: SingleSlideProps) {
+export default function SingleSlide({ slide, position, prevSlideAction, nextSlideAction, totalSlides}: SingleSlideProps) {
+  const sliderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const slideElement = sliderRef.current;
+    if (!slideElement) return;
+
+    let animatedPosition = position;
+
+    if (position > totalSlides / 2) {
+      animatedPosition = position - totalSlides;
+    } else if (position < -totalSlides / 2) {
+      animatedPosition = position + totalSlides;
+    }
+
+
+    const targetXPercent = animatedPosition * 100;
+    const targetOpacity = position === 0 ? 1 : 0;
+    const targetScale = position === 0 ? 1 : 0.9;
+    const targetZIndex = position === 0 ? 1 : 0;
+
+    gsap.to(slideElement, {
+      xPercent: targetXPercent,
+      opacity: targetOpacity,
+      scale: targetScale,
+      zIndex: targetZIndex,
+      duration: 0.5,
+      ease: "power2.out",
+    });
+
+  }, [position, totalSlides]);
+
+
   return (
       <div
-          className={`carousel-item ${position === 0 ? 'carousel-item-active' : 'carousel-item-inactive'}`}
-          style={{ transform: `translateX(${position * 100}%)`}}
+          className={`carousel-item ${position === 0 ? 'active' : ''}`}
+          ref={sliderRef}
       >
         <div className="carousel-image-wrapper">
           <div>
@@ -52,7 +86,7 @@ export default function SingleSlide({ slide, position, prevSlideAction, nextSlid
               </p>
             </div>
 
-            <div className="relative">
+            <div className="slide-details-wrapper">
               {(slide.type === 'item' || slide.type === 'chest') && (
                   <DetailedSlideInfo
                       type={slide.type}

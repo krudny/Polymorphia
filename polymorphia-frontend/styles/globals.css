@@ -70,7 +70,7 @@
     --animate-slideInFromLeftOwl: slideInFromLeftOwl 0.9s 0.2s cubic-bezier(0.34, 1, 0.2, 1) forwards;
     --animate-slideInFromRight: slideInFromRight 0.6s cubic-bezier(0.34, 1, 0.2, 1) forwards;
     --animate-slideOutToRight: slideOutToRight 0.6s cubic-bezier(0.34, 1, 0.2, 1) forwards;
-    --animate-fadeExpand: fadeExpand 0.7s 0.15s cubic-bezier(0.34, 1, 0.2, 1) forwards;
+    --animate-fadeExpand: fadeExpand 0.9s cubic-bezier(0.34, 1, 0.2, 1) forwards;
     --animate-fadeExpandHero: fadeExpand 0.7s cubic-bezier(0.34, 1, 0.2, 1) forwards;
     --animate-fadeShrink: fadeShrink 0.5s cubic-bezier(0.34, 1, 0.2, 1) forwards;
     --shadow-3xl: 0px 0px 12px 0px rgba(66, 68, 90, 0.5);
