@@ -1,4 +1,4 @@
-export interface ApiItemsResponse {
+export interface ItemResponseDTO {
   id: number;
   name: string;
   description: string;
@@ -10,19 +10,18 @@ export interface ApiItemsResponse {
   textBehavior: string;
 }
 
-export interface ApiEvolutionStagesResponse {
+export interface EvolutionStageResponseDto {
   id: number;
   name: string;
   description: string;
   minXp: number;
   grade: number;
   imageUrl: string;
-  imageWithoutBgUrl: string | null;
   courseId: number;
   gradingText: string;
 }
 
-export interface ApiChestsResponse {
+export interface ChestResponseDto {
   id: number;
   name: string;
   description: string;

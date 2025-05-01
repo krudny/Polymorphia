@@ -1,10 +1,11 @@
 import Image from "next/image";
 import {ReactNode, Suspense} from "react";
 import Link from "next/link";
+import "../../styles/general.css"
 
 export default function FaqLayout({children}: {children: ReactNode}) {
   return (
-      <div className="w-screen min-h-[100dvh] lg:h-screen relative bg-black">
+      <div className="knowledge-base-wrapper">
         <Image
             src="/background.png"
             alt="Background"
@@ -13,8 +14,8 @@ export default function FaqLayout({children}: {children: ReactNode}) {
             priority
             sizes="100%"
         />
-        <div className="relative z-10 w-full min-h-[100dvh] h-full flex flex-col ">
-          <div className="w-full flex justify-center items-center h-16 text-center">
+        <div className="knowledge-base-inner-wrapper ">
+          <div>
             <Link href="/"><h3 className="text-4xl">Polymorphia</h3></Link>
           </div>
           <Suspense>

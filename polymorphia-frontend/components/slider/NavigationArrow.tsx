@@ -1,6 +1,7 @@
 import {ChevronLeft, ChevronRight} from "lucide-react";
 import {NavigationArrowProps} from "@/interfaces/slider/SliderInterfaces";
 import clsx from "clsx";
+import "../../styles/slider.css";
 
 export default function NavigationArrow({ direction, onClick, className }: NavigationArrowProps) {
   const Icon = direction === "left" ? ChevronLeft : ChevronRight;

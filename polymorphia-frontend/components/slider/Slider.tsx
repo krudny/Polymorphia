@@ -6,6 +6,7 @@ import NavigationDots from "@/components/slider/NavigationDots";
 import {SliderProps} from "@/interfaces/slider/SliderInterfaces";
 import SingleSlide from "@/components/slider/SingleSlide";
 import SliderNavigation from "@/components/slider/SliderNavigation";
+import "../../styles/slider.css";
 
 
 export default function Slider({ slides, initialSlide=0 }: SliderProps) {

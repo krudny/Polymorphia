@@ -1,3 +1,6 @@
+@import "tailwindcss";
+@import "./globals.css";
+
 .background-wrapper {
     @apply w-screen h-[100dvh] lg:h-screen relative;
 }
@@ -13,4 +16,16 @@
 
 .loading-wrapper > div {
     @apply w-12 h-12 border-4 border-neutral-400 border-t-neutral-800 rounded-full animate-spin;
+}
+
+.knowledge-base-wrapper {
+    @apply w-screen min-h-[100dvh] relative bg-black lg:h-screen;
+}
+
+.knowledge-base-inner-wrapper {
+    @apply w-full min-h-[100dvh] h-full flex flex-col relative z-10
+}
+
+.knowledge-base-inner-wrapper > div {
+    @apply w-full flex-centered h-16;
 }

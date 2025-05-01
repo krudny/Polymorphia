@@ -1,15 +1,15 @@
 import {ChestSlide, EvolutionStageSlide, ItemSlide} from "@/interfaces/slider/SliderInterfaces";
-import {ApiChestsResponse, ApiEvolutionStagesResponse, ApiItemsResponse} from "@/interfaces/api/FaqInterfaces";
+import {ChestResponseDto, EvolutionStageResponseDto, ItemResponseDTO} from "@/interfaces/api/DTO";
 
 const API_HOST = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080';
 
-const FaqService = {
-  getEvolutionStages: async (): Promise<EvolutionStageSlide[]> => {
+const KnowledgeBaseService = {
+  getEvolutionStages: async (courseId: number): Promise<EvolutionStageSlide[]> => {
     try {
-      const response = await fetch(`${API_HOST}/courses/1/evolution-stages`);
+      const response = await fetch(`${API_HOST}/courses/${courseId}/evolution-stages`);
       const data = await response.json();
       return data
-          .map((evolutionStage: ApiEvolutionStagesResponse) => ({
+          .map((evolutionStage: EvolutionStageResponseDto) => ({
             type: 'evolution-stage',
             name: evolutionStage.name,
             description: evolutionStage.description,
@@ -22,19 +22,19 @@ const FaqService = {
     }
   },
 
-  getItems: async (): Promise<ItemSlide[]> => {
+  getItems: async (courseId: number): Promise<ItemSlide[]> => {
     try {
-      const response = await fetch(`${API_HOST}/courses/1/items`);
+      const response = await fetch(`${API_HOST}/courses/${courseId}/items`);
       const data = await response.json();
-      return data.map((reward: ApiItemsResponse) => {
+      return data.map((item: ItemResponseDTO) => {
         return {
           type: 'item',
-          id: reward.id,
-          name: reward.name,
-          description: reward.description,
-          imageUrl: reward.imageUrl,
-          textBonus: reward.textBonus,
-          chestIds: reward.chestIds,
+          id: item.id,
+          name: item.name,
+          description: item.description,
+          imageUrl: item.imageUrl,
+          textBonus: item.textBonus,
+          chestIds: item.chestIds,
         } as ItemSlide;
       });
     } catch (error) {
@@ -43,11 +43,11 @@ const FaqService = {
     }
   },
 
-  getChests: async (): Promise<ChestSlide[]> => {
+  getChests: async (courseId: number): Promise<ChestSlide[]> => {
     try {
-      const response = await fetch(`${API_HOST}/courses/1/chests`);
+      const response = await fetch(`${API_HOST}/courses/${courseId}/chests`);
       const data = await response.json();
-      return data.map((chest: ApiChestsResponse) => {
+      return data.map((chest: ChestResponseDto) => {
         return {
           type: 'chest',
           id: chest.id,
@@ -65,4 +65,4 @@ const FaqService = {
   }
 }
 
-export default FaqService;
+export default KnowledgeBaseService;

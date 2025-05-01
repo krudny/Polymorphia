@@ -1,4 +1,5 @@
 import {NavigationDotsProps} from "@/interfaces/slider/SliderInterfaces";
+import "../../styles/slider.css";
 
 export default function NavigationDots({slides, currentSlide, goToSlide}: NavigationDotsProps) {
   return (

@@ -5,6 +5,7 @@ import Image from "next/image";
 import NavigationArrow from "@/components/slider/NavigationArrow";
 import DetailedSlideInfo from "@/components/slider/DetailedSlideInfo";
 import clsx from "clsx";
+import "../../styles/slider.css";
 
 export default function SingleSlide({ slide, position, prevSlideAction, nextSlideAction}: SingleSlideProps) {
   return (

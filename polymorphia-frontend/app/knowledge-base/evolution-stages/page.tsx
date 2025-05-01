@@ -1,13 +1,13 @@
 "use client"
 import Slider from "@/components/slider/Slider";
-import FaqService from "@/services/faq/FaqService";
 import {useQuery} from "@tanstack/react-query";
 import Loading from "@/components/general/Loading";
+import KnowledgeBaseService from "@/services/knowledge-base/KnowledgeBaseService";
 
 export default function EvolutionStages() {
   const { data: evolutionStages, isLoading, error } = useQuery({
-    queryKey: ['evolution_stages'],
-    queryFn: FaqService.getEvolutionStages,
+    queryKey: ['evolution_stages', 1],
+    queryFn: () => KnowledgeBaseService.getEvolutionStages(1),
   });
 
   if (isLoading) {
