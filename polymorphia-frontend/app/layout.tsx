@@ -1,6 +1,6 @@
 "use client"
 
-import "./globals.css";
+import "../styles/globals.css";
 import { League_Gothic } from 'next/font/google';
 import {QueryClient} from "@tanstack/query-core";
 import {QueryClientProvider} from "@tanstack/react-query";

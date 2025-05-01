@@ -3,7 +3,6 @@
 import {SquareMousePointer} from "lucide-react";
 import Image from "next/image";
 import {useQuery} from "@tanstack/react-query";
-import FaqService from "@/services/faq/FaqService";
 import {
   ChestQueryResult,
   ItemQueryResult,
@@ -11,17 +10,19 @@ import {
 import Loading from "@/components/general/Loading";
 import {ChestSlide, ItemSlide} from "@/interfaces/slider/SliderInterfaces";
 import Link from "next/link";
+import "../../styles/slider.css";
+import KnowledgeBaseService from "@/services/knowledge-base/KnowledgeBaseService";
 
 export default function DetailedSlideInfo({type, ids}: {type: string, ids: number[]}) {
   const itemQueryResult: ItemQueryResult = useQuery({
-    queryKey: ["items"],
-    queryFn: () => FaqService.getItems(),
+    queryKey: ["items", 1],
+    queryFn: () => KnowledgeBaseService.getItems(1),
     enabled: type === "chest",
   });
 
   const chestQueryResult: ChestQueryResult = useQuery({
-    queryKey: ["chest"],
-    queryFn: () => FaqService.getChests(),
+    queryKey: ["chest", 1],
+    queryFn: () => KnowledgeBaseService.getChests(1),
     enabled: type === "item",
   });
 

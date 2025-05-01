@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import NavigationArrow from "@/components/slider/NavigationArrow";
 import LoginFormProps from "@/interfaces/home/LoginFormInterface";
+import "../../styles/home.css"
 
 export default function LoginForm({ onBackAction }: LoginFormProps) {
   const [email, setEmail] = useState('');

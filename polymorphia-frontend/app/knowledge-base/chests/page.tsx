@@ -1,17 +1,17 @@
 "use client"
 
 import {useQuery} from "@tanstack/react-query";
-import FaqService from "@/services/faq/FaqService";
 import Loading from "@/components/general/Loading";
 import Slider from "@/components/slider/Slider";
 import {useSearchParams} from "next/navigation";
+import KnowledgeBaseService from "@/services/knowledge-base/KnowledgeBaseService";
 
 export default function Chests() {
   const searchParams = useSearchParams();
 
   const { data: chests, isLoading, error } = useQuery({
-    queryKey: ['chests'],
-    queryFn: FaqService.getChests,
+    queryKey: ['chests', 1],
+    queryFn: () => KnowledgeBaseService.getChests(1),
   });
 
   if (isLoading) {

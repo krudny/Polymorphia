@@ -6,6 +6,8 @@ import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import LoginForm from "@/components/home/LoginForm";
 import {useState} from "react";
 import Link from "next/link";
+import "../styles/home.css"
+
 
 export default function Home() {
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
@@ -41,8 +43,8 @@ export default function Home() {
             <h1>Polymorphia</h1>
             <div className="hero-buttons">
               <ButtonWithBorder text="Zaloguj się" onClick={openLoginForm} />
-              <Link href="/faq/evolution-stages">
-                <ButtonWithBorder text="FAQ" />
+              <Link href="/knowledge-base/evolution-stages">
+                <ButtonWithBorder text="Baza wiedzy" />
               </Link>
             </div>
           </div>

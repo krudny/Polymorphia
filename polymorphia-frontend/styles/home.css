@@ -1,3 +1,6 @@
+@import "tailwindcss";
+@import "./globals.css";
+
 .hero-background-wrapper {
     @apply flex flex-col-reverse md:flex-row overflow-hidden;
 }
