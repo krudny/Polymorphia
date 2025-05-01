@@ -10,7 +10,7 @@
 }
 
 .slide-wrapper {
-    @apply relative w-full h-full flex-1 flex-col-centered overflow-x-hidden opacity-0 animate-fadeExpand;
+    @apply relative w-full h-full flex-1 flex-col-centered overflow-x-hidden opacity-0;
 }
 
 .slider-dots {
@@ -29,8 +29,12 @@
     @apply text-neutral-800 transition-colors hover:text-neutral-600;
 }
 
+.slide-details-wrapper {
+    @apply relative flex mt-6 self-center w-full min-h-12 md:mt-0 md:self-end;
+}
+
 .slide-details {
-    @apply w-full flex-col-centered mt-4;
+    @apply w-full flex-col-centered;
     @apply lg:items-end;
 }
 
@@ -52,9 +56,14 @@
 }
 
 .carousel-item {
-    @apply absolute top-0 left-0 w-full h-fit flex-col-centered py-2 px-6;
-    @apply lg:py-0 lg:h-full lg:flex-row lg:px-16 xl:px-26 2xl:px-36;
-    @apply transition-all duration-450 ease-[cubic-bezier(0.34,1,0.2,1)];
+    @apply absolute top-0 left-0 w-full min-h-fit h-full;
+    @apply opacity-0 z-10;
+    @apply flex flex-col justify-center items-center py-2 px-6;
+    @apply lg:py-0 lg:flex-row lg:px-16 xl:px-26 2xl:px-36;
+}
+
+.carousel-item.active {
+    @apply opacity-100 -z-10;
 }
 
 .carousel-item-active {

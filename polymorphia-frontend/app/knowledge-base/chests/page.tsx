@@ -1,7 +1,6 @@
 "use client"
 
 import {useQuery} from "@tanstack/react-query";
-import Loading from "@/components/general/Loading";
 import Slider from "@/components/slider/Slider";
 import {useSearchParams} from "next/navigation";
 import KnowledgeBaseService from "@/services/knowledge-base/KnowledgeBaseService";
@@ -15,7 +14,7 @@ export default function Chests() {
   });
 
   if (isLoading) {
-    return <Loading />;
+    return null;
   }
 
   if (error) {

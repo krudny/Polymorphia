@@ -1,5 +1,6 @@
 "use client"
 
+import "../../styles/general.css"
 
 export default function Loading() {
   return (

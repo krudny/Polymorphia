@@ -1,43 +1,58 @@
 "use client"
 
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import NavigationArrow from "@/components/slider/NavigationArrow";
 import NavigationDots from "@/components/slider/NavigationDots";
-import {SliderProps} from "@/interfaces/slider/SliderInterfaces";
+import {SliderProps, SliderSlide} from "@/interfaces/slider/SliderInterfaces";
 import SingleSlide from "@/components/slider/SingleSlide";
 import SliderNavigation from "@/components/slider/SliderNavigation";
 import "../../styles/slider.css";
+import gsap from "gsap";
 
+function shiftArray(arr: SliderSlide[], shift: number) {
+  const len = arr.length;
+  const offset = ((shift % len) + len) % len;
+  return arr.slice(offset).concat(arr.slice(0, offset));
+}
 
 export default function Slider({ slides, initialSlide=0 }: SliderProps) {
   const [currentSlide, setCurrentSlide] = useState<number>(initialSlide);
+  const sliderRef = useRef<HTMLDivElement>(null);
 
   const nextSlide = () => {
-    setCurrentSlide((prev: number) => (prev === slides.length - 1 ? 0 : prev + 1));
+    setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev: number) => (prev === 0 ? slides.length - 1 : prev - 1));
+    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
   };
 
   const goToSlide = (index: number) => { setCurrentSlide(index); };
+
+  if (initialSlide != 0) shiftArray(slides, initialSlide - currentSlide);
+
+
+  useEffect(() => {
+      gsap.fromTo(sliderRef.current, { scale: 0.8, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, delay: 0.1, duration: 0.4, ease: "power2.out" });
+  }, []);
 
   return (
       <>
         <div className="slider-wrapper">
           <SliderNavigation />
-          <div className="slide-wrapper">
+          <div className="slide-wrapper" ref={sliderRef}>
             {slides.map((slide, index) => (
-              <SingleSlide
-                key={index}
-                slide={slide}
-                position={index - currentSlide}
-                prevSlideAction={prevSlide}
-                nextSlideAction={nextSlide}
-              />
+                <SingleSlide
+                    key={index}
+                    slide={slide}
+                    position={index - currentSlide}
+                    prevSlideAction={prevSlide}
+                    nextSlideAction={nextSlide}
+                    totalSlides={slides.length}
+                />
             ))}
-            <NavigationArrow direction="left" onClick={prevSlide} className="hidden lg:block" />
-            <NavigationArrow direction="right" onClick={nextSlide} className="hidden lg:block" />
+            <NavigationArrow direction="left" onClick={prevSlide} className="hidden lg:block z-[999]" />
+            <NavigationArrow direction="right" onClick={nextSlide} className="hidden lg:block z-[999]" />
           </div>
         </div>
         <NavigationDots slides={slides} currentSlide={currentSlide} goToSlide={goToSlide} />

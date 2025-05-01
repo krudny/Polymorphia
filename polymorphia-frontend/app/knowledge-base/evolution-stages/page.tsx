@@ -1,7 +1,6 @@
 "use client"
 import Slider from "@/components/slider/Slider";
 import {useQuery} from "@tanstack/react-query";
-import Loading from "@/components/general/Loading";
 import KnowledgeBaseService from "@/services/knowledge-base/KnowledgeBaseService";
 
 export default function EvolutionStages() {
@@ -11,7 +10,7 @@ export default function EvolutionStages() {
   });
 
   if (isLoading) {
-    return <Loading />;
+    return null;
   }
 
   if (error) {

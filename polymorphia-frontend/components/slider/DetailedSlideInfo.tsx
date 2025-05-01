@@ -73,7 +73,7 @@ export default function DetailedSlideInfo({type, ids}: {type: string, ids: numbe
 
             return (
                 <Link
-                    href={`/faq/${type === 'item' ? 'chests' : 'items'}?slide=${goToSlide}`}
+                    href={`/knowledge-base/${type === 'item' ? 'chests' : 'items'}?slide=${goToSlide}`}
                     key={element.id}
                 >
                   <div className="slide-details-image">

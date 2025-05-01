@@ -33,6 +33,7 @@ export interface SingleSlideProps {
   position: number;
   prevSlideAction: () => void;
   nextSlideAction: () => void;
+  totalSlides: number;
 }
 
 export interface SliderProps {
