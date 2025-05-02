@@ -14,7 +14,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping()
-    public ResponseEntity<Void> addStudent(@RequestBody UserRequestDto userDto) {
+    public ResponseEntity<Void> addUser(@RequestBody UserRequestDto userDto) {
         Long userId = userService.addUser(userDto);
         return Util.getCreatedResponseEntity(userId);
     }
