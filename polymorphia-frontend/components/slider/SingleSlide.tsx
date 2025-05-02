@@ -7,40 +7,15 @@ import DetailedSlideInfo from "@/components/slider/DetailedSlideInfo";
 import clsx from "clsx";
 import "../../styles/slider.css";
 import {useEffect, useRef} from "react";
-import gsap from "gsap";
+import {animateSingleSlide} from "@/animations/Slider";
 
-export default function SingleSlide({ slide, position, prevSlideAction, nextSlideAction, totalSlides}: SingleSlideProps) {
+export default function SingleSlide({ slide, position, prevSlideAction, nextSlideAction}: SingleSlideProps) {
   const sliderRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const slideElement = sliderRef.current;
-    if (!slideElement) return;
-
-    let animatedPosition = position;
-
-    if (position > totalSlides / 2) {
-      animatedPosition = position - totalSlides;
-    } else if (position < -totalSlides / 2) {
-      animatedPosition = position + totalSlides;
-    }
-
-
-    const targetXPercent = animatedPosition * 100;
-    const targetOpacity = position === 0 ? 1 : 0;
-    const targetScale = position === 0 ? 1 : 0.9;
-    const targetZIndex = position === 0 ? 1 : 0;
-
-    gsap.to(slideElement, {
-      xPercent: targetXPercent,
-      opacity: targetOpacity,
-      scale: targetScale,
-      zIndex: targetZIndex,
-      duration: 0.5,
-      ease: "power2.out",
-    });
-
-  }, [position, totalSlides]);
-
+    if (!sliderRef.current) return;
+    animateSingleSlide(sliderRef.current, position);
+  }, [position]);
 
   return (
       <div

@@ -7,7 +7,7 @@ import LoginForm from "@/components/home/LoginForm";
 import {useEffect, useRef, useState} from "react";
 import Link from "next/link";
 import "../styles/home.css"
-import gsap from "gsap";
+import {animateInitialMount, animateLoginFormVisibility} from "@/animations/Home";
 
 export default function Home() {
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
@@ -22,28 +22,16 @@ export default function Home() {
   const hasMountedRef = useRef(false);
 
   useEffect(() => {
-    if (!hasMountedRef.current || !loginFormRef.current || !titleSectionRef.current) return;
-    const isVisible = isLoginFormVisible;
-
-    gsap.timeline()
-        .to(titleSectionRef.current, { opacity: isVisible ? 0 : 1, scale: isVisible ? 0.8 : 1, duration: 0.5, ease: "power3.inOut" })
-        .fromTo(
-            loginFormRef.current,
-            isVisible ? { x: "0%", opacity: 0 } : { x: "-100%" },
-            isVisible ? { x: "-100%", opacity: 1, duration: 0.4, ease: "power2.inOut" } : { x: "0%", opacity: 0, duration: 0.6, ease: "power2.inOut", yoyo: true },
-            "<"
-        );
-  }, [isLoginFormVisible]);
+    if (!backgroundRef.current || !titleSectionRef.current || !imageRef.current) return;
+    animateInitialMount(backgroundRef.current, titleSectionRef.current, imageRef.current, () => {
+      hasMountedRef.current = true;
+    });
+  }, []);
 
   useEffect(() => {
-    gsap.timeline()
-        .fromTo(backgroundRef.current, { x: "-100%", autoAlpha: 0 }, { x: "0%", autoAlpha: 1, duration: 0.4, ease: "power2.inOut" })
-        .fromTo(titleSectionRef.current, { x: "100%", autoAlpha: 0 }, { x: "0%", autoAlpha: 1, duration: 0.7, ease: "power2.inOut" }, ">")
-        .fromTo(imageRef.current, { x: "-100%", autoAlpha: 0 }, { x: "0%", autoAlpha: 1, duration: 0.7, ease: "power2.inOut" }, "<")
-        .then(() => {
-          hasMountedRef.current = true;
-        });
-  }, []);
+    if (!hasMountedRef.current || !loginFormRef.current || !titleSectionRef.current) return;
+    animateLoginFormVisibility(loginFormRef.current, titleSectionRef.current, isLoginFormVisible);
+  }, [isLoginFormVisible]);
 
   return (
       <BackgroundWrapper className="hero-background-wrapper">

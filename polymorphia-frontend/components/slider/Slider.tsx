@@ -7,7 +7,7 @@ import {SliderProps, SliderSlide} from "@/interfaces/slider/SliderInterfaces";
 import SingleSlide from "@/components/slider/SingleSlide";
 import SliderNavigation from "@/components/slider/SliderNavigation";
 import "../../styles/slider.css";
-import gsap from "gsap";
+import {animateSlider} from "@/animations/Slider";
 
 function shiftArray(arr: SliderSlide[], shift: number) {
   const len = arr.length;
@@ -31,9 +31,9 @@ export default function Slider({ slides, initialSlide=0 }: SliderProps) {
 
   if (initialSlide != 0) shiftArray(slides, initialSlide - currentSlide);
 
-
   useEffect(() => {
-      gsap.fromTo(sliderRef.current, { scale: 0.8, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, delay: 0.1, duration: 0.4, ease: "power2.out" });
+    if (!sliderRef.current) return;
+    animateSlider(sliderRef.current);
   }, []);
 
   return (
@@ -48,7 +48,6 @@ export default function Slider({ slides, initialSlide=0 }: SliderProps) {
                     position={index - currentSlide}
                     prevSlideAction={prevSlide}
                     nextSlideAction={nextSlide}
-                    totalSlides={slides.length}
                 />
             ))}
             <NavigationArrow direction="left" onClick={prevSlide} className="hidden lg:block z-[999]" />
