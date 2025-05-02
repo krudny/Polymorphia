@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.dto.request.user;
 
 
+import com.agh.polymorphia_backend.model.user.UserType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
