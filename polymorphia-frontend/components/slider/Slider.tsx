@@ -3,17 +3,12 @@
 import {useEffect, useRef, useState} from "react";
 import NavigationArrow from "@/components/slider/NavigationArrow";
 import NavigationDots from "@/components/slider/NavigationDots";
-import {SliderProps, SliderSlide} from "@/interfaces/slider/SliderInterfaces";
+import {SliderProps} from "@/interfaces/slider/SliderInterfaces";
 import SingleSlide from "@/components/slider/SingleSlide";
 import SliderNavigation from "@/components/slider/SliderNavigation";
 import "../../styles/slider.css";
 import {animateSlider} from "@/animations/Slider";
-
-function shiftArray(arr: SliderSlide[], shift: number) {
-  const len = arr.length;
-  const offset = ((shift % len) + len) % len;
-  return arr.slice(offset).concat(arr.slice(0, offset));
-}
+import {shiftArray} from "@/components/slider/utils";
 
 export default function Slider({ slides, initialSlide=0 }: SliderProps) {
   const [currentSlide, setCurrentSlide] = useState<number>(initialSlide);

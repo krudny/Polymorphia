@@ -2,6 +2,7 @@
 import Slider from "@/components/slider/Slider";
 import {useQuery} from "@tanstack/react-query";
 import KnowledgeBaseService from "@/services/knowledge-base/KnowledgeBaseService";
+import Loading from "@/components/general/Loading";
 
 export default function EvolutionStages() {
   const { data: evolutionStages, isLoading, error } = useQuery({
@@ -10,7 +11,7 @@ export default function EvolutionStages() {
   });
 
   if (isLoading) {
-    return null;
+    return <Loading />;
   }
 
   if (error) {

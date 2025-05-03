@@ -4,6 +4,7 @@ import {useQuery} from "@tanstack/react-query";
 import Slider from "@/components/slider/Slider";
 import {useSearchParams} from "next/navigation";
 import KnowledgeBaseService from "@/services/knowledge-base/KnowledgeBaseService";
+import Loading from "@/components/general/Loading";
 
 export default function Chests() {
   const searchParams = useSearchParams();
@@ -14,7 +15,7 @@ export default function Chests() {
   });
 
   if (isLoading) {
-    return null;
+    return <Loading />;
   }
 
   if (error) {

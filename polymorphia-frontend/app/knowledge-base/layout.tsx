@@ -3,7 +3,7 @@ import {ReactNode, Suspense} from "react";
 import Link from "next/link";
 import "../../styles/general.css"
 
-export default function FaqLayout({children}: {children: ReactNode}) {
+export default function KnowledgeBaseLayout({children}: {children: ReactNode}) {
   return (
       <div className="knowledge-base-wrapper">
         <Image

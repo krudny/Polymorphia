@@ -7,7 +7,7 @@
 
 .button-with-border {
     @apply block mx-auto border-2 border-neutral-800;
-    @apply transition-colors duration-400 ease-[cubic-bezier(0.34,1,0.2,1)] hover:bg-neutral-800 hover:text-neutral-300;
+    @apply transition-colors duration-400 ease-[cubic-bezier(0.34,1,0.2,1)] hover:bg-neutral-800 hover:text-neutral-300 hover:cursor-pointer;
 }
 
 .loading-wrapper {

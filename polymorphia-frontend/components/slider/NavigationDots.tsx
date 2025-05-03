@@ -8,7 +8,7 @@ export default function NavigationDots({slides, currentSlide, goToSlide}: Naviga
             <button
                 key={index}
                 onClick={() => goToSlide(index)}
-                className={`${currentSlide === index ? "bg-neutral-600" : "bg-neutral-800"}`}
+                className={`${currentSlide === index ? "bg-neutral-800" : "bg-neutral-500"}`}
                 aria-label={`Przejdź do slajdu ${index + 1}`}
             />
         ))}
