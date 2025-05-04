@@ -35,5 +35,5 @@ jobs:
             sudo systemctl start docker
             cd /home/ubuntu/polymorphia/polymorphia-backend
             sudo docker build -t polymorphia-backend .
-            sudo docker run -d -p 8080:8080 -v /app/config:/app/config --name polymorphia-backend polymorphia-backend --spring.config.location=file:/app/config/application.properties
+            sudo docker run -d -p 8080:8080 -v /app/config:/app/config -v ~/polymorphia-static:/app/static --name polymorphia-backend polymorphia-backend --spring.config.location=file:/app/config/application.properties
           EOF
