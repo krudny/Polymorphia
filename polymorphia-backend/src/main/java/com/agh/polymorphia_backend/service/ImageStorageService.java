@@ -14,12 +14,9 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 @Service
+@AllArgsConstructor
 public class ImageStorageService {
     private final StaticFileServerProperties properties;
-
-    public ImageStorageService(StaticFileServerProperties properties) {
-        this.properties = properties;
-    }
 
     @Getter
     @AllArgsConstructor
