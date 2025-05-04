@@ -47,4 +47,14 @@ public class ImageStorageService {
 
         return relativePath;
     }
+
+    public void deleteImageIfExists(String relativePath) {
+        if (relativePath == null || relativePath.isBlank()) return;
+
+        Path fullPath = Paths.get(properties.rootDir(), relativePath).toAbsolutePath().normalize();
+        try {
+            Files.deleteIfExists(fullPath);
+        } catch (IOException ignored) {
+        }
+    }
 }
