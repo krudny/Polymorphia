@@ -29,8 +29,8 @@ public class RewardService {
     private final ItemMapper itemMapper;
     private final ChestMapper chestMapper;
 
-    public Long addChest(ChestRequestDto chestRequestDto) {
-        return chestRepository.save(chestMapper.chestRequestDtoToChest(chestRequestDto)).getId();
+    public Long addChest(ChestRequestDto chestRequestDto, String imageUrl) {
+        return chestRepository.save(chestMapper.chestRequestDtoToChest(chestRequestDto, imageUrl)).getId();
     }
 
     public Long addItem(ItemRequestDto itemRequestDto) {
