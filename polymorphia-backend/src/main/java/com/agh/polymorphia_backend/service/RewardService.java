@@ -33,8 +33,8 @@ public class RewardService {
         return chestRepository.save(chestMapper.chestRequestDtoToChest(chestRequestDto, imageUrl)).getId();
     }
 
-    public Long addItem(ItemRequestDto itemRequestDto) {
-        return itemRepository.save(itemMapper.itemRequestDtoToItem(itemRequestDto)).getId();
+    public Long addItem(ItemRequestDto itemRequestDto, String imageUrl) {
+        return itemRepository.save(itemMapper.itemRequestDtoToItem(itemRequestDto, imageUrl)).getId();
     }
 
     public ItemResponseDto getItemById(Long itemId) {
