@@ -30,7 +30,7 @@ public class RewardController {
     private final ImageStorageService imageStorageService;
 
     @PostMapping(value = "/chests", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> addChest(@ModelAttribute ChestRequestDto chest, @RequestParam("image") MultipartFile chestImage) throws IOException {
+    public ResponseEntity<Void> addChest(@RequestPart("chest") ChestRequestDto chest, @RequestParam("image") MultipartFile chestImage) throws IOException {
         String imageUrl = imageStorageService.saveImage(chestImage, ImageStorageService.ImageType.CHEST);
         Long chestId = rewardService.addChest(chest, imageUrl);
         return Util.getCreatedResponseEntity(chestId);
@@ -49,10 +49,11 @@ public class RewardController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/items")
+    @PostMapping(value = "/items", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> addItem(
-            @RequestBody ItemRequestDto item) {
-        return Util.getCreatedResponseEntity(rewardService.addItem(item));
+            @RequestPart("item") ItemRequestDto item, @RequestParam("image") MultipartFile itemImage) throws IOException {
+        String imageUrl = imageStorageService.saveImage(itemImage, ImageStorageService.ImageType.ITEM);
+        return Util.getCreatedResponseEntity(rewardService.addItem(item, imageUrl));
     }
 
     @GetMapping("/items/{itemId}")

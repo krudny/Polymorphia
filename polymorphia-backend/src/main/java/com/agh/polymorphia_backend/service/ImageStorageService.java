@@ -24,7 +24,8 @@ public class ImageStorageService {
     @Getter
     @AllArgsConstructor
     public enum ImageType {
-        CHEST("chest", "chests/");
+        CHEST("chest", "chests/"),
+        ITEM("item", "items/");
 
         private final String name;
         private final String path;
