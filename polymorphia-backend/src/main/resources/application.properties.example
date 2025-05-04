@@ -6,7 +6,10 @@ spring.datasource.username=
 spring.datasource.password=
 
 spring.jpa.show-sql=true
-spring.jpa.hibernate.ddl-auto=update
 
 # Might be useful for local development:
 # spring.jpa.hibernate.ddl-auto=create-drop
+spring.jpa.hibernate.ddl-auto=update
+
+# Relative path to static files directory
+static-file-server.root-dir=
