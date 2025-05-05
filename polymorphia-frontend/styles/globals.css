@@ -1,0 +1,96 @@
+@import "tailwindcss";
+@tailwind utilities;
+
+@theme {
+    @keyframes slideInFromLeft {
+        0% {
+            opacity: 0;
+            transform: translateX(-100%);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes slideInFromLeftOwl {
+        0% {
+            opacity: 0;
+            transform: translateX(-100%);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes slideInFromRight {
+        0% {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes slideOutToRight {
+        0% {
+            transform: translateX(0%);
+        }
+        100% {
+            transform: translateX(100%);
+        }
+    }
+
+    @keyframes fadeExpand {
+        0% {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @keyframes fadeShrink {
+        0% {
+            opacity: 1;
+            transform: scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: scale(0.6);
+        }
+    }
+
+    --animate-slideInFromLeft: slideInFromLeft 0.7s 0.1s cubic-bezier(0.34, 1, 0.2, 1) forwards;
+    --animate-slideInFromLeftOwl: slideInFromLeftOwl 0.9s 0.2s cubic-bezier(0.34, 1, 0.2, 1) forwards;
+    --animate-slideInFromRight: slideInFromRight 0.6s cubic-bezier(0.34, 1, 0.2, 1) forwards;
+    --animate-slideOutToRight: slideOutToRight 0.6s cubic-bezier(0.34, 1, 0.2, 1) forwards;
+    --animate-fadeExpand: fadeExpand 0.9s cubic-bezier(0.34, 1, 0.2, 1) forwards;
+    --animate-fadeExpandHero: fadeExpand 0.7s cubic-bezier(0.34, 1, 0.2, 1) forwards;
+    --animate-fadeShrink: fadeShrink 0.5s cubic-bezier(0.34, 1, 0.2, 1) forwards;
+    --shadow-3xl: 0px 0px 12px 0px rgba(66, 68, 90, 0.5);
+}
+
+@utility flex-centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@utility flex-col-centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+
+
+
