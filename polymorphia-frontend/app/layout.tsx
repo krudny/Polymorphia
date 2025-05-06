@@ -1,6 +1,7 @@
 "use client"
 
 import "../styles/globals.css";
+import localFont from "next/font/local";
 import { League_Gothic } from 'next/font/google';
 import {QueryClient} from "@tanstack/query-core";
 import {QueryClientProvider} from "@tanstack/react-query";
@@ -10,6 +11,14 @@ const leagueGothic = League_Gothic({
   subsets: ['latin'],
   display: 'swap',
 })
+
+const materialSymbols = localFont({
+  variable: "--font-family-symbols",
+  style: "normal",
+  src: "../node_modules/material-symbols/material-symbols-rounded.woff2",
+  display: "block",
+  weight: "100 700",
+});
 
 export default function RootLayout({
   children,
@@ -21,7 +30,7 @@ export default function RootLayout({
 
   return (
     <html lang="pl">
-      <body className={`${leagueGothic.className} text-[#262626]`}>
+      <body className={`${leagueGothic.className} ${materialSymbols.variable} text-[#262626]`}>
         <QueryClientProvider client={queryClient}>
           {children}
         </QueryClientProvider>

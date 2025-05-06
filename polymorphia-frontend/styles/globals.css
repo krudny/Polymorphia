@@ -1,6 +1,30 @@
 @import "tailwindcss";
 @tailwind utilities;
 
+:root {
+    --font-family-symbols: "Material Symbols Rounded";
+}
+
+.material-symbols {
+    font-family: var(--font-family-symbols), serif;
+    font-variation-settings:
+            "FILL" 0,
+            "wght" 400,
+            "GRAD" 0,
+            "opsz" 48;
+    display: inline-block;
+    line-height: 1;
+}
+
+.custom-scrollbar {
+    scrollbar-color: #3c3c3c #262626;
+    scrollbar-width: thin;
+}
+
+
+.custom-scrollbar::-webkit-scrollbar {
+
+}
 @theme {
     @keyframes slideInFromLeft {
         0% {

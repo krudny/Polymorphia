@@ -1,7 +1,7 @@
 import Image from "next/image";
 import {ReactNode, Suspense} from "react";
 import Link from "next/link";
-import "../../styles/general.css"
+import "../../../styles/general.css"
 
 export default function KnowledgeBaseLayout({children}: {children: ReactNode}) {
   return (
@@ -14,7 +14,7 @@ export default function KnowledgeBaseLayout({children}: {children: ReactNode}) {
             priority
             sizes="100%"
         />
-        <div className="knowledge-base-inner-wrapper ">
+        <div className="knowledge-base-inner-wrapper">
           <div>
             <Link href="/"><h3 className="text-4xl">Polymorphia</h3></Link>
           </div>
