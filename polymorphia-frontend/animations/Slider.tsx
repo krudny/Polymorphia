@@ -13,16 +13,3 @@ export const animateSingleSlide = (
     ease: "power2.out",
   });
 };
-
-export const animateSlider = (sliderRef: HTMLDivElement) => {
-  gsap.fromTo(sliderRef, {
-      scale: 0.8,
-      autoAlpha: 0
-    }, {
-      scale: 1,
-      autoAlpha: 1,
-      delay: 0.1,
-      duration: 0.4,
-      ease: "power2.out"
-    });
-}

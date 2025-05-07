@@ -14,6 +14,7 @@ export const MainMenuItems: MenuOption[]  = [
   {
     icon: BadgeHelpIcon,
     text: 'Baza wiedzy',
+    link: 'knowledge-base/',
     subItems: [
       { text: 'Postacie', link: 'knowledge-base/evolution-stages' },
       { text: 'Przedmioty', link: 'knowledge-base/items' },

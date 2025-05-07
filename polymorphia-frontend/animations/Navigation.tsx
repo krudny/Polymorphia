@@ -5,70 +5,69 @@ export const animateSidebar = (
     isExpanded: boolean
 ) => {
   gsap.killTweensOf(sidebar);
-  const targetWidth = isExpanded ? "20rem" : "96px";
+  const targetWidth = isExpanded ? "18rem" : "96px";
   const tl = gsap.timeline();
 
-  const imageEl = sidebar.querySelector<HTMLDivElement>('.profile-image');
   const profileBlock = sidebar.querySelector<HTMLDivElement>('.profile-block');
   const headings = Array.from(sidebar.querySelectorAll<HTMLElement>('h2'));
   const chevrons = Array.from(sidebar.querySelectorAll<HTMLElement>('.chevron-container'));
 
+  const targets = [sidebar, profileBlock, ...headings, ...chevrons].filter(Boolean) as HTMLElement[];
+  gsap.killTweensOf(targets);
+
   if (isExpanded) {
     tl.to(sidebar, {
       width: targetWidth,
-      duration: 0.4,
-      ease: "power2.inOut",
+      duration: 0.3,
+      ease: "power1.in",
     })
-        .to(imageEl, {
-          width: "40%",
-          height: "40%",
-          ease: "power2.inOut"
-        }, "<")
-
-        .set([...headings, ...chevrons], { display: 'block' }, "<0.29")
+        .set([...headings, ...chevrons], { display: 'block' }, "<0.1")
+        .set(profileBlock, { display: "flex" }, "<")
         .fromTo(
             [...headings, ...chevrons],
-            { opacity: 0, x: -10 },
+            { opacity: 0, x: -20 },
             {
               opacity: 1,
               x: 0,
               duration: 0.2,
-              ease: "power2.out"
+              ease: "power1.in"
             },
             "<"
         )
-        .set(profileBlock, { display: "flex" }, "<")
         .fromTo(
             profileBlock,
             { opacity: 0, x: -20  },
             {
               opacity: 1,
               x: 0,
-              duration: 0.15,
-              ease: "power2.out"
+              duration: 0.2,
+              ease: "power1.in"
             }, "<"
         )
 
   } else {
-    tl.to(profileBlock, {
+    tl
+    .to(profileBlock, {
       opacity: 0,
-      x: -10,
-      duration: 0.1,
-      ease: "power2.in",
+      x: -20,
+      duration: 0.2,
+      ease: "power1.out",
       onComplete: () => {
         gsap.set(profileBlock, { display: "none" });
       }
-    })
-    .to(sidebar, {
-      width: targetWidth,
-      duration: 0.6,
-      ease: "power2.inOut"
-    })
+    }, "<")
+
     .to([...chevrons, ...headings], {
       opacity: 0,
-      x: -10,
-      duration: 0.1,
-    }, "<");
+      x: -20,
+      duration: 0.2,
+      ease: "power1.out",
+    }, "<")
+    .to(sidebar, {
+      width: targetWidth,
+      duration: 0.5,
+      ease: "power1.out",
+    }, "<0.1")
   }
 };
 
@@ -84,33 +83,28 @@ export const animateNavbar = (
   gsap.killTweensOf([drawer, ...allElements]);
 
   if (isExpanded) {
-    drawer.classList.remove('hidden');
-    gsap.set(drawer, { opacity: 0, y: -20, display: 'flex' });
-    gsap.set(allElements, { opacity: 1 });
+    gsap.set(drawer, { opacity: 0, y: -30, display: 'flex' });
+    gsap.set(allElements, { opacity: 1, x: 0 });
     gsap.set([...chevrons], { display: 'block' })
 
-    gsap.timeline({ defaults: { ease: 'power2.out' } })
-        .to(drawer, { opacity: 1, y: 0, duration: 0.3 })
+    gsap.timeline({ defaults: { ease: 'power1.in' } })
+        .to(drawer, { opacity: 1, y: 0, duration: 0.1 })
         .from(allElements, {
           x: -10,
+          duration: 0.2,
           opacity: 0,
-          duration: 0.3,
-          stagger: 0.05
-        }, '<0.1');
+        });
   } else {
     gsap.timeline({
-      defaults: { ease: 'power2.in' },
-      onComplete: () => {
-        drawer.classList.add('hidden');
-      }
+      defaults: { ease: 'power1.out' },
     })
         .to(allElements, {
           x: -10,
           opacity: 0,
           duration: 0.2,
-          stagger: { each: 0.03, from: 'end' }
         })
-        .to(drawer, { opacity: 0, y: -20, duration: 0.2 }, '<0.2');
+        .to(drawer, { opacity: 0, y: -30, duration: 0.3 }, "<0.2")
+        .set(drawer, { display: 'none' });
   }
 };
 
@@ -133,14 +127,14 @@ export const animateSubMenuSection = (
       gsap.fromTo(
           container,
           { height: 0 },
-          { height: fullHeight, duration: 0.3, opacity: 1, delay: 0.15, ease: 'power2.inOut' }
+          { height: fullHeight, duration: 0.3, opacity: 1, ease: 'power1.in' }
       );
     } else {
       gsap.to(container, {
         height: 0,
-        duration: 0.2,
+        duration: 0.3,
         opacity: 0,
-        ease: 'power2.inOut'
+        ease: 'power1.out'
       });
     }
   });

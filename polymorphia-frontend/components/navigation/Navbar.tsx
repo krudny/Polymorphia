@@ -7,7 +7,7 @@ import Line from "@/components/navigation/Line";
 import {animateNavbar} from "@/animations/Navigation";
 
 export default function Navbar() {
-  const { isExpanded, setIsExpanded } = useContext(NavigationContext);
+  const { isExpanded, isLocked, setIsExpanded } = useContext(NavigationContext);
   const drawerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -17,14 +17,17 @@ export default function Navbar() {
   }, [isExpanded]);
 
   useEffect(() => {
-    document.body.style.overflow = isExpanded ? 'hidden' : 'auto';
+    if (!isLocked && isExpanded) {
+      document.body.style.overflow = isExpanded ? 'hidden' : 'auto';
+
+    }
     return () => {
       document.body.style.overflow = 'auto';
     };
   }, [isExpanded]);
 
   return (
-      <div className="flex flex-col px-5">
+      <div className="flex flex-col px-5 z-20">
         <div className="w-full h-20 flex items-center justify-between">
           <MenuIcon size={38} onClick={() => setIsExpanded(!isExpanded)} className="cursor-pointer" />
           <h1 className="text-4xl">Polymorphia</h1>
@@ -32,7 +35,7 @@ export default function Navbar() {
         </div>
         <div
             ref={drawerRef}
-            className="fixed flex-col inset-0 top-20 bg-neutral-800 z-50 h-[calc(100dvh-5rem)] overflow-y-auto hidden"
+            className="fixed flex-col inset-0 top-20 bg-neutral-800 z-20 h-[calc(100dvh-5rem)] overflow-y-auto hidden"
         >
           <div className="flex-1">
             <MenuSection options={MainMenuItems} />

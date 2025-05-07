@@ -17,7 +17,7 @@
 }
 
 .custom-scrollbar {
-    scrollbar-color: #3c3c3c #262626;
+    scrollbar-color: #3c3c3c transparent;
     scrollbar-width: thin;
 }
 

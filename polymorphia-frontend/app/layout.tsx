@@ -29,7 +29,7 @@ export default function RootLayout({
   const [queryClient] = useState(() => new QueryClient());
 
   return (
-    <html lang="pl">
+    <html lang="pl" className="custom-scrollbar">
       <body className={`${leagueGothic.className} ${materialSymbols.variable} text-[#262626]`}>
         <QueryClientProvider client={queryClient}>
           {children}

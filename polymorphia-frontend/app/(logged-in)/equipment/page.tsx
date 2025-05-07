@@ -1,8 +1,12 @@
+"use client"
+import {useScaleShow} from "@/animations/General";
 import Image from "next/image";
 
 export default function Equipment() {
+  const wrapperRef = useScaleShow();
+
   return (
-      <div className="w-full md:max-w-5xl mx-auto p-4">
+      <div ref={wrapperRef} className="w-full md:max-w-5xl mx-auto p-4 opacity-0">
         <section className="mt-3">
           <h1 className="text-6xl mb-6 lg:mb-10">Przedmioty</h1>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -26,7 +30,7 @@ export default function Equipment() {
           </div>
         </section>
 
-        <section className="mt-7">
+        <section className="my-7">
           <h1 className="text-6xl mb-7 lg:mb-10">Skrzynki</h1>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {[1, 2, 3, 4].map((_, i) => (

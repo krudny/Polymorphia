@@ -17,6 +17,12 @@ export default function MenuSection({ options }: MenuSectionProps) {
   };
 
   useEffect(() => {
+    if (!isExpanded) {
+      setOpenSubMenu([]);
+    }
+  }, [isExpanded]);
+
+  useEffect(() => {
     animateSubMenuSection(containerRefs.current, openSubMenu, isExpanded, options);
   }, [openSubMenu, isExpanded, options]);
 
@@ -28,18 +34,17 @@ export default function MenuSection({ options }: MenuSectionProps) {
 
           return (
               <div key={option.text}>
+                <Link href={`/${option?.link ?? ""}`} key={option.text}>
                 <div
                     className="w-fit flex items-center ml-2 my-4 min-h-9 lg:min-h-8 lg:my-3 lg:ml-4 hover:cursor-pointer"
                     onClick={() => option.subItems && isExpanded && toggleSubMenu(option.text)}
                 >
-                  <Icon size="1.75rem" className="hover:cursor-default" />
-                  <Link href={`/${option?.link ?? ""}`} key={option.text}>
+                    <Icon size="1.75rem" className="hover:cursor-pointer" />
                     <h2
                         className="text-3xl lg:text-2xl ml-5 whitespace-nowrap hover:text-neutral-400 transition-colors ease-in duration-150 opacity-0"
                     >
                       {option.text}
                     </h2>
-                  </Link>
                   {option.subItems && isExpanded && (
                       <div
                           className="ml-2 hidden chevron-container"
@@ -49,6 +54,7 @@ export default function MenuSection({ options }: MenuSectionProps) {
                       </div>
                   )}
                 </div>
+                </Link>
 
                 {option.subItems && (
                     <div

@@ -3,16 +3,18 @@
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import {useContext} from "react";
 import {NavigationContext} from "@/components/navigation/NavigationContext";
+import {useScaleShow} from "@/animations/General";
 
 export default function Settings() {
   const { isLocked, setIsLocked } = useContext(NavigationContext);
+  const wrapperRef = useScaleShow();
 
   const toggleSidebarLock = () => {
     setIsLocked(!isLocked);
   };
 
   return (
-      <div className="py-6 px-32">
+      <div ref={wrapperRef} className="py-6 px-32">
         <h1 className="text-7xl mb-10">Tymczasowe ustawienia</h1>
         <div className="flex justify-start items-center">
           <h3 className="text-4xl">Zablokuj rozwijanie sidebaru</h3>

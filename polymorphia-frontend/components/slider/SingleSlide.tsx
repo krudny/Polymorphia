@@ -27,8 +27,6 @@ export default function SingleSlide({ slide, position, prevSlideAction, nextSlid
             <Image
                 src={`/${slide.imageUrl}`}
                 fill
-                placeholder="blur"
-                blurDataURL="/blur.png"
                 alt={slide.name}
                 sizes="(max-width: 1024px) 400px, (max-width: 1920px) 50vw"
                 priority

@@ -17,27 +17,13 @@ export const NavigationProvider = ({ children }: { children: ReactNode }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 1024) {
-        setIsExpanded(false);
-      }
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [])
-
-  useEffect(() => {
     localStorage.setItem('sidebarLocked', isLocked.toString());
   }, [isLocked]);
 
   useEffect(() => {
     console.log(isLocked);
     const saved = localStorage.getItem('sidebarLocked');
-    if (saved === 'true' && window.innerWidth > 1024) {
+    if (saved === 'true') {
       setIsLocked(true);
       setIsExpanded(true);
     } else {

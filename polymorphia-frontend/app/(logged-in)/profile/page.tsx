@@ -1,8 +1,12 @@
+"use client"
 import Image from "next/image";
+import {useScaleShow} from "@/animations/General";
 
 export default function Profile() {
+  const wrapperRef = useScaleShow();
+
   return (
-      <div className="flex-1  sm:flex-col-centered px-4 w-full">
+      <div ref={wrapperRef} className="flex-1  sm:flex-col-centered px-4 w-full opacity-0">
         <div className="flex-col-centered mt-10 lg:mt-0 w-full sm:flex-row mx-auto lg:w-4/5  ">
           <div className="w-full flex-centered sm:flex-row">
             <div className="relative w-4/5 aspect-square ">
