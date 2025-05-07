@@ -22,7 +22,7 @@ export const animateSidebar = (
         .to(imageEl, {
           width: "40%",
           height: "40%",
-          ease: "power1.out"
+          ease: "power2.inOut"
         }, "<")
 
         .set([...headings, ...chevrons], { display: 'block' }, "<0.29")

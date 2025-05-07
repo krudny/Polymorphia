@@ -9,7 +9,7 @@ import Link from "next/link";
 export default function Layout({ children }: { children: ReactNode }) {
   return (
       <NavigationProvider>
-        <div className="w-full min-h-[100dvh] flex flex-col lg:flex-row bg-black">
+        <div className="w-full min-h-[100dvh] relative flex flex-col lg:flex-row bg-black">
           <Navigation />
           <Image
               src="/background.png"
@@ -20,7 +20,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               sizes="100%"
           />
           <div className="w-full h-full flex flex-col min-h-[100dvh] lg:min-h-screen z-50 relative">
-            <div className="w-full flex-centered h-15">
+            <div className="w-full flex-centered h-15 hidden lg:flex">
               <Link href="/"><h3 className="text-4xl">Polymorphia</h3></Link>
             </div>
             {children}

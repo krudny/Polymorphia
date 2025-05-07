@@ -24,6 +24,7 @@ export const MainMenuItems: MenuOption[]  = [
   {
     icon: TrophyIcon,
     text: 'Ekwipunek',
+    link: 'equipment',
     subItems: [
       { text: 'Bronie' },
       { text: 'Zbroje' },
