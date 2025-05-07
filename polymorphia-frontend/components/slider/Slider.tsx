@@ -5,7 +5,6 @@ import NavigationArrow from "@/components/slider/NavigationArrow";
 import NavigationDots from "@/components/slider/NavigationDots";
 import {SliderProps} from "@/interfaces/slider/SliderInterfaces";
 import SingleSlide from "@/components/slider/SingleSlide";
-import SliderNavigation from "@/components/slider/SliderNavigation";
 import "../../styles/slider.css";
 import {animateSlider} from "@/animations/Slider";
 import {shiftArray} from "@/components/slider/utils";
@@ -34,7 +33,6 @@ export default function Slider({ slides, initialSlide=0 }: SliderProps) {
   return (
       <>
         <div className="slider-wrapper">
-          <SliderNavigation />
           <div className="slide-wrapper" ref={sliderRef}>
             {slides.map((slide, index) => (
                 <SingleSlide

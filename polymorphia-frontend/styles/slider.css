@@ -5,16 +5,12 @@
     @apply flex-1 flex flex-col;
 }
 
-.slider-navigation {
-    @apply flex-centered w-full h-fit  space-x-4 mb-3 z-[999];
-}
-
 .slide-wrapper {
     @apply relative w-full h-full flex-1 flex-col-centered overflow-x-hidden opacity-0;
 }
 
 .slider-dots {
-    @apply w-full h-6 py-2 flex-centered space-x-2;
+    @apply w-full max-h-10 py-2  flex-centered space-x-2;
 }
 
 .slider-dots > button {
@@ -56,10 +52,10 @@
 }
 
 .carousel-item {
-    @apply absolute top-0 left-0 w-full min-h-fit h-full;
+    @apply absolute top-0 left-0 w-full h-full;
     @apply opacity-0 z-10;
     @apply flex flex-col justify-center items-center py-2 px-6;
-    @apply lg:py-0 lg:flex-row lg:px-16 xl:px-26 2xl:px-36;
+    @apply lg:py-0 lg:flex-row lg:px-16 xl:px-26 2xl:px-24;
 }
 
 .carousel-item.active {
@@ -94,11 +90,11 @@
 
 .carousel-content-wrapper {
     @apply w-full h-full flex-col-centered justify-start;
-    @apply lg:justify-evenly lg:ml-6 xl:ml-16;
+    @apply lg:justify-evenly lg:ml-6;
 }
 
 .carousel-content-inner-wrapper {
-    @apply flex flex-col justify-center lg:h-[28rem] xl:h-[32rem] 2xl:h-fit;
+    @apply flex flex-col justify-center lg:h-[28rem] xl:h-[32rem] 2xl:h-fit ;
 }
 
 .carousel-content {

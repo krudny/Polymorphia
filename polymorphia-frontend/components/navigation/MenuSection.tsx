@@ -3,6 +3,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { NavigationContext } from "@/components/navigation/NavigationContext";
 import { MenuSectionProps } from "@/interfaces/navigation/NavigationInterfaces";
 import {animateSubMenuSection} from "@/animations/Navigation";
+import Link from "next/link";
 
 export default function MenuSection({ options }: MenuSectionProps) {
   const { isExpanded } = useContext(NavigationContext);
@@ -32,11 +33,13 @@ export default function MenuSection({ options }: MenuSectionProps) {
                     onClick={() => option.subItems && isExpanded && toggleSubMenu(option.text)}
                 >
                   <Icon size="1.75rem" className="hover:cursor-default" />
-                  <h2
-                      className="text-3xl lg:text-2xl ml-5 whitespace-nowrap hover:text-neutral-400 transition-colors ease-in duration-150 opacity-0"
-                  >
-                    {option.text}
-                  </h2>
+                  <Link href={`/${option?.link ?? ""}`} key={option.text}>
+                    <h2
+                        className="text-3xl lg:text-2xl ml-5 whitespace-nowrap hover:text-neutral-400 transition-colors ease-in duration-150 opacity-0"
+                    >
+                      {option.text}
+                    </h2>
+                  </Link>
                   {option.subItems && isExpanded && (
                       <div
                           className="ml-2 hidden chevron-container"
@@ -54,12 +57,14 @@ export default function MenuSection({ options }: MenuSectionProps) {
                         style={{ height: 0 }}
                     >
                       {option.subItems.map((sub) => (
-                          <h3
-                              key={sub.text}
-                              className="text-2xl lg:text-xl cursor-pointer hover:text-neutral-400 transition-colors ease-in duration-150"
-                          >
-                            {sub.text}
-                          </h3>
+                          <Link href={`/${sub?.link ?? ""}`} key={sub.text}>
+                            <h3
+                                key={sub.text}
+                                className="text-2xl lg:text-xl cursor-pointer hover:text-neutral-400 transition-colors ease-in duration-150"
+                            >
+                              {sub.text}
+                            </h3>
+                          </Link>
                       ))}
                     </div>
                 )}

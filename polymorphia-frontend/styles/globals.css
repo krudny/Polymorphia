@@ -21,10 +21,6 @@
     scrollbar-width: thin;
 }
 
-
-.custom-scrollbar::-webkit-scrollbar {
-
-}
 @theme {
     @keyframes slideInFromLeft {
         0% {

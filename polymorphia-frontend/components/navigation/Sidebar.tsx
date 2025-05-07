@@ -10,7 +10,7 @@ import clsx from "clsx";
 import {animateSidebar} from "@/animations/Navigation";
 
 export default function Sidebar() {
-  const { isExpanded, setIsExpanded } = useContext(NavigationContext);
+  const { isExpanded, setIsExpanded, isLocked } = useContext(NavigationContext);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -22,9 +22,13 @@ export default function Sidebar() {
   return (
       <div
           ref={sidebarRef}
-          className="flex flex-col max-h-screen min-h-full bg-neutral-800 w-[96px]"
-          onMouseEnter={() => setIsExpanded(true)}
-          onMouseLeave={() => setIsExpanded(false)}
+          className="flex flex-col max-h-screen min-h-full bg-neutral-800 w-[96px] overflow-visible"
+          onMouseEnter={() => {
+            if (!isLocked) setIsExpanded(true)
+          }}
+          onMouseLeave={() => {
+            if (!isLocked) setIsExpanded(false)
+          }}
       >
         <UserSection />
         <Line />

@@ -4,7 +4,7 @@ import {GraduationCapIcon, TrophyIcon} from "lucide-react";
 export default function UserSection() {
   return (
       <div className="flex justify-between gap-x-4 my-6 px-4">
-        <div className="relative aspect-square min-w-[60px] profile-image">
+        <div className="relative aspect-square min-w-[60px] max-w-[100px] profile-image">
           <Image
               src="/4.jpg"
               alt="Profil uzytkownika"
@@ -13,7 +13,7 @@ export default function UserSection() {
               className="object-cover rounded-lg"
           />
         </div>
-        <div className="profile-block flex-col justify-center flex-1 gap-y-1 hidden">
+        <div className="profile-block flex-col justify-center flex-1 flex-nowrap text-nowrap overflow-visible hidden">
           <h1 className="text-3xl">Gerard Małoduszny</h1>
           <h3 className="text-xl">Majestatyczna Bestia</h3>
           <div className="flex items-center gap-x-4">

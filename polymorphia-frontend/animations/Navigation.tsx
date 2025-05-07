@@ -8,7 +8,7 @@ export const animateSidebar = (
   const targetWidth = isExpanded ? "20rem" : "96px";
   const tl = gsap.timeline();
 
-  const imageEl = sidebar.querySelector<HTMLImageElement>('.profile-image');
+  const imageEl = sidebar.querySelector<HTMLDivElement>('.profile-image');
   const profileBlock = sidebar.querySelector<HTMLDivElement>('.profile-block');
   const headings = Array.from(sidebar.querySelectorAll<HTMLElement>('h2'));
   const chevrons = Array.from(sidebar.querySelectorAll<HTMLElement>('.chevron-container'));
@@ -16,41 +16,44 @@ export const animateSidebar = (
   if (isExpanded) {
     tl.to(sidebar, {
       width: targetWidth,
-      duration: 0.6,
+      duration: 0.4,
       ease: "power2.inOut",
     })
         .to(imageEl, {
           width: "40%",
+          height: "40%",
           ease: "power1.out"
         }, "<")
-        .set(profileBlock, { display: "flex" })
-        .set([...headings, ...chevrons], { display: 'block' }, "<")
 
-        .fromTo(
-            profileBlock,
-            { opacity: 0, x: -10 },
-            {
-              opacity: 1,
-              x: 0,
-              duration: 0.1,
-              ease: "power2.out"
-            }, "<"
-        )
+        .set([...headings, ...chevrons], { display: 'block' }, "<0.29")
         .fromTo(
             [...headings, ...chevrons],
             { opacity: 0, x: -10 },
             {
               opacity: 1,
               x: 0,
-              duration: 0.2
+              duration: 0.2,
+              ease: "power2.out"
             },
             "<"
-        );
+        )
+        .set(profileBlock, { display: "flex" }, "<")
+        .fromTo(
+            profileBlock,
+            { opacity: 0, x: -20  },
+            {
+              opacity: 1,
+              x: 0,
+              duration: 0.15,
+              ease: "power2.out"
+            }, "<"
+        )
+
   } else {
     tl.to(profileBlock, {
       opacity: 0,
       x: -10,
-      duration: 0.2,
+      duration: 0.1,
       ease: "power2.in",
       onComplete: () => {
         gsap.set(profileBlock, { display: "none" });
@@ -58,13 +61,13 @@ export const animateSidebar = (
     })
     .to(sidebar, {
       width: targetWidth,
-      duration: 0.7,
+      duration: 0.6,
       ease: "power2.inOut"
     })
     .to([...chevrons, ...headings], {
       opacity: 0,
       x: -10,
-      duration: 0.2,
+      duration: 0.1,
     }, "<");
   }
 };
@@ -130,12 +133,13 @@ export const animateSubMenuSection = (
       gsap.fromTo(
           container,
           { height: 0 },
-          { height: fullHeight, duration: 0.3, ease: 'power2.inOut' }
+          { height: fullHeight, duration: 0.3, opacity: 1, delay: 0.15, ease: 'power2.inOut' }
       );
     } else {
       gsap.to(container, {
         height: 0,
-        duration: 0.3,
+        duration: 0.2,
+        opacity: 0,
         ease: 'power2.inOut'
       });
     }

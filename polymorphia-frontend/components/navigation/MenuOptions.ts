@@ -15,9 +15,9 @@ export const MainMenuItems: MenuOption[]  = [
     icon: BadgeHelpIcon,
     text: 'Baza wiedzy',
     subItems: [
-      { text: 'Postacie' },
-      { text: 'Przedmioty' },
-      { text: 'Skrzynki' },
+      { text: 'Postacie', link: 'knowledge-base/evolution-stages' },
+      { text: 'Przedmioty', link: 'knowledge-base/items' },
+      { text: 'Skrzynki', link: 'knowledge-base/chests' },
     ],
   },
   { icon: GraduationCapIcon, text: 'Oceny' },
@@ -36,10 +36,10 @@ export const MainMenuItems: MenuOption[]  = [
 export const BottomDesktopMenuItems: MenuOption[] = [
   { icon: BellIcon, text: "Powiadomienia" },
   { icon: LogOutIcon, text: 'Wyloguj się' },
-  { icon: SettingsIcon, text: 'Ustawienia' },
+  { icon: SettingsIcon, text: 'Ustawienia', link: 'settings' },
 ]
 
 export const BottomMenuItems: MenuOption[] = [
   { icon: LogOutIcon, text: 'Wyloguj się' },
-  { icon: SettingsIcon, text: 'Ustawienia' },
+  { icon: SettingsIcon, text: 'Ustawienia', link: 'settings' },
 ];
