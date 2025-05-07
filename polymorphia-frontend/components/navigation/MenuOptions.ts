@@ -10,7 +10,7 @@ import {
 import {MenuOption} from "@/interfaces/navigation/NavigationInterfaces";
 
 export const MainMenuItems: MenuOption[]  = [
-  { icon: UserIcon, text: 'Profil' },
+  { icon: UserIcon, text: 'Profil', link: 'profile' },
   {
     icon: BadgeHelpIcon,
     text: 'Baza wiedzy',
@@ -25,11 +25,6 @@ export const MainMenuItems: MenuOption[]  = [
     icon: TrophyIcon,
     text: 'Ekwipunek',
     link: 'equipment',
-    subItems: [
-      { text: 'Bronie' },
-      { text: 'Zbroje' },
-      { text: 'Akcesoria' },
-    ],
   },
   { icon: MedalIcon, text: 'Hall of Fame' },
 ];

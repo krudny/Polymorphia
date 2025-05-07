@@ -19,7 +19,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               priority
               sizes="100%"
           />
-          <div className="w-full h-full flex flex-col min-h-[100dvh] lg:min-h-screen z-50 relative">
+          <div className="w-full h-full flex flex-col min-h-[calc(100dvh-5rem)] lg:min-h-screen z-50 relative">
             <div className="w-full flex-centered h-15 hidden lg:flex">
               <Link href="/"><h3 className="text-4xl">Polymorphia</h3></Link>
             </div>
