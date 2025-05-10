@@ -1,7 +1,12 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  /* config options here */
-};
-
-export default nextConfig;
+/** @type {import('next').NextConfig} */
+module.exports = {
+  async redirects() {
+    return [
+      {
+        source: '/knowledge-base',
+        destination: '/knowledge-base/evolution-stages/',
+        permanent: true,
+      },
+    ]
+  },
+}
