@@ -42,6 +42,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfig.corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
+                        .requestMatchers(HttpMethod.POST, "/users").permitAll()
                         .requestMatchers(HttpMethod.POST, "/courses/**", "/rewards/**", "/users/**").hasAuthority(UserType.COORDINATOR.getAuthority())
                         .anyRequest().authenticated())
                 .formLogin(form -> form
@@ -74,7 +75,7 @@ public class SecurityConfig {
 
         String json = String.format(
                 "{\"timestamp\": \"%s\", \"status\": %d, \"error\": \"%s\", \"path\": \"%s\"}",
-                Instant.now(), status, errorMessage, request.getRequestURI()
+                Instant.now(), Integer.valueOf(status), errorMessage, request.getRequestURI()
         );
 
         response.getWriter().write(json);
