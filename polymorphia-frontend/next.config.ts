@@ -1,3 +1,5 @@
+import { API_STATIC_HOST_PATTERN } from "./services/api"
+
 /** @type {import('next').NextConfig} */
 module.exports = {
   async redirects() {
@@ -8,5 +10,8 @@ module.exports = {
         permanent: true,
       },
     ]
+  },
+  images: {
+    remotePatterns: [API_STATIC_HOST_PATTERN],
   },
 }

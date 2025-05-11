@@ -19,11 +19,11 @@ export default function Chests() {
   }
 
   if (error) {
-    return <div>Error loading chests: {error.message}</div>;
+    return <div>Wystąpił błąd podczas ładowania skrzynek.</div>;
   }
 
   if (!chests || chests.length === 0) {
-    return <div>No chests found.</div>;
+    return <div>Nie znaleziono skrzynek.</div>;
   }
 
   return (

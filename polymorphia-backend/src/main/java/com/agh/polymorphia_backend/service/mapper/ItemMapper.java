@@ -31,7 +31,7 @@ public class ItemMapper {
 
     private final EventSectionRepository eventSectionRepository;
 
-    public Item itemRequestDtoToItem(ItemRequestDto itemRequestDto) {
+    public Item itemRequestDtoToItem(ItemRequestDto itemRequestDto, String imageUrl) {
         EventSection eventSection = eventSectionRepository.findById(itemRequestDto.getEventSectionId())
                 .orElseThrow(() -> new InvalidArgumentException(EVENT_SECTION_NOT_FOUND));
 
@@ -44,7 +44,7 @@ public class ItemMapper {
         return itemBuilder
                 .limit(itemRequestDto.getLimit())
                 .name(itemRequestDto.getName())
-                .imageUrl(itemRequestDto.getImageUrl())
+                .imageUrl(imageUrl)
                 .description(itemRequestDto.getDescription())
                 .eventSection(eventSection)
                 .chests(new HashSet<>())
