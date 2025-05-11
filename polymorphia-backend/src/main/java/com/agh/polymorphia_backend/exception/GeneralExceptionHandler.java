@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.io.IOException;
+
 @ControllerAdvice
 @Order(2)
 public class GeneralExceptionHandler {
     private static final String INVALID_PARAMS = "Invalid request parameter type";
     private static final String MISSING_PARAMS = "Missing request parameter";
+    private static final String INTERNAL_ERROR = "Internal server error";
 
     @ExceptionHandler({MethodArgumentTypeMismatchException.class, ConstraintViolationException.class})
     public ResponseEntity<CustomExceptionResponse> handleArgumentNotValidException(Exception ex) {
@@ -32,6 +35,15 @@ public class GeneralExceptionHandler {
                 .description(String.format("Missing required parameter '%s'", ex.getParameterName()))
                 .build();
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<CustomExceptionResponse> handleIOException() {
+        CustomExceptionResponse response = CustomExceptionResponse.builder()
+                .title(INTERNAL_ERROR)
+                .description("An internal server error has occurred")
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

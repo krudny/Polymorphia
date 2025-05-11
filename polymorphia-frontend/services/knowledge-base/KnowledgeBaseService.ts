@@ -1,7 +1,6 @@
 import {ChestSlide, EvolutionStageSlide, ItemSlide} from "@/interfaces/slider/SliderInterfaces";
 import {ChestResponseDto, EvolutionStageResponseDto, ItemResponseDTO} from "@/interfaces/api/DTO";
-
-const API_HOST = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080';
+import API_HOST from "../api";
 
 const KnowledgeBaseService = {
   getEvolutionStages: async (

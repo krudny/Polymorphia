@@ -30,14 +30,14 @@ public class ChestMapper {
                 .build();
     }
 
-    public Chest chestRequestDtoToChest(ChestRequestDto chestRequestDto) {
+    public Chest chestRequestDtoToChest(ChestRequestDto chestRequestDto, String imageUrl) {
         Course course = courseRepository.findById(chestRequestDto.courseId())
                 .orElseThrow(() -> new InvalidArgumentException(CHEST_NOT_FOUND));
         return Chest.builder()
                 .course(course)
                 .behavior(chestRequestDto.behavior())
                 .name(chestRequestDto.name())
-                .imageUrl(chestRequestDto.imageUrl())
+                .imageUrl(imageUrl)
                 .description(chestRequestDto.description())
                 .build();
     }

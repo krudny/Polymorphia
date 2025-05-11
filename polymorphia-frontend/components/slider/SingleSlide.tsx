@@ -8,6 +8,7 @@ import clsx from "clsx";
 import "../../styles/slider.css";
 import {useEffect, useRef} from "react";
 import {animateSingleSlide} from "@/animations/Slider";
+import { API_STATIC_URL } from "@/services/api";
 
 export default function SingleSlide({ slide, position, prevSlideAction, nextSlideAction}: SingleSlideProps) {
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -25,7 +26,7 @@ export default function SingleSlide({ slide, position, prevSlideAction, nextSlid
         <div className="carousel-image-wrapper">
           <div>
             <Image
-                src={`/${slide.imageUrl}`}
+                src={`${API_STATIC_URL}/${slide.imageUrl}`}
                 fill
                 placeholder="blur"
                 blurDataURL="/blur.png"

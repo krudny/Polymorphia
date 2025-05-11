@@ -13,9 +13,6 @@ public record ChestRequestDto(
         @NotEmpty
         String description,
 
-        @NotEmpty
-        String imageUrl,
-
         @NotNull
         ChestBehavior behavior,
 
