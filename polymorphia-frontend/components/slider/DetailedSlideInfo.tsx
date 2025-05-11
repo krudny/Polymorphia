@@ -12,6 +12,7 @@ import {ChestSlide, ItemSlide} from "@/interfaces/slider/SliderInterfaces";
 import Link from "next/link";
 import "../../styles/slider.css";
 import KnowledgeBaseService from "@/services/knowledge-base/KnowledgeBaseService";
+import { API_STATIC_URL } from "@/services/api";
 
 export default function DetailedSlideInfo({type, ids}: {type: string, ids: number[]}) {
   const itemQueryResult: ItemQueryResult = useQuery({
@@ -78,7 +79,7 @@ export default function DetailedSlideInfo({type, ids}: {type: string, ids: numbe
                 >
                   <div className="slide-details-image">
                     <Image
-                        src={`/${element.imageUrl}`}
+                        src={`${API_STATIC_URL}/${element.imageUrl}`}
                         fill
                         alt={element.name}
                         sizes="10vw"
