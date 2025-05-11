@@ -3,6 +3,8 @@ package com.agh.polymorphia_backend.service;
 import com.agh.polymorphia_backend.config.StaticFileServerProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +19,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ImageStorageService {
     private final StaticFileServerProperties properties;
+    private final Logger logger = LoggerFactory.getLogger(ImageStorageService.class);
 
     @Getter
     @AllArgsConstructor
@@ -52,6 +55,7 @@ public class ImageStorageService {
         try {
             Files.deleteIfExists(fullPath);
         } catch (IOException ignored) {
+            logger.warn("Attempted to delete image resource {} but it does not exist.", fullPath);
         }
     }
 }
