@@ -1,6 +1,6 @@
 "use client"
 
-import {SquareMousePointer} from "lucide-react";
+import {CircleX, SquareMousePointer} from "lucide-react";
 import Image from "next/image";
 import {useQuery} from "@tanstack/react-query";
 import {
@@ -41,23 +41,37 @@ export default function DetailedSlideInfo({type, ids}: {type: string, ids: numbe
     error = chestQueryResult.error;
   }
 
-
   if (isLoading) {
     return <Loading />;
   }
 
   if (error) {
-    return <div>Błąd ładowania {type==='item' ? 'skrzynek' : 'przedmiotów'}: {error.message}</div>;
+    return <div className="slide-details">
+        <div className="slide-details-info">
+          <CircleX size={20} />
+          <h3 className="text-xl 2xl:text-2xl">Błąd ładowania {type==='item' ? 'skrzynek' : 'przedmiotów'}: {error.message}</h3>
+        </div>
+      </div>;
   }
 
   if (!data || data.length === 0) {
-    return <div>Nie znaleziono {type==='item' ? 'skrzynek' : 'przedmiotów'}</div>;
+    return <div className="slide-details">
+        <div className="slide-details-info">
+          <CircleX size={20} />
+          <h3 className="text-xl 2xl:text-2xl">Nie znaleziono {type==='item' ? 'skrzynek' : 'przedmiotów'}.</h3>
+        </div>
+      </div>;
   }
 
   const filteredData = data.filter((element) => ids.includes(element.id));
 
   if (filteredData.length === 0) {
-    return <div>Brak pasujących {type === 'item' ? 'przedmiotów' : 'skrzynek'}.</div>;
+    return <div className="slide-details">
+        <div className="slide-details-info">
+          <CircleX size={20} />
+          <h3 className="text-xl 2xl:text-2xl">{type === 'item' ? 'Ten przedmiot nie występuje w żadnej ze skrzynek' : 'W tej skrzynce nie znajdują się żadne przedmioty'}.</h3>
+        </div>
+      </div>;
   }
 
 
