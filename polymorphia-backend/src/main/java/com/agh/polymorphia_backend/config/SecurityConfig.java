@@ -15,17 +15,20 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.io.IOException;
 import java.time.Instant;
-import java.time.ZoneOffset;
+import java.util.List;
 
 @AllArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
     private final PasswordEncoder passwordEncoder;
-    private final CorsConfig corsConfig;
+    private final CorsProperties corsProperties;
     private final UserService userService;
 
     @Bean
@@ -39,10 +42,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .cors(cors -> cors.configurationSource(corsConfig.corsConfigurationSource()))
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers(HttpMethod.POST, "/users").permitAll()
                         .requestMatchers(HttpMethod.POST, "/courses/**", "/rewards/**", "/users/**").hasAuthority(UserType.COORDINATOR.getAuthority())
                         .anyRequest().authenticated())
                 .formLogin(form -> form
@@ -75,10 +77,23 @@ public class SecurityConfig {
 
         String json = String.format(
                 "{\"timestamp\": \"%s\", \"status\": %d, \"error\": \"%s\", \"path\": \"%s\"}",
-                Instant.now(), Integer.valueOf(status), errorMessage, request.getRequestURI()
+                Instant.now(), status, errorMessage, request.getRequestURI()
         );
 
         response.getWriter().write(json);
     }
 
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOriginPatterns(corsProperties.allowedOrigins());
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 }
