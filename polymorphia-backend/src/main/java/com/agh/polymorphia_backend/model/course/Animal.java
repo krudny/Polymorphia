@@ -1,20 +1,16 @@
-package com.agh.polymorphia_backend.model.event;
+package com.agh.polymorphia_backend.model.course;
 
-import com.agh.polymorphia_backend.model.course.Course;
+import com.agh.polymorphia_backend.model.user.Student;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 @Entity
-@Table(name = "event_sections")
-@Inheritance(strategy = InheritanceType.JOINED)
-
+@Table(name = "students_course_groups")
 @Data
-@SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class EventSection {
+public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
@@ -23,10 +19,13 @@ public class EventSection {
 
     @NotEmpty
     private String name;
-    private boolean shownInRoadMap = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id")
-    private Course course;
+    @JoinColumn(name = "student_id")
+    private Student student;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_group_id")
+    private CourseGroup courseGroup;
 
 }

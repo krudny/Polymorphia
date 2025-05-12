@@ -12,7 +12,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import java.io.IOException;
 
 @ControllerAdvice
-@Order(2)
+@Order(3)
 public class GeneralExceptionHandler {
     private static final String INVALID_PARAMS = "Invalid request parameter type";
     private static final String MISSING_PARAMS = "Missing request parameter";

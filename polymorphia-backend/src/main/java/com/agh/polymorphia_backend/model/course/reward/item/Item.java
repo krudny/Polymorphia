@@ -2,7 +2,7 @@ package com.agh.polymorphia_backend.model.course.reward.item;
 
 
 import com.agh.polymorphia_backend.model.course.reward.Chest;
-import com.agh.polymorphia_backend.model.event.EventSection;
+import com.agh.polymorphia_backend.model.event.section.EventSection;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
