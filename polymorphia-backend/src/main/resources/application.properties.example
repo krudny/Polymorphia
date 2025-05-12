@@ -19,3 +19,9 @@ spring.servlet.multipart.max-request-size=5MB
 
 # CORS configuration
 cors.allowed-origins[0]=
+
+# Initial user
+initial.user.firstName=
+initial.user.lastName=
+initial.user.email=
+initial.user.password=
