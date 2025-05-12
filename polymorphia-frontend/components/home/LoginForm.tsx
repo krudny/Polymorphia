@@ -19,7 +19,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
       password: "",
     } as LoginDto,
     validators: {
-      onChange: loginSchema,
+      onBlur: loginSchema,
     },
     onSubmit: async ({ value }) => {
       loginMutation.mutate(value);
@@ -27,8 +27,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
   });
 
   const loginMutation = useMutation({
-    mutationFn: ({ email, password }: { email: string; password: string }) =>
-      AuthService.login(email, password),
+    mutationFn: AuthService.login,
     onSuccess: () => {
       alert("Zalogowano!");
       form.reset();
@@ -61,6 +60,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
                   id={field.name}
                   placeholder="Twój email"
                   value={field.state.value}
+                  onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   required
                   autoComplete="off"
@@ -75,9 +75,10 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
               <div>
                 <input
                   type="password"
-                  id="password"
+                  id={field.name}
                   placeholder="Twoje hasło"
                   value={field.state.value}
+                  onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   required
                 />

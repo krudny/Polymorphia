@@ -1,7 +1,8 @@
 import API_HOST from "./api";
+import {LoginDto} from "@/interfaces/api/DTO";
 
 const AuthService = {
-  login: async (email: string, password: string) => {
+  login: async ({email, password}: LoginDto) => {
     const params = new URLSearchParams();
     params.append("username", email);
     params.append("password", password);
@@ -16,7 +17,6 @@ const AuthService = {
     });
 
     if (!response.ok) throw new Error("Failed to login");
-    return;
   },
 };
 
