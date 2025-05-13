@@ -31,21 +31,12 @@ public class ItemRequestDto {
     @NotEmpty
     private String description;
 
-    @NotEmpty
-    private String imageUrl;
-
     @NotNull
     private Integer limit;
-
-    @NotEmpty
-    private String textBonus;
 
     @NotNull
     private ItemType type;
 
     @NotNull
     private Long eventSectionId;
-
-    @NotEmpty
-    private String textBehavior;
 }

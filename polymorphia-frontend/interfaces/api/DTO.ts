@@ -30,3 +30,8 @@ export interface ChestResponseDto {
   courseId: number;
   itemIds: number[]
 }
+
+export interface LoginDto {
+  email: string;
+  password: string;
+}
