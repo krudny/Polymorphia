@@ -24,12 +24,15 @@ public class CourseGroup {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
+    @ToString.Exclude
     private Course course;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "instructor_id")
+    @ToString.Exclude
     private Instructor instructor;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "courseGroup")
+    @ToString.Exclude
     private List<Animal> animals;
 }

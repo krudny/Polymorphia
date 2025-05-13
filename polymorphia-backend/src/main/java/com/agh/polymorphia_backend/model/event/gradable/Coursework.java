@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.model.event.gradable;
 
 
-import com.agh.polymorphia_backend.model.event.section.TestSection;
+import com.agh.polymorphia_backend.model.event.section.CourseworkSection;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -11,25 +11,35 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@Table(name = "tests")
+@Table(name = "courseworks")
 @Inheritance(strategy = InheritanceType.JOINED)
 
 @Data
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @SuperBuilder
 @NoArgsConstructor
-public class Test extends GradableEvent<TestSection> {
+public class Coursework extends GradableEvent<CourseworkSection> {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "test_section_id")
-    private TestSection eventSection;
+    @JoinColumn(name = "coursework_section_id")
+    private CourseworkSection eventSection;
 
     @NotEmpty
     private String name;
+
+    @NotEmpty
+    private String topic;
+
+    @NotEmpty
+    private String infoUrl;
 
     @NotNull
     private Integer roadMapOrder;
 
     @NotNull
+    private Boolean containsExtraAssignment = false;
+
+    @NotNull
     private Boolean hidden = false;
 }
+

@@ -11,7 +11,10 @@ import lombok.experimental.SuperBuilder;
 import java.time.ZonedDateTime;
 
 @Entity
-@Table(name = "grades")
+@Table(
+        name = "grades",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"animal_id", "gradable_event_id"})
+)
 @Inheritance(strategy = InheritanceType.JOINED)
 
 @Data
@@ -26,6 +29,7 @@ public class Grade {
     private Long id;
 
     @NotNull
+    @Setter(AccessLevel.NONE)
     private ZonedDateTime createdDate;
 
     @NotNull
@@ -41,5 +45,18 @@ public class Grade {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gradable_event_id")
     private GradableEvent gradableEvent;
+
+    @PrePersist
+    protected void onCreate() {
+        if (createdDate == null) {
+            createdDate = ZonedDateTime.now();
+        }
+        modifiedDate = ZonedDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        modifiedDate = ZonedDateTime.now();
+    }
 
 }

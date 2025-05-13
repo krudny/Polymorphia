@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.model.event.gradable;
 
 import com.agh.polymorphia_backend.model.course.reward.Chest;
+import com.agh.polymorphia_backend.model.event.section.EventSection;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -16,7 +17,7 @@ import java.util.Set;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class GradableEvent {
+public abstract class GradableEvent<T extends EventSection> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
@@ -33,4 +34,8 @@ public class GradableEvent {
             inverseJoinColumns = @JoinColumn(name = "chest_id")
     )
     private Set<Chest> chests;
+
+    public abstract T getEventSection();
+
+    public abstract void setEventSection(T eventSection);
 }

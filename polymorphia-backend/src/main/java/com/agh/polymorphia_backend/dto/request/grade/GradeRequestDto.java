@@ -3,13 +3,10 @@ package com.agh.polymorphia_backend.dto.request.grade;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
-@Builder
+@Builder(toBuilder = true)
 public record GradeRequestDto(
         @NotNull
-        Long instructorId,
-
-        @NotNull
-        Long studentId,
+        Long animalId,
 
         @NotNull
         Long courseGroupId,
@@ -19,7 +16,6 @@ public record GradeRequestDto(
 
         @NotNull
         Integer xp
-
 ) {
 
 }
