@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.dto.response.user;
 
 
-import com.agh.polymorphia_backend.dto.request.user.UserType;
+import com.agh.polymorphia_backend.model.user.UserType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

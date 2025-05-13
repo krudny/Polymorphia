@@ -9,11 +9,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "students")
 @PrimaryKeyJoinColumn(name = "user_id")
-
 @Data
 @SuperBuilder
 @NoArgsConstructor
@@ -22,4 +25,9 @@ public class Student extends User {
     @NotNull
     @Column(unique = true)
     private Integer indexNumber;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(UserType.STUDENT);
+    }
 }
