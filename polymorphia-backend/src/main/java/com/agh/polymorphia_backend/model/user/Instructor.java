@@ -6,6 +6,10 @@ import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @SuperBuilder
@@ -14,5 +18,8 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "instructors")
 @PrimaryKeyJoinColumn(name = "user_id")
 public class Instructor extends User {
-
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(UserType.INSTRUCTOR);
+    }
 }

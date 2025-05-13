@@ -2,7 +2,7 @@ package com.agh.polymorphia_backend.service.mapper;
 
 import com.agh.polymorphia_backend.dto.request.user.StudentRequestDto;
 import com.agh.polymorphia_backend.dto.request.user.UserRequestDto;
-import com.agh.polymorphia_backend.dto.request.user.UserType;
+import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.dto.response.user.CoordinatorResponseDto;
 import com.agh.polymorphia_backend.dto.response.user.InstructorResponseDto;
 import com.agh.polymorphia_backend.dto.response.user.StudentResponseDto;
