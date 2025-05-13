@@ -19,7 +19,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
       password: "",
     } as LoginDto,
     validators: {
-      onBlur: loginSchema,
+      onBlur: loginSchema
     },
     onSubmit: async ({ value }) => {
       loginMutation.mutate(value);
