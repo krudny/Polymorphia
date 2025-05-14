@@ -29,14 +29,14 @@ jobs:
       - name: Copy files 
         run: |
           rsync -avz -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" \
-            ./ ${{ secrets.OCI_USERNAME }}@${{ secrets.OCI_VM_PUBLIC_IP }}:/home/ubuntu/polymorphia
+            ./ ${{ secrets.OCI_USERNAME }}@${{ secrets.OCI_VM_PUBLIC_IP }}:~/polymorphia
 
       - name: Build and Run Docker container 
         run: |
           ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no \
             ${{ secrets.OCI_USERNAME }}@${{ secrets.OCI_VM_PUBLIC_IP }} << EOF
               set -e
-              cd /home/ubuntu/polymorphia/polymorphia-backend
+              cd ~/polymorphia/polymorphia-backend
               sudo systemctl start docker || true
               sudo docker stop polymorphia-backend || true
               sudo docker rm polymorphia-backend || true
