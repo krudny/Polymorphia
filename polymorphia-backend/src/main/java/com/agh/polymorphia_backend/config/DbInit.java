@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.config;
 
+import com.agh.polymorphia_backend.model.user.Coordinator;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
@@ -15,15 +16,15 @@ public class DbInit {
 
     @PostConstruct
     public void init() {
-//        if (userRepository.findByEmail(initialUserProperties.email()).isEmpty()) {
-//            Coordinator coordinator = Coordinator.builder()
-//                    .firstName(initialUserProperties.firstName())
-//                    .lastName(initialUserProperties.lastName())
-//                    .email(initialUserProperties.email())
-//                    .password(passwordEncoder.encode(initialUserProperties.password()))
-//                    .build();
-//
-//            userRepository.save(coordinator);
-//        }
+        if (userRepository.findByEmail(initialUserProperties.email()).isEmpty()) {
+            Coordinator coordinator = Coordinator.builder()
+                    .firstName(initialUserProperties.firstName())
+                    .lastName(initialUserProperties.lastName())
+                    .email(initialUserProperties.email())
+                    .password(passwordEncoder.encode(initialUserProperties.password()))
+                    .build();
+
+            userRepository.save(coordinator);
+        }
     }
 }

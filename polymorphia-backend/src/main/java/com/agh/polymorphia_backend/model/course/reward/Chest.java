@@ -2,7 +2,6 @@ package com.agh.polymorphia_backend.model.course.reward;
 
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.course.reward.item.Item;
-import com.agh.polymorphia_backend.model.event.gradable.GradableEvent;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -19,27 +18,30 @@ import java.util.Set;
 @Table(name = "chests")
 @ToString(exclude = {"items"})
 public class Chest {
-    @ManyToMany(mappedBy = "chests", fetch = FetchType.LAZY)
-    Set<Item> items;
-    @ManyToMany(mappedBy = "chests", fetch = FetchType.LAZY)
-    Set<GradableEvent> gradableEvents;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     @EqualsAndHashCode.Include
     private Long id;
+
     @NotEmpty
     private String name;
+
     @NotEmpty
     @Column(length = 1000)
     private String description;
+
     @NotEmpty
     private String imageUrl;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     private ChestBehavior behavior;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     private Course course;
 
+    @ManyToMany(mappedBy = "chests", fetch = FetchType.LAZY)
+    Set<Item> items;
 }

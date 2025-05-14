@@ -1,9 +1,12 @@
 package com.agh.polymorphia_backend.model.course;
 
+import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.user.Student;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "students_course_groups")
@@ -27,5 +30,8 @@ public class Animal {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_group_id")
     private CourseGroup courseGroup;
+
+    @ManyToMany(mappedBy = "animals", fetch = FetchType.LAZY)
+    Set<ProjectGroup> projectGroups;
 
 }

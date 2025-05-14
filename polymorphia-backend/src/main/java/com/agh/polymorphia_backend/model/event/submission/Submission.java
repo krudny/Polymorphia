@@ -1,34 +1,31 @@
-package com.agh.polymorphia_backend.model.grade;
-
+package com.agh.polymorphia_backend.model.event.submission;
 
 import com.agh.polymorphia_backend.model.course.Animal;
-import com.agh.polymorphia_backend.model.event.gradable.GradableEvent;
-import com.agh.polymorphia_backend.model.grade.reward.AssignedChest;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.ZonedDateTime;
-import java.util.List;
 
 @Entity
-@Table(
-        name = "grades",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"animal_id", "gradable_event_id"})
-)
+@Table(name = "submissions")
 @Inheritance(strategy = InheritanceType.JOINED)
 
 @Data
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Grade {
+public class Submission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     @EqualsAndHashCode.Include
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "animal_id")
+    private Animal animal;
 
     @NotNull
     @Setter(AccessLevel.NONE)
@@ -36,20 +33,6 @@ public class Grade {
 
     @NotNull
     private ZonedDateTime modifiedDate;
-
-    @NotNull
-    private Integer xp;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "animal_id")
-    private Animal animal;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "gradable_event_id")
-    private GradableEvent<?> gradableEvent;
-
-    @OneToMany(mappedBy = "grade", fetch = FetchType.LAZY)
-    private List<AssignedChest> assignedChests;
 
     @PrePersist
     protected void onCreate() {
@@ -63,5 +46,4 @@ public class Grade {
     protected void onUpdate() {
         modifiedDate = ZonedDateTime.now();
     }
-
 }

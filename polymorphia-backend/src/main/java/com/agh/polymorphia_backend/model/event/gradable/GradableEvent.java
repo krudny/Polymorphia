@@ -1,13 +1,12 @@
 package com.agh.polymorphia_backend.model.event.gradable;
 
-import com.agh.polymorphia_backend.model.course.reward.Chest;
 import com.agh.polymorphia_backend.model.event.section.EventSection;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "gradable_events")
@@ -27,13 +26,8 @@ public abstract class GradableEvent<T extends EventSection> {
     @NotNull
     private Integer maxXp;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "gradable_events_chests",
-            joinColumns = @JoinColumn(name = "gradable_event_id"),
-            inverseJoinColumns = @JoinColumn(name = "chest_id")
-    )
-    private Set<Chest> chests;
+    @OneToMany(mappedBy = "gradableEvent", fetch = FetchType.LAZY)
+    private List<GradableEventChest> gradableEventChests;
 
     public abstract T getEventSection();
 

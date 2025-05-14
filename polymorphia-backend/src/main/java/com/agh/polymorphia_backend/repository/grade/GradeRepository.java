@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.repository.course;
+package com.agh.polymorphia_backend.repository.grade;
 
 import com.agh.polymorphia_backend.model.grade.Grade;
 import org.springframework.data.jpa.repository.JpaRepository;

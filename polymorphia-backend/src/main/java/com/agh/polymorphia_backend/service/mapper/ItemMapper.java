@@ -13,7 +13,7 @@ import com.agh.polymorphia_backend.model.course.reward.item.FlatBonusItem;
 import com.agh.polymorphia_backend.model.course.reward.item.Item;
 import com.agh.polymorphia_backend.model.course.reward.item.PercentageBonusItem;
 import com.agh.polymorphia_backend.model.event.section.EventSection;
-import com.agh.polymorphia_backend.repository.event.EventSectionRepository;
+import com.agh.polymorphia_backend.repository.event.section.EventSectionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
