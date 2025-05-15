@@ -5,6 +5,7 @@ import {BottomMenuItems, MainMenuItems} from "@/components/navigation/MenuOption
 import MenuSection from "@/components/navigation/MenuSection";
 import Line from "@/components/navigation/Line";
 import {animateNavbar} from "@/animations/Navigation";
+import "../../styles/navigation.css"
 
 export default function Navbar() {
   const { isExpanded, isLocked, setIsExpanded } = useContext(NavigationContext);
@@ -27,15 +28,15 @@ export default function Navbar() {
   }, [isExpanded]);
 
   return (
-      <div className="flex flex-col px-5 z-20">
-        <div className="w-full h-20 flex items-center justify-between">
+      <div className="navbar">
+        <div className="navbar-visible">
           <MenuIcon size={38} onClick={() => setIsExpanded(!isExpanded)} className="cursor-pointer" />
-          <h1 className="text-4xl">Polymorphia</h1>
-          <span className="material-symbols text-3xl cursor-pointer">notifications</span>
+          <h1 >Polymorphia</h1>
+          <span>notifications</span>
         </div>
         <div
             ref={drawerRef}
-            className="fixed flex-col inset-0 top-20 bg-neutral-800 z-20 h-[calc(100dvh-5rem)] overflow-y-auto hidden"
+            className="navbar-drawer"
         >
           <div className="flex-1">
             <MenuSection options={MainMenuItems} />

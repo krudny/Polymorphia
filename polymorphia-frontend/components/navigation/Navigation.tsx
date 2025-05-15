@@ -1,13 +1,14 @@
 import Navbar from "@/components/navigation/Navbar";
 import Sidebar from "@/components/navigation/Sidebar";
+import "../../styles/navigation.css"
 
 export default function Navigation() {
   return (
-        <div className="bg-neutral-800 text-neutral-300 select-none z-50">
-          <nav className="w-full max-h-[100dvh] min-h-20 lg:hidden">
+        <div className="navigation">
+          <nav className="navbar-wrapper">
             <Navbar />
           </nav>
-          <nav className="h-screen sticky left-0 top-0 shrink-0 hidden lg:block">
+          <nav className="sidebar-wrapper">
             <Sidebar />
           </nav>
         </div>

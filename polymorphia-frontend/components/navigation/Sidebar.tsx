@@ -5,6 +5,7 @@ import MenuSection from "@/components/navigation/MenuSection";
 import {BottomDesktopMenuItems, MainMenuItems} from "@/components/navigation/MenuOptions";
 import {useContext, useEffect, useRef} from "react";
 import {NavigationContext} from "@/components/navigation/NavigationContext";
+import "../../styles/navigation.css"
 
 import clsx from "clsx";
 import {animateSidebar} from "@/animations/Navigation";
@@ -22,7 +23,7 @@ export default function Sidebar() {
   return (
       <div
           ref={sidebarRef}
-          className="flex flex-col max-h-screen min-h-full bg-neutral-800 w-[96px] overflow-visible"
+          className="sidebar"
           onMouseEnter={() => {
             if (!isLocked) setIsExpanded(true)
           }}
@@ -32,7 +33,7 @@ export default function Sidebar() {
       >
         <UserSection />
         <Line />
-        <div className={clsx(`flex-1 my-2 overflow-hidden ${isExpanded ? "overflow-y-scroll custom-scrollbar lg:mr-2" : ""}`)}>
+        <div className={clsx(`sidebar-menu-section-base ${isExpanded ? "sidebar-menu-section-expanded" : ""}`)}>
           <MenuSection options={MainMenuItems} />
         </div>
         <div>

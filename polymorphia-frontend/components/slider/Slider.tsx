@@ -25,10 +25,11 @@ export default function Slider({ slides, initialSlide=0 }: SliderProps) {
 
   if (initialSlide != 0) shiftArray(slides, initialSlide - currentSlide);
 
+
   return (
       <>
-        <div ref={wrapperRef} className="slider-wrapper">
-          <div className="slide-wrapper">
+        <div ref={wrapperRef} className="slider-wrapper bg-red-400">
+          <div className="slide-wrapper bg-orange-600">
             {slides.map((slide, index) => (
                 <SingleSlide
                     key={index}

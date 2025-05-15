@@ -18,10 +18,10 @@ export const animateSidebar = (
   if (isExpanded) {
     tl.to(sidebar, {
       width: targetWidth,
-      duration: 0.3,
-      ease: "power1.in",
+      duration: 0.6,
+      ease: "power2.out",
     })
-        .set([...headings, ...chevrons], { display: 'block' }, "<0.1")
+        .set([...headings, ...chevrons], { display: 'block' }, "<0.2")
         .set(profileBlock, { display: "flex" }, "<")
         .fromTo(
             [...headings, ...chevrons],
@@ -30,7 +30,7 @@ export const animateSidebar = (
               opacity: 1,
               x: 0,
               duration: 0.2,
-              ease: "power1.in"
+              ease: "power1.out"
             },
             "<"
         )
@@ -41,7 +41,7 @@ export const animateSidebar = (
               opacity: 1,
               x: 0,
               duration: 0.2,
-              ease: "power1.in"
+              ease: "power1.out"
             }, "<"
         )
 
@@ -96,14 +96,14 @@ export const animateNavbar = (
         });
   } else {
     gsap.timeline({
-      defaults: { ease: 'power1.out' },
+      defaults: { ease: 'power1.in' },
     })
         .to(allElements, {
-          x: -10,
+          x: -20,
           opacity: 0,
           duration: 0.2,
         })
-        .to(drawer, { opacity: 0, y: -30, duration: 0.3 }, "<0.2")
+        .to(drawer, { opacity: 0, y: -50, duration: 0.15 }, "<0.15")
         .set(drawer, { display: 'none' });
   }
 };
