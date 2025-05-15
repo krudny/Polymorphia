@@ -79,18 +79,22 @@
     @apply flex flex-col my-1 px-4;
 }
 
-.menu-section-options {
-    @apply w-fit flex-centered ml-2 my-4 min-h-9 hover:cursor-pointer;
+.menu-option-row-wrapper {
+    @apply  w-fit flex-centered ml-2 my-4 min-h-9 hover:cursor-pointer;
     @apply lg:min-h-8 lg:my-3 lg:ml-4;
 }
 
-.menu-section-options > svg {
-    @apply w-[1.75rem] h-[1.75rem] hover:cursor-pointer;
+.menu-section-options-link-part {
+    @apply flex-centered;
 }
 
-.menu-section-options > h2 {
+.menu-section-options-link-part > h2 {
     @apply text-3xl ml-5 whitespace-nowrap hover:text-neutral-400;
     @apply lg:text-2xl transition-colors ease-in duration-150 opacity-0;
+}
+
+.menu-section > svg {
+    @apply w-[1.75rem] h-[1.75rem] hover:cursor-pointer;
 }
 
 .menu-section-subitems {

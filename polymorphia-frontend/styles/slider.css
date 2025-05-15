@@ -73,7 +73,7 @@
 }
 
 .carousel-wrapper {
-    @apply flex-col-centered lg:flex-row 2xl:max-w-[1450px];
+    @apply w-full flex-col-centered lg:flex-row 2xl:max-w-[1450px];
 }
 
 .carousel-item.active {
@@ -89,17 +89,14 @@
 }
 
 .carousel-image-wrapper {
-    @apply w-4/5 h-fit flex-centered my-2;
+    @apply w-full h-fit flex-centered my-2;
     @apply lg:my-0 lg:h-full;
 }
 
 .carousel-image-wrapper > div {
-    @apply relative w-full lg:max-w-xl xl:max-w-2xl aspect-square;
+    @apply relative w-full lg:max-w-xl xl:max-w-2xl 2xl:max-w-[500px] aspect-square rounded-4xl;
 }
 
-.carousel-image-wrapper > div {
-    @apply rounded-4xl;
-}
 
 .carousel-image-wrapper > div > img {
     @apply rounded-4xl shadow-md object-cover;
@@ -107,7 +104,7 @@
 
 .carousel-content-wrapper {
     @apply w-full  h-fit flex-col-centered justify-start;
-    @apply lg:justify-evenly md:min-w-md lg:ml-10 xl:min-w-xl 2xl:min-w-3xl;
+    @apply lg:justify-evenly md:min-w-md lg:ml-10 xl:min-w-xl 2xl:min-w-2xl;
 }
 
 .carousel-content-inner-wrapper {

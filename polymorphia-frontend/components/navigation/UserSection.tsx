@@ -1,12 +1,13 @@
 import Image from "next/image";
 import "../../styles/navigation.css"
+import {API_STATIC_URL} from "@/services/api";
 
 export default function UserSection() {
   return (
       <div className="user-section">
         <div className="profile-image user-section-image-wrapper">
           <Image
-              src="/4.jpg"
+              src={`${API_STATIC_URL}/images/evolution-stages/4.jpg`}
               alt="Profil uzytkownika"
               fill
               priority

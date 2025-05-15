@@ -8,29 +8,29 @@ import {animateNavbar} from "@/animations/Navigation";
 import "../../styles/navigation.css"
 
 export default function Navbar() {
-  const { isExpanded, isLocked, setIsExpanded } = useContext(NavigationContext);
+  const { isNavbarExpanded, setIsNavbarExpanded } = useContext(NavigationContext);
   const drawerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const drawer = drawerRef.current;
     if (!drawer) return;
-    animateNavbar(drawer, isExpanded);
-  }, [isExpanded]);
+    animateNavbar(drawer, isNavbarExpanded);
+  }, [isNavbarExpanded]);
 
   useEffect(() => {
-    if (!isLocked && isExpanded) {
-      document.body.style.overflow = isExpanded ? 'hidden' : 'auto';
+    if (isNavbarExpanded) {
+      document.body.style.overflow = isNavbarExpanded ? 'hidden' : 'auto';
 
     }
     return () => {
       document.body.style.overflow = 'auto';
     };
-  }, [isExpanded]);
+  }, [isNavbarExpanded]);
 
   return (
       <div className="navbar">
         <div className="navbar-visible">
-          <MenuIcon size={38} onClick={() => setIsExpanded(!isExpanded)} className="cursor-pointer" />
+          <MenuIcon size={38} onClick={() => setIsNavbarExpanded(!isNavbarExpanded)} className="cursor-pointer" />
           <h1 >Polymorphia</h1>
           <span>notifications</span>
         </div>

@@ -7,7 +7,7 @@ import Link from "next/link";
 import "../../styles/navigation.css"
 
 export default function MenuSection({ options }: MenuSectionProps) {
-  const { isExpanded } = useContext(NavigationContext);
+  const { isSidebarExpanded, isNavbarExpanded, setIsNavbarExpanded } = useContext(NavigationContext);
   const [openSubMenu, setOpenSubMenu] = useState<string[]>([]);
   const containerRefs = useRef<Array<HTMLDivElement | null>>([]);
 
@@ -17,11 +17,14 @@ export default function MenuSection({ options }: MenuSectionProps) {
     );
   };
 
+  const isExpanded = isNavbarExpanded || isSidebarExpanded;
+
   useEffect(() => {
-    if (!isExpanded) {
+    if (!isNavbarExpanded || !isSidebarExpanded) {
       setOpenSubMenu([]);
     }
-  }, [isExpanded]);
+    console.log(isNavbarExpanded);
+  }, [isNavbarExpanded, isSidebarExpanded]);
 
   useEffect(() => {
     animateSubMenuSection(containerRefs.current, openSubMenu, isExpanded, options);
@@ -35,23 +38,26 @@ export default function MenuSection({ options }: MenuSectionProps) {
 
           return (
               <div key={option.text}>
-                <Link href={`/${option?.link ?? ""}`} key={option.text}>
-                <div
-                    className="menu-section-options"
-                    onClick={() => option.subItems && isExpanded && toggleSubMenu(option.text)}
-                >
-                    <Icon />
-                    <h2>{option.text}</h2>
+                <div className="menu-option-row-wrapper">
+                  <Link href={`/${option?.link ?? ""}`} key={option.text} onClick={() => setIsNavbarExpanded(false)}>
+                    <div className="menu-section-options-link-part">
+                      <Icon />
+                      <h2>{option.text}</h2>
+                    </div>
+                  </Link>
                   {option.subItems && isExpanded && (
                       <div
                           className="menu-section-subitems chevron-container"
                           data-menu-index={idx}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            toggleSubMenu(option.text);
+                          }}
                       >
                         {isOpen ? <ChevronUp /> : <ChevronDown />}
                       </div>
                   )}
                 </div>
-                </Link>
 
                 {option.subItems && (
                     <div
@@ -60,7 +66,7 @@ export default function MenuSection({ options }: MenuSectionProps) {
                         style={{ height: 0 }}
                     >
                       {option.subItems.map((sub) => (
-                          <Link href={`/${sub?.link ?? ""}`} key={sub.text}>
+                          <Link href={`/${sub?.link ?? ""}`} key={sub.text} onClick={() => setIsNavbarExpanded(false)}>
                             <h3 key={sub.text}>
                               {sub.text}
                             </h3>

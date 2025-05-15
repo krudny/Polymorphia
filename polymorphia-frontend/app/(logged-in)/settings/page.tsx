@@ -6,11 +6,11 @@ import {NavigationContext} from "@/components/navigation/NavigationContext";
 import {useScaleShow} from "@/animations/General";
 
 export default function Settings() {
-  const { isLocked, setIsLocked } = useContext(NavigationContext);
+  const { isSidebarLocked, setIsSidebarLocked } = useContext(NavigationContext);
   const wrapperRef = useScaleShow();
 
   const toggleSidebarLock = () => {
-    setIsLocked(!isLocked);
+    setIsSidebarLocked(!isSidebarLocked);
   };
 
   return (
@@ -19,7 +19,7 @@ export default function Settings() {
         <div className="flex justify-start items-center">
           <h3 className="text-4xl">Zablokuj rozwijanie sidebaru</h3>
           <ButtonWithBorder
-              text={isLocked ? 'Odblokuj' : 'Zablokuj'}
+              text={isSidebarLocked ? 'Odblokuj' : 'Zablokuj'}
               onClick={toggleSidebarLock}
               size="md"
               className="!mx-0 !ml-6"

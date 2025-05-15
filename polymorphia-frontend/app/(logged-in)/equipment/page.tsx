@@ -1,27 +1,31 @@
 "use client"
 import {useScaleShow} from "@/animations/General";
 import Image from "next/image";
+import "../../../styles/equipment.css"
+import toast from "react-hot-toast";
+import {API_STATIC_URL} from "@/services/api";
 
 export default function Equipment() {
   const wrapperRef = useScaleShow();
 
   return (
-      <div ref={wrapperRef} className="w-full md:max-w-5xl mx-auto p-4 opacity-0">
+      <div ref={wrapperRef} className="equipment">
         <section className="mt-3">
-          <h1 className="text-6xl mb-6 lg:mb-10">Przedmioty</h1>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <h1>Przedmioty</h1>
+          <div className="equipment-grid">
             {[1, 2, 3, 4].map((_, i) => (
                 <div key={i}>
-                  <div key={i} className="relative w-full aspect-square">
+                  <div key={i} className="equipment-grid-item">
                     <Image
                         src="/locked.png"
                         alt="Locked item"
                         fill
-                        className="object-cover rounded-2xl shadow-lg"
+                        className="equipment-img"
                         priority
                         sizes="(min-width: 1024px) 25vw, 50vw"
                     />
                   </div>
+                  {/* TODO: to change */}
                   <div className="w-full flex-centered mt-4">
                     <h3 className="text-4xl text-shadow-lg">0/4</h3>
                   </div>
@@ -31,26 +35,25 @@ export default function Equipment() {
         </section>
 
         <section className="my-7">
-          <h1 className="text-6xl mb-7 lg:mb-10">Skrzynki</h1>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <h1>Skrzynki</h1>
+          <div className="equipment-grid">
             {[1, 2, 3, 4].map((_, i) => (
-                <div key={i} className="flex-col-centered">
-                  <div key={i} className="relative w-full aspect-square ">
+                <div key={i}>
+                  <div key={i} className="equipment-grid-item">
                     <Image
-                        src="/s1.png"
-                        alt="Locked item"
+                        src={`${API_STATIC_URL}/images/chests/s1.png`}
+                        alt="Chest"
                         fill
-                        className="object-cover rounded-2xl shadow-lg"
+                        className="equipment-img"
                         priority
                         sizes="(min-width: 1024px) 25vw, 50vw"
                     />
                   </div>
-                  <div className="w-full flex-centered bg-neutral-800 mt-4 text-neutral-300 rounded-xl shadow-lg">
-                    <h3 className="text-lg lg:text-2xl py-1">Otwórz skrzynię</h3>
-                  </div>
+                  <button className="equipment-open-chest-btn" onClick={() => toast.error("Not implemented")}>
+                    <h3 >Otwórz skrzynię</h3>
+                  </button>
                 </div>
             ))}
-
           </div>
         </section>
       </div>

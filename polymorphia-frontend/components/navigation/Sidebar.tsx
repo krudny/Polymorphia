@@ -11,29 +11,29 @@ import clsx from "clsx";
 import {animateSidebar} from "@/animations/Navigation";
 
 export default function Sidebar() {
-  const { isExpanded, setIsExpanded, isLocked } = useContext(NavigationContext);
+  const { isSidebarExpanded, setIsSidebarExpanded, isSidebarLocked } = useContext(NavigationContext);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const sidebar = sidebarRef.current;
     if (!sidebar) return;
-    animateSidebar(sidebar, isExpanded);
-  }, [isExpanded]);
+    animateSidebar(sidebar, isSidebarExpanded);
+  }, [isSidebarExpanded]);
 
   return (
       <div
           ref={sidebarRef}
           className="sidebar"
           onMouseEnter={() => {
-            if (!isLocked) setIsExpanded(true)
+            if (!isSidebarLocked) setIsSidebarExpanded(true)
           }}
           onMouseLeave={() => {
-            if (!isLocked) setIsExpanded(false)
+            if (!isSidebarLocked) setIsSidebarExpanded(false)
           }}
       >
         <UserSection />
         <Line />
-        <div className={clsx(`sidebar-menu-section-base ${isExpanded ? "sidebar-menu-section-expanded" : ""}`)}>
+        <div className={clsx(`sidebar-menu-section-base ${isSidebarExpanded ? "sidebar-menu-section-expanded" : ""}`)}>
           <MenuSection options={MainMenuItems} />
         </div>
         <div>

@@ -6,38 +6,42 @@ import {
 import { NavigationContextType } from "@/interfaces/navigation/NavigationInterfaces";
 
 export const NavigationContext = createContext<NavigationContextType>({
-  isExpanded: false,
-  setIsExpanded: () => {},
-  isLocked: false,
-  setIsLocked: () => {}
+  isSidebarExpanded: false,
+  setIsSidebarExpanded: () => {},
+  isSidebarLocked: false,
+  setIsSidebarLocked: () => {},
+  isNavbarExpanded: false,
+  setIsNavbarExpanded: () => {}
 });
 
 export const NavigationProvider = ({ children }: { children: ReactNode }) => {
-  const [isLocked, setIsLocked] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isSidebarLocked, setIsSidebarLocked] = useState(false);
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
+  const [isNavbarExpanded, setIsNavbarExpanded] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('sidebarLocked', isLocked.toString());
-  }, [isLocked]);
+    localStorage.setItem('sidebarLocked', isSidebarLocked.toString());
+  }, [isSidebarLocked]);
 
   useEffect(() => {
-    console.log(isLocked);
     const saved = localStorage.getItem('sidebarLocked');
     if (saved === 'true') {
-      setIsLocked(true);
-      setIsExpanded(true);
+      setIsSidebarLocked(true);
+      setIsSidebarExpanded(true);
     } else {
-      setIsExpanded(false);
+      setIsSidebarExpanded(false);
     }
-  }, [isLocked]);
+  }, [isSidebarLocked]);
 
   return (
       <NavigationContext.Provider
           value={{
-            isExpanded,
-            setIsExpanded,
-            isLocked,
-            setIsLocked
+            isSidebarExpanded,
+            setIsSidebarExpanded,
+            isSidebarLocked,
+            setIsSidebarLocked,
+            isNavbarExpanded,
+            setIsNavbarExpanded
           }}
       >
         {children}

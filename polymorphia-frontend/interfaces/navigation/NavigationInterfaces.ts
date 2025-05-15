@@ -17,8 +17,10 @@ export interface MenuSectionProps {
 }
 
 export interface NavigationContextType {
-  isExpanded: boolean;
-  setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
-  isLocked: boolean;
-  setIsLocked: React.Dispatch<React.SetStateAction<boolean>>;
+  isSidebarExpanded: boolean;
+  setIsSidebarExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+  isSidebarLocked: boolean;
+  setIsSidebarLocked: React.Dispatch<React.SetStateAction<boolean>>;
+  isNavbarExpanded: boolean;
+  setIsNavbarExpanded: React.Dispatch<React.SetStateAction<boolean>>;
 }
