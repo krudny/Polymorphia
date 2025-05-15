@@ -28,8 +28,8 @@ export default function Slider({ slides, initialSlide=0 }: SliderProps) {
 
   return (
       <>
-        <div ref={wrapperRef} className="slider-wrapper bg-red-400">
-          <div className="slide-wrapper bg-orange-600">
+        <div ref={wrapperRef} className="slider-wrapper">
+          <div className="slide-wrapper">
             {slides.map((slide, index) => (
                 <SingleSlide
                     key={index}

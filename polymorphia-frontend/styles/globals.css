@@ -5,6 +5,10 @@
     --font-family-symbols: "Material Symbols Rounded";
 }
 
+@theme {
+    --shadow-3xl: 0px 0px 12px 0px rgba(66, 68, 90, 0.5);
+}
+
 @utility flex-centered {
     display: flex;
     align-items: center;
