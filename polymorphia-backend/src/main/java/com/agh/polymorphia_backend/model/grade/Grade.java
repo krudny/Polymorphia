@@ -4,13 +4,14 @@ package com.agh.polymorphia_backend.model.grade;
 import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.event.gradable.GradableEvent;
 import com.agh.polymorphia_backend.model.grade.reward.AssignedChest;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.ZonedDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(
@@ -46,10 +47,11 @@ public class Grade {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gradable_event_id")
+    @JsonBackReference
     private GradableEvent<?> gradableEvent;
 
     @OneToMany(mappedBy = "grade", fetch = FetchType.LAZY)
-    private List<AssignedChest> assignedChests;
+    private Set<AssignedChest> assignedChests;
 
     @PrePersist
     protected void onCreate() {

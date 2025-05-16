@@ -1,13 +1,15 @@
 package com.agh.polymorphia_backend.model.event.section;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
-import jakarta.persistence.Table;
+import com.agh.polymorphia_backend.model.event.gradable.Test;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "test_sections")
@@ -18,4 +20,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class TestSection extends EventSection {
+    @OneToMany(mappedBy = "eventSection", fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @ToString.Exclude
+    private Set<Test> tests;
 }

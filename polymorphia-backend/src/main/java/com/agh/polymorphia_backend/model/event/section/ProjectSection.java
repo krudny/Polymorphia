@@ -1,14 +1,16 @@
 package com.agh.polymorphia_backend.model.event.section;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
-import jakarta.persistence.Table;
+import com.agh.polymorphia_backend.model.event.gradable.ProjectCriterion;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "project_sections")
@@ -25,4 +27,9 @@ public class ProjectSection extends EventSection {
     @NotEmpty
     private Integer roadMapOrder;
     private boolean hidden = false;
+
+    @OneToMany(mappedBy = "eventSection", fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @ToString.Exclude
+    private Set<ProjectCriterion> projectCriteria;
 }

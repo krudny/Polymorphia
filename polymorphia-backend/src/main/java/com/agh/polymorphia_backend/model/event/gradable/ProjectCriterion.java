@@ -2,11 +2,13 @@ package com.agh.polymorphia_backend.model.event.gradable;
 
 
 import com.agh.polymorphia_backend.model.event.section.ProjectSection;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Entity
@@ -20,6 +22,8 @@ import lombok.experimental.SuperBuilder;
 public class ProjectCriterion extends GradableEvent<ProjectSection> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_section_id")
+    @JsonBackReference
+    @ToString.Exclude
     private ProjectSection eventSection;
 
     @NotEmpty

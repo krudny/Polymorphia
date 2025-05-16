@@ -36,13 +36,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import static com.agh.polymorphia_backend.service.DbExtractingUtil.*;
+
 @Service
 @AllArgsConstructor
 public class GradeService {
-    private static final String DB_OBJECT_NOT_FOUND = "%s of id: %s not found";
-    private static final String GRADABLE_EVENT = "GradableEvent";
-    private static final String ANIMAL = "Animal";
-    private static final String CHEST = "Chest";
     private static final String NO_SUBMISSION = "This gradableEvent has no submissions - unable to grade";
 
     // repositories
@@ -145,7 +143,7 @@ public class GradeService {
     private void assignChest(Long chestId, Grade grade) {
         gradeRequestValidator.validateChestCount(chestId, grade);
 
-        List<AssignedChest> assignedChests = grade.getAssignedChests();
+        Set<AssignedChest> assignedChests = grade.getAssignedChests();
         Chest chest = getChest(chestId);
         AssignedChest newAssignedChest = AssignedChest.builder()
                 .chest(chest)
@@ -162,7 +160,7 @@ public class GradeService {
         return gradableEventRepository.findById(gradableEventId)
                 .orElseThrow(() -> new InvalidArgumentException(
                         String.format(DB_OBJECT_NOT_FOUND,
-                                GRADABLE_EVENT,
+                                FIELD_GRADABLE_EVENT,
                                 gradableEventId)
                 ));
     }
@@ -171,7 +169,7 @@ public class GradeService {
         return animalRepository.findById(gradeRequestDto.getGradedObjectId())
                 .orElseThrow(() -> new InvalidArgumentException(
                         String.format(DB_OBJECT_NOT_FOUND,
-                                ANIMAL,
+                                FIELD_ANIMAL,
                                 gradeRequestDto.getGradedObjectId())
                 ));
     }
@@ -195,17 +193,21 @@ public class GradeService {
         return chestRepository.findById(chestId)
                 .orElseThrow(() -> new InvalidArgumentException(
                         String.format(DB_OBJECT_NOT_FOUND,
-                                CHEST,
+                                FIELD_CHEST,
                                 chestId)
                 ));
     }
 
-    private Grade getGrade(Grade grade, GradableEvent<?> gradableEvent, Animal animal) {
-        return gradeRepository.findByGradableEventIdAndAnimalId(gradableEvent.getId(),
-                        animal.getId())
+    public Grade getGrade(Grade grade, GradableEvent<?> gradableEvent, Animal animal) {
+        return getExistingGrade(gradableEvent, animal)
                 .orElse(
                         getNewGrade(grade, gradableEvent, animal)
                 );
+    }
+
+    public Optional<Grade> getExistingGrade(GradableEvent<?> gradableEvent, Animal animal) {
+        return gradeRepository.findByGradableEventIdAndAnimalId(gradableEvent.getId(),
+                animal.getId());
     }
 
     private Grade getNewGrade(Grade grade, GradableEvent<?> gradableEvent, Animal animal) {

@@ -66,7 +66,7 @@ public class GradeRequestValidator {
 
     public void validateChestCount(Long chestId, Grade grade) {
         long assignedChestsCount = Optional.ofNullable(grade.getAssignedChests())
-                .orElse(Collections.emptyList())
+                .orElse(Collections.emptySet())
                 .stream()
                 .filter(assignedChest -> assignedChest.getChest().getId().equals(chestId))
                 .count();

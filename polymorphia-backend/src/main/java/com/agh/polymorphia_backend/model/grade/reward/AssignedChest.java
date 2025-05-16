@@ -2,6 +2,7 @@ package com.agh.polymorphia_backend.model.grade.reward;
 
 import com.agh.polymorphia_backend.model.course.reward.Chest;
 import com.agh.polymorphia_backend.model.grade.Grade;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,5 +34,7 @@ public class AssignedChest {
     private Chest chest;
 
     @OneToMany(mappedBy = "assignedChest", fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @ToString.Exclude
     private List<AssignedItem> assignedItems;
 }
