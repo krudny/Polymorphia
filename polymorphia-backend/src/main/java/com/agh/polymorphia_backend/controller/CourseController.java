@@ -3,7 +3,7 @@ package com.agh.polymorphia_backend.controller;
 import com.agh.polymorphia_backend.dto.response.course.EvolutionStageResponseDto;
 import com.agh.polymorphia_backend.dto.response.course.reward.ChestResponseDto;
 import com.agh.polymorphia_backend.dto.response.course.reward.item.ItemResponseDto;
-import com.agh.polymorphia_backend.service.CourseService;
+import com.agh.polymorphia_backend.service.course.CourseService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
