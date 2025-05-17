@@ -1,7 +1,6 @@
 package com.agh.polymorphia_backend.model.project;
 
 import com.agh.polymorphia_backend.model.event.section.ProjectSection;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
@@ -22,7 +21,6 @@ public class ProjectVariantCategory {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_section_id")
-    @JsonBackReference
     @ToString.Exclude
     private ProjectSection projectSection;
 

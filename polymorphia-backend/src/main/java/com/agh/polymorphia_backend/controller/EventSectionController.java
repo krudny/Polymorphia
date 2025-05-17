@@ -1,9 +1,9 @@
 package com.agh.polymorphia_backend.controller;
 
-import com.agh.polymorphia_backend.dto.response.event.section.AllGradableEventsResponseDto;
-import com.agh.polymorphia_backend.service.event.gradable.CourseworkService;
-import com.agh.polymorphia_backend.service.event.gradable.ProjectService;
-import com.agh.polymorphia_backend.service.event.gradable.TestService;
+import com.agh.polymorphia_backend.dto.response.event.section.EventSectionResponseDto;
+import com.agh.polymorphia_backend.service.event.gradable.CourseworkSectionService;
+import com.agh.polymorphia_backend.service.event.gradable.ProjectSectionService;
+import com.agh.polymorphia_backend.service.event.gradable.TestSectionService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,26 +15,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping()
-public class GradableEventController {
-    private final TestService testService;
-    private final ProjectService projectService;
-    private final CourseworkService courseworkService;
+public class EventSectionController {
+    private final TestSectionService testService;
+    private final ProjectSectionService projectService;
+    private final CourseworkSectionService courseworkService;
 
     @GetMapping("/coursework-sections/{courseworkSectionId}")
     @PreAuthorize("hasRole('STUDENT')")
-    public ResponseEntity<AllGradableEventsResponseDto> getAllCourseworks(@PathVariable Long courseworkSectionId) {
+    public ResponseEntity<EventSectionResponseDto> getAllCourseworks(@PathVariable Long courseworkSectionId) {
         return ResponseEntity.ok(courseworkService.getAllEvents(courseworkSectionId));
     }
 
     @GetMapping("/test-sections/{testSectionId}")
     @PreAuthorize("hasRole('STUDENT')")
-    public ResponseEntity<AllGradableEventsResponseDto> getAllTests(@PathVariable Long testSectionId) {
+    public ResponseEntity<EventSectionResponseDto> getAllTests(@PathVariable Long testSectionId) {
         return ResponseEntity.ok(testService.getAllEvents(testSectionId));
     }
 
     @GetMapping("/project-sections/{projectSectionId}")
     @PreAuthorize("hasRole('STUDENT')")
-    public ResponseEntity<AllGradableEventsResponseDto> getProject(@PathVariable Long projectSectionId) {
+    public ResponseEntity<EventSectionResponseDto> getProject(@PathVariable Long projectSectionId) {
         return ResponseEntity.ok(projectService.getAllEvents(projectSectionId));
     }
 }

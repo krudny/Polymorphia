@@ -1,21 +1,18 @@
 package com.agh.polymorphia_backend.model.grade.reward;
 
-import com.agh.polymorphia_backend.model.course.reward.item.Item;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.agh.polymorphia_backend.model.event.gradable.GradableEvent;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.util.Set;
-
 @Entity
-@Table(name = "assigned_items")
+@Table(name = "boosted_gradable_events_items")
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Data
-public class AssignedItem {
+public class BoostedGradableEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
@@ -23,20 +20,15 @@ public class AssignedItem {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id")
-    private Item item;
+    @JoinColumn(name = "assigned_item_id")
+    @ToString.Exclude
+    private AssignedItem assignedItem;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "assigned_chest_id")
-    @JsonBackReference
+    @JoinColumn(name = "gradable_event_id")
     @ToString.Exclude
-    private AssignedChest assignedChest;
+    private GradableEvent<?> gradableEvent;
 
     @NotNull
-    private Boolean used;
-
-    @OneToMany(mappedBy = "assignedItem", fetch = FetchType.LAZY)
-    @ToString.Exclude
-    private Set<BoostedGradableEvent> boostedGradableEvents;
-
+    private Integer flatBonusXp;
 }

@@ -2,12 +2,11 @@ package com.agh.polymorphia_backend.service.event.gradable;
 
 import com.agh.polymorphia_backend.dto.response.event.section.GradableEventResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.section.grade.GradeResponseDto;
-import com.agh.polymorphia_backend.model.course.reward.item.FlatBonusItem;
 import com.agh.polymorphia_backend.model.course.reward.item.Item;
 import com.agh.polymorphia_backend.model.course.reward.item.PercentageBonusItem;
-import com.agh.polymorphia_backend.model.event.gradable.GradableEvent;
 import com.agh.polymorphia_backend.model.grade.Grade;
 import com.agh.polymorphia_backend.model.grade.reward.AssignedItem;
+import com.agh.polymorphia_backend.model.grade.reward.BoostedGradableEvent;
 import lombok.AllArgsConstructor;
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
@@ -43,12 +42,10 @@ public class XpCalculator {
             if (item instanceof PercentageBonusItem) {
                 percentageBonus += ((PercentageBonusItem) item).getPercentageBonus();
             } else {
-                int xpBonus = ((FlatBonusItem) item).getXpBonus();
-
-                for (GradableEvent<?> boostedGradableEvent : assignedItem.getBoostedGradableEvents()) {
-                    GradableEventResponseDto event = gradableEvents.get(boostedGradableEvent.getId());
+                for (BoostedGradableEvent boostedGradableEvent : assignedItem.getBoostedGradableEvents()) {
+                    GradableEventResponseDto event = gradableEvents.get(boostedGradableEvent.getGradableEvent().getId());
                     if (event != null) {
-                        xpBonus = setEventSectionBonusXp(event.getGrade(), xpBonus, event.getMaxXp());
+                        setEventSectionBonusXp(event.getGrade(), boostedGradableEvent.getFlatBonusXp());
                     }
                 }
             }
@@ -56,15 +53,12 @@ public class XpCalculator {
         return percentageBonus;
     }
 
-    private int setEventSectionBonusXp(GradeResponseDto grade, int xpBonus, int maxXp) {
+    private void setEventSectionBonusXp(GradeResponseDto grade, int flatBonusXp) {
         int gainedXp = Optional.ofNullable(grade.getGainedXp()).orElse(0);
-        int lostXp = maxXp - gainedXp;
-        int eventXpBonus = Math.min(lostXp, xpBonus);
         int currentFlatBonusXp = Optional.ofNullable(grade.getFlatBonusXp()).orElse(0);
 
-        grade.setFlatBonusXp(eventXpBonus + currentFlatBonusXp);
+        grade.setFlatBonusXp(flatBonusXp + currentFlatBonusXp);
         grade.setTotalXp(grade.getFlatBonusXp() + gainedXp);
-        return xpBonus - eventXpBonus;
     }
 
 }

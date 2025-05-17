@@ -31,10 +31,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static com.agh.polymorphia_backend.service.DbExtractingUtil.*;
 
@@ -43,7 +40,7 @@ import static com.agh.polymorphia_backend.service.DbExtractingUtil.*;
 public class GradeService {
     private static final String NO_SUBMISSION = "This gradableEvent has no submissions - unable to grade";
 
-    // repositories
+
     private final GradableEventRepository gradableEventRepository;
     private final GradeRepository gradeRepository;
     private final AnimalRepository animalRepository;
@@ -51,7 +48,6 @@ public class GradeService {
     private final ChestRepository chestRepository;
     private final AssignedChestRepository assignedChestRepository;
 
-    // validator
     private final GradeRequestValidator gradeRequestValidator;
 
 
@@ -108,7 +104,6 @@ public class GradeService {
             ProjectSubmission submission = getProjectSubmissionGroup(gradeRequestDto.getGradedObjectId());
             return gradeProjectByGroup(submission, gradeRequestDto, gradableEvent);
         }
-
     }
 
     private Long gradeProjectByAnimal(ProjectSubmission submission, GradeRequestDto gradeRequestDto,
@@ -218,7 +213,7 @@ public class GradeService {
         return gradableEvents.stream()
                 .map(coursework -> getExistingGrade(coursework, animal)
                         .orElse(null))
-                .filter(grade -> grade != null)
+                .filter(Objects::nonNull)
                 .toList();
     }
 

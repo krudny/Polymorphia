@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.dto.response.event.section.project;
 
-import com.agh.polymorphia_backend.dto.response.event.section.AllGradableEventsResponseDto;
+import com.agh.polymorphia_backend.dto.response.event.section.EventSectionResponseDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -15,7 +15,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
-public class ProjectResponseDto extends AllGradableEventsResponseDto {
+public class ProjectResponseDto extends EventSectionResponseDto {
     @NotNull
     private Boolean submitted;
 

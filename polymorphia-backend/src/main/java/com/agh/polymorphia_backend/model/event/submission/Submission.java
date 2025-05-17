@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.ZonedDateTime;
 
@@ -16,7 +18,7 @@ import java.time.ZonedDateTime;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Submission {
+public abstract class Submission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
@@ -29,21 +31,11 @@ public class Submission {
 
     @NotNull
     @Setter(AccessLevel.NONE)
+    @CreationTimestamp
     private ZonedDateTime createdDate;
 
     @NotNull
+    @Setter(AccessLevel.NONE)
+    @UpdateTimestamp
     private ZonedDateTime modifiedDate;
-
-    @PrePersist
-    protected void onCreate() {
-        if (createdDate == null) {
-            createdDate = ZonedDateTime.now();
-        }
-        modifiedDate = ZonedDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        modifiedDate = ZonedDateTime.now();
-    }
 }

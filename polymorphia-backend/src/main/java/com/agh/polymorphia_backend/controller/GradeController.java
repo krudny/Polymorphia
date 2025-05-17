@@ -18,7 +18,6 @@ import java.util.List;
 public class GradeController {
     private final GradeService gradeService;
 
-    // check event type instead of passing in request?
     @PostMapping()
     @PreAuthorize("hasRole('INSTRUCTOR')")
     public ResponseEntity<List<Long>> grade(@RequestBody GradeRequestDto gradeRequestDto) {

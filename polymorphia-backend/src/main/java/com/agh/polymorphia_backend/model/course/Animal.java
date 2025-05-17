@@ -2,6 +2,7 @@ package com.agh.polymorphia_backend.model.course;
 
 import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.user.Student;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
@@ -32,6 +33,7 @@ public class Animal {
     private CourseGroup courseGroup;
 
     @ManyToMany(mappedBy = "animals", fetch = FetchType.LAZY)
+    @JsonBackReference
     Set<ProjectGroup> projectGroups;
 
 }

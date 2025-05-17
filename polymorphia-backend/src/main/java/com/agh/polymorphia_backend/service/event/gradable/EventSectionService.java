@@ -1,15 +1,14 @@
 package com.agh.polymorphia_backend.service.event.gradable;
 
-import com.agh.polymorphia_backend.dto.response.event.section.AllGradableEventsResponseDto;
+import com.agh.polymorphia_backend.dto.response.event.section.EventSectionResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.section.GradableEventResponseDto;
 import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.event.gradable.GradableEvent;
 import com.agh.polymorphia_backend.model.event.section.EventSection;
 import com.agh.polymorphia_backend.model.grade.Grade;
 import com.agh.polymorphia_backend.model.grade.reward.AssignedItem;
-import com.agh.polymorphia_backend.service.course.AnimalService;
 import com.agh.polymorphia_backend.service.GradeService;
-import com.agh.polymorphia_backend.service.event.section.EventSectionService;
+import com.agh.polymorphia_backend.service.course.AnimalService;
 import com.agh.polymorphia_backend.service.mapper.gradable.GradableEventMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,19 +23,19 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public abstract class GradableEventService<T extends GradableEventMapper> {
-    // service
+public abstract class EventSectionService<T extends GradableEventMapper> {
+
     protected final T mapper;
     protected final AnimalService animalService;
-    protected final EventSectionService eventSectionService;
+    protected final com.agh.polymorphia_backend.service.event.section.EventSectionService eventSectionService;
     private final XpCalculator xpCalculator;
     private final GradeService gradeService;
 
-    protected GradableEventService(
+    protected EventSectionService(
             T mapper,
             GradeService gradeService,
             AnimalService animalService,
-            EventSectionService eventSectionService,
+            com.agh.polymorphia_backend.service.event.section.EventSectionService eventSectionService,
             XpCalculator xpCalculator
     ) {
         this.mapper = mapper;
@@ -46,10 +45,10 @@ public abstract class GradableEventService<T extends GradableEventMapper> {
         this.xpCalculator = xpCalculator;
     }
 
-    public abstract AllGradableEventsResponseDto getAllEvents(Long eventSectionId);
+    public abstract EventSectionResponseDto getAllEvents(Long eventSectionId);
 
-    protected <S extends EventSection, E extends GradableEvent<S>> AllGradableEventsResponseDto getAllGradableEvents(
-            AllGradableEventsResponseDto responseDto,
+    protected <S extends EventSection, E extends GradableEvent<S>> EventSectionResponseDto getAllGradableEvents(
+            EventSectionResponseDto responseDto,
             Long sectionId,
             Class<S> eventSectionClass,
             Function<S, Set<E>> getGradableEventsFunction,
@@ -74,7 +73,7 @@ public abstract class GradableEventService<T extends GradableEventMapper> {
     }
 
 
-    private void setSummaryGrade(AllGradableEventsResponseDto allGradableEventsResponseDto,
+    private void setSummaryGrade(EventSectionResponseDto eventSectionResponseDto,
                                  Map<Long, GradableEventResponseDto> gradableEvents,
                                  List<Grade> eventSectionGrades,
                                  Long animalId,
@@ -88,10 +87,10 @@ public abstract class GradableEventService<T extends GradableEventMapper> {
 
         float percentageBonusXp = (float) ((gainedXp + flatBonusXp) * percentageBonus) / 100;
 
-        allGradableEventsResponseDto.setGainedXp(gainedXp);
-        allGradableEventsResponseDto.setFlatBonusXp(flatBonusXp);
-        allGradableEventsResponseDto.setPercentageBonus(percentageBonus);
-        allGradableEventsResponseDto.setPercentageBonusXp(percentageBonusXp);
-        allGradableEventsResponseDto.setTotalXp(gainedXp + flatBonusXp + percentageBonusXp);
+        eventSectionResponseDto.setGainedXp(gainedXp);
+        eventSectionResponseDto.setFlatBonusXp(flatBonusXp);
+        eventSectionResponseDto.setPercentageBonus(percentageBonus);
+        eventSectionResponseDto.setPercentageBonusXp(percentageBonusXp);
+        eventSectionResponseDto.setTotalXp(gainedXp + flatBonusXp + percentageBonusXp);
     }
 }

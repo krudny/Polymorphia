@@ -4,11 +4,12 @@ package com.agh.polymorphia_backend.model.grade;
 import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.event.gradable.GradableEvent;
 import com.agh.polymorphia_backend.model.grade.reward.AssignedChest;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.ZonedDateTime;
 import java.util.Set;
@@ -24,7 +25,7 @@ import java.util.Set;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Grade {
+public abstract class Grade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
@@ -33,9 +34,12 @@ public class Grade {
 
     @NotNull
     @Setter(AccessLevel.NONE)
+    @CreationTimestamp
     private ZonedDateTime createdDate;
 
     @NotNull
+    @Setter(AccessLevel.NONE)
+    @UpdateTimestamp
     private ZonedDateTime modifiedDate;
 
     @NotNull
@@ -47,23 +51,8 @@ public class Grade {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gradable_event_id")
-    @JsonBackReference
     private GradableEvent<?> gradableEvent;
 
     @OneToMany(mappedBy = "grade", fetch = FetchType.LAZY)
     private Set<AssignedChest> assignedChests;
-
-    @PrePersist
-    protected void onCreate() {
-        if (createdDate == null) {
-            createdDate = ZonedDateTime.now();
-        }
-        modifiedDate = ZonedDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        modifiedDate = ZonedDateTime.now();
-    }
-
 }
