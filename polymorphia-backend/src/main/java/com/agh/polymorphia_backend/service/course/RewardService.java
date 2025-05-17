@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.service;
+package com.agh.polymorphia_backend.service.course;
 
 import com.agh.polymorphia_backend.dto.request.course.reward.ChestRequestDto;
 import com.agh.polymorphia_backend.dto.request.course.reward.item.ItemRequestDto;
@@ -8,6 +8,7 @@ import com.agh.polymorphia_backend.model.course.reward.Chest;
 import com.agh.polymorphia_backend.model.course.reward.item.Item;
 import com.agh.polymorphia_backend.repository.course.reward.ChestRepository;
 import com.agh.polymorphia_backend.repository.course.reward.ItemRepository;
+import com.agh.polymorphia_backend.service.ImageStorageService;
 import com.agh.polymorphia_backend.service.mapper.ChestMapper;
 import com.agh.polymorphia_backend.service.mapper.ItemMapper;
 import lombok.AllArgsConstructor;

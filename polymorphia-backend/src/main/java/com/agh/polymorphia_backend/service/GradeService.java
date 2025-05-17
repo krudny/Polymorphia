@@ -205,9 +205,21 @@ public class GradeService {
                 );
     }
 
+    public Set<Grade> getAnimalGrades(Long animalId) {
+        return gradeRepository.findByAnimalId(animalId).orElse(Collections.emptySet());
+    }
+
     public Optional<Grade> getExistingGrade(GradableEvent<?> gradableEvent, Animal animal) {
         return gradeRepository.findByGradableEventIdAndAnimalId(gradableEvent.getId(),
                 animal.getId());
+    }
+
+    public <T extends GradableEvent<?>> List<Grade> getGradableEventGrades(Set<T> gradableEvents, Animal animal) {
+        return gradableEvents.stream()
+                .map(coursework -> getExistingGrade(coursework, animal)
+                        .orElse(null))
+                .filter(grade -> grade != null)
+                .toList();
     }
 
     private Grade getNewGrade(Grade grade, GradableEvent<?> gradableEvent, Animal animal) {

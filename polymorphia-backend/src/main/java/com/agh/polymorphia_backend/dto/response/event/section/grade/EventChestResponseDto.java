@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.dto.response.page.event;
+package com.agh.polymorphia_backend.dto.response.event.section.grade;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

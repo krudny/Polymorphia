@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.dto.response.page.event;
+package com.agh.polymorphia_backend.dto.response.event.section;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotEmpty;
@@ -13,25 +13,25 @@ import java.util.List;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
-public class GradableEventResponseDto {
-    @NotNull
-    private Long id;
-
+public class AllGradableEventsResponseDto {
     @NotEmpty
     private String name;
 
     @NotNull
-    private Integer maxXp;
-
-    private Integer gainedXp = 0;
-
-    private Integer flatBonusXp = 0;
-
-    private Integer totalXp = 0;
+    private List<GradableEventResponseDto> gradableEvents;
 
     @NotNull
-    private Boolean graded;
+    private Integer gainedXp;
 
     @NotNull
-    private List<EventChestResponseDto> chests;
+    private Integer flatBonusXp;
+
+    @NotNull
+    private Integer percentageBonus;
+
+    @NotNull
+    private Float percentageBonusXp;
+
+    @NotNull
+    private Float totalXp;
 }

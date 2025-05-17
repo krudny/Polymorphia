@@ -1,5 +1,6 @@
-package com.agh.polymorphia_backend.dto.response.page.event;
+package com.agh.polymorphia_backend.dto.response.event.section.coursework;
 
+import com.agh.polymorphia_backend.dto.response.event.section.GradableEventResponseDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -20,12 +21,10 @@ public class CourseworkEventResponseDto extends GradableEventResponseDto {
     @NotEmpty
     private String topic;
 
-    @NotNull
-    private Boolean containsExtraAssignment;
+    @NotEmpty
+    private Boolean submitted;
 
-    private String prUrl;
-
-    private String extraAssignmentPrUrl;
+    private CourseworkSubmissionResponseDto submission;
 
     @NotNull
     private Boolean hidden;

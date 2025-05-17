@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.service;
+package com.agh.polymorphia_backend.service.course;
 
 
 import com.agh.polymorphia_backend.dto.response.course.EvolutionStageResponseDto;
