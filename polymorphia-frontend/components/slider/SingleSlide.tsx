@@ -20,7 +20,7 @@ export default function SingleSlide({ slide, position, prevSlideAction, nextSlid
 
   return (
       <div
-          className={`carousel-item  ${position === 0 ? 'active' : ''}`}
+          className={`carousel-item ${position === 0 ? 'active' : ''}`}
           ref={sliderRef}
       >
         <div className="carousel-wrapper">
