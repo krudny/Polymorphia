@@ -36,7 +36,7 @@ public class GradeRequestValidator {
     private static final String NO_CHEST_IDS_AND_XP = "Either chestIds or xp are required";
     private static final String TOO_MANY_CHESTS = "Maximum value of chests (%d) with id %d has already been assigned to this grade";
 
-    // repository
+
     private final CourseGroupRepository courseGroupRepository;
     private final GradableEventRepository gradableEventRepository;
 

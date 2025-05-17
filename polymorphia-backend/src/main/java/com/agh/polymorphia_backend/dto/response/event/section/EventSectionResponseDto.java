@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
-public class AllGradableEventsResponseDto {
+public class EventSectionResponseDto {
     @NotEmpty
     private String name;
 

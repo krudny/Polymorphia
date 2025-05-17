@@ -21,12 +21,11 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class CourseService {
-    // repositories
+
     private final EvolutionStagesRepository evolutionStagesRepository;
     private final ChestRepository chestRepository;
     private final ItemRepository<Item> itemRepository;
 
-    // mappers
     private final ItemMapper itemMapper;
     private final EvolutionStagesMapper evolutionStagesMapper;
     private final ChestMapper chestMapper;

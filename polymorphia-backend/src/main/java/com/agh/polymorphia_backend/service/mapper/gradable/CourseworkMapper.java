@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.service.mapper.gradable;
 
 import com.agh.polymorphia_backend.dto.response.event.section.GradableEventResponseDto;
-import com.agh.polymorphia_backend.dto.response.event.section.coursework.CourseworkEventResponseDto;
+import com.agh.polymorphia_backend.dto.response.event.section.coursework.CourseworkResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.section.coursework.CourseworkSubmissionResponseDto;
 import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.event.gradable.Coursework;
@@ -22,7 +22,7 @@ public class CourseworkMapper extends GradableEventMapper {
     }
 
     public GradableEventResponseDto courseworkToGradableEventResponseDto(Coursework coursework, Animal animal) {
-        CourseworkEventResponseDto event = new CourseworkEventResponseDto();
+        CourseworkResponseDto event = new CourseworkResponseDto();
 
         event.setId(coursework.getId());
         event.setName(coursework.getName());
@@ -35,7 +35,7 @@ public class CourseworkMapper extends GradableEventMapper {
         return setGradeAndRewards(event, coursework, animal);
     }
 
-    private void setSubmission(Coursework coursework, Animal animal, CourseworkEventResponseDto event) {
+    private void setSubmission(Coursework coursework, Animal animal, CourseworkResponseDto event) {
         Optional<CourseworkSubmission> courseworkSubmission = submissionRepository.findByAnimalAndCoursework(animal, coursework);
         CourseworkSubmissionResponseDto submission = new CourseworkSubmissionResponseDto();
 

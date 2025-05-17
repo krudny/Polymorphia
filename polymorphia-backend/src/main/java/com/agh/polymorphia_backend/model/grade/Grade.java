@@ -9,6 +9,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.ZonedDateTime;
 import java.util.Set;
@@ -24,7 +26,7 @@ import java.util.Set;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Grade {
+public abstract class Grade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
@@ -33,9 +35,11 @@ public class Grade {
 
     @NotNull
     @Setter(AccessLevel.NONE)
+    @CreationTimestamp
     private ZonedDateTime createdDate;
 
     @NotNull
+    @UpdateTimestamp
     private ZonedDateTime modifiedDate;
 
     @NotNull
@@ -52,18 +56,4 @@ public class Grade {
 
     @OneToMany(mappedBy = "grade", fetch = FetchType.LAZY)
     private Set<AssignedChest> assignedChests;
-
-    @PrePersist
-    protected void onCreate() {
-        if (createdDate == null) {
-            createdDate = ZonedDateTime.now();
-        }
-        modifiedDate = ZonedDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        modifiedDate = ZonedDateTime.now();
-    }
-
 }

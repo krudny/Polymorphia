@@ -24,11 +24,10 @@ public class RewardService {
     public static final String CHEST_NOT_FOUND = "Chests of ids [%s] not found";
     private static final String ITEM_NOT_FOUND = "Items of ids [%s] not found";
 
-    // repositories
+
     private final ChestRepository chestRepository;
     private final ItemRepository<Item> itemRepository;
 
-    // mappers
     private final ItemMapper itemMapper;
     private final ChestMapper chestMapper;
     private final ImageStorageService imageStorageService;

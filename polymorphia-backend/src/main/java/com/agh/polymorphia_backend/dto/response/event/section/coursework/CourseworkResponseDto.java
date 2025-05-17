@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
-public class CourseworkEventResponseDto extends GradableEventResponseDto {
+public class CourseworkResponseDto extends GradableEventResponseDto {
     @NotEmpty
     private String infoUrl;
 
