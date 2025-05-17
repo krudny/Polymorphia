@@ -1,0 +1,42 @@
+@import "tailwindcss";
+@import "./globals.css";
+
+.profile {
+    @apply flex-1 px-4 w-full opacity-0 sm:flex-col-centered;
+}
+
+.profile-content-wrapper {
+    @apply flex-col-centered w-full mx-auto mt-10  sm:flex-row lg:mt-0 lg:w-4/5 lg:max-w-[1450px];
+}
+
+.profile-image-wrapper {
+    @apply flex-centered relative w-3/5 aspect-square
+}
+
+.profile-img {
+    @apply object-cover rounded-2xl shadow-lg;
+}
+
+.profile-content {
+    @apply flex-col-centered w-4/5 text-center;
+}
+
+.profile-content > h1 {
+    @apply text-6xl my-4 sm:text-6xl md:text-8xl;
+}
+
+.profile-content > h2 {
+    @apply text-5xl sm:text-6xl md:text-7xl;
+}
+
+.profile-content > h3 {
+    @apply text-4xl my-4;
+}
+
+.profile-progress-bar {
+    @apply flex-centered w-full lg:mx-48 h-28 my-6 lg:-mb-6 bg-neutral-400;
+}
+
+.profile-progress-bar > h1 {
+    @apply text-4xl;
+}

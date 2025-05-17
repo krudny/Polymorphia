@@ -11,8 +11,12 @@ import { FieldInfo } from "@/components/form/FieldInfo";
 import { loginSchema } from "@/components/form/schema";
 import AuthService from "@/services/AuthService";
 import "../../styles/home.css";
+import {useRouter} from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function LoginForm({ onBackAction }: LoginFormProps) {
+  const router = useRouter();
+
   const form = useForm({
     defaultValues: {
       email: "",
@@ -29,11 +33,12 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
   const loginMutation = useMutation({
     mutationFn: AuthService.login,
     onSuccess: () => {
-      alert("Zalogowano!");
+      toast.success('Zalogowano pomyślnie!')
+      router.push('/profile');
       form.reset();
     },
     onError: (error: Error) => {
-      alert(error.message);
+      toast.error(`Wystąpił błąd! ${error.message}`)
     },
   });
 

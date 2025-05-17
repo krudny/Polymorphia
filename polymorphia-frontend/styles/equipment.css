@@ -1,0 +1,30 @@
+@import "tailwindcss";
+@import "./globals.css";
+
+.equipment {
+    @apply w-full md:max-w-5xl mx-auto p-4 opacity-0;
+}
+
+.equipment > section > h1 {
+    @apply text-6xl mb-6 lg:mb-10;
+}
+
+.equipment-grid {
+    @apply grid grid-cols-2 sm:grid-cols-4 gap-4;
+}
+
+.equipment-grid-item {
+    @apply relative w-full aspect-square;
+}
+
+.equipment-img {
+    @apply object-cover rounded-2xl shadow-lg;
+}
+
+.equipment-open-chest-btn {
+    @apply w-full flex-centered bg-neutral-800 mt-4 text-neutral-300 rounded-xl shadow-lg hover:cursor-pointer;
+}
+
+.equipment-open-chest-btn > h3 {
+    @apply text-lg py-1 lg:text-2xl;
+}

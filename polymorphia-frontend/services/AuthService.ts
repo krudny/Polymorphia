@@ -1,5 +1,6 @@
-import API_HOST from "./api";
+
 import {LoginDto} from "@/interfaces/api/DTO";
+import {API_HOST} from "@/services/api";
 
 const AuthService = {
   login: async ({email, password}: LoginDto) => {

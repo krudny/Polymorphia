@@ -20,11 +20,11 @@ export default function Items() {
   }
 
   if (error) {
-    return <div>Wystąpił błąd podczas ładowania przedmiotów.</div>;
+    return <div>Error loading items: {error.message}</div>;
   }
 
   if (!items || items.length === 0) {
-    return <div>Nie znaleziono przedmiotów.</div>;
+    return <div>No items found.</div>;
   }
 
   return (
