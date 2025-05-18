@@ -4,9 +4,16 @@ import Image from "next/image";
 import "../../../styles/equipment.css"
 import toast from "react-hot-toast";
 import {API_STATIC_URL} from "@/services/api";
+import { useTitle } from "@/components/navigation/TitleContext";
+import { useEffect } from "react";
 
 export default function Equipment() {
   const wrapperRef = useScaleShow();
+  const { setTitle } = useTitle();
+
+  useEffect(() => {
+    setTitle('Ekwipunek');
+  }, [])
 
   return (
       <div ref={wrapperRef} className="equipment">

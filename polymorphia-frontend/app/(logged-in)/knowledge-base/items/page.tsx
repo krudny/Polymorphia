@@ -5,9 +5,16 @@ import {useQuery} from "@tanstack/react-query";
 import {useSearchParams} from "next/navigation";
 import KnowledgeBaseService from "@/services/knowledge-base/KnowledgeBaseService";
 import Loading from "@/components/general/Loading";
+import { useTitle } from "@/components/navigation/TitleContext";
+import { useEffect } from "react";
 
 export default function Items() {
   const searchParams = useSearchParams();
+  const { setTitle } = useTitle();
+
+  useEffect(() => {
+    setTitle('Przedmioty');
+  }, [])
 
   const { data: items, isLoading, error } = useQuery({
     queryKey: ['items', 1],

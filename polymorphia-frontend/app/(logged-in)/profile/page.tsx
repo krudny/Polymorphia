@@ -3,9 +3,16 @@ import Image from "next/image";
 import {useScaleShow} from "@/animations/General";
 import {API_STATIC_URL} from "@/services/api";
 import "../../../styles/profile.css"
+import { useTitle } from "@/components/navigation/TitleContext";
+import { useEffect } from "react";
 
 export default function Profile() {
   const wrapperRef = useScaleShow();
+  const { setTitle } = useTitle();
+
+  useEffect(() => {
+    setTitle('Profil');
+  }, [])
 
   return (
       <div ref={wrapperRef} className="profile">
