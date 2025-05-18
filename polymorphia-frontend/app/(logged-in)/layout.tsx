@@ -5,8 +5,11 @@ import Navigation from "@/components/navigation/Navigation";
 import {NavigationProvider} from "@/components/navigation/NavigationContext";
 import Image from "next/image";
 import Link from "next/link";
+import { useTitle } from "@/components/navigation/TitleContext";
 
 export default function Layout({ children }: { children: ReactNode }) {
+  const { title } = useTitle();
+
   return (
       <NavigationProvider>
         <div className="w-full min-h-[100dvh] relative flex flex-col lg:flex-row bg-black">
@@ -21,7 +24,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           />
           <div className="w-full h-full flex flex-col min-h-[calc(100dvh-5rem)] lg:min-h-screen relative">
             <div className="w-full flex-centered h-15 hidden lg:flex">
-              <Link href="/"><h3 className="text-4xl">Polymorphia</h3></Link>
+              <h3 className="text-4xl">{title}</h3>
             </div>
             {children}
           </div>
