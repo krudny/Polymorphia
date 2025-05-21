@@ -1,4 +1,4 @@
-import {SquareFillCalc} from "@/app/(logged-in)/test/ProgressBarUtil";
+import {SquareFillCalc} from "@/components/progressbar/ProgressBarUtil";
 
 export default function ProgressBarSquare({ squareFill, position }: { squareFill: number, position: number }) {
     return (

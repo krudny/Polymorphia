@@ -1,6 +1,8 @@
-export default function ProgressBarTextLabels({ textLabels }: { textLabels: string[] }) {
+import {ProgressBarTextLabelsProps} from "@/interfaces/progressbar/ProgressBarInterfaces";
+
+export default function ProgressBarTextLabels({ textLabels }: ProgressBarTextLabelsProps) {
     return (
-        <div>
+        <div className="w-full min-h-14 relative px-20">
             {textLabels.map((label, i) => (
                 <div
                     key={i}

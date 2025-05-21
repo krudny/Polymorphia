@@ -1,4 +1,7 @@
-export default function ProgressBarBottomRangeLabels({minXP, currentXP, maxXP}) {
+import {ProgressBarRangeLabelsProps} from "@/interfaces/progressbar/ProgressBarInterfaces";
+
+
+export default function ProgressBarRangeLabels({minXP, currentXP, maxXP}: ProgressBarRangeLabelsProps) {
     return (
         <div className="h-14 relative">
             <div className="absolute left-0 -translate-x-1/2  w-14 text-center">

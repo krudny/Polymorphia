@@ -18,10 +18,10 @@ export const animateSidebar = (
   if (isExpanded) {
     tl.to(sidebar, {
       width: targetWidth,
-      duration: 0.6,
+      duration: 0.5,
       ease: "power2.out",
     })
-        .set([...headings, ...chevrons], { display: 'block' }, "<0.2")
+        .set([...headings, ...chevrons], { display: 'block' }, "<0.15")
         .set(profileBlock, { display: "flex" }, "<")
         .fromTo(
             [...headings, ...chevrons],
