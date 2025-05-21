@@ -2,27 +2,27 @@
 @import "./globals.css";
 
 .profile {
-    @apply flex-1 px-4 w-full opacity-0 flex-col-centered lg:h-screen;
+    @apply flex-1 px-4 w-full opacity-0 flex-col-centered lg:max-h-screen overflow-y-hidden;
 }
 
 .profile-wrapper {
-    @apply w-full lg:max-w-[1600px];
+    @apply w-full flex-1 flex flex-col px-2 justify-center lg:justify-between lg:max-w-[1600px];
 }
 
 .profile-content-wrapper {
-    @apply flex-col-centered w-full mx-auto mt-10 sm:flex-row lg:mt-0 lg:w-4/5;
+    @apply flex-col-centered w-full mx-auto mt-10 sm:flex-row lg:my-auto lg:w-4/5;
 }
 
 .profile-image-wrapper {
-    @apply flex-centered relative w-3/5 aspect-square
+    @apply flex-centered relative w-full aspect-square lg:w-1/2;
 }
 
 .profile-img {
-    @apply object-cover rounded-2xl shadow-lg;
+    @apply object-cover rounded-3xl shadow-lg;
 }
 
 .profile-content {
-    @apply flex-col-centered w-4/5 text-center;
+    @apply flex-col-centered w-full text-center lg:w-4/5;
 }
 
 .profile-content > h1 {
@@ -38,11 +38,11 @@
 }
 
 .profile-progress-bar-mobile {
-    @apply md:hidden w-full h-fit mt-6 px-6;
+    @apply md:hidden w-full h-fit mt-4;
 }
 
 .profile-progress-bar-desktop {
-    @apply hidden md:block w-full h-fit mt-7;
+    @apply hidden md:block w-full h-fit mb-6 pb-3;
 }
 
 .profile-progress-bar > h1 {

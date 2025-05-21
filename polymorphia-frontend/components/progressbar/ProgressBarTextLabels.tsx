@@ -1,18 +1,35 @@
 import {ProgressBarTextLabelsProps} from "@/interfaces/progressbar/ProgressBarInterfaces";
+import "../../styles/progressbar.css"
+import {tv} from "tailwind-variants";
+import clsx from "clsx";
 
-export default function ProgressBarTextLabels({ textLabels }: ProgressBarTextLabelsProps) {
+const textLabelsStyles = tv({
+    base: "",
+    variants: {
+        size: {
+            sm: "text-2xl",
+            md: "text-3xl",
+            lg: "text-4xl",
+        },
+    },
+    defaultVariants: {
+        size: "md",
+    },
+});
+
+export default function ProgressBarTextLabels({ textLabels, size }: ProgressBarTextLabelsProps) {
     return (
-        <div className="w-full min-h-14 relative px-20">
+        <div className="progressbar-text-container">
             {textLabels.map((label, i) => (
                 <div
                     key={i}
-                    className="absolute w-20 text-center flex-col-centered"
+                    className="progressbar-text-label"
                     style={{
                         left: `${(i / (textLabels.length - 1)) * 100}%`,
                         transform: 'translateX(-50%)',
                     }}
                 >
-                  <span className="text-xl text-neutral-800 block whitespace-normal break-normal">
+                  <span className={clsx(textLabelsStyles({ size }))}>
                     {label}
                   </span>
                 </div>

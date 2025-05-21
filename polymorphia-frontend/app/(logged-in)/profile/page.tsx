@@ -28,16 +28,16 @@ export default function Profile() {
                 <h3>Jesteś 36 na 139 zwierzaków!</h3>
               </div>
             </div>
-              {/*TODO:skalowanie range*/}
             <div className="profile-progress-bar-mobile">
                 <ProgressBar
-                    minXP={0}
-                    currentXP={5}
-                    maxXP={10}
+                    minXP={60}
+                    currentXP={65}
+                    maxXP={70}
                     numSquares={2}
                     segmentSizes={[0, 100, 0]}
                     upperTextLabels={["3.5 (60xp)", "4.0 (70xp)"]}
                     bottomTextLabels={["Żółtodziób", "Nieopierzony Odkrywca"]}
+                    labelsSize="sm"
                 />
             </div>
 
@@ -50,6 +50,7 @@ export default function Profile() {
                     segmentSizes={[0, 25, 0, 25, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0 ]}
                     upperTextLabels={["2.0 (0xp)", "2.0 (25xp)", "3.0 (50xp)", "3.5 (60xp)", "4.0 (70xp)", "4.5 (80xp)", "5.0 (90xp)", "5.0 (100xp)"]}
                     bottomTextLabels={["Jajo", "Pisklak", "Podlot", "Żółtodziób", "Nieopierzony Odkrywca", "Samodzielny Zwierzak", "Majestatyczna Bestia", "Władca Polymorphii"]}
+                    labelsSize="sm"
                 />
             </div>
           </div>

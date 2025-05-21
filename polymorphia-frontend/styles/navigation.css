@@ -36,7 +36,7 @@
 }
 
 .navbar-visible {
-    @apply w-full h-20 flex items-center justify-between;
+    @apply w-full h-20 flex items-center justify-between z-[1200];
 }
 
 .navbar-visible > h1 {

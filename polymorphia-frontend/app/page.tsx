@@ -7,6 +7,7 @@ import LoginForm from "@/components/home/LoginForm";
 import {useEffect, useRef, useState} from "react";
 import "../styles/home.css"
 import {animateInitialMount, animateLoginFormVisibility} from "@/animations/Home";
+import {API_STATIC_URL} from "@/services/api";
 
 export default function Home() {
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
@@ -36,7 +37,7 @@ export default function Home() {
       <BackgroundWrapper className="hero-background-wrapper">
         <div className="hero-background-image" ref={backgroundRef}>
           <Image
-              src="/hero_bg.png"
+              src={`${API_STATIC_URL}/images/general/hero_bg.png`}
               alt="Hero background"
               fill
               className="object-cover"
@@ -47,7 +48,7 @@ export default function Home() {
         <div className="hero-image-wrapper" ref={imageRef}>
           <div>
             <Image
-                src="/owl.png"
+                src={`${API_STATIC_URL}/images/general/owl.png`}
                 alt="Hero owl"
                 width={1000}
                 height={1000}

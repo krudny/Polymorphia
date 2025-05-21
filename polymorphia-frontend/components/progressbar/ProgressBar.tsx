@@ -5,6 +5,7 @@ import {FillsCalc, isProgressBarInputValid} from "@/components/progressbar/Progr
 import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLabels";
 import {ProgressBarProps} from "@/interfaces/progressbar/ProgressBarInterfaces";
 import toast from "react-hot-toast";
+import "../../styles/progressbar.css"
 
 export default function ProgressBar(props: ProgressBarProps) {
     if (!isProgressBarInputValid(props)) {
@@ -12,18 +13,19 @@ export default function ProgressBar(props: ProgressBarProps) {
         return null;
     }
 
-    const {minXP = 0, currentXP = 5.5, maxXP = 100, numSquares = 2, segmentSizes, upperTextLabels, bottomTextLabels} = props;
-    const fills = FillsCalc(minXP, maxXP, currentXP, segmentSizes)
+    const {minXP = 0, currentXP = 5.5, maxXP = 100, numSquares = 2, segmentSizes, upperTextLabels, bottomTextLabels, labelsSize} = props;
+    const scaledCurrentXP = ((currentXP - minXP) / (maxXP - minXP)) * 100;
+    const fills = FillsCalc(0, 100, scaledCurrentXP, segmentSizes)
 
     return (
-        <div className="w-full h-full px-10 m-auto flex flex-col justify-center">
+        <div className="progressbar">
             {upperTextLabels && upperTextLabels.length > 0 && (
-                <div className="w-full whitespace-nowrap min-h-8">
-                    <ProgressBarTextLabels textLabels={upperTextLabels} />
+                <div className="progressbar-label-container">
+                    <ProgressBarTextLabels textLabels={upperTextLabels} size={labelsSize} />
                 </div>
             )}
 
-            <div className="w-full relative mt-3 my-8">
+            <div className="progressbar-progress-container">
                 {Array.from({ length: numSquares - 1 }, (_, index) => {
                     const width = `calc((100% - ${(numSquares - 1) * 2 }rem) / ${numSquares - 1})`;
                     return (
@@ -47,11 +49,11 @@ export default function ProgressBar(props: ProgressBarProps) {
             </div>
 
             {bottomTextLabels && bottomTextLabels.length > 0 ? (
-                <div className="w-full whitespace-nowrap h-14">
-                    <ProgressBarTextLabels textLabels={bottomTextLabels} />
+                <div className="progressbar-label-container">
+                    <ProgressBarTextLabels textLabels={bottomTextLabels} size={labelsSize} />
                 </div>
             ) : (
-                <div className="w-full whitespace-nowraps">
+                <div className="progressbar-label-container">
                     <ProgressBarRangeLabels minXP={minXP} currentXP={currentXP} maxXP={maxXP} />
                 </div>
             )}
