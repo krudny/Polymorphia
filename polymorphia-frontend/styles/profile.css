@@ -34,7 +34,7 @@
 }
 
 .profile-progress-bar {
-    @apply flex-centered w-full lg:mx-48 h-28 my-6 lg:-mb-6 bg-neutral-400;
+    @apply w-full lg:max-w-[1450px] h-40 my-10 lg:-mb-6;
 }
 
 .profile-progress-bar > h1 {
