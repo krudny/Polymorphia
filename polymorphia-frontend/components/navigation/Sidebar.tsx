@@ -9,6 +9,8 @@ import "../../styles/navigation.css"
 
 import clsx from "clsx";
 import {animateSidebar} from "@/animations/Navigation";
+import { useQuery } from "@tanstack/react-query";
+import { EventSectionService } from "@/services/course/EventSectionService";
 
 export default function Sidebar() {
   const { isSidebarExpanded, setIsSidebarExpanded, isSidebarLocked } = useContext(NavigationContext);
@@ -19,6 +21,30 @@ export default function Sidebar() {
     if (!sidebar) return;
     animateSidebar(sidebar, isSidebarExpanded);
   }, [isSidebarExpanded]);
+
+  const {
+    data: eventSections,
+    isSuccess,
+  } = useQuery({
+    queryKey: ['eventSections'],
+    queryFn: () => EventSectionService.getEventSections(),
+  });
+
+  let menuItems = [...MainMenuItems];
+  if (isSuccess) {
+    const courseItem = menuItems.filter(
+      (menuOption) => menuOption.text === 'Kurs'
+    )[0];
+    courseItem.link = `course/1/${eventSections[0].id}`;
+
+    courseItem.subItems = eventSections.map((eventSection) => {
+      // TODO: use correct courseID
+      return {
+        text: eventSection.name,
+        link: `course/${eventSection.id}`,
+      };
+    });
+  }
 
   return (
       <div
@@ -34,7 +60,7 @@ export default function Sidebar() {
         <UserSection />
         <Line />
         <div className={clsx(`sidebar-menu-section-base ${isSidebarExpanded ? "sidebar-menu-section-expanded" : ""}`)}>
-          <MenuSection options={MainMenuItems} />
+          <MenuSection options={menuItems} />
         </div>
         <div>
           <Line />
