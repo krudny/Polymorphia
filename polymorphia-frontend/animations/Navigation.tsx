@@ -18,10 +18,10 @@ export const animateSidebar = (
   if (isExpanded) {
     tl.to(sidebar, {
       width: targetWidth,
-      duration: 0.6,
+      duration: 0.5,
       ease: "power2.out",
     })
-        .set([...headings, ...chevrons], { display: 'block' }, "<0.2")
+        .set([...headings, ...chevrons], { display: 'block' }, "<0.15")
         .set(profileBlock, { display: "flex" }, "<")
         .fromTo(
             [...headings, ...chevrons],
@@ -83,27 +83,27 @@ export const animateNavbar = (
   gsap.killTweensOf([drawer, ...allElements]);
 
   if (isExpanded) {
-    gsap.set(drawer, { opacity: 0, y: -30, display: 'flex' });
+    gsap.set(drawer, { opacity: 0, y: -100, display: 'flex' });
     gsap.set(allElements, { opacity: 1, x: 0 });
     gsap.set([...chevrons], { display: 'block' })
 
     gsap.timeline({ defaults: { ease: 'power1.in' } })
-        .to(drawer, { opacity: 1, y: 0, duration: 0.1 })
+        .to(drawer, { opacity: 1, y: 0, duration: 0.2 })
         .from(allElements, {
           x: -10,
-          duration: 0.2,
+          duration: 0.1,
           opacity: 0,
         });
   } else {
     gsap.timeline({
-      defaults: { ease: 'power1.in' },
+      defaults: { ease: 'power1.out' },
     })
         .to(allElements, {
           x: -20,
           opacity: 0,
-          duration: 0.2,
+          duration: 0.1,
         })
-        .to(drawer, { opacity: 0, y: -50, duration: 0.15 }, "<0.15")
+        .to(drawer, { opacity: 0, y: -50, duration: 0.25 }, "<0.1")
         .set(drawer, { display: 'none' });
   }
 };
@@ -127,12 +127,12 @@ export const animateSubMenuSection = (
       gsap.fromTo(
           container,
           { height: 0 },
-          { height: fullHeight, duration: 0.3, opacity: 1, ease: 'power1.in' }
+          { height: fullHeight, duration: 0.2, opacity: 1, ease: 'power1.in' }
       );
     } else {
       gsap.to(container, {
         height: 0,
-        duration: 0.3,
+        duration: 0.2,
         opacity: 0,
         ease: 'power1.out'
       });

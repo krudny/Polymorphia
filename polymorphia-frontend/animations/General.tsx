@@ -1,6 +1,6 @@
 "use client"
 import gsap from "gsap";
-import {RefObject, useEffect, useRef} from "react";
+import {useEffect, useRef} from "react";
 
 export const animateScaleShow = (ref: HTMLDivElement) => {
   gsap.fromTo(ref, {

@@ -38,7 +38,7 @@
 /* Detailed Slide Info */
 
 .slide-details-wrapper {
-    @apply relative flex mt-10 self-center w-full min-h-12 md:mt-0 md:self-end;
+    @apply relative flex mt-8 self-center w-full min-h-12 md:self-end;
 }
 
 .slide-details {
@@ -94,7 +94,7 @@
 }
 
 .carousel-image-wrapper > div {
-    @apply relative w-full max-w-lg aspect-square rounded-4xl;
+    @apply relative w-full max-w-lg aspect-square rounded-3xl;
     @apply lg:max-w-[400px] xl:max-w-[500px] 2xl:max-w-[600px];
 }
 
@@ -103,7 +103,7 @@
 }
 
 .carousel-content-wrapper {
-    @apply w-full h-fit flex-col-centered justify-start px-8;
+    @apply w-full h-fit flex-col-centered justify-start lg:pl-6;
     @apply lg:justify-evenly;
     @apply lg:min-w-[500px] lg:max-w-[500px];
     @apply xl:min-w-[700px] xl:max-w-[700px];
