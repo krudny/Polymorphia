@@ -2,6 +2,7 @@
 @tailwind utilities;
 
 :root {
+    overscroll-behavior: none;
     --font-family-symbols: "Material Symbols Rounded";
 }
 
