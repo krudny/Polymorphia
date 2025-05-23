@@ -1,5 +1,5 @@
 export interface PointsSummaryProps {
-  children: React.ReactNode;
+  elements: PointsSummaryElementProps[];
 }
 
 export interface PointsSummaryElementProps {

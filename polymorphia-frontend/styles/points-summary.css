@@ -1,0 +1,21 @@
+@import 'tailwindcss';
+@import './globals.css';
+
+.points-summary {
+  @apply flex gap-10 flex-col pb-5;
+  @apply md:justify-between md:items-end md:h-[calc(100vh-var(--spacing)*25)];
+  @apply max-md:items-center;
+}
+
+.points-summary-element {
+  @apply flex flex-col items-center text-shadow-sm;
+  @apply md:items-end;
+}
+
+.points-summary-element h1 {
+  @apply text-4xl text-nowrap;
+}
+
+.points-summary-element h2 {
+  @apply text-7xl text-nowrap;
+}
