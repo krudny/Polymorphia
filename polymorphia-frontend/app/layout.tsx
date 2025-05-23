@@ -32,6 +32,9 @@ export default function RootLayout({
 
   return (
     <html lang="pl" className="custom-scrollbar">
+      <head>
+        <meta name="theme-color" content="#262626" />
+      </head>
       <body className={`${leagueGothic.className} ${materialSymbols.variable} text-[#262626]`}>
         <TitleProvider>
           <QueryClientProvider client={queryClient}>
