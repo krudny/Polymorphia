@@ -23,6 +23,10 @@ export interface GradableEventCore {
   hidden?: boolean;
 }
 
-export interface TestsSectionProps {
+export interface EventSectionProps {
   eventSection: EventSection;
 }
+
+export interface TestsSectionProps extends EventSectionProps {}
+
+export interface CourseworkSectionProps extends EventSectionProps {}

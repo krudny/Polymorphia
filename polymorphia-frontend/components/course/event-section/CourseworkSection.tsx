@@ -3,11 +3,13 @@ import '../../../styles/general.css';
 import '../../../styles/event-section.css';
 import CardGrid from '@/components/card/CardGrid';
 import PointsSummary from './points-summary/PointsSummary';
-import { TestsSectionProps } from '@/interfaces/course/EventSectionInterfaces';
+import { CourseworkSectionProps } from '@/interfaces/course/EventSectionInterfaces';
 import { CardProps } from '@/interfaces/card/CardInterfaces';
 import { PointsSummaryElementProps } from '@/interfaces/course/PointsSummaryInterfaces';
 
-export default function TestsSection({ eventSection }: TestsSectionProps) {
+export default function CourseworkSection({
+  eventSection,
+}: CourseworkSectionProps) {
   const wrapperRef = useScaleShow();
 
   const cards: CardProps[] = eventSection.gradableEvents
