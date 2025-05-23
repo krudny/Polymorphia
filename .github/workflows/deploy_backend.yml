@@ -1,4 +1,5 @@
-name: Deploy and Build Docker Image on Oracle Cloud VM
+name: Deploy and Build Docker Image on Google Cloud
+
 on:
   push:
     branches:
@@ -13,34 +14,32 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Install rsync
+        run: |
+          sudo apt update
+          sudo apt install -y rsync openssh-client
+
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.OCI_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -p ${{ secrets.OCI_SSH_PORT }} -H ${{ secrets.OCI_VM_PUBLIC_IP }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.OCI_VM_PUBLIC_IP }} >> ~/.ssh/known_hosts
 
-      - name: Copy files to Oracle Cloud VM
+      - name: Copy files 
         run: |
-          rsync -avz --delete -e "ssh -i ~/.ssh/id_rsa -p ${{ secrets.OCI_SSH_PORT }} -o StrictHostKeyChecking=no" \
-            ./ ${{ secrets.OCI_USERNAME }}@${{ secrets.OCI_VM_PUBLIC_IP }}:/home/ubuntu/polymorphia
+          rsync -avz -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" \
+            ./ ${{ secrets.OCI_USERNAME }}@${{ secrets.OCI_VM_PUBLIC_IP }}:~/polymorphia
 
-      - name: Build and Run Docker container on Oracle Cloud VM
+      - name: Build and Run Docker container 
         run: |
-          ssh -i ~/.ssh/id_rsa -p ${{ secrets.OCI_SSH_PORT }} -o StrictHostKeyChecking=no \
-            ${{ secrets.OCI_USERNAME }}@${{ secrets.OCI_VM_PUBLIC_IP }} << 'EOF'
-            sudo docker stop polymorphia-backend || true
-            sudo docker rm polymorphia-backend || true
-            sudo usermod -aG docker $USER
-            sudo systemctl start docker
-            cd /home/ubuntu/polymorphia/polymorphia-backend
-            sudo docker build -t polymorphia-backend .
-            sudo docker run -d \
-            --restart unless-stopped \
-            -p 8080:8080 \
-            -v /app/config:/app/config \
-            -v ~/polymorphia-static:/app/static \
-            --name polymorphia-backend \
-            polymorphia-backend \
-            --spring.config.location=file:/app/config/application.properties
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no \
+            ${{ secrets.OCI_USERNAME }}@${{ secrets.OCI_VM_PUBLIC_IP }} << EOF
+              set -e
+              cd ~/polymorphia/polymorphia-backend
+              sudo systemctl start docker || true
+              sudo docker stop polymorphia-backend || true
+              sudo docker rm polymorphia-backend || true
+              sudo docker build -t polymorphia-backend .
+              sudo docker run -d -p 8080:8080 -v /app/config:/app/config -v ~/polymorphia-static:/app/static --name polymorphia-backend polymorphia-backend --spring.config.location=file:/app/config/application.properties
           EOF
