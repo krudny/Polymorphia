@@ -1,9 +1,14 @@
 @import 'tailwindcss';
 @import './globals.css';
 
+.card-grid {
+  @apply w-full h-fit grid grid-cols-1 gap-5;
+  @apply md:grid-cols-2 md:max-w-2xl;
+  @apply 2xl:grid-cols-3 2xl:max-w-5xl;
+}
+
 .card {
-  @apply w-full p-5 rounded-xl border-2 border-neutral-800 backdrop-blur-xs shadow-md transition-all;
-  @apply md:max-w-xs;
+  @apply w-full p-5 rounded-xl border-2 border-neutral-800 backdrop-blur-xs shadow-md transition-all h-fit;
   @apply hover:shadow-lg hover:scale-[1.02];
 }
 
@@ -12,10 +17,13 @@
 }
 
 .card-subtitle {
-  @apply truncate text-2xl
+  @apply truncate text-2xl;
 }
 
 .card-xp {
-  @apply text-nowrap text-3xl
+  @apply text-nowrap text-3xl;
 }
 
+.card-bottom {
+  @apply flex flex-row justify-between gap-3 items-end;
+}
