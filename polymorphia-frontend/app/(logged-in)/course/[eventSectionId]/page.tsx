@@ -1,6 +1,6 @@
 'use client';
 
-import TestsSection from '@/components/course/event-section/TestsSection';
+import SectionView from '@/components/course/event-section/SectionView';
 import Loading from '@/components/general/Loading';
 import { useTitle } from '@/components/navigation/TitleContext';
 import { EventSectionService } from '@/services/course/EventSectionService';
@@ -8,7 +8,6 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import { useEffect } from 'react';
 import '../../../../styles/general.css';
-import CourseworkSection from '@/components/course/event-section/CourseworkSection';
 
 export default function EventSection() {
   const { setTitle } = useTitle();
@@ -52,10 +51,10 @@ export default function EventSection() {
 
   switch (eventSection.type) {
     case 'coursework':
-      return <CourseworkSection eventSection={eventSection} />;
+      return <SectionView eventSection={eventSection} />;
 
     case 'tests':
-      return <TestsSection eventSection={eventSection} />;
+      return <SectionView eventSection={eventSection} presentEventsModally />;
 
     case 'project':
       return <></>;

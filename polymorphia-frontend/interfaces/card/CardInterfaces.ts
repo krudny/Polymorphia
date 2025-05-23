@@ -1,8 +1,9 @@
 export interface CardProps {
+  id: number;
   title: string;
   subtitle?: string;
   xp?: string;
-  link?: string;
+  onClick?: () => void;
 }
 
 export interface CardGridProps {
