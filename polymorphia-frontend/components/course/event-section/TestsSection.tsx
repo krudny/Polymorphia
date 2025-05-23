@@ -1,3 +1,10 @@
+import { useScaleShow } from "@/animations/General";
+import "../../../styles/general.css";
+
 export default function TestsSection() {
-  return <><h1>Hello, world</h1></>;
+  const wrapperRef = useScaleShow();
+  
+  return <div ref={wrapperRef} className="basic-container">
+    Hi.
+  </div>
 }

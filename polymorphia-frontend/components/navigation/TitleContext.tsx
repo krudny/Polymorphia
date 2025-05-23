@@ -8,10 +8,10 @@ interface TitleContextType {
 const TitleContext = createContext<TitleContextType | undefined>(undefined);
 
 export function TitleProvider({ children }: { children: ReactNode }) {
-  const [title, setTitle] = useState('Polymorphia');
+  const [title, setTitle] = useState('');
 
   function setTitleWithName(title: string) {
-    const headerTitle = title.length > 0 ? title : 'Polymorphia';
+    const headerTitle = title;
     const documentTitle = title.length > 0 ? `Polymorphia: ${title}` : 'Polymorphia';
 
     setTitle(headerTitle);
