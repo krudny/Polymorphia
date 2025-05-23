@@ -27,6 +27,6 @@ export interface EventSectionProps {
   eventSection: EventSection;
 }
 
-export interface TestsSectionProps extends EventSectionProps {}
-
-export interface CourseworkSectionProps extends EventSectionProps {}
+export interface SectionViewProps extends EventSectionProps {
+  presentEventsModally?: boolean;
+}
