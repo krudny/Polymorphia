@@ -24,7 +24,7 @@ export default function Equipment() {
                 <div key={i}>
                   <div key={i} className="equipment-grid-item">
                     <Image
-                        src="/locked.png"
+                        src={`${API_STATIC_URL}/images/chests/locked.png`}
                         alt="Locked item"
                         fill
                         className="equipment-img"
