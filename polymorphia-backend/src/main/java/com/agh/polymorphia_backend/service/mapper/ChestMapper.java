@@ -10,7 +10,7 @@ import com.agh.polymorphia_backend.repository.course.CourseRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.agh.polymorphia_backend.service.RewardService.CHEST_NOT_FOUND;
+import static com.agh.polymorphia_backend.service.course.RewardService.CHEST_NOT_FOUND;
 
 @Service
 @AllArgsConstructor
