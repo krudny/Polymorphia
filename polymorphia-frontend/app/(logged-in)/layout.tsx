@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <div className="w-full min-h-[100dvh] relative flex flex-col lg:flex-row bg-black">
           <Navigation />
           <Image
-              src="/background.png"
+              src={`/background.png`}
               alt="Background"
               fill
               className="absolute object-cover"
