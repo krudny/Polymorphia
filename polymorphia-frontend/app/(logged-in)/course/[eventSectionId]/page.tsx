@@ -54,7 +54,7 @@ export default function EventSection() {
       return <></>;
 
     case 'tests':
-      return <TestsSection />;
+      return <TestsSection eventSection={eventSection} />;
 
     case 'project':
       return <></>;

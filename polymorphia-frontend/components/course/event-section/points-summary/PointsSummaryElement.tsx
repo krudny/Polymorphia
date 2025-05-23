@@ -6,9 +6,9 @@ export default function PointsSummaryElement({
   xp,
 }: PointsSummaryElementProps) {
   return (
-    <div className="flex flex-col items-center md:items-end">
-      <h1 className="text-4xl text-nowrap">{title}</h1>
-      <h2 className="text-7xl text-nowrap">{xp}</h2>
+    <div className="points-summary-element">
+      <h1>{title}</h1>
+      <h2>{xp}</h2>
     </div>
   );
 }
