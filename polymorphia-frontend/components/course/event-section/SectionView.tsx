@@ -3,23 +3,41 @@ import '../../../styles/general.css';
 import '../../../styles/event-section.css';
 import CardGrid from '@/components/card/CardGrid';
 import PointsSummary from './points-summary/PointsSummary';
-import { CourseworkSectionProps } from '@/interfaces/course/EventSectionInterfaces';
+import {
+  GradableEventCore,
+  SectionViewProps,
+} from '@/interfaces/course/EventSectionInterfaces';
 import { CardProps } from '@/interfaces/card/CardInterfaces';
 import { PointsSummaryElementProps } from '@/interfaces/course/PointsSummaryInterfaces';
+import { useRouter } from 'next/navigation';
+import Modal from '@/components/modal/Modal';
+import { useState } from 'react';
 
-export default function CourseworkSection({
+export default function SectionView({
   eventSection,
-}: CourseworkSectionProps) {
+  presentEventsModally = false,
+}: SectionViewProps) {
   const wrapperRef = useScaleShow();
+  const router = useRouter();
+
+  const [currentGradableEventModal, setCurrentGradableEventModal] =
+    useState<GradableEventCore | null>(null);
 
   const cards: CardProps[] = eventSection.gradableEvents
     .filter((event) => !event.hidden)
     .map((event) => {
       return {
+        id: event.id,
         title: event.name,
         subtitle: event.topic,
         xp: event.gainedXp ? `${event.gainedXp} xp` : undefined,
-        link: `/course/${eventSection.id}/${event.id}`,
+        onClick: presentEventsModally
+          ? () => {
+              setCurrentGradableEventModal(event);
+            }
+          : () => {
+              router.push(`/course/${eventSection.id}/${event.id}`);
+            },
       };
     });
 
@@ -43,9 +61,18 @@ export default function CourseworkSection({
   ];
 
   return (
-    <div ref={wrapperRef} className="basic-container coursework-section">
+    <div ref={wrapperRef} className="basic-container section-view">
       <CardGrid cards={cards} />
       <PointsSummary elements={pointsSummaryElements} />
+      {presentEventsModally && (
+        <Modal
+          isOpen={currentGradableEventModal !== null}
+          title={currentGradableEventModal?.name ?? ''}
+          onClose={() => setCurrentGradableEventModal(null)}
+        >
+          Hi!
+        </Modal>
+      )}
     </div>
   );
 }

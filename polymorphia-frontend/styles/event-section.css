@@ -1,12 +1,7 @@
 @import 'tailwindcss';
 @import './globals.css';
 
-.tests-section {
-  @apply flex flex-col gap-10;
-  @apply md:flex-row md:justify-between md:gap-20;
-}
-
-.coursework-section {
+.section-view {
   @apply flex flex-col gap-10;
   @apply md:flex-row md:justify-between md:gap-20;
 }
