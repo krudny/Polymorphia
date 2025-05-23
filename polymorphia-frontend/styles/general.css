@@ -19,13 +19,6 @@
 }
 
 .knowledge-base-wrapper {
-    @apply w-screen min-h-[100dvh] relative bg-black lg:h-screen;
+    @apply w-full h-full flex flex-col flex-1 relative;
 }
 
-.knowledge-base-inner-wrapper {
-    @apply w-full min-h-[100dvh] h-full flex flex-col relative z-10
-}
-
-.knowledge-base-inner-wrapper > div {
-    @apply w-full flex-centered h-16;
-}

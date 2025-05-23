@@ -5,7 +5,6 @@ import BackgroundWrapper from "@/components/general/BackgroundWrapper";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import LoginForm from "@/components/home/LoginForm";
 import {useEffect, useRef, useState} from "react";
-import Link from "next/link";
 import "../styles/home.css"
 import {animateInitialMount, animateLoginFormVisibility} from "@/animations/Home";
 
@@ -62,9 +61,6 @@ export default function Home() {
             <h1>Polymorphia</h1>
             <div className="hero-buttons">
               <ButtonWithBorder text="Zaloguj się" onClick={openLoginForm} />
-              <Link href="/knowledge-base/evolution-stages">
-                <ButtonWithBorder text="Baza wiedzy" />
-              </Link>
             </div>
           </div>
 

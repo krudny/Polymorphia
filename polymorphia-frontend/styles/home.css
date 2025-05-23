@@ -63,6 +63,14 @@
     @apply w-full text-center text-4xl py-3 border-b-2 border-b-neutral-800 focus:outline-none;
 }
 
+.login-form > div > input:-webkit-autofill,
+.login-form > div > input:-webkit-autofill:hover,
+.login-form > div > input:-webkit-autofill:focus,
+.login-form > div > input:-webkit-autofill:active {
+    -webkit-background-clip: text;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
 .forgot-password {
     @apply mt-4 text-center text-xl hover:cursor-pointer;
 }
