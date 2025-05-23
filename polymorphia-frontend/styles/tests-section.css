@@ -1,10 +1,3 @@
 @import "tailwindcss";
 @import "./globals.css";
 
-.tests-section {
-    @apply w-full md:max-w-5xl mx-auto p-4 opacity-0;
-}
-
-.tests-section > section > h1 {
-    @apply text-6xl mb-6 lg:mb-10;
-}
