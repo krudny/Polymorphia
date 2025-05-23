@@ -1,25 +1,31 @@
 @import "tailwindcss";
 @import "./globals.css";
 
+/* Slider */
+
 .slider-wrapper {
-    @apply flex-1 flex flex-col;
+    @apply flex-1 flex flex-col opacity-0;
 }
 
 .slider-navigation {
-    @apply flex-centered w-full h-fit  space-x-4 mb-3 z-[999];
+    @apply flex-centered w-full h-fit  space-x-4 mb-3;
 }
 
 .slide-wrapper {
-    @apply relative w-full h-full flex-1 flex-col-centered overflow-x-hidden opacity-0;
+    @apply relative w-full h-full flex-1 flex-col-centered overflow-x-hidden;
 }
+
+/* Navigation Dots */
 
 .slider-dots {
     @apply w-full h-6 py-2 flex-centered space-x-2;
 }
 
 .slider-dots > button {
-   @apply w-3 h-3 rounded-full;
+    @apply w-3 h-3 rounded-full;
 }
+
+/* Navigation Arrow */
 
 .slider-arrows {
     @apply absolute top-1/2 -translate-y-1/2 transform rounded-full transition-all hover:cursor-pointer;
@@ -29,8 +35,10 @@
     @apply text-neutral-800 transition-colors hover:text-neutral-600;
 }
 
+/* Detailed Slide Info */
+
 .slide-details-wrapper {
-    @apply relative flex mt-6 self-center w-full min-h-12 md:mt-0 md:self-end;
+    @apply relative flex mt-10 self-center w-full min-h-12 md:mt-0 md:self-end;
 }
 
 .slide-details {
@@ -55,11 +63,17 @@
     @apply rounded-xl object-cover transition-shadow duration-200 shadow-md hover:shadow-3xl;
 }
 
+/* Single Slide */
+
 .carousel-item {
     @apply absolute top-0 left-0 w-full min-h-fit h-full;
     @apply opacity-0 z-10;
     @apply flex flex-col justify-center items-center py-2 px-6;
-    @apply lg:py-0 lg:flex-row lg:px-16 xl:px-26 2xl:px-36;
+    @apply lg:py-0 lg:flex-row lg:px-10 xl:px-20;
+}
+
+.carousel-wrapper {
+    @apply w-full flex-col-centered lg:flex-row 2xl:max-w-[1450px];
 }
 
 .carousel-item.active {
@@ -76,16 +90,12 @@
 
 .carousel-image-wrapper {
     @apply w-full h-fit flex-centered my-2;
-    @apply lg:my-0 lg:w-fit lg:h-full 2xl:w-full;
+    @apply lg:my-0 lg:h-full;
 }
 
 .carousel-image-wrapper > div {
-    @apply relative w-xs aspect-square;
-    @apply lg:w-md xl:w-lg 2xl:w-lg;
-}
-
-.carousel-image-wrapper > div {
-    @apply rounded-4xl;
+    @apply relative w-full max-w-lg aspect-square rounded-4xl;
+    @apply lg:max-w-[400px] xl:max-w-[500px] 2xl:max-w-[600px];
 }
 
 .carousel-image-wrapper > div > img {
@@ -93,8 +103,11 @@
 }
 
 .carousel-content-wrapper {
-    @apply w-full h-full flex-col-centered justify-start;
-    @apply lg:justify-evenly lg:ml-6 xl:ml-16;
+    @apply w-full h-fit flex-col-centered justify-start px-8;
+    @apply lg:justify-evenly;
+    @apply lg:min-w-[500px] lg:max-w-[500px];
+    @apply xl:min-w-[700px] xl:max-w-[700px];
+    @apply 2xl:max-w-full;
 }
 
 .carousel-content-inner-wrapper {
