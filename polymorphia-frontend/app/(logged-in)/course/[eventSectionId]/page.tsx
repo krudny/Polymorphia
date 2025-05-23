@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import { useEffect } from 'react';
 import '../../../../styles/general.css';
+import CourseworkSection from '@/components/course/event-section/CourseworkSection';
 
 export default function EventSection() {
   const { setTitle } = useTitle();
@@ -51,7 +52,7 @@ export default function EventSection() {
 
   switch (eventSection.type) {
     case 'coursework':
-      return <></>;
+      return <CourseworkSection eventSection={eventSection} />;
 
     case 'tests':
       return <TestsSection eventSection={eventSection} />;
