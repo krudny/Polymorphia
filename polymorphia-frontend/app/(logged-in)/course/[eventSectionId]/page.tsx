@@ -1,17 +1,17 @@
 'use client';
 
-import { useScaleShow } from '@/animations/General';
 import TestsSection from '@/components/course/event-section/TestsSection';
 import Loading from '@/components/general/Loading';
 import { useTitle } from '@/components/navigation/TitleContext';
 import { EventSectionService } from '@/services/course/EventSectionService';
 import { useQuery } from '@tanstack/react-query';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useEffect } from 'react';
+import '../../../../styles/general.css';
 
 export default function EventSection() {
-  const wrapperRef = useScaleShow();
   const { setTitle } = useTitle();
+
   const params = useParams();
   const eventSectionId = Number(params.eventSectionId);
 
@@ -34,11 +34,19 @@ export default function EventSection() {
   }
 
   if (error) {
-    return <div>Error loading event section: {error.message}</div>;
+    return (
+      <div className="basic-container-">
+        Error loading event section: {error.message}
+      </div>
+    );
   }
 
   if (!eventSection) {
-    return <div>No event section with this ID exists.</div>;
+    return (
+      <div className="basic-container">
+        No event section with this ID exists.
+      </div>
+    );
   }
 
   switch (eventSection.type) {
