@@ -2,20 +2,39 @@
 @import './globals.css';
 
 .points-summary {
-  @apply flex gap-10 flex-col pb-5;
-  @apply md:justify-between md:items-end md:h-[calc(100vh-var(--spacing)*25)];
+  @apply flex gap-10 flex-col my-5;
+  @apply md:justify-center md:items-end md:h-screen md:fixed md:right-20 md:top-0 md:w-80 md:my-0;
   @apply max-md:items-center;
+  @apply max-xl:right-5;
 }
 
 .points-summary-element {
-  @apply flex flex-col items-center text-shadow-sm;
+  @apply flex text-shadow-sm;
+}
+
+.points-summary-element-vertical {
+  @apply flex-col items-center;
+  @apply md:items-end;
+}
+
+.points-summary-element-horizontal {
+  @apply items-center flex-row gap-5;
   @apply md:items-end;
 }
 
 .points-summary-element h1 {
-  @apply text-4xl text-nowrap;
+  @apply text-5xl text-nowrap;
+}
+
+.points-summary-element-horizontal > h1 {
+  @apply text-7xl;
 }
 
 .points-summary-element h2 {
   @apply text-7xl text-nowrap;
+}
+
+.points-summary-divider {
+  @apply border-t-2 border-neutral-800 w-80 -mt-5 -mb-5;
+  @apply md:w-full;
 }
