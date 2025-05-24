@@ -14,7 +14,7 @@
 }
 
 .modal {
-  @apply m-3 w-sm min-h-32 p-5 z-[52] bg-neutral-300 border-2 border-neutral-800 rounded-xl;
+  @apply m-3 w-sm max-h-[calc(100vh-var(--spacing)*5)] p-5 z-[52] bg-neutral-300 border-2 border-neutral-800 rounded-xl;
   @apply lg:w-md;
   @apply 2xl:w-lg;
 }

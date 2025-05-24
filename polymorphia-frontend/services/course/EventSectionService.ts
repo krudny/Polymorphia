@@ -164,17 +164,50 @@ const eventSections: EventSection[] = [
     bonuses: [
       {
         name: 'Bonusy punktowe',
-        bonusXp: '0',
-        items: [],
+        bonusXp: '4',
+        items: [
+          {
+            assignedId: 1,
+            item: {
+              id: 1,
+              imageUrl: 'images/items/carrot.jpg',
+              name: 'Marchewka',
+            },
+            receivedDate: '12.11.2026',
+            bonusXp: '2',
+          },
+          {
+            assignedId: 3,
+            item: {
+              id: 2,
+              imageUrl: 'images/items/parsley.jpg',
+              name: 'Pietruszka',
+            },
+            receivedDate: '21.12.2026',
+            bonusXp: '2',
+          },
+        ],
       },
       {
         name: 'Bonusy procentowe',
-        bonusXp: '0',
-        bonusPercentage: '0',
-        items: [],
+        bonusXp: '0,8',
+        bonusPercentage: '10',
+        items: [
+          {
+            assignedId: 2,
+            item: {
+              id: 2,
+              imageUrl: 'images/items/parsley.jpg',
+              name: 'Pietruszka',
+            },
+            receivedDate: '06.12.2026',
+            bonusXp: '0,8',
+            bonusPercentage: '10',
+          },
+        ],
       },
     ],
-    totalXp: '4',
+    totalXp: '8,8',
     gradableEvents: [
       {
         id: 1,
