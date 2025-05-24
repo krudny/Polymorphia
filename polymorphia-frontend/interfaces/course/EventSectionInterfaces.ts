@@ -42,7 +42,7 @@ export interface BonusInfo {
 export interface BonusInfoItem {
   assignedId: number;
   itemId: number;
-  itemUrl: string;
+  imageUrl: string;
   name: string;
   receivedDate: string;
   bonusXp: string;

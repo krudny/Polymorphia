@@ -20,7 +20,7 @@
 }
 
 .modal-header {
-  @apply flex flex-row justify-between items-start mb-2;
+  @apply flex flex-row justify-between items-start mb-5;
 }
 
 .modal-header h1 {
