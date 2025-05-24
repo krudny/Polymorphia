@@ -17,3 +17,23 @@
 .gradable-event-section h2 {
   @apply text-3xl;
 }
+
+.gradable-event-section-xp {
+  @apply flex flex-col;
+}
+
+.gradable-event-section-chests {
+  @apply flex flex-col;
+}
+
+.gradable-event-section-chests-inner {
+  @apply flex flex-row gap-5 pt-3;
+}
+
+.gradable-event-section-chests-image-wrapper {
+  @apply rounded-xl shadow-lg w-30 h-30 relative;
+}
+
+.gradable-event-section-chests-image-wrapper img {
+  @apply rounded-xl;
+}

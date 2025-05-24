@@ -18,7 +18,6 @@ export default function TestDetailsModal({
     isLoading,
     isSuccess,
     isError,
-    error,
   } = useQuery({
     queryKey: ['tests', testData],
     queryFn: () => EventSectionService.getGradableEvent<Test>(testData),
