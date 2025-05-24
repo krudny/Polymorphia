@@ -1,10 +1,11 @@
 import { PointsSummaryElementProps } from '@/interfaces/course/PointsSummaryInterfaces';
 import '../../../../styles/points-summary.css';
 import clsx from 'clsx';
+import { SquareMousePointer } from 'lucide-react';
 
 export default function PointsSummaryElement({
-  title,
-  xp,
+  bonus,
+  onClick,
   horizontal = false,
 }: PointsSummaryElementProps) {
   return (
@@ -13,11 +14,16 @@ export default function PointsSummaryElement({
         'points-summary-element',
         horizontal
           ? 'points-summary-element-horizontal'
-          : 'points-summary-element-vertical'
+          : 'points-summary-element-vertical',
+        onClick && "points-summary-element-hover"
       )}
+      onClick={onClick}
     >
-      <h1>{title}</h1>
-      <h2>{xp}</h2>
+      <div className="flex flex-row items-center gap-5">
+        {onClick && <SquareMousePointer className="text-neutral-500"/>}
+        <h1>{bonus.name}</h1>
+      </div>
+      <h2>{bonus.bonusXp}</h2>
     </div>
   );
 }

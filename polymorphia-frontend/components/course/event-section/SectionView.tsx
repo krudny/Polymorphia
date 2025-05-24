@@ -40,31 +40,12 @@ export default function SectionView({
       };
     });
 
-  const pointsSummaryElements: PointsSummaryElementProps[] = [
-    {
-      title: 'Zdobyte xp',
-      xp: `${eventSection.gainedXp} xp`,
-    },
-    {
-      title: 'Bonusy punktowe',
-      xp: `+${eventSection.flatBonusXp} xp`,
-    },
-    {
-      title: 'Bonusy procentowe',
-      xp: `+${eventSection.percentageBonusXp} xp`,
-    },
-    {
-      title: 'Łącznie',
-      xp: `${eventSection.totalXp} xp`,
-    },
-  ];
-
   return (
     <>
       <div className="basic-container section-view">
         <CardGrid cards={cards} />
       </div>
-      <PointsSummary elements={pointsSummaryElements} />
+      <PointsSummary eventSection={eventSection} />
       {presentEventsModally && (
         <Modal
           isOpen={currentGradableEventModal !== null}
