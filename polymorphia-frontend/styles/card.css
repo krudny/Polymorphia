@@ -2,7 +2,7 @@
 @import './globals.css';
 
 .card-grid {
-  @apply w-full h-fit grid grid-cols-1 gap-5;
+  @apply w-full h-full grid grid-cols-1 gap-5;
   @apply md:grid-cols-2 md:max-w-2xl;
   @apply 2xl:grid-cols-3 2xl:max-w-5xl;
 }

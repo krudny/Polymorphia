@@ -5,4 +5,5 @@ export interface PointsSummaryProps {
 export interface PointsSummaryElementProps {
   title: string;
   xp: string;
+  horizontal?: boolean;
 }

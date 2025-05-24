@@ -14,7 +14,7 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   return (
       <NavigationProvider>
-        <div className="w-full min-h-[100dvh] relative flex flex-col lg:flex-row bg-black">
+        <div className="w-full min-h-[100dvh] relative flex flex-col lg:flex-row bg-black overflow-hidden">
           <Navigation />
           <Image
               src={`/background.png`}
@@ -24,8 +24,8 @@ export default function Layout({ children }: { children: ReactNode }) {
               priority
               sizes="100%"
           />
-          <div className="w-full h-full flex flex-col min-h-[calc(100dvh-5rem)] lg:min-h-screen relative">
-            <div className="w-full flex-centered h-15 hidden lg:flex">
+          <div id="main-container" className="w-full h-full flex flex-col min-h-[calc(100dvh-5rem)] lg:h-screen relative overflow-hidden lg:overflow-y-auto custom-scrollbar max-lg:mt-20">
+            <div className="w-full flex-centered h-15 hidden lg:flex shrink-0">
               <h3 className="text-4xl" ref={titleRef}>{title}</h3>
             </div>
             {children}
