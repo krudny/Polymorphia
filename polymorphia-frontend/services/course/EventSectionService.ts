@@ -1,15 +1,18 @@
 import {
   EventSection,
   EventSectionCore,
+  GradableEvent,
 } from '@/interfaces/course/EventSectionInterfaces';
-import { MenuOption } from '@/interfaces/navigation/NavigationInterfaces';
 
+// mocks
+
+// keep in sync with array below
 const eventSections: EventSection[] = [
   {
     id: 1,
     name: 'Git',
     type: 'coursework',
-    gainedXp: '4',
+    gainedXp: '2',
     bonuses: [
       {
         name: 'Bonusy punktowe',
@@ -23,13 +26,13 @@ const eventSections: EventSection[] = [
         items: [],
       },
     ],
-    totalXp: '4',
+    totalXp: '2',
     gradableEvents: [
       {
         id: 1,
         name: 'Lab 0',
         topic: 'Git jest git',
-        gainedXp: '4',
+        gainedXp: '2',
         hidden: false,
       },
     ],
@@ -279,7 +282,103 @@ const eventSections: EventSection[] = [
   },
 ];
 
-// mocks
+// keep in sync with array above
+const gradableEventsList: { id: number; gradableEvents: GradableEvent[] }[] = [
+  {
+    id: 1,
+    gradableEvents: [],
+  },
+  {
+    id: 2,
+    gradableEvents: [],
+  },
+  {
+    id: 3,
+    gradableEvents: [
+      {
+        id: 1,
+        name: 'Kartkówka 1',
+        maxXp: '2',
+        grade: {
+          gainedXp: '2',
+          chests: [
+            {
+              assignedId: 123,
+              chest: {
+                id: 456,
+                name: 'Zwariowana skrzynka kartkówkowa',
+                imageUrl: 'images/chests/s1.png',
+                opened: false,
+              },
+            },
+          ],
+        },
+        hidden: false,
+      },
+      {
+        id: 2,
+        name: 'Kartkówka 2',
+        maxXp: '2',
+        grade: {
+          gainedXp: '0',
+          chests: [],
+        },
+        hidden: false,
+      },
+      {
+        id: 3,
+        name: 'Kartkówka 3',
+        maxXp: '2',
+        grade: {
+          gainedXp: '0',
+          chests: [],
+        },
+        hidden: false,
+      },
+      {
+        id: 4,
+        name: 'Kartkówka 4',
+        maxXp: '2',
+        grade: {
+          gainedXp: '2',
+          chests: [],
+        },
+        hidden: false,
+      },
+      {
+        id: 5,
+        name: 'Kartkówka 5',
+        maxXp: '2',
+        hidden: false,
+      },
+      {
+        id: 6,
+        name: 'Kartkówka 6',
+        maxXp: '2',
+        hidden: false,
+      },
+      {
+        id: 7,
+        name: 'Kartkówka 7',
+        maxXp: '2',
+        hidden: false,
+      },
+    ],
+  },
+  {
+    id: 4,
+    gradableEvents: [],
+  },
+  {
+    id: 5,
+    gradableEvents: [],
+  },
+  {
+    id: 6,
+    gradableEvents: [],
+  },
+];
+
 export const EventSectionService = {
   getEventSections: async (): Promise<EventSectionCore[]> => {
     return new Promise<EventSectionCore[]>((resolve) => {
@@ -324,5 +423,33 @@ export const EventSectionService = {
     });
   },
 
-  // getGradableEvent: async (eventSectionId: number, gradableEventId: number): Promise<Gradable
+  getGradableEvent: async <T extends GradableEvent>(data?: {
+    eventSectionId: number;
+    gradableEventId: number;
+  }): Promise<T> => {
+    return new Promise<T>((resolve, reject) => {
+      if (data === undefined) {
+        reject('No data');
+        return;
+      }
+
+      const gradableEvents = gradableEventsList.filter(
+        (e) => e.id === data.eventSectionId
+      );
+
+      if (gradableEvents.length !== 1) {
+        reject('Invalid id');
+      }
+
+      const gradableEvent = gradableEvents[0].gradableEvents.filter(
+        (e) => e.id === data.gradableEventId
+      );
+
+      if (gradableEvent.length === 1) {
+        resolve(gradableEvent[0] as T);
+      } else {
+        reject('Invalid id');
+      }
+    });
+  },
 };

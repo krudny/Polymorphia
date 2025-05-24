@@ -1,3 +1,5 @@
+import { ModalProps } from '../modal/ModalInterfaces';
+
 export interface EventSectionCore {
   id: number;
   name: string;
@@ -49,10 +51,40 @@ export interface BonusInfoItem {
   bonusPercentage?: string; // "10"
 }
 
-// export interface GradableEvent {
-//   id: number;
-//   name: string;
-//   maxXp: string; // "1,2"
-//   infoUrl: string;
-//   hidden
-// }
+export interface GradableEvent {
+  id: number;
+  name: string;
+  maxXp: string; // "1,2"
+  hidden?: boolean;
+  grade?: Grade;
+}
+
+export interface Test extends GradableEvent {}
+
+export interface Grade {
+  gainedXp: string; // "1,2"
+  chests: GradeChest[];
+}
+
+export interface GradeChest {
+  assignedId: number;
+  chest: {
+    id: number;
+    name: string;
+    imageUrl: string;
+    opened: boolean;
+  };
+}
+
+export interface RewardsInfoProps {
+  grade?: Grade;
+  maxXp: string;
+}
+
+export interface TestDetailsModalProps
+  extends Omit<ModalProps, 'title' | 'isOpen' | 'children'> {
+  testData?: {
+    eventSectionId: number;
+    gradableEventId: number;
+  };
+}
