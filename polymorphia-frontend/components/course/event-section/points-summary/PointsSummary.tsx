@@ -63,9 +63,7 @@ export default function PointsSummary({ eventSection }: PointsSummaryProps) {
       <BonusInfoModal
         bonusInfo={currentBonusInfoModal}
         onClose={() => setCurrentBonusInfoModal(null)}
-      >
-        Hi!
-      </BonusInfoModal>
+      />
     </>
   );
 }
