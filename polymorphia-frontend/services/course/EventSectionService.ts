@@ -2,6 +2,7 @@ import {
   EventSection,
   EventSectionCore,
 } from '@/interfaces/course/EventSectionInterfaces';
+import { MenuOption } from '@/interfaces/navigation/NavigationInterfaces';
 
 const eventSections: EventSection[] = [
   {
@@ -104,7 +105,7 @@ const eventSections: EventSection[] = [
         id: 3,
         name: 'Laboratorium 3',
         topic: 'Interakcje między obiektami',
-        gainedXp:'2,5',
+        gainedXp: '2,5',
         hidden: false,
       },
       {

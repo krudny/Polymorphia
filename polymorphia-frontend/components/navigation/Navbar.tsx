@@ -11,6 +11,9 @@ import { animateNavbar } from '@/animations/Navigation';
 import '../../styles/navigation.css';
 import { useQuery } from '@tanstack/react-query';
 import { EventSectionService } from '@/services/course/EventSectionService';
+import { EventSectionCore } from '@/interfaces/course/EventSectionInterfaces';
+import { MenuOption } from '@/interfaces/navigation/NavigationInterfaces';
+import { updateMenuItems } from '@/services/course/EventSectionUtils';
 
 export default function Navbar() {
   const { isNavbarExpanded, setIsNavbarExpanded } =
@@ -39,18 +42,7 @@ export default function Navbar() {
 
   let menuItems = [...MainMenuItems];
   if (isSuccess) {
-    const courseItem = menuItems.filter(
-      (menuOption) => menuOption.text === 'Kurs'
-    )[0];
-    courseItem.link = `course/${eventSections[0].id}`;
-
-    courseItem.subItems = eventSections.map((eventSection) => {
-      // TODO: use correct courseID
-      return {
-        text: eventSection.name,
-        link: `course/${eventSection.id}`,
-      };
-    });
+    updateMenuItems(menuItems, eventSections);
   }
 
   return (
