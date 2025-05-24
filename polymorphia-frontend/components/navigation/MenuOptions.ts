@@ -21,7 +21,7 @@ export const MainMenuItems: MenuOption[]  = [
       { text: 'Skrzynki', link: 'knowledge-base/chests' },
     ],
   },
-  { icon: GraduationCapIcon, text: 'Oceny' },
+  { icon: GraduationCapIcon, text: 'Kurs' },
   {
     icon: TrophyIcon,
     text: 'Ekwipunek',

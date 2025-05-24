@@ -7,6 +7,7 @@ import LoginForm from "@/components/home/LoginForm";
 import {useEffect, useRef, useState} from "react";
 import "../styles/home.css"
 import {animateInitialMount, animateLoginFormVisibility} from "@/animations/Home";
+import { useTitle } from "@/components/navigation/TitleContext";
 import {API_STATIC_URL} from "@/services/api";
 
 export default function Home() {
@@ -14,6 +15,8 @@ export default function Home() {
 
   const openLoginForm = () => setIsLoginFormVisible(true);
   const closeLoginForm = () => setIsLoginFormVisible(false);
+
+  const { setTitle } = useTitle();
 
   const loginFormRef = useRef<HTMLDivElement>(null);
   const titleSectionRef = useRef<HTMLDivElement>(null);
@@ -32,6 +35,10 @@ export default function Home() {
     if (!hasMountedRef.current || !loginFormRef.current || !titleSectionRef.current) return;
     animateLoginFormVisibility(loginFormRef.current, titleSectionRef.current, isLoginFormVisible);
   }, [isLoginFormVisible]);
+
+  useEffect(() => {
+    setTitle('');
+  }, [])
 
   return (
       <BackgroundWrapper className="hero-background-wrapper">
