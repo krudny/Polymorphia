@@ -19,7 +19,7 @@ export default function Modal({
       onClick={isOpen ? onClose : undefined}
     >
       <div
-        className="modal"
+        className="modal overflow-auto"
         onClick={(e) => {
           e.stopPropagation();
         }}
