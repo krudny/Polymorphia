@@ -24,7 +24,13 @@ export default function PointsSummary({ eventSection }: PointsSummaryProps) {
     },
     ...eventSection.bonuses.map((bonus) => {
       return {
-        bonus: bonus,
+        bonus: {
+          ...bonus,
+          bonusXp: `+${bonus.bonusXp} xp`,
+          bonusPercentage: bonus.bonusPercentage
+            ? `+${bonus.bonusPercentage}$`
+            : undefined,
+        },
         onClick: () => setCurrentBonusInfoModal(bonus),
       };
     }),

@@ -8,7 +8,6 @@ import {
   SectionViewProps,
 } from '@/interfaces/course/EventSectionInterfaces';
 import { CardProps } from '@/interfaces/card/CardInterfaces';
-import { PointsSummaryElementProps } from '@/interfaces/course/PointsSummaryInterfaces';
 import { useRouter } from 'next/navigation';
 import Modal from '@/components/modal/Modal';
 import { useState } from 'react';
