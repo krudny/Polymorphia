@@ -1,6 +1,7 @@
 export interface EventSectionCore {
   id: number;
   name: string;
+  hidden?: boolean;
 }
 
 export interface EventSection {
@@ -47,3 +48,11 @@ export interface BonusInfoItem {
   bonusXp: string; // "1,2"
   bonusPercentage?: string; // "10"
 }
+
+// export interface GradableEvent {
+//   id: number;
+//   name: string;
+//   maxXp: string; // "1,2"
+//   infoUrl: string;
+//   hidden
+// }
