@@ -8,9 +8,10 @@ export interface EventSection {
   type: 'coursework' | 'tests' | 'project';
   name: string;
   gainedXp: number;
-  flatBonusXp: number;
-  percentageBonus: number;
-  percentageBonusXp: number;
+  // flatBonusXp: number;
+  // percentageBonus: number;
+  // percentageBonusXp: number;
+  bonuses: BonusInfo[],
   totalXp: number;
   gradableEvents: GradableEventCore[];
 }
@@ -29,4 +30,21 @@ export interface EventSectionProps {
 
 export interface SectionViewProps extends EventSectionProps {
   presentEventsModally?: boolean;
+}
+
+export interface BonusInfo {
+  name: string;
+  bonusXp: string;
+  bonusPercentage?: string;
+  items: BonusInfoItem[];
+}
+
+export interface BonusInfoItem {
+  assignedId: number;
+  itemId: number;
+  itemUrl: string;
+  name: string;
+  receivedDate: string;
+  bonusXp: string;
+  bonusPercentage?: string;
 }
