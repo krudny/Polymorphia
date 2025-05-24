@@ -9,9 +9,19 @@ const eventSections: EventSection[] = [
     name: 'Git',
     type: 'coursework',
     gainedXp: 4,
-    flatBonusXp: 0,
-    percentageBonus: 0,
-    percentageBonusXp: 0,
+    bonuses: [
+      {
+        name: 'Bonusy punktowe',
+        bonusXp: '+0 xp',
+        items: [],
+      },
+      {
+        name: 'Bonusy procentowe',
+        bonusXp: '+0 xp',
+        bonusPercentage: '+0%',
+        items: [],
+      },
+    ],
     totalXp: 4,
     gradableEvents: [
       {
@@ -28,9 +38,38 @@ const eventSections: EventSection[] = [
     name: 'Laboratoria',
     type: 'coursework',
     gainedXp: 11.5,
-    flatBonusXp: 1.5,
-    percentageBonus: 10,
-    percentageBonusXp: 1.3,
+    bonuses: [
+      {
+        name: 'Bonusy punktowe',
+        bonusXp: '+1.5 xp',
+        items: [
+          {
+            assignedId: 1,
+            itemId: 1,
+            itemUrl: 'images/items/carrot.jpg',
+            name: 'Marchewka',
+            receivedDate: '12.11.2026',
+            bonusXp: '+1.5 xp',
+          },
+        ],
+      },
+      {
+        name: 'Bonusy procentowe',
+        bonusXp: '+1.3 xp',
+        bonusPercentage: '+10%',
+        items: [
+          {
+            assignedId: 2,
+            itemId: 2,
+            itemUrl: 'images/items/parsley.jpg',
+            name: 'Pietruszka',
+            receivedDate: '06.12.2026',
+            bonusXp: '+1.3 xp',
+            bonusPercentage: '+10%',
+          },
+        ],
+      },
+    ],
     totalXp: 14.3,
     gradableEvents: [
       {
@@ -104,10 +143,20 @@ const eventSections: EventSection[] = [
     name: 'Kartkówki',
     type: 'tests',
     gainedXp: 4,
-    flatBonusXp: 2,
-    percentageBonus: 10,
-    percentageBonusXp: 0.6,
-    totalXp: 6.6,
+    bonuses: [
+      {
+        name: 'Bonusy punktowe',
+        bonusXp: '+0 xp',
+        items: [],
+      },
+      {
+        name: 'Bonusy procentowe',
+        bonusXp: '+0 xp',
+        bonusPercentage: '+0%',
+        items: [],
+      },
+    ],
+    totalXp: 4,
     gradableEvents: [
       {
         id: 1,
@@ -155,9 +204,19 @@ const eventSections: EventSection[] = [
     name: 'Quizy',
     type: 'tests',
     gainedXp: 4,
-    flatBonusXp: 0,
-    percentageBonus: 0,
-    percentageBonusXp: 0,
+    bonuses: [
+      {
+        name: 'Bonusy punktowe',
+        bonusXp: '+0 xp',
+        items: [],
+      },
+      {
+        name: 'Bonusy procentowe',
+        bonusXp: '+0 xp',
+        bonusPercentage: '+0%',
+        items: [],
+      },
+    ],
     totalXp: 4,
     gradableEvents: [],
   },
@@ -166,9 +225,19 @@ const eventSections: EventSection[] = [
     name: 'Specjalne',
     type: 'coursework',
     gainedXp: 4,
-    flatBonusXp: 0,
-    percentageBonus: 0,
-    percentageBonusXp: 0,
+    bonuses: [
+      {
+        name: 'Bonusy punktowe',
+        bonusXp: '+0 xp',
+        items: [],
+      },
+      {
+        name: 'Bonusy procentowe',
+        bonusXp: '+0 xp',
+        bonusPercentage: '+0%',
+        items: [],
+      },
+    ],
     totalXp: 4,
     gradableEvents: [],
   },
@@ -177,9 +246,19 @@ const eventSections: EventSection[] = [
     name: 'Projekt',
     type: 'project',
     gainedXp: 4,
-    flatBonusXp: 0,
-    percentageBonus: 0,
-    percentageBonusXp: 0,
+    bonuses: [
+      {
+        name: 'Bonusy punktowe',
+        bonusXp: '+0 xp',
+        items: [],
+      },
+      {
+        name: 'Bonusy procentowe',
+        bonusXp: '+0 xp',
+        bonusPercentage: '+0%',
+        items: [],
+      },
+    ],
     totalXp: 4,
     gradableEvents: [],
   },

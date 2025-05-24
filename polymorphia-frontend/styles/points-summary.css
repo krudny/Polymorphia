@@ -12,6 +12,10 @@
   @apply flex text-shadow-sm;
 }
 
+.points-summary-element-hover {
+  @apply cursor-pointer hover:text-shadow-lg;
+}
+
 .points-summary-element-vertical {
   @apply flex-col items-center;
   @apply md:items-end;
