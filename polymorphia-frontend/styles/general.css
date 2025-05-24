@@ -23,7 +23,7 @@
 }
 
 .basic-container {
-    @apply w-full md:max-w-5xl 2xl:max-w-7xl mx-auto p-4;
+    @apply w-full md:max-w-5xl 2xl:max-w-7xl mx-auto p-4 lg:mt-10;
 }
 
 .basic-container > h1 {

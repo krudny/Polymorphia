@@ -17,7 +17,6 @@ export default function SectionView({
   eventSection,
   presentEventsModally = false,
 }: SectionViewProps) {
-  const wrapperRef = useScaleShow();
   const router = useRouter();
 
   const [currentGradableEventModal, setCurrentGradableEventModal] =
@@ -61,8 +60,10 @@ export default function SectionView({
   ];
 
   return (
-    <div ref={wrapperRef} className="basic-container section-view">
-      <CardGrid cards={cards} />
+    <>
+      <div className="basic-container section-view">
+        <CardGrid cards={cards} />
+      </div>
       <PointsSummary elements={pointsSummaryElements} />
       {presentEventsModally && (
         <Modal
@@ -73,6 +74,6 @@ export default function SectionView({
           Hi!
         </Modal>
       )}
-    </div>
+    </>
   );
 }

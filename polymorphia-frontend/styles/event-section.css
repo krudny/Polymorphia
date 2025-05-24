@@ -2,6 +2,6 @@
 @import './globals.css';
 
 .section-view {
-  @apply flex flex-col gap-10;
-  @apply md:flex-row md:justify-between md:gap-20;
+  @apply flex flex-col gap-10 transform-none;
+  @apply md:flex-row md:gap-0 md:pr-100;
 }
