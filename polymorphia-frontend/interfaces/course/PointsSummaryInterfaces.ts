@@ -1,16 +1,25 @@
 import { ModalProps } from '../modal/ModalInterfaces';
-import { BonusInfo, EventSection } from './EventSectionInterfaces';
+import {
+  BonusInfo,
+  BonusInfoItem,
+  EventSection,
+} from './EventSectionInterfaces';
 
 export interface PointsSummaryProps {
   eventSection: EventSection;
 }
 
 export interface PointsSummaryElementProps {
-  bonus: BonusInfo,
+  bonus: BonusInfo;
   onClick?: () => void;
   horizontal?: boolean;
 }
 
-export interface BonusInfoModalProps extends Omit<ModalProps, 'title' | 'isOpen'> {
-  bonusInfo: BonusInfo | null,
+export interface BonusInfoModalProps
+  extends Omit<ModalProps, 'title' | 'isOpen' | 'children'> {
+  bonusInfo: BonusInfo | null;
+}
+
+export interface BonusItemCardProps {
+  item: BonusInfoItem;
 }

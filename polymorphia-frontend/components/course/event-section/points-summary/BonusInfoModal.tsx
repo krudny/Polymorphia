@@ -1,6 +1,7 @@
 import Modal from '@/components/modal/Modal';
 import { BonusInfoModalProps } from '@/interfaces/course/PointsSummaryInterfaces';
 import BonusItemCard from './BonusItemCard';
+import '../../../../styles/points-summary.css';
 
 export default function BonusInfoModal({
   bonusInfo,
@@ -12,7 +13,7 @@ export default function BonusInfoModal({
       title={bonusInfo?.name ?? ''}
       onClose={onClose}
     >
-      <div className="flex flex-col gap-2">
+      <div className="bonus-info-modal">
         {bonusInfo?.items.map((item) => (
           <BonusItemCard key={item.assignedId} item={item} />
         ))}
