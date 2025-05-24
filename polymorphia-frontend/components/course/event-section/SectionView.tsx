@@ -11,6 +11,7 @@ import { CardProps } from '@/interfaces/card/CardInterfaces';
 import { useRouter } from 'next/navigation';
 import Modal from '@/components/modal/Modal';
 import { useState } from 'react';
+import TestDetailsModal from './TestDetailsModal';
 
 export default function SectionView({
   eventSection,
@@ -45,14 +46,18 @@ export default function SectionView({
         <CardGrid cards={cards} />
       </div>
       <PointsSummary eventSection={eventSection} />
-      {presentEventsModally && (
-        <Modal
-          isOpen={currentGradableEventModal !== null}
-          title={currentGradableEventModal?.name ?? ''}
+      {presentEventsModally && eventSection.type === 'tests' && (
+        <TestDetailsModal
+          testData={
+            currentGradableEventModal
+              ? {
+                  eventSectionId: eventSection.id,
+                  gradableEventId: currentGradableEventModal.id,
+                }
+              : undefined
+          }
           onClose={() => setCurrentGradableEventModal(null)}
-        >
-          Hi!
-        </Modal>
+        />
       )}
     </>
   );

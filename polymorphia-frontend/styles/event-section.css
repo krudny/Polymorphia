@@ -5,3 +5,15 @@
   @apply flex flex-col gap-10 transform-none;
   @apply md:flex-row md:gap-0 md:pr-100;
 }
+
+.gradable-event-section {
+  @apply flex flex-col gap-2;
+}
+
+.gradable-event-section h1 {
+  @apply text-5xl;
+}
+
+.gradable-event-section h2 {
+  @apply text-3xl;
+}
