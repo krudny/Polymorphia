@@ -8,22 +8,22 @@ export default function BonusItemCard({ item }: BonusItemCardProps) {
     <div className="bonus-item-card">
       <div className="bonus-item-card-image">
         <Image
-          src={`${API_STATIC_URL}/${item.imageUrl}`}
-          alt={item.name}
+          src={`${API_STATIC_URL}/${item.item.imageUrl}`}
+          alt={item.item.name}
           fill
         />
       </div>
       <div className="bonus-item-card-middle">
-        <h1>{item.name}</h1>
+        <h1>{item.item.name}</h1>
         <h2>Zdobyto: {item.receivedDate}</h2>
       </div>
       <div className="bonus-item-card-xp">
         {item.bonusPercentage && (
           <p className="bonus-item-card-xp-percentage">
-            ({item.bonusPercentage})
+            (+{item.bonusPercentage}%)
           </p>
         )}
-        <p className="bonus-item-card-xp-value">{item.bonusXp}</p>
+        <p className="bonus-item-card-xp-value">+{item.bonusXp} xp</p>
       </div>
     </div>
   );
