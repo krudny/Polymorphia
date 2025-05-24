@@ -30,7 +30,7 @@
   @apply text-5xl text-nowrap;
 }
 
-.points-summary-element-horizontal > h1 {
+.points-summary-element-horizontal h1 {
   @apply text-7xl;
 }
 
