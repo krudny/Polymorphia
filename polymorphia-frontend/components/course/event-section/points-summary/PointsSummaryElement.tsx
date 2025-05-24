@@ -15,12 +15,12 @@ export default function PointsSummaryElement({
         horizontal
           ? 'points-summary-element-horizontal'
           : 'points-summary-element-vertical',
-        onClick && "points-summary-element-hover"
+        onClick && 'points-summary-element-hover'
       )}
       onClick={onClick}
     >
-      <div className="flex flex-row items-center gap-5">
-        {onClick && <SquareMousePointer className="text-neutral-500"/>}
+      <div className="points-summary-element-header">
+        {onClick && <SquareMousePointer className="text-neutral-500" />}
         <h1>{bonus.name}</h1>
       </div>
       <h2>{bonus.bonusXp}</h2>
