@@ -16,7 +16,7 @@
 }
 
 .card h1 {
-  @apply text-5xl mb-2;
+  @apply truncate text-5xl mb-2;
 }
 
 .card-subtitle {
