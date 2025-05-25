@@ -12,7 +12,7 @@
 }
 
 .event-section-card-hover {
-  @apply hover:shadow-lg hover:scale-[1.02];
+  @apply hover:scale-[1.02];
 }
 
 .event-section-card h1 {
