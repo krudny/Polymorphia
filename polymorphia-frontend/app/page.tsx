@@ -38,7 +38,7 @@ export default function Home() {
 
   useEffect(() => {
     setTitle('');
-  }, [])
+  }, [setTitle]);
 
   return (
       <BackgroundWrapper className="hero-background-wrapper">

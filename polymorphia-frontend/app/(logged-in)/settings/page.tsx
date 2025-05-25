@@ -17,7 +17,7 @@ export default function Settings() {
 
   useEffect(() => {
     setTitle('Ustawienia');
-  }, [])
+  }, [setTitle]);
 
   return (
       <div ref={wrapperRef} className="py-6 px-32">

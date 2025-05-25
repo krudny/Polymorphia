@@ -11,7 +11,7 @@ export default function EvolutionStages() {
 
   useEffect(() => {
     setTitle('Postacie');
-  }, []);
+  }, [setTitle]);
 
   const { data: evolutionStages, isLoading, error } = useQuery({
     queryKey: ['evolution_stages', 1],

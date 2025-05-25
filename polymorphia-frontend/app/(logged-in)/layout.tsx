@@ -4,7 +4,6 @@ import {ReactNode} from "react";
 import Navigation from "@/components/navigation/Navigation";
 import {NavigationProvider} from "@/components/navigation/NavigationContext";
 import Image from "next/image";
-import Link from "next/link";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useScaleShow } from "@/animations/General";
 

@@ -13,7 +13,7 @@ export default function Equipment() {
 
   useEffect(() => {
     setTitle('Ekwipunek');
-  }, [])
+  }, [setTitle]);
 
   return (
       <div ref={wrapperRef} className="equipment">

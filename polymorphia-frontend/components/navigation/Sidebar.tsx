@@ -14,8 +14,6 @@ import clsx from 'clsx';
 import { animateSidebar } from '@/animations/Navigation';
 import { useQuery } from '@tanstack/react-query';
 import { EventSectionService } from '@/services/course/EventSectionService';
-import { EventSectionCore } from '@/interfaces/course/EventSectionInterfaces';
-import { MenuOption } from '@/interfaces/navigation/NavigationInterfaces';
 import { updateMenuItems } from '@/services/course/EventSectionUtils';
 
 export default function Sidebar() {
@@ -34,7 +32,7 @@ export default function Sidebar() {
     queryFn: () => EventSectionService.getEventSections(),
   });
 
-  let menuItems = [...MainMenuItems];
+  const menuItems = [...MainMenuItems];
   if (isSuccess) {
     updateMenuItems(menuItems, eventSections);
   }

@@ -1,4 +1,3 @@
-import { useScaleShow } from '@/animations/General';
 import '../../../styles/general.css';
 import '../../../styles/event-section.css';
 import CardGrid from '@/components/card/CardGrid';
@@ -9,7 +8,6 @@ import {
 } from '@/interfaces/course/EventSectionInterfaces';
 import { CardProps } from '@/interfaces/card/CardInterfaces';
 import { useRouter } from 'next/navigation';
-import Modal from '@/components/modal/Modal';
 import { useState } from 'react';
 import TestDetailsModal from './TestDetailsModal';
 

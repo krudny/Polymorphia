@@ -13,7 +13,7 @@ export default function Profile() {
 
   useEffect(() => {
     setTitle('Profil');
-  }, [])
+  }, [setTitle]);
 
   return (
       <div ref={wrapperRef} className="profile">

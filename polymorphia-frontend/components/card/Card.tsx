@@ -1,7 +1,6 @@
 import { CardProps } from '@/interfaces/card/CardInterfaces';
 import './../../styles/card.css';
 import clsx from 'clsx';
-import Link from 'next/link';
 
 export default function Card({ title, subtitle, xp, onClick }: CardProps) {
   return (

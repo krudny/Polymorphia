@@ -59,7 +59,7 @@ export interface GradableEvent {
   grade?: Grade;
 }
 
-export interface Test extends GradableEvent {}
+export type Test = GradableEvent
 
 export interface Grade {
   gainedXp: string; // "1,2"
