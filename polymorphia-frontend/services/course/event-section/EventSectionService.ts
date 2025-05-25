@@ -55,7 +55,7 @@ const eventSections: EventSection[] = [
               name: 'Marchewka',
             },
             receivedDate: '12.11.2026',
-            bonusXp: '1,0',
+            bonusXp: '1',
           },
           {
             assignedId: 3,
