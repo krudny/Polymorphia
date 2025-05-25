@@ -12,7 +12,7 @@ export function TitleProvider({ children }: { children: ReactNode }) {
 
   function setTitleWithName(title: string) {
     const headerTitle = title;
-    const documentTitle = title.length > 0 ? `Polymorphia: ${title}` : 'Polymorphia';
+    const documentTitle = title.length > 0 ? `${title} - Polymorphia` : 'Polymorphia';
 
     setTitle(headerTitle);
     document.title = documentTitle;
