@@ -2,7 +2,7 @@ import {
   EventSection,
   EventSectionCore,
   GradableEvent,
-} from '@/interfaces/course/EventSectionInterfaces';
+} from '@/interfaces/course/event-section/EventSectionInterfaces';
 
 // mocks
 
