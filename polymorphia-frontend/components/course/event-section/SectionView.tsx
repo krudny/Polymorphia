@@ -1,12 +1,12 @@
 import '../../../styles/general.css';
 import '../../../styles/event-section.css';
-import CardGrid from '@/components/card/CardGrid';
+import EventSectionCardGrid from '@/components/course/event-section/card/EventSectionCardGrid';
 import PointsSummary from './points-summary/PointsSummary';
 import {
   GradableEventCore,
   SectionViewProps,
-} from '@/interfaces/course/EventSectionInterfaces';
-import { CardProps } from '@/interfaces/card/CardInterfaces';
+} from '@/interfaces/course/event-section/EventSectionInterfaces';
+import { EventSectionCardProps } from '@/interfaces/course/event-section/card/EventSectionCardInterfaces';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import TestDetailsModal from './TestDetailsModal';
@@ -20,7 +20,7 @@ export default function SectionView({
   const [currentGradableEventModal, setCurrentGradableEventModal] =
     useState<GradableEventCore | null>(null);
 
-  const cards: CardProps[] = eventSection.gradableEvents
+  const cards: EventSectionCardProps[] = eventSection.gradableEvents
     .filter((event) => !event.hidden)
     .map((event) => {
       return {
@@ -41,7 +41,7 @@ export default function SectionView({
   return (
     <>
       <div className="basic-container section-view">
-        <CardGrid cards={cards} />
+        <EventSectionCardGrid cards={cards} />
       </div>
       <PointsSummary eventSection={eventSection} />
       {presentEventsModally && eventSection.type === 'tests' && (

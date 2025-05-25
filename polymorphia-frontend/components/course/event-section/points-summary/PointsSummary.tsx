@@ -1,13 +1,13 @@
 import {
   PointsSummaryElementProps,
   PointsSummaryProps,
-} from '@/interfaces/course/PointsSummaryInterfaces';
+} from '@/interfaces/course/event-section/PointsSummaryInterfaces';
 import '../../../../styles/points-summary.css';
 import PointsSummaryElement from './PointsSummaryElement';
 import { useScaleShow } from '@/animations/General';
 import { Fragment, useState } from 'react';
 import BonusInfoModal from './BonusInfoModal';
-import { BonusInfo } from '@/interfaces/course/EventSectionInterfaces';
+import { BonusInfo } from '@/interfaces/course/event-section/EventSectionInterfaces';
 
 export default function PointsSummary({ eventSection }: PointsSummaryProps) {
   const wrapperRef = useScaleShow();

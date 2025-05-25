@@ -13,8 +13,8 @@ import '../../styles/navigation.css';
 import clsx from 'clsx';
 import { animateSidebar } from '@/animations/Navigation';
 import { useQuery } from '@tanstack/react-query';
-import { EventSectionService } from '@/services/course/EventSectionService';
-import { updateMenuItems } from '@/services/course/EventSectionUtils';
+import { EventSectionService } from '@/services/course/event-section/EventSectionService';
+import { updateMenuItems } from '@/services/course/event-section/EventSectionUtils';
 
 export default function Sidebar() {
   const { isSidebarExpanded, setIsSidebarExpanded, isSidebarLocked } =

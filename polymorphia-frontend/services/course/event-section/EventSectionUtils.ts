@@ -1,6 +1,6 @@
 'use client';
 
-import { EventSectionCore } from '@/interfaces/course/EventSectionInterfaces';
+import { EventSectionCore } from '@/interfaces/course/event-section/EventSectionInterfaces';
 import { MenuOption } from '@/interfaces/navigation/NavigationInterfaces';
 
 export function updateMenuItems(
