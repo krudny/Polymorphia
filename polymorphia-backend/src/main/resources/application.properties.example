@@ -25,3 +25,8 @@ initial.user.firstName=
 initial.user.lastName=
 initial.user.email=
 initial.user.password=
+
+# Session
+server.servlet.session.cookie.same-site=None
+server.servlet.session.cookie.secure=true
+server.servlet.session.cookie.http-only=true
