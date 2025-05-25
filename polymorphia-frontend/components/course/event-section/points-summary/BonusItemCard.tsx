@@ -1,7 +1,7 @@
 import { API_STATIC_URL } from '@/services/api';
 import Image from 'next/image';
 import '../../../../styles/points-summary.css';
-import { BonusItemCardProps } from '@/interfaces/course/PointsSummaryInterfaces';
+import { BonusItemCardProps } from '@/interfaces/course/event-section/PointsSummaryInterfaces';
 
 export default function BonusItemCard({ item }: BonusItemCardProps) {
   return (

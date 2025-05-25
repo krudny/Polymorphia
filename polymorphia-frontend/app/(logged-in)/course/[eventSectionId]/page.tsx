@@ -3,7 +3,7 @@
 import SectionView from '@/components/course/event-section/SectionView';
 import Loading from '@/components/general/Loading';
 import { useTitle } from '@/components/navigation/TitleContext';
-import { EventSectionService } from '@/services/course/EventSectionService';
+import { EventSectionService } from '@/services/course/event-section/EventSectionService';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import { useEffect } from 'react';

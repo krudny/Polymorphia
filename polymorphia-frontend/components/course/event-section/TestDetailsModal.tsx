@@ -2,9 +2,9 @@ import Modal from '@/components/modal/Modal';
 import {
   Test,
   TestDetailsModalProps,
-} from '@/interfaces/course/EventSectionInterfaces';
+} from '@/interfaces/course/event-section/EventSectionInterfaces';
 import RewardsInfo from './RewardsInfo';
-import { EventSectionService } from '@/services/course/EventSectionService';
+import { EventSectionService } from '@/services/course/event-section/EventSectionService';
 import { useQuery } from '@tanstack/react-query';
 import Loading from '@/components/general/Loading';
 

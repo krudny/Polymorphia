@@ -1,4 +1,4 @@
-import { ModalProps } from '../modal/ModalInterfaces';
+import { ModalProps } from '../../modal/ModalInterfaces';
 
 export interface EventSectionCore {
   id: number;

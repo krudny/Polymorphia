@@ -1,4 +1,4 @@
-import { ModalProps } from '../modal/ModalInterfaces';
+import { ModalProps } from '../../modal/ModalInterfaces';
 import {
   BonusInfo,
   BonusInfoItem,
