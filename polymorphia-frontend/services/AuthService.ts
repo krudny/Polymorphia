@@ -30,7 +30,7 @@ const AuthService = {
   getCsrfToken: async () => {
     await fetch(`${API_HOST}/users/csrf-token`, {
       credentials: "include",
-    }).catch(() => {});
+    });
   }
 };
 
