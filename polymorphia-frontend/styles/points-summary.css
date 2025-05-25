@@ -60,7 +60,7 @@
 }
 
 .bonus-item-card-image {
-  @apply rounded-xl shadow-md w-20 h-20 relative;
+  @apply rounded-xl shadow-lg w-20 h-20 relative;
 }
 
 .bonus-item-card-image img {
