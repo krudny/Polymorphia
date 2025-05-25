@@ -14,7 +14,7 @@ export default function Items() {
 
   useEffect(() => {
     setTitle('Przedmioty');
-  }, [])
+  }, [setTitle]);
 
   const { data: items, isLoading, error } = useQuery({
     queryKey: ['items', 1],

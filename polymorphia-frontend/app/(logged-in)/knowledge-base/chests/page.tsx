@@ -14,7 +14,7 @@ export default function Chests() {
 
   useEffect(() => {
     setTitle('Skrzynki');
-  }, []);
+  }, [setTitle]);
 
   const { data: chests, isLoading, error } = useQuery({
     queryKey: ['chests', 1],

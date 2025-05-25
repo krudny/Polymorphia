@@ -6,7 +6,6 @@ import {
 import RewardsInfo from './RewardsInfo';
 import { EventSectionService } from '@/services/course/EventSectionService';
 import { useQuery } from '@tanstack/react-query';
-import { Suspense } from 'react';
 import Loading from '@/components/general/Loading';
 
 export default function TestDetailsModal({

@@ -27,7 +27,7 @@ export default function EventSection() {
 
   useEffect(() => {
     setTitle(isSuccess ? eventSection.name : '');
-  }, [eventSection]);
+  }, [eventSection, isSuccess, setTitle]);
 
   if (isLoading) {
     return <Loading />;
@@ -35,7 +35,7 @@ export default function EventSection() {
 
   if (error) {
     return (
-      <div className="basic-container-">
+      <div className="basic-container">
         Error loading event section: {error.message}
       </div>
     );
