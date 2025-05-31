@@ -60,16 +60,14 @@ export default function SectionView({
         id="section-view-containter"
         className="w-full xl:mx-auto xl:max-w-6/7 3xl:max-w-4/5 p-4 h-[calc(100vh-var(--spacing)*15)] flex flex-col justify-center"
       >
-        <div className="flex flex-row justify-between items-center w-full">
           <EventSectionCardGrid
             eventSectionId={eventSectionId}
             eventSectionType={eventSection.type}
             presentEventsModally={presentEventsModally}
             containerRef={containerRef}
             summaryRef={summaryRef}
+            pointsSummary={<PointsSummary ref={summaryRef} eventSection={eventSection} />}
           />
-          <PointsSummary ref={summaryRef} eventSection={eventSection} />
-        </div>
       </div>
     </>
   );

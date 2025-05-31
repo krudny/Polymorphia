@@ -4,7 +4,6 @@
 .points-summary {
   @apply flex gap-10 flex-col;
   @apply justify-between items-end h-full;
-  @apply max-h-[40rem]
 }
 
 .points-summary-element {

@@ -2,7 +2,7 @@
 @import './globals.css';
 
 .event-section-card-grid {
-  @apply w-full h-full grid gap-5;
+  @apply h-full w-fit grid gap-5;
 }
 
 .event-section-card {

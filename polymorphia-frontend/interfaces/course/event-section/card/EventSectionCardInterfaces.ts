@@ -16,4 +16,5 @@ export interface EventSectionCardGridProps {
   presentEventsModally: boolean;
   containerRef: React.RefObject<HTMLDivElement | null>;
   summaryRef: React.RefObject<HTMLDivElement | null>;
+  pointsSummary: React.ReactNode;
 }
