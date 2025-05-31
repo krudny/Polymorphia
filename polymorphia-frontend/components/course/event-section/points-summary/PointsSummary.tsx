@@ -44,7 +44,7 @@ export default function PointsSummary({ eventSection, ref }: PointsSummaryProps)
 
   return (
     <>
-      <div ref={ref} className="points-summary">
+      <div ref={ref} id="summary" className="points-summary">
         {elements.map((element, index) => (
           <Fragment key={element.bonus.name}>
             <PointsSummaryElement
