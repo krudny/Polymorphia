@@ -101,12 +101,13 @@ export default function EventSectionCardGrid({
 
       const expandedSidebar = document.getElementById('sidebar-animated');
       const sidebarOffset =
-        expandedSidebar !== null ? 288 : 0;
+        expandedSidebar !== null ? expandedSidebar.offsetWidth : 0;
+        // expandedSidebar !== null ? 288 : 0;
       console.log(sidebarOffset);
 
       const rows = Math.floor((height - 80 + 20) / (160 + 20));
       const cols = Math.floor(
-        (width - 40 - (summaryRef?.current?.offsetWidth ?? 300) + sidebarOffset + 20) /
+        (width - 40 - 100 - (summaryRef?.current?.offsetWidth ?? 300) + sidebarOffset + 20) /
           (416 + 20)
       );
 
