@@ -21,7 +21,8 @@ export default function EventSectionCardGrid({
   eventSectionType,
   presentEventsModally,
   containerRef,
-  summaryRef
+  summaryRef,
+  pointsSummary,
 }: EventSectionCardGridProps) {
   const router = useRouter();
   const wrapperRef = useScaleShow();
@@ -36,26 +37,36 @@ export default function EventSectionCardGrid({
         const height = containerRef.current.offsetHeight;
         const width = containerRef.current.offsetWidth;
 
-        const rows = Math.floor((height + 20) / (160 + 20));
-        const cols = Math.floor((width - summaryRef.current.offsetWidth + 20) / (400 + 20))
-        
+        const rows = Math.floor((height - 56 + 20) / (160 + 20));
+        const cols = Math.floor(
+          (width - summaryRef.current.offsetWidth + 20) / (400 + 20)
+        );
+
+        console.log((height - 56 + 20) / (160 + 20));
+        console.log((width - summaryRef.current.offsetWidth + 20) / (400 + 20));
+
         setPageRows(Math.max(Math.min(rows, 6), 1));
         setPageCols(Math.max(Math.min(cols, 3), 1));
       }
-    }
+    };
 
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [containerRef]);
 
-
   const {
     data: gradableEventsData,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ['eventSectionGradableEvents', eventSectionId, currentPage, pageRows, pageCols],
+    queryKey: [
+      'eventSectionGradableEvents',
+      eventSectionId,
+      currentPage,
+      pageRows,
+      pageCols,
+    ],
     queryFn: () =>
       EventSectionService.getEventSectionGradableEvents({
         eventSectionId,
@@ -83,7 +94,7 @@ export default function EventSectionCardGrid({
     return <div className="basic-container">No gradable events.</div>;
   }
 
-  console.log(gradableEventsData)
+  console.log(gradableEventsData);
 
   const cards: (EventSectionCardProps & { id: number })[] =
     gradableEventsData.data
@@ -93,7 +104,7 @@ export default function EventSectionCardGrid({
           id: event.id,
           title: event.name,
           subtitle: event.topic,
-          xp: event.gainedXp ? `${event.gainedXp} xp` : undefined,
+          xp: event.gainedXp ? `${event.gainedXp} xp` : '0.0 xp',
           onClick: presentEventsModally
             ? () => {
                 setCurrentGradableEventModal(event);
@@ -107,11 +118,27 @@ export default function EventSectionCardGrid({
       });
 
   return (
-    <div ref={wrapperRef} className="flex flex-col justify-between">
-      <div className={clsx("event-section-card-grid", `grid-cols-${pageCols}`, `grid-rows-${pageRows}`)}>
-        {cards.map((card) => (
-          <EventSectionCard key={card.id} {...card} />
-        ))}
+    <div
+      ref={wrapperRef}
+      className="flex flex-col justify-between w-full max-h-full overflow-hidden"
+    >
+      <div className="flex flex-row justify-between gap-10">
+        <div
+          className={clsx(
+            'event-section-card-grid',
+            `grid-cols-${pageCols}`,
+            `grid-rows-${pageRows}`
+          )}
+        >
+          {cards.map((card) => (
+            <EventSectionCard
+              key={card.id}
+              {...card}
+              color={card.xp !== '0.0 xp' ? 'green' : 'silver'}
+            />
+          ))}
+        </div>
+        {pointsSummary}
       </div>
       <ReactPaginate
         pageCount={gradableEventsData.page.totalPages}

@@ -12,31 +12,31 @@ const eventSections: EventSection[] = [
     id: 1,
     name: 'Git',
     type: 'coursework',
-    gainedXp: '2',
+    gainedXp: '2.0',
     bonuses: [
       {
         name: 'Bonusy punktowe',
-        bonusXp: '0',
+        bonusXp: '0.0',
         items: [],
       },
       {
         name: 'Bonusy procentowe',
-        bonusXp: '0',
-        bonusPercentage: '0',
+        bonusXp: '0.0',
+        bonusPercentage: '0.0',
         items: [],
       },
     ],
-    totalXp: '2',
+    totalXp: '2.0',
   },
   {
     id: 2,
     name: 'Laboratoria',
     type: 'coursework',
-    gainedXp: '11,5',
+    gainedXp: '11.5',
     bonuses: [
       {
         name: 'Bonusy punktowe',
-        bonusXp: '1,5',
+        bonusXp: '1.5',
         items: [
           {
             assignedId: 1,
@@ -46,7 +46,7 @@ const eventSections: EventSection[] = [
               name: 'Marchewka',
             },
             receivedDate: '12.11.2026',
-            bonusXp: '1',
+            bonusXp: '1.0',
           },
           {
             assignedId: 3,
@@ -56,13 +56,13 @@ const eventSections: EventSection[] = [
               name: 'Pietruszka',
             },
             receivedDate: '21.12.2026',
-            bonusXp: '0,5',
+            bonusXp: '0.5',
           },
         ],
       },
       {
         name: 'Bonusy procentowe',
-        bonusXp: '1,3',
+        bonusXp: '1.3',
         bonusPercentage: '10',
         items: [
           {
@@ -73,23 +73,23 @@ const eventSections: EventSection[] = [
               name: 'Pietruszka',
             },
             receivedDate: '06.12.2026',
-            bonusXp: '1,3',
+            bonusXp: '1.3',
             bonusPercentage: '10',
           },
         ],
       },
     ],
-    totalXp: '14,3',
+    totalXp: '14.3',
   },
   {
     id: 3,
     name: 'Kartkówki',
     type: 'tests',
-    gainedXp: '4',
+    gainedXp: '4.0',
     bonuses: [
       {
         name: 'Bonusy punktowe',
-        bonusXp: '4',
+        bonusXp: '4.0',
         items: [
           {
             assignedId: 1,
@@ -99,7 +99,7 @@ const eventSections: EventSection[] = [
               name: 'Marchewka',
             },
             receivedDate: '12.11.2026',
-            bonusXp: '2',
+            bonusXp: '2.0',
           },
           {
             assignedId: 3,
@@ -109,13 +109,13 @@ const eventSections: EventSection[] = [
               name: 'Pietruszka',
             },
             receivedDate: '21.12.2026',
-            bonusXp: '2',
+            bonusXp: '2.0',
           },
         ],
       },
       {
         name: 'Bonusy procentowe',
-        bonusXp: '0,8',
+        bonusXp: '0.8',
         bonusPercentage: '10',
         items: [
           {
@@ -126,73 +126,73 @@ const eventSections: EventSection[] = [
               name: 'Pietruszka',
             },
             receivedDate: '06.12.2026',
-            bonusXp: '0,8',
+            bonusXp: '0.8',
             bonusPercentage: '10',
           },
         ],
       },
     ],
-    totalXp: '8,8',
+    totalXp: '8.8',
   },
   {
     id: 4,
     name: 'Quizy',
     type: 'tests',
-    gainedXp: '4',
+    gainedXp: '4.0',
     bonuses: [
       {
         name: 'Bonusy punktowe',
-        bonusXp: '0',
+        bonusXp: '0.0',
         items: [],
       },
       {
         name: 'Bonusy procentowe',
-        bonusXp: '0',
-        bonusPercentage: '0',
+        bonusXp: '0.0',
+        bonusPercentage: '0.0',
         items: [],
       },
     ],
-    totalXp: '4',
+    totalXp: '4.0',
   },
   {
     id: 5,
     name: 'Specjalne',
     type: 'coursework',
-    gainedXp: '4',
+    gainedXp: '4.0',
     bonuses: [
       {
         name: 'Bonusy punktowe',
-        bonusXp: '0',
+        bonusXp: '0.0',
         items: [],
       },
       {
         name: 'Bonusy procentowe',
-        bonusXp: '0',
-        bonusPercentage: '0',
+        bonusXp: '0.0',
+        bonusPercentage: '0.0',
         items: [],
       },
     ],
-    totalXp: '4',
+    totalXp: '4.0',
   },
   {
     id: 6,
     name: 'Projekt',
     type: 'project',
-    gainedXp: '4',
+    gainedXp: '4.0',
     bonuses: [
       {
         name: 'Bonusy punktowe',
-        bonusXp: '0',
+        bonusXp: '0.0',
         items: [],
       },
       {
         name: 'Bonusy procentowe',
-        bonusXp: '0',
-        bonusPercentage: '0',
+        bonusXp: '0.0',
+        bonusPercentage: '0.0',
         items: [],
       },
     ],
-    totalXp: '4',
+    totalXp: '4.0',
   },
 ];
 
@@ -208,7 +208,7 @@ const gradableEventsCoreList: {
         id: 1,
         name: 'Lab 0',
         topic: 'Git jest git',
-        gainedXp: '2',
+        gainedXp: '2.0',
         hidden: false,
       },
     ],
@@ -220,28 +220,28 @@ const gradableEventsCoreList: {
         id: 1,
         name: 'Laboratorium 1',
         topic: 'Instrukcje sterujące w Javie',
-        gainedXp: '3',
+        gainedXp: '3.0',
         hidden: false,
       },
       {
         id: 2,
         name: 'Laboratorium 2',
         topic: 'Model obiektowy',
-        gainedXp: '4',
+        gainedXp: '4.0',
         hidden: false,
       },
       {
         id: 3,
         name: 'Laboratorium 3',
         topic: 'Interakcje między obiektami',
-        gainedXp: '2,5',
+        gainedXp: '2.5',
         hidden: false,
       },
       {
         id: 4,
         name: 'Laboratorium 4',
         topic: 'Interfejsy i mapy',
-        gainedXp: '2',
+        gainedXp: '2.0',
         hidden: false,
       },
       {
@@ -288,25 +288,25 @@ const gradableEventsCoreList: {
       {
         id: 1,
         name: 'Kartkówka 1',
-        gainedXp: '2',
+        gainedXp: '2.0',
         hidden: false,
       },
       {
         id: 2,
         name: 'Kartkówka 2',
-        gainedXp: '0',
+        gainedXp: '0.0',
         hidden: false,
       },
       {
         id: 3,
         name: 'Kartkówka 3',
-        gainedXp: '0',
+        gainedXp: '0.0',
         hidden: false,
       },
       {
         id: 4,
         name: 'Kartkówka 4',
-        gainedXp: '2',
+        gainedXp: '2.0',
         hidden: false,
       },
       {
@@ -356,9 +356,9 @@ const gradableEventsList: { id: number; gradableEvents: GradableEvent[] }[] = [
       {
         id: 1,
         name: 'Kartkówka 1',
-        maxXp: '2',
+        maxXp: '2.0',
         grade: {
-          gainedXp: '2',
+          gainedXp: '2.0',
           chests: [
             {
               assignedId: 123,
@@ -376,9 +376,9 @@ const gradableEventsList: { id: number; gradableEvents: GradableEvent[] }[] = [
       {
         id: 2,
         name: 'Kartkówka 2',
-        maxXp: '2',
+        maxXp: '2.0',
         grade: {
-          gainedXp: '0',
+          gainedXp: '0.0',
           chests: [],
         },
         hidden: false,
@@ -386,9 +386,9 @@ const gradableEventsList: { id: number; gradableEvents: GradableEvent[] }[] = [
       {
         id: 3,
         name: 'Kartkówka 3',
-        maxXp: '2',
+        maxXp: '2.0',
         grade: {
-          gainedXp: '0',
+          gainedXp: '0.0',
           chests: [],
         },
         hidden: false,
@@ -396,9 +396,9 @@ const gradableEventsList: { id: number; gradableEvents: GradableEvent[] }[] = [
       {
         id: 4,
         name: 'Kartkówka 4',
-        maxXp: '2',
+        maxXp: '2.0',
         grade: {
-          gainedXp: '2',
+          gainedXp: '2.0',
           chests: [],
         },
         hidden: false,
@@ -406,19 +406,19 @@ const gradableEventsList: { id: number; gradableEvents: GradableEvent[] }[] = [
       {
         id: 5,
         name: 'Kartkówka 5',
-        maxXp: '2',
+        maxXp: '2.0',
         hidden: false,
       },
       {
         id: 6,
         name: 'Kartkówka 6',
-        maxXp: '2',
+        maxXp: '2.0',
         hidden: false,
       },
       {
         id: 7,
         name: 'Kartkówka 7',
-        maxXp: '2',
+        maxXp: '2.0',
         hidden: false,
       },
     ],
