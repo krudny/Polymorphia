@@ -3,7 +3,7 @@
 
 .section-view {
   @apply flex flex-col gap-10 transform-none;
-  @apply md:flex-row md:gap-0 md:pr-100;
+  @apply md:flex-row md:gap-0 md:pr-100 xl:pr-0;
 }
 
 .gradable-event-section {
