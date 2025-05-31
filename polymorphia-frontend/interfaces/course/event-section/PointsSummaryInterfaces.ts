@@ -7,6 +7,7 @@ import {
 
 export interface PointsSummaryProps {
   eventSection: EventSection;
+  ref: React.RefObject<HTMLDivElement | null>;
 }
 
 export interface PointsSummaryElementProps {

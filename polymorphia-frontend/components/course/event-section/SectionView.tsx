@@ -3,46 +3,73 @@ import '../../../styles/event-section.css';
 import EventSectionCardGrid from '@/components/course/event-section/card/EventSectionCardGrid';
 import PointsSummary from './points-summary/PointsSummary';
 import {
-  GradableEventCore,
   SectionViewProps,
 } from '@/interfaces/course/event-section/EventSectionInterfaces';
-import { EventSectionCardProps } from '@/interfaces/course/event-section/card/EventSectionCardInterfaces';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import TestDetailsModal from './TestDetailsModal';
-import EventSectionCard from './card/EventSectionCard';
+import { useEffect, useRef } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { EventSectionService } from '@/services/course/event-section/EventSectionService';
+import Loading from '@/components/general/Loading';
+import { useTitle } from '@/components/navigation/TitleContext';
 
 export default function SectionView({
-  eventSection,
+  eventSectionId,
   presentEventsModally = false,
 }: SectionViewProps) {
-  const router = useRouter();
+  const { setTitle } = useTitle();
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const summaryRef = useRef<HTMLDivElement | null>(null);
 
-  const [currentGradableEventModal, setCurrentGradableEventModal] =
-    useState<GradableEventCore | null>(null);
+  const {
+    data: eventSection,
+    isLoading,
+    isSuccess,
+    error,
+  } = useQuery({
+    queryKey: ['eventSections', eventSectionId],
+    queryFn: () => EventSectionService.getEventSection(eventSectionId),
+  });
 
-  const cards: EventSectionCardProps[] = eventSection.gradableEvents
-    .filter((event) => !event.hidden)
-    .map((event) => {
-      return {
-        id: event.id,
-        title: event.name,
-        subtitle: event.topic,
-        xp: event.gainedXp ? `${event.gainedXp} xp` : undefined,
-        onClick: presentEventsModally
-          ? () => {
-              setCurrentGradableEventModal(event);
-            }
-          : () => {
-              router.push(`/course/${eventSection.id}/${event.id}`);
-            },
-      };
-    });
+  useEffect(() => {
+    setTitle(isSuccess ? eventSection.name : '');
+  }, [eventSection, isSuccess, setTitle]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return (
+      <div className="basic-container">
+        Error loading event section: {error.message}
+      </div>
+    );
+  }
+
+  if (!eventSection) {
+    return (
+      <div className="basic-container">
+        No event section with this ID exists.
+      </div>
+    );
+  }
 
   return (
     <>
-      <div className="w-full xl:mx-auto xl:max-w-6/7 3xl:max-w-4/5 p-4 h-[calc(100vh-var(--spacing)*15)]">
-        <EventSectionCard title="Laboratorium 1" subtitle="Interfejsy i mapy" xp="1.0 xp" size="lg" color="silver"/>
+      <div
+        ref={containerRef}
+        id="section-view-containter"
+        className="w-full xl:mx-auto xl:max-w-6/7 3xl:max-w-4/5 p-4 h-[calc(100vh-var(--spacing)*15)] flex flex-col justify-center"
+      >
+        <div className="flex flex-row justify-between items-center w-full">
+          <EventSectionCardGrid
+            eventSectionId={eventSectionId}
+            eventSectionType={eventSection.type}
+            presentEventsModally={presentEventsModally}
+            containerRef={containerRef}
+            summaryRef={summaryRef}
+          />
+          <PointsSummary ref={summaryRef} eventSection={eventSection} />
+        </div>
       </div>
     </>
   );

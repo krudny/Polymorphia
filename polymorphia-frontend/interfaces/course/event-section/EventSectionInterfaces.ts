@@ -3,6 +3,7 @@ import { ModalProps } from '../../modal/ModalInterfaces';
 export interface EventSectionCore {
   id: number;
   name: string;
+  type: 'coursework' | 'tests' | 'project';
   hidden?: boolean;
 }
 
@@ -13,7 +14,6 @@ export interface EventSection {
   gainedXp: string; // "1,2"
   bonuses: BonusInfo[];
   totalXp: string; // "1,2"
-  gradableEvents: GradableEventCore[];
 }
 
 export interface GradableEventCore {
@@ -24,11 +24,16 @@ export interface GradableEventCore {
   hidden?: boolean;
 }
 
-export interface EventSectionProps {
-  eventSection: EventSection;
+export interface GradableEventCoreResponse {
+  data: GradableEventCore[],
+  page: {
+    totalPages: number,
+  }
 }
 
-export interface SectionViewProps extends EventSectionProps {
+
+export interface SectionViewProps {
+  eventSectionId: number;
   presentEventsModally?: boolean;
 }
 

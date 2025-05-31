@@ -2,11 +2,11 @@ import {
   EventSection,
   EventSectionCore,
   GradableEvent,
+  GradableEventCore,
+  GradableEventCoreResponse,
 } from '@/interfaces/course/event-section/EventSectionInterfaces';
 
 // mocks
-
-// keep in sync with array below
 const eventSections: EventSection[] = [
   {
     id: 1,
@@ -27,15 +27,6 @@ const eventSections: EventSection[] = [
       },
     ],
     totalXp: '2',
-    gradableEvents: [
-      {
-        id: 1,
-        name: 'Lab 0',
-        topic: 'Git jest git',
-        gainedXp: '2',
-        hidden: false,
-      },
-    ],
   },
   {
     id: 2,
@@ -89,6 +80,141 @@ const eventSections: EventSection[] = [
       },
     ],
     totalXp: '14,3',
+  },
+  {
+    id: 3,
+    name: 'Kartkówki',
+    type: 'tests',
+    gainedXp: '4',
+    bonuses: [
+      {
+        name: 'Bonusy punktowe',
+        bonusXp: '4',
+        items: [
+          {
+            assignedId: 1,
+            item: {
+              id: 1,
+              imageUrl: 'images/items/carrot.jpg',
+              name: 'Marchewka',
+            },
+            receivedDate: '12.11.2026',
+            bonusXp: '2',
+          },
+          {
+            assignedId: 3,
+            item: {
+              id: 2,
+              imageUrl: 'images/items/parsley.jpg',
+              name: 'Pietruszka',
+            },
+            receivedDate: '21.12.2026',
+            bonusXp: '2',
+          },
+        ],
+      },
+      {
+        name: 'Bonusy procentowe',
+        bonusXp: '0,8',
+        bonusPercentage: '10',
+        items: [
+          {
+            assignedId: 2,
+            item: {
+              id: 2,
+              imageUrl: 'images/items/parsley.jpg',
+              name: 'Pietruszka',
+            },
+            receivedDate: '06.12.2026',
+            bonusXp: '0,8',
+            bonusPercentage: '10',
+          },
+        ],
+      },
+    ],
+    totalXp: '8,8',
+  },
+  {
+    id: 4,
+    name: 'Quizy',
+    type: 'tests',
+    gainedXp: '4',
+    bonuses: [
+      {
+        name: 'Bonusy punktowe',
+        bonusXp: '0',
+        items: [],
+      },
+      {
+        name: 'Bonusy procentowe',
+        bonusXp: '0',
+        bonusPercentage: '0',
+        items: [],
+      },
+    ],
+    totalXp: '4',
+  },
+  {
+    id: 5,
+    name: 'Specjalne',
+    type: 'coursework',
+    gainedXp: '4',
+    bonuses: [
+      {
+        name: 'Bonusy punktowe',
+        bonusXp: '0',
+        items: [],
+      },
+      {
+        name: 'Bonusy procentowe',
+        bonusXp: '0',
+        bonusPercentage: '0',
+        items: [],
+      },
+    ],
+    totalXp: '4',
+  },
+  {
+    id: 6,
+    name: 'Projekt',
+    type: 'project',
+    gainedXp: '4',
+    bonuses: [
+      {
+        name: 'Bonusy punktowe',
+        bonusXp: '0',
+        items: [],
+      },
+      {
+        name: 'Bonusy procentowe',
+        bonusXp: '0',
+        bonusPercentage: '0',
+        items: [],
+      },
+    ],
+    totalXp: '4',
+  },
+];
+
+// keep in sync with array below
+const gradableEventsCoreList: {
+  id: number;
+  gradableEvents: GradableEventCore[];
+}[] = [
+  {
+    id: 1,
+    gradableEvents: [
+      {
+        id: 1,
+        name: 'Lab 0',
+        topic: 'Git jest git',
+        gainedXp: '2',
+        hidden: false,
+      },
+    ],
+  },
+  {
+    id: 2,
     gradableEvents: [
       {
         id: 1,
@@ -158,56 +284,6 @@ const eventSections: EventSection[] = [
   },
   {
     id: 3,
-    name: 'Kartkówki',
-    type: 'tests',
-    gainedXp: '4',
-    bonuses: [
-      {
-        name: 'Bonusy punktowe',
-        bonusXp: '4',
-        items: [
-          {
-            assignedId: 1,
-            item: {
-              id: 1,
-              imageUrl: 'images/items/carrot.jpg',
-              name: 'Marchewka',
-            },
-            receivedDate: '12.11.2026',
-            bonusXp: '2',
-          },
-          {
-            assignedId: 3,
-            item: {
-              id: 2,
-              imageUrl: 'images/items/parsley.jpg',
-              name: 'Pietruszka',
-            },
-            receivedDate: '21.12.2026',
-            bonusXp: '2',
-          },
-        ],
-      },
-      {
-        name: 'Bonusy procentowe',
-        bonusXp: '0,8',
-        bonusPercentage: '10',
-        items: [
-          {
-            assignedId: 2,
-            item: {
-              id: 2,
-              imageUrl: 'images/items/parsley.jpg',
-              name: 'Pietruszka',
-            },
-            receivedDate: '06.12.2026',
-            bonusXp: '0,8',
-            bonusPercentage: '10',
-          },
-        ],
-      },
-    ],
-    totalXp: '8,8',
     gradableEvents: [
       {
         id: 1,
@@ -252,65 +328,14 @@ const eventSections: EventSection[] = [
   },
   {
     id: 4,
-    name: 'Quizy',
-    type: 'tests',
-    gainedXp: '4',
-    bonuses: [
-      {
-        name: 'Bonusy punktowe',
-        bonusXp: '0',
-        items: [],
-      },
-      {
-        name: 'Bonusy procentowe',
-        bonusXp: '0',
-        bonusPercentage: '0',
-        items: [],
-      },
-    ],
-    totalXp: '4',
     gradableEvents: [],
   },
   {
     id: 5,
-    name: 'Specjalne',
-    type: 'coursework',
-    gainedXp: '4',
-    bonuses: [
-      {
-        name: 'Bonusy punktowe',
-        bonusXp: '0',
-        items: [],
-      },
-      {
-        name: 'Bonusy procentowe',
-        bonusXp: '0',
-        bonusPercentage: '0',
-        items: [],
-      },
-    ],
-    totalXp: '4',
     gradableEvents: [],
   },
   {
     id: 6,
-    name: 'Projekt',
-    type: 'project',
-    gainedXp: '4',
-    bonuses: [
-      {
-        name: 'Bonusy punktowe',
-        bonusXp: '0',
-        items: [],
-      },
-      {
-        name: 'Bonusy procentowe',
-        bonusXp: '0',
-        bonusPercentage: '0',
-        items: [],
-      },
-    ],
-    totalXp: '4',
     gradableEvents: [],
   },
 ];
@@ -419,26 +444,32 @@ export const EventSectionService = {
         {
           id: 1,
           name: 'Git',
+          type: 'coursework',
         },
         {
           id: 2,
           name: 'Laboratoria',
+          type: 'coursework',
         },
         {
           id: 3,
           name: 'Kartkówki',
+          type: 'tests',
         },
         {
           id: 4,
           name: 'Quizy',
+          type: 'tests',
         },
         {
           id: 5,
           name: 'Specjalne',
+          type: 'coursework',
         },
         {
           id: 6,
           name: 'Projekt',
+          type: 'project',
         },
       ]);
     });
@@ -453,6 +484,43 @@ export const EventSectionService = {
       } else {
         reject('Invalid id');
       }
+    });
+  },
+
+
+  // pages start from 0 in Spring
+  getEventSectionGradableEvents: async ({
+    eventSectionId,
+    page,
+    pageSize,
+  }: {
+    eventSectionId: number;
+    page: number;
+    pageSize: number;
+  }): Promise<GradableEventCoreResponse> => {
+    return new Promise<GradableEventCoreResponse>((resolve, reject) => {
+      const matchedSection = gradableEventsCoreList.find(
+        (e) => e.id === eventSectionId
+      );
+
+      if (!matchedSection) {
+        reject('Invalid id');
+        return;
+      }
+
+      const startIndex = page * pageSize;
+      const endIndex = startIndex + pageSize;
+      const paginatedEvents = matchedSection.gradableEvents.slice(
+        startIndex,
+        endIndex
+      );
+
+      resolve({
+        data: paginatedEvents,
+        page: {
+          totalPages: Math.ceil(matchedSection.gradableEvents.length / pageSize)
+        }
+      });
     });
   },
 
