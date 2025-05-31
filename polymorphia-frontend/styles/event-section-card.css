@@ -4,7 +4,7 @@
 .event-section-card-grid {
   @apply w-full h-full grid grid-cols-1 gap-5;
   @apply md:grid-cols-2 md:max-w-2xl;
-  @apply 2xl:grid-cols-3 2xl:max-w-5xl;
+  @apply 3xl:grid-cols-3 3xl:max-w-5xl;
 }
 
 .event-section-card {

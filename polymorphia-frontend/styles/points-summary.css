@@ -5,6 +5,7 @@
   @apply flex gap-10 flex-col my-5;
   @apply md:justify-center md:items-end md:h-screen md:fixed md:right-20 md:top-0 md:w-80 md:my-0 md:pt-20;
   @apply lg:pt-0;
+  @apply 3xl:right-60;
   @apply max-md:items-center;
   @apply max-xl:right-5;
 }
@@ -29,17 +30,17 @@
 
 .points-summary-element h1 {
   @apply text-5xl text-nowrap;
-  @apply [@media(max-height:730px)]:text-3xl
+  @apply [@media(max-height:600px)]:text-3xl
 }
 
 .points-summary-element-horizontal h1 {
   @apply text-7xl;
-  @apply [@media(max-height:730px)]:text-5xl
+  @apply [@media(max-height:600px)]:text-5xl
 }
 
 .points-summary-element h2 {
   @apply text-7xl text-nowrap;
-  @apply [@media(max-height:730px)]:text-5xl
+  @apply [@media(max-height:600px)]:text-5xl
 }
 
 .points-summary-element-header {
