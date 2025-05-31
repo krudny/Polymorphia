@@ -4,13 +4,11 @@ import {
 } from '@/interfaces/course/event-section/PointsSummaryInterfaces';
 import '../../../../styles/points-summary.css';
 import PointsSummaryElement from './PointsSummaryElement';
-import { useScaleShow } from '@/animations/General';
 import { Fragment, useState } from 'react';
 import BonusInfoModal from './BonusInfoModal';
 import { BonusInfo } from '@/interfaces/course/event-section/EventSectionInterfaces';
 
-export default function PointsSummary({ eventSection }: PointsSummaryProps) {
-  const wrapperRef = useScaleShow();
+export default function PointsSummary({ eventSection, ref }: PointsSummaryProps) {
   const [currentBonusInfoModal, setCurrentBonusInfoModal] =
     useState<BonusInfo | null>(null);
 
@@ -46,7 +44,7 @@ export default function PointsSummary({ eventSection }: PointsSummaryProps) {
 
   return (
     <>
-      <div ref={wrapperRef} className="points-summary">
+      <div ref={ref} className="points-summary">
         {elements.map((element, index) => (
           <Fragment key={element.bonus.name}>
             <PointsSummaryElement

@@ -1,35 +1,9 @@
 @import 'tailwindcss';
 @import './globals.css';
 
-/* .event-section-card-grid {
-  @apply w-full h-full grid grid-cols-1 gap-5;
-  @apply md:grid-cols-2 md:max-w-2xl;
-  @apply 3xl:grid-cols-3 3xl:max-w-5xl;
+.event-section-card-grid {
+  @apply w-full h-full grid gap-5;
 }
-
-.event-section-card {
-  @apply w-full p-5 rounded-xl border-2 border-neutral-800 backdrop-blur-xs shadow-md transition-all h-fit;
-}
-
-.event-section-card-hover {
-  @apply hover:scale-[1.02];
-}
-
-.event-section-card h1 {
-  @apply truncate text-5xl mb-2;
-}
-
-.event-section-card-subtitle {
-  @apply truncate text-2xl;
-}
-
-.event-section-card-xp {
-  @apply text-nowrap text-3xl;
-}
-
-.event-section-card-bottom {
-  @apply flex flex-row justify-between gap-3 items-end;
-} */
 
 .event-section-card {
   @apply w-full rounded-md bg-neutral-50 drop-shadow-lg transition-all overflow-hidden flex flex-row;

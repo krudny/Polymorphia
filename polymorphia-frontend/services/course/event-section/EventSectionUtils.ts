@@ -10,7 +10,7 @@ export function updateMenuItems(
   const courseItem = menuItems.filter(
     (menuOption) => menuOption.text === 'Kurs'
   )[0];
-  courseItem.link = `course/${eventSections[0].id}`;
+  courseItem.link = `course/${eventSections[0].type}/${eventSections[0].id}`;
 
   courseItem.subItems = eventSections
     .filter((eventSection) => !eventSection.hidden)
@@ -18,7 +18,7 @@ export function updateMenuItems(
       // TODO: use correct courseID
       return {
         text: eventSection.name,
-        link: `course/${eventSection.id}`,
+        link: `course/${eventSection.type}/${eventSection.id}`,
       };
     });
 }
