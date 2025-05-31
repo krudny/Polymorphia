@@ -2,7 +2,16 @@
 @import './globals.css';
 
 .event-section-card-grid {
-  @apply h-full w-fit grid gap-5;
+  @apply grid gap-5 px-3 justify-items-start items-start pb-3;
+}
+
+.fading-edges {
+  mask-image: linear-gradient(to right, transparent, black 1%, black 99%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 1%, black 99%, transparent);
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
 }
 
 .event-section-card {
@@ -41,6 +50,10 @@
     @apply w-30 h-30;
   }
 
+  .event-section-card-middle {
+    @apply w-[12.5rem];
+  }
+
   .event-section-card-middle,
   .event-section-card-xp {
     h1 {
@@ -54,7 +67,7 @@
 }
 
 .event-section-card-md {
-  @apply h-40 max-w-[25rem];
+  @apply h-40 max-w-[26rem];
 
   .event-section-card-image {
     @apply w-40 h-40;
@@ -62,6 +75,10 @@
 
   .event-section-card-xp {
     @apply w-40 h-40;
+  }
+
+  .event-section-card-middle {
+    @apply w-[16rem];
   }
 
   .event-section-card-middle,
@@ -85,6 +102,10 @@
 
   .event-section-card-xp {
     @apply w-50 h-50;
+  }
+
+  .event-section-card-middle {
+    @apply w-[22.5rem];
   }
 
   .event-section-card-middle,

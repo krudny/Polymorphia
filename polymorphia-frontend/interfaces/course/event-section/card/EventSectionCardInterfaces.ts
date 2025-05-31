@@ -1,3 +1,5 @@
+import { EventSection } from "../EventSectionInterfaces";
+
 export interface EventSectionCardProps {
   title: string;
   subtitle?: string;
@@ -11,10 +13,7 @@ export type EventSectionCardVariantProps = {
 };
 
 export interface EventSectionCardGridProps {
-  eventSectionId: number;
-  eventSectionType: "coursework" | "tests" | "project";
+  eventSection: EventSection;
   presentEventsModally: boolean;
   containerRef: React.RefObject<HTMLDivElement | null>;
-  summaryRef: React.RefObject<HTMLDivElement | null>;
-  pointsSummary: React.ReactNode;
 }

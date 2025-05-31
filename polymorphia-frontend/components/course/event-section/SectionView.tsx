@@ -2,9 +2,7 @@ import '../../../styles/general.css';
 import '../../../styles/event-section.css';
 import EventSectionCardGrid from '@/components/course/event-section/card/EventSectionCardGrid';
 import PointsSummary from './points-summary/PointsSummary';
-import {
-  SectionViewProps,
-} from '@/interfaces/course/event-section/EventSectionInterfaces';
+import { SectionViewProps } from '@/interfaces/course/event-section/EventSectionInterfaces';
 import { useEffect, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { EventSectionService } from '@/services/course/event-section/EventSectionService';
@@ -54,21 +52,16 @@ export default function SectionView({
   }
 
   return (
-    <>
-      <div
-        ref={containerRef}
-        id="section-view-containter"
-        className="w-full xl:mx-auto xl:max-w-6/7 3xl:max-w-4/5 p-4 h-[calc(100vh-var(--spacing)*15)] flex flex-col justify-center"
-      >
-          <EventSectionCardGrid
-            eventSectionId={eventSectionId}
-            eventSectionType={eventSection.type}
-            presentEventsModally={presentEventsModally}
-            containerRef={containerRef}
-            summaryRef={summaryRef}
-            pointsSummary={<PointsSummary ref={summaryRef} eventSection={eventSection} />}
-          />
-      </div>
-    </>
+    <div
+      ref={containerRef}
+      id="section-view-containter"
+      className="w-full xl:mx-auto xl:max-w-6/7 3xl:max-w-4/5 p-4 h-[calc(100vh-var(--spacing)*15)] flex flex-col justify-center"
+    >
+      <EventSectionCardGrid
+        eventSection={eventSection}
+        presentEventsModally={presentEventsModally}
+        containerRef={containerRef}
+      />
+    </div>
   );
 }

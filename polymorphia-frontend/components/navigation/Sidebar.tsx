@@ -40,6 +40,7 @@ export default function Sidebar() {
   return (
     <div
       ref={sidebarRef}
+      id={isSidebarLocked ? "sidebar-locked" : "sidebar-animated"}
       className="sidebar"
       onMouseEnter={() => {
         if (!isSidebarLocked) setIsSidebarExpanded(true);
