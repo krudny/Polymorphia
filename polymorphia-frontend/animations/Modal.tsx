@@ -17,13 +17,13 @@ export function useModalAnimation(onClose: () => void, isOpen: boolean) {
         .fromTo(
           backdropRef.current,
           { opacity: 0 },
-          { opacity: 1, duration: 0.3, ease: 'power2.out' },
+          { opacity: 1, duration: 0.2, ease: 'power2.out' },
           0
         )
         .fromTo(
           modalRef.current,
           { scale: 0.9, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 0.3, ease: 'power1.in' },
+          { scale: 1, opacity: 1, duration: 0.2, ease: 'power1.in' },
           0
         );
     }

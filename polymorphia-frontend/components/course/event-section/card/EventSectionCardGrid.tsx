@@ -71,7 +71,7 @@ export default function EventSectionCardGrid({
       gsap.to(sliderRef.current, {
         xPercent: -dir * 20,
         opacity: 0,
-        duration: 0.4,
+        duration: 0.25,
         ease: 'power2.inOut',
         onComplete: () => {
           setPageToShow(newPage);
@@ -88,7 +88,7 @@ export default function EventSectionCardGrid({
       gsap.fromTo(
         sliderRef.current,
         { xPercent: direction * 100, opacity: 0 },
-        { xPercent: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }
+        { xPercent: 0, opacity: 1, duration: 0.25, ease: 'power2.out' }
       );
     }
   }, [pageToShow, gradableEventsData]); // eslint-disable-line -- adding 'direction' to dependency list breaks the animation
