@@ -18,7 +18,6 @@ import {
   mapPropsToCards,
   setResizeObserver,
 } from '@/services/course/event-section/EventSectionUtils';
-import { useScaleShow } from '@/animations/General';
 
 export default function EventSectionCardGrid({
   eventSection,
