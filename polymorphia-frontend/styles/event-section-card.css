@@ -77,10 +77,6 @@
     @apply w-20 h-20;
   }
 
-  .event-section-card-force-width .event-section-card-middle {
-    @apply lg:w-[8rem];
-  }
-
   .event-section-card-middle,
   .event-section-card-xp {
     @apply p-2;
@@ -96,6 +92,10 @@
   }
 }
 
+.event-section-card-xs.event-section-card-force-width .event-section-card-middle {
+  @apply lg:w-[8rem];
+}
+
 .event-section-card-sm {
   @apply h-30;
 
@@ -105,10 +105,6 @@
 
   .event-section-card-xp {
     @apply w-30 h-30;
-  }
-
-  .event-section-card-force-width .event-section-card-middle {
-    @apply lg:w-[12.5rem];
   }
 
   .event-section-card-middle,
@@ -123,6 +119,10 @@
   }
 }
 
+.event-section-card-sm.event-section-card-force-width .event-section-card-middle {
+  @apply lg:w-[12.5rem];
+}
+
 .event-section-card-md {
   @apply h-40 lg:max-w-[26rem];
 
@@ -132,10 +132,6 @@
 
   .event-section-card-xp {
     @apply w-40 h-40;
-  }
-
-  .event-section-card-force-width .event-section-card-middle {
-    @apply lg:w-[16rem];
   }
 
   .event-section-card-middle,
@@ -150,6 +146,10 @@
   }
 }
 
+.event-section-card-md.event-section-card-force-width .event-section-card-middle {
+    @apply lg:w-[16rem];
+  }
+
 .event-section-card-lg {
   @apply h-50 lg:max-w-[35rem];
 
@@ -159,10 +159,6 @@
 
   .event-section-card-xp {
     @apply w-50 h-50;
-  }
-
-  .event-section-card-force-width .event-section-card-middle {
-    @apply lg:w-[22.5rem];
   }
 
   .event-section-card-middle,
@@ -175,4 +171,8 @@
       @apply text-2xl;
     }
   }
+}
+
+.event-section-card-lg.event-section-card-force-width .event-section-card-middle {
+  @apply lg:w-[22.5rem];
 }

@@ -2,9 +2,9 @@
 @import './globals.css';
 
 .section-view {
-  @apply w-full p-4 flex flex-col;
+  @apply w-full p-4 flex flex-col mx-auto;
   @apply lg:h-[calc(100vh-var(--spacing)*15)] lg:justify-center;
-  @apply xl:mx-auto xl:max-w-6/7 3xl:max-w-4/5
+  @apply xl:mx-auto min-[1480px]:max-w-6/7 3xl:max-w-4/5 min-[1024px]:max-[1277px]:max-w-4/5;
 }
 
 .gradable-event-section {

@@ -50,7 +50,7 @@ export function setResizeObserver(
     if (window.outerWidth < 1024) {
       setMobile(true);
 
-      setPageCols(1);
+      setPageCols(width > 650 ? 2 : 1);
       setPageRows(5);
     } else {
       setMobile(false);
