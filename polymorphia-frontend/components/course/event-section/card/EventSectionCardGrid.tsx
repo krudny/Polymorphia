@@ -33,6 +33,7 @@ export default function EventSectionCardGrid({
   const [pageCols, setPageCols] = useState(2);
   const [pageToShow, setPageToShow] = useState(0); // delayed page shown in DOM
   const [direction, setDirection] = useState<1 | -1>(1); // animation direction
+  const [mobile, setMobile] = useState(false);
 
   const handlePageChange = (selected: { selected: number }) => {
     const newPage = selected.selected;
@@ -88,7 +89,7 @@ export default function EventSectionCardGrid({
   }, [pageToShow, gradableEventsData]);
 
   useEffect(() => {
-    console.log(containerRef, summaryRef)
+    console.log(containerRef, summaryRef);
     if (!containerRef.current) return;
 
     const handleResize = () => {
@@ -99,25 +100,37 @@ export default function EventSectionCardGrid({
       const height = containerRef.current.offsetHeight;
       const width = containerRef.current.offsetWidth;
 
-      const expandedSidebar = document.getElementById('sidebar-animated');
-      const sidebarOffset =
-        expandedSidebar !== null ? expandedSidebar.offsetWidth : 0;
+      if (window.outerWidth < 1024) {
+        setMobile(true);
+        setPageCols(1);
+        setPageRows(5);
+      } else {
+        setMobile(false);
+        const expandedSidebar = document.getElementById('sidebar-animated');
+        const sidebarOffset =
+          expandedSidebar !== null ? expandedSidebar.offsetWidth : 0;
         // expandedSidebar !== null ? 288 : 0;
-      console.log(sidebarOffset);
+        console.log(sidebarOffset);
 
-      const rows = Math.floor((height - 80 + 20) / (160 + 20));
-      const cols = Math.floor(
-        (width - 40 - 100 - (summaryRef?.current?.offsetWidth ?? 300) + sidebarOffset + 20) /
-          (416 + 20)
-      );
+        const rows = Math.floor((height - 80 + 20) / (160 + 20));
+        const cols = Math.floor(
+          (width -
+            40 -
+            100 -
+            (summaryRef?.current?.offsetWidth ?? 300) +
+            sidebarOffset +
+            20) /
+            (416 + 20)
+        );
 
-      console.log(rows, cols);
-      console.log(height);
+        console.log(rows, cols);
+        console.log(height);
 
-      const maxRows = height <= 650 ? 2 : height >= 900 ? 4 : 3;
+        const maxRows = height <= 650 ? 2 : height >= 900 ? 4 : 3;
 
-      setPageRows(Math.max(Math.min(rows, maxRows), 1));
-      setPageCols(Math.max(Math.min(cols, 3), 1));
+        setPageRows(Math.max(Math.min(rows, maxRows), 1));
+        setPageCols(Math.max(Math.min(cols, 3), 1));
+      }
     };
 
     const resizeObserver = new ResizeObserver(handleResize);
@@ -173,11 +186,24 @@ export default function EventSectionCardGrid({
         };
       });
 
+  const pagination = (
+    <ReactPaginate
+      pageCount={gradableEventsData.page.totalPages}
+      onPageChange={handlePageChange}
+      forcePage={currentPage}
+      containerClassName="pagination-container"
+      pageClassName="pagination-page"
+      previousLabel={<ChevronLeft />}
+      nextLabel={<ChevronRight />}
+      breakLabel="..."
+    />
+  );
+
   return (
     <>
       <div className="flex flex-col justify-between w-full max-h-full">
-        <div className="flex flex-row justify-between items-center gap-10">
-          <div className="fading-edges">
+        <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-10">
+          <div className="max-xl:w-full fading-edges">
             <div
               ref={sliderRef}
               className={clsx(
@@ -185,7 +211,6 @@ export default function EventSectionCardGrid({
                 `grid-cols-${pageCols}`,
                 `grid-rows-${pageRows}`
               )}
-              
             >
               {cards.map((card) => (
                 <EventSectionCard
@@ -193,23 +218,15 @@ export default function EventSectionCardGrid({
                   {...card}
                   color={card.xp !== undefined ? 'green' : 'silver'}
                   xp={card.xp !== undefined ? card.xp : '0.0 xp'}
+                  size={mobile ? "sm" : "md"}
                 />
               ))}
             </div>
           </div>
-          
+          {mobile && pagination}
           <PointsSummary ref={summaryRef} eventSection={eventSection} />
         </div>
-        <ReactPaginate
-          pageCount={gradableEventsData.page.totalPages}
-          onPageChange={handlePageChange}
-          forcePage={currentPage}
-          containerClassName="pagination-container"
-          pageClassName="pagination-page"
-          previousLabel={<ChevronLeft />}
-          nextLabel={<ChevronRight />}
-          breakLabel="..."
-        />
+        {!mobile && pagination}
       </div>
       {presentEventsModally && eventSection.type === 'tests' && (
         <TestDetailsModal
