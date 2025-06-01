@@ -18,6 +18,7 @@ import {
   mapPropsToCards,
   setResizeObserver,
 } from '@/services/course/event-section/EventSectionUtils';
+import { useScaleShow } from '@/animations/General';
 
 export default function EventSectionCardGrid({
   eventSection,
@@ -28,6 +29,8 @@ export default function EventSectionCardGrid({
 
   const sliderRef = useRef<HTMLDivElement | null>(null);
   const summaryRef = useRef<HTMLDivElement | null>(null);
+  const paginationRef = useScaleShow();
+  const noPagesErrorRef = useScaleShow();
 
   const [currentPage, setCurrentPage] = useState(0);
   const [pageRows, setPageRows] = useState(3);
@@ -124,18 +127,20 @@ export default function EventSectionCardGrid({
   );
 
   const pagination = (
-    <ReactPaginate
-      pageCount={gradableEventsData.page.totalPages}
-      onPageChange={handlePageChange}
-      forcePage={currentPage}
-      pageRangeDisplayed={2}
-      marginPagesDisplayed={1}
-      containerClassName="pagination-container"
-      pageClassName="pagination-page"
-      previousLabel={<ChevronLeft />}
-      nextLabel={<ChevronRight />}
-      breakLabel="..."
-    />
+    <div ref={paginationRef} className="w-fit">
+      <ReactPaginate
+        pageCount={gradableEventsData.page.totalPages}
+        onPageChange={handlePageChange}
+        forcePage={currentPage}
+        pageRangeDisplayed={2}
+        marginPagesDisplayed={1}
+        containerClassName="pagination-container"
+        pageClassName="pagination-page"
+        previousLabel={<ChevronLeft />}
+        nextLabel={<ChevronRight />}
+        breakLabel="..."
+      />
+    </div>
   );
 
   return (
@@ -164,7 +169,9 @@ export default function EventSectionCardGrid({
               </div>
             </div>
           ) : (
-            <div className="event-section-card-no-grid">Brak aktywności.</div>
+            <div ref={noPagesErrorRef} className="event-section-card-no-grid">
+              Brak aktywności.
+            </div>
           )}
           {mobile && cards.length > 0 && pagination}
           <PointsSummary ref={summaryRef} eventSection={eventSection} />
