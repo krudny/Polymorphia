@@ -40,7 +40,7 @@
 }
 
 .event-section-card-sm {
-  @apply h-30 max-w-[20rem];
+  @apply h-30 xl:max-w-[20rem];
 
   .event-section-card-image {
     @apply w-30 h-30;
@@ -51,7 +51,7 @@
   }
 
   .event-section-card-middle {
-    @apply w-[12.5rem];
+    @apply lg:w-[12.5rem];
   }
 
   .event-section-card-middle,
@@ -67,7 +67,7 @@
 }
 
 .event-section-card-md {
-  @apply h-40 max-w-[26rem];
+  @apply h-40 lg:max-w-[26rem];
 
   .event-section-card-image {
     @apply w-40 h-40;
@@ -78,7 +78,7 @@
   }
 
   .event-section-card-middle {
-    @apply w-[16rem];
+    @apply lg:w-[16rem];
   }
 
   .event-section-card-middle,
@@ -94,7 +94,7 @@
 }
 
 .event-section-card-lg {
-  @apply h-50 max-w-[35rem];
+  @apply h-50 lg:max-w-[35rem];
 
   .event-section-card-image {
     @apply w-50 h-50;
@@ -105,7 +105,7 @@
   }
 
   .event-section-card-middle {
-    @apply w-[22.5rem];
+    @apply lg:w-[22.5rem];
   }
 
   .event-section-card-middle,

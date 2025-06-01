@@ -55,7 +55,7 @@ export default function SectionView({
     <div
       ref={containerRef}
       id="section-view-containter"
-      className="w-full xl:mx-auto xl:max-w-6/7 3xl:max-w-4/5 p-4 h-[calc(100vh-var(--spacing)*15)] flex flex-col justify-center"
+      className="w-full xl:mx-auto xl:max-w-6/7 3xl:max-w-4/5 p-4 lg:h-[calc(100vh-var(--spacing)*15)] flex flex-col lg:justify-center"
     >
       <EventSectionCardGrid
         eventSection={eventSection}
