@@ -23,8 +23,8 @@ export default function Layout({ children }: { children: ReactNode }) {
               priority
               sizes="100%"
           />
-          <div id="main-container" className="w-full h-full flex flex-col min-h-[calc(100dvh-5rem)] lg:h-screen relative overflow-hidden lg:overflow-y-auto custom-scrollbar max-lg:mt-20">
-            <div className="w-full flex-centered h-15 flex shrink-0">
+          <div id="main-container" className="w-full h-full flex flex-col min-h-[calc(100dvh-5rem)] lg:h-screen relative overflow-hidden lg:overflow-y-auto custom-scrollbar max-lg:mt-25">
+            <div className="w-full flex-centered h-15 shrink-0 hidden lg:flex">
               <h3 className="text-4xl" ref={titleRef}>{title}</h3>
             </div>
             {children}

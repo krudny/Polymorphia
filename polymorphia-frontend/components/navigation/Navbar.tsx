@@ -12,11 +12,14 @@ import '../../styles/navigation.css';
 import { useQuery } from '@tanstack/react-query';
 import { EventSectionService } from '@/services/course/event-section/EventSectionService';
 import { updateMenuItems } from '@/services/course/event-section/EventSectionUtils';
+import { useTitle } from './TitleContext';
 
 export default function Navbar() {
   const { isNavbarExpanded, setIsNavbarExpanded } =
     useContext(NavigationContext);
   const drawerRef = useRef<HTMLDivElement | null>(null);
+
+  const { title } = useTitle();
 
   useEffect(() => {
     const drawer = drawerRef.current;
@@ -51,7 +54,7 @@ export default function Navbar() {
           onClick={() => setIsNavbarExpanded(!isNavbarExpanded)}
           className="cursor-pointer"
         />
-        <h1>Polymorphia</h1>
+        <h1>{title}</h1>
         <span>notifications</span>
       </div>
       <div ref={drawerRef} className="navbar-drawer">
