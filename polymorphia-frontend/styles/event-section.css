@@ -1,11 +1,13 @@
 @import 'tailwindcss';
 @import './globals.css';
 
-/* .section-view {
-  @apply flex flex-col gap-10 transform-none;
-  @apply md:flex-row md:gap-0 md:pr-100 xl:pr-0;
+.section-view {
+  @apply w-full p-4 flex flex-col;
+  @apply lg:h-[calc(100vh-var(--spacing)*15)] lg:justify-center;
+  @apply xl:mx-auto xl:max-w-6/7 3xl:max-w-4/5
 }
 
+/*
 .gradable-event-section {
   @apply flex flex-col gap-2;
 }

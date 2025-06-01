@@ -11,16 +11,16 @@ export interface EventSection {
   id: number;
   type: 'coursework' | 'tests' | 'project';
   name: string;
-  gainedXp: string; // "1,2"
+  gainedXp: string; // "1.2"
   bonuses: BonusInfo[];
-  totalXp: string; // "1,2"
+  totalXp: string; // "1.2"
 }
 
 export interface GradableEventCore {
   id: number;
   name: string;
   topic?: string;
-  gainedXp?: string; // "1,2", undefined if there is no grade
+  gainedXp?: string; // "1.2", undefined if there is no grade
   hidden?: boolean;
 }
 
@@ -31,7 +31,6 @@ export interface GradableEventCoreResponse {
   }
 }
 
-
 export interface SectionViewProps {
   eventSectionId: number;
   presentEventsModally?: boolean;
@@ -39,7 +38,7 @@ export interface SectionViewProps {
 
 export interface BonusInfo {
   name: string;
-  bonusXp: string; // "1,2"
+  bonusXp: string; // "1.2"
   bonusPercentage?: string; // "10"
   items: BonusInfoItem[];
 }
@@ -52,14 +51,14 @@ export interface BonusInfoItem {
     imageUrl: string;
   };
   receivedDate: string; // "12.06.2026"
-  bonusXp: string; // "1,2"
+  bonusXp: string; // "1.2"
   bonusPercentage?: string; // "10"
 }
 
 export interface GradableEvent {
   id: number;
   name: string;
-  maxXp: string; // "1,2"
+  maxXp: string; // "1.2"
   hidden?: boolean;
   grade?: Grade;
 }
@@ -67,7 +66,7 @@ export interface GradableEvent {
 export type Test = GradableEvent
 
 export interface Grade {
-  gainedXp: string; // "1,2"
+  gainedXp: string; // "1.2"
   chests: GradeChest[];
 }
 

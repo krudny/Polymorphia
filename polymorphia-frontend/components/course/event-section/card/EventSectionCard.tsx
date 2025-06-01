@@ -6,7 +6,6 @@ import '../../../../styles/event-section-card.css';
 import clsx from 'clsx';
 import { tv } from 'tailwind-variants';
 import Image from 'next/image';
-import { API_STATIC_URL } from '@/services/api';
 
 const eventSectionCard = tv({
   base: 'event-section-card',
@@ -21,7 +20,7 @@ const eventSectionCard = tv({
       silver: 'border-b-6 border-slate-400',
       bronze: 'border-b-6 border-amber-800',
       green: 'border-b-6 border-green-600',
-      none: 'border-0'
+      none: 'border-0',
     },
   },
   defaultVariants: {
@@ -34,6 +33,7 @@ export default function EventSectionCard({
   title,
   subtitle,
   xp,
+  image,
   onClick,
   size,
   color,
@@ -46,13 +46,11 @@ export default function EventSectionCard({
       )}
       onClick={onClick}
     >
-      {/* <div className="event-section-card-image">
-        <Image
-          src={`${API_STATIC_URL}/images/chests/s1.png`}
-          alt="obrazek"
-          fill
-        />
-      </div> */}
+      {image && (
+        <div className="event-section-card-image">
+          <Image src={image.url} alt={image.alt} fill />
+        </div>
+      )}
       <div className="event-section-card-middle">
         <h1>{title}</h1>
         <h2>{subtitle}</h2>

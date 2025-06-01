@@ -1,50 +1,26 @@
-import {
-  PointsSummaryElementProps,
-  PointsSummaryProps,
-} from '@/interfaces/course/event-section/PointsSummaryInterfaces';
+import { PointsSummaryProps } from '@/interfaces/course/event-section/PointsSummaryInterfaces';
 import '../../../../styles/points-summary.css';
 import PointsSummaryElement from './PointsSummaryElement';
 import { Fragment, useState } from 'react';
 import BonusInfoModal from './BonusInfoModal';
 import { BonusInfo } from '@/interfaces/course/event-section/EventSectionInterfaces';
+import { getBonusesFromEventSection } from '@/services/course/event-section/EventSectionUtils';
 
-export default function PointsSummary({ eventSection, ref }: PointsSummaryProps) {
+export default function PointsSummary({
+  eventSection,
+  ref,
+}: PointsSummaryProps) {
   const [currentBonusInfoModal, setCurrentBonusInfoModal] =
     useState<BonusInfo | null>(null);
 
-  const elements: PointsSummaryElementProps[] = [
-    {
-      bonus: {
-        name: 'Zdobyte xp',
-        bonusXp: `${eventSection.gainedXp} xp`,
-        items: [],
-      },
-    },
-    ...eventSection.bonuses.map((bonus) => {
-      return {
-        bonus: {
-          ...bonus,
-          bonusXp: `+${bonus.bonusXp} xp`,
-          bonusPercentage: bonus.bonusPercentage
-            ? `+${bonus.bonusPercentage}$`
-            : undefined,
-        },
-        onClick: () => setCurrentBonusInfoModal(bonus),
-      };
-    }),
-    {
-      bonus: {
-        name: 'Łącznie',
-        bonusXp: `${eventSection.totalXp} xp`,
-        items: [],
-      },
-      horizontal: true,
-    },
-  ];
+  const elements = getBonusesFromEventSection(
+    eventSection,
+    setCurrentBonusInfoModal
+  );
 
   return (
     <>
-      <div ref={ref} id="summary" className="points-summary">
+      <div ref={ref} className="points-summary">
         {elements.map((element, index) => (
           <Fragment key={element.bonus.name}>
             <PointsSummaryElement
