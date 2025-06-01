@@ -12,8 +12,9 @@ export interface EventSectionCardProps {
 }
 
 export type EventSectionCardVariantProps = {
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'xs' | 'sm' | 'md' | 'lg';
   color?: 'gold' | 'silver' | 'bronze' | 'green';
+  forceWidth?: boolean;
 };
 
 export interface EventSectionCardGridProps {

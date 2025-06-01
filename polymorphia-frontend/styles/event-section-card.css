@@ -65,8 +65,38 @@
   @apply flex flex-col items-center justify-center shrink-0 h-full p-5 gap-2 bg-neutral-300;
 }
 
+.event-section-card-xs {
+  @apply h-20;
+
+  .event-section-card-image {
+    @apply w-20 h-20;
+  }
+
+  .event-section-card-xp {
+    @apply w-20 h-20;
+  }
+
+  .event-section-card-force-width .event-section-card-middle {
+    @apply lg:w-[8rem];
+  }
+
+  .event-section-card-middle,
+  .event-section-card-xp {
+    @apply p-2;
+    @apply gap-1;
+
+    h1 {
+      @apply text-2xl;
+    }
+
+    h2 {
+      @apply text-sm;
+    }
+  }
+}
+
 .event-section-card-sm {
-  @apply h-30 xl:max-w-[20rem];
+  @apply h-30;
 
   .event-section-card-image {
     @apply w-30 h-30;
@@ -76,7 +106,7 @@
     @apply w-30 h-30;
   }
 
-  .event-section-card-middle {
+  .event-section-card-force-width .event-section-card-middle {
     @apply lg:w-[12.5rem];
   }
 
@@ -103,7 +133,7 @@
     @apply w-40 h-40;
   }
 
-  .event-section-card-middle {
+  .event-section-card-force-width .event-section-card-middle {
     @apply lg:w-[16rem];
   }
 
@@ -130,7 +160,7 @@
     @apply w-50 h-50;
   }
 
-  .event-section-card-middle {
+  .event-section-card-force-width .event-section-card-middle {
     @apply lg:w-[22.5rem];
   }
 
