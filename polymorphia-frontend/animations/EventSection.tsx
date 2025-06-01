@@ -1,5 +1,5 @@
 import { GradableEventCoreResponse } from '@/interfaces/course/event-section/EventSectionInterfaces';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 
 export function useEventSectionAnimation(
@@ -32,23 +32,27 @@ export function useEventSectionAnimation(
     }
   };
 
-  const [firstRender, setFirstRender] = useState(true);
+  const firstRender = useRef(true);
+  const directionRef = useRef(direction);
+  directionRef.current = direction;
 
   useEffect(() => {
     if (!gradableEventsData || !sliderRef.current) return;
-    if (firstRender) {
-      setFirstRender(false);
+    if (firstRender.current) {
+      firstRender.current = false;
       return;
     }
+
+    const dir = directionRef.current;
 
     if (sliderRef.current) {
       gsap.fromTo(
         sliderRef.current,
-        { xPercent: direction * 100, opacity: 0 },
+        { xPercent: dir * 100, opacity: 0 },
         { xPercent: 0, opacity: 1, duration: 0.2, ease: 'power2.out' }
       );
     }
-  }, [pageToShow, gradableEventsData]); // eslint-disable-line -- adding 'direction' to dependency list breaks the animation
+  }, [pageToShow, gradableEventsData, sliderRef]);
 
   return {
     handlePageChange: handlePageChange,
