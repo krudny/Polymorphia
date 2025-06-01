@@ -1,15 +1,17 @@
 import { ModalProps } from '../../modal/ModalInterfaces';
 
+export type EventSectionType = 'coursework' | 'tests' | 'project';
+
 export interface EventSectionCore {
   id: number;
   name: string;
-  type: 'coursework' | 'tests' | 'project';
+  type: EventSectionType;
   hidden?: boolean;
 }
 
 export interface EventSection {
   id: number;
-  type: 'coursework' | 'tests' | 'project';
+  type: EventSectionType;
   name: string;
   gainedXp: string; // "1.2"
   bonuses: BonusInfo[];
