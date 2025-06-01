@@ -4,7 +4,7 @@
 .points-summary {
   @apply flex gap-10 flex-col pb-5 pt-3;
   @apply items-center;
-  @apply lg:justify-between lg:items-end lg:h-full lg:pb-3 lg:pt-0;
+  @apply lg:justify-between lg:items-end lg:h-full lg:pt-0;
   @apply [@media(max-height:709px)]:gap-5;
 }
 
