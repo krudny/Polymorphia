@@ -142,27 +142,31 @@ export default function EventSectionCardGrid({
     <>
       <div className="event-section-card-grid-center-vertically">
         <div className="event-section-card-grid-point-summary-layout">
-          <div className="event-section-card-fading-edges">
-            <div
-              ref={sliderRef}
-              className={clsx(
-                'event-section-card-grid',
-                `grid-cols-${pageCols}`,
-                `grid-rows-${pageRows}`
-              )}
-            >
-              {cards.map((card) => (
-                <EventSectionCard
-                  key={card.id}
-                  {...card}
-                  color={card.xp !== undefined ? 'green' : 'silver'}
-                  xp={card.xp !== undefined ? card.xp : '0.0 xp'}
-                  size={mobile ? 'sm' : 'md'}
-                />
-              ))}
+          {cards.length > 0 ? (
+            <div className="event-section-card-fading-edges">
+              <div
+                ref={sliderRef}
+                className={clsx(
+                  'event-section-card-grid',
+                  `grid-cols-${pageCols}`,
+                  `grid-rows-${pageRows}`
+                )}
+              >
+                {cards.map((card) => (
+                  <EventSectionCard
+                    key={card.id}
+                    {...card}
+                    color={card.xp !== undefined ? 'green' : 'silver'}
+                    xp={card.xp !== undefined ? card.xp : '0.0 xp'}
+                    size={mobile ? 'sm' : 'md'}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-          {mobile && pagination}
+          ) : (
+            <div className="event-section-card-no-grid">Brak aktywności.</div>
+          )}
+          {mobile && cards.length > 0 && pagination}
           <PointsSummary ref={summaryRef} eventSection={eventSection} />
         </div>
         {!mobile && pagination}

@@ -36,6 +36,10 @@
   @apply grid gap-5 px-3 justify-items-start items-start mb-5;
 }
 
+.event-section-card-no-grid {
+  @apply w-full flex justify-center text-3xl;
+}
+
 .event-section-card {
   @apply w-full rounded-md bg-neutral-50 drop-shadow-lg transition-all overflow-hidden flex flex-row;
 }
