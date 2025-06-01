@@ -487,7 +487,6 @@ export const EventSectionService = {
     });
   },
 
-
   // pages start from 0 in Spring
   getEventSectionGradableEvents: async ({
     eventSectionId,
@@ -518,8 +517,10 @@ export const EventSectionService = {
       resolve({
         data: paginatedEvents,
         page: {
-          totalPages: Math.ceil(matchedSection.gradableEvents.length / pageSize)
-        }
+          totalPages: Math.ceil(
+            matchedSection.gradableEvents.length / pageSize
+          ),
+        },
       });
     });
   },

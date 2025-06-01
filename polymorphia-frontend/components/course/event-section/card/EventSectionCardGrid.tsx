@@ -1,11 +1,7 @@
-import {
-  EventSectionCardGridProps,
-  EventSectionCardProps,
-} from '@/interfaces/course/event-section/card/EventSectionCardInterfaces';
+import { EventSectionCardGridProps } from '@/interfaces/course/event-section/card/EventSectionCardInterfaces';
 import EventSectionCard from './EventSectionCard';
 import '../../../../styles/event-section-card.css';
 import '../../../../styles/paginate.css';
-import { useScaleShow } from '@/animations/General';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { EventSectionService } from '@/services/course/event-section/EventSectionService';
@@ -13,11 +9,15 @@ import Loading from '@/components/general/Loading';
 import { useEffect, useRef, useState } from 'react';
 import { GradableEventCore } from '@/interfaces/course/event-section/EventSectionInterfaces';
 import ReactPaginate from 'react-paginate';
-import { ChevronLeft, ChevronRight, MoveLeft, MoveRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import clsx from 'clsx';
 import gsap from 'gsap';
 import TestDetailsModal from '../TestDetailsModal';
 import PointsSummary from '../points-summary/PointsSummary';
+import {
+  mapPropsToCards,
+  setResizeObserver,
+} from '@/services/course/event-section/EventSectionUtils';
 
 export default function EventSectionCardGrid({
   eventSection,
@@ -25,36 +25,20 @@ export default function EventSectionCardGrid({
   containerRef,
 }: EventSectionCardGridProps) {
   const router = useRouter();
+
   const sliderRef = useRef<HTMLDivElement | null>(null);
   const summaryRef = useRef<HTMLDivElement | null>(null);
 
   const [currentPage, setCurrentPage] = useState(0);
   const [pageRows, setPageRows] = useState(3);
   const [pageCols, setPageCols] = useState(2);
-  const [pageToShow, setPageToShow] = useState(0); // delayed page shown in DOM
-  const [direction, setDirection] = useState<1 | -1>(1); // animation direction
   const [mobile, setMobile] = useState(false);
 
-  const handlePageChange = (selected: { selected: number }) => {
-    const newPage = selected.selected;
-    if (newPage === pageToShow) return;
+  const [pageToShow, setPageToShow] = useState(0);
+  const [direction, setDirection] = useState<1 | -1>(1);
 
-    const dir = newPage > pageToShow ? 1 : -1;
-    setDirection(dir);
-
-    if (sliderRef.current) {
-      gsap.to(sliderRef.current, {
-        xPercent: -dir * 20,
-        opacity: 0,
-        duration: 0.4,
-        ease: 'power2.inOut',
-        onComplete: () => {
-          setPageToShow(newPage); // triggers data change
-          setCurrentPage(newPage); // query depends on this
-        },
-      });
-    }
-  };
+  const [currentGradableEventModal, setCurrentGradableEventModal] =
+    useState<GradableEventCore | null>(null);
 
   const {
     data: gradableEventsData,
@@ -76,6 +60,27 @@ export default function EventSectionCardGrid({
       }),
   });
 
+  const handlePageChange = (selected: { selected: number }) => {
+    const newPage = selected.selected;
+    if (newPage === pageToShow) return;
+
+    const dir = newPage > pageToShow ? 1 : -1;
+    setDirection(dir);
+
+    if (sliderRef.current) {
+      gsap.to(sliderRef.current, {
+        xPercent: -dir * 20,
+        opacity: 0,
+        duration: 0.4,
+        ease: 'power2.inOut',
+        onComplete: () => {
+          setPageToShow(newPage);
+          setCurrentPage(newPage);
+        },
+      });
+    }
+  };
+
   useEffect(() => {
     if (!gradableEventsData || !sliderRef.current) return;
 
@@ -86,105 +91,37 @@ export default function EventSectionCardGrid({
         { xPercent: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }
       );
     }
-  }, [pageToShow, gradableEventsData]);
+  }, [pageToShow, gradableEventsData]); // eslint-disable-line -- adding 'direction' to dependency list breaks the animation
 
   useEffect(() => {
-    console.log(containerRef, summaryRef);
-    if (!containerRef.current) return;
-
-    const handleResize = () => {
-      console.log(containerRef, summaryRef);
-      if (!containerRef.current) return;
-      console.log(2);
-
-      const height = containerRef.current.offsetHeight;
-      const width = containerRef.current.offsetWidth;
-
-      if (window.outerWidth < 1024) {
-        setMobile(true);
-        setPageCols(1);
-        setPageRows(5);
-      } else {
-        setMobile(false);
-        const expandedSidebar = document.getElementById('sidebar-animated');
-        const sidebarOffset =
-          expandedSidebar !== null ? expandedSidebar.offsetWidth : 0;
-        // expandedSidebar !== null ? 288 : 0;
-        console.log(sidebarOffset);
-
-        const rows = Math.floor((height - 80 + 20) / (160 + 20));
-        const cols = Math.floor(
-          (width -
-            40 -
-            100 -
-            (summaryRef?.current?.offsetWidth ?? 300) +
-            sidebarOffset +
-            20) /
-            (416 + 20)
-        );
-
-        console.log(rows, cols);
-        console.log(height);
-
-        const maxRows = height <= 650 ? 2 : height >= 900 ? 4 : 3;
-
-        setPageRows(Math.max(Math.min(rows, maxRows), 1));
-        setPageCols(Math.max(Math.min(cols, 3), 1));
-      }
-    };
-
-    const resizeObserver = new ResizeObserver(handleResize);
-    resizeObserver.observe(containerRef.current);
-    if (summaryRef.current !== null) {
-      resizeObserver.observe(summaryRef.current);
-    }
-
-    handleResize(); // Run once immediately
-
-    return () => {
-      resizeObserver.disconnect();
-    };
+    return setResizeObserver(
+      containerRef,
+      summaryRef,
+      setMobile,
+      setPageCols,
+      setPageRows
+    );
   }, [containerRef, summaryRef]);
-
-  const [currentGradableEventModal, setCurrentGradableEventModal] =
-    useState<GradableEventCore | null>(null);
 
   if (isLoading) {
     return <Loading />;
   }
 
   if (error) {
-    return (
-      <div className="basic-container">
-        Error loading gradable events: {error.message}
-      </div>
-    );
+    return <div>Error loading gradable events: {error.message}</div>;
   }
 
   if (!gradableEventsData) {
-    return <div className="basic-container">No gradable events.</div>;
+    return <div>No gradable events.</div>;
   }
 
-  const cards: (EventSectionCardProps & { id: number })[] =
-    gradableEventsData.data
-      .filter((event) => !event.hidden)
-      .map((event) => {
-        return {
-          id: event.id,
-          title: event.name,
-          subtitle: event.topic,
-          xp: event.gainedXp ? `${event.gainedXp} xp` : undefined,
-          onClick: presentEventsModally
-            ? () => {
-                setCurrentGradableEventModal(event);
-              }
-            : () => {
-                router.push(
-                  `/course/${eventSection.type}/${eventSection.id}/${event.id}`
-                );
-              },
-        };
-      });
+  const cards = mapPropsToCards(
+    gradableEventsData,
+    presentEventsModally,
+    setCurrentGradableEventModal,
+    router,
+    eventSection
+  );
 
   const pagination = (
     <ReactPaginate
@@ -201,9 +138,9 @@ export default function EventSectionCardGrid({
 
   return (
     <>
-      <div className="flex flex-col justify-between w-full max-h-full">
-        <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-10">
-          <div className="max-xl:w-full fading-edges">
+      <div className="event-section-card-grid-center-vertically">
+        <div className="event-section-card-grid-point-summary-layout">
+          <div className="event-section-card-fading-edges">
             <div
               ref={sliderRef}
               className={clsx(
@@ -218,7 +155,7 @@ export default function EventSectionCardGrid({
                   {...card}
                   color={card.xp !== undefined ? 'green' : 'silver'}
                   xp={card.xp !== undefined ? card.xp : '0.0 xp'}
-                  size={mobile ? "sm" : "md"}
+                  size={mobile ? 'sm' : 'md'}
                 />
               ))}
             </div>

@@ -1,7 +1,6 @@
 import '../../../styles/general.css';
 import '../../../styles/event-section.css';
 import EventSectionCardGrid from '@/components/course/event-section/card/EventSectionCardGrid';
-import PointsSummary from './points-summary/PointsSummary';
 import { SectionViewProps } from '@/interfaces/course/event-section/EventSectionInterfaces';
 import { useEffect, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
@@ -15,7 +14,6 @@ export default function SectionView({
 }: SectionViewProps) {
   const { setTitle } = useTitle();
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const summaryRef = useRef<HTMLDivElement | null>(null);
 
   const {
     data: eventSection,
@@ -37,7 +35,7 @@ export default function SectionView({
 
   if (error) {
     return (
-      <div className="basic-container">
+      <div className="section-view">
         Error loading event section: {error.message}
       </div>
     );
@@ -45,9 +43,7 @@ export default function SectionView({
 
   if (!eventSection) {
     return (
-      <div className="basic-container">
-        No event section with this ID exists.
-      </div>
+      <div className="section-view">No event section with this ID exists.</div>
     );
   }
 
@@ -55,7 +51,7 @@ export default function SectionView({
     <div
       ref={containerRef}
       id="section-view-containter"
-      className="w-full xl:mx-auto xl:max-w-6/7 3xl:max-w-4/5 p-4 lg:h-[calc(100vh-var(--spacing)*15)] flex flex-col lg:justify-center"
+      className="section-view"
     >
       <EventSectionCardGrid
         eventSection={eventSection}

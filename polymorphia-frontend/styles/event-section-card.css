@@ -1,17 +1,39 @@
 @import 'tailwindcss';
 @import './globals.css';
 
-.event-section-card-grid {
-  @apply grid gap-5 px-3 justify-items-start items-start pb-3;
+.event-section-card-grid-center-vertically {
+  @apply flex flex-col justify-between w-full max-h-full;
 }
 
-.fading-edges {
-  mask-image: linear-gradient(to right, transparent, black 1%, black 99%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 1%, black 99%, transparent);
+.event-section-card-grid-point-summary-layout {
+  @apply flex flex-col items-center gap-10;
+  @apply lg:flex-row lg:justify-between;
+}
+
+.event-section-card-fading-edges {
+  @apply max-xl:w-full;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 1%,
+    black 99%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 1%,
+    black 99%,
+    transparent
+  );
   mask-size: 100% 100%;
   -webkit-mask-size: 100% 100%;
   mask-repeat: no-repeat;
   -webkit-mask-repeat: no-repeat;
+}
+
+.event-section-card-grid {
+  @apply grid gap-5 px-3 justify-items-start items-start pb-3;
 }
 
 .event-section-card {
