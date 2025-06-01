@@ -145,7 +145,7 @@ export function getBonusesFromEventSection(
       return {
         bonus: {
           ...bonus,
-          bonusXp: `+${bonus.bonusXp} xp`,
+          bonusXp: `${bonus.bonusXp} xp`,
           bonusPercentage: bonus.bonusPercentage
             ? `+${bonus.bonusPercentage}$`
             : undefined,
