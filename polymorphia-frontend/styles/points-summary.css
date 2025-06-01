@@ -2,10 +2,10 @@
 @import './globals.css';
 
 .points-summary {
-  @apply flex gap-10 flex-col pb-5 pt-3;
-  @apply items-center;
+  @apply flex gap-10 flex-col pb-5 pt-3 items-center;
   @apply lg:justify-between lg:items-end lg:h-full lg:pt-0;
   @apply [@media(max-height:709px)]:gap-5;
+  @apply max-lg:w-full max-lg:px-5;
 }
 
 .points-summary-element {
@@ -29,18 +29,21 @@
 .points-summary-element h1 {
   @apply text-5xl text-nowrap;
   @apply [@media(max-height:709px)]:text-3xl;
+  @apply max-lg:text-4xl;
   @apply [@media(min-height:960px)]:[@media(min-width:1024px)]:text-6xl;
 }
 
 .points-summary-element-horizontal h1 {
   @apply text-7xl;
   @apply [@media(max-height:709px)]:text-5xl;
+  @apply max-lg:text-6xl;
   @apply [@media(min-height:960px)]:[@media(min-width:1024px)]:text-8xl;
 }
 
 .points-summary-element h2 {
   @apply text-7xl text-nowrap;
   @apply [@media(max-height:709px)]:text-5xl;
+  @apply max-lg:text-6xl;
   @apply [@media(min-height:960px)]:[@media(min-width:1024px)]:text-8xl;
 }
 
@@ -48,10 +51,13 @@
   @apply flex flex-row items-center gap-5;
 }
 
+.points-summary-element-header-offset {
+  @apply -ml-[44px];
+}
+
 .points-summary-divider {
-  @apply border-t-2 border-neutral-800 w-80 -mt-5 -mb-5;
+  @apply border-t-2 border-neutral-800 min-w-full -mt-5 -mb-5;
   @apply [@media(max-height:709px)]:-mt-2.5 [@media(max-height:709px)]:-mb-2.5;
-  @apply lg:w-full;
 }
 
 .bonus-info-modal {

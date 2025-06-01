@@ -19,7 +19,7 @@ export default function PointsSummaryElement({
       )}
       onClick={onClick}
     >
-      <div className="points-summary-element-header">
+      <div className={clsx("points-summary-element-header", onClick && "points-summary-element-header-offset")}>
         {onClick && <SquareMousePointer className="text-neutral-500" />}
         <h1>{bonus.name}</h1>
       </div>
