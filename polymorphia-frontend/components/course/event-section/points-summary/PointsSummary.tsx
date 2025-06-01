@@ -5,13 +5,11 @@ import { Fragment, useState } from 'react';
 import BonusInfoModal from './BonusInfoModal';
 import { BonusInfo } from '@/interfaces/course/event-section/EventSectionInterfaces';
 import { getBonusesFromEventSection } from '@/services/course/event-section/EventSectionUtils';
-import { useScaleShow } from '@/animations/General';
 
 export default function PointsSummary({
   eventSection,
   ref,
 }: PointsSummaryProps) {
-  const wrapperRef = useScaleShow();
   const [currentBonusInfoModal, setCurrentBonusInfoModal] =
     useState<BonusInfo | null>(null);
 
@@ -21,7 +19,7 @@ export default function PointsSummary({
   );
 
   return (
-    <div ref={wrapperRef}>
+    <>
       <div ref={ref} className="points-summary">
         {elements.map((element, index) => (
           <Fragment key={element.bonus.name}>
@@ -46,6 +44,6 @@ export default function PointsSummary({
         bonusInfo={currentBonusInfoModal}
         onClose={() => setCurrentBonusInfoModal(null)}
       />
-    </div>
+    </>
   );
 }
