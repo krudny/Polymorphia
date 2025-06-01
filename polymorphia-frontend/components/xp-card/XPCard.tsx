@@ -1,20 +1,20 @@
 import {
   EventSectionCardProps,
   EventSectionCardVariantProps,
-} from '@/interfaces/course/event-section/card/EventSectionCardInterfaces';
-import '../../../../styles/event-section-card.css';
+} from '@/interfaces/xp-card/XPCardInterfaces';
+import '../../styles/xp-card.css';
 import clsx from 'clsx';
 import { tv } from 'tailwind-variants';
 import Image from 'next/image';
 
-const eventSectionCard = tv({
-  base: 'event-section-card',
+const xpCard = tv({
+  base: 'xp-card',
   variants: {
     size: {
-      xs: 'event-section-card-xs',
-      sm: 'event-section-card-sm',
-      md: 'event-section-card-md',
-      lg: 'event-section-card-lg',
+      xs: 'xp-card-xs',
+      sm: 'xp-card-sm',
+      md: 'xp-card-md',
+      lg: 'xp-card-lg',
     },
     color: {
       gold: 'border-b-6 border-amber-400',
@@ -24,7 +24,7 @@ const eventSectionCard = tv({
       none: 'border-0',
     },
     forceWidth: {
-      true: 'event-section-card-force-width',
+      true: 'xp-card-force-width',
       false: '',
     },
   },
@@ -35,7 +35,7 @@ const eventSectionCard = tv({
   },
 });
 
-export default function EventSectionCard({
+export default function XPCard({
   title,
   subtitle,
   xp,
@@ -48,21 +48,21 @@ export default function EventSectionCard({
   return (
     <div
       className={clsx(
-        eventSectionCard({ size, color, forceWidth }),
-        onClick && 'event-section-card-hover'
+        xpCard({ size, color, forceWidth }),
+        onClick && 'xp-card-hover'
       )}
       onClick={onClick}
     >
       {image && (
-        <div className="event-section-card-image">
+        <div className="xp-card-image">
           <Image src={image.url} alt={image.alt} fill />
         </div>
       )}
-      <div className="event-section-card-middle">
+      <div className="xp-card-middle">
         <h1>{title}</h1>
         <h2>{subtitle}</h2>
       </div>
-      <div className="event-section-card-xp">
+      <div className="xp-card-xp">
         <h1>{xp}</h1>
         <h2>SUMA</h2>
       </div>

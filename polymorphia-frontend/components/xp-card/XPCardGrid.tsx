@@ -1,7 +1,7 @@
-import { EventSectionCardGridProps } from '@/interfaces/course/event-section/card/EventSectionCardInterfaces';
-import EventSectionCard from './EventSectionCard';
-import '../../../../styles/event-section-card.css';
-import '../../../../styles/paginate.css';
+import { EventSectionCardGridProps } from '@/interfaces/xp-card/XPCardInterfaces';
+import XPCard from './XPCard';
+import '../../styles/xp-card.css';
+import '../../styles/paginate.css';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { EventSectionService } from '@/services/course/event-section/EventSectionService';
@@ -11,15 +11,15 @@ import { GradableEventCore } from '@/interfaces/course/event-section/EventSectio
 import ReactPaginate from 'react-paginate';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import clsx from 'clsx';
-import TestDetailsModal from '../TestDetailsModal';
-import PointsSummary from '../points-summary/PointsSummary';
+import TestDetailsModal from '../course/event-section/TestDetailsModal';
+import PointsSummary from '../course/event-section/points-summary/PointsSummary';
 import {
   mapPropsToCards,
   setResizeObserver,
 } from '@/services/course/event-section/EventSectionUtils';
 import { useEventSectionAnimation } from '@/animations/EventSection';
 
-export default function EventSectionCardGrid({
+export default function XPCardGrid({
   eventSection,
   presentEventsModally,
   containerRef,
@@ -117,20 +117,20 @@ export default function EventSectionCardGrid({
 
   return (
     <>
-      <div className="event-section-card-grid-center-vertically">
-        <div className="event-section-card-grid-point-summary-layout">
+      <div className="xp-card-grid-center-vertically">
+        <div className="xp-card-grid-point-summary-layout">
           {cards.length > 0 ? (
-            <div className="event-section-card-fading-edges">
+            <div className="xp-card-fading-edges">
               <div
                 ref={sliderRef}
                 className={clsx(
-                  'event-section-card-grid',
+                  'xp-card-grid',
                   `grid-cols-${pageCols}`,
                   `grid-rows-${pageRows}`
                 )}
               >
                 {cards.map((card) => (
-                  <EventSectionCard
+                  <XPCard
                     key={card.id}
                     {...card}
                     color={card.xp !== undefined ? 'green' : 'silver'}
@@ -142,7 +142,7 @@ export default function EventSectionCardGrid({
               </div>
             </div>
           ) : (
-            <div className="event-section-card-no-grid">Brak aktywności.</div>
+            <div className="xp-card-no-grid">Brak aktywności.</div>
           )}
           {mobile && cards.length > 0 && pagination}
           <PointsSummary ref={summaryRef} eventSection={eventSection} />

@@ -1,4 +1,4 @@
-import { EventSection } from '../EventSectionInterfaces';
+import { EventSection } from '../course/event-section/EventSectionInterfaces';
 
 export interface EventSectionCardProps {
   title: string;
