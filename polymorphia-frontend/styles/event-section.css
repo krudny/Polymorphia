@@ -7,7 +7,6 @@
   @apply xl:mx-auto xl:max-w-6/7 3xl:max-w-4/5
 }
 
-/*
 .gradable-event-section {
   @apply flex flex-col gap-2;
 }
@@ -38,4 +37,4 @@
 
 .gradable-event-section-chests-image-wrapper img {
   @apply rounded-xl;
-} */
+}
