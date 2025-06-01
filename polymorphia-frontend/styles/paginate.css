@@ -2,7 +2,7 @@
 @import './globals.css';
 
 .pagination-container {
-  @apply flex flex-row gap-2 items-center h-12 p-2 mt-2;
+  @apply flex flex-row gap-2 items-center h-12;
 
   a {
     @apply cursor-pointer;
