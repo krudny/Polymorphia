@@ -33,7 +33,7 @@
 }
 
 .event-section-card-grid {
-  @apply grid gap-5 px-3 justify-items-start items-start pb-3;
+  @apply grid gap-5 px-3 justify-items-start items-start mb-5;
 }
 
 .event-section-card {
