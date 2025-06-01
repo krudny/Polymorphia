@@ -12,7 +12,7 @@ export default function RewardsInfo({ grade, maxXp }: RewardsInfoProps) {
         <>
           <div className="gradable-event-section-xp">
             <h2>Punkty doświadczenia</h2>
-            <div className="pt-7">
+            <div className="pt-7 min-[390px]:w-[380px] w-[310px] -ml-[38px] -mr-[38px]">
               <ProgressBar
                 minXP={0}
                 currentXP={Number(grade?.gainedXp)}
@@ -39,9 +39,9 @@ export default function RewardsInfo({ grade, maxXp }: RewardsInfoProps) {
                   </div>
                 ))}
               </div>
-            ) : (
-              'Nie przydzielono żadnej skrzynki.'
-            )}
+            ) : <div className="text-xl">
+              Nie przydzielono żadnej skrzynki.
+            </div>}
           </div>
         </>
       ) : (
