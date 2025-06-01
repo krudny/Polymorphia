@@ -29,19 +29,19 @@
 .points-summary-element h1 {
   @apply text-5xl text-nowrap;
   @apply [@media(max-height:709px)]:text-3xl;
-  @apply [@media(min-height:960px,min-width:1024px)]:text-6xl;
+  @apply [@media(min-height:960px)]:[@media(min-width:1024px)]:text-6xl;
 }
 
 .points-summary-element-horizontal h1 {
   @apply text-7xl;
   @apply [@media(max-height:709px)]:text-5xl;
-  @apply [@media(min-height:960px,min-width:1024px)]:text-8xl;
+  @apply [@media(min-height:960px)]:[@media(min-width:1024px)]:text-8xl;
 }
 
 .points-summary-element h2 {
   @apply text-7xl text-nowrap;
   @apply [@media(max-height:709px)]:text-5xl;
-  @apply [@media(min-height:960px,min-width:1024px)]:text-8xl;
+  @apply [@media(min-height:960px)]:[@media(min-width:1024px)]:text-8xl;
 }
 
 .points-summary-element-header {
