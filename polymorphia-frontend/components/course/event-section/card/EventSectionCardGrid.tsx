@@ -112,8 +112,11 @@ export default function EventSectionCardGrid({
       );
 
       console.log(rows, cols);
+      console.log(height);
 
-      setPageRows(Math.max(Math.min(rows, 4), 1));
+      const maxRows = height <= 650 ? 2 : height >= 900 ? 4 : 3;
+
+      setPageRows(Math.max(Math.min(rows, maxRows), 1));
       setPageCols(Math.max(Math.min(cols, 3), 1));
     };
 
@@ -173,7 +176,7 @@ export default function EventSectionCardGrid({
   return (
     <>
       <div className="flex flex-col justify-between w-full max-h-full">
-        <div className="flex flex-row justify-between gap-10">
+        <div className="flex flex-row justify-between items-center gap-10">
           <div className="fading-edges">
             <div
               ref={sliderRef}

@@ -4,6 +4,7 @@
 .points-summary {
   @apply flex gap-10 flex-col;
   @apply justify-between items-end h-full pb-3;
+  @apply [@media(max-height:709px)]:gap-5;
 }
 
 .points-summary-element {
@@ -26,17 +27,20 @@
 
 .points-summary-element h1 {
   @apply text-5xl text-nowrap;
-  @apply [@media(max-height:709px)]:text-3xl
+  @apply [@media(max-height:709px)]:text-3xl;
+  @apply [@media(min-height:960px)]:text-6xl;
 }
 
 .points-summary-element-horizontal h1 {
   @apply text-7xl;
-  @apply [@media(max-height:709px)]:text-5xl
+  @apply [@media(max-height:709px)]:text-5xl;
+  @apply [@media(min-height:960px)]:text-8xl;
 }
 
 .points-summary-element h2 {
   @apply text-7xl text-nowrap;
-  @apply [@media(max-height:709px)]:text-5xl
+  @apply [@media(max-height:709px)]:text-5xl;
+  @apply [@media(min-height:960px)]:text-8xl;
 }
 
 .points-summary-element-header {
@@ -45,6 +49,7 @@
 
 .points-summary-divider {
   @apply border-t-2 border-neutral-800 w-80 -mt-5 -mb-5;
+  @apply [@media(max-height:709px)]:-mt-2.5 [@media(max-height:709px)]:-mb-2.5;
   @apply md:w-full;
 }
 
