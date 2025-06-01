@@ -11,13 +11,13 @@ import { GradableEventCore } from '@/interfaces/course/event-section/EventSectio
 import ReactPaginate from 'react-paginate';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import clsx from 'clsx';
-import gsap from 'gsap';
 import TestDetailsModal from '../TestDetailsModal';
 import PointsSummary from '../points-summary/PointsSummary';
 import {
   mapPropsToCards,
   setResizeObserver,
 } from '@/services/course/event-section/EventSectionUtils';
+import { useEventSectionAnimation } from '@/animations/EventSection';
 
 export default function EventSectionCardGrid({
   eventSection,
@@ -60,38 +60,15 @@ export default function EventSectionCardGrid({
       }),
   });
 
-  const handlePageChange = (selected: { selected: number }) => {
-    const newPage = selected.selected;
-    if (newPage === pageToShow) return;
-
-    const dir = newPage > pageToShow ? 1 : -1;
-    setDirection(dir);
-
-    if (sliderRef.current) {
-      gsap.to(sliderRef.current, {
-        xPercent: -dir * 20,
-        opacity: 0,
-        duration: 0.2,
-        ease: 'power2.inOut',
-        onComplete: () => {
-          setPageToShow(newPage);
-          setCurrentPage(newPage);
-        },
-      });
-    }
-  };
-
-  useEffect(() => {
-    if (!gradableEventsData || !sliderRef.current) return;
-
-    if (sliderRef.current) {
-      gsap.fromTo(
-        sliderRef.current,
-        { xPercent: direction * 100, opacity: 0 },
-        { xPercent: 0, opacity: 1, duration: 0.2, ease: 'power2.out' }
-      );
-    }
-  }, [pageToShow, gradableEventsData]); // eslint-disable-line -- adding 'direction' to dependency list breaks the animation
+  const { handlePageChange } = useEventSectionAnimation(
+    pageToShow,
+    setDirection,
+    sliderRef,
+    setPageToShow,
+    setCurrentPage,
+    gradableEventsData,
+    direction
+  );
 
   useEffect(() => {
     return setResizeObserver(
