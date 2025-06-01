@@ -1,6 +1,6 @@
 'use client';
 
-import { EventSectionCardProps } from '@/interfaces/course/event-section/card/EventSectionCardInterfaces';
+import { EventSectionCardProps } from '@/interfaces/xp-card/XPCardInterfaces';
 import {
   BonusInfo,
   EventSection,

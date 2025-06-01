@@ -1,11 +1,11 @@
 import { API_STATIC_URL } from '@/services/api';
 import '../../../../styles/points-summary.css';
 import { BonusItemCardProps } from '@/interfaces/course/event-section/PointsSummaryInterfaces';
-import EventSectionCard from '../card/EventSectionCard';
+import XPCard from '../../../xp-card/XPCard';
 
 export default function BonusItemCard({ item }: BonusItemCardProps) {
   return (
-    <EventSectionCard
+    <XPCard
       title={item.item.name}
       subtitle={`Zdobyto: ${item.receivedDate}`}
       image={{

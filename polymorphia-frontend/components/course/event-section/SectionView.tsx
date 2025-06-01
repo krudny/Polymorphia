@@ -1,6 +1,6 @@
 import '../../../styles/general.css';
 import '../../../styles/event-section.css';
-import EventSectionCardGrid from '@/components/course/event-section/card/EventSectionCardGrid';
+import XPCardGrid from '@/components/xp-card/XPCardGrid';
 import { SectionViewProps } from '@/interfaces/course/event-section/EventSectionInterfaces';
 import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
@@ -54,7 +54,7 @@ export default function SectionView({
       id="section-view-containter"
       className="section-view"
     >
-      <EventSectionCardGrid
+      <XPCardGrid
         eventSection={eventSection}
         presentEventsModally={presentEventsModally}
         containerRef={containerRef}
