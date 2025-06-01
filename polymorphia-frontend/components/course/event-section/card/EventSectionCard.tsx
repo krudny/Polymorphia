@@ -11,6 +11,7 @@ const eventSectionCard = tv({
   base: 'event-section-card',
   variants: {
     size: {
+      xs: 'event-section-card-xs',
       sm: 'event-section-card-sm',
       md: 'event-section-card-md',
       lg: 'event-section-card-lg',
@@ -22,10 +23,15 @@ const eventSectionCard = tv({
       green: 'border-b-6 border-green-600',
       none: 'border-0',
     },
+    forceWidth: {
+      true: 'event-section-card-force-width',
+      false: '',
+    },
   },
   defaultVariants: {
     size: 'md',
     color: 'none',
+    forceWidth: false,
   },
 });
 
@@ -37,12 +43,13 @@ export default function EventSectionCard({
   onClick,
   size,
   color,
+  forceWidth,
 }: EventSectionCardProps & EventSectionCardVariantProps) {
   return (
     <div
       className={clsx(
-        eventSectionCard({ size, color }),
-        true && 'event-section-card-hover'
+        eventSectionCard({ size, color, forceWidth }),
+        onClick && 'event-section-card-hover'
       )}
       onClick={onClick}
     >

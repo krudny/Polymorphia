@@ -159,6 +159,7 @@ export default function EventSectionCardGrid({
                     color={card.xp !== undefined ? 'green' : 'silver'}
                     xp={card.xp !== undefined ? card.xp : '0.0 xp'}
                     size={mobile ? 'sm' : 'md'}
+                    forceWidth={!mobile}
                   />
                 ))}
               </div>

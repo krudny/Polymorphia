@@ -57,39 +57,3 @@
 .bonus-info-modal {
   @apply flex flex-col gap-2;
 }
-
-.bonus-item-card {
-  @apply w-full flex flex-row gap-3 border-2 border-neutral-800 p-2 rounded-lg shadow-sm;
-}
-
-.bonus-item-card-image {
-  @apply rounded-xl shadow-lg w-20 h-20 relative;
-}
-
-.bonus-item-card-image img {
-  @apply rounded-xl;
-}
-
-.bonus-item-card-middle {
-  @apply flex flex-col justify-center grow truncate;
-}
-
-.bonus-item-card-middle h1 {
-  @apply text-3xl lg:text-4xl truncate;
-}
-
-.bonus-item-card-middle h2 {
-  @apply truncate;
-}
-
-.bonus-item-card-xp {
-  @apply flex flex-col justify-center items-end text-nowrap;
-}
-
-.bonus-item-card-xp-percentage {
-  @apply lg:text-xl text-lg;
-}
-
-.bonus-item-card-xp-value {
-  @apply lg:text-4xl text-3xl;
-}
