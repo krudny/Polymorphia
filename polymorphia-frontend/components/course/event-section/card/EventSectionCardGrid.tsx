@@ -128,6 +128,8 @@ export default function EventSectionCardGrid({
       pageCount={gradableEventsData.page.totalPages}
       onPageChange={handlePageChange}
       forcePage={currentPage}
+      pageRangeDisplayed={2}
+      marginPagesDisplayed={1}
       containerClassName="pagination-container"
       pageClassName="pagination-page"
       previousLabel={<ChevronLeft />}
