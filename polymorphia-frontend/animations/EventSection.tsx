@@ -9,7 +9,9 @@ export function useEventSectionAnimation(
   setPageToShow: (n: number) => void,
   setCurrentPage: (n: number) => void,
   gradableEventsData: GradableEventCoreResponse | undefined,
-  direction: 1 | -1
+  direction: 1 | -1,
+  firstRender: boolean,
+  setFirstRender: (b: boolean) => void
 ): { handlePageChange: (selected: { selected: number }) => void } {
   const handlePageChange = (selected: { selected: number }) => {
     const newPage = selected.selected;
@@ -17,6 +19,7 @@ export function useEventSectionAnimation(
 
     const dir = newPage > pageToShow ? 1 : -1;
     setDirection(dir);
+    setFirstRender(false);
 
     if (sliderRef.current) {
       gsap.to(sliderRef.current, {
@@ -32,14 +35,15 @@ export function useEventSectionAnimation(
     }
   };
 
-  const firstRender = useRef(true);
+  const firstRenderRef = useRef(firstRender);
+  firstRenderRef.current = firstRender;
+
   const directionRef = useRef(direction);
   directionRef.current = direction;
 
   useEffect(() => {
     if (!gradableEventsData || !sliderRef.current) return;
-    if (firstRender.current) {
-      firstRender.current = false;
+    if (firstRenderRef.current) {
       return;
     }
 
