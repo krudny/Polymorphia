@@ -1,5 +1,5 @@
 import { GradableEventCoreResponse } from '@/interfaces/course/event-section/EventSectionInterfaces';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import gsap from 'gsap';
 
 export function useEventSectionAnimation(
@@ -32,8 +32,14 @@ export function useEventSectionAnimation(
     }
   };
 
+  const [firstRender, setFirstRender] = useState(true);
+
   useEffect(() => {
     if (!gradableEventsData || !sliderRef.current) return;
+    if (firstRender) {
+      setFirstRender(false);
+      return;
+    }
 
     if (sliderRef.current) {
       gsap.fromTo(
