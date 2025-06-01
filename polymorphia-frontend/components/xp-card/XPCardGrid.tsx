@@ -36,6 +36,7 @@ export default function XPCardGrid({
 
   const [pageToShow, setPageToShow] = useState(0);
   const [direction, setDirection] = useState<1 | -1>(1);
+  const [firstRender, setFirstRender] = useState(true);
 
   const [currentGradableEventModal, setCurrentGradableEventModal] =
     useState<GradableEventCore | null>(null);
@@ -67,7 +68,9 @@ export default function XPCardGrid({
     setPageToShow,
     setCurrentPage,
     gradableEventsData,
-    direction
+    direction,
+    firstRender,
+    setFirstRender
   );
 
   useEffect(() => {
