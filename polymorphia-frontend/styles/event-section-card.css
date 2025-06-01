@@ -19,17 +19,8 @@
     black 99%,
     transparent
   );
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent,
-    black 1%,
-    black 99%,
-    transparent
-  );
   mask-size: 100% 100%;
-  -webkit-mask-size: 100% 100%;
   mask-repeat: no-repeat;
-  -webkit-mask-repeat: no-repeat;
 }
 
 .event-section-card-grid {
