@@ -83,11 +83,11 @@
     @apply gap-1;
 
     h1 {
-      @apply text-2xl;
+      @apply text-2xl min-[350px]:text-[1.85rem];
     }
 
     h2 {
-      @apply text-sm;
+      @apply text-sm min-[350px]:text-[1rem];
     }
   }
 }
