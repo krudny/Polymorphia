@@ -15,11 +15,11 @@ export default function EvolutionStages() {
   }
 
   if (error) {
-    return <div>Wystąpił błąd podczas ładowania poziomów doświadczenia.</div>;
+    return <div>Error loading evolution stages: {error.message}</div>;
   }
 
   if (!evolutionStages || evolutionStages.length === 0) {
-    return <div>Nie znaleziono poziomów doświadczenia.</div>;
+    return <div>No evolution stages found.</div>;
   }
 
   return (

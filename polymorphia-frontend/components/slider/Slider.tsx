@@ -1,18 +1,17 @@
 "use client"
 
-import {useEffect, useRef, useState} from "react";
+import {useState} from "react";
 import NavigationArrow from "@/components/slider/NavigationArrow";
 import NavigationDots from "@/components/slider/NavigationDots";
 import {SliderProps} from "@/interfaces/slider/SliderInterfaces";
 import SingleSlide from "@/components/slider/SingleSlide";
-import SliderNavigation from "@/components/slider/SliderNavigation";
 import "../../styles/slider.css";
-import {animateSlider} from "@/animations/Slider";
 import {shiftArray} from "@/components/slider/utils";
+import {useScaleShow} from "@/animations/General";
 
 export default function Slider({ slides, initialSlide=0 }: SliderProps) {
   const [currentSlide, setCurrentSlide] = useState<number>(initialSlide);
-  const sliderRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useScaleShow();
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
@@ -26,16 +25,11 @@ export default function Slider({ slides, initialSlide=0 }: SliderProps) {
 
   if (initialSlide != 0) shiftArray(slides, initialSlide - currentSlide);
 
-  useEffect(() => {
-    if (!sliderRef.current) return;
-    animateSlider(sliderRef.current);
-  }, []);
 
   return (
       <>
-        <div className="slider-wrapper">
-          <SliderNavigation />
-          <div className="slide-wrapper" ref={sliderRef}>
+        <div ref={wrapperRef} className="slider-wrapper">
+          <div className="slide-wrapper">
             {slides.map((slide, index) => (
                 <SingleSlide
                     key={index}
