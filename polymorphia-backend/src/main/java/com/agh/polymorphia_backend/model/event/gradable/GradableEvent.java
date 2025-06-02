@@ -6,8 +6,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.util.List;
-
 @Entity
 @Table(name = "gradable_events")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -22,14 +20,8 @@ public abstract class GradableEvent<T extends EventSection> {
     @Setter(AccessLevel.NONE)
     @EqualsAndHashCode.Include
     private Long id;
-
     @NotNull
-    private Integer maxXp;
-
-    @OneToMany(mappedBy = "gradableEvent", fetch = FetchType.LAZY)
-    private List<GradableEventChest> gradableEventChests;
+    private Float maxXp;
 
     public abstract T getEventSection();
-
-    public abstract void setEventSection(T eventSection);
 }

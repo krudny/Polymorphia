@@ -6,8 +6,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.util.Set;
-
 @Entity
 @Table(name = "assigned_items")
 @NoArgsConstructor
@@ -34,9 +32,5 @@ public class AssignedItem {
 
     @NotNull
     private Boolean used;
-
-    @OneToMany(mappedBy = "assignedItem", fetch = FetchType.LAZY)
-    @ToString.Exclude
-    private Set<BoostedGradableEvent> boostedGradableEvents;
 
 }

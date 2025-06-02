@@ -3,6 +3,7 @@ package com.agh.polymorphia_backend.model.course;
 import com.agh.polymorphia_backend.model.user.Instructor;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.List;
@@ -22,11 +23,13 @@ public class CourseGroup {
     @NotEmpty
     private String name;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     @ToString.Exclude
     private Course course;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "instructor_id")
     @ToString.Exclude

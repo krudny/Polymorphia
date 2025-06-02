@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
-public class TestEventResponseDto extends GradableEventResponseDto {
+public class TestResponseDto extends GradableEventResponseDto {
 
     @NotNull
     private Boolean hidden;

@@ -5,7 +5,6 @@ import com.agh.polymorphia_backend.exception.ValidationError;
 import com.agh.polymorphia_backend.exception.ValidationException;
 import com.agh.polymorphia_backend.exception.ValidationExceptionResponse;
 import com.agh.polymorphia_backend.exception.database.InvalidArgumentException;
-import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.course.CourseGroup;
 import com.agh.polymorphia_backend.model.event.gradable.GradableEvent;
 import com.agh.polymorphia_backend.model.grade.Grade;
@@ -29,12 +28,13 @@ public class GradeRequestValidator {
     private static final String FIELD_CHEST = "chestIds";
 
     private static final String INSTRUCTOR_NOT_IN_GROUP = "Instructor does not manage courseGroup %d!";
-    private static final String XP_VALUE_TOO_BIG = "xp value is too big, maximum is %d";
+    private static final String XP_VALUE_TOO_BIG = "xp value is too big, maximum is %.1f";
     private static final String INVALID_REQUEST = "Invalid request";
     private static final String DB_OBJECT_NOT_FOUND = "%s of id: %s not found";
     private static final String GRADABLE_EVENT_NOT_IN_COURSE = "GradableEvent is not in this course";
-    private static final String NO_CHEST_IDS_AND_XP = "Either chestIds or xp are required";
+    private static final String NO_CHEST_IDS_AND_XP = "Either non-empty chestIds or non-negative xp are required";
     private static final String TOO_MANY_CHESTS = "Maximum value of chests (%d) with id %d has already been assigned to this grade";
+    private static final String CHESTS_NOT_IN_GRADABLE_EVENT = "It is not allowed to assign chest %d to this gradableEvent";
 
 
     private final CourseGroupRepository courseGroupRepository;
@@ -71,22 +71,23 @@ public class GradeRequestValidator {
                 .filter(assignedChest -> assignedChest.getChest().getId().equals(chestId))
                 .count();
 
-        Optional<Integer> maxChests = gradableEventRepository.findMaxChestsByGradableEventIdAndChestId(
+        Integer maxChests = gradableEventRepository.findMaxChestsByGradableEventIdAndChestId(
                 grade.getGradableEvent().getId(),
                 chestId
-        );
+        ).orElseThrow(() -> new InvalidArgumentException(String.format(CHESTS_NOT_IN_GRADABLE_EVENT, chestId)));
 
-        if (maxChests.isEmpty() || assignedChestsCount >= maxChests.get()) {
+        if (assignedChestsCount >= maxChests) {
             throw new InvalidArgumentException(String.format(
                     TOO_MANY_CHESTS,
-                    maxChests.orElse(0),
+                    maxChests,
                     chestId
             ));
         }
     }
 
     private Optional<ValidationError> validateXpOrChestIdsPresent(GradeRequestDto request) {
-        return request.getChestIds() != null || request.getXp() != null
+        return (request.getChestIds() != null && request.getChestIds().isEmpty())
+                || (request.getXp() != null && request.getXp() >= 0)
                 ? Optional.empty() :
                 Optional.of(ValidationError.builder()
                         .field(String.format("%s,%s", FIELD_XP, FIELD_CHEST))
@@ -108,7 +109,7 @@ public class GradeRequestValidator {
     }
 
     private Optional<ValidationError> validateGradableEventInSameCourseAsCourseGroup(GradableEvent<?> event, CourseGroup courseGroup) {
-        return event.getEventSection().getCourse().getId().equals(Optional.ofNullable(courseGroup.getCourse()).map(Course::getId).orElse(null))
+        return event.getEventSection().getCourse().getId().equals(courseGroup.getCourse().getId())
                 ? Optional.empty() :
                 Optional.of(ValidationError.builder()
                         .field(FIELD_GRADABLE_EVENT)
@@ -118,7 +119,7 @@ public class GradeRequestValidator {
 
 
     private Optional<ValidationError> validateMaxXpNotExceeded(GradeRequestDto request, GradableEvent<?> event) {
-        return Optional.ofNullable(request.getXp()).orElse(0) <= event.getMaxXp() ? Optional.empty() : Optional.of(ValidationError.builder()
+        return Optional.ofNullable(request.getXp()).orElse((float) 0) <= event.getMaxXp() ? Optional.empty() : Optional.of(ValidationError.builder()
                 .field(FIELD_XP)
                 .message(String.format(
                         XP_VALUE_TOO_BIG,

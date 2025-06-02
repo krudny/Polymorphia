@@ -7,8 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.util.List;
-
 @SuperBuilder
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -18,13 +16,10 @@ public class EventSectionResponseDto {
     private String name;
 
     @NotNull
-    private List<GradableEventResponseDto> gradableEvents;
+    private Float gainedXp;
 
     @NotNull
-    private Integer gainedXp;
-
-    @NotNull
-    private Integer flatBonusXp;
+    private Float flatBonusXp;
 
     @NotNull
     private Integer percentageBonus;

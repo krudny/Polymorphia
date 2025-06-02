@@ -18,7 +18,7 @@ public record EvolutionStageResponseDto(
         String description,
 
         @NotNull
-        Integer minXp,
+        Float minXp,
 
         @NotNull
         BigDecimal grade,

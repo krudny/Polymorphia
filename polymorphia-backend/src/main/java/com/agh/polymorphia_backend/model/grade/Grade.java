@@ -32,18 +32,16 @@ public abstract class Grade {
     @EqualsAndHashCode.Include
     private Long id;
 
-    @NotNull
     @Setter(AccessLevel.NONE)
     @CreationTimestamp
     private ZonedDateTime createdDate;
 
-    @NotNull
     @Setter(AccessLevel.NONE)
     @UpdateTimestamp
     private ZonedDateTime modifiedDate;
 
     @NotNull
-    private Integer xp;
+    private Float xp;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "animal_id")

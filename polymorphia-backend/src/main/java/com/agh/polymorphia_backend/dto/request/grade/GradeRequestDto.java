@@ -39,7 +39,7 @@ public class GradeRequestDto {
         @NotNull
         private Long gradableEventId;
 
-    private Integer xp;
+    private Float xp;
 
     private List<Long> chestIds;
 }

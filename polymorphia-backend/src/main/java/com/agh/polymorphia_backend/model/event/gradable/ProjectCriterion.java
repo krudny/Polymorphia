@@ -24,9 +24,14 @@ public class ProjectCriterion extends GradableEvent<ProjectSection> {
     @JoinColumn(name = "project_section_id")
     @JsonBackReference
     @ToString.Exclude
-    private ProjectSection eventSection;
+    private ProjectSection projectSection;
 
     @NotEmpty
     private String name;
+
+    @Override
+    public ProjectSection getEventSection() {
+        return projectSection;
+    }
 }
 

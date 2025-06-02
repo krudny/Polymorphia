@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.service.mapper.gradable;
 
 import com.agh.polymorphia_backend.dto.response.event.section.GradableEventResponseDto;
+import com.agh.polymorphia_backend.dto.response.event.section.GradableEventShortResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.section.grade.EventChestResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.section.grade.GradeResponseDto;
 import com.agh.polymorphia_backend.model.course.Animal;
@@ -21,7 +22,8 @@ public abstract class GradableEventMapper {
     private final GradeService gradeService;
 
     protected GradableEventResponseDto setGradeAndRewards(GradableEventResponseDto event,
-                                                          GradableEvent<?> gradableEvent, Animal animal) {
+                                                          GradableEvent<?> gradableEvent,
+                                                          Animal animal) {
 
         Optional<Grade> gradeOptional = gradeService.getExistingGrade(gradableEvent, animal);
         GradeResponseDto grade = new GradeResponseDto();
@@ -62,4 +64,8 @@ public abstract class GradableEventMapper {
                 )
                 .toList();
     }
+
+    public abstract GradableEventResponseDto toGradableEventResponseDto(GradableEvent<?> gradableEvent, Animal animal);
+
+    public abstract GradableEventShortResponseDto toShortResponseDto(GradableEvent<?> gradableEvent, Animal animal);
 }

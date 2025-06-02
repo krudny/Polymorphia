@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class FlatBonusItem extends Item {
     @NotNull
-    private Integer xpBonus;
+    private Float xpBonus;
 
     @NotNull
     @Enumerated(EnumType.STRING)

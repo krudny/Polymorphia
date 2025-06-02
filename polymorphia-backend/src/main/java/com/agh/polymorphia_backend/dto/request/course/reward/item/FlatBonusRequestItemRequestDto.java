@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 public class FlatBonusRequestItemRequestDto extends ItemRequestDto {
     @NotNull
     @Positive
-    private Integer xpBonus;
+    private Float xpBonus;
 
     @NotNull
     private FlatBonusItemBehavior behavior;

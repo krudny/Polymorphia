@@ -26,7 +26,7 @@ public class Coursework extends GradableEvent<CourseworkSection> {
     @JoinColumn(name = "coursework_section_id")
     @JsonBackReference
     @ToString.Exclude
-    private CourseworkSection eventSection;
+    private CourseworkSection courseworkSection;
 
     @NotEmpty
     private String name;
@@ -45,5 +45,10 @@ public class Coursework extends GradableEvent<CourseworkSection> {
 
     @NotNull
     private Boolean hidden = false;
+
+    @Override
+    public CourseworkSection getEventSection() {
+        return courseworkSection;
+    }
 }
 

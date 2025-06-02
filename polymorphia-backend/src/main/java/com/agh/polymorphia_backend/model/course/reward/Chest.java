@@ -38,6 +38,7 @@ public class Chest {
     @Enumerated(EnumType.STRING)
     private ChestBehavior behavior;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     private Course course;

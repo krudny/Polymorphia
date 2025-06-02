@@ -13,11 +13,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class GradeResponseDto {
 
-    private Integer gainedXp;
-
-    private Integer flatBonusXp = 0;
-
-    private Integer totalXp = 0;
+    private Float gainedXp;
 
     private ZonedDateTime createdDate;
 

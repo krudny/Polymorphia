@@ -23,7 +23,7 @@ import java.util.HashSet;
 @AllArgsConstructor
 public class ItemMapper {
     private static final String BONUS_TEXT = "%s do eventów z kategorii %s";
-    private static final String XP_TEXT = "+%d xp";
+    private static final String XP_TEXT = "+%.1f xp";
     private static final String PERCENT_TEXT = "+%d%%";
 
     private static final String PERCENTAGE_TEXT_BEHAVIOR = "Działa automatycznie, nie wymaga aktywacji";

@@ -29,7 +29,7 @@ public class EvolutionStage {
     private String description;
 
     @NotNull
-    private Integer minXp;
+    private Float minXp;
 
     @NotNull
     @Column(precision = 2, scale = 1)
@@ -38,6 +38,7 @@ public class EvolutionStage {
     @NotEmpty
     private String imageUrl;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     private Course course;

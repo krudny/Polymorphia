@@ -27,11 +27,10 @@ import com.agh.polymorphia_backend.repository.grade.GradeRepository;
 import com.agh.polymorphia_backend.repository.grade.reward.AssignedChestRepository;
 import com.agh.polymorphia_backend.service.validation.GradeRequestValidator;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 import static com.agh.polymorphia_backend.service.DbExtractingUtil.*;
 
@@ -51,44 +50,50 @@ public class GradeService {
     private final GradeRequestValidator gradeRequestValidator;
 
 
-    public List<Long> grade(GradeRequestDto gradeRequestDto) {
+    public List<Long> grade(GradeRequestDto gradeRequestDto, Instructor instructor) {
         GradableEvent<?> gradableEvent = getGradableEvent(gradeRequestDto.getGradableEventId());
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Instructor instructor = (Instructor) authentication.getPrincipal();
         gradeRequestValidator.validate(gradeRequestDto, gradableEvent, instructor);
-
-        return switch (gradeRequestDto.getType()) {
-            case TEST -> gradeTest(gradeRequestDto, (Test) gradableEvent);
-            case COURSEWORK -> gradeCoursework(gradeRequestDto, (Coursework) gradableEvent);
-            case PROJECT -> gradeProject((ProjectGradeRequestDto) gradeRequestDto, (ProjectCriterion) gradableEvent);
-        };
+        try {
+            return switch (gradeRequestDto.getType()) {
+                case TEST -> gradeTest(gradeRequestDto, (Test) gradableEvent);
+                case COURSEWORK -> gradeCoursework(gradeRequestDto, (Coursework) gradableEvent);
+                case PROJECT ->
+                        gradeProject((ProjectGradeRequestDto) gradeRequestDto, (ProjectCriterion) gradableEvent);
+            };
+        } catch (ClassCastException e) {
+            throw new InvalidArgumentException(String.format(DB_OBJECT_NOT_FOUND,
+                    FIELD_GRADABLE_EVENT,
+                    gradeRequestDto.getGradableEventId()));
+        }
 
     }
 
     private List<Long> gradeTest(GradeRequestDto gradeRequestDto, Test gradableEvent) {
         Animal animal = getAnimal(gradeRequestDto);
-        TestGrade grade = (TestGrade) getGrade(TestGrade.builder().build(), gradableEvent, animal);
+        TestGrade grade = (TestGrade) getGrade(TestGrade::new, gradableEvent, animal);
 
         grade.setXp(gradeRequestDto.getXp());
+        List<Long> gradeIds = List.of(gradeRepository.save(grade).getId());
         assignChests(gradeRequestDto, grade);
 
-        return List.of(gradeRepository.save(grade).getId());
+        return gradeIds;
     }
 
     private List<Long> gradeCoursework(GradeRequestDto gradeRequestDto, Coursework gradableEvent) {
         CourseworkGrade grade = getCourseworkGrade(gradeRequestDto, gradableEvent);
 
         grade.setXp(gradeRequestDto.getXp());
+        List<Long> gradeIds = List.of(gradeRepository.save(grade).getId());
         assignChests(gradeRequestDto, grade);
 
-        return List.of(gradeRepository.save(grade).getId());
+        return gradeIds;
     }
 
     private CourseworkGrade getCourseworkGrade(GradeRequestDto gradeRequestDto, Coursework gradableEvent) {
         Animal animal = getAnimal(gradeRequestDto);
 
-        CourseworkGrade grade = (CourseworkGrade) getGrade(CourseworkGrade.builder().build(), gradableEvent, animal);
+        CourseworkGrade grade = (CourseworkGrade) getGrade(CourseworkGrade::new, gradableEvent, animal);
 
         CourseworkSubmission submission = getCourseworkSubmission(gradableEvent, animal);
         grade.setCourseworkSubmission(submission);
@@ -108,7 +113,7 @@ public class GradeService {
 
     private Long gradeProjectByAnimal(ProjectSubmission submission, GradeRequestDto gradeRequestDto,
                                       ProjectCriterion gradableEvent, Animal animal) {
-        ProjectGrade grade = (ProjectGrade) getGrade(ProjectGrade.builder().build(), gradableEvent, animal);
+        ProjectGrade grade = (ProjectGrade) getGrade(ProjectGrade::new, gradableEvent, animal);
 
         grade.setXp(gradeRequestDto.getXp());
         grade.setProjectSubmission(submission);
@@ -138,16 +143,17 @@ public class GradeService {
     private void assignChest(Long chestId, Grade grade) {
         gradeRequestValidator.validateChestCount(chestId, grade);
 
-        Set<AssignedChest> assignedChests = grade.getAssignedChests();
+        Set<AssignedChest> assignedChests = Optional.ofNullable(grade.getAssignedChests()).orElse(new HashSet<>());
         Chest chest = getChest(chestId);
         AssignedChest newAssignedChest = AssignedChest.builder()
                 .chest(chest)
                 .grade(grade)
                 .build();
-        assignedChestRepository.save(newAssignedChest);
 
         assignedChests.add(newAssignedChest);
         grade.setAssignedChests(assignedChests);
+        gradeRepository.save(grade);
+        assignedChestRepository.save(newAssignedChest);
     }
 
 
@@ -193,11 +199,14 @@ public class GradeService {
                 ));
     }
 
-    public Grade getGrade(Grade grade, GradableEvent<?> gradableEvent, Animal animal) {
+    public Grade getGrade(Supplier<? extends Grade> gradeSupplier, GradableEvent<?> gradableEvent, Animal animal) {
         return getExistingGrade(gradableEvent, animal)
-                .orElse(
-                        getNewGrade(grade, gradableEvent, animal)
-                );
+                .orElseGet(() -> {
+                    Grade grade = gradeSupplier.get();
+                    grade.setAnimal(animal);
+                    grade.setGradableEvent(gradableEvent);
+                    return grade;
+                });
     }
 
     public Set<Grade> getAnimalGrades(Long animalId) {
@@ -216,11 +225,4 @@ public class GradeService {
                 .filter(Objects::nonNull)
                 .toList();
     }
-
-    private Grade getNewGrade(Grade grade, GradableEvent<?> gradableEvent, Animal animal) {
-        grade.setAnimal(animal);
-        grade.setGradableEvent(gradableEvent);
-        return grade;
-    }
-
 }

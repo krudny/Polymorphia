@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FlatBonusItemResponseDto extends ItemResponseDto {
     @NotNull
-    private Integer xpBonus;
+    private Float xpBonus;
     @NotNull
     private FlatBonusItemBehavior behavior;
 }

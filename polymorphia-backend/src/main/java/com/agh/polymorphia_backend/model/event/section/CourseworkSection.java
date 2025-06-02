@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.model.event.section;
 
 import com.agh.polymorphia_backend.model.event.gradable.Coursework;
+import com.agh.polymorphia_backend.model.event.gradable.GradableEvent;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -20,8 +22,13 @@ import java.util.Set;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class CourseworkSection extends EventSection {
-    @OneToMany(mappedBy = "eventSection", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "courseworkSection", fetch = FetchType.LAZY)
     @JsonManagedReference
     @ToString.Exclude
     private Set<Coursework> courseworks;
+
+    @Override
+    public Set<GradableEvent<?>> getGradableEvents() {
+        return new HashSet<>(courseworks);
+    }
 }
