@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.service.event.gradable;
 
-import com.agh.polymorphia_backend.dto.response.event.section.CourseworkTestSectionResponseDto;
+import com.agh.polymorphia_backend.dto.response.event.gradable.CourseworkTestSectionResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.section.EventSectionResponseDto;
 import com.agh.polymorphia_backend.repository.event.gradable.GradableEventRepository;
 import com.agh.polymorphia_backend.repository.event.section.EventSectionRepository;

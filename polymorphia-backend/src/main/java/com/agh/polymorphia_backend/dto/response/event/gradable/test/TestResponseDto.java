@@ -1,6 +1,6 @@
-package com.agh.polymorphia_backend.dto.response.event.section.test;
+package com.agh.polymorphia_backend.dto.response.event.gradable.test;
 
-import com.agh.polymorphia_backend.dto.response.event.section.GradableEventResponseDto;
+import com.agh.polymorphia_backend.dto.response.event.gradable.GradableEventResponseDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.controller;
 
-import com.agh.polymorphia_backend.dto.response.event.section.GradableEventResponseDto;
+import com.agh.polymorphia_backend.dto.response.event.gradable.GradableEventResponseDto;
 import com.agh.polymorphia_backend.service.event.gradable.CourseworkSectionService;
 import com.agh.polymorphia_backend.service.event.gradable.TestSectionService;
 import lombok.AllArgsConstructor;

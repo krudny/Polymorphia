@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.model.event.section;
 
+import com.agh.polymorphia_backend.dto.request.grade.EventSectionType;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.event.gradable.GradableEvent;
 import jakarta.persistence.*;
@@ -36,4 +37,5 @@ public abstract class EventSection {
 
     public abstract Set<GradableEvent<?>> getGradableEvents();
 
+    public abstract EventSectionType getEventSectionType();
 }

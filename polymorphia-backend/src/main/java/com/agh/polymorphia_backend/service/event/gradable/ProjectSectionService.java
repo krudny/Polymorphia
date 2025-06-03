@@ -1,11 +1,11 @@
 package com.agh.polymorphia_backend.service.event.gradable;
 
+import com.agh.polymorphia_backend.dto.response.event.gradable.GradableEventResponseDto;
+import com.agh.polymorphia_backend.dto.response.event.gradable.project.AnimalResponseDto;
+import com.agh.polymorphia_backend.dto.response.event.gradable.project.ProjectResponseDto;
+import com.agh.polymorphia_backend.dto.response.event.gradable.project.ProjectSubmissionResponseDto;
+import com.agh.polymorphia_backend.dto.response.event.gradable.project.ProjectVariantResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.section.EventSectionResponseDto;
-import com.agh.polymorphia_backend.dto.response.event.section.GradableEventResponseDto;
-import com.agh.polymorphia_backend.dto.response.event.section.project.AnimalResponseDto;
-import com.agh.polymorphia_backend.dto.response.event.section.project.ProjectResponseDto;
-import com.agh.polymorphia_backend.dto.response.event.section.project.ProjectSubmissionResponseDto;
-import com.agh.polymorphia_backend.dto.response.event.section.project.ProjectVariantResponseDto;
 import com.agh.polymorphia_backend.exception.database.InvalidArgumentException;
 import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.event.gradable.ProjectCriterion;

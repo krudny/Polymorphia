@@ -28,7 +28,7 @@ import java.util.List;
 })
 public class GradeRequestDto {
     @NotEmpty
-    private GradeType type;
+    private EventSectionType type;
 
     @NotNull
     private Long gradedObjectId;

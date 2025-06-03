@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.dto.response.event.section;
 
-import com.agh.polymorphia_backend.dto.response.event.section.grade.GradeResponseDto;
+import com.agh.polymorphia_backend.dto.request.grade.EventSectionType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -12,18 +12,13 @@ import lombok.experimental.SuperBuilder;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
-public class GradableEventResponseDto {
+public class EventSectionShortResponseDto {
     @NotNull
     private Long id;
 
     @NotEmpty
     private String name;
 
-    private GradeResponseDto grade;
-
     @NotNull
-    private Float maxXp;
-
-    @NotNull
-    private Boolean graded;
+    private EventSectionType eventSectionType;
 }

@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.model.event.section;
 
+import com.agh.polymorphia_backend.dto.request.grade.EventSectionType;
 import com.agh.polymorphia_backend.model.event.gradable.GradableEvent;
 import com.agh.polymorphia_backend.model.event.gradable.Test;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -30,5 +31,10 @@ public class TestSection extends EventSection {
     @Override
     public Set<GradableEvent<?>> getGradableEvents() {
         return new HashSet<>(tests);
+    }
+
+    @Override
+    public EventSectionType getEventSectionType() {
+        return EventSectionType.TEST;
     }
 }

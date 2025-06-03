@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.dto.response.event.section.coursework;
+package com.agh.polymorphia_backend.dto.response.event.gradable.coursework;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotNull;

@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.service.mapper.gradable;
 
-import com.agh.polymorphia_backend.dto.response.event.section.GradableEventResponseDto;
-import com.agh.polymorphia_backend.dto.response.event.section.GradableEventShortResponseDto;
+import com.agh.polymorphia_backend.dto.response.event.gradable.GradableEventResponseDto;
+import com.agh.polymorphia_backend.dto.response.event.gradable.GradableEventShortResponseDto;
 import com.agh.polymorphia_backend.exception.database.InvalidArgumentException;
 import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.event.gradable.GradableEvent;
