@@ -39,13 +39,17 @@ export default function RewardsInfo({ grade, maxXp }: RewardsInfoProps) {
                   </div>
                 ))}
               </div>
-            ) : <div className="text-xl">
-              Nie przydzielono żadnej skrzynki.
-            </div>}
+            ) : (
+              <div className="text-xl 2xl:text-2xl">
+                Nie przydzielono żadnej skrzynki.
+              </div>
+            )}
           </div>
         </>
       ) : (
-        'To wydarzenie nie zostało jeszcze ocenione.'
+        <div className="text-xl 2xl:text-2xl">
+          To wydarzenie nie zostało jeszcze ocenione.
+        </div>
       )}
     </section>
   );
