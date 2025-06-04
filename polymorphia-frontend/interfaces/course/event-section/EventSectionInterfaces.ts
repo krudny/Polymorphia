@@ -27,15 +27,14 @@ export interface GradableEventCore {
 }
 
 export interface GradableEventCoreResponse {
-  data: GradableEventCore[],
+  data: GradableEventCore[];
   page: {
-    totalPages: number,
-  }
+    totalPages: number;
+  };
 }
 
 export interface SectionViewProps {
   eventSectionId: number;
-  presentEventsModally?: boolean;
 }
 
 export interface BonusInfo {
@@ -65,7 +64,7 @@ export interface GradableEvent {
   grade?: Grade;
 }
 
-export type Test = GradableEvent
+export type Test = GradableEvent;
 
 export interface Grade {
   gainedXp: string; // "1.2"
@@ -89,8 +88,6 @@ export interface RewardsInfoProps {
 
 export interface TestDetailsModalProps
   extends Omit<ModalProps, 'title' | 'isOpen' | 'children'> {
-  testData?: {
-    eventSectionId: number;
-    gradableEventId: number;
-  };
+  eventSectionId: number;
+  selectedGradableEventId: number | null;
 }

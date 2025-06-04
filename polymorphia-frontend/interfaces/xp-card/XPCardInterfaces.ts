@@ -19,6 +19,5 @@ export type EventSectionCardVariantProps = {
 
 export interface EventSectionCardGridProps {
   eventSection: EventSection;
-  presentEventsModally: boolean;
   containerRef: React.RefObject<HTMLDivElement | null>;
 }

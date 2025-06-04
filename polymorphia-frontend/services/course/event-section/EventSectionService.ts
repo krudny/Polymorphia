@@ -525,12 +525,12 @@ export const EventSectionService = {
     });
   },
 
-  getGradableEvent: async <T extends GradableEvent>(data?: {
+  getGradableEvent: async <T extends GradableEvent>(data: {
     eventSectionId: number;
-    gradableEventId: number;
+    gradableEventId: number | null;
   }): Promise<T> => {
     return new Promise<T>((resolve, reject) => {
-      if (data === undefined) {
+      if (data.gradableEventId === null) {
         reject('No data');
         return;
       }

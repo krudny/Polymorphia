@@ -9,10 +9,7 @@ import Loading from '@/components/general/Loading';
 import { useTitle } from '@/components/navigation/TitleContext';
 import { useScaleShow } from '@/animations/General';
 
-export default function SectionView({
-  eventSectionId,
-  presentEventsModally = false,
-}: SectionViewProps) {
+export default function SectionView({ eventSectionId }: SectionViewProps) {
   const { setTitle } = useTitle();
   const containerRef = useScaleShow();
 
@@ -54,11 +51,7 @@ export default function SectionView({
       id="section-view-containter"
       className="section-view"
     >
-      <XPCardGrid
-        eventSection={eventSection}
-        presentEventsModally={presentEventsModally}
-        containerRef={containerRef}
-      />
+      <XPCardGrid eventSection={eventSection} containerRef={containerRef} />
     </div>
   );
 }

@@ -7,7 +7,6 @@ import { useQuery } from '@tanstack/react-query';
 import { EventSectionService } from '@/services/course/event-section/EventSectionService';
 import Loading from '@/components/general/Loading';
 import { useEffect, useRef, useState } from 'react';
-import { GradableEventCore } from '@/interfaces/course/event-section/EventSectionInterfaces';
 import ReactPaginate from 'react-paginate';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import clsx from 'clsx';
@@ -21,7 +20,6 @@ import { useEventSectionAnimation } from '@/animations/EventSection';
 
 export default function XPCardGrid({
   eventSection,
-  presentEventsModally,
   containerRef,
 }: EventSectionCardGridProps) {
   const router = useRouter();
@@ -38,8 +36,10 @@ export default function XPCardGrid({
   const [direction, setDirection] = useState<1 | -1>(1);
   const [firstRender, setFirstRender] = useState(true);
 
-  const [currentGradableEventModal, setCurrentGradableEventModal] =
-    useState<GradableEventCore | null>(null);
+  const [
+    currentlySelectedGradableEventIdForModal,
+    setCurrentlySelectedGradableEventIdForModal,
+  ] = useState<number | null>(null);
 
   const {
     data: gradableEventsData,
@@ -97,8 +97,7 @@ export default function XPCardGrid({
 
   const cards = mapPropsToCards(
     gradableEventsData,
-    presentEventsModally,
-    setCurrentGradableEventModal,
+    setCurrentlySelectedGradableEventIdForModal,
     router,
     eventSection
   );
@@ -154,17 +153,11 @@ export default function XPCardGrid({
         </div>
         {!mobile && pagination}
       </div>
-      {presentEventsModally && eventSection.type === 'tests' && (
+      {eventSection.type === 'tests' && (
         <TestDetailsModal
-          testData={
-            currentGradableEventModal
-              ? {
-                  eventSectionId: eventSection.id,
-                  gradableEventId: currentGradableEventModal.id,
-                }
-              : undefined
-          }
-          onClose={() => setCurrentGradableEventModal(null)}
+          eventSectionId={eventSection.id}
+          selectedGradableEventId={currentlySelectedGradableEventIdForModal}
+          onClose={() => setCurrentlySelectedGradableEventIdForModal(null)}
         />
       )}
     </>

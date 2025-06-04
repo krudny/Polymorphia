@@ -9,7 +9,8 @@ import { useQuery } from '@tanstack/react-query';
 import Loading from '@/components/general/Loading';
 
 export default function TestDetailsModal({
-  testData,
+  eventSectionId,
+  selectedGradableEventId,
   onClose,
 }: TestDetailsModalProps) {
   const {
@@ -18,17 +19,21 @@ export default function TestDetailsModal({
     isSuccess,
     isError,
   } = useQuery({
-    queryKey: ['tests', testData],
-    queryFn: () => EventSectionService.getGradableEvent<Test>(testData),
+    queryKey: ['tests', eventSectionId, selectedGradableEventId],
+    queryFn: () =>
+      EventSectionService.getGradableEvent<Test>({
+        eventSectionId: eventSectionId,
+        gradableEventId: selectedGradableEventId,
+      }),
   });
 
-  if (testData === undefined) {
+  if (selectedGradableEventId === null) {
     return <Modal isOpen={false} title={''} onClose={onClose} />;
   }
 
   if (isError) {
     return (
-      <Modal isOpen={testData !== undefined} title="Błąd" onClose={onClose}>
+      <Modal isOpen title="Błąd" onClose={onClose}>
         Wystąpił błąd przy ładowaniu szczegółów.
       </Modal>
     );
@@ -36,11 +41,7 @@ export default function TestDetailsModal({
 
   if (isLoading) {
     return (
-      <Modal
-        isOpen={testData !== undefined}
-        title="Ładowanie"
-        onClose={onClose}
-      >
+      <Modal isOpen title="Ładowanie" onClose={onClose}>
         <div className="h-50 mt-20">
           <Loading />
         </div>
@@ -50,11 +51,7 @@ export default function TestDetailsModal({
 
   if (isSuccess) {
     return (
-      <Modal
-        isOpen={testData !== undefined}
-        title={test?.name ?? ''}
-        onClose={onClose}
-      >
+      <Modal isOpen title={test?.name ?? ''} onClose={onClose}>
         <RewardsInfo grade={test.grade} maxXp={test.maxXp} />
       </Modal>
     );
