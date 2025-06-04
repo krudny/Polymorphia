@@ -5,7 +5,6 @@ import {
   BonusInfo,
   EventSection,
   EventSectionCore,
-  GradableEventCore,
   GradableEventCoreResponse,
 } from '@/interfaces/course/event-section/EventSectionInterfaces';
 import { PointsSummaryElementProps } from '@/interfaces/course/event-section/PointsSummaryInterfaces';
@@ -103,8 +102,7 @@ export function setResizeObserver(
 
 export function mapPropsToCards(
   gradableEventsData: GradableEventCoreResponse,
-  presentEventsModally: boolean,
-  setCurrentGradableEventModal: (e: GradableEventCore) => void,
+  setCurrentlySelectedGradableEventIdForModal: (e: number | null) => void,
   router: AppRouterInstance,
   eventSection: EventSection
 ): (EventSectionCardProps & { id: number })[] {
@@ -116,15 +114,16 @@ export function mapPropsToCards(
         title: event.name,
         subtitle: event.topic,
         xp: event.gainedXp ? `${event.gainedXp} xp` : undefined,
-        onClick: presentEventsModally
-          ? () => {
-              setCurrentGradableEventModal(event);
-            }
-          : () => {
-              router.push(
-                `/course/${eventSection.type}/${eventSection.id}/${event.id}`
-              );
-            },
+        onClick:
+          eventSection.type === 'tests'
+            ? () => {
+                setCurrentlySelectedGradableEventIdForModal(event.id);
+              }
+            : () => {
+                router.push(
+                  `/course/${eventSection.type}/${eventSection.id}/${event.id}`
+                );
+              },
       };
     });
 }

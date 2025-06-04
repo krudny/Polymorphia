@@ -11,15 +11,13 @@ export default function EventSection() {
 
   switch (eventSectionType) {
     case 'coursework':
-      return <SectionView eventSectionId={eventSectionId} />;
-
     case 'tests':
-      return <SectionView eventSectionId={eventSectionId} presentEventsModally />;
+      return <SectionView eventSectionId={eventSectionId} />;
 
     case 'project':
       return <></>;
-    
+
     default:
-      return <div>Niepoprawna kategoria.</div>
+      return <div>Niepoprawna kategoria.</div>;
   }
 }
