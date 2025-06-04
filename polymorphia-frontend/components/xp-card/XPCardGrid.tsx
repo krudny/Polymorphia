@@ -107,7 +107,9 @@ export default function XPCardGrid({
     <ReactPaginate
       pageCount={gradableEventsData.page.totalPages}
       onPageChange={handlePageChange}
-      forcePage={currentPage}
+      forcePage={
+        gradableEventsData.page.totalPages > 0 ? currentPage : undefined
+      }
       pageRangeDisplayed={2}
       marginPagesDisplayed={1}
       containerClassName="pagination-container"
