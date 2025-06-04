@@ -9,7 +9,7 @@ export default function UserSection() {
 
   return (
       <div className="user-section">
-        <div className="profile-image user-section-image-wrapper">
+        <div className="user-section-image-wrapper">
           <Image
               src={`${API_STATIC_URL}${profileImage}`}
               alt="Zwierzak użytkownika"

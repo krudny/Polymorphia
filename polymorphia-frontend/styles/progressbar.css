@@ -4,7 +4,7 @@
 /* ProgressBar */
 
 .progressbar {
-    @apply w-full h-full px-16 m-auto flex flex-col justify-center text-neutral-800;
+    @apply w-full h-full m-auto flex flex-col justify-center text-neutral-800;
 }
 
 .progressbar-label-container {
@@ -42,7 +42,7 @@
 /* ProgressBarSquare */
 
 .progressbar-square {
-    @apply absolute top-1/2 -translate-y-1/2 -translate-x-1/2;
+    @apply absolute top-1/2 -translate-y-1/2 -translate-x-1/2 z-50;
 }
 
 .progressbar-square > div {

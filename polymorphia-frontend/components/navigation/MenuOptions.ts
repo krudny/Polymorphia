@@ -27,7 +27,11 @@ export const MainMenuItems: MenuOption[]  = [
     text: 'Ekwipunek',
     link: 'equipment',
   },
-  { icon: MedalIcon, text: 'Hall of Fame' },
+  {
+    icon: MedalIcon,
+    text: 'Hall of Fame',
+    link: 'hall-of-fame'
+  },
 ];
 
 export const BottomDesktopMenuItems: MenuOption[] = [

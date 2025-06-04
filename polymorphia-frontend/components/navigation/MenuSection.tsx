@@ -23,7 +23,6 @@ export default function MenuSection({ options }: MenuSectionProps) {
     if (!isNavbarExpanded || !isSidebarExpanded) {
       setOpenSubMenu([]);
     }
-    console.log(isNavbarExpanded);
   }, [isNavbarExpanded, isSidebarExpanded]);
 
   useEffect(() => {
