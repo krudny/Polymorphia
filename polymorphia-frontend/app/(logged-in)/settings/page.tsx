@@ -2,7 +2,7 @@
 
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import {useContext, useEffect} from "react";
-import {NavigationContext} from "@/components/navigation/NavigationContext";
+import {NavigationContext} from "@/components/providers/NavigationContext";
 import {useScaleShow} from "@/animations/General";
 import { useTitle } from "@/components/navigation/TitleContext";
 
