@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.model.event.submission;
 
-import com.agh.polymorphia_backend.model.event.gradable.Coursework;
+import com.agh.polymorphia_backend.model.event.gradable.Assignment;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
@@ -10,8 +10,8 @@ import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(
-        name = "coursework_submissions",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"coursework_id", "animal_id"})
+        name = "assignment_submissions",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"assignment_id", "animal_id"})
 )
 @Inheritance(strategy = InheritanceType.JOINED)
 
@@ -19,7 +19,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class CourseworkSubmission extends Submission {
+public class AssignmentSubmission extends Submission {
     @NotEmpty
     private String prUrl;
 
@@ -27,6 +27,6 @@ public class CourseworkSubmission extends Submission {
     private String extraAssignmentPrUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "coursework_id")
-    private Coursework coursework;
+    @JoinColumn(name = "assignment_id")
+    private Assignment assignment;
 }

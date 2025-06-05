@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.dto.response.event.gradable.coursework;
+package com.agh.polymorphia_backend.dto.response.event.gradable.assignment;
 
 import com.agh.polymorphia_backend.dto.response.event.gradable.GradableEventResponseDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -14,17 +14,14 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
-public class CourseworkResponseDto extends GradableEventResponseDto {
+public class AssignmentResponseDto extends GradableEventResponseDto {
     @NotEmpty
     private String infoUrl;
 
     @NotEmpty
     private String topic;
 
-    @NotEmpty
-    private Boolean submitted;
-
-    private CourseworkSubmissionResponseDto submission;
+    private AssignmentSubmissionResponseDto submission;
 
     @NotNull
     private Boolean hidden;

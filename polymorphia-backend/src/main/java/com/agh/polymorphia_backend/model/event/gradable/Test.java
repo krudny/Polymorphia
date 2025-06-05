@@ -31,6 +31,8 @@ public class Test extends GradableEvent<TestSection> {
     @NotEmpty
     private String name;
 
+    private String topic;
+
     @NotNull
     private Integer roadMapOrder;
 

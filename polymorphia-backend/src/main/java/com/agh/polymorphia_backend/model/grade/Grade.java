@@ -6,11 +6,13 @@ import com.agh.polymorphia_backend.model.event.gradable.GradableEvent;
 import com.agh.polymorphia_backend.model.grade.reward.AssignedChest;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.Set;
 
@@ -41,7 +43,9 @@ public abstract class Grade {
     private ZonedDateTime modifiedDate;
 
     @NotNull
-    private Float xp;
+    @Positive
+    @Column(precision = 4, scale = 1)
+    private BigDecimal xp;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "animal_id")

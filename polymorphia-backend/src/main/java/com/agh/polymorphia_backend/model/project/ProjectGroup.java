@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.model.project;
 
 import com.agh.polymorphia_backend.model.course.Animal;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,7 +27,7 @@ public class ProjectGroup {
             joinColumns = @JoinColumn(name = "project_group_id"),
             inverseJoinColumns = @JoinColumn(name = "animal_id")
     )
-    @JsonManagedReference
+    @JsonIgnore
     @ToString.Exclude
     private Set<Animal> animals;
 
@@ -37,6 +37,7 @@ public class ProjectGroup {
             joinColumns = @JoinColumn(name = "project_group_id"),
             inverseJoinColumns = @JoinColumn(name = "project_variant_id")
     )
+    @JsonIgnore
     @ToString.Exclude
     private Set<ProjectVariant> projectVariants;
 }

@@ -4,10 +4,15 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
+import java.time.ZonedDateTime;
+
 @Builder
 public record EventChestResponseDto(
         @NotNull
         Long id,
+
+        @NotNull
+        Long assignedChestId,
 
         @NotEmpty
         String name,
@@ -16,6 +21,9 @@ public record EventChestResponseDto(
         String imageUrl,
 
         @NotNull
-        Boolean opened
+        Boolean opened,
+
+        @NotNull
+        ZonedDateTime receivedDate
 ) {
 }

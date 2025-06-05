@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.response.event.section.EventSectionResponseDto;
-import com.agh.polymorphia_backend.service.event.gradable.CourseworkSectionService;
+import com.agh.polymorphia_backend.service.event.gradable.AssignmentSectionService;
 import com.agh.polymorphia_backend.service.event.gradable.ProjectSectionService;
 import com.agh.polymorphia_backend.service.event.gradable.TestSectionService;
 import lombok.AllArgsConstructor;
@@ -18,17 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class EventSectionController {
     private final TestSectionService testService;
     private final ProjectSectionService projectService;
-    private final CourseworkSectionService courseworkService;
+    private final AssignmentSectionService assignmentService;
 
-    @GetMapping("/coursework-sections/{courseworkSectionId}")
+    @GetMapping("/assignment-sections/{assignmentSectionId}")
     @PreAuthorize("hasRole('STUDENT')")
-    public ResponseEntity<EventSectionResponseDto> getAllCourseworks(@PathVariable Long courseworkSectionId) {
-        return ResponseEntity.ok(courseworkService.getAllEvents(courseworkSectionId));
+    public ResponseEntity<EventSectionResponseDto> getAssignment(@PathVariable Long assignmentSectionId) {
+        return ResponseEntity.ok(assignmentService.getAllEvents(assignmentSectionId));
     }
 
     @GetMapping("/test-sections/{testSectionId}")
     @PreAuthorize("hasRole('STUDENT')")
-    public ResponseEntity<EventSectionResponseDto> getAllTests(@PathVariable Long testSectionId) {
+    public ResponseEntity<EventSectionResponseDto> getTest(@PathVariable Long testSectionId) {
         return ResponseEntity.ok(testService.getAllEvents(testSectionId));
     }
 

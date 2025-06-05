@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.model.event.submission;
 
 import com.agh.polymorphia_backend.model.course.Animal;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -27,6 +28,8 @@ public abstract class Submission {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "animal_id")
+    @JsonIgnore
+    @ToString.Exclude
     private Animal animal;
 
     @NotNull

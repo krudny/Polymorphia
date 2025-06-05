@@ -26,18 +26,16 @@ public abstract class GradableEventMapper {
                                                           Animal animal) {
 
         Optional<Grade> gradeOptional = gradeService.getExistingGrade(gradableEvent, animal);
-        GradeResponseDto grade = new GradeResponseDto();
-        event.setGrade(grade);
 
         if (gradeOptional.isEmpty()) {
-            event.setGraded(false);
             return event;
         }
 
+        GradeResponseDto grade = new GradeResponseDto();
+        event.setGrade(grade);
+
         Grade fetchedGrade = gradeOptional.get();
         List<EventChestResponseDto> chests = getGradeChests(fetchedGrade);
-
-        event.setGraded(true);
 
         grade.setGainedXp(fetchedGrade.getXp());
         grade.setCreatedDate(fetchedGrade.getCreatedDate());
@@ -56,8 +54,10 @@ public abstract class GradableEventMapper {
                             Chest chest = assignedChest.getChest();
                             return EventChestResponseDto.builder()
                                     .id(chest.getId())
+                                    .assignedChestId(assignedChest.getId())
                                     .name(chest.getName())
                                     .imageUrl(chest.getImageUrl())
+                                    .receivedDate(assignedChest.getReceivedDate())
                                     .opened(assignedChest.getOpened())
                                     .build();
                         }

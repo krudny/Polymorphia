@@ -1,7 +1,9 @@
 package com.agh.polymorphia_backend.dto.response.course;
 
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Builder;
 
 import java.math.BigDecimal;
@@ -18,9 +20,13 @@ public record EvolutionStageResponseDto(
         String description,
 
         @NotNull
-        Float minXp,
+        @Positive
+        @Digits(integer = 3, fraction = 1)
+        BigDecimal minXp,
 
         @NotNull
+        @Positive
+        @Digits(integer = 3, fraction = 1)
         BigDecimal grade,
 
         @NotEmpty

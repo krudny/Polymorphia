@@ -5,6 +5,7 @@ import com.agh.polymorphia_backend.model.event.gradable.GradableEvent;
 import com.agh.polymorphia_backend.model.event.gradable.Test;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,9 @@ public class TestSection extends EventSection {
     @JsonManagedReference
     @ToString.Exclude
     private Set<Test> tests;
+
+    @NotNull
+    private Boolean containsTopics;
 
     @Override
     public Set<GradableEvent<?>> getGradableEvents() {

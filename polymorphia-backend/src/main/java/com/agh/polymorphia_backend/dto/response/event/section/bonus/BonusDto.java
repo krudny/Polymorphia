@@ -1,4 +1,5 @@
-package com.agh.polymorphia_backend.dto.response.event.gradable.grade;
+package com.agh.polymorphia_backend.dto.response.event.section.bonus;
+
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.Digits;
@@ -6,23 +7,21 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
 import java.util.List;
 
+@SuperBuilder
 @Data
-@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class GradeResponseDto {
+@NoArgsConstructor
+public class BonusDto {
+    @NotNull
     @Positive
     @Digits(integer = 3, fraction = 1)
-    private BigDecimal gainedXp;
-
-    private ZonedDateTime createdDate;
-
-    private ZonedDateTime modifiedDate;
+    private BigDecimal xp;
 
     @NotNull
-    private List<EventChestResponseDto> chests;
+    private List<BonusItemDto> items;
 }

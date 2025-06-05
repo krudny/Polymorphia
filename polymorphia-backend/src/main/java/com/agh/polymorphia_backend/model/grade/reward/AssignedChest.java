@@ -5,7 +5,9 @@ import com.agh.polymorphia_backend.model.grade.Grade;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Entity
@@ -22,6 +24,10 @@ public class AssignedChest {
     @EqualsAndHashCode.Include
     private Long id;
 
+    @Setter(AccessLevel.NONE)
+    @CreationTimestamp
+    private ZonedDateTime receivedDate;
+
     @Builder.Default
     private Boolean opened = false;
 
@@ -33,7 +39,7 @@ public class AssignedChest {
     @JoinColumn(name = "chest_id")
     private Chest chest;
 
-    @OneToMany(mappedBy = "assignedChest", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "assignedChest", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     @ToString.Exclude
     private List<AssignedItem> assignedItems;

@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.dto.request.grade;
 
 
+import com.agh.polymorphia_backend.dto.request.grade.targets.GradedTarget;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -15,5 +16,5 @@ import lombok.experimental.SuperBuilder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProjectGradeRequestDto extends GradeRequestDto {
     @NotNull
-    private GradedObjectType gradedObjectType;
+    private GradedTarget gradedTarget;
 }

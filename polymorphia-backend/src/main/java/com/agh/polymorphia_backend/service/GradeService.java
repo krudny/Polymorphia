@@ -1,18 +1,21 @@
 package com.agh.polymorphia_backend.service;
 
+import com.agh.polymorphia_backend.dto.request.grade.AssignmentGradeRequestDto;
 import com.agh.polymorphia_backend.dto.request.grade.GradeRequestDto;
-import com.agh.polymorphia_backend.dto.request.grade.GradedObjectType;
 import com.agh.polymorphia_backend.dto.request.grade.ProjectGradeRequestDto;
+import com.agh.polymorphia_backend.dto.request.grade.TestGradeRequestDto;
+import com.agh.polymorphia_backend.dto.request.grade.targets.AnimalTarget;
+import com.agh.polymorphia_backend.dto.request.grade.targets.ProjectGroupTarget;
 import com.agh.polymorphia_backend.exception.database.InvalidArgumentException;
 import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.reward.Chest;
-import com.agh.polymorphia_backend.model.event.gradable.Coursework;
+import com.agh.polymorphia_backend.model.event.gradable.Assignment;
 import com.agh.polymorphia_backend.model.event.gradable.GradableEvent;
 import com.agh.polymorphia_backend.model.event.gradable.ProjectCriterion;
 import com.agh.polymorphia_backend.model.event.gradable.Test;
-import com.agh.polymorphia_backend.model.event.submission.CourseworkSubmission;
+import com.agh.polymorphia_backend.model.event.submission.AssignmentSubmission;
 import com.agh.polymorphia_backend.model.event.submission.ProjectSubmission;
-import com.agh.polymorphia_backend.model.grade.CourseworkGrade;
+import com.agh.polymorphia_backend.model.grade.AssignmentGrade;
 import com.agh.polymorphia_backend.model.grade.Grade;
 import com.agh.polymorphia_backend.model.grade.ProjectGrade;
 import com.agh.polymorphia_backend.model.grade.TestGrade;
@@ -28,6 +31,7 @@ import com.agh.polymorphia_backend.repository.grade.reward.AssignedChestReposito
 import com.agh.polymorphia_backend.service.validation.GradeRequestValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.function.Supplier;
@@ -35,6 +39,7 @@ import java.util.function.Supplier;
 import static com.agh.polymorphia_backend.service.DbExtractingUtil.*;
 
 @Service
+@Transactional
 @AllArgsConstructor
 public class GradeService {
     private static final String NO_SUBMISSION = "This gradableEvent has no submissions - unable to grade";
@@ -56,8 +61,9 @@ public class GradeService {
         gradeRequestValidator.validate(gradeRequestDto, gradableEvent, instructor);
         try {
             return switch (gradeRequestDto.getType()) {
-                case TEST -> gradeTest(gradeRequestDto, (Test) gradableEvent);
-                case COURSEWORK -> gradeCoursework(gradeRequestDto, (Coursework) gradableEvent);
+                case TEST -> gradeTest((TestGradeRequestDto) gradeRequestDto, (Test) gradableEvent);
+                case ASSIGNMENT ->
+                        gradeAssignment((AssignmentGradeRequestDto) gradeRequestDto, (Assignment) gradableEvent);
                 case PROJECT ->
                         gradeProject((ProjectGradeRequestDto) gradeRequestDto, (ProjectCriterion) gradableEvent);
             };
@@ -69,8 +75,8 @@ public class GradeService {
 
     }
 
-    private List<Long> gradeTest(GradeRequestDto gradeRequestDto, Test gradableEvent) {
-        Animal animal = getAnimal(gradeRequestDto);
+    private List<Long> gradeTest(TestGradeRequestDto gradeRequestDto, Test gradableEvent) {
+        Animal animal = getAnimal(gradeRequestDto.getAnimalId());
         TestGrade grade = (TestGrade) getGrade(TestGrade::new, gradableEvent, animal);
 
         grade.setXp(gradeRequestDto.getXp());
@@ -80,8 +86,8 @@ public class GradeService {
         return gradeIds;
     }
 
-    private List<Long> gradeCoursework(GradeRequestDto gradeRequestDto, Coursework gradableEvent) {
-        CourseworkGrade grade = getCourseworkGrade(gradeRequestDto, gradableEvent);
+    private List<Long> gradeAssignment(AssignmentGradeRequestDto gradeRequestDto, Assignment gradableEvent) {
+        AssignmentGrade grade = getAssignmentGrade(gradeRequestDto, gradableEvent);
 
         grade.setXp(gradeRequestDto.getXp());
         List<Long> gradeIds = List.of(gradeRepository.save(grade).getId());
@@ -90,24 +96,27 @@ public class GradeService {
         return gradeIds;
     }
 
-    private CourseworkGrade getCourseworkGrade(GradeRequestDto gradeRequestDto, Coursework gradableEvent) {
-        Animal animal = getAnimal(gradeRequestDto);
+    private AssignmentGrade getAssignmentGrade(AssignmentGradeRequestDto gradeRequestDto, Assignment gradableEvent) {
+        Animal animal = getAnimal(gradeRequestDto.getAnimalId());
 
-        CourseworkGrade grade = (CourseworkGrade) getGrade(CourseworkGrade::new, gradableEvent, animal);
+        AssignmentGrade grade = (AssignmentGrade) getGrade(AssignmentGrade::new, gradableEvent, animal);
 
-        CourseworkSubmission submission = getCourseworkSubmission(gradableEvent, animal);
-        grade.setCourseworkSubmission(submission);
+        AssignmentSubmission submission = getAssignmentSubmission(gradableEvent, animal);
+        grade.setAssignmentSubmission(submission);
         return grade;
     }
 
     private List<Long> gradeProject(ProjectGradeRequestDto gradeRequestDto, ProjectCriterion gradableEvent) {
-        if (gradeRequestDto.getGradedObjectType().equals(GradedObjectType.STUDENT)) {
-            ProjectSubmission submission = getProjectSubmissionStudent(gradeRequestDto.getGradedObjectId());
-            Animal animal = getAnimal(gradeRequestDto);
-            return List.of(gradeProjectByAnimal(submission, gradeRequestDto, gradableEvent, animal));
-        } else {
-            ProjectSubmission submission = getProjectSubmissionGroup(gradeRequestDto.getGradedObjectId());
-            return gradeProjectByGroup(submission, gradeRequestDto, gradableEvent);
+        switch (gradeRequestDto.getGradedTarget()) {
+            case AnimalTarget(Long animalId) -> {
+                ProjectSubmission submission = getProjectSubmissionStudent(animalId);
+                Animal animal = getAnimal(animalId);
+                return List.of(gradeProjectByAnimal(submission, gradeRequestDto, gradableEvent, animal));
+            }
+            case ProjectGroupTarget(Long groupId) -> {
+                ProjectSubmission submission = getProjectSubmissionGroup(groupId);
+                return gradeProjectByGroup(submission, gradeRequestDto, gradableEvent);
+            }
         }
     }
 
@@ -134,26 +143,64 @@ public class GradeService {
     }
 
     private void assignChests(GradeRequestDto gradeRequestDto, Grade grade) {
-        if (gradeRequestDto.getChestIds() != null) {
-            gradeRequestDto.getChestIds()
-                    .forEach(chest -> assignChest(chest, grade));
-        }
+        Set<AssignedChest> chestsToRemove = new HashSet<>(
+                Optional.ofNullable(grade.getAssignedChests()).orElse(Collections.emptySet())
+        );
+
+
+        List<Long> chestIdsToAdd = markChestsForAddingOrRemoval(gradeRequestDto, chestsToRemove);
+        deleteChests(chestsToRemove, grade);
+
+        chestIdsToAdd.forEach(chestId -> addChest(chestId, grade));
     }
 
-    private void assignChest(Long chestId, Grade grade) {
-        gradeRequestValidator.validateChestCount(chestId, grade);
+    private List<Long> markChestsForAddingOrRemoval(GradeRequestDto gradeRequestDto, Set<AssignedChest> chestsToRemove) {
+        List<Long> chestIdsToAdd = new ArrayList<>();
 
-        Set<AssignedChest> assignedChests = Optional.ofNullable(grade.getAssignedChests()).orElse(new HashSet<>());
+        for (Long chestId : gradeRequestDto.getChestIds()) {
+            List<AssignedChest> assignedChests = chestsToRemove.stream()
+                    .filter(assignedChest -> assignedChest.getChest().getId().equals(chestId))
+                    .sorted(Comparator.comparing(AssignedChest::getReceivedDate))
+                    .toList();
+
+            Optional<AssignedChest> assignedChest = assignedChests.stream()
+                    .filter(AssignedChest::getOpened)
+                    .findFirst();
+
+            if (assignedChest.isPresent()) {
+                chestsToRemove.remove(assignedChest.get());
+            } else if (!assignedChests.isEmpty()) {
+                chestsToRemove.remove(assignedChests.getFirst());
+            } else {
+                chestIdsToAdd.add(chestId);
+            }
+        }
+        return chestIdsToAdd;
+    }
+
+    private void deleteChests(Set<AssignedChest> chestsToRemove, Grade grade) {
+        assignedChestRepository.deleteAll(chestsToRemove);
+        Optional.ofNullable(grade.getAssignedChests()).orElse(new HashSet<>())
+                .removeAll(chestsToRemove);
+        gradeRepository.save(grade);
+    }
+
+    private void addChest(Long chestId, Grade grade) {
+        gradeRequestValidator.validateChestCount(chestId, grade.getAssignedChests(), grade.getGradableEvent().getId());
+
+        Set<AssignedChest> assignedChests = new HashSet<>(
+                Optional.ofNullable(grade.getAssignedChests()).orElse(Collections.emptySet())
+        );
         Chest chest = getChest(chestId);
-        AssignedChest newAssignedChest = AssignedChest.builder()
-                .chest(chest)
-                .grade(grade)
-                .build();
+        AssignedChest newAssignedChest = new AssignedChest();
+        newAssignedChest.setChest(chest);
+        newAssignedChest.setGrade(grade);
 
         assignedChests.add(newAssignedChest);
+        assignedChestRepository.save(newAssignedChest);
+
         grade.setAssignedChests(assignedChests);
         gradeRepository.save(grade);
-        assignedChestRepository.save(newAssignedChest);
     }
 
 
@@ -166,17 +213,17 @@ public class GradeService {
                 ));
     }
 
-    private Animal getAnimal(GradeRequestDto gradeRequestDto) {
-        return animalRepository.findById(gradeRequestDto.getGradedObjectId())
+    private Animal getAnimal(long animalId) {
+        return animalRepository.findById(animalId)
                 .orElseThrow(() -> new InvalidArgumentException(
                         String.format(DB_OBJECT_NOT_FOUND,
                                 FIELD_ANIMAL,
-                                gradeRequestDto.getGradedObjectId())
+                                animalId)
                 ));
     }
 
-    private CourseworkSubmission getCourseworkSubmission(Coursework gradableEvent, Animal animal) {
-        return submissionRepository.findByAnimalAndCoursework(animal, gradableEvent)
+    private AssignmentSubmission getAssignmentSubmission(Assignment gradableEvent, Animal animal) {
+        return submissionRepository.findByAnimalAndAssignment(animal, gradableEvent)
                 .orElseThrow(() -> new InvalidArgumentException(NO_SUBMISSION));
     }
 
@@ -220,7 +267,7 @@ public class GradeService {
 
     public <T extends GradableEvent<?>> List<Grade> getGradableEventGrades(Set<T> gradableEvents, Animal animal) {
         return gradableEvents.stream()
-                .map(coursework -> getExistingGrade(coursework, animal)
+                .map(assignment -> getExistingGrade(assignment, animal)
                         .orElse(null))
                 .filter(Objects::nonNull)
                 .toList();

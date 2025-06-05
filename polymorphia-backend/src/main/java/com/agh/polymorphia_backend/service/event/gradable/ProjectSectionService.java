@@ -53,11 +53,9 @@ public class ProjectSectionService extends EventSectionService {
     @Override
     public EventSectionResponseDto getAllEvents(Long projectSectionId) {
 
-        ProjectResponseDto responseDto = (ProjectResponseDto) getAllGradableEvents(
-                new ProjectResponseDto(),
-                projectSectionId
-        );
+        ProjectResponseDto responseDto = new ProjectResponseDto();
 
+        addGradableEventsSummary(responseDto, projectSectionId);
         setProjectCriteria(responseDto, projectSectionId);
 
         ProjectGroup projectGroup = getProjectGroup(projectSectionId);
@@ -98,11 +96,7 @@ public class ProjectSectionService extends EventSectionService {
                 submissionRepository.findProjectSubmissionByProjectGroupId(
                         projectGroup.getId()
                 );
-        if (projectSubmissionOptional.isEmpty()) {
-            responseDto.setSubmitted(false);
-        } else {
-            responseDto.setSubmitted(true);
-
+        if (projectSubmissionOptional.isPresent()) {
             ProjectSubmission projectSubmission = projectSubmissionOptional.get();
             ProjectSubmissionResponseDto submission = ProjectSubmissionResponseDto.builder()
                     .createdDate(projectSubmission.getCreatedDate())

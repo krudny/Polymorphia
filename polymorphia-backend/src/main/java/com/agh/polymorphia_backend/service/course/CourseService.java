@@ -38,7 +38,7 @@ public class CourseService {
     public List<EvolutionStageResponseDto> getEvolutionStages(Long courseId) {
         return evolutionStagesRepository.findAllByCourseId(courseId)
                 .stream().map(evolutionStagesMapper::evolutionStageToEvolutionStageResponseDto)
-                .sorted(Comparator.comparingDouble(EvolutionStageResponseDto::minXp))
+                .sorted(Comparator.comparing(EvolutionStageResponseDto::minXp))
                 .toList();
     }
 

@@ -3,6 +3,7 @@ package com.agh.polymorphia_backend.controller;
 import com.agh.polymorphia_backend.dto.request.grade.GradeRequestDto;
 import com.agh.polymorphia_backend.model.user.Instructor;
 import com.agh.polymorphia_backend.service.GradeService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,7 +24,7 @@ public class GradeController {
 
     @PostMapping()
     @PreAuthorize("hasRole('INSTRUCTOR')")
-    public ResponseEntity<List<Long>> grade(@RequestBody GradeRequestDto gradeRequestDto) {
+    public ResponseEntity<List<Long>> grade(@Valid @RequestBody GradeRequestDto gradeRequestDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Instructor instructor = (Instructor) authentication.getPrincipal();
         List<Long> gradeIds = gradeService.grade(gradeRequestDto, instructor);

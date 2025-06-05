@@ -18,4 +18,6 @@ public class TestResponseDto extends GradableEventResponseDto {
     @NotNull
     private Boolean hidden;
 
+    private String topic;
+
 }

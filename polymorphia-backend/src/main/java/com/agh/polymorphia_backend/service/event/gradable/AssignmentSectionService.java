@@ -1,18 +1,18 @@
 package com.agh.polymorphia_backend.service.event.gradable;
 
-import com.agh.polymorphia_backend.dto.response.event.gradable.CourseworkTestSectionResponseDto;
+import com.agh.polymorphia_backend.dto.response.event.gradable.EventSectionWithGradableEventsListResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.section.EventSectionResponseDto;
 import com.agh.polymorphia_backend.repository.event.gradable.GradableEventRepository;
 import com.agh.polymorphia_backend.repository.event.section.EventSectionRepository;
 import com.agh.polymorphia_backend.service.GradeService;
 import com.agh.polymorphia_backend.service.course.AnimalService;
-import com.agh.polymorphia_backend.service.mapper.gradable.CourseworkMapper;
+import com.agh.polymorphia_backend.service.mapper.gradable.AssignmentMapper;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CourseworkSectionService extends EventSectionService {
+public class AssignmentSectionService extends EventSectionService {
 
-    public CourseworkSectionService(CourseworkMapper mapper,
+    public AssignmentSectionService(AssignmentMapper mapper,
                                     AnimalService animalService,
                                     EventSectionRepository eventSectionRepository,
                                     XpCalculator xpCalculator,
@@ -23,12 +23,10 @@ public class CourseworkSectionService extends EventSectionService {
 
 
     @Override
-    public EventSectionResponseDto getAllEvents(Long courseworkSectionId) {
-        EventSectionResponseDto responseDto = getAllGradableEvents(
-                new CourseworkTestSectionResponseDto(),
-                courseworkSectionId
-        );
-        setGradableEventsShortResponseDto((CourseworkTestSectionResponseDto) responseDto, courseworkSectionId);
+    public EventSectionResponseDto getAllEvents(Long assignmentSectionId) {
+        EventSectionWithGradableEventsListResponseDto responseDto = new EventSectionWithGradableEventsListResponseDto();
+        addGradableEventsSummary(responseDto, assignmentSectionId);
+        setAssignmentTestGradableEventsShortResponseDtos(responseDto, assignmentSectionId);
 
         return responseDto;
     }

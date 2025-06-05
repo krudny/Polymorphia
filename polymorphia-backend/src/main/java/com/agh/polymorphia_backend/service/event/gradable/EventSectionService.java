@@ -1,9 +1,11 @@
 package com.agh.polymorphia_backend.service.event.gradable;
 
-import com.agh.polymorphia_backend.dto.response.event.gradable.CourseworkTestSectionResponseDto;
+import com.agh.polymorphia_backend.dto.response.event.gradable.EventSectionWithGradableEventsListResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.gradable.GradableEventResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.gradable.GradableEventShortResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.section.EventSectionResponseDto;
+import com.agh.polymorphia_backend.dto.response.event.section.bonus.FlatBonusDto;
+import com.agh.polymorphia_backend.dto.response.event.section.bonus.PercentageBonusDto;
 import com.agh.polymorphia_backend.exception.database.InvalidArgumentException;
 import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.event.gradable.GradableEvent;
@@ -19,6 +21,8 @@ import com.agh.polymorphia_backend.service.mapper.gradable.GradableEventMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Set;
 
@@ -62,7 +66,7 @@ public abstract class EventSectionService {
         return mapper.toGradableEventResponseDto(gradableEvent, animal);
     }
 
-    protected EventSectionResponseDto getAllGradableEvents(
+    protected void addGradableEventsSummary(
             EventSectionResponseDto responseDto,
             Long sectionId) {
 
@@ -76,7 +80,6 @@ public abstract class EventSectionService {
 
         setSummaryGrade(responseDto, grades, animal.getId(), section);
 
-        return responseDto;
     }
 
     private void setSummaryGrade(EventSectionResponseDto eventSectionResponseDto,
@@ -87,16 +90,28 @@ public abstract class EventSectionService {
         List<AssignedItem> animalAssignedItems = getAssignedItems(allAnimalGrades, eventSection);
 
         int percentageBonus = xpCalculator.sumPercentageBonus(animalAssignedItems);
-        float flatBonusXp = xpCalculator.sumFlatBonus(animalAssignedItems);
-        float gainedXp = xpCalculator.sumGainedXp(eventSectionGrades);
+        BigDecimal flatBonusXp = xpCalculator.sumFlatBonus(animalAssignedItems);
+        BigDecimal gainedXp = xpCalculator.sumGainedXp(eventSectionGrades);
 
-        float percentageBonusXp = ((gainedXp + flatBonusXp) * percentageBonus) / 100;
+        BigDecimal percentageBonusXp = gainedXp.add(flatBonusXp).multiply(BigDecimal.valueOf(percentageBonus))
+                .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP)
+                .setScale(1, RoundingMode.HALF_UP);
+
+        PercentageBonusDto percentageBonusDto = PercentageBonusDto.builder()
+                .xp(percentageBonusXp)
+                .percentage(percentageBonus)
+                .items(xpCalculator.getPercentageBonusItemDtos(animalAssignedItems, gainedXp))
+                .build();
+
+        FlatBonusDto flatBonusItemDto = FlatBonusDto.builder()
+                .xp(flatBonusXp)
+                .items(xpCalculator.getFlatBonusItemDtos(animalAssignedItems))
+                .build();
 
         eventSectionResponseDto.setGainedXp(gainedXp);
-        eventSectionResponseDto.setFlatBonusXp(flatBonusXp);
-        eventSectionResponseDto.setPercentageBonus(percentageBonus);
-        eventSectionResponseDto.setPercentageBonusXp(percentageBonusXp);
-        eventSectionResponseDto.setTotalXp(gainedXp + flatBonusXp + percentageBonusXp);
+        eventSectionResponseDto.setFlatBonus(flatBonusItemDto);
+        eventSectionResponseDto.setPercentageBonus(percentageBonusDto);
+        eventSectionResponseDto.setTotalXp(gainedXp.add(flatBonusXp).add(percentageBonusXp));
     }
 
     public EventSection getEventSection(Long id) {
@@ -121,13 +136,13 @@ public abstract class EventSectionService {
 
     }
 
-    protected void setGradableEventsShortResponseDto(CourseworkTestSectionResponseDto responseDto, Long testSectionId) {
-        EventSection eventSection = getEventSection(testSectionId);
+    protected void setAssignmentTestGradableEventsShortResponseDtos(EventSectionWithGradableEventsListResponseDto responseDto, Long eventSectionId) {
+        EventSection eventSection = getEventSection(eventSectionId);
 
         Animal animal = animalService.getAnimal(eventSection);
-        Set<GradableEvent<?>> projectCriteriaSet = eventSection.getGradableEvents();
+        Set<GradableEvent<?>> gradableEventSet = eventSection.getGradableEvents();
 
-        List<GradableEventShortResponseDto> gradableEvents = projectCriteriaSet.stream()
+        List<GradableEventShortResponseDto> gradableEvents = gradableEventSet.stream()
                 .map(event -> mapper.toShortResponseDto(event, animal))
                 .toList();
 

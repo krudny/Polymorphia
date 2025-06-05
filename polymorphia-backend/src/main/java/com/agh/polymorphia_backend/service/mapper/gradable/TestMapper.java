@@ -25,6 +25,7 @@ public class TestMapper extends GradableEventMapper {
         TestResponseDto event = TestResponseDto.builder()
                 .id(test.getId())
                 .name(test.getName())
+                .topic(test.getTopic())
                 .hidden(test.getHidden())
                 .maxXp(test.getMaxXp())
                 .build();
@@ -37,6 +38,7 @@ public class TestMapper extends GradableEventMapper {
         return GradableEventShortResponseDto.builder()
                 .id(test.getId())
                 .name(((Test) test).getName())
+                .topic(((Test) test).getTopic())
                 .build();
     }
 

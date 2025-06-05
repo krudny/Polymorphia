@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.dto.request.grade;
+package com.agh.polymorphia_backend.dto.response.event.section.bonus;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -8,12 +8,12 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-@NoArgsConstructor
 @SuperBuilder
 @Data
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TestGradeRequestDto extends GradeRequestDto {
+@NoArgsConstructor
+public class PercentageBonusDto extends BonusDto {
     @NotNull
-    private Long animalId;
+    private Integer percentage;
 }

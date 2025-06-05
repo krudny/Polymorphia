@@ -15,7 +15,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
-public class CourseworkTestSectionResponseDto extends EventSectionResponseDto {
+public class EventSectionWithGradableEventsListResponseDto extends EventSectionResponseDto {
     @NotNull
     private List<GradableEventShortResponseDto> gradableEvents;
 }

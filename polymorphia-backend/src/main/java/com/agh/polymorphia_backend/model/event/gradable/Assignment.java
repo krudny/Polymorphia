@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.model.event.gradable;
 
 
-import com.agh.polymorphia_backend.model.event.section.CourseworkSection;
+import com.agh.polymorphia_backend.model.event.section.AssignmentSection;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -13,25 +13,24 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@Table(name = "courseworks")
+@Table(name = "assignments")
 @Inheritance(strategy = InheritanceType.JOINED)
 
 @Data
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @SuperBuilder
 @NoArgsConstructor
-public class Coursework extends GradableEvent<CourseworkSection> {
+public class Assignment extends GradableEvent<AssignmentSection> {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "coursework_section_id")
+    @JoinColumn(name = "assignment_section_id")
     @JsonBackReference
     @ToString.Exclude
-    private CourseworkSection courseworkSection;
+    private AssignmentSection assignmentSection;
 
     @NotEmpty
     private String name;
 
-    @NotEmpty
     private String topic;
 
     @NotEmpty
@@ -47,8 +46,8 @@ public class Coursework extends GradableEvent<CourseworkSection> {
     private Boolean hidden = false;
 
     @Override
-    public CourseworkSection getEventSection() {
-        return courseworkSection;
+    public AssignmentSection getEventSection() {
+        return assignmentSection;
     }
 }
 
