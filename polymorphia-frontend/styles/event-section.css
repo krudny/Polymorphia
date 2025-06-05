@@ -8,7 +8,7 @@
 }
 
 .gradable-event-section {
-  @apply flex flex-col gap-2;
+  @apply flex flex-col gap-2 min-w-72;
 }
 
 .gradable-event-section h1 {
@@ -21,6 +21,10 @@
 
 .gradable-event-section-xp {
   @apply flex flex-col;
+}
+
+.gradable-event-section-progress-bar {
+  @apply pt-7 w-full px-6;
 }
 
 .gradable-event-section-chests {

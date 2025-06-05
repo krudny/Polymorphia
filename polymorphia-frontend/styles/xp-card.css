@@ -58,27 +58,27 @@
 }
 
 .xp-card-xs {
-  @apply h-20;
+  @apply h-24 drop-shadow-sm rounded-lg;
 
   .xp-card-image {
-    @apply w-20 h-20;
+    @apply w-24 h-24;
   }
 
   .xp-card-xp {
-    @apply w-20 h-20;
+    @apply w-24 h-24;
   }
 
   .xp-card-middle,
   .xp-card-xp {
-    @apply p-2;
+    @apply p-3;
     @apply gap-1;
 
     h1 {
-      @apply text-2xl min-[350px]:text-[1.85rem];
+      @apply text-2xl min-[350px]:text-[2rem];
     }
 
     h2 {
-      @apply text-sm min-[350px]:text-[1rem];
+      @apply text-sm min-[350px]:text-[1.3rem];
     }
   }
 }

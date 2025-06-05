@@ -14,7 +14,7 @@
 }
 
 .modal {
-  @apply m-3 w-sm max-h-[calc(100vh-var(--spacing)*5)] p-5 z-[52] bg-[url(/background-modal.png)] bg-repeat-y bg-[length:100%_auto] bg-top border-2 border-neutral-800 rounded-xl;
+  @apply m-3 w-fit max-h-[calc(100vh-var(--spacing)*5)] p-5 z-[52] bg-[url(/background-modal.png)] bg-repeat-y bg-[length:100%_auto] bg-top border-2 border-neutral-800 rounded-xl;
 }
 
 .modal-header {

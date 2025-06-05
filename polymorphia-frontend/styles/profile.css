@@ -6,11 +6,11 @@
 }
 
 .profile-wrapper {
-    @apply w-full flex-1 flex flex-col px-2 justify-center lg:px-10 lg:justify-between lg:max-w-[1600px];
+    @apply w-full flex-1 flex flex-col px-2 justify-center lg:px-14 lg:justify-between lg:max-w-[1600px];
 }
 
 .profile-content-wrapper {
-    @apply flex-col-centered w-full mx-auto mt-10 lg:flex-row lg:my-auto ;
+    @apply flex-col-centered w-full mx-auto mt-10 lg:flex-row lg:my-auto;
 }
 
 .profile-image-wrapper {
@@ -22,7 +22,7 @@
 }
 
 .profile-content {
-    @apply flex-col-centered gap-y-2 w-full text-center my-9 lg:w-4/5;
+    @apply flex-col-centered gap-y-2 w-full h-full text-center my-9 lg:w-4/5;
 }
 
 .profile-content > h1 {
@@ -30,7 +30,7 @@
 }
 
 .profile-content > h2 {
-    @apply text-4xl md:text-5xl 2xl:text-7xl;
+    @apply text-4xl md:text-5xl 2xl:text-6xl;
 }
 
 .profile-content > h3 {
@@ -46,7 +46,7 @@
 }
 
 .profile-progress-bar-desktop {
-    @apply hidden md:block w-full h-fit py-4 px-8;
+    @apply hidden md:block w-full h-fit py-6 -mb-4 px-8;
 }
 
 .profile-progress-bar > h1 {

@@ -15,16 +15,9 @@ export function useModalAnimation(onClose: () => void, isOpen: boolean) {
       timelineRef.current = gsap
         .timeline({ paused: true })
         .fromTo(
-          backdropRef.current,
-          { opacity: 0 },
-          { opacity: 1, duration: 0.2, ease: 'power4.out' },
-          0
-        )
-        .fromTo(
-          modalRef.current,
-          { scale: 0.9, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 0.2, ease: 'power4.in' },
-          0
+          [backdropRef.current, modalRef.current],
+          { opacity: 0, scale: 0.95 },
+          { opacity: 1, scale: 1, duration: 0.4, ease: 'power1.in' }
         );
     }
 
