@@ -15,6 +15,7 @@ const xpCard = tv({
       sm: 'xp-card-sm',
       md: 'xp-card-md',
       lg: 'xp-card-lg',
+      hallOfFame: 'xp-card-hall-of-fame'
     },
     color: {
       gold: 'border-b-6 border-amber-400',

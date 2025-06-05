@@ -33,7 +33,7 @@
 }
 
 .xp-card {
-  @apply w-full rounded-md bg-neutral-50 drop-shadow-lg transition-all overflow-hidden flex flex-row;
+  @apply w-full rounded-xl bg-neutral-50 drop-shadow-lg transition-all overflow-hidden flex flex-row;
 }
 
 .xp-card-hover {
@@ -132,7 +132,7 @@
     }
 
     h2 {
-      @apply text-xl;
+      @apply text-2xl;
     }
   }
 }
@@ -166,4 +166,23 @@
 
 .xp-card-lg.xp-card-force-width .xp-card-middle {
   @apply lg:w-[22.5rem];
+}
+
+.xp-card-hall-of-fame {
+  @apply w-full h-full;
+
+  .xp-card-xp {
+    @apply w-fit h-full;
+  }
+
+  .xp-card-middle,
+  .xp-card-xp {
+    h1 {
+      @apply text-[2.5rem];
+    }
+
+    h2 {
+      @apply text-2xl;
+    }
+  }
 }

@@ -1,9 +1,20 @@
+"use client"
 import RankCard from "@/app/(logged-in)/test/RankCard";
 import RankSort from "@/app/(logged-in)/test/RankSort";
 import RankSearch from "@/app/(logged-in)/test/RankSearch";
 import RankPodium from "@/app/(logged-in)/test/RankPodium";
+import Pagination from "@/components/general/Pagination";
+import '../../../styles/paginate.css';
+import {useTitle} from "@/components/navigation/TitleContext";
+import {useEffect} from "react";
 
 export default function HallOfFame() {
+    const { setTitle } = useTitle();
+
+    useEffect(() => {
+        setTitle("Hall of Fame");
+    }, [setTitle]);
+
     return (
         <div className="w-full h-full mx-auto flex flex-col lg:px-10 lg:mt-4 lg:max-h-[calc(100dvh-5rem)] lg:min-h-[calc(100dvh-5rem)] lg:max-w-[1600px]">
             <div className="flex flex-1 min-h-0">
@@ -13,7 +24,7 @@ export default function HallOfFame() {
                     </div>
                     <div className="w-full flex justify-between flex-col flex-1 px-4">
                         {[1,2,3].map((_, i) => (
-                            <RankPodium key={i} />
+                            <RankPodium key={i} position={i + 1} />
                         ))}
                     </div>
                 </div>
@@ -30,7 +41,11 @@ export default function HallOfFame() {
                 </div>
             </div>
             <div className="w-full min-h-14 flex items-center justify-end text-2xl">
-                pageable
+                <Pagination
+                    totalPages={5}
+                    onPageChange={() => {}}
+                    forcePage={1}
+                />
             </div>
         </div>
     )
