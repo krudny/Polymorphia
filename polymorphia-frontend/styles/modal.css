@@ -2,7 +2,7 @@
 @import './globals.css';
 
 .modal-backdrop {
-  @apply fixed top-0 left-0 flex items-center justify-center w-screen h-screen z-[51] bg-neutral-800/50 backdrop-blur-xs;
+  @apply fixed top-0 left-0 flex items-center justify-center w-screen h-screen z-[51] bg-neutral-800/50 backdrop-blur-xs will-change-auto;
 }
 
 .modal-visible {
@@ -14,15 +14,23 @@
 }
 
 .modal {
-  @apply m-3 w-fit max-h-[calc(100vh-var(--spacing)*5)] p-5 z-[52] bg-[url(/background-modal.png)] bg-repeat-y bg-[length:100%_auto] bg-top border-2 border-neutral-800 rounded-xl;
+  @apply m-3 w-fit max-h-[calc(100vh-var(--spacing)*5)] p-5 z-[52] bg-[url(/background-modal.png)] bg-repeat-y bg-[length:100%_auto] bg-top border-2 border-neutral-800 rounded-xl will-change-transform;
+}
+
+.modal-header-wrapper {
+  @apply flex flex-col mb-5;
 }
 
 .modal-header {
-  @apply flex flex-row justify-between items-center mb-5;
+  @apply flex justify-between items-center;
 }
 
 .modal-header h1 {
   @apply text-5xl;
+}
+
+.modal-header-wrapper h2 {
+  @apply text-2xl;
 }
 
 .modal-header-exit-button {

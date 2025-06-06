@@ -104,7 +104,7 @@ export default function XPCardGrid({
   const pagination = (
       <Pagination
         totalPages={gradableEventsData.page.totalPages}
-        onPageChange={handlePageChange}
+        onPageChangeAction={handlePageChange}
         forcePage={gradableEventsData.page.totalPages > 0 ? currentPage : undefined}
       />
   )

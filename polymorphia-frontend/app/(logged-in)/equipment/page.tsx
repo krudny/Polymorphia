@@ -1,68 +1,61 @@
 "use client"
-import {useScaleShow} from "@/animations/General";
-import Image from "next/image";
 import "../../../styles/equipment.css"
-import toast from "react-hot-toast";
-import {API_STATIC_URL} from "@/services/api";
 import { useTitle } from "@/components/navigation/TitleContext";
-import { useEffect } from "react";
+import {useEffect, useState} from "react";
+import ItemModal from "@/components/equipment/modals/ItemModal";
+import ChestModal from "@/components/equipment/modals/ChestModal";
+import {ChestData, ItemData} from "@/interfaces/equipment/EquipmentInterfaces";
+import {useQuery} from "@tanstack/react-query";
+import Loading from "@/components/general/Loading";
+import EquipmentService from "@/services/equipment/EquipmentService";
+import EquipmentSectionWrapper from "@/components/equipment/EquipmentSectionWrapper";
 
 export default function Equipment() {
-  const wrapperRef = useScaleShow();
+  const [currentItemModalData, setCurrentItemModalData] = useState<ItemData | null>(null);
+  const [currentChestModalData, setCurrentChestModalData] = useState<ChestData | null>(null);
   const { setTitle } = useTitle();
 
   useEffect(() => {
     setTitle('Ekwipunek');
   }, [setTitle]);
 
-  return (
-      <div ref={wrapperRef} className="equipment">
-        <section className="mt-3">
-          <h1>Przedmioty</h1>
-          <div className="equipment-grid">
-            {[1, 2, 3, 4].map((_, i) => (
-                <div key={i}>
-                  <div key={i} className="equipment-grid-item">
-                    <Image
-                        src={`${API_STATIC_URL}/images/chests/locked.png`}
-                        alt="Locked item"
-                        fill
-                        className="equipment-img"
-                        priority
-                        sizes="(min-width: 1024px) 25vw, 50vw"
-                    />
-                  </div>
-                  {/* TODO: to change */}
-                  <div className="w-full flex-centered mt-4">
-                    <h3 className="text-4xl text-shadow-lg">0/4</h3>
-                  </div>
-                </div>
-            ))}
-          </div>
-        </section>
+  // TODO: error handling
+  const { data: items, isLoading: isItemsLoading } = useQuery({
+    queryKey: ['equipment-items'],
+    queryFn: () => EquipmentService.getItems(),
+  });
 
-        <section className="my-7">
-          <h1>Skrzynki</h1>
-          <div className="equipment-grid">
-            {[1, 2, 3, 4].map((_, i) => (
-                <div key={i}>
-                  <div key={i} className="equipment-grid-item">
-                    <Image
-                        src={`${API_STATIC_URL}/images/chests/s1.png`}
-                        alt="Chest"
-                        fill
-                        className="equipment-img"
-                        priority
-                        sizes="(min-width: 1024px) 25vw, 50vw"
-                    />
-                  </div>
-                  <button className="equipment-open-chest-btn" onClick={() => toast.error("Not implemented")}>
-                    <h3 >Otwórz skrzynię</h3>
-                  </button>
-                </div>
-            ))}
-          </div>
-        </section>
+  const { data: chests, isLoading: isChestsLoading} = useQuery({
+    queryKey: ['equipment-chests'],
+    queryFn: () => EquipmentService.getChests(),
+  });
+
+  if (isItemsLoading || isChestsLoading) {
+    return <Loading />;
+  }
+
+  if (!items || !chests) {
+    return <div>Error :c</div>;
+  }
+
+  return (
+      <div className="equipment">
+        <EquipmentSectionWrapper
+          items={items}
+          chests={chests}
+          setCurrentChestModalData={setCurrentChestModalData}
+          setCurrentItemModalData={setCurrentItemModalData}
+        />
+
+        <ItemModal
+          item={currentItemModalData}
+          onClose={() => setCurrentItemModalData(null)}
+        />
+
+        <ChestModal
+          chest={currentChestModalData}
+          onClose={() => setCurrentChestModalData(null)}
+        />
       </div>
   );
 }

@@ -19,20 +19,18 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         queryFn: () => UserService.getCurrentUser(),
     })
 
-    UserService.getEquipment();
-
     if (isLoading) return <Loading />
 
     return (
         <UserContext.Provider
             value={{
-                userId: userData?.userId,
-                userName: userData?.userName,
-                animalName: userData?.animalName,
-                evolutionStage: userData?.evolutionStage,
-                currentXP: userData?.currentXP,
-                profileImage: userData?.profileImage,
-                role: userData?.role,
+                userId: userData!.userId,
+                userName: userData!.userName,
+                animalName: userData!.animalName,
+                evolutionStage: userData!.evolutionStage,
+                currentXP: userData!.currentXP,
+                profileImage: userData!.profileImage,
+                role: userData!.role,
             }}
         >
             {children}

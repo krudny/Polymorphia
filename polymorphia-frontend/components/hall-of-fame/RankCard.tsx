@@ -1,8 +1,8 @@
-import RankImage from "@/app/(logged-in)/test/RankImage";
-import RankSummary from "@/app/(logged-in)/test/RankSummary";
-import RankPosition from "@/app/(logged-in)/test/RankPosition";
-import RankUserData from "@/app/(logged-in)/test/RankUserData";
-import RankUserPoints from "@/app/(logged-in)/test/RankUserPoints";
+import RankImage from "@/components/hall-of-fame/RankImage";
+import RankSummary from "@/components/hall-of-fame/RankSummary";
+import RankPosition from "@/components/hall-of-fame/RankPosition";
+import RankUserData from "@/components/hall-of-fame/RankUserData";
+import RankUserPoints from "@/components/hall-of-fame/RankUserPoints";
 
 
 export default function RankCard() {

@@ -12,14 +12,21 @@ export function useModalAnimation(onClose: () => void, isOpen: boolean) {
     if (!modalRef.current || !backdropRef.current) return;
 
     if (!timelineRef.current) {
-      timelineRef.current = gsap
-        .timeline({ paused: true })
+      timelineRef.current = gsap.timeline({ paused: true })
         .fromTo(
-          [backdropRef.current, modalRef.current],
+          backdropRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.2, ease: 'power1.inOut' }
+        )
+        .fromTo(
+          modalRef.current,
           { opacity: 0, scale: 0.95 },
-          { opacity: 1, scale: 1, duration: 0.4, ease: 'power1.in' }
+          { opacity: 1, scale: 1, duration: 0.25, ease: 'power1.inOut' },
+          '<'
         );
     }
+
+
 
     if (isOpen && !isClosing) {
       timelineRef.current.play();

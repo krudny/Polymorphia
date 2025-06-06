@@ -1,17 +1,15 @@
-import {API_HOST} from "@/services/api";
-
 const UserService = {
     getCurrentUser: async () => {
-        const response = await fetch(`${API_HOST}/test/user`);
-        if (!response.ok) throw new Error(response.statusText);
-        return await response.json();
+        return {
+            userId: 1,
+            userName: "Kamil Rudny",
+            animalName: "Gerard Pocieszny",
+            evolutionStage: "Majestatyczna bestia",
+            currentXP: 67,
+            profileImage: "/images/evolution-stages/4.jpg",
+            role: "Student"
+        };
     },
-
-    getEquipment: async () => {
-        const response = await fetch(`${API_HOST}/test/equipment`);
-        if (!response.ok) throw new Error(response.statusText);
-        return await response.json();
-    }
 }
 
 export default UserService;

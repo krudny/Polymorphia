@@ -1,12 +1,13 @@
 "use client"
 import {ChevronLeft, ChevronRight} from "lucide-react";
 import ReactPaginate from "react-paginate";
+import {PaginationProps} from "@/interfaces/general/PaginationInterfaces";
 
-export default function Pagination({totalPages, onPageChange, forcePage}) {
+export default function Pagination({totalPages, onPageChangeAction, forcePage}: PaginationProps) {
     return (
         <ReactPaginate
             pageCount={totalPages}
-            onPageChange={onPageChange}
+            onPageChange={onPageChangeAction}
             forcePage={forcePage}
             pageRangeDisplayed={3}
             marginPagesDisplayed={3}

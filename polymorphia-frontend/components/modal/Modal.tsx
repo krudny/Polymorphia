@@ -9,6 +9,7 @@ export default function Modal({
   isOpen,
   onClose,
   title,
+  subtitle,
   children,
 }: ModalProps) {
   const { modalRef, backdropRef, handleCloseClick } = useModalAnimation(
@@ -32,9 +33,12 @@ export default function Modal({
           e.stopPropagation();
         }}
       >
-        <div className="modal-header">
-          <h1>{title}</h1>
-          <X className="modal-header-exit-button" onClick={handleCloseClick} />
+        <div className="modal-header-wrapper">
+          <div className="modal-header">
+            <h1>{title}</h1>
+            <X className="modal-header-exit-button" onClick={handleCloseClick} />
+          </div>
+          <h2>{subtitle}</h2>
         </div>
         {children}
       </div>

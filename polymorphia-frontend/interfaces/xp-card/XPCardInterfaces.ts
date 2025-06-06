@@ -12,9 +12,10 @@ export interface EventSectionCardProps {
 }
 
 export type EventSectionCardVariantProps = {
-  size?: 'xs' | 'sm' | 'md' | 'lg';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'hallOfFame';
   color?: 'gold' | 'silver' | 'bronze' | 'green';
   forceWidth?: boolean;
+  isSumVisible?: boolean;
 };
 
 export interface EventSectionCardGridProps {

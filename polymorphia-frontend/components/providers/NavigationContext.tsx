@@ -8,38 +8,51 @@ import { NavigationContextType } from "@/interfaces/navigation/NavigationInterfa
 export const NavigationContext = createContext<NavigationContextType>({
   isSidebarExpanded: false,
   setIsSidebarExpanded: () => {},
-  isSidebarLocked: false,
-  setIsSidebarLocked: () => {},
+  isSidebarLockedOpened: false,
+  setIsSidebarLockedOpened: () => {},
+  isSidebarLockedClosed: false,
+  setIsSidebarLockedClosed: () => {},
   isNavbarExpanded: false,
   setIsNavbarExpanded: () => {}
 });
 
 export const NavigationProvider = ({ children }: { children: ReactNode }) => {
-  const [isSidebarLocked, setIsSidebarLocked] = useState(false);
+  const [isSidebarLockedOpened, setIsSidebarLockedOpened] = useState(() => {
+    const stored = localStorage.getItem('sidebarLockedOpened');
+    return stored !== null ? stored === 'true' : false;
+  });
+  const [isSidebarLockedClosed, setIsSidebarLockedClosed] = useState(() => {
+    const stored = localStorage.getItem('sidebarLockedClosed');
+    return stored !== null ? stored === 'true' : false;
+  });
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
   const [isNavbarExpanded, setIsNavbarExpanded] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('sidebarLocked', isSidebarLocked.toString());
-  }, [isSidebarLocked]);
+      localStorage.setItem('sidebarLockedOpened', isSidebarLockedOpened.toString());
+      localStorage.setItem('sidebarLockedClosed', isSidebarLockedClosed.toString());
+  }, [isSidebarLockedOpened, isSidebarLockedClosed]);
 
   useEffect(() => {
-    const saved = localStorage.getItem('sidebarLocked');
-    if (saved === 'true') {
-      setIsSidebarLocked(true);
+    const savedOpened = localStorage.getItem('sidebarLockedOpened');
+
+    if (savedOpened === 'true') {
+      setIsSidebarLockedOpened(true);
       setIsSidebarExpanded(true);
     } else {
       setIsSidebarExpanded(false);
     }
-  }, [isSidebarLocked]);
+  }, [isSidebarLockedOpened]);
 
   return (
       <NavigationContext.Provider
           value={{
             isSidebarExpanded,
             setIsSidebarExpanded,
-            isSidebarLocked,
-            setIsSidebarLocked,
+            isSidebarLockedOpened,
+            setIsSidebarLockedOpened,
+            isSidebarLockedClosed,
+            setIsSidebarLockedClosed,
             isNavbarExpanded,
             setIsNavbarExpanded
           }}

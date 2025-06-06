@@ -6,7 +6,7 @@ import "../../../styles/profile.css"
 import ProgressBar from "@/components/progressbar/ProgressBar";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
-import RankUserPoints from "@/app/(logged-in)/test/RankUserPoints";
+import RankUserPoints from "@/components/hall-of-fame/RankUserPoints";
 
 export default function Profile() {
   const wrapperRef = useScaleShow();

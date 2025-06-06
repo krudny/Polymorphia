@@ -17,7 +17,7 @@ import { EventSectionService } from '@/services/course/event-section/EventSectio
 import { updateMenuItems } from '@/services/course/event-section/EventSectionUtils';
 
 export default function Sidebar() {
-  const { isSidebarExpanded, setIsSidebarExpanded, isSidebarLocked } =
+  const { isSidebarExpanded, setIsSidebarExpanded, isSidebarLockedOpened, isSidebarLockedClosed } =
     useContext(NavigationContext);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
 
@@ -40,13 +40,13 @@ export default function Sidebar() {
   return (
     <div
       ref={sidebarRef}
-      id={isSidebarLocked ? "sidebar-locked" : "sidebar-animated"}
+      id={isSidebarLockedOpened ? "sidebar-locked" : "sidebar-animated"}
       className="sidebar"
       onMouseEnter={() => {
-        if (!isSidebarLocked) setIsSidebarExpanded(true);
+        if (!isSidebarLockedOpened && !isSidebarLockedClosed) setIsSidebarExpanded(true);
       }}
       onMouseLeave={() => {
-        if (!isSidebarLocked) setIsSidebarExpanded(false);
+        if (!isSidebarLockedOpened && !isSidebarLockedClosed) setIsSidebarExpanded(false);
       }}
     >
       <UserSection />
