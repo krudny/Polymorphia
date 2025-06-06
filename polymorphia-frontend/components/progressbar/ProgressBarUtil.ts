@@ -4,13 +4,13 @@ export function FillsCalc(
   minXP: number,
   maxXP: number,
   currentXP: number,
-  segmentSizes: number[],
+  segmentSizes: number[]
 ): number[] {
   const totalXP = maxXP - minXP;
   const currentRelativeXP = currentXP - minXP;
   const percentage = Math.min(
     Math.max(0, (currentRelativeXP / totalXP) * 100),
-    100,
+    100
   );
 
   const fills: number[] = [];

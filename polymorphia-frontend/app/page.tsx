@@ -36,7 +36,7 @@ export default function Home() {
       imageRef.current,
       () => {
         hasMountedRef.current = true;
-      },
+      }
     );
   }, []);
 
@@ -50,7 +50,7 @@ export default function Home() {
     animateLoginFormVisibility(
       loginFormRef.current,
       titleSectionRef.current,
-      isLoginFormVisible,
+      isLoginFormVisible
     );
   }, [isLoginFormVisible]);
 

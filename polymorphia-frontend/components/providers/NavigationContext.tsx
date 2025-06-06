@@ -27,11 +27,11 @@ export const NavigationProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     localStorage.setItem(
       "sidebarLockedOpened",
-      isSidebarLockedOpened.toString(),
+      isSidebarLockedOpened.toString()
     );
     localStorage.setItem(
       "sidebarLockedClosed",
-      isSidebarLockedClosed.toString(),
+      isSidebarLockedClosed.toString()
     );
   }, [isSidebarLockedOpened, isSidebarLockedClosed]);
 

@@ -69,7 +69,7 @@ export default function XPCardGrid({
     gradableEventsData,
     direction,
     firstRender,
-    setFirstRender,
+    setFirstRender
   );
 
   useEffect(() => {
@@ -78,7 +78,7 @@ export default function XPCardGrid({
       summaryRef,
       setMobile,
       setPageCols,
-      setPageRows,
+      setPageRows
     );
   }, [containerRef, summaryRef]);
 
@@ -98,7 +98,7 @@ export default function XPCardGrid({
     gradableEventsData,
     setCurrentlySelectedGradableEventIdForModal,
     router,
-    eventSection,
+    eventSection
   );
 
   const pagination = (
@@ -122,7 +122,7 @@ export default function XPCardGrid({
                 className={clsx(
                   "xp-card-grid",
                   `grid-cols-${pageCols}`,
-                  `grid-rows-${pageRows}`,
+                  `grid-rows-${pageRows}`
                 )}
               >
                 {cards.map((card) => (

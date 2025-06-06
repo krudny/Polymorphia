@@ -15,14 +15,14 @@ export default function PointsSummaryElement({
         horizontal
           ? "points-summary-element-horizontal"
           : "points-summary-element-vertical",
-        onClick && "points-summary-element-hover",
+        onClick && "points-summary-element-hover"
       )}
       onClick={onClick}
     >
       <div
         className={clsx(
           "points-summary-element-header",
-          onClick && "points-summary-element-header-offset",
+          onClick && "points-summary-element-header-offset"
         )}
       >
         {onClick && <SquareMousePointer className="text-neutral-500" />}

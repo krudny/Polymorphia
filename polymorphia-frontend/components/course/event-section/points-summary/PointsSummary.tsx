@@ -15,7 +15,7 @@ export default function PointsSummary({
 
   const elements = getBonusesFromEventSection(
     eventSection,
-    setCurrentBonusInfoModal,
+    setCurrentBonusInfoModal
   );
 
   return (

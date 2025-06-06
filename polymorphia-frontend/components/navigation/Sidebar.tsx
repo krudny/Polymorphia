@@ -61,7 +61,7 @@ export default function Sidebar() {
         className={clsx(
           `sidebar-menu-section-base ${
             isSidebarExpanded ? "sidebar-menu-section-expanded" : ""
-          }`,
+          }`
         )}
       >
         <MenuSection options={menuItems} />

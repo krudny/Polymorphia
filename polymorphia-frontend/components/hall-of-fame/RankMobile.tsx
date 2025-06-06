@@ -1,19 +1,22 @@
-"use client"
+"use client";
 
 import RankSearch from "@/components/hall-of-fame/RankSearch";
 import RankSort from "@/components/hall-of-fame/RankSort";
 import RankPodium from "@/components/hall-of-fame/RankPodium";
 import Pagination from "@/components/general/Pagination";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import RankCardMobile from "@/components/hall-of-fame/RankCardMobile";
 
 export default function RankMobile() {
   const [currentPage, setCurrentPage] = useState(2);
 
-  setCurrentPage(2)
+  useEffect(() => {
+    setCurrentPage(2);
+  }, [])
+
 
   return (
-    <div className="w-full h-full px-4 bg-red-50">
+    <div className="w-full h-full px-4">
       <div className="w-full h-16 flex justify-between">
         <RankSearch />
         <RankSort />
@@ -40,5 +43,5 @@ export default function RankMobile() {
         />
       </div>
     </div>
-  )
+  );
 }

@@ -14,7 +14,7 @@ export const animateScaleShow = (ref: HTMLDivElement) => {
       autoAlpha: 1,
       duration: 0.3,
       ease: "power1.in",
-    },
+    }
   );
 };
 

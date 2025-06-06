@@ -29,7 +29,7 @@ export default function MenuSection({ options }: MenuSectionProps) {
       containerRefs.current,
       openSubMenu,
       isExpanded,
-      options,
+      options
     );
   }, [openSubMenu, isExpanded, options]);
 

@@ -11,7 +11,7 @@ export function useEventSectionAnimation(
   gradableEventsData: GradableEventCoreResponse | undefined,
   direction: 1 | -1,
   firstRender: boolean,
-  setFirstRender: (b: boolean) => void,
+  setFirstRender: (b: boolean) => void
 ): { handlePageChange: (selected: { selected: number }) => void } {
   const handlePageChange = (selected: { selected: number }) => {
     const newPage = selected.selected;
@@ -53,7 +53,7 @@ export function useEventSectionAnimation(
       gsap.fromTo(
         sliderRef.current,
         { xPercent: dir * 100, opacity: 0 },
-        { xPercent: 0, opacity: 1, duration: 0.2, ease: "power2.out" },
+        { xPercent: 0, opacity: 1, duration: 0.2, ease: "power2.out" }
       );
     }
   }, [pageToShow, gradableEventsData, sliderRef]);

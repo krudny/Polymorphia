@@ -12,11 +12,11 @@ import { API_HOST } from "@/services/api";
 
 const KnowledgeBaseService = {
   getEvolutionStages: async (
-    courseId: number,
+    courseId: number
   ): Promise<EvolutionStageSlide[]> => {
     const response = await fetch(
       `${API_HOST}/courses/${courseId}/evolution-stages`,
-      { credentials: "include" },
+      { credentials: "include" }
     );
     if (!response.ok) throw new Error("Failed to fetch evolution stages!");
     const data = await response.json();

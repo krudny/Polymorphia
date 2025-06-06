@@ -2,7 +2,7 @@ import { gsap } from "gsap";
 
 export const animateSidebar = (
   sidebar: HTMLDivElement,
-  isExpanded: boolean,
+  isExpanded: boolean
 ) => {
   gsap.killTweensOf(sidebar);
   const targetWidth = isExpanded ? "18rem" : "96px";
@@ -11,11 +11,11 @@ export const animateSidebar = (
   const profileBlock = sidebar.querySelector<HTMLDivElement>(".profile-block");
   const headings = Array.from(sidebar.querySelectorAll<HTMLElement>("h2"));
   const chevrons = Array.from(
-    sidebar.querySelectorAll<HTMLElement>(".chevron-container"),
+    sidebar.querySelectorAll<HTMLElement>(".chevron-container")
   );
 
   const targets = [sidebar, profileBlock, ...headings, ...chevrons].filter(
-    Boolean,
+    Boolean
   ) as HTMLElement[];
   gsap.killTweensOf(targets);
 
@@ -36,7 +36,7 @@ export const animateSidebar = (
           duration: 0.2,
           ease: "power1.out",
         },
-        "<",
+        "<"
       )
       .fromTo(
         profileBlock,
@@ -47,7 +47,7 @@ export const animateSidebar = (
           duration: 0.2,
           ease: "power1.out",
         },
-        "<",
+        "<"
       );
   } else {
     tl.to(
@@ -61,7 +61,7 @@ export const animateSidebar = (
           gsap.set(profileBlock, { display: "none" });
         },
       },
-      "<",
+      "<"
     )
 
       .to(
@@ -72,7 +72,7 @@ export const animateSidebar = (
           duration: 0.2,
           ease: "power1.out",
         },
-        "<",
+        "<"
       )
       .to(
         sidebar,
@@ -81,20 +81,20 @@ export const animateSidebar = (
           duration: 0.5,
           ease: "power1.out",
         },
-        "<0.1",
+        "<0.1"
       );
   }
 };
 
 export const animateNavbar = (
   drawer: HTMLDivElement,
-  isExpanded: boolean,
+  isExpanded: boolean
 ): void => {
   const menuItems = Array.from(
-    drawer.querySelectorAll<HTMLHeadingElement>("h2"),
+    drawer.querySelectorAll<HTMLHeadingElement>("h2")
   );
   const chevrons = Array.from(
-    drawer.querySelectorAll<HTMLElement>(".chevron-container"),
+    drawer.querySelectorAll<HTMLElement>(".chevron-container")
   );
 
   const allElements = [...menuItems, ...chevrons];
@@ -133,7 +133,7 @@ export const animateSubMenuSection = (
   containers: Array<HTMLDivElement | null>,
   openSubMenu: string[],
   isExpanded: boolean,
-  options: { text: string }[],
+  options: { text: string }[]
 ): void => {
   options.forEach((opt, idx) => {
     const container = containers[idx];
@@ -148,7 +148,7 @@ export const animateSubMenuSection = (
       gsap.fromTo(
         container,
         { height: 0 },
-        { height: fullHeight, duration: 0.2, opacity: 1, ease: "power1.in" },
+        { height: fullHeight, duration: 0.2, opacity: 1, ease: "power1.in" }
       );
     } else {
       gsap.to(container, {

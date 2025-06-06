@@ -499,7 +499,7 @@ export const EventSectionService = {
   }): Promise<GradableEventCoreResponse> => {
     return new Promise<GradableEventCoreResponse>((resolve, reject) => {
       const matchedSection = gradableEventsCoreList.find(
-        (e) => e.id === eventSectionId,
+        (e) => e.id === eventSectionId
       );
 
       if (!matchedSection) {
@@ -511,14 +511,14 @@ export const EventSectionService = {
       const endIndex = startIndex + pageSize;
       const paginatedEvents = matchedSection.gradableEvents.slice(
         startIndex,
-        endIndex,
+        endIndex
       );
 
       resolve({
         data: paginatedEvents,
         page: {
           totalPages: Math.ceil(
-            matchedSection.gradableEvents.length / pageSize,
+            matchedSection.gradableEvents.length / pageSize
           ),
         },
       });
@@ -536,7 +536,7 @@ export const EventSectionService = {
       }
 
       const gradableEvents = gradableEventsList.filter(
-        (e) => e.id === data.eventSectionId,
+        (e) => e.id === data.eventSectionId
       );
 
       if (gradableEvents.length !== 1) {
@@ -544,7 +544,7 @@ export const EventSectionService = {
       }
 
       const gradableEvent = gradableEvents[0].gradableEvents.filter(
-        (e) => e.id === data.gradableEventId,
+        (e) => e.id === data.gradableEventId
       );
 
       if (gradableEvent.length === 1) {

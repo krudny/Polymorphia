@@ -12,7 +12,7 @@ export default function RankCard() {
         <RankSummary />
       </div>
       <div className="w-full">
-        <RankUserPoints titleSize={"xs" } xpSize={"sm"} separators={false} />
+        <RankUserPoints titleSize={"xs"} xpSize={"sm"} separators={false} />
       </div>
     </div>
   );

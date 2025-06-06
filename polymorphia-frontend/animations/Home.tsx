@@ -3,7 +3,7 @@ import gsap from "gsap";
 export const animateLoginFormVisibility = (
   loginFormElement: HTMLDivElement,
   titleSectionElement: HTMLDivElement,
-  isVisible: boolean,
+  isVisible: boolean
 ) => {
   gsap
     .timeline()
@@ -25,7 +25,7 @@ export const animateLoginFormVisibility = (
             ease: "power2.inOut",
             yoyo: true,
           },
-      "<",
+      "<"
     );
 };
 
@@ -33,7 +33,7 @@ export const animateInitialMount = (
   backgroundElement: HTMLDivElement,
   titleSectionElement: HTMLDivElement,
   imageElement: HTMLDivElement,
-  onComplete: () => void,
+  onComplete: () => void
 ) => {
   gsap
     .timeline()
@@ -41,19 +41,19 @@ export const animateInitialMount = (
       backgroundElement,
       { x: "-100%", autoAlpha: 0 },
       { x: "0%", autoAlpha: 1, duration: 0.4, ease: "power2.inOut" },
-      0,
+      0
     )
     .fromTo(
       titleSectionElement,
       { x: "100%", autoAlpha: 0 },
       { x: "0%", autoAlpha: 1, duration: 0.6, ease: "power2.inOut" },
-      0,
+      0
     )
     .fromTo(
       imageElement,
       { x: "-100%", autoAlpha: 0 },
       { x: "0%", autoAlpha: 1, duration: 0.6, ease: "power2.inOut" },
-      "<",
+      "<"
     )
     .then(onComplete);
 };

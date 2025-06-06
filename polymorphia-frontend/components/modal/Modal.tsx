@@ -14,7 +14,7 @@ export default function Modal({
 }: ModalProps) {
   const { modalRef, backdropRef, handleCloseClick } = useModalAnimation(
     onClose,
-    isOpen,
+    isOpen
   );
 
   return createPortal(
@@ -22,7 +22,7 @@ export default function Modal({
       ref={backdropRef}
       className={clsx(
         "modal-backdrop",
-        isOpen ? "modal-visible" : "modal-not-visible",
+        isOpen ? "modal-visible" : "modal-not-visible"
       )}
       onClick={handleCloseClick}
     >
@@ -46,6 +46,6 @@ export default function Modal({
         {children}
       </div>
     </div>,
-    document.body,
+    document.body
   );
 }

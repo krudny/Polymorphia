@@ -13,10 +13,10 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 
 export function updateMenuItems(
   menuItems: MenuOption[],
-  eventSections: EventSectionCore[],
+  eventSections: EventSectionCore[]
 ) {
   const courseItem = menuItems.filter(
-    (menuOption) => menuOption.text === "Kurs",
+    (menuOption) => menuOption.text === "Kurs"
   )[0];
   courseItem.link = `course/${eventSections[0].type}/${eventSections[0].id}`;
 
@@ -36,7 +36,7 @@ export function setResizeObserver(
   summaryRef: React.RefObject<HTMLDivElement | null>,
   setMobile: (v: boolean) => void,
   setPageCols: (n: number) => void,
-  setPageRows: (n: number) => void,
+  setPageRows: (n: number) => void
 ) {
   if (!containerRef.current) return;
 
@@ -68,7 +68,7 @@ export function setResizeObserver(
 
       const rows = Math.floor(
         (height - heightApproxOffset + gridCardsGap) /
-          (cardHeight + gridCardsGap),
+          (cardHeight + gridCardsGap)
       );
       const cols = Math.floor(
         (width -
@@ -77,7 +77,7 @@ export function setResizeObserver(
           (summaryRef?.current?.offsetWidth ?? summaryApproxOffset) +
           sidebarOffset +
           gridCardsGap) /
-          (cardWidth + gridCardsGap),
+          (cardWidth + gridCardsGap)
       );
 
       const maxRows = height <= 650 ? 2 : height >= 900 ? 4 : 3;
@@ -104,7 +104,7 @@ export function mapPropsToCards(
   gradableEventsData: GradableEventCoreResponse,
   setCurrentlySelectedGradableEventIdForModal: (e: number | null) => void,
   router: AppRouterInstance,
-  eventSection: EventSection,
+  eventSection: EventSection
 ): (EventSectionCardProps & { id: number })[] {
   return gradableEventsData.data
     .filter((event) => !event.hidden)
@@ -121,7 +121,7 @@ export function mapPropsToCards(
               }
             : () => {
                 router.push(
-                  `/course/${eventSection.type}/${eventSection.id}/${event.id}`,
+                  `/course/${eventSection.type}/${eventSection.id}/${event.id}`
                 );
               },
       };
@@ -130,7 +130,7 @@ export function mapPropsToCards(
 
 export function getBonusesFromEventSection(
   eventSection: EventSection,
-  setCurrentBonusInfoModal: (e: BonusInfo) => void,
+  setCurrentBonusInfoModal: (e: BonusInfo) => void
 ): PointsSummaryElementProps[] {
   return [
     {

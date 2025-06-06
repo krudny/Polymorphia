@@ -2,7 +2,7 @@ import gsap from "gsap";
 
 export const animateSingleSlide = (
   slideRef: HTMLDivElement,
-  position: number,
+  position: number
 ) => {
   gsap.to(slideRef, {
     xPercent: position * 100,
@@ -27,6 +27,6 @@ export const animateSlider = (sliderRef: HTMLDivElement) => {
       delay: 0.1,
       duration: 0.4,
       ease: "power2.out",
-    },
+    }
   );
 };
