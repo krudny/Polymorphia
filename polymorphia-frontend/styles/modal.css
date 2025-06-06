@@ -1,5 +1,5 @@
-@import 'tailwindcss';
-@import './globals.css';
+@import "tailwindcss";
+@import "./globals.css";
 
 .modal-backdrop {
   @apply fixed top-0 left-0 flex items-center justify-center w-screen h-screen z-[51] bg-neutral-800/50 backdrop-blur-xs will-change-auto;

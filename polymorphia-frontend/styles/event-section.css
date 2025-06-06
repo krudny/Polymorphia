@@ -1,5 +1,5 @@
-@import 'tailwindcss';
-@import './globals.css';
+@import "tailwindcss";
+@import "./globals.css";
 
 .section-view {
   @apply w-full p-4 flex flex-col mx-auto;

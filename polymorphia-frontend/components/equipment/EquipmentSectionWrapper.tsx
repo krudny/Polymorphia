@@ -1,9 +1,18 @@
-import {useScaleShow} from "@/animations/General";
+import { useScaleShow } from "@/animations/General";
 import EquipmentSection from "@/components/equipment/EquipmentSection";
-import {ChestData, EquipmentSectionWrapperProps, ItemData} from "@/interfaces/equipment/EquipmentInterfaces";
-import "../../styles/equipment.css"
+import {
+  ChestData,
+  EquipmentSectionWrapperProps,
+  ItemData,
+} from "@/interfaces/equipment/EquipmentInterfaces";
+import "../../styles/equipment.css";
 
-export default function EquipmentSectionWrapper({ items, chests, setCurrentItemModalData, setCurrentChestModalData}: EquipmentSectionWrapperProps) {
+export default function EquipmentSectionWrapper({
+  items,
+  chests,
+  setCurrentItemModalData,
+  setCurrentChestModalData,
+}: EquipmentSectionWrapperProps) {
   const wrapperRef = useScaleShow();
 
   return (
@@ -12,7 +21,7 @@ export default function EquipmentSectionWrapper({ items, chests, setCurrentItemM
         type="item"
         data={items}
         onClick={(item) => {
-          setCurrentItemModalData(item as ItemData)
+          setCurrentItemModalData(item as ItemData);
         }}
       />
 
@@ -20,9 +29,9 @@ export default function EquipmentSectionWrapper({ items, chests, setCurrentItemM
         type="chest"
         data={chests}
         onClick={(chest) => {
-          setCurrentChestModalData(chest as ChestData)
+          setCurrentChestModalData(chest as ChestData);
         }}
       />
     </div>
-  )
+  );
 }

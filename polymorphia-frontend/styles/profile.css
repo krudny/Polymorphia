@@ -2,53 +2,53 @@
 @import "./globals.css";
 
 .profile {
-    @apply flex-1 w-full opacity-0 flex-col-centered lg:max-h-[calc(100dvh-5rem)];
+  @apply flex-1 w-full opacity-0 flex-col-centered lg:max-h-[calc(100dvh-5rem)];
 }
 
 .profile-wrapper {
-    @apply w-full flex-1 flex flex-col px-2 justify-center lg:px-14 lg:justify-between lg:max-w-[1600px];
+  @apply w-full flex-1 flex flex-col px-2 justify-center lg:px-14 lg:justify-between lg:max-w-[1600px];
 }
 
 .profile-content-wrapper {
-    @apply flex-col-centered w-full mx-auto mt-10 lg:flex-row lg:my-auto;
+  @apply flex-col-centered w-full mx-auto mt-10 lg:flex-row lg:my-auto;
 }
 
 .profile-image-wrapper {
-    @apply flex-centered relative w-full aspect-square lg:w-2/5;
+  @apply flex-centered relative w-full aspect-square lg:w-2/5;
 }
 
 .profile-img {
-    @apply object-cover rounded-3xl shadow-lg;
+  @apply object-cover rounded-3xl shadow-lg;
 }
 
 .profile-content {
-    @apply flex-col-centered gap-y-2 w-full h-full text-center my-9 lg:w-4/5;
+  @apply flex-col-centered gap-y-2 w-full h-full text-center my-9 lg:w-4/5;
 }
 
 .profile-content > h1 {
-    @apply text-6xl 2xl:text-7xl;
+  @apply text-6xl 2xl:text-7xl;
 }
 
 .profile-content > h2 {
-    @apply text-4xl md:text-5xl 2xl:text-6xl;
+  @apply text-4xl md:text-5xl 2xl:text-6xl;
 }
 
 .profile-content > h3 {
-    @apply text-3xl 2xl:text-5xl;
+  @apply text-3xl 2xl:text-5xl;
 }
 
 .profile-points {
-    @apply w-4/5 max-w-64 mt-2 sm:w-lg sm:max-w-full 2xl:w-2xl 2xl:mt-10;
+  @apply w-4/5 max-w-64 mt-2 sm:w-lg sm:max-w-full 2xl:w-2xl 2xl:mt-10;
 }
 
 .profile-progress-bar-mobile {
-    @apply md:hidden w-full px-12 pb-3 h-fit;
+  @apply md:hidden w-full px-12 pb-3 h-fit;
 }
 
 .profile-progress-bar-desktop {
-    @apply hidden md:block w-full h-fit py-6 -mb-4 px-8;
+  @apply hidden md:block w-full h-fit py-6 -mb-4 px-8;
 }
 
 .profile-progress-bar > h1 {
-    @apply text-4xl;
+  @apply text-4xl;
 }

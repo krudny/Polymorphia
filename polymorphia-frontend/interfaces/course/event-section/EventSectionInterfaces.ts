@@ -1,6 +1,6 @@
-import { ModalProps } from '../../modal/ModalInterfaces';
+import { ModalProps } from "../../modal/ModalInterfaces";
 
-export type EventSectionType = 'coursework' | 'tests' | 'project';
+export type EventSectionType = "coursework" | "tests" | "project";
 
 export interface EventSectionCore {
   id: number;
@@ -87,7 +87,7 @@ export interface RewardsInfoProps {
 }
 
 export interface TestDetailsModalProps
-  extends Omit<ModalProps, 'title' | 'isOpen' | 'children'> {
+  extends Omit<ModalProps, "title" | "isOpen" | "children"> {
   eventSectionId: number;
   selectedGradableEventId: number | null;
 }

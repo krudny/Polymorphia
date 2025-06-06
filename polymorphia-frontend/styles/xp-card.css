@@ -1,5 +1,5 @@
-@import 'tailwindcss';
-@import './globals.css';
+@import "tailwindcss";
+@import "./globals.css";
 
 .xp-card-grid-center-vertically {
   @apply flex flex-col justify-between w-full max-h-full;
@@ -65,20 +65,22 @@
   }
 
   .xp-card-xp {
-    @apply w-24 h-24;
+    @apply w-20 h-24;
   }
 
-  .xp-card-middle,
+  .xp-card-middle {
+    @apply max-w-xl;
+  }
+
   .xp-card-xp {
-    @apply p-3;
-    @apply gap-1;
+    @apply p-1;
 
     h1 {
-      @apply text-2xl min-[350px]:text-[2rem];
+      @apply text-lg min-[350px]:text-[2rem];
     }
 
     h2 {
-      @apply text-sm min-[350px]:text-[1.3rem];
+      @apply text-xs min-[350px]:text-[1.3rem];
     }
   }
 }
@@ -138,8 +140,8 @@
 }
 
 .xp-card-md.xp-card-force-width .xp-card-middle {
-    @apply lg:w-[16rem];
-  }
+  @apply lg:w-[16rem];
+}
 
 .xp-card-lg {
   @apply h-50 lg:max-w-[35rem];
@@ -168,21 +170,40 @@
   @apply lg:w-[22.5rem];
 }
 
-.xp-card-hall-of-fame {
+.xp-card-hall-of-fame-desktop {
   @apply w-full h-full;
 
   .xp-card-xp {
-    @apply w-fit h-full;
+    @apply w-fit px-6 h-full;
   }
 
   .xp-card-middle,
   .xp-card-xp {
     h1 {
-      @apply text-[2.5rem];
+      @apply text-[2.3rem];
     }
 
     h2 {
       @apply text-2xl;
+    }
+  }
+}
+
+.xp-card-hall-of-fame-mobile {
+  @apply w-full h-full;
+
+  .xp-card-xp {
+    @apply w-fit px-6 h-full;
+  }
+
+  .xp-card-middle,
+  .xp-card-xp {
+    h1 {
+      @apply text-[2rem];
+    }
+
+    h2 {
+      @apply text-xl;
     }
   }
 }

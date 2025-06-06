@@ -1,19 +1,31 @@
-import {ChestData, EquipmentSectionProps, ItemData} from "@/interfaces/equipment/EquipmentInterfaces";
-import {API_STATIC_URL} from "@/services/api";
+import {
+  ChestData,
+  EquipmentSectionProps,
+  ItemData,
+} from "@/interfaces/equipment/EquipmentInterfaces";
+import { API_STATIC_URL } from "@/services/api";
 import "../../styles/equipment.css";
-import Image from 'next/image';
+import Image from "next/image";
 
-export default function EquipmentSection({ type, data, onClick }: EquipmentSectionProps) {
+export default function EquipmentSection({
+  type,
+  data,
+  onClick,
+}: EquipmentSectionProps) {
   return (
     <section className="my-7">
-      <h1 className="equipment-header">{type === 'item' ? 'Przedmioty' : 'Skrzynki'}</h1>
+      <h1 className="equipment-header">
+        {type === "item" ? "Przedmioty" : "Skrzynki"}
+      </h1>
       <div className="equipment-grid">
         {data.map((item) => {
-          if (type === 'item') {
+          if (type === "item") {
             const itemData = item as ItemData;
             return (
               <div key={itemData.itemId} onClick={() => onClick(itemData)}>
-                <div className={`equipment-grid-item ${itemData.quantity > 0 ? "hover:cursor-pointer" : ""}`}>
+                <div
+                  className={`equipment-grid-item ${itemData.quantity > 0 ? "hover:cursor-pointer" : ""}`}
+                >
                   <Image
                     src={`${API_STATIC_URL}/${itemData.imageUrl}`}
                     alt={itemData.title}
@@ -51,11 +63,17 @@ export default function EquipmentSection({ type, data, onClick }: EquipmentSecti
                   />
                 </div>
                 {chestData.openedDate ? (
-                  <button className="equipment-open-chest-btn" onClick={() => onClick(chestData)}>
+                  <button
+                    className="equipment-open-chest-btn"
+                    onClick={() => onClick(chestData)}
+                  >
                     <h3>Otwarta {chestData.openedDate}</h3>
                   </button>
                 ) : (
-                  <button className="equipment-open-chest-btn" onClick={() => onClick(chestData)}>
+                  <button
+                    className="equipment-open-chest-btn"
+                    onClick={() => onClick(chestData)}
+                  >
                     <h3>Otwórz skrzynię</h3>
                   </button>
                 )}

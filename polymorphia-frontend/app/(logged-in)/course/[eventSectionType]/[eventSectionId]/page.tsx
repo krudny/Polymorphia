@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import SectionView from '@/components/course/event-section/SectionView';
-import { useParams } from 'next/navigation';
-import '../../../../../styles/general.css';
+import SectionView from "@/components/course/event-section/SectionView";
+import { useParams } from "next/navigation";
+import "../../../../../styles/general.css";
 
 export default function EventSection() {
   const params = useParams();
@@ -10,11 +10,11 @@ export default function EventSection() {
   const eventSectionId = Number(params.eventSectionId);
 
   switch (eventSectionType) {
-    case 'coursework':
-    case 'tests':
+    case "coursework":
+    case "tests":
       return <SectionView eventSectionId={eventSectionId} />;
 
-    case 'project':
+    case "project":
       return <></>;
 
     default:

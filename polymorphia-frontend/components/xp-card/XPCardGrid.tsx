@@ -1,20 +1,20 @@
-import { EventSectionCardGridProps } from '@/interfaces/xp-card/XPCardInterfaces';
-import XPCard from './XPCard';
-import '../../styles/xp-card.css';
-import '../../styles/paginate.css';
-import { useRouter } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
-import { EventSectionService } from '@/services/course/event-section/EventSectionService';
-import Loading from '@/components/general/Loading';
-import { useEffect, useRef, useState } from 'react';
-import clsx from 'clsx';
-import TestDetailsModal from '../course/event-section/TestDetailsModal';
-import PointsSummary from '../course/event-section/points-summary/PointsSummary';
+import { EventSectionCardGridProps } from "@/interfaces/xp-card/XPCardInterfaces";
+import XPCard from "./XPCard";
+import "../../styles/xp-card.css";
+import "../../styles/paginate.css";
+import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { EventSectionService } from "@/services/course/event-section/EventSectionService";
+import Loading from "@/components/general/Loading";
+import { useEffect, useRef, useState } from "react";
+import clsx from "clsx";
+import TestDetailsModal from "../course/event-section/TestDetailsModal";
+import PointsSummary from "../course/event-section/points-summary/PointsSummary";
 import {
   mapPropsToCards,
   setResizeObserver,
-} from '@/services/course/event-section/EventSectionUtils';
-import { useEventSectionAnimation } from '@/animations/EventSection';
+} from "@/services/course/event-section/EventSectionUtils";
+import { useEventSectionAnimation } from "@/animations/EventSection";
 import Pagination from "@/components/general/Pagination";
 
 export default function XPCardGrid({
@@ -46,7 +46,7 @@ export default function XPCardGrid({
     error,
   } = useQuery({
     queryKey: [
-      'eventSectionGradableEvents',
+      "eventSectionGradableEvents",
       eventSection.id,
       currentPage,
       pageRows,
@@ -69,7 +69,7 @@ export default function XPCardGrid({
     gradableEventsData,
     direction,
     firstRender,
-    setFirstRender
+    setFirstRender,
   );
 
   useEffect(() => {
@@ -78,7 +78,7 @@ export default function XPCardGrid({
       summaryRef,
       setMobile,
       setPageCols,
-      setPageRows
+      setPageRows,
     );
   }, [containerRef, summaryRef]);
 
@@ -98,16 +98,18 @@ export default function XPCardGrid({
     gradableEventsData,
     setCurrentlySelectedGradableEventIdForModal,
     router,
-    eventSection
+    eventSection,
   );
 
   const pagination = (
-      <Pagination
-        totalPages={gradableEventsData.page.totalPages}
-        onPageChangeAction={handlePageChange}
-        forcePage={gradableEventsData.page.totalPages > 0 ? currentPage : undefined}
-      />
-  )
+    <Pagination
+      totalPages={gradableEventsData.page.totalPages}
+      onPageChangeAction={handlePageChange}
+      forcePage={
+        gradableEventsData.page.totalPages > 0 ? currentPage : undefined
+      }
+    />
+  );
 
   return (
     <>
@@ -118,18 +120,18 @@ export default function XPCardGrid({
               <div
                 ref={sliderRef}
                 className={clsx(
-                  'xp-card-grid',
+                  "xp-card-grid",
                   `grid-cols-${pageCols}`,
-                  `grid-rows-${pageRows}`
+                  `grid-rows-${pageRows}`,
                 )}
               >
                 {cards.map((card) => (
                   <XPCard
                     key={card.id}
                     {...card}
-                    color={card.xp !== undefined ? 'green' : 'silver'}
-                    xp={card.xp !== undefined ? card.xp : '0.0 xp'}
-                    size={mobile ? 'sm' : 'md'}
+                    color={card.xp !== undefined ? "green" : "silver"}
+                    xp={card.xp !== undefined ? card.xp : "0.0 xp"}
+                    size={mobile ? "sm" : "md"}
                     forceWidth={!mobile}
                   />
                 ))}
@@ -143,7 +145,7 @@ export default function XPCardGrid({
         </div>
         {!mobile && pagination}
       </div>
-      {eventSection.type === 'tests' && (
+      {eventSection.type === "tests" && (
         <TestDetailsModal
           eventSectionId={eventSection.id}
           selectedGradableEventId={currentlySelectedGradableEventIdForModal}

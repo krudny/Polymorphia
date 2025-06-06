@@ -1,9 +1,12 @@
 import Modal from "@/components/modal/Modal";
-import {API_STATIC_URL} from "@/services/api";
+import { API_STATIC_URL } from "@/services/api";
 import XPCard from "@/components/xp-card/XPCard";
-import {ChestModalProps, Item} from "@/interfaces/equipment/EquipmentInterfaces";
+import {
+  ChestModalProps,
+  Item,
+} from "@/interfaces/equipment/EquipmentInterfaces";
 
-export default function ChestModal({chest, onClose}: ChestModalProps) {
+export default function ChestModal({ chest, onClose }: ChestModalProps) {
   return (
     <Modal
       isOpen={chest !== null}
@@ -28,5 +31,5 @@ export default function ChestModal({chest, onClose}: ChestModalProps) {
         ))}
       </div>
     </Modal>
-  )
+  );
 }

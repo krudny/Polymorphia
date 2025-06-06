@@ -28,7 +28,7 @@ export interface ChestResponseDto {
   imageUrl: string;
   behavior: string;
   courseId: number;
-  itemIds: number[]
+  itemIds: number[];
 }
 
 export interface LoginDto {

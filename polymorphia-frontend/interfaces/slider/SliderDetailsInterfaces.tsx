@@ -1,5 +1,5 @@
-import {UseQueryResult} from "@tanstack/react-query";
-import {ChestSlide, ItemSlide} from "@/interfaces/slider/SliderInterfaces";
+import { UseQueryResult } from "@tanstack/react-query";
+import { ChestSlide, ItemSlide } from "@/interfaces/slider/SliderInterfaces";
 
 export type ItemQueryResult = UseQueryResult<ItemSlide[] | undefined, Error>;
 

@@ -1,6 +1,6 @@
-'use client';
-import gsap from 'gsap';
-import { useRef, useEffect, useState, useCallback } from 'react';
+"use client";
+import gsap from "gsap";
+import { useRef, useEffect, useState, useCallback } from "react";
 
 export function useModalAnimation(onClose: () => void, isOpen: boolean) {
   const modalRef = useRef<HTMLDivElement | null>(null);
@@ -12,21 +12,20 @@ export function useModalAnimation(onClose: () => void, isOpen: boolean) {
     if (!modalRef.current || !backdropRef.current) return;
 
     if (!timelineRef.current) {
-      timelineRef.current = gsap.timeline({ paused: true })
+      timelineRef.current = gsap
+        .timeline({ paused: true })
         .fromTo(
           backdropRef.current,
           { opacity: 0 },
-          { opacity: 1, duration: 0.2, ease: 'power1.inOut' }
+          { opacity: 1, duration: 0.2, ease: "power1.inOut" },
         )
         .fromTo(
           modalRef.current,
           { opacity: 0, scale: 0.95 },
-          { opacity: 1, scale: 1, duration: 0.25, ease: 'power1.inOut' },
-          '<'
+          { opacity: 1, scale: 1, duration: 0.25, ease: "power1.inOut" },
+          "<",
         );
     }
-
-
 
     if (isOpen && !isClosing) {
       timelineRef.current.play();
@@ -41,10 +40,10 @@ export function useModalAnimation(onClose: () => void, isOpen: boolean) {
 
     setIsClosing(true);
 
-    timelineRef.current.reverse().eventCallback('onReverseComplete', () => {
+    timelineRef.current.reverse().eventCallback("onReverseComplete", () => {
       onClose();
       if (!isClosing && timelineRef.current) return;
-      timelineRef.current?.eventCallback('onReverseComplete', null);
+      timelineRef.current?.eventCallback("onReverseComplete", null);
     });
   }, [isClosing, onClose]);
 

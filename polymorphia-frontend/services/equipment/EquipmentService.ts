@@ -1,4 +1,7 @@
-import {ChestData, ItemData} from "@/interfaces/equipment/EquipmentInterfaces";
+import {
+  ChestData,
+  ItemData,
+} from "@/interfaces/equipment/EquipmentInterfaces";
 
 const EquipmentService = {
   getItems: async (): Promise<ItemData[]> => {
@@ -39,7 +42,7 @@ const EquipmentService = {
             subtitle: "Zdobyto 2.06.2026",
             imageUrl: "images/items/parsley.jpg",
             bonusXp: "1.2",
-          }, 
+          },
         ],
       },
       {

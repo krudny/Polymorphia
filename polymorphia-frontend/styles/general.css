@@ -2,22 +2,22 @@
 @import "./globals.css";
 
 .background-wrapper {
-    @apply w-screen h-[100dvh] lg:h-screen relative;
+  @apply w-screen h-[100dvh] lg:h-screen relative;
 }
 
 .button-with-border {
-    @apply block mx-auto border-2 border-neutral-800;
-    @apply transition-colors duration-400 ease-[cubic-bezier(0.34,1,0.2,1)] hover:bg-neutral-800 hover:text-neutral-300 hover:cursor-pointer;
+  @apply block mx-auto border-2 border-neutral-800;
+  @apply transition-colors duration-400 ease-[cubic-bezier(0.34,1,0.2,1)] hover:bg-neutral-800 hover:text-neutral-300 hover:cursor-pointer;
 }
 
 .loading-wrapper {
-    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[1000];
+  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[1000];
 }
 
 .loading-wrapper > div {
-    @apply w-12 h-12 border-4 border-neutral-400 border-t-neutral-800 rounded-full animate-spin;
+  @apply w-12 h-12 border-4 border-neutral-400 border-t-neutral-800 rounded-full animate-spin;
 }
 
 .knowledge-base-wrapper {
-    @apply w-full h-full flex flex-col flex-1 relative;
+  @apply w-full h-full flex flex-col flex-1 relative;
 }

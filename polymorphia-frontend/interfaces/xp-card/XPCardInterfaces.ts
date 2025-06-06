@@ -1,4 +1,4 @@
-import { EventSection } from '../course/event-section/EventSectionInterfaces';
+import { EventSection } from "../course/event-section/EventSectionInterfaces";
 
 export interface EventSectionCardProps {
   title: string;
@@ -12,8 +12,8 @@ export interface EventSectionCardProps {
 }
 
 export type EventSectionCardVariantProps = {
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'hallOfFame';
-  color?: 'gold' | 'silver' | 'bronze' | 'green';
+  size?: "xs" | "sm" | "md" | "lg" | "hofDesktop" | "hofMobile";
+  color?: "gold" | "silver" | "bronze" | "green";
   forceWidth?: boolean;
   isSumVisible?: boolean;
 };

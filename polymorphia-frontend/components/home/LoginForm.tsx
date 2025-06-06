@@ -11,7 +11,7 @@ import { FieldInfo } from "@/components/form/FieldInfo";
 import { loginSchema } from "@/components/form/schema";
 import AuthService from "@/services/AuthService";
 import "../../styles/home.css";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 export default function LoginForm({ onBackAction }: LoginFormProps) {
@@ -23,7 +23,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
       password: "",
     } as LoginDto,
     validators: {
-      onBlur: loginSchema
+      onBlur: loginSchema,
     },
     onSubmit: async ({ value }) => {
       loginMutation.mutate(value);
@@ -33,12 +33,12 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
   const loginMutation = useMutation({
     mutationFn: AuthService.login,
     onSuccess: () => {
-      toast.success('Zalogowano pomyślnie!')
-      router.push('/profile');
+      toast.success("Zalogowano pomyślnie!");
+      router.push("/profile");
       form.reset();
     },
     onError: (error: Error) => {
-      toast.error(`Wystąpił błąd! ${error.message}`)
+      toast.error(`Wystąpił błąd! ${error.message}`);
     },
   });
 

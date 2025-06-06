@@ -1,10 +1,10 @@
-import { PointsSummaryProps } from '@/interfaces/course/event-section/PointsSummaryInterfaces';
-import '../../../../styles/points-summary.css';
-import PointsSummaryElement from './PointsSummaryElement';
-import { Fragment, useState } from 'react';
-import BonusInfoModal from './BonusInfoModal';
-import { BonusInfo } from '@/interfaces/course/event-section/EventSectionInterfaces';
-import { getBonusesFromEventSection } from '@/services/course/event-section/EventSectionUtils';
+import { PointsSummaryProps } from "@/interfaces/course/event-section/PointsSummaryInterfaces";
+import "../../../../styles/points-summary.css";
+import PointsSummaryElement from "./PointsSummaryElement";
+import { Fragment, useState } from "react";
+import BonusInfoModal from "./BonusInfoModal";
+import { BonusInfo } from "@/interfaces/course/event-section/EventSectionInterfaces";
+import { getBonusesFromEventSection } from "@/services/course/event-section/EventSectionUtils";
 
 export default function PointsSummary({
   eventSection,
@@ -15,7 +15,7 @@ export default function PointsSummary({
 
   const elements = getBonusesFromEventSection(
     eventSection,
-    setCurrentBonusInfoModal
+    setCurrentBonusInfoModal,
   );
 
   return (

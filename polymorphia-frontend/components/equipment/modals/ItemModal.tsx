@@ -1,10 +1,13 @@
 import Modal from "@/components/modal/Modal";
-import "../../../styles/points-summary.css"
-import {API_STATIC_URL} from "@/services/api";
+import "../../../styles/points-summary.css";
+import { API_STATIC_URL } from "@/services/api";
 import XPCard from "@/components/xp-card/XPCard";
-import {Item, ItemModalProps} from "@/interfaces/equipment/EquipmentInterfaces";
+import {
+  Item,
+  ItemModalProps,
+} from "@/interfaces/equipment/EquipmentInterfaces";
 
-export default function ItemModal({item, onClose}: ItemModalProps) {
+export default function ItemModal({ item, onClose }: ItemModalProps) {
   return (
     <Modal
       isOpen={item !== null}
@@ -29,5 +32,5 @@ export default function ItemModal({item, onClose}: ItemModalProps) {
         ))}
       </div>
     </Modal>
-  )
+  );
 }

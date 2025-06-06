@@ -1,4 +1,4 @@
-import {SliderSlide} from "@/interfaces/slider/SliderInterfaces";
+import { SliderSlide } from "@/interfaces/slider/SliderInterfaces";
 
 export function shiftArray(arr: SliderSlide[], shift: number) {
   const len = arr.length;

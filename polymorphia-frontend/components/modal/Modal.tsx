@@ -1,9 +1,9 @@
-import { ModalProps } from '@/interfaces/modal/ModalInterfaces';
-import clsx from 'clsx';
-import { X } from 'lucide-react';
-import { createPortal } from 'react-dom';
-import '../../styles/modal.css';
-import { useModalAnimation } from '@/animations/Modal';
+import { ModalProps } from "@/interfaces/modal/ModalInterfaces";
+import clsx from "clsx";
+import { X } from "lucide-react";
+import { createPortal } from "react-dom";
+import "../../styles/modal.css";
+import { useModalAnimation } from "@/animations/Modal";
 
 export default function Modal({
   isOpen,
@@ -14,15 +14,15 @@ export default function Modal({
 }: ModalProps) {
   const { modalRef, backdropRef, handleCloseClick } = useModalAnimation(
     onClose,
-    isOpen
+    isOpen,
   );
 
   return createPortal(
     <div
       ref={backdropRef}
       className={clsx(
-        'modal-backdrop',
-        isOpen ? 'modal-visible' : 'modal-not-visible'
+        "modal-backdrop",
+        isOpen ? "modal-visible" : "modal-not-visible",
       )}
       onClick={handleCloseClick}
     >
@@ -36,13 +36,16 @@ export default function Modal({
         <div className="modal-header-wrapper">
           <div className="modal-header">
             <h1>{title}</h1>
-            <X className="modal-header-exit-button" onClick={handleCloseClick} />
+            <X
+              className="modal-header-exit-button"
+              onClick={handleCloseClick}
+            />
           </div>
           <h2>{subtitle}</h2>
         </div>
         {children}
       </div>
     </div>,
-    document.body
+    document.body,
   );
 }

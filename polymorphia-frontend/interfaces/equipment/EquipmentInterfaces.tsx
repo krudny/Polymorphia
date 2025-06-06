@@ -1,4 +1,4 @@
-export type EquipmentSectionType = 'item' | 'chest';
+export type EquipmentSectionType = "item" | "chest";
 
 export interface EquipmentSectionProps {
   type: EquipmentSectionType;
@@ -48,5 +48,3 @@ export interface EquipmentSectionWrapperProps {
   setCurrentChestModalData: (modalData: ChestData) => void;
   setCurrentItemModalData: (modalData: ItemData) => void;
 }
-
-

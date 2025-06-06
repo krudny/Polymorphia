@@ -1,8 +1,8 @@
-import gsap from 'gsap';
+import gsap from "gsap";
 
 export const animateSingleSlide = (
-    slideRef: HTMLDivElement,
-    position: number,
+  slideRef: HTMLDivElement,
+  position: number,
 ) => {
   gsap.to(slideRef, {
     xPercent: position * 100,
@@ -15,14 +15,18 @@ export const animateSingleSlide = (
 };
 
 export const animateSlider = (sliderRef: HTMLDivElement) => {
-  gsap.fromTo(sliderRef, {
+  gsap.fromTo(
+    sliderRef,
+    {
       scale: 0.8,
-      autoAlpha: 0
-    }, {
+      autoAlpha: 0,
+    },
+    {
       scale: 1,
       autoAlpha: 1,
       delay: 0.1,
       duration: 0.4,
-      ease: "power2.out"
-    });
-}
+      ease: "power2.out",
+    },
+  );
+};

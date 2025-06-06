@@ -1,18 +1,18 @@
-import { MenuIcon } from 'lucide-react';
-import { NavigationContext } from '@/components/providers/NavigationContext';
-import { useContext, useEffect, useRef } from 'react';
+import { MenuIcon } from "lucide-react";
+import { NavigationContext } from "@/components/providers/NavigationContext";
+import { useContext, useEffect, useRef } from "react";
 import {
   BottomMenuItems,
   MainMenuItems,
-} from '@/components/navigation/MenuOptions';
-import MenuSection from '@/components/navigation/MenuSection';
-import Line from '@/components/navigation/Line';
-import { animateNavbar } from '@/animations/Navigation';
-import '../../styles/navigation.css';
-import { useQuery } from '@tanstack/react-query';
-import { EventSectionService } from '@/services/course/event-section/EventSectionService';
-import { updateMenuItems } from '@/services/course/event-section/EventSectionUtils';
-import { useTitle } from './TitleContext';
+} from "@/components/navigation/MenuOptions";
+import MenuSection from "@/components/navigation/MenuSection";
+import Line from "@/components/navigation/Line";
+import { animateNavbar } from "@/animations/Navigation";
+import "../../styles/navigation.css";
+import { useQuery } from "@tanstack/react-query";
+import { EventSectionService } from "@/services/course/event-section/EventSectionService";
+import { updateMenuItems } from "@/services/course/event-section/EventSectionUtils";
+import { useTitle } from "./TitleContext";
 
 export default function Navbar() {
   const { isNavbarExpanded, setIsNavbarExpanded } =
@@ -29,15 +29,15 @@ export default function Navbar() {
 
   useEffect(() => {
     if (isNavbarExpanded) {
-      document.body.style.overflow = isNavbarExpanded ? 'hidden' : 'auto';
+      document.body.style.overflow = isNavbarExpanded ? "hidden" : "auto";
     }
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     };
   }, [isNavbarExpanded]);
 
   const { data: eventSections, isSuccess } = useQuery({
-    queryKey: ['eventSections'],
+    queryKey: ["eventSections"],
     queryFn: () => EventSectionService.getEventSections(),
   });
 
