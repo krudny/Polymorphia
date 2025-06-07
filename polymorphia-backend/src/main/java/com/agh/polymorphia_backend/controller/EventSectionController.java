@@ -6,6 +6,8 @@ import com.agh.polymorphia_backend.service.event.gradable.AssignmentSectionServi
 import com.agh.polymorphia_backend.service.event.gradable.ProjectSectionService;
 import com.agh.polymorphia_backend.service.event.gradable.TestSectionService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,8 +33,8 @@ public class EventSectionController {
 
     @GetMapping("/assignment-sections/{assignmentSectionId}/gradable-events")
     @PreAuthorize("hasRole('STUDENT')")
-    public ResponseEntity<List<GradableEventShortResponseDto>> getAllAssignments(@PathVariable Long assignmentSectionId) {
-        return ResponseEntity.ok(assignmentService.getShortGradableEvents(assignmentSectionId));
+    public ResponseEntity<Page<GradableEventShortResponseDto>> getAllAssignments(Pageable pageable, @PathVariable Long assignmentSectionId) {
+        return ResponseEntity.ok(assignmentService.getShortGradableEvents(assignmentSectionId, pageable));
     }
 
     @GetMapping("/test-sections/{testSectionId}")
@@ -43,8 +45,8 @@ public class EventSectionController {
 
     @GetMapping("/test-sections/{testSectionId}/gradable-events")
     @PreAuthorize("hasRole('STUDENT')")
-    public ResponseEntity<List<GradableEventShortResponseDto>> getAllTests(@PathVariable Long testSectionId) {
-        return ResponseEntity.ok(testService.getShortGradableEvents(testSectionId));
+    public ResponseEntity<Page<GradableEventShortResponseDto>> getAllTests(Pageable pageable, @PathVariable Long testSectionId) {
+        return ResponseEntity.ok(testService.getShortGradableEvents(testSectionId, pageable));
     }
 
     @GetMapping("/project-sections/{projectSectionId}")
