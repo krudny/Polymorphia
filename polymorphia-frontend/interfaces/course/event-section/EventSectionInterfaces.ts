@@ -9,6 +9,46 @@ export interface EventSectionShortResponseDto {
   hidden?: boolean;
 }
 
+export interface EventSectionResponseDto {
+  name: string;
+  gainedXp: number;
+  flatBonus: BonusDto;
+  percentageBonus: BonusDto;
+  totalXp: number;
+}
+
+export interface BonusDto {
+  xp: number;
+  percentage?: number;
+  items: BonusItemDto[];
+}
+
+export interface BonusItemDto {
+  id: number;
+  assignedItemId: number;
+  assignedChestId: number;
+  name: string;
+  imageUrl: string;
+  receivedDate: string;
+  xp: number;
+  percentage?: number;
+}
+
+export interface GradableEventShortResponseDto {
+  id: number;
+  name: string;
+  topic?: string;
+  gainedXp?: number;
+  hidden?: boolean;
+}
+
+export interface GradableEventShortResponseDtoPage {
+  content: GradableEventShortResponseDto[];
+  page: {
+    totalPages: number;
+  }
+}
+
 export interface EventSection {
   id: number;
   type: EventSectionType;
@@ -35,6 +75,7 @@ export interface GradableEventCoreResponse {
 
 export interface SectionViewProps {
   eventSectionId: number;
+  eventSectionType: EventSectionType;
 }
 
 export interface BonusInfo {

@@ -12,7 +12,12 @@ export default function EventSection() {
   switch (eventSectionType) {
     case 'ASSIGNMENT':
     case 'TEST':
-      return <SectionView eventSectionId={eventSectionId} />;
+      return (
+        <SectionView
+          eventSectionId={eventSectionId}
+          eventSectionType={eventSectionType}
+        />
+      );
 
     case 'PROJECT':
       return <></>;

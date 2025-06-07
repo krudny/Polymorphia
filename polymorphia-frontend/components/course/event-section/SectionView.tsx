@@ -9,7 +9,10 @@ import Loading from '@/components/general/Loading';
 import { useTitle } from '@/components/navigation/TitleContext';
 import { useScaleShow } from '@/animations/General';
 
-export default function SectionView({ eventSectionId }: SectionViewProps) {
+export default function SectionView({
+  eventSectionId,
+  eventSectionType,
+}: SectionViewProps) {
   const { setTitle } = useTitle();
   const containerRef = useScaleShow();
 
@@ -20,7 +23,8 @@ export default function SectionView({ eventSectionId }: SectionViewProps) {
     error,
   } = useQuery({
     queryKey: ['eventSections', eventSectionId],
-    queryFn: () => EventSectionService.getEventSection(eventSectionId),
+    queryFn: () =>
+      EventSectionService.getEventSection({ eventSectionId, eventSectionType }),
   });
 
   useEffect(() => {

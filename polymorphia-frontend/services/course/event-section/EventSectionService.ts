@@ -1,442 +1,13 @@
 import {
   EventSection,
+  EventSectionResponseDto,
   EventSectionShortResponseDto,
+  EventSectionType,
   GradableEvent,
-  GradableEventCore,
   GradableEventCoreResponse,
+  GradableEventShortResponseDtoPage,
 } from '@/interfaces/course/event-section/EventSectionInterfaces';
 import { API_HOST } from '@/services/api';
-
-// mocks
-const eventSections: EventSection[] = [
-  {
-    id: 1,
-    name: 'Git',
-    type: 'ASSIGNMENT',
-    gainedXp: '2.0',
-    bonuses: [
-      {
-        name: 'Bonusy punktowe',
-        bonusXp: '0.0',
-        items: [],
-      },
-      {
-        name: 'Bonusy procentowe',
-        bonusXp: '0.0',
-        bonusPercentage: '0.0',
-        items: [],
-      },
-    ],
-    totalXp: '2.0',
-  },
-  {
-    id: 2,
-    name: 'Laboratoria',
-    type: 'ASSIGNMENT',
-    gainedXp: '11.5',
-    bonuses: [
-      {
-        name: 'Bonusy punktowe',
-        bonusXp: '1.5',
-        items: [
-          {
-            assignedId: 1,
-            item: {
-              id: 1,
-              imageUrl: 'images/items/carrot.jpg',
-              name: 'Marchewka',
-            },
-            receivedDate: '12.11.2026',
-            bonusXp: '1.0',
-          },
-          {
-            assignedId: 3,
-            item: {
-              id: 2,
-              imageUrl: 'images/items/parsley.jpg',
-              name: 'Pietruszka',
-            },
-            receivedDate: '21.12.2026',
-            bonusXp: '0.5',
-          },
-        ],
-      },
-      {
-        name: 'Bonusy procentowe',
-        bonusXp: '1.3',
-        bonusPercentage: '10',
-        items: [
-          {
-            assignedId: 2,
-            item: {
-              id: 2,
-              imageUrl: 'images/items/parsley.jpg',
-              name: 'Pietruszka',
-            },
-            receivedDate: '06.12.2026',
-            bonusXp: '1.3',
-            bonusPercentage: '10',
-          },
-        ],
-      },
-    ],
-    totalXp: '14.3',
-  },
-  {
-    id: 3,
-    name: 'Kartkówki',
-    type: 'TEST',
-    gainedXp: '4.0',
-    bonuses: [
-      {
-        name: 'Bonusy punktowe',
-        bonusXp: '4.0',
-        items: [
-          {
-            assignedId: 1,
-            item: {
-              id: 1,
-              imageUrl: 'images/items/carrot.jpg',
-              name: 'Marchewka',
-            },
-            receivedDate: '12.11.2026',
-            bonusXp: '2.0',
-          },
-          {
-            assignedId: 3,
-            item: {
-              id: 2,
-              imageUrl: 'images/items/parsley.jpg',
-              name: 'Pietruszka',
-            },
-            receivedDate: '21.12.2026',
-            bonusXp: '2.0',
-          },
-        ],
-      },
-      {
-        name: 'Bonusy procentowe',
-        bonusXp: '0.8',
-        bonusPercentage: '10',
-        items: [
-          {
-            assignedId: 2,
-            item: {
-              id: 2,
-              imageUrl: 'images/items/parsley.jpg',
-              name: 'Pietruszka',
-            },
-            receivedDate: '06.12.2026',
-            bonusXp: '0.8',
-            bonusPercentage: '10',
-          },
-        ],
-      },
-    ],
-    totalXp: '8.8',
-  },
-  {
-    id: 4,
-    name: 'Quizy',
-    type: 'TEST',
-    gainedXp: '4.0',
-    bonuses: [
-      {
-        name: 'Bonusy punktowe',
-        bonusXp: '0.0',
-        items: [],
-      },
-      {
-        name: 'Bonusy procentowe',
-        bonusXp: '0.0',
-        bonusPercentage: '0.0',
-        items: [],
-      },
-    ],
-    totalXp: '4.0',
-  },
-  {
-    id: 5,
-    name: 'Specjalne',
-    type: 'ASSIGNMENT',
-    gainedXp: '4.0',
-    bonuses: [
-      {
-        name: 'Bonusy punktowe',
-        bonusXp: '0.0',
-        items: [],
-      },
-      {
-        name: 'Bonusy procentowe',
-        bonusXp: '0.0',
-        bonusPercentage: '0.0',
-        items: [],
-      },
-    ],
-    totalXp: '4.0',
-  },
-  {
-    id: 6,
-    name: 'Projekt',
-    type: 'PROJECT',
-    gainedXp: '4.0',
-    bonuses: [
-      {
-        name: 'Bonusy punktowe',
-        bonusXp: '0.0',
-        items: [],
-      },
-      {
-        name: 'Bonusy procentowe',
-        bonusXp: '0.0',
-        bonusPercentage: '0.0',
-        items: [],
-      },
-    ],
-    totalXp: '4.0',
-  },
-];
-
-// keep in sync with array below
-const gradableEventsCoreList: {
-  id: number;
-  gradableEvents: GradableEventCore[];
-}[] = [
-  {
-    id: 1,
-    gradableEvents: [
-      {
-        id: 1,
-        name: 'Lab 0',
-        topic: 'Git jest git',
-        gainedXp: '2.0',
-        hidden: false,
-      },
-    ],
-  },
-  {
-    id: 2,
-    gradableEvents: [
-      {
-        id: 1,
-        name: 'Laboratorium 1',
-        topic: 'Instrukcje sterujące w Javie',
-        gainedXp: '3.0',
-        hidden: false,
-      },
-      {
-        id: 2,
-        name: 'Laboratorium 2',
-        topic: 'Model obiektowy',
-        gainedXp: '4.0',
-        hidden: false,
-      },
-      {
-        id: 3,
-        name: 'Laboratorium 3',
-        topic: 'Interakcje między obiektami',
-        gainedXp: '2.5',
-        hidden: false,
-      },
-      {
-        id: 4,
-        name: 'Laboratorium 4',
-        topic: 'Interfejsy i mapy',
-        gainedXp: '2.0',
-        hidden: false,
-      },
-      {
-        id: 5,
-        name: 'Laboratorium 5',
-        topic: 'Dziedziczenie',
-        hidden: false,
-      },
-      {
-        id: 6,
-        name: 'Laboratorium 6',
-        topic: 'Refactoring kodu',
-        hidden: false,
-      },
-      {
-        id: 7,
-        name: 'Laboratorium 7',
-        topic: 'Wielowątkowość',
-        hidden: false,
-      },
-      {
-        id: 8,
-        name: 'Laboratorium 8',
-        topic: 'Interfejs graficzny',
-        hidden: false,
-      },
-      {
-        id: 9,
-        name: 'Laboratorium 9',
-        topic: 'Lambdy, streamy i zarządzanie zasobami',
-        hidden: false,
-      },
-      {
-        id: 10,
-        name: 'Laboratorium 10',
-        topic: 'Kotlin jako alternatywa dla Javy',
-        hidden: false,
-      },
-    ],
-  },
-  {
-    id: 3,
-    gradableEvents: [
-      {
-        id: 1,
-        name: 'Kartkówka 1',
-        gainedXp: '2.0',
-        hidden: false,
-      },
-      {
-        id: 2,
-        name: 'Kartkówka 2',
-        gainedXp: '0.0',
-        hidden: false,
-      },
-      {
-        id: 3,
-        name: 'Kartkówka 3',
-        gainedXp: '0.0',
-        hidden: false,
-      },
-      {
-        id: 4,
-        name: 'Kartkówka 4',
-        gainedXp: '2.0',
-        hidden: false,
-      },
-      {
-        id: 5,
-        name: 'Kartkówka 5',
-        hidden: false,
-      },
-      {
-        id: 6,
-        name: 'Kartkówka 6',
-        hidden: false,
-      },
-      {
-        id: 7,
-        name: 'Kartkówka 7',
-        hidden: false,
-      },
-    ],
-  },
-  {
-    id: 4,
-    gradableEvents: [],
-  },
-  {
-    id: 5,
-    gradableEvents: [],
-  },
-  {
-    id: 6,
-    gradableEvents: [],
-  },
-];
-
-// keep in sync with array above
-const gradableEventsList: { id: number; gradableEvents: GradableEvent[] }[] = [
-  {
-    id: 1,
-    gradableEvents: [],
-  },
-  {
-    id: 2,
-    gradableEvents: [],
-  },
-  {
-    id: 3,
-    gradableEvents: [
-      {
-        id: 1,
-        name: 'Kartkówka 1',
-        maxXp: '2.0',
-        grade: {
-          gainedXp: '2.0',
-          chests: [
-            {
-              assignedId: 123,
-              chest: {
-                id: 456,
-                name: 'Zwariowana skrzynka kartkówkowa',
-                imageUrl: 'images/chests/s1.png',
-                opened: false,
-              },
-            },
-          ],
-        },
-        hidden: false,
-      },
-      {
-        id: 2,
-        name: 'Kartkówka 2',
-        maxXp: '2.0',
-        grade: {
-          gainedXp: '0.0',
-          chests: [],
-        },
-        hidden: false,
-      },
-      {
-        id: 3,
-        name: 'Kartkówka 3',
-        maxXp: '2.0',
-        grade: {
-          gainedXp: '0.0',
-          chests: [],
-        },
-        hidden: false,
-      },
-      {
-        id: 4,
-        name: 'Kartkówka 4',
-        maxXp: '2.0',
-        grade: {
-          gainedXp: '2.0',
-          chests: [],
-        },
-        hidden: false,
-      },
-      {
-        id: 5,
-        name: 'Kartkówka 5',
-        maxXp: '2.0',
-        hidden: false,
-      },
-      {
-        id: 6,
-        name: 'Kartkówka 6',
-        maxXp: '2.0',
-        hidden: false,
-      },
-      {
-        id: 7,
-        name: 'Kartkówka 7',
-        maxXp: '2.0',
-        hidden: false,
-      },
-    ],
-  },
-  {
-    id: 4,
-    gradableEvents: [],
-  },
-  {
-    id: 5,
-    gradableEvents: [],
-  },
-  {
-    id: 6,
-    gradableEvents: [],
-  },
-];
 
 export const EventSectionService = {
   getEventSections: async (
@@ -452,54 +23,108 @@ export const EventSectionService = {
     return response.json();
   },
 
-  getEventSection: async (eventSectionId: number): Promise<EventSection> => {
-    return new Promise<EventSection>((resolve, reject) => {
-      const eventSection = eventSections.filter((e) => e.id === eventSectionId);
+  getEventSection: async ({
+    eventSectionId,
+    eventSectionType,
+  }: {
+    eventSectionId: number;
+    eventSectionType: EventSectionType;
+  }): Promise<EventSection> => {
+    const response = await fetch(
+      `${API_HOST}/${eventSectionType.toLowerCase()}-sections/${eventSectionId}`,
+      { credentials: 'include' }
+    );
 
-      if (eventSection.length === 1) {
-        resolve(eventSection[0]);
-      } else {
-        reject('Invalid id');
-      }
-    });
+    if (!response.ok) throw new Error('Failed to fetch event section!');
+
+    const data: EventSectionResponseDto = await response.json();
+
+    return {
+      id: eventSectionId,
+      type: eventSectionType,
+      name: data.name,
+      gainedXp: data.gainedXp.toFixed(1),
+      totalXp: data.totalXp.toFixed(1),
+      bonuses: [
+        {
+          name: 'Bonusy punktowe',
+          bonusXp: data.flatBonus.xp.toFixed(1),
+          items: data.flatBonus.items.map((item) => {
+            return {
+              assignedId: item.id,
+              item: {
+                id: item.assignedItemId,
+                name: item.name,
+                imageUrl: item.imageUrl,
+              },
+              receivedDate: item.receivedDate,
+              bonusXp: item.xp.toFixed(1),
+            };
+          }),
+        },
+        {
+          name: 'Bonusy procentowe',
+          bonusXp: data.percentageBonus.xp.toFixed(1),
+          bonusPercentage: data.percentageBonus.percentage?.toString(),
+          items: data.percentageBonus.items.map((item) => {
+            return {
+              assignedId: item.id,
+              item: {
+                id: item.assignedItemId,
+                name: item.name,
+                imageUrl: item.imageUrl,
+              },
+              receivedDate: item.receivedDate,
+              bonusXp: item.xp.toFixed(1),
+              bonusPercentage: item.percentage?.toString(),
+            };
+          }),
+        },
+      ],
+    };
   },
 
   // pages start from 0 in Spring
   getEventSectionGradableEvents: async ({
     eventSectionId,
+    eventSectionType,
     page,
     pageSize,
   }: {
     eventSectionId: number;
+    eventSectionType: EventSectionType;
     page: number;
     pageSize: number;
   }): Promise<GradableEventCoreResponse> => {
-    return new Promise<GradableEventCoreResponse>((resolve, reject) => {
-      const matchedSection = gradableEventsCoreList.find(
-        (e) => e.id === eventSectionId
-      );
+    const params = new URLSearchParams({
+      page: String(page),
+      size: String(pageSize),
+    }).toString();
 
-      if (!matchedSection) {
-        reject('Invalid id');
-        return;
-      }
+    const response = await fetch(
+      `${API_HOST}/${eventSectionType.toLowerCase()}-sections/${eventSectionId}/gradable-events?` +
+        params,
+      { credentials: 'include' }
+    );
 
-      const startIndex = page * pageSize;
-      const endIndex = startIndex + pageSize;
-      const paginatedEvents = matchedSection.gradableEvents.slice(
-        startIndex,
-        endIndex
-      );
+    if (!response.ok) throw new Error('Failed to fetch gradable events!');
 
-      resolve({
-        data: paginatedEvents,
-        page: {
-          totalPages: Math.ceil(
-            matchedSection.gradableEvents.length / pageSize
-          ),
-        },
-      });
-    });
+    const data: GradableEventShortResponseDtoPage = await response.json();
+
+    return {
+      data: data.content.map((event) => {
+        return {
+          id: event.id,
+          name: event.name,
+          topic: event.topic,
+          gainedXp: event.gainedXp?.toFixed(1),
+          hidden: event.hidden,
+        };
+      }),
+      page: {
+        totalPages: data.page.totalPages,
+      },
+    };
   },
 
   getGradableEvent: async <T extends GradableEvent>(data: {

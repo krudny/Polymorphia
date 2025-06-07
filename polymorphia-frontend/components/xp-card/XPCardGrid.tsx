@@ -56,6 +56,7 @@ export default function XPCardGrid({
     queryFn: () =>
       EventSectionService.getEventSectionGradableEvents({
         eventSectionId: eventSection.id,
+        eventSectionType: eventSection.type,
         page: currentPage,
         pageSize: pageRows * pageCols,
       }),
