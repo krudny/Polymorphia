@@ -49,6 +49,49 @@ export interface GradableEventShortResponseDtoPage {
   }
 }
 
+export interface GradableEventResponseDto {
+  id: number;
+  name: string;
+  maxXp: number;
+  grade?: GradeResponseDto;
+}
+
+export interface TestResponseDto extends GradableEventResponseDto {
+  hidden: boolean;
+  topic?: string;
+}
+
+export interface AssignmentResponseDto extends GradableEventResponseDto {
+  infoUrl: string;
+  topic?: string;
+  submission: AssignmentSubmissionResponseDto;
+  hidden: boolean;
+}
+
+export interface AssignmentSubmissionResponseDto {
+  containsExtraAssignment: boolean;
+  prUrl?: string;
+  extraAssignmentPrUrl?: string;
+  createdDate?: string;
+  modifiedDate?: string;
+}
+
+export interface GradeResponseDto {
+  createdDate: string;
+  modifiedDate: string;
+  gainedXp: number;
+  chests: EventChestResponseDto[];
+}
+
+export interface EventChestResponseDto {
+  id: number;
+  assignedChestId: number;
+  name: string;
+  imageUrl: string;
+  opened: boolean;
+  receivedDate: string;
+}
+
 export interface EventSection {
   id: number;
   type: EventSectionType;

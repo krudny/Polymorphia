@@ -6,6 +6,8 @@ import {
   GradableEvent,
   GradableEventCoreResponse,
   GradableEventShortResponseDtoPage,
+  Test,
+  TestResponseDto,
 } from '@/interfaces/course/event-section/EventSectionInterfaces';
 import { API_HOST } from '@/services/api';
 
@@ -84,7 +86,6 @@ export const EventSectionService = {
     };
   },
 
-  // pages start from 0 in Spring
   getEventSectionGradableEvents: async ({
     eventSectionId,
     eventSectionType,
@@ -127,33 +128,58 @@ export const EventSectionService = {
     };
   },
 
-  getGradableEvent: async <T extends GradableEvent>(data: {
-    eventSectionId: number;
+  getGradableEvent: async <T extends GradableEvent>({
+    eventSectionType,
+    gradableEventId,
+  }: {
+    eventSectionType: EventSectionType;
     gradableEventId: number | null;
   }): Promise<T> => {
-    return new Promise<T>((resolve, reject) => {
-      if (data.gradableEventId === null) {
+    if (gradableEventId === null) {
+      return new Promise<T>((_, reject) => {
         reject('No data');
-        return;
-      }
+      });
+    }
 
-      const gradableEvents = gradableEventsList.filter(
-        (e) => e.id === data.eventSectionId
-      );
+    /// TODO: URL might break for projects
+    const response = await fetch(
+      `${API_HOST}/${eventSectionType.toLowerCase()}s/${gradableEventId}`,
+      { credentials: 'include' }
+    );
 
-      if (gradableEvents.length !== 1) {
-        reject('Invalid id');
-      }
+    if (!response.ok) throw new Error('Failed to fetch event section!');
 
-      const gradableEvent = gradableEvents[0].gradableEvents.filter(
-        (e) => e.id === data.gradableEventId
-      );
+    const data: unknown = await response.json();
 
-      if (gradableEvent.length === 1) {
-        resolve(gradableEvent[0] as T);
-      } else {
-        reject('Invalid id');
-      }
-    });
+    if (eventSectionType === 'TEST') {
+      const testData: TestResponseDto = data as TestResponseDto;
+      const mapped: Test = {
+        id: testData.id,
+        name: testData.name,
+        maxXp: testData.maxXp.toFixed(1),
+        hidden: testData.hidden,
+        grade: testData.grade
+          ? {
+              gainedXp: testData.grade.gainedXp.toFixed(1),
+              chests: testData.grade.chests.map((chest) => {
+                return {
+                  assignedId: chest.assignedChestId,
+                  chest: {
+                    id: chest.id,
+                    name: chest.name,
+                    imageUrl: chest.imageUrl,
+                    opened: chest.opened,
+                  },
+                };
+              }),
+            }
+          : undefined,
+      };
+      return mapped as T;
+    } else {
+      return new Promise<T>((resolve, reject) => {
+        reject('Not implemented yet.');
+      });
+    }
   },
 };
