@@ -5,6 +5,7 @@ import {
   GradableEventCore,
   GradableEventCoreResponse,
 } from '@/interfaces/course/event-section/EventSectionInterfaces';
+import { API_HOST } from '@/services/api';
 
 // mocks
 const eventSections: EventSection[] = [
@@ -438,41 +439,17 @@ const gradableEventsList: { id: number; gradableEvents: GradableEvent[] }[] = [
 ];
 
 export const EventSectionService = {
-  getEventSections: async (): Promise<EventSectionShortResponseDto[]> => {
-    return new Promise<EventSectionShortResponseDto[]>((resolve) => {
-      resolve([
-        {
-          id: 1,
-          name: 'Git',
-          eventSectionType: 'ASSIGNMENT',
-        },
-        {
-          id: 2,
-          name: 'Laboratoria',
-          eventSectionType: 'ASSIGNMENT',
-        },
-        {
-          id: 3,
-          name: 'Kartkówki',
-          eventSectionType: 'TEST',
-        },
-        {
-          id: 4,
-          name: 'Quizy',
-          eventSectionType: 'TEST',
-        },
-        {
-          id: 5,
-          name: 'Specjalne',
-          eventSectionType: 'ASSIGNMENT',
-        },
-        {
-          id: 6,
-          name: 'Projekt',
-          eventSectionType: 'PROJECT',
-        },
-      ]);
-    });
+  getEventSections: async (
+    courseId: number
+  ): Promise<EventSectionShortResponseDto[]> => {
+    const response = await fetch(
+      `${API_HOST}/courses/${courseId}/event-sections`,
+      { credentials: 'include' }
+    );
+
+    if (!response.ok) throw new Error('Failed to fetch event sections!');
+
+    return response.json();
   },
 
   getEventSection: async (eventSectionId: number): Promise<EventSection> => {

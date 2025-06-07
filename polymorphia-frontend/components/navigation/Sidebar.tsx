@@ -29,7 +29,8 @@ export default function Sidebar() {
 
   const { data: eventSections, isSuccess } = useQuery({
     queryKey: ['eventSections'],
-    queryFn: () => EventSectionService.getEventSections(),
+    // TODO: use real courseId
+    queryFn: () => EventSectionService.getEventSections(1),
   });
 
   const menuItems = [...MainMenuItems];
@@ -40,7 +41,7 @@ export default function Sidebar() {
   return (
     <div
       ref={sidebarRef}
-      id={isSidebarLocked ? "sidebar-locked" : "sidebar-animated"}
+      id={isSidebarLocked ? 'sidebar-locked' : 'sidebar-animated'}
       className="sidebar"
       onMouseEnter={() => {
         if (!isSidebarLocked) setIsSidebarExpanded(true);

@@ -38,7 +38,8 @@ export default function Navbar() {
 
   const { data: eventSections, isSuccess } = useQuery({
     queryKey: ['eventSections'],
-    queryFn: () => EventSectionService.getEventSections(),
+    // TODO: use real courseId
+    queryFn: () => EventSectionService.getEventSections(1),
   });
 
   const menuItems = [...MainMenuItems];
