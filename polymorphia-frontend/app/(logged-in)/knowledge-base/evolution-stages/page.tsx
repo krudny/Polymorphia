@@ -1,12 +1,24 @@
-"use client"
+"use client";
 import Slider from "@/components/slider/Slider";
-import {useQuery} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import KnowledgeBaseService from "@/services/knowledge-base/KnowledgeBaseService";
 import Loading from "@/components/general/Loading";
+import { useTitle } from "@/components/navigation/TitleContext";
+import { useEffect } from "react";
 
 export default function EvolutionStages() {
-  const { data: evolutionStages, isLoading, error } = useQuery({
-    queryKey: ['evolution_stages', 1],
+  const { setTitle } = useTitle();
+
+  useEffect(() => {
+    setTitle("Postacie");
+  }, [setTitle]);
+
+  const {
+    data: evolutionStages,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["evolution_stages", 1],
     queryFn: () => KnowledgeBaseService.getEvolutionStages(1),
   });
 
@@ -22,7 +34,5 @@ export default function EvolutionStages() {
     return <div>No evolution stages found.</div>;
   }
 
-  return (
-      <Slider slides={evolutionStages}/>
-  )
+  return <Slider slides={evolutionStages} />;
 }

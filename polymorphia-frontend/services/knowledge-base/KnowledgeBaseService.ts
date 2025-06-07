@@ -1,6 +1,14 @@
-import {ChestSlide, EvolutionStageSlide, ItemSlide} from "@/interfaces/slider/SliderInterfaces";
-import {ChestResponseDto, EvolutionStageResponseDto, ItemResponseDTO} from "@/interfaces/api/DTO";
-import {API_HOST} from "@/services/api";
+import {
+  ChestSlide,
+  EvolutionStageSlide,
+  ItemSlide,
+} from "@/interfaces/slider/SliderInterfaces";
+import {
+  ChestResponseDto,
+  EvolutionStageResponseDto,
+  ItemResponseDTO,
+} from "@/interfaces/api/DTO";
+import { API_HOST } from "@/services/api";
 
 const KnowledgeBaseService = {
   getEvolutionStages: async (
@@ -38,6 +46,12 @@ const KnowledgeBaseService = {
         chestIds: item.chestIds,
       } as ItemSlide;
     });
+  },
+
+  getItem: async (itemId: number) => {
+    const response = await fetch(`${API_HOST}/rewards/items/${itemId}`);
+    if (!response.ok) throw new Error("Failed to fetch item");
+    return await response.json();
   },
 
   getChests: async (courseId: number): Promise<ChestSlide[]> => {
