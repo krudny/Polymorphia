@@ -1,6 +1,5 @@
 package com.agh.polymorphia_backend.service.event.gradable;
 
-import com.agh.polymorphia_backend.dto.response.event.gradable.EventSectionWithGradableEventsListResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.section.EventSectionResponseDto;
 import com.agh.polymorphia_backend.repository.event.gradable.GradableEventRepository;
 import com.agh.polymorphia_backend.repository.event.section.EventSectionRepository;
@@ -24,9 +23,8 @@ public class AssignmentSectionService extends EventSectionService {
 
     @Override
     public EventSectionResponseDto getAllEvents(Long assignmentSectionId) {
-        EventSectionWithGradableEventsListResponseDto responseDto = new EventSectionWithGradableEventsListResponseDto();
+        EventSectionResponseDto responseDto = new EventSectionResponseDto();
         addGradableEventsSummary(responseDto, assignmentSectionId);
-        setAssignmentTestGradableEventsShortResponseDtos(responseDto, assignmentSectionId);
 
         return responseDto;
     }

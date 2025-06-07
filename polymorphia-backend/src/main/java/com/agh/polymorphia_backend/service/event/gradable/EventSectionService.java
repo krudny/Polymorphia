@@ -1,6 +1,5 @@
 package com.agh.polymorphia_backend.service.event.gradable;
 
-import com.agh.polymorphia_backend.dto.response.event.gradable.EventSectionWithGradableEventsListResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.gradable.GradableEventResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.gradable.GradableEventShortResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.section.EventSectionResponseDto;
@@ -136,16 +135,14 @@ public abstract class EventSectionService {
 
     }
 
-    protected void setAssignmentTestGradableEventsShortResponseDtos(EventSectionWithGradableEventsListResponseDto responseDto, Long eventSectionId) {
+    public List<GradableEventShortResponseDto> getShortGradableEvents(Long eventSectionId) {
         EventSection eventSection = getEventSection(eventSectionId);
 
         Animal animal = animalService.getAnimal(eventSection);
         Set<GradableEvent<?>> gradableEventSet = eventSection.getGradableEvents();
 
-        List<GradableEventShortResponseDto> gradableEvents = gradableEventSet.stream()
+        return gradableEventSet.stream()
                 .map(event -> mapper.toShortResponseDto(event, animal))
                 .toList();
-
-        responseDto.setGradableEvents(gradableEvents);
     }
 }
