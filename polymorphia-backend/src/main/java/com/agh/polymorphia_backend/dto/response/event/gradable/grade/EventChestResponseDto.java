@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.dto.response.event.gradable.grade;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -24,6 +25,7 @@ public record EventChestResponseDto(
         Boolean opened,
 
         @NotNull
+        @JsonFormat(pattern="dd.MM.yyyy")
         ZonedDateTime receivedDate
 ) {
 }
