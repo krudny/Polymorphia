@@ -47,11 +47,15 @@ public class AssignmentMapper extends GradableEventMapper {
     public GradableEventShortResponseDto toShortResponseDto(GradableEvent<?> gradableEvent, Animal animal) {
         Assignment assignment = getAssignment(gradableEvent);
 
-        return GradableEventShortResponseDto.builder()
+        GradableEventShortResponseDto event = GradableEventShortResponseDto.builder()
                 .id(assignment.getId())
                 .name(assignment.getName())
                 .topic(assignment.getTopic())
                 .build();
+
+        setGainedXp(event, gradableEvent, animal);
+
+        return event;
     }
 
     private Assignment getAssignment(GradableEvent<?> gradableEvent) {

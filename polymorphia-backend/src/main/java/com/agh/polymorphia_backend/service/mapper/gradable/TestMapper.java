@@ -35,11 +35,15 @@ public class TestMapper extends GradableEventMapper {
 
     @Override
     public GradableEventShortResponseDto toShortResponseDto(GradableEvent<?> test, Animal animal) {
-        return GradableEventShortResponseDto.builder()
+        GradableEventShortResponseDto event = GradableEventShortResponseDto.builder()
                 .id(test.getId())
                 .name(((Test) test).getName())
                 .topic(((Test) test).getTopic())
                 .build();
+
+        setGainedXp(event, test, animal);
+
+        return event;
     }
 
     private Test getTest(GradableEvent<?> event) {
