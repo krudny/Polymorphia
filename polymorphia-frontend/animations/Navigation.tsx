@@ -139,23 +139,30 @@ export const animateSubMenuSection = (
     const container = containers[idx];
     if (!container) return;
 
+    if (container.dataset.animating) return;
+    container.dataset.animating = "true";
+
     gsap.killTweensOf(container);
 
     const isOpen = openSubMenu.includes(opt.text);
 
+    const onComplete = () => {
+      delete container.dataset.animating;
+    };
+
     if (isExpanded && isOpen) {
-      const fullHeight = container.scrollHeight;
-      gsap.fromTo(
-        container,
-        { height: 0 },
-        { height: fullHeight, duration: 0.2, opacity: 1, ease: "power1.in" }
-      );
+      gsap.to(container, {
+        height: "auto",
+        duration: 0.2,
+        opacity: 1,
+        onComplete
+      });
     } else {
       gsap.to(container, {
         height: 0,
         duration: 0.2,
         opacity: 0,
-        ease: "power1.out",
+        onComplete
       });
     }
   });
