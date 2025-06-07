@@ -18,12 +18,12 @@ public record EvolutionStageRequestDto(
 
         @NotNull
         @Positive
-        @Digits(integer = 3, fraction = 1)
+        @Digits(integer = 4, fraction = 1)
         BigDecimal minXp,
 
         @NotNull
         @Positive
-        @Digits(integer = 1, fraction = 1)
+        @Digits(integer = 2, fraction = 1)
         BigDecimal grade,
 
         @NotEmpty
