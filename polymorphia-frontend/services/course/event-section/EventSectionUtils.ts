@@ -115,7 +115,7 @@ export function mapPropsToCards(
         subtitle: event.topic,
         xp: event.gainedXp ? `${event.gainedXp} xp` : undefined,
         onClick:
-          eventSection.type === 'TEST'
+          eventSection.type === 'test'
             ? () => {
                 setCurrentlySelectedGradableEventIdForModal(event.id);
               }

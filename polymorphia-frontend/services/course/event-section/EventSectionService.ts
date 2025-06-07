@@ -151,7 +151,7 @@ export const EventSectionService = {
 
     const data: unknown = await response.json();
 
-    if (eventSectionType === 'TEST') {
+    if (eventSectionType === 'test') {
       const testData: TestResponseDto = data as TestResponseDto;
       const mapped: Test = {
         id: testData.id,

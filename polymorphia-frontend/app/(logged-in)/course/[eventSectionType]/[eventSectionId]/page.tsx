@@ -10,8 +10,8 @@ export default function EventSection() {
   const eventSectionId = Number(params.eventSectionId);
 
   switch (eventSectionType) {
-    case 'ASSIGNMENT':
-    case 'TEST':
+    case 'assignment':
+    case 'test':
       return (
         <SectionView
           eventSectionId={eventSectionId}
@@ -19,7 +19,7 @@ export default function EventSection() {
         />
       );
 
-    case 'PROJECT':
+    case 'project':
       return <></>;
 
     default:

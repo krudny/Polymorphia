@@ -22,7 +22,7 @@ export default function TestDetailsModal({
     queryKey: ['tests', eventSectionId, selectedGradableEventId],
     queryFn: () =>
       EventSectionService.getGradableEvent<Test>({
-        eventSectionType: 'TEST',
+        eventSectionType: 'test',
         gradableEventId: selectedGradableEventId,
       }),
   });
