@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EvolutionStagesMapper {
-    private static final String EVOLUTION_STAGES_GRADING_TEXT = "%dxp odblokowuje ocenę %.1f";
+    private static final String EVOLUTION_STAGES_GRADING_TEXT = "%fxp odblokowuje ocenę %.1f";
 
     public EvolutionStageResponseDto evolutionStageToEvolutionStageResponseDto(EvolutionStage evolutionStage) {
         return EvolutionStageResponseDto.builder()
