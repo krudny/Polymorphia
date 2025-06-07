@@ -20,13 +20,13 @@ public class GradableEventController {
 
     @GetMapping("/assignments/{assignmentId}")
     @PreAuthorize("hasRole('STUDENT')")
-    public ResponseEntity<GradableEventResponseDto> getAllAssignments(@PathVariable Long assignmentId) {
+    public ResponseEntity<GradableEventResponseDto> getAssignment(@PathVariable Long assignmentId) {
         return ResponseEntity.ok(assignmentService.getOneEvent(assignmentId));
     }
 
     @GetMapping("/tests/{testId}")
     @PreAuthorize("hasRole('STUDENT')")
-    public ResponseEntity<GradableEventResponseDto> getAllTests(@PathVariable Long testId) {
+    public ResponseEntity<GradableEventResponseDto> getTest(@PathVariable Long testId) {
         return ResponseEntity.ok(testService.getOneEvent(testId));
     }
 }

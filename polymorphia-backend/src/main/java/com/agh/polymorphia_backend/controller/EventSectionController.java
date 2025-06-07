@@ -22,13 +22,13 @@ public class EventSectionController {
 
     @GetMapping("/assignment-sections/{assignmentSectionId}")
     @PreAuthorize("hasRole('STUDENT')")
-    public ResponseEntity<EventSectionResponseDto> getAssignment(@PathVariable Long assignmentSectionId) {
+    public ResponseEntity<EventSectionResponseDto> getAssignmentSection(@PathVariable Long assignmentSectionId) {
         return ResponseEntity.ok(assignmentService.getAllEvents(assignmentSectionId));
     }
 
     @GetMapping("/test-sections/{testSectionId}")
     @PreAuthorize("hasRole('STUDENT')")
-    public ResponseEntity<EventSectionResponseDto> getTest(@PathVariable Long testSectionId) {
+    public ResponseEntity<EventSectionResponseDto> getTestSection(@PathVariable Long testSectionId) {
         return ResponseEntity.ok(testService.getAllEvents(testSectionId));
     }
 

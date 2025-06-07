@@ -23,7 +23,7 @@ public record EvolutionStageRequestDto(
 
         @NotNull
         @Positive
-        @Digits(integer = 3, fraction = 1)
+        @Digits(integer = 1, fraction = 1)
         BigDecimal grade,
 
         @NotEmpty
