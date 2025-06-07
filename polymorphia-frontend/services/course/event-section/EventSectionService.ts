@@ -1,6 +1,6 @@
 import {
   EventSection,
-  EventSectionCore,
+  EventSectionShortResponseDto,
   GradableEvent,
   GradableEventCore,
   GradableEventCoreResponse,
@@ -11,7 +11,7 @@ const eventSections: EventSection[] = [
   {
     id: 1,
     name: 'Git',
-    type: 'coursework',
+    type: 'ASSIGNMENT',
     gainedXp: '2.0',
     bonuses: [
       {
@@ -31,7 +31,7 @@ const eventSections: EventSection[] = [
   {
     id: 2,
     name: 'Laboratoria',
-    type: 'coursework',
+    type: 'ASSIGNMENT',
     gainedXp: '11.5',
     bonuses: [
       {
@@ -84,7 +84,7 @@ const eventSections: EventSection[] = [
   {
     id: 3,
     name: 'Kartkówki',
-    type: 'tests',
+    type: 'TEST',
     gainedXp: '4.0',
     bonuses: [
       {
@@ -137,7 +137,7 @@ const eventSections: EventSection[] = [
   {
     id: 4,
     name: 'Quizy',
-    type: 'tests',
+    type: 'TEST',
     gainedXp: '4.0',
     bonuses: [
       {
@@ -157,7 +157,7 @@ const eventSections: EventSection[] = [
   {
     id: 5,
     name: 'Specjalne',
-    type: 'coursework',
+    type: 'ASSIGNMENT',
     gainedXp: '4.0',
     bonuses: [
       {
@@ -177,7 +177,7 @@ const eventSections: EventSection[] = [
   {
     id: 6,
     name: 'Projekt',
-    type: 'project',
+    type: 'PROJECT',
     gainedXp: '4.0',
     bonuses: [
       {
@@ -438,38 +438,38 @@ const gradableEventsList: { id: number; gradableEvents: GradableEvent[] }[] = [
 ];
 
 export const EventSectionService = {
-  getEventSections: async (): Promise<EventSectionCore[]> => {
-    return new Promise<EventSectionCore[]>((resolve) => {
+  getEventSections: async (): Promise<EventSectionShortResponseDto[]> => {
+    return new Promise<EventSectionShortResponseDto[]>((resolve) => {
       resolve([
         {
           id: 1,
           name: 'Git',
-          type: 'coursework',
+          eventSectionType: 'ASSIGNMENT',
         },
         {
           id: 2,
           name: 'Laboratoria',
-          type: 'coursework',
+          eventSectionType: 'ASSIGNMENT',
         },
         {
           id: 3,
           name: 'Kartkówki',
-          type: 'tests',
+          eventSectionType: 'TEST',
         },
         {
           id: 4,
           name: 'Quizy',
-          type: 'tests',
+          eventSectionType: 'TEST',
         },
         {
           id: 5,
           name: 'Specjalne',
-          type: 'coursework',
+          eventSectionType: 'ASSIGNMENT',
         },
         {
           id: 6,
           name: 'Projekt',
-          type: 'project',
+          eventSectionType: 'PROJECT',
         },
       ]);
     });

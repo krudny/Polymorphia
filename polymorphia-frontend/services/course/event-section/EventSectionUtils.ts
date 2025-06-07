@@ -4,7 +4,7 @@ import { EventSectionCardProps } from '@/interfaces/xp-card/XPCardInterfaces';
 import {
   BonusInfo,
   EventSection,
-  EventSectionCore,
+  EventSectionShortResponseDto,
   GradableEventCoreResponse,
 } from '@/interfaces/course/event-section/EventSectionInterfaces';
 import { PointsSummaryElementProps } from '@/interfaces/course/event-section/PointsSummaryInterfaces';
@@ -13,12 +13,12 @@ import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.share
 
 export function updateMenuItems(
   menuItems: MenuOption[],
-  eventSections: EventSectionCore[]
+  eventSections: EventSectionShortResponseDto[]
 ) {
   const courseItem = menuItems.filter(
     (menuOption) => menuOption.text === 'Kurs'
   )[0];
-  courseItem.link = `course/${eventSections[0].type}/${eventSections[0].id}`;
+  courseItem.link = `course/${eventSections[0].eventSectionType}/${eventSections[0].id}`;
 
   courseItem.subItems = eventSections
     .filter((eventSection) => !eventSection.hidden)
@@ -26,7 +26,7 @@ export function updateMenuItems(
       // TODO: use correct courseID
       return {
         text: eventSection.name,
-        link: `course/${eventSection.type}/${eventSection.id}`,
+        link: `course/${eventSection.eventSectionType}/${eventSection.id}`,
       };
     });
 }
@@ -115,7 +115,7 @@ export function mapPropsToCards(
         subtitle: event.topic,
         xp: event.gainedXp ? `${event.gainedXp} xp` : undefined,
         onClick:
-          eventSection.type === 'tests'
+          eventSection.type === 'TEST'
             ? () => {
                 setCurrentlySelectedGradableEventIdForModal(event.id);
               }

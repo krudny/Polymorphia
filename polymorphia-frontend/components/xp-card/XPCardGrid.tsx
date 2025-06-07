@@ -153,7 +153,7 @@ export default function XPCardGrid({
         </div>
         {!mobile && pagination}
       </div>
-      {eventSection.type === 'tests' && (
+      {eventSection.type === 'TEST' && (
         <TestDetailsModal
           eventSectionId={eventSection.id}
           selectedGradableEventId={currentlySelectedGradableEventIdForModal}

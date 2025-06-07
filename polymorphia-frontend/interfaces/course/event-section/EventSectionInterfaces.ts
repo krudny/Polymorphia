@@ -1,11 +1,11 @@
 import { ModalProps } from '../../modal/ModalInterfaces';
 
-export type EventSectionType = 'coursework' | 'tests' | 'project';
+export type EventSectionType = 'ASSIGNMENT' | 'TEST' | 'PROJECT';
 
-export interface EventSectionCore {
+export interface EventSectionShortResponseDto {
   id: number;
   name: string;
-  type: EventSectionType;
+  eventSectionType: EventSectionType;
   hidden?: boolean;
 }
 
