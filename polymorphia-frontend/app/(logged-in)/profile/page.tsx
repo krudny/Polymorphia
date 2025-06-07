@@ -4,9 +4,16 @@ import {useScaleShow} from "@/animations/General";
 import {API_STATIC_URL} from "@/services/api";
 import "../../../styles/profile.css"
 import ProgressBar from "@/components/progressbar/ProgressBar";
+import { useTitle } from "@/components/navigation/TitleContext";
+import { useEffect } from "react";
 
 export default function Profile() {
   const wrapperRef = useScaleShow();
+  const { setTitle } = useTitle();
+
+  useEffect(() => {
+    setTitle('Profil');
+  }, [setTitle]);
 
   return (
       <div ref={wrapperRef} className="profile">

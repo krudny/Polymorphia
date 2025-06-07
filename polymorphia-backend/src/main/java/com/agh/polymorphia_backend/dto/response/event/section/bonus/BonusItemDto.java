@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.dto.response.event.section.bonus;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
@@ -33,6 +34,7 @@ public class BonusItemDto {
     private String imageUrl;
 
     @NotNull
+    @JsonFormat(pattern="dd.MM.yyyy")
     private ZonedDateTime receivedDate;
 
     @NotNull

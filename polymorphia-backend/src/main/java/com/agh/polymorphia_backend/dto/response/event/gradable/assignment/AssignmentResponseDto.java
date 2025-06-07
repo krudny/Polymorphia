@@ -18,7 +18,6 @@ public class AssignmentResponseDto extends GradableEventResponseDto {
     @NotEmpty
     private String infoUrl;
 
-    @NotEmpty
     private String topic;
 
     private AssignmentSubmissionResponseDto submission;

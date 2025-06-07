@@ -23,7 +23,6 @@ public class AssignmentSubmission extends Submission {
     @NotEmpty
     private String prUrl;
 
-    @NotEmpty
     private String extraAssignmentPrUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)

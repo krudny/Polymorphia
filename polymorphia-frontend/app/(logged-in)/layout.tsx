@@ -4,12 +4,12 @@ import {ReactNode} from "react";
 import Navigation from "@/components/navigation/Navigation";
 import {NavigationProvider} from "@/components/navigation/NavigationContext";
 import Image from "next/image";
-import Link from "next/link";
+import MainLayout from "@/components/general/MainLayout";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
       <NavigationProvider>
-        <div className="w-full min-h-[100dvh] relative flex flex-col lg:flex-row bg-black">
+        <div className="w-full min-h-[100dvh] relative flex flex-col lg:flex-row bg-black overflow-hidden">
           <Navigation />
           <Image
               src={`/background.png`}
@@ -19,12 +19,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               priority
               sizes="100%"
           />
-          <div className="w-full h-full flex flex-col min-h-[calc(100dvh-5rem)] lg:min-h-screen relative">
-            <div className="w-full flex-centered h-15 hidden lg:flex">
-              <Link href="/"><h3 className="text-4xl">Polymorphia</h3></Link>
-            </div>
-            {children}
-          </div>
+          <MainLayout>{children}</MainLayout>
         </div>
       </NavigationProvider>
   );

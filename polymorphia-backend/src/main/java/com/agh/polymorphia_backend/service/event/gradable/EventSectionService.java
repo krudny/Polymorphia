@@ -1,6 +1,5 @@
 package com.agh.polymorphia_backend.service.event.gradable;
 
-import com.agh.polymorphia_backend.dto.response.event.gradable.EventSectionWithGradableEventsListResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.gradable.GradableEventResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.gradable.GradableEventShortResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.section.EventSectionResponseDto;
@@ -19,6 +18,8 @@ import com.agh.polymorphia_backend.service.GradeService;
 import com.agh.polymorphia_backend.service.course.AnimalService;
 import com.agh.polymorphia_backend.service.mapper.gradable.GradableEventMapper;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -56,6 +57,8 @@ public abstract class EventSectionService {
     }
 
     public abstract EventSectionResponseDto getAllEvents(Long eventSectionId);
+
+    public abstract Page<GradableEvent<?>> getAllEventsPage(Long eventSectionId, Pageable pageable);
 
     public GradableEventResponseDto getOneEvent(Long eventId) {
         GradableEvent<?> gradableEvent = gradableEventRepository.findById(eventId)
@@ -136,16 +139,13 @@ public abstract class EventSectionService {
 
     }
 
-    protected void setAssignmentTestGradableEventsShortResponseDtos(EventSectionWithGradableEventsListResponseDto responseDto, Long eventSectionId) {
+    public Page<GradableEventShortResponseDto> getShortGradableEvents(Long eventSectionId, Pageable pageable) {
         EventSection eventSection = getEventSection(eventSectionId);
 
         Animal animal = animalService.getAnimal(eventSection);
-        Set<GradableEvent<?>> gradableEventSet = eventSection.getGradableEvents();
+        Page<GradableEvent<?>> gradableEventPage = getAllEventsPage(eventSectionId, pageable);
 
-        List<GradableEventShortResponseDto> gradableEvents = gradableEventSet.stream()
-                .map(event -> mapper.toShortResponseDto(event, animal))
-                .toList();
-
-        responseDto.setGradableEvents(gradableEvents);
+        return gradableEventPage
+                .map(event -> mapper.toShortResponseDto(event, animal));
     }
 }

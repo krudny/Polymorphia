@@ -36,7 +36,7 @@ public class EvolutionStage {
 
     @NotNull
     @Positive
-    @Column(precision = 1, scale = 1)
+    @Column(precision = 2, scale = 1)
     private BigDecimal grade;
 
     @NotEmpty
