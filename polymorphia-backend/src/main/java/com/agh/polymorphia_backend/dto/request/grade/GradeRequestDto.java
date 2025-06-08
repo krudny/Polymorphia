@@ -24,9 +24,9 @@ import java.util.List;
         visible = true
 )
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = TestGradeRequestDto.class, name = "TEST"),
-        @JsonSubTypes.Type(value = AssignmentGradeRequestDto.class, name = "ASSIGNMENT"),
-        @JsonSubTypes.Type(value = ProjectGradeRequestDto.class, name = "PROJECT")
+        @JsonSubTypes.Type(value = TestGradeRequestDto.class, name = "test"),
+        @JsonSubTypes.Type(value = AssignmentGradeRequestDto.class, name = "assignment"),
+        @JsonSubTypes.Type(value = ProjectGradeRequestDto.class, name = "project")
 })
 public class GradeRequestDto {
     @NotNull
