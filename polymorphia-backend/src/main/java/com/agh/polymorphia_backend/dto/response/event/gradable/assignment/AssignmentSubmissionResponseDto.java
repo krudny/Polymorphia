@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.dto.response.event.gradable.assignment;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,9 @@ public class AssignmentSubmissionResponseDto {
 
     private String extraAssignmentPrUrl;
 
+    @JsonFormat(pattern="dd.MM.yyyy")
     private ZonedDateTime createdDate;
 
+    @JsonFormat(pattern="dd.MM.yyyy")
     private ZonedDateTime modifiedDate;
 }

@@ -8,17 +8,21 @@ import com.agh.polymorphia_backend.dto.response.event.gradable.project.ProjectVa
 import com.agh.polymorphia_backend.dto.response.event.section.EventSectionResponseDto;
 import com.agh.polymorphia_backend.exception.database.InvalidArgumentException;
 import com.agh.polymorphia_backend.model.course.Animal;
+import com.agh.polymorphia_backend.model.event.gradable.GradableEvent;
 import com.agh.polymorphia_backend.model.event.gradable.ProjectCriterion;
 import com.agh.polymorphia_backend.model.event.section.ProjectSection;
 import com.agh.polymorphia_backend.model.event.submission.ProjectSubmission;
 import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.repository.event.gradable.GradableEventRepository;
+import com.agh.polymorphia_backend.repository.event.gradable.ProjectCriterionRepository;
 import com.agh.polymorphia_backend.repository.event.section.EventSectionRepository;
 import com.agh.polymorphia_backend.repository.event.submission.SubmissionRepository;
 import com.agh.polymorphia_backend.repository.project.ProjectGroupRepository;
 import com.agh.polymorphia_backend.service.GradeService;
 import com.agh.polymorphia_backend.service.course.AnimalService;
 import com.agh.polymorphia_backend.service.mapper.gradable.ProjectMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,6 +39,7 @@ public class ProjectSectionService extends EventSectionService {
 
     private final ProjectGroupRepository projectGroupRepository;
     private final SubmissionRepository submissionRepository;
+    private final ProjectCriterionRepository projectCriterionRepository;
 
     public ProjectSectionService(ProjectMapper mapper,
                                  AnimalService animalService,
@@ -43,10 +48,11 @@ public class ProjectSectionService extends EventSectionService {
                                  GradeService gradeService,
                                  ProjectGroupRepository projectGroupRepository,
                                  SubmissionRepository submissionRepository,
-                                 GradableEventRepository gradableEventRepository) {
+                                 GradableEventRepository gradableEventRepository, ProjectCriterionRepository projectCriterionRepository) {
         super(mapper, gradeService, animalService, eventSectionRepository, xpCalculator, gradableEventRepository);
         this.projectGroupRepository = projectGroupRepository;
         this.submissionRepository = submissionRepository;
+        this.projectCriterionRepository = projectCriterionRepository;
     }
 
 
@@ -63,6 +69,11 @@ public class ProjectSectionService extends EventSectionService {
         setProjectVariants(responseDto, projectGroup);
         setProjectSubmission(responseDto, projectGroup);
         return responseDto;
+    }
+
+    @Override
+    public Page<GradableEvent<?>> getAllEventsPage(Long eventSectionId, Pageable pageable) {
+        return projectCriterionRepository.findAllByProjectSection_Id(eventSectionId, pageable);
     }
 
     private void setProjectAnimals(ProjectResponseDto responseDto, ProjectGroup projectGroup) {

@@ -1,17 +1,23 @@
 "use client"
 
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import {NavigationContext} from "@/components/navigation/NavigationContext";
 import {useScaleShow} from "@/animations/General";
+import { useTitle } from "@/components/navigation/TitleContext";
 
 export default function Settings() {
   const { isSidebarLocked, setIsSidebarLocked } = useContext(NavigationContext);
+  const { setTitle } = useTitle();
   const wrapperRef = useScaleShow();
 
   const toggleSidebarLock = () => {
     setIsSidebarLocked(!isSidebarLocked);
   };
+
+  useEffect(() => {
+    setTitle('Ustawienia');
+  }, [setTitle]);
 
   return (
       <div ref={wrapperRef} className="py-6 px-32">

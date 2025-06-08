@@ -7,6 +7,7 @@ import {QueryClient} from "@tanstack/query-core";
 import {QueryClientProvider} from "@tanstack/react-query";
 import {useState} from "react";
 import {Toaster} from "react-hot-toast";
+import { TitleProvider } from "@/components/navigation/TitleContext";
 
 const leagueGothic = League_Gothic({
   subsets: ['latin'],
@@ -30,12 +31,17 @@ export default function RootLayout({
   const [queryClient] = useState(() => new QueryClient());
 
   return (
-    <html lang="pl" className="custom-scrollbar">
+    <html lang="pl" className="custom-scrollbar lg:overflow-hidden bg-neutral-200">
+      <head>
+        <meta name="theme-color" content="#262626" />
+      </head>
       <body className={`${leagueGothic.className} ${materialSymbols.variable} text-[#262626]`}>
-        <QueryClientProvider client={queryClient}>
-          <Toaster toastOptions={{ style: { fontSize: "1.5rem" }}} />
-          {children}
-        </QueryClientProvider>
+        <TitleProvider>
+          <QueryClientProvider client={queryClient}>
+            <Toaster toastOptions={{ style: { fontSize: "1.5rem" }}} />
+            {children}
+          </QueryClientProvider>
+        </TitleProvider>
       </body>
     </html>
   );

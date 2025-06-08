@@ -46,6 +46,19 @@ public abstract class GradableEventMapper {
         return event;
     }
 
+    protected GradableEventShortResponseDto setGainedXp(GradableEventShortResponseDto event,
+                                                        GradableEvent<?> gradableEvent,
+                                                        Animal animal) {
+        Optional<Grade> gradeOptional = gradeService.getExistingGrade(gradableEvent, animal);
+
+        if (gradeOptional.isEmpty()) {
+            return event;
+        }
+
+        event.setGainedXp(gradeOptional.get().getXp());
+        return event;
+    }
+
     private List<EventChestResponseDto> getGradeChests(Grade grade) {
         return Optional.ofNullable(grade.getAssignedChests())
                 .orElse(Collections.emptySet())

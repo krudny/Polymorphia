@@ -5,9 +5,16 @@ import Slider from "@/components/slider/Slider";
 import {useSearchParams} from "next/navigation";
 import KnowledgeBaseService from "@/services/knowledge-base/KnowledgeBaseService";
 import Loading from "@/components/general/Loading";
+import { useTitle } from "@/components/navigation/TitleContext";
+import { useEffect } from "react";
 
 export default function Chests() {
   const searchParams = useSearchParams();
+  const { setTitle } = useTitle();
+
+  useEffect(() => {
+    setTitle('Skrzynki');
+  }, [setTitle]);
 
   const { data: chests, isLoading, error } = useQuery({
     queryKey: ['chests', 1],

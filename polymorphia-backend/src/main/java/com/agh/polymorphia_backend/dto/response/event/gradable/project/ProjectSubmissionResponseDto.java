@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.dto.response.event.gradable.project;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -19,8 +20,10 @@ public class ProjectSubmissionResponseDto {
     private String projectUrl;
 
     @NotNull
+    @JsonFormat(pattern="dd.MM.yyyy")
     private ZonedDateTime createdDate;
 
     @NotNull
+    @JsonFormat(pattern="dd.MM.yyyy")
     private ZonedDateTime modifiedDate;
 }
