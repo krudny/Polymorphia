@@ -16,7 +16,7 @@ export default function MainLayout({ children }: { children: ReactNode }) {
           {title}
         </h3>
       </div>
-      <div className="w-full flex flex-1">{children}</div>
+      <div className="w-full flex flex-col flex-1">{children}</div>
     </div>
   );
 }
