@@ -28,7 +28,7 @@ jobs:
 
       - name: Copy files 
         run: |
-          rsync -avz -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" \
+          rsync -avz --delete -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" \
             ./ ${{ secrets.OCI_USERNAME }}@${{ secrets.OCI_VM_PUBLIC_IP }}:~/polymorphia
 
       - name: Build and Run Docker container 

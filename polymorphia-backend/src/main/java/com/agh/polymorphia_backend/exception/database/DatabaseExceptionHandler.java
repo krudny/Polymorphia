@@ -27,6 +27,7 @@ public class DatabaseExceptionHandler {
 
     @ExceptionHandler(DataAccessException.class)
     public ResponseEntity<CustomExceptionResponse> handleResourceNotFound(DataAccessException ex) {
+        ex.printStackTrace();
         CustomExceptionResponse customExceptionResponse = CustomExceptionResponse.builder()
                 .title(DATA_ACCESS_EXCEPTION)
                 .description(ex.getMessage())

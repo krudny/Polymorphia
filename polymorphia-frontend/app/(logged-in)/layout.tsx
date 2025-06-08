@@ -1,29 +1,26 @@
-"use client";
+"use client"
 
-import { ReactNode } from "react";
+import {ReactNode} from "react";
 import Navigation from "@/components/navigation/Navigation";
-import { NavigationProvider } from "@/components/providers/NavigationContext";
+import {NavigationProvider} from "@/components/navigation/NavigationContext";
 import Image from "next/image";
-import { UserProvider } from "@/components/providers/UserContext";
 import MainLayout from "@/components/general/MainLayout";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <UserProvider>
       <NavigationProvider>
         <div className="w-full min-h-[100dvh] relative flex flex-col lg:flex-row bg-black overflow-hidden">
           <Navigation />
           <Image
-            src={`/background.png`}
-            alt="Background"
-            fill
-            className="absolute object-cover"
-            priority
-            sizes="100%"
+              src={`/background.png`}
+              alt="Background"
+              fill
+              className="absolute object-cover"
+              priority
+              sizes="100%"
           />
           <MainLayout>{children}</MainLayout>
         </div>
       </NavigationProvider>
-    </UserProvider>
   );
 }

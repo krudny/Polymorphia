@@ -1,8 +1,8 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @tailwind utilities;
 
 :root {
-  --font-family-symbols: "Material Symbols Rounded";
+  --font-family-symbols: 'Material Symbols Rounded';
 }
 
 @theme {

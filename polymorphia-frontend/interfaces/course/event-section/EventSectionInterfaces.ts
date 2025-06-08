@@ -1,12 +1,95 @@
-import { ModalProps } from "../../modal/ModalInterfaces";
+import { ModalProps } from '../../modal/ModalInterfaces';
 
-export type EventSectionType = "coursework" | "tests" | "project";
+export type EventSectionType = 'assignment' | 'test' | 'project';
 
-export interface EventSectionCore {
+export interface EventSectionShortResponseDto {
   id: number;
   name: string;
-  type: EventSectionType;
+  eventSectionType: EventSectionType;
   hidden?: boolean;
+}
+
+export interface EventSectionResponseDto {
+  name: string;
+  gainedXp: number;
+  flatBonus: BonusDto;
+  percentageBonus: BonusDto;
+  totalXp: number;
+}
+
+export interface BonusDto {
+  xp: number;
+  percentage?: number;
+  items: BonusItemDto[];
+}
+
+export interface BonusItemDto {
+  id: number;
+  assignedItemId: number;
+  assignedChestId: number;
+  name: string;
+  imageUrl: string;
+  receivedDate: string;
+  xp: number;
+  percentage?: number;
+}
+
+export interface GradableEventShortResponseDto {
+  id: number;
+  name: string;
+  topic?: string;
+  gainedXp?: number;
+  hidden?: boolean;
+}
+
+export interface GradableEventShortResponseDtoPage {
+  content: GradableEventShortResponseDto[];
+  page: {
+    totalPages: number;
+  }
+}
+
+export interface GradableEventResponseDto {
+  id: number;
+  name: string;
+  maxXp: number;
+  grade?: GradeResponseDto;
+}
+
+export interface TestResponseDto extends GradableEventResponseDto {
+  hidden: boolean;
+  topic?: string;
+}
+
+export interface AssignmentResponseDto extends GradableEventResponseDto {
+  infoUrl: string;
+  topic?: string;
+  submission: AssignmentSubmissionResponseDto;
+  hidden: boolean;
+}
+
+export interface AssignmentSubmissionResponseDto {
+  containsExtraAssignment: boolean;
+  prUrl?: string;
+  extraAssignmentPrUrl?: string;
+  createdDate?: string;
+  modifiedDate?: string;
+}
+
+export interface GradeResponseDto {
+  createdDate: string;
+  modifiedDate: string;
+  gainedXp: number;
+  chests: EventChestResponseDto[];
+}
+
+export interface EventChestResponseDto {
+  id: number;
+  assignedChestId: number;
+  name: string;
+  imageUrl: string;
+  opened: boolean;
+  receivedDate: string;
 }
 
 export interface EventSection {
@@ -35,6 +118,7 @@ export interface GradableEventCoreResponse {
 
 export interface SectionViewProps {
   eventSectionId: number;
+  eventSectionType: EventSectionType;
 }
 
 export interface BonusInfo {
@@ -87,7 +171,7 @@ export interface RewardsInfoProps {
 }
 
 export interface TestDetailsModalProps
-  extends Omit<ModalProps, "title" | "isOpen" | "children"> {
+  extends Omit<ModalProps, 'title' | 'isOpen' | 'children'> {
   eventSectionId: number;
   selectedGradableEventId: number | null;
 }

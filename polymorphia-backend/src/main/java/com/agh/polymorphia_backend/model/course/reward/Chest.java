@@ -18,9 +18,6 @@ import java.util.Set;
 @Table(name = "chests")
 @ToString(exclude = {"items"})
 public class Chest {
-    @ManyToMany(mappedBy = "chests", fetch = FetchType.LAZY)
-    Set<Item> items;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
@@ -41,8 +38,11 @@ public class Chest {
     @Enumerated(EnumType.STRING)
     private ChestBehavior behavior;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     private Course course;
 
+    @ManyToMany(mappedBy = "chests", fetch = FetchType.LAZY)
+    Set<Item> items;
 }

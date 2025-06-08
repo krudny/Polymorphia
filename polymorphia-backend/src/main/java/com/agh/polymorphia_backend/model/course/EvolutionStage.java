@@ -3,6 +3,7 @@ package com.agh.polymorphia_backend.model.course;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -29,15 +30,19 @@ public class EvolutionStage {
     private String description;
 
     @NotNull
-    private Integer minXp;
+    @Positive
+    @Column(precision = 4, scale = 1)
+    private BigDecimal minXp;
 
     @NotNull
+    @Positive
     @Column(precision = 2, scale = 1)
     private BigDecimal grade;
 
     @NotEmpty
     private String imageUrl;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     private Course course;

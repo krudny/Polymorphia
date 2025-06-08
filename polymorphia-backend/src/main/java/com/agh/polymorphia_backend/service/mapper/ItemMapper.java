@@ -12,8 +12,8 @@ import com.agh.polymorphia_backend.model.course.reward.Chest;
 import com.agh.polymorphia_backend.model.course.reward.item.FlatBonusItem;
 import com.agh.polymorphia_backend.model.course.reward.item.Item;
 import com.agh.polymorphia_backend.model.course.reward.item.PercentageBonusItem;
-import com.agh.polymorphia_backend.model.event.EventSection;
-import com.agh.polymorphia_backend.repository.event.EventSectionRepository;
+import com.agh.polymorphia_backend.model.event.section.EventSection;
+import com.agh.polymorphia_backend.repository.event.section.EventSectionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ import java.util.HashSet;
 @AllArgsConstructor
 public class ItemMapper {
     private static final String BONUS_TEXT = "%s do eventów z kategorii %s";
-    private static final String XP_TEXT = "+%d xp";
+    private static final String XP_TEXT = "+%.1f xp";
     private static final String PERCENT_TEXT = "+%d%%";
 
     private static final String PERCENTAGE_TEXT_BEHAVIOR = "Działa automatycznie, nie wymaga aktywacji";
