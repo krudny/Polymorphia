@@ -4,7 +4,7 @@ import RankSearch from "@/components/hall-of-fame/RankSearch";
 import RankSort from "@/components/hall-of-fame/RankSort";
 import RankPodium from "@/components/hall-of-fame/RankPodium";
 import Pagination from "@/components/general/Pagination";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import RankCardMobile from "@/components/hall-of-fame/RankCardMobile";
 
 export default function RankMobile() {
@@ -12,8 +12,7 @@ export default function RankMobile() {
 
   useEffect(() => {
     setCurrentPage(2);
-  }, [])
-
+  }, []);
 
   return (
     <div className="w-full h-full px-4">

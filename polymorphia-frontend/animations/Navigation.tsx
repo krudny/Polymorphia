@@ -155,14 +155,14 @@ export const animateSubMenuSection = (
         height: "auto",
         duration: 0.2,
         opacity: 1,
-        onComplete
+        onComplete,
       });
     } else {
       gsap.to(container, {
         height: 0,
         duration: 0.2,
         opacity: 0,
-        onComplete
+        onComplete,
       });
     }
   });

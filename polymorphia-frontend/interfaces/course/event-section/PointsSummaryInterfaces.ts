@@ -1,9 +1,9 @@
-import { ModalProps } from '../../modal/ModalInterfaces';
+import { ModalProps } from "../../modal/ModalInterfaces";
 import {
   BonusInfo,
   BonusInfoItem,
   EventSection,
-} from './EventSectionInterfaces';
+} from "./EventSectionInterfaces";
 
 export interface PointsSummaryProps {
   eventSection: EventSection;
@@ -17,7 +17,7 @@ export interface PointsSummaryElementProps {
 }
 
 export interface BonusInfoModalProps
-  extends Omit<ModalProps, 'title' | 'isOpen' | 'children'> {
+  extends Omit<ModalProps, "title" | "isOpen" | "children"> {
   bonusInfo: BonusInfo | null;
 }
 

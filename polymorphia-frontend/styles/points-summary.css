@@ -1,5 +1,5 @@
-@import 'tailwindcss';
-@import './globals.css';
+@import "tailwindcss";
+@import "./globals.css";
 
 .points-summary {
   @apply flex gap-10 flex-col pb-5 pt-3 items-center;

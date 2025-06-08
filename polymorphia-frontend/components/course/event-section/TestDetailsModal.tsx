@@ -1,12 +1,12 @@
-import Modal from '@/components/modal/Modal';
+import Modal from "@/components/modal/Modal";
 import {
   Test,
   TestDetailsModalProps,
-} from '@/interfaces/course/event-section/EventSectionInterfaces';
-import RewardsInfo from './RewardsInfo';
-import { EventSectionService } from '@/services/course/event-section/EventSectionService';
-import { useQuery } from '@tanstack/react-query';
-import Loading from '@/components/general/Loading';
+} from "@/interfaces/course/event-section/EventSectionInterfaces";
+import RewardsInfo from "./RewardsInfo";
+import { EventSectionService } from "@/services/course/event-section/EventSectionService";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "@/components/general/Loading";
 
 export default function TestDetailsModal({
   eventSectionId,
@@ -19,16 +19,16 @@ export default function TestDetailsModal({
     isSuccess,
     isError,
   } = useQuery({
-    queryKey: ['tests', eventSectionId, selectedGradableEventId],
+    queryKey: ["tests", eventSectionId, selectedGradableEventId],
     queryFn: () =>
       EventSectionService.getGradableEvent<Test>({
-        eventSectionType: 'test',
+        eventSectionType: "test",
         gradableEventId: selectedGradableEventId,
       }),
   });
 
   if (selectedGradableEventId === null) {
-    return <Modal isOpen={false} title={''} onClose={onClose} />;
+    return <Modal isOpen={false} title={""} onClose={onClose} />;
   }
 
   if (isError) {
@@ -51,7 +51,7 @@ export default function TestDetailsModal({
 
   if (isSuccess) {
     return (
-      <Modal isOpen title={test?.name ?? ''} onClose={onClose}>
+      <Modal isOpen title={test?.name ?? ""} onClose={onClose}>
         <RewardsInfo grade={test.grade} maxXp={test.maxXp} />
       </Modal>
     );
