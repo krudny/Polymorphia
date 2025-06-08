@@ -34,7 +34,7 @@ export default function Profile() {
             <h1>Kamil Rudny</h1>
             <h2>Gerard Pocieszny</h2>
             <h3>Jesteś 36 na 139 zwierzaków!</h3>
-            <div className="w-1/2 md:hidden mt-4">
+            <div className="w-full md:hidden mt-4">
               <RankUserPoints separators titleSize="sm" xpSize="md" />
             </div>
             <div className="hidden md:block 2xl:hidden w-4/5 max-w-xl mt-6">
