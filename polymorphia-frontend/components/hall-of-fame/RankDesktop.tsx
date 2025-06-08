@@ -8,6 +8,7 @@ import Pagination from "@/components/general/Pagination";
 export default function RankDesktop() {
   const wrapperRef = useScaleShow();
 
+  // TODO: breakpointy
   return (
     <div
       ref={wrapperRef}
@@ -30,17 +31,17 @@ export default function RankDesktop() {
             <RankSort />
           </div>
           <div className="w-full flex flex-col flex-1 px-4 overflow-y-scroll custom-scrollbar">
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((_, i) => (
-              <RankCardDesktop key={i} />
+            {Array.from({ length: 20 - 4 + 1 }, (_, i) => (
+              <RankCardDesktop key={i} position={i + 3} />
             ))}
           </div>
         </div>
       </div>
       <div className="w-full min-h-14 flex items-center justify-end text-2xl">
         <Pagination
-          totalPages={5}
+          totalPages={250 / 20}
           onPageChangeAction={() => {}}
-          forcePage={1}
+          forcePage={0}
         />
       </div>
     </div>

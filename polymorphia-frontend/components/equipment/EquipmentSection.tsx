@@ -35,7 +35,7 @@ export default function EquipmentSection({
                     sizes="(min-width: 1024px) 25vw, 50vw"
                   />
                   {itemData.quantity > 0 ? (
-                    <div className="absolute bg-neutral-300 opacity-65 bottom-0 right-0 rounded-tl-2xl w-fit h-auto aspect-square flex-centered">
+                    <div className="absolute bg-neutral-300/80 backdrop-blur-sm flex-col-centered bottom-0 right-0 rounded-tl-xl rounded-br-xl w-12 aspect-square">
                       <h3 className="text-4xl px-4">{itemData.quantity}</h3>
                     </div>
                   ) : (

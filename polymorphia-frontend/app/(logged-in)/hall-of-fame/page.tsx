@@ -14,10 +14,10 @@ export default function HallOfFame() {
 
   return (
     <>
-      <div className="lg:hidden w-full">
+      <div className="xl:hidden w-full">
         <RankMobile />
       </div>
-      <div className="w-full hidden lg:block">
+      <div className="w-full hidden xl:block">
         <RankDesktop />
       </div>
     </>

@@ -12,7 +12,7 @@ export interface EventSectionCardProps {
 }
 
 export type EventSectionCardVariantProps = {
-  size?: "xs" | "sm" | "md" | "lg" | "hofDesktop" | "hofMobile";
+  size?: "xs" | "sm" | "md" | "lg" | "hofDesktop";
   color?: "gold" | "silver" | "bronze" | "green";
   forceWidth?: boolean;
   isSumVisible?: boolean;
