@@ -1,7 +1,7 @@
 export default function RankSearch() {
   return (
     <form className="w-44 md:w-64 flex-centered">
-      <div className="md:px-2 w-full h-14 flex items-center border-b-2  border-neutral-800 text-xl md:text-3xl">
+      <div className="md:px-2 w-full h-full flex items-center border-b-2  border-neutral-800 text-xl md:text-3xl">
         <span className="material-symbols text-2xl md:text-4xl">search</span>
         <input
           type="text"
