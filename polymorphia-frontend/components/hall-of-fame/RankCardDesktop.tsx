@@ -8,13 +8,15 @@ export default function RankCardDesktop({ position }: { position: number }) {
   const isLarge = useMediaQuery({ minWidth: 1400 });
 
   return (
-    <div className="w-full min-h-[calc(25%-1rem)] my-2 flex justify-between rounded-xl bg-neutral-100 shadow-lg ">
-      <RankImage position={position} />
-      <RankUserData />
-      <div className="w-full min-w-[320px] xl:max-w-[350px] 2xl:max-w-[500px]">
+    <div className="w-full 2xl:min-h-[calc(25%-1rem)] h-28 my-2 flex justify-between items-center rounded-xl bg-pink-400 bg-neutral-100 shadow-lg ">
+      <div className="flex h-full truncate w-2/5 bg-purple-700">
+        <RankImage position={position} />
+        <RankUserData />
+      </div>
+      <div className="w-full min-w-[350px] lg:max-w-[380px] 2xl:max-w-[500px]">
         <RankUserPoints
           titleSize={"sm"}
-          xpSize={isLarge ? "md" : "sm"}
+          xpSize={isLarge ? "md" : "md"}
           separators={false}
         />
       </div>

@@ -13,10 +13,10 @@ export default function RankCard({ position }: { position: number }) {
 
   return (
     <div
-      className={`w-full min-h-[calc(25%-1rem)] my-2 flex-col flex justify-between rounded-xl bg-gray-50 shadow-lg border-b-6 ${border}`}
+      className={`w-full min-h-[calc(25%-1rem)] my-2 flex-col flex justify-between rounded-xl bg-gray-50 shadow-lg border-b-6 p-3 ${border}`}
     >
-      <RankImage position={position} />
-      <div className="w-full flex mt-4 px-5 lg:px-1">
+      <div className="w-full flex lg:px-1">
+        <RankImage position={position} />
         <RankUserData />
         <RankSummary />
       </div>

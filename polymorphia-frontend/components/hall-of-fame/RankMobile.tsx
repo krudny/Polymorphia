@@ -16,14 +16,14 @@ function handleResize(setPages: (value: number) => void) {
 }
 
 export default function RankMobile() {
-  const [pages, setPages] = useState(1);
+  const [pages, setPages] = useState(10);
 
-  useEffect(() => {
-    const onResize = () => handleResize(setPages);
-    window.addEventListener("resize", onResize);
-    onResize();
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
+  // useEffect(() => {
+  //   const onResize = () => handleResize(setPages);
+  //   window.addEventListener("resize", onResize);
+  //   onResize();
+  //   return () => window.removeEventListener("resize", onResize);
+  // }, []);
 
   return (
     <div className="w-full h-full px-4">
@@ -32,7 +32,7 @@ export default function RankMobile() {
         <RankSort />
       </div>
 
-      <div className="w-full grid grid-cols-1 min-[540px]:grid-cols-2 min-[800px]:grid-cols-3 gap-2 min-[700px]:gap-3 overflow-y-scroll custom-scrollbar">
+      <div className="w-full grid grid-cols-1 min-[650px]:grid-cols-2 gap-2 min-[700px]:gap-3 overflow-y-scroll custom-scrollbar">
         {Array.from({ length: pages }, (_, i) => (
           <RankCardMobile key={i} position={i + 1} />
         ))}

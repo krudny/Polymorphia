@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <UserProvider>
       <NavigationProvider>
-        <div className="w-full min-h-[100dvh] relative flex flex-col lg:flex-row bg-black overflow-hidden">
+        <div className="w-full min-h-[100dvh] relative flex flex-col lg:flex-row bg-black">
           <Navigation />
           <Image
             src={`/background.png`}

@@ -1,6 +1,6 @@
 export default function RankUserData() {
   return (
-    <div className="w-full xl:w-56 h-full flex flex-col justify-center lg:ml-3 overflow-hidden">
+    <div className="w-full lg:w-56 lg:mx-auto bg-yellow-300  h-full flex flex-col justify-center ml-3  overflow-hidden">
       <h1 className="text-3xl lg:text-4xl truncate w-full">
         Gerard Małoduszny
       </h1>

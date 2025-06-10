@@ -35,10 +35,10 @@ export default function RankUserPoints({
   ];
 
   return (
-    <div className="w-full h-full grid grid-cols-4 sm:gap-1 px-2">
+    <div className="w-full h-full grid grid-cols-4 sm:gap-1 lg:px-2 mt-2 lg:mt-0">
       {items.map(([item, xp], i) => (
         <div
-          className={`flex-col-centered min-h-24 my-auto ${
+          className={`flex-col-centered min-h-20 lg:min-h-24 my-auto ${
             separators && i !== items.length - 1
               ? "sm:border-r-[1px] border-[#212121]"
               : ""

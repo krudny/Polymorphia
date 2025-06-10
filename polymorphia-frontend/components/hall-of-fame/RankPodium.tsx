@@ -2,7 +2,7 @@ import XPCard from "@/components/xp-card/XPCard";
 
 export default function RankPodium({ position }: { position: 1 | 2 | 3 }) {
   return (
-    <div className="w-full h-[calc(33.333%-1rem)] max-h-52 my-2 bg-neutral-300 rounded-xl">
+    <div className="w-full h-full 2xl:h-[calc(33.333%-1rem)] max-h-36 2xl:max-h-52 bg-neutral-300 rounded-xl bg-green-300">
       <XPCard
         title="Gerard Małoduszny"
         subtitle="Majestatyczna Bestia"

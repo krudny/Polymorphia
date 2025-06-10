@@ -167,7 +167,7 @@
 }
 
 .xp-card-lg.xp-card-force-width .xp-card-middle {
-  @apply lg:w-[22.5rem];
+  @apply w-[22.5rem];
 }
 
 .xp-card-hall-of-fame-desktop {
@@ -177,10 +177,14 @@
     @apply w-fit px-6 h-full;
   }
 
+  .xp-card-middle {
+    @apply bg-gray-200 max-w-full;
+  }
+
   .xp-card-middle,
   .xp-card-xp {
     h1 {
-      @apply text-[2.3rem];
+      @apply text-[1.9rem] xl:text-[2.3rem];
     }
 
     h2 {

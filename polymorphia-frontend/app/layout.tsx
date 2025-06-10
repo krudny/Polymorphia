@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <html
       lang="pl"
-      className="custom-scrollbar lg:overflow-hidden bg-neutral-200"
+      className="custom-scrollbar bg-neutral-200"
     >
       <head>
         <meta name="theme-color" content="#262626" />
