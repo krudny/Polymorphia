@@ -7,11 +7,12 @@ import RewardsInfo from "./RewardsInfo";
 import { EventSectionService } from "@/services/course/event-section/EventSectionService";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "@/components/general/Loading";
+import { useEffect, useState } from "react";
 
 export default function TestDetailsModal({
   eventSectionId,
   selectedGradableEventId,
-  onClose,
+  onClosed,
 }: TestDetailsModalProps) {
   const {
     data: test,
@@ -27,33 +28,32 @@ export default function TestDetailsModal({
       }),
   });
 
-  if (selectedGradableEventId === null) {
-    return <Modal isOpen={false} title={""} onClose={onClose} />;
-  }
+  const [modalVisible, setModalVisible] = useState(false);
 
-  if (isError) {
-    return (
-      <Modal isOpen title="Błąd" onClose={onClose}>
-        Wystąpił błąd przy ładowaniu szczegółów.
-      </Modal>
-    );
-  }
+  const onRequestClose = () => {
+    setModalVisible(false);
+  };
 
-  if (isLoading) {
-    return (
-      <Modal isOpen title="Ładowanie" onClose={onClose}>
+  useEffect(() => {
+    setModalVisible(!!selectedGradableEventId);
+  }, [selectedGradableEventId]);
+
+  console.log(modalVisible, test)
+
+  return (
+    <Modal
+      isOpen={modalVisible}
+      title={test?.name ?? ""}
+      onClosed={onClosed}
+      onRequestClose={onRequestClose}
+    >
+      {isError ?? <div>Wystąpił błąd przy ładowaniu szczegółów.</div>}
+      {isLoading ?? (
         <div className="h-50 mt-20">
           <Loading />
         </div>
-      </Modal>
-    );
-  }
-
-  if (isSuccess) {
-    return (
-      <Modal isOpen title={test?.name ?? ""} onClose={onClose}>
-        <RewardsInfo grade={test.grade} maxXp={test.maxXp} />
-      </Modal>
-    );
-  }
+      )}
+      {isSuccess && <RewardsInfo grade={test.grade} maxXp={test.maxXp} />}
+    </Modal>
+  );
 }
