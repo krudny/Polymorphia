@@ -46,7 +46,7 @@
 .hall-of-fame-desktop {
   @apply w-full h-full mx-auto flex flex-col opacity-0;
   @apply lg:px-8 lg:mt-4 lg:max-w-[1600px];
-  @apply 2xl:px-10 2xl:max-h-[54rem] 3xl:min-h-[54rem] 3xl:max-h-[54rem];
+  @apply 2xl:px-10 2xl:h-[calc(100dvh-5rem)] 2xl:max-h-[54rem] 3xl:min-h-[54rem] 3xl:max-h-[54rem];
 }
 
 .hall-of-fame-desktop-wrapper {
