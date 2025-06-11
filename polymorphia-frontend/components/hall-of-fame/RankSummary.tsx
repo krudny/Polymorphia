@@ -1,4 +1,4 @@
-import "../../styles/hall-of-fame.css"
+import "../../styles/hall-of-fame.css";
 
 export default function RankSummary() {
   return (

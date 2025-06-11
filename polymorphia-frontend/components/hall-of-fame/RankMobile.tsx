@@ -5,8 +5,8 @@ import RankSort from "@/components/hall-of-fame/RankSort";
 import Pagination from "@/components/general/Pagination";
 import RankCardMobile from "@/components/hall-of-fame/RankCardMobile";
 import { useState } from "react";
-import "../../styles/hall-of-fame.css"
-import {useScaleShow} from "@/animations/General";
+import "../../styles/hall-of-fame.css";
+import { useScaleShow } from "@/animations/General";
 
 export default function RankMobile() {
   const wrapperRef = useScaleShow();

@@ -4,16 +4,13 @@ import RankSearch from "@/components/hall-of-fame/RankSearch";
 import RankSort from "@/components/hall-of-fame/RankSort";
 import RankCardDesktop from "@/components/hall-of-fame/RankCardDesktop";
 import Pagination from "@/components/general/Pagination";
-import "../../styles/hall-of-fame.css"
+import "../../styles/hall-of-fame.css";
 
 export default function RankDesktop() {
   const wrapperRef = useScaleShow();
 
   return (
-    <div
-      ref={wrapperRef}
-      className="hall-of-fame-desktop"
-    >
+    <div ref={wrapperRef} className="hall-of-fame-desktop">
       <div className="hall-of-fame-desktop-wrapper">
         <div className="hall-of-fame-desktop-podium-wrapper">
           <div className="hall-of-fame-desktop-podium-text">

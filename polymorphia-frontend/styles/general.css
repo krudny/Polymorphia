@@ -23,11 +23,7 @@
 }
 
 .image-badge {
-  @apply absolute bg-neutral-300/85 backdrop-blur-sm flex-col-centered bottom-0 right-0 aspect-square;
-}
-
-.image-badge > h1 {
-  @apply text-base px-1 lg:text-2xl lg:px-2;
+  @apply absolute bg-neutral-300/80 flex-col-centered bottom-0 right-0 aspect-square overflow-hidden  bg-clip-padding z-50;
 }
 
 .main-layout {
@@ -43,5 +39,5 @@
 }
 
 .main-layout-content-wrapper {
-  @apply w-full flex flex-col 3xl:max-h-[56rem] 3xl:max-w-[1650px] m-auto;
+  @apply w-full flex flex-col 3xl:max-h-[56rem] 3xl:max-w-[1750px] m-auto;
 }

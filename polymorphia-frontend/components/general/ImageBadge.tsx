@@ -1,12 +1,17 @@
-import "../../styles/general.css"
+import "../../styles/general.css";
+import clsx from "clsx";
 
 // TODO: variants?
-export default function ImageBadge({number, className}: {number: number, className?: string}) {
+export default function ImageBadge({
+  text,
+  className,
+}: {
+  text: string;
+  className?: string;
+}) {
   return (
-    <div className={`image-badge ${className}`}>
-      <h1>
-        {number < 10 ? "0" + number : number}
-      </h1>
+    <div className={clsx(`image-badge ${className}`)}>
+      <h1>{text}</h1>
     </div>
-  )
+  );
 }

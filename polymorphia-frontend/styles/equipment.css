@@ -28,3 +28,15 @@
 .equipment-open-chest-btn > h3 {
   @apply text-lg py-1 lg:text-2xl;
 }
+
+.equipment-locked-item {
+  @apply absolute bg-neutral-300 flex-centered opacity-70 w-full h-full;
+}
+
+.equipment-locked-item > span {
+  @apply material-symbols;
+}
+
+.equipment-locked-item > span > p {
+  @apply text-8xl;
+}

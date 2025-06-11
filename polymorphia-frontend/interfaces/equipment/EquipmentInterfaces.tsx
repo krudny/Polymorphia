@@ -1,9 +1,19 @@
 export type EquipmentSectionType = "item" | "chest";
 
+export interface EquipmentContextType {
+  currentItemModalData: ItemData | null;
+  setCurrentItemModalData: (modalData: ItemData | null) => void;
+  currentChestModalData: ChestData | null;
+  setCurrentChestModalData: (modalData: ChestData | null) => void;
+  currentOpeningChestModalData: ChestData | null;
+  setCurrentOpeningChestModalData: (modalData: ChestData | null) => void;
+  pickedItemsIds: number[];
+  setPickedItemsIds: React.Dispatch<React.SetStateAction<number[]>>;
+}
+
 export interface EquipmentSectionProps {
   type: EquipmentSectionType;
   data: ItemData[] | ChestData[];
-  onClick: (item: ItemData | ChestData) => void;
 }
 
 export interface ItemData {
@@ -20,6 +30,7 @@ export interface ChestData {
   title: string;
   subtitle: string;
   imageUrl: string;
+  behavior: "ONE_OF_MANY" | "ALL";
   openedDate: string | undefined;
   items: Item[];
 }
@@ -32,19 +43,7 @@ export interface Item {
   bonusXp: string;
 }
 
-export interface ItemModalProps {
-  item: ItemData | null;
-  onClose: () => void;
-}
-
-export interface ChestModalProps {
-  chest: ChestData | null;
-  onClose: () => void;
-}
-
 export interface EquipmentSectionWrapperProps {
   items: ItemData[];
   chests: ChestData[];
-  setCurrentChestModalData: (modalData: ChestData) => void;
-  setCurrentItemModalData: (modalData: ItemData) => void;
 }

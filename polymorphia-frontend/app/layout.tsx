@@ -30,10 +30,7 @@ export default function RootLayout({
   const [queryClient] = useState(() => new QueryClient());
 
   return (
-    <html
-      lang="pl"
-      className="custom-scrollbar bg-neutral-200"
-    >
+    <html lang="pl" className="custom-scrollbar bg-neutral-200">
       <head>
         <meta name="theme-color" content="#262626" />
       </head>

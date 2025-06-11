@@ -6,12 +6,17 @@ import {
 import { API_STATIC_URL } from "@/services/api";
 import "../../styles/equipment.css";
 import Image from "next/image";
+import ImageBadge from "@/components/general/ImageBadge";
+import { useContext } from "react";
+import { EquipmentContext } from "@/components/providers/EquipmentContext";
 
-export default function EquipmentSection({
-  type,
-  data,
-  onClick,
-}: EquipmentSectionProps) {
+export function EquipmentSection({ type, data }: EquipmentSectionProps) {
+  const {
+    setCurrentItemModalData,
+    setCurrentChestModalData,
+    setCurrentOpeningChestModalData,
+  } = useContext(EquipmentContext);
+
   return (
     <section className="my-7">
       <h1 className="equipment-header">
@@ -22,7 +27,14 @@ export default function EquipmentSection({
           if (type === "item") {
             const itemData = item as ItemData;
             return (
-              <div key={itemData.itemId} onClick={() => onClick(itemData)}>
+              <div
+                key={itemData.itemId}
+                onClick={
+                  itemData.quantity > 0
+                    ? () => setCurrentItemModalData(itemData)
+                    : undefined
+                }
+              >
                 <div
                   className={`equipment-grid-item ${itemData.quantity > 0 ? "hover:cursor-pointer" : ""}`}
                 >
@@ -35,13 +47,14 @@ export default function EquipmentSection({
                     sizes="(min-width: 1024px) 25vw, 50vw"
                   />
                   {itemData.quantity > 0 ? (
-                    <div className="absolute bg-neutral-300/80 backdrop-blur-sm flex-col-centered bottom-0 right-0 rounded-tl-xl rounded-br-xl w-12 aspect-square">
-                      <h3 className="text-4xl px-4">{itemData.quantity}</h3>
-                    </div>
+                    <ImageBadge
+                      text={itemData.quantity.toString()}
+                      className={"rounded-tl-2xl rounded-br-2xl text-3xl w-10"}
+                    />
                   ) : (
-                    <div className="absolute bg-neutral-300 flex-centered opacity-70 w-full h-full">
-                      <span className="material-symbols">
-                        <p className="text-8xl">lock</p>
+                    <div className="equipment-locked-item">
+                      <span>
+                        <p>lock</p>
                       </span>
                     </div>
                   )}
@@ -65,14 +78,14 @@ export default function EquipmentSection({
                 {chestData.openedDate ? (
                   <button
                     className="equipment-open-chest-btn"
-                    onClick={() => onClick(chestData)}
+                    onClick={() => setCurrentChestModalData(chestData)}
                   >
                     <h3>Otwarta {chestData.openedDate}</h3>
                   </button>
                 ) : (
                   <button
                     className="equipment-open-chest-btn"
-                    onClick={() => onClick(chestData)}
+                    onClick={() => setCurrentOpeningChestModalData(chestData)}
                   >
                     <h3>Otwórz skrzynię</h3>
                   </button>

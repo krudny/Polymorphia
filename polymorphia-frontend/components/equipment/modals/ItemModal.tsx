@@ -2,16 +2,19 @@ import Modal from "@/components/modal/Modal";
 import "../../../styles/points-summary.css";
 import { API_STATIC_URL } from "@/services/api";
 import XPCard from "@/components/xp-card/XPCard";
-import {
-  Item,
-  ItemModalProps,
-} from "@/interfaces/equipment/EquipmentInterfaces";
+import { Item } from "@/interfaces/equipment/EquipmentInterfaces";
+import { EquipmentContext } from "@/components/providers/EquipmentContext";
+import { useContext } from "react";
 
-export default function ItemModal({ item, onClose }: ItemModalProps) {
+export default function ItemModal() {
+  const { currentItemModalData, setCurrentItemModalData } =
+    useContext(EquipmentContext);
+  const item = currentItemModalData;
+
   return (
     <Modal
       isOpen={item !== null}
-      onClose={onClose}
+      onClose={() => setCurrentItemModalData(null)}
       title={item?.title ?? ""}
       subtitle={item?.subtitle ?? ""}
     >

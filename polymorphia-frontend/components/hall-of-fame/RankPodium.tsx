@@ -1,5 +1,5 @@
 import XPCard from "@/components/xp-card/XPCard";
-import "../../styles/hall-of-fame.css"
+import "../../styles/hall-of-fame.css";
 
 export default function RankPodium({ position }: { position: 1 | 2 | 3 }) {
   return (

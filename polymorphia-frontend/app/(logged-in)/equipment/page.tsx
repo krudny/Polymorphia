@@ -12,12 +12,10 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "@/components/general/Loading";
 import EquipmentService from "@/services/equipment/EquipmentService";
 import EquipmentSectionWrapper from "@/components/equipment/EquipmentSectionWrapper";
+import OpeningChestModal from "@/components/equipment/modals/OpeningChestModal";
+import { EquipmentProvider } from "@/components/providers/EquipmentContext";
 
 export default function Equipment() {
-  const [currentItemModalData, setCurrentItemModalData] =
-    useState<ItemData | null>(null);
-  const [currentChestModalData, setCurrentChestModalData] =
-    useState<ChestData | null>(null);
   const { setTitle } = useTitle();
 
   useEffect(() => {
@@ -44,23 +42,14 @@ export default function Equipment() {
   }
 
   return (
-    <div className="equipment">
-      <EquipmentSectionWrapper
-        items={items}
-        chests={chests}
-        setCurrentChestModalData={setCurrentChestModalData}
-        setCurrentItemModalData={setCurrentItemModalData}
-      />
+    <EquipmentProvider>
+      <div className="equipment">
+        <EquipmentSectionWrapper items={items} chests={chests} />
 
-      <ItemModal
-        item={currentItemModalData}
-        onClose={() => setCurrentItemModalData(null)}
-      />
-
-      <ChestModal
-        chest={currentChestModalData}
-        onClose={() => setCurrentChestModalData(null)}
-      />
-    </div>
+        <ItemModal />
+        <ChestModal />
+        <OpeningChestModal />
+      </div>
+    </EquipmentProvider>
   );
 }

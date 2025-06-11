@@ -1,16 +1,19 @@
 import Modal from "@/components/modal/Modal";
 import { API_STATIC_URL } from "@/services/api";
 import XPCard from "@/components/xp-card/XPCard";
-import {
-  ChestModalProps,
-  Item,
-} from "@/interfaces/equipment/EquipmentInterfaces";
+import { Item } from "@/interfaces/equipment/EquipmentInterfaces";
+import { useContext } from "react";
+import { EquipmentContext } from "@/components/providers/EquipmentContext";
 
-export default function ChestModal({ chest, onClose }: ChestModalProps) {
+export default function ChestModal() {
+  const { currentChestModalData, setCurrentChestModalData } =
+    useContext(EquipmentContext);
+  const chest = currentChestModalData;
+
   return (
     <Modal
       isOpen={chest !== null}
-      onClose={onClose}
+      onClose={() => setCurrentChestModalData(null)}
       title={chest?.title ?? ""}
       subtitle={chest?.subtitle ?? ""}
     >

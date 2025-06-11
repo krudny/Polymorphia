@@ -85,6 +85,7 @@ const EquipmentService = {
         chestId: 1,
         title: "Złota skrzynia",
         subtitle: "Wygrane nagrody",
+        behavior: "ONE_OF_MANY",
         imageUrl: "images/chests/s1.png",
         openedDate: "12.06.2026",
         items: [
@@ -107,7 +108,8 @@ const EquipmentService = {
       {
         chestId: 2,
         title: "Złota skrzynia",
-        subtitle: "Wybierz jedną",
+        subtitle: "Wybierz jedno",
+        behavior: "ONE_OF_MANY",
         imageUrl: "images/chests/s1.png",
         openedDate: undefined,
         items: [
