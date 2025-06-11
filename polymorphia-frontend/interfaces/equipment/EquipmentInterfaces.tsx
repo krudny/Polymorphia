@@ -1,3 +1,5 @@
+import { ChestBehavior } from "@/interfaces/api/DTO";
+
 export type EquipmentSectionType = "item" | "chest";
 
 export interface EquipmentContextType {
@@ -30,7 +32,7 @@ export interface ChestData {
   title: string;
   subtitle: string;
   imageUrl: string;
-  behavior: "ONE_OF_MANY" | "ALL";
+  behavior: ChestBehavior;
   openedDate: string | undefined;
   items: Item[];
 }
@@ -40,7 +42,7 @@ export interface Item {
   title: string;
   subtitle: string;
   imageUrl: string;
-  bonusXp: string;
+  bonusXp?: string;
 }
 
 export interface EquipmentSectionWrapperProps {

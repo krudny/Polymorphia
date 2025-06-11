@@ -1,13 +1,10 @@
 "use client";
 import "../../../styles/equipment.css";
 import { useTitle } from "@/components/navigation/TitleContext";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ItemModal from "@/components/equipment/modals/ItemModal";
 import ChestModal from "@/components/equipment/modals/ChestModal";
-import {
-  ChestData,
-  ItemData,
-} from "@/interfaces/equipment/EquipmentInterfaces";
+
 import { useQuery } from "@tanstack/react-query";
 import Loading from "@/components/general/Loading";
 import EquipmentService from "@/services/equipment/EquipmentService";
