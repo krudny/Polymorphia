@@ -4,6 +4,7 @@ import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
 import RankDesktop from "@/components/hall-of-fame/RankDesktop";
 import RankMobile from "@/components/hall-of-fame/RankMobile";
+import "../../../styles/hall-of-fame.css"
 
 export default function HallOfFame() {
   const { setTitle } = useTitle();
@@ -14,7 +15,7 @@ export default function HallOfFame() {
 
   return (
     <>
-      <div className="lg:hidden w-full">
+      <div className="w-full lg:hidden">
         <RankMobile />
       </div>
       <div className="w-full hidden lg:block">

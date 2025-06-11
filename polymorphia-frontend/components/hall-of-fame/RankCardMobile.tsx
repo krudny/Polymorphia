@@ -2,6 +2,7 @@ import RankImage from "@/components/hall-of-fame/RankImage";
 import RankSummary from "@/components/hall-of-fame/RankSummary";
 import RankUserData from "@/components/hall-of-fame/RankUserData";
 import RankUserPoints from "@/components/hall-of-fame/RankUserPoints";
+import "../../styles/hall-of-fame.css"
 
 export default function RankCard({ position }: { position: number }) {
   const borderColors: Record<1 | 2 | 3, string> = {
@@ -13,14 +14,14 @@ export default function RankCard({ position }: { position: number }) {
 
   return (
     <div
-      className={`w-full min-h-[calc(25%-1rem)] my-2 flex-col flex justify-between rounded-xl bg-gray-50 shadow-lg border-b-6 p-3 ${border}`}
+      className={`hall-of-fame-mobile-record-wrapper ${border}`}
     >
-      <div className="w-full flex lg:px-1">
+      <div>
         <RankImage position={position} />
         <RankUserData />
         <RankSummary />
       </div>
-      <div className="w-full">
+      <div>
         <RankUserPoints titleSize={"xs"} xpSize={"sm"} separators={false} />
       </div>
     </div>

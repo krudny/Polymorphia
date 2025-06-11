@@ -2,6 +2,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ReactPaginate from "react-paginate";
 import { PaginationProps } from "@/interfaces/general/PaginationInterfaces";
+import "../../styles/paginate.css"
 
 export default function Pagination({
   totalPages,

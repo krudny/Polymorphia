@@ -1,10 +1,12 @@
+import "../../styles/hall-of-fame.css"
+
 export default function RankUserData() {
   return (
-    <div className="w-full lg:w-56 lg:mx-auto   h-full flex flex-col justify-center ml-3 2xl:ml-3 overflow-hidden">
-      <h1 className="text-3xl lg:text-4xl truncate w-full">
+    <div className="hall-of-fame-user-data">
+      <h1>
         Gerard Małoduszny
       </h1>
-      <h2 className="text-xl lg:text-2xl 2xl:mt-2 truncate w-full">
+      <h2>
         Majestatyczna Bestia
       </h2>
     </div>

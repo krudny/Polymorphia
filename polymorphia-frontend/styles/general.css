@@ -21,3 +21,11 @@
 .knowledge-base-wrapper {
   @apply w-full flex flex-col flex-1 relative;
 }
+
+.image-badge {
+  @apply absolute bg-neutral-300/85 backdrop-blur-sm flex-col-centered bottom-0 right-0 aspect-square;
+}
+
+.image-badge > h1 {
+  @apply text-base px-1 lg:text-2xl lg:px-2;
+}

@@ -1,0 +1,177 @@
+@import "tailwindcss";
+@import "./globals.css";
+@tailwind utilities;
+
+/* Hall of fame general */
+
+@utility hall-of-fame-rank-wrapper {
+    @apply w-full overflow-y-scroll custom-scrollbar;
+}
+
+@utility hall-of-fame-pagination-wrapper {
+    @apply w-full min-h-14 flex-centered text-2xl;
+}
+
+@utility hall-of-fame-record-wrapper {
+    @apply w-full rounded-xl bg-neutral-100 shadow-lg;
+}
+
+@utility hall-of-fame-search-wrapper {
+    @apply w-full flex justify-between my-2;
+}
+/* Hall of fame mobile */
+
+.hall-of-fame-mobile {
+    @apply w-full px-4 opacity-0;
+}
+
+.hall-of-fame-mobile-search-wrapper {
+    @apply hall-of-fame-search-wrapper h-12;
+}
+
+.hall-of-fame-mobile-rank-wrapper {
+    @apply w-full grid grid-cols-1 gap-3 min-[650px]:grid-cols-2;
+}
+
+.hall-of-fame-mobile-record-wrapper {
+    @apply hall-of-fame-record-wrapper min-h-[calc(25%-1rem)] flex flex-col justify-between border-b-6 p-3;
+}
+
+.hall-of-fame-mobile-record-wrapper > div {
+    @apply w-full flex;
+}
+
+/* Hall of fame desktop */
+
+.hall-of-fame-desktop {
+    @apply w-full h-full mx-auto flex flex-col opacity-0;
+    @apply lg:px-8 lg:mt-4 lg:max-w-[1600px];
+    @apply 2xl:px-10 2xl:max-h-[calc(100dvh-5rem)] 3xl:min-h-[54rem] 3xl:max-h-[54rem];
+}
+
+.hall-of-fame-desktop-wrapper {
+    @apply flex flex-col h-full min-h-0 px-4 2xl:flex-row;
+}
+
+.hall-of-fame-desktop-rank-wrapper {
+    @apply hall-of-fame-rank-wrapper flex flex-col flex-1 gap-y-2 2xl:gap-y-4;
+}
+
+.hall-of-fame-desktop-record-wrapper {
+    @apply hall-of-fame-record-wrapper h-28  flex justify-between items-center;
+    @apply min-[1400px]:h-36 2xl:min-h-[calc(25%-0.75rem)];
+}
+
+.hall-of-fame-desktop-record-user-data-wrapper {
+    @apply flex h-full truncate w-2/5 2xl:w-fit;
+}
+
+.hall-of-fame-desktop-record-user-points-wrapper {
+    @apply w-full min-w-[350px] lg:max-w-[450px] 2xl:max-w-[380px];
+}
+
+.hall-of-fame-desktop-podium-wrapper {
+    @apply w-full flex flex-col;
+    @apply 2xl:w-[30%] 2xl:min-h-full 2xl:mr-4;
+}
+
+.hall-of-fame-desktop-podium-text {
+    @apply w-full h-16 flex-centered mb-2 hidden 2xl:flex;
+}
+
+.hall-of-fame-desktop-podium-text > h2 {
+    @apply text-3xl;
+}
+
+.hall-of-fame-desktop-podium {
+    @apply w-full h-fit py-3 grid grid-cols-3 gap-x-3;
+    @apply 2xl:flex 2xl:flex-col 2xl:justify-between 2xl:flex-1 2xl:px-4 2xl:py-0;
+}
+
+.hall-of-fame-desktop-search-wrapper {
+    @apply hall-of-fame-search-wrapper h-16 mt-0;
+}
+
+.hall-of-fame-desktop-content-wrapper {
+    @apply w-full flex-col-centered 2xl:w-[70%] 2xl:min-h-full;
+}
+
+/* Hall of fame image */
+
+.hall-of-fame-image-wrapper {
+    @apply h-full relative aspect-square;
+}
+
+.hall-of-fame-image {
+    @apply object-cover rounded-xl lg:rounded-bl-xl lg:rounded-tr-none;
+}
+
+/* Hall of fame user data */
+
+.hall-of-fame-user-data {
+    @apply w-full h-full flex-col-centered ml-3 overflow-hidden;
+    @apply lg:w-56 lg:mx-auto 2xl:ml-10;
+}
+
+.hall-of-fame-user-data > h1 {
+    @apply w-full text-3xl truncate lg:text-4xl;
+}
+
+.hall-of-fame-user-data > h2 {
+    @apply w-full text-xl truncate lg:text-2xl 2xl:mt-2;
+}
+
+/* Hall of fame summary points */
+
+.hall-of-fame-summary-points {
+    @apply w-fit h-full flex flex-col items-end justify-center;
+    @apply lg:items-center lg:px-2;
+    @apply 2xl:bg-[#d4d4d4] 2xl:rounded-tr-xl 2xl:rounded-br-xl;
+}
+
+.hall-of-fame-summary-points > h1 {
+    @apply text-3xl;
+}
+
+.hall-of-fame-summary-points > h2 {
+    @apply text-xl lg:text-2xl lg:mt-1;
+}
+
+/* Hall of fame podium */
+
+.hall-of-fame-podium {
+    @apply w-full h-full 2xl:h-[calc(33.333%-1rem)] max-h-36 2xl:max-h-52 bg-neutral-300 rounded-xl;
+}
+
+/* Hall of fame search */
+
+.hall-of-fame-search-form {
+    @apply w-44 md:w-64 flex-centered;
+}
+
+.hall-of-fame-search-wrapper {
+    @apply w-full h-full flex-centered border-b-2  border-neutral-800 text-xl;
+    @apply md:px-2 md:text-2xl lg:text-3xl;
+}
+
+.hall-of-fame-search-wrapper > span {
+    @apply material-symbols text-2xl md:text-3xl lg:text-4xl;
+}
+
+.hall-of-fame-search-input {
+    @apply flex-1 h-full px-3 bg-transparent text-neutral-800 placeholder-neutral-800 focus:outline-none;
+}
+
+/* Hall of fame sort */
+
+.hall-of-fame-sort-button {
+    @apply flex-centered w-fit;
+}
+
+.hall-of-fame-sort-button > span {
+    @apply material-symbols text-2xl md:text-3xl;
+}
+
+.hall-of-fame-sort-button > h1 {
+    @apply text-xl ml-2 md:text-2xl lg:text-3xl;
+}

@@ -4,41 +4,28 @@ import RankSearch from "@/components/hall-of-fame/RankSearch";
 import RankSort from "@/components/hall-of-fame/RankSort";
 import Pagination from "@/components/general/Pagination";
 import RankCardMobile from "@/components/hall-of-fame/RankCardMobile";
-import { useEffect, useState } from "react";
-
-function handleResize(setPages: (value: number) => void) {
-  const width = window.innerWidth;
-  if (width < 800) {
-    setPages(10);
-  } else {
-    setPages(12);
-  }
-}
+import { useState } from "react";
+import "../../styles/hall-of-fame.css"
+import {useScaleShow} from "@/animations/General";
 
 export default function RankMobile() {
-  const [pages, setPages] = useState(10);
-
-  useEffect(() => {
-    const onResize = () => handleResize(setPages);
-    window.addEventListener("resize", onResize);
-    onResize();
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
+  const wrapperRef = useScaleShow();
+  const [pages] = useState(16);
 
   return (
-    <div className="w-full h-full px-4">
-      <div className="w-full h-12 flex justify-between my-2">
+    <div ref={wrapperRef} className="hall-of-fame-mobile">
+      <div className="hall-of-fame-mobile-search-wrapper">
         <RankSearch />
         <RankSort />
       </div>
 
-      <div className="w-full grid grid-cols-1 min-[650px]:grid-cols-2 min-[700px]:gap-3 overflow-y-scroll custom-scrollbar">
+      <div className="hall-of-fame-mobile-rank-wrapper">
         {Array.from({ length: pages }, (_, i) => (
           <RankCardMobile key={i} position={i + 1} />
         ))}
       </div>
 
-      <div className="w-full min-h-14 flex items-center justify-center text-2xl">
+      <div className="hall-of-fame-pagination-wrapper">
         <Pagination
           totalPages={250 / pages}
           onPageChangeAction={() => {}}

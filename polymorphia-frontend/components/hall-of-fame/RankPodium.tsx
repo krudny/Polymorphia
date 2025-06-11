@@ -1,8 +1,9 @@
 import XPCard from "@/components/xp-card/XPCard";
+import "../../styles/hall-of-fame.css"
 
 export default function RankPodium({ position }: { position: 1 | 2 | 3 }) {
   return (
-    <div className="w-full h-full 2xl:h-[calc(33.333%-1rem)] max-h-36 2xl:max-h-52 bg-neutral-300 rounded-xl bg-green-300">
+    <div className="hall-of-fame-podium">
       <XPCard
         title="Gerard Małoduszny"
         subtitle="Majestatyczna Bestia"
