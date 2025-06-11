@@ -3,18 +3,25 @@ import clsx from "clsx";
 import { X } from "lucide-react";
 import { createPortal } from "react-dom";
 import "../../styles/modal.css";
-import { useModalAnimation } from "@/animations/Modal";
+import { useAnimatedModalState } from "@/animations/Modal";
+import { useRef } from "react";
 
 export default function Modal({
   isOpen,
-  onClose,
+  onRequestClose,
+  onClosed,
   title,
   subtitle,
   children,
 }: ModalProps) {
-  const { modalRef, backdropRef, handleCloseClick } = useModalAnimation(
-    onClose,
-    isOpen
+  const modalRef = useRef<HTMLDivElement | null>(null);
+  const backdropRef = useRef<HTMLDivElement | null>(null);
+
+  const modalState = useAnimatedModalState(
+    isOpen,
+    modalRef,
+    backdropRef,
+    onClosed
   );
 
   return createPortal(
@@ -22,9 +29,9 @@ export default function Modal({
       ref={backdropRef}
       className={clsx(
         "modal-backdrop",
-        isOpen ? "modal-visible" : "modal-not-visible"
+        modalState !== "closed" ? "modal-visible" : "modal-not-visible"
       )}
-      onClick={handleCloseClick}
+      onClick={onRequestClose}
     >
       <div
         ref={modalRef}
@@ -36,10 +43,7 @@ export default function Modal({
         <div className="modal-header-wrapper">
           <div className="modal-header">
             <h1>{title}</h1>
-            <X
-              className="modal-header-exit-button"
-              onClick={handleCloseClick}
-            />
+            <X className="modal-header-exit-button" onClick={onRequestClose} />
           </div>
           <h2>{subtitle}</h2>
         </div>

@@ -1,5 +1,5 @@
 import Modal from "@/components/modal/Modal";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { EquipmentContext } from "@/components/providers/EquipmentContext";
 import { API_STATIC_URL } from "@/services/api";
 import Image from "next/image";
@@ -13,6 +13,11 @@ export default function OpeningChestModal() {
     setPickedItemsIds,
   } = useContext(EquipmentContext);
   const openingChest = currentOpeningChestModalData;
+  const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    setModalVisible(!!openingChest);
+  }, [openingChest]);
 
   const handlePickItem = (itemId: number) => {
     if (!openingChest) return;
@@ -28,15 +33,20 @@ export default function OpeningChestModal() {
     }
   };
 
-  const handleClose = () => {
+  const onRequestClose = () => {
+    setModalVisible(false);
+  };
+
+  const onClosed = () => {
     setCurrentOpeningChestModalData(null);
     setPickedItemsIds([]);
   };
 
   return (
     <Modal
-      isOpen={openingChest !== null}
-      onClose={handleClose}
+      isOpen={modalVisible}
+      onRequestClose={onRequestClose}
+      onClosed={onClosed}
       title={openingChest?.title ?? ""}
       subtitle={openingChest?.subtitle ?? ""}
     >
@@ -55,7 +65,9 @@ export default function OpeningChestModal() {
                   src={`${API_STATIC_URL}/${item.imageUrl}`}
                   alt={item.title}
                   fill
-                  className={`equipment-img ${isPicked ? "outline-4 outline-amber-400" : ""}`}
+                  className={`equipment-img ${
+                    isPicked ? "outline-4 outline-amber-400" : ""
+                  }`}
                   priority
                   sizes="(min-width: 1024px) 10vw, 25vw"
                 />
@@ -67,7 +79,7 @@ export default function OpeningChestModal() {
           <ButtonWithBorder
             text="Potwierdź"
             className="w-full"
-            onClick={handleClose}
+            onClick={onRequestClose}
           />
         </div>
       </>

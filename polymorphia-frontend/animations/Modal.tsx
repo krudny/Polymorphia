@@ -1,51 +1,73 @@
 "use client";
+import { ModalState } from "@/interfaces/modal/ModalInterfaces";
 import gsap from "gsap";
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect, useState, useLayoutEffect, RefObject } from "react";
 
-export function useModalAnimation(onClose: () => void, isOpen: boolean) {
-  const modalRef = useRef<HTMLDivElement | null>(null);
-  const backdropRef = useRef<HTMLDivElement | null>(null);
+export function useAnimatedModalState(
+  isOpen: boolean,
+  modalRef: RefObject<HTMLDivElement | null>,
+  backdropRef: RefObject<HTMLDivElement | null>,
+  onClosed: () => void
+) {
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
-  const [isClosing, setIsClosing] = useState(false);
 
-  useEffect(() => {
-    if (!modalRef.current || !backdropRef.current) return;
+  const [modalState, setModalState] = useState<ModalState>("closed");
 
-    if (!timelineRef.current) {
-      timelineRef.current = gsap
-        .timeline({ paused: true })
-        .fromTo(
-          backdropRef.current,
-          { opacity: 0 },
-          { opacity: 1, duration: 0.2, ease: "power1.inOut" }
-        )
-        .fromTo(
-          modalRef.current,
-          { opacity: 0, scale: 0.95 },
-          { opacity: 1, scale: 1, duration: 0.25, ease: "power1.inOut" },
-          "<"
-        );
-    }
+  // Set timeline only once
+  useLayoutEffect(() => {
+    if (!modalRef.current || !backdropRef.current || !!timelineRef.current)
+      return;
 
-    if (isOpen && !isClosing) {
-      timelineRef.current.play();
-    }
-    if (!isOpen && isClosing) {
-      setIsClosing(false);
-    }
-  }, [isOpen, isClosing]);
-
-  const handleCloseClick = useCallback(() => {
-    if (isClosing || !timelineRef.current) return;
-
-    setIsClosing(true);
-
-    timelineRef.current.reverse().eventCallback("onReverseComplete", () => {
-      onClose();
-      if (!isClosing && timelineRef.current) return;
-      timelineRef.current?.eventCallback("onReverseComplete", null);
+    const tl = gsap.timeline({
+      paused: true,
+      onComplete: () => {
+        setModalState("opened");
+      },
     });
-  }, [isClosing, onClose]);
 
-  return { modalRef, backdropRef, handleCloseClick };
+    tl.fromTo(
+      backdropRef.current,
+      { opacity: 0 },
+      { opacity: 1, duration: 0.2, ease: "power1.inOut" }
+    ).fromTo(
+      modalRef.current,
+      { opacity: 0, scale: 0.95 },
+      { opacity: 1, scale: 1, duration: 0.25, ease: "power1.inOut" },
+      "<"
+    );
+
+    timelineRef.current = tl;
+
+    return () => {
+      tl.kill();
+    };
+  }, [backdropRef, modalRef]);
+
+  // Handle changes to onClosed callback separately to setting timeline
+  // to avoid resetting the timeline on re-renders
+  useLayoutEffect(() => {
+    if (!timelineRef.current) return;
+    timelineRef.current.eventCallback("onReverseComplete", () => {
+      onClosed();
+      setModalState("closed");
+    });
+  }, [onClosed]);
+
+  // Handle modal state
+  useEffect(() => {
+    const tl = timelineRef.current;
+    if (!tl) return;
+
+    if (isOpen && modalState === "closed") {
+      setModalState("opening");
+      tl.play();
+    }
+
+    if (!isOpen && modalState === "opened") {
+      setModalState("closing");
+      tl.reverse();
+    }
+  }, [isOpen, modalState]);
+
+  return modalState;
 }
