@@ -4,17 +4,23 @@ import { API_STATIC_URL } from "@/services/api";
 import XPCard from "@/components/xp-card/XPCard";
 import { Item } from "@/interfaces/equipment/EquipmentInterfaces";
 import { EquipmentContext } from "@/components/providers/EquipmentContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export default function ItemModal() {
   const { currentItemModalData, setCurrentItemModalData } =
     useContext(EquipmentContext);
   const item = currentItemModalData;
+  const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    setModalVisible(!!item);
+  }, [item]);
 
   return (
     <Modal
-      isOpen={item !== null}
-      onClose={() => setCurrentItemModalData(null)}
+      isOpen={modalVisible}
+      onRequestClose={() => setModalVisible(false)}
+      onClosed={() => setCurrentItemModalData(null)}
       title={item?.title ?? ""}
       subtitle={item?.subtitle ?? ""}
     >
