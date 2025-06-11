@@ -1,6 +1,7 @@
 import { useScaleShow } from "@/animations/General";
 import { useTitle } from "../navigation/TitleContext";
 import { ReactNode } from "react";
+import '../../styles/general.css'
 
 export default function MainLayout({ children }: { children: ReactNode }) {
   const { title } = useTitle();
@@ -9,14 +10,14 @@ export default function MainLayout({ children }: { children: ReactNode }) {
   return (
     <div
       id="main-container"
-      className="w-full h-full flex flex-col min-h-[calc(100dvh)] relative  overflow-x-hidden custom-scrollbar max-lg:mt-20"
+      className="main-layout"
     >
-      <div className="w-full flex-centered h-15 shrink-0 hidden lg:flex">
-        <h3 className="text-4xl" ref={titleRef}>
+      <div className="main-layout-title">
+        <h3 ref={titleRef}>
           {title}
         </h3>
       </div>
-      <div className="w-full flex flex-col flex-1">{children}</div>
+      <div className="main-layout-content-wrapper">{children}</div>
     </div>
   );
 }

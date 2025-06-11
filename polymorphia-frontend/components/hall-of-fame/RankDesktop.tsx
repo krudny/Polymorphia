@@ -19,7 +19,7 @@ export default function RankDesktop() {
           <div className="hall-of-fame-desktop-podium-text">
             <h2>Podium</h2>
           </div>
-          <div className="hall-of-fame-desktop-podium ">
+          <div className="hall-of-fame-desktop-podium">
             {([1, 2, 3] as const).map((position) => (
               <RankPodium key={position} position={position} />
             ))}

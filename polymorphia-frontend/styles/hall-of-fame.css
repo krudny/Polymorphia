@@ -17,7 +17,7 @@
 }
 
 @utility hall-of-fame-search-wrapper {
-    @apply w-full flex justify-between my-2;
+    @apply w-full flex justify-between my-3;
 }
 /* Hall of fame mobile */
 
@@ -46,7 +46,7 @@
 .hall-of-fame-desktop {
     @apply w-full h-full mx-auto flex flex-col opacity-0;
     @apply lg:px-8 lg:mt-4 lg:max-w-[1600px];
-    @apply 2xl:px-10 2xl:max-h-[calc(100dvh-5rem)] 3xl:min-h-[54rem] 3xl:max-h-[54rem];
+    @apply 2xl:px-10 2xl:max-h-[54rem] 3xl:min-h-[54rem] 3xl:max-h-[54rem];
 }
 
 .hall-of-fame-desktop-wrapper {
@@ -54,11 +54,11 @@
 }
 
 .hall-of-fame-desktop-rank-wrapper {
-    @apply hall-of-fame-rank-wrapper flex flex-col flex-1 gap-y-2 2xl:gap-y-4;
+    @apply hall-of-fame-rank-wrapper flex flex-col flex-1 gap-y-2 2xl:gap-y-4 pr-2;
 }
 
 .hall-of-fame-desktop-record-wrapper {
-    @apply hall-of-fame-record-wrapper h-28  flex justify-between items-center;
+    @apply hall-of-fame-record-wrapper h-28 flex justify-between items-center;
     @apply min-[1400px]:h-36 2xl:min-h-[calc(25%-0.75rem)];
 }
 
@@ -76,7 +76,7 @@
 }
 
 .hall-of-fame-desktop-podium-text {
-    @apply w-full h-16 flex-centered mb-2 hidden 2xl:flex;
+    @apply w-full h-14 flex-centered mb-3 hidden 2xl:flex;
 }
 
 .hall-of-fame-desktop-podium-text > h2 {
@@ -89,7 +89,7 @@
 }
 
 .hall-of-fame-desktop-search-wrapper {
-    @apply hall-of-fame-search-wrapper h-16 mt-0;
+    @apply hall-of-fame-search-wrapper h-14 mt-0;
 }
 
 .hall-of-fame-desktop-content-wrapper {
