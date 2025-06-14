@@ -1,7 +1,7 @@
 import { ModalProps } from "@/interfaces/modal/ModalInterfaces";
 import ModalInner from "./ModalInner";
 import { useState, useEffect } from "react";
-import { ModalProvider } from "./ModalContext";
+import { ModalProvider } from "../providers/ModalContext";
 
 export default function Modal(props: ModalProps) {
   const { isDataPresented, onClosed, ...rest } = props;

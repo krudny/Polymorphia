@@ -3,7 +3,7 @@ import { EquipmentContext } from "@/components/providers/EquipmentContext";
 import { API_STATIC_URL } from "@/services/api";
 import { useContext } from "react";
 import Image from "next/image";
-import { useModal } from "@/components/modal/ModalContext";
+import { useModal } from "@/components/providers/ModalContext";
 
 export default function OpeningChestModalContent() {
   const { closeModal } = useModal();
