@@ -1,3 +1,5 @@
+import {ReactNode} from "react";
+
 export type ModalState = "closed" | "opening" | "opened" | "closing";
 
 export interface ModalProps {
