@@ -28,7 +28,7 @@ export default function OpeningChestModalContent() {
   return (
     <>
       <div className="w-80 grid grid-cols-2 gap-3">
-        {openingChest?.items.map(item => (
+        {openingChest?.items.map((item) => (
           <div
             key={item.itemId}
             className="relative w-full aspect-square cursor-pointer"
