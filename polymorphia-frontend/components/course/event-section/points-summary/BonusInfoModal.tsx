@@ -5,13 +5,13 @@ import Modal from "@/components/modal/Modal";
 
 export default function BonusInfoModal({
   bonusInfo,
-  onClose,
+  onClosed,
 }: BonusInfoModalProps) {
   return (
     <Modal
       isDataPresented={bonusInfo !== null}
       title={bonusInfo?.name ?? ""}
-      onClose={onClose}
+      onClosed={onClosed}
     >
       <div className="bonus-info-modal">
         {bonusInfo?.items.map((item) => (

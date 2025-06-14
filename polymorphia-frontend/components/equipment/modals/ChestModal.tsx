@@ -13,7 +13,7 @@ export default function ChestModal() {
   return (
     <Modal
       isDataPresented={chest !== null}
-      onClose={() => setCurrentChestModalData(null)}
+      onClosed={() => setCurrentChestModalData(null)}
       title={chest?.title ?? ""}
       subtitle={chest?.subtitle ?? ""}
     >

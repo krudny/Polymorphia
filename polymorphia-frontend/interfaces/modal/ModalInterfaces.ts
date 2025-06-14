@@ -3,9 +3,8 @@ import { ReactNode } from "react";
 export type ModalState = "closed" | "opening" | "opened" | "closing";
 
 export interface ModalProps
-  extends Omit<ModalInnerProps, "isOpen" | "onRequestClose" | "onClosed"> {
+  extends Omit<ModalInnerProps, "isOpen" | "onRequestClose"> {
   isDataPresented: boolean;
-  onClose: () => void;
 }
 
 export interface ModalInnerProps {
@@ -67,4 +66,13 @@ export interface ModalInnerProps {
   title: string;
   subtitle?: string;
   children?: ReactNode;
+}
+
+export interface ModalContextValue {
+  closeModal: () => void;
+}
+
+export interface ModalProviderProps {
+  children: React.ReactNode;
+  closeModal: () => void;
 }

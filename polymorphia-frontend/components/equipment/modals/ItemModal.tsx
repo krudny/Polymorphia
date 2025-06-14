@@ -14,7 +14,7 @@ export default function ItemModal() {
   return (
     <Modal
       isDataPresented={item !== null}
-      onClose={() => setCurrentItemModalData(null)}
+      onClosed={() => setCurrentItemModalData(null)}
       title={item?.title ?? ""}
       subtitle={item?.subtitle ?? ""}
     >
