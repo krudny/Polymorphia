@@ -1,6 +1,6 @@
-import { GradableEventCoreResponse } from '@/interfaces/course/event-section/EventSectionInterfaces';
-import React, { useEffect, useRef } from 'react';
-import gsap from 'gsap';
+import { GradableEventCoreResponse } from "@/interfaces/course/event-section/EventSectionInterfaces";
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
 
 export function useEventSectionAnimation(
   pageToShow: number,
@@ -26,7 +26,7 @@ export function useEventSectionAnimation(
         xPercent: -dir * 20,
         opacity: 0,
         duration: 0.2,
-        ease: 'power2.inOut',
+        ease: "power2.inOut",
         onComplete: () => {
           setPageToShow(newPage);
           setCurrentPage(newPage);
@@ -53,7 +53,7 @@ export function useEventSectionAnimation(
       gsap.fromTo(
         sliderRef.current,
         { xPercent: dir * 100, opacity: 0 },
-        { xPercent: 0, opacity: 1, duration: 0.2, ease: 'power2.out' }
+        { xPercent: 0, opacity: 1, duration: 0.2, ease: "power2.out" }
       );
     }
   }, [pageToShow, gradableEventsData, sliderRef]);

@@ -8,8 +8,8 @@ import {
   GradableEventShortResponseDtoPage,
   Test,
   TestResponseDto,
-} from '@/interfaces/course/event-section/EventSectionInterfaces';
-import { API_HOST } from '@/services/api';
+} from "@/interfaces/course/event-section/EventSectionInterfaces";
+import { API_HOST } from "@/services/api";
 
 export const EventSectionService = {
   getEventSections: async (
@@ -17,10 +17,10 @@ export const EventSectionService = {
   ): Promise<EventSectionShortResponseDto[]> => {
     const response = await fetch(
       `${API_HOST}/courses/${courseId}/event-sections`,
-      { credentials: 'include' }
+      { credentials: "include" }
     );
 
-    if (!response.ok) throw new Error('Failed to fetch event sections!');
+    if (!response.ok) throw new Error("Failed to fetch event sections!");
 
     return response.json();
   },
@@ -34,10 +34,10 @@ export const EventSectionService = {
   }): Promise<EventSection> => {
     const response = await fetch(
       `${API_HOST}/${eventSectionType.toLowerCase()}-sections/${eventSectionId}`,
-      { credentials: 'include' }
+      { credentials: "include" }
     );
 
-    if (!response.ok) throw new Error('Failed to fetch event section!');
+    if (!response.ok) throw new Error("Failed to fetch event section!");
 
     const data: EventSectionResponseDto = await response.json();
 
@@ -49,7 +49,7 @@ export const EventSectionService = {
       totalXp: data.totalXp.toFixed(1),
       bonuses: [
         {
-          name: 'Bonusy punktowe',
+          name: "Bonusy punktowe",
           bonusXp: data.flatBonus.xp.toFixed(1),
           items: data.flatBonus.items.map((item) => {
             return {
@@ -65,7 +65,7 @@ export const EventSectionService = {
           }),
         },
         {
-          name: 'Bonusy procentowe',
+          name: "Bonusy procentowe",
           bonusXp: data.percentageBonus.xp.toFixed(1),
           bonusPercentage: data.percentageBonus.percentage?.toString(),
           items: data.percentageBonus.items.map((item) => {
@@ -105,10 +105,10 @@ export const EventSectionService = {
     const response = await fetch(
       `${API_HOST}/${eventSectionType.toLowerCase()}-sections/${eventSectionId}/gradable-events?` +
         params,
-      { credentials: 'include' }
+      { credentials: "include" }
     );
 
-    if (!response.ok) throw new Error('Failed to fetch gradable events!');
+    if (!response.ok) throw new Error("Failed to fetch gradable events!");
 
     const data: GradableEventShortResponseDtoPage = await response.json();
 
@@ -137,21 +137,21 @@ export const EventSectionService = {
   }): Promise<T> => {
     if (gradableEventId === null) {
       return new Promise<T>((_, reject) => {
-        reject('No data');
+        reject("No data");
       });
     }
 
     /// TODO: URL might break for projects
     const response = await fetch(
       `${API_HOST}/${eventSectionType.toLowerCase()}s/${gradableEventId}`,
-      { credentials: 'include' }
+      { credentials: "include" }
     );
 
-    if (!response.ok) throw new Error('Failed to fetch event section!');
+    if (!response.ok) throw new Error("Failed to fetch event section!");
 
     const data: unknown = await response.json();
 
-    if (eventSectionType === 'test') {
+    if (eventSectionType === "test") {
       const testData: TestResponseDto = data as TestResponseDto;
       const mapped: Test = {
         id: testData.id,
@@ -178,7 +178,7 @@ export const EventSectionService = {
       return mapped as T;
     } else {
       return new Promise<T>((resolve, reject) => {
-        reject('Not implemented yet.');
+        reject("Not implemented yet.");
       });
     }
   },
