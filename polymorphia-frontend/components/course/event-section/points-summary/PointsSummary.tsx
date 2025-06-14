@@ -42,7 +42,7 @@ export default function PointsSummary({
       </div>
       <BonusInfoModal
         bonusInfo={currentBonusInfoModal}
-        onClosed={() => setCurrentBonusInfoModal(null)}
+        onClose={() => setCurrentBonusInfoModal(null)}
       />
     </>
   );

@@ -1,9 +1,9 @@
-import Modal from "@/components/modal/Modal";
 import { useContext, useEffect, useState } from "react";
 import { EquipmentContext } from "@/components/providers/EquipmentContext";
 import { API_STATIC_URL } from "@/services/api";
 import Image from "next/image";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ModalInner from "@/components/modal/ModalInner";
 
 export default function OpeningChestModal() {
   const {
@@ -43,7 +43,7 @@ export default function OpeningChestModal() {
   };
 
   return (
-    <Modal
+    <ModalInner
       isOpen={modalVisible}
       onRequestClose={onRequestClose}
       onClosed={onClosed}
@@ -83,6 +83,6 @@ export default function OpeningChestModal() {
           />
         </div>
       </>
-    </Modal>
+    </ModalInner>
   );
 }

@@ -1,4 +1,3 @@
-import Modal from "@/components/modal/Modal";
 import {
   Test,
   TestDetailsModalProps,
@@ -7,12 +6,12 @@ import RewardsInfo from "./RewardsInfo";
 import { EventSectionService } from "@/services/course/event-section/EventSectionService";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "@/components/general/Loading";
-import { useEffect, useState } from "react";
+import Modal from "@/components/modal/Modal";
 
 export default function TestDetailsModal({
   eventSectionId,
   selectedGradableEventId,
-  onClosed,
+  onClose,
 }: TestDetailsModalProps) {
   const {
     data: test,
@@ -28,24 +27,11 @@ export default function TestDetailsModal({
       }),
   });
 
-  const [modalVisible, setModalVisible] = useState(false);
-
-  const onRequestClose = () => {
-    setModalVisible(false);
-  };
-
-  useEffect(() => {
-    setModalVisible(!!selectedGradableEventId);
-  }, [selectedGradableEventId]);
-
-  console.log(modalVisible, test)
-
   return (
     <Modal
-      isOpen={modalVisible}
+      isDataPresented={selectedGradableEventId !== null}
       title={test?.name ?? ""}
-      onClosed={onClosed}
-      onRequestClose={onRequestClose}
+      onClose={onClose}
     >
       {isError ?? <div>Wystąpił błąd przy ładowaniu szczegółów.</div>}
       {isLoading ?? (

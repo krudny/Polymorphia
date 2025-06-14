@@ -2,7 +2,13 @@ import { ReactNode } from "react";
 
 export type ModalState = "closed" | "opening" | "opened" | "closing";
 
-export interface ModalProps {
+export interface ModalProps
+  extends Omit<ModalInnerProps, "isOpen" | "onRequestClose" | "onClosed"> {
+  isDataPresented: boolean;
+  onClose: () => void;
+}
+
+export interface ModalInnerProps {
   isOpen: boolean;
   /**
    * Use this callback to set the visibility (isOpen) of the modal to false.

@@ -1,25 +1,17 @@
-import Modal from "@/components/modal/Modal";
 import { BonusInfoModalProps } from "@/interfaces/course/event-section/PointsSummaryInterfaces";
 import BonusItemCard from "./BonusItemCard";
 import "../../../../styles/points-summary.css";
-import { useEffect, useState } from "react";
+import Modal from "@/components/modal/Modal";
 
 export default function BonusInfoModal({
   bonusInfo,
-  onClosed,
+  onClose,
 }: BonusInfoModalProps) {
-  const [modalVisible, setModalVisible] = useState(false);
-
-  useEffect(() => {
-    setModalVisible(!!bonusInfo);
-  }, [bonusInfo]);
-
   return (
     <Modal
-      isOpen={modalVisible}
+      isDataPresented={bonusInfo !== null}
       title={bonusInfo?.name ?? ""}
-      onRequestClose={() => setModalVisible(false)}
-      onClosed={onClosed}
+      onClose={onClose}
     >
       <div className="bonus-info-modal">
         {bonusInfo?.items.map((item) => (

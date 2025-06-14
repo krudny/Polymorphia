@@ -17,7 +17,10 @@ export interface PointsSummaryElementProps {
 }
 
 export interface BonusInfoModalProps
-  extends Omit<ModalProps, "title" | "isOpen" | "children" | "onRequestClose"> {
+  extends Omit<
+    ModalProps,
+    "title" | "isDataPresented" | "children" | "onRequestClose"
+  > {
   bonusInfo: BonusInfo | null;
 }
 

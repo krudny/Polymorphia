@@ -158,7 +158,7 @@ export default function XPCardGrid({
         <TestDetailsModal
           eventSectionId={eventSection.id}
           selectedGradableEventId={currentlySelectedGradableEventIdForModal}
-          onClosed={() => setCurrentlySelectedGradableEventIdForModal(null)}
+          onClose={() => setCurrentlySelectedGradableEventIdForModal(null)}
         />
       )}
     </>
