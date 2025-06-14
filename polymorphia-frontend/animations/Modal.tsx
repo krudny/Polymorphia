@@ -28,11 +28,11 @@ export function useAnimatedModalState(
     tl.fromTo(
       backdropRef.current,
       { opacity: 0 },
-      { opacity: 1, duration: 0.2, ease: "power1.inOut" }
+      { opacity: 1, duration: 0.15, ease: "power1.inOut" }
     ).fromTo(
       modalRef.current,
       { opacity: 0, scale: 0.95 },
-      { opacity: 1, scale: 1, duration: 0.25, ease: "power1.inOut" },
+      { opacity: 1, scale: 1, duration: 0.20, ease: "power1.inOut" },
       "<"
     );
 

@@ -44,7 +44,7 @@
 /* Hall of fame desktop */
 
 .hall-of-fame-desktop {
-  @apply w-full h-full mx-auto flex flex-col opacity-0;
+  @apply w-full h-full mx-auto flex flex-col opacity-0 overflow-x-hidden;
   @apply lg:px-8 lg:mt-4 lg:max-w-[1600px];
   @apply 2xl:px-10 2xl:h-[calc(100dvh-5rem)] 2xl:max-h-[54rem] 3xl:min-h-[54rem] 3xl:max-h-[54rem];
 }
@@ -58,7 +58,7 @@
 }
 
 .hall-of-fame-desktop-record-wrapper {
-  @apply hall-of-fame-record-wrapper h-28 flex justify-between items-center;
+  @apply hall-of-fame-record-wrapper h-28 flex justify-between items-center bg-neutral-100;
   @apply min-[1400px]:h-36 2xl:min-h-[calc(25%-0.75rem)];
 }
 
@@ -72,7 +72,7 @@
 
 .hall-of-fame-desktop-podium-wrapper {
   @apply w-full flex flex-col;
-  @apply 2xl:w-[30%] 2xl:min-h-full 2xl:mr-4;
+  @apply 2xl:w-[30%] 2xl:min-h-full;
 }
 
 .hall-of-fame-desktop-podium-text {
@@ -85,7 +85,7 @@
 
 .hall-of-fame-desktop-podium {
   @apply w-full h-fit py-3 grid grid-cols-3 gap-x-3;
-  @apply 2xl:flex 2xl:flex-col 2xl:justify-between 2xl:flex-1 2xl:px-4 2xl:py-0;
+  @apply 2xl:flex 2xl:flex-col 2xl:justify-between 2xl:flex-1 2xl:px-5 2xl:py-0;
 }
 
 .hall-of-fame-desktop-search-wrapper {
@@ -110,7 +110,7 @@
 
 .hall-of-fame-user-data {
   @apply w-full h-full flex-col-centered ml-3 overflow-hidden;
-  @apply lg:w-56 lg:mx-auto 2xl:ml-10;
+  @apply lg:w-56 lg:mx-auto lg:px-4 2xl:ml-10;
 }
 
 .hall-of-fame-user-data > h1 {
@@ -126,7 +126,7 @@
 .hall-of-fame-summary-points {
   @apply w-fit h-full flex flex-col items-end justify-center;
   @apply lg:items-center lg:px-2;
-  @apply 2xl:bg-[#d4d4d4] 2xl:rounded-tr-xl 2xl:rounded-br-xl;
+  @apply lg:bg-[#d4d4d4] 2xl:rounded-tr-xl 2xl:rounded-br-xl;
 }
 
 .hall-of-fame-summary-points > h1 {
@@ -140,7 +140,7 @@
 /* Hall of fame podium */
 
 .hall-of-fame-podium {
-  @apply w-full h-full 2xl:h-[calc(33.333%-1rem)] max-h-36 2xl:max-h-52 bg-neutral-300 rounded-xl;
+  @apply w-full h-full 2xl:h-[calc(33.333%-1rem)] max-h-36 2xl:max-h-52 rounded-xl;
 }
 
 /* Hall of fame search */

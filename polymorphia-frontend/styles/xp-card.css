@@ -178,7 +178,7 @@
   }
 
   .xp-card-middle {
-    @apply bg-gray-200 max-w-full;
+    @apply bg-neutral-100 max-w-full;
   }
 
   .xp-card-middle,
