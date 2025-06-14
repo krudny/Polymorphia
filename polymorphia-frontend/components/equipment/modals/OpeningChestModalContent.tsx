@@ -52,7 +52,7 @@ export default function OpeningChestModalContent() {
       <div className="w-full mt-5">
         <ButtonWithBorder
           text="Potwierdź"
-          className="w-full"
+          className="w-full rounded-xl"
           onClick={closeModal}
         />
       </div>

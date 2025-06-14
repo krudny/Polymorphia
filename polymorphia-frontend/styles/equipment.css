@@ -21,8 +21,8 @@
   @apply object-cover rounded-2xl shadow-lg;
 }
 
-.equipment-open-chest-btn {
-  @apply w-full flex-centered bg-neutral-800 mt-4 text-neutral-300 rounded-xl shadow-lg hover:cursor-pointer;
+.equipment-chest-btn {
+  @apply w-full flex-centered mt-4;
 }
 
 .equipment-open-chest-btn > h3 {

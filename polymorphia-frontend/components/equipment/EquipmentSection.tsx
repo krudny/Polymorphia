@@ -9,6 +9,7 @@ import Image from "next/image";
 import ImageBadge from "@/components/general/ImageBadge";
 import { useContext } from "react";
 import { EquipmentContext } from "@/components/providers/EquipmentContext";
+import ButtonWithBorder from "../button/ButtonWithBorder";
 
 export function EquipmentSection({ type, data }: EquipmentSectionProps) {
   const {
@@ -76,19 +77,21 @@ export function EquipmentSection({ type, data }: EquipmentSectionProps) {
                   />
                 </div>
                 {chestData.openedDate ? (
-                  <button
-                    className="equipment-open-chest-btn"
-                    onClick={() => setCurrentChestModalData(chestData)}
-                  >
-                    <h3>Otwarta {chestData.openedDate}</h3>
-                  </button>
+                  <div className="equipment-chest-btn">
+                    <ButtonWithBorder
+                      text={`Otwarta ${chestData.openedDate}`}
+                      onClick={() => setCurrentChestModalData(chestData)}
+                      className="w-full !py-0 text-lg lg:text-2xl rounded-xl"
+                    />
+                  </div>
                 ) : (
-                  <button
-                    className="equipment-open-chest-btn"
-                    onClick={() => setCurrentOpeningChestModalData(chestData)}
-                  >
-                    <h3>Otwórz skrzynię</h3>
-                  </button>
+                  <div className="equipment-chest-btn">
+                    <ButtonWithBorder
+                      text="Otwórz skrzynię"
+                      onClick={() => setCurrentOpeningChestModalData(chestData)}
+                      className="w-full !py-0 text-lg lg:text-2xl rounded-xl"
+                    />
+                  </div>
                 )}
               </div>
             );
