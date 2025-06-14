@@ -171,7 +171,7 @@ export interface RewardsInfoProps {
 }
 
 export interface TestDetailsModalProps
-  extends Omit<ModalProps, "title" | "isOpen" | "children"> {
+  extends Omit<ModalProps, "title" | "isDataPresented" | "children"> {
   eventSectionId: number;
   selectedGradableEventId: number | null;
 }

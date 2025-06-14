@@ -1,7 +1,7 @@
-import Modal from "@/components/modal/Modal";
 import { BonusInfoModalProps } from "@/interfaces/course/event-section/PointsSummaryInterfaces";
 import BonusItemCard from "./BonusItemCard";
 import "../../../../styles/points-summary.css";
+import Modal from "@/components/modal/Modal";
 
 export default function BonusInfoModal({
   bonusInfo,
@@ -9,7 +9,7 @@ export default function BonusInfoModal({
 }: BonusInfoModalProps) {
   return (
     <Modal
-      isOpen={bonusInfo !== null}
+      isDataPresented={bonusInfo !== null}
       title={bonusInfo?.name ?? ""}
       onClose={onClose}
     >
