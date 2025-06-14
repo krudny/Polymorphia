@@ -11,7 +11,7 @@ import Modal from "@/components/modal/Modal";
 export default function TestDetailsModal({
   eventSectionId,
   selectedGradableEventId,
-  onClose,
+  onClosed,
 }: TestDetailsModalProps) {
   const {
     data: test,
@@ -31,7 +31,7 @@ export default function TestDetailsModal({
     <Modal
       isDataPresented={selectedGradableEventId !== null}
       title={test?.name ?? ""}
-      onClose={onClose}
+      onClosed={onClosed}
     >
       {isError ?? <div>Wystąpił błąd przy ładowaniu szczegółów.</div>}
       {isLoading ?? (
