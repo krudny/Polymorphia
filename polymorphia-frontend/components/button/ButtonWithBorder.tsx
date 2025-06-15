@@ -16,11 +16,16 @@ const buttonWithBorder = tv({
       lg: "text-4xl px-10 py-3",
     },
     isActive: {
-      true: "bg-neutral-800 text-neutral-300",
+      true: "pointer-events-none",
+    },
+    forceDark: {
+      true: "button-with-border-dark",
+      false: "button-with-border-dark button-with-border-light",
     },
   },
   defaultVariants: {
     size: "md",
+    forceDark: false,
   },
 });
 
@@ -30,11 +35,15 @@ export default function ButtonWithBorder({
   className,
   size = "md",
   isActive,
+  forceDark,
 }: ButtonWithBorderProps & VariantProps) {
   return (
     <button
       onClick={onClick}
-      className={clsx(buttonWithBorder({ size, isActive }), className)}
+      className={clsx(
+        buttonWithBorder({ size, isActive, forceDark }),
+        className
+      )}
     >
       {text}
     </button>

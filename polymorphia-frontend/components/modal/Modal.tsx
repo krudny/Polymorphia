@@ -8,6 +8,7 @@ import { useAnimatedModalState } from "@/animations/Modal";
 import { useEffect, useRef, useState } from "react";
 import { ModalProvider } from "../providers/ModalContext";
 import { ModalProps } from "@/interfaces/modal/ModalInterfaces";
+import { useTheme } from "next-themes";
 
 export default function Modal(props: ModalProps) {
   const { isDataPresented, onClosed, title, subtitle, children, ...rest } =
@@ -16,6 +17,11 @@ export default function Modal(props: ModalProps) {
   const [modalVisible, setModalVisible] = useState(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
   const backdropRef = useRef<HTMLDivElement | null>(null);
+  const { resolvedTheme } = useTheme();
+  const background =
+    resolvedTheme === "dark"
+      ? "bg-[url(/background-modal-dark.png)]"
+      : "bg-[url(/background-modal.png)]";
 
   useEffect(() => {
     setModalVisible(isDataPresented);
@@ -45,7 +51,7 @@ export default function Modal(props: ModalProps) {
         >
           <div
             ref={modalRef}
-            className="modal overflow-auto"
+            className={`modal ${background}`}
             onClick={(e) => {
               e.stopPropagation();
             }}

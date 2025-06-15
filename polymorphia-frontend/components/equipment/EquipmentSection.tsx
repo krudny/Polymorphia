@@ -55,7 +55,7 @@ export function EquipmentSection({ type, data }: EquipmentSectionProps) {
                   ) : (
                     <div className="equipment-locked-item">
                       <span>
-                        <p>lock</p>
+                        <p className="opacity-80">lock</p>
                       </span>
                     </div>
                   )}

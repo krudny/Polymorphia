@@ -34,7 +34,7 @@
 }
 
 .hero-right-wrapper > div > h1 {
-  @apply text-7xl mb-8;
+  @apply text-7xl mb-8 text-primary-dark;
   @apply md:text-9xl md:mb-14;
 }
 
@@ -43,11 +43,11 @@
 }
 
 .hero-login {
-  @apply flex-centered absolute top-0 -right-full w-full h-full z-20 opacity-0;
+  @apply flex-centered absolute top-0 -right-full w-full h-full z-20 opacity-0 text-primary-dark;
 }
 
 .login-wrapper {
-  @apply relative flex-centered w-full max-w-xl px-16;
+  @apply relative flex-centered w-full max-w-xl px-16 text-primary-dark;
   @apply md:px-0;
 }
 
@@ -60,7 +60,7 @@
 }
 
 .login-form > div > input {
-  @apply w-full text-center text-4xl py-3 border-b-2 border-b-neutral-800 focus:outline-none;
+  @apply w-full text-center text-4xl py-3 border-b-2 border-b-primary-dark focus:outline-none text-primary-dark;
 }
 
 .login-form > div > input:-webkit-autofill,
@@ -68,6 +68,7 @@
 .login-form > div > input:-webkit-autofill:focus,
 .login-form > div > input:-webkit-autofill:active {
   -webkit-background-clip: text;
+  -webkit-text-fill-color: #262626;
   transition: background-color 5000s ease-in-out 0s;
 }
 

@@ -32,7 +32,7 @@
 }
 
 .slider-arrows > svg {
-  @apply text-neutral-800 transition-colors hover:text-neutral-600;
+  @apply transition-colors hover:text-primary-gray;
 }
 
 /* Detailed Slide Info */
@@ -47,7 +47,7 @@
 }
 
 .slide-details-info {
-  @apply flex-centered my-1 gap-x-1 text-neutral-400;
+  @apply flex-centered my-1 gap-x-1 text-primary-gray;
 }
 
 .slide-details-content {
