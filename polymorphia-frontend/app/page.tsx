@@ -54,19 +54,6 @@ export default function Home() {
     );
   }, [isLoginFormVisible]);
 
-  // always light mode on home page, then autodetect
-  useEffect(() => {
-    const root = document.documentElement;
-    root.style.colorScheme = "light";
-    root.classList.add("light");
-    root.classList.remove("dark");
-    return () => {
-      root.classList.remove("light");
-      root.classList.add(resolvedTheme || "");
-      root.style.colorScheme = resolvedTheme || "";
-    };
-  }, [resolvedTheme]);
-
   return (
     <BackgroundWrapper className="hero-background-wrapper">
       <div className="hero-background-image" ref={backgroundRef}>
@@ -95,7 +82,11 @@ export default function Home() {
         <div ref={titleSectionRef}>
           <h1>Polymorphia</h1>
           <div className="hero-buttons">
-            <ButtonWithBorder text="Zaloguj się" onClick={openLoginForm} />
+            <ButtonWithBorder
+              text="Zaloguj się"
+              onClick={openLoginForm}
+              forceDark
+            />
           </div>
         </div>
 
