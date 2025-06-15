@@ -11,7 +11,6 @@ import {
   animateLoginFormVisibility,
 } from "@/animations/Home";
 import { API_STATIC_URL } from "@/services/api";
-import { useTheme } from "next-themes";
 
 export default function Home() {
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
@@ -24,8 +23,6 @@ export default function Home() {
   const backgroundRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const hasMountedRef = useRef(false);
-
-  const { resolvedTheme } = useTheme();
 
   useEffect(() => {
     if (!backgroundRef.current || !titleSectionRef.current || !imageRef.current)
