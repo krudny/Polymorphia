@@ -90,7 +90,7 @@
 }
 
 .menu-section-options-link-part > h2 {
-  @apply text-3xl ml-5 whitespace-nowrap hover:text-neutral-400;
+  @apply text-3xl ml-5 whitespace-nowrap hover:text-primary-gray;
   @apply lg:text-2xl transition-colors ease-in duration-150 opacity-0;
 }
 
@@ -111,6 +111,6 @@
 }
 
 .menu-section-subitems-wrapper > a > h3 {
-  @apply text-2xl cursor-pointer hover:text-neutral-400;
+  @apply text-2xl cursor-pointer hover:text-primary-gray;
   @apply transition-colors ease-in duration-150 lg:text-xl;
 }
