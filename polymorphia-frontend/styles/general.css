@@ -6,8 +6,9 @@
 }
 
 .button-with-border {
-  @apply block mx-auto border-2 border-neutral-800;
-  @apply transition-colors duration-400 ease-[cubic-bezier(0.34,1,0.2,1)] hover:bg-neutral-800 hover:text-neutral-300 hover:cursor-pointer;
+  @apply block mx-auto border-2 border-primary-dark;
+  @apply transition-colors duration-400 ease-[cubic-bezier(0.34,1,0.2,1)] hover:bg-primary-dark hover:text-neutral-300 hover:cursor-pointer;
+  @apply dark:border-secondary-light hover:dark:bg-secondary-light hover:dark:text-primary-dark;
 }
 
 .loading-wrapper {
@@ -15,7 +16,7 @@
 }
 
 .loading-wrapper > div {
-  @apply w-12 h-12 border-4 border-neutral-400 border-t-neutral-800 rounded-full animate-spin;
+  @apply w-12 h-12 border-4 border-primary-gray border-t-primary-dark rounded-full animate-spin;
 }
 
 .knowledge-base-wrapper {
@@ -24,6 +25,7 @@
 
 .image-badge {
   @apply absolute bg-neutral-300/80 flex-col-centered bottom-0 right-0 aspect-square overflow-hidden  bg-clip-padding z-50;
+  @apply dark:bg-secondary-dark;
 }
 
 .main-layout {

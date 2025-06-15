@@ -16,7 +16,7 @@ const buttonWithBorder = tv({
       lg: "text-4xl px-10 py-3",
     },
     isActive: {
-      true: "bg-neutral-800 text-neutral-300",
+      true: "bg-primary-dark text-neutral-300",
     },
   },
   defaultVariants: {

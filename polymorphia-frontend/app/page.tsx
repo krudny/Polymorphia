@@ -11,7 +11,7 @@ import {
   animateLoginFormVisibility,
 } from "@/animations/Home";
 import { API_STATIC_URL } from "@/services/api";
-import { useTitle } from "@/components/navigation/TitleContext";
+import { useTheme } from "next-themes";
 
 export default function Home() {
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
@@ -19,13 +19,13 @@ export default function Home() {
   const openLoginForm = () => setIsLoginFormVisible(true);
   const closeLoginForm = () => setIsLoginFormVisible(false);
 
-  const { setTitle } = useTitle();
-
   const loginFormRef = useRef<HTMLDivElement>(null);
   const titleSectionRef = useRef<HTMLDivElement>(null);
   const backgroundRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const hasMountedRef = useRef(false);
+
+  const { resolvedTheme } = useTheme();
 
   useEffect(() => {
     if (!backgroundRef.current || !titleSectionRef.current || !imageRef.current)
@@ -54,9 +54,18 @@ export default function Home() {
     );
   }, [isLoginFormVisible]);
 
+  // always light mode on home page, then autodetect
   useEffect(() => {
-    setTitle("");
-  }, [setTitle]);
+    const root = document.documentElement;
+    root.style.colorScheme = "light";
+    root.classList.add("light");
+    root.classList.remove("dark");
+    return () => {
+      root.classList.remove("light");
+      root.classList.add(resolvedTheme || "");
+      root.style.colorScheme = resolvedTheme || "";
+    };
+  }, [resolvedTheme]);
 
   return (
     <BackgroundWrapper className="hero-background-wrapper">

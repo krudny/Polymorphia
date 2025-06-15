@@ -40,7 +40,7 @@ export default function RankUserPoints({
         <div
           className={`flex-col-centered min-h-20 lg:min-h-24 my-auto ${
             separators && i !== items.length - 1
-              ? "sm:border-r-[1px] border-[#212121]"
+              ? "sm:border-r-[1px] border-primary-dark dark:border-secondary-light"
               : ""
           }`}
           key={i}

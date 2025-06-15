@@ -56,7 +56,7 @@
 }
 
 .points-summary-divider {
-  @apply border-t-2 border-neutral-800 w-full max-w-80 -mt-5 -mb-5;
+  @apply border-t-2 border-primary-dark w-full max-w-80 -mt-5 -mb-5;
   @apply lg:min-w-full lg:max-w-full;
   @apply [@media(max-height:709px)]:-mt-2.5 [@media(max-height:709px)]:-mb-2.5;
 }

@@ -60,7 +60,7 @@
 }
 
 .login-form > div > input {
-  @apply w-full text-center text-4xl py-3 border-b-2 border-b-neutral-800 focus:outline-none;
+  @apply w-full text-center text-4xl py-3 border-b-2 border-b-primary-dark focus:outline-none;
 }
 
 .login-form > div > input:-webkit-autofill,
