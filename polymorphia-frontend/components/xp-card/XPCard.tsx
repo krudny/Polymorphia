@@ -66,7 +66,7 @@ export default function XPCard({
       </div>
       <div className="xp-card-xp">
         <h1>{xp}</h1>
-        {isSumVisible && <h2>SUMA</h2>}
+        {isSumVisible && <h2>Suma</h2>}
       </div>
     </div>
   );
