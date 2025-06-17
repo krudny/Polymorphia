@@ -1,22 +1,22 @@
-'use client';
+"use client";
 
-import { EventSectionCardProps } from '@/interfaces/xp-card/XPCardInterfaces';
+import { EventSectionCardProps } from "@/interfaces/xp-card/XPCardInterfaces";
 import {
   BonusInfo,
   EventSection,
   EventSectionShortResponseDto,
   GradableEventCoreResponse,
-} from '@/interfaces/course/event-section/EventSectionInterfaces';
-import { PointsSummaryElementProps } from '@/interfaces/course/event-section/PointsSummaryInterfaces';
-import { MenuOption } from '@/interfaces/navigation/NavigationInterfaces';
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+} from "@/interfaces/course/event-section/EventSectionInterfaces";
+import { PointsSummaryElementProps } from "@/interfaces/course/event-section/PointsSummaryInterfaces";
+import { MenuOption } from "@/interfaces/navigation/NavigationInterfaces";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export function updateMenuItems(
   menuItems: MenuOption[],
   eventSections: EventSectionShortResponseDto[]
 ) {
   const courseItem = menuItems.filter(
-    (menuOption) => menuOption.text === 'Kurs'
+    (menuOption) => menuOption.text === "Kurs"
   )[0];
   courseItem.link = `course/${eventSections[0].eventSectionType}/${eventSections[0].id}`;
 
@@ -54,7 +54,7 @@ export function setResizeObserver(
     } else {
       setMobile(false);
 
-      const expandedSidebar = document.getElementById('sidebar-animated');
+      const expandedSidebar = document.getElementById("sidebar-animated");
       const sidebarOffset =
         expandedSidebar !== null ? expandedSidebar.offsetWidth : 0;
 
@@ -115,7 +115,7 @@ export function mapPropsToCards(
         subtitle: event.topic,
         xp: event.gainedXp ? `${event.gainedXp} xp` : undefined,
         onClick:
-          eventSection.type === 'test'
+          eventSection.type === "test"
             ? () => {
                 setCurrentlySelectedGradableEventIdForModal(event.id);
               }
@@ -135,7 +135,7 @@ export function getBonusesFromEventSection(
   return [
     {
       bonus: {
-        name: 'Zdobyte xp',
+        name: "Zdobyte xp",
         bonusXp: `${eventSection.gainedXp} xp`,
         items: [],
       },
@@ -154,7 +154,7 @@ export function getBonusesFromEventSection(
     }),
     {
       bonus: {
-        name: 'Łącznie',
+        name: "Łącznie",
         bonusXp: `${eventSection.totalXp} xp`,
         items: [],
       },

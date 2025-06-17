@@ -1,24 +1,28 @@
-'use client';
-import UserSection from '@/components/navigation/UserSection';
-import Line from '@/components/navigation/Line';
-import MenuSection from '@/components/navigation/MenuSection';
+"use client";
+import UserSection from "@/components/navigation/UserSection";
+import Line from "@/components/navigation/Line";
+import MenuSection from "@/components/navigation/MenuSection";
 import {
   BottomDesktopMenuItems,
   MainMenuItems,
-} from '@/components/navigation/MenuOptions';
-import { useContext, useEffect, useRef } from 'react';
-import { NavigationContext } from '@/components/navigation/NavigationContext';
-import '../../styles/navigation.css';
+} from "@/components/navigation/MenuOptions";
+import { useContext, useEffect, useRef } from "react";
+import { NavigationContext } from "@/components/providers/NavigationContext";
+import "../../styles/navigation.css";
 
-import clsx from 'clsx';
-import { animateSidebar } from '@/animations/Navigation';
-import { useQuery } from '@tanstack/react-query';
-import { EventSectionService } from '@/services/course/event-section/EventSectionService';
-import { updateMenuItems } from '@/services/course/event-section/EventSectionUtils';
+import clsx from "clsx";
+import { animateSidebar } from "@/animations/Navigation";
+import { useQuery } from "@tanstack/react-query";
+import { EventSectionService } from "@/services/course/event-section/EventSectionService";
+import { updateMenuItems } from "@/services/course/event-section/EventSectionUtils";
 
 export default function Sidebar() {
-  const { isSidebarExpanded, setIsSidebarExpanded, isSidebarLocked } =
-    useContext(NavigationContext);
+  const {
+    isSidebarExpanded,
+    setIsSidebarExpanded,
+    isSidebarLockedOpened,
+    isSidebarLockedClosed,
+  } = useContext(NavigationContext);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -28,7 +32,7 @@ export default function Sidebar() {
   }, [isSidebarExpanded]);
 
   const { data: eventSections, isSuccess } = useQuery({
-    queryKey: ['eventSections'],
+    queryKey: ["eventSections"],
     // TODO: use real courseId
     queryFn: () => EventSectionService.getEventSections(1),
   });
@@ -41,13 +45,15 @@ export default function Sidebar() {
   return (
     <div
       ref={sidebarRef}
-      id={isSidebarLocked ? 'sidebar-locked' : 'sidebar-animated'}
+      id={isSidebarLockedOpened ? "sidebar-locked" : "sidebar-animated"}
       className="sidebar"
       onMouseEnter={() => {
-        if (!isSidebarLocked) setIsSidebarExpanded(true);
+        if (!isSidebarLockedOpened && !isSidebarLockedClosed)
+          setIsSidebarExpanded(true);
       }}
       onMouseLeave={() => {
-        if (!isSidebarLocked) setIsSidebarExpanded(false);
+        if (!isSidebarLockedOpened && !isSidebarLockedClosed)
+          setIsSidebarExpanded(false);
       }}
     >
       <UserSection />
@@ -55,7 +61,7 @@ export default function Sidebar() {
       <div
         className={clsx(
           `sidebar-menu-section-base ${
-            isSidebarExpanded ? 'sidebar-menu-section-expanded' : ''
+            isSidebarExpanded ? "sidebar-menu-section-expanded" : ""
           }`
         )}
       >

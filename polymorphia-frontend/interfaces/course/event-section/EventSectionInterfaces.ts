@@ -1,6 +1,6 @@
-import { ModalProps } from '../../modal/ModalInterfaces';
+import { ModalProps } from "../../modal/ModalInterfaces";
 
-export type EventSectionType = 'assignment' | 'test' | 'project';
+export type EventSectionType = "assignment" | "test" | "project";
 
 export interface EventSectionShortResponseDto {
   id: number;
@@ -46,7 +46,7 @@ export interface GradableEventShortResponseDtoPage {
   content: GradableEventShortResponseDto[];
   page: {
     totalPages: number;
-  }
+  };
 }
 
 export interface GradableEventResponseDto {
@@ -171,7 +171,7 @@ export interface RewardsInfoProps {
 }
 
 export interface TestDetailsModalProps
-  extends Omit<ModalProps, 'title' | 'isOpen' | 'children'> {
+  extends Omit<ModalProps, "title" | "isDataPresented" | "children"> {
   eventSectionId: number;
   selectedGradableEventId: number | null;
 }
