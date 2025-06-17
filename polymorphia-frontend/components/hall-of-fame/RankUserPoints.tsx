@@ -26,13 +26,9 @@ export default function RankUserPoints({
   separators = false,
   titleSize = "md",
   xpSize = "xl",
+  xpDetails
 }: RankUserPointsProps) {
-  const items = [
-    ["Laboratoria", 40],
-    ["Kartkówki", 20],
-    ["Projekt", 60],
-    ["Bonusy", 15.2],
-  ];
+  const items = Object.entries(xpDetails).filter(item => item[0] !== "total").reverse();
 
   return (
     <div className="w-full h-full grid grid-cols-4 sm:gap-1 lg:px-2">

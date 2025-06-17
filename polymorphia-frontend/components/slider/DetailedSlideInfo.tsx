@@ -11,7 +11,7 @@ import Loading from "@/components/general/Loading";
 import { ChestSlide, ItemSlide } from "@/interfaces/slider/SliderInterfaces";
 import Link from "next/link";
 import "../../styles/slider.css";
-import KnowledgeBaseService from "@/services/knowledge-base/KnowledgeBaseService";
+import KnowledgeBaseService from "@/services/KnowledgeBaseService";
 import { API_STATIC_URL } from "@/services/api";
 
 export default function DetailedSlideInfo({

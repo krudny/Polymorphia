@@ -3,7 +3,7 @@
 import Slider from "@/components/slider/Slider";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
-import KnowledgeBaseService from "@/services/knowledge-base/KnowledgeBaseService";
+import KnowledgeBaseService from "@/services/KnowledgeBaseService";
 import Loading from "@/components/general/Loading";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";

@@ -7,7 +7,7 @@ import ChestModal from "@/components/equipment/modals/ChestModal";
 
 import { useQuery } from "@tanstack/react-query";
 import Loading from "@/components/general/Loading";
-import EquipmentService from "@/services/equipment/EquipmentService";
+import EquipmentService from "@/services/EquipmentService";
 import EquipmentSectionWrapper from "@/components/equipment/EquipmentSectionWrapper";
 import OpeningChestModal from "@/components/equipment/modals/OpeningChestModal";
 import { EquipmentProvider } from "@/components/providers/EquipmentContext";

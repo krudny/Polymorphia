@@ -12,7 +12,7 @@ export default function Pagination({
   return (
     <ReactPaginate
       pageCount={totalPages}
-      onPageChange={onPageChangeAction}
+      onPageChange={(selectedItem) => onPageChangeAction(selectedItem.selected)}
       forcePage={forcePage}
       pageRangeDisplayed={3}
       marginPagesDisplayed={3}
