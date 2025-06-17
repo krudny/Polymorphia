@@ -181,14 +181,17 @@
     @apply bg-primary-light dark:bg-primary-dark max-w-full;
   }
 
+
   .xp-card-middle,
   .xp-card-xp {
+    @apply gap-0 2xl:gap-1;
+
     h1 {
-      @apply text-[1.9rem] xl:text-[2.3rem];
+      @apply text-[1.9rem] lg:text-4xl 2xl:text-[2.5rem];
     }
 
     h2 {
-      @apply text-2xl;
+      @apply text-2xl 2xl:text-[1.6rem] mt-0;
     }
   }
 }
