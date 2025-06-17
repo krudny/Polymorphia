@@ -174,7 +174,7 @@
   @apply w-full h-full;
 
   .xp-card-xp {
-    @apply w-fit px-6 h-full dark:bg-secondary-dark;
+    @apply w-fit px-6 h-full;
   }
 
   .xp-card-middle {

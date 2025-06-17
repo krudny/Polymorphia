@@ -34,7 +34,7 @@
 }
 
 .hall-of-fame-mobile-record-wrapper {
-  @apply hall-of-fame-record-wrapper min-h-[calc(25%-1rem)] flex flex-col justify-between border-b-6 p-3;
+  @apply hall-of-fame-record-wrapper min-h-[calc(25%-1rem)] flex flex-col justify-between border-b-6 p-3 gap-y-3;
 }
 
 .hall-of-fame-mobile-record-wrapper > div {
