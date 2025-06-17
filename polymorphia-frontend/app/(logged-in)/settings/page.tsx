@@ -17,7 +17,7 @@ export default function Settings() {
   } = useContext(NavigationContext);
   const { setTitle } = useTitle();
   const wrapperRef = useScaleShow();
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
 
   const toggleSidebarLockOpened = () => {
     if (isSidebarLockedClosed) {
@@ -65,9 +65,9 @@ export default function Settings() {
       <div className="flex justify-start items-center mt-10">
         <h3 className="text-4xl">Darkmode</h3>
         <ButtonWithBorder
-          text={theme === "dark" ? "Wyłącz" : "Włącz"}
+          text={resolvedTheme === "dark" ? "Wyłącz" : "Włącz"}
           onClick={
-            theme === "dark" ? () => setTheme("light") : () => setTheme("dark")
+            resolvedTheme === "dark" ? () => setTheme("light") : () => setTheme("dark")
           }
           size="md"
           className="!mx-0 !ml-6"

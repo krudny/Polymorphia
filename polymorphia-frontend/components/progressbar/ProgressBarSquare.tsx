@@ -12,7 +12,7 @@ export default function ProgressBarSquare({
     <>
       <div className="progressbar-square" style={{ left: `${position}%` }}>
         <div
-          className="bg-primary-gray dark:bg-secondary-light"
+          className="bg-primary-gray dark:bg-primary-dark"
           style={{
             transform: "rotate(45deg)",
             transformOrigin: "center center",
@@ -22,7 +22,7 @@ export default function ProgressBarSquare({
 
       <div className="progressbar-square" style={{ left: `${position}%` }}>
         <div
-          className="bg-primary-dark dark:bg-primary-gray"
+          className="bg-primary-dark dark:bg-secondary-light dark:scale-105"
           style={{
             transform: "rotate(45deg)",
             transformOrigin: "center center",

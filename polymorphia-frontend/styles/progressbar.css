@@ -19,11 +19,11 @@
 
 .progressbar-line {
   @apply absolute top-1/2 -translate-y-1/2 ml-4  h-2 overflow-hidden z-50;
-  @apply bg-primary-gray dark:bg-secondary-light;
+  @apply bg-primary-gray dark:bg-primary-dark;
 }
 
 .progressbar-line > div {
-  @apply h-full bg-primary-dark dark:bg-primary-gray;
+  @apply h-full bg-primary-dark dark:bg-secondary-light;
 }
 
 /* ProgressBarRangeLabels */

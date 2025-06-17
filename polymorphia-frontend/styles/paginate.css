@@ -9,7 +9,7 @@
   }
 
   .pagination-page a {
-    @apply flex items-center justify-center w-8 h-8 text-primary-dark bg-primary-light dark:bg-primary-gray border-2 border-primary-dark rounded-md text-xl;
+    @apply flex items-center justify-center w-8 h-8 text-primary-dark bg-neutral-300 dark:bg-primary-gray border-2 border-primary-dark rounded-md text-xl;
   }
 
   .selected a {
