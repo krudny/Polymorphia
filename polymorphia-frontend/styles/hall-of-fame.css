@@ -124,17 +124,17 @@
 /* Hall of fame summary points */
 
 .hall-of-fame-summary-points {
-  @apply w-fit h-full flex flex-col items-end justify-center;
-  @apply lg:items-center lg:px-2;
+  @apply w-fit h-full flex flex-col-reverse items-end justify-center;
+  @apply lg:items-center lg:px-2 lg:flex-col;
   @apply lg:bg-[#d4d4d4] lg:dark:bg-secondary-dark 2xl:rounded-tr-xl 2xl:rounded-br-xl;
 }
 
 .hall-of-fame-summary-points > h1 {
-  @apply text-3xl;
+  @apply text-3xl lg:text-4xl;
 }
 
-.hall-of-fame-summary-points > h2 {
-  @apply text-xl lg:text-2xl lg:mt-1;
+.hall-of-fame-summary-points > h3 {
+  @apply text-xl lg:text-2xl;
 }
 
 /* Hall of fame podium */
