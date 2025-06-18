@@ -1,36 +1,45 @@
-import {useQuery, useQueryClient} from "@tanstack/react-query";
+import {useQuery} from "@tanstack/react-query";
 import HallOfFameService from "@/services/HallOfFameService";
-import { createContext, ReactNode } from "react";
+import {createContext, ReactNode, useEffect, useState} from "react";
 import Loading from "../general/Loading";
 
 export const HallOfFameContext = createContext({
-  searchSuggestions: [],
-  refreshSuggestions: () => {},
+  search: "",
+  page: 0,
+  setPage: (newPage: number) => {},
+  data: [],
+  setSearch: (newSearch: string) => {},
+  isLoading: false,
 });
 
 export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
-  const queryClient = useQueryClient();
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(50);
+  const [debouncedSearch, setDebouncedSearch] = useState(search);
 
-  const { data: searchSuggestions = [], isLoading } = useQuery({
-    queryKey: ["hallOfFameNames"],
-    queryFn: () => HallOfFameService.getHallOfFameNames(),
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 300);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [search]);
+
+  const { data = [], isLoading } = useQuery({
+    queryKey: ["hallOfFame", page, size, debouncedSearch],
+    queryFn: () => HallOfFameService.getHallOfFame(page, size, debouncedSearch),
+    keepPreviousData: true,
   });
 
-  const refreshSuggestions = () => {
-    queryClient.invalidateQueries({ queryKey: ["hallOfFameNames"] });
-  };
-
-  if (isLoading) {
-    return <Loading />;
-  }
+  useEffect(() => {
+    console.log(data)
+  }, [data]);
 
   return (
-    <HallOfFameContext.Provider
-      value={{
-        searchSuggestions,
-        refreshSuggestions,
-      }}
-    >
+    <HallOfFameContext.Provider value={{ data, page, setPage, search, setSearch, isLoading }}>
       {children}
     </HallOfFameContext.Provider>
   );

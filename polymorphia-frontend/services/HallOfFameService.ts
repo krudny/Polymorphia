@@ -12,16 +12,6 @@ const HallOfFameService = {
     const response = await fetch(`${API_HOST}/test?${params.toString()}`);
     return await response.json();
   },
-
-  getHallOfFameNames: async (): Promise<string[]> => {
-    const response = await fetch(`${API_HOST}/test/names`);
-    return await response.json();
-  },
-
-  getHallOfFameNamesSuggestions: async (searchTerm: string): Promise<string[]> => {
-    const response = await fetch(`${API_HOST}/test/names?searchTerm=${encodeURIComponent(searchTerm)}`);
-    return await response.json();
-  }
 };
 
 export default HallOfFameService;

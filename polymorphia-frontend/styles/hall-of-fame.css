@@ -154,12 +154,12 @@
   @apply md:px-2 md:text-2xl lg:text-3xl;
 }
 
-.hall-of-fame-search-wrapper > div > span {
-  @apply material-symbols px-2 text-2xl md:text-3xl lg:text-4xl text-primary-dark dark:text-secondary-light;
+.hall-of-fame-search-wrapper > span {
+  @apply material-symbols text-2xl md:text-3xl lg:text-4xl text-primary-dark dark:text-secondary-light;
 }
 
 .hall-of-fame-search-input {
-  @apply flex-1 h-full bg-transparent text-primary-dark placeholder-primary-dark ;
+  @apply flex-1 ml-3 h-full bg-transparent text-primary-dark placeholder-primary-dark ;
   @apply dark:placeholder-secondary-light dark:text-secondary-light focus:outline-none;
 
 }
