@@ -16,9 +16,12 @@ import java.util.stream.Collectors;
 public class TestController {
 
     @GetMapping("/names")
-    public List<String> getNames() {
-        return Arrays.asList(
+    public List<String> getNames(@RequestParam(value = "searchTerm", required = false) String searchTerm) {
+        List<String> allNames = Arrays.asList(
                 "Gerard Małoduszny",
+                "Gerard Małosolny",
+                "Gerard Kiszony",
+                "Gerard Solny",
                 "Kamil Rudny",
                 "Anna Nowak",
                 "Jan Kowalski",
@@ -26,6 +29,13 @@ public class TestController {
                 "Tomasz Zieliński",
                 "Paulina Kaczmarek"
         );
+        if (searchTerm == null || searchTerm.isEmpty()) {
+            return allNames;
+        }
+        String lower = searchTerm.toLowerCase();
+        return allNames.stream()
+                .filter(name -> name.toLowerCase().contains(lower))
+                .collect(Collectors.toList());
     }
 
     @GetMapping
@@ -37,6 +47,9 @@ public class TestController {
         // Kilka przykładowych nazw, w tym Gerard i inne
         String[] studentNames = {
                 "Gerard Małoduszny",
+                "Gerard Małosolny",
+                "Gerard Kiszony",
+                "Gerard Solny",
                 "Kamil Rudny",
                 "Anna Nowak",
                 "Jan Kowalski",
@@ -54,7 +67,7 @@ public class TestController {
             userDetails.put("studentName", studentName);
 
             // Przykładowo inne pola dla userDetails:
-            userDetails.put("animalName", "Gerard Małoduszny"); // możesz rozbudować jeśli chcesz różne
+            userDetails.put("animalName", studentName); // możesz rozbudować jeśli chcesz różne
             userDetails.put("evolutionStage", "Majestatyczna Bestia");
 
             int stage = 6 - (i / 50);

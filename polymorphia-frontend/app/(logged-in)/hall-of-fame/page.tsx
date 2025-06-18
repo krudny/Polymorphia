@@ -9,6 +9,7 @@ import {useQuery} from "@tanstack/react-query";
 import HallOfFameService from "@/services/HallOfFameService";
 import Loading from "@/components/general/Loading";
 import {useScaleShow} from "@/animations/General";
+import { HallOfFameProvider } from "@/components/providers/HallOfFameContext";
 
 export default function HallOfFame() {
   const { setTitle } = useTitle();
@@ -20,13 +21,15 @@ export default function HallOfFame() {
 
 
   return (
-    <div ref={wrapperRef}>
-      <div className="w-full lg:hidden">
-        {/*<RankMobile />*/}
+    <HallOfFameProvider>
+      <div ref={wrapperRef}>
+        <div className="w-full lg:hidden">
+          {/*<RankMobile />*/}
+        </div>
+        <div className="w-full hidden lg:block">
+          <RankDesktop />
+        </div>
       </div>
-      <div className="w-full hidden lg:block">
-        <RankDesktop />
-      </div>
-    </div>
+    </HallOfFameProvider>
   );
 }

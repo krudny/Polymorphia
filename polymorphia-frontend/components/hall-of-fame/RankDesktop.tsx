@@ -41,7 +41,6 @@ export default function RankDesktop() {
     return <div>No data found.</div>;
   }
 
-  console.log(data)
   const podium = data.content.slice(0, 3);
 
 
@@ -87,7 +86,7 @@ export default function RankDesktop() {
       <div className="hall-of-fame-pagination-wrapper justify-end">
         <Pagination
           totalPages={data.page.totalPages}
-          forcePage={data.page.number}
+          forcePage={data.page.page}
           onPageChangeAction={setPage}
         />
       </div>
