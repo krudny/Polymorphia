@@ -21,7 +21,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearch(search);
-    }, 300);
+    }, 400);
 
     return () => {
       clearTimeout(handler);

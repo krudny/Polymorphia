@@ -41,8 +41,8 @@ export default function ButtonWithBorder({
     <button
       onClick={onClick}
       className={clsx(
+        className,
         buttonWithBorder({ size, isActive, forceDark }),
-        className
       )}
     >
       {text}

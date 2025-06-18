@@ -12,6 +12,7 @@ import {useQuery} from "@tanstack/react-query";
 import HallOfFameService from "@/services/HallOfFameService";
 import Loading from "@/components/general/Loading";
 import {HallOfFameContext} from "@/components/providers/HallOfFameContext";
+import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 
 export default function RankDesktop() {
   const { data, page, setPage, isLoading } = useContext(HallOfFameContext);
@@ -24,24 +25,27 @@ export default function RankDesktop() {
             <h2>Podium</h2>
           </div>
           <div className="hall-of-fame-desktop-podium">
-            {/*{podium.map((item, index) => (*/}
-            {/*  <RankPodium*/}
-            {/*    key={`podium-${index}-${item.userDetails.studentName}`}*/}
-            {/*    position={index + 1}*/}
-            {/*    userDetails={item.userDetails}*/}
-            {/*    xpDetails={item.xpDetails}*/}
-            {/*  />*/}
-            {/*))}*/}
+            {!isLoading && data.content.slice(0,3).map((item, index) => (
+              <RankPodium
+                key={`podium-${index}-${item.userDetails.studentName}`}
+                position={index + 1}
+                userDetails={item.userDetails}
+                xpDetails={item.xpDetails}
+              />
+            ))}
           </div>
         </div>
         <div className="hall-of-fame-desktop-content-wrapper">
           <div className="hall-of-fame-desktop-search-wrapper">
             <RankSearch />
-            <RankSort />
+            <ButtonWithBorder text="Filtry" className="!mx-0 !py-0 !border-0 !border-b-2"/>
+            {/*<RankSort />*/}
           </div>
           <div className="hall-of-fame-desktop-rank-wrapper">
             {isLoading ? (
-              <Loading />
+              <div className="w-full h-full flex-centered">
+                <Loading />
+              </div>
             ) : (
               data.content.map((item, index) => (
                 <RankCardDesktop
@@ -59,7 +63,7 @@ export default function RankDesktop() {
         {!isLoading &&
         <Pagination
           totalPages={data.page.totalPages}
-          forcePage={data.page.page}
+          forcePage={page}
           onPageChangeAction={setPage}
         />}
       </div>

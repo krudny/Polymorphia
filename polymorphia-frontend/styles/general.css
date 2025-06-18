@@ -6,7 +6,7 @@
 }
 
 .button-with-border {
-  @apply block mx-auto border-2;
+  @apply block mx-auto border-2 flex-col-centered;
   @apply transition-colors duration-400 ease-[cubic-bezier(0.34,1,0.2,1)] hover:cursor-pointer;
 }
 
