@@ -12,7 +12,7 @@ export default function NavigationDots({
         <button
           key={index}
           onClick={() => goToSlide(index)}
-          className={`${currentSlide === index ? "bg-neutral-800" : "bg-neutral-500"}`}
+          className={`${currentSlide === index ? "bg-primary-dark dark:bg-secondary-light" : "bg-primary-gray"}`}
           aria-label={`Przejdź do slajdu ${index + 1}`}
         />
       ))}
