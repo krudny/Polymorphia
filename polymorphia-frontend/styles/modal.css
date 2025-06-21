@@ -14,7 +14,7 @@
 }
 
 .modal {
-  @apply m-3 w-fit max-h-[calc(100vh-var(--spacing)*5)] p-5 z-[52] bg-repeat-y bg-[length:100%_auto] bg-top border-2 overflow-auto border-primary-dark rounded-xl will-change-transform;
+  @apply m-3 w-fit max-h-[calc(100vh-var(--spacing)*5)] p-5 z-[52] bg-repeat-y bg-[length:100%_auto] bg-top border-2  border-primary-dark rounded-xl will-change-transform;
 }
 
 .modal-header-wrapper {

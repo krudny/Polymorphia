@@ -11,7 +11,7 @@ import { ModalProps } from "@/interfaces/modal/ModalInterfaces";
 import { useTheme } from "next-themes";
 
 export default function Modal(props: ModalProps) {
-  const { isDataPresented, onClosed, title, subtitle, children, ...rest } =
+  const { isDataPresented = true, onClosed, title, subtitle, children, ...rest } =
     props;
 
   const [modalVisible, setModalVisible] = useState(false);

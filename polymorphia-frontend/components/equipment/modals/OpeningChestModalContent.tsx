@@ -54,6 +54,7 @@ export default function OpeningChestModalContent() {
           text="Potwierdź"
           className="w-full rounded-xl"
           onClick={closeModal}
+          size="sm"
         />
       </div>
     </>

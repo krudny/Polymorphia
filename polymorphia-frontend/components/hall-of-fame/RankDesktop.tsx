@@ -13,9 +13,11 @@ import HallOfFameService from "@/services/HallOfFameService";
 import Loading from "@/components/general/Loading";
 import {HallOfFameContext} from "@/components/providers/HallOfFameContext";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import FiltersModal from "@/components/hall-of-fame/modals/FiltersModal";
 
 export default function RankDesktop() {
   const { data, page, setPage, isLoading } = useContext(HallOfFameContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
      <div className="hall-of-fame-desktop">
@@ -38,7 +40,7 @@ export default function RankDesktop() {
         <div className="hall-of-fame-desktop-content-wrapper">
           <div className="hall-of-fame-desktop-search-wrapper">
             <RankSearch />
-            <ButtonWithBorder text="Filtry" className="!mx-0 !py-0 !border-0 !border-b-2"/>
+            <ButtonWithBorder text="Filtry" className="!mx-0 !py-0 !border-0 !border-b-2" onClick={() => setIsModalOpen(!isModalOpen)}/>
             {/*<RankSort />*/}
           </div>
           <div className="hall-of-fame-desktop-rank-wrapper">
@@ -67,6 +69,9 @@ export default function RankDesktop() {
           onPageChangeAction={setPage}
         />}
       </div>
+       {isModalOpen && (
+         <FiltersModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+       )}
     </div>
   );
 }
