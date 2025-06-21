@@ -3,7 +3,7 @@ import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { useState } from "react";
 import { Check } from "lucide-react";
 import "../../../styles/general.css";
-import CustomSelect from "@/components/button/CustomSelect";
+import CustomSelect from "@/components/general/CustomSelect";
 
 const options = [
   { value: "all", label: "Wszystkie" },

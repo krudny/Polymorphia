@@ -1,0 +1,93 @@
+"use client"
+
+import {Check} from "lucide-react";
+import Modal from "../modal/Modal";
+import { useState } from "react";
+
+export default function CustomSelect({
+                                       isOpen,
+                                       selectedValues,
+                                       possibleValues,
+                                       categoryId,        // Dodaj to
+                                       filtersDispatch    // I to
+                                     }) {
+  const handleSelect = (option) => {
+    const isSelected = selectedValues.some((o) => o === option.value);
+
+    if (isSelected) {
+      filtersDispatch({
+        type: 'REMOVE_CATEGORY_SELECTION',
+        payload: {
+          categoryId: categoryId,
+          value: option.value
+        }
+      });
+    } else {
+      filtersDispatch({
+        type: 'ADD_CATEGORY_SELECTION',
+        payload: {
+          categoryId: categoryId,
+          value: option.value
+        }
+      });
+    }
+  };
+
+  const handleToggleOpen = () => {
+    setX(true);
+    filtersDispatch({
+      type: 'SET_CATEGORY_OPEN',
+      payload: {
+        categoryId: categoryId,
+        isOpen: !isOpen
+      }
+    });
+  };
+
+  console.log(selectedValues);
+
+  const [x, setX] = useState(false);
+  return (
+    <div className="relative w-full">
+      <button
+        type="button"
+        onClick={handleToggleOpen}
+        className="w-full border-b-2 border-secondary-light
+                  hover:bg-secondary-light hover:text-primary-dark
+                  px-6 py-1 text-xl  flex-centered transition-colors
+                  duration-400 ease-[cubic-bezier(0.34,1,0.2,1)] focus:outline-none"
+      >
+        {selectedValues.length === 1 ? selectedValues[0] : "Wiele"}
+      </button>
+
+      {x && <Modal title="kocham react" onClosed={() => setX(false)}><div>wiecej compile errorów niz dni do prezentacji</div></Modal>}
+
+      {isOpen && (
+        <ul className="absolute z-10 mt-1 w-full bg-[url(/background-modal-dark.png)]  shadow-md max-h-44 overflow-y-scroll custom-scrollbar select-none focus:outline-none">
+          {possibleValues.map((option) => {
+            console.log(possibleValues);
+            const isSelected = selectedValues.some((o) => {
+              console.log(o + " " + option.value)
+              return o === option.value;
+            });
+            return (
+              <li
+                key={option.value}
+                onClick={() => handleSelect(option)}
+                className={`relative  py-2 flex items-center justify-center  cursor-pointer border-b-2 border-secondary-light transition-colors
+                hover:bg-secondary-light hover:text-primary-dark ${
+                  isSelected ? "" : ""
+                }`}
+              >
+                <span className="pl-1">{option.label}</span>
+                {isSelected && (
+                  <Check className="w-4 h-4 absolute right-2" />
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
+  );
+}
