@@ -159,9 +159,8 @@
 }
 
 .hall-of-fame-search-input {
-  @apply flex-1 ml-3 h-full bg-transparent text-primary-dark placeholder-primary-dark ;
+  @apply flex-1 ml-3 h-full bg-transparent text-primary-dark placeholder-primary-dark;
   @apply dark:placeholder-secondary-light dark:text-secondary-light focus:outline-none;
-
 }
 
 /* Hall of fame sort */

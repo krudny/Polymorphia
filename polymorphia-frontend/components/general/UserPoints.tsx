@@ -1,5 +1,5 @@
 import { tv } from "tailwind-variants";
-import {UserPointsProps} from "@/interfaces/general/UserInterfaces";
+import { UserPointsProps } from "@/interfaces/general/UserInterfaces";
 
 const headerVariant = tv({
   base: "transition-all",
@@ -21,9 +21,9 @@ export default function UserPoints({
   separators = false,
   titleSize = "md",
   xpSize = "xl",
-  xpDetails
+  xpDetails,
 }: UserPointsProps) {
-  const items = Object.entries(xpDetails).filter(item => item[0] !== "total");
+  const items = Object.entries(xpDetails).filter((item) => item[0] !== "total");
 
   return (
     <div className="w-full h-full grid grid-cols-4 sm:gap-1 lg:px-2">

@@ -5,8 +5,13 @@ import ImageBadge from "@/components/general/ImageBadge";
 import Loading from "@/components/general/Loading";
 import { useState } from "react";
 
-export default function RankImage({ imageUrl, position }: { imageUrl: string, position: number }) {
-
+export default function RankImage({
+  imageUrl,
+  position,
+}: {
+  imageUrl: string;
+  position: number;
+}) {
   return (
     <div className="hall-of-fame-image-wrapper">
       <Image

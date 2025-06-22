@@ -11,8 +11,14 @@ import { ModalProps } from "@/interfaces/modal/ModalInterfaces";
 import { useTheme } from "next-themes";
 
 export default function Modal(props: ModalProps) {
-  const { isDataPresented = true, onClosed, title, subtitle, children, ...rest } =
-    props;
+  const {
+    isDataPresented = true,
+    onClosed,
+    title,
+    subtitle,
+    children,
+    ...rest
+  } = props;
 
   const [modalVisible, setModalVisible] = useState(false);
   const modalRef = useRef<HTMLDivElement | null>(null);

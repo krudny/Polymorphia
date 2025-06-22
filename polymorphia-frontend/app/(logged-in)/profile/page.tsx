@@ -17,7 +17,7 @@ export default function Profile() {
   }, [setTitle]);
 
   const sampleData = {
-    Laboratoria: 43.10,
+    Laboratoria: 43.1,
     Kartkówki: 35.75,
     Projekt: 24.65,
     Bonusy: 18.41,
@@ -42,13 +42,28 @@ export default function Profile() {
             <h2>Gerard Pocieszny</h2>
             <h3>Jesteś 36 na 139 zwierzaków!</h3>
             <div className="w-full md:hidden mt-4">
-              <UserPoints separators titleSize="sm" xpSize="md" xpDetails={sampleData} />
+              <UserPoints
+                separators
+                titleSize="sm"
+                xpSize="md"
+                xpDetails={sampleData}
+              />
             </div>
             <div className="hidden md:block 2xl:hidden w-4/5 max-w-xl mt-6">
-              <UserPoints separators titleSize="sm" xpSize="md" xpDetails={sampleData} />
+              <UserPoints
+                separators
+                titleSize="sm"
+                xpSize="md"
+                xpDetails={sampleData}
+              />
             </div>
             <div className="hidden 2xl:block w-4/5 mt-10">
-              <UserPoints separators titleSize="md" xpSize="lg" xpDetails={sampleData} />
+              <UserPoints
+                separators
+                titleSize="md"
+                xpSize="lg"
+                xpDetails={sampleData}
+              />
             </div>
           </div>
         </div>

@@ -1,48 +1,47 @@
-"use client"
+"use client";
 
-import {Check} from "lucide-react";
+import { Check } from "lucide-react";
 import Modal from "../modal/Modal";
 import { useState } from "react";
 
 export default function CustomSelect({
-                                       isOpen,
-                                       selectedValues,
-                                       possibleValues,
-                                       categoryId,
-                                       filtersDispatch
-                                     }) {
+  isOpen,
+  selectedValues,
+  possibleValues,
+  categoryId,
+  filtersDispatch,
+}) {
   const handleSelect = (option) => {
     const isSelected = selectedValues.some((o) => o === option.value);
 
     if (isSelected) {
       filtersDispatch({
-        type: 'REMOVE_CATEGORY_SELECTION',
+        type: "REMOVE_CATEGORY_SELECTION",
         payload: {
           categoryId: categoryId,
-          value: option.value
-        }
+          value: option.value,
+        },
       });
     } else {
       filtersDispatch({
-        type: 'ADD_CATEGORY_SELECTION',
+        type: "ADD_CATEGORY_SELECTION",
         payload: {
           categoryId: categoryId,
-          value: option.value
-        }
+          value: option.value,
+        },
       });
     }
   };
 
   const handleToggleOpen = () => {
     filtersDispatch({
-      type: 'SET_CATEGORY_OPEN',
+      type: "SET_CATEGORY_OPEN",
       payload: {
         categoryId: categoryId,
-        isOpen: !isOpen
-      }
+        isOpen: !isOpen,
+      },
     });
   };
-
 
   return (
     <div className="relative w-full">
@@ -61,7 +60,7 @@ export default function CustomSelect({
         <ul className="absolute z-10 mt-1 w-full bg-[url(/background-modal-dark.png)]  shadow-md max-h-44 overflow-y-scroll custom-scrollbar select-none focus:outline-none">
           {possibleValues.map((option) => {
             const isSelected = selectedValues.some((o) => {
-              console.log(o + " " + option.value)
+              console.log(o + " " + option.value);
               return o === option.value;
             });
             return (
@@ -74,9 +73,7 @@ export default function CustomSelect({
                 }`}
               >
                 <span className="pl-1">{option.label}</span>
-                {isSelected && (
-                  <Check className="w-4 h-4 absolute right-2" />
-                )}
+                {isSelected && <Check className="w-4 h-4 absolute right-2" />}
               </li>
             );
           })}

@@ -16,9 +16,8 @@ const studentNames = [
   "Jan Kowalski",
   "Maria Wiśniewska",
   "Tomasz Zieliński",
-  "Paulina Kaczmarek"
+  "Paulina Kaczmarek",
 ];
-
 
 const generateAllData = () => {
   const allData = [];
@@ -35,7 +34,7 @@ const generateAllData = () => {
         imageUrl: `/images/evolution-stages/${stage}.jpg`,
         position: i,
       },
-      xpDetails: {} as Record<string, number>
+      xpDetails: {} as Record<string, number>,
     };
 
     item.xpDetails["Laboratoria"] = roundToTwo(40.0 + Math.random() * 20);
@@ -43,7 +42,8 @@ const generateAllData = () => {
     item.xpDetails["Projekt"] = roundToTwo(20.0 + Math.random() * 10);
     item.xpDetails["Bonusy"] = roundToTwo(15.2 + Math.random() * 5);
 
-    const totalSum = item.xpDetails["Laboratoria"] +
+    const totalSum =
+      item.xpDetails["Laboratoria"] +
       item.xpDetails["Kartkówki"] +
       item.xpDetails["Projekt"] +
       item.xpDetails["Bonusy"];
@@ -62,7 +62,6 @@ const generateAllData = () => {
   return allData;
 };
 
-
 const ALL_DATA = generateAllData();
 
 const HallOfFameService = {
@@ -71,15 +70,15 @@ const HallOfFameService = {
     size: number,
     searchTerm: string,
     sortBy?: string,
-    sortOrder?: 'asc' | 'desc'
+    sortOrder?: "asc" | "desc"
   ) => {
-    await new Promise(resolve => setTimeout(resolve, 400));
+    await new Promise((resolve) => setTimeout(resolve, 400));
 
     let filteredData = [...ALL_DATA];
 
-    if (searchTerm && searchTerm.trim() !== '') {
+    if (searchTerm && searchTerm.trim() !== "") {
       const lowerSearch = searchTerm.toLowerCase();
-      filteredData = filteredData.filter(item =>
+      filteredData = filteredData.filter((item) =>
         item.userDetails.studentName.toLowerCase().includes(lowerSearch)
       );
     }
@@ -89,17 +88,17 @@ const HallOfFameService = {
         let valueA: any;
         let valueB: any;
 
-        if (sortBy === 'name') {
+        if (sortBy === "name") {
           valueA = a.userDetails.studentName;
           valueB = b.userDetails.studentName;
           const comparison = valueA.localeCompare(valueB);
-          return sortOrder === 'asc' ? comparison : -comparison;
+          return sortOrder === "asc" ? comparison : -comparison;
         } else {
           valueA = a.xpDetails[sortBy] || 0;
           valueB = b.xpDetails[sortBy] || 0;
 
           const comparison = valueA - valueB;
-          return sortOrder === 'asc' ? comparison : -comparison;
+          return sortOrder === "asc" ? comparison : -comparison;
         }
       });
     }
@@ -124,13 +123,13 @@ const HallOfFameService = {
       size: size,
       number: page,
       numberOfElements: pageContent.length,
-      empty: pageContent.length === 0
+      empty: pageContent.length === 0,
     };
   },
   getPodium: async () => {
-    await new Promise(resolve => setTimeout(resolve, 300));
-    return  [...ALL_DATA.slice(0, 3)];
-  }
-}
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    return [...ALL_DATA.slice(0, 3)];
+  },
+};
 
 export default HallOfFameService;

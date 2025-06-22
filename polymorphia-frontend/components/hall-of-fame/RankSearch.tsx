@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
 import "../../styles/hall-of-fame.css";
-import { useDebouncedSuggestions} from "@/components/hall-of-fame/debouncer";
-import {useContext, useState} from "react";
-import {HallOfFameContext} from "@/components/providers/HallOfFameContext";
+import { useDebouncedSuggestions } from "@/components/hall-of-fame/debouncer";
+import { useContext, useState } from "react";
+import { HallOfFameContext } from "@/components/providers/HallOfFameContext";
 
 export default function RankSearch() {
   const { search, setSearch } = useContext(HallOfFameContext);
@@ -20,14 +20,14 @@ export default function RankSearch() {
       onSubmit={(e) => e.preventDefault()}
     >
       <div className="hall-of-fame-search-wrapper">
-          <span>search</span>
-          <input
-            type="text"
-            value={search}
-            onChange={handleInputChange}
-            placeholder="Znajdź zwierzaka..."
-            className="hall-of-fame-search-input"
-          />
+        <span>search</span>
+        <input
+          type="text"
+          value={search}
+          onChange={handleInputChange}
+          placeholder="Znajdź zwierzaka..."
+          className="hall-of-fame-search-input"
+        />
       </div>
     </form>
   );

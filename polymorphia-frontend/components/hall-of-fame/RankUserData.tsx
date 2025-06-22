@@ -1,6 +1,8 @@
 import "../../styles/hall-of-fame.css";
 
-export default function RankUserData({ userDetails: { animalName, evolutionStage } }) {
+export default function RankUserData({
+  userDetails: { animalName, evolutionStage },
+}) {
   return (
     <div className="hall-of-fame-user-data">
       <h1>{animalName}</h1>

@@ -42,7 +42,7 @@ export default function ButtonWithBorder({
       onClick={onClick}
       className={clsx(
         className,
-        buttonWithBorder({ size, isActive, forceDark }),
+        buttonWithBorder({ size, isActive, forceDark })
       )}
     >
       {text}

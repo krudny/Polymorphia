@@ -3,6 +3,6 @@ export interface UserPointsProps {
   titleSize?: "xs" | "sm" | "md" | "lg" | "xl";
   xpSize?: "xs" | "sm" | "md" | "lg" | "xl";
   xpDetails: {
-    [key: string]: number
+    [key: string]: number;
   };
 }

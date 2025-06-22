@@ -1,6 +1,12 @@
-import {useQuery, useQueryClient} from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import HallOfFameService from "@/services/HallOfFameService";
-import {createContext, ReactNode, useEffect, useReducer, useState} from "react";
+import {
+  createContext,
+  ReactNode,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 import Loading from "../general/Loading";
 import toast from "react-hot-toast";
 
@@ -16,7 +22,7 @@ export const filterCategories = [
     availableOptions: [
       { value: "asc", label: "Rosnąco" },
       { value: "desc", label: "Malejąco" },
-    ]
+    ],
   },
   {
     id: "sortBy",
@@ -33,7 +39,7 @@ export const filterCategories = [
       { value: "Projekt", label: "Projekt" },
       { value: "Bonusy", label: "Bonusy" },
       { value: "total", label: "Suma" },
-    ]
+    ],
   },
   {
     id: "groups",
@@ -57,7 +63,7 @@ export const filterCategories = [
       { value: "bm-01-00", label: "BM-01-00" },
       { value: "bm-02-00", label: "BM-02-00" },
       { value: "bm-03-00", label: "BM-03-00" },
-    ]
+    ],
   },
   {
     id: "rankingOptions",
@@ -73,15 +79,14 @@ export const filterCategories = [
       { value: "Kartkówki", label: "Kartkówki" },
       { value: "Projekt", label: "Projekt" },
       { value: "Bonusy", label: "Bonusy" },
-    ]
+    ],
   },
-
 ];
 
 export const initialFiltersState = {
   isModalOpen: false,
   categories: filterCategories,
-}
+};
 
 export const HallOfFameContext = createContext({
   search: "",
@@ -99,7 +104,10 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(50);
   const [debouncedSearch, setDebouncedSearch] = useState(search);
-  const [filtersState, filtersDispatch] = useReducer(RankReducer, initialFiltersState)
+  const [filtersState, filtersDispatch] = useReducer(
+    RankReducer,
+    initialFiltersState
+  );
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -112,8 +120,12 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   }, [search]);
 
   const getSortParams = () => {
-    const sortCategory = filtersState.categories.find(cat => cat.id === "sort");
-    const sortByCategory = filtersState.categories.find(cat => cat.id === "sortBy");
+    const sortCategory = filtersState.categories.find(
+      (cat) => cat.id === "sort"
+    );
+    const sortByCategory = filtersState.categories.find(
+      (cat) => cat.id === "sortBy"
+    );
 
     const sortOrder = sortCategory?.selectedOptions[0] || "";
     let sortBy = sortByCategory?.selectedOptions[0] || "";
@@ -127,18 +139,36 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     queryClient.invalidateQueries({
-      queryKey: ["hallOfFame"]
+      queryKey: ["hallOfFame"],
     });
     setPage(0);
   }, [filtersState, queryClient]);
 
   const { data = [], isLoading } = useQuery({
     queryKey: ["hallOfFame", page, size, debouncedSearch],
-    queryFn: () => HallOfFameService.getHallOfFame(page, size, debouncedSearch, sortBy, sortOrder),
+    queryFn: () =>
+      HallOfFameService.getHallOfFame(
+        page,
+        size,
+        debouncedSearch,
+        sortBy,
+        sortOrder
+      ),
   });
 
   return (
-    <HallOfFameContext.Provider value={{ data, page, setPage, search, setSearch, isLoading, filtersState, filtersDispatch }}>
+    <HallOfFameContext.Provider
+      value={{
+        data,
+        page,
+        setPage,
+        search,
+        setSearch,
+        isLoading,
+        filtersState,
+        filtersDispatch,
+      }}
+    >
       {children}
     </HallOfFameContext.Provider>
   );
@@ -146,36 +176,39 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
 
 function RankReducer(state, action) {
   switch (action.type) {
-    case 'TOGGLE_MODAL':
+    case "TOGGLE_MODAL":
       return {
         ...state,
-        isModalOpen: !state.isModalOpen
+        isModalOpen: !state.isModalOpen,
       };
 
-      case 'OPEN_MODAL':
+    case "OPEN_MODAL":
       return {
         ...state,
         isModalOpen: true,
       };
 
-      case 'CLOSE_MODAL':
-        return {
-        ...state,
-          isModalOpen: false,
-        };
-
-    case 'TOGGLE_SORT_ORDER':
+    case "CLOSE_MODAL":
       return {
         ...state,
-        isSortedAsc: !state.isSortedAsc
+        isModalOpen: false,
       };
 
-    case 'ADD_CATEGORY_SELECTION':
+    case "TOGGLE_SORT_ORDER":
       return {
         ...state,
-        categories: state.categories.map(category => {
+        isSortedAsc: !state.isSortedAsc,
+      };
+
+    case "ADD_CATEGORY_SELECTION":
+      return {
+        ...state,
+        categories: state.categories.map((category) => {
           if (category.id === action.payload.categoryId) {
-            const newSelections = [...category.selectedOptions, action.payload.value];
+            const newSelections = [
+              ...category.selectedOptions,
+              action.payload.value,
+            ];
 
             // if (category.maxSelections && newSelections.length > category.maxSelections) {
             //   toast.error(`Nie możesz zaznaczyć więcej niż ${category.maxSelections} opcji!`);
@@ -184,16 +217,16 @@ function RankReducer(state, action) {
             return { ...category, selectedOptions: newSelections };
           }
           return category;
-        })
+        }),
       };
 
-    case 'REMOVE_CATEGORY_SELECTION':
+    case "REMOVE_CATEGORY_SELECTION":
       return {
         ...state,
-        categories: state.categories.map(category => {
+        categories: state.categories.map((category) => {
           if (category.id === action.payload.categoryId) {
             const newSelections = category.selectedOptions.filter(
-              option => option !== action.payload.value
+              (option) => option !== action.payload.value
             );
 
             // if (category.minSelections && newSelections.length < category.minSelections) {
@@ -203,109 +236,113 @@ function RankReducer(state, action) {
 
             return {
               ...category,
-              selectedOptions: newSelections
+              selectedOptions: newSelections,
             };
           }
           return category;
-        })
+        }),
       };
 
-    case 'TOGGLE_CATEGORY':
+    case "TOGGLE_CATEGORY":
       return {
         ...state,
-        categories: state.categories.map(category => {
+        categories: state.categories.map((category) => {
           if (category.id === action.payload.categoryId) {
             return { ...category, isOpen: !category.isOpen };
           } else {
             return { ...category, isOpen: false };
           }
-        })
+        }),
       };
 
-    case 'CLOSE_ALL_CATEGORIES':
+    case "CLOSE_ALL_CATEGORIES":
       return {
         ...state,
-        categories: state.categories.map(category => {
-            return {...category, isOpen: false}
-          }
-        )
+        categories: state.categories.map((category) => {
+          return { ...category, isOpen: false };
+        }),
       };
 
-    case 'SET_SORT_ORDER':
+    case "SET_SORT_ORDER":
       return {
         ...state,
-        isSortedAsc: action.payload
+        isSortedAsc: action.payload,
       };
 
-    case 'SET_SORTED_BY':
+    case "SET_SORTED_BY":
       return {
         ...state,
-        sortedBy: action.payload
+        sortedBy: action.payload,
       };
 
-    case 'TOGGLE_GROUPS':
+    case "TOGGLE_GROUPS":
       return {
         ...state,
-        isGroupsOpen: !state.isGroupsOpen
+        isGroupsOpen: !state.isGroupsOpen,
       };
 
-    case 'SET_GROUPS_OPEN':
+    case "SET_GROUPS_OPEN":
       return {
         ...state,
-        isGroupsOpen: action.payload
+        isGroupsOpen: action.payload,
       };
 
-    case 'SET_SELECTED_GROUPS':
+    case "SET_SELECTED_GROUPS":
       return {
         ...state,
-        selectedGroups: action.payload
+        selectedGroups: action.payload,
       };
 
-    case 'ADD_GROUP':
+    case "ADD_GROUP":
       return {
         ...state,
-        selectedGroups: [...state.selectedGroups, action.payload]
+        selectedGroups: [...state.selectedGroups, action.payload],
       };
 
-    case 'REMOVE_GROUP':
+    case "REMOVE_GROUP":
       return {
         ...state,
-        selectedGroups: state.selectedGroups.filter(group => group !== action.payload)
+        selectedGroups: state.selectedGroups.filter(
+          (group) => group !== action.payload
+        ),
       };
 
-    case 'TOGGLE_RANKING_OPTIONS':
+    case "TOGGLE_RANKING_OPTIONS":
       return {
         ...state,
-        isRankingOptionsOpen: !state.isRankingOptionsOpen
+        isRankingOptionsOpen: !state.isRankingOptionsOpen,
       };
 
-    case 'SET_RANKING_OPTIONS_OPEN':
+    case "SET_RANKING_OPTIONS_OPEN":
       return {
         ...state,
-        isRankingOptionsOpen: action.payload
+        isRankingOptionsOpen: action.payload,
       };
 
-    case 'SET_SELECTED_RANKING_OPTIONS':
+    case "SET_SELECTED_RANKING_OPTIONS":
       return {
         ...state,
-        selectedRankingOptions: action.payload
+        selectedRankingOptions: action.payload,
       };
 
-    case 'ADD_RANKING_OPTION':
+    case "ADD_RANKING_OPTION":
       return {
         ...state,
-        selectedRankingOptions: [...state.selectedRankingOptions, action.payload]
+        selectedRankingOptions: [
+          ...state.selectedRankingOptions,
+          action.payload,
+        ],
       };
 
-    case 'REMOVE_RANKING_OPTION':
+    case "REMOVE_RANKING_OPTION":
       return {
         ...state,
         selectedRankingOptions: state.selectedRankingOptions.filter(
-          option => option !== action.payload
-        )
+          (option) => option !== action.payload
+        ),
       };
 
-    case 'RESET_FILTERS':
+    case "RESET_FILTERS":
       return {
         ...state,
         isModalOpen: false,
@@ -314,7 +351,12 @@ function RankReducer(state, action) {
         isGroupsOpen: false,
         selectedGroups: ["Wszystkie"],
         isRankingOptionsOpen: false,
-        selectedRankingOptions: ["Laboratoria", "Kartkówki", "Projekt", "Bonusy"]
+        selectedRankingOptions: [
+          "Laboratoria",
+          "Kartkówki",
+          "Projekt",
+          "Bonusy",
+        ],
       };
 
     default:

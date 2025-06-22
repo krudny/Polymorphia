@@ -1,6 +1,6 @@
 import XPCard from "@/components/xp-card/XPCard";
 import "../../styles/hall-of-fame.css";
-import {useQuery} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import HallOfFameService from "@/services/HallOfFameService";
 import Loading from "@/components/general/Loading";
 
