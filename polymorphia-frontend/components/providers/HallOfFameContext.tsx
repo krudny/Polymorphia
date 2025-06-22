@@ -6,8 +6,21 @@ import toast from "react-hot-toast";
 
 export const filterCategories = [
   {
+    id: "sort",
+    name: "Sortowanie",
+    isOpen: false,
+    minSelections: 1,
+    maxSelections: 1,
+    defaultSelected: ["Rosnąco"],
+    selectedOptions: ["Rosnąco"],
+    availableOptions: [
+      { value: "asc", label: "Rosnąco" },
+      { value: "desc", label: "Malejąco" },
+    ]
+  },
+  {
     id: "sortBy",
-    name: "Sortowanie po",
+    name: "Sortowanie po kategorii",
     isOpen: false,
     minSelections: 1,
     maxSelections: 1,
@@ -15,7 +28,6 @@ export const filterCategories = [
     selectedOptions: ["Suma"],
     availableOptions: [
       { value: "Suma", label: "Suma" },
-      { value: "Średnia", label: "Średnia" },
       { value: "Laboratoria", label: "Laboratoria" },
       { value: "Kartkówki", label: "Kartkówki" },
       { value: "Projekt", label: "Projekt" },
@@ -39,6 +51,11 @@ export const filterCategories = [
       { value: "bm-19-00", label: "BM-19-00" },
       { value: "bm-20-00", label: "BM-20-00" },
       { value: "bm-21-00", label: "BM-21-00" },
+      { value: "bm-22-00", label: "BM-22-00" },
+      { value: "bm-23-00", label: "BM-23-00" },
+      { value: "bm-01-00", label: "BM-01-00" },
+      { value: "bm-02-00", label: "BM-02-00" },
+      { value: "bm-03-00", label: "BM-03-00" },
     ]
   },
   {
@@ -74,7 +91,7 @@ export const HallOfFameContext = createContext({
   setSearch: (newSearch: string) => {},
   isLoading: false,
   filtersState: initialFiltersState,
-  filtersDispatch: () => {},
+  filtersDispatch: (action: any) => {},
   getCategoryData: (categoryId: string) => {},
 });
 
@@ -178,6 +195,18 @@ function RankReducer(state, action) {
             };
           }
           return category;
+        })
+      };
+
+    case 'TOGGLE_CATEGORY':
+      return {
+        ...state,
+        categories: state.categories.map(category => {
+          if (category.id === action.payload.categoryId) {
+            return { ...category, isOpen: !category.isOpen };
+          } else {
+            return { ...category, isOpen: false };
+          }
         })
       };
 

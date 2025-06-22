@@ -8,8 +8,8 @@ export default function CustomSelect({
                                        isOpen,
                                        selectedValues,
                                        possibleValues,
-                                       categoryId,        // Dodaj to
-                                       filtersDispatch    // I to
+                                       categoryId,
+                                       filtersDispatch
                                      }) {
   const handleSelect = (option) => {
     const isSelected = selectedValues.some((o) => o === option.value);
@@ -34,7 +34,6 @@ export default function CustomSelect({
   };
 
   const handleToggleOpen = () => {
-    setX(true);
     filtersDispatch({
       type: 'SET_CATEGORY_OPEN',
       payload: {
@@ -44,9 +43,7 @@ export default function CustomSelect({
     });
   };
 
-  console.log(selectedValues);
 
-  const [x, setX] = useState(false);
   return (
     <div className="relative w-full">
       <button
@@ -60,12 +57,9 @@ export default function CustomSelect({
         {selectedValues.length === 1 ? selectedValues[0] : "Wiele"}
       </button>
 
-      {x && <Modal title="kocham react" onClosed={() => setX(false)}><div>wiecej compile errorów niz dni do prezentacji</div></Modal>}
-
       {isOpen && (
         <ul className="absolute z-10 mt-1 w-full bg-[url(/background-modal-dark.png)]  shadow-md max-h-44 overflow-y-scroll custom-scrollbar select-none focus:outline-none">
           {possibleValues.map((option) => {
-            console.log(possibleValues);
             const isSelected = selectedValues.some((o) => {
               console.log(o + " " + option.value)
               return o === option.value;
