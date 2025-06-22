@@ -1,7 +1,6 @@
 "use client";
 
 import RankSearch from "@/components/hall-of-fame/RankSearch";
-import RankSort from "@/components/hall-of-fame/RankSort";
 import Pagination from "@/components/general/Pagination";
 import RankCardMobile from "@/components/hall-of-fame/RankCardMobile";
 import { useState } from "react";
@@ -16,7 +15,6 @@ export default function RankMobile() {
     <div ref={wrapperRef} className="hall-of-fame-mobile">
       <div className="hall-of-fame-mobile-search-wrapper">
         <RankSearch />
-        <RankSort />
       </div>
 
       <div className="hall-of-fame-mobile-rank-wrapper">

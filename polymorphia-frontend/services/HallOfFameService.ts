@@ -1,17 +1,136 @@
-import {API_HOST} from "@/services/api";
-import {HallOfFameResponseDTO} from "@/interfaces/api/DTO";
+/* eslint-disable */
+
+// TODO: temporary file
+
+const roundToTwo = (num: number): number => {
+  return parseFloat((Math.round(num * 100) / 100).toFixed(2));
+};
+
+const studentNames = [
+  "Gerard Małoduszny",
+  "Gerard Małosolny",
+  "Gerard Kiszony",
+  "Gerard Solny",
+  "Kamil Rudny",
+  "Anna Nowak",
+  "Jan Kowalski",
+  "Maria Wiśniewska",
+  "Tomasz Zieliński",
+  "Paulina Kaczmarek"
+];
+
+
+const generateAllData = () => {
+  const allData = [];
+
+  for (let i = 0; i < 250; i++) {
+    const studentName = studentNames[i % studentNames.length];
+    const stage = Math.max(1, 6 - Math.floor(i / 50));
+
+    const item = {
+      userDetails: {
+        studentName: studentName,
+        animalName: studentName,
+        evolutionStage: "Majestatyczna Bestia",
+        imageUrl: `/images/evolution-stages/${stage}.jpg`,
+        position: i,
+      },
+      xpDetails: {} as Record<string, number>
+    };
+
+    item.xpDetails["Laboratoria"] = roundToTwo(40.0 + Math.random() * 20);
+    item.xpDetails["Kartkówki"] = roundToTwo(30.0 + Math.random() * 15);
+    item.xpDetails["Projekt"] = roundToTwo(20.0 + Math.random() * 10);
+    item.xpDetails["Bonusy"] = roundToTwo(15.2 + Math.random() * 5);
+
+    const totalSum = item.xpDetails["Laboratoria"] +
+      item.xpDetails["Kartkówki"] +
+      item.xpDetails["Projekt"] +
+      item.xpDetails["Bonusy"];
+
+    item.xpDetails["total"] = roundToTwo(totalSum);
+
+    allData.push(item);
+  }
+
+  allData.sort((a, b) => b.xpDetails["total"] - a.xpDetails["total"]);
+
+  allData.forEach((item, index) => {
+    item.userDetails.position = index + 1;
+  });
+
+  return allData;
+};
+
+
+const ALL_DATA = generateAllData();
 
 const HallOfFameService = {
-  getHallOfFame: async (page: number, size: number, searchTerm: string): Promise<HallOfFameResponseDTO> => {
-    const params = new URLSearchParams();
-    params.append('page', String(page));
-    params.append('size', String(size));
-    if (searchTerm) {
-      params.append('searchTerm', searchTerm);
+  getHallOfFame: async (
+    page: number,
+    size: number,
+    searchTerm: string,
+    sortBy?: string,
+    sortOrder?: 'asc' | 'desc'
+  ) => {
+    await new Promise(resolve => setTimeout(resolve, 400));
+
+    let filteredData = [...ALL_DATA];
+
+    if (searchTerm && searchTerm.trim() !== '') {
+      const lowerSearch = searchTerm.toLowerCase();
+      filteredData = filteredData.filter(item =>
+        item.userDetails.studentName.toLowerCase().includes(lowerSearch)
+      );
     }
-    const response = await fetch(`${API_HOST}/test?${params.toString()}`);
-    return await response.json();
+
+    if (sortBy && sortOrder) {
+      filteredData.sort((a, b) => {
+        let valueA: any;
+        let valueB: any;
+
+        if (sortBy === 'name') {
+          valueA = a.userDetails.studentName;
+          valueB = b.userDetails.studentName;
+          const comparison = valueA.localeCompare(valueB);
+          return sortOrder === 'asc' ? comparison : -comparison;
+        } else {
+          valueA = a.xpDetails[sortBy] || 0;
+          valueB = b.xpDetails[sortBy] || 0;
+
+          const comparison = valueA - valueB;
+          return sortOrder === 'asc' ? comparison : -comparison;
+        }
+      });
+    }
+
+    const start = page * size;
+    const end = Math.min(start + size, filteredData.length);
+    const pageContent = filteredData.slice(start, end);
+
+    const totalPages = Math.ceil(filteredData.length / size);
+
+    return {
+      content: pageContent,
+      page: {
+        pageNumber: page,
+        pageSize: size,
+        offset: start,
+        totalPages: totalPages,
+      },
+      totalElements: filteredData.length,
+      first: page === 0,
+      last: page >= totalPages - 1,
+      size: size,
+      number: page,
+      numberOfElements: pageContent.length,
+      empty: pageContent.length === 0
+    };
   },
-};
+  getPodium: async () => {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    return  [...ALL_DATA.slice(0, 3)];
+  }
+}
 
 export default HallOfFameService;

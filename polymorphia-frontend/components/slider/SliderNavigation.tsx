@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/general/ButtonWithBorder";
 import "../../styles/slider.css";
 import { usePathname } from "next/navigation";
 

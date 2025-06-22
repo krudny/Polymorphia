@@ -1,7 +1,7 @@
 import RankImage from "@/components/hall-of-fame/RankImage";
 import RankSummary from "@/components/hall-of-fame/RankSummary";
 import RankUserData from "@/components/hall-of-fame/RankUserData";
-import RankUserPoints from "@/components/hall-of-fame/RankUserPoints";
+import UserPoints from "@/components/general/UserPoints";
 import "../../styles/hall-of-fame.css";
 
 export default function RankCard({ position }: { position: number }) {
@@ -20,7 +20,7 @@ export default function RankCard({ position }: { position: number }) {
         <RankSummary />
       </div>
       <div>
-        <RankUserPoints titleSize={"xs"} xpSize={"sm"} separators={false} />
+        <UserPoints titleSize={"xs"} xpSize={"sm"} separators={false} />
       </div>
     </div>
   );

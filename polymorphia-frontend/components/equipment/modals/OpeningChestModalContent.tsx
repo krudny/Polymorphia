@@ -1,4 +1,4 @@
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/general/ButtonWithBorder";
 import { EquipmentContext } from "@/components/providers/EquipmentContext";
 import { API_STATIC_URL } from "@/services/api";
 import { useContext } from "react";

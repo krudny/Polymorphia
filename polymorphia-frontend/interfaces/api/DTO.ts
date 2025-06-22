@@ -85,12 +85,10 @@ export interface HallOfFameRecordDTO {
     animalName: string;
     studentName: string;
     evolutionStage: string;
+    position: number;
   };
   xpDetails: {
-    laboratories: number;
-    tests: number;
-    project: number;
-    bonuses: number;
+    [key: string]: number;
     total: number;
   };
 }

@@ -3,7 +3,7 @@
 import React from "react";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/general/ButtonWithBorder";
 import NavigationArrow from "@/components/slider/NavigationArrow";
 import LoginFormProps from "@/interfaces/home/LoginFormInterface";
 import { LoginDto } from "@/interfaces/api/DTO";

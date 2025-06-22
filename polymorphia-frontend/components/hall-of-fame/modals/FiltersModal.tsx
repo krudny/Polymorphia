@@ -1,7 +1,7 @@
 "use client"
 
 import Modal from "@/components/modal/Modal";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/general/ButtonWithBorder";
 import CustomSelect from "@/components/general/CustomSelect";
 import {HallOfFameContext} from "@/components/providers/HallOfFameContext";
 import {useContext, useLayoutEffect, useRef} from "react";
@@ -12,7 +12,6 @@ import gsap from "gsap";
 export default function FiltersModal() {
   const { filtersState, filtersDispatch } = useContext(HallOfFameContext);
 
-  // Przechowujemy referencje do rozwijanych sekcji kategorii
   const refs = useRef({});
 
   useLayoutEffect(() => {
@@ -53,7 +52,10 @@ export default function FiltersModal() {
   return (
     <Modal
       title="Filtry"
-      onClosed={() => filtersDispatch({ type: 'CLOSE_MODAL' })}
+      onClosed={() => {
+        filtersDispatch({ type: 'CLOSE_ALL_CATEGORIES' })
+        filtersDispatch({ type: 'CLOSE_MODAL' })
+      }}
     >
       <div className="overflow-visible">
         <div className="w-96 flex flex-col">

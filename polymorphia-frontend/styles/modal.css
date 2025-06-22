@@ -34,5 +34,5 @@
 }
 
 .modal-header-exit-button {
-  @apply cursor-pointer hover:drop-shadow-lg;
+  @apply cursor-pointer hover:drop-shadow-lg hover:text-primary-gray transition-colors duration-150;
 }

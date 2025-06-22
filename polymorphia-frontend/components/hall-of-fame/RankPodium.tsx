@@ -1,16 +1,36 @@
 import XPCard from "@/components/xp-card/XPCard";
 import "../../styles/hall-of-fame.css";
+import {useQuery} from "@tanstack/react-query";
+import HallOfFameService from "@/services/HallOfFameService";
+import Loading from "@/components/general/Loading";
 
-export default function RankPodium({ position, userDetails: {animalName, evolutionStage}, xpDetails: {total} }: { position: 1 | 2 | 3 }) {
+export default function RankPodium() {
+  const { data: podium = [], isLoading } = useQuery({
+    queryKey: ["podium"],
+    queryFn: () => HallOfFameService.getPodium(),
+  });
+
+  if (isLoading) return <Loading />;
+
   return (
-    <div className="hall-of-fame-podium">
-      <XPCard
-        title={animalName}
-        subtitle={evolutionStage}
-        color={position === 1 ? "gold" : position === 2 ? "silver" : "bronze"}
-        xp={total}
-        size={"hofDesktop"}
-      />
-    </div>
+    <>
+      {podium.map((item, index) => (
+        <div className="hall-of-fame-podium" key={index}>
+          <XPCard
+            title={item.userDetails.animalName}
+            subtitle={item.userDetails.evolutionStage}
+            color={
+              item.userDetails.position === 1
+                ? "gold"
+                : item.userDetails.position === 2
+                  ? "silver"
+                  : "bronze"
+            }
+            xp={item.xpDetails.total.toFixed(2)}
+            size={"hofDesktop"}
+          />
+        </div>
+      ))}
+    </>
   );
 }

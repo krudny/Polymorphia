@@ -6,7 +6,7 @@ import "../../../styles/profile.css";
 import ProgressBar from "@/components/progressbar/ProgressBar";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
-import RankUserPoints from "@/components/hall-of-fame/RankUserPoints";
+import UserPoints from "@/components/general/UserPoints";
 
 export default function Profile() {
   const wrapperRef = useScaleShow();
@@ -15,6 +15,13 @@ export default function Profile() {
   useEffect(() => {
     setTitle("Profil");
   }, [setTitle]);
+
+  const sampleData = {
+    Laboratoria: 43.10,
+    Kartkówki: 35.75,
+    Projekt: 24.65,
+    Bonusy: 18.41,
+  };
 
   return (
     <div ref={wrapperRef} className="profile">
@@ -34,15 +41,15 @@ export default function Profile() {
             <h1>Kamil Rudny</h1>
             <h2>Gerard Pocieszny</h2>
             <h3>Jesteś 36 na 139 zwierzaków!</h3>
-            {/*<div className="w-full md:hidden mt-4">*/}
-            {/*  <RankUserPoints separators titleSize="sm" xpSize="md" />*/}
-            {/*</div>*/}
-            {/*<div className="hidden md:block 2xl:hidden w-4/5 max-w-xl mt-6">*/}
-            {/*  <RankUserPoints separators titleSize="sm" xpSize="md" />*/}
-            {/*</div>*/}
-            {/*<div className="hidden 2xl:block w-4/5 mt-10">*/}
-            {/*  <RankUserPoints separators titleSize="md" xpSize="lg" />*/}
-            {/*</div>*/}
+            <div className="w-full md:hidden mt-4">
+              <UserPoints separators titleSize="sm" xpSize="md" xpDetails={sampleData} />
+            </div>
+            <div className="hidden md:block 2xl:hidden w-4/5 max-w-xl mt-6">
+              <UserPoints separators titleSize="sm" xpSize="md" xpDetails={sampleData} />
+            </div>
+            <div className="hidden 2xl:block w-4/5 mt-10">
+              <UserPoints separators titleSize="md" xpSize="lg" xpDetails={sampleData} />
+            </div>
           </div>
         </div>
         <div className="profile-progress-bar-mobile">

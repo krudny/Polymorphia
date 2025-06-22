@@ -1,4 +1,4 @@
-import {useQuery} from "@tanstack/react-query";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
 import HallOfFameService from "@/services/HallOfFameService";
 import {createContext, ReactNode, useEffect, useReducer, useState} from "react";
 import Loading from "../general/Loading";
@@ -11,8 +11,8 @@ export const filterCategories = [
     isOpen: false,
     minSelections: 1,
     maxSelections: 1,
-    defaultSelected: ["Rosnąco"],
-    selectedOptions: ["Rosnąco"],
+    defaultSelected: ["desc"],
+    selectedOptions: ["desc"],
     availableOptions: [
       { value: "asc", label: "Rosnąco" },
       { value: "desc", label: "Malejąco" },
@@ -24,14 +24,15 @@ export const filterCategories = [
     isOpen: false,
     minSelections: 1,
     maxSelections: 1,
-    defaultSelected: ["Suma"],
-    selectedOptions: ["Suma"],
+    defaultSelected: ["total"],
+    selectedOptions: ["total"],
     availableOptions: [
-      { value: "Suma", label: "Suma" },
+      { value: "name", label: "Nazwa" },
       { value: "Laboratoria", label: "Laboratoria" },
       { value: "Kartkówki", label: "Kartkówki" },
       { value: "Projekt", label: "Projekt" },
       { value: "Bonusy", label: "Bonusy" },
+      { value: "total", label: "Suma" },
     ]
   },
   {
@@ -40,8 +41,8 @@ export const filterCategories = [
     isOpen: false,
     minSelections: 1,
     maxSelections: null,
-    defaultSelected: ["Wszystkie"],
-    selectedOptions: ["Wszystkie"],
+    defaultSelected: ["all"],
+    selectedOptions: ["all"],
     availableOptions: [
       { value: "all", label: "Wszystkie" },
       { value: "mi-15-00", label: "MI-15-00" },
@@ -79,7 +80,6 @@ export const filterCategories = [
 
 export const initialFiltersState = {
   isModalOpen: false,
-  isSortedAsc: false,
   categories: filterCategories,
 }
 
@@ -92,7 +92,6 @@ export const HallOfFameContext = createContext({
   isLoading: false,
   filtersState: initialFiltersState,
   filtersDispatch: (action: any) => {},
-  getCategoryData: (categoryId: string) => {},
 });
 
 export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
@@ -112,21 +111,34 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
     };
   }, [search]);
 
-  const { data = [], isLoading } = useQuery({
-    queryKey: ["hallOfFame", page, size, debouncedSearch],
-    queryFn: () => HallOfFameService.getHallOfFame(page, size, debouncedSearch),
-  });
+  const getSortParams = () => {
+    const sortCategory = filtersState.categories.find(cat => cat.id === "sort");
+    const sortByCategory = filtersState.categories.find(cat => cat.id === "sortBy");
 
-  useEffect(() => {
-    console.log(data)
-  }, [data]);
+    const sortOrder = sortCategory?.selectedOptions[0] || "";
+    let sortBy = sortByCategory?.selectedOptions[0] || "";
 
-  const getCategoryData = (categoryId) => {
-    return filtersState.categories.find(cat => cat.id === categoryId);
+    return { sortBy, sortOrder };
   };
 
+  const { sortBy, sortOrder } = getSortParams();
+
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    queryClient.invalidateQueries({
+      queryKey: ["hallOfFame"]
+    });
+    setPage(0);
+  }, [filtersState, queryClient]);
+
+  const { data = [], isLoading } = useQuery({
+    queryKey: ["hallOfFame", page, size, debouncedSearch],
+    queryFn: () => HallOfFameService.getHallOfFame(page, size, debouncedSearch, sortBy, sortOrder),
+  });
+
   return (
-    <HallOfFameContext.Provider value={{ data, page, setPage, search, setSearch, isLoading, filtersState, filtersDispatch, getCategoryData }}>
+    <HallOfFameContext.Provider value={{ data, page, setPage, search, setSearch, isLoading, filtersState, filtersDispatch }}>
       {children}
     </HallOfFameContext.Provider>
   );
@@ -165,10 +177,10 @@ function RankReducer(state, action) {
           if (category.id === action.payload.categoryId) {
             const newSelections = [...category.selectedOptions, action.payload.value];
 
-            if (category.maxSelections && newSelections.length > category.maxSelections) {
-              toast.error(`Nie możesz zaznaczyć więcej niż ${category.maxSelections} opcji!`);
-              return category;
-            }
+            // if (category.maxSelections && newSelections.length > category.maxSelections) {
+            //   toast.error(`Nie możesz zaznaczyć więcej niż ${category.maxSelections} opcji!`);
+            //   return category;
+            // }
             return { ...category, selectedOptions: newSelections };
           }
           return category;
@@ -184,10 +196,10 @@ function RankReducer(state, action) {
               option => option !== action.payload.value
             );
 
-            if (category.minSelections && newSelections.length < category.minSelections) {
-              toast.error(`Nie możesz zaznaczyć mniej niż ${category.minSelections} opcji!`);
-              return category;
-            }
+            // if (category.minSelections && newSelections.length < category.minSelections) {
+            //   toast.error(`Nie możesz zaznaczyć mniej niż ${category.minSelections} opcji!`);
+            //   return category;
+            // }
 
             return {
               ...category,
@@ -210,13 +222,12 @@ function RankReducer(state, action) {
         })
       };
 
-    case 'SET_CATEGORY_OPEN':
+    case 'CLOSE_ALL_CATEGORIES':
       return {
         ...state,
-        categories: state.categories.map(category =>
-          category.id === action.payload.categoryId
-            ? { ...category, isOpen: action.payload.isOpen }
-            : category
+        categories: state.categories.map(category => {
+            return {...category, isOpen: false}
+          }
         )
       };
 

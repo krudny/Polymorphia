@@ -22,7 +22,7 @@ export default function HallOfFame() {
 
   return (
     <HallOfFameProvider>
-      <div className="opacity-0" ref={wrapperRef}>
+      <div className="" ref={wrapperRef}>
         <div className="w-full lg:hidden">
           {/*<RankMobile />*/}
         </div>

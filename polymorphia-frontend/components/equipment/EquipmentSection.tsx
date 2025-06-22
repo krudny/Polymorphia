@@ -9,7 +9,7 @@ import Image from "next/image";
 import ImageBadge from "@/components/general/ImageBadge";
 import { useContext } from "react";
 import { EquipmentContext } from "@/components/providers/EquipmentContext";
-import ButtonWithBorder from "../button/ButtonWithBorder";
+import ButtonWithBorder from "../general/ButtonWithBorder";
 
 export function EquipmentSection({ type, data }: EquipmentSectionProps) {
   const {

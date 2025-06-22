@@ -1,6 +1,6 @@
 "use client";
 
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/general/ButtonWithBorder";
 import { useContext, useEffect } from "react";
 import { NavigationContext } from "@/components/providers/NavigationContext";
 import { useScaleShow } from "@/animations/General";

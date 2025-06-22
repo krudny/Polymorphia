@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import BackgroundWrapper from "@/components/general/BackgroundWrapper";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/general/ButtonWithBorder";
 import LoginForm from "@/components/home/LoginForm";
 import { useEffect, useRef, useState } from "react";
 import "../styles/home.css";
