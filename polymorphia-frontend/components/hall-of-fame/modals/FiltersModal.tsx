@@ -9,7 +9,12 @@ import { ArrowDown, ArrowUp } from "lucide-react";
 import gsap from "gsap";
 
 export default function FiltersModal() {
-  const { filtersState, filtersDispatch } = useContext(HallOfFameContext);
+  const {
+    filtersState,
+    filtersDispatch,
+    hasUnappliedChanges,
+    confirmButtonAction,
+  } = useContext(HallOfFameContext);
 
   const refs = useRef({});
 
@@ -75,12 +80,12 @@ export default function FiltersModal() {
                 >
                   {category.isOpen ? (
                     <>
-                      <ArrowDown className="w-5 h-5 transition-transform duration-300" />
+                      <ArrowUp className="w-5 h-5 transition-transform duration-300" />
                       <h1 className="text-2xl">Zamknij</h1>
                     </>
                   ) : (
                     <>
-                      <ArrowUp className="w-5 h-5 transition-transform duration-300" />
+                      <ArrowDown className="w-5 h-5 transition-transform duration-300" />
                       <h1 className="text-2xl">Otwórz</h1>
                     </>
                   )}
@@ -97,25 +102,24 @@ export default function FiltersModal() {
                 }}
               >
                 <div className="grid grid-cols-4 gap-2 text-xl my-2 ">
-                  {category.availableOptions.map((option) => {
-                    const isSelected = category.selectedOptions.includes(
-                      option.value
-                    );
+                  {Array.from(category.availableOptions.entries()).map(([value, label]) => {
+                    const isSelected = category.selectedOptions.includes(value);
 
                     return (
                       <div
-                        key={option.value}
-                        onClick={() => handleSelect(category.id, option)}
+                        key={value}
+                        onClick={() => handleSelect(category.id, { value, label })}
                         className={`w-full rounded-md flex-centered px-2 py-1 text-primary-dark cursor-pointer transition-colors duration-150 ease-in-out ${
                           isSelected
                             ? "bg-secondary-light shadow-md"
                             : "bg-primary-gray "
                         }`}
                       >
-                        {option.label}
+                        {label}
                       </div>
                     );
                   })}
+
                 </div>
               </div>
             </div>
@@ -124,10 +128,15 @@ export default function FiltersModal() {
 
         <div className="w-full mt-5">
           <ButtonWithBorder
-            text="Potwierdź"
+            text={hasUnappliedChanges ? "Potwierdź zmiany" : "Potwierdź"}
             className="w-full rounded-md"
             size="sm"
-            onClick={() => {}}
+            onClick={() => {
+              if (confirmButtonAction()) {
+                filtersDispatch({ type: "CLOSE_ALL_CATEGORIES" });
+                filtersDispatch({ type: "CLOSE_MODAL" });
+              }
+            }}
           />
         </div>
       </div>

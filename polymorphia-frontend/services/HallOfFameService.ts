@@ -19,6 +19,21 @@ const studentNames = [
   "Paulina Kaczmarek",
 ];
 
+const groups = [
+  "MI-15-00",
+  "BM-16-00",
+  "BM-17-00",
+  "BM-18-00",
+  "BM-19-00",
+  "BM-20-00",
+  "BM-21-00",
+  "BM-22-00",
+  "BM-23-00",
+  "BM-01-00",
+  "BM-02-00",
+  "BM-03-00",
+];
+
 const generateAllData = () => {
   const allData = [];
 
@@ -33,6 +48,7 @@ const generateAllData = () => {
         evolutionStage: "Majestatyczna Bestia",
         imageUrl: `/images/evolution-stages/${stage}.jpg`,
         position: i,
+        group: groups[i % groups.length],
       },
       xpDetails: {} as Record<string, number>,
     };
@@ -70,11 +86,18 @@ const HallOfFameService = {
     size: number,
     searchTerm: string,
     sortBy?: string,
-    sortOrder?: "asc" | "desc"
+    sortOrder?: "asc" | "desc",
+    groups?: string[]
   ) => {
     await new Promise((resolve) => setTimeout(resolve, 400));
 
     let filteredData = [...ALL_DATA];
+
+    if (groups && !groups?.includes("all")) {
+      filteredData = filteredData.filter((item) =>
+        groups.includes(item.userDetails.group.toLowerCase())
+      );
+    }
 
     if (searchTerm && searchTerm.trim() !== "") {
       const lowerSearch = searchTerm.toLowerCase();
