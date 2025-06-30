@@ -13,10 +13,10 @@ export const filterCategories = [
     minSelections: 1,
     maxSelections: 1,
     selectedOptions: ["desc"],
-    availableOptions: new Map([
-      ["asc", "Rosnąco"],
-      ["desc", "Malejąco"],
-    ]),
+    availableOptions: [
+      { label: "Rosnąco", value: "asc", priority: 0 },
+      { label: "Malejąco", value: "desc", priority: 1 },
+    ],
   },
   {
     id: "sortBy",
@@ -25,14 +25,11 @@ export const filterCategories = [
     minSelections: 1,
     maxSelections: 1,
     selectedOptions: ["total"],
-    availableOptions: new Map([
-      ["name", "Nazwa"],
-      ["Laboratoria", "Laboratoria"],
-      ["Kartkówki", "Kartkówki"],
-      ["Projekt", "Projekt"],
-      ["Bonusy", "Bonusy"],
-      ["total", "Suma"],
-    ]),
+    availableOptions: [
+      { label: "Nazwa", value: "name", priority: Number.NEGATIVE_INFINITY },
+      { label: "Bonusy", value: "Bonusy", priority: Number.POSITIVE_INFINITY - 1 },
+      { label: "Suma", value: "total", priority: Number.POSITIVE_INFINITY },
+    ],
   },
   {
     id: "groups",
@@ -41,21 +38,21 @@ export const filterCategories = [
     minSelections: 1,
     maxSelections: 100,
     selectedOptions: ["all"],
-    availableOptions: new Map([
-      ["all", "Wszystkie"],
-      ["mi-15-00", "MI-15-00"],
-      ["bm-16-00", "BM-16-00"],
-      ["bm-17-00", "BM-17-00"],
-      ["bm-18-00", "BM-18-00"],
-      ["bm-19-00", "BM-19-00"],
-      ["bm-20-00", "BM-20-00"],
-      ["bm-21-00", "BM-21-00"],
-      ["bm-22-00", "BM-22-00"],
-      ["bm-23-00", "BM-23-00"],
-      ["bm-01-00", "BM-01-00"],
-      ["bm-02-00", "BM-02-00"],
-      ["bm-03-00", "BM-03-00"],
-    ]),
+    availableOptions: [
+      { label: "Wszystkie", value: "all", priority: 0 },
+      { label: "MI-15-00", value: "mi-15-00", priority: 1 },
+      { label: "BM-16-00", value: "bm-16-00", priority: 2 },
+      { label: "BM-17-00", value: "bm-17-00", priority: 3 },
+      { label: "BM-18-00", value: "bm-18-00", priority: 4 },
+      { label: "BM-19-00", value: "bm-19-00", priority: 5 },
+      { label: "BM-20-00", value: "bm-20-00", priority: 6 },
+      { label: "BM-21-00", value: "bm-21-00", priority: 7 },
+      { label: "BM-22-00", value: "bm-22-00", priority: 8 },
+      { label: "BM-23-00", value: "bm-23-00", priority: 9 },
+      { label: "BM-01-00", value: "bm-01-00", priority: 10 },
+      { label: "BM-02-00", value: "bm-02-00", priority: 11 },
+      { label: "BM-03-00", value: "bm-03-00", priority: 12 },
+    ],
   },
   {
     id: "rankingOptions",
@@ -64,12 +61,11 @@ export const filterCategories = [
     minSelections: 4,
     maxSelections: 4,
     selectedOptions: ["Bonusy"],
-    availableOptions: new Map([
-      ["Bonusy", "Bonusy"],
-    ]),
+    availableOptions: [
+      { label: "Bonusy", value: "Bonusy", priority: Number.POSITIVE_INFINITY },
+    ],
   },
 ];
-
 
 export const initialFiltersState = {
   isModalOpen: false,
@@ -88,6 +84,7 @@ export const HallOfFameContext = createContext({
   filtersDispatch: (action: any) => {},
   confirmButtonAction: () => {},
   hasUnappliedChanges: false,
+  getAllCategories: (state) => {},
 });
 
 export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
@@ -100,24 +97,35 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
     initialFiltersState
   );
 
-  // Stan dla zatwierdzonych filtrów
+
+
+
   const [appliedFiltersState, setAppliedFiltersState] =
     useState(initialFiltersState);
 
-  // Funkcja do pobierania parametrów z zatwierdzonych filtrów
+  const getAllCategories = (state) => {
+    return {
+      sortCategory: state.categories.find((cat) => cat.id === "sort"),
+      sortByCategory: state.categories.find((cat) => cat.id === "sortBy"),
+      groupsCategory: state.categories.find((cat) => cat.id === "groups"),
+      rankingOptionsCategory: state.categories.find((cat) => cat.id === "rankingOptions"),
+    };
+  };
+
+  const {
+    sortCategory,
+    sortByCategory,
+    groupsCategory,
+    rankingOptionsCategory,
+  } = getAllCategories(initialFiltersState);
+
   const getAppliedQueryParams = (state) => {
-    const sortCategory = state.categories.find(
-      (cat) => cat.id === "sort"
-    );
-    const sortByCategory = state.categories.find(
-      (cat) => cat.id === "sortBy"
-    );
-    const groupsCategory = state.categories.find(
-      (cat) => cat.id === "groups"
-    );
-    const rankingOptionsCategory = state.categories.find(
-      (cat) => cat.id === "rankingOptions"
-    );
+    const {
+      sortCategory,
+      sortByCategory,
+      groupsCategory,
+      rankingOptionsCategory,
+    } = getAllCategories(state);
 
     return {
       sortOrder: sortCategory?.selectedOptions[0] || "",
@@ -130,12 +138,10 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   const appliedParams = getAppliedQueryParams(appliedFiltersState);
   const queryClient = useQueryClient();
 
-  // Sprawdzanie czy są niezatwierdzone zmiany
   const hasUnappliedChanges =
     JSON.stringify(filtersState) !== JSON.stringify(appliedFiltersState);
 
   const confirmButtonAction = (): boolean => {
-    // Sprawdź wszystkie kategorie
     for (const category of filtersState.categories) {
       const selectedCount = category.selectedOptions.length;
 
@@ -171,8 +177,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
 
     return true;
   };
-
-  // useQuery używa zatwierdzonych parametrów
+  
   const { data = [], isLoading } = useQuery({
     queryKey: [
       "hallOfFame",
@@ -201,12 +206,43 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
     queryFn: () => EventSectionService.getEventSections(1),
   });
 
-  const rankingOptions = initialFiltersState.categories.find((cat) => cat.id === "rankingOptions");
-  eventSections?.forEach((category) => {
-    if (rankingOptions && category.name) {
-      if (!rankingOptions.availableOptions.has(category.name)) {
-        rankingOptions.availableOptions.set(category.name, category.name);
+
+  const addEventSections = (category) => {
+    const existingValues = new Set(category.availableOptions.map(option => option.value));
+
+    eventSections?.forEach((eventSection) => {
+      if (!existingValues.has(eventSection.name)) {
+        category.availableOptions.push({
+          label: eventSection.name,
+          value: eventSection.name,
+          priority: eventSection.priority,
+        });
+        existingValues.add(eventSection.name);
+
       }
+    });
+  }
+
+  addEventSections(sortByCategory)
+  addEventSections(rankingOptionsCategory);
+
+  console.log(filtersState);
+
+  console.log("APPLIED", appliedFiltersState);
+
+  filterCategories.forEach(category => {
+    if (category.selectedOptions.length < category.maxSelections) {
+      const notSelected = category.availableOptions
+        .filter(opt => !category.selectedOptions.includes(opt.value))
+        .sort((a, b) => a.priority - b.priority);
+
+      const toAdd = Math.min(
+        category.maxSelections - category.selectedOptions.length,
+        notSelected.length
+      );
+
+      const optionsToAdd = notSelected.slice(0, toAdd).map(opt => opt.value);
+      category.selectedOptions = [...category.selectedOptions, ...optionsToAdd];
     }
   });
 
@@ -224,6 +260,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
         filtersDispatch,
         confirmButtonAction,
         hasUnappliedChanges,
+        getAllCategories,
       }}
     >
       {children}
@@ -265,7 +302,7 @@ function RankReducer(state, action) {
             if (category.minSelections === 1 && category.maxSelections === 1) {
               return { ...category, selectedOptions: [action.payload.value] };
             } else {
-              if (category.selectedOptions.length < category.maxSelections) {
+
                 if (action.payload.value === "all") {
                   return {
                     ...category,
@@ -279,9 +316,7 @@ function RankReducer(state, action) {
                     action.payload.value,
                   ].filter((item) => item != "all"),
                 };
-              } else {
-                toast.error("Możesz zaznaczyć tylko " + category.maxSelections);
-              }
+
             }
           }
           return category;

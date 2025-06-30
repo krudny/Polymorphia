@@ -1,23 +1,20 @@
 "use client";
-import { useScaleShow } from "@/animations/General";
 import RankPodium from "@/components/hall-of-fame/RankPodium";
 import RankSearch from "@/components/hall-of-fame/RankSearch";
-import RankSort from "@/components/hall-of-fame/RankSort";
 import RankCardDesktop from "@/components/hall-of-fame/RankCardDesktop";
 import Pagination from "@/components/general/Pagination";
 import "../../styles/hall-of-fame.css";
-import { HallOfFameResponseDTO } from "@/interfaces/api/DTO";
-import { useContext, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import HallOfFameService from "@/services/HallOfFameService";
+import { useContext } from "react";
 import Loading from "@/components/general/Loading";
 import { HallOfFameContext } from "@/components/providers/HallOfFameContext";
 import ButtonWithBorder from "@/components/general/ButtonWithBorder";
 import FiltersModal from "@/components/hall-of-fame/modals/FiltersModal";
 
 export default function RankDesktop() {
-  const { data, page, setPage, isLoading, filtersState, filtersDispatch } =
+  const { data, page, setPage, isLoading, filtersState, appliedFiltersState, getAllCategories, filtersDispatch } =
     useContext(HallOfFameContext);
+
+  const rankingOptions = appliedFiltersState.categories.find((cat) => cat.id === "rankingOptions")?.selectedOptions;
 
   return (
     <div className="hall-of-fame-desktop">
@@ -45,13 +42,21 @@ export default function RankDesktop() {
                 <Loading />
               </div>
             ) : (
-              data.content.map((item, index) => (
-                <RankCardDesktop
-                  key={`rank-${index}-${item.userDetails.studentName}`}
-                  userDetails={item.userDetails}
-                  xpDetails={item.xpDetails}
-                />
-              ))
+              data.content.map((item, index) => {
+                const filteredXpDetails = Object.fromEntries(
+                  Object.entries(item.xpDetails).filter(([key]) =>
+                    rankingOptions.includes(key)
+                  )
+                );
+
+                return (
+                  <RankCardDesktop
+                    key={`rank-${index}-${item.userDetails.studentName}`}
+                    userDetails={item.userDetails}
+                    xpDetails={filteredXpDetails}
+                  />
+                );
+              })
             )}
           </div>
         </div>

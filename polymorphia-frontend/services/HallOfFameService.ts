@@ -52,15 +52,18 @@ const generateAllData = () => {
       },
       xpDetails: {} as Record<string, number>,
     };
-
-    item.xpDetails["Laboratoria"] = roundToTwo(40.0 + Math.random() * 20);
-    item.xpDetails["Kartkówki"] = roundToTwo(30.0 + Math.random() * 15);
+    item.xpDetails["Git"] = roundToTwo(2.0 + Math.random());
+    item.xpDetails["Laboratorium"] = roundToTwo(40.0 + Math.random() * 20);
+    item.xpDetails["Kartkówka"] = roundToTwo(30.0 + Math.random() * 15);
+    item.xpDetails["Specjalne"] = roundToTwo(10.0 + Math.random() * 15);
     item.xpDetails["Projekt"] = roundToTwo(20.0 + Math.random() * 10);
     item.xpDetails["Bonusy"] = roundToTwo(15.2 + Math.random() * 5);
 
     const totalSum =
-      item.xpDetails["Laboratoria"] +
-      item.xpDetails["Kartkówki"] +
+      item.xpDetails["Laboratorium"] +
+      item.xpDetails["Kartkówka"] +
+      item.xpDetails["Git"] +
+      item.xpDetails["Specjalne"] +
       item.xpDetails["Projekt"] +
       item.xpDetails["Bonusy"];
 

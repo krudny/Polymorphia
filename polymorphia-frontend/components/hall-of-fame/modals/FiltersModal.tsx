@@ -101,25 +101,26 @@ export default function FiltersModal() {
                   marginTop: 0,
                 }}
               >
-                <div className="grid grid-cols-4 gap-2 text-xl my-2 ">
-                  {Array.from(category.availableOptions.entries()).map(([value, label]) => {
-                    const isSelected = category.selectedOptions.includes(value);
+                <div className="grid grid-cols-4 gap-2 text-xl my-2">
+                  {category.availableOptions
+                    .sort((a, b) => a.priority - b.priority)
+                    .map((option) => {
+                      const isSelected = category.selectedOptions.includes(option.value);
 
-                    return (
-                      <div
-                        key={value}
-                        onClick={() => handleSelect(category.id, { value, label })}
-                        className={`w-full rounded-md flex-centered px-2 py-1 text-primary-dark cursor-pointer transition-colors duration-150 ease-in-out ${
-                          isSelected
-                            ? "bg-secondary-light shadow-md"
-                            : "bg-primary-gray "
-                        }`}
-                      >
-                        {label}
-                      </div>
-                    );
-                  })}
-
+                      return (
+                        <div
+                          key={option.value}
+                          onClick={() => handleSelect(category.id, option)}
+                          className={`w-full rounded-md flex-centered px-2 py-1 text-primary-dark cursor-pointer transition-colors duration-150 ease-in-out ${
+                            isSelected
+                              ? "bg-secondary-light shadow-md"
+                              : "bg-primary-gray "
+                          }`}
+                        >
+                          {option.label}
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
             </div>
