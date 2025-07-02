@@ -1,52 +1,104 @@
-"use client"
+"use client";
 
-import {createContext, ReactNode, useEffect, useReducer, useState} from "react";
-import {useDebounce} from "use-debounce";
-import {useQuery} from "@tanstack/react-query";
-import {EventSectionService} from "@/services/course/event-section/EventSectionService";
-import {addEventSectionsToCategories, getAllCategories} from "@/services/hall-of-fame/Helpers";
-import {filtersCategories} from "@/services/hall-of-fame/FilterCategories";
-import {HallOfFameReducer} from "@/services/hall-of-fame/HallOfFameReducer";
+import {
+  createContext,
+  ReactNode,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
+import { useDebounce } from "use-debounce";
+import { useQuery } from "@tanstack/react-query";
+import { EventSectionService } from "@/services/course/event-section/EventSectionService";
+import {
+  addEventSectionsToFilters,
+  getAllFilters,
+  getAppliedQueryParams,
+} from "@/services/hall-of-fame/Helpers";
+import { filters } from "@/services/hall-of-fame/InitialFilters";
+import { HallOfFameReducer } from "@/services/hall-of-fame/HallOfFameReducer";
+import { HallOfFameContextType } from "@/interfaces/hall-of-fame/HallOfFameLogicInterfaces";
+import HallOfFameService from "@/services/hall-of-fame/HallOfFameService";
 
-export const HallOfFameContext = createContext({
+export const HallOfFameContext = createContext<HallOfFameContextType>({
   page: 0,
-  setPage: (newPage: number) => {},
+  setPage: () => {},
   search: "",
-  setSearch: (newSearch: string) => {},
+  setSearch: () => {},
   isModalOpen: false,
-})
+  setIsModalOpen: () => {},
+  filtersState: [],
+  filtersDispatch: () => {},
+  isLoading: true,
+});
 
-export const HallOfFameProvider = ({children} : {children:ReactNode}) => {
+export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   const pageSize = 50;
   const [page, setPage] = useState(0);
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 400);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [filtersState, setFiltersState] = useReducer(HallOfFameReducer, filtersCategories);
+  const [filtersState, filtersDispatch] = useReducer(
+    HallOfFameReducer,
+    filters
+  );
   const [appliedFiltersState, setAppliedFiltersState] = useState(filtersState);
-  const { sortByCategory, rankingOptionsCategory } = getAllCategories(filtersState);
+  const { sortByFilter, rankingOptionsFilter } = getAllFilters(filtersState);
+  const { sortOrder, sortBy, groups, rankingOptions } =
+    getAppliedQueryParams(appliedFiltersState);
 
   const { data: eventSections } = useQuery({
     queryKey: ["eventSections"],
     queryFn: () => EventSectionService.getEventSections(1),
   });
 
-  useEffect(() => {
-    if (eventSections) {
-      addEventSectionsToCategories(eventSections, sortByCategory);
-      addEventSectionsToCategories(eventSections, rankingOptionsCategory);
-    }
-  }, [eventSections, sortByCategory, rankingOptionsCategory]);
-
-  <HallOfFameContext.Provider
-    value={{
+  const { data = [], isLoading } = useQuery({
+    queryKey: [
+      "hallOfFame",
       page,
-      setPage,
-      search,
-      setSearch,
-      isModalOpen,
-    }}
-  >
-    {children}
-  </HallOfFameContext.Provider>
-}
+      pageSize,
+      debouncedSearch,
+      sortOrder,
+      sortBy,
+      groups,
+    ],
+    queryFn: () =>
+      HallOfFameService.getHallOfFame(
+        page,
+        pageSize,
+        debouncedSearch,
+        sortBy[0],
+        sortOrder[0] === "asc" || sortOrder[0] === "desc"
+          ? sortOrder[0]
+          : undefined,
+        groups
+      ),
+  });
+
+  useEffect(() => {
+    if (eventSections && sortByFilter && rankingOptionsFilter) {
+      addEventSectionsToFilters(eventSections, sortByFilter);
+      addEventSectionsToFilters(eventSections, rankingOptionsFilter);
+    } else {
+      throw new Error("Filters are broken by dev!");
+    }
+  }, [eventSections, sortByFilter, rankingOptionsFilter]);
+
+  return (
+    <HallOfFameContext.Provider
+      value={{
+        page,
+        setPage,
+        search,
+        setSearch,
+        isModalOpen,
+        setIsModalOpen,
+        filtersState,
+        filtersDispatch,
+        isLoading,
+      }}
+    >
+      {children}
+    </HallOfFameContext.Provider>
+  );
+};

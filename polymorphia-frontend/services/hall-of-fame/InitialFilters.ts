@@ -1,4 +1,6 @@
-export const filtersCategories = [
+import { HallOfFameFilter } from "@/interfaces/hall-of-fame/HallOfFameLogicInterfaces";
+
+export const filters: HallOfFameFilter[] = [
   {
     id: "sort",
     name: "Sortowanie",
@@ -7,8 +9,8 @@ export const filtersCategories = [
     maxSelections: 1,
     options: [
       { label: "Rosnąco", value: "asc", isSelected: false },
-      { label: "Malejąco", value: "desc", isSelected: true }
-    ]
+      { label: "Malejąco", value: "desc", isSelected: true },
+    ],
   },
   {
     id: "sortBy",
@@ -17,8 +19,13 @@ export const filtersCategories = [
     minSelections: 1,
     maxSelections: 1,
     options: [
-      { label: "Nazwa", value: "name", "priority": Number.NEGATIVE_INFINITY, isSelected: false },
-    ]
+      {
+        label: "Nazwa",
+        value: "name",
+        priority: Number.NEGATIVE_INFINITY,
+        isSelected: false,
+      },
+    ],
   },
   {
     id: "groups",
@@ -39,8 +46,8 @@ export const filtersCategories = [
       { label: "BM-23-00", value: "bm-23-00", isSelected: false },
       { label: "BM-01-00", value: "bm-01-00", isSelected: false },
       { label: "BM-02-00", value: "bm-02-00", isSelected: false },
-      { label: "BM-03-00", value: "bm-03-00", isSelected: false }
-    ]
+      { label: "BM-03-00", value: "bm-03-00", isSelected: false },
+    ],
   },
   {
     id: "rankingOptions",
@@ -48,6 +55,6 @@ export const filtersCategories = [
     isOpen: false,
     minSelections: 4,
     maxSelections: 4,
-    options: []
-  }
-]
+    options: [],
+  },
+];
