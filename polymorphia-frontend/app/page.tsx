@@ -1,13 +1,16 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import BackgroundWrapper from "@/components/general/BackgroundWrapper";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import LoginForm from "@/components/home/LoginForm";
-import {useEffect, useRef, useState} from "react";
-import "../styles/home.css"
-import {animateInitialMount, animateLoginFormVisibility} from "@/animations/Home";
-import {API_STATIC_URL} from "@/services/api";
+import { useEffect, useRef, useState } from "react";
+import "../styles/home.css";
+import {
+  animateInitialMount,
+  animateLoginFormVisibility,
+} from "@/animations/Home";
+import { API_STATIC_URL } from "@/services/api";
 import { useTitle } from "@/components/navigation/TitleContext";
 
 export default function Home() {
@@ -25,57 +28,72 @@ export default function Home() {
   const hasMountedRef = useRef(false);
 
   useEffect(() => {
-    if (!backgroundRef.current || !titleSectionRef.current || !imageRef.current) return;
-    animateInitialMount(backgroundRef.current, titleSectionRef.current, imageRef.current, () => {
-      hasMountedRef.current = true;
-    });
+    if (!backgroundRef.current || !titleSectionRef.current || !imageRef.current)
+      return;
+    animateInitialMount(
+      backgroundRef.current,
+      titleSectionRef.current,
+      imageRef.current,
+      () => {
+        hasMountedRef.current = true;
+      }
+    );
   }, []);
 
   useEffect(() => {
-    if (!hasMountedRef.current || !loginFormRef.current || !titleSectionRef.current) return;
-    animateLoginFormVisibility(loginFormRef.current, titleSectionRef.current, isLoginFormVisible);
+    if (
+      !hasMountedRef.current ||
+      !loginFormRef.current ||
+      !titleSectionRef.current
+    )
+      return;
+    animateLoginFormVisibility(
+      loginFormRef.current,
+      titleSectionRef.current,
+      isLoginFormVisible
+    );
   }, [isLoginFormVisible]);
 
   useEffect(() => {
-    setTitle('');
+    setTitle("");
   }, [setTitle]);
 
   return (
-      <BackgroundWrapper className="hero-background-wrapper">
-        <div className="hero-background-image" ref={backgroundRef}>
+    <BackgroundWrapper className="hero-background-wrapper">
+      <div className="hero-background-image" ref={backgroundRef}>
+        <Image
+          src={`${API_STATIC_URL}/images/general/hero_bg.png`}
+          alt="Hero background"
+          fill
+          className="object-cover"
+          priority
+          sizes="60vw"
+        />
+      </div>
+      <div className="hero-image-wrapper" ref={imageRef}>
+        <div>
           <Image
-              src={`${API_STATIC_URL}/images/general/hero_bg.png`}
-              alt="Hero background"
-              fill
-              className="object-cover"
-              priority
-              sizes="60vw"
+            src={`${API_STATIC_URL}/images/general/owl.png`}
+            alt="Hero owl"
+            width={1000}
+            height={1000}
+            priority
+            sizes="(max-width: 1024px) 400px, (max-width: 1920px) 50vw"
           />
         </div>
-        <div className="hero-image-wrapper" ref={imageRef}>
-          <div>
-            <Image
-                src={`${API_STATIC_URL}/images/general/owl.png`}
-                alt="Hero owl"
-                width={1000}
-                height={1000}
-                priority
-                sizes="(max-width: 1024px) 400px, (max-width: 1920px) 50vw"
-            />
+      </div>
+      <div className="hero-right-wrapper">
+        <div ref={titleSectionRef}>
+          <h1>Polymorphia</h1>
+          <div className="hero-buttons">
+            <ButtonWithBorder text="Zaloguj się" onClick={openLoginForm} />
           </div>
         </div>
-        <div className="hero-right-wrapper">
-          <div ref={titleSectionRef}>
-            <h1>Polymorphia</h1>
-            <div className="hero-buttons">
-              <ButtonWithBorder text="Zaloguj się" onClick={openLoginForm} />
-            </div>
-          </div>
 
-          <div className={`hero-login`} ref={loginFormRef}>
-            <LoginForm onBackAction={closeLoginForm} />
-          </div>
+        <div className={`hero-login`} ref={loginFormRef}>
+          <LoginForm onBackAction={closeLoginForm} />
         </div>
-      </BackgroundWrapper>
-  )
+      </div>
+    </BackgroundWrapper>
+  );
 }

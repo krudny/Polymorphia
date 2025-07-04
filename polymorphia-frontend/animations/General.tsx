@@ -1,6 +1,6 @@
-'use client';
-import gsap from 'gsap';
-import { useRef } from 'react';
+"use client";
+import gsap from "gsap";
+import { useEffect, useRef } from "react";
 
 export const animateScaleShow = (ref: HTMLDivElement) => {
   gsap.fromTo(
@@ -13,7 +13,7 @@ export const animateScaleShow = (ref: HTMLDivElement) => {
       scale: 1,
       autoAlpha: 1,
       duration: 0.3,
-      ease: 'power1.in',
+      ease: "power1.in",
     }
   );
 };
@@ -21,9 +21,11 @@ export const animateScaleShow = (ref: HTMLDivElement) => {
 export function useScaleShow() {
   const ref = useRef<HTMLDivElement | null>(null);
 
-  if (ref.current) {
-    animateScaleShow(ref.current);
-  }
+  useEffect(() => {
+    if (ref.current) {
+      animateScaleShow(ref.current);
+    }
+  }, []);
 
   return ref;
 }

@@ -1,8 +1,20 @@
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
+
+export type ModalState = "closed" | "opening" | "opened" | "closing";
 
 export interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+  isDataPresented: boolean;
+  onClosed: () => void;
   title: string;
+  subtitle?: string;
   children?: ReactNode;
+}
+
+export interface ModalContextValue {
+  closeModal: () => void;
+}
+
+export interface ModalProviderProps {
+  children: React.ReactNode;
+  closeModal: () => void;
 }

@@ -1,17 +1,17 @@
-import Modal from '@/components/modal/Modal';
-import { BonusInfoModalProps } from '@/interfaces/course/event-section/PointsSummaryInterfaces';
-import BonusItemCard from './BonusItemCard';
-import '../../../../styles/points-summary.css';
+import { BonusInfoModalProps } from "@/interfaces/course/event-section/PointsSummaryInterfaces";
+import BonusItemCard from "./BonusItemCard";
+import "../../../../styles/points-summary.css";
+import Modal from "@/components/modal/Modal";
 
 export default function BonusInfoModal({
   bonusInfo,
-  onClose,
+  onClosed,
 }: BonusInfoModalProps) {
   return (
     <Modal
-      isOpen={bonusInfo !== null}
-      title={bonusInfo?.name ?? ''}
-      onClose={onClose}
+      isDataPresented={bonusInfo !== null}
+      title={bonusInfo?.name ?? ""}
+      onClosed={onClosed}
     >
       <div className="bonus-info-modal">
         {bonusInfo?.items.map((item) => (

@@ -2,29 +2,41 @@
 @import "./globals.css";
 
 .equipment {
-    @apply w-full md:max-w-5xl mx-auto p-4 opacity-0;
+  @apply w-full md:max-w-5xl mx-auto p-4 opacity-100 select-none;
 }
 
-.equipment > section > h1 {
-    @apply text-6xl mb-6 lg:mb-10;
+.equipment-header {
+  @apply text-6xl mb-6 lg:mb-10;
 }
 
 .equipment-grid {
-    @apply grid grid-cols-2 sm:grid-cols-4 gap-4;
+  @apply grid grid-cols-2 sm:grid-cols-4 gap-4;
 }
 
 .equipment-grid-item {
-    @apply relative w-full aspect-square;
+  @apply relative w-full aspect-square;
 }
 
 .equipment-img {
-    @apply object-cover rounded-2xl shadow-lg;
+  @apply object-cover rounded-2xl shadow-lg;
 }
 
-.equipment-open-chest-btn {
-    @apply w-full flex-centered bg-neutral-800 mt-4 text-neutral-300 rounded-xl shadow-lg hover:cursor-pointer;
+.equipment-chest-btn {
+  @apply w-full flex-centered mt-4;
 }
 
 .equipment-open-chest-btn > h3 {
-    @apply text-lg py-1 lg:text-2xl;
+  @apply text-lg py-1 lg:text-2xl;
+}
+
+.equipment-locked-item {
+  @apply absolute bg-neutral-300 flex-centered opacity-70 w-full h-full;
+}
+
+.equipment-locked-item > span {
+  @apply material-symbols;
+}
+
+.equipment-locked-item > span > p {
+  @apply text-8xl;
 }

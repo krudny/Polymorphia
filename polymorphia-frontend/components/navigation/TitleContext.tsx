@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, ReactNode, useContext, useState } from "react";
 
 interface TitleContextType {
   title: string;
@@ -8,11 +8,12 @@ interface TitleContextType {
 const TitleContext = createContext<TitleContextType | undefined>(undefined);
 
 export function TitleProvider({ children }: { children: ReactNode }) {
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState("");
 
   function setTitleWithName(title: string) {
     const headerTitle = title;
-    const documentTitle = title.length > 0 ? `${title} - Polymorphia` : 'Polymorphia';
+    const documentTitle =
+      title.length > 0 ? `${title} - Polymorphia` : "Polymorphia";
 
     setTitle(headerTitle);
     document.title = documentTitle;
@@ -29,7 +30,7 @@ export function useTitle() {
   const context = useContext(TitleContext);
 
   if (context === undefined) {
-    throw new Error('useTitle must be used within a TitleProvider');
+    throw new Error("useTitle must be used within a TitleProvider");
   }
 
   return context;

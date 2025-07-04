@@ -1,29 +1,29 @@
-type sizeVariants = 'sm' | 'md' | 'lg';
+type sizeVariants = "sm" | "md" | "lg";
 
 export interface ProgressBarProps {
-    minXP: number;
-    currentXP: number;
-    maxXP: number;
-    numSquares: number;
-    segmentSizes: number[];
-    upperTextLabels?: string[];
-    bottomTextLabels?: string[];
-    labelsSize?: sizeVariants;
+  minXP: number;
+  currentXP: number;
+  maxXP: number;
+  numSquares: number;
+  segmentSizes: number[];
+  upperTextLabels?: string[];
+  bottomTextLabels?: string[];
+  labelsSize?: sizeVariants;
 }
 
 export interface ProgressBarLineProps {
-    width: string;
-    position: number;
-    lineFill: number;
+  width: string;
+  position: number;
+  lineFill: number;
 }
 
 export interface ProgressBarRangeLabelsProps {
-    minXP: number;
-    currentXP: number;
-    maxXP: number;
+  minXP: number;
+  currentXP: number;
+  maxXP: number;
 }
 
 export interface ProgressBarTextLabelsProps {
-    textLabels: string[];
-    size?: sizeVariants;
+  textLabels: string[];
+  size?: sizeVariants;
 }

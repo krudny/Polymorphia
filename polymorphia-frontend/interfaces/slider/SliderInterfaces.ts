@@ -1,7 +1,7 @@
 export type SliderSlide = EvolutionStageSlide | ItemSlide | ChestSlide;
 
 export interface EvolutionStageSlide {
-  type: 'evolution-stage';
+  type: "evolution-stage";
   name: string;
   description: string;
   imageUrl: string;
@@ -9,7 +9,7 @@ export interface EvolutionStageSlide {
 }
 
 export interface ItemSlide {
-  type: 'item';
+  type: "item";
   id: number;
   name: string;
   description: string;
@@ -19,7 +19,7 @@ export interface ItemSlide {
 }
 
 export interface ChestSlide {
-  type: 'chest';
+  type: "chest";
   id: number;
   name: string;
   description: string;
@@ -51,7 +51,3 @@ export interface NavigationArrowProps {
   onClick: () => void;
   className?: string;
 }
-
-
-
-

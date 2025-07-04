@@ -1,8 +1,8 @@
-import ProgressBar from '@/components/progressbar/ProgressBar';
-import { RewardsInfoProps } from '@/interfaces/course/event-section/EventSectionInterfaces';
-import { API_STATIC_URL } from '@/services/api';
-import Image from 'next/image';
-import '../../../styles/event-section.css';
+import ProgressBar from "@/components/progressbar/ProgressBar";
+import { RewardsInfoProps } from "@/interfaces/course/event-section/EventSectionInterfaces";
+import { API_STATIC_URL } from "@/services/api";
+import Image from "next/image";
+import "../../../styles/event-section.css";
 
 export default function RewardsInfo({ grade, maxXp }: RewardsInfoProps) {
   return (
@@ -12,7 +12,7 @@ export default function RewardsInfo({ grade, maxXp }: RewardsInfoProps) {
         <>
           <div className="gradable-event-section-xp">
             <h2>Punkty doświadczenia</h2>
-            <div className="pt-7 min-[390px]:w-[380px] w-[310px] -ml-[38px] -mr-[38px]">
+            <div className="gradable-event-section-progress-bar">
               <ProgressBar
                 minXP={0}
                 currentXP={Number(grade?.gainedXp)}
