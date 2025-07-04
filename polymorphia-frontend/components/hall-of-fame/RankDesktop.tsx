@@ -5,7 +5,7 @@ import RankSort from "@/components/hall-of-fame/RankSort";
 import RankCardDesktop from "@/components/hall-of-fame/RankCardDesktop";
 import Pagination from "@/components/general/Pagination";
 import "../../styles/hall-of-fame.css";
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import { HallOfFameContext } from "@/components/providers/HallOfFameContext";
 import { HallOfFameRecordDTO } from "@/interfaces/api/DTO";
 import { handlePageChange } from "@/services/hall-of-fame/Helpers";
@@ -15,7 +15,7 @@ export default function RankDesktop() {
   const wrapperRef = useScaleShow();
 
   const { data, setPage, isLoading } = useContext(HallOfFameContext);
-
+ useEffect(() => {console.log(data.page)}, [data])
   return (
     <div ref={wrapperRef} className="hall-of-fame-desktop">
       <div className="hall-of-fame-desktop-wrapper">
@@ -50,7 +50,7 @@ export default function RankDesktop() {
         </div>
       </div>
       <div className="hall-of-fame-pagination-wrapper justify-end">
-        {!isLoading && (
+        {!isLoading && data.page.totalPages > 0 && (
           <Pagination
             totalPages={data.page.totalPages}
             forcePage={data.page.pageNumber}
