@@ -75,6 +75,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
       ),
   });
 
+
   useEffect(() => {
     if (eventSections && sortByFilter && rankingOptionsFilter) {
       addEventSectionsToFilters(eventSections, sortByFilter);
