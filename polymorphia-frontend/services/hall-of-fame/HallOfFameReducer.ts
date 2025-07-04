@@ -23,6 +23,14 @@ export function HallOfFameReducer(
         };
       });
 
+    case "TOGGLE_CATEGORY":
+      return filters.map((filter) => {
+        return {
+          ...filter,
+          isOpen: filter.id === action.payload.id ? !filter.isOpen : false
+        }
+      })
+
     case "CLOSE_ALL_CATEGORIES":
       return filters.map((filter) => ({
         ...filter,

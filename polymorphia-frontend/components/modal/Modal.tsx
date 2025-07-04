@@ -10,7 +10,7 @@ import { ModalProvider } from "../providers/ModalContext";
 import { ModalProps } from "@/interfaces/modal/ModalInterfaces";
 
 export default function Modal(props: ModalProps) {
-  const { isDataPresented, onClosed, title, subtitle, children, ...rest } =
+  const { isDataPresented = true, onClosed, title, subtitle, children, ...rest } =
     props;
 
   const [modalVisible, setModalVisible] = useState(false);

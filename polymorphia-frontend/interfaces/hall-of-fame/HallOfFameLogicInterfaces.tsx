@@ -26,7 +26,6 @@ export type HallOfFameAction =
     }
   | { type: "TOGGLE_CATEGORY"; payload: { id: string } }
   | { type: "CLOSE_ALL_CATEGORIES" }
-  | { type: "RESET_FILTERS" };
 
 export type HallOfFameContextType = {
   data: HallOfFameResponseDTO;
@@ -39,13 +38,7 @@ export type HallOfFameContextType = {
   filtersState: HallOfFameFilter[];
   filtersDispatch: Dispatch<HallOfFameAction>;
   isLoading: boolean;
-};
-
-export type HallOfFameConfirmButtonType = {
-  filters: HallOfFameFilter[];
-  setAppliedFiltersState: React.Dispatch<
-    React.SetStateAction<HallOfFameFilter[]>
-  >;
+  setAppliedFiltersState: Dispatch<SetStateAction<HallOfFameFilter[]>>;
 };
 
 export type HallOfFameFilterID =

@@ -41,6 +41,7 @@ export const HallOfFameContext = createContext<HallOfFameContextType>({
   filtersState: [],
   filtersDispatch: () => {},
   isLoading: true,
+  setAppliedFiltersState: () => {},
 });
 
 export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
@@ -108,6 +109,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
         filtersState,
         filtersDispatch,
         isLoading,
+        setAppliedFiltersState,
       }}
     >
       {children}
