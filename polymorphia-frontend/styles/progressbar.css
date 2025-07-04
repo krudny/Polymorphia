@@ -4,7 +4,7 @@
 /* ProgressBar */
 
 .progressbar {
-  @apply w-full h-full m-auto flex flex-col justify-center text-neutral-800;
+  @apply w-full h-full m-auto flex flex-col justify-center;
 }
 
 .progressbar-label-container {
@@ -18,11 +18,12 @@
 /* ProgressBarLine */
 
 .progressbar-line {
-  @apply absolute top-1/2 -translate-y-1/2 ml-4  h-2 bg-neutral-400 overflow-hidden z-50;
+  @apply absolute top-1/2 -translate-y-1/2 ml-4  h-2 overflow-hidden z-50;
+  @apply bg-primary-gray dark:bg-primary-dark;
 }
 
 .progressbar-line > div {
-  @apply h-full bg-neutral-800;
+  @apply h-full bg-primary-dark dark:bg-secondary-light;
 }
 
 /* ProgressBarRangeLabels */

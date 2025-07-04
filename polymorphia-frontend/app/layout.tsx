@@ -8,6 +8,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { TitleProvider } from "@/components/navigation/TitleContext";
+import { ThemeProvider } from "next-themes";
 
 const leagueGothic = League_Gothic({
   subsets: ["latin"],
@@ -30,19 +31,30 @@ export default function RootLayout({
   const [queryClient] = useState(() => new QueryClient());
 
   return (
-    <html lang="pl" className="custom-scrollbar bg-neutral-200">
+    <html
+      lang="pl"
+      className="custom-scrollbar bg-neutral-200"
+      suppressHydrationWarning
+    >
       <head>
         <meta name="theme-color" content="#262626" />
       </head>
       <body
-        className={`${leagueGothic.className} ${materialSymbols.variable} text-[#262626]`}
+        className={`${leagueGothic.className} ${materialSymbols.variable} text-primary-dark dark:text-secondary-light`}
       >
-        <TitleProvider>
-          <QueryClientProvider client={queryClient}>
-            <Toaster toastOptions={{ style: { fontSize: "1.5rem" } }} />
-            {children}
-          </QueryClientProvider>
-        </TitleProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          storageKey="theme"
+        >
+          <TitleProvider>
+            <QueryClientProvider client={queryClient}>
+              <Toaster toastOptions={{ style: { fontSize: "1.5rem" } }} />
+              {children}
+            </QueryClientProvider>
+          </TitleProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
