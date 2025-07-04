@@ -1,5 +1,7 @@
 /* eslint-disable */
 
+import { HallOfFameResponseDTO } from "@/interfaces/api/DTO";
+
 const studentNames = [
   "Gerard Małoduszny",
   "Gerard Małosolny",
@@ -85,7 +87,7 @@ const HallOfFameService = {
     sortBy?: string,
     sortOrder?: "asc" | "desc",
     groups?: string[]
-  ) => {
+  ): Promise<HallOfFameResponseDTO> => {
     await new Promise((resolve) => setTimeout(resolve, 400));
 
     let filteredData = [...ALL_DATA];

@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import { HallOfFameResponseDTO } from "@/interfaces/api/DTO";
 
 export interface HallOfFameFilter {
   id: HallOfFameFilterID;
@@ -28,10 +29,11 @@ export type HallOfFameAction =
   | { type: "RESET_FILTERS" };
 
 export type HallOfFameContextType = {
+  data: HallOfFameResponseDTO;
   page: number;
-  setPage: (newPage: number) => void;
+  setPage: Dispatch<SetStateAction<number>>;
   search: string;
-  setSearch: (newSearch: string) => void;
+  setSearch: Dispatch<SetStateAction<string>>;
   isModalOpen: boolean;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
   filtersState: HallOfFameFilter[];

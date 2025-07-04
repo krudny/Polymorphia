@@ -96,3 +96,26 @@ export const getAppliedQueryParams = (filtersState: HallOfFameFilter[]) => {
     rankingOptions: getSelectedValues(rankingOptionsFilter),
   };
 };
+
+export const selectMinimumOptions = (filter: HallOfFameFilter) => {
+  const selectedOptions = filter.options.filter((opt) => opt.isSelected);
+  const notSelectedOptions = filter.options.filter((opt) => !opt.isSelected);
+
+  if (selectedOptions.length < filter.minSelections) {
+    const toAdd = Math.min(
+      notSelectedOptions.length,
+      filter.maxSelections - selectedOptions.length
+    );
+    for (let i = 0; i < toAdd; i++) {
+      notSelectedOptions[i].isSelected = true;
+    }
+  }
+};
+
+export const handlePageChange = (
+  setPage: React.Dispatch<React.SetStateAction<number>>
+) => {
+  return ({ selected }: { selected: number }) => {
+    setPage(selected);
+  };
+};

@@ -14,13 +14,24 @@ import {
   addEventSectionsToFilters,
   getAllFilters,
   getAppliedQueryParams,
+  selectMinimumOptions,
 } from "@/services/hall-of-fame/Helpers";
 import { filters } from "@/services/hall-of-fame/InitialFilters";
 import { HallOfFameReducer } from "@/services/hall-of-fame/HallOfFameReducer";
 import { HallOfFameContextType } from "@/interfaces/hall-of-fame/HallOfFameLogicInterfaces";
 import HallOfFameService from "@/services/hall-of-fame/HallOfFameService";
+import Loading from "@/components/general/Loading";
+
+const emptyDataObject = {
+  content: [],
+  page: {
+    pageNumber: 0,
+    totalPages: 0,
+  },
+};
 
 export const HallOfFameContext = createContext<HallOfFameContextType>({
+  data: emptyDataObject,
   page: 0,
   setPage: () => {},
   search: "",
@@ -52,7 +63,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
     queryFn: () => EventSectionService.getEventSections(1),
   });
 
-  const { data = [], isLoading } = useQuery({
+  const { data = emptyDataObject, isLoading } = useQuery({
     queryKey: [
       "hallOfFame",
       page,
@@ -80,14 +91,14 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
     if (eventSections && sortByFilter && rankingOptionsFilter) {
       addEventSectionsToFilters(eventSections, sortByFilter);
       addEventSectionsToFilters(eventSections, rankingOptionsFilter);
-    } else {
-      throw new Error("Filters are broken by dev!");
+      selectMinimumOptions(rankingOptionsFilter);
     }
   }, [eventSections, sortByFilter, rankingOptionsFilter]);
 
   return (
     <HallOfFameContext.Provider
       value={{
+        data,
         page,
         setPage,
         search,
