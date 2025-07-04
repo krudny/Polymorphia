@@ -16,23 +16,20 @@ const headerVariant = tv({
   },
 });
 
-interface RankUserPointsProps {
+interface UserPointsProps {
   separators?: boolean;
   titleSize?: "xs" | "sm" | "md" | "lg" | "xl";
   xpSize?: "xs" | "sm" | "md" | "lg" | "xl";
+  xpDetails: Record<string, number>;
 }
 
-export default function RankUserPoints({
+export default function UserPoints({
   separators = false,
   titleSize = "md",
   xpSize = "xl",
-}: RankUserPointsProps) {
-  const items = [
-    ["Laboratoria", 40],
-    ["Kartkówki", 20],
-    ["Projekt", 60],
-    ["Bonusy", 15.2],
-  ];
+  xpDetails,
+}: UserPointsProps) {
+  const items = Object.entries(xpDetails);
 
   return (
     <div className="w-full h-full grid grid-cols-4 sm:gap-1 lg:px-2">
@@ -40,7 +37,7 @@ export default function RankUserPoints({
         <div
           className={`flex-col-centered min-h-fit lg:min-h-24 my-auto ${
             separators && i !== items.length - 1
-              ? "sm:border-r-[1px] border-[#212121]"
+              ? "sm:border-r-[1px] border-primary-dark dark:border-secondary-light"
               : ""
           }`}
           key={i}
@@ -49,7 +46,7 @@ export default function RankUserPoints({
           <h1
             className={`${xpSize === "lg" || xpSize === "xl" ? "mt-3" : ""} ${headerVariant({ size: xpSize })}`}
           >
-            {xp} xp
+            {xp.toFixed(2)}
           </h1>
         </div>
       ))}

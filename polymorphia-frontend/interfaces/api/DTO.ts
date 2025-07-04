@@ -68,3 +68,25 @@ export interface EquipmentChestItemsResponseDTO {
   imageUrl: string;
   bonusXp?: string;
 }
+
+export interface HallOfFameResponseDTO {
+  content: HallOfFameRecordDTO[];
+  page: {
+    pageNumber: number;
+    totalPages: number;
+  };
+}
+
+export interface HallOfFameRecordDTO {
+  userDetails: UserDetailsDTO;
+  xpDetails: Record<string, number>;
+}
+
+export interface UserDetailsDTO {
+  studentName: string;
+  animalName: string;
+  evolutionStage: string;
+  group: string;
+  imageUrl: string;
+  position: number;
+}
