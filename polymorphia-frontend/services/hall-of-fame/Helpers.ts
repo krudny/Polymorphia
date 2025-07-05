@@ -7,6 +7,7 @@ import {
   HallOfFameFilterOption,
 } from "@/interfaces/hall-of-fame/HallOfFameLogicInterfaces";
 
+// TODO: adding bonuses there makes no sense
 export const addEventSectionsToFilters = (
   eventSections: EventSectionShortResponseDto[],
   filter: HallOfFameFilter
@@ -26,6 +27,16 @@ export const addEventSectionsToFilters = (
       existingValues.add(eventSection.name);
     }
   });
+
+  if (!existingValues.has("Bonusy")) {
+    filter.options.push({
+      label: "Bonusy",
+      value: "Bonusy",
+      priority: Number.MAX_SAFE_INTEGER,
+      isSelected: true,
+    });
+    existingValues.add("Bonusy");
+  }
 };
 
 // TODO: null assertion, but I trust myself more than typescript

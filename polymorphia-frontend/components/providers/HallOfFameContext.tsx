@@ -87,12 +87,12 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   });
 
   useEffect(() => {
-    if (eventSections && sortByFilter && rankingOptionsFilter) {
+    if (data && eventSections && sortByFilter && rankingOptionsFilter) {
       addEventSectionsToFilters(eventSections, sortByFilter);
       addEventSectionsToFilters(eventSections, rankingOptionsFilter);
       selectMinimumOptions(rankingOptionsFilter);
     }
-  }, [eventSections, sortByFilter, rankingOptionsFilter]);
+  }, [data, eventSections, sortByFilter, rankingOptionsFilter]);
 
   return (
     <HallOfFameContext.Provider
