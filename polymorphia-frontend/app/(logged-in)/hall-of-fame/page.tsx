@@ -6,6 +6,7 @@ import RankDesktop from "@/components/hall-of-fame/RankDesktop";
 import "../../../styles/hall-of-fame.css";
 import { HallOfFameProvider } from "@/components/providers/HallOfFameContext";
 import RankMobile from "@/components/hall-of-fame/RankMobile";
+import FiltersModal from "@/components/hall-of-fame/modals/FiltersModal";
 
 export default function HallOfFame() {
   const { setTitle } = useTitle();
@@ -22,6 +23,7 @@ export default function HallOfFame() {
       <div className="w-full hidden lg:block">
         <RankDesktop />
       </div>
+        <FiltersModal />
     </HallOfFameProvider>
   );
 }

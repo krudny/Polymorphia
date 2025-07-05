@@ -15,7 +15,7 @@ import { HallOfFameRecordDTO } from "@/interfaces/api/DTO";
 
 export default function RankMobile() {
   const wrapperRef = useScaleShow();
-  const { data, setPage, isLoading, isModalOpen, setIsModalOpen } =
+  const { data, setPage, isLoading, setIsModalOpen } =
     useContext(HallOfFameContext);
 
   return (
@@ -54,7 +54,6 @@ export default function RankMobile() {
           />
         )}
       </div>
-      {isModalOpen && <FiltersModal />}
     </div>
   );
 }

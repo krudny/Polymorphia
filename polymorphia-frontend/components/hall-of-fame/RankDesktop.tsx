@@ -15,7 +15,7 @@ import FiltersModal from "@/components/hall-of-fame/modals/FiltersModal";
 export default function RankDesktop() {
   const wrapperRef = useScaleShow();
 
-  const { data, setPage, isLoading, isModalOpen, setIsModalOpen } =
+  const { data, setPage, isLoading, setIsModalOpen } =
     useContext(HallOfFameContext);
 
   return (
@@ -64,7 +64,6 @@ export default function RankDesktop() {
           />
         )}
       </div>
-      {isModalOpen && <FiltersModal />}
     </div>
   );
 }

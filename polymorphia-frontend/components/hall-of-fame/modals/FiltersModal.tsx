@@ -15,6 +15,7 @@ export default function FiltersModal() {
     filtersState,
     setAppliedFiltersState,
     filtersDispatch,
+      isModalOpen,
     setIsModalOpen,
   } = useContext(HallOfFameContext);
 
@@ -69,13 +70,14 @@ export default function FiltersModal() {
   }, [filtersState]);
 
   return (
-    <Modal
-      title="Filtry"
-      onClosed={() => {
-        filtersDispatch({ type: "CLOSE_ALL_CATEGORIES" });
-        setIsModalOpen(false);
-      }}
-    >
+      <Modal
+          isDataPresented={isModalOpen}
+          title="Filtry"
+          onClosed={() => {
+            filtersDispatch({ type: "CLOSE_ALL_CATEGORIES" });
+            setIsModalOpen(false);
+          }}
+      >
       <div className="overflow-visible">
         <div className="w-full md:w-96 flex flex-col">
           {filtersState.map((filter) => (
@@ -119,7 +121,7 @@ export default function FiltersModal() {
                     <div
                       key={option.value}
                       onClick={() => handleSelect(filter.id, option)}
-                      className={`w-full rounded-md flex-centered px-2 py-1 text-primary-dark border-2 border-primary-dark cursor-pointer transition-colors duration-150 ease-in-out ${
+                      className={`w-full rounded-md flex-centered px-2 py-1 text-primary-dark border-2 border-primary-dark cursor-pointer select-none transition-colors duration-150 ease-in-out ${
                         option.isSelected
                           ? "bg-primary-dark text-secondary-light dark:bg-secondary-light dark:text-primary-dark shadow-md"
                           : "dark:bg-primary-gray "
