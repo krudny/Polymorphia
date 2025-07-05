@@ -10,7 +10,6 @@ import { HallOfFameRecordDTO } from "@/interfaces/api/DTO";
 import { handlePageChange } from "@/services/hall-of-fame/Helpers";
 import Loading from "@/components/general/Loading";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import FiltersModal from "@/components/hall-of-fame/modals/FiltersModal";
 
 export default function RankDesktop() {
   const wrapperRef = useScaleShow();
