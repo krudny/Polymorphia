@@ -9,7 +9,7 @@ import {
   getAllFilters,
 } from "@/services/hall-of-fame/Helpers";
 import { HallOfFameContext } from "@/components/providers/HallOfFameContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 export default function RankCardDesktop({
   userDetails,
@@ -24,7 +24,7 @@ export default function RankCardDesktop({
     <div className="hall-of-fame-desktop-record-wrapper">
       <div className="hall-of-fame-desktop-record-user-data-wrapper">
         <RankImage
-          position={userDetails.position}
+                            position={userDetails.position}
           imageUrl={userDetails.imageUrl}
         />
         <RankUserData {...userDetails} />

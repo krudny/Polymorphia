@@ -15,7 +15,7 @@ export default function FiltersModal() {
     filtersState,
     setAppliedFiltersState,
     filtersDispatch,
-      isModalOpen,
+    isModalOpen,
     setIsModalOpen,
   } = useContext(HallOfFameContext);
 
@@ -70,14 +70,14 @@ export default function FiltersModal() {
   }, [filtersState]);
 
   return (
-      <Modal
-          isDataPresented={isModalOpen}
-          title="Filtry"
-          onClosed={() => {
-            filtersDispatch({ type: "CLOSE_ALL_CATEGORIES" });
-            setIsModalOpen(false);
-          }}
-      >
+    <Modal
+      isDataPresented={isModalOpen}
+      title="Filtry"
+      onClosed={() => {
+        filtersDispatch({ type: "CLOSE_ALL_CATEGORIES" });
+        setIsModalOpen(false);
+      }}
+    >
       <div className="overflow-visible">
         <div className="w-full md:w-96 flex flex-col">
           {filtersState.map((filter) => (

@@ -9,7 +9,6 @@ import { useScaleShow } from "@/animations/General";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { HallOfFameContext } from "@/components/providers/HallOfFameContext";
 import { handlePageChange } from "@/services/hall-of-fame/Helpers";
-import FiltersModal from "@/components/hall-of-fame/modals/FiltersModal";
 import Loading from "@/components/general/Loading";
 import { HallOfFameRecordDTO } from "@/interfaces/api/DTO";
 
