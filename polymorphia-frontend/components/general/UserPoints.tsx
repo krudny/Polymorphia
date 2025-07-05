@@ -35,7 +35,7 @@ export default function UserPoints({
     <div className="w-full h-full grid grid-cols-4 sm:gap-1 lg:px-2">
       {items.map(([item, xp], i) => (
         <div
-          className={`flex-col-centered min-h-fit lg:min-h-24 my-auto ${
+          className={`flex-col-centered min-h-fit lg:min-h-24 my-auto truncate ${
             separators && i !== items.length - 1
               ? "sm:border-r-[1px] border-primary-dark dark:border-secondary-light"
               : ""

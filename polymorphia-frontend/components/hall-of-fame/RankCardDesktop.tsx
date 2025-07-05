@@ -4,7 +4,7 @@ import RankUserData from "@/components/hall-of-fame/RankUserData";
 import UserPoints from "@/components/general/UserPoints";
 import "../../styles/hall-of-fame.css";
 import { HallOfFameRecordDTO } from "@/interfaces/api/DTO";
-import { getAllFilters } from "@/services/hall-of-fame/Helpers";
+import {filterXpDetails, getAllFilters} from "@/services/hall-of-fame/Helpers";
 import { HallOfFameContext } from "@/components/providers/HallOfFameContext";
 import { useContext } from "react";
 
@@ -15,13 +15,7 @@ export default function RankCardDesktop({
   const { filtersState } = useContext(HallOfFameContext);
   const { rankingOptionsFilter } = getAllFilters(filtersState);
 
-  const filteredXpDetails = Object.fromEntries(
-    Object.entries(xpDetails).filter(([key]) =>
-      rankingOptionsFilter.options.some(
-        (option) => option.value === key.toString() && option.isSelected
-      )
-    )
-  );
+  const filteredXpDetails = filterXpDetails(xpDetails, rankingOptionsFilter);
 
   return (
     <div className="hall-of-fame-desktop-record-wrapper">
