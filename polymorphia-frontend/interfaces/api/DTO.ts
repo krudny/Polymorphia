@@ -79,7 +79,7 @@ export interface HallOfFameResponseDTO {
 
 export interface HallOfFameRecordDTO {
   userDetails: UserDetailsDTO;
-  xpDetails: Record<string, number>;
+  xpDetails: Record<string, string>;
 }
 
 export interface UserDetailsDTO {

@@ -26,7 +26,7 @@ export default function RankPodium() {
                                     ? "silver"
                                     : "bronze"
                         }
-                        xp={item.xpDetails.total.toFixed(2)}
+                        xp={item.xpDetails.total}
                         size={"hofDesktop"}
                     />
                 </div>

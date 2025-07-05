@@ -30,8 +30,8 @@ const groups = [
   "BM-03-00",
 ];
 
-const roundToTwo = (num: number): number => {
-  return parseFloat((Math.round(num * 100) / 100).toFixed(2));
+const roundToTwo = (num: number): string => {
+  return (Math.round(num * 100) / 100).toFixed(2);
 };
 
 const generateAllData = () => {
@@ -50,7 +50,7 @@ const generateAllData = () => {
         position: i + 1,
         group: groups[i % groups.length],
       },
-      xpDetails: {} as Record<string, number>,
+      xpDetails: {} as Record<string, string>,
     };
 
     // needs to be sorted based on priority
@@ -62,17 +62,22 @@ const generateAllData = () => {
     item.xpDetails["Bonusy"] = roundToTwo(15.2 + Math.random() * 5);
 
     const totalSum =
-      item.xpDetails["Laboratorium"] +
-      item.xpDetails["Kartkówka"] +
-      item.xpDetails["Git"] +
-      item.xpDetails["Specjalne"] +
-      item.xpDetails["Projekt"] +
-      item.xpDetails["Bonusy"];
+        parseFloat(item.xpDetails["Laboratorium"]) +
+        parseFloat(item.xpDetails["Kartkówka"]) +
+        parseFloat(item.xpDetails["Git"]) +
+        parseFloat(item.xpDetails["Specjalne"]) +
+        parseFloat(item.xpDetails["Projekt"]) +
+        parseFloat(item.xpDetails["Bonusy"]);
 
     item.xpDetails["total"] = roundToTwo(totalSum);
 
     allData.push(item);
   }
+
+  allData.sort((a, b) => parseFloat(b.xpDetails.total) - parseFloat(a.xpDetails.total));
+  allData.forEach((item, index) => {
+    item.userDetails.position = index + 1;
+  });
 
   return allData;
 };

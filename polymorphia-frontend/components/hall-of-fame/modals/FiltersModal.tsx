@@ -17,6 +17,12 @@ export default function FiltersModal() {
         });
     };
 
+    const setRef = (id: HallOfFameFilterID) => (el: HTMLDivElement | null) => {
+        if (el) {
+            refs.current[id] = el;
+        }
+    };
+
     const refs = useRef<Record<HallOfFameFilterID, HTMLDivElement | null>>({
         sort: null,
         sortBy: null,
@@ -91,7 +97,7 @@ export default function FiltersModal() {
                             </div>
 
                             <div
-                                ref={(el) => (refs.current[filter.id] = el)}
+                                ref={setRef(filter.id)}
                                 style={{
                                     overflow: "hidden",
                                     height: 0,
@@ -105,10 +111,10 @@ export default function FiltersModal() {
                                                 <div
                                                     key={option.value}
                                                     onClick={() => handleSelect(filter.id, option)}
-                                                    className={`w-full rounded-md flex-centered px-2 py-1 text-primary-dark cursor-pointer transition-colors duration-150 ease-in-out ${
+                                                    className={`w-full rounded-md flex-centered px-2 py-1 text-primary-dark border-2 border-primary-dark cursor-pointer transition-colors duration-150 ease-in-out ${
                                                         option.isSelected
                                                             ? "bg-primary-dark text-secondary-light dark:bg-secondary-light shadow-md"
-                                                            : "bg-primary-gray "
+                                                            : "dark:bg-primary-gray "
                                                     }`}
                                                 >
                                                     {option.label}

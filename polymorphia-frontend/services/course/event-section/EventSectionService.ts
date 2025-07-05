@@ -13,16 +13,20 @@ import { API_HOST } from "@/services/api";
 
 export const EventSectionService = {
   getEventSections: async (
-    courseId: number
+      courseId: number
   ): Promise<EventSectionShortResponseDto[]> => {
     const response = await fetch(
-      `${API_HOST}/courses/${courseId}/event-sections`,
-      { credentials: "include" }
+        `${API_HOST}/courses/${courseId}/event-sections`,
+        { credentials: "include" }
     );
 
-    if (!response.ok) throw new Error("Failed to fetch event sections!");
+    if (!response.ok) {
+      throw new Error("Failed to fetch event sections!");
+    }
 
-    return response.json();
+    const data: EventSectionShortResponseDto[] = await response.json();
+
+    return data.sort((a, b) => (a.priority ?? 0) - (b.priority ?? 0));
   },
 
   getEventSection: async ({

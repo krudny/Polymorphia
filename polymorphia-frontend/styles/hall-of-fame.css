@@ -110,7 +110,7 @@
 
 .hall-of-fame-user-data {
   @apply w-full h-full flex-col-centered ml-3 overflow-hidden;
-  @apply lg:w-56 lg:mx-auto lg:px-4 2xl:ml-10;
+  @apply lg:w-56 lg:mx-auto lg:px-4 2xl:ml-6 2xl:w-72;
 }
 
 .hall-of-fame-user-data > h1 {
@@ -124,7 +124,7 @@
 /* Hall of fame summary points */
 
 .hall-of-fame-summary-points {
-  @apply w-fit h-full flex flex-col-reverse items-end justify-center;
+  @apply w-20 h-full flex flex-col-reverse items-end justify-center;
   @apply lg:items-center lg:px-2 lg:flex-col;
   @apply lg:bg-[#d4d4d4] lg:dark:bg-secondary-dark 2xl:rounded-tr-xl 2xl:rounded-br-xl;
 }

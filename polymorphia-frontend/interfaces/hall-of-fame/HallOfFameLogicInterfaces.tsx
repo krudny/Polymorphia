@@ -46,3 +46,4 @@ export type HallOfFameFilterID =
   | "sortBy"
   | "groups"
   | "rankingOptions";
+

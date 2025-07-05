@@ -20,7 +20,7 @@ interface UserPointsProps {
   separators?: boolean;
   titleSize?: "xs" | "sm" | "md" | "lg" | "xl";
   xpSize?: "xs" | "sm" | "md" | "lg" | "xl";
-  xpDetails: Record<string, number>;
+  xpDetails: Record<string, string>;
 }
 
 export default function UserPoints({
@@ -46,7 +46,7 @@ export default function UserPoints({
           <h1
             className={`${xpSize === "lg" || xpSize === "xl" ? "mt-3" : ""} ${headerVariant({ size: xpSize })}`}
           >
-            {xp.toFixed(2)}
+            {xp}
           </h1>
         </div>
       ))}

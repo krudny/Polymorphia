@@ -48,7 +48,14 @@ export function HallOfFameReducer(
             ...option,
             isSelected: option.value === "all",
           }));
-        } else {
+        }
+        else if (filter.maxSelections === 1) {
+          updatedOptions = filter.options.map((option) => ({
+            ...option,
+            isSelected: option.value === action.payload.value,
+          }));
+        }
+        else {
           updatedOptions = filter.options.map((option) => {
             if (option.value === action.payload.value) {
               return { ...option, isSelected: true };
