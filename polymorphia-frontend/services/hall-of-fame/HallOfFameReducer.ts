@@ -27,9 +27,9 @@ export function HallOfFameReducer(
       return filters.map((filter) => {
         return {
           ...filter,
-          isOpen: filter.id === action.payload.id ? !filter.isOpen : false
-        }
-      })
+          isOpen: filter.id === action.payload.id ? !filter.isOpen : false,
+        };
+      });
 
     case "CLOSE_ALL_CATEGORIES":
       return filters.map((filter) => ({
@@ -48,14 +48,12 @@ export function HallOfFameReducer(
             ...option,
             isSelected: option.value === "all",
           }));
-        }
-        else if (filter.maxSelections === 1) {
+        } else if (filter.maxSelections === 1) {
           updatedOptions = filter.options.map((option) => ({
             ...option,
             isSelected: option.value === action.payload.value,
           }));
-        }
-        else {
+        } else {
           updatedOptions = filter.options.map((option) => {
             if (option.value === action.payload.value) {
               return { ...option, isSelected: true };

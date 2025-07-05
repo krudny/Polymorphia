@@ -27,19 +27,29 @@ export const addEventSectionsToFilters = (
   });
 };
 
-export const addFieldToFilter = ({label, value, priority, isSelected}: HallOfFameFilterOption, filter: HallOfFameFilter) => {
+export const addFieldToFilter = (
+  { label, value, priority, isSelected }: HallOfFameFilterOption,
+  filter: HallOfFameFilter
+) => {
   const existingValues = new Set(
-      filter.options.map((option: HallOfFameFilterOption) => option.value)
+    filter.options.map((option: HallOfFameFilterOption) => option.value)
   );
 
   if (!existingValues.has(value)) {
-    filter.options.push({label: label, value: value, priority: priority, isSelected: isSelected})
+    filter.options.push({
+      label: label,
+      value: value,
+      priority: priority,
+      isSelected: isSelected,
+    });
   }
-}
+};
 
-export const sortFilters = (filters: HallOfFameFilter[])=> {
-  filters.forEach(filter => filter.options.sort((a, b) => (a.priority ?? 0) - (b.priority ?? 0)))
-}
+export const sortFilters = (filters: HallOfFameFilter[]) => {
+  filters.forEach((filter) =>
+    filter.options.sort((a, b) => (a.priority ?? 0) - (b.priority ?? 0))
+  );
+};
 
 // TODO: null assertion, but I trust myself more than typescript
 export const getAllFilters = (filters: HallOfFameFilter[]) => {
@@ -54,8 +64,10 @@ export const getAllFilters = (filters: HallOfFameFilter[]) => {
 };
 
 export const hallOfFameConfirmAction = (
-    filters: HallOfFameFilter[],
-    setAppliedFiltersState: React.Dispatch<React.SetStateAction<HallOfFameFilter[]>>
+  filters: HallOfFameFilter[],
+  setAppliedFiltersState: React.Dispatch<
+    React.SetStateAction<HallOfFameFilter[]>
+  >
 ): boolean => {
   const queryClient = new QueryClient();
 
@@ -134,22 +146,22 @@ export const handlePageChange = (
 };
 
 export const filterXpDetails = (
-    xpDetails: Record<string, string>,
-    rankingOptionsFilter: HallOfFameFilter
+  xpDetails: Record<string, string>,
+  rankingOptionsFilter: HallOfFameFilter
 ): Record<string, string> => {
   if (rankingOptionsFilter.id !== "rankingOptions") {
     throw new Error(
-        `filterXpDetails: Expected filter id 'rankingOptions', got '${rankingOptionsFilter.id}'`
+      `filterXpDetails: Expected filter id 'rankingOptions', got '${rankingOptionsFilter.id}'`
     );
   }
 
   const selectedKeys = new Set(
-      rankingOptionsFilter.options
-          .filter((option) => option.isSelected)
-          .map((option) => option.value)
+    rankingOptionsFilter.options
+      .filter((option) => option.isSelected)
+      .map((option) => option.value)
   );
 
   return Object.fromEntries(
-      Object.entries(xpDetails).filter(([key]) => selectedKeys.has(key))
+    Object.entries(xpDetails).filter(([key]) => selectedKeys.has(key))
   );
 };

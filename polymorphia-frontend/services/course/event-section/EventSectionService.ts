@@ -13,11 +13,11 @@ import { API_HOST } from "@/services/api";
 
 export const EventSectionService = {
   getEventSections: async (
-      courseId: number
+    courseId: number
   ): Promise<EventSectionShortResponseDto[]> => {
     const response = await fetch(
-        `${API_HOST}/courses/${courseId}/event-sections`,
-        { credentials: "include" }
+      `${API_HOST}/courses/${courseId}/event-sections`,
+      { credentials: "include" }
     );
 
     if (!response.ok) {

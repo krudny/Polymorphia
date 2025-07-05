@@ -4,7 +4,10 @@ import RankUserData from "@/components/hall-of-fame/RankUserData";
 import UserPoints from "@/components/general/UserPoints";
 import "../../styles/hall-of-fame.css";
 import { HallOfFameRecordDTO } from "@/interfaces/api/DTO";
-import {filterXpDetails, getAllFilters} from "@/services/hall-of-fame/Helpers";
+import {
+  filterXpDetails,
+  getAllFilters,
+} from "@/services/hall-of-fame/Helpers";
 import { HallOfFameContext } from "@/components/providers/HallOfFameContext";
 import { useContext } from "react";
 

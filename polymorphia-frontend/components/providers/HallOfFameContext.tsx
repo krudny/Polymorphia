@@ -11,18 +11,17 @@ import { useDebounce } from "use-debounce";
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/services/course/event-section/EventSectionService";
 import {
-  addEventSectionsToFilters, addFieldToFilter,
+  addEventSectionsToFilters,
+  addFieldToFilter,
   getAllFilters,
   getAppliedQueryParams,
-  selectMinimumOptions, sortFilters,
+  selectMinimumOptions,
+  sortFilters,
 } from "@/services/hall-of-fame/Helpers";
 import { filters } from "@/services/hall-of-fame/InitialFilters";
 import { HallOfFameReducer } from "@/services/hall-of-fame/HallOfFameReducer";
 import { HallOfFameContextType } from "@/interfaces/hall-of-fame/HallOfFameLogicInterfaces";
 import HallOfFameService from "@/services/hall-of-fame/HallOfFameService";
-import Loading from "@/components/general/Loading";
-import {sort} from "next/dist/build/webpack/loaders/css-loader/src/utils";
-import {sortByPageExts} from "next/dist/build/entries";
 
 const emptyDataObject = {
   content: [],
@@ -58,7 +57,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   );
   const [appliedFiltersState, setAppliedFiltersState] = useState(filtersState);
   const { sortByFilter, rankingOptionsFilter } = getAllFilters(filtersState);
-  const { sortOrder, sortBy, groups, rankingOptions } =
+  const { sortOrder, sortBy, groups } =
     getAppliedQueryParams(appliedFiltersState);
 
   const { data: eventSections } = useQuery({
@@ -89,12 +88,35 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
       ),
   });
 
-
   useEffect(() => {
     if (data && eventSections && sortByFilter && rankingOptionsFilter) {
-      addFieldToFilter({label: "Bonusy", value: "Bonusy", priority: Number.MAX_SAFE_INTEGER, isSelected: false}, sortByFilter);
-      addFieldToFilter({label: "Bonusy", value: "Bonusy", priority: Number.MAX_SAFE_INTEGER, isSelected: true}, rankingOptionsFilter);
-      addFieldToFilter({label: "Suma", value: "total", priority: Number.MAX_SAFE_INTEGER, isSelected: true}, sortByFilter);
+      addFieldToFilter(
+        {
+          label: "Bonusy",
+          value: "Bonusy",
+          priority: Number.MAX_SAFE_INTEGER,
+          isSelected: false,
+        },
+        sortByFilter
+      );
+      addFieldToFilter(
+        {
+          label: "Bonusy",
+          value: "Bonusy",
+          priority: Number.MAX_SAFE_INTEGER,
+          isSelected: true,
+        },
+        rankingOptionsFilter
+      );
+      addFieldToFilter(
+        {
+          label: "Suma",
+          value: "total",
+          priority: Number.MAX_SAFE_INTEGER,
+          isSelected: true,
+        },
+        sortByFilter
+      );
       addEventSectionsToFilters(eventSections, sortByFilter);
       addEventSectionsToFilters(eventSections, rankingOptionsFilter);
       sortFilters(filtersState);

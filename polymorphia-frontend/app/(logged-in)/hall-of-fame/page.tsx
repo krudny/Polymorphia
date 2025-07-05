@@ -17,7 +17,7 @@ export default function HallOfFame() {
   return (
     <HallOfFameProvider>
       <div className="w-full lg:hidden">
-          <RankMobile />
+        <RankMobile />
       </div>
       <div className="w-full hidden lg:block">
         <RankDesktop />

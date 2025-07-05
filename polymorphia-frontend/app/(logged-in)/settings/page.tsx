@@ -67,7 +67,9 @@ export default function Settings() {
         <ButtonWithBorder
           text={resolvedTheme === "dark" ? "Wyłącz" : "Włącz"}
           onClick={
-            resolvedTheme === "dark" ? () => setTheme("light") : () => setTheme("dark")
+            resolvedTheme === "dark"
+              ? () => setTheme("light")
+              : () => setTheme("dark")
           }
           size="md"
           className="!mx-0 !ml-6"

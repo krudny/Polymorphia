@@ -4,7 +4,7 @@ import RankSearch from "@/components/hall-of-fame/RankSearch";
 import RankCardDesktop from "@/components/hall-of-fame/RankCardDesktop";
 import Pagination from "@/components/general/Pagination";
 import "../../styles/hall-of-fame.css";
-import {useContext} from "react";
+import { useContext } from "react";
 import { HallOfFameContext } from "@/components/providers/HallOfFameContext";
 import { HallOfFameRecordDTO } from "@/interfaces/api/DTO";
 import { handlePageChange } from "@/services/hall-of-fame/Helpers";
@@ -15,7 +15,8 @@ import FiltersModal from "@/components/hall-of-fame/modals/FiltersModal";
 export default function RankDesktop() {
   const wrapperRef = useScaleShow();
 
-  const { data, setPage, isLoading, isModalOpen, setIsModalOpen } = useContext(HallOfFameContext);
+  const { data, setPage, isLoading, isModalOpen, setIsModalOpen } =
+    useContext(HallOfFameContext);
 
   return (
     <div ref={wrapperRef} className="hall-of-fame-desktop">
@@ -25,18 +26,18 @@ export default function RankDesktop() {
             <h2>Podium</h2>
           </div>
           <div className="hall-of-fame-desktop-podium">
-              <RankPodium />
+            <RankPodium />
           </div>
         </div>
         <div className="hall-of-fame-desktop-content-wrapper">
-            <div className="hall-of-fame-desktop-search-wrapper">
-                <RankSearch />
-                <ButtonWithBorder
-                    text="Filtry"
-                    className="!mx-0 !py-0 !border-0 !border-b-2"
-                    onClick={() => setIsModalOpen(true)}
-                />
-            </div>
+          <div className="hall-of-fame-desktop-search-wrapper">
+            <RankSearch />
+            <ButtonWithBorder
+              text="Filtry"
+              className="!mx-0 !py-0 !border-0 !border-b-2"
+              onClick={() => setIsModalOpen(true)}
+            />
+          </div>
           <div className="hall-of-fame-desktop-rank-wrapper">
             {isLoading ? (
               <div className="relative w-full h-full flex-centered ">
@@ -63,7 +64,7 @@ export default function RankDesktop() {
           />
         )}
       </div>
-        {isModalOpen && <FiltersModal />}
+      {isModalOpen && <FiltersModal />}
     </div>
   );
 }

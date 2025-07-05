@@ -25,7 +25,7 @@ export type HallOfFameAction =
       payload: { id: string; value: string };
     }
   | { type: "TOGGLE_CATEGORY"; payload: { id: string } }
-  | { type: "CLOSE_ALL_CATEGORIES" }
+  | { type: "CLOSE_ALL_CATEGORIES" };
 
 export type HallOfFameContextType = {
   data: HallOfFameResponseDTO;
@@ -46,4 +46,3 @@ export type HallOfFameFilterID =
   | "sortBy"
   | "groups"
   | "rankingOptions";
-

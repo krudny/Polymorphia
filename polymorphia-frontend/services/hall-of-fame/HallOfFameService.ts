@@ -62,19 +62,21 @@ const generateAllData = () => {
     item.xpDetails["Bonusy"] = roundToTwo(15.2 + Math.random() * 5);
 
     const totalSum =
-        parseFloat(item.xpDetails["Laboratorium"]) +
-        parseFloat(item.xpDetails["Kartkówka"]) +
-        parseFloat(item.xpDetails["Git"]) +
-        parseFloat(item.xpDetails["Specjalne"]) +
-        parseFloat(item.xpDetails["Projekt"]) +
-        parseFloat(item.xpDetails["Bonusy"]);
+      parseFloat(item.xpDetails["Laboratorium"]) +
+      parseFloat(item.xpDetails["Kartkówka"]) +
+      parseFloat(item.xpDetails["Git"]) +
+      parseFloat(item.xpDetails["Specjalne"]) +
+      parseFloat(item.xpDetails["Projekt"]) +
+      parseFloat(item.xpDetails["Bonusy"]);
 
     item.xpDetails["total"] = roundToTwo(totalSum);
 
     allData.push(item);
   }
 
-  allData.sort((a, b) => parseFloat(b.xpDetails.total) - parseFloat(a.xpDetails.total));
+  allData.sort(
+    (a, b) => parseFloat(b.xpDetails.total) - parseFloat(a.xpDetails.total)
+  );
   allData.forEach((item, index) => {
     item.userDetails.position = index + 1;
   });
