@@ -1,5 +1,5 @@
 import Modal from "@/components/modal/Modal";
-import { useContext, useEffect, useLayoutEffect, useRef } from "react";
+import { useContext, useLayoutEffect, useRef } from "react";
 import { HallOfFameContext } from "@/components/providers/HallOfFameContext";
 import { ArrowDown, ArrowUp } from "lucide-react";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
@@ -68,10 +68,6 @@ export default function FiltersModal() {
     });
   }, [filtersState]);
 
-  useEffect(() => {
-    console.log(filtersState);
-  }, [filtersState]);
-
   return (
     <Modal
       title="Filtry"
@@ -81,7 +77,7 @@ export default function FiltersModal() {
       }}
     >
       <div className="overflow-visible">
-        <div className="w-96 flex flex-col">
+        <div className="w-full md:w-96 flex flex-col">
           {filtersState.map((filter) => (
             <div key={filter.id} className="flex flex-col my-2">
               <div className="flex justify-between items-center">
@@ -125,7 +121,7 @@ export default function FiltersModal() {
                       onClick={() => handleSelect(filter.id, option)}
                       className={`w-full rounded-md flex-centered px-2 py-1 text-primary-dark border-2 border-primary-dark cursor-pointer transition-colors duration-150 ease-in-out ${
                         option.isSelected
-                          ? "bg-primary-dark text-secondary-light dark:bg-secondary-light shadow-md"
+                          ? "bg-primary-dark text-secondary-light dark:bg-secondary-light dark:text-primary-dark shadow-md"
                           : "dark:bg-primary-gray "
                       }`}
                     >

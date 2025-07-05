@@ -15,8 +15,8 @@ export default function RankCardDesktop({
   userDetails,
   xpDetails,
 }: HallOfFameRecordDTO) {
-  const { filtersState } = useContext(HallOfFameContext);
-  const { rankingOptionsFilter } = getAllFilters(filtersState);
+  const { appliedFiltersState } = useContext(HallOfFameContext);
+  const { rankingOptionsFilter } = getAllFilters(appliedFiltersState);
 
   const filteredXpDetails = filterXpDetails(xpDetails, rankingOptionsFilter);
 

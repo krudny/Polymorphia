@@ -22,8 +22,8 @@ export default function RankCard({
   };
   const border =
     borderColors[userDetails.position as 1 | 2 | 3] ?? "border-none";
-  const { filtersState } = useContext(HallOfFameContext);
-  const { rankingOptionsFilter } = getAllFilters(filtersState);
+  const { appliedFiltersState } = useContext(HallOfFameContext);
+  const { rankingOptionsFilter } = getAllFilters(appliedFiltersState);
   const filteredXpDetails = filterXpDetails(xpDetails, rankingOptionsFilter);
 
   return (

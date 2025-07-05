@@ -1,11 +1,11 @@
 "use client";
 
 import {
-  createContext,
-  ReactNode,
-  useEffect,
-  useReducer,
-  useState,
+    createContext,
+    ReactNode,
+    useEffect,
+    useReducer, useRef,
+    useState,
 } from "react";
 import { useDebounce } from "use-debounce";
 import { useQuery } from "@tanstack/react-query";
@@ -42,6 +42,7 @@ export const HallOfFameContext = createContext<HallOfFameContextType>({
   filtersState: [],
   filtersDispatch: () => {},
   isLoading: true,
+    appliedFiltersState: [],
   setAppliedFiltersState: () => {},
 });
 
@@ -57,8 +58,8 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   );
   const [appliedFiltersState, setAppliedFiltersState] = useState(filtersState);
   const { sortByFilter, rankingOptionsFilter } = getAllFilters(filtersState);
-  const { sortOrder, sortBy, groups } =
-    getAppliedQueryParams(appliedFiltersState);
+  const { sortOrder, sortBy, groups } = getAppliedQueryParams(appliedFiltersState);
+  const initRef = useRef(false);
 
   const { data: eventSections } = useQuery({
     queryKey: ["eventSections"],
@@ -89,7 +90,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   });
 
   useEffect(() => {
-    if (data && eventSections && sortByFilter && rankingOptionsFilter) {
+    if (!initRef.current && data && eventSections && sortByFilter && rankingOptionsFilter) {
       addFieldToFilter(
         {
           label: "Bonusy",
@@ -121,8 +122,9 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
       addEventSectionsToFilters(eventSections, rankingOptionsFilter);
       sortFilters(filtersState);
       selectMinimumOptions(rankingOptionsFilter);
+      initRef.current = true;
     }
-  }, [data, eventSections, filtersState, sortByFilter, rankingOptionsFilter]);
+  }, [data, eventSections, sortByFilter, rankingOptionsFilter, filtersState]);
 
   return (
     <HallOfFameContext.Provider
@@ -137,6 +139,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
         filtersState,
         filtersDispatch,
         isLoading,
+          appliedFiltersState,
         setAppliedFiltersState,
       }}
     >

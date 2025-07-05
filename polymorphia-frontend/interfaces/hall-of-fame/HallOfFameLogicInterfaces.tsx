@@ -38,6 +38,7 @@ export type HallOfFameContextType = {
   filtersState: HallOfFameFilter[];
   filtersDispatch: Dispatch<HallOfFameAction>;
   isLoading: boolean;
+  appliedFiltersState: HallOfFameFilter[];
   setAppliedFiltersState: Dispatch<SetStateAction<HallOfFameFilter[]>>;
 };
 
