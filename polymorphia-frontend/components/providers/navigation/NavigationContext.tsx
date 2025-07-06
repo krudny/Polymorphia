@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
-import { NavigationContextType } from "@/components/navigation/types";
+import { NavigationContextInterface } from "@/components/providers/navigation/types";
 
-export const NavigationContext = createContext<NavigationContextType>({
+export const NavigationContext = createContext<NavigationContextInterface>({
   isSidebarExpanded: false,
   setIsSidebarExpanded: () => {},
   isSidebarLockedOpened: false,

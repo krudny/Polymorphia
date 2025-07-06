@@ -3,7 +3,7 @@ import { EquipmentContext } from "@/components/providers/equipment/EquipmentCont
 import { API_STATIC_URL } from "@/services/api";
 import { useContext } from "react";
 import Image from "next/image";
-import { useModal } from "@/components/providers/ModalContext";
+import { useModal } from "@/components/providers/modal/ModalContext";
 import { Item } from "@/components/equipment/types";
 import "../index.css";
 

@@ -7,7 +7,7 @@ import {
   MainMenuItems,
 } from "@/components/navigation/MenuOptions";
 import { useContext, useEffect, useRef } from "react";
-import { NavigationContext } from "@/components/providers/NavigationContext";
+import { NavigationContext } from "@/components/providers/navigation/NavigationContext";
 import "./index.css";
 
 import clsx from "clsx";

@@ -15,14 +15,3 @@ export interface SubMenuOption {
 export interface MenuSectionProps {
   options: MenuOption[];
 }
-
-export interface NavigationContextType {
-  isSidebarExpanded: boolean;
-  setIsSidebarExpanded: React.Dispatch<React.SetStateAction<boolean>>;
-  isSidebarLockedOpened: boolean;
-  setIsSidebarLockedOpened: React.Dispatch<React.SetStateAction<boolean>>;
-  isSidebarLockedClosed: boolean;
-  setIsSidebarLockedClosed: React.Dispatch<React.SetStateAction<boolean>>;
-  isNavbarExpanded: boolean;
-  setIsNavbarExpanded: React.Dispatch<React.SetStateAction<boolean>>;
-}

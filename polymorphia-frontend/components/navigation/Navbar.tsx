@@ -1,5 +1,5 @@
 import { MenuIcon } from "lucide-react";
-import { NavigationContext } from "@/components/providers/NavigationContext";
+import { NavigationContext } from "@/components/providers/navigation/NavigationContext";
 import { useContext, useEffect, useRef } from "react";
 import {
   BottomMenuItems,

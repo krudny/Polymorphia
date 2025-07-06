@@ -6,7 +6,7 @@ import { createPortal } from "react-dom";
 import "./index.css";
 import { useAnimatedModalState } from "@/animations/Modal";
 import { useEffect, useRef, useState } from "react";
-import { ModalProvider } from "../providers/ModalContext";
+import { ModalProvider } from "../providers/modal/ModalContext";
 import { ModalProps } from "@/components/modal/types";
 import { useTheme } from "next-themes";
 

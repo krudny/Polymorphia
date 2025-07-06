@@ -9,12 +9,3 @@ export interface ModalProps {
   subtitle?: string;
   children?: ReactNode;
 }
-
-export interface ModalContextValue {
-  closeModal: () => void;
-}
-
-export interface ModalProviderProps {
-  children: React.ReactNode;
-  closeModal: () => void;
-}
