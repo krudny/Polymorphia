@@ -1,7 +1,7 @@
 import { API_STATIC_URL } from "@/services/api";
 import Image from "next/image";
 import "./index.css";
-import ImageBadge from "@/components/general/ImageBadge";
+import ImageBadge from "@/components/image-badge/ImageBadge";
 
 export default function HallOfFameImage({
   position,

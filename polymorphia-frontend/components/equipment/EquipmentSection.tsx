@@ -1,7 +1,7 @@
 import { API_STATIC_URL } from "@/services/api";
 import "./index.css";
 import Image from "next/image";
-import ImageBadge from "@/components/general/ImageBadge";
+import ImageBadge from "@/components/image-badge/ImageBadge";
 import { useContext } from "react";
 import { EquipmentContext } from "@/components/providers/equipment/EquipmentContext";
 import ButtonWithBorder from "../button/ButtonWithBorder";

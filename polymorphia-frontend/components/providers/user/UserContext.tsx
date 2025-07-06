@@ -1,7 +1,7 @@
 import { createContext, ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import UserService from "@/app/(logged-in)/profile/UserService";
-import Loading from "@/components/general/Loading";
+import Loading from "@/components/loading/Loading";
 import { UserContextInterface } from "@/components/providers/user/types";
 
 export const UserContext = createContext<UserContextInterface>({

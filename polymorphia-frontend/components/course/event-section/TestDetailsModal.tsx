@@ -5,7 +5,7 @@ import {
 import RewardsInfo from "./RewardsInfo";
 import { EventSectionService } from "@/services/course/event-section/EventSectionService";
 import { useQuery } from "@tanstack/react-query";
-import Loading from "@/components/general/Loading";
+import Loading from "@/components/loading/Loading";
 import Modal from "@/components/modal/Modal";
 
 export default function TestDetailsModal({

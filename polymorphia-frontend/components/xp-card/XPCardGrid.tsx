@@ -3,7 +3,7 @@ import "../pagination/index.css";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/services/course/event-section/EventSectionService";
-import Loading from "@/components/general/Loading";
+import Loading from "@/components/loading/Loading";
 import { useEffect, useRef, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { ChevronLeft, ChevronRight } from "lucide-react";

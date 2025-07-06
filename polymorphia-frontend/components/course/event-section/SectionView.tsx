@@ -3,7 +3,7 @@ import { SectionViewProps } from "@/interfaces/course/event-section/EventSection
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/services/course/event-section/EventSectionService";
-import Loading from "@/components/general/Loading";
+import Loading from "@/components/loading/Loading";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useScaleShow } from "@/animations/General";
 import "./index.css";

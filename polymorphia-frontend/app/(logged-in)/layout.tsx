@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import Navigation from "@/components/navigation/Navigation";
 import { NavigationProvider } from "@/components/providers/NavigationContext";
 import Image from "next/image";
-import MainLayout from "@/components/general/MainLayout";
+import MainLayout from "@/components/main-layout/MainLayout";
 import { UserProvider } from "@/components/providers/user/UserContext";
 import { useTheme } from "next-themes";
 

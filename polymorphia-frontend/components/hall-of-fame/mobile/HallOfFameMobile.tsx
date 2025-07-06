@@ -8,7 +8,7 @@ import "./index.css";
 import { useScaleShow } from "@/animations/General";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
-import Loading from "@/components/general/Loading";
+import Loading from "@/components/loading/Loading";
 import { HallOfFameRecordDTO } from "@/interfaces/api/DTO";
 import { handlePageChange } from "@/components/providers/hall-of-fame/utils/handlePageChange";
 

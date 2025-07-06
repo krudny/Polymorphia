@@ -4,7 +4,7 @@ import { NavigationContext } from "@/components/providers/NavigationContext";
 import { MenuSectionProps } from "@/interfaces/navigation/NavigationInterfaces";
 import { animateSubMenuSection } from "@/animations/Navigation";
 import Link from "next/link";
-import "../../styles/navigation.css";
+import "./index.css";
 
 export default function MenuSection({ options }: MenuSectionProps) {
   const { isSidebarExpanded, isNavbarExpanded, setIsNavbarExpanded } =

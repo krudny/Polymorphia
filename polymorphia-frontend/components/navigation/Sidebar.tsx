@@ -8,7 +8,7 @@ import {
 } from "@/components/navigation/MenuOptions";
 import { useContext, useEffect, useRef } from "react";
 import { NavigationContext } from "@/components/providers/NavigationContext";
-import "../../styles/navigation.css";
+import "./index.css";
 
 import clsx from "clsx";
 import { animateSidebar } from "@/animations/Navigation";

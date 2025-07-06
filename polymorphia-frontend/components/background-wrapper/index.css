@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@import "../../styles/globals.css";
+
+.background-wrapper {
+    @apply w-screen h-[100dvh] lg:h-screen relative;
+}

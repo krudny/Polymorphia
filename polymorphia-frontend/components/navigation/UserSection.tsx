@@ -1,5 +1,5 @@
 import Image from "next/image";
-import "../../styles/navigation.css";
+import "./index.css";
 import { API_STATIC_URL } from "@/services/api";
 import { useContext } from "react";
 import { UserContext } from "@/components/providers/user/UserContext";

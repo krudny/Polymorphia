@@ -1,6 +1,6 @@
 "use client";
 
-import "../../styles/general.css";
+import "./index.css";
 
 export default function Loading() {
   return (
