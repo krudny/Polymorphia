@@ -1,5 +1,5 @@
-import { ProgressBarRangeLabelsProps } from "@/interfaces/progressbar/ProgressBarInterfaces";
-import "../../styles/progressbar.css";
+import "./progressbar.css";
+import { ProgressBarRangeLabelsProps } from "@/components/progressbar/types";
 
 export default function ProgressBarRangeLabels({
   minXP,

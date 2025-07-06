@@ -27,3 +27,8 @@ export interface ProgressBarTextLabelsProps {
   textLabels: string[];
   size?: sizeVariants;
 }
+
+export interface ProgressBarSquareProps {
+  squareFill: number;
+  position: number;
+}
