@@ -5,9 +5,9 @@ import NavigationArrow from "@/components/slider/NavigationArrow";
 import NavigationDots from "@/components/slider/NavigationDots";
 import { SliderProps } from "@/interfaces/slider/SliderInterfaces";
 import SingleSlide from "@/components/slider/SingleSlide";
-import "../../styles/slider.css";
 import { shiftArray } from "@/components/slider/utils";
 import { useScaleShow } from "@/animations/General";
+import "./index.css";
 
 export default function Slider({ slides, initialSlide = 0 }: SliderProps) {
   const [currentSlide, setCurrentSlide] = useState<number>(initialSlide);

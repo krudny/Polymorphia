@@ -1,5 +1,5 @@
 import { NavigationDotsProps } from "@/interfaces/slider/SliderInterfaces";
-import "../../styles/slider.css";
+import "./index.css";
 
 export default function NavigationDots({
   slides,

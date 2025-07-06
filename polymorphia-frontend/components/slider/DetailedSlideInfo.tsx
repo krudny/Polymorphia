@@ -10,9 +10,9 @@ import {
 import Loading from "@/components/general/Loading";
 import { ChestSlide, ItemSlide } from "@/interfaces/slider/SliderInterfaces";
 import Link from "next/link";
-import "../../styles/slider.css";
-import KnowledgeBaseService from "@/services/KnowledgeBaseService";
+import KnowledgeBaseService from "@/app/(logged-in)/knowledge-base/KnowledgeBaseService";
 import { API_STATIC_URL } from "@/services/api";
+import "./index.css";
 
 export default function DetailedSlideInfo({
   type,

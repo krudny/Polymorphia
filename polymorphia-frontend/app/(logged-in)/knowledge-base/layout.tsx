@@ -1,5 +1,5 @@
 import { ReactNode, Suspense } from "react";
-import "../../../styles/general.css";
+import "./index.css";
 
 export default function KnowledgeBaseLayout({
   children,

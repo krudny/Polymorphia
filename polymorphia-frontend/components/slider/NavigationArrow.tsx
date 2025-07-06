@@ -1,7 +1,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { NavigationArrowProps } from "@/interfaces/slider/SliderInterfaces";
 import clsx from "clsx";
-import "../../styles/slider.css";
+import "./index.css";
 
 export default function NavigationArrow({
   direction,

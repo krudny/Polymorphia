@@ -26,10 +26,6 @@
   @apply w-12 h-12 border-4 border-primary-gray border-t-primary-dark rounded-full animate-spin;
 }
 
-.knowledge-base-wrapper {
-  @apply w-full flex flex-col min-h-[calc(100dvh-5rem)] relative 3xl:min-h-[54rem];
-}
-
 .image-badge {
   @apply absolute bg-neutral-300/80 flex-col-centered bottom-0 right-0 aspect-square overflow-hidden  bg-clip-padding z-50;
   @apply dark:bg-secondary-dark;
