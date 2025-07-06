@@ -20,10 +20,10 @@
 .progressbar-line {
   @apply absolute top-1/2 -translate-y-1/2 ml-4  h-2 overflow-hidden z-50;
   @apply bg-primary-gray dark:bg-primary-dark;
-}
 
-.progressbar-line > div {
-  @apply h-full bg-primary-dark dark:bg-secondary-light;
+  div {
+    @apply h-full bg-primary-dark dark:bg-secondary-light;
+  }
 }
 
 /* ProgressBarRangeLabels */
@@ -34,20 +34,20 @@
 
 .progressbar-range-label {
   @apply absolute -translate-x-1/2 w-14 text-center;
-}
 
-.progressbar-range-label > span {
-  @apply text-2xl;
+  span {
+    @apply text-2xl;
+  }
 }
 
 /* ProgressBarSquare */
 
 .progressbar-square {
   @apply absolute top-1/2 -translate-y-1/2 -translate-x-1/2 z-50;
-}
 
-.progressbar-square > div {
-  @apply w-8 h-8;
+  div {
+    @apply w-8 h-8;
+  }
 }
 
 /* ProgressBarTextLabels */
@@ -58,8 +58,8 @@
 
 .progressbar-text-label {
   @apply absolute w-28 text-center flex-col-centered;
-}
 
-.progressbar-text-label > span {
-  @apply block whitespace-normal break-normal;
+  span {
+    @apply block whitespace-normal break-normal;
+  }
 }
