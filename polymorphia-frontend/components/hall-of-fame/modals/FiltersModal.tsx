@@ -11,6 +11,7 @@ import gsap from "gsap";
 import { useQueryClient } from "@tanstack/react-query";
 import "./index.css";
 import { hallOfFameConfirmAction } from "@/components/providers/hall-of-fame/utils/hallOfFameConfirmAction";
+import { animateFiltersModal } from "@/animations/FiltersModal";
 
 export default function FiltersModal() {
   const queryClient = useQueryClient();
@@ -47,28 +48,7 @@ export default function FiltersModal() {
   });
 
   useLayoutEffect(() => {
-    filtersState.forEach((filter) => {
-      const el = refs.current[filter.id];
-      if (!el) return;
-
-      if (filter.isOpen) {
-        gsap.to(el, {
-          height: "auto",
-          opacity: 1,
-          marginTop: "0.5rem",
-          duration: 0.4,
-          ease: "power2.inOut",
-        });
-      } else {
-        gsap.to(el, {
-          height: 0,
-          opacity: 0,
-          marginTop: 0,
-          duration: 0.4,
-          ease: "power2.inOut",
-        });
-      }
-    });
+    animateFiltersModal(filtersState, refs.current);
   }, [filtersState]);
 
   return (
