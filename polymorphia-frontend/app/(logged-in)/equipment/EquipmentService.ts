@@ -4,7 +4,7 @@ import {
 } from "@/interfaces/api/DTO";
 import { ChestData, ItemData } from "@/components/equipment/types";
 
-const Service = {
+const EquipmentService = {
   getItems: async (): Promise<ItemData[]> => {
     const response: EquipmentItemResponseDTO[] = [
       {
@@ -153,4 +153,4 @@ const Service = {
   },
 };
 
-export default Service;
+export default EquipmentService;

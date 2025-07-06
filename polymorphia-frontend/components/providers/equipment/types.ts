@@ -1,6 +1,6 @@
 import { ChestData, ItemData } from "@/components/equipment/types";
 
-export interface EquipmentContextType {
+export interface EquipmentContextInterface {
   currentItemModalData: ItemData | null;
   setCurrentItemModalData: (modalData: ItemData | null) => void;
   currentChestModalData: ChestData | null;

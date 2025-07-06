@@ -7,7 +7,7 @@ import ChestModal from "@/components/equipment/modals/ChestModal";
 
 import { useQuery } from "@tanstack/react-query";
 import Loading from "@/components/general/Loading";
-import Service from "@/app/(logged-in)/equipment/service";
+import EquipmentService from "@/app/(logged-in)/equipment/EquipmentService";
 import EquipmentSectionWrapper from "@/components/equipment/EquipmentSectionWrapper";
 import OpeningChestModal from "@/components/equipment/modals/OpeningChestModal";
 import { EquipmentProvider } from "@/components/providers/equipment/EquipmentContext";
@@ -22,12 +22,12 @@ export default function Equipment() {
   // TODO: error handling
   const { data: items, isLoading: isItemsLoading } = useQuery({
     queryKey: ["equipment-items"],
-    queryFn: () => Service.getItems(),
+    queryFn: () => EquipmentService.getItems(),
   });
 
   const { data: chests, isLoading: isChestsLoading } = useQuery({
     queryKey: ["equipment-chests"],
-    queryFn: () => Service.getChests(),
+    queryFn: () => EquipmentService.getChests(),
   });
 
   if (isItemsLoading || isChestsLoading) {
