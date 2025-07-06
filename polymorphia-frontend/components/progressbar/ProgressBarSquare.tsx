@@ -1,5 +1,5 @@
 import { SquareFillCalc } from "@/components/progressbar/ProgressBarUtil";
-import "./progressbar.css";
+import "./index.css";
 import { ProgressBarSquareProps } from "@/components/progressbar/types";
 
 export default function ProgressBarSquare({

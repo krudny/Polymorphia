@@ -1,4 +1,4 @@
-import "./progressbar.css";
+import "./index.css";
 import { ProgressBarLineProps } from "@/components/progressbar/types";
 
 export default function ProgressBarLine({

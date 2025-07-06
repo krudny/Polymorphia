@@ -1,7 +1,7 @@
 import RankImage from "@/components/hall-of-fame/RankImage";
 import RankSummary from "@/components/hall-of-fame/RankSummary";
 import RankUserData from "@/components/hall-of-fame/RankUserData";
-import UserPoints from "@/components/general/UserPoints";
+import UserPoints from "@/components/user-points/UserPoints";
 import "../../styles/hall-of-fame.css";
 import { HallOfFameRecordDTO } from "@/interfaces/api/DTO";
 import {

@@ -1,4 +1,6 @@
 import { tv } from "tailwind-variants";
+import { UserPointsProps } from "@/components/user-points/types";
+import "./index.css";
 
 const headerVariant = tv({
   base: "transition-all",
@@ -16,13 +18,6 @@ const headerVariant = tv({
   },
 });
 
-interface UserPointsProps {
-  separators?: boolean;
-  titleSize?: "xs" | "sm" | "md" | "lg" | "xl";
-  xpSize?: "xs" | "sm" | "md" | "lg" | "xl";
-  xpDetails: Record<string, string>;
-}
-
 export default function UserPoints({
   separators = false,
   titleSize = "md",
@@ -32,14 +27,10 @@ export default function UserPoints({
   const items = Object.entries(xpDetails);
 
   return (
-    <div className="w-full h-full grid grid-cols-4 sm:gap-1 lg:px-2">
+    <div className="user-points">
       {items.map(([item, xp], i) => (
         <div
-          className={`flex-col-centered min-h-fit lg:min-h-24 my-auto truncate ${
-            separators && i !== items.length - 1
-              ? "sm:border-r-[1px] border-primary-dark dark:border-secondary-light"
-              : ""
-          }`}
+          className={`user-point ${separators && i !== items.length - 1 ? "user-point-separators" : ""}`}
           key={i}
         >
           <h2 className={headerVariant({ size: titleSize })}>{item}</h2>

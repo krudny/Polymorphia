@@ -7,7 +7,7 @@ import {
 } from "@/components/progressbar/ProgressBarUtil";
 import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLabels";
 import toast from "react-hot-toast";
-import "./progressbar.css";
+import "./index.css";
 import { ProgressBarProps } from "@/components/progressbar/types";
 
 export default function ProgressBar(props: ProgressBarProps) {
