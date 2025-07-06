@@ -1,4 +1,4 @@
-import { ModalProps } from "../../modal/ModalInterfaces";
+import { ModalProps } from "../../../components/modal/types";
 
 export type EventSectionType = "assignment" | "test" | "project";
 

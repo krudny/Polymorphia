@@ -7,7 +7,7 @@ import "./index.css";
 import { useAnimatedModalState } from "@/animations/Modal";
 import { useEffect, useRef, useState } from "react";
 import { ModalProvider } from "../providers/ModalContext";
-import { ModalProps } from "@/interfaces/modal/ModalInterfaces";
+import { ModalProps } from "@/components/modal/types";
 import { useTheme } from "next-themes";
 
 export default function Modal(props: ModalProps) {

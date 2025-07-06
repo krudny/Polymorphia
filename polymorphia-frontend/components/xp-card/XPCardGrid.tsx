@@ -1,4 +1,3 @@
-import { EventSectionCardGridProps } from "@/interfaces/xp-card/XPCardInterfaces";
 import XPCard from "./XPCard";
 import "../pagination/index.css";
 import { useRouter } from "next/navigation";
@@ -17,6 +16,7 @@ import {
 } from "@/services/course/event-section/EventSectionUtils";
 import { useEventSectionAnimation } from "@/animations/EventSection";
 import "./index.css";
+import { EventSectionCardGridProps } from "@/components/xp-card/types";
 
 export default function XPCardGrid({
   eventSection,

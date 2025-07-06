@@ -1,7 +1,7 @@
 import {
   ModalContextValue,
   ModalProviderProps,
-} from "@/interfaces/modal/ModalInterfaces";
+} from "@/components/modal/types";
 import React, { createContext, useContext } from "react";
 
 const ModalContext = createContext<ModalContextValue | undefined>(undefined);
