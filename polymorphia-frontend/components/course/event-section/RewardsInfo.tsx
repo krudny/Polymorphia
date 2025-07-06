@@ -2,7 +2,7 @@ import ProgressBar from "@/components/progressbar/ProgressBar";
 import { RewardsInfoProps } from "@/interfaces/course/event-section/EventSectionInterfaces";
 import { API_STATIC_URL } from "@/services/api";
 import Image from "next/image";
-import "../../../styles/event-section.css";
+import "./index.css";
 
 export default function RewardsInfo({ grade, maxXp }: RewardsInfoProps) {
   return (

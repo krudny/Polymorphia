@@ -1,7 +1,7 @@
 "use client";
 
 import HallOfFameSearch from "@/components/hall-of-fame/general/HallOfFameSearch";
-import Pagination from "@/components/general/Pagination";
+import Pagination from "@/components/pagination/Pagination";
 import RankCardMobile from "@/components/hall-of-fame/mobile/HallOfFameCardMobile";
 import { useContext } from "react";
 import "./index.css";

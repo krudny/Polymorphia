@@ -3,7 +3,7 @@
 import clsx from "clsx";
 import { X } from "lucide-react";
 import { createPortal } from "react-dom";
-import "../../styles/modal.css";
+import "./index.css";
 import { useAnimatedModalState } from "@/animations/Modal";
 import { useEffect, useRef, useState } from "react";
 import { ModalProvider } from "../providers/ModalContext";

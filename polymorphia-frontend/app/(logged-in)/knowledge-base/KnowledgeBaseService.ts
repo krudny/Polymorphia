@@ -1,14 +1,14 @@
 import {
-  ChestSlide,
-  EvolutionStageSlide,
-  ItemSlide,
-} from "@/interfaces/slider/SliderInterfaces";
-import {
   ChestResponseDto,
   EvolutionStageResponseDto,
   ItemResponseDTO,
 } from "@/interfaces/api/DTO";
 import { API_HOST } from "@/services/api";
+import {
+  ChestSlide,
+  EvolutionStageSlide,
+  ItemSlide,
+} from "@/components/slider/types";
 
 const KnowledgeBaseService = {
   getEvolutionStages: async (

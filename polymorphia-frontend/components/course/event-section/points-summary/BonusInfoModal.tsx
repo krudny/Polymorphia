@@ -1,6 +1,6 @@
 import { BonusInfoModalProps } from "@/interfaces/course/event-section/PointsSummaryInterfaces";
 import BonusItemCard from "./BonusItemCard";
-import "../../../../styles/points-summary.css";
+import "./index.css";
 import Modal from "@/components/modal/Modal";
 
 export default function BonusInfoModal({

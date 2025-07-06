@@ -1,7 +1,7 @@
 import { useScaleShow } from "@/animations/General";
 import HallOfFameSearch from "@/components/hall-of-fame/general/HallOfFameSearch";
 import HallOfFameCardDesktop from "@/components/hall-of-fame/desktop/HallOfFameCardDesktop";
-import Pagination from "@/components/general/Pagination";
+import Pagination from "@/components/pagination/Pagination";
 import "./index.css";
 import { useContext } from "react";
 import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
