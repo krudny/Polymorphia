@@ -1,4 +1,4 @@
-import "./index.css";
+import "../index.css";
 import { API_STATIC_URL } from "@/services/api";
 import XPCard from "@/components/xp-card/XPCard";
 import { EquipmentContext } from "@/components/providers/equipment/EquipmentContext";

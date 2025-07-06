@@ -28,6 +28,10 @@
     }
 }
 
+.hall-of-fame-podium {
+    @apply w-full h-full 2xl:h-[calc(33.333%-1rem)] max-h-36 2xl:max-h-52 rounded-xl;
+}
+
 .hall-of-fame-desktop-content-wrapper {
     @apply w-full flex-col-centered 2xl:w-[70%] 2xl:min-h-full;
 }
@@ -60,10 +64,4 @@
 
 .hall-of-fame-desktop-search-wrapper {
     @apply hall-of-fame-search-wrapper h-14 mt-0;
-}
-
-/* Hall of fame podium */
-
-.hall-of-fame-podium {
-    @apply w-full h-full 2xl:h-[calc(33.333%-1rem)] max-h-36 2xl:max-h-52 rounded-xl;
 }
