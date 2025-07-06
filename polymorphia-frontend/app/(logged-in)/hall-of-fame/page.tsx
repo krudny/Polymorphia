@@ -23,7 +23,7 @@ export default function HallOfFame() {
       <div className="w-full hidden lg:block">
         <RankDesktop />
       </div>
-        <FiltersModal />
+      <FiltersModal />
     </HallOfFameProvider>
   );
 }

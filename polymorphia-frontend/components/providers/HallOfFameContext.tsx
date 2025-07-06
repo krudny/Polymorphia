@@ -1,11 +1,12 @@
 "use client";
 
 import {
-    createContext,
-    ReactNode,
-    useEffect,
-    useReducer, useRef,
-    useState,
+  createContext,
+  ReactNode,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
 } from "react";
 import { useDebounce } from "use-debounce";
 import { useQuery } from "@tanstack/react-query";
@@ -42,7 +43,7 @@ export const HallOfFameContext = createContext<HallOfFameContextType>({
   filtersState: [],
   filtersDispatch: () => {},
   isLoading: true,
-    appliedFiltersState: [],
+  appliedFiltersState: [],
   setAppliedFiltersState: () => {},
 });
 
@@ -58,7 +59,8 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   );
   const [appliedFiltersState, setAppliedFiltersState] = useState(filtersState);
   const { sortByFilter, rankingOptionsFilter } = getAllFilters(filtersState);
-  const { sortOrder, sortBy, groups } = getAppliedQueryParams(appliedFiltersState);
+  const { sortOrder, sortBy, groups } =
+    getAppliedQueryParams(appliedFiltersState);
   const initRef = useRef(false);
 
   const { data: eventSections } = useQuery({
@@ -90,7 +92,13 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   });
 
   useEffect(() => {
-    if (!initRef.current && data && eventSections && sortByFilter && rankingOptionsFilter) {
+    if (
+      !initRef.current &&
+      data &&
+      eventSections &&
+      sortByFilter &&
+      rankingOptionsFilter
+    ) {
       addFieldToFilter(
         {
           label: "Bonusy",
@@ -139,7 +147,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
         filtersState,
         filtersDispatch,
         isLoading,
-          appliedFiltersState,
+        appliedFiltersState,
         setAppliedFiltersState,
       }}
     >
