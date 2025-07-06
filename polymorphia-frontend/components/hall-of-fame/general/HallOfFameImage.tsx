@@ -1,9 +1,9 @@
 import { API_STATIC_URL } from "@/services/api";
 import Image from "next/image";
-import "../../styles/hall-of-fame.css";
+import "./index.css";
 import ImageBadge from "@/components/general/ImageBadge";
 
-export default function RankImage({
+export default function HallOfFameImage({
   position,
   imageUrl,
 }: {
@@ -21,9 +21,7 @@ export default function RankImage({
       />
       <ImageBadge
         text={position < 10 ? "0" + position : position.toString()}
-        className={
-          "rounded-tl-xl rounded-br-xl w-5 text-base lg:text-2xl lg:min-w-8 lg:rounded-br-none"
-        }
+        className={"hall-of-fame-image-badge"}
       />
     </div>
   );

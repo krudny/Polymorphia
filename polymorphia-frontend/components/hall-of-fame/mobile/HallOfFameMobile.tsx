@@ -1,18 +1,18 @@
 "use client";
 
-import RankSearch from "@/components/hall-of-fame/RankSearch";
+import HallOfFameSearch from "@/components/hall-of-fame/general/HallOfFameSearch";
 import Pagination from "@/components/general/Pagination";
-import RankCardMobile from "@/components/hall-of-fame/RankCardMobile";
+import RankCardMobile from "@/components/hall-of-fame/mobile/HallOfFameCardMobile";
 import { useContext } from "react";
-import "../../styles/hall-of-fame.css";
+import "./index.css";
 import { useScaleShow } from "@/animations/General";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import { HallOfFameContext } from "@/components/providers/HallOfFameContext";
-import { handlePageChange } from "@/services/hall-of-fame/Helpers";
+import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
 import Loading from "@/components/general/Loading";
 import { HallOfFameRecordDTO } from "@/interfaces/api/DTO";
+import { handlePageChange } from "@/components/providers/hall-of-fame/utils/handlePageChange";
 
-export default function RankMobile() {
+export default function HallOfFameMobile() {
   const wrapperRef = useScaleShow();
   const { data, setPage, isLoading, setIsModalOpen } =
     useContext(HallOfFameContext);
@@ -20,17 +20,18 @@ export default function RankMobile() {
   return (
     <div ref={wrapperRef} className="hall-of-fame-mobile">
       <div className="hall-of-fame-mobile-search-wrapper">
-        <RankSearch />
+        <HallOfFameSearch />
         <ButtonWithBorder
           text="Filtry"
           className="!mx-0 !py-0 !border-0 !border-b-2"
+          size="sm"
           onClick={() => setIsModalOpen(true)}
         />
       </div>
 
       <div className="hall-of-fame-mobile-rank-wrapper">
         {isLoading ? (
-          <div className="relative w-full h-full flex-centered ">
+          <div className="hall-of-fame-loading-wrapper">
             <Loading />
           </div>
         ) : (

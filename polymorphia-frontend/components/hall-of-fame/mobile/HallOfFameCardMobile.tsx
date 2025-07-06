@@ -1,15 +1,13 @@
-import RankImage from "@/components/hall-of-fame/RankImage";
-import RankSummary from "@/components/hall-of-fame/RankSummary";
-import RankUserData from "@/components/hall-of-fame/RankUserData";
+import HallOfFameImage from "@/components/hall-of-fame/general/HallOfFameImage";
+import HallOfFamePointsSummary from "@/components/hall-of-fame/general/HallOfFamePointsSummary";
+import HallOfFameUserData from "@/components/hall-of-fame/general/HallOfFameUserData";
 import UserPoints from "@/components/user-points/UserPoints";
-import "../../styles/hall-of-fame.css";
+import "./index.css";
 import { HallOfFameRecordDTO } from "@/interfaces/api/DTO";
-import {
-  filterXpDetails,
-  getAllFilters,
-} from "@/services/hall-of-fame/Helpers";
 import { useContext } from "react";
-import { HallOfFameContext } from "@/components/providers/HallOfFameContext";
+import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
+import { getAllFilters } from "@/components/providers/hall-of-fame/utils/getAllFilters";
+import { filterXpDetails } from "@/components/providers/hall-of-fame/utils/filterXpDetails";
 
 export default function RankCard({
   userDetails,
@@ -29,12 +27,12 @@ export default function RankCard({
   return (
     <div className={`hall-of-fame-mobile-record-wrapper ${border}`}>
       <div>
-        <RankImage
+        <HallOfFameImage
           position={userDetails.position}
           imageUrl={userDetails.imageUrl}
         />
-        <RankUserData {...userDetails} />
-        <RankSummary total={xpDetails.total} />
+        <HallOfFameUserData {...userDetails} />
+        <HallOfFamePointsSummary total={xpDetails.total} />
       </div>
       <div>
         <UserPoints

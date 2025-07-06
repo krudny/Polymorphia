@@ -1,16 +1,22 @@
 import XPCard from "@/components/xp-card/XPCard";
-import "../../styles/hall-of-fame.css";
+import "./index.css";
 import Loading from "@/components/general/Loading";
-import HallOfFameService from "@/services/hall-of-fame/HallOfFameService";
+import HallOfFameService from "@/app/(logged-in)/hall-of-fame/HallOfFameService";
 import { useQuery } from "@tanstack/react-query";
 
-export default function RankPodium() {
+export default function HallOfFamePodium() {
   const { data: podium = [], isLoading } = useQuery({
     queryKey: ["podium"],
     queryFn: () => HallOfFameService.getPodium(),
   });
 
-  if (isLoading) return <Loading />;
+  if (isLoading) {
+    return (
+      <div className="hall-of-fame-loading-wrapper">
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <>

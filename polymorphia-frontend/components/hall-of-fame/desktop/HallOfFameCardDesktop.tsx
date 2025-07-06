@@ -1,33 +1,30 @@
-import RankImage from "@/components/hall-of-fame/RankImage";
-import RankSummary from "@/components/hall-of-fame/RankSummary";
-import RankUserData from "@/components/hall-of-fame/RankUserData";
+import HallOfFameImage from "@/components/hall-of-fame/general/HallOfFameImage";
+import HallOfFamePointsSummary from "@/components/hall-of-fame/general/HallOfFamePointsSummary";
+import HallOfFameUserData from "@/components/hall-of-fame/general/HallOfFameUserData";
 import UserPoints from "@/components/user-points/UserPoints";
-import "../../styles/hall-of-fame.css";
+import "./index.css";
 import { HallOfFameRecordDTO } from "@/interfaces/api/DTO";
-import {
-  filterXpDetails,
-  getAllFilters,
-} from "@/services/hall-of-fame/Helpers";
-import { HallOfFameContext } from "@/components/providers/HallOfFameContext";
+import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
 import { useContext } from "react";
+import { filterXpDetails } from "@/components/providers/hall-of-fame/utils/filterXpDetails";
+import { getAllFilters } from "@/components/providers/hall-of-fame/utils/getAllFilters";
 
-export default function RankCardDesktop({
+export default function HallOfFameCardDesktop({
   userDetails,
   xpDetails,
 }: HallOfFameRecordDTO) {
   const { appliedFiltersState } = useContext(HallOfFameContext);
   const { rankingOptionsFilter } = getAllFilters(appliedFiltersState);
-
   const filteredXpDetails = filterXpDetails(xpDetails, rankingOptionsFilter);
 
   return (
     <div className="hall-of-fame-desktop-record-wrapper">
       <div className="hall-of-fame-desktop-record-user-data-wrapper">
-        <RankImage
+        <HallOfFameImage
           position={userDetails.position}
           imageUrl={userDetails.imageUrl}
         />
-        <RankUserData {...userDetails} />
+        <HallOfFameUserData {...userDetails} />
       </div>
       <div className="hall-of-fame-desktop-record-user-points-wrapper">
         <UserPoints
@@ -37,7 +34,7 @@ export default function RankCardDesktop({
           xpDetails={filteredXpDetails}
         />
       </div>
-      <RankSummary total={xpDetails.total} />
+      <HallOfFamePointsSummary total={xpDetails.total} />
     </div>
   );
 }

@@ -1,15 +1,16 @@
 import Modal from "@/components/modal/Modal";
 import { useContext, useLayoutEffect, useRef } from "react";
-import { HallOfFameContext } from "@/components/providers/HallOfFameContext";
+import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
 import { ArrowDown, ArrowUp } from "lucide-react";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import { hallOfFameConfirmAction } from "@/services/hall-of-fame/Helpers";
 import {
   HallOfFameFilterID,
   HallOfFameFilterOption,
-} from "@/interfaces/hall-of-fame/HallOfFameLogicInterfaces";
+} from "@/components/hall-of-fame/general/types";
 import gsap from "gsap";
 import { useQueryClient } from "@tanstack/react-query";
+import "./index.css";
+import { hallOfFameConfirmAction } from "@/components/providers/hall-of-fame/utils/hallOfFameConfirmAction";
 
 export default function FiltersModal() {
   const queryClient = useQueryClient();
@@ -78,14 +79,14 @@ export default function FiltersModal() {
         setIsModalOpen(false);
       }}
     >
-      <div className="overflow-visible">
-        <div className="w-full md:w-96 flex flex-col">
+      <div className="filters-modal">
+        <div className="filters-modal-wrapper">
           {filtersState.map((filter) => (
-            <div key={filter.id} className="flex flex-col my-2">
-              <div className="flex justify-between items-center">
-                <h1 className="text-3xl">{filter.name}</h1>
+            <div key={filter.id} className="filters-modal-filter-wrapper">
+              <div className="filters-modal-filter">
+                <h1>{filter.name}</h1>
                 <div
-                  className="flex items-center gap-x-1 cursor-pointer hover:opacity-70 transition-opacity"
+                  className="filters-modal-toggle-button"
                   onClick={() =>
                     filtersDispatch({
                       type: "OPEN_FILTER",
@@ -94,15 +95,15 @@ export default function FiltersModal() {
                   }
                 >
                   {filter.isOpen ? (
-                    <>
-                      <ArrowUp className="w-5 h-5 transition-transform duration-300" />
-                      <h1 className="text-2xl">Zamknij</h1>
-                    </>
+                    <div className="filters-modal-toggle">
+                      <ArrowUp className="filters-modal-toggle-arrow" />
+                      <h2>Zamknij</h2>
+                    </div>
                   ) : (
-                    <>
-                      <ArrowDown className="w-5 h-5 transition-transform duration-300" />
-                      <h1 className="text-2xl">Otwórz</h1>
-                    </>
+                    <div className="filters-modal-toggle">
+                      <ArrowDown className="filters-modal-toggle-arrow" />
+                      <h2>Otwórz</h2>
+                    </div>
                   )}
                 </div>
               </div>
@@ -116,15 +117,15 @@ export default function FiltersModal() {
                   marginTop: 0,
                 }}
               >
-                <div className="grid grid-cols-4 gap-2 text-xl my-2">
+                <div className="filters-modal-filter-grid">
                   {filter.options.map((option) => (
                     <div
                       key={option.value}
                       onClick={() => handleSelect(filter.id, option)}
-                      className={`w-full rounded-md flex-centered px-2 py-1 text-primary-dark border-2 border-primary-dark cursor-pointer select-none transition-colors duration-150 ease-in-out ${
+                      className={`filters-modal-filter-option ${
                         option.isSelected
-                          ? "bg-primary-dark text-secondary-light dark:bg-secondary-light dark:text-primary-dark shadow-md"
-                          : "dark:bg-primary-gray "
+                          ? "filters-modal-filter-option-selected "
+                          : "filters-modal-filter-option-unselected"
                       }`}
                     >
                       {option.label}
@@ -136,7 +137,7 @@ export default function FiltersModal() {
           ))}
         </div>
 
-        <div className="w-full mt-5">
+        <div className="filters-modal-button-wrapper">
           <ButtonWithBorder
             text={"Potwierdź zmiany"}
             className="w-full rounded-md"

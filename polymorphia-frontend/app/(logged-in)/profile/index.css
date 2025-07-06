@@ -6,11 +6,11 @@
 }
 
 .profile-wrapper {
-  @apply w-full flex-1 flex flex-col px-2 justify-center lg:px-14 lg:justify-between lg:max-w-[1600px];
+  @apply w-full flex-1 flex flex-col p-2 justify-center lg:px-14 lg:justify-between lg:max-w-[1600px];
 }
 
 .profile-content-wrapper {
-  @apply flex-col-centered w-full mx-auto mt-10 lg:flex-row lg:my-auto;
+  @apply flex-col-centered w-full mx-auto lg:flex-row lg:my-auto lg:mt-10;
 }
 
 .profile-image-wrapper {

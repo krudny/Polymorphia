@@ -1,17 +1,17 @@
 import { useScaleShow } from "@/animations/General";
-import RankPodium from "@/components/hall-of-fame/RankPodium";
-import RankSearch from "@/components/hall-of-fame/RankSearch";
-import RankCardDesktop from "@/components/hall-of-fame/RankCardDesktop";
+import HallOfFameSearch from "@/components/hall-of-fame/general/HallOfFameSearch";
+import HallOfFameCardDesktop from "@/components/hall-of-fame/desktop/HallOfFameCardDesktop";
 import Pagination from "@/components/general/Pagination";
-import "../../styles/hall-of-fame.css";
+import "./index.css";
 import { useContext } from "react";
-import { HallOfFameContext } from "@/components/providers/HallOfFameContext";
+import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
 import { HallOfFameRecordDTO } from "@/interfaces/api/DTO";
-import { handlePageChange } from "@/services/hall-of-fame/Helpers";
 import Loading from "@/components/general/Loading";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import HallOfFamePodium from "@/components/hall-of-fame/desktop/HallOfFamePodium";
+import { handlePageChange } from "@/components/providers/hall-of-fame/utils/handlePageChange";
 
-export default function RankDesktop() {
+export default function HallOfFameDesktop() {
   const wrapperRef = useScaleShow();
 
   const { data, setPage, isLoading, setIsModalOpen } =
@@ -25,12 +25,12 @@ export default function RankDesktop() {
             <h2>Podium</h2>
           </div>
           <div className="hall-of-fame-desktop-podium">
-            <RankPodium />
+            <HallOfFamePodium />
           </div>
         </div>
         <div className="hall-of-fame-desktop-content-wrapper">
           <div className="hall-of-fame-desktop-search-wrapper">
-            <RankSearch />
+            <HallOfFameSearch />
             <ButtonWithBorder
               text="Filtry"
               className="!mx-0 !py-0 !border-0 !border-b-2"
@@ -39,12 +39,12 @@ export default function RankDesktop() {
           </div>
           <div className="hall-of-fame-desktop-rank-wrapper">
             {isLoading ? (
-              <div className="relative w-full h-full flex-centered ">
+              <div className="hall-of-fame-loading-wrapper">
                 <Loading />
               </div>
             ) : (
               data.content.map((record: HallOfFameRecordDTO) => (
-                <RankCardDesktop
+                <HallOfFameCardDesktop
                   key={`rank-${record.userDetails.position}`}
                   userDetails={record.userDetails}
                   xpDetails={record.xpDetails}

@@ -1,4 +1,4 @@
-import { HallOfFameFilter } from "@/interfaces/hall-of-fame/HallOfFameLogicInterfaces";
+import { HallOfFameFilter } from "@/components/hall-of-fame/general/types";
 
 export const filters: HallOfFameFilter[] = [
   {

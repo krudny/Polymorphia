@@ -1,6 +1,6 @@
-import "../../styles/hall-of-fame.css";
+import "./index.css";
 
-export default function RankSummary({ total }: { total: string }) {
+export default function HallOfFamePointsSummary({ total }: { total: string }) {
   return (
     <div className="hall-of-fame-summary-points">
       <h3>Suma</h3>

@@ -1,7 +1,7 @@
-import "../../styles/hall-of-fame.css";
+import "./index.css";
 import { UserDetailsDTO } from "@/interfaces/api/DTO";
 
-export default function RankUserData({
+export default function HallOfFameUserData({
   animalName,
   evolutionStage,
   group,

@@ -11,18 +11,16 @@ import {
 import { useDebounce } from "use-debounce";
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/services/course/event-section/EventSectionService";
-import {
-  addEventSectionsToFilters,
-  addFieldToFilter,
-  getAllFilters,
-  getAppliedQueryParams,
-  selectMinimumOptions,
-  sortFilters,
-} from "@/services/hall-of-fame/Helpers";
-import { filters } from "@/services/hall-of-fame/InitialFilters";
-import { HallOfFameReducer } from "@/services/hall-of-fame/HallOfFameReducer";
-import { HallOfFameContextType } from "@/interfaces/hall-of-fame/HallOfFameLogicInterfaces";
-import HallOfFameService from "@/services/hall-of-fame/HallOfFameService";
+import { filters } from "@/components/providers/hall-of-fame/filters/InitialFilters";
+import { HallOfFameReducer } from "@/components/providers/hall-of-fame/filters/HallOfFameReducer";
+import HallOfFameService from "@/app/(logged-in)/hall-of-fame/HallOfFameService";
+import { HallOfFameContextInterface } from "@/components/providers/hall-of-fame/types";
+import { getAllFilters } from "@/components/providers/hall-of-fame/utils/getAllFilters";
+import { getAppliedQueryParams } from "@/components/providers/hall-of-fame/utils/getAppliedQueryParams";
+import { addFieldToFilter } from "@/components/providers/hall-of-fame/utils/addFieldToFilter";
+import { addEventSectionsToFilters } from "@/components/providers/hall-of-fame/utils/addEventSectionsToFilters";
+import { sortFilters } from "@/components/providers/hall-of-fame/utils/sortFilters";
+import { selectMinimumOptions } from "@/components/providers/hall-of-fame/utils/selectMinimumOptions";
 
 const emptyDataObject = {
   content: [],
@@ -32,7 +30,7 @@ const emptyDataObject = {
   },
 };
 
-export const HallOfFameContext = createContext<HallOfFameContextType>({
+export const HallOfFameContext = createContext<HallOfFameContextInterface>({
   data: emptyDataObject,
   page: 0,
   setPage: () => {},

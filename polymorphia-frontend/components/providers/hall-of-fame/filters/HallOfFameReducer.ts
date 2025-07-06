@@ -1,7 +1,5 @@
-import {
-  HallOfFameAction,
-  HallOfFameFilter,
-} from "@/interfaces/hall-of-fame/HallOfFameLogicInterfaces";
+import { HallOfFameFilter } from "@/components/hall-of-fame/general/types";
+import { HallOfFameAction } from "@/components/providers/hall-of-fame/types";
 
 export function HallOfFameReducer(
   filters: HallOfFameFilter[],

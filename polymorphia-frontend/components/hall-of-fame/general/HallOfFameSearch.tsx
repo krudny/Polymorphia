@@ -1,8 +1,8 @@
-import "../../styles/hall-of-fame.css";
+import "./index.css";
 import { useContext } from "react";
-import { HallOfFameContext } from "@/components/providers/HallOfFameContext";
+import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
 
-export default function RankSearch() {
+export default function HallOfFameSearch() {
   const { search, setSearch } = useContext(HallOfFameContext);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

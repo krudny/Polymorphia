@@ -1,14 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { HallOfFameResponseDTO } from "@/interfaces/api/DTO";
-
-export interface HallOfFameFilter {
-  id: HallOfFameFilterID;
-  name: string;
-  isOpen: boolean;
-  minSelections: number;
-  maxSelections: number;
-  options: HallOfFameFilterOption[];
-}
+import { Dispatch, SetStateAction } from "react";
+import { HallOfFameFilter } from "@/components/hall-of-fame/general/types";
 
 export interface HallOfFameFilterOption {
   label: string;
@@ -26,7 +19,7 @@ export type HallOfFameAction =
     }
   | { type: "CLOSE_ALL_FILTERS" };
 
-export type HallOfFameContextType = {
+export interface HallOfFameContextInterface {
   data: HallOfFameResponseDTO;
   page: number;
   setPage: Dispatch<SetStateAction<number>>;
@@ -39,7 +32,7 @@ export type HallOfFameContextType = {
   isLoading: boolean;
   appliedFiltersState: HallOfFameFilter[];
   setAppliedFiltersState: Dispatch<SetStateAction<HallOfFameFilter[]>>;
-};
+}
 
 export type HallOfFameFilterID =
   | "sort"
