@@ -1,9 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
-import {
-  ChestData,
-  EquipmentContextType,
-  ItemData,
-} from "@/interfaces/equipment/EquipmentInterfaces";
+import { EquipmentContextType } from "@/components/providers/equipment/types";
+import { ChestData, ItemData } from "@/components/equipment/types";
 
 export const EquipmentContext = createContext<EquipmentContextType>({
   currentItemModalData: null,

@@ -1,10 +1,10 @@
 import "../../../styles/points-summary.css";
 import { API_STATIC_URL } from "@/services/api";
 import XPCard from "@/components/xp-card/XPCard";
-import { Item } from "@/interfaces/equipment/EquipmentInterfaces";
-import { EquipmentContext } from "@/components/providers/EquipmentContext";
+import { EquipmentContext } from "@/components/providers/equipment/EquipmentContext";
 import { useContext } from "react";
 import Modal from "@/components/modal/Modal";
+import { Item } from "@/components/equipment/types";
 
 export default function ItemModal() {
   const { currentItemModalData, setCurrentItemModalData } =

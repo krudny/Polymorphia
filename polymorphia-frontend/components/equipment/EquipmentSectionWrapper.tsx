@@ -1,7 +1,7 @@
 import { useScaleShow } from "@/animations/General";
 import { EquipmentSection } from "@/components/equipment/EquipmentSection";
-import { EquipmentSectionWrapperProps } from "@/interfaces/equipment/EquipmentInterfaces";
-import "../../styles/equipment.css";
+import "./index.css";
+import { EquipmentSectionWrapperProps } from "@/components/equipment/types";
 
 export default function EquipmentSectionWrapper({
   items,
@@ -12,7 +12,6 @@ export default function EquipmentSectionWrapper({
   return (
     <div ref={wrapperRef}>
       <EquipmentSection type="item" data={items} />
-
       <EquipmentSection type="chest" data={chests} />
     </div>
   );

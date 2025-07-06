@@ -1,15 +1,15 @@
+import { API_STATIC_URL } from "@/services/api";
+import "./index.css";
+import Image from "next/image";
+import ImageBadge from "@/components/general/ImageBadge";
+import { useContext } from "react";
+import { EquipmentContext } from "@/components/providers/equipment/EquipmentContext";
+import ButtonWithBorder from "../button/ButtonWithBorder";
 import {
   ChestData,
   EquipmentSectionProps,
   ItemData,
-} from "@/interfaces/equipment/EquipmentInterfaces";
-import { API_STATIC_URL } from "@/services/api";
-import "../../styles/equipment.css";
-import Image from "next/image";
-import ImageBadge from "@/components/general/ImageBadge";
-import { useContext } from "react";
-import { EquipmentContext } from "@/components/providers/EquipmentContext";
-import ButtonWithBorder from "../button/ButtonWithBorder";
+} from "@/components/equipment/types";
 
 export function EquipmentSection({ type, data }: EquipmentSectionProps) {
   const {
@@ -43,19 +43,19 @@ export function EquipmentSection({ type, data }: EquipmentSectionProps) {
                     src={`${API_STATIC_URL}/${itemData.imageUrl}`}
                     alt={itemData.title}
                     fill
-                    className="equipment-img"
+                    className="equipment-image"
                     priority
                     sizes="(min-width: 1024px) 25vw, 50vw"
                   />
                   {itemData.quantity > 0 ? (
                     <ImageBadge
                       text={itemData.quantity.toString()}
-                      className={"rounded-tl-2xl rounded-br-2xl text-3xl w-10"}
+                      className="equipment-image-badge"
                     />
                   ) : (
                     <div className="equipment-locked-item">
                       <span>
-                        <p className="opacity-80">lock</p>
+                        <p>lock</p>
                       </span>
                     </div>
                   )}
@@ -71,25 +71,25 @@ export function EquipmentSection({ type, data }: EquipmentSectionProps) {
                     src={`${API_STATIC_URL}/${chestData.imageUrl}`}
                     alt={chestData.title}
                     fill
-                    className="equipment-img"
+                    className="equipment-image"
                     priority
                     sizes="(min-width: 1024px) 25vw, 50vw"
                   />
                 </div>
                 {chestData.openedDate ? (
-                  <div className="equipment-chest-btn">
+                  <div className="equipment-chest-btn-wrapper">
                     <ButtonWithBorder
                       text={`Otwarta ${chestData.openedDate}`}
                       onClick={() => setCurrentChestModalData(chestData)}
-                      className="w-full !py-0 text-lg lg:text-2xl rounded-xl"
+                      className="equipment-chest-btn"
                     />
                   </div>
                 ) : (
-                  <div className="equipment-chest-btn">
+                  <div className="equipment-chest-btn-wrapper">
                     <ButtonWithBorder
                       text="Otwórz skrzynię"
                       onClick={() => setCurrentOpeningChestModalData(chestData)}
-                      className="w-full !py-0 text-lg lg:text-2xl rounded-xl"
+                      className="equipment-chest-btn"
                     />
                   </div>
                 )}

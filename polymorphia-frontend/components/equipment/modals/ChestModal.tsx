@@ -1,9 +1,9 @@
 import { API_STATIC_URL } from "@/services/api";
 import XPCard from "@/components/xp-card/XPCard";
-import { Item } from "@/interfaces/equipment/EquipmentInterfaces";
 import { useContext } from "react";
-import { EquipmentContext } from "@/components/providers/EquipmentContext";
+import { EquipmentContext } from "@/components/providers/equipment/EquipmentContext";
 import Modal from "@/components/modal/Modal";
+import { Item } from "@/components/equipment/types";
 
 export default function ChestModal() {
   const { currentChestModalData, setCurrentChestModalData } =

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { EquipmentContext } from "@/components/providers/EquipmentContext";
+import { EquipmentContext } from "@/components/providers/equipment/EquipmentContext";
 import Modal from "@/components/modal/Modal";
 import OpeningChestModalContent from "./OpeningChestModalContent";
 
