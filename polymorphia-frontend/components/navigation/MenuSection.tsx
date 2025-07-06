@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { NavigationContext } from "@/components/providers/NavigationContext";
-import { MenuSectionProps } from "@/interfaces/navigation/NavigationInterfaces";
+import { MenuSectionProps } from "@/components/navigation/types";
 import { animateSubMenuSection } from "@/animations/Navigation";
 import Link from "next/link";
 import "./index.css";

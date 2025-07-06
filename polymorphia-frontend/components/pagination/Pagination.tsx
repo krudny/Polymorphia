@@ -1,8 +1,8 @@
 "use client";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ReactPaginate from "react-paginate";
-import { PaginationProps } from "@/interfaces/general/PaginationInterfaces";
 import "./index.css";
+import { PaginationProps } from "@/components/pagination/types";
 
 export default function Pagination({
   totalPages,

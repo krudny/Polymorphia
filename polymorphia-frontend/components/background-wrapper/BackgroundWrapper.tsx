@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { BackgroundWrapperProps } from "@/interfaces/general/BackgroundWrapperInterface";
 import clsx from "clsx";
 import "./index.css";
+import { BackgroundWrapperProps } from "@/components/background-wrapper/types";
 
 export default function BackgroundWrapper({
   children,

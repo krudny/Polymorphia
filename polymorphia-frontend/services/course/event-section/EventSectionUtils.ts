@@ -1,6 +1,5 @@
 "use client";
 
-import { EventSectionCardProps } from "@/interfaces/xp-card/XPCardInterfaces";
 import {
   BonusInfo,
   EventSection,
@@ -8,8 +7,9 @@ import {
   GradableEventCoreResponse,
 } from "@/interfaces/course/event-section/EventSectionInterfaces";
 import { PointsSummaryElementProps } from "@/interfaces/course/event-section/PointsSummaryInterfaces";
-import { MenuOption } from "@/interfaces/navigation/NavigationInterfaces";
+import { MenuOption } from "@/components/navigation/types";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { EventSectionCardProps } from "@/components/xp-card/types";
 
 export function updateMenuItems(
   menuItems: MenuOption[],
