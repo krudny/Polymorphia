@@ -2,6 +2,7 @@ import {
   HallOfFameFilter,
   HallOfFameFilterID,
 } from "@/components/hall-of-fame/general/types";
+import gsap from "gsap";
 
 export function animateFiltersModal(
   filters: HallOfFameFilter[],
