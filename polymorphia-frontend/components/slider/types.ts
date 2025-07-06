@@ -1,3 +1,9 @@
+import { UseQueryResult } from "@tanstack/react-query";
+
+export type ItemQueryResult = UseQueryResult<ItemSlide[] | undefined, Error>;
+
+export type ChestQueryResult = UseQueryResult<ChestSlide[] | undefined, Error>;
+
 export type SliderSlide = EvolutionStageSlide | ItemSlide | ChestSlide;
 
 export interface EvolutionStageSlide {

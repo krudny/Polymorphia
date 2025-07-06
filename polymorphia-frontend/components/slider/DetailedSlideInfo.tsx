@@ -3,16 +3,17 @@
 import { CircleX, SquareMousePointer } from "lucide-react";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
-import {
-  ChestQueryResult,
-  ItemQueryResult,
-} from "@/interfaces/slider/SliderDetailsInterfaces";
 import Loading from "@/components/general/Loading";
-import { ChestSlide, ItemSlide } from "@/interfaces/slider/SliderInterfaces";
 import Link from "next/link";
 import KnowledgeBaseService from "@/app/(logged-in)/knowledge-base/KnowledgeBaseService";
 import { API_STATIC_URL } from "@/services/api";
 import "./index.css";
+import {
+  ChestQueryResult,
+  ChestSlide,
+  ItemQueryResult,
+  ItemSlide,
+} from "@/components/slider/types";
 
 export default function DetailedSlideInfo({
   type,
