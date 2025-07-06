@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "../../../styles/globals.css";
 
+/* Section View */
+
 .section-view {
     @apply w-full p-4 flex flex-col mx-auto;
     @apply lg:h-[calc(100vh-var(--spacing)*15)] lg:justify-center;
