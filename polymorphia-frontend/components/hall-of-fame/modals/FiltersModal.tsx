@@ -20,6 +20,7 @@ export default function FiltersModal() {
     filtersDispatch,
     isModalOpen,
     setIsModalOpen,
+    setPage,
   } = useContext(HallOfFameContext);
 
   const handleSelect = (
@@ -152,6 +153,7 @@ export default function FiltersModal() {
               ) {
                 filtersDispatch({ type: "CLOSE_ALL_FILTERS" });
                 setIsModalOpen(false);
+                setPage(0);
               }
             }}
           />
