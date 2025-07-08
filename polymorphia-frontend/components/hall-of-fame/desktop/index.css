@@ -6,13 +6,13 @@
 /* Hall of fame desktop */
 
 .hall-of-fame-desktop {
-    @apply w-full h-full mx-auto flex flex-col opacity-0 overflow-x-hidden;
-    @apply lg:px-8 lg:mt-4 lg:max-w-[1600px];
-    @apply 2xl:px-10 2xl:h-[calc(100dvh-5rem)] 2xl:max-h-[54rem] 3xl:min-h-[54rem] 3xl:max-h-[54rem];
+    @apply w-full h-full mx-auto flex flex-col flex-1 opacity-0 overflow-x-hidden;
+    @apply lg:px-8 lg:mt-4 lg:max-w-[1250px];
+    @apply 2xl:max-w-[1600px] 2xl:px-10 2xl:h-[calc(100dvh-5rem)] 2xl:max-h-[54rem] 3xl:min-h-[54rem] 3xl:max-h-[54rem];
 }
 
 .hall-of-fame-desktop-wrapper {
-    @apply flex flex-col h-full min-h-0 px-4 2xl:flex-row;
+    @apply flex flex-col flex-1 h-full min-h-0 px-4 2xl:flex-row;
 }
 
 .hall-of-fame-desktop-podium-wrapper {
@@ -33,11 +33,11 @@
 }
 
 .hall-of-fame-desktop-content-wrapper {
-    @apply w-full flex-col-centered 2xl:w-[70%] 2xl:min-h-full;
+    @apply w-full flex-col-centered flex-1 2xl:w-[70%] min-h-full;
 }
 
 .hall-of-fame-desktop-rank-wrapper {
-    @apply hall-of-fame-rank-wrapper flex flex-col flex-1 gap-y-2 2xl:gap-y-4 pr-2;
+    @apply hall-of-fame-rank-wrapper flex flex-col flex-1 gap-y-2 2xl:gap-y-4 2xl:pr-4;
 }
 
 /* Hall of fame card desktop */
@@ -48,7 +48,7 @@
 }
 
 .hall-of-fame-desktop-record-user-data-wrapper {
-    @apply flex h-full truncate w-3/5 2xl:w-fit;
+    @apply flex h-full truncate w-2/5 2xl:w-fit;
 }
 
 .hall-of-fame-desktop-record-user-points-wrapper {
