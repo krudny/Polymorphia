@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { EquipmentContext } from "@/components/providers/equipment/EquipmentContext";
 import Modal from "@/components/modal/Modal";
 import { Item } from "@/components/equipment/types";
+import "../index.css";
 
 export default function ChestModal() {
   const { currentChestModalData, setCurrentChestModalData } =

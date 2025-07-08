@@ -60,3 +60,9 @@
 .opening-chest-modal-button-wrapper {
     @apply w-full mt-5;
 }
+
+/* Chest modal */
+
+.bonus-info-modal {
+    @apply flex flex-col gap-2;
+}
