@@ -6,10 +6,9 @@ export const hallOfFameConfirmAction = (
   filters: HallOfFameFilter[],
   setAppliedFiltersState: React.Dispatch<
     React.SetStateAction<HallOfFameFilter[]>
-  >
+  >,
+  queryClient: QueryClient
 ): boolean => {
-  const queryClient = new QueryClient();
-
   const invalidFilterCount = filters.find((filter) => {
     const selectedCount = filter.options.filter((opt) => opt.isSelected).length;
     return (
