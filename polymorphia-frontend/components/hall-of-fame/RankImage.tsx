@@ -13,7 +13,7 @@ export default function RankImage({
   return (
     <div className="hall-of-fame-image-wrapper">
       <Image
-        src={`${API_STATIC_URL}${imageUrl}`}
+        src={`${API_STATIC_URL}/${imageUrl}`}
         alt="User profile"
         fill
         className="hall-of-fame-image"

@@ -1,10 +1,10 @@
 import { EventSectionShortResponseDto } from "@/interfaces/course/event-section/EventSectionInterfaces";
 import toast from "react-hot-toast";
-import { QueryClient } from "@tanstack/query-core";
 import {
   HallOfFameFilter,
   HallOfFameFilterOption,
 } from "@/interfaces/hall-of-fame/HallOfFameLogicInterfaces";
+import { QueryClient } from "@tanstack/query-core";
 
 export const addEventSectionsToFilters = (
   eventSections: EventSectionShortResponseDto[],
@@ -67,10 +67,9 @@ export const hallOfFameConfirmAction = (
   filters: HallOfFameFilter[],
   setAppliedFiltersState: React.Dispatch<
     React.SetStateAction<HallOfFameFilter[]>
-  >
+  >,
+  queryClient: QueryClient
 ): boolean => {
-  const queryClient = new QueryClient();
-
   const invalidFilterCount = filters.find((filter) => {
     const selectedCount = filter.options.filter((opt) => opt.isSelected).length;
     return (

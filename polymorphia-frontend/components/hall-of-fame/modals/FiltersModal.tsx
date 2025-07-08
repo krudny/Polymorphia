@@ -9,8 +9,10 @@ import {
   HallOfFameFilterOption,
 } from "@/interfaces/hall-of-fame/HallOfFameLogicInterfaces";
 import gsap from "gsap";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function FiltersModal() {
+  const queryClient = useQueryClient();
   const {
     filtersState,
     setAppliedFiltersState,
@@ -86,7 +88,7 @@ export default function FiltersModal() {
                   className="flex items-center gap-x-1 cursor-pointer hover:opacity-70 transition-opacity"
                   onClick={() =>
                     filtersDispatch({
-                      type: "TOGGLE_CATEGORY",
+                      type: "OPEN_FILTER",
                       payload: { id: filter.id },
                     })
                   }
@@ -141,7 +143,11 @@ export default function FiltersModal() {
             size="sm"
             onClick={() => {
               if (
-                hallOfFameConfirmAction(filtersState, setAppliedFiltersState)
+                hallOfFameConfirmAction(
+                  filtersState,
+                  setAppliedFiltersState,
+                  queryClient
+                )
               ) {
                 filtersDispatch({ type: "CLOSE_ALL_FILTERS" });
                 setIsModalOpen(false);

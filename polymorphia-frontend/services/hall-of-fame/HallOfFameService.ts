@@ -46,7 +46,7 @@ const generateAllData = () => {
         studentName: studentName,
         animalName: studentName,
         evolutionStage: "Majestatyczna Bestia",
-        imageUrl: `/images/evolution-stages/${stage}.jpg`,
+        imageUrl: `images/evolution-stages/${stage}.jpg`,
         position: i + 1,
         group: groups[i % groups.length],
       },
