@@ -24,9 +24,7 @@ export default function FiltersModal() {
     option: HallOfFameFilterOption
   ) => {
     filtersDispatch({
-      type: option.isSelected
-        ? "REMOVE_CATEGORY_SELECTION"
-        : "ADD_CATEGORY_SELECTION",
+      type: option.isSelected ? "REMOVE_FROM_FILTER" : "ADD_TO_FILTER",
       payload: { id: filterId, value: option.value },
     });
   };
@@ -74,7 +72,7 @@ export default function FiltersModal() {
       isDataPresented={isModalOpen}
       title="Filtry"
       onClosed={() => {
-        filtersDispatch({ type: "CLOSE_ALL_CATEGORIES" });
+        filtersDispatch({ type: "CLOSE_ALL_FILTERS" });
         setIsModalOpen(false);
       }}
     >
@@ -145,7 +143,7 @@ export default function FiltersModal() {
               if (
                 hallOfFameConfirmAction(filtersState, setAppliedFiltersState)
               ) {
-                filtersDispatch({ type: "CLOSE_ALL_CATEGORIES" });
+                filtersDispatch({ type: "CLOSE_ALL_FILTERS" });
                 setIsModalOpen(false);
               }
             }}

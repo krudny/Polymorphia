@@ -8,22 +8,7 @@ export function HallOfFameReducer(
   action: HallOfFameAction
 ) {
   switch (action.type) {
-    case "TOGGLE_SORT_ORDER":
-      return filters.map((filter) => {
-        if (filter.id !== action.payload.id) return filter;
-
-        const updatedOptions = filter.options.map((option) => ({
-          ...option,
-          isSelected: !option.isSelected,
-        }));
-
-        return {
-          ...filter,
-          options: updatedOptions,
-        };
-      });
-
-    case "TOGGLE_CATEGORY":
+    case "OPEN_FILTER":
       return filters.map((filter) => {
         return {
           ...filter,
@@ -31,13 +16,13 @@ export function HallOfFameReducer(
         };
       });
 
-    case "CLOSE_ALL_CATEGORIES":
+    case "CLOSE_ALL_FILTERS":
       return filters.map((filter) => ({
         ...filter,
         isOpen: false,
       }));
 
-    case "ADD_CATEGORY_SELECTION":
+    case "ADD_TO_FILTER":
       return filters.map((filter) => {
         if (filter.id !== action.payload.id) return filter;
 
@@ -70,7 +55,7 @@ export function HallOfFameReducer(
         };
       });
 
-    case "REMOVE_CATEGORY_SELECTION":
+    case "REMOVE_FROM_FILTER":
       return filters.map((filter) => {
         if (filter.id !== action.payload.id) return filter;
 

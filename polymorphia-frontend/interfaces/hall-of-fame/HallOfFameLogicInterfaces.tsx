@@ -18,14 +18,13 @@ export interface HallOfFameFilterOption {
 }
 
 export type HallOfFameAction =
-  | { type: "TOGGLE_SORT_ORDER"; payload: { id: string } }
-  | { type: "ADD_CATEGORY_SELECTION"; payload: { id: string; value: string } }
+  | { type: "OPEN_FILTER"; payload: { id: string } }
+  | { type: "ADD_TO_FILTER"; payload: { id: string; value: string } }
   | {
-      type: "REMOVE_CATEGORY_SELECTION";
+      type: "REMOVE_FROM_FILTER";
       payload: { id: string; value: string };
     }
-  | { type: "TOGGLE_CATEGORY"; payload: { id: string } }
-  | { type: "CLOSE_ALL_CATEGORIES" };
+  | { type: "CLOSE_ALL_FILTERS" };
 
 export type HallOfFameContextType = {
   data: HallOfFameResponseDTO;

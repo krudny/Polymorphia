@@ -83,7 +83,7 @@ export interface HallOfFameRecordDTO {
 }
 
 export interface UserDetailsDTO {
-  studentName: string;
+  studentName?: string;
   animalName: string;
   evolutionStage: string;
   group: string;
