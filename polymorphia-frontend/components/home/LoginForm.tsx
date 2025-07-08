@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useForm } from "@tanstack/react-form";
-import { useMutation } from "@tanstack/react-query";
+import {useMutation, useQuery} from "@tanstack/react-query";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import NavigationArrow from "@/components/slider/NavigationArrow";
 import LoginFormProps from "@/interfaces/home/LoginFormInterface";
@@ -16,6 +16,10 @@ import toast from "react-hot-toast";
 
 export default function LoginForm({ onBackAction }: LoginFormProps) {
   const router = useRouter();
+  const { data: csrfToken, isLoading: csrfLoading, isError: csrfError } = useQuery({
+    queryKey: ["csrfToken"],
+    queryFn: AuthService.fetchCsrfToken
+  });
 
   const form = useForm({
     defaultValues: {
@@ -26,12 +30,23 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
       onBlur: loginSchema
     },
     onSubmit: async ({ value }) => {
-      loginMutation.mutate(value);
+      if (csrfLoading) {
+        toast.error("Wystąpił błąd, spróbój ponownie.");
+        return;
+      }
+      if (csrfError || !csrfToken) {
+        toast.error('Nie udało się pobrać tokena CSRF.');
+        return;
+      }
+      console.log(csrfToken);
+      loginMutation.mutate({...value, csrfToken});
     },
   });
 
   const loginMutation = useMutation({
-    mutationFn: AuthService.login,
+    mutationFn: ({ email, password, csrfToken }: LoginDto & { csrfToken: string }) => {
+      return AuthService.login({ email, password }, csrfToken);
+    },
     onSuccess: () => {
       toast.success('Zalogowano pomyślnie!')
       router.push('/profile');

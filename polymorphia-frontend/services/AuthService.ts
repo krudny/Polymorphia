@@ -1,24 +1,31 @@
 
 import {LoginDto} from "@/interfaces/api/DTO";
 import {API_HOST} from "@/services/api";
-import Cookies from "js-cookie";
 
 const AuthService = {
-  login: async ({email, password}: LoginDto) => {
-    const params = new URLSearchParams();
-    await AuthService.getCsrfToken();
-    const csrfToken = Cookies.get("XSRF-TOKEN");
-    if (!csrfToken) {
-      throw new Error("Brak tokena CSRF");
+  fetchCsrfToken: async (): Promise<string> => {
+    const response = await fetch(`${API_HOST}/users/csrf-token`, {
+      credentials: "include",
+    });
+    if (!response.ok) {
+      throw new Error("Nie udało się pobrać tokena CSRF.");
     }
+    const data = await response.json();
+    console.log(data.token);
+    return data.token;
+  },
+
+  login: async ({email, password}: LoginDto, csrfToken: string) => {
+    console.log("tok: " + csrfToken);
+    const params = new URLSearchParams();
     params.append("username", email);
     params.append("password", password);
 
     const response = await fetch(`${API_HOST}/login`, {
       method: "POST",
-      headers: new Headers({
+    headers: new Headers({
         "Content-Type": "application/x-www-form-urlencoded",
-        "X-XSRF-TOKEN": csrfToken,
+        "X-CSRF-TOKEN": csrfToken,
       }),
       body: params.toString(),
       credentials: "include",
@@ -27,11 +34,6 @@ const AuthService = {
     if (!response.ok) throw new Error("Failed to login");
   },
 
-  getCsrfToken: async () => {
-    await fetch(`${API_HOST}/users/csrf-token`, {
-      credentials: "include",
-    });
-  }
 };
 
 export default AuthService;
