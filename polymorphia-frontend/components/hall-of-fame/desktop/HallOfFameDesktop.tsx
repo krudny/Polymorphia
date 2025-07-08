@@ -1,16 +1,16 @@
 import { useScaleShow } from "@/animations/General";
-import HallOfFameCardDesktop from "@/components/hall-of-fame/desktop/HallOfFameCardDesktop";
 import Pagination from "@/components/pagination/Pagination";
 import "./index.css";
 import "../general/index.css";
 import { useContext } from "react";
 import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
-import { HallOfFameRecordDTO } from "@/interfaces/api/DTO";
-import Loading from "@/components/loading/Loading";
 import { handlePageChange } from "@/components/providers/hall-of-fame/utils/handlePageChange";
 import HallOfFamePodium from "@/components/hall-of-fame/desktop/HallOfFamePodium";
 import HallOfFameSearch from "@/components/hall-of-fame/general/HallOfFameSearch";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import Loading from "@/components/loading/Loading";
+import { HallOfFameRecordDTO } from "@/interfaces/api/DTO";
+import HallOfFameCardDesktop from "@/components/hall-of-fame/desktop/HallOfFameCardDesktop";
 
 export default function HallOfFameDesktop() {
   const wrapperRef = useScaleShow();

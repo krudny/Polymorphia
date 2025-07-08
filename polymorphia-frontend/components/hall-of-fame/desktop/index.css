@@ -7,8 +7,8 @@
 
 .hall-of-fame-desktop {
     @apply w-full h-full mx-auto flex flex-col flex-1 opacity-0 overflow-x-hidden;
-    @apply lg:px-8 lg:mt-4 lg:max-w-[1250px];
-    @apply 2xl:max-w-[1600px] 2xl:px-10 2xl:h-[calc(100dvh-5rem)] 2xl:max-h-[54rem] 3xl:min-h-[54rem] 3xl:max-h-[54rem];
+    @apply lg:px-8 lg:max-w-[1250px];
+    @apply 2xl:py-4 2xl:max-w-[1600px] 2xl:px-10 2xl:h-[calc(100dvh-5rem)] 2xl:max-h-[54rem] 3xl:min-h-[54rem] 3xl:max-h-[54rem];
 }
 
 .hall-of-fame-desktop-wrapper {
@@ -63,5 +63,5 @@
 }
 
 .hall-of-fame-desktop-search-wrapper {
-    @apply hall-of-fame-search-wrapper h-14 mt-0;
+    @apply hall-of-fame-search-wrapper h-14 mt-0 2xl:pr-4;
 }

@@ -40,7 +40,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#262626" />
       </head>
       <body
-        className={`${leagueGothic.className} ${materialSymbols.variable} text-primary-dark dark:text-secondary-light`}
+        className={`${leagueGothic.className} ${materialSymbols.variable} text-primary-dark dark:text-secondary-light bg-red-400`}
       >
         <ThemeProvider
           attribute="class"
