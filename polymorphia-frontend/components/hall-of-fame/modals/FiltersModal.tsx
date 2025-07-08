@@ -7,7 +7,6 @@ import {
   HallOfFameFilterID,
   HallOfFameFilterOption,
 } from "@/components/hall-of-fame/general/types";
-import gsap from "gsap";
 import { useQueryClient } from "@tanstack/react-query";
 import "./index.css";
 import { hallOfFameConfirmAction } from "@/components/providers/hall-of-fame/utils/hallOfFameConfirmAction";
