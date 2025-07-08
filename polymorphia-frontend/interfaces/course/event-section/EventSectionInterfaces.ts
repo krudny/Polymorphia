@@ -7,6 +7,7 @@ export interface EventSectionShortResponseDto {
   name: string;
   eventSectionType: EventSectionType;
   hidden?: boolean;
+  priority: number;
 }
 
 export interface EventSectionResponseDto {

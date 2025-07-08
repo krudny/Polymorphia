@@ -6,7 +6,7 @@ import "../../../styles/profile.css";
 import ProgressBar from "@/components/progressbar/ProgressBar";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
-import RankUserPoints from "@/components/hall-of-fame/RankUserPoints";
+import UserPoints from "@/components/general/UserPoints";
 
 export default function Profile() {
   const wrapperRef = useScaleShow();
@@ -15,6 +15,13 @@ export default function Profile() {
   useEffect(() => {
     setTitle("Profil");
   }, [setTitle]);
+
+  const sampleXpDetails = {
+    Laboratoria: "54.32",
+    Kartkówki: "43.33",
+    Projekt: "18.33",
+    Bonusy: "12.98",
+  };
 
   return (
     <div ref={wrapperRef} className="profile">
@@ -35,13 +42,28 @@ export default function Profile() {
             <h2>Gerard Pocieszny</h2>
             <h3>Jesteś 36 na 139 zwierzaków!</h3>
             <div className="w-full md:hidden mt-4">
-              <RankUserPoints separators titleSize="sm" xpSize="md" />
+              <UserPoints
+                separators
+                titleSize="sm"
+                xpSize="md"
+                xpDetails={sampleXpDetails}
+              />
             </div>
             <div className="hidden md:block 2xl:hidden w-4/5 max-w-xl mt-6">
-              <RankUserPoints separators titleSize="sm" xpSize="md" />
+              <UserPoints
+                separators
+                titleSize="sm"
+                xpSize="md"
+                xpDetails={sampleXpDetails}
+              />
             </div>
             <div className="hidden 2xl:block w-4/5 mt-10">
-              <RankUserPoints separators titleSize="md" xpSize="lg" />
+              <UserPoints
+                separators
+                titleSize="md"
+                xpSize="lg"
+                xpDetails={sampleXpDetails}
+              />
             </div>
           </div>
         </div>

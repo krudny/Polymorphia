@@ -3,11 +3,17 @@ import Image from "next/image";
 import "../../styles/hall-of-fame.css";
 import ImageBadge from "@/components/general/ImageBadge";
 
-export default function RankImage({ position }: { position: number }) {
+export default function RankImage({
+  position,
+  imageUrl,
+}: {
+  position: number;
+  imageUrl: string;
+}) {
   return (
     <div className="hall-of-fame-image-wrapper">
       <Image
-        src={`${API_STATIC_URL}/images/evolution-stages/4.jpg`}
+        src={`${API_STATIC_URL}/${imageUrl}`}
         alt="User profile"
         fill
         className="hall-of-fame-image"

@@ -21,4 +21,7 @@ public class EventSectionShortResponseDto {
 
     @NotNull
     private EventSectionType eventSectionType;
+
+    @NotNull
+    private Long priority;
 }

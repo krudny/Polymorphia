@@ -20,9 +20,13 @@ export const EventSectionService = {
       { credentials: "include" }
     );
 
-    if (!response.ok) throw new Error("Failed to fetch event sections!");
+    if (!response.ok) {
+      throw new Error("Failed to fetch event sections!");
+    }
 
-    return response.json();
+    const data: EventSectionShortResponseDto[] = await response.json();
+
+    return data.sort((a, b) => (a.priority ?? 0) - (b.priority ?? 0));
   },
 
   getEventSection: async ({

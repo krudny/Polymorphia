@@ -35,6 +35,9 @@ public abstract class EventSection {
     @JoinColumn(name = "course_id")
     private Course course;
 
+    @NotNull
+    private Long priority;
+
     public abstract Set<GradableEvent<?>> getGradableEvents();
 
     public abstract EventSectionType getEventSectionType();

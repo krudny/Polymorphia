@@ -1,13 +1,21 @@
 import { useScaleShow } from "@/animations/General";
 import RankPodium from "@/components/hall-of-fame/RankPodium";
 import RankSearch from "@/components/hall-of-fame/RankSearch";
-import RankSort from "@/components/hall-of-fame/RankSort";
 import RankCardDesktop from "@/components/hall-of-fame/RankCardDesktop";
 import Pagination from "@/components/general/Pagination";
 import "../../styles/hall-of-fame.css";
+import { useContext } from "react";
+import { HallOfFameContext } from "@/components/providers/HallOfFameContext";
+import { HallOfFameRecordDTO } from "@/interfaces/api/DTO";
+import { handlePageChange } from "@/services/hall-of-fame/Helpers";
+import Loading from "@/components/general/Loading";
+import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 
 export default function RankDesktop() {
   const wrapperRef = useScaleShow();
+
+  const { data, setPage, isLoading, setIsModalOpen } =
+    useContext(HallOfFameContext);
 
   return (
     <div ref={wrapperRef} className="hall-of-fame-desktop">
@@ -17,29 +25,43 @@ export default function RankDesktop() {
             <h2>Podium</h2>
           </div>
           <div className="hall-of-fame-desktop-podium">
-            {([1, 2, 3] as const).map((position) => (
-              <RankPodium key={position} position={position} />
-            ))}
+            <RankPodium />
           </div>
         </div>
         <div className="hall-of-fame-desktop-content-wrapper">
           <div className="hall-of-fame-desktop-search-wrapper">
             <RankSearch />
-            <RankSort />
+            <ButtonWithBorder
+              text="Filtry"
+              className="!mx-0 !py-0 !border-0 !border-b-2"
+              onClick={() => setIsModalOpen(true)}
+            />
           </div>
           <div className="hall-of-fame-desktop-rank-wrapper">
-            {Array.from({ length: 10 - 4 + 1 }, (_, i) => (
-              <RankCardDesktop key={i} position={i + 3} />
-            ))}
+            {isLoading ? (
+              <div className="relative w-full h-full flex-centered ">
+                <Loading />
+              </div>
+            ) : (
+              data.content.map((record: HallOfFameRecordDTO) => (
+                <RankCardDesktop
+                  key={`rank-${record.userDetails.position}`}
+                  userDetails={record.userDetails}
+                  xpDetails={record.xpDetails}
+                />
+              ))
+            )}
           </div>
         </div>
       </div>
       <div className="hall-of-fame-pagination-wrapper justify-end">
-        <Pagination
-          totalPages={250 / 20}
-          onPageChangeAction={() => {}}
-          forcePage={0}
-        />
+        {!isLoading && data.page.totalPages > 0 && (
+          <Pagination
+            totalPages={data.page.totalPages}
+            forcePage={data.page.pageNumber}
+            onPageChangeAction={handlePageChange(setPage)}
+          />
+        )}
       </div>
     </div>
   );

@@ -61,6 +61,7 @@ public class CourseService {
                         .name(eventSection.getName())
                         .id(eventSection.getId())
                         .eventSectionType(eventSection.getEventSectionType())
+                        .priority(eventSection.getPriority())
                         .build()
                 )
                 .collect(Collectors.toList());
