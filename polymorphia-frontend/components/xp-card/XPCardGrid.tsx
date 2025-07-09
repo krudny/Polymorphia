@@ -102,7 +102,6 @@ export default function XPCardGrid({
     eventSection
   );
 
-  // TODO: use pagination component
   const pagination = (
     <Pagination
       pageCount={gradableEventsData.page.totalPages}
