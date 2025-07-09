@@ -1,9 +1,9 @@
-import { PointsSummaryProps } from "@/interfaces/course/event-section/PointsSummaryInterfaces";
+import { PointsSummaryProps } from "@/components/course/event-section/points-summary/types";
 import PointsSummaryElement from "./PointsSummaryElement";
 import { Fragment, useState } from "react";
 import BonusInfoModal from "./BonusInfoModal";
-import { BonusInfo } from "@/interfaces/course/event-section/EventSectionInterfaces";
-import { getBonusesFromEventSection } from "@/services/course/event-section/EventSectionUtils";
+import { BonusInfo } from "@/components/course/event-section/types";
+import { getBonusesFromEventSection } from "@/components/course/event-section/EventSectionUtils";
 import "./index.css";
 
 export default function PointsSummary({

@@ -2,7 +2,7 @@ import XPCard from "./XPCard";
 import "../pagination/index.css";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/services/course/event-section/EventSectionService";
+import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import Loading from "@/components/loading/Loading";
 import { useEffect, useRef, useState } from "react";
 import ReactPaginate from "react-paginate";
@@ -13,7 +13,7 @@ import PointsSummary from "../course/event-section/points-summary/PointsSummary"
 import {
   mapPropsToCards,
   setResizeObserver,
-} from "@/services/course/event-section/EventSectionUtils";
+} from "@/components/course/event-section/EventSectionUtils";
 import { useEventSectionAnimation } from "@/animations/EventSection";
 import "./index.css";
 import { EventSectionCardGridProps } from "@/components/xp-card/types";
