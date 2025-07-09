@@ -28,7 +28,7 @@
 }
 
 .equipment-chest-btn {
-    @apply w-full py-0 text-lg lg:text-2xl rounded-xl;
+    @apply w-full py-0 text-base md:text-lg lg:text-2xl rounded-xl;
 }
 
 .equipment-locked-item {

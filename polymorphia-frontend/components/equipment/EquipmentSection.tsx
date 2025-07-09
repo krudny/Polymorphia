@@ -19,7 +19,7 @@ export function EquipmentSection({ type, data }: EquipmentSectionProps) {
   } = useContext(EquipmentContext);
 
   return (
-    <section className="my-7">
+    <section className="mb-5">
       <h1 className="equipment-header">
         {type === "item" ? "Przedmioty" : "Skrzynki"}
       </h1>
