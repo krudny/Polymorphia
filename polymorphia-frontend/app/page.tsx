@@ -1,16 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import BackgroundWrapper from "@/components/general/BackgroundWrapper";
+import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import LoginForm from "@/components/home/LoginForm";
 import { useEffect, useRef, useState } from "react";
-import "../styles/home.css";
 import {
   animateInitialMount,
   animateLoginFormVisibility,
 } from "@/animations/Home";
 import { API_STATIC_URL } from "@/services/api";
+import "./index.css";
 
 export default function Home() {
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);

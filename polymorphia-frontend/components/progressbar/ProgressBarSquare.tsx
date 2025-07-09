@@ -1,13 +1,11 @@
 import { SquareFillCalc } from "@/components/progressbar/ProgressBarUtil";
-import "../../styles/progressbar.css";
+import "./index.css";
+import { ProgressBarSquareProps } from "@/components/progressbar/types";
 
 export default function ProgressBarSquare({
   squareFill,
   position,
-}: {
-  squareFill: number;
-  position: number;
-}) {
+}: ProgressBarSquareProps) {
   return (
     <>
       <div className="progressbar-square" style={{ left: `${position}%` }}>

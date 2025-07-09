@@ -1,11 +1,8 @@
 import React from "react";
-import {
-  ButtonWithBorderProps,
-  VariantProps,
-} from "@/interfaces/button/ButtonInterfaces";
+import { ButtonWithBorderProps, VariantProps } from "@/components/button/types";
 import clsx from "clsx";
 import { tv } from "tailwind-variants";
-import "../../styles/general.css";
+import "./index.css";
 
 const buttonWithBorder = tv({
   base: "button-with-border",

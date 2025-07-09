@@ -1,5 +1,5 @@
 "use client";
-import { ModalState } from "@/interfaces/modal/ModalInterfaces";
+import { ModalState } from "@/components/modal/types";
 import gsap from "gsap";
 import { useRef, useEffect, useState, useLayoutEffect, RefObject } from "react";
 

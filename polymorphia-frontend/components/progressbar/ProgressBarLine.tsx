@@ -1,5 +1,5 @@
-import { ProgressBarLineProps } from "@/interfaces/progressbar/ProgressBarInterfaces";
-import "../../styles/progressbar.css";
+import "./index.css";
+import { ProgressBarLineProps } from "@/components/progressbar/types";
 
 export default function ProgressBarLine({
   width,

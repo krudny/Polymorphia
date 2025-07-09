@@ -1,5 +1,5 @@
 import { MenuIcon } from "lucide-react";
-import { NavigationContext } from "@/components/providers/NavigationContext";
+import { NavigationContext } from "@/components/providers/navigation/NavigationContext";
 import { useContext, useEffect, useRef } from "react";
 import {
   BottomMenuItems,
@@ -8,7 +8,7 @@ import {
 import MenuSection from "@/components/navigation/MenuSection";
 import Line from "@/components/navigation/Line";
 import { animateNavbar } from "@/animations/Navigation";
-import "../../styles/navigation.css";
+import "./index.css";
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/services/course/event-section/EventSectionService";
 import { updateMenuItems } from "@/services/course/event-section/EventSectionUtils";

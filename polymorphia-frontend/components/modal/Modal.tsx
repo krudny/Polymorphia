@@ -3,11 +3,11 @@
 import clsx from "clsx";
 import { X } from "lucide-react";
 import { createPortal } from "react-dom";
-import "../../styles/modal.css";
+import "./index.css";
 import { useAnimatedModalState } from "@/animations/Modal";
 import { useEffect, useRef, useState } from "react";
-import { ModalProvider } from "../providers/ModalContext";
-import { ModalProps } from "@/interfaces/modal/ModalInterfaces";
+import { ModalProvider } from "../providers/modal/ModalContext";
+import { ModalProps } from "@/components/modal/types";
 import { useTheme } from "next-themes";
 
 export default function Modal(props: ModalProps) {

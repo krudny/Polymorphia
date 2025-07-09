@@ -2,7 +2,6 @@
 
 import SectionView from "@/components/course/event-section/SectionView";
 import { useParams } from "next/navigation";
-import "../../../../../styles/general.css";
 
 export default function EventSection() {
   const params = useParams();

@@ -1,14 +1,14 @@
 "use client";
 
-import { SingleSlideProps } from "@/interfaces/slider/SliderInterfaces";
 import Image from "next/image";
 import NavigationArrow from "@/components/slider/NavigationArrow";
 import DetailedSlideInfo from "@/components/slider/DetailedSlideInfo";
 import clsx from "clsx";
-import "../../styles/slider.css";
+import "./index.css";
 import { useEffect, useRef } from "react";
 import { animateSingleSlide } from "@/animations/Slider";
 import { API_STATIC_URL } from "@/services/api";
+import { SingleSlideProps } from "@/components/slider/types";
 
 export default function SingleSlide({
   slide,

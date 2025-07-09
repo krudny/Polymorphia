@@ -6,9 +6,9 @@ import {
   isProgressBarInputValid,
 } from "@/components/progressbar/ProgressBarUtil";
 import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLabels";
-import { ProgressBarProps } from "@/interfaces/progressbar/ProgressBarInterfaces";
 import toast from "react-hot-toast";
-import "../../styles/progressbar.css";
+import "./index.css";
+import { ProgressBarProps } from "@/components/progressbar/types";
 
 export default function ProgressBar(props: ProgressBarProps) {
   if (!isProgressBarInputValid(props)) {
@@ -26,6 +26,7 @@ export default function ProgressBar(props: ProgressBarProps) {
     bottomTextLabels,
     labelsSize,
   } = props;
+
   const scaledCurrentXP = ((currentXP - minXP) / (maxXP - minXP)) * 100;
   const fills = FillsCalc(0, 100, scaledCurrentXP, segmentSizes);
 

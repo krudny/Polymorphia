@@ -1,8 +1,8 @@
 "use client";
 import Slider from "@/components/slider/Slider";
 import { useQuery } from "@tanstack/react-query";
-import KnowledgeBaseService from "@/services/KnowledgeBaseService";
-import Loading from "@/components/general/Loading";
+import KnowledgeBaseService from "@/app/(logged-in)/knowledge-base/KnowledgeBaseService";
+import Loading from "@/components/loading/Loading";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
 

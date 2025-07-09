@@ -2,11 +2,11 @@
 import Image from "next/image";
 import { useScaleShow } from "@/animations/General";
 import { API_STATIC_URL } from "@/services/api";
-import "../../../styles/profile.css";
+import "./index.css";
 import ProgressBar from "@/components/progressbar/ProgressBar";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
-import UserPoints from "@/components/general/UserPoints";
+import UserPoints from "@/components/user-points/UserPoints";
 
 export default function Profile() {
   const wrapperRef = useScaleShow();
@@ -38,10 +38,12 @@ export default function Profile() {
             />
           </div>
           <div className="profile-content">
-            <h1>Kamil Rudny</h1>
-            <h2>Gerard Pocieszny</h2>
-            <h3>Jesteś 36 na 139 zwierzaków!</h3>
-            <div className="w-full md:hidden mt-4">
+            <div className="profile-content-text">
+              <h1>Kamil Rudny</h1>
+              <h2>Gerard Pocieszny</h2>
+              <h3>Jesteś 36 na 139 zwierzaków!</h3>
+            </div>
+            <div className="profile-user-points-xs">
               <UserPoints
                 separators
                 titleSize="sm"
@@ -49,7 +51,7 @@ export default function Profile() {
                 xpDetails={sampleXpDetails}
               />
             </div>
-            <div className="hidden md:block 2xl:hidden w-4/5 max-w-xl mt-6">
+            <div className="profile-user-points-md">
               <UserPoints
                 separators
                 titleSize="sm"
@@ -57,7 +59,7 @@ export default function Profile() {
                 xpDetails={sampleXpDetails}
               />
             </div>
-            <div className="hidden 2xl:block w-4/5 mt-10">
+            <div className="profile-user-points-2xl">
               <UserPoints
                 separators
                 titleSize="md"

@@ -1,11 +1,9 @@
-import { EventSectionCardGridProps } from "@/interfaces/xp-card/XPCardInterfaces";
 import XPCard from "./XPCard";
-import "../../styles/xp-card.css";
-import "../../styles/paginate.css";
+import "../pagination/index.css";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/services/course/event-section/EventSectionService";
-import Loading from "@/components/general/Loading";
+import Loading from "@/components/loading/Loading";
 import { useEffect, useRef, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -17,6 +15,8 @@ import {
   setResizeObserver,
 } from "@/services/course/event-section/EventSectionUtils";
 import { useEventSectionAnimation } from "@/animations/EventSection";
+import "./index.css";
+import { EventSectionCardGridProps } from "@/components/xp-card/types";
 
 export default function XPCardGrid({
   eventSection,
@@ -103,6 +103,7 @@ export default function XPCardGrid({
     eventSection
   );
 
+  // TODO: use pagination component
   const pagination = (
     <ReactPaginate
       pageCount={gradableEventsData.page.totalPages}

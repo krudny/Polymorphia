@@ -1,6 +1,6 @@
 import Navbar from "@/components/navigation/Navbar";
 import Sidebar from "@/components/navigation/Sidebar";
-import "../../styles/navigation.css";
+import "./index.css";
 
 export default function Navigation() {
   return (

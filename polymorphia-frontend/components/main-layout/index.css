@@ -1,0 +1,18 @@
+@import "tailwindcss";
+@import "../../styles/globals.css";
+
+.main-layout {
+    @apply w-full h-full flex flex-col min-h-[calc(100dvh)] relative overflow-x-hidden custom-scrollbar max-lg:mt-20;
+}
+
+.main-layout-title {
+    @apply w-full flex-centered h-15 shrink-0 hidden lg:flex;
+
+    h3 {
+        @apply text-4xl;
+    }
+}
+
+.main-layout-content-wrapper {
+    @apply w-full flex flex-col 3xl:max-h-[56rem] 3xl:max-w-[1750px] m-auto flex-1;
+}

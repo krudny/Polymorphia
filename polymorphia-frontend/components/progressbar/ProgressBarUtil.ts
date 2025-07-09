@@ -1,4 +1,4 @@
-import { ProgressBarProps } from "@/interfaces/progressbar/ProgressBarInterfaces";
+import { ProgressBarProps } from "@/components/progressbar/types";
 
 export function FillsCalc(
   minXP: number,

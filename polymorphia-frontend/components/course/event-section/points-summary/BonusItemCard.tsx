@@ -1,5 +1,5 @@
 import { API_STATIC_URL } from "@/services/api";
-import "../../../../styles/points-summary.css";
+import "./index.css";
 import { BonusItemCardProps } from "@/interfaces/course/event-section/PointsSummaryInterfaces";
 import XPCard from "../../../xp-card/XPCard";
 

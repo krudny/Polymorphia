@@ -1,11 +1,11 @@
-import {
-  EventSectionCardProps,
-  EventSectionCardVariantProps,
-} from "@/interfaces/xp-card/XPCardInterfaces";
-import "../../styles/xp-card.css";
 import clsx from "clsx";
 import { tv } from "tailwind-variants";
 import Image from "next/image";
+import "./index.css";
+import {
+  EventSectionCardProps,
+  EventSectionCardVariantProps,
+} from "@/components/xp-card/types";
 
 const xpCard = tv({
   base: "xp-card",

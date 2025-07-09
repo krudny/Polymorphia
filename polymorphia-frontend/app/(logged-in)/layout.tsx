@@ -2,10 +2,10 @@
 
 import { ReactNode } from "react";
 import Navigation from "@/components/navigation/Navigation";
-import { NavigationProvider } from "@/components/providers/NavigationContext";
+import { NavigationProvider } from "@/components/providers/navigation/NavigationContext";
 import Image from "next/image";
-import MainLayout from "@/components/general/MainLayout";
-import { UserProvider } from "@/components/providers/UserContext";
+import MainLayout from "@/components/main-layout/MainLayout";
+import { UserProvider } from "@/components/providers/user/UserContext";
 import { useTheme } from "next-themes";
 
 export default function Layout({ children }: { children: ReactNode }) {

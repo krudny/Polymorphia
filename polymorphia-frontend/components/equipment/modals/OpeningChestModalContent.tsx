@@ -1,9 +1,11 @@
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import { EquipmentContext } from "@/components/providers/EquipmentContext";
+import { EquipmentContext } from "@/components/providers/equipment/EquipmentContext";
 import { API_STATIC_URL } from "@/services/api";
 import { useContext } from "react";
 import Image from "next/image";
-import { useModal } from "@/components/providers/ModalContext";
+import { useModal } from "@/components/providers/modal/ModalContext";
+import { Item } from "@/components/equipment/types";
+import "../index.css";
 
 export default function OpeningChestModalContent() {
   const { closeModal } = useModal();
@@ -19,28 +21,30 @@ export default function OpeningChestModalContent() {
     if (openingChest.behavior === "ONE_OF_MANY") {
       setPickedItemsIds([itemId]);
     } else {
-      setPickedItemsIds((prev) =>
-        isPicked ? prev.filter((id) => id !== itemId) : [...prev, itemId]
+      setPickedItemsIds((prev: number[]) =>
+        isPicked
+          ? prev.filter((id: number) => id !== itemId)
+          : [...prev, itemId]
       );
     }
   };
 
   return (
     <>
-      <div className="w-80 grid grid-cols-2 gap-3">
-        {openingChest?.items.map((item) => (
+      <div className="opening-chest-modal">
+        {openingChest?.items.map((item: Item) => (
           <div
             key={item.itemId}
-            className="relative w-full aspect-square cursor-pointer"
+            className="opening-chest-modal-image-wrapper"
             onClick={() => handlePickItem(item.itemId)}
           >
             <Image
               src={`${API_STATIC_URL}/${item.imageUrl}`}
               alt={item.title}
               fill
-              className={`equipment-img ${
+              className={`equipment-image ${
                 pickedItemsIds.includes(item.itemId)
-                  ? "outline-4 outline-amber-400"
+                  ? "opening-chest-modal-image-selected"
                   : ""
               }`}
               priority
@@ -49,7 +53,7 @@ export default function OpeningChestModalContent() {
           </div>
         ))}
       </div>
-      <div className="w-full mt-5">
+      <div className="opening-chest-modal-button-wrapper">
         <ButtonWithBorder
           text="Potwierdź"
           className="w-full rounded-xl"

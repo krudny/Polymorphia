@@ -8,7 +8,7 @@ import {
   TrophyIcon,
   UserIcon,
 } from "lucide-react";
-import { MenuOption } from "@/interfaces/navigation/NavigationInterfaces";
+import { MenuOption } from "@/components/navigation/types";
 
 export const MainMenuItems: MenuOption[] = [
   { icon: UserIcon, text: "Profil", link: "profile" },

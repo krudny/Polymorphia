@@ -1,13 +1,12 @@
-import "../../../styles/general.css";
-import "../../../styles/event-section.css";
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
 import { SectionViewProps } from "@/interfaces/course/event-section/EventSectionInterfaces";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/services/course/event-section/EventSectionService";
-import Loading from "@/components/general/Loading";
+import Loading from "@/components/loading/Loading";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useScaleShow } from "@/animations/General";
+import "./index.css";
 
 export default function SectionView({
   eventSectionId,

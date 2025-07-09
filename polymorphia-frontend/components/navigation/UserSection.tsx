@@ -1,8 +1,8 @@
 import Image from "next/image";
-import "../../styles/navigation.css";
+import "./index.css";
 import { API_STATIC_URL } from "@/services/api";
 import { useContext } from "react";
-import { UserContext } from "@/components/providers/UserContext";
+import { UserContext } from "@/components/providers/user/UserContext";
 
 export default function UserSection() {
   const { animalName, evolutionStage, profileImage } = useContext(UserContext);

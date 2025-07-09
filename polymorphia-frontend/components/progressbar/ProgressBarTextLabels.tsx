@@ -1,7 +1,7 @@
-import { ProgressBarTextLabelsProps } from "@/interfaces/progressbar/ProgressBarInterfaces";
-import "../../styles/progressbar.css";
 import { tv } from "tailwind-variants";
 import clsx from "clsx";
+import { ProgressBarTextLabelsProps } from "@/components/progressbar/types";
+import "./index.css";
 
 const textLabelsStyles = tv({
   base: "",

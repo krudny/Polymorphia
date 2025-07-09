@@ -1,16 +1,16 @@
 "use client";
-import "../../../styles/equipment.css";
+import "./index.css";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
 import ItemModal from "@/components/equipment/modals/ItemModal";
 import ChestModal from "@/components/equipment/modals/ChestModal";
 
 import { useQuery } from "@tanstack/react-query";
-import Loading from "@/components/general/Loading";
-import EquipmentService from "@/services/EquipmentService";
+import Loading from "@/components/loading/Loading";
+import EquipmentService from "@/app/(logged-in)/equipment/EquipmentService";
 import EquipmentSectionWrapper from "@/components/equipment/EquipmentSectionWrapper";
 import OpeningChestModal from "@/components/equipment/modals/OpeningChestModal";
-import { EquipmentProvider } from "@/components/providers/EquipmentContext";
+import { EquipmentProvider } from "@/components/providers/equipment/EquipmentContext";
 
 export default function Equipment() {
   const { setTitle } = useTitle();

@@ -1,5 +1,5 @@
 import { PointsSummaryElementProps } from "@/interfaces/course/event-section/PointsSummaryInterfaces";
-import "../../../../styles/points-summary.css";
+import "./index.css";
 import clsx from "clsx";
 import { SquareMousePointer } from "lucide-react";
 
