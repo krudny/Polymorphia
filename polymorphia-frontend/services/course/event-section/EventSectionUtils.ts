@@ -5,8 +5,8 @@ import {
   EventSection,
   EventSectionShortResponseDto,
   GradableEventCoreResponse,
-} from "@/interfaces/course/event-section/EventSectionInterfaces";
-import { PointsSummaryElementProps } from "@/interfaces/course/event-section/PointsSummaryInterfaces";
+} from "@/components/course/event-section/types";
+import { PointsSummaryElementProps } from "@/components/course/event-section/points-summary/types";
 import { MenuOption } from "@/components/navigation/types";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { EventSectionCardProps } from "@/components/xp-card/types";
