@@ -1,4 +1,4 @@
-import { GradableEventCoreResponse } from "@/interfaces/course/event-section/EventSectionInterfaces";
+import { GradableEventCoreResponse } from "@/components/course/event-section/types";
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 

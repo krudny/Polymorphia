@@ -1,4 +1,4 @@
-import { EventSectionShortResponseDto } from "@/interfaces/course/event-section/EventSectionInterfaces";
+import { EventSectionShortResponseDto } from "@/components/course/event-section/types";
 import {
   HallOfFameFilter,
   HallOfFameFilterOption,
