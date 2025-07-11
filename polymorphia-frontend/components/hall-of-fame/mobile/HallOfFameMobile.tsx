@@ -48,9 +48,9 @@ export default function HallOfFameMobile() {
       <div className="hall-of-fame-pagination-wrapper">
         {!isLoading && data.page.totalPages > 0 && (
           <Pagination
-            totalPages={data.page.totalPages}
+            pageCount={data.page.totalPages}
             forcePage={data.page.pageNumber}
-            onPageChangeAction={handlePageChange(setPage)}
+            onPageChange={handlePageChange(setPage)}
           />
         )}
       </div>

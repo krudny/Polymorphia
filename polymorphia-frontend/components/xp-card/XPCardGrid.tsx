@@ -5,8 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import Loading from "@/components/loading/Loading";
 import { useEffect, useRef, useState } from "react";
-import ReactPaginate from "react-paginate";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import clsx from "clsx";
 import TestDetailsModal from "../course/event-section/TestDetailsModal";
 import PointsSummary from "../course/event-section/points-summary/PointsSummary";
@@ -17,6 +15,7 @@ import {
 import { useEventSectionAnimation } from "@/animations/EventSection";
 import "./index.css";
 import { EventSectionCardGridProps } from "@/components/xp-card/types";
+import Pagination from "../pagination/Pagination";
 
 export default function XPCardGrid({
   eventSection,
@@ -103,9 +102,8 @@ export default function XPCardGrid({
     eventSection
   );
 
-  // TODO: use pagination component
   const pagination = (
-    <ReactPaginate
+    <Pagination
       pageCount={gradableEventsData.page.totalPages}
       onPageChange={handlePageChange}
       forcePage={
@@ -113,11 +111,6 @@ export default function XPCardGrid({
       }
       pageRangeDisplayed={2}
       marginPagesDisplayed={1}
-      containerClassName="pagination-container"
-      pageClassName="pagination-page"
-      previousLabel={<ChevronLeft />}
-      nextLabel={<ChevronRight />}
-      breakLabel="..."
     />
   );
 

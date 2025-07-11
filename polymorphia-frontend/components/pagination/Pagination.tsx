@@ -1,26 +1,19 @@
 "use client";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import ReactPaginate from "react-paginate";
+import ReactPaginate, { ReactPaginateProps } from "react-paginate";
 import "./index.css";
-import { PaginationProps } from "@/components/pagination/types";
 
-export default function Pagination({
-  totalPages,
-  onPageChangeAction,
-  forcePage,
-}: PaginationProps) {
+export default function Pagination(props: ReactPaginateProps) {
   return (
     <ReactPaginate
-      pageCount={totalPages}
-      onPageChange={onPageChangeAction}
-      forcePage={forcePage}
-      pageRangeDisplayed={3}
-      marginPagesDisplayed={3}
-      containerClassName="pagination-container"
-      pageClassName="pagination-page"
-      previousLabel={<ChevronLeft />}
-      nextLabel={<ChevronRight />}
-      breakLabel="..."
+      {...props}
+      pageRangeDisplayed={props.pageRangeDisplayed ?? 3}
+      marginPagesDisplayed={props.marginPagesDisplayed ?? 3}
+      containerClassName={props.containerClassName ?? "pagination-container"}
+      pageClassName={props.pageClassName ?? "pagination-page"}
+      previousLabel={props.previousLabel ?? <ChevronLeft />}
+      nextLabel={props.nextLabel ?? <ChevronRight />}
+      breakLabel={props.breakLabel ?? "..."}
     />
   );
 }
