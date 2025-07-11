@@ -1,4 +1,4 @@
-import { BonusInfoModalProps } from "@/interfaces/course/event-section/PointsSummaryInterfaces";
+import { BonusInfoModalProps } from "@/components/course/event-section/points-summary/types";
 import BonusItemCard from "./BonusItemCard";
 import "./index.css";
 import Modal from "@/components/modal/Modal";

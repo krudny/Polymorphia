@@ -1,8 +1,8 @@
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
-import { SectionViewProps } from "@/interfaces/course/event-section/EventSectionInterfaces";
+import { SectionViewProps } from "@/components/course/event-section/types";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/services/course/event-section/EventSectionService";
+import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import Loading from "@/components/loading/Loading";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useScaleShow } from "@/animations/General";

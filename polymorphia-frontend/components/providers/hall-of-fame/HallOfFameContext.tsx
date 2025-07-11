@@ -10,7 +10,7 @@ import {
 } from "react";
 import { useDebounce } from "use-debounce";
 import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/services/course/event-section/EventSectionService";
+import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { filters } from "@/components/providers/hall-of-fame/filters/InitialFilters";
 import { HallOfFameReducer } from "@/components/providers/hall-of-fame/filters/HallOfFameReducer";
 import HallOfFameService from "@/app/(logged-in)/hall-of-fame/HallOfFameService";

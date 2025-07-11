@@ -1,5 +1,5 @@
 import ProgressBar from "@/components/progressbar/ProgressBar";
-import { RewardsInfoProps } from "@/interfaces/course/event-section/EventSectionInterfaces";
+import { RewardsInfoProps } from "@/components/course/event-section/types";
 import { API_STATIC_URL } from "@/services/api";
 import Image from "next/image";
 import "./index.css";
