@@ -14,7 +14,7 @@ export default function BonusItemCard({ item }: BonusItemCardProps) {
       }}
       size="xs"
       xp={`+${item.bonusXp} xp`}
-      isSumVisible={false}
+      isSumLabelVisible={false}
     />
   );
 }

@@ -66,7 +66,7 @@
     }
 
     .xp-card-middle {
-        @apply min-w-32 max-w-xl min-[400px]:min-w-44 p-2 gap-0;
+        @apply min-w-32 max-w-xl min-[400px]:min-w-48 px-4 py-2 gap-0;
     }
 
     .xp-card-xp {

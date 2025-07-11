@@ -13,6 +13,7 @@ import { ThemeProvider } from "next-themes";
 const leagueGothic = League_Gothic({
   subsets: ["latin"],
   display: "swap",
+  variable: "--font-league",
 });
 
 const materialSymbols = localFont({
@@ -40,7 +41,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#262626" />
       </head>
       <body
-        className={`${leagueGothic.className} ${materialSymbols.variable} text-primary-dark dark:text-secondary-light`}
+        className={`${leagueGothic.className} ${leagueGothic.variable} ${materialSymbols.variable} text-primary-dark dark:text-secondary-light`}
       >
         <ThemeProvider
           attribute="class"

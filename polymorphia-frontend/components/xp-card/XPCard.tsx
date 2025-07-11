@@ -45,7 +45,7 @@ export default function XPCard({
   size,
   color,
   forceWidth,
-  isSumVisible = true,
+  isSumLabelVisible = true,
 }: EventSectionCardProps & EventSectionCardVariantProps) {
   return (
     <div
@@ -64,10 +64,12 @@ export default function XPCard({
         <h1>{title}</h1>
         <h2>{subtitle}</h2>
       </div>
-      <div className="xp-card-xp">
-        <h1>{xp}</h1>
-        {isSumVisible && <h2>Suma</h2>}
-      </div>
+      {xp && (
+        <div className="xp-card-xp">
+          <h1>{xp}</h1>
+          {isSumLabelVisible && <h2>Suma</h2>}
+        </div>
+      )}
     </div>
   );
 }

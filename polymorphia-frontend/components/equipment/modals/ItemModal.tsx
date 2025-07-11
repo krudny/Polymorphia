@@ -30,7 +30,7 @@ export default function ItemModal() {
             }}
             size="xs"
             xp={`+${item.bonusXp} xp`}
-            isSumVisible={false}
+            isSumLabelVisible={false}
           />
         ))}
       </div>

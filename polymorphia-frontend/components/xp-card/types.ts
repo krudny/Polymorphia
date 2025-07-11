@@ -9,13 +9,13 @@ export interface EventSectionCardProps {
     alt: string;
   };
   onClick?: () => void;
+  isSumLabelVisible?: boolean;
 }
 
 export type EventSectionCardVariantProps = {
   size?: "xs" | "sm" | "md" | "lg" | "hofDesktop";
   color?: "gold" | "silver" | "bronze" | "green";
   forceWidth?: boolean;
-  isSumVisible?: boolean;
 };
 
 export interface EventSectionCardGridProps {
