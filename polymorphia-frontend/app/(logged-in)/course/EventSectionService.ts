@@ -8,7 +8,7 @@ import {
   GradableEventShortResponseDtoPage,
   Test,
   TestResponseDto,
-} from "@/interfaces/course/event-section/EventSectionInterfaces";
+} from "@/components/course/event-section/types";
 import { API_HOST } from "@/services/api";
 
 export const EventSectionService = {

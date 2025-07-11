@@ -1,12 +1,13 @@
 import {
   Test,
   TestDetailsModalProps,
-} from "@/interfaces/course/event-section/EventSectionInterfaces";
+} from "@/components/course/event-section/types";
 import RewardsInfo from "./RewardsInfo";
-import { EventSectionService } from "@/services/course/event-section/EventSectionService";
+import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "@/components/loading/Loading";
 import Modal from "@/components/modal/Modal";
+import "./index.css";
 
 export default function TestDetailsModal({
   eventSectionId,
@@ -33,9 +34,13 @@ export default function TestDetailsModal({
       title={test?.name ?? ""}
       onClosed={onClosed}
     >
-      {isError ?? <div>Wystąpił błąd przy ładowaniu szczegółów.</div>}
+      {isError ?? (
+        <div className="gradable-event-section text-xl 2xl:text-2xl">
+          Wystąpił błąd przy ładowaniu szczegółów.
+        </div>
+      )}
       {isLoading ?? (
-        <div className="h-50 mt-20">
+        <div className="gradable-event-section h-50">
           <Loading />
         </div>
       )}

@@ -1,6 +1,6 @@
 import { API_STATIC_URL } from "@/services/api";
 import "./index.css";
-import { BonusItemCardProps } from "@/interfaces/course/event-section/PointsSummaryInterfaces";
+import { BonusItemCardProps } from "@/components/course/event-section/points-summary/types";
 import XPCard from "../../../xp-card/XPCard";
 
 export default function BonusItemCard({ item }: BonusItemCardProps) {

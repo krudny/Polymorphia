@@ -10,8 +10,8 @@ import Line from "@/components/navigation/Line";
 import { animateNavbar } from "@/animations/Navigation";
 import "./index.css";
 import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/services/course/event-section/EventSectionService";
-import { updateMenuItems } from "@/services/course/event-section/EventSectionUtils";
+import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
+import { updateMenuItems } from "@/components/course/event-section/EventSectionUtils";
 import { useTitle } from "./TitleContext";
 
 export default function Navbar() {

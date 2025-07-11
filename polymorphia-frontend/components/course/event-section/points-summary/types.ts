@@ -1,9 +1,5 @@
-import { ModalProps } from "../../../components/modal/types";
-import {
-  BonusInfo,
-  BonusInfoItem,
-  EventSection,
-} from "./EventSectionInterfaces";
+import { ModalProps } from "../../../modal/types";
+import { BonusInfo, BonusInfoItem, EventSection } from "../types";
 
 export interface PointsSummaryProps {
   eventSection: EventSection;

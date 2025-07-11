@@ -1,4 +1,4 @@
-import { PointsSummaryElementProps } from "@/interfaces/course/event-section/PointsSummaryInterfaces";
+import { PointsSummaryElementProps } from "@/components/course/event-section/points-summary/types";
 import "./index.css";
 import clsx from "clsx";
 import { SquareMousePointer } from "lucide-react";
