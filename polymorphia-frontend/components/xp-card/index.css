@@ -54,7 +54,7 @@
 }
 
 .xp-card-xp {
-    @apply flex flex-col items-center justify-center shrink-0 h-full p-5 gap-2 bg-neutral-300 dark:bg-secondary-dark;
+    @apply flex flex-col items-center justify-center shrink-0 h-full p-5 gap-2 bg-secondary-gray dark:bg-secondary-dark;
 }
 
 .xp-card-xs {

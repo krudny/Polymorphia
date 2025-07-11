@@ -4,11 +4,11 @@ import { useEffect } from "react";
 import { useTitle } from "@/components/navigation/TitleContext";
 import Markdown from "react-markdown";
 import { sampleText } from "@/app/(logged-in)/test/sampleText";
-import SpeedDial from "@/app/(logged-in)/test/SpeedDial";
 import GroupModal from "@/app/(logged-in)/test/modals/GroupModal";
 import ProjectVariant from "@/app/(logged-in)/test/modals/ProjectVariant";
 import Rewards from "@/app/(logged-in)/test/modals/Rewards";
 import PullRequest from "@/app/(logged-in)/test/modals/PullRequest";
+import SpeedDial from "@/components/speed-dial";
 
 export default function Test() {
   const { setTitle } = useTitle();
