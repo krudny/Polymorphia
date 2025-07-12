@@ -1,5 +1,8 @@
 import Modal from "@/components/modal/Modal";
-import { sampleText2, sampleText3 } from "@/app/(logged-in)/test/sampleText";
+import {
+  sampleText2,
+  sampleText3,
+} from "@/components/course/project-section/sampleText";
 
 export default function ProjectVariant({
   isActive,

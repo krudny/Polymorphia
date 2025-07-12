@@ -2,6 +2,7 @@
 
 import SectionView from "@/components/course/event-section/SectionView";
 import { useParams } from "next/navigation";
+import ProjectView from "@/components/course/project-section";
 
 export default function EventSection() {
   const params = useParams();
@@ -19,7 +20,12 @@ export default function EventSection() {
       );
 
     case "project":
-      return <></>;
+      return (
+        <ProjectView
+          eventSectionId={eventSectionId}
+          eventSectionType={eventSectionType}
+        />
+      );
 
     default:
       return <div>Niepoprawna kategoria.</div>;

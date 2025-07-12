@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@import "../../../styles/globals.css";
+
+.event-section-pr-modal-input {
+    @apply text-primary-dark dark:text-secondary-light placeholder-primary-dark dark:placeholder-secondary-light focus:outline-none;
+}

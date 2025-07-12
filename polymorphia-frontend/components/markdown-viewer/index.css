@@ -1,0 +1,12 @@
+@import "tailwindcss";
+@import "../../styles/globals.css";
+
+/* Config */
+
+.markdown-config-code-inline {
+    @apply bg-[#c3c3c3] text-primary-dark px-2 rounded text-3xl;
+}
+
+.markdown-config-code-block {
+    @apply bg-primary-dark text-secondary-light text-sm p-4 rounded overflow-x-auto my-4;
+}
