@@ -10,7 +10,6 @@ import {
 } from "react";
 import { useDebounce } from "use-debounce";
 import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { filters } from "@/components/providers/hall-of-fame/filters/InitialFilters";
 import { HallOfFameReducer } from "@/components/providers/hall-of-fame/filters/HallOfFameReducer";
 import HallOfFameService from "@/app/(logged-in)/hall-of-fame/HallOfFameService";
@@ -21,6 +20,7 @@ import { addFieldToFilter } from "@/components/providers/hall-of-fame/utils/addF
 import { addEventSectionsToFilters } from "@/components/providers/hall-of-fame/utils/addEventSectionsToFilters";
 import { sortFilters } from "@/components/providers/hall-of-fame/utils/sortFilters";
 import { selectMinimumOptions } from "@/components/providers/hall-of-fame/utils/selectMinimumOptions";
+import { BetterEventSectionService } from "@/app/(logged-in)/course/[eventSectionType]/BetterEventSectionService";
 
 const emptyDataObject = {
   content: [],
@@ -63,7 +63,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
 
   const { data: eventSections } = useQuery({
     queryKey: ["eventSections"],
-    queryFn: () => EventSectionService.getEventSections(1),
+    queryFn: () => BetterEventSectionService.getEventSections(1),
   });
 
   const { data = emptyDataObject, isLoading } = useQuery({

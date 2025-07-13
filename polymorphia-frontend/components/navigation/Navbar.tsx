@@ -10,9 +10,9 @@ import Line from "@/components/navigation/Line";
 import { animateNavbar } from "@/animations/Navigation";
 import "./index.css";
 import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { updateMenuItems } from "@/components/course/event-section/EventSectionUtils";
 import { useTitle } from "./TitleContext";
+import { BetterEventSectionService } from "@/app/(logged-in)/course/[eventSectionType]/BetterEventSectionService";
 
 export default function Navbar() {
   const { isNavbarExpanded, setIsNavbarExpanded } =
@@ -39,7 +39,7 @@ export default function Navbar() {
   const { data: eventSections, isSuccess } = useQuery({
     queryKey: ["eventSections"],
     // TODO: use real courseId
-    queryFn: () => EventSectionService.getEventSections(1),
+    queryFn: () => BetterEventSectionService.getEventSections(1),
   });
 
   const menuItems = [...MainMenuItems];
