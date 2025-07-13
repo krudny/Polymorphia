@@ -6,7 +6,7 @@ import ProjectView from "@/components/course/project-section";
 
 export default function EventSection() {
   const params = useParams();
-  const eventSectionType = params.eventSectionType;
+  const eventSectionType = String(params.eventSectionType);
   const eventSectionId = Number(params.eventSectionId);
 
   switch (eventSectionType) {

@@ -17,6 +17,7 @@ export interface GradableEventResponseDTO {
   name: string;
   topic?: string;
   gainedXp: number;
+  order: number;
 }
 
 interface BonusItem {
@@ -53,8 +54,6 @@ interface MarkdownResponseDTO {
   markdown: string;
 }
 
-interface PointSummaryResponseDTO {}
-
 export const BetterEventSectionService = {
   getEventSections: async (
     courseId: number
@@ -77,141 +76,159 @@ export const BetterEventSectionService = {
         order: 5,
       },
     ];
-
-    data.sort((a, b) => a.order - b.order);
-    return data;
+    return data.sort((a, b) => a.order - b.order);
   },
   getGradableEvents: async (
     eventSectionId: number
   ): Promise<GradableEventResponseDTO[]> => {
     if (eventSectionId === 1) {
-      return [
+      const events = [
         {
           id: 1,
           name: "Test 1",
           topic: "Instrukcje sterujące",
           gainedXp: 1.5,
+          order: 1,
         },
         {
           id: 2,
           name: "Test 2",
           topic: "Model obiektowy",
           gainedXp: 2.0,
+          order: 2,
         },
         {
           id: 3,
           name: "Test 3",
           topic: "Interakcje między obiektami",
           gainedXp: 0.0,
+          order: 3,
         },
         {
           id: 4,
           name: "Test 4",
           topic: "Interfejsy i mapy",
           gainedXp: 0.0,
+          order: 4,
         },
         {
           id: 5,
           name: "Test 5",
           topic: "Dziedziczenie",
           gainedXp: 0.0,
+          order: 5,
         },
         {
           id: 6,
           name: "Test 6",
           topic: "Refactoring kodu",
           gainedXp: 0.0,
+          order: 6,
         },
         {
           id: 7,
           name: "Test 7",
           topic: "Wielowątkowość",
           gainedXp: 0.0,
+          order: 7,
         },
         {
           id: 8,
           name: "Test 8",
           topic: "Interfejs graficzny",
           gainedXp: 0.0,
+          order: 8,
         },
         {
           id: 9,
           name: "Test 9",
           topic: "Lambdy, streamy i zarządzanie zasobami",
           gainedXp: 0.0,
+          order: 9,
         },
         {
           id: 10,
           name: "Test 10",
           topic: "Kotlin jako alternatywa dla Javy",
           gainedXp: 0.0,
+          order: 10,
         },
         {
           id: 11,
           name: "Test 11",
           topic: "A może Rust?",
           gainedXp: 0.0,
+          order: 11,
         },
         {
           id: 12,
           name: "Test 12",
           topic: "Jak wycentrować diva",
           gainedXp: 0.0,
+          order: 12,
         },
       ];
+      return events.sort((a, b) => a.order - b.order);
     } else if (eventSectionId === 2) {
-      return [
+      const events = [
+        {
+          id: 15,
+          name: "Lab 1",
+          topic: "Instrukcje sterujące w Javie",
+          gainedXp: 2.0,
+          order: 1,
+        },
         {
           id: 16,
           name: "Lab 2",
           topic: "Model obiektowy",
           gainedXp: 0.0,
+          order: 2,
         },
         {
           id: 17,
           name: "Lab 3",
           topic: "Interakcje między obiektami",
           gainedXp: 0.0,
+          order: 3,
         },
         {
           id: 18,
           name: "Lab 4",
           topic: "Interfejsy i mapy",
           gainedXp: 0.0,
+          order: 4,
         },
         {
           id: 19,
           name: "Lab 5",
           topic: "Dziedziczenie",
           gainedXp: 0.0,
+          order: 5,
         },
         {
           id: 20,
           name: "Lab 6",
           topic: "Refactoring kodu",
           gainedXp: 0.0,
+          order: 6,
         },
         {
           id: 21,
           name: "Lab 7",
           topic: "Wielowątkowość",
           gainedXp: 0.0,
+          order: 7,
         },
         {
           id: 22,
           name: "Lab 8",
           topic: "Interfejs graficzny",
           gainedXp: 0.0,
-        },
-        {
-          id: 15,
-          name: "Lab 1",
-          topic: "Instrukcje sterujące w Javie",
-          gainedXp: 2.0,
+          order: 8,
         },
       ];
-    } else if (eventSectionId === 3) {
-      return [];
+      return events.sort((a, b) => a.order - b.order);
     } else {
       return [];
     }
@@ -273,11 +290,11 @@ export const BetterEventSectionService = {
     if (eventSectionId === 1) {
       return {};
     } else if (eventSectionId === 2 && eventId === 15) {
-      return { markdown: { lab1 } };
+      return { markdown: lab1 };
     } else if (eventSectionId === 2 && eventId === 16) {
-      return { markdown: { lab2 } };
+      return { markdown: lab2 };
     } else if (eventSectionId === 3 && eventId === 1) {
-      return { markdown: { proj1 } };
+      return { markdown: proj1 };
     } else {
       return {};
     }
