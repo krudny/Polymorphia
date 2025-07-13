@@ -1,9 +1,5 @@
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
 import { SectionViewProps } from "@/components/course/event-section/types";
-import { useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
-import Loading from "@/components/loading/Loading";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useScaleShow } from "@/animations/General";
 import "./index.css";
@@ -15,38 +11,38 @@ export default function SectionView({
   const { setTitle } = useTitle();
   const containerRef = useScaleShow();
 
-  const {
-    data: eventSection,
-    isLoading,
-    isSuccess,
-    error,
-  } = useQuery({
-    queryKey: ["eventSections", eventSectionId],
-    queryFn: () =>
-      EventSectionService.getEventSection({ eventSectionId, eventSectionType }),
-  });
-
-  useEffect(() => {
-    setTitle(isSuccess ? eventSection.name : "");
-  }, [eventSection, isSuccess, setTitle]);
-
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (error) {
-    return (
-      <div className="section-view">
-        Error loading event section: {error.message}
-      </div>
-    );
-  }
-
-  if (!eventSection) {
-    return (
-      <div className="section-view">No event section with this ID exists.</div>
-    );
-  }
+  // const {
+  //   data: eventSection,
+  //   isLoading,
+  //   isSuccess,
+  //   error,
+  // } = useQuery({
+  //   queryKey: ["eventSections", eventSectionId],
+  //   queryFn: () =>
+  //     EventSectionService.getEventSection({ eventSectionId, eventSectionType }),
+  // });
+  //
+  // useEffect(() => {
+  //   setTitle(isSuccess ? eventSection.name : "");
+  // }, [eventSection, isSuccess, setTitle]);
+  //
+  // if (isLoading) {
+  //   return <Loading />;
+  // }
+  //
+  // if (error) {
+  //   return (
+  //     <div className="section-view">
+  //       Error loading event section: {error.message}
+  //     </div>
+  //   );
+  // }
+  //
+  // if (!eventSection) {
+  //   return (
+  //     <div className="section-view">No event section with this ID exists.</div>
+  //   );
+  // }
 
   return (
     <div
@@ -54,7 +50,11 @@ export default function SectionView({
       id="section-view-containter"
       className="section-view"
     >
-      <XPCardGrid eventSection={eventSection} containerRef={containerRef} />
+      <XPCardGrid
+        eventSectionId={eventSectionId}
+        eventSectionType={eventSectionType}
+        containerRef={containerRef}
+      />
     </div>
   );
 }

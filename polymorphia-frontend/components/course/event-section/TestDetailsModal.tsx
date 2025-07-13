@@ -39,7 +39,7 @@ export default function TestDetailsModal({
           Wystąpił błąd przy ładowaniu szczegółów.
         </div>
       )}
-      {isLoading ?? (
+      {isLoading && (
         <div className="gradable-event-section h-50">
           <Loading />
         </div>

@@ -4,12 +4,9 @@ import {
   BonusInfo,
   EventSection,
   EventSectionShortResponseDto,
-  GradableEventCoreResponse,
 } from "@/components/course/event-section/types";
 import { PointsSummaryElementProps } from "@/components/course/event-section/points-summary/types";
 import { MenuOption } from "@/components/navigation/types";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { EventSectionCardProps } from "@/components/xp-card/types";
 
 export function updateMenuItems(
   menuItems: MenuOption[],
@@ -98,34 +95,6 @@ export function setResizeObserver(
   return () => {
     resizeObserver.disconnect();
   };
-}
-
-export function mapPropsToCards(
-  gradableEventsData: GradableEventCoreResponse,
-  setCurrentlySelectedGradableEventIdForModal: (e: number | null) => void,
-  router: AppRouterInstance,
-  eventSection: EventSection
-): (EventSectionCardProps & { id: number })[] {
-  return gradableEventsData.data
-    .filter((event) => !event.hidden)
-    .map((event) => {
-      return {
-        id: event.id,
-        title: event.name,
-        subtitle: event.topic,
-        xp: event.gainedXp ? `${event.gainedXp} xp` : undefined,
-        onClick:
-          eventSection.type === "test"
-            ? () => {
-                setCurrentlySelectedGradableEventIdForModal(event.id);
-              }
-            : () => {
-                router.push(
-                  `/course/${eventSection.type}/${eventSection.id}/${event.id}`
-                );
-              },
-      };
-    });
 }
 
 export function getBonusesFromEventSection(

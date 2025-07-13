@@ -12,7 +12,7 @@ interface EventSectionResponseDTO {
   order: number;
 }
 
-interface GradableEventResponseDTO {
+export interface GradableEventResponseDTO {
   id: number;
   name: string;
   topic?: string;

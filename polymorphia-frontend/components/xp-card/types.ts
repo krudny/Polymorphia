@@ -1,4 +1,4 @@
-import { EventSection } from "@/components/course/event-section/types";
+import { EventSectionType } from "@/components/course/event-section/types";
 
 export interface EventSectionCardProps {
   title: string;
@@ -19,6 +19,7 @@ export type EventSectionCardVariantProps = {
 };
 
 export interface EventSectionCardGridProps {
-  eventSection: EventSection;
+  eventSectionId: number;
+  eventSectionType: EventSectionType;
   containerRef: React.RefObject<HTMLDivElement | null>;
 }

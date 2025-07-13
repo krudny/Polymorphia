@@ -7,7 +7,7 @@ import { getBonusesFromEventSection } from "@/components/course/event-section/Ev
 import "./index.css";
 
 export default function PointsSummary({
-  eventSection,
+  eventSectionId,
   ref,
 }: PointsSummaryProps) {
   const [currentBonusInfoModal, setCurrentBonusInfoModal] =
