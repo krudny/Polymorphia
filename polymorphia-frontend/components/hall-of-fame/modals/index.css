@@ -6,7 +6,7 @@
 }
 
 .filters-modal-wrapper {
-    @apply w-full md:w-96 flex flex-col;
+    @apply w-full md:w-[28rem] flex flex-col;
 }
 
 .filters-modal-filter-wrapper {
@@ -38,7 +38,7 @@
 }
 
 .filters-modal-filter-grid {
-    @apply grid grid-cols-4 gap-2 text-xl my-2;
+    @apply grid grid-cols-3 md:grid-cols-4 gap-2 text-xl my-2;
 }
 
 .filters-modal-filter-option {

@@ -18,7 +18,7 @@ export default function HallOfFame() {
       <div className="w-full lg:hidden">
         <HallOfFameMobile />
       </div>
-      <div className="w-full hidden lg:flex flex-col flex-1">
+      <div className="w-full hidden lg:flex flex-col-centered flex-1">
         <HallOfFameDesktop />
       </div>
       <FiltersModal />

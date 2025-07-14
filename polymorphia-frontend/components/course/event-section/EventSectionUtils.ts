@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  BonusInfo,
-  EventSection,
-  EventSectionShortResponseDto,
-} from "@/components/course/event-section/types";
-import { PointsSummaryElementProps } from "@/components/course/event-section/points-summary/types";
+import { EventSectionShortResponseDto } from "@/components/course/event-section/types";
 import { MenuOption } from "@/components/navigation/types";
 
 export function updateMenuItems(
@@ -95,39 +90,4 @@ export function setResizeObserver(
   return () => {
     resizeObserver.disconnect();
   };
-}
-
-export function getBonusesFromEventSection(
-  eventSection: EventSection,
-  setCurrentBonusInfoModal: (e: BonusInfo) => void
-): PointsSummaryElementProps[] {
-  return [
-    {
-      bonus: {
-        name: "Zdobyte xp",
-        bonusXp: `${eventSection.gainedXp} xp`,
-        items: [],
-      },
-    },
-    ...eventSection.bonuses.map((bonus) => {
-      return {
-        bonus: {
-          ...bonus,
-          bonusXp: `${bonus.bonusXp} xp`,
-          bonusPercentage: bonus.bonusPercentage
-            ? `+${bonus.bonusPercentage}$`
-            : undefined,
-        },
-        onClick: () => setCurrentBonusInfoModal(bonus),
-      };
-    }),
-    {
-      bonus: {
-        name: "Łącznie",
-        bonusXp: `${eventSection.totalXp} xp`,
-        items: [],
-      },
-      horizontal: true,
-    },
-  ];
 }

@@ -12,7 +12,7 @@
 }
 
 .hall-of-fame-mobile-rank-wrapper {
-    @apply w-full grid grid-cols-1 gap-3 min-[650px]:grid-cols-2;
+    @apply w-full min-h-[calc(100dvh-15rem)]  grid grid-cols-1 gap-3 min-[650px]:grid-cols-2;
 }
 
 .hall-of-fame-mobile-record-wrapper {

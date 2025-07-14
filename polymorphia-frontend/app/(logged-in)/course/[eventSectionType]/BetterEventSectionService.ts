@@ -1,7 +1,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { lab1, lab2, proj1 } from "@/app/(logged-in)/course/sampleData";
+import { lab0, lab1, lab2, proj1 } from "@/app/(logged-in)/course/sampleData";
 
 type EventSectionType = "assignment" | "project" | "test";
 
@@ -20,26 +20,15 @@ export interface GradableEventResponseDTO {
   order: number;
 }
 
-interface BonusItem {
-  id: number;
-  assignedItemId: number;
-  assignedChestId: number;
-  name: string;
-  imageUrl: string;
-  receivedDate: string;
-  xp: number;
-  percentage: number;
-}
-
 interface PercentageBonus {
   xp: number;
-  items: BonusItem[];
+  items: BonusInfoItem[];
   percentage: number;
 }
 
 interface FlatBonus {
   xp: number;
-  items: BonusItem[];
+  items: BonusInfoItem[];
 }
 
 interface PointsSummaryResponseDTO {
@@ -65,13 +54,18 @@ export const BetterEventSectionService = {
         eventSectionType: "assignment",
         order: 2,
       },
-      { id: 3, name: "Projekt", eventSectionType: "project", order: 4 },
+      { id: 3, name: "Projekt 1", eventSectionType: "project", order: 4 },
       { id: 1, name: "Kartkówka", eventSectionType: "test", order: 1 },
       { id: 4, name: "Git", eventSectionType: "assignment", order: 0 },
-      { id: 5, name: "Specjalne", eventSectionType: "assignment", order: 3 },
+      {
+        id: 5,
+        name: "Specjalny lab",
+        eventSectionType: "assignment",
+        order: 3,
+      },
       {
         id: 6,
-        name: "Projekt wiosenny",
+        name: "Projekt 2",
         eventSectionType: "project",
         order: 5,
       },
@@ -94,7 +88,7 @@ export const BetterEventSectionService = {
           id: 2,
           name: "Test 2",
           topic: "Model obiektowy",
-          gainedXp: 2.0,
+          gainedXp: 0.0,
           order: 2,
         },
         {
@@ -229,6 +223,43 @@ export const BetterEventSectionService = {
         },
       ];
       return events.sort((a, b) => a.order - b.order);
+    } else if (eventSectionId === 4) {
+      return [
+        {
+          id: 30,
+          name: "Lab 0",
+          topic: "Git jest cool",
+          gainedXp: 0.0,
+          order: 1,
+        },
+      ];
+    } else if (eventSectionId === 6) {
+      return [
+        {
+          id: 32,
+          name: "Projekt 2",
+          topic: "Refactoring hell",
+          gainedXp: 0.0,
+          order: 1,
+        },
+      ];
+    } else if (eventSectionId === 3) {
+      return [
+        {
+          id: 33,
+          name: "Projekt 1a",
+          topic: "Darwin World",
+          gainedXp: 0.0,
+          order: 1,
+        },
+        {
+          id: 34,
+          name: "Projekt 1b",
+          topic: "Polymorphia",
+          gainedXp: 0.0,
+          order: 2,
+        },
+      ];
     } else {
       return [];
     }
@@ -242,19 +273,20 @@ export const BetterEventSectionService = {
         gainedXp: 3.5,
         percentageBonus: {
           xp: 0.2,
+          percentage: 5,
           items: [
             {
-              id: 1,
-              assignedItemId: 1,
-              assignedChestId: 3,
-              name: "Pietruszka",
-              imageUrl: "images/items/parsley.jpg",
+              assignedId: 1,
+              item: {
+                id: 1,
+                name: "Pietruszka",
+                imageUrl: "images/items/parsley.jpg",
+              },
               receivedDate: "07.06.2025",
-              xp: 0.2,
-              percentage: 5,
+              bonusXp: "0.2",
+              bonusPercentage: "5",
             },
           ],
-          percentage: 5,
         },
         flatBonus: {
           xp: 0,
@@ -268,8 +300,8 @@ export const BetterEventSectionService = {
         gainedXp: 2.0,
         percentageBonus: {
           xp: 0.0,
-          items: [],
           percentage: 0,
+          items: [],
         },
         flatBonus: {
           xp: 0,
@@ -277,10 +309,21 @@ export const BetterEventSectionService = {
         },
         totalXp: 2.0,
       };
-    } else if (eventSectionId === 3) {
-      return {};
     } else {
-      return {};
+      return {
+        name: "",
+        gainedXp: 0,
+        percentageBonus: {
+          xp: 0.0,
+          percentage: 0,
+          items: [],
+        },
+        flatBonus: {
+          xp: 0,
+          items: [],
+        },
+        totalXp: 0,
+      };
     }
   },
   getMarkdown: async (
@@ -293,8 +336,18 @@ export const BetterEventSectionService = {
       return { markdown: lab1 };
     } else if (eventSectionId === 2 && eventId === 16) {
       return { markdown: lab2 };
-    } else if (eventSectionId === 3 && eventId === 1) {
+    } else if (eventSectionId === 3 && eventId === 33) {
       return { markdown: proj1 };
+    } else if (eventSectionId === 3 && eventId === 34) {
+      return {
+        markdown: "# Dlaczego prosty CRUD nie jest prosty? \n < Content >",
+      };
+    } else if (eventSectionId === 4 && eventId === 33) {
+      return { markdown: lab0 };
+    } else if (eventSectionId === 6 && eventId === 32) {
+      return {
+        markdown: "# Dlaczego refactoring hell to zło? \n < Content >",
+      };
     } else {
       return {};
     }

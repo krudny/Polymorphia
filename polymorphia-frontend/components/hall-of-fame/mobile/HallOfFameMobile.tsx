@@ -8,9 +8,9 @@ import "./index.css";
 import { useScaleShow } from "@/animations/General";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
-import Loading from "@/components/loading/Loading";
 import { HallOfFameRecordDTO } from "@/interfaces/api/DTO";
 import { handlePageChange } from "@/components/providers/hall-of-fame/utils/handlePageChange";
+import Loading from "@/components/loading/Loading";
 
 export default function HallOfFameMobile() {
   const wrapperRef = useScaleShow();
@@ -31,7 +31,7 @@ export default function HallOfFameMobile() {
 
       <div className="hall-of-fame-mobile-rank-wrapper">
         {isLoading ? (
-          <div className="hall-of-fame-loading-wrapper">
+          <div className="hall-of-fame-loading-wrapper lg:hidden">
             <Loading />
           </div>
         ) : (

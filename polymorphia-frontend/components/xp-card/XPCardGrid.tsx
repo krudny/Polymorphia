@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "@/components/loading/Loading";
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
-import { setResizeObserver } from "@/components/course/event-section/EventSectionUtils";
 import { useEventSectionAnimation } from "@/animations/EventSection";
 import "./index.css";
 import { EventSectionCardGridProps } from "@/components/xp-card/types";
@@ -13,6 +12,7 @@ import { BetterEventSectionService } from "@/app/(logged-in)/course/[eventSectio
 import Pagination from "@/components/pagination/Pagination";
 import TestDetailsModal from "@/components/course/event-section/TestDetailsModal";
 import PointsSummary from "@/components/course/event-section/points-summary/PointsSummary";
+import { setResizeObserver } from "@/components/course/event-section/EventSectionUtils";
 
 export default function XPCardGrid({
   eventSectionId,
@@ -54,6 +54,14 @@ export default function XPCardGrid({
       setPageRows
     );
   }, [containerRef, summaryRef]);
+
+  useEffect(() => {
+    if (!isLoading && gradableEvents && gradableEvents.length === 1) {
+      router.push(
+        `/course/${eventSectionType}/${eventSectionId}/${gradableEvents[0].id}`
+      );
+    }
+  }, [isLoading, gradableEvents, eventSectionType, eventSectionId, router]);
 
   const { handlePageChange } = useEventSectionAnimation(
     pageToShow,

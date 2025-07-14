@@ -4,6 +4,7 @@ import { BonusItemCardProps } from "@/components/course/event-section/points-sum
 import XPCard from "../../../xp-card/XPCard";
 
 export default function BonusItemCard({ item }: BonusItemCardProps) {
+  console.log(item, "item");
   return (
     <XPCard
       title={item.item.name}
@@ -13,7 +14,7 @@ export default function BonusItemCard({ item }: BonusItemCardProps) {
         alt: item.item.name,
       }}
       size="xs"
-      xp={`+${item.bonusXp} xp`}
+      xp={`+${item.bonusXp}`}
       isSumLabelVisible={false}
     />
   );
