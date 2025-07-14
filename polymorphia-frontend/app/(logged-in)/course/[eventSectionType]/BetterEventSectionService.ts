@@ -342,7 +342,7 @@ export const BetterEventSectionService = {
       return {
         markdown: "# Dlaczego prosty CRUD nie jest prosty? \n < Content >",
       };
-    } else if (eventSectionId === 4 && eventId === 33) {
+    } else if (eventSectionId === 4 && eventId === 30) {
       return { markdown: lab0 };
     } else if (eventSectionId === 6 && eventId === 32) {
       return {
@@ -351,5 +351,59 @@ export const BetterEventSectionService = {
     } else {
       return {};
     }
+  },
+
+  /* Do poprawy interfejs, zunifikowanie z test details */
+  getReward: async (eventId: number): Promise<GradableEvent> => {
+    if (eventId === 30) {
+      return {
+        id: 1,
+        name: "Git",
+        grade: {
+          gainedXp: 2.0,
+          createdDate: "07.06.2025",
+          modifiedDate: "07.06.2025",
+          chests: [
+            {
+              id: 1,
+              assignedChestId: 3,
+              name: "Srebrna Skrzynia",
+              imageUrl: "images/chests/s1.png",
+              opened: true,
+              receivedDate: "07.06.2025",
+            },
+          ],
+        },
+        maxXp: 2.0,
+        hidden: false,
+        topic: "Git jest cool",
+      };
+    }
+    if (eventId === 15) {
+      return {
+        id: 1,
+        name: "Lab 1",
+        grade: {
+          gainedXp: 0.75,
+          createdDate: "07.06.2025",
+          modifiedDate: "07.06.2025",
+          chests: [
+            {
+              id: 1,
+              assignedChestId: 3,
+              name: "Srebrna Skrzynia",
+              imageUrl: "images/chests/s2.jpg",
+              opened: true,
+              receivedDate: "07.06.2025",
+            },
+          ],
+        },
+        maxXp: 2.0,
+        hidden: false,
+        topic: "Lab 1",
+      };
+    }
+
+    return {};
   },
 };

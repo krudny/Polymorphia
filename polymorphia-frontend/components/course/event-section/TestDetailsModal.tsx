@@ -34,7 +34,7 @@ export default function TestDetailsModal({
       title={test?.name ?? ""}
       onClosed={onClosed}
     >
-      {isError ?? (
+      {isError && (
         <div className="gradable-event-section text-xl 2xl:text-2xl">
           Wystąpił błąd przy ładowaniu szczegółów.
         </div>

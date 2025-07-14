@@ -1,6 +1,6 @@
 import PullRequest from "@/components/course/project-section/modals/PullRequest";
 import GroupModal from "@/components/course/project-section/modals/GroupModal";
-import Rewards from "@/components/course/project-section/modals/Rewards";
+import AssignmentDetailsModal from "@/components/course/project-section/modals/AssignmentDetailsModal";
 import ProjectVariant from "@/components/course/project-section/modals/ProjectVariant";
 
 export const speedDialItems = [
@@ -22,7 +22,7 @@ export const speedDialItems = [
     label: "Nagrody",
     icon: "trophy",
     modal: (onClose: () => void) => (
-      <Rewards isActive={true} onClosed={onClose} />
+      <AssignmentDetailsModal isActive={true} onClosed={onClose} />
     ),
   },
   {

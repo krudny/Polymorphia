@@ -29,7 +29,7 @@ export default function ItemModal() {
               alt: item.title,
             }}
             size="xs"
-            xp={`+${item.bonusXp} xp`}
+            xp={`+${item.bonusXp}`}
             isSumLabelVisible={false}
           />
         ))}

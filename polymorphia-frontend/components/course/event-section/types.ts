@@ -147,6 +147,7 @@ export interface GradableEvent {
   maxXp: string; // "1.2"
   hidden?: boolean;
   grade?: Grade;
+  topic?: string;
 }
 
 export type Test = GradableEvent;
@@ -158,12 +159,10 @@ export interface Grade {
 
 export interface GradeChest {
   assignedId: number;
-  chest: {
-    id: number;
-    name: string;
-    imageUrl: string;
-    opened: boolean;
-  };
+  id: number;
+  name: string;
+  imageUrl: string;
+  opened: boolean;
 }
 
 export interface RewardsInfoProps {
