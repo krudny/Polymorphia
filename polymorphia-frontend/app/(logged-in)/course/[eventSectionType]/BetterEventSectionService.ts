@@ -406,4 +406,20 @@ export const BetterEventSectionService = {
 
     return {};
   },
+
+  getProjectVariant: async (
+    eventId: number
+  ): Promise<{ variant: string; description: Record<string, string> }> => {
+    if (eventId === 32) {
+      return {
+        variant: "G-2",
+        description: {
+          G: "Dorodne Plony - preferowany jest rozkład równomierny, ale na pewnym kwadratowym podobszarze mapy (zajmującym 20% mapy) czasem pojawiają się większe rośliny, których zjedzenie dodaje zwierzakowi znacznie więcej energii. Każda taka roślina zajmuje kwadratowy obszar 2x2 pola. Obsługa sytuacji, w której więcej zwierzaków kończy ruch na jednym z pól należących do dużej rośliny powinna wyglądać tak samo jak w przypadku, gdy wiele zwierząt walczy o normalną roślinę na jednym polu.",
+          "2": "Podmianka - mutacja może też skutkować tym, że dwa geny zamienią się miejscami.",
+        },
+      };
+    }
+
+    return {};
+  },
 };

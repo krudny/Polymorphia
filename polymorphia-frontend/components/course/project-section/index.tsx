@@ -6,7 +6,7 @@ import { ProjectService } from "@/components/course/project-section/ProjectServi
 import PullRequest from "@/components/course/project-section/modals/PullRequest";
 import GroupModal from "@/components/course/project-section/modals/GroupModal";
 import AssignmentDetailsModal from "@/components/course/project-section/modals/AssignmentDetailsModal";
-import ProjectVariant from "@/components/course/project-section/modals/ProjectVariant";
+import ProjectVariant from "@/components/course/project-section/modals/ProjectVariantModal";
 import Loading from "@/components/loading/Loading";
 import MarkdownViewer from "@/components/markdown-viewer";
 import { SectionViewProps } from "@/components/course/event-section/types";

@@ -2,14 +2,28 @@ import { useQuery } from "@tanstack/react-query";
 import { BetterEventSectionService } from "@/app/(logged-in)/course/[eventSectionType]/BetterEventSectionService";
 import { SpeedDialItem } from "@/components/speed-dial/types";
 import AssignmentDetailsModal from "@/components/course/project-section/modals/AssignmentDetailsModal";
+import ProjectVariantModal from "@/components/course/project-section/modals/ProjectVariantModal";
 
 export function useSpeedDialItemsFactory(
   eventSectionType: string,
   eventId: number
 ): SpeedDialItem[] {
-  const { data, isLoading, isError } = useQuery({
+  const {
+    data: rewards,
+    isLoading: isRewardsLoading,
+    isError: isRewardsError,
+  } = useQuery({
     queryKey: ["rewards", eventId],
     queryFn: () => BetterEventSectionService.getReward(eventId),
+  });
+
+  const {
+    data: projectVariant,
+    isLoading: isProjectVariantLoading,
+    isError: isProjectVariantError,
+  } = useQuery({
+    queryKey: ["projectVariant", eventId],
+    queryFn: () => BetterEventSectionService.getProjectVariant(eventId),
   });
 
   const rewardsItem: SpeedDialItem = {
@@ -19,9 +33,25 @@ export function useSpeedDialItemsFactory(
       <AssignmentDetailsModal
         isActive={true}
         onClosed={onClose}
-        data={data ? { grade: data.grade, maxXp: data.maxXp } : undefined}
-        isLoading={isLoading}
-        isError={isError}
+        data={
+          rewards ? { grade: rewards.grade, maxXp: rewards.maxXp } : undefined
+        }
+        isLoading={isRewardsLoading}
+        isError={isRewardsError}
+      />
+    ),
+  };
+
+  const projectVariantItem: SpeedDialItem = {
+    label: "Wariant",
+    icon: "arrow_split",
+    modal: (onClose) => (
+      <ProjectVariantModal
+        isActive={true}
+        onClosed={onClose}
+        data={projectVariant}
+        isLoading={isProjectVariantLoading}
+        isError={isProjectVariantError}
       />
     ),
   };
@@ -30,7 +60,7 @@ export function useSpeedDialItemsFactory(
     case "assignment":
       return [rewardsItem];
     case "project":
-      return [rewardsItem];
+      return [rewardsItem, projectVariantItem];
     default:
       return [];
   }
