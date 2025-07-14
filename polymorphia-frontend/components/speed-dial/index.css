@@ -5,8 +5,12 @@
     @apply flex flex-col items-center gap-y-3;
 }
 
-.speed-dial-button-wrapper {
+.speed-dial-content-wrapper {
     @apply relative w-13 h-13;
+}
+
+.speed-dial-button-wrapper {
+    @apply relative w-full h-full;
 }
 
 .speed-dial-button {

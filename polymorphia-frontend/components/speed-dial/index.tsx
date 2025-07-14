@@ -13,23 +13,26 @@ export default function SpeedDial({ items }: SpeedDialProps) {
     <>
       <div className="speed-dial">
         {items.map((item, i) => (
-          <div
-            key={i}
-            onMouseEnter={() => setHoveredIndex(i)}
-            onMouseLeave={() => setHoveredIndex(null)}
-          >
-            <div className="speed-dial-button-wrapper">
-              <ButtonWithBorder
-                text=""
-                size="lg"
-                className="speed-dial-button"
-                icon={item.icon}
-                onClick={() => {
-                  if (item.modal) {
-                    setActiveModal(item.modal(() => setActiveModal(null)));
-                  }
-                }}
-              />
+          <div key={i}>
+            <div className="speed-dial-content-wrapper">
+              <div
+                onMouseEnter={() => setHoveredIndex(i)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                className="speed-dial-button-wrapper"
+              >
+                <ButtonWithBorder
+                  text=""
+                  size="lg"
+                  className="speed-dial-button"
+                  icon={item.icon}
+                  onClick={() => {
+                    if (item.modal) {
+                      setActiveModal(item.modal(() => setActiveModal(null)));
+                    }
+                  }}
+                />
+              </div>
+
               <div
                 className={`speed-dial-label ${hoveredIndex === i ? "opacity-100 -translate-x-3" : "opacity-0 translate-x-0"}`}
               >
