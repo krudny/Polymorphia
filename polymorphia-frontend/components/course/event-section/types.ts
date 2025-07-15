@@ -102,26 +102,6 @@ export interface EventSection {
   totalXp: string; // "1.2"
 }
 
-export interface GradableEventCore {
-  id: number;
-  name: string;
-  topic?: string;
-  gainedXp?: string; // "1.2", undefined if there is no grade
-  hidden?: boolean;
-}
-
-export interface GradableEventCoreResponse {
-  data: GradableEventCore[];
-  page: {
-    totalPages: number;
-  };
-}
-
-export interface SectionViewProps {
-  eventSectionId: number;
-  eventSectionType: EventSectionType;
-}
-
 export interface BonusInfo {
   name: string;
   bonusXp: string; // "1.2"

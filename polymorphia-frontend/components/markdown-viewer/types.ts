@@ -1,3 +1,3 @@
 export interface MarkdownViewerProps {
-  content: string;
+  markdown: string;
 }

@@ -2,15 +2,9 @@
 // @ts-nocheck
 
 import { lab0, lab1, lab2, proj1 } from "@/app/(logged-in)/course/sampleData";
+import { EventSectionShortResponseDto } from "@/components/course/event-section/types";
 
 type EventSectionType = "assignment" | "project" | "test";
-
-interface EventSectionResponseDTO {
-  id: number;
-  name: string;
-  eventSectionType: EventSectionType;
-  order: number;
-}
 
 export interface GradableEventResponseDTO {
   id: number;
@@ -18,6 +12,14 @@ export interface GradableEventResponseDTO {
   topic?: string;
   gainedXp: number;
   order: number;
+}
+
+interface PointsSummaryResponseDTO {
+  name: string;
+  gainedXp: number;
+  percentageBonus: PercentageBonus;
+  flatBonus: FlatBonus;
+  totalXp: number;
 }
 
 interface PercentageBonus {
@@ -31,14 +33,6 @@ interface FlatBonus {
   items: BonusInfoItem[];
 }
 
-interface PointsSummaryResponseDTO {
-  name: string;
-  gainedXp: number;
-  percentageBonus: PercentageBonus;
-  flatBonus: FlatBonus;
-  totalXp: number;
-}
-
 interface MarkdownResponseDTO {
   markdown: string;
 }
@@ -46,7 +40,7 @@ interface MarkdownResponseDTO {
 export const BetterEventSectionService = {
   getEventSections: async (
     courseId: number
-  ): Promise<EventSectionResponseDTO[]> => {
+  ): Promise<EventSectionShortResponseDTO[]> => {
     const data = [
       {
         id: 2,
@@ -326,25 +320,21 @@ export const BetterEventSectionService = {
       };
     }
   },
-  getMarkdown: async (
-    eventSectionId: number,
-    eventId: number
-  ): Promise<MarkdownResponseDTO> => {
-    if (eventSectionId === 1) {
-      return {};
-    } else if (eventSectionId === 2 && eventId === 15) {
+  getMarkdown: async (eventId: number): Promise<MarkdownResponseDTO> => {
+    await new Promise<void>((resolve) => setTimeout(resolve, 1000));
+    if (eventId === 15) {
       return { markdown: lab1 };
-    } else if (eventSectionId === 2 && eventId === 16) {
+    } else if (eventId === 16) {
       return { markdown: lab2 };
-    } else if (eventSectionId === 3 && eventId === 33) {
+    } else if (eventId === 33) {
       return { markdown: proj1 };
-    } else if (eventSectionId === 3 && eventId === 34) {
+    } else if (eventId === 34) {
       return {
         markdown: "# Dlaczego prosty CRUD nie jest prosty? \n < Content >",
       };
-    } else if (eventSectionId === 4 && eventId === 30) {
+    } else if (eventId === 30) {
       return { markdown: lab0 };
-    } else if (eventSectionId === 6 && eventId === 32) {
+    } else if (eventId === 32) {
       return {
         markdown: "# Dlaczego refactoring hell to zło? \n < Content >",
       };
@@ -353,7 +343,6 @@ export const BetterEventSectionService = {
     }
   },
 
-  /* Do poprawy interfejs, zunifikowanie z test details */
   getReward: async (eventId: number): Promise<GradableEvent> => {
     if (eventId === 30) {
       return {
@@ -380,6 +369,31 @@ export const BetterEventSectionService = {
       };
     }
     if (eventId === 15) {
+      return {
+        id: 1,
+        name: "Lab 1",
+        grade: {
+          gainedXp: 0.75,
+          createdDate: "07.06.2025",
+          modifiedDate: "07.06.2025",
+          chests: [
+            {
+              id: 1,
+              assignedChestId: 3,
+              name: "Srebrna Skrzynia",
+              imageUrl: "images/chests/s2.jpg",
+              opened: true,
+              receivedDate: "07.06.2025",
+            },
+          ],
+        },
+        maxXp: 2.0,
+        hidden: false,
+        topic: "Lab 1",
+      };
+    }
+
+    if (eventId === 1) {
       return {
         id: 1,
         name: "Lab 1",

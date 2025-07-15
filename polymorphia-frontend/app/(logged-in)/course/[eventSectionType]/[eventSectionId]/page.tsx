@@ -1,33 +1,27 @@
 "use client";
 
-import SectionView from "@/components/course/event-section/SectionView";
 import { useParams } from "next/navigation";
+import { useScaleShow } from "@/animations/General";
+import XPCardGrid from "@/components/xp-card/XPCardGrid";
+import { EventSectionType } from "@/components/course/event-section/types";
 
-export default function EventSection() {
+export default function SectionView() {
   const params = useParams();
-  const eventSectionType = String(params.eventSectionType);
+  const eventSectionType = params.eventSectionType as EventSectionType;
   const eventSectionId = Number(params.eventSectionId);
+  const containerRef = useScaleShow();
 
-  switch (eventSectionType) {
-    case "assignment":
-    case "test":
-    case "project":
-      return (
-        <SectionView
-          eventSectionId={eventSectionId}
-          eventSectionType={eventSectionType}
-        />
-      );
-
-    // case "project":
-    //   return (
-    //     <ProjectView
-    //       eventSectionId={eventSectionId}
-    //       eventSectionType={eventSectionType}
-    //     />
-    //   );
-
-    default:
-      return <div>Niepoprawna kategoria.</div>;
-  }
+  return (
+    <div
+      ref={containerRef}
+      id="section-view-containter"
+      className="section-view"
+    >
+      <XPCardGrid
+        eventSectionId={eventSectionId}
+        eventSectionType={eventSectionType}
+        containerRef={containerRef}
+      />
+    </div>
+  );
 }

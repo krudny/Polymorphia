@@ -3,7 +3,7 @@ import RewardsInfo from "@/components/course/event-section/RewardsInfo";
 import Loading from "@/components/loading/Loading";
 import { Grade } from "@/components/course/event-section/types";
 
-export default function AssignmentDetailsModal({
+export default function EventRewardModal({
   data,
   onClosed,
   isLoading,

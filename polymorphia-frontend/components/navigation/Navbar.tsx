@@ -12,7 +12,7 @@ import "./index.css";
 import { useQuery } from "@tanstack/react-query";
 import { updateMenuItems } from "@/components/course/event-section/EventSectionUtils";
 import { useTitle } from "./TitleContext";
-import { BetterEventSectionService } from "@/app/(logged-in)/course/[eventSectionType]/BetterEventSectionService";
+import { BetterEventSectionService } from "@/app/(logged-in)/course/BetterEventSectionService";
 
 export default function Navbar() {
   const { isNavbarExpanded, setIsNavbarExpanded } =

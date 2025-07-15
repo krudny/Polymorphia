@@ -1,13 +1,27 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { SpeedDialProps } from "@/components/speed-dial/types";
 import "./index.css";
+import { useSpeedDialItemsFactory } from "@/app/(logged-in)/course/[eventSectionType]/[eventSectionId]/[eventId]/util";
+import Loading from "@/components/loading/Loading";
 
-export default function SpeedDial({ items }: SpeedDialProps) {
+export default function SpeedDial({
+  eventSectionType,
+  eventId,
+}: SpeedDialProps) {
+  const items = useSpeedDialItemsFactory(eventSectionType, eventId);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [activeModal, setActiveModal] = useState<ReactNode | null>(null);
+
+  useEffect(() => {
+    console.log(items);
+  }, [items]);
+
+  if (!items) {
+    return <Loading />;
+  }
 
   items.sort((a, b) => a.order - b.order);
 
@@ -30,6 +44,8 @@ export default function SpeedDial({ items }: SpeedDialProps) {
                   onClick={() => {
                     if (item.modal) {
                       setActiveModal(item.modal(() => setActiveModal(null)));
+                    } else if (item.onClick) {
+                      item.onClick();
                     }
                   }}
                 />

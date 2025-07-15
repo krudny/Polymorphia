@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ProjectService } from "@/components/course/project-section/ProjectService";
 import PullRequest from "@/components/course/project-section/modals/PullRequest";
 import GroupModal from "@/components/course/project-section/modals/GroupModal";
-import AssignmentDetailsModal from "@/components/course/project-section/modals/AssignmentDetailsModal";
+import EventRewardModal from "@/components/course/project-section/modals/EventRewardModal";
 import ProjectVariant from "@/components/course/project-section/modals/ProjectVariantModal";
 import Loading from "@/components/loading/Loading";
 import MarkdownViewer from "@/components/markdown-viewer";
@@ -32,7 +32,7 @@ const createSpeedDialItems = (projectDetails) => {
       label: "Nagrody",
       icon: "trophy",
       modal: (onClose: () => void) => (
-        <AssignmentDetailsModal isActive={true} onClosed={onClose} />
+        <EventRewardModal isActive={true} onClosed={onClose} />
       ),
     },
     {

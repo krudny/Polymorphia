@@ -5,20 +5,20 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "@/components/loading/Loading";
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
-import { useEventSectionAnimation } from "@/animations/EventSection";
+import { useXPGridAnimation } from "@/animations/XPGrid";
 import "./index.css";
-import { EventSectionCardGridProps } from "@/components/xp-card/types";
-import { BetterEventSectionService } from "@/app/(logged-in)/course/[eventSectionType]/BetterEventSectionService";
+import { XPCardGridProps } from "@/components/xp-card/types";
+import { BetterEventSectionService } from "@/app/(logged-in)/course/BetterEventSectionService";
 import Pagination from "@/components/pagination/Pagination";
-import TestDetailsModal from "@/components/course/event-section/TestDetailsModal";
 import PointsSummary from "@/components/course/event-section/points-summary/PointsSummary";
 import { setResizeObserver } from "@/components/course/event-section/EventSectionUtils";
+import EventRewardModal from "@/components/course/project-section/modals/EventRewardModal";
 
 export default function XPCardGrid({
   eventSectionId,
   eventSectionType,
   containerRef,
-}: EventSectionCardGridProps) {
+}: XPCardGridProps) {
   const router = useRouter();
 
   const sliderRef = useRef<HTMLDivElement | null>(null);
@@ -32,9 +32,7 @@ export default function XPCardGrid({
   const [direction, setDirection] = useState<1 | -1>(1);
   const [firstRender, setFirstRender] = useState(true);
 
-  const [selectedGradableEventId, setSelectedGradableEventId] = useState<
-    number | null
-  >(null);
+  const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
 
   const {
     data: gradableEvents,
@@ -45,15 +43,15 @@ export default function XPCardGrid({
     queryFn: () => BetterEventSectionService.getGradableEvents(eventSectionId),
   });
 
-  useEffect(() => {
-    return setResizeObserver(
-      containerRef,
-      summaryRef,
-      setMobile,
-      setPageCols,
-      setPageRows
-    );
-  }, [containerRef, summaryRef]);
+  const {
+    data: reward,
+    isLoading: isRewardLoading,
+    isError: isRewardError,
+  } = useQuery({
+    queryKey: ["eventReward", selectedEventId],
+    queryFn: () => BetterEventSectionService.getReward(selectedEventId!),
+    enabled: !!selectedEventId,
+  });
 
   useEffect(() => {
     if (!isLoading && gradableEvents && gradableEvents.length === 1) {
@@ -63,7 +61,7 @@ export default function XPCardGrid({
     }
   }, [isLoading, gradableEvents, eventSectionType, eventSectionId, router]);
 
-  const { handlePageChange } = useEventSectionAnimation(
+  const { handlePageChange } = useXPGridAnimation(
     pageToShow,
     setDirection,
     sliderRef,
@@ -74,6 +72,16 @@ export default function XPCardGrid({
     firstRender,
     setFirstRender
   );
+
+  useEffect(() => {
+    return setResizeObserver(
+      containerRef,
+      summaryRef,
+      setMobile,
+      setPageCols,
+      setPageRows
+    );
+  }, [containerRef, summaryRef]);
 
   if (isLoading) {
     return <Loading />;
@@ -96,7 +104,7 @@ export default function XPCardGrid({
 
   const handleGradableEventClick = (id: number) => {
     if (eventSectionType === "test") {
-      setSelectedGradableEventId(id);
+      setSelectedEventId(id);
     } else {
       router.push(`/course/${eventSectionType}/${eventSectionId}/${id}`);
     }
@@ -114,45 +122,50 @@ export default function XPCardGrid({
 
   return (
     <>
-      <div className="xp-card-grid-center-vertically">
-        <div className="xp-card-grid-point-summary-layout">
-          {gradableEventsPage.length > 0 ? (
-            <div className="xp-card-fading-edges">
-              <div
-                ref={sliderRef}
-                className={clsx(
-                  "xp-card-grid",
-                  `grid-cols-${pageCols}`,
-                  `grid-rows-${pageRows}`
-                )}
-              >
-                {gradableEventsPage.map((gradableEvent) => (
-                  <XPCard
-                    title={gradableEvent.name}
-                    subtitle={gradableEvent.topic ?? ""}
-                    key={gradableEvent.id}
-                    color={gradableEvent.gainedXp !== 0 ? "green" : "silver"}
-                    xp={gradableEvent.gainedXp.toFixed(1).toString()}
-                    size={mobile ? "sm" : "md"}
-                    forceWidth={!mobile}
-                    onClick={() => handleGradableEventClick(gradableEvent.id)}
-                  />
-                ))}
+      {gradableEventsPage.length > 1 && (
+        <div className="xp-card-grid-center-vertically">
+          <div className="xp-card-grid-point-summary-layout">
+            {gradableEventsPage.length > 0 ? (
+              <div className="xp-card-fading-edges">
+                <div
+                  ref={sliderRef}
+                  className={clsx(
+                    "xp-card-grid",
+                    `grid-cols-${pageCols}`,
+                    `grid-rows-${pageRows}`
+                  )}
+                >
+                  {gradableEventsPage.map((gradableEvent) => (
+                    <XPCard
+                      title={gradableEvent.name}
+                      subtitle={gradableEvent.topic ?? ""}
+                      key={gradableEvent.id}
+                      color={gradableEvent.gainedXp !== 0 ? "green" : "silver"}
+                      xp={gradableEvent.gainedXp.toFixed(1).toString()}
+                      size={mobile ? "sm" : "md"}
+                      forceWidth={!mobile}
+                      onClick={() => handleGradableEventClick(gradableEvent.id)}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
-          ) : (
-            <div className="xp-card-no-grid">Brak aktywności.</div>
-          )}
-          {mobile && gradableEventsPage.length > 0 && pagination}
-          <PointsSummary ref={summaryRef} eventSectionId={eventSectionId} />
+            ) : (
+              <div className="xp-card-no-grid">Brak aktywności.</div>
+            )}
+            {mobile && gradableEventsPage.length > 0 && pagination}
+            <PointsSummary ref={summaryRef} eventSectionId={eventSectionId} />
+          </div>
+          {!mobile && pagination}
         </div>
-        {!mobile && pagination}
-      </div>
+      )}
       {eventSectionType === "test" && (
-        <TestDetailsModal
-          eventSectionId={eventSectionId}
-          selectedGradableEventId={selectedGradableEventId}
-          onClosed={() => setSelectedGradableEventId(null)}
+        <EventRewardModal
+          data={
+            reward ? { grade: reward.grade, maxXp: reward.maxXp } : undefined
+          }
+          onClosed={() => setSelectedEventId(null)}
+          isLoading={isRewardLoading}
+          isError={isRewardError}
         />
       )}
     </>

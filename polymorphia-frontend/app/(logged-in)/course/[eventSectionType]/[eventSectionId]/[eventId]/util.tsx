@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { BetterEventSectionService } from "@/app/(logged-in)/course/[eventSectionType]/BetterEventSectionService";
+import { BetterEventSectionService } from "@/app/(logged-in)/course/BetterEventSectionService";
 import { SpeedDialItem } from "@/components/speed-dial/types";
-import AssignmentDetailsModal from "@/components/course/project-section/modals/AssignmentDetailsModal";
+import EventRewardModal from "@/components/course/project-section/modals/EventRewardModal";
 import ProjectVariantModal from "@/components/course/project-section/modals/ProjectVariantModal";
 import GroupModal from "@/components/course/project-section/modals/GroupModal";
 import UserService from "@/app/(logged-in)/profile/UserService";
@@ -53,7 +53,7 @@ export function useSpeedDialItemsFactory(
     label: "Nagrody",
     icon: "trophy",
     modal: (onClose) => (
-      <AssignmentDetailsModal
+      <EventRewardModal
         onClosed={onClose}
         data={
           rewards ? { grade: rewards.grade, maxXp: rewards.maxXp } : undefined
@@ -93,7 +93,7 @@ export function useSpeedDialItemsFactory(
   };
 
   const projectGroupPickingItem: SpeedDialItem = {
-    order: 0,
+    order: 4,
     label: "Grupa",
     icon: "person_add",
     modal: (onClose) => (
@@ -106,6 +106,13 @@ export function useSpeedDialItemsFactory(
     ),
   };
 
+  const editMarkdown: SpeedDialItem = {
+    order: 0,
+    label: "Edytuj treść",
+    icon: "edit",
+    onClick: () => alert("dupa"),
+  };
+
   switch (eventSectionType) {
     case "assignment":
       return [rewardsItem];
@@ -115,6 +122,7 @@ export function useSpeedDialItemsFactory(
         projectVariantItem,
         projectGroupItem,
         projectGroupPickingItem,
+        editMarkdown,
       ];
     default:
       return [];

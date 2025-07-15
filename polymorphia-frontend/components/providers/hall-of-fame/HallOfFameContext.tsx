@@ -20,7 +20,7 @@ import { addFieldToFilter } from "@/components/providers/hall-of-fame/utils/addF
 import { addEventSectionsToFilters } from "@/components/providers/hall-of-fame/utils/addEventSectionsToFilters";
 import { sortFilters } from "@/components/providers/hall-of-fame/utils/sortFilters";
 import { selectMinimumOptions } from "@/components/providers/hall-of-fame/utils/selectMinimumOptions";
-import { BetterEventSectionService } from "@/app/(logged-in)/course/[eventSectionType]/BetterEventSectionService";
+import { BetterEventSectionService } from "@/app/(logged-in)/course/BetterEventSectionService";
 
 const emptyDataObject = {
   content: [],
