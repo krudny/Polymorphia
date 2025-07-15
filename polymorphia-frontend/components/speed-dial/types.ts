@@ -5,6 +5,7 @@ export interface SpeedDialProps {
 }
 
 export interface SpeedDialItem {
+  order: number;
   label: string;
   icon: string;
   modal: (onClose: () => void) => ReactNode;

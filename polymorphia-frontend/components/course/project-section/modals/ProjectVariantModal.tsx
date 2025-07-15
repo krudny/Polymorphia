@@ -1,32 +1,32 @@
 import Modal from "@/components/modal/Modal";
+import Loading from "@/components/loading/Loading";
 
 export default function ProjectVariantModal({
-  isActive,
   onClosed,
   data,
   isLoading,
   isError,
 }: {
-  isActive: boolean;
   onClosed: () => void;
   data: { variant: string; description: Record<string, string> } | undefined;
   isLoading: boolean;
   isError: boolean;
 }) {
-  if (isLoading || !data) {
-    return;
-  }
-
   return (
     <Modal
-      isDataPresented={isActive}
+      isDataPresented={true}
       onClosed={onClosed}
       title="Wariant projektu"
-      subtitle={`Twój wariant projektu to ${data?.variant}.`}
+      subtitle={`Twój wariant projektu to ${data?.variant ?? ""}.`}
     >
       {isError && (
         <div className="gradable-event-section text-xl 2xl:text-2xl">
           Wystąpił błąd przy ładowaniu szczegółów.
+        </div>
+      )}
+      {isLoading && (
+        <div className="gradable-event-section h-50">
+          <Loading />
         </div>
       )}
       {!isLoading && data && (

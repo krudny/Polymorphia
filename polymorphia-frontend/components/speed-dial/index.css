@@ -14,7 +14,7 @@
 }
 
 .speed-dial-button {
-    @apply p-0 w-full h-full text-2xl flex-centered rounded;
+    @apply p-0 w-full h-full text-2xl flex-col-centered rounded;
 }
 
 .speed-dial-label {

@@ -9,6 +9,8 @@ export default function SpeedDial({ items }: SpeedDialProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [activeModal, setActiveModal] = useState<ReactNode | null>(null);
 
+  items.sort((a, b) => a.order - b.order);
+
   return (
     <>
       <div className="speed-dial">
@@ -23,7 +25,7 @@ export default function SpeedDial({ items }: SpeedDialProps) {
                 <ButtonWithBorder
                   text=""
                   size="lg"
-                  className="speed-dial-button"
+                  className="speed-dial-button !flex-centered"
                   icon={item.icon}
                   onClick={() => {
                     if (item.modal) {

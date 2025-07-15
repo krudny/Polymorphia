@@ -33,11 +33,11 @@ export default function Page() {
   }
 
   return (
-    <div className="w-full flex flex-col mx-auto">
+    <div className="w-full relative flex flex-col mx-auto">
       <div className="fixed right-10 bottom-10">
         <SpeedDial items={speedDialItems} />
       </div>
-      <div className="max-w-[1200px] mx-auto my-10">
+      <div className="max-w-[1200px] mx-auto my-10 ">
         <MarkdownViewer content={data.markdown} />
       </div>
     </div>

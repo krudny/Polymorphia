@@ -33,7 +33,7 @@
 }
 
 .xp-card {
-    @apply w-full rounded-xl drop-shadow-lg transition-all overflow-hidden flex flex-row bg-neutral-50 dark:bg-primary-dark;
+    @apply box-border w-full rounded-xl drop-shadow-lg transition-all overflow-hidden flex flex-row bg-neutral-50 dark:bg-primary-dark;
 }
 
 .xp-card-hover {
@@ -54,7 +54,7 @@
 }
 
 .xp-card-xp {
-    @apply flex flex-col items-center justify-center shrink-0 h-full p-5 gap-2 bg-secondary-gray dark:bg-secondary-dark;
+    @apply box-border flex flex-col items-center justify-center shrink-0 h-full p-5 gap-2 bg-secondary-gray dark:bg-secondary-dark;
 }
 
 .xp-card-xs {

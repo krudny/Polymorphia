@@ -3,6 +3,9 @@ import { BetterEventSectionService } from "@/app/(logged-in)/course/[eventSectio
 import { SpeedDialItem } from "@/components/speed-dial/types";
 import AssignmentDetailsModal from "@/components/course/project-section/modals/AssignmentDetailsModal";
 import ProjectVariantModal from "@/components/course/project-section/modals/ProjectVariantModal";
+import GroupModal from "@/components/course/project-section/modals/GroupModal";
+import UserService from "@/app/(logged-in)/profile/UserService";
+import GroupPickingModal from "@/components/course/project-section/modals/GroupPickingModal";
 
 export function useSpeedDialItemsFactory(
   eventSectionType: string,
@@ -24,14 +27,33 @@ export function useSpeedDialItemsFactory(
   } = useQuery({
     queryKey: ["projectVariant", eventId],
     queryFn: () => BetterEventSectionService.getProjectVariant(eventId),
+    enabled: eventSectionType === "project",
+  });
+
+  const {
+    data: group,
+    isLoading: isGroupLoading,
+    isError: isGroupError,
+  } = useQuery({
+    queryKey: ["randomUsers"],
+    queryFn: () => UserService.getRandomUsers(),
+  });
+
+  const {
+    data: groupPicking,
+    isLoading: isGroupPickingLoading,
+    isError: isGroupPickingError,
+  } = useQuery({
+    queryKey: ["groupPicking"],
+    queryFn: () => UserService.getRandomGroup(),
   });
 
   const rewardsItem: SpeedDialItem = {
+    order: 1,
     label: "Nagrody",
     icon: "trophy",
     modal: (onClose) => (
       <AssignmentDetailsModal
-        isActive={true}
         onClosed={onClose}
         data={
           rewards ? { grade: rewards.grade, maxXp: rewards.maxXp } : undefined
@@ -43,11 +65,11 @@ export function useSpeedDialItemsFactory(
   };
 
   const projectVariantItem: SpeedDialItem = {
+    order: 2,
     label: "Wariant",
     icon: "arrow_split",
     modal: (onClose) => (
       <ProjectVariantModal
-        isActive={true}
         onClosed={onClose}
         data={projectVariant}
         isLoading={isProjectVariantLoading}
@@ -56,11 +78,44 @@ export function useSpeedDialItemsFactory(
     ),
   };
 
+  const projectGroupItem: SpeedDialItem = {
+    order: 3,
+    label: "Grupa",
+    icon: "person",
+    modal: (onClose) => (
+      <GroupModal
+        onClosed={onClose}
+        data={group}
+        isLoading={isGroupLoading}
+        isError={isGroupError}
+      />
+    ),
+  };
+
+  const projectGroupPickingItem: SpeedDialItem = {
+    order: 0,
+    label: "Grupa",
+    icon: "person_add",
+    modal: (onClose) => (
+      <GroupPickingModal
+        onClosed={onClose}
+        data={groupPicking}
+        isLoading={isGroupPickingLoading}
+        isError={isGroupPickingError}
+      />
+    ),
+  };
+
   switch (eventSectionType) {
     case "assignment":
       return [rewardsItem];
     case "project":
-      return [rewardsItem, projectVariantItem];
+      return [
+        rewardsItem,
+        projectVariantItem,
+        projectGroupItem,
+        projectGroupPickingItem,
+      ];
     default:
       return [];
   }

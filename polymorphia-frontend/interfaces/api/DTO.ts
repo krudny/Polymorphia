@@ -82,8 +82,9 @@ export interface HallOfFameRecordDTO {
   xpDetails: Record<string, string>;
 }
 
+//TODO: handle which one is optional
 export interface UserDetailsDTO {
-  studentName?: string;
+  studentName: string;
   animalName: string;
   evolutionStage: string;
   group: string;

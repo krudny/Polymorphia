@@ -4,7 +4,6 @@
 :root {
   --font-family-symbols: "Material Symbols Rounded";
 }
-
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {

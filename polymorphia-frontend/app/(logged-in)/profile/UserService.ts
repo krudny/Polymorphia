@@ -1,3 +1,5 @@
+import { UserDetailsDTO } from "@/interfaces/api/DTO";
+
 const UserService = {
   getCurrentUser: async () => {
     return {
@@ -10,27 +12,107 @@ const UserService = {
       role: "Student",
     };
   },
-  getRandomUsers: async () => {
+  getRandomUsers: async (): Promise<UserDetailsDTO[]> => {
     return [
       {
-        userId: 1,
-        userName: "Kamil Rudny",
+        studentName: "Kamil Rudny",
         animalName: "Gerard Pocieszny",
         evolutionStage: "Majestatyczna bestia",
-        currentXP: 67,
         group: "BM-20-00",
-        profileImage: "images/evolution-stages/4.jpg",
-        role: "Student",
+        imageUrl: "images/evolution-stages/4.jpg",
+        position: 1,
       },
       {
-        userId: 2,
-        userName: "Kamil Śmieszny",
+        studentName: "Kamil Śmieszny",
         animalName: "Gerard Wesoły",
         evolutionStage: "Majestatyczna bestia",
         group: "BM-20-00",
-        currentXP: 67,
-        profileImage: "images/evolution-stages/5.jpg",
-        role: "Student",
+        imageUrl: "images/evolution-stages/5.jpg",
+        position: 2,
+      },
+    ];
+  },
+  getRandomGroup: async (): Promise<UserDetailsDTO[]> => {
+    return [
+      {
+        studentName: "Kamil Rudny",
+        animalName: "Gerard Pocieszny",
+        evolutionStage: "Majestatyczna bestia",
+        group: "BM-20-00",
+        imageUrl: "images/evolution-stages/4.jpg",
+        position: 1,
+      },
+      {
+        studentName: "Kamil Śmieszny",
+        animalName: "Gerard Wesoły",
+        evolutionStage: "Majestatyczna bestia",
+        group: "BM-20-00",
+        imageUrl: "images/evolution-stages/5.jpg",
+        position: 2,
+      },
+      {
+        studentName: "Kamil Rudny",
+        animalName: "Gerard Pocieszny",
+        evolutionStage: "Majestatyczna bestia",
+        group: "BM-20-00",
+        imageUrl: "images/evolution-stages/4.jpg",
+        position: 1,
+      },
+      {
+        studentName: "Kamil Śmieszny",
+        animalName: "Gerard Wesoły",
+        evolutionStage: "Majestatyczna bestia",
+        group: "BM-20-00",
+        imageUrl: "images/evolution-stages/5.jpg",
+        position: 2,
+      },
+      {
+        studentName: "Kamil Rudny",
+        animalName: "Gerard Pocieszny",
+        evolutionStage: "Majestatyczna bestia",
+        group: "BM-20-00",
+        imageUrl: "images/evolution-stages/4.jpg",
+        position: 1,
+      },
+      {
+        studentName: "Kamil Śmieszny",
+        animalName: "Gerard Wesoły",
+        evolutionStage: "Majestatyczna bestia",
+        group: "BM-20-00",
+        imageUrl: "images/evolution-stages/5.jpg",
+        position: 2,
+      },
+      {
+        studentName: "Kamil Rudny",
+        animalName: "Gerard Pocieszny",
+        evolutionStage: "Majestatyczna bestia",
+        group: "BM-20-00",
+        imageUrl: "images/evolution-stages/4.jpg",
+        position: 1,
+      },
+      {
+        studentName: "Kamil Śmieszny",
+        animalName: "Gerard Wesoły",
+        evolutionStage: "Majestatyczna bestia",
+        group: "BM-20-00",
+        imageUrl: "images/evolution-stages/5.jpg",
+        position: 2,
+      },
+      {
+        studentName: "Kamil Rudny",
+        animalName: "Gerard Pocieszny",
+        evolutionStage: "Majestatyczna bestia",
+        group: "BM-20-00",
+        imageUrl: "images/evolution-stages/4.jpg",
+        position: 1,
+      },
+      {
+        studentName: "Kamil Śmieszny",
+        animalName: "Gerard Wesoły",
+        evolutionStage: "Majestatyczna bestia",
+        group: "BM-20-00",
+        imageUrl: "images/evolution-stages/5.jpg",
+        position: 2,
       },
     ];
   },

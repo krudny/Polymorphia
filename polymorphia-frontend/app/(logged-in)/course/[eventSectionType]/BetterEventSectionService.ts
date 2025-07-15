@@ -410,6 +410,7 @@ export const BetterEventSectionService = {
   getProjectVariant: async (
     eventId: number
   ): Promise<{ variant: string; description: Record<string, string> }> => {
+    console.log("wywołano");
     if (eventId === 32) {
       return {
         variant: "G-2",
