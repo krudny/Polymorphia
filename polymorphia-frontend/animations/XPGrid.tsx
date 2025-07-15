@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { GradableEventResponseDTO } from "@/app/(logged-in)/course/[eventSectionType]/BetterEventSectionService";
+import { GradableEventResponseDTO } from "@/app/(logged-in)/course/BetterEventSectionService";
 
 export function useEventSectionAnimation(
   pageToShow: number,
