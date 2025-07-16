@@ -6,11 +6,16 @@ import ProjectVariantModal from "@/components/course/project-section/modals/Proj
 import GroupModal from "@/components/course/project-section/modals/GroupModal";
 import UserService from "@/app/(logged-in)/profile/UserService";
 import GroupPickingModal from "@/components/course/project-section/modals/GroupPickingModal";
+import { useContext } from "react";
+import { MarkdownContext } from "@/components/providers/markdown/MarkdownContext";
 
 export function useSpeedDialItemsFactory(
   eventSectionType: string,
   eventId: number
 ): SpeedDialItem[] {
+  const { isEditing, setIsEditing, saveMarkdown, rejectMarkdown } =
+    useContext(MarkdownContext);
+
   const {
     data: rewards,
     isLoading: isRewardsLoading,
@@ -49,7 +54,8 @@ export function useSpeedDialItemsFactory(
   });
 
   const rewardsItem: SpeedDialItem = {
-    order: 1,
+    id: 1,
+    order: 5,
     label: "Nagrody",
     icon: "trophy",
     modal: (onClose) => (
@@ -65,6 +71,7 @@ export function useSpeedDialItemsFactory(
   };
 
   const projectVariantItem: SpeedDialItem = {
+    id: 2,
     order: 2,
     label: "Wariant",
     icon: "arrow_split",
@@ -79,6 +86,7 @@ export function useSpeedDialItemsFactory(
   };
 
   const projectGroupItem: SpeedDialItem = {
+    id: 3,
     order: 3,
     label: "Grupa",
     icon: "person",
@@ -93,6 +101,7 @@ export function useSpeedDialItemsFactory(
   };
 
   const projectGroupPickingItem: SpeedDialItem = {
+    id: 4,
     order: 4,
     label: "Grupa",
     icon: "person_add",
@@ -106,11 +115,28 @@ export function useSpeedDialItemsFactory(
     ),
   };
 
-  const editMarkdown: SpeedDialItem = {
+  const saveMarkdownItem: SpeedDialItem = {
+    id: 5,
     order: 0,
+    label: "Zapisz markdown",
+    icon: "save",
+    onClick: () => saveMarkdown(),
+  };
+
+  const editMarkdownItem: SpeedDialItem = {
+    id: 6,
+    order: 1,
     label: "Edytuj treść",
     icon: "edit",
-    onClick: () => alert("dupa"),
+    onClick: () => setIsEditing(true),
+  };
+
+  const rejectMarkdownItem: SpeedDialItem = {
+    id: 7,
+    order: 1,
+    label: "Anuluj edycje",
+    icon: "close",
+    onClick: () => rejectMarkdown(),
   };
 
   switch (eventSectionType) {
@@ -118,11 +144,13 @@ export function useSpeedDialItemsFactory(
       return [rewardsItem];
     case "project":
       return [
+        ...(isEditing
+          ? [saveMarkdownItem, rejectMarkdownItem]
+          : [editMarkdownItem]),
         rewardsItem,
         projectVariantItem,
         projectGroupItem,
         projectGroupPickingItem,
-        editMarkdown,
       ];
     default:
       return [];

@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useState } from "react";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { SpeedDialProps } from "@/components/speed-dial/types";
 import "./index.css";
@@ -14,10 +14,6 @@ export default function SpeedDial({
   const items = useSpeedDialItemsFactory(eventSectionType, eventId);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [activeModal, setActiveModal] = useState<ReactNode | null>(null);
-
-  useEffect(() => {
-    console.log(items);
-  }, [items]);
 
   if (!items) {
     return <Loading />;

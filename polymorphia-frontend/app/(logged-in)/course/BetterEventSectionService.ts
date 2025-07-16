@@ -37,6 +37,15 @@ interface MarkdownResponseDTO {
   markdown: string;
 }
 
+const mockMarkdownStore: Record<number, string> = {
+  15: lab1,
+  16: lab2,
+  30: lab0,
+  33: proj1,
+  34: "# Dlaczego prosty CRUD nie jest prosty? \n < Content >",
+  32: "# Dlaczego refactoring hell to zło? \n < Content >",
+};
+
 export const BetterEventSectionService = {
   getEventSections: async (
     courseId: number
@@ -322,25 +331,18 @@ export const BetterEventSectionService = {
   },
   getMarkdown: async (eventId: number): Promise<MarkdownResponseDTO> => {
     await new Promise<void>((resolve) => setTimeout(resolve, 1000));
-    if (eventId === 15) {
-      return { markdown: lab1 };
-    } else if (eventId === 16) {
-      return { markdown: lab2 };
-    } else if (eventId === 33) {
-      return { markdown: proj1 };
-    } else if (eventId === 34) {
-      return {
-        markdown: "# Dlaczego prosty CRUD nie jest prosty? \n < Content >",
-      };
-    } else if (eventId === 30) {
-      return { markdown: lab0 };
-    } else if (eventId === 32) {
-      return {
-        markdown: "# Dlaczego refactoring hell to zło? \n < Content >",
-      };
+
+    const markdown = mockMarkdownStore[eventId];
+    if (markdown !== undefined) {
+      return { markdown };
     } else {
-      return {};
+      return { markdown: "" };
     }
+  },
+
+  saveMarkdown: async (eventId: number, newMarkdown: string): Promise<void> => {
+    await new Promise<void>((resolve) => setTimeout(resolve, 100));
+    mockMarkdownStore[eventId] = newMarkdown;
   },
 
   getReward: async (eventId: number): Promise<GradableEvent> => {

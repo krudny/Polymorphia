@@ -8,7 +8,7 @@ import GroupModal from "@/components/course/project-section/modals/GroupModal";
 import EventRewardModal from "@/components/course/project-section/modals/EventRewardModal";
 import ProjectVariant from "@/components/course/project-section/modals/ProjectVariantModal";
 import Loading from "@/components/loading/Loading";
-import MarkdownViewer from "@/components/markdown-viewer";
+import MarkdownViewer from "@/components/markdown/markdown-viewer";
 import { SectionViewProps } from "@/components/course/event-section/types";
 
 const createSpeedDialItems = (projectDetails) => {

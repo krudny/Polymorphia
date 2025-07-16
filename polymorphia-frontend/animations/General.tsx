@@ -5,8 +5,8 @@ import { useEffect, useRef } from "react";
 export const animateScaleShow = (ref: HTMLDivElement) => {
   gsap.fromTo(
     ref,
-    { y: 50, autoAlpha: 0 },
-    { y: 0, autoAlpha: 1, duration: 0.25, ease: "power1.in" }
+    { scale: 0.85, autoAlpha: 0 },
+    { scale: 1, autoAlpha: 1, duration: 0.25, ease: "power1.in" }
   );
 };
 
@@ -21,7 +21,6 @@ export function useScaleShow(animate: boolean = true) {
       return;
     }
 
-    // Run entry animation
     animateScaleShow(ref.current);
   }, [animate]);
 

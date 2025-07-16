@@ -20,6 +20,20 @@ export const markdownConfig: Components = {
       {children}
     </span>
   ),
+  // img: (props: ComponentProps<"img">) => {
+  //   const { src = "", alt = "" } = props;
+  //   return (
+  //     <div className="relative w-full max-w-3xl h-[400px] my-8">
+  //       <Image
+  //         src={src}
+  //         alt={alt}
+  //         fill
+  //         className="object-contain rounded-xl shadow-md"
+  //         sizes="(max-width: 768px) 100vw, 700px"
+  //       />
+  //     </div>
+  //   );
+  // },
 
   code({ node, className, children, ...props }) {
     const isBlock = node?.position?.start.line !== node?.position?.end.line;

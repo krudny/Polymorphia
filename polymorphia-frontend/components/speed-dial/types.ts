@@ -7,6 +7,7 @@ export interface SpeedDialProps {
 }
 
 export interface SpeedDialItem {
+  id: number;
   order: number;
   label: string;
   icon: string;
