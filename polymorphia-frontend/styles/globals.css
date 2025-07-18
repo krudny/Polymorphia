@@ -6,6 +6,10 @@
 }
 @custom-variant dark (&:where(.dark, .dark *));
 
+:global(.next-image-blur-placeholder) {
+  opacity: 0 !important;
+}
+
 @theme {
   --shadow-3xl: 0px 0px 12px 0px rgba(66, 68, 90, 0.5);
   --breakpoint-3xl: 132rem;

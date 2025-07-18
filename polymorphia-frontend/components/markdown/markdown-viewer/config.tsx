@@ -1,5 +1,8 @@
 import { Components } from "react-markdown";
 import "./index.css";
+import { ComponentProps } from "react";
+import { API_STATIC_URL } from "@/services/api";
+import Image from "next/image";
 
 export const markdownConfig: Components = {
   h1: ({ ...props }) => <h1 className="text-5xl my-10 first:mt-0" {...props} />,
@@ -20,20 +23,39 @@ export const markdownConfig: Components = {
       {children}
     </span>
   ),
-  // img: (props: ComponentProps<"img">) => {
-  //   const { src = "", alt = "" } = props;
-  //   return (
-  //     <div className="relative w-full max-w-3xl h-[400px] my-8">
-  //       <Image
-  //         src={src}
-  //         alt={alt}
-  //         fill
-  //         className="object-contain rounded-xl shadow-md"
-  //         sizes="(max-width: 768px) 100vw, 700px"
-  //       />
-  //     </div>
-  //   );
-  // },
+
+  img: (props: ComponentProps<"img">) => {
+    const { src = "", alt = "" } = props;
+    return (
+      <span className="relative flex items-start">
+        <Image
+          src={`${API_STATIC_URL}/images/general/${src}`}
+          alt={alt}
+          width={800}
+          height={600}
+          className="object-contain rounded-xl shadow-md my-4 max-w-xl w-full h-auto"
+          sizes="(max-width: 768px) 100vw, 500px"
+        />
+      </span>
+    );
+  },
+  a: ({ children, ...props }) => (
+    <a
+      {...props}
+      className="
+      hover:opacity-70
+      hover:cursor-pointer
+      transition
+    "
+      style={{
+        transition: "opacity 0.2s",
+      }}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {children}
+    </a>
+  ),
 
   code({ node, className, children, ...props }) {
     const isBlock = node?.position?.start.line !== node?.position?.end.line;

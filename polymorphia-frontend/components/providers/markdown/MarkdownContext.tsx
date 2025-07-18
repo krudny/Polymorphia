@@ -5,6 +5,7 @@ import {
 } from "@/components/providers/markdown/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { BetterEventSectionService } from "@/app/(logged-in)/course/BetterEventSectionService";
+import toast from "react-hot-toast";
 
 export const MarkdownContext = createContext<MarkdownContextInterface>({
   markdown: "",
@@ -49,6 +50,7 @@ export const MarkdownProvider = ({
       setMarkdown(newMarkdown);
       setIsEditing(false);
       queryClient.invalidateQueries({ queryKey: ["markdown", eventId] });
+      toast.success("Markdown został zaktualizowany!");
     },
     onError: (error) => {
       console.error("Błąd zapisu markdown:", error);

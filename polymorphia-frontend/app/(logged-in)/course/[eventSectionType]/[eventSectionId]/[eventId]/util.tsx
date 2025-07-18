@@ -117,10 +117,11 @@ export function useSpeedDialItemsFactory(
 
   const saveMarkdownItem: SpeedDialItem = {
     id: 5,
-    order: 0,
+    order: 1,
     label: "Zapisz markdown",
     icon: "save",
     onClick: () => saveMarkdown(),
+    color: "#048635",
   };
 
   const editMarkdownItem: SpeedDialItem = {
@@ -133,10 +134,11 @@ export function useSpeedDialItemsFactory(
 
   const rejectMarkdownItem: SpeedDialItem = {
     id: 7,
-    order: 1,
+    order: 0,
     label: "Anuluj edycje",
     icon: "close",
     onClick: () => rejectMarkdown(),
+    color: "#a30d0d",
   };
 
   switch (eventSectionType) {

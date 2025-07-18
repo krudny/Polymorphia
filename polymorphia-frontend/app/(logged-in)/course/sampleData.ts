@@ -503,23 +503,23 @@ export const proj1 =
   "\n" +
   "Stwórzmy grę! Nie będzie to jednak gra, w którą my gramy. Zamiast tego będzie to świat, który ewoluuje na naszych oczach! Stworzymy środowisko stepów i dżungli ze zwierzakami, które biegają, buszują w zaroślach, jedzą i rozmnażają się. A po kilku milionach lat zobaczymy, że wyewoluowały w różne gatunki!\n" +
   "\n" +
-  '<p align="center"><img src="zwierzak.jpg" style="width:600px" /></p>\n' +
+  "![dżungla](zwierzak.jpg)\n" +
   "\n" +
   "Świat naszej gry jest dość prosty. Składa się ze zwykłej, prostokątnej połaci podzielonej na kwadratowe pola. Większość świata pokrywają stepy, na których rośnie niewiele roślin stanowiących pożywienie zwierzaków. Niektóre rejeony porasta jednak dżungla, gdzie rośliny rosną dużo szybciej. Rośliny będą wyrastały w losowych miejscach, ale ich koncentracja będzie większa w dżungli niż na stepie.\n" +
   "\n" +
-  '<p align="center"><img src="dzungla.jpg" style="width:600px" /></p>\n' +
+  "![dżungla](dzungla.jpg)\n" +
   "\n" +
   "Nasze zwierzęta, które są roślinożercami, będą przemierzały ten świat w poszukiwaniu pożywienia. Każdy zwierzak ma określoną energię, która zmniejsza się co dnia. Znalezienie i zjedzenie rośliny zwiększa poziom energii o pewną wartość.\n" +
   "\n" +
   "## Anatomia zwierzaka\n" +
   "\n" +
-  '<p align="center"><img src="zwierzak2.jpg" style="width:400px" /></p>\n' +
+  "![dżungla](zwierzak2.jpg)\n" +
   "\n" +
   "Musimy śledzić kilka cech każdego zwierzaka. Po pierwsze, zarówno w przypadku rośliny jak i tych, którzy je zjadają, musimy znać koordynaty `x` i `y`. Wskazują nam one, gdzie dany zwierzak lub roślina jest na mapie.\n" +
   "\n" +
   "Musimy także wiedzieć, ile energii ma dany zwierzak. To darwinowska gra o przetrwanie, więc jeśli zwierzak nie zdoła zdobyć odpowiedniej ilości pożywienia, będzie głodować i zdechnie...  Energia mówi nam o tym, ile dni funkcjonowania zostało jeszcze danemu zwierzakowi. Musi ono koniecznie znaleźć więcej jedzenia, zanim jej zapas się wyczerpie.\n" +
   "\n" +
-  '<p align="center"><img src="kierunki.jpg" style="width:600px" /></p>\n' +
+  "![dżungla](kierunki.jpg)\n" +
   "\n" +
   "Musimy również pamiętać, w którą stronę zwierzak jest zwrócony. Jest to ważne, ponieważ każdego dnia będzie ono poruszać się na mapie w tym właśnie kierunku. Istnieje osiem różnych możliwych pozycji i tyle samo możliwych obrotów. Obrót `0` oznacza, że zwierzak nie zmienia swojej orientacji, obrót `1` oznacza, że zwierzak obraca się o 45°, `2`, o 90°, itd. Przykładowo: jeśli zwierzak był skierowany na północ i obrót wynosi `1`, to zwierzak skierowany jest teraz na północny wschód.\n" +
   "\n" +
@@ -671,4 +671,4 @@ export const proj1 =
   "\n" +
   "Uwaga: przedstawione implementacje niekoniecznie spełniają tegoroczne wymagania.\n" +
   "\n" +
-  "* https://www.youtube.com/watch?v=4FangGEpwe4";
+  "* <https://www.youtube.com/watch?v=4FangGEpwe4>";

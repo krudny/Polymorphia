@@ -13,4 +13,5 @@ export interface SpeedDialItem {
   icon: string;
   modal?: (onClose: () => void) => ReactNode;
   onClick?: () => void;
+  color?: string;
 }

@@ -9,6 +9,7 @@ import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { TitleProvider } from "@/components/navigation/TitleContext";
 import { ThemeProvider } from "next-themes";
+import { createTheme, ThemeProvider as ThemeProviderMui } from "@mui/material";
 
 const leagueGothic = League_Gothic({
   subsets: ["latin"],
@@ -31,6 +32,28 @@ export default function RootLayout({
 }>) {
   const [queryClient] = useState(() => new QueryClient());
 
+  const theme = createTheme({
+    components: {
+      MuiTooltip: {
+        styleOverrides: {
+          tooltip: {
+            backgroundColor: "#262626",
+            color: "#d4d4d4",
+            fontFamily: "var(--font-league)",
+            fontSize: 20,
+            borderRadius: 8,
+            padding: "8px 16px",
+            display: "flex",
+            alignItems: "center",
+          },
+          arrow: {
+            color: "#262626",
+          },
+        },
+      },
+    },
+  });
+
   return (
     <html
       lang="pl"
@@ -43,19 +66,21 @@ export default function RootLayout({
       <body
         className={`${leagueGothic.className} ${leagueGothic.variable} ${materialSymbols.variable} text-primary-dark dark:text-secondary-light`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          storageKey="theme"
-        >
-          <TitleProvider>
-            <QueryClientProvider client={queryClient}>
-              <Toaster toastOptions={{ style: { fontSize: "1.5rem" } }} />
-              {children}
-            </QueryClientProvider>
-          </TitleProvider>
-        </ThemeProvider>
+        <ThemeProviderMui theme={theme}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            storageKey="theme"
+          >
+            <TitleProvider>
+              <QueryClientProvider client={queryClient}>
+                <Toaster toastOptions={{ style: { fontSize: "1.5rem" } }} />
+                {children}
+              </QueryClientProvider>
+            </TitleProvider>
+          </ThemeProvider>
+        </ThemeProviderMui>
       </body>
     </html>
   );
