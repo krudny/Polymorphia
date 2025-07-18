@@ -54,9 +54,7 @@ interface FlatBonus {
   items: BonusInfoItem[];
 }
 
-interface MarkdownResponseDTO {
-  markdown: string;
-}
+n;
 
 const mockMarkdownStore: Record<number, string> = {
   15: lab1,
