@@ -13,6 +13,7 @@ import Pagination from "@/components/pagination/Pagination";
 import PointsSummary from "@/components/course/event-section/points-summary/PointsSummary";
 import { setResizeObserver } from "@/components/course/event-section/EventSectionUtils";
 import EventRewardModal from "@/components/course/modals/EventRewardModal";
+import { useTitle } from "@/components/navigation/TitleContext";
 
 export default function XPCardGrid({
   eventSectionId,
@@ -20,6 +21,7 @@ export default function XPCardGrid({
   containerRef,
 }: XPCardGridProps) {
   const router = useRouter();
+  const { setTitle } = useTitle();
 
   const sliderRef = useRef<HTMLDivElement | null>(null);
   const summaryRef = useRef<HTMLDivElement | null>(null);
@@ -42,6 +44,20 @@ export default function XPCardGrid({
     queryKey: ["gradableEvents", eventSectionId],
     queryFn: () => BetterEventSectionService.getGradableEvents(eventSectionId),
   });
+
+  const { data: eventSections } = useQuery({
+    queryKey: ["eventSections"],
+    // TODO: use real courseId
+    queryFn: () => BetterEventSectionService.getEventSections(1),
+  });
+
+  useEffect(() => {
+    if (eventSections) {
+      setTitle(
+        eventSections.find((section) => section.id === eventSectionId).name
+      );
+    }
+  }, [setTitle, eventSectionId, eventSections]);
 
   useEffect(() => {
     if (!isLoading && gradableEvents && gradableEvents.length === 1) {
@@ -81,7 +97,7 @@ export default function XPCardGrid({
     return <div>Error loading gradable events: {error.message}</div>;
   }
 
-  if (!gradableEvents) {
+  if (!gradableEvents || gradableEvents.length === 0) {
     return <div>No gradable events.</div>;
   }
 

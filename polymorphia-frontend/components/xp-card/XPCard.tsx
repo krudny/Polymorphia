@@ -15,7 +15,7 @@ const xpCard = tv({
       hofDesktop: "xp-card-hall-of-fame-desktop",
     },
     color: {
-      gold: "border-r-6 border-amber-400",
+      gold: "border-b-6 border-amber-400",
       silver: "border-b-6 border-slate-400",
       bronze: "border-b-6 border-amber-800",
       green: "border-b-6 border-green-600",

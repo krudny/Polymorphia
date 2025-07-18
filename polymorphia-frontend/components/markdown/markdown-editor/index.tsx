@@ -2,6 +2,7 @@
 
 import { useContext, useEffect, useRef } from "react";
 import { MarkdownContext } from "@/components/providers/markdown/MarkdownContext";
+import { useScaleShow } from "@/animations/General";
 
 export default function MarkdownEditor() {
   const { newMarkdown, setNewMarkdown } = useContext(MarkdownContext);
@@ -19,8 +20,13 @@ export default function MarkdownEditor() {
     }
   }, [newMarkdown]);
 
+  const wrapperRef = useScaleShow(!!newMarkdown);
+
   return (
-    <div className="w-full flex flex-col items-center justify-center px-4">
+    <div
+      className="w-full flex flex-col items-center justify-center px-4"
+      ref={wrapperRef}
+    >
       <textarea
         ref={textareaRef}
         value={newMarkdown}

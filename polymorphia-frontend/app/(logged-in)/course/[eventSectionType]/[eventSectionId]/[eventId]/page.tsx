@@ -27,7 +27,7 @@ export default function EventView() {
             eventId={eventId}
           />
         </div>
-        <div className="max-w-[1200px] w-full h-full flex-col-centered flex-1 mx-auto my-10 ">
+        <div className="max-w-[1200px] w-full h-full flex-col-centered flex-1 mx-auto my-10">
           <MarkdownWrapper />
         </div>
       </div>
