@@ -4,7 +4,7 @@ import { API_STATIC_URL } from "@/services/api";
 import Loading from "@/components/loading/Loading";
 import { useQuery } from "@tanstack/react-query";
 import UserService from "@/app/(logged-in)/profile/UserService";
-import { SpeedDialModalProps } from "@/components/course/project-section/modals/ProjectVariantModal";
+import { SpeedDialModalProps } from "@/components/course/modals/ProjectVariantModal";
 
 export default function GroupModal({ eventId, onClosed }: SpeedDialModalProps) {
   // TODO: currently mocked

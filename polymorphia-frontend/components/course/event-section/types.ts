@@ -1,5 +1,3 @@
-import { ModalProps } from "../../modal/types";
-
 export type EventSectionType = "assignment" | "test" | "project";
 
 export interface EventSectionShortResponseDto {
@@ -148,10 +146,4 @@ export interface GradeChest {
 export interface RewardsInfoProps {
   grade?: Grade;
   maxXp: string;
-}
-
-export interface TestDetailsModalProps
-  extends Omit<ModalProps, "title" | "isDataPresented" | "children"> {
-  eventSectionId: number;
-  selectedGradableEventId: number | null;
 }

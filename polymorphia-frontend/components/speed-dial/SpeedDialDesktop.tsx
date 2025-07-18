@@ -7,12 +7,14 @@ import { useSpeedDialItemsFactory } from "@/components/speed-dial/SpeedDialFacto
 import Loading from "@/components/loading/Loading";
 import { SpeedDial as SpeedDialMui, SpeedDialAction } from "@mui/material";
 
-export default function SpeedDial({
+export default function SpeedDialDesktop({
   eventSectionType,
   eventId,
 }: SpeedDialProps) {
   const items = useSpeedDialItemsFactory(eventSectionType, eventId);
   const [activeModal, setActiveModal] = useState<ReactNode | null>(null);
+
+  console.log(items);
 
   if (!items) {
     return <Loading />;
@@ -50,7 +52,6 @@ export default function SpeedDial({
             slotProps={{
               tooltip: {
                 title: item.label,
-                // open: true,
               },
               fab: {
                 style: {

@@ -3,7 +3,7 @@ import { UserDetailsDTO } from "@/interfaces/api/DTO";
 import Modal from "@/components/modal/Modal";
 import { useEffect, useState } from "react";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import { SpeedDialModalProps } from "@/components/course/project-section/modals/ProjectVariantModal";
+import { SpeedDialModalProps } from "@/components/course/modals/ProjectVariantModal";
 import { useDebounce } from "use-debounce";
 import { useQuery } from "@tanstack/react-query";
 import { BetterEventSectionService } from "@/app/(logged-in)/course/BetterEventSectionService";

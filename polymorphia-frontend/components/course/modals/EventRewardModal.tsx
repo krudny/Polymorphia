@@ -3,7 +3,7 @@ import RewardsInfo from "@/components/course/event-section/RewardsInfo";
 import Loading from "@/components/loading/Loading";
 import { useQuery } from "@tanstack/react-query";
 import { BetterEventSectionService } from "@/app/(logged-in)/course/BetterEventSectionService";
-import { SpeedDialModalProps } from "@/components/course/project-section/modals/ProjectVariantModal";
+import { SpeedDialModalProps } from "@/components/course/modals/ProjectVariantModal";
 
 export default function EventRewardModal({
   eventId,
