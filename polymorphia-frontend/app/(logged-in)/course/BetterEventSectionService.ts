@@ -7,6 +7,7 @@ import {
   studentNames,
 } from "@/app/(logged-in)/hall-of-fame/HallOfFameService";
 import { UserDetailsDTO } from "@/interfaces/api/DTO";
+import { BonusInfoItem } from "@/components/course/event-section/types";
 
 const allData: UserDetailsDTO[] = [];
 
@@ -54,8 +55,6 @@ interface FlatBonus {
   items: BonusInfoItem[];
 }
 
-n;
-
 const mockMarkdownStore: Record<number, string> = {
   15: lab1,
   16: lab2,
@@ -68,7 +67,7 @@ const mockMarkdownStore: Record<number, string> = {
 export const BetterEventSectionService = {
   getEventSections: async (
     courseId: number
-  ): Promise<EventSectionShortResponseDTO[]> => {
+  ): Promise<EventSectionResponseDTO[]> => {
     const data = [
       {
         id: 2,
