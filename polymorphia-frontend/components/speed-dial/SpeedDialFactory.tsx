@@ -1,10 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import { BetterEventSectionService } from "@/app/(logged-in)/course/BetterEventSectionService";
 import { SpeedDialItem } from "@/components/speed-dial/types";
 import EventRewardModal from "@/components/course/project-section/modals/EventRewardModal";
 import ProjectVariantModal from "@/components/course/project-section/modals/ProjectVariantModal";
 import GroupModal from "@/components/course/project-section/modals/GroupModal";
-import UserService from "@/app/(logged-in)/profile/UserService";
 import GroupPickingModal from "@/components/course/project-section/modals/GroupPickingModal";
 import { useContext } from "react";
 import { MarkdownContext } from "@/components/providers/markdown/MarkdownContext";
@@ -16,57 +13,13 @@ export function useSpeedDialItemsFactory(
   const { isEditing, setIsEditing, saveMarkdown, rejectMarkdown } =
     useContext(MarkdownContext);
 
-  const {
-    data: rewards,
-    isLoading: isRewardsLoading,
-    isError: isRewardsError,
-  } = useQuery({
-    queryKey: ["rewards", eventId],
-    queryFn: () => BetterEventSectionService.getReward(eventId),
-  });
-
-  const {
-    data: projectVariant,
-    isLoading: isProjectVariantLoading,
-    isError: isProjectVariantError,
-  } = useQuery({
-    queryKey: ["projectVariant", eventId],
-    queryFn: () => BetterEventSectionService.getProjectVariant(eventId),
-    enabled: eventSectionType === "project",
-  });
-
-  const {
-    data: group,
-    isLoading: isGroupLoading,
-    isError: isGroupError,
-  } = useQuery({
-    queryKey: ["randomUsers"],
-    queryFn: () => UserService.getRandomUsers(),
-  });
-
-  const {
-    data: groupPicking,
-    isLoading: isGroupPickingLoading,
-    isError: isGroupPickingError,
-  } = useQuery({
-    queryKey: ["groupPicking"],
-    queryFn: () => UserService.getRandomGroup(),
-  });
-
   const rewardsItem: SpeedDialItem = {
     id: 1,
     order: 5,
     label: "Nagrody",
     icon: "trophy",
     modal: (onClose) => (
-      <EventRewardModal
-        onClosed={onClose}
-        data={
-          rewards ? { grade: rewards.grade, maxXp: rewards.maxXp } : undefined
-        }
-        isLoading={isRewardsLoading}
-        isError={isRewardsError}
-      />
+      <EventRewardModal eventId={eventId} onClosed={onClose} />
     ),
   };
 
@@ -77,10 +30,9 @@ export function useSpeedDialItemsFactory(
     icon: "arrow_split",
     modal: (onClose) => (
       <ProjectVariantModal
+        eventId={eventId}
+        eventSectionType={eventSectionType}
         onClosed={onClose}
-        data={projectVariant}
-        isLoading={isProjectVariantLoading}
-        isError={isProjectVariantError}
       />
     ),
   };
@@ -90,28 +42,16 @@ export function useSpeedDialItemsFactory(
     order: 3,
     label: "Grupa",
     icon: "person",
-    modal: (onClose) => (
-      <GroupModal
-        onClosed={onClose}
-        data={group}
-        isLoading={isGroupLoading}
-        isError={isGroupError}
-      />
-    ),
+    modal: (onClose) => <GroupModal eventId={eventId} onClosed={onClose} />,
   };
 
   const projectGroupPickingItem: SpeedDialItem = {
     id: 4,
     order: 4,
-    label: "Grupa",
+    label: "Utwórz grupę",
     icon: "person_add",
     modal: (onClose) => (
-      <GroupPickingModal
-        onClosed={onClose}
-        data={groupPicking}
-        isLoading={isGroupPickingLoading}
-        isError={isGroupPickingError}
-      />
+      <GroupPickingModal eventId={eventId} onClosed={onClose} />
     ),
   };
 

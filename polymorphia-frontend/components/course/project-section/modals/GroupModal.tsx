@@ -2,19 +2,17 @@ import Modal from "@/components/modal/Modal";
 import XPCard from "@/components/xp-card/XPCard";
 import { API_STATIC_URL } from "@/services/api";
 import Loading from "@/components/loading/Loading";
-import { UserDetailsDTO } from "@/interfaces/api/DTO";
+import { useQuery } from "@tanstack/react-query";
+import UserService from "@/app/(logged-in)/profile/UserService";
+import { SpeedDialModalProps } from "@/components/course/project-section/modals/ProjectVariantModal";
 
-export default function GroupModal({
-  onClosed,
-  data,
-  isLoading,
-  isError,
-}: {
-  onClosed: () => void;
-  data: UserDetailsDTO[] | undefined;
-  isLoading: boolean;
-  isError: boolean;
-}) {
+export default function GroupModal({ eventId, onClosed }: SpeedDialModalProps) {
+  // TODO: currently mocked
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["randomUsers", eventId],
+    queryFn: () => UserService.getRandomUsers(),
+  });
+
   return (
     <Modal
       isDataPresented={true}

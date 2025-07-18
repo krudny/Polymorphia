@@ -43,16 +43,6 @@ export default function XPCardGrid({
     queryFn: () => BetterEventSectionService.getGradableEvents(eventSectionId),
   });
 
-  const {
-    data: reward,
-    isLoading: isRewardLoading,
-    isError: isRewardError,
-  } = useQuery({
-    queryKey: ["eventReward", selectedEventId],
-    queryFn: () => BetterEventSectionService.getReward(selectedEventId!),
-    enabled: !!selectedEventId,
-  });
-
   useEffect(() => {
     if (!isLoading && gradableEvents && gradableEvents.length === 1) {
       router.push(
@@ -160,12 +150,8 @@ export default function XPCardGrid({
       )}
       {eventSectionType === "test" && (
         <EventRewardModal
-          data={
-            reward ? { grade: reward.grade, maxXp: reward.maxXp } : undefined
-          }
+          eventId={selectedEventId ?? undefined}
           onClosed={() => setSelectedEventId(null)}
-          isLoading={isRewardLoading}
-          isError={isRewardError}
         />
       )}
     </>

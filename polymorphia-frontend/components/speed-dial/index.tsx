@@ -3,7 +3,7 @@
 import { ReactNode, useState } from "react";
 import { SpeedDialProps } from "@/components/speed-dial/types";
 import "./index.css";
-import { useSpeedDialItemsFactory } from "@/app/(logged-in)/course/[eventSectionType]/[eventSectionId]/[eventId]/util";
+import { useSpeedDialItemsFactory } from "@/components/speed-dial/SpeedDialFactory";
 import Loading from "@/components/loading/Loading";
 import { SpeedDial as SpeedDialMui, SpeedDialAction } from "@mui/material";
 

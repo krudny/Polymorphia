@@ -1,15 +1,14 @@
 import { UserDetailsDTO } from "@/interfaces/api/DTO";
 
 const UserService = {
-  getCurrentUser: async () => {
+  getCurrentUser: async (): Promise<UserDetailsDTO> => {
     return {
-      userId: 1,
-      userName: "Kamil Rudny",
+      studentName: "Kamil Rudny",
       animalName: "Gerard Pocieszny",
       evolutionStage: "Majestatyczna bestia",
-      currentXP: 67,
-      profileImage: "/images/evolution-stages/4.jpg",
-      role: "Student",
+      imageUrl: "images/evolution-stages/4.jpg",
+      group: "BM-10-00",
+      position: 25,
     };
   },
   getRandomUsers: async (): Promise<UserDetailsDTO[]> => {

@@ -1,19 +1,20 @@
 import Modal from "@/components/modal/Modal";
 import RewardsInfo from "@/components/course/event-section/RewardsInfo";
 import Loading from "@/components/loading/Loading";
-import { Grade } from "@/components/course/event-section/types";
+import { useQuery } from "@tanstack/react-query";
+import { BetterEventSectionService } from "@/app/(logged-in)/course/BetterEventSectionService";
+import { SpeedDialModalProps } from "@/components/course/project-section/modals/ProjectVariantModal";
 
 export default function EventRewardModal({
-  data,
+  eventId,
   onClosed,
-  isLoading,
-  isError,
-}: {
-  data: { grade: Grade; maxXp: string } | undefined;
-  onClosed: () => void;
-  isLoading: boolean;
-  isError: boolean;
-}) {
+}: SpeedDialModalProps) {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["eventReward", eventId],
+    queryFn: () => BetterEventSectionService.getReward(eventId!),
+    enabled: !!eventId,
+  });
+
   return (
     <Modal
       isDataPresented={data !== undefined}

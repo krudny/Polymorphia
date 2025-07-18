@@ -2,7 +2,28 @@
 // @ts-nocheck
 
 import { lab0, lab1, lab2, proj1 } from "@/app/(logged-in)/course/sampleData";
-import { EventSectionShortResponseDto } from "@/components/course/event-section/types";
+import {
+  groups,
+  studentNames,
+} from "@/app/(logged-in)/hall-of-fame/HallOfFameService";
+import { UserDetailsDTO } from "@/interfaces/api/DTO";
+
+const allData: UserDetailsDTO[] = [];
+
+for (let i = 0; i < 250; i++) {
+  const studentName = studentNames[i % studentNames.length];
+  const stage = Math.max(1, 6 - Math.floor(i / 50));
+
+  const item = {
+    studentName: studentName,
+    animalName: studentName,
+    evolutionStage: "Majestatyczna Bestia",
+    imageUrl: `images/evolution-stages/${stage}.jpg`,
+    position: i + 1,
+    group: groups[i % groups.length],
+  };
+  allData.push(item);
+}
 
 type EventSectionType = "assignment" | "project" | "test";
 
@@ -433,5 +454,17 @@ export const BetterEventSectionService = {
         "2": "Podmianka - mutacja może też skutkować tym, że dwa geny zamienią się miejscami.",
       },
     };
+  },
+  getRandomPeople: async (searchTerm: string): Promise<UserDetailsDTO[]> => {
+    let filteredData = allData;
+
+    if (searchTerm && searchTerm.trim() !== "") {
+      const lowerSearch = searchTerm.toLowerCase();
+      filteredData = filteredData.filter((item) =>
+        item.studentName.toLowerCase().includes(lowerSearch)
+      );
+    }
+
+    return filteredData;
   },
 };
