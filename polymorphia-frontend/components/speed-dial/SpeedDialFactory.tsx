@@ -1,8 +1,8 @@
 import { SpeedDialItem } from "@/components/speed-dial/types";
-import EventRewardModal from "@/components/course/modals/EventRewardModal";
-import ProjectVariantModal from "@/components/course/modals/ProjectVariantModal";
-import GroupModal from "@/components/course/modals/GroupModal";
-import GroupPickingModal from "@/components/course/modals/GroupPickingModal";
+import EventRewardModal from "@/components/speed-dial/modals/EventRewardModal";
+import ProjectVariantModal from "@/components/speed-dial/modals/ProjectVariantModal";
+import GroupModal from "@/components/speed-dial/modals/GroupModal";
+import GroupPickingModal from "@/components/speed-dial/modals/GroupPickingModal";
 import { useContext } from "react";
 import { MarkdownContext } from "@/components/providers/markdown/MarkdownContext";
 

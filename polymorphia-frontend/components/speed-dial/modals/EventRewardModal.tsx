@@ -3,7 +3,7 @@ import RewardsInfo from "@/components/course/event-section/RewardsInfo";
 import Loading from "@/components/loading/Loading";
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
-import { SpeedDialModalProps } from "@/components/course/modals/ProjectVariantModal";
+import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 
 export default function EventRewardModal({
   gradableEventId,

@@ -4,7 +4,7 @@ import { API_STATIC_URL } from "@/services/api";
 import Loading from "@/components/loading/Loading";
 import { useQuery } from "@tanstack/react-query";
 import UserService from "@/app/(logged-in)/profile/UserService";
-import { SpeedDialModalProps } from "@/components/course/modals/ProjectVariantModal";
+import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 
 export default function GroupModal({
   gradableEventId,

@@ -1,9 +1,10 @@
 import { ModalProps } from "../../../modal/types";
 import { BonusInfo, BonusInfoItem } from "../types";
+import { RefObject } from "react";
 
 export interface PointsSummaryProps {
   eventSectionId: number;
-  ref: React.RefObject<HTMLDivElement | null>;
+  ref: RefObject<HTMLDivElement | null>;
 }
 
 export interface PointsSummaryElementProps {

@@ -1,5 +1,14 @@
 export type EventSectionType = "assignment" | "test" | "project";
 
+export interface EventSection {
+  id: number;
+  type: EventSectionType;
+  name: string;
+  gainedXp: string; // "1.2"
+  bonuses: BonusInfo[];
+  totalXp: string; // "1.2"
+}
+
 export interface EventSectionShortResponseDto {
   id: number;
   name: string;
@@ -89,15 +98,6 @@ export interface EventChestResponseDto {
   imageUrl: string;
   opened: boolean;
   receivedDate: string;
-}
-
-export interface EventSection {
-  id: number;
-  type: EventSectionType;
-  name: string;
-  gainedXp: string; // "1.2"
-  bonuses: BonusInfo[];
-  totalXp: string; // "1.2"
 }
 
 export interface BonusInfo {

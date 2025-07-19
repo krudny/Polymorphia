@@ -1,4 +1,5 @@
 import { EventSectionType } from "@/components/course/event-section/types";
+import { RefObject } from "react";
 
 export interface XPCardProps {
   title: string;
@@ -21,5 +22,5 @@ export type XPCardVariantProps = {
 export interface XPCardGridProps {
   eventSectionId: number;
   eventSectionType: EventSectionType;
-  containerRef: React.RefObject<HTMLDivElement | null>;
+  containerRef: RefObject<HTMLDivElement | null>;
 }

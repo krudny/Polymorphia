@@ -3,7 +3,6 @@ import { UserDetailsDTO } from "@/interfaces/api/DTO";
 import Modal from "@/components/modal/Modal";
 import { useEffect, useState } from "react";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import { SpeedDialModalProps } from "@/components/course/modals/ProjectVariantModal";
 import { useDebounce } from "use-debounce";
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
@@ -11,6 +10,7 @@ import { API_STATIC_URL } from "@/services/api";
 import XPCard from "@/components/xp-card/XPCard";
 import UserService from "@/app/(logged-in)/profile/UserService";
 import { useModal } from "@/components/providers/modal/ModalContext";
+import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 
 function GroupPickingModalContent() {
   const { closeModal } = useModal();

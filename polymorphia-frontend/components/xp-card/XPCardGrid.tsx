@@ -12,7 +12,7 @@ import { EventSectionService } from "@/app/(logged-in)/course/EventSectionServic
 import Pagination from "@/components/pagination/Pagination";
 import PointsSummary from "@/components/course/event-section/points-summary/PointsSummary";
 import { setResizeObserver } from "@/components/course/event-section/EventSectionUtils";
-import EventRewardModal from "@/components/course/modals/EventRewardModal";
+import EventRewardModal from "@/components/speed-dial/modals/EventRewardModal";
 import { useTitle } from "@/components/navigation/TitleContext";
 
 export default function XPCardGrid({

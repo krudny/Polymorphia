@@ -48,8 +48,6 @@ export default function PointsSummary({
     items: pointsSummary.percentageBonus.items,
   };
 
-  console.log(percentageBonus);
-
   return (
     <>
       <div ref={ref} className="points-summary">

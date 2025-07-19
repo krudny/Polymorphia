@@ -1,12 +1,12 @@
-import React from "react";
+import { Dispatch, SetStateAction } from "react";
 
 export interface NavigationContextInterface {
   isSidebarExpanded: boolean;
-  setIsSidebarExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSidebarExpanded: Dispatch<SetStateAction<boolean>>;
   isSidebarLockedOpened: boolean;
-  setIsSidebarLockedOpened: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSidebarLockedOpened: Dispatch<SetStateAction<boolean>>;
   isSidebarLockedClosed: boolean;
-  setIsSidebarLockedClosed: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSidebarLockedClosed: Dispatch<SetStateAction<boolean>>;
   isNavbarExpanded: boolean;
-  setIsNavbarExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsNavbarExpanded: Dispatch<SetStateAction<boolean>>;
 }

@@ -1,5 +1,16 @@
 export type ChestBehavior = "ALL" | "ONE_OF_MANY";
 
+export interface EvolutionStageResponseDto {
+  id: number;
+  name: string;
+  description: string;
+  minXp: number;
+  grade: number;
+  imageUrl: string;
+  courseId: number;
+  gradingText: string;
+}
+
 export interface ItemResponseDTO {
   id: number;
   name: string;
@@ -10,17 +21,6 @@ export interface ItemResponseDTO {
   eventSectionId: number;
   chestIds: number[];
   textBehavior: string;
-}
-
-export interface EvolutionStageResponseDto {
-  id: number;
-  name: string;
-  description: string;
-  minXp: number;
-  grade: number;
-  imageUrl: string;
-  courseId: number;
-  gradingText: string;
 }
 
 export interface ChestResponseDto {

@@ -2,12 +2,7 @@ import Modal from "@/components/modal/Modal";
 import Loading from "@/components/loading/Loading";
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
-
-export interface SpeedDialModalProps {
-  gradableEventId: number | undefined;
-  onClosed: () => void;
-  eventSectionType?: string;
-}
+import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 
 export default function ProjectVariantModal({
   gradableEventId,
