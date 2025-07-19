@@ -4,7 +4,7 @@ import {
   MarkdownProviderProps,
 } from "@/components/providers/markdown/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { BetterEventSectionService } from "@/app/(logged-in)/course/BetterEventSectionService";
+import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import toast from "react-hot-toast";
 
 export const MarkdownContext = createContext<MarkdownContextInterface>({
@@ -22,7 +22,7 @@ export const MarkdownContext = createContext<MarkdownContextInterface>({
 
 export const MarkdownProvider = ({
   children,
-  eventId,
+  gradableEventId,
 }: MarkdownProviderProps) => {
   const queryClient = useQueryClient();
 
@@ -31,8 +31,8 @@ export const MarkdownProvider = ({
   const [isEditing, setIsEditing] = useState(false);
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["markdown", eventId],
-    queryFn: () => BetterEventSectionService.getMarkdown(Number(eventId)),
+    queryKey: ["markdown", gradableEventId],
+    queryFn: () => EventSectionService.getMarkdown(Number(gradableEventId)),
     staleTime: 1000 * 60,
   });
 
@@ -45,11 +45,13 @@ export const MarkdownProvider = ({
 
   const mutation = useMutation({
     mutationFn: () =>
-      BetterEventSectionService.saveMarkdown(Number(eventId), newMarkdown),
+      EventSectionService.saveMarkdown(Number(gradableEventId), newMarkdown),
     onSuccess: () => {
       setMarkdown(newMarkdown);
       setIsEditing(false);
-      queryClient.invalidateQueries({ queryKey: ["markdown", eventId] });
+      queryClient.invalidateQueries({
+        queryKey: ["markdown", gradableEventId],
+      });
       toast.success("Markdown został zaktualizowany!");
     },
     onError: (error) => {

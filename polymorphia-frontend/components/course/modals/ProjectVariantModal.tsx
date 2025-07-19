@@ -1,23 +1,23 @@
 import Modal from "@/components/modal/Modal";
 import Loading from "@/components/loading/Loading";
 import { useQuery } from "@tanstack/react-query";
-import { BetterEventSectionService } from "@/app/(logged-in)/course/BetterEventSectionService";
+import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 
 export interface SpeedDialModalProps {
-  eventId: number | undefined;
+  gradableEventId: number | undefined;
   onClosed: () => void;
   eventSectionType?: string;
 }
 
 export default function ProjectVariantModal({
-  eventId,
+  gradableEventId,
   eventSectionType,
   onClosed,
 }: SpeedDialModalProps) {
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["projectVariant", eventId],
-    queryFn: () => BetterEventSectionService.getProjectVariant(eventId!),
-    enabled: !!eventId && eventSectionType === "project",
+    queryKey: ["projectVariant", gradableEventId],
+    queryFn: () => EventSectionService.getProjectVariant(gradableEventId!),
+    enabled: !!gradableEventId && eventSectionType === "project",
   });
 
   return (

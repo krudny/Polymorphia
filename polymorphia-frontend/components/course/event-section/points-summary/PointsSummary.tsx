@@ -3,7 +3,7 @@ import { Fragment, useState } from "react";
 import { BonusInfo } from "@/components/course/event-section/types";
 import "./index.css";
 import { useQuery } from "@tanstack/react-query";
-import { BetterEventSectionService } from "@/app/(logged-in)/course/BetterEventSectionService";
+import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import Loading from "@/components/loading/Loading";
 import BonusInfoModal from "@/components/course/event-section/points-summary/BonusInfoModal";
 import PointsSummaryElement from "@/components/course/event-section/points-summary/PointsSummaryElement";
@@ -21,7 +21,7 @@ export default function PointsSummary({
     error,
   } = useQuery({
     queryKey: ["pointsSummary", eventSectionId],
-    queryFn: () => BetterEventSectionService.getPointsSummary(eventSectionId),
+    queryFn: () => EventSectionService.getPointsSummary(eventSectionId),
   });
 
   if (isLoading) {

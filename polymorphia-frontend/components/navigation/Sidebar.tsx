@@ -14,7 +14,7 @@ import clsx from "clsx";
 import { animateSidebar } from "@/animations/Navigation";
 import { useQuery } from "@tanstack/react-query";
 import { updateMenuItems } from "@/components/course/event-section/EventSectionUtils";
-import { BetterEventSectionService } from "@/app/(logged-in)/course/BetterEventSectionService";
+import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 
 export default function Sidebar() {
   const {
@@ -34,7 +34,7 @@ export default function Sidebar() {
   const { data: eventSections, isSuccess } = useQuery({
     queryKey: ["eventSections"],
     // TODO: use real courseId
-    queryFn: () => BetterEventSectionService.getEventSections(1),
+    queryFn: () => EventSectionService.getEventSections(1),
   });
 
   const menuItems = [...MainMenuItems];

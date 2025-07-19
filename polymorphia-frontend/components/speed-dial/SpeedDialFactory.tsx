@@ -8,7 +8,7 @@ import { MarkdownContext } from "@/components/providers/markdown/MarkdownContext
 
 export function useSpeedDialItemsFactory(
   eventSectionType: string,
-  eventId: number
+  gradableEventId: number
 ): SpeedDialItem[] {
   const { isEditing, setIsEditing, saveMarkdown, rejectMarkdown } =
     useContext(MarkdownContext);
@@ -19,7 +19,7 @@ export function useSpeedDialItemsFactory(
     label: "Nagrody",
     icon: "trophy",
     modal: (onClose) => (
-      <EventRewardModal eventId={eventId} onClosed={onClose} />
+      <EventRewardModal gradableEventId={gradableEventId} onClosed={onClose} />
     ),
   };
 
@@ -30,7 +30,7 @@ export function useSpeedDialItemsFactory(
     icon: "arrow_split",
     modal: (onClose) => (
       <ProjectVariantModal
-        eventId={eventId}
+        gradableEventId={gradableEventId}
         eventSectionType={eventSectionType}
         onClosed={onClose}
       />
@@ -42,7 +42,9 @@ export function useSpeedDialItemsFactory(
     order: 3,
     label: "Grupa",
     icon: "person",
-    modal: (onClose) => <GroupModal eventId={eventId} onClosed={onClose} />,
+    modal: (onClose) => (
+      <GroupModal gradableEventId={gradableEventId} onClosed={onClose} />
+    ),
   };
 
   const projectGroupPickingItem: SpeedDialItem = {
@@ -51,7 +53,7 @@ export function useSpeedDialItemsFactory(
     label: "Utwórz grupę",
     icon: "person_add",
     modal: (onClose) => (
-      <GroupPickingModal eventId={eventId} onClosed={onClose} />
+      <GroupPickingModal gradableEventId={gradableEventId} onClosed={onClose} />
     ),
   };
 

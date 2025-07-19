@@ -9,9 +9,9 @@ import { SpeedDial as SpeedDialMui, SpeedDialAction } from "@mui/material";
 
 export default function SpeedDialDesktop({
   eventSectionType,
-  eventId,
+  gradableEventId,
 }: SpeedDialProps) {
-  const items = useSpeedDialItemsFactory(eventSectionType, eventId);
+  const items = useSpeedDialItemsFactory(eventSectionType, gradableEventId);
   const [activeModal, setActiveModal] = useState<ReactNode | null>(null);
 
   console.log(items);

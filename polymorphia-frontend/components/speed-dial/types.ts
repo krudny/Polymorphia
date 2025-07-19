@@ -3,7 +3,7 @@ import { EventSectionType } from "@/components/course/event-section/types";
 
 export interface SpeedDialProps {
   eventSectionType: EventSectionType;
-  eventId: number;
+  gradableEventId: number;
 }
 
 export interface SpeedDialItem {

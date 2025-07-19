@@ -20,7 +20,7 @@ import { addFieldToFilter } from "@/components/providers/hall-of-fame/utils/addF
 import { addEventSectionsToFilters } from "@/components/providers/hall-of-fame/utils/addEventSectionsToFilters";
 import { sortFilters } from "@/components/providers/hall-of-fame/utils/sortFilters";
 import { selectMinimumOptions } from "@/components/providers/hall-of-fame/utils/selectMinimumOptions";
-import { BetterEventSectionService } from "@/app/(logged-in)/course/BetterEventSectionService";
+import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 
 const emptyDataObject = {
   content: [],
@@ -63,7 +63,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
 
   const { data: eventSections } = useQuery({
     queryKey: ["eventSections"],
-    queryFn: () => BetterEventSectionService.getEventSections(1),
+    queryFn: () => EventSectionService.getEventSections(1),
   });
 
   const { data = emptyDataObject, isLoading } = useQuery({

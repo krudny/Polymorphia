@@ -6,10 +6,13 @@ import { useQuery } from "@tanstack/react-query";
 import UserService from "@/app/(logged-in)/profile/UserService";
 import { SpeedDialModalProps } from "@/components/course/modals/ProjectVariantModal";
 
-export default function GroupModal({ eventId, onClosed }: SpeedDialModalProps) {
+export default function GroupModal({
+  gradableEventId,
+  onClosed,
+}: SpeedDialModalProps) {
   // TODO: currently mocked
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["randomUsers", eventId],
+    queryKey: ["randomUsers", gradableEventId],
     queryFn: () => UserService.getRandomUsers(),
   });
 

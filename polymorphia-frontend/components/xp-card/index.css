@@ -29,7 +29,7 @@
 }
 
 .xp-card-grid {
-    @apply grid gap-5 px-3 justify-items-start items-start;
+    @apply grid gap-5 p-3 justify-items-start items-start;
     @apply lg:mb-5;
 }
 

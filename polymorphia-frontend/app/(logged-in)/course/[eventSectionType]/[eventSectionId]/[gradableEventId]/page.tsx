@@ -13,18 +13,18 @@ export default function EventView() {
   const eventSectionType = params.eventSectionType as EventSectionType;
 
   return (
-    <MarkdownProvider eventId={eventId}>
+    <MarkdownProvider gradableEventId={eventId}>
       <div className="w-full relative flex flex-col flex-1 mx-auto">
         <div className="fixed right-5 bottom-5 lg:hidden">
           <SpeedDialMobile
             eventSectionType={eventSectionType}
-            eventId={eventId}
+            gradableEventId={eventId}
           />
         </div>
         <div className="right-5 bottom-5 hidden lg:fixed lg:block">
           <SpeedDialDesktop
             eventSectionType={eventSectionType}
-            eventId={eventId}
+            gradableEventId={eventId}
           />
         </div>
         <div className="max-w-[1200px] w-full h-full flex-col-centered flex-1 mx-auto my-10">

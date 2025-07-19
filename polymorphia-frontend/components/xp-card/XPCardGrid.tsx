@@ -8,7 +8,7 @@ import clsx from "clsx";
 import { useXPGridAnimation } from "@/animations/XPGrid";
 import "./index.css";
 import { XPCardGridProps } from "@/components/xp-card/types";
-import { BetterEventSectionService } from "@/app/(logged-in)/course/BetterEventSectionService";
+import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import Pagination from "@/components/pagination/Pagination";
 import PointsSummary from "@/components/course/event-section/points-summary/PointsSummary";
 import { setResizeObserver } from "@/components/course/event-section/EventSectionUtils";
@@ -42,13 +42,13 @@ export default function XPCardGrid({
     error,
   } = useQuery({
     queryKey: ["gradableEvents", eventSectionId],
-    queryFn: () => BetterEventSectionService.getGradableEvents(eventSectionId),
+    queryFn: () => EventSectionService.getGradableEvents(eventSectionId),
   });
 
   const { data: eventSections } = useQuery({
     queryKey: ["eventSections"],
     // TODO: use real courseId
-    queryFn: () => BetterEventSectionService.getEventSections(1),
+    queryFn: () => EventSectionService.getEventSections(1),
   });
 
   useEffect(() => {
@@ -166,7 +166,7 @@ export default function XPCardGrid({
       )}
       {eventSectionType === "test" && (
         <EventRewardModal
-          eventId={selectedEventId ?? undefined}
+          gradableEventId={selectedEventId ?? undefined}
           onClosed={() => setSelectedEventId(null)}
         />
       )}

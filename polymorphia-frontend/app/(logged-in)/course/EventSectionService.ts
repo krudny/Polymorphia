@@ -64,7 +64,7 @@ const mockMarkdownStore: Record<number, string> = {
   32: "# Dlaczego refactoring hell to zło? \n < Content >",
 };
 
-export const BetterEventSectionService = {
+export const EventSectionService = {
   getEventSections: async (
     courseId: number
   ): Promise<EventSectionResponseDTO[]> => {
@@ -347,10 +347,12 @@ export const BetterEventSectionService = {
       };
     }
   },
-  getMarkdown: async (eventId: number): Promise<MarkdownResponseDTO> => {
+  getMarkdown: async (
+    gradableEventId: number
+  ): Promise<MarkdownResponseDTO> => {
     await new Promise<void>((resolve) => setTimeout(resolve, 1000));
 
-    const markdown = mockMarkdownStore[eventId];
+    const markdown = mockMarkdownStore[gradableEventId];
     if (markdown !== undefined) {
       return { markdown };
     } else {
@@ -358,13 +360,16 @@ export const BetterEventSectionService = {
     }
   },
 
-  saveMarkdown: async (eventId: number, newMarkdown: string): Promise<void> => {
+  saveMarkdown: async (
+    gradableEventId: number,
+    newMarkdown: string
+  ): Promise<void> => {
     await new Promise<void>((resolve) => setTimeout(resolve, 100));
-    mockMarkdownStore[eventId] = newMarkdown;
+    mockMarkdownStore[gradableEventId] = newMarkdown;
   },
 
-  getReward: async (eventId: number): Promise<GradableEvent> => {
-    if (eventId === 30) {
+  getReward: async (gradableEventId: number): Promise<GradableEvent> => {
+    if (gradableEventId === 30) {
       return {
         id: 1,
         name: "Git",
@@ -388,7 +393,7 @@ export const BetterEventSectionService = {
         topic: "Git jest cool",
       };
     }
-    if (eventId === 15) {
+    if (gradableEventId === 15) {
       return {
         id: 1,
         name: "Lab 1",
@@ -413,7 +418,7 @@ export const BetterEventSectionService = {
       };
     }
 
-    if (eventId === 1) {
+    if (gradableEventId === 1) {
       return {
         id: 1,
         name: "Lab 1",
@@ -442,7 +447,7 @@ export const BetterEventSectionService = {
   },
 
   getProjectVariant: async (
-    eventId: number
+    gradableEventId: number
   ): Promise<{ variant: string; description: Record<string, string> }> => {
     return {
       variant: "G-2",

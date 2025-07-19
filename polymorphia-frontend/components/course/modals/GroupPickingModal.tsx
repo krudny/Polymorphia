@@ -6,7 +6,7 @@ import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { SpeedDialModalProps } from "@/components/course/modals/ProjectVariantModal";
 import { useDebounce } from "use-debounce";
 import { useQuery } from "@tanstack/react-query";
-import { BetterEventSectionService } from "@/app/(logged-in)/course/BetterEventSectionService";
+import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { API_STATIC_URL } from "@/services/api";
 import XPCard from "@/components/xp-card/XPCard";
 import UserService from "@/app/(logged-in)/profile/UserService";
@@ -32,7 +32,7 @@ function GroupPickingModalContent() {
 
   const { data, isError } = useQuery({
     queryKey: ["allUsers", debouncedSearch],
-    queryFn: () => BetterEventSectionService.getRandomPeople(debouncedSearch),
+    queryFn: () => EventSectionService.getRandomPeople(debouncedSearch),
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -123,7 +123,7 @@ function GroupPickingModalContent() {
 }
 
 export default function GroupPickingModal({
-  eventId,
+  gradableEventId,
   onClosed,
 }: SpeedDialModalProps) {
   return (
