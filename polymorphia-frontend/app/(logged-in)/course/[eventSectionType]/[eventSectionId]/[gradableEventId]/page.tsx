@@ -15,19 +15,19 @@ export default function EventView() {
   return (
     <MarkdownProvider gradableEventId={gradableEventId}>
       <div className="w-full relative flex flex-col flex-1 mx-auto z-20">
-        <div className="fixed block right-5 bottom-5 lg:hidden z-[999]">
+        <div className="fixed block right-2 bottom-3 md:right-5 md:bottom-5 xl:hidden z-[999]">
           <SpeedDialMobile
             eventSectionType={eventSectionType}
             gradableEventId={gradableEventId}
           />
         </div>
-        <div className="right-5 bottom-5 hidden lg:fixed lg:block z-[999]">
+        <div className="right-5 bottom-5 hidden lg:fixed xl:block z-[999]">
           <SpeedDialDesktop
             eventSectionType={eventSectionType}
             gradableEventId={gradableEventId}
           />
         </div>
-        <div className="max-w-[1200px] w-full h-full flex-col-centered flex-1 mx-auto my-10 -z-50">
+        <div className="p-7 max-w-[900px] w-full h-full flex-col-centered flex-1 md:mx-auto 2xl:max-w-[1200px]">
           <MarkdownWrapper />
         </div>
       </div>

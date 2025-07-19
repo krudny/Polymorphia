@@ -5,19 +5,31 @@ import { API_STATIC_URL } from "@/services/api";
 import Image from "next/image";
 
 export const markdownConfig: Components = {
-  h1: ({ ...props }) => <h1 className="text-5xl my-10 first:mt-0" {...props} />,
+  h1: ({ ...props }) => (
+    <h1 className="text-4xl my-5 lg:text-5xl lg:my-10 first:mt-0" {...props} />
+  ),
   h2: ({ ...props }) => (
-    <h2 className="text-[2.5rem] my-7 first:mt-0" {...props} />
+    <h2
+      className="text-[2rem] my-4 lg:text-[2.5rem] lg:my-7 first:mt-0"
+      {...props}
+    />
   ),
   h3: ({ ...props }) => (
     <h3 className="text-[2.2rem] my-4 first:mt-0" {...props} />
   ),
   p: ({ ...props }) => (
-    <p className="text-3xl mt-5 first:mt-0 leading-11" {...props} />
+    <p
+      className="text-[1.6rem] leading-8 mt-3 lg:text-3xl lg:mt-5 lg:leading-11 first:mt-0"
+      {...props}
+    />
   ),
-  ol: ({ ...props }) => <ol className="list-decimal pl-16" {...props} />,
-  ul: ({ ...props }) => <ul className="list-disc pl-16" {...props} />,
-  li: ({ ...props }) => <li className="text-3xl my-2" {...props} />,
+  ol: ({ ...props }) => (
+    <ol className="pl-8 list-decimal lg:pl-16" {...props} />
+  ),
+  ul: ({ ...props }) => <ul className="pl-8 list-disc lg:pl-16" {...props} />,
+  li: ({ ...props }) => (
+    <li className="text-[1.6rem] my-1 lg:text-3xl lg:my-2" {...props} />
+  ),
   strong: ({ children, ...props }) => (
     <span className="font-normal" {...props}>
       {children}
