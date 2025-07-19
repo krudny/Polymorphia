@@ -9,7 +9,8 @@ import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { TitleProvider } from "@/components/navigation/TitleContext";
 import { ThemeProvider } from "next-themes";
-import { createTheme, ThemeProvider as ThemeProviderMui } from "@mui/material";
+import { ThemeProvider as ThemeProviderMui } from "@mui/material";
+import { themeConfig } from "@/components/speed-dial/config";
 
 const leagueGothic = League_Gothic({
   subsets: ["latin"],
@@ -31,29 +32,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [queryClient] = useState(() => new QueryClient());
-
-  const theme = createTheme({
-    components: {
-      MuiTooltip: {
-        styleOverrides: {
-          tooltip: {
-            backgroundColor: "#262626",
-            color: "#d4d4d4",
-            fontFamily: "var(--font-league)",
-            fontSize: 20,
-            borderRadius: 8,
-            padding: "8px 16px",
-            display: "flex",
-            alignItems: "center",
-          },
-          arrow: {
-            color: "#262626",
-          },
-        },
-      },
-    },
-  });
-
   return (
     <html
       lang="pl"
@@ -66,7 +44,7 @@ export default function RootLayout({
       <body
         className={`${leagueGothic.className} ${leagueGothic.variable} ${materialSymbols.variable} text-primary-dark dark:text-secondary-light`}
       >
-        <ThemeProviderMui theme={theme}>
+        <ThemeProviderMui theme={themeConfig}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
