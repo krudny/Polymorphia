@@ -29,6 +29,7 @@ export default function SpeedDialMobile({
           position: "absolute",
           bottom: 0,
           right: 0,
+          zIndex: 9999,
         }}
         FabProps={{
           style: {
