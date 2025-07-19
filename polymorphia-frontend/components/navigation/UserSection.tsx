@@ -5,13 +5,13 @@ import { useContext } from "react";
 import { UserContext } from "@/components/providers/user/UserContext";
 
 export default function UserSection() {
-  const { animalName, evolutionStage, profileImage } = useContext(UserContext);
+  const { animalName, evolutionStage, imageUrl } = useContext(UserContext);
 
   return (
     <div className="user-section">
       <div className="user-section-image-wrapper">
         <Image
-          src={`${API_STATIC_URL}${profileImage}`}
+          src={`${API_STATIC_URL}/${imageUrl}`}
           alt="Zwierzak użytkownika"
           fill
           priority

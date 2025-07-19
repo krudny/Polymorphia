@@ -9,10 +9,13 @@ import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { TitleProvider } from "@/components/navigation/TitleContext";
 import { ThemeProvider } from "next-themes";
+import { ThemeProvider as ThemeProviderMui } from "@mui/material";
+import { themeConfig } from "@/components/speed-dial/config";
 
 const leagueGothic = League_Gothic({
   subsets: ["latin"],
   display: "swap",
+  variable: "--font-league",
 });
 
 const materialSymbols = localFont({
@@ -29,7 +32,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [queryClient] = useState(() => new QueryClient());
-
   return (
     <html
       lang="pl"
@@ -40,21 +42,23 @@ export default function RootLayout({
         <meta name="theme-color" content="#262626" />
       </head>
       <body
-        className={`${leagueGothic.className} ${materialSymbols.variable} text-primary-dark dark:text-secondary-light`}
+        className={`${leagueGothic.className} ${leagueGothic.variable} ${materialSymbols.variable} text-primary-dark dark:text-secondary-light`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          storageKey="theme"
-        >
-          <TitleProvider>
-            <QueryClientProvider client={queryClient}>
-              <Toaster toastOptions={{ style: { fontSize: "1.5rem" } }} />
-              {children}
-            </QueryClientProvider>
-          </TitleProvider>
-        </ThemeProvider>
+        <ThemeProviderMui theme={themeConfig}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            storageKey="theme"
+          >
+            <TitleProvider>
+              <QueryClientProvider client={queryClient}>
+                <Toaster toastOptions={{ style: { fontSize: "1.5rem" } }} />
+                {children}
+              </QueryClientProvider>
+            </TitleProvider>
+          </ThemeProvider>
+        </ThemeProviderMui>
       </body>
     </html>
   );

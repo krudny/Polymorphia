@@ -7,9 +7,9 @@ import "./index.css";
 export default function RewardsInfo({ grade, maxXp }: RewardsInfoProps) {
   return (
     <section className="gradable-event-section">
-      <h1>Nagroda</h1>
       {grade !== undefined ? (
         <>
+          <h1>Nagroda</h1>
           <div className="gradable-event-section-xp">
             <h2>Punkty doświadczenia</h2>
             <div className="gradable-event-section-progress-bar">
@@ -29,11 +29,11 @@ export default function RewardsInfo({ grade, maxXp }: RewardsInfoProps) {
                 {grade?.chests.map((chest) => (
                   <div
                     className="gradable-event-section-chests-image-wrapper"
-                    key={chest.assignedId}
+                    key={chest.id}
                   >
                     <Image
-                      src={`${API_STATIC_URL}/${chest.chest.imageUrl}`}
-                      alt={chest.chest.name}
+                      src={`${API_STATIC_URL}/${chest.imageUrl}`}
+                      alt={chest.name}
                       fill
                     />
                   </div>

@@ -33,6 +33,7 @@ export default function ButtonWithBorder({
   size = "md",
   isActive,
   forceDark,
+  icon,
 }: ButtonWithBorderProps & VariantProps) {
   return (
     <button
@@ -42,6 +43,7 @@ export default function ButtonWithBorder({
         className
       )}
     >
+      {icon && <span className="material-symbols">{icon}</span>}
       {text}
     </button>
   );

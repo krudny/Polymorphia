@@ -13,8 +13,8 @@ export default function BonusItemCard({ item }: BonusItemCardProps) {
         alt: item.item.name,
       }}
       size="xs"
-      xp={`+${item.bonusXp} xp`}
-      isSumVisible={false}
+      xp={`+${item.bonusXp}`}
+      isSumLabelVisible={false}
     />
   );
 }

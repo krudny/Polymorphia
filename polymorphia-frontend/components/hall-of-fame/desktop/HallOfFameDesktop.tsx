@@ -40,7 +40,7 @@ export default function HallOfFameDesktop() {
           </div>
           <div className="hall-of-fame-desktop-rank-wrapper">
             {isLoading ? (
-              <div className="hall-of-fame-loading-wrapper">
+              <div className="hall-of-fame-loading-wrapper hidden lg:block">
                 <Loading />
               </div>
             ) : (

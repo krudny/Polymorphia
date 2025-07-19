@@ -32,7 +32,7 @@
 }
 
 .equipment-locked-item {
-    @apply absolute bg-neutral-300/70 dark:bg-primary-dark/80 flex-centered w-full h-full;
+    @apply absolute bg-secondary-gray/70 dark:bg-primary-dark/80 flex-centered w-full h-full;
 
     span {
         @apply material-symbols;

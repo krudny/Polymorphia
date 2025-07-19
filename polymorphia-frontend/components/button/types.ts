@@ -1,7 +1,8 @@
 export interface ButtonWithBorderProps {
-  text: string;
+  text?: string;
   className?: string;
   onClick?: () => void;
+  icon?: string;
 }
 
 export type VariantProps = {

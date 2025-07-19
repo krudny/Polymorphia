@@ -10,9 +10,9 @@ import Line from "@/components/navigation/Line";
 import { animateNavbar } from "@/animations/Navigation";
 import "./index.css";
 import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { updateMenuItems } from "@/components/course/event-section/EventSectionUtils";
 import { useTitle } from "./TitleContext";
+import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 
 export default function Navbar() {
   const { isNavbarExpanded, setIsNavbarExpanded } =

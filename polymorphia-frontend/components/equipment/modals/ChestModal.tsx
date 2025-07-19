@@ -29,8 +29,8 @@ export default function ChestModal() {
               alt: item.title,
             }}
             size="xs"
-            xp={`+${item.bonusXp} xp`}
-            isSumVisible={false}
+            xp={`+${item.bonusXp}`}
+            isSumLabelVisible={false}
           />
         ))}
       </div>

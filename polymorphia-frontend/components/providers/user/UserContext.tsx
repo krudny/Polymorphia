@@ -2,16 +2,15 @@ import { createContext, ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import UserService from "@/app/(logged-in)/profile/UserService";
 import Loading from "@/components/loading/Loading";
-import { UserContextInterface } from "@/components/providers/user/types";
+import { UserDetailsDTO } from "@/interfaces/api/DTO";
 
-export const UserContext = createContext<UserContextInterface>({
-  userId: 0,
-  userName: "",
+export const UserContext = createContext<UserDetailsDTO>({
+  studentName: "",
   animalName: "",
   evolutionStage: "",
-  currentXP: 0,
-  profileImage: "",
-  role: "",
+  imageUrl: "",
+  position: 0,
+  group: "",
 });
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
@@ -25,13 +24,12 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   return (
     <UserContext.Provider
       value={{
-        userId: userData!.userId,
-        userName: userData!.userName,
+        studentName: userData!.studentName,
         animalName: userData!.animalName,
         evolutionStage: userData!.evolutionStage,
-        currentXP: userData!.currentXP,
-        profileImage: userData!.profileImage,
-        role: userData!.role,
+        imageUrl: userData!.imageUrl,
+        group: userData!.group,
+        position: userData!.position,
       }}
     >
       {children}

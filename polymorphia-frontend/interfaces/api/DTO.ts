@@ -1,5 +1,16 @@
 export type ChestBehavior = "ALL" | "ONE_OF_MANY";
 
+export interface EvolutionStageResponseDto {
+  id: number;
+  name: string;
+  description: string;
+  minXp: number;
+  grade: number;
+  imageUrl: string;
+  courseId: number;
+  gradingText: string;
+}
+
 export interface ItemResponseDTO {
   id: number;
   name: string;
@@ -10,17 +21,6 @@ export interface ItemResponseDTO {
   eventSectionId: number;
   chestIds: number[];
   textBehavior: string;
-}
-
-export interface EvolutionStageResponseDto {
-  id: number;
-  name: string;
-  description: string;
-  minXp: number;
-  grade: number;
-  imageUrl: string;
-  courseId: number;
-  gradingText: string;
 }
 
 export interface ChestResponseDto {
@@ -82,8 +82,9 @@ export interface HallOfFameRecordDTO {
   xpDetails: Record<string, string>;
 }
 
+//TODO: handle which one is optional
 export interface UserDetailsDTO {
-  studentName?: string;
+  studentName: string;
   animalName: string;
   evolutionStage: string;
   group: string;

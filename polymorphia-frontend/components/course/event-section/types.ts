@@ -1,6 +1,13 @@
-import { ModalProps } from "../../modal/types";
-
 export type EventSectionType = "assignment" | "test" | "project";
+
+export interface EventSection {
+  id: number;
+  type: EventSectionType;
+  name: string;
+  gainedXp: string; // "1.2"
+  bonuses: BonusInfo[];
+  totalXp: string; // "1.2"
+}
 
 export interface EventSectionShortResponseDto {
   id: number;
@@ -93,35 +100,6 @@ export interface EventChestResponseDto {
   receivedDate: string;
 }
 
-export interface EventSection {
-  id: number;
-  type: EventSectionType;
-  name: string;
-  gainedXp: string; // "1.2"
-  bonuses: BonusInfo[];
-  totalXp: string; // "1.2"
-}
-
-export interface GradableEventCore {
-  id: number;
-  name: string;
-  topic?: string;
-  gainedXp?: string; // "1.2", undefined if there is no grade
-  hidden?: boolean;
-}
-
-export interface GradableEventCoreResponse {
-  data: GradableEventCore[];
-  page: {
-    totalPages: number;
-  };
-}
-
-export interface SectionViewProps {
-  eventSectionId: number;
-  eventSectionType: EventSectionType;
-}
-
 export interface BonusInfo {
   name: string;
   bonusXp: string; // "1.2"
@@ -147,6 +125,7 @@ export interface GradableEvent {
   maxXp: string; // "1.2"
   hidden?: boolean;
   grade?: Grade;
+  topic?: string;
 }
 
 export type Test = GradableEvent;
@@ -158,21 +137,13 @@ export interface Grade {
 
 export interface GradeChest {
   assignedId: number;
-  chest: {
-    id: number;
-    name: string;
-    imageUrl: string;
-    opened: boolean;
-  };
+  id: number;
+  name: string;
+  imageUrl: string;
+  opened: boolean;
 }
 
 export interface RewardsInfoProps {
   grade?: Grade;
   maxXp: string;
-}
-
-export interface TestDetailsModalProps
-  extends Omit<ModalProps, "title" | "isDataPresented" | "children"> {
-  eventSectionId: number;
-  selectedGradableEventId: number | null;
 }
