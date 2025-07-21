@@ -27,7 +27,7 @@ export default function EventView() {
             gradableEventId={gradableEventId}
           />
         </div>
-        <div className="p-7 max-w-[900px] w-full h-full flex-col-centered flex-1 md:mx-auto 2xl:max-w-[1200px]">
+        <div className="p-7 md:px-24 md:py-12 w-full h-full flex-col-centered flex-1 md:mx-auto 2xl:max-w-[1300px]">
           <MarkdownWrapper />
         </div>
       </div>
