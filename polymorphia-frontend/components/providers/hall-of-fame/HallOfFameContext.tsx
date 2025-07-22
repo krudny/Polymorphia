@@ -101,7 +101,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
         {
           label: "Bonusy",
           value: "Bonusy",
-          priority: Number.MAX_SAFE_INTEGER,
+          order: Number.MAX_SAFE_INTEGER,
           isSelected: false,
         },
         sortByFilter
@@ -110,7 +110,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
         {
           label: "Bonusy",
           value: "Bonusy",
-          priority: Number.MAX_SAFE_INTEGER,
+          order: Number.MAX_SAFE_INTEGER,
           isSelected: true,
         },
         rankingOptionsFilter
@@ -119,7 +119,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
         {
           label: "Suma",
           value: "total",
-          priority: Number.MAX_SAFE_INTEGER,
+          order: Number.MAX_SAFE_INTEGER,
           isSelected: true,
         },
         sortByFilter

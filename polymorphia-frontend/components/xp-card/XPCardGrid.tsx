@@ -52,11 +52,11 @@ export default function XPCardGrid({
   });
 
   useEffect(() => {
-    if (eventSections) {
-      setTitle(
-        eventSections.find((section) => section.id === eventSectionId).name
-      );
-    }
+    const section = eventSections?.find(
+      (section) => section.id === eventSectionId
+    );
+    const eventSectionName = section?.name ?? "";
+    setTitle(eventSectionName);
   }, [setTitle, eventSectionId, eventSections]);
 
   useEffect(() => {

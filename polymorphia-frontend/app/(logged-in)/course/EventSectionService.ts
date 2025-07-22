@@ -7,7 +7,10 @@ import {
   studentNames,
 } from "@/app/(logged-in)/hall-of-fame/HallOfFameService";
 import { UserDetailsDTO } from "@/interfaces/api/DTO";
-import { BonusInfoItem } from "@/components/course/event-section/types";
+import {
+  BonusInfoItem,
+  EventSectionResponseDTO,
+} from "@/components/course/event-section/types";
 
 const allData: UserDetailsDTO[] = [];
 
@@ -25,8 +28,6 @@ for (let i = 0; i < 250; i++) {
   };
   allData.push(item);
 }
-
-type EventSectionType = "assignment" | "project" | "test";
 
 export interface GradableEventResponseDTO {
   id: number;
@@ -72,23 +73,44 @@ export const EventSectionService = {
       {
         id: 2,
         name: "Laboratorium",
-        eventSectionType: "assignment",
+        type: "assignment",
         order: 2,
+        hidden: false,
       },
-      { id: 3, name: "Projekt 1", eventSectionType: "project", order: 4 },
-      { id: 1, name: "Kartkówka", eventSectionType: "test", order: 1 },
-      { id: 4, name: "Git", eventSectionType: "assignment", order: 0 },
+      {
+        id: 3,
+        name: "Projekt 1",
+        type: "project",
+        order: 4,
+        hidden: false,
+      },
+      {
+        id: 1,
+        name: "Kartkówka",
+        type: "test",
+        order: 1,
+        hidden: false,
+      },
+      {
+        id: 4,
+        name: "Git",
+        type: "assignment",
+        order: 0,
+        hidden: false,
+      },
       {
         id: 5,
         name: "Specjalny lab",
-        eventSectionType: "assignment",
+        type: "assignment",
         order: 3,
+        hidden: false,
       },
       {
         id: 6,
         name: "Projekt 2",
-        eventSectionType: "project",
+        type: "project",
         order: 5,
+        hidden: false,
       },
     ];
     return data.sort((a, b) => a.order - b.order);

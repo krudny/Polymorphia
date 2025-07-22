@@ -1,29 +1,16 @@
-export type EventSectionType = "assignment" | "test" | "project";
+// MOJE
 
-export interface EventSection {
+export type EventSectionType = "assignment" | "project" | "test";
+
+export interface EventSectionResponseDTO {
   id: number;
+  name: string;
   type: EventSectionType;
-  name: string;
-  gainedXp: string; // "1.2"
-  bonuses: BonusInfo[];
-  totalXp: string; // "1.2"
+  order: number;
+  hidden: boolean;
 }
 
-export interface EventSectionShortResponseDto {
-  id: number;
-  name: string;
-  eventSectionType: EventSectionType;
-  hidden?: boolean;
-  priority: number;
-}
-
-export interface EventSectionResponseDto {
-  name: string;
-  gainedXp: number;
-  flatBonus: BonusDto;
-  percentageBonus: BonusDto;
-  totalXp: number;
-}
+// RESZTA
 
 export interface BonusDto {
   xp: number;

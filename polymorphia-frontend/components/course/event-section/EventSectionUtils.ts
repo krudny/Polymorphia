@@ -1,16 +1,18 @@
 "use client";
 
-import { EventSectionShortResponseDto } from "@/components/course/event-section/types";
+import { EventSectionResponseDTO } from "@/components/course/event-section/types";
 import { MenuOption } from "@/components/navigation/types";
 
 export function updateMenuItems(
   menuItems: MenuOption[],
-  eventSections: EventSectionShortResponseDto[]
+  eventSections: EventSectionResponseDTO[]
 ) {
   const courseItem = menuItems.filter(
     (menuOption) => menuOption.text === "Kurs"
   )[0];
-  courseItem.link = `course/${eventSections[0].eventSectionType}/${eventSections[0].id}`;
+
+  courseItem.link = `course/${eventSections[0].type}/${eventSections[0].id}`;
+  console.log(courseItem);
 
   courseItem.subItems = eventSections
     .filter((eventSection) => !eventSection.hidden)
@@ -18,7 +20,7 @@ export function updateMenuItems(
       // TODO: use correct courseID
       return {
         text: eventSection.name,
-        link: `course/${eventSection.eventSectionType}/${eventSection.id}`,
+        link: `course/${eventSection.type}/${eventSection.id}`,
       };
     });
 }
