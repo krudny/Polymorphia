@@ -2,11 +2,11 @@
 
 import { useContext, useEffect, useRef } from "react";
 import { MarkdownContext } from "@/components/providers/markdown/MarkdownContext";
-import { useScaleShow } from "@/animations/General";
+import { useFadeInAnimate } from "@/animations/FadeIn";
 
 export default function MarkdownEditor() {
   const { newMarkdown, setNewMarkdown } = useContext(MarkdownContext);
-  const wrapperRef = useScaleShow(!!newMarkdown);
+  const wrapperRef = useFadeInAnimate(!!newMarkdown);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -22,7 +22,7 @@ export default function MarkdownEditor() {
 
   return (
     <div
-      className="w-full flex flex-col items-center justify-center lg:px-4"
+      className="w-full flex flex-col items-center justify-center opacity-0 lg:px-4"
       ref={wrapperRef}
     >
       <textarea

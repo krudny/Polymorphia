@@ -5,7 +5,7 @@ import NavigationArrow from "@/components/slider/NavigationArrow";
 import NavigationDots from "@/components/slider/NavigationDots";
 import SingleSlide from "@/components/slider/SingleSlide";
 import { shiftArray } from "@/components/slider/utils";
-import { useScaleShow } from "@/animations/General";
+import { useScaleShow } from "@/animations/ScaleShow";
 import "./index.css";
 import { SliderProps } from "@/components/slider/types";
 

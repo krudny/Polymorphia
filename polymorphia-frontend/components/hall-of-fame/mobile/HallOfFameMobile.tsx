@@ -5,7 +5,7 @@ import Pagination from "@/components/pagination/Pagination";
 import RankCardMobile from "@/components/hall-of-fame/mobile/HallOfFameCardMobile";
 import { useContext } from "react";
 import "./index.css";
-import { useScaleShow } from "@/animations/General";
+import { useScaleShow } from "@/animations/ScaleShow";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
 import { HallOfFameRecordDTO } from "@/interfaces/api/DTO";

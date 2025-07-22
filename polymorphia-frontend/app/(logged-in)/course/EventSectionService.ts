@@ -350,10 +350,9 @@ export const EventSectionService = {
   getMarkdown: async (
     gradableEventId: number
   ): Promise<MarkdownResponseDTO> => {
-    await new Promise<void>((resolve) => setTimeout(resolve, 1000));
-
     const markdown = mockMarkdownStore[gradableEventId];
     if (markdown !== undefined) {
+      await new Promise<void>((resolve) => setTimeout(resolve, 300));
       return { markdown };
     } else {
       return { markdown: "" };

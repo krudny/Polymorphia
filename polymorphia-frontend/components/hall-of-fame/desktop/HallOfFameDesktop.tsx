@@ -1,4 +1,4 @@
-import { useScaleShow } from "@/animations/General";
+import { useScaleShow } from "@/animations/ScaleShow";
 import Pagination from "@/components/pagination/Pagination";
 import "./index.css";
 import "../general/index.css";

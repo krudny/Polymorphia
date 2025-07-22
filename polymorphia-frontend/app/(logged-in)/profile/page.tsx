@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useScaleShow } from "@/animations/General";
+import { useScaleShow } from "@/animations/ScaleShow";
 import { API_STATIC_URL } from "@/services/api";
 import "./index.css";
 import ProgressBar from "@/components/progressbar/ProgressBar";

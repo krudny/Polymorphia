@@ -12,6 +12,8 @@
 }
 
 .markdown {
+    @apply opacity-0;
+
     h1 code {
         @apply text-4xl lg:text-5xl;
     }

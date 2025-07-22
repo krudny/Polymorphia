@@ -3,7 +3,7 @@
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { useContext, useEffect } from "react";
 import { NavigationContext } from "@/components/providers/navigation/NavigationContext";
-import { useScaleShow } from "@/animations/General";
+import { useScaleShow } from "@/animations/ScaleShow";
 import { useTitle } from "@/components/navigation/TitleContext";
 import toast from "react-hot-toast";
 import { useTheme } from "next-themes";
