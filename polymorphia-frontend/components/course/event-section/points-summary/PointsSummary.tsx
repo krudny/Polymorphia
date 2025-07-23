@@ -37,7 +37,7 @@ export default function PointsSummary({
   }
 
   const flatBonus = {
-    name: "Bonusy punktkowe",
+    name: "Bonusy punktowe",
     bonusXp: `${pointsSummary.flatBonus.xp.toFixed(1)} xp`,
     items: pointsSummary.flatBonus.items,
   };
