@@ -77,7 +77,7 @@ export function useSpeedDialItemsFactory(
   const rejectMarkdownItem: SpeedDialItem = {
     id: 7,
     order: 0,
-    label: "Anuluj edycje",
+    label: "Anuluj edycję",
     icon: "close",
     onClick: () => rejectMarkdown(),
     color: "#a30d0d",
