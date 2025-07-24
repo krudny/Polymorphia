@@ -36,13 +36,12 @@ const xpCard = tv({
 export default function XPCard({
   title,
   subtitle,
-  xp,
+  component,
   image,
   onClick,
   size,
   color,
   forceWidth,
-  isSumLabelVisible = true,
 }: XPCardProps & XPCardVariantProps) {
   return (
     <div
@@ -61,12 +60,7 @@ export default function XPCard({
         <h1>{title}</h1>
         <h2>{subtitle}</h2>
       </div>
-      {xp && (
-        <div className="xp-card-xp">
-          <h1>{xp} xp</h1>
-          {isSumLabelVisible && <h2>Suma</h2>}
-        </div>
-      )}
+      <div className="xp-card-component">{component}</div>
     </div>
   );
 }

@@ -1,15 +1,16 @@
 "use client";
 
-import { useContext, useEffect, useRef } from "react";
+import { ChangeEvent, useContext, useEffect, useRef } from "react";
 import { MarkdownContext } from "@/components/providers/markdown/MarkdownContext";
 import { useFadeInAnimate } from "@/animations/FadeIn";
+import "./index.css";
 
 export default function MarkdownEditor() {
   const { newMarkdown, setNewMarkdown } = useContext(MarkdownContext);
   const wrapperRef = useFadeInAnimate(!!newMarkdown);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setNewMarkdown(e.target.value);
   };
 
@@ -21,16 +22,12 @@ export default function MarkdownEditor() {
   }, [newMarkdown]);
 
   return (
-    <div
-      className="w-full flex flex-col items-center justify-center opacity-0 lg:px-4"
-      ref={wrapperRef}
-    >
+    <div className="markdown-editor" ref={wrapperRef}>
       <textarea
         ref={textareaRef}
         value={newMarkdown}
         onChange={handleChange}
         placeholder="Wpisz coś tutaj..."
-        className="w-full max-w-[1200px] min-h-[300px] text-2xl text-primary-dark rounded-xl custom-scrollbar outline-primary-dark focus:outline-none resize-none"
       />
     </div>
   );

@@ -1,0 +1,8 @@
+@import "tailwindcss";
+@import "../../../styles/globals.css";
+
+/* XPCardPoints */
+
+.xp-card-points {
+    @apply w-full h-full flex-col-centered;
+}

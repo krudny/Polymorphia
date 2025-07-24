@@ -58,7 +58,7 @@
     }
 }
 
-.xp-card-xp {
+.xp-card-component {
     @apply box-border flex flex-col items-center justify-center shrink-0 h-full p-5 gap-2 bg-secondary-gray dark:bg-secondary-dark;
 }
 
@@ -66,7 +66,7 @@
     @apply h-20 min-[400px]:h-24 drop-shadow-sm rounded-lg;
 
     .xp-card-image,
-    .xp-card-xp {
+    .xp-card-component {
         @apply w-20 h-20 min-[400px]:w-24 min-[400px]:h-24;
     }
 
@@ -74,12 +74,12 @@
         @apply min-w-32 max-w-xl min-[400px]:min-w-48 px-4 py-2 gap-0;
     }
 
-    .xp-card-xp {
+    .xp-card-component {
         @apply p-1;
     }
 
     .xp-card-middle,
-    .xp-card-xp {
+    .xp-card-component {
         h1 {
             @apply text-2xl min-[400px]:text-[2rem];
         }
@@ -101,12 +101,12 @@
         @apply w-30 h-30;
     }
 
-    .xp-card-xp {
+    .xp-card-component {
         @apply w-30 h-30;
     }
 
     .xp-card-middle,
-    .xp-card-xp {
+    .xp-card-component {
         h1 {
             @apply text-4xl;
         }
@@ -128,12 +128,12 @@
         @apply w-40 h-40;
     }
 
-    .xp-card-xp {
+    .xp-card-component {
         @apply w-40 h-40;
     }
 
     .xp-card-middle,
-    .xp-card-xp {
+    .xp-card-component {
         h1 {
             @apply text-5xl;
         }
@@ -155,12 +155,12 @@
         @apply w-50 h-50;
     }
 
-    .xp-card-xp {
+    .xp-card-component {
         @apply w-50 h-50;
     }
 
     .xp-card-middle,
-    .xp-card-xp {
+    .xp-card-component {
         h1 {
             @apply text-6xl;
         }
@@ -178,7 +178,7 @@
 .xp-card-hall-of-fame-desktop {
     @apply w-full h-full;
 
-    .xp-card-xp {
+    .xp-card-component {
         @apply w-fit px-6 h-full;
     }
 
@@ -187,7 +187,7 @@
     }
 
     .xp-card-middle,
-    .xp-card-xp {
+    .xp-card-component {
         @apply gap-0 2xl:gap-1;
 
         h1 {

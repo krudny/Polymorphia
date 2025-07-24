@@ -21,7 +21,7 @@ export default function MarkdownViewer() {
   }
 
   return (
-    <div className="w-full custom-scrollbar markdown" ref={wrapperRef}>
+    <div className="markdown-viewer" ref={wrapperRef}>
       <Markdown components={markdownConfig}>{markdown}</Markdown>
     </div>
   );
