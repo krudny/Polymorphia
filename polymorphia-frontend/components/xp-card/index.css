@@ -59,7 +59,7 @@
 }
 
 .xp-card-component {
-    @apply box-border flex flex-col items-center justify-center shrink-0 h-full p-5 gap-2 bg-secondary-gray dark:bg-secondary-dark;
+    @apply box-border flex-col-centered shrink-0 h-full;
 }
 
 .xp-card-xs {

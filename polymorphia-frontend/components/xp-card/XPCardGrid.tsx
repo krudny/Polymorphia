@@ -60,9 +60,10 @@ export default function XPCardGrid({
     setTitle(eventSectionName);
   }, [setTitle, eventSectionId, eventSections]);
 
+  // if there's only one gradable event, there's fast forward to content omitting XPCardGrid.
   useEffect(() => {
     if (!isLoading && gradableEvents && gradableEvents.length === 1) {
-      router.push(
+      router.replace(
         `/course/${eventSectionType}/${eventSectionId}/${gradableEvents[0].id}`
       );
     }
@@ -129,47 +130,46 @@ export default function XPCardGrid({
 
   return (
     <>
-      {gradableEventsPage.length > 1 && (
+      {gradableEventsPage.length > 1 ? (
         <div className="xp-card-grid-center-vertically">
           <div className="xp-card-grid-point-summary-layout">
-            {gradableEventsPage.length > 0 ? (
-              <div className="xp-card-fading-edges">
-                <div
-                  ref={sliderRef}
-                  className={clsx(
-                    "xp-card-grid",
-                    `grid-cols-${pageCols}`,
-                    `grid-rows-${pageRows}`
-                  )}
-                >
-                  {gradableEventsPage.map((gradableEvent) => (
-                    <XPCard
-                      title={gradableEvent.name}
-                      subtitle={gradableEvent.topic ?? ""}
-                      key={gradableEvent.id}
-                      color={gradableEvent.gainedXp !== 0 ? "green" : "silver"}
-                      component={
-                        <XPCardPoints
-                          points={gradableEvent.gainedXp.toFixed(1).toString()}
-                          isSumVisible={true}
-                        />
-                      }
-                      size={mobile ? "sm" : "md"}
-                      forceWidth={!mobile}
-                      onClick={() => handleGradableEventClick(gradableEvent.id)}
-                    />
-                  ))}
-                </div>
+            <div className="xp-card-fading-edges">
+              <div
+                ref={sliderRef}
+                className={clsx(
+                  "xp-card-grid",
+                  `grid-cols-${pageCols}`,
+                  `grid-rows-${pageRows}`
+                )}
+              >
+                {gradableEventsPage.map((gradableEvent) => (
+                  <XPCard
+                    title={gradableEvent.name}
+                    subtitle={gradableEvent.topic ?? ""}
+                    key={gradableEvent.id}
+                    color={gradableEvent.gainedXp !== 0 ? "green" : "silver"}
+                    component={
+                      <XPCardPoints
+                        points={gradableEvent.gainedXp.toFixed(1).toString()}
+                        isSumVisible={true}
+                      />
+                    }
+                    size={mobile ? "sm" : "md"}
+                    forceWidth={!mobile}
+                    onClick={() => handleGradableEventClick(gradableEvent.id)}
+                  />
+                ))}
               </div>
-            ) : (
-              <div className="xp-card-no-grid">Brak aktywności.</div>
-            )}
+            </div>
             {mobile && gradableEventsPage.length > 0 && pagination}
             <PointsSummary ref={summaryRef} eventSectionId={eventSectionId} />
           </div>
           {!mobile && pagination}
         </div>
+      ) : (
+        <div className="xp-card-no-grid">Brak aktywności.</div>
       )}
+
       {eventSectionType === "test" && (
         <EventRewardModal
           gradableEventId={selectedEventId ?? undefined}

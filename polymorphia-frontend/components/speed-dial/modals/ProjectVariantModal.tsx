@@ -3,6 +3,9 @@ import Loading from "@/components/loading/Loading";
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
+import XPCard from "@/components/xp-card/XPCard";
+import XPCardProjectVariant from "@/components/xp-card/inner-components/XPCardProjectVariant";
+import { API_STATIC_URL } from "@/services/api";
 
 export default function ProjectVariantModal({
   gradableEventId,
@@ -15,12 +18,17 @@ export default function ProjectVariantModal({
     enabled: !!gradableEventId && eventSectionType === "project",
   });
 
+  const subtitle =
+    data && data.length > 0
+      ? `Twój wariant projektu to ${data.map((projectVariant) => projectVariant.shortCode).join("-")}`
+      : "";
+
   return (
     <Modal
       isDataPresented={true}
       onClosed={onClosed}
       title="Wariant projektu"
-      subtitle={`Twój wariant projektu to ${data?.variant ?? ""}.`}
+      subtitle={subtitle}
     >
       {isError && (
         <div className="gradable-event-section text-xl 2xl:text-2xl">
@@ -34,15 +42,21 @@ export default function ProjectVariantModal({
       )}
       {!isLoading && data && (
         <div className="flex flex-col gap-y-5 max-w-xl">
-          {Object.entries(data.description)
-            .reverse()
-            .map(([key, value]) => (
-              <div key={key}>
-                <p className="text-2xl whitespace-pre-line">
-                  {key} - {value}
-                </p>
-              </div>
-            ))}
+          {data.map((projectVariant, index) => (
+            <XPCard
+              title={projectVariant.name}
+              subtitle={projectVariant.category}
+              image={{
+                url: `${API_STATIC_URL}/${projectVariant.imageUrl}`,
+                alt: projectVariant.name,
+              }}
+              key={index}
+              component={
+                <XPCardProjectVariant shortCode={projectVariant.shortCode} />
+              }
+              size="sm"
+            />
+          ))}
         </div>
       )}
     </Modal>

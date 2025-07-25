@@ -1,5 +1,3 @@
-// MOJE
-
 export type EventSectionType = "assignment" | "project" | "test";
 
 export interface EventSectionResponseDTO {
@@ -9,8 +7,6 @@ export interface EventSectionResponseDTO {
   order: number;
   hidden: boolean;
 }
-
-// RESZTA
 
 export interface BonusDto {
   xp: number;

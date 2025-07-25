@@ -56,6 +56,13 @@ interface FlatBonus {
   items: BonusInfoItem[];
 }
 
+interface ProjectVariantResponseDTO {
+  name: string;
+  category: string;
+  shortCode: string;
+  imageUrl: string;
+}
+
 const mockMarkdownStore: Record<number, string> = {
   15: lab1,
   16: lab2,
@@ -469,14 +476,21 @@ export const EventSectionService = {
 
   getProjectVariant: async (
     gradableEventId: number
-  ): Promise<{ variant: string; description: Record<string, string> }> => {
-    return {
-      variant: "G-2",
-      description: {
-        G: "Dorodne Plony - preferowany jest rozkład równomierny, ale na pewnym kwadratowym podobszarze mapy (zajmującym 20% mapy) czasem pojawiają się większe rośliny, których zjedzenie dodaje zwierzakowi znacznie więcej energii. Każda taka roślina zajmuje kwadratowy obszar 2x2 pola. Obsługa sytuacji, w której więcej zwierzaków kończy ruch na jednym z pól należących do dużej rośliny powinna wyglądać tak samo jak w przypadku, gdy wiele zwierząt walczy o normalną roślinę na jednym polu.",
-        "2": "Podmianka - mutacja może też skutkować tym, że dwa geny zamienią się miejscami.",
+  ): Promise<ProjectVariantResponseDTO[]> => {
+    return [
+      {
+        shortCode: "G",
+        name: "Pożary",
+        category: "Mapa i roślinność",
+        imageUrl: "images/general/pozary.jpg",
       },
-    };
+      {
+        shortCode: "2",
+        name: "Podmianka",
+        category: "Zwierzaki",
+        imageUrl: "images/general/podmianka.jpg",
+      },
+    ];
   },
   getRandomPeople: async (searchTerm: string): Promise<UserDetailsDTO[]> => {
     let filteredData = allData;

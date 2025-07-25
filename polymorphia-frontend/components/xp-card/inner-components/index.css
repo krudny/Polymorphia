@@ -4,5 +4,15 @@
 /* XPCardPoints */
 
 .xp-card-points {
-    @apply w-full h-full flex-col-centered;
+    @apply w-full h-full flex-col-centered gap-2 bg-secondary-gray dark:bg-secondary-dark;
+}
+
+/* XPCardProjectVariant */
+
+.xp-card-project-variant {
+    @apply w-3/5 h-full flex-col-centered text-primary-gray self-end;
+
+    p {
+        @apply text-5xl;
+    }
 }
