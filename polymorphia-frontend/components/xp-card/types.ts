@@ -1,16 +1,15 @@
 import { EventSectionType } from "@/components/course/event-section/types";
-import { RefObject } from "react";
+import { ReactNode, RefObject } from "react";
 
 export interface XPCardProps {
   title: string;
   subtitle?: string;
-  xp?: string;
+  component?: ReactNode;
   image?: {
     url: string;
     alt: string;
   };
   onClick?: () => void;
-  isSumLabelVisible?: boolean;
 }
 
 export type XPCardVariantProps = {

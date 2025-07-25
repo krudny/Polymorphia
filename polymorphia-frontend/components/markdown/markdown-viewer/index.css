@@ -11,8 +11,10 @@
     @apply bg-primary-dark text-secondary-light text-sm p-4 rounded overflow-x-auto my-4;
 }
 
-.markdown {
-    @apply opacity-0;
+/* Markdown viewer */
+
+.markdown-viewer {
+    @apply w-full opacity-0 custom-scrollbar;
 
     h1 code {
         @apply text-4xl lg:text-5xl;

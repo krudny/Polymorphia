@@ -2,6 +2,7 @@
 
 import { EventSectionResponseDTO } from "@/components/course/event-section/types";
 import { MenuOption } from "@/components/navigation/types";
+import { RefObject } from "react";
 
 export function updateMenuItems(
   menuItems: MenuOption[],
@@ -12,7 +13,6 @@ export function updateMenuItems(
   )[0];
 
   courseItem.link = `course/${eventSections[0].type}/${eventSections[0].id}`;
-  console.log(courseItem);
 
   courseItem.subItems = eventSections
     .filter((eventSection) => !eventSection.hidden)
@@ -26,8 +26,8 @@ export function updateMenuItems(
 }
 
 export function setResizeObserver(
-  containerRef: React.RefObject<HTMLDivElement | null>,
-  summaryRef: React.RefObject<HTMLDivElement | null>,
+  containerRef: RefObject<HTMLDivElement | null>,
+  summaryRef: RefObject<HTMLDivElement | null>,
   setMobile: (v: boolean) => void,
   setPageCols: (n: number) => void,
   setPageRows: (n: number) => void

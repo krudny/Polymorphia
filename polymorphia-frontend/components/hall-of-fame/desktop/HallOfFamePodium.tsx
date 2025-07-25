@@ -3,6 +3,7 @@ import "./index.css";
 import Loading from "@/components/loading/Loading";
 import HallOfFameService from "@/app/(logged-in)/hall-of-fame/HallOfFameService";
 import { useQuery } from "@tanstack/react-query";
+import XPCardPoints from "@/components/xp-card/inner-components/XPCardPoints";
 
 export default function HallOfFamePodium() {
   const { data: podium = [], isLoading } = useQuery({
@@ -32,7 +33,9 @@ export default function HallOfFamePodium() {
                   ? "silver"
                   : "bronze"
             }
-            xp={item.xpDetails.total}
+            component={
+              <XPCardPoints points={item.xpDetails.total} isSumVisible={true} />
+            }
             size={"hofDesktop"}
           />
         </div>
