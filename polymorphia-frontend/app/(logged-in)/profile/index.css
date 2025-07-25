@@ -10,7 +10,7 @@
 }
 
 .profile-content-wrapper {
-  @apply flex-col-centered w-full mx-auto lg:flex-row lg:my-8;
+  @apply flex-col-centered w-full mx-auto lg:flex-row lg:my-6;
 }
 
 .profile-image-wrapper {
@@ -54,7 +54,7 @@
 }
 
 .profile-points {
-  @apply w-4/5 max-w-64 mt-2 sm:w-lg sm:max-w-full 2xl:w-2xl 2xl:mt-8;
+  @apply w-4/5 max-w-64 mt-2 sm:w-lg sm:max-w-full 2xl:w-2xl;
 }
 
 .profile-progress-bar-mobile {
@@ -62,5 +62,5 @@
 }
 
 .profile-progress-bar-desktop {
-  @apply hidden md:block w-full h-fit py-6 -mb-4 px-8;
+  @apply hidden md:block w-full h-fit pt-4 px-8;
 }
