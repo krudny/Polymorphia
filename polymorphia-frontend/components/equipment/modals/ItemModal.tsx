@@ -5,7 +5,6 @@ import { EquipmentContext } from "@/components/providers/equipment/EquipmentCont
 import { useContext } from "react";
 import Modal from "@/components/modal/Modal";
 import { Item } from "@/components/equipment/types";
-import XPCardPoints from "@/components/xp-card/inside-components/XPCardPoints";
 
 export default function ItemModal() {
   const { currentItemModalData, setCurrentItemModalData } =
@@ -30,7 +29,8 @@ export default function ItemModal() {
               alt: item.title,
             }}
             size="xs"
-            component={<XPCardPoints points={`+${item.bonusXp}`} />}
+            xp={`+${item.bonusXp}`}
+            isSumLabelVisible={false}
           />
         ))}
       </div>

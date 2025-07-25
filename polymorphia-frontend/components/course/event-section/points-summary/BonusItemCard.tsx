@@ -2,7 +2,6 @@ import { API_STATIC_URL } from "@/services/api";
 import "./index.css";
 import { BonusItemCardProps } from "@/components/course/event-section/points-summary/types";
 import XPCard from "../../../xp-card/XPCard";
-import XPCardPoints from "@/components/xp-card/inside-components/XPCardPoints";
 
 export default function BonusItemCard({ item }: BonusItemCardProps) {
   return (
@@ -14,7 +13,8 @@ export default function BonusItemCard({ item }: BonusItemCardProps) {
         alt: item.item.name,
       }}
       size="xs"
-      component={<XPCardPoints points={`+${item.bonusXp}`} />}
+      xp={`+${item.bonusXp}`}
+      isSumLabelVisible={false}
     />
   );
 }

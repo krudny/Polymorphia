@@ -1,4 +1,5 @@
-c
+@import "tailwindcss";
+@import "../../styles/globals.css";
 
 .background-wrapper {
     @apply fixed inset-0 ;

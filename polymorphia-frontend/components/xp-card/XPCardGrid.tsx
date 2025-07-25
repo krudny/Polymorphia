@@ -14,7 +14,6 @@ import PointsSummary from "@/components/course/event-section/points-summary/Poin
 import { setResizeObserver } from "@/components/course/event-section/EventSectionUtils";
 import EventRewardModal from "@/components/speed-dial/modals/EventRewardModal";
 import { useTitle } from "@/components/navigation/TitleContext";
-import XPCardPoints from "@/components/xp-card/inside-components/XPCardPoints";
 
 export default function XPCardGrid({
   eventSectionId,
@@ -148,11 +147,7 @@ export default function XPCardGrid({
                       subtitle={gradableEvent.topic ?? ""}
                       key={gradableEvent.id}
                       color={gradableEvent.gainedXp !== 0 ? "green" : "silver"}
-                      component={
-                        <XPCardPoints
-                          points={gradableEvent.gainedXp.toFixed(1).toString()}
-                        />
-                      }
+                      xp={gradableEvent.gainedXp.toFixed(1).toString()}
                       size={mobile ? "sm" : "md"}
                       forceWidth={!mobile}
                       onClick={() => handleGradableEventClick(gradableEvent.id)}
