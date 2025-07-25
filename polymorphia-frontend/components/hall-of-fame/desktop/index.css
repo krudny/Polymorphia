@@ -29,7 +29,7 @@
 }
 
 .hall-of-fame-podium {
-    @apply w-full h-full 2xl:h-[calc(33.333%-1rem)] max-h-36 2xl:max-h-52 rounded-xl;
+    @apply w-full h-full max-h-36 rounded-xl 2xl:max-h-52 2xl:h-[calc(33.333%-1rem)];
 }
 
 .hall-of-fame-desktop-content-wrapper {

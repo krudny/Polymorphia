@@ -179,7 +179,7 @@
     @apply w-full h-full;
 
     .xp-card-component {
-        @apply w-fit px-6 h-full;
+        @apply w-32 h-full;
     }
 
     .xp-card-middle {
