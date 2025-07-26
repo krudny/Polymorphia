@@ -1,14 +1,12 @@
-import ProgressBarTextLabels from "@/components/progressbar/ProgressBarTextLabels";
 import ProgressBarLine from "@/components/progressbar/ProgressBarLine";
-import ProgressBarSquare from "@/components/progressbar/ProgressBarSquare";
 import {
   FillsCalc,
   isProgressBarInputValid,
 } from "@/components/progressbar/ProgressBarUtil";
-import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLabels";
 import toast from "react-hot-toast";
 import "./index.css";
 import { ProgressBarProps } from "@/components/progressbar/types";
+import ProgressBarSquare from "@/components/progressbar/ProgressBarSquare";
 
 export default function ProgressBar(props: ProgressBarProps) {
   if (!isProgressBarInputValid(props)) {
@@ -25,6 +23,7 @@ export default function ProgressBar(props: ProgressBarProps) {
     upperTextLabels,
     bottomTextLabels,
     labelsSize,
+    horizontal = true,
   } = props;
 
   const scaledCurrentXP = ((currentXP - minXP) / (maxXP - minXP)) * 100;
@@ -32,14 +31,14 @@ export default function ProgressBar(props: ProgressBarProps) {
 
   return (
     <div className="progressbar">
-      {upperTextLabels && upperTextLabels.length > 0 && (
-        <div className="progressbar-label-container">
-          <ProgressBarTextLabels
-            textLabels={upperTextLabels}
-            size={labelsSize}
-          />
-        </div>
-      )}
+      {/*{upperTextLabels && upperTextLabels.length > 0 && (*/}
+      {/*  <div className="progressbar-label-container">*/}
+      {/*    <ProgressBarTextLabels*/}
+      {/*      textLabels={upperTextLabels}*/}
+      {/*      size={labelsSize}*/}
+      {/*    />*/}
+      {/*  </div>*/}
+      {/*)}*/}
 
       <div className="progressbar-progress-container">
         {Array.from({ length: numSquares - 1 }, (_, index) => {
@@ -63,22 +62,22 @@ export default function ProgressBar(props: ProgressBarProps) {
         ))}
       </div>
 
-      {bottomTextLabels && bottomTextLabels.length > 0 ? (
-        <div className="progressbar-label-container">
-          <ProgressBarTextLabels
-            textLabels={bottomTextLabels}
-            size={labelsSize}
-          />
-        </div>
-      ) : (
-        <div className="progressbar-label-container">
-          <ProgressBarRangeLabels
-            minXP={minXP}
-            currentXP={currentXP}
-            maxXP={maxXP}
-          />
-        </div>
-      )}
+      {/*{bottomTextLabels && bottomTextLabels.length > 0 ? (*/}
+      {/*  <div className="progressbar-label-container">*/}
+      {/*    <ProgressBarTextLabels*/}
+      {/*      textLabels={bottomTextLabels}*/}
+      {/*      size={labelsSize}*/}
+      {/*    />*/}
+      {/*  </div>*/}
+      {/*) : (*/}
+      {/*  <div className="progressbar-label-container">*/}
+      {/*    <ProgressBarRangeLabels*/}
+      {/*      minXP={minXP}*/}
+      {/*      currentXP={currentXP}*/}
+      {/*      maxXP={maxXP}*/}
+      {/*    />*/}
+      {/*  </div>*/}
+      {/*)}*/}
     </div>
   );
 }

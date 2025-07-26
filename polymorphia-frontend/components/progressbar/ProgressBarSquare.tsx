@@ -8,7 +8,7 @@ export default function ProgressBarSquare({
 }: ProgressBarSquareProps) {
   return (
     <>
-      <div className="progressbar-square" style={{ left: `${position}%` }}>
+      <div className="progressbar-square" style={{ top: `${position}%` }}>
         <div
           className="bg-primary-gray dark:bg-primary-dark"
           style={{
@@ -18,7 +18,7 @@ export default function ProgressBarSquare({
         />
       </div>
 
-      <div className="progressbar-square" style={{ left: `${position}%` }}>
+      <div className="progressbar-square" style={{ top: `${position}%` }}>
         <div
           className="bg-primary-dark dark:bg-secondary-light dark:scale-105"
           style={{

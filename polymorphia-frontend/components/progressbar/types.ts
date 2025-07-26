@@ -9,6 +9,7 @@ export interface ProgressBarProps {
   upperTextLabels?: string[];
   bottomTextLabels?: string[];
   labelsSize?: sizeVariants;
+  horizontal?: boolean;
 }
 
 export interface ProgressBarLineProps {

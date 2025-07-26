@@ -9,9 +9,13 @@ export default function ProgressBarLine({
   return (
     <div
       className="progressbar-line"
-      style={{ left: `${position}%`, width: `${width}` }}
+      style={{
+        top: `${position}%`,
+        height: `${width}`,
+        transform: `translateY(25%)`,
+      }}
     >
-      <div style={{ width: `${lineFill}%` }} />
+      <div style={{ height: `${lineFill}%` }} />
     </div>
   );
 }

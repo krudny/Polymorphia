@@ -28,8 +28,8 @@ export default function ProgressBarTextLabels({
           key={i}
           className="progressbar-text-label"
           style={{
-            left: `${(i / (textLabels.length - 1)) * 100}%`,
-            transform: "translateX(-50%)",
+            top: `${(i / (textLabels.length - 1)) * 100}%`,
+            transform: "translateX(-50%) translateY(-50%)",
           }}
         >
           <span className={clsx(textLabelsStyles({ size }))}>{label}</span>
