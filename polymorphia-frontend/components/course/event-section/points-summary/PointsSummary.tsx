@@ -69,7 +69,7 @@ export default function PointsSummary({
               }
             />
             <PointsSummaryElement
-              bonus={flatBonus}
+              bonus={percentageBonus}
               onClick={
                 percentageBonus.items.length > 0
                   ? () => setCurrentBonusInfoModal(percentageBonus)

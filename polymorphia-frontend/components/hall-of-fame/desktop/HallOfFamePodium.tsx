@@ -34,7 +34,11 @@ export default function HallOfFamePodium() {
                   : "bronze"
             }
             component={
-              <XPCardPoints points={item.xpDetails.total} isSumVisible={true} />
+              <XPCardPoints
+                points={item.xpDetails.total}
+                isSumVisible={true}
+                isXPVisible={false}
+              />
             }
             size={"hofDesktop"}
           />

@@ -74,9 +74,6 @@
         @apply min-w-32 max-w-xl min-[400px]:min-w-48 px-4 py-2 gap-0;
     }
 
-    .xp-card-component {
-        @apply p-1;
-    }
 
     .xp-card-middle,
     .xp-card-component {
