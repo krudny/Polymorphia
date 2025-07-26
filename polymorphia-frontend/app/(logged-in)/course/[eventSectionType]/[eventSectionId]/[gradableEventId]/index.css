@@ -2,7 +2,7 @@
 @import "../../../../../../styles/globals.css";
 
 .gradable-event {
-    @apply w-full relative flex flex-col flex-1 mx-auto z-20;
+    @apply w-full relative flex flex-col-centered flex-1 mx-auto z-20;
 }
 
 .gradable-event-speed-dial-mobile {
@@ -14,6 +14,6 @@
 }
 
 .gradable-event-markdown-wrapper {
-    @apply w-full h-full flex-col-centered flex-1 p-7;
-    @apply md:px-24 md:py-12 md:mx-auto 2xl:max-w-[1300px];
+    @apply w-full h-full flex-col-centered flex-1 p-9;
+    @apply lg:p-6 lg:max-w-[840px] xl:max-w-[860px] 2xl:max-w-[1120px] 3xl:max-w-[1750px];
 }
