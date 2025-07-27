@@ -32,40 +32,6 @@ for (let i = 0; i < 250; i++) {
   allData.push(item);
 }
 
-// export interface GradableEventResponseDTO {
-//   id: number;
-//   name: string;
-//   topic?: string;
-//   gainedXp: number;
-//   order: number;
-// }
-
-// interface PointsSummaryResponseDTO {
-//   name: string;
-//   gainedXp: number;
-//   percentageBonus: PercentageBonus;
-//   flatBonus: FlatBonus;
-//   totalXp: number;
-// }
-
-// interface PercentageBonus {
-//   xp: number;
-//   items: BonusInfoItem[];
-//   percentage: number;
-// }
-
-// interface FlatBonus {
-//   xp: number;
-//   items: BonusInfoItem[];
-// }
-
-// interface ProjectVariantResponseDTO {
-//   name: string;
-//   category: string;
-//   shortCode: string;
-//   imageUrl: string;
-// }
-
 const mockMarkdownStore: Record<number, string> = {
   15: lab1,
   16: lab2,
