@@ -12,12 +12,18 @@ export default function ProgressBarLine({
       className={`progressbar-line ${isHorizontal ? "progressbar-line-horizontal" : "progressbar-line-vertical"}`}
       style={{
         ...(isHorizontal
-          ? { width: `${size}`, left: `${position}%` }
-          : { height: `${size}`, top: `${position}%` }),
-        transform: `${isHorizontal ? "translateX(25%)" : "translateY(25%)"}`,
+          ? { width: `${size}`, left: `calc(${position}% + 16px)` }
+          : { height: `${size}`, top: `calc(${position}% + 16px)` }),
       }}
     >
-      <div style={{ height: `${lineFill}%` }} />
+      <div
+        className="progressbar-line-fill"
+        style={
+          isHorizontal
+            ? { width: `${lineFill}%`, height: "100%" }
+            : { height: `${lineFill}%`, width: "100%" }
+        }
+      />
     </div>
   );
 }

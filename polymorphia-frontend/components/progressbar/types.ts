@@ -28,6 +28,7 @@ export interface ProgressBarRangeLabelsProps {
 export interface ProgressBarTextLabelsProps {
   textLabels: string[];
   size?: sizeVariants;
+  isHorizontal: boolean;
 }
 
 export interface ProgressBarSquareProps {

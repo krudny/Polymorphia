@@ -20,21 +20,28 @@ const textLabelsStyles = tv({
 export default function ProgressBarTextLabels({
   textLabels,
   size,
+  isHorizontal,
 }: ProgressBarTextLabelsProps) {
   return (
     <div className="progressbar-text-container">
-      {textLabels.map((label, i) => (
-        <div
-          key={i}
-          className="progressbar-text-label"
-          style={{
-            top: `${(i / (textLabels.length - 1)) * 100}%`,
-            transform: "translateX(-50%) translateY(-50%)",
-          }}
-        >
-          <span className={clsx(textLabelsStyles({ size }))}>{label}</span>
-        </div>
-      ))}
+      {textLabels.map((label, i) => {
+        const positionStyle = isHorizontal
+          ? { left: `${(i / (textLabels.length - 1)) * 100}%` }
+          : { top: `${(i / (textLabels.length - 1)) * 100}%` };
+
+        return (
+          <div
+            key={i}
+            className="progressbar-text-label"
+            style={{
+              ...positionStyle,
+              transform: "translateX(-50%) translateY(-50%)",
+            }}
+          >
+            <span className={clsx(textLabelsStyles({ size }))}>{label}</span>
+          </div>
+        );
+      })}
     </div>
   );
 }

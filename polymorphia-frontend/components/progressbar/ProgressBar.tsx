@@ -6,6 +6,7 @@ import {
 import toast from "react-hot-toast";
 import "./index.css";
 import { ProgressBarProps } from "@/components/progressbar/types";
+import ProgressBarTextLabels from "@/components/progressbar/ProgressBarTextLabels";
 import ProgressBarSquare from "@/components/progressbar/ProgressBarSquare";
 
 export default function ProgressBar(props: ProgressBarProps) {
@@ -33,14 +34,17 @@ export default function ProgressBar(props: ProgressBarProps) {
     <div
       className={`${isHorizontal ? "progressbar-horizontal" : "progressbar-vertical"}`}
     >
-      {/*{upperTextLabels && upperTextLabels.length > 0 && (*/}
-      {/*  <div className="progressbar-label-container">*/}
-      {/*    <ProgressBarTextLabels*/}
-      {/*      textLabels={upperTextLabels}*/}
-      {/*      size={labelsSize}*/}
-      {/*    />*/}
-      {/*  </div>*/}
-      {/*)}*/}
+      {upperTextLabels && upperTextLabels.length > 0 && (
+        <div
+          className={`${isHorizontal ? "progressbar-label-container-horizontal" : "progressbar-label-container-vertical"}`}
+        >
+          <ProgressBarTextLabels
+            textLabels={upperTextLabels}
+            size={labelsSize}
+            isHorizontal={isHorizontal}
+          />
+        </div>
+      )}
 
       <div
         className={`${isHorizontal ? "progressbar-container-horizontal" : "progressbar-container-vertical"}`}

@@ -13,7 +13,7 @@ export default function Roadmap() {
 
   return (
     <>
-      <div className="w-fit min-h-screen mb-40 bg-yellow-200 mx-auto flex-col-centered mt-20">
+      <div className="w-fit h-[1800px] mb-40 bg-yellow-200 mx-auto flex-col-centered mt-20">
         <ProgressBar
           minXP={0}
           currentXP={27}
@@ -50,7 +50,7 @@ export default function Roadmap() {
           // ]}
         />
       </div>
-      <div className="w-[1000px] min-h-screen mb-96 bg-yellow-200 mx-auto flex-col-centered mt-20">
+      <div className="w-[1400px] min-h-screen mb-96 bg-yellow-200 mx-auto flex-col-centered mt-20">
         <ProgressBar
           minXP={0}
           currentXP={27}
