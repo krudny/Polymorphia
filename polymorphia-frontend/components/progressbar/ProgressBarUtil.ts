@@ -82,6 +82,13 @@ export function isProgressBarInputValid({
     !bottomTextLabels || bottomTextLabels.length === numSquares;
   const isSegmentSumCloseTo100 = Math.abs(sum(segmentSizes) - 100) < 0.5;
 
+  console.log("hasMinSquares:", hasMinSquares);
+  console.log("hasValidXPRange:", hasValidXPRange);
+  console.log("hasValidSegments:", hasValidSegments);
+  console.log("hasValidUpperLabels:", hasValidUpperLabels);
+  console.log("hasValidBottomLabels:", hasValidBottomLabels);
+  console.log("isSegmentSumCloseTo100:", isSegmentSumCloseTo100);
+
   return (
     hasMinSquares &&
     hasValidXPRange &&

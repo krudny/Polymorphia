@@ -4,7 +4,7 @@
 /* XPCardPoints */
 
 .xp-card-points {
-    @apply w-full h-full flex-col-centered gap-1 bg-secondary-gray dark:bg-secondary-dark;
+    @apply w-full h-full flex-col-centered bg-secondary-gray dark:bg-secondary-dark;
 }
 
 /* XPCardProjectVariant */
