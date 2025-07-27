@@ -171,10 +171,11 @@ export interface GradableEventResponseDTO {
   order_index: number;
 }
 
+// Points Summary
 export interface PointsSummaryBonusResponseDTO {
   xp: number;
   percentage?: number;
-  items: AssignedItemResponseDTO[];
+  assignedItems: AssignedItemResponseDTO[];
 }
 
 export interface PointsSummaryResponseDTO {
@@ -182,4 +183,9 @@ export interface PointsSummaryResponseDTO {
   flatBonus: PointsSummaryBonusResponseDTO;
   percentageBonus: PointsSummaryBonusResponseDTO;
   totalXp: number;
+}
+
+// Markdown
+export interface MarkdownResponseDTO {
+  markdown: string;
 }

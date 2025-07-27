@@ -10,12 +10,12 @@ export default function BonusInfoModal({
   return (
     <Modal
       isDataPresented={bonusInfo !== null}
-      title={bonusInfo?.name ?? ""}
+      title={bonusInfo?.title ?? ""}
       onClosed={onClosed}
     >
       <div className="bonus-info-modal">
-        {bonusInfo?.items.map((item) => (
-          <BonusItemCard key={item.assignedId} item={item} />
+        {bonusInfo?.data.assignedItems.map((assignedItem) => (
+          <BonusItemCard key={assignedItem.id} assignedItem={assignedItem} />
         ))}
       </div>
     </Modal>

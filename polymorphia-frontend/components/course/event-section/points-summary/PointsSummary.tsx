@@ -1,6 +1,8 @@
-import { PointsSummaryProps } from "@/components/course/event-section/points-summary/types";
-import { Fragment, useState } from "react";
-import { BonusInfo } from "@/components/course/event-section/types";
+import {
+  PointsSummaryBonus,
+  PointsSummaryProps,
+} from "@/components/course/event-section/points-summary/types";
+import { useState } from "react";
 import "./index.css";
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
@@ -13,7 +15,7 @@ export default function PointsSummary({
   ref,
 }: PointsSummaryProps) {
   const [currentBonusInfoModal, setCurrentBonusInfoModal] =
-    useState<BonusInfo | null>(null);
+    useState<PointsSummaryBonus | null>(null);
 
   const {
     data: pointsSummary,
@@ -36,16 +38,30 @@ export default function PointsSummary({
     return <div>No points summary</div>;
   }
 
-  const flatBonus = {
-    name: "Bonusy punktowe",
-    bonusXp: `${pointsSummary.flatBonus.xp.toFixed(1)} xp`,
-    items: pointsSummary.flatBonus.items,
+  const gainedXpElement: PointsSummaryBonus = {
+    title: "Zdobyte xp",
+    data: {
+      xp: pointsSummary.gainedXp,
+      assignedItems: [],
+    },
   };
 
-  const percentageBonus = {
-    name: "Bonusy procentowe",
-    bonusXp: `${pointsSummary.percentageBonus.xp.toFixed(1)} xp`,
-    items: pointsSummary.percentageBonus.items,
+  const flatBonusElement: PointsSummaryBonus = {
+    title: "Bonusy punktowe",
+    data: pointsSummary.flatBonus,
+  };
+
+  const percentageBonusElement: PointsSummaryBonus = {
+    title: "Bonusy procentowe",
+    data: pointsSummary.percentageBonus,
+  };
+
+  const totalXpElement: PointsSummaryBonus = {
+    title: "Łącznie",
+    data: {
+      xp: pointsSummary.totalXp,
+      assignedItems: [],
+    },
   };
 
   return (
@@ -53,38 +69,25 @@ export default function PointsSummary({
       <div ref={ref} className="points-summary">
         {pointsSummary && (
           <>
+            <PointsSummaryElement bonus={gainedXpElement} />
             <PointsSummaryElement
-              bonus={{
-                name: "Zdobyte xp",
-                bonusXp: `${pointsSummary.gainedXp.toFixed(1)} xp`,
-                items: [],
-              }}
-            />
-            <PointsSummaryElement
-              bonus={flatBonus}
+              bonus={flatBonusElement}
               onClick={
-                flatBonus.items.length > 0
-                  ? () => setCurrentBonusInfoModal(flatBonus)
+                pointsSummary.flatBonus.assignedItems.length > 0
+                  ? () => setCurrentBonusInfoModal(flatBonusElement)
                   : undefined
               }
             />
             <PointsSummaryElement
-              bonus={percentageBonus}
+              bonus={percentageBonusElement}
               onClick={
-                percentageBonus.items.length > 0
-                  ? () => setCurrentBonusInfoModal(percentageBonus)
+                pointsSummary.percentageBonus.assignedItems.length > 0
+                  ? () => setCurrentBonusInfoModal(percentageBonusElement)
                   : undefined
               }
             />
             <div className="points-summary-divider" />
-            <PointsSummaryElement
-              bonus={{
-                name: "Łącznie",
-                bonusXp: `${pointsSummary.totalXp.toFixed(1)} xp`,
-                items: [],
-              }}
-              horizontal={true}
-            />
+            <PointsSummaryElement bonus={totalXpElement} horizontal={true} />
           </>
         )}
       </div>

@@ -8,6 +8,8 @@ import {
 import {
   EventSectionResponseDTO,
   GradableEventResponseDTO,
+  MarkdownResponseDTO,
+  PointsSummaryResponseDTO,
   UserDetailsDTO,
 } from "@/interfaces/api/DTO";
 
@@ -347,63 +349,61 @@ export const EventSectionService = {
   ): Promise<PointsSummaryResponseDTO> => {
     if (eventSectionId === 1) {
       return {
-        name: "Kartkówka",
         gainedXp: 3.5,
         percentageBonus: {
           xp: 0.2,
           percentage: 5,
-          items: [
+          assignedItems: [
             {
-              assignedId: 1,
+              id: 1,
               item: {
                 id: 1,
                 name: "Pietruszka",
+                bonusText: "+5% do kategorii Kartkówka",
                 imageUrl: "images/items/parsley.jpg",
               },
               receivedDate: "07.06.2025",
-              bonusXp: "0.2",
-              bonusPercentage: "5",
+              xp: 0.2,
             },
           ],
         },
         flatBonus: {
           xp: 0,
-          items: [],
+          assignedItems: [],
         },
         totalXp: 3.7,
       };
     } else if (eventSectionId === 2) {
       return {
-        name: "Laboratorium",
         gainedXp: 2.0,
         percentageBonus: {
           xp: 0.0,
           percentage: 0,
-          items: [],
+          assignedItems: [],
         },
         flatBonus: {
           xp: 0,
-          items: [],
+          assignedItems: [],
         },
         totalXp: 2.0,
       };
     } else {
       return {
-        name: "",
         gainedXp: 0,
         percentageBonus: {
           xp: 0.0,
           percentage: 0,
-          items: [],
+          assignedItems: [],
         },
         flatBonus: {
           xp: 0,
-          items: [],
+          assignedItems: [],
         },
         totalXp: 0,
       };
     }
   },
+
   getMarkdown: async (
     gradableEventId: number
   ): Promise<MarkdownResponseDTO> => {
