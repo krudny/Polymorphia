@@ -189,3 +189,27 @@ export interface PointsSummaryResponseDTO {
 export interface MarkdownResponseDTO {
   markdown: string;
 }
+
+// Rewards
+export interface CriterionGradeResponseDTO {
+  id: number;
+  xp: number;
+  assignedChests: AssignedChestResponseDTO[];
+}
+
+export interface CriterionResponseDTO {
+  id: number;
+  name: string;
+  maxXp: number;
+  criterionGrade?: CriterionGradeResponseDTO;
+}
+
+export interface GradeResponseDTO {
+  id: number;
+  // additional info, currently not needed
+}
+
+export interface RewardResponseDTO {
+  grade?: GradeResponseDTO;
+  criteria: CriterionResponseDTO[]; // technically they should be a part of the grade but I think this will be a better interface for frontend
+}
