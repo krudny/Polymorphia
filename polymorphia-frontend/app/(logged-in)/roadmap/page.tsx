@@ -6,6 +6,7 @@ import ProgressBar from "@/components/progressbar/ProgressBar";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardPoints from "@/components/xp-card/inner-components/XPCardPoints";
 import { useFadeInAnimate } from "@/animations/FadeIn";
+import ProgressBarElement from "@/components/progressbar/ProgressBarElement";
 
 export default function Roadmap() {
   const { setTitle } = useTitle();
@@ -30,40 +31,38 @@ export default function Roadmap() {
             i % 2 === 0 ? 0 : +(100 / 19).toFixed(8)
           )}
           isHorizontal={false}
-          elements={Array.from({ length: 20 }, (_, i) => (
-            <XPCard
-              title={`Laboratorium ${i}`}
-              subtitle="Interfejsy i mapy"
-              key={i}
-              color={i < 6 ? "green" : "silver"}
-              size="md"
-              component={<XPCardPoints points="3.7" isSumVisible={true} />}
+          upperElement={
+            <ProgressBarElement
+              elements={Array.from({ length: 20 }, (_, i) => (
+                <XPCard
+                  title={`Laboratorium ${i}`}
+                  subtitle="Interfejsy i mapy"
+                  key={i}
+                  color={i < 6 ? "green" : "silver"}
+                  size="md"
+                  component={<XPCardPoints points="3.7" isSumVisible={true} />}
+                />
+              ))}
+              isUpper={true}
+              isHorizontal={false}
             />
-          ))}
-          // upperTextLabels={[
-          //   "Jajo",
-          //   "Pisklak",
-          //   "Podlot",
-          //   "Żółtodziób",
-          //   "Nieopierzony Odkrywca",
-          //   "Samodzielny Zwierzak",
-          //   "Majestatyczna Bestia",
-          //   "Władca Polymorphii",
-          //   "Majestatyczna Bestia",
-          //   "Władca Polymorphii",
-          // ]}
-          // bottomTextLabels={[
-          //   "Jajo",
-          //   "Pisklak",
-          //   "Podlot",
-          //   "Żółtodziób",
-          //   "Nieopierzony Odkrywca",
-          //   "Samodzielny Zwierzak",
-          //   "Majestatyczna Bestia",
-          //   "Władca Polymorphii",
-          //   "Majestatyczna Bestia",
-          //   "Władca Polymorphii",
-          // ]}
+          }
+          lowerElement={
+            <ProgressBarElement
+              elements={Array.from({ length: 20 }, (_, i) => (
+                <XPCard
+                  title={`Laboratorium ${i}`}
+                  subtitle="Interfejsy i mapy"
+                  key={i}
+                  color={i < 6 ? "green" : "silver"}
+                  size="md"
+                  component={<XPCardPoints points="3.7" isSumVisible={true} />}
+                />
+              ))}
+              isUpper={false}
+              isHorizontal={false}
+            />
+          }
         />
       </div>
       {/*<div className="w-[1400px] min-h-screen mb-96 bg-yellow-200 mx-auto flex-col-centered mt-20">*/}

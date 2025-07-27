@@ -6,9 +6,7 @@ import {
 import toast from "react-hot-toast";
 import "./index.css";
 import { ProgressBarProps } from "@/components/progressbar/types";
-import ProgressBarTextLabels from "@/components/progressbar/ProgressBarTextLabels";
 import ProgressBarSquare from "@/components/progressbar/ProgressBarSquare";
-import ProgressBarElements from "@/components/progressbar/ProgressBarElements";
 
 export default function ProgressBar(props: ProgressBarProps) {
   if (!isProgressBarInputValid(props)) {
@@ -22,10 +20,8 @@ export default function ProgressBar(props: ProgressBarProps) {
     maxXP = 100,
     numSquares = 2,
     segmentSizes,
-    elements,
-    upperTextLabels,
-    bottomTextLabels,
-    labelsSize,
+    upperElement,
+    lowerElement,
     isHorizontal = true,
   } = props;
 
@@ -36,25 +32,8 @@ export default function ProgressBar(props: ProgressBarProps) {
     <div
       className={`${isHorizontal ? "progressbar-horizontal" : "progressbar-vertical"}`}
     >
-      {upperTextLabels && upperTextLabels.length > 0 && (
-        <div className="progressbar-label-container">
-          <ProgressBarTextLabels
-            textLabels={upperTextLabels}
-            size={labelsSize}
-            isHorizontal={isHorizontal}
-          />
-        </div>
-      )}
-
-      {elements && elements.length > 0 && (
-        <div className="progressbar-label-container">
-          <ProgressBarElements
-            elements={elements}
-            size={labelsSize}
-            isHorizontal={isHorizontal}
-            isUpper={true}
-          />
-        </div>
+      {upperElement && (
+        <div className="progressbar-label-container">{upperElement}</div>
       )}
 
       <div
@@ -83,36 +62,18 @@ export default function ProgressBar(props: ProgressBarProps) {
         ))}
       </div>
 
-      {elements && elements.length > 0 && (
-        <div className="progressbar-label-container">
-          <ProgressBarElements
-            elements={elements}
-            size={labelsSize}
-            isHorizontal={isHorizontal}
-            isUpper={false}
-          />
-        </div>
+      {lowerElement && (
+        <div className="progressbar-label-container">{lowerElement}</div>
       )}
 
-      {bottomTextLabels && bottomTextLabels.length > 0 ? (
-        <div className="progressbar-label-container">
-          <ProgressBarTextLabels
-            textLabels={bottomTextLabels}
-            size={labelsSize}
-            isHorizontal={isHorizontal}
-          />
-        </div>
-      ) : (
-        <></>
-        // <div className="progressbar-label-container">
-        //   <ProgressBarRangeLabels
-        //     minXP={minXP}
-        //     currentXP={currentXP}
-        //     maxXP={maxXP}
-        //     isHorizontal={isHorizontal}
-        //   />
-        // </div>
-      )}
+      {/*<div className="progressbar-label-container">*/}
+      {/*  <ProgressBarRangeLabels*/}
+      {/*    minXP={minXP}*/}
+      {/*    currentXP={currentXP}*/}
+      {/*    maxXP={maxXP}*/}
+      {/*    isHorizontal={isHorizontal}*/}
+      {/*  />*/}
+      {/*</div>*/}
     </div>
   );
 }

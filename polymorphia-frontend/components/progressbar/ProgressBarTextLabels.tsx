@@ -7,6 +7,7 @@ const textLabelsStyles = tv({
   base: "",
   variants: {
     size: {
+      xs: "text-xl",
       sm: "text-2xl",
       md: "text-3xl",
       lg: "text-4xl",
@@ -21,10 +22,13 @@ export default function ProgressBarTextLabels({
   textLabels,
   size,
   isHorizontal,
+  className,
 }: ProgressBarTextLabelsProps) {
   return (
     <div
-      className={`progressbar-text-container ${isHorizontal ? "w-full min-h-14" : "h-full min-w-14"}`}
+      className={clsx(
+        `progressbar-text-container ${isHorizontal ? "w-full min-h-16" : "h-full min-w-14"} ${className}`
+      )}
     >
       {textLabels.map((label, i) => {
         const positionStyle = isHorizontal

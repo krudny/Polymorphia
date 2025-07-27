@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-type sizeVariants = "sm" | "md" | "lg";
+type sizeVariants = "xs" | "sm" | "md" | "lg";
 
 export interface ProgressBarProps {
   minXP: number;
@@ -8,10 +8,8 @@ export interface ProgressBarProps {
   maxXP: number;
   numSquares: number;
   segmentSizes: number[];
-  upperTextLabels?: string[];
-  elements?: ReactNode[];
-  bottomTextLabels?: string[];
-  labelsSize?: sizeVariants;
+  upperElement?: ReactNode;
+  lowerElement?: ReactNode;
   isHorizontal?: boolean;
 }
 
@@ -33,9 +31,10 @@ export interface ProgressBarTextLabelsProps {
   textLabels: string[];
   size?: sizeVariants;
   isHorizontal: boolean;
+  className?: string;
 }
 
-export interface ProgressBarElementsProps {
+export interface ProgressBarElementProps {
   elements: ReactNode[];
   size?: sizeVariants;
   isHorizontal: boolean;

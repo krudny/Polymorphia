@@ -1,11 +1,11 @@
-import { ProgressBarElementsProps } from "@/components/progressbar/types";
+import { ProgressBarElementProps } from "@/components/progressbar/types";
 
-export default function ProgressBarElements({
+export default function ProgressBarElement({
   elements,
   size,
   isHorizontal,
   isUpper,
-}: ProgressBarElementsProps) {
+}: ProgressBarElementProps) {
   return (
     <div
       className={`progressbar-element-container ${
