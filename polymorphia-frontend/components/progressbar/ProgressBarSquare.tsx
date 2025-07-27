@@ -5,10 +5,15 @@ import { ProgressBarSquareProps } from "@/components/progressbar/types";
 export default function ProgressBarSquare({
   squareFill,
   position,
+  isHorizontal,
 }: ProgressBarSquareProps) {
+  const positionStyle = isHorizontal
+    ? { left: `${position}%` }
+    : { top: `${position}%` };
+
   return (
     <>
-      <div className="progressbar-square" style={{ top: `${position}%` }}>
+      <div className="progressbar-square" style={positionStyle}>
         <div
           className="bg-primary-gray dark:bg-primary-dark"
           style={{
@@ -18,7 +23,7 @@ export default function ProgressBarSquare({
         />
       </div>
 
-      <div className="progressbar-square" style={{ top: `${position}%` }}>
+      <div className="progressbar-square" style={positionStyle}>
         <div
           className="bg-primary-dark dark:bg-secondary-light dark:scale-105"
           style={{

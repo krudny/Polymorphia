@@ -33,4 +33,5 @@ export interface ProgressBarTextLabelsProps {
 export interface ProgressBarSquareProps {
   squareFill: number;
   position: number;
+  isHorizontal: boolean;
 }

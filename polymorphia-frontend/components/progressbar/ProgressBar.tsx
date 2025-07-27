@@ -6,6 +6,7 @@ import {
 import toast from "react-hot-toast";
 import "./index.css";
 import { ProgressBarProps } from "@/components/progressbar/types";
+import ProgressBarSquare from "@/components/progressbar/ProgressBarSquare";
 
 export default function ProgressBar(props: ProgressBarProps) {
   if (!isProgressBarInputValid(props)) {
@@ -57,13 +58,14 @@ export default function ProgressBar(props: ProgressBarProps) {
           );
         })}
 
-        {/*{Array.from({ length: numSquares }).map((_, index) => (*/}
-        {/*  <ProgressBarSquare*/}
-        {/*    key={index}*/}
-        {/*    squareFill={fills[2 * index]}*/}
-        {/*    position={(index / (numSquares - 1)) * 100}*/}
-        {/*  />*/}
-        {/*))}*/}
+        {Array.from({ length: numSquares }).map((_, index) => (
+          <ProgressBarSquare
+            key={index}
+            squareFill={fills[2 * index]}
+            position={(index / (numSquares - 1)) * 100}
+            isHorizontal={isHorizontal}
+          />
+        ))}
       </div>
       {/*{bottomTextLabels && bottomTextLabels.length > 0 ? (*/}
       {/*  <div className="progressbar-label-container">*/}
