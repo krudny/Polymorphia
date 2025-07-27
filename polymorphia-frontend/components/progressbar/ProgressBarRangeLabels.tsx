@@ -6,14 +6,14 @@ export default function ProgressBarRangeLabels({
   minXP,
   currentXP,
   maxXP,
-  isHorizontal,
+  isHorizontal = true,
 }: ProgressBarRangeLabelsProps) {
   const getLabelProps = (position: string) => ({
     style: isHorizontal ? { left: position } : { top: position },
     className: clsx(
       "progressbar-range-label",
       isHorizontal
-        ? "-translate-x-1/2 translate-y-full"
+        ? "-translate-x-1/2 -translate-y-1/4"
         : "translate-x-1/2 -translate-y-1/2"
     ),
   });

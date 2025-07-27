@@ -65,43 +65,6 @@ export default function Roadmap() {
           }
         />
       </div>
-      {/*<div className="w-[1400px] min-h-screen mb-96 bg-yellow-200 mx-auto flex-col-centered mt-20">*/}
-      {/*  <ProgressBar*/}
-      {/*    minXP={0}*/}
-      {/*    currentXP={27}*/}
-      {/*    maxXP={100}*/}
-      {/*    numSquares={10}*/}
-      {/*    segmentSizes={[*/}
-      {/*      0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0,*/}
-      {/*      10,*/}
-      {/*    ]}*/}
-      {/*    isHorizontal={true}*/}
-      {/*    upperTextLabels={[*/}
-      {/*      "Jajo",*/}
-      {/*      "Pisklak",*/}
-      {/*      "Podlot",*/}
-      {/*      "Żółtodziób",*/}
-      {/*      "Nieopierzony Odkrywca",*/}
-      {/*      "Samodzielny Zwierzak",*/}
-      {/*      "Majestatyczna Bestia",*/}
-      {/*      "Władca Polymorphii",*/}
-      {/*      "Majestatyczna Bestia",*/}
-      {/*      "Władca Polymorphii",*/}
-      {/*    ]}*/}
-      {/*    // bottomTextLabels={[*/}
-      {/*    //   "Jajo",*/}
-      {/*    //   "Pisklak",*/}
-      {/*    //   "Podlot",*/}
-      {/*    //   "Żółtodziób",*/}
-      {/*    //   "Nieopierzony Odkrywca",*/}
-      {/*    //   "Samodzielny Zwierzak",*/}
-      {/*    //   "Majestatyczna Bestia",*/}
-      {/*    //   "Władca Polymorphii",*/}
-      {/*    //   "Majestatyczna Bestia",*/}
-      {/*    //   "Władca Polymorphii",*/}
-      {/*    // ]}*/}
-      {/*  />*/}
-      {/*</div>*/}
     </>
   );
 }

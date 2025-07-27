@@ -2,7 +2,7 @@
 @import "../../../styles/globals.css";
 
 .profile {
-  @apply flex-1 w-full opacity-0 flex-col-centered extra-large-center my-auto max-h-[50rem] h-[calc(100dvh-6rem)] bg-red-400 3xl:flex-none;
+  @apply flex-1 w-full opacity-0 flex-col-centered extra-large-center my-auto max-h-[50rem] h-[calc(100dvh-6rem)] 3xl:flex-none;
 }
 
 .profile-wrapper {
@@ -62,5 +62,5 @@
 }
 
 .profile-progress-bar-desktop {
-  @apply hidden md:block w-full h-fit pt-5 px-8;
+  @apply hidden md:block w-full h-fit pb-3 px-8;
 }

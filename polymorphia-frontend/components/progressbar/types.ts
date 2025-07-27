@@ -17,20 +17,20 @@ export interface ProgressBarLineProps {
   size: string;
   position: number;
   lineFill: number;
-  isHorizontal: boolean;
+  isHorizontal?: boolean;
 }
 
 export interface ProgressBarRangeLabelsProps {
   minXP: number;
   currentXP: number;
   maxXP: number;
-  isHorizontal: boolean;
+  isHorizontal?: boolean;
 }
 
 export interface ProgressBarTextLabelsProps {
   textLabels: string[];
   size?: sizeVariants;
-  isHorizontal: boolean;
+  isHorizontal?: boolean;
   className?: string;
 }
 

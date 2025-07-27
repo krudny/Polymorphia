@@ -21,7 +21,7 @@ const textLabelsStyles = tv({
 export default function ProgressBarTextLabels({
   textLabels,
   size,
-  isHorizontal,
+  isHorizontal = true,
   className,
 }: ProgressBarTextLabelsProps) {
   return (

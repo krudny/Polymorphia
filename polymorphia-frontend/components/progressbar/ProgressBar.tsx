@@ -65,15 +65,6 @@ export default function ProgressBar(props: ProgressBarProps) {
       {lowerElement && (
         <div className="progressbar-label-container">{lowerElement}</div>
       )}
-
-      {/*<div className="progressbar-label-container">*/}
-      {/*  <ProgressBarRangeLabels*/}
-      {/*    minXP={minXP}*/}
-      {/*    currentXP={currentXP}*/}
-      {/*    maxXP={maxXP}*/}
-      {/*    isHorizontal={isHorizontal}*/}
-      {/*  />*/}
-      {/*</div>*/}
     </div>
   );
 }

@@ -45,7 +45,7 @@
 /* ProgressBarRangeLabels */
 
 .progressbar-range-container {
-  @apply w-full h-full relative;
+  @apply w-full h-full min-h-8 relative;
 }
 
 .progressbar-range-label {

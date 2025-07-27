@@ -83,7 +83,6 @@ export default function Profile() {
             upperElement={
               <ProgressBarTextLabels
                 textLabels={["3.5 (60xp)", "4.0 (70xp)"]}
-                isHorizontal={true}
                 className="!min-h-8"
                 size="sm"
               />
@@ -91,7 +90,6 @@ export default function Profile() {
             lowerElement={
               <ProgressBarTextLabels
                 textLabels={["Nieopierzony Odkrywca", "Samodzielny Zwierzak"]}
-                isHorizontal={true}
                 size="sm"
               />
             }
@@ -117,7 +115,6 @@ export default function Profile() {
                   "5.0 (90xp)",
                   "5.0 (100xp)",
                 ]}
-                isHorizontal={true}
                 className="!min-h-8"
                 size={isSm ? "sm" : "md"}
               />
@@ -134,7 +131,6 @@ export default function Profile() {
                   "Majestatyczna Bestia",
                   "Władca Polymorphii",
                 ]}
-                isHorizontal={true}
                 size={isSm ? "sm" : "md"}
               />
             }

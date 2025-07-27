@@ -5,7 +5,7 @@ export default function ProgressBarLine({
   size,
   position,
   lineFill,
-  isHorizontal,
+  isHorizontal = true,
 }: ProgressBarLineProps) {
   return (
     <div
