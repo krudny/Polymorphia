@@ -1,19 +1,36 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { EventSectionType } from "@/components/course/event-section/types";
+import { EventType } from "@/interfaces/api/DTO";
 import { MarkdownProvider } from "@/components/providers/markdown/MarkdownContext";
 import SpeedDialMobile from "@/components/speed-dial/SpeedDialMobile";
 import SpeedDialDesktop from "@/components/speed-dial/SpeedDialDesktop";
 import MarkdownWrapper from "@/components/markdown/MarkdownWrapper";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import "./index.css";
+import { useTitle } from "@/components/navigation/TitleContext";
+import { useQuery } from "@tanstack/react-query";
+import { EventSectionService } from "../../../EventSectionService";
+import { useEffect } from "react";
 
 export default function GradableEventView() {
   const params = useParams();
+  const eventSectionId = Number(params.eventSectionId);
   const gradableEventId = Number(params.gradableEventId);
-  const eventSectionType = params.eventSectionType as EventSectionType;
+  const eventSectionType = params.eventSectionType as EventType;
+
   const wrapperRef = useFadeInAnimate();
+
+  const { setTitle } = useTitle();
+
+  const { data: eventSection } = useQuery({
+    queryKey: ["eventSections", eventSectionId],
+    queryFn: () => EventSectionService.getEventSection(eventSectionId),
+  });
+
+  useEffect(() => {
+    setTitle(eventSection?.name ?? "");
+  }, [eventSection]);
 
   return (
     <MarkdownProvider gradableEventId={gradableEventId}>
