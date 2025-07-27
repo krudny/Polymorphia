@@ -151,7 +151,7 @@ export default function XPCardGrid({
                     component={
                       <XPCardPoints
                         points={gradableEvent.gainedXp.toFixed(1).toString()}
-                        isSumVisible={true}
+                        isSumLabelVisible={true}
                       />
                     }
                     size={mobile ? "sm" : "md"}

@@ -3,15 +3,15 @@ import "./index.css";
 
 export default function XPCardPoints({
   points,
-  isSumVisible = false,
-  isXPVisible = true,
+  isSumLabelVisible = false,
+  isXPLabelVisible = true,
 }: XPCardPointsProps) {
   return (
     <div className="xp-card-points">
       <h1>
-        {points} {isXPVisible && <span>xp</span>}
+        {points} {isXPLabelVisible && <span>xp</span>}
       </h1>
-      {isSumVisible && <h2>Suma</h2>}
+      {isSumLabelVisible && <h2>Suma</h2>}
     </div>
   );
 }
