@@ -2,154 +2,150 @@ import {
   EquipmentChestResponseDTO,
   EquipmentItemResponseDTO,
 } from "@/interfaces/api/DTO";
-import { ChestData, ItemData } from "@/components/equipment/types";
 
 const EquipmentService = {
-  getItems: async (): Promise<ItemData[]> => {
-    const response: EquipmentItemResponseDTO[] = [
+  getItems: async (): Promise<EquipmentItemResponseDTO[]> => {
+    return [
       {
-        itemId: 1,
-        itemName: "Marchewka",
-        itemBonus: "+10% do kategorii lab",
-        imageUrl: "images/items/carrot.jpg",
-        quantity: 2,
-        items: [
+        base: {
+          id: 1,
+          name: "Marchewka",
+          bonusText: "+10% do kategorii lab",
+          imageUrl: "images/items/carrot.jpg",
+        },
+        assignmentDetailsArray: [
           {
-            itemId: 1,
+            id: 1,
             receivedDate: "2.06.2026",
-            bonusXp: "1.2",
+            xp: 1.2,
           },
           {
-            itemId: 2,
+            id: 2,
             receivedDate: "5.06.2026",
-            bonusXp: "1.2",
+            xp: 1.2,
           },
         ],
       },
       {
-        itemId: 2,
-        itemName: "Pietruszka",
-        itemBonus: "+10% do kategorii lab",
-        imageUrl: "images/items/parsley.jpg",
-        quantity: 1,
-        items: [
+        base: {
+          id: 2,
+          name: "Pietruszka",
+          bonusText: "+10% do kategorii lab",
+          imageUrl: "images/items/parsley.jpg",
+        },
+        assignmentDetailsArray: [
           {
-            itemId: 1,
+            id: 3,
             receivedDate: "2.06.2025",
-            bonusXp: "2.5",
+            xp: 2.5,
           },
         ],
       },
       {
-        itemId: 3,
-        itemName: "Apteczka",
-        itemBonus: "+10% do kategorii lab",
-        imageUrl: "images/items/aid.jpg",
-        quantity: 2,
-        items: [
+        base: {
+          id: 3,
+          name: "Apteczka",
+          bonusText: "+10% do kategorii lab",
+          imageUrl: "images/items/aid.jpg",
+        },
+        assignmentDetailsArray: [
           {
-            itemId: 1,
+            id: 4,
             receivedDate: "2.06.2026",
-            bonusXp: "3.5",
+            xp: 3.5,
           },
           {
-            itemId: 2,
+            id: 5,
             receivedDate: "5.06.2026",
-            bonusXp: "4.0",
+            xp: 4.0,
           },
         ],
       },
       {
-        itemId: 4,
-        itemName: "Weterynarz",
-        itemBonus: "+10% do kategorii lab",
-        imageUrl: "images/items/aid.jpg",
-        quantity: 0,
-        items: [],
+        base: {
+          id: 4,
+          name: "Weterynarz",
+          bonusText: "+10% do kategorii lab",
+          imageUrl: "images/items/aid.jpg",
+        },
+        assignmentDetailsArray: [],
       },
     ];
-
-    return response.map((item) => ({
-      itemId: item.itemId,
-      title: item.itemName,
-      subtitle: item.itemBonus,
-      imageUrl: item.imageUrl,
-      quantity: item.quantity,
-      items: item.items.map((instance) => ({
-        itemId: instance.itemId,
-        title: item.itemName,
-        subtitle: `Zdobyto ${instance.receivedDate}`,
-        imageUrl: item.imageUrl,
-        bonusXp: instance.bonusXp,
-      })),
-    }));
   },
 
-  getChests: async (): Promise<ChestData[]> => {
-    const response: EquipmentChestResponseDTO[] = [
+  getChests: async (): Promise<EquipmentChestResponseDTO[]> => {
+    return [
       {
-        chestId: 1,
-        chestName: "Złota skrzynia",
-        behavior: "ONE_OF_MANY",
-        imageUrl: "images/chests/s1.png",
-        openedDate: "12.06.2026",
-        items: [
+        assignedChest: {
+          id: 1,
+          chest: {
+            id: 1,
+            name: "Złota skrzynia",
+            behavior: "ONE_OF_MANY",
+            behaviorText: "Wybierz jeden przedmiot ze skrzynki",
+            imageUrl: "images/chests/s1.png",
+          },
+          receivedDate: "12.06.2026",
+          openedDate: "12.06.2026",
+        },
+        receivedItems: [
           {
-            itemId: 1,
-            itemName: "Marchewka",
-            imageUrl: "images/items/carrot.jpg",
-            bonusXp: "1.2",
+            item: {
+              id: 1,
+              name: "Marchewka",
+              bonusText: "+10% do kategorii lab",
+              imageUrl: "images/items/carrot.jpg",
+            },
+            assignmentDetails: {
+              id: 6,
+              receivedDate: "12.06.2026",
+              xp: 1.2,
+            },
           },
           {
-            itemId: 2,
-            itemName: "Marchewka",
-            imageUrl: "images/items/carrot.jpg",
-            bonusXp: "1.2",
+            item: {
+              id: 1,
+              name: "Marchewka",
+              bonusText: "+10% do kategorii lab",
+              imageUrl: "images/items/carrot.jpg",
+            },
+            assignmentDetails: {
+              id: 7,
+              receivedDate: "12.06.2026",
+              xp: 1.2,
+            },
           },
         ],
       },
       {
-        chestId: 2,
-        chestName: "Srebrna skrzynia",
-        behavior: "ONE_OF_MANY",
-        imageUrl: "images/chests/s2.jpg",
-        openedDate: undefined,
-        items: [
+        assignedChest: {
+          id: 2,
+          chest: {
+            id: 2,
+            name: "Srebrna skrzynia",
+            behavior: "ONE_OF_MANY",
+            behaviorText: "Wybierz jeden przedmiot ze skrzynki",
+            imageUrl: "images/chests/s2.jpg",
+          },
+          receivedDate: "13.06.2026",
+          openedDate: undefined,
+        },
+        chestContent: [
           {
-            itemId: 1,
-            itemName: "Marchewka",
+            id: 1,
+            name: "Marchewka",
+            bonusText: "+10% do kategorii lab",
             imageUrl: "images/items/carrot.jpg",
           },
           {
-            itemId: 2,
-            itemName: "Marchewka",
+            id: 2,
+            name: "Marchewka",
+            bonusText: "+10% do kategorii lab",
             imageUrl: "images/items/carrot.jpg",
           },
         ],
       },
     ];
-
-    return response.map((chest) => ({
-      chestId: chest.chestId,
-      title: chest.chestName,
-      subtitle:
-        chest.openedDate !== undefined
-          ? "Wygrane nagrody"
-          : chest.behavior === "ALL"
-            ? "Wybierz wszystkie"
-            : "Wybierz jedno",
-      behavior: chest.behavior,
-      imageUrl: chest.imageUrl,
-      openedDate: chest.openedDate,
-      items: chest.items.map((item) => ({
-        itemId: item.itemId,
-        title: item.itemName,
-        subtitle:
-          chest.openedDate !== undefined ? `Zdobyto ${chest.openedDate}` : "",
-        imageUrl: item.imageUrl,
-        bonusXp: item.bonusXp,
-      })),
-    }));
   },
 };
 

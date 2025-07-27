@@ -4,8 +4,8 @@ import { API_STATIC_URL } from "@/services/api";
 import { useContext } from "react";
 import Image from "next/image";
 import { useModal } from "@/components/providers/modal/ModalContext";
-import { Item } from "@/components/equipment/types";
 import "../index.css";
+import { BaseItemResponseDTO } from "@/interfaces/api/DTO";
 
 export default function OpeningChestModalContent() {
   const { closeModal } = useModal();
@@ -14,11 +14,19 @@ export default function OpeningChestModalContent() {
     useContext(EquipmentContext);
   const openingChest = currentOpeningChestModalData;
 
+  if (
+    openingChest !== null &&
+    (openingChest?.assignedChest.openedDate !== undefined ||
+      !openingChest?.chestContent)
+  ) {
+    throw new Error("OpeningChestModalContent handles only unopened chests!");
+  }
+
   const handlePickItem = (itemId: number) => {
     if (!openingChest) return;
     const isPicked = pickedItemsIds.includes(itemId);
 
-    if (openingChest.behavior === "ONE_OF_MANY") {
+    if (openingChest.assignedChest.chest.behavior === "ONE_OF_MANY") {
       setPickedItemsIds([itemId]);
     } else {
       setPickedItemsIds((prev: number[]) =>
@@ -32,18 +40,18 @@ export default function OpeningChestModalContent() {
   return (
     <>
       <div className="opening-chest-modal">
-        {openingChest?.items.map((item: Item) => (
+        {openingChest?.chestContent!.map((item: BaseItemResponseDTO) => (
           <div
-            key={item.itemId}
+            key={item.id}
             className="opening-chest-modal-image-wrapper"
-            onClick={() => handlePickItem(item.itemId)}
+            onClick={() => handlePickItem(item.id)}
           >
             <Image
               src={`${API_STATIC_URL}/${item.imageUrl}`}
-              alt={item.title}
+              alt={item.name}
               fill
               className={`equipment-image ${
-                pickedItemsIds.includes(item.itemId)
+                pickedItemsIds.includes(item.id)
                   ? "opening-chest-modal-image-selected"
                   : ""
               }`}

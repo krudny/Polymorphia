@@ -3,36 +3,51 @@ import XPCard from "@/components/xp-card/XPCard";
 import { useContext } from "react";
 import { EquipmentContext } from "@/components/providers/equipment/EquipmentContext";
 import Modal from "@/components/modal/Modal";
-import { Item } from "@/components/equipment/types";
 import "../index.css";
 import XPCardPoints from "@/components/xp-card/inner-components/XPCardPoints";
+import { AssignedItemResponseDTO } from "@/interfaces/api/DTO";
 
 export default function ChestModal() {
   const { currentChestModalData, setCurrentChestModalData } =
     useContext(EquipmentContext);
-  const chest = currentChestModalData;
+  const equipmentChest = currentChestModalData;
+
+  if (
+    equipmentChest !== null &&
+    (!equipmentChest?.assignedChest.openedDate ||
+      !equipmentChest?.receivedItems)
+  ) {
+    throw new Error("ChestModal handles only opened chests!");
+  }
 
   return (
     <Modal
-      isDataPresented={chest !== null}
+      isDataPresented={equipmentChest !== null}
       onClosed={() => setCurrentChestModalData(null)}
-      title={chest?.title ?? ""}
-      subtitle={chest?.subtitle ?? ""}
+      title={equipmentChest?.assignedChest.chest.name ?? ""}
+      subtitle="Wygrane nagrody"
     >
       <div className="bonus-info-modal">
-        {chest?.items.map((item: Item) => (
-          <XPCard
-            key={item.itemId}
-            title={item.title}
-            subtitle={item.subtitle}
-            image={{
-              url: `${API_STATIC_URL}/${item.imageUrl}`,
-              alt: item.title,
-            }}
-            size="xs"
-            component={<XPCardPoints points={`+${item.bonusXp}`} />}
-          />
-        ))}
+        {equipmentChest?.receivedItems!.map(
+          (assignedItem: AssignedItemResponseDTO) => (
+            <XPCard
+              key={assignedItem.assignmentDetails.id}
+              title={assignedItem.item.name}
+              subtitle={`Zdobyto ${assignedItem.assignmentDetails.receivedDate}`}
+              image={{
+                url: `${API_STATIC_URL}/${assignedItem.item.imageUrl}`,
+                alt: assignedItem.item.name,
+              }}
+              size="xs"
+              // TODO: handle undefined xp
+              component={
+                <XPCardPoints
+                  points={`+${assignedItem.assignmentDetails.xp}`}
+                />
+              }
+            />
+          )
+        )}
       </div>
     </Modal>
   );

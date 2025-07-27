@@ -168,7 +168,7 @@ export interface AssignedChestResponseDTO {
   openedDate?: string; // undefined if chest hasn't been opened yet
 }
 
-interface EquipmentChestResponseDTO {
+export interface EquipmentChestResponseDTO {
   assignedChest: AssignedChestResponseDTO;
   receivedItems?: AssignedItemResponseDTO[]; // if chest has been opened
   chestContent?: BaseItemResponseDTO[]; // if chest hasn't been opened yet
