@@ -9,13 +9,14 @@ export interface ProgressBarProps {
   upperTextLabels?: string[];
   bottomTextLabels?: string[];
   labelsSize?: sizeVariants;
-  horizontal?: boolean;
+  isHorizontal?: boolean;
 }
 
 export interface ProgressBarLineProps {
-  width: string;
+  size: string;
   position: number;
   lineFill: number;
+  isHorizontal: boolean;
 }
 
 export interface ProgressBarRangeLabelsProps {

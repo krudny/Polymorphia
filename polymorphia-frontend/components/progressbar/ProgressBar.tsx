@@ -6,7 +6,6 @@ import {
 import toast from "react-hot-toast";
 import "./index.css";
 import { ProgressBarProps } from "@/components/progressbar/types";
-import ProgressBarSquare from "@/components/progressbar/ProgressBarSquare";
 
 export default function ProgressBar(props: ProgressBarProps) {
   if (!isProgressBarInputValid(props)) {
@@ -23,14 +22,16 @@ export default function ProgressBar(props: ProgressBarProps) {
     upperTextLabels,
     bottomTextLabels,
     labelsSize,
-    horizontal = true,
+    isHorizontal = true,
   } = props;
 
   const scaledCurrentXP = ((currentXP - minXP) / (maxXP - minXP)) * 100;
   const fills = FillsCalc(0, 100, scaledCurrentXP, segmentSizes);
 
   return (
-    <div className="progressbar">
+    <div
+      className={`${isHorizontal ? "progressbar-horizontal" : "progressbar-vertical"}`}
+    >
       {/*{upperTextLabels && upperTextLabels.length > 0 && (*/}
       {/*  <div className="progressbar-label-container">*/}
       {/*    <ProgressBarTextLabels*/}
@@ -40,28 +41,30 @@ export default function ProgressBar(props: ProgressBarProps) {
       {/*  </div>*/}
       {/*)}*/}
 
-      <div className="progressbar-progress-container">
+      <div
+        className={`${isHorizontal ? "progressbar-container-horizontal" : "progressbar-container-vertical"}`}
+      >
         {Array.from({ length: numSquares - 1 }, (_, index) => {
-          const width = `calc((100% - ${(numSquares - 1) * 2}rem) / ${numSquares - 1})`;
+          const size = `calc((100% - ${(numSquares - 1) * 2}rem) / ${numSquares - 1})`;
           return (
             <ProgressBarLine
               key={index}
               position={(index / (numSquares - 1)) * 100}
-              width={width}
+              size={size}
               lineFill={fills[2 * index + 1]}
+              isHorizontal={isHorizontal}
             />
           );
         })}
 
-        {Array.from({ length: numSquares }).map((_, index) => (
-          <ProgressBarSquare
-            key={index}
-            squareFill={fills[2 * index]}
-            position={(index / (numSquares - 1)) * 100}
-          />
-        ))}
+        {/*{Array.from({ length: numSquares }).map((_, index) => (*/}
+        {/*  <ProgressBarSquare*/}
+        {/*    key={index}*/}
+        {/*    squareFill={fills[2 * index]}*/}
+        {/*    position={(index / (numSquares - 1)) * 100}*/}
+        {/*  />*/}
+        {/*))}*/}
       </div>
-
       {/*{bottomTextLabels && bottomTextLabels.length > 0 ? (*/}
       {/*  <div className="progressbar-label-container">*/}
       {/*    <ProgressBarTextLabels*/}

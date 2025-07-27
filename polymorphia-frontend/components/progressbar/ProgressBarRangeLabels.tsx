@@ -12,11 +12,11 @@ export default function ProgressBarRangeLabels({
         <span>{minXP} xp</span>
       </div>
 
-      <div className="progressbar-range-label left-1/2 -top-2">
+      <div className="progressbar-range-label top-1/2">
         <span className="!text-4xl">{currentXP} xp</span>
       </div>
 
-      <div className="progressbar-range-label left-full">
+      <div className="progressbar-range-label top-full">
         <span>{maxXP} xp</span>
       </div>
     </div>

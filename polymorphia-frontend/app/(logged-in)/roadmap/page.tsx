@@ -12,29 +12,81 @@ export default function Roadmap() {
   }, [setTitle]);
 
   return (
-    <div className="w-fit min-h-screen mb-96 bg-yellow-200 mx-auto flex-col-centered mt-20">
-      <ProgressBar
-        minXP={0}
-        currentXP={27}
-        maxXP={100}
-        numSquares={10}
-        segmentSizes={[
-          0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10,
-        ]}
-        horizontal={false}
-        bottomTextLabels={[
-          "Jajo",
-          "Pisklak",
-          "Podlot",
-          "Żółtodziób",
-          "Nieopierzony Odkrywca",
-          "Samodzielny Zwierzak",
-          "Majestatyczna Bestia",
-          "Władca Polymorphii",
-          "Majestatyczna Bestia",
-          "Władca Polymorphii",
-        ]}
-      />
-    </div>
+    <>
+      <div className="w-fit min-h-screen mb-40 bg-yellow-200 mx-auto flex-col-centered mt-20">
+        <ProgressBar
+          minXP={0}
+          currentXP={27}
+          maxXP={100}
+          numSquares={10}
+          segmentSizes={[
+            0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0,
+            10,
+          ]}
+          isHorizontal={false}
+          upperTextLabels={[
+            "Jajo",
+            "Pisklak",
+            "Podlot",
+            "Żółtodziób",
+            "Nieopierzony Odkrywca",
+            "Samodzielny Zwierzak",
+            "Majestatyczna Bestia",
+            "Władca Polymorphii",
+            "Majestatyczna Bestia",
+            "Władca Polymorphii",
+          ]}
+          // bottomTextLabels={[
+          //   "Jajo",
+          //   "Pisklak",
+          //   "Podlot",
+          //   "Żółtodziób",
+          //   "Nieopierzony Odkrywca",
+          //   "Samodzielny Zwierzak",
+          //   "Majestatyczna Bestia",
+          //   "Władca Polymorphii",
+          //   "Majestatyczna Bestia",
+          //   "Władca Polymorphii",
+          // ]}
+        />
+      </div>
+      <div className="w-[1000px] min-h-screen mb-96 bg-yellow-200 mx-auto flex-col-centered mt-20">
+        <ProgressBar
+          minXP={0}
+          currentXP={27}
+          maxXP={100}
+          numSquares={10}
+          segmentSizes={[
+            0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0,
+            10,
+          ]}
+          isHorizontal={true}
+          upperTextLabels={[
+            "Jajo",
+            "Pisklak",
+            "Podlot",
+            "Żółtodziób",
+            "Nieopierzony Odkrywca",
+            "Samodzielny Zwierzak",
+            "Majestatyczna Bestia",
+            "Władca Polymorphii",
+            "Majestatyczna Bestia",
+            "Władca Polymorphii",
+          ]}
+          bottomTextLabels={[
+            "Jajo",
+            "Pisklak",
+            "Podlot",
+            "Żółtodziób",
+            "Nieopierzony Odkrywca",
+            "Samodzielny Zwierzak",
+            "Majestatyczna Bestia",
+            "Władca Polymorphii",
+            "Majestatyczna Bestia",
+            "Władca Polymorphii",
+          ]}
+        />
+      </div>
+    </>
   );
 }
