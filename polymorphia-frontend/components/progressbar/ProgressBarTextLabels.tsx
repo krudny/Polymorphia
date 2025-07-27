@@ -24,12 +24,18 @@ export default function ProgressBarTextLabels({
 }: ProgressBarTextLabelsProps) {
   return (
     <div
-      className={`progressbar-text-container ${isHorizontal ? "py-20" : "px-20"}`}
+      className={`progressbar-text-container ${isHorizontal ? "w-full min-h-14" : "h-full min-w-14"}`}
     >
       {textLabels.map((label, i) => {
         const positionStyle = isHorizontal
-          ? { left: `${(i / (textLabels.length - 1)) * 100}%` }
-          : { top: `${(i / (textLabels.length - 1)) * 100}%` };
+          ? {
+              left: `${(i / (textLabels.length - 1)) * 100}%`,
+              transform: `translateX(-50%)`,
+            }
+          : {
+              top: `${(i / (textLabels.length - 1)) * 100}%`,
+              transform: `translateX(-50%) translateY(-50%)`,
+            };
 
         return (
           <div
@@ -37,7 +43,6 @@ export default function ProgressBarTextLabels({
             className="progressbar-text-label"
             style={{
               ...positionStyle,
-              transform: "translateX(-50%) translateY(-50%)",
             }}
           >
             <span className={clsx(textLabelsStyles({ size }))}>{label}</span>

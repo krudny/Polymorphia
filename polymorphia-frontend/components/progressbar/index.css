@@ -4,15 +4,15 @@
 /* ProgressBar */
 
 .progressbar-vertical {
-  @apply w-fit h-full flex justify-center gap-3 bg-red-400;
+  @apply w-fit h-full flex justify-center gap-10 bg-red-400;
 }
 
 .progressbar-horizontal {
-  @apply w-full h-full m-auto flex flex-col justify-center bg-pink-500;
+  @apply w-full h-full m-auto flex flex-col gap-10 justify-center bg-pink-500;
 }
 
 .progressbar-label-container {
-  @apply w-full whitespace-nowrap  bg-yellow-400;
+  @apply whitespace-nowrap  bg-yellow-500 min-h-fit;
 }
 
 .progressbar-container-vertical{
@@ -69,11 +69,11 @@
 /* ProgressBarTextLabels */
 
 .progressbar-text-container {
-  @apply w-full h-full min-h-14 relative bg-red-800;
+  @apply relative bg-red-800;
 }
 
 .progressbar-text-label {
-  @apply absolute w-28 text-center flex-col-centered bg-blue-600;
+  @apply absolute w-28 text-center bg-blue-600;
 
   span {
     @apply block whitespace-normal break-normal;
