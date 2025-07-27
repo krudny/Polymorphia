@@ -8,7 +8,6 @@ import {
 import {
   EventSectionResponseDTO,
   GradableEventResponseDTO,
-  GradeResponseDTO,
   MarkdownResponseDTO,
   PointsSummaryResponseDTO,
   ProjectVariantResponseDTO,
@@ -358,15 +357,17 @@ export const EventSectionService = {
           percentage: 5,
           assignedItems: [
             {
-              id: 1,
               item: {
                 id: 1,
                 name: "Pietruszka",
                 bonusText: "+5% do kategorii Kartkówka",
                 imageUrl: "images/items/parsley.jpg",
               },
-              receivedDate: "07.06.2025",
-              xp: 0.2,
+              assignmentDetails: {
+                id: 1,
+                receivedDate: "07.06.2025",
+                xp: 0.2,
+              },
             },
           ],
         },

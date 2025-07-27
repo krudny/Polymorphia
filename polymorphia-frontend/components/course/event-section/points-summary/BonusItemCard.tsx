@@ -8,14 +8,16 @@ export default function BonusItemCard({ assignedItem }: BonusItemCardProps) {
   return (
     <XPCard
       title={assignedItem.item.name}
-      subtitle={`Zdobyto: ${assignedItem.receivedDate}`}
+      subtitle={`Zdobyto: ${assignedItem.assignmentDetails.receivedDate}`}
       image={{
         url: `${API_STATIC_URL}/${assignedItem.item.imageUrl}`,
         alt: assignedItem.item.name,
       }}
       size="xs"
-      // TODO: handle undefined item.xp
-      component={<XPCardPoints points={`+${assignedItem.xp}`} />}
+      // TODO: handle undefined xp
+      component={
+        <XPCardPoints points={`+${assignedItem.assignmentDetails.xp}`} />
+      }
     />
   );
 }

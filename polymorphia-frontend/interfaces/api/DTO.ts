@@ -67,6 +67,7 @@ export interface LoginDto {
 //   bonusXp?: string;
 // }
 
+// #region Hall of Fame
 export interface HallOfFameResponseDTO {
   content: HallOfFameRecordDTO[];
   page: {
@@ -79,7 +80,9 @@ export interface HallOfFameRecordDTO {
   userDetails: UserDetailsDTO;
   xpDetails: Record<string, string>;
 }
+// #endregion Hall of Fame
 
+// #region User Details
 //TODO: handle which one is optional
 export interface UserDetailsDTO {
   studentName: string;
@@ -89,8 +92,9 @@ export interface UserDetailsDTO {
   imageUrl: string;
   position: number;
 }
+// #endregion User Details
 
-// Knowledge base
+// #region Knowledge base
 export type KnowledgeBaseSlideType = "evolution-stage" | "item" | "chest";
 
 export interface KnowledgeBaseSlideRelatedRewardResponseDTO {
@@ -108,8 +112,10 @@ export interface KnowledgeBaseSlideResponseDTO {
   imageUrl: string;
   relatedRewards?: KnowledgeBaseSlideRelatedRewardResponseDTO[];
 }
+// #endregion Knowledge base
 
-// Items
+// #region Items
+// Contains general information about the item (without any assignment details)
 export interface BaseItemResponseDTO {
   id: number;
   name: string;
@@ -117,18 +123,34 @@ export interface BaseItemResponseDTO {
   imageUrl: string;
 }
 
-export interface AssignedItemResponseDTO {
+// Contains only the data related to assignment of the item
+export interface ItemAssignmentDetailsResponseDTO {
   id: number;
-  item: BaseItemResponseDTO;
   receivedDate: string;
   xp?: number; // undefined if item hasn't been 'used' yet
 }
 
-export interface EquipmentItemResponseDTO {
-  assignedItems: AssignedItemResponseDTO[];
+// Meant to be used as complete information about the item
+// and the assignment of the item to the animal.
+export interface AssignedItemResponseDTO {
+  item: BaseItemResponseDTO;
+  assignmentDetails: ItemAssignmentDetailsResponseDTO;
 }
 
-// Chests
+// Meant to be used as a "stack" of items. It allows to:
+// - avoid sending repeated data over the network
+//   (simple mapping to AssignedItemResponseDTO)
+// - send information about "locked" item
+//   (when someone hasn't received this item yet)
+export interface EquipmentItemResponseDTO {
+  base: BaseItemResponseDTO;
+  // 'Array' suffix is there to highlight the difference
+  // between this interface and AssignedItemResponseDTO
+  assignmentDetailsArray: ItemAssignmentDetailsResponseDTO[];
+}
+// #endregion Items
+
+// #region Chests
 export type ChestBehavior = "ALL" | "ONE_OF_MANY";
 
 export interface BaseChestResponseDTO {
@@ -151,8 +173,9 @@ interface EquipmentChestResponseDTO {
   receivedItems?: AssignedItemResponseDTO[]; // if chest has been opened
   chestContent?: BaseItemResponseDTO[]; // if chest hasn't been opened yet
 }
+// #endregion Chests
 
-// Course
+// #region Course
 export type EventType = "assignment" | "project" | "test";
 
 export interface EventSectionResponseDTO {
@@ -170,8 +193,9 @@ export interface GradableEventResponseDTO {
   gainedXp: number;
   order_index: number;
 }
+// #endregion Course
 
-// Points Summary
+// #region Points Summary
 export interface PointsSummaryBonusResponseDTO {
   xp: number;
   percentage?: number;
@@ -184,13 +208,15 @@ export interface PointsSummaryResponseDTO {
   percentageBonus: PointsSummaryBonusResponseDTO;
   totalXp: number;
 }
+// #endregion Points Summary
 
-// Markdown
+// #region Markdown
 export interface MarkdownResponseDTO {
   markdown: string;
 }
+// #endregion Markdown
 
-// Rewards
+// #region Rewards
 export interface CriterionGradeResponseDTO {
   id: number;
   xp: number;
@@ -213,8 +239,9 @@ export interface RewardResponseDTO {
   grade?: GradeResponseDTO;
   criteria: CriterionResponseDTO[]; // technically they should be a part of the grade but I think this will be a better interface for frontend
 }
+// #endregion Rewards
 
-// Project Variant
+// #region Project Variant
 export interface ProjectVariantResponseDTO {
   id: number;
   name: string;
@@ -223,3 +250,4 @@ export interface ProjectVariantResponseDTO {
   imageUrl: string;
   // currently without description
 }
+// #endregion Project Variant
