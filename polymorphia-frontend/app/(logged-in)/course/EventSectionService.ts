@@ -1,16 +1,15 @@
 /* eslint-disable */
-// @ts-nocheck
 
 import { lab0, lab1, lab2, proj1 } from "@/app/(logged-in)/course/sampleData";
 import {
   groups,
   studentNames,
 } from "@/app/(logged-in)/hall-of-fame/HallOfFameService";
-import { UserDetailsDTO } from "@/interfaces/api/DTO";
 import {
-  BonusInfoItem,
   EventSectionResponseDTO,
-} from "@/components/course/event-section/types";
+  GradableEventResponseDTO,
+  UserDetailsDTO,
+} from "@/interfaces/api/DTO";
 
 const allData: UserDetailsDTO[] = [];
 
@@ -29,39 +28,39 @@ for (let i = 0; i < 250; i++) {
   allData.push(item);
 }
 
-export interface GradableEventResponseDTO {
-  id: number;
-  name: string;
-  topic?: string;
-  gainedXp: number;
-  order: number;
-}
+// export interface GradableEventResponseDTO {
+//   id: number;
+//   name: string;
+//   topic?: string;
+//   gainedXp: number;
+//   order: number;
+// }
 
-interface PointsSummaryResponseDTO {
-  name: string;
-  gainedXp: number;
-  percentageBonus: PercentageBonus;
-  flatBonus: FlatBonus;
-  totalXp: number;
-}
+// interface PointsSummaryResponseDTO {
+//   name: string;
+//   gainedXp: number;
+//   percentageBonus: PercentageBonus;
+//   flatBonus: FlatBonus;
+//   totalXp: number;
+// }
 
-interface PercentageBonus {
-  xp: number;
-  items: BonusInfoItem[];
-  percentage: number;
-}
+// interface PercentageBonus {
+//   xp: number;
+//   items: BonusInfoItem[];
+//   percentage: number;
+// }
 
-interface FlatBonus {
-  xp: number;
-  items: BonusInfoItem[];
-}
+// interface FlatBonus {
+//   xp: number;
+//   items: BonusInfoItem[];
+// }
 
-interface ProjectVariantResponseDTO {
-  name: string;
-  category: string;
-  shortCode: string;
-  imageUrl: string;
-}
+// interface ProjectVariantResponseDTO {
+//   name: string;
+//   category: string;
+//   shortCode: string;
+//   imageUrl: string;
+// }
 
 const mockMarkdownStore: Record<number, string> = {
   15: lab1,
@@ -72,242 +71,271 @@ const mockMarkdownStore: Record<number, string> = {
   32: "# Dlaczego refactoring hell to zło? \n < Content >",
 };
 
+const eventSectionData: EventSectionResponseDTO[] = [
+  {
+    id: 2,
+    name: "Laboratorium",
+    type: "assignment",
+    order_index: 2,
+  },
+  {
+    id: 3,
+    name: "Projekt 1",
+    type: "project",
+    order_index: 4,
+  },
+  {
+    id: 1,
+    name: "Kartkówka",
+    type: "test",
+    order_index: 1,
+  },
+  {
+    id: 4,
+    name: "Git",
+    type: "assignment",
+    order_index: 0,
+  },
+  {
+    id: 5,
+    name: "Specjalny lab",
+    type: "assignment",
+    order_index: 3,
+  },
+  {
+    id: 6,
+    name: "Projekt 2",
+    type: "project",
+    order_index: 5,
+  },
+];
+
 export const EventSectionService = {
+  getEventSection: async (
+    eventSectionId: number
+  ): Promise<EventSectionResponseDTO> => {
+    const eventSection: EventSectionResponseDTO | undefined =
+      eventSectionData.find((section) => section.id === eventSectionId);
+    if (!eventSection) {
+      throw new Error("This event section does not exist.");
+    }
+    return eventSection;
+  },
   getEventSections: async (
     courseId: number
   ): Promise<EventSectionResponseDTO[]> => {
-    const data = [
-      {
-        id: 2,
-        name: "Laboratorium",
-        type: "assignment",
-        order: 2,
-        hidden: false,
-      },
-      {
-        id: 3,
-        name: "Projekt 1",
-        type: "project",
-        order: 4,
-        hidden: false,
-      },
-      {
-        id: 1,
-        name: "Kartkówka",
-        type: "test",
-        order: 1,
-        hidden: false,
-      },
-      {
-        id: 4,
-        name: "Git",
-        type: "assignment",
-        order: 0,
-        hidden: false,
-      },
-      {
-        id: 5,
-        name: "Specjalny lab",
-        type: "assignment",
-        order: 3,
-        hidden: false,
-      },
-      {
-        id: 6,
-        name: "Projekt 2",
-        type: "project",
-        order: 5,
-        hidden: false,
-      },
-    ];
-    return data.sort((a, b) => a.order - b.order);
+    return eventSectionData.sort((a, b) => a.order_index - b.order_index);
   },
   getGradableEvents: async (
     eventSectionId: number
   ): Promise<GradableEventResponseDTO[]> => {
     if (eventSectionId === 1) {
-      const events = [
+      const events: GradableEventResponseDTO[] = [
         {
           id: 1,
+          type: "test",
           name: "Test 1",
           topic: "Instrukcje sterujące",
           gainedXp: 1.5,
-          order: 1,
+          order_index: 1,
         },
         {
           id: 2,
+          type: "test",
           name: "Test 2",
           topic: "Model obiektowy",
           gainedXp: 0.0,
-          order: 2,
+          order_index: 2,
         },
         {
           id: 3,
+          type: "test",
           name: "Test 3",
           topic: "Interakcje między obiektami",
           gainedXp: 0.0,
-          order: 3,
+          order_index: 3,
         },
         {
           id: 4,
+          type: "test",
           name: "Test 4",
           topic: "Interfejsy i mapy",
           gainedXp: 0.0,
-          order: 4,
+          order_index: 4,
         },
         {
           id: 5,
+          type: "test",
           name: "Test 5",
           topic: "Dziedziczenie",
           gainedXp: 0.0,
-          order: 5,
+          order_index: 5,
         },
         {
           id: 6,
+          type: "test",
           name: "Test 6",
           topic: "Refactoring kodu",
           gainedXp: 0.0,
-          order: 6,
+          order_index: 6,
         },
         {
           id: 7,
+          type: "test",
           name: "Test 7",
           topic: "Wielowątkowość",
           gainedXp: 0.0,
-          order: 7,
+          order_index: 7,
         },
         {
           id: 8,
+          type: "test",
           name: "Test 8",
           topic: "Interfejs graficzny",
           gainedXp: 0.0,
-          order: 8,
+          order_index: 8,
         },
         {
           id: 9,
+          type: "test",
           name: "Test 9",
           topic: "Lambdy, streamy i zarządzanie zasobami",
           gainedXp: 0.0,
-          order: 9,
+          order_index: 9,
         },
         {
           id: 10,
+          type: "test",
           name: "Test 10",
           topic: "Kotlin jako alternatywa dla Javy",
           gainedXp: 0.0,
-          order: 10,
+          order_index: 10,
         },
         {
           id: 11,
+          type: "test",
           name: "Test 11",
           topic: "A może Rust?",
           gainedXp: 0.0,
-          order: 11,
+          order_index: 11,
         },
         {
           id: 12,
+          type: "test",
           name: "Test 12",
           topic: "Jak wycentrować diva",
           gainedXp: 0.0,
-          order: 12,
+          order_index: 12,
         },
       ];
-      return events.sort((a, b) => a.order - b.order);
+      return events.sort((a, b) => a.order_index - b.order_index);
     } else if (eventSectionId === 2) {
-      const events = [
+      const events: GradableEventResponseDTO[] = [
         {
           id: 15,
+          type: "assignment",
           name: "Lab 1",
           topic: "Instrukcje sterujące w Javie",
           gainedXp: 2.0,
-          order: 1,
+          order_index: 1,
         },
         {
           id: 16,
+          type: "assignment",
           name: "Lab 2",
           topic: "Model obiektowy",
           gainedXp: 0.0,
-          order: 2,
+          order_index: 2,
         },
         {
           id: 17,
+          type: "assignment",
           name: "Lab 3",
           topic: "Interakcje między obiektami",
           gainedXp: 0.0,
-          order: 3,
+          order_index: 3,
         },
         {
           id: 18,
+          type: "assignment",
           name: "Lab 4",
           topic: "Interfejsy i mapy",
           gainedXp: 0.0,
-          order: 4,
+          order_index: 4,
         },
         {
           id: 19,
+          type: "assignment",
           name: "Lab 5",
           topic: "Dziedziczenie",
           gainedXp: 0.0,
-          order: 5,
+          order_index: 5,
         },
         {
           id: 20,
+          type: "assignment",
           name: "Lab 6",
           topic: "Refactoring kodu",
           gainedXp: 0.0,
-          order: 6,
+          order_index: 6,
         },
         {
           id: 21,
+          type: "assignment",
           name: "Lab 7",
           topic: "Wielowątkowość",
           gainedXp: 0.0,
-          order: 7,
+          order_index: 7,
         },
         {
           id: 22,
+          type: "assignment",
           name: "Lab 8",
           topic: "Interfejs graficzny",
           gainedXp: 0.0,
-          order: 8,
+          order_index: 8,
         },
       ];
-      return events.sort((a, b) => a.order - b.order);
+      return events.sort((a, b) => a.order_index - b.order_index);
     } else if (eventSectionId === 4) {
       return [
         {
           id: 30,
+          type: "assignment",
           name: "Lab 0",
           topic: "Git jest cool",
           gainedXp: 0.0,
-          order: 1,
+          order_index: 1,
         },
       ];
     } else if (eventSectionId === 6) {
       return [
         {
           id: 32,
+          type: "project",
           name: "Projekt 2",
           topic: "Refactoring hell",
           gainedXp: 0.0,
-          order: 1,
+          order_index: 1,
         },
       ];
     } else if (eventSectionId === 3) {
       return [
         {
           id: 33,
+          type: "project",
           name: "Projekt 1a",
           topic: "Darwin World",
           gainedXp: 0.0,
-          order: 1,
+          order_index: 1,
         },
         {
           id: 34,
+          type: "project",
           name: "Projekt 1b",
           topic: "Polymorphia",
           gainedXp: 0.0,
-          order: 2,
+          order_index: 2,
         },
       ];
     } else {
