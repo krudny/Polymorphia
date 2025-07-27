@@ -1,5 +1,7 @@
 // export type EventSectionType = "assignment" | "project" | "test";
 
+import { RewardResponseDTO } from "@/interfaces/api/DTO";
+
 // export interface EventSectionResponseDTO {
 //   id: number;
 //   name: string;
@@ -126,7 +128,6 @@
 //   opened: boolean;
 // }
 
-// export interface RewardsInfoProps {
-//   grade?: Grade;
-//   maxXp: string;
-// }
+export interface RewardsInfoProps {
+  reward: RewardResponseDTO;
+}

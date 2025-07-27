@@ -31,9 +31,7 @@ export default function EventRewardModal({
           <Loading />
         </div>
       )}
-      {!isLoading && data && (
-        <RewardsInfo grade={data.grade} maxXp={data.maxXp} />
-      )}
+      {!isLoading && data && <RewardsInfo reward={data} />}
     </Modal>
   );
 }
