@@ -1,8 +1,8 @@
-import { EventSectionResponseDTO } from "@/components/course/event-section/types";
 import {
   HallOfFameFilter,
   HallOfFameFilterOption,
 } from "@/components/hall-of-fame/general/types";
+import { EventSectionResponseDTO } from "@/interfaces/api/DTO";
 
 export const addEventSectionsToFilters = (
   eventSections: EventSectionResponseDTO[],
@@ -17,7 +17,7 @@ export const addEventSectionsToFilters = (
       filter.options.push({
         label: eventSection.name,
         value: eventSection.name,
-        order: eventSection.order,
+        order: eventSection.order_index,
         isSelected: false,
       });
       existingValues.add(eventSection.name);

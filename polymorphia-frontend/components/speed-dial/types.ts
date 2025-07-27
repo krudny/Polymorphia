@@ -1,8 +1,8 @@
+import { EventType } from "@/interfaces/api/DTO";
 import { ReactNode } from "react";
-import { EventSectionType } from "@/components/course/event-section/types";
 
 export interface SpeedDialProps {
-  eventSectionType: EventSectionType;
+  eventSectionType: EventType;
   gradableEventId: number;
 }
 
