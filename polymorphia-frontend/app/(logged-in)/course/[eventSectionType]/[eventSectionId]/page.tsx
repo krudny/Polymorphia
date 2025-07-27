@@ -25,7 +25,7 @@ export default function SectionView() {
 
   useEffect(() => {
     setTitle(eventSection?.name ?? "");
-  }, [eventSection]);
+  }, [eventSection, setTitle]);
 
   return (
     <div

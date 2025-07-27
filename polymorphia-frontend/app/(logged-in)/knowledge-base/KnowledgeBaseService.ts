@@ -1,5 +1,7 @@
+/* eslint-disable -- unused variables because of mocks, TODO: remove this line */
+
 import { KnowledgeBaseSlideResponseDTO } from "@/interfaces/api/DTO";
-import { API_HOST } from "@/services/api";
+// import { API_HOST } from "@/services/api";
 
 const KnowledgeBaseService = {
   getEvolutionStages: async (
