@@ -99,6 +99,7 @@ export type KnowledgeBaseSlideType = "evolution-stage" | "item" | "chest";
 
 export interface KnowledgeBaseSlideRelatedRewardResponseDTO {
   id: number;
+  order_index: number;
   name: string;
   imageUrl: string;
 }
@@ -106,6 +107,7 @@ export interface KnowledgeBaseSlideRelatedRewardResponseDTO {
 export interface KnowledgeBaseSlideResponseDTO {
   type: KnowledgeBaseSlideType;
   id: number;
+  order_index: number;
   name: string;
   subtitle: string;
   description: string;

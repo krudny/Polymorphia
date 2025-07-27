@@ -40,7 +40,7 @@ export default function Items() {
 
   return (
     <Slider
-      slides={items}
+      slides={items.sort((a, b) => a.order_index - b.order_index)}
       initialSlide={parseInt(searchParams.get("slide") ?? "0") || 0}
     />
   );
