@@ -213,3 +213,13 @@ export interface RewardResponseDTO {
   grade?: GradeResponseDTO;
   criteria: CriterionResponseDTO[]; // technically they should be a part of the grade but I think this will be a better interface for frontend
 }
+
+// Project Variant
+export interface ProjectVariantResponseDTO {
+  id: number;
+  name: string;
+  categoryName: string;
+  shortCode: string;
+  imageUrl: string;
+  // currently without description
+}

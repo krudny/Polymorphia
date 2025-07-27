@@ -11,6 +11,7 @@ import {
   GradeResponseDTO,
   MarkdownResponseDTO,
   PointsSummaryResponseDTO,
+  ProjectVariantResponseDTO,
   RewardResponseDTO,
   UserDetailsDTO,
 } from "@/interfaces/api/DTO";
@@ -508,15 +509,17 @@ export const EventSectionService = {
   ): Promise<ProjectVariantResponseDTO[]> => {
     return [
       {
+        id: 1,
         shortCode: "G",
         name: "Pożary",
-        category: "Mapa i roślinność",
+        categoryName: "Mapa i roślinność",
         imageUrl: "images/general/pozary.jpg",
       },
       {
+        id: 2,
         shortCode: "2",
         name: "Podmianka",
-        category: "Zwierzaki",
+        categoryName: "Zwierzaki",
         imageUrl: "images/general/podmianka.jpg",
       },
     ];
