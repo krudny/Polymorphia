@@ -23,7 +23,9 @@ export default function ProgressBarTextLabels({
   isHorizontal,
 }: ProgressBarTextLabelsProps) {
   return (
-    <div className="progressbar-text-container">
+    <div
+      className={`progressbar-text-container ${isHorizontal ? "py-20" : "px-20"}`}
+    >
       {textLabels.map((label, i) => {
         const positionStyle = isHorizontal
           ? { left: `${(i / (textLabels.length - 1)) * 100}%` }

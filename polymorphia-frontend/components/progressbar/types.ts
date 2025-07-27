@@ -23,6 +23,7 @@ export interface ProgressBarRangeLabelsProps {
   minXP: number;
   currentXP: number;
   maxXP: number;
+  isHorizontal: boolean;
 }
 
 export interface ProgressBarTextLabelsProps {

@@ -8,6 +8,7 @@ import "./index.css";
 import { ProgressBarProps } from "@/components/progressbar/types";
 import ProgressBarTextLabels from "@/components/progressbar/ProgressBarTextLabels";
 import ProgressBarSquare from "@/components/progressbar/ProgressBarSquare";
+import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLabels";
 
 export default function ProgressBar(props: ProgressBarProps) {
   if (!isProgressBarInputValid(props)) {
@@ -35,9 +36,7 @@ export default function ProgressBar(props: ProgressBarProps) {
       className={`${isHorizontal ? "progressbar-horizontal" : "progressbar-vertical"}`}
     >
       {upperTextLabels && upperTextLabels.length > 0 && (
-        <div
-          className={`${isHorizontal ? "progressbar-label-container-horizontal" : "progressbar-label-container-vertical"}`}
-        >
+        <div className="progressbar-label-container">
           <ProgressBarTextLabels
             textLabels={upperTextLabels}
             size={labelsSize}
@@ -71,22 +70,24 @@ export default function ProgressBar(props: ProgressBarProps) {
           />
         ))}
       </div>
-      {/*{bottomTextLabels && bottomTextLabels.length > 0 ? (*/}
-      {/*  <div className="progressbar-label-container">*/}
-      {/*    <ProgressBarTextLabels*/}
-      {/*      textLabels={bottomTextLabels}*/}
-      {/*      size={labelsSize}*/}
-      {/*    />*/}
-      {/*  </div>*/}
-      {/*) : (*/}
-      {/*  <div className="progressbar-label-container">*/}
-      {/*    <ProgressBarRangeLabels*/}
-      {/*      minXP={minXP}*/}
-      {/*      currentXP={currentXP}*/}
-      {/*      maxXP={maxXP}*/}
-      {/*    />*/}
-      {/*  </div>*/}
-      {/*)}*/}
+      {bottomTextLabels && bottomTextLabels.length > 0 ? (
+        <div className="progressbar-label-container">
+          <ProgressBarTextLabels
+            textLabels={bottomTextLabels}
+            size={labelsSize}
+            isHorizontal={isHorizontal}
+          />
+        </div>
+      ) : (
+        <div className="progressbar-label-container">
+          <ProgressBarRangeLabels
+            minXP={minXP}
+            currentXP={currentXP}
+            maxXP={maxXP}
+            isHorizontal={isHorizontal}
+          />
+        </div>
+      )}
     </div>
   );
 }

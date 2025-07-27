@@ -73,18 +73,18 @@ export default function Roadmap() {
             "Majestatyczna Bestia",
             "Władca Polymorphii",
           ]}
-          bottomTextLabels={[
-            "Jajo",
-            "Pisklak",
-            "Podlot",
-            "Żółtodziób",
-            "Nieopierzony Odkrywca",
-            "Samodzielny Zwierzak",
-            "Majestatyczna Bestia",
-            "Władca Polymorphii",
-            "Majestatyczna Bestia",
-            "Władca Polymorphii",
-          ]}
+          // bottomTextLabels={[
+          //   "Jajo",
+          //   "Pisklak",
+          //   "Podlot",
+          //   "Żółtodziób",
+          //   "Nieopierzony Odkrywca",
+          //   "Samodzielny Zwierzak",
+          //   "Majestatyczna Bestia",
+          //   "Władca Polymorphii",
+          //   "Majestatyczna Bestia",
+          //   "Władca Polymorphii",
+          // ]}
         />
       </div>
     </>

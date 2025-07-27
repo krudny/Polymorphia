@@ -1,22 +1,32 @@
 import "./index.css";
 import { ProgressBarRangeLabelsProps } from "@/components/progressbar/types";
+import clsx from "clsx";
 
 export default function ProgressBarRangeLabels({
   minXP,
   currentXP,
   maxXP,
+  isHorizontal,
 }: ProgressBarRangeLabelsProps) {
+  const getLabelProps = (position: string) => ({
+    style: isHorizontal ? { left: position } : { top: position },
+    className: clsx(
+      "progressbar-range-label",
+      isHorizontal
+        ? "-translate-x-1/2 translate-y-full"
+        : "translate-x-1/2 -translate-y-1/2"
+    ),
+  });
+
   return (
     <div className="progressbar-range-container">
-      <div className="progressbar-range-label left-0">
+      <div {...getLabelProps("0")}>
         <span>{minXP} xp</span>
       </div>
-
-      <div className="progressbar-range-label top-1/2">
+      <div {...getLabelProps("50%")}>
         <span className="!text-4xl">{currentXP} xp</span>
       </div>
-
-      <div className="progressbar-range-label top-full">
+      <div {...getLabelProps("100%")}>
         <span>{maxXP} xp</span>
       </div>
     </div>
