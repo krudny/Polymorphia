@@ -36,9 +36,9 @@ export interface ProgressBarTextLabelsProps {
 
 export interface ProgressBarElementProps {
   elements: ReactNode[];
-  size?: sizeVariants;
-  isHorizontal: boolean;
   isUpper: boolean;
+  isHorizontal: boolean;
+  alternate: boolean;
 }
 
 export interface ProgressBarSquareProps {

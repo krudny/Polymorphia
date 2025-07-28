@@ -2,8 +2,8 @@ import { ProgressBarElementProps } from "@/components/progressbar/types";
 
 export default function ProgressBarElement({
   elements,
-  size,
   isHorizontal,
+  alternate,
   isUpper,
 }: ProgressBarElementProps) {
   return (
@@ -13,8 +13,10 @@ export default function ProgressBarElement({
       }`}
     >
       {elements.map((element, i) => {
-        if (isUpper && i % 2 !== 0) return null;
-        if (!isUpper && i % 2 === 0) return null;
+        if (alternate) {
+          if (isUpper && i % 2 !== 0) return null;
+          if (!isUpper && i % 2 === 0) return null;
+        }
 
         const positionStyle = isHorizontal
           ? {

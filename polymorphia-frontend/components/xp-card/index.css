@@ -50,7 +50,7 @@
 }
 
 .xp-card-middle {
-    @apply flex flex-col justify-center h-full p-5 gap-2 min-w-0 flex-1;
+    @apply flex flex-col justify-center h-full px-7 min-w-0 flex-1;
 
     h1,
     h2 {
@@ -59,7 +59,7 @@
 }
 
 .xp-card-component {
-    @apply box-border flex-col-centered shrink-0 h-full;
+    @apply box-border flex-col-centered shrink-0 h-full pb-[6px];
 }
 
 .xp-card-xs {
@@ -88,7 +88,7 @@
 }
 
 .xp-card-xs.xp-card-force-width .xp-card-middle {
-    @apply lg:w-[8rem];
+    @apply w-[9rem];
 }
 
 .xp-card-sm {
@@ -115,7 +115,7 @@
 }
 
 .xp-card-sm.xp-card-force-width .xp-card-middle {
-    @apply lg:w-[12.5rem];
+    @apply w-[12rem];
 }
 
 .xp-card-md {
@@ -142,7 +142,7 @@
 }
 
 .xp-card-md.xp-card-force-width .xp-card-middle {
-    @apply lg:w-[16rem];
+    @apply lg:w-[24rem];
 }
 
 .xp-card-lg {

@@ -69,32 +69,17 @@ export function isProgressBarInputValid({
   maxXP,
   numSquares,
   segmentSizes,
-  upperTextLabels,
-  bottomTextLabels,
 }: ProgressBarProps): boolean {
   const hasMinSquares = numSquares >= 2;
   const hasValidXPRange =
     minXP <= maxXP && currentXP >= minXP && currentXP <= maxXP;
   const hasValidSegments = segmentSizes.length >= numSquares * 2 - 1;
-  const hasValidUpperLabels =
-    !upperTextLabels || upperTextLabels.length === numSquares;
-  const hasValidBottomLabels =
-    !bottomTextLabels || bottomTextLabels.length === numSquares;
   const isSegmentSumCloseTo100 = Math.abs(sum(segmentSizes) - 100) < 0.5;
-
-  console.log("hasMinSquares:", hasMinSquares);
-  console.log("hasValidXPRange:", hasValidXPRange);
-  console.log("hasValidSegments:", hasValidSegments);
-  console.log("hasValidUpperLabels:", hasValidUpperLabels);
-  console.log("hasValidBottomLabels:", hasValidBottomLabels);
-  console.log("isSegmentSumCloseTo100:", isSegmentSumCloseTo100);
 
   return (
     hasMinSquares &&
     hasValidXPRange &&
     hasValidSegments &&
-    hasValidUpperLabels &&
-    hasValidBottomLabels &&
     isSegmentSumCloseTo100
   );
 }

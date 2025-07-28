@@ -7,61 +7,86 @@ import XPCard from "@/components/xp-card/XPCard";
 import XPCardPoints from "@/components/xp-card/inner-components/XPCardPoints";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import ProgressBarElement from "@/components/progressbar/ProgressBarElement";
+import { useQuery } from "@tanstack/react-query";
+import { RoadmapService } from "@/app/(logged-in)/roadmap/RoadmapService";
+import XPCardChest from "@/components/xp-card/inner-components/XPCardChest";
+import Loading from "@/components/loading/Loading";
+import { useMediaQuery } from "react-responsive";
 
 export default function Roadmap() {
   const { setTitle } = useTitle();
   const wrapperRef = useFadeInAnimate();
+  const isXL = useMediaQuery({ minWidth: 1280 });
+  const isMd = useMediaQuery({ minWidth: 768 });
 
   useEffect(() => {
     setTitle("Roadmapa");
   }, [setTitle]);
 
+  const { data, isLoading } = useQuery({
+    queryKey: ["roadmap"],
+    queryFn: () => RoadmapService.getRoadmapData(),
+  });
+
+  if (isLoading || !data) {
+    return <Loading />;
+  }
+
+  const cards = data.map((item) => {
+    return (
+      <XPCard
+        title={item.name}
+        subtitle={item.topic}
+        key={item.id}
+        color={item.gainedXp > 0 ? "green" : "silver"}
+        size={isXL ? "md" : isMd ? "sm" : "xs"}
+        forceWidth={true}
+        component={
+          item.hasChest ? (
+            <XPCardChest />
+          ) : (
+            <XPCardPoints
+              points={item.gainedXp.toString()}
+              isSumVisible={true}
+            />
+          )
+        }
+      />
+    );
+  });
+
   return (
     <>
       <div
         ref={wrapperRef}
-        className="w-[55rem] h-[2500px] mb-40 mx-auto flex-col-centered mt-32"
+        className="w-[17rem] min-[400px]:w-[20rem] md:w-[44rem] h-[2300px] xl:w-[57rem] xl:h-[2500px] mx-auto flex-col-centered mt-30"
       >
         <ProgressBar
           minXP={0}
           currentXP={27}
           maxXP={100}
-          numSquares={20}
-          segmentSizes={Array.from({ length: 39 }, (_, i) =>
-            i % 2 === 0 ? 0 : +(100 / 19).toFixed(8)
+          numSquares={cards?.length ?? 0}
+          segmentSizes={Array.from({ length: cards.length * 2 - 1 }, (_, i) =>
+            i % 2 === 0 ? 0 : 100 / (cards.length - 1)
           )}
           isHorizontal={false}
           upperElement={
             <ProgressBarElement
-              elements={Array.from({ length: 20 }, (_, i) => (
-                <XPCard
-                  title={`Laboratorium ${i}`}
-                  subtitle="Interfejsy i mapy"
-                  key={i}
-                  color={i < 6 ? "green" : "silver"}
-                  size="md"
-                  component={<XPCardPoints points="3.7" isSumVisible={true} />}
-                />
-              ))}
+              elements={cards ?? []}
+              alternate={isMd}
               isUpper={true}
               isHorizontal={false}
             />
           }
           lowerElement={
-            <ProgressBarElement
-              elements={Array.from({ length: 20 }, (_, i) => (
-                <XPCard
-                  title={`Laboratorium ${i}`}
-                  subtitle="Interfejsy i mapy"
-                  key={i}
-                  color={i < 6 ? "green" : "silver"}
-                  size="md"
-                  component={<XPCardPoints points="3.7" isSumVisible={true} />}
-                />
-              ))}
-              isUpper={false}
-              isHorizontal={false}
-            />
+            isMd ? (
+              <ProgressBarElement
+                elements={cards ?? []}
+                alternate={isMd}
+                isUpper={false}
+                isHorizontal={false}
+              />
+            ) : undefined
           }
         />
       </div>
