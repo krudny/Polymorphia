@@ -29,8 +29,7 @@
 }
 
 .xp-card-grid {
-    @apply grid gap-5 p-3 justify-items-start items-start;
-    @apply lg:mb-5;
+    @apply grid gap-5 justify-items-start items-start;
 }
 
 .xp-card-no-grid {
@@ -38,7 +37,7 @@
 }
 
 .xp-card {
-    @apply box-border w-full rounded-xl drop-shadow-lg transition-all overflow-hidden flex flex-row bg-neutral-50 dark:bg-primary-dark;
+    @apply box-content w-full rounded-xl drop-shadow-lg transition-all overflow-hidden flex flex-row bg-neutral-50 dark:bg-primary-dark;
 }
 
 .xp-card-hover {
@@ -47,6 +46,10 @@
 
 .xp-card-image {
     @apply relative shrink-0;
+}
+
+.xp-card-lock {
+    @apply hidden;
 }
 
 .xp-card-middle {
@@ -59,7 +62,7 @@
 }
 
 .xp-card-component {
-    @apply box-border flex-col-centered shrink-0 h-full pb-[6px];
+    @apply flex-col-centered flex-1;
 }
 
 .xp-card-xs {
@@ -142,7 +145,7 @@
 }
 
 .xp-card-md.xp-card-force-width .xp-card-middle {
-    @apply lg:w-[24rem];
+    @apply w-[30rem];
 }
 
 .xp-card-lg {
@@ -194,5 +197,13 @@
         h2 {
             @apply text-2xl 2xl:text-[1.6rem] mt-0;
         }
+    }
+}
+
+.xp-card-locked {
+    @apply absolute w-full h-full bg-secondary-gray/70 dark:bg-primary-dark/80 flex-col-centered cursor-default hover:drop-shadow-none;
+
+    span {
+        @apply text-6xl text-primary-dark;
     }
 }

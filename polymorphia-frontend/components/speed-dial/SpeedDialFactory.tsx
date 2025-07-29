@@ -1,5 +1,5 @@
 import { SpeedDialItem } from "@/components/speed-dial/types";
-import EventRewardModal from "@/components/speed-dial/modals/EventRewardModal";
+import GradableEventRewardModal from "@/components/speed-dial/modals/GradableEventRewardModal";
 import ProjectVariantModal from "@/components/speed-dial/modals/ProjectVariantModal";
 import GroupModal from "@/components/speed-dial/modals/GroupModal";
 import GroupPickingModal from "@/components/speed-dial/modals/GroupPickingModal";
@@ -19,7 +19,10 @@ export function useSpeedDialItemsFactory(
     label: "Nagrody",
     icon: "trophy",
     modal: (onClose) => (
-      <EventRewardModal gradableEventId={gradableEventId} onClosed={onClose} />
+      <GradableEventRewardModal
+        gradableEventId={gradableEventId}
+        onClosed={onClose}
+      />
     ),
   };
 

@@ -12,7 +12,7 @@ import { EventSectionService } from "@/app/(logged-in)/course/EventSectionServic
 import Pagination from "@/components/pagination/Pagination";
 import PointsSummary from "@/components/course/event-section/points-summary/PointsSummary";
 import { setResizeObserver } from "@/components/course/event-section/EventSectionUtils";
-import EventRewardModal from "@/components/speed-dial/modals/EventRewardModal";
+import GradableEventRewardModal from "@/components/speed-dial/modals/GradableEventRewardModal";
 import { useTitle } from "@/components/navigation/TitleContext";
 import XPCardPoints from "@/components/xp-card/inner-components/XPCardPoints";
 
@@ -171,7 +171,7 @@ export default function XPCardGrid({
       )}
 
       {eventSectionType === "test" && (
-        <EventRewardModal
+        <GradableEventRewardModal
           gradableEventId={selectedEventId ?? undefined}
           onClosed={() => setSelectedEventId(null)}
         />

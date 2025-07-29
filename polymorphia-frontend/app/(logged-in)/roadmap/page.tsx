@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTitle } from "@/components/navigation/TitleContext";
 import ProgressBar from "@/components/progressbar/ProgressBar";
 import XPCard from "@/components/xp-card/XPCard";
@@ -12,9 +12,11 @@ import { RoadmapService } from "@/app/(logged-in)/roadmap/RoadmapService";
 import XPCardChest from "@/components/xp-card/inner-components/XPCardChest";
 import Loading from "@/components/loading/Loading";
 import { useMediaQuery } from "react-responsive";
+import RoadmapModals from "@/app/(logged-in)/roadmap/RoadmapModals";
 
 export default function Roadmap() {
   const { setTitle } = useTitle();
+  const [selectedEvent, setSelectedEvent] = useState(null);
   const wrapperRef = useFadeInAnimate();
   const isXL = useMediaQuery({ minWidth: 1280 });
   const isMd = useMediaQuery({ minWidth: 768 });
@@ -32,6 +34,11 @@ export default function Roadmap() {
     return <Loading />;
   }
 
+  const handleClick = (gradableEvent) => {
+    console.log("click", gradableEvent);
+    setSelectedEvent(gradableEvent);
+  };
+
   const cards = data.map((item) => {
     return (
       <XPCard
@@ -41,6 +48,12 @@ export default function Roadmap() {
         color={item.gainedXp > 0 ? "green" : "silver"}
         size={isXL ? "md" : isMd ? "sm" : "xs"}
         forceWidth={true}
+        isLocked={item.hidden}
+        onClick={() => {
+          if (!item.hidden) {
+            handleClick(item);
+          }
+        }}
         component={
           item.hasChest ? (
             <XPCardChest />
@@ -59,7 +72,7 @@ export default function Roadmap() {
     <>
       <div
         ref={wrapperRef}
-        className="w-[17rem] min-[400px]:w-[20rem] md:w-[44rem] h-[2300px] xl:w-[57rem] xl:h-[2500px] mx-auto flex-col-centered mt-30"
+        className=" w-[17rem] min-[400px]:w-[20rem] md:w-[44rem] h-[2300px] xl:w-[57rem] xl:h-[2500px] mx-auto flex-col-centered py-24 2xl:py-32"
       >
         <ProgressBar
           minXP={0}
@@ -90,6 +103,10 @@ export default function Roadmap() {
           }
         />
       </div>
+      <RoadmapModals
+        gradableEvent={selectedEvent}
+        setSelectedEvent={setSelectedEvent}
+      />
     </>
   );
 }
