@@ -48,12 +48,6 @@ const KnowledgeBaseService = {
     });
   },
 
-  getItem: async (itemId: number) => {
-    const response = await fetch(`${API_HOST}/rewards/items/${itemId}`);
-    if (!response.ok) throw new Error("Failed to fetch item");
-    return await response.json();
-  },
-
   getChests: async (courseId: number): Promise<ChestSlide[]> => {
     const response = await fetch(`${API_HOST}/courses/${courseId}/chests`, {
       credentials: "include",

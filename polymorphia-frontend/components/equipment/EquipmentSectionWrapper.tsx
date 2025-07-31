@@ -1,4 +1,4 @@
-import { useScaleShow } from "@/animations/General";
+import { useScaleShow } from "@/animations/ScaleShow";
 import { EquipmentSection } from "@/components/equipment/EquipmentSection";
 import "./index.css";
 import { EquipmentSectionWrapperProps } from "@/components/equipment/types";

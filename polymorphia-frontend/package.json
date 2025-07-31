@@ -13,6 +13,9 @@
     "lint": "npm run eslint:check && npm run prettier:check"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.2.0",
     "@tailwindcss/postcss": "^4.1.5",
     "@tanstack/react-form": "^1.11.1",
     "@tanstack/react-query": "^5.74.7",
@@ -27,6 +30,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hot-toast": "^2.5.2",
+    "react-markdown": "^10.1.0",
     "react-paginate": "^8.3.0",
     "react-responsive": "^10.0.1",
     "tailwind-variants": "^1.0.0",

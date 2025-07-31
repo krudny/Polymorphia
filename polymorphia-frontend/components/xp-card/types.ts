@@ -1,9 +1,10 @@
-import { EventSection } from "@/components/course/event-section/types";
+import { EventSectionType } from "@/components/course/event-section/types";
+import { ReactNode, RefObject } from "react";
 
-export interface EventSectionCardProps {
+export interface XPCardProps {
   title: string;
   subtitle?: string;
-  xp?: string;
+  component?: ReactNode;
   image?: {
     url: string;
     alt: string;
@@ -11,14 +12,14 @@ export interface EventSectionCardProps {
   onClick?: () => void;
 }
 
-export type EventSectionCardVariantProps = {
+export type XPCardVariantProps = {
   size?: "xs" | "sm" | "md" | "lg" | "hofDesktop";
   color?: "gold" | "silver" | "bronze" | "green";
   forceWidth?: boolean;
-  isSumVisible?: boolean;
 };
 
-export interface EventSectionCardGridProps {
-  eventSection: EventSection;
-  containerRef: React.RefObject<HTMLDivElement | null>;
+export interface XPCardGridProps {
+  eventSectionId: number;
+  eventSectionType: EventSectionType;
+  containerRef: RefObject<HTMLDivElement | null>;
 }

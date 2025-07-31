@@ -2,12 +2,12 @@
 @import "../../styles/globals.css";
 
 .button-with-border {
-    @apply block mx-auto border-2;
+    @apply block mx-auto border-2 rounded;
     @apply transition-colors duration-400 ease-[cubic-bezier(0.34,1,0.2,1)] hover:cursor-pointer;
 }
 
 .button-with-border-dark {
-    @apply text-primary-dark border-primary-dark hover:bg-primary-dark hover:text-neutral-300;
+    @apply text-primary-dark border-primary-dark hover:bg-primary-dark hover:text-secondary-gray;
 }
 
 .button-with-border-light {

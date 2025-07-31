@@ -11,7 +11,7 @@ export interface HallOfFameFilterOption {
   label: string;
   value: string;
   isSelected: boolean;
-  priority?: number;
+  order?: number;
 }
 
 export type HallOfFameFilterID =

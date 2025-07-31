@@ -52,7 +52,7 @@ export default function Home() {
   }, [isLoginFormVisible]);
 
   return (
-    <BackgroundWrapper className="hero-background-wrapper">
+    <BackgroundWrapper className="hero-background-wrapper" forceTheme="light">
       <div className="hero-background-image" ref={backgroundRef}>
         <Image
           src={`${API_STATIC_URL}/images/general/hero_bg.png`}

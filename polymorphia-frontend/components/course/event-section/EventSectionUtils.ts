@@ -1,24 +1,18 @@
 "use client";
 
-import {
-  BonusInfo,
-  EventSection,
-  EventSectionShortResponseDto,
-  GradableEventCoreResponse,
-} from "@/components/course/event-section/types";
-import { PointsSummaryElementProps } from "@/components/course/event-section/points-summary/types";
+import { EventSectionResponseDTO } from "@/components/course/event-section/types";
 import { MenuOption } from "@/components/navigation/types";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { EventSectionCardProps } from "@/components/xp-card/types";
+import { RefObject } from "react";
 
 export function updateMenuItems(
   menuItems: MenuOption[],
-  eventSections: EventSectionShortResponseDto[]
+  eventSections: EventSectionResponseDTO[]
 ) {
   const courseItem = menuItems.filter(
     (menuOption) => menuOption.text === "Kurs"
   )[0];
-  courseItem.link = `course/${eventSections[0].eventSectionType}/${eventSections[0].id}`;
+
+  courseItem.link = `course/${eventSections[0].type}/${eventSections[0].id}`;
 
   courseItem.subItems = eventSections
     .filter((eventSection) => !eventSection.hidden)
@@ -26,14 +20,14 @@ export function updateMenuItems(
       // TODO: use correct courseID
       return {
         text: eventSection.name,
-        link: `course/${eventSection.eventSectionType}/${eventSection.id}`,
+        link: `course/${eventSection.type}/${eventSection.id}`,
       };
     });
 }
 
 export function setResizeObserver(
-  containerRef: React.RefObject<HTMLDivElement | null>,
-  summaryRef: React.RefObject<HTMLDivElement | null>,
+  containerRef: RefObject<HTMLDivElement | null>,
+  summaryRef: RefObject<HTMLDivElement | null>,
   setMobile: (v: boolean) => void,
   setPageCols: (n: number) => void,
   setPageRows: (n: number) => void
@@ -98,67 +92,4 @@ export function setResizeObserver(
   return () => {
     resizeObserver.disconnect();
   };
-}
-
-export function mapPropsToCards(
-  gradableEventsData: GradableEventCoreResponse,
-  setCurrentlySelectedGradableEventIdForModal: (e: number | null) => void,
-  router: AppRouterInstance,
-  eventSection: EventSection
-): (EventSectionCardProps & { id: number })[] {
-  return gradableEventsData.data
-    .filter((event) => !event.hidden)
-    .map((event) => {
-      return {
-        id: event.id,
-        title: event.name,
-        subtitle: event.topic,
-        xp: event.gainedXp ? `${event.gainedXp} xp` : undefined,
-        onClick:
-          eventSection.type === "test"
-            ? () => {
-                setCurrentlySelectedGradableEventIdForModal(event.id);
-              }
-            : () => {
-                router.push(
-                  `/course/${eventSection.type}/${eventSection.id}/${event.id}`
-                );
-              },
-      };
-    });
-}
-
-export function getBonusesFromEventSection(
-  eventSection: EventSection,
-  setCurrentBonusInfoModal: (e: BonusInfo) => void
-): PointsSummaryElementProps[] {
-  return [
-    {
-      bonus: {
-        name: "Zdobyte xp",
-        bonusXp: `${eventSection.gainedXp} xp`,
-        items: [],
-      },
-    },
-    ...eventSection.bonuses.map((bonus) => {
-      return {
-        bonus: {
-          ...bonus,
-          bonusXp: `${bonus.bonusXp} xp`,
-          bonusPercentage: bonus.bonusPercentage
-            ? `+${bonus.bonusPercentage}$`
-            : undefined,
-        },
-        onClick: () => setCurrentBonusInfoModal(bonus),
-      };
-    }),
-    {
-      bonus: {
-        name: "Łącznie",
-        bonusXp: `${eventSection.totalXp} xp`,
-        items: [],
-      },
-      horizontal: true,
-    },
-  ];
 }

@@ -2,10 +2,7 @@ import clsx from "clsx";
 import { tv } from "tailwind-variants";
 import Image from "next/image";
 import "./index.css";
-import {
-  EventSectionCardProps,
-  EventSectionCardVariantProps,
-} from "@/components/xp-card/types";
+import { XPCardProps, XPCardVariantProps } from "@/components/xp-card/types";
 
 const xpCard = tv({
   base: "xp-card",
@@ -39,14 +36,13 @@ const xpCard = tv({
 export default function XPCard({
   title,
   subtitle,
-  xp,
+  component,
   image,
   onClick,
   size,
   color,
   forceWidth,
-  isSumVisible = true,
-}: EventSectionCardProps & EventSectionCardVariantProps) {
+}: XPCardProps & XPCardVariantProps) {
   return (
     <div
       className={clsx(
@@ -64,10 +60,7 @@ export default function XPCard({
         <h1>{title}</h1>
         <h2>{subtitle}</h2>
       </div>
-      <div className="xp-card-xp">
-        <h1>{xp}</h1>
-        {isSumVisible && <h2>Suma</h2>}
-      </div>
+      <div className="xp-card-component">{component}</div>
     </div>
   );
 }

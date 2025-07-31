@@ -1,8 +1,10 @@
+import { ReactNode } from "react";
+
 export interface ModalContextValue {
   closeModal: () => void;
 }
 
 export interface ModalProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
   closeModal: () => void;
 }

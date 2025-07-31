@@ -1,4 +1,4 @@
-import { useScaleShow } from "@/animations/General";
+import { useScaleShow } from "@/animations/ScaleShow";
 import { useTitle } from "../navigation/TitleContext";
 import { ReactNode } from "react";
 import "./index.css";

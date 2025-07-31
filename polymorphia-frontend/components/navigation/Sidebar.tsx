@@ -13,8 +13,8 @@ import "./index.css";
 import clsx from "clsx";
 import { animateSidebar } from "@/animations/Navigation";
 import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { updateMenuItems } from "@/components/course/event-section/EventSectionUtils";
+import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 
 export default function Sidebar() {
   const {

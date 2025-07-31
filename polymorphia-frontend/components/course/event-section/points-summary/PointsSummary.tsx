@@ -1,44 +1,92 @@
 import { PointsSummaryProps } from "@/components/course/event-section/points-summary/types";
-import PointsSummaryElement from "./PointsSummaryElement";
 import { Fragment, useState } from "react";
-import BonusInfoModal from "./BonusInfoModal";
 import { BonusInfo } from "@/components/course/event-section/types";
-import { getBonusesFromEventSection } from "@/components/course/event-section/EventSectionUtils";
 import "./index.css";
+import { useQuery } from "@tanstack/react-query";
+import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
+import Loading from "@/components/loading/Loading";
+import BonusInfoModal from "@/components/course/event-section/points-summary/BonusInfoModal";
+import PointsSummaryElement from "@/components/course/event-section/points-summary/PointsSummaryElement";
 
 export default function PointsSummary({
-  eventSection,
+  eventSectionId,
   ref,
 }: PointsSummaryProps) {
   const [currentBonusInfoModal, setCurrentBonusInfoModal] =
     useState<BonusInfo | null>(null);
 
-  const elements = getBonusesFromEventSection(
-    eventSection,
-    setCurrentBonusInfoModal
-  );
+  const {
+    data: pointsSummary,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["pointsSummary", eventSectionId],
+    queryFn: () => EventSectionService.getPointsSummary(eventSectionId),
+  });
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <div>Error loading points summary {error.message}</div>;
+  }
+
+  if (!pointsSummary) {
+    return <div>No points summary</div>;
+  }
+
+  const flatBonus = {
+    name: "Bonusy punktowe",
+    bonusXp: `${pointsSummary.flatBonus.xp.toFixed(1)} xp`,
+    items: pointsSummary.flatBonus.items,
+  };
+
+  const percentageBonus = {
+    name: "Bonusy procentowe",
+    bonusXp: `${pointsSummary.percentageBonus.xp.toFixed(1)} xp`,
+    items: pointsSummary.percentageBonus.items,
+  };
 
   return (
     <>
       <div ref={ref} className="points-summary">
-        {elements.map((element, index) => (
-          <Fragment key={element.bonus.name}>
+        {pointsSummary && (
+          <>
             <PointsSummaryElement
-              {...element}
-              horizontal={index === elements.length - 1}
+              bonus={{
+                name: "Zdobyte xp",
+                bonusXp: `${pointsSummary.gainedXp.toFixed(1)} xp`,
+                items: [],
+              }}
+            />
+            <PointsSummaryElement
+              bonus={flatBonus}
               onClick={
-                element.bonus.items.length > 0
-                  ? () => {
-                      setCurrentBonusInfoModal(element.bonus);
-                    }
+                flatBonus.items.length > 0
+                  ? () => setCurrentBonusInfoModal(flatBonus)
                   : undefined
               }
             />
-            {index === elements.length - 2 && (
-              <div className="points-summary-divider" />
-            )}
-          </Fragment>
-        ))}
+            <PointsSummaryElement
+              bonus={percentageBonus}
+              onClick={
+                percentageBonus.items.length > 0
+                  ? () => setCurrentBonusInfoModal(percentageBonus)
+                  : undefined
+              }
+            />
+            <div className="points-summary-divider" />
+            <PointsSummaryElement
+              bonus={{
+                name: "Łącznie",
+                bonusXp: `${pointsSummary.totalXp.toFixed(1)} xp`,
+                items: [],
+              }}
+              horizontal={true}
+            />
+          </>
+        )}
       </div>
       <BonusInfoModal
         bonusInfo={currentBonusInfoModal}

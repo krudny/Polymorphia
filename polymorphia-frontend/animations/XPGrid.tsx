@@ -1,14 +1,14 @@
-import { GradableEventCoreResponse } from "@/components/course/event-section/types";
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { GradableEventResponseDTO } from "@/app/(logged-in)/course/EventSectionService";
 
-export function useEventSectionAnimation(
+export function useXPGridAnimation(
   pageToShow: number,
   setDirection: (n: 1 | -1) => void,
   sliderRef: React.RefObject<HTMLDivElement | null>,
   setPageToShow: (n: number) => void,
   setCurrentPage: (n: number) => void,
-  gradableEventsData: GradableEventCoreResponse | undefined,
+  gradableEventsData: GradableEventResponseDTO[] | undefined,
   direction: 1 | -1,
   firstRender: boolean,
   setFirstRender: (b: boolean) => void

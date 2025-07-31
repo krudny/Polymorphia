@@ -2,7 +2,7 @@
 
 import { HallOfFameResponseDTO } from "@/interfaces/api/DTO";
 
-const studentNames = [
+export const studentNames = [
   "Gerard Małoduszny",
   "Gerard Małosolny",
   "Gerard Kiszony",
@@ -15,7 +15,7 @@ const studentNames = [
   "Paulina Kaczmarek",
 ];
 
-const groups = [
+export const groups = [
   "MI-15-00",
   "BM-16-00",
   "BM-17-00",
