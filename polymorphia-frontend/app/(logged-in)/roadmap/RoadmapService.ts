@@ -1,5 +1,7 @@
+import { GradableEventResponseDTO } from "@/app/(logged-in)/course/EventSectionService";
+
 export const RoadmapService = {
-  getRoadmapData: async () => {
+  getRoadmapData: async (): Promise<GradableEventResponseDTO[]> => {
     return [
       {
         id: 1,
@@ -7,6 +9,8 @@ export const RoadmapService = {
         topic: "Instrukcje sterujące",
         gainedXp: 1.5,
         order: 1,
+        hasChest: false,
+        isLocked: false,
       },
       {
         id: 15,
@@ -14,6 +18,8 @@ export const RoadmapService = {
         topic: "Instrukcje sterujące w Javie",
         gainedXp: 2.0,
         order: 2,
+        hasChest: false,
+        isLocked: false,
       },
       {
         id: 2,
@@ -21,6 +27,8 @@ export const RoadmapService = {
         topic: "Model obiektowy",
         gainedXp: 0.0,
         order: 3,
+        hasChest: false,
+        isLocked: false,
       },
       {
         id: 16,
@@ -28,6 +36,8 @@ export const RoadmapService = {
         topic: "Model obiektowy",
         gainedXp: 0.0,
         order: 4,
+        hasChest: true,
+        isLocked: false,
       },
       {
         id: 30,
@@ -36,7 +46,7 @@ export const RoadmapService = {
         gainedXp: 0.0,
         order: 5,
         hasChest: true,
-        hidden: true,
+        isLocked: true,
       },
       {
         id: 33,
@@ -45,7 +55,7 @@ export const RoadmapService = {
         gainedXp: 0.0,
         order: 5,
         hasChest: true,
-        hidden: false,
+        isLocked: false,
       },
       {
         id: 3,
@@ -53,6 +63,8 @@ export const RoadmapService = {
         topic: "Interakcje między obiektami",
         gainedXp: 0.0,
         order: 6,
+        hasChest: false,
+        isLocked: false,
       },
       {
         id: 17,
@@ -60,6 +72,8 @@ export const RoadmapService = {
         topic: "Interakcje między obiektami",
         gainedXp: 0.0,
         order: 7,
+        hasChest: false,
+        isLocked: false,
       },
       {
         id: 4,
@@ -67,6 +81,8 @@ export const RoadmapService = {
         topic: "Interfejsy i mapy",
         gainedXp: 0.0,
         order: 8,
+        hasChest: false,
+        isLocked: false,
       },
       {
         id: 18,
@@ -74,6 +90,8 @@ export const RoadmapService = {
         topic: "Interfejsy i mapy",
         gainedXp: 0.0,
         order: 9,
+        hasChest: false,
+        isLocked: false,
       },
       {
         id: 5,
@@ -81,6 +99,8 @@ export const RoadmapService = {
         topic: "Dziedziczenie",
         gainedXp: 0.0,
         order: 10,
+        hasChest: false,
+        isLocked: false,
       },
       {
         id: 19,
@@ -88,6 +108,8 @@ export const RoadmapService = {
         topic: "Dziedziczenie",
         gainedXp: 0.0,
         order: 11,
+        hasChest: true,
+        isLocked: false,
       },
       {
         id: 6,
@@ -95,6 +117,8 @@ export const RoadmapService = {
         topic: "Refactoring kodu",
         gainedXp: 0.0,
         order: 12,
+        hasChest: false,
+        isLocked: false,
       },
       {
         id: 20,
@@ -102,6 +126,8 @@ export const RoadmapService = {
         topic: "Refactoring kodu",
         gainedXp: 0.0,
         order: 13,
+        hasChest: false,
+        isLocked: false,
       },
       {
         id: 7,
@@ -109,6 +135,8 @@ export const RoadmapService = {
         topic: "Wielowątkowość",
         gainedXp: 0.0,
         order: 14,
+        hasChest: false,
+        isLocked: false,
       },
       {
         id: 21,
@@ -116,6 +144,8 @@ export const RoadmapService = {
         topic: "Wielowątkowość",
         gainedXp: 0.0,
         order: 15,
+        hasChest: false,
+        isLocked: false,
       },
       {
         id: 8,
@@ -123,6 +153,8 @@ export const RoadmapService = {
         topic: "Interfejs graficzny",
         gainedXp: 0.0,
         order: 16,
+        hasChest: true,
+        isLocked: false,
       },
       {
         id: 22,
@@ -130,6 +162,8 @@ export const RoadmapService = {
         topic: "Interfejs graficzny",
         gainedXp: 0.0,
         order: 17,
+        hasChest: false,
+        isLocked: false,
       },
       {
         id: 9,
@@ -137,6 +171,8 @@ export const RoadmapService = {
         topic: "Lambdy, streamy i zarządzanie zasobami",
         gainedXp: 0.0,
         order: 18,
+        hasChest: false,
+        isLocked: false,
       },
       {
         id: 10,
@@ -144,6 +180,8 @@ export const RoadmapService = {
         topic: "Kotlin jako alternatywa dla Javy",
         gainedXp: 0.0,
         order: 19,
+        hasChest: false,
+        isLocked: false,
       },
       {
         id: 11,
@@ -151,6 +189,8 @@ export const RoadmapService = {
         topic: "A może Rust?",
         gainedXp: 0.0,
         order: 20,
+        hasChest: false,
+        isLocked: false,
       },
       {
         id: 12,
@@ -158,6 +198,8 @@ export const RoadmapService = {
         topic: "Jak wycentrować diva",
         gainedXp: 0.0,
         order: 21,
+        hasChest: false,
+        isLocked: false,
       },
     ];
   },

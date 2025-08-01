@@ -4,19 +4,21 @@ import { useEffect, useState } from "react";
 import { useTitle } from "@/components/navigation/TitleContext";
 import ProgressBar from "@/components/progressbar/ProgressBar";
 import XPCard from "@/components/xp-card/XPCard";
-import XPCardPoints from "@/components/xp-card/inner-components/XPCardPoints";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import ProgressBarElement from "@/components/progressbar/ProgressBarElement";
 import { useQuery } from "@tanstack/react-query";
 import { RoadmapService } from "@/app/(logged-in)/roadmap/RoadmapService";
-import XPCardChest from "@/components/xp-card/inner-components/XPCardChest";
 import Loading from "@/components/loading/Loading";
 import { useMediaQuery } from "react-responsive";
 import RoadmapModals from "@/app/(logged-in)/roadmap/RoadmapModals";
+import { getCardComponent } from "@/shared/card/getCardComponent";
+import { GradableEventResponseDTO } from "@/app/(logged-in)/course/EventSectionService";
 
 export default function Roadmap() {
   const { setTitle } = useTitle();
-  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [selectedEvent, setSelectedEvent] = useState<
+    GradableEventResponseDTO | undefined
+  >(undefined);
   const wrapperRef = useFadeInAnimate();
   const isXL = useMediaQuery({ minWidth: 1280 });
   const isMd = useMediaQuery({ minWidth: 768 });
@@ -34,36 +36,25 @@ export default function Roadmap() {
     return <Loading />;
   }
 
-  const handleClick = (gradableEvent) => {
+  const handleClick = (gradableEvent: GradableEventResponseDTO) => {
     console.log("click", gradableEvent);
     setSelectedEvent(gradableEvent);
   };
 
-  const cards = data.map((item) => {
+  const cards = data.map((gradableEvent) => {
+    const { name, topic, id, gainedXp, isLocked, hasChest } = gradableEvent;
+
     return (
       <XPCard
-        title={item.name}
-        subtitle={item.topic}
-        key={item.id}
-        color={item.gainedXp > 0 ? "green" : "silver"}
+        title={name}
+        subtitle={topic}
+        key={id}
+        color={gainedXp > 0 ? "green" : "silver"}
         size={isXL ? "md" : isMd ? "sm" : "xs"}
         forceWidth={true}
-        isLocked={item.hidden}
-        onClick={() => {
-          if (!item.hidden) {
-            handleClick(item);
-          }
-        }}
-        component={
-          item.hasChest ? (
-            <XPCardChest />
-          ) : (
-            <XPCardPoints
-              points={item.gainedXp.toString()}
-              isSumVisible={true}
-            />
-          )
-        }
+        isLocked={isLocked}
+        onClick={() => handleClick(gradableEvent)}
+        component={getCardComponent(gainedXp, hasChest)}
       />
     );
   });
