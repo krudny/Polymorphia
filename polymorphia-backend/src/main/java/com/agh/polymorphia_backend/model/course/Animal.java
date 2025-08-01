@@ -12,7 +12,7 @@ import lombok.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "students_course_groups")
+@Table(name = "animals")
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)

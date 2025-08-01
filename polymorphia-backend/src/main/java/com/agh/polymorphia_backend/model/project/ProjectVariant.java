@@ -19,6 +19,12 @@ public class ProjectVariant {
     @EqualsAndHashCode.Include
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_variant_category_id")
+    @JsonBackReference
+    @ToString.Exclude
+    private ProjectVariantCategory projectVariantCategory;
+
     @NotEmpty
     private String name;
 
@@ -28,9 +34,5 @@ public class ProjectVariant {
     @NotEmpty
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "project_variant_category_id")
-    @JsonBackReference
-    @ToString.Exclude
-    private ProjectVariantCategory projectVariantCategory;
+    private String imageUrl;
 }

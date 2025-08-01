@@ -3,16 +3,13 @@ package com.agh.polymorphia_backend.model.grade;
 
 import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.event.gradable.GradableEvent;
-import com.agh.polymorphia_backend.model.grade.reward.AssignedChest;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.Set;
 
@@ -27,7 +24,7 @@ import java.util.Set;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public abstract class Grade {
+public class Grade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
@@ -42,10 +39,6 @@ public abstract class Grade {
     @UpdateTimestamp
     private ZonedDateTime modifiedDate;
 
-    @NotNull
-    @Positive
-    @Column(precision = 4, scale = 1)
-    private BigDecimal xp;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "animal_id")
@@ -53,8 +46,10 @@ public abstract class Grade {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gradable_event_id")
-    private GradableEvent<?> gradableEvent;
+    private GradableEvent gradableEvent;
 
     @OneToMany(mappedBy = "grade", fetch = FetchType.LAZY)
-    private Set<AssignedChest> assignedChests;
+    @JsonIgnore
+    @ToString.Exclude
+    private Set<CriterionGrade> criteriaGrades;
 }

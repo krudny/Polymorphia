@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.model.project;
 
-import com.agh.polymorphia_backend.model.event.section.ProjectSection;
+import com.agh.polymorphia_backend.model.event.gradable.Project;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 @Data
 @NoArgsConstructor
 @SuperBuilder
-@Table(name = "project_variant_catogories")
+@Table(name = "project_variant_categories")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ProjectVariantCategory {
     @Id
@@ -20,9 +20,9 @@ public class ProjectVariantCategory {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "project_section_id")
+    @JoinColumn(name = "project_id")
     @ToString.Exclude
-    private ProjectSection projectSection;
+    private Project project;
 
     @NotEmpty
     private String name;

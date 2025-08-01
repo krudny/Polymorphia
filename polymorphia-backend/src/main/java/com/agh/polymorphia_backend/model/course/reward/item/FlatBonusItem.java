@@ -3,7 +3,7 @@ package com.agh.polymorphia_backend.model.course.reward.item;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -20,11 +20,16 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class FlatBonusItem extends Item {
     @NotNull
-    @Positive
+    @PositiveOrZero
     @Column(precision = 4, scale = 1)
     private BigDecimal xpBonus;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     private FlatBonusItemBehavior behavior;
+
+    @Override
+    public ItemType getItemType() {
+        return ItemType.FLAT_BONUS;
+    }
 }

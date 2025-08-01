@@ -1,32 +1,28 @@
 package com.agh.polymorphia_backend.controller;
 
-import com.agh.polymorphia_backend.dto.response.event.gradable.GradableEventResponseDto;
-import com.agh.polymorphia_backend.service.event.gradable.AssignmentSectionService;
-import com.agh.polymorphia_backend.service.event.gradable.TestSectionService;
+import com.agh.polymorphia_backend.dto.response.event.gradable.MarkdownResponseDto;
+import com.agh.polymorphia_backend.service.event.GradableEventService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping()
+@RequestMapping("/gradable-events")
 public class GradableEventController {
-    private final TestSectionService testService;
-    private final AssignmentSectionService assignmentService;
+    private final GradableEventService gradableEventService;
 
-    @GetMapping("/assignments/{assignmentId}")
-    @PreAuthorize("hasRole('STUDENT')")
-    public ResponseEntity<GradableEventResponseDto> getAssignment(@PathVariable Long assignmentId) {
-        return ResponseEntity.ok(assignmentService.getOneEvent(assignmentId));
+    @GetMapping("/{gradableEventId}/markdown")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<MarkdownResponseDto> getGradableEventMarkdown(@PathVariable Long gradableEventId) {
+        return ResponseEntity.ok(gradableEventService.getMarkdown(gradableEventId));
     }
 
-    @GetMapping("/tests/{testId}")
-    @PreAuthorize("hasRole('STUDENT')")
-    public ResponseEntity<GradableEventResponseDto> getTest(@PathVariable Long testId) {
-        return ResponseEntity.ok(testService.getOneEvent(testId));
+    @PutMapping("/{gradableEventId}/markdown")
+    @PreAuthorize("hasAuthority('COORDINATOR')")
+    public ResponseEntity<Void> saveGradableEventMarkdown(@PathVariable Long gradableEventId, @RequestBody MarkdownResponseDto markdown) {
+        gradableEventService.saveMarkdown(gradableEventId, markdown);
+        return ResponseEntity.ok().build();
     }
 }

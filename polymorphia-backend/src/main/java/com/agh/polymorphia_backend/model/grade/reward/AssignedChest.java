@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.model.grade.reward;
 
 import com.agh.polymorphia_backend.model.course.reward.Chest;
-import com.agh.polymorphia_backend.model.grade.Grade;
+import com.agh.polymorphia_backend.model.grade.CriterionGrade;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -32,8 +32,8 @@ public class AssignedChest {
     private Boolean opened = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "grade_id")
-    private Grade grade;
+    @JoinColumn(name = "criterion_grade_id")
+    private CriterionGrade criterionGrade;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chest_id")

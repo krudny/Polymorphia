@@ -1,11 +1,12 @@
 package com.agh.polymorphia_backend.model.event.section;
 
-import com.agh.polymorphia_backend.dto.request.grade.EventSectionType;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.event.gradable.GradableEvent;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -28,7 +29,10 @@ public abstract class EventSection {
 
     @NotEmpty
     private String name;
+
     private boolean shownInRoadMap = false;
+
+    private boolean eventsWithTopics = false;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -36,9 +40,16 @@ public abstract class EventSection {
     private Course course;
 
     @NotNull
-    private Long priority;
+    @Positive
+    private Long orderIndex;
 
-    public abstract Set<GradableEvent<?>> getGradableEvents();
+    @NotNull
+    private Boolean hidden = false;
+
+    @OneToMany(mappedBy = "eventSection", fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @ToString.Exclude
+    private Set<GradableEvent> gradableEvents;
 
     public abstract EventSectionType getEventSectionType();
 }

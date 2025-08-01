@@ -1,10 +1,11 @@
 package com.agh.polymorphia_backend.dto.response.event.section.bonus;
 
 
+import com.agh.polymorphia_backend.dto.response.event.section.bonus.item.BonusItemDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -18,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 public class BonusDto {
     @NotNull
-    @Positive
+    @PositiveOrZero
     @Digits(integer = 3, fraction = 1)
     private BigDecimal xp;
 

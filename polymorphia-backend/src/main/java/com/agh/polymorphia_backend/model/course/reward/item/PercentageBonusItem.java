@@ -20,4 +20,9 @@ import lombok.experimental.SuperBuilder;
 public class PercentageBonusItem extends Item {
     @NotNull
     private Integer percentageBonus;
+
+    @Override
+    public ItemType getItemType() {
+        return ItemType.PERCENTAGE_BONUS;
+    }
 }

@@ -15,5 +15,5 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class PercentageBonusDto extends BonusDto {
     @NotNull
-    private Integer percentage;
+    private Integer bonusPercentage;
 }

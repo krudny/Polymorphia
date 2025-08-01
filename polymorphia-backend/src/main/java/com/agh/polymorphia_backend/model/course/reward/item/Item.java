@@ -19,7 +19,7 @@ import java.util.Set;
 @ToString(exclude = {"chests"})
 @Inheritance(strategy = InheritanceType.JOINED)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Item {
+public abstract class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
@@ -51,5 +51,7 @@ public class Item {
             inverseJoinColumns = @JoinColumn(name = "chest_id")
     )
     private Set<Chest> chests;
+
+    public abstract ItemType getItemType();
 
 }

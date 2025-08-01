@@ -3,6 +3,7 @@ package com.agh.polymorphia_backend.model.event.submission;
 import com.agh.polymorphia_backend.model.course.Animal;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -19,7 +20,7 @@ import java.time.ZonedDateTime;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public abstract class Submission {
+public class Submission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
@@ -27,10 +28,19 @@ public abstract class Submission {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "requirement_id")
+    @JsonIgnore
+    @ToString.Exclude
+    private SubmissionRequirement requirement;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "animal_id")
     @JsonIgnore
     @ToString.Exclude
     private Animal animal;
+
+    @NotEmpty
+    private String url;
 
     @NotNull
     @Setter(AccessLevel.NONE)

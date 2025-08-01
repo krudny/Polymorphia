@@ -1,6 +1,8 @@
 package com.agh.polymorphia_backend.model.project;
 
 import com.agh.polymorphia_backend.model.course.Animal;
+import com.agh.polymorphia_backend.model.event.gradable.Project;
+import com.agh.polymorphia_backend.model.user.Instructor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,6 +22,18 @@ public class ProjectGroup {
     @Setter(AccessLevel.NONE)
     @EqualsAndHashCode.Include
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id")
+    @JsonIgnore
+    @ToString.Exclude
+    private Project project;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "instructor_id")
+    @JsonIgnore
+    @ToString.Exclude
+    private Instructor instructor;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
