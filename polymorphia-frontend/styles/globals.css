@@ -1,0 +1,65 @@
+@import "tailwindcss";
+@tailwind utilities;
+
+:root {
+  --font-family-symbols: "Material Symbols Rounded";
+}
+@custom-variant dark (&:where(.dark, .dark *));
+
+:global(.next-image-blur-placeholder) {
+  opacity: 0 !important;
+}
+
+@theme {
+  --shadow-3xl: 0px 0px 12px 0px rgba(66, 68, 90, 0.5);
+  --breakpoint-3xl: 132rem;
+  --color-primary-light: #fafafa;
+  --color-secondary-light: #f5f5f5;
+  --color-primary-dark: #262626;
+  --color-secondary-dark: #212121;
+  --color-primary-gray: #a1a1a1;
+  --color-secondary-gray: #d4d4d4;
+}
+
+@utility flex-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@utility flex-col-centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@utility custom-scrollbar {
+  scrollbar-color: #3c3c3c transparent;
+  scrollbar-width: thin;
+}
+
+@utility material-symbols {
+  font-family: var(--font-family-symbols), serif;
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 600,
+    "GRAD" 0,
+    "opsz" 48;
+  display: inline-block;
+  line-height: 1;
+}
+
+@layer utilities {
+  .extra-large-center {
+    @apply 3xl:max-h-[56rem] 3xl:max-w-[1750px];
+  }
+}
+
+@source inline('grid-rows-1');
+@source inline('grid-rows-2');
+@source inline('grid-rows-3');
+@source inline('grid-rows-4');
+@source inline('grid-cols-1');
+@source inline('grid-cols-2');
+@source inline('grid-cols-3');

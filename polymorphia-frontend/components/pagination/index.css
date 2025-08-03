@@ -1,0 +1,18 @@
+@import "tailwindcss";
+@import "../../styles/globals.css";
+
+.pagination-container {
+    @apply flex flex-row gap-2 items-center h-12;
+
+    a {
+        @apply cursor-pointer;
+    }
+
+    .pagination-page a {
+        @apply flex items-center justify-center w-8 h-8 text-primary-dark bg-secondary-gray dark:bg-primary-gray border-2 border-primary-dark rounded-md text-xl;
+    }
+
+    .selected a {
+        @apply bg-primary-dark text-primary-light dark:bg-secondary-light dark:text-primary-dark;
+    }
+}

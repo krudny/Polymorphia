@@ -2,7 +2,7 @@ name: Promote Staging Image to Production
 
 on:
   workflow_dispatch:
-
+  
 jobs:
   promote-to-production:
     if: github.actor == 'krudny'
