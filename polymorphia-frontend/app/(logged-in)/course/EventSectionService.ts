@@ -320,7 +320,6 @@ export const EventSectionService = {
         gainedXp: "3.5",
         percentageBonus: {
           xp: "0.2",
-          percentage: 5,
           assignedItems: [
             {
               item: {
@@ -348,7 +347,6 @@ export const EventSectionService = {
         gainedXp: "2.0",
         percentageBonus: {
           xp: "0.0",
-          percentage: 0,
           assignedItems: [],
         },
         flatBonus: {
@@ -362,7 +360,6 @@ export const EventSectionService = {
         gainedXp: "0",
         percentageBonus: {
           xp: "0.0",
-          percentage: 0,
           assignedItems: [],
         },
         flatBonus: {

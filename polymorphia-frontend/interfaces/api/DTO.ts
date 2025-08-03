@@ -129,7 +129,6 @@ export interface GradableEventResponseDTO {
 // Points Summary
 export interface PointsSummaryBonusResponseDTO {
   xp: string;
-  percentage?: number;
   assignedItems: AssignedItemResponseDTO[];
 }
 
