@@ -11,7 +11,7 @@ import {
   MarkdownResponseDTO,
   PointsSummaryResponseDTO,
   ProjectVariantResponseDTO,
-  RewardResponseDTO,
+  GradeResponseDTO,
   UserDetailsDTO,
 } from "@/interfaces/api/DTO";
 
@@ -391,7 +391,7 @@ export const EventSectionService = {
     mockMarkdownStore[gradableEventId] = newMarkdown;
   },
 
-  getReward: async (gradableEventId: number): Promise<RewardResponseDTO> => {
+  getReward: async (gradableEventId: number): Promise<GradeResponseDTO> => {
     if (gradableEventId === 30) {
       return {
         grade: {
