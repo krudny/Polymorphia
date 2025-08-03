@@ -1,3 +1,5 @@
+name: Run Backend Tests
+
 on:
   push:
     branches:
