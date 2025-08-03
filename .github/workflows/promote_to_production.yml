@@ -1,9 +1,6 @@
 name: Promote Staging Image to Production
 
 on:
-  push:
-    branches:
-      - feature/OG-83-staging-environment
   workflow_dispatch:
     inputs:
       image_tag:
