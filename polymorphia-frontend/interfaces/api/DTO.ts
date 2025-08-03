@@ -80,9 +80,7 @@ export interface AssignedItemResponseDTO {
 //   (when someone hasn't received this item yet)
 export interface EquipmentItemResponseDTO {
   base: BaseItemResponseDTO;
-  // 'Array' suffix is there to highlight the difference
-  // between this interface and AssignedItemResponseDTO
-  assignmentDetailsArray: ItemAssignmentDetailsResponseDTO[];
+  assignmentDetails: ItemAssignmentDetailsResponseDTO[];
 }
 
 // Chests

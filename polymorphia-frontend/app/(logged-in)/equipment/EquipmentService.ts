@@ -13,7 +13,7 @@ const EquipmentService = {
           bonusText: "+10% do kategorii lab",
           imageUrl: "images/items/carrot.jpg",
         },
-        assignmentDetailsArray: [
+        assignmentDetails: [
           {
             id: 1,
             receivedDate: "2.06.2026",
@@ -33,7 +33,7 @@ const EquipmentService = {
           bonusText: "+10% do kategorii lab",
           imageUrl: "images/items/parsley.jpg",
         },
-        assignmentDetailsArray: [
+        assignmentDetails: [
           {
             id: 3,
             receivedDate: "2.06.2025",
@@ -48,7 +48,7 @@ const EquipmentService = {
           bonusText: "+10% do kategorii lab",
           imageUrl: "images/items/aid.jpg",
         },
-        assignmentDetailsArray: [
+        assignmentDetails: [
           {
             id: 4,
             receivedDate: "2.06.2026",
@@ -68,7 +68,7 @@ const EquipmentService = {
           bonusText: "+10% do kategorii lab",
           imageUrl: "images/items/aid.jpg",
         },
-        assignmentDetailsArray: [],
+        assignmentDetails: [],
       },
     ];
   },

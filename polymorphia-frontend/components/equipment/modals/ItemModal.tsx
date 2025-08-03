@@ -20,7 +20,7 @@ export default function ItemModal() {
       subtitle={equipmentItem?.base.bonusText ?? ""}
     >
       <div className="bonus-info-modal">
-        {equipmentItem?.assignmentDetailsArray.map(
+        {equipmentItem?.assignmentDetails.map(
           (itemAssignmentDetails: ItemAssignmentDetailsResponseDTO) => (
             <XPCard
               key={itemAssignmentDetails.id}

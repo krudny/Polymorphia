@@ -31,13 +31,13 @@ export function EquipmentSection({ type, data }: EquipmentSectionProps) {
               <div
                 key={itemData.base.id}
                 onClick={
-                  itemData.assignmentDetailsArray.length > 0
+                  itemData.assignmentDetails.length > 0
                     ? () => setCurrentItemModalData(itemData)
                     : undefined
                 }
               >
                 <div
-                  className={`equipment-grid-item ${itemData.assignmentDetailsArray.length > 0 ? "hover:cursor-pointer" : ""}`}
+                  className={`equipment-grid-item ${itemData.assignmentDetails.length > 0 ? "hover:cursor-pointer" : ""}`}
                 >
                   <Image
                     src={`${API_STATIC_URL}/${itemData.base.imageUrl}`}
@@ -47,9 +47,9 @@ export function EquipmentSection({ type, data }: EquipmentSectionProps) {
                     priority
                     sizes="(min-width: 1024px) 25vw, 50vw"
                   />
-                  {itemData.assignmentDetailsArray.length > 0 ? (
+                  {itemData.assignmentDetails.length > 0 ? (
                     <ImageBadge
-                      text={itemData.assignmentDetailsArray.length.toString()}
+                      text={itemData.assignmentDetails.length.toString()}
                       className="equipment-image-badge"
                     />
                   ) : (
