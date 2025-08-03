@@ -5,7 +5,7 @@ on:
     branches:
       - main
       - develop
-      - feature/OG-83-staging-environment
+      # - feature/OG-83-staging-environment
   workflow_dispatch:
 
 jobs: 
