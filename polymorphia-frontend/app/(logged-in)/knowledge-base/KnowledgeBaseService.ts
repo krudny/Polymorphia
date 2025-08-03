@@ -18,7 +18,7 @@ const KnowledgeBaseService = {
       {
         type: "evolution-stage",
         id: 1,
-        order_index: 0,
+        orderIndex: 0,
         name: "Jajo",
         subtitle: "0.0 xp odblokowuje ocenę 2.0",
         description:
@@ -28,7 +28,7 @@ const KnowledgeBaseService = {
       {
         type: "evolution-stage",
         id: 2,
-        order_index: 1,
+        orderIndex: 1,
         name: "Jajo2",
         subtitle: "0.0 xp odblokowuje ocenę 2.0",
         description:
@@ -38,7 +38,7 @@ const KnowledgeBaseService = {
       {
         type: "evolution-stage",
         id: 3,
-        order_index: 2,
+        orderIndex: 2,
         name: "Jajo3",
         subtitle: "0.0 xp odblokowuje ocenę 2.0",
         description:
@@ -61,7 +61,7 @@ const KnowledgeBaseService = {
       {
         type: "item",
         id: 1,
-        order_index: 0,
+        orderIndex: 0,
         name: "Apteczka",
         subtitle: "+10.0 xp do eventów z kategorii projekt",
         description:
@@ -71,7 +71,7 @@ const KnowledgeBaseService = {
       {
         type: "item",
         id: 2,
-        order_index: 1,
+        orderIndex: 1,
         name: "Apteczka2",
         subtitle: "+10.0 xp do eventów z kategorii projekt",
         description:
@@ -81,7 +81,7 @@ const KnowledgeBaseService = {
       {
         type: "item",
         id: 3,
-        order_index: 2,
+        orderIndex: 2,
         name: "Apteczka3",
         subtitle: "+10.0 xp do eventów z kategorii projekt",
         description:
@@ -90,7 +90,7 @@ const KnowledgeBaseService = {
         relatedRewards: [
           {
             id: 2,
-            order_index: 1,
+            orderIndex: 1,
             name: "Srebrna Skrzynka 2",
             imageUrl: "images/chests/s1.png",
           },
@@ -112,7 +112,7 @@ const KnowledgeBaseService = {
       {
         type: "chest",
         id: 1,
-        order_index: 0,
+        orderIndex: 0,
         name: "Srebrna skrzynia",
         subtitle: "Otrzymujesz pełną zawartość skrzynki",
         description:
@@ -122,7 +122,7 @@ const KnowledgeBaseService = {
       {
         type: "chest",
         id: 2,
-        order_index: 1,
+        orderIndex: 1,
         name: "Srebrna skrzynia 2",
         subtitle: "Otrzymujesz pełną zawartość skrzynki",
         description:
@@ -131,7 +131,7 @@ const KnowledgeBaseService = {
         relatedRewards: [
           {
             id: 3,
-            order_index: 2,
+            orderIndex: 2,
             name: "Apteczka3",
             imageUrl: "images/items/aid.jpg",
           },
@@ -140,7 +140,7 @@ const KnowledgeBaseService = {
       {
         type: "chest",
         id: 3,
-        order_index: 2,
+        orderIndex: 2,
         name: "Srebrna skrzynia 3",
         subtitle: "Otrzymujesz pełną zawartość skrzynki",
         description:

@@ -34,7 +34,7 @@ export type KnowledgeBaseSlideType = "evolution-stage" | "item" | "chest";
 
 export interface KnowledgeBaseSlideRelatedRewardResponseDTO {
   id: number;
-  order_index: number;
+  orderIndex: number;
   name: string;
   imageUrl: string;
 }
@@ -42,7 +42,7 @@ export interface KnowledgeBaseSlideRelatedRewardResponseDTO {
 export interface KnowledgeBaseSlideResponseDTO {
   type: KnowledgeBaseSlideType;
   id: number;
-  order_index: number;
+  orderIndex: number;
   name: string;
   subtitle: string;
   description: string;
@@ -116,7 +116,7 @@ export interface EventSectionResponseDTO {
   id: number;
   type: EventType;
   name: string;
-  order_index: number;
+  orderIndex: number;
 }
 
 export interface GradableEventResponseDTO {
@@ -125,7 +125,7 @@ export interface GradableEventResponseDTO {
   name: string;
   topic?: string;
   gainedXp: string;
-  order_index: number;
+  orderIndex: number;
 }
 
 // Points Summary

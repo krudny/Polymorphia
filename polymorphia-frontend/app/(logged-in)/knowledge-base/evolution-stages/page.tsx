@@ -36,7 +36,7 @@ export default function EvolutionStages() {
 
   return (
     <Slider
-      slides={evolutionStages.sort((a, b) => a.order_index - b.order_index)}
+      slides={evolutionStages.sort((a, b) => a.orderIndex - b.orderIndex)}
     />
   );
 }

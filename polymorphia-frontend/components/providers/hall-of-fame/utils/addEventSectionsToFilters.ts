@@ -17,7 +17,7 @@ export const addEventSectionsToFilters = (
       filter.options.push({
         label: eventSection.name,
         value: eventSection.name,
-        order: eventSection.order_index,
+        order: eventSection.orderIndex,
         isSelected: false,
       });
       existingValues.add(eventSection.name);

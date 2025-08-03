@@ -46,37 +46,37 @@ const eventSectionData: EventSectionResponseDTO[] = [
     id: 2,
     name: "Laboratorium",
     type: "assignment",
-    order_index: 2,
+    orderIndex: 2,
   },
   {
     id: 3,
     name: "Projekt 1",
     type: "project",
-    order_index: 4,
+    orderIndex: 4,
   },
   {
     id: 1,
     name: "Kartkówka",
     type: "test",
-    order_index: 1,
+    orderIndex: 1,
   },
   {
     id: 4,
     name: "Git",
     type: "assignment",
-    order_index: 0,
+    orderIndex: 0,
   },
   {
     id: 5,
     name: "Specjalny lab",
     type: "assignment",
-    order_index: 3,
+    orderIndex: 3,
   },
   {
     id: 6,
     name: "Projekt 2",
     type: "project",
-    order_index: 5,
+    orderIndex: 5,
   },
 ];
 
@@ -94,7 +94,7 @@ export const EventSectionService = {
   getEventSections: async (
     courseId: number
   ): Promise<EventSectionResponseDTO[]> => {
-    return eventSectionData.sort((a, b) => a.order_index - b.order_index);
+    return eventSectionData.sort((a, b) => a.orderIndex - b.orderIndex);
   },
   getGradableEvents: async (
     eventSectionId: number
@@ -107,7 +107,7 @@ export const EventSectionService = {
           name: "Test 1",
           topic: "Instrukcje sterujące",
           gainedXp: 1.5,
-          order_index: 1,
+          orderIndex: 1,
         },
         {
           id: 2,
@@ -115,7 +115,7 @@ export const EventSectionService = {
           name: "Test 2",
           topic: "Model obiektowy",
           gainedXp: 0.0,
-          order_index: 2,
+          orderIndex: 2,
         },
         {
           id: 3,
@@ -123,7 +123,7 @@ export const EventSectionService = {
           name: "Test 3",
           topic: "Interakcje między obiektami",
           gainedXp: 0.0,
-          order_index: 3,
+          orderIndex: 3,
         },
         {
           id: 4,
@@ -131,7 +131,7 @@ export const EventSectionService = {
           name: "Test 4",
           topic: "Interfejsy i mapy",
           gainedXp: 0.0,
-          order_index: 4,
+          orderIndex: 4,
         },
         {
           id: 5,
@@ -139,7 +139,7 @@ export const EventSectionService = {
           name: "Test 5",
           topic: "Dziedziczenie",
           gainedXp: 0.0,
-          order_index: 5,
+          orderIndex: 5,
         },
         {
           id: 6,
@@ -147,7 +147,7 @@ export const EventSectionService = {
           name: "Test 6",
           topic: "Refactoring kodu",
           gainedXp: 0.0,
-          order_index: 6,
+          orderIndex: 6,
         },
         {
           id: 7,
@@ -155,7 +155,7 @@ export const EventSectionService = {
           name: "Test 7",
           topic: "Wielowątkowość",
           gainedXp: 0.0,
-          order_index: 7,
+          orderIndex: 7,
         },
         {
           id: 8,
@@ -163,7 +163,7 @@ export const EventSectionService = {
           name: "Test 8",
           topic: "Interfejs graficzny",
           gainedXp: 0.0,
-          order_index: 8,
+          orderIndex: 8,
         },
         {
           id: 9,
@@ -171,7 +171,7 @@ export const EventSectionService = {
           name: "Test 9",
           topic: "Lambdy, streamy i zarządzanie zasobami",
           gainedXp: 0.0,
-          order_index: 9,
+          orderIndex: 9,
         },
         {
           id: 10,
@@ -179,7 +179,7 @@ export const EventSectionService = {
           name: "Test 10",
           topic: "Kotlin jako alternatywa dla Javy",
           gainedXp: 0.0,
-          order_index: 10,
+          orderIndex: 10,
         },
         {
           id: 11,
@@ -187,7 +187,7 @@ export const EventSectionService = {
           name: "Test 11",
           topic: "A może Rust?",
           gainedXp: 0.0,
-          order_index: 11,
+          orderIndex: 11,
         },
         {
           id: 12,
@@ -195,10 +195,10 @@ export const EventSectionService = {
           name: "Test 12",
           topic: "Jak wycentrować diva",
           gainedXp: 0.0,
-          order_index: 12,
+          orderIndex: 12,
         },
       ];
-      return events.sort((a, b) => a.order_index - b.order_index);
+      return events.sort((a, b) => a.orderIndex - b.orderIndex);
     } else if (eventSectionId === 2) {
       const events: GradableEventResponseDTO[] = [
         {
@@ -207,7 +207,7 @@ export const EventSectionService = {
           name: "Lab 1",
           topic: "Instrukcje sterujące w Javie",
           gainedXp: 2.0,
-          order_index: 1,
+          orderIndex: 1,
         },
         {
           id: 16,
@@ -215,7 +215,7 @@ export const EventSectionService = {
           name: "Lab 2",
           topic: "Model obiektowy",
           gainedXp: 0.0,
-          order_index: 2,
+          orderIndex: 2,
         },
         {
           id: 17,
@@ -223,7 +223,7 @@ export const EventSectionService = {
           name: "Lab 3",
           topic: "Interakcje między obiektami",
           gainedXp: 0.0,
-          order_index: 3,
+          orderIndex: 3,
         },
         {
           id: 18,
@@ -231,7 +231,7 @@ export const EventSectionService = {
           name: "Lab 4",
           topic: "Interfejsy i mapy",
           gainedXp: 0.0,
-          order_index: 4,
+          orderIndex: 4,
         },
         {
           id: 19,
@@ -239,7 +239,7 @@ export const EventSectionService = {
           name: "Lab 5",
           topic: "Dziedziczenie",
           gainedXp: 0.0,
-          order_index: 5,
+          orderIndex: 5,
         },
         {
           id: 20,
@@ -247,7 +247,7 @@ export const EventSectionService = {
           name: "Lab 6",
           topic: "Refactoring kodu",
           gainedXp: 0.0,
-          order_index: 6,
+          orderIndex: 6,
         },
         {
           id: 21,
@@ -255,7 +255,7 @@ export const EventSectionService = {
           name: "Lab 7",
           topic: "Wielowątkowość",
           gainedXp: 0.0,
-          order_index: 7,
+          orderIndex: 7,
         },
         {
           id: 22,
@@ -263,10 +263,10 @@ export const EventSectionService = {
           name: "Lab 8",
           topic: "Interfejs graficzny",
           gainedXp: 0.0,
-          order_index: 8,
+          orderIndex: 8,
         },
       ];
-      return events.sort((a, b) => a.order_index - b.order_index);
+      return events.sort((a, b) => a.orderIndex - b.orderIndex);
     } else if (eventSectionId === 4) {
       return [
         {
@@ -275,7 +275,7 @@ export const EventSectionService = {
           name: "Lab 0",
           topic: "Git jest cool",
           gainedXp: 0.0,
-          order_index: 1,
+          orderIndex: 1,
         },
       ];
     } else if (eventSectionId === 6) {
@@ -286,7 +286,7 @@ export const EventSectionService = {
           name: "Projekt 2",
           topic: "Refactoring hell",
           gainedXp: 0.0,
-          order_index: 1,
+          orderIndex: 1,
         },
       ];
     } else if (eventSectionId === 3) {
@@ -297,7 +297,7 @@ export const EventSectionService = {
           name: "Projekt 1a",
           topic: "Darwin World",
           gainedXp: 0.0,
-          order_index: 1,
+          orderIndex: 1,
         },
         {
           id: 34,
@@ -305,7 +305,7 @@ export const EventSectionService = {
           name: "Projekt 1b",
           topic: "Polymorphia",
           gainedXp: 0.0,
-          order_index: 2,
+          orderIndex: 2,
         },
       ];
     } else {
