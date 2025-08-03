@@ -51,3 +51,4 @@ jobs:
               -v ~/polymorphia-static:/app/static \
               REGION-docker.pkg.dev/PROJECT_ID/REPO/IMAGE:${{ github.sha }} \
               --spring.config.location=file:/app/config/application.properties
+              
