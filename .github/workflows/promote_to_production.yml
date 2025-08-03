@@ -15,16 +15,20 @@ jobs:
   promote-to-production:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
       - name: Auth to Google Cloud
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      - name: Setup Google Cloud SDK
+      - name: Setup Google Cloud 
         uses: google-github-actions/setup-gcloud@v2
 
       - name: Configure Docker for Artifact Registry
-        run: gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
+        run: |
+          gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
 
       - name: Pull staging image
         run: |
@@ -55,4 +59,3 @@ jobs:
               -v ~/polymorphia-static:/app/static \
               us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/polymorphia-backend/polymorphia-backend:prod-latest \
               --spring.config.location=file:/app/config/application.properties
-              
