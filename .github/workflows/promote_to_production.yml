@@ -10,6 +10,9 @@ jobs:
   promote-to-production:
     runs-on: ubuntu-latest
     steps:
+      - name: Show actor
+        run: echo Actor: ${{ github.actor }}
+
       - name: Checkout repository
         uses: actions/checkout@v4
       
