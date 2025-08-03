@@ -1,24 +1,24 @@
-import { KnowledgeBaseSlideResponseDTO } from "@/interfaces/api/DTO";
+import { KnowledgeBaseResponseDTO } from "@/interfaces/api/DTO";
 
 export interface SingleSlideProps {
-  slide: KnowledgeBaseSlideResponseDTO;
+  slide: KnowledgeBaseResponseDTO;
   position: number;
   prevSlideAction: () => void;
   nextSlideAction: () => void;
 }
 
 export interface SliderProps {
-  slides: KnowledgeBaseSlideResponseDTO[];
+  slides: KnowledgeBaseResponseDTO[];
   initialSlide?: number;
 }
 
 export interface DetailedSlideInfoProps {
-  type: KnowledgeBaseSlideResponseDTO["type"];
-  relatedRewards: KnowledgeBaseSlideResponseDTO["relatedRewards"];
+  type: KnowledgeBaseResponseDTO["type"];
+  relatedRewards: KnowledgeBaseResponseDTO["relatedRewards"];
 }
 
 export interface NavigationDotsProps {
-  slides: KnowledgeBaseSlideResponseDTO[];
+  slides: KnowledgeBaseResponseDTO[];
   currentSlide: number;
   goToSlide: (index: number) => void;
 }

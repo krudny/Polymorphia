@@ -1,12 +1,12 @@
 /* eslint-disable -- unused variables because of mocks, TODO: remove this line */
 
-import { KnowledgeBaseSlideResponseDTO } from "@/interfaces/api/DTO";
+import { KnowledgeBaseResponseDTO } from "@/interfaces/api/DTO";
 // import { API_HOST } from "@/services/api";
 
 const KnowledgeBaseService = {
   getEvolutionStages: async (
     courseId: number
-  ): Promise<KnowledgeBaseSlideResponseDTO[]> => {
+  ): Promise<KnowledgeBaseResponseDTO[]> => {
     // const response = await fetch(
     //   `${API_HOST}/courses/${courseId}/evolution-stages`,
     //   { credentials: "include" }
@@ -48,9 +48,7 @@ const KnowledgeBaseService = {
     ];
   },
 
-  getItems: async (
-    courseId: number
-  ): Promise<KnowledgeBaseSlideResponseDTO[]> => {
+  getItems: async (courseId: number): Promise<KnowledgeBaseResponseDTO[]> => {
     // const response = await fetch(`${API_HOST}/courses/${courseId}/items`, {
     //   credentials: "include",
     // });
@@ -99,9 +97,7 @@ const KnowledgeBaseService = {
     ];
   },
 
-  getChests: async (
-    courseId: number
-  ): Promise<KnowledgeBaseSlideResponseDTO[]> => {
+  getChests: async (courseId: number): Promise<KnowledgeBaseResponseDTO[]> => {
     // const response = await fetch(`${API_HOST}/courses/${courseId}/chests`, {
     //   credentials: "include",
     // });

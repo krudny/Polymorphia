@@ -30,24 +30,24 @@ export interface UserDetailsDTO {
 }
 
 // Knowledge Base
-export type KnowledgeBaseSlideType = "evolution-stage" | "item" | "chest";
+export type KnowledgeBaseType = "evolution-stage" | "item" | "chest";
 
-export interface KnowledgeBaseSlideRelatedRewardResponseDTO {
+export interface KnowledgeBaseRelatedRewardResponseDTO {
   id: number;
   orderIndex: number;
   name: string;
   imageUrl: string;
 }
 
-export interface KnowledgeBaseSlideResponseDTO {
-  type: KnowledgeBaseSlideType;
+export interface KnowledgeBaseResponseDTO {
+  type: KnowledgeBaseType;
   id: number;
   orderIndex: number;
   name: string;
   subtitle: string;
   description: string;
   imageUrl: string;
-  relatedRewards?: KnowledgeBaseSlideRelatedRewardResponseDTO[];
+  relatedRewards?: KnowledgeBaseRelatedRewardResponseDTO[];
 }
 
 // Items
