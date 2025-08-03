@@ -51,7 +51,7 @@ jobs:
           key: ${{ secrets.PROD_SSH_PRIVATE_KEY }}
           script: |
             gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
-            sudo docker pull us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/polymorphia-backend/polymorphia-backend:prod-latest
+            sudo docker pull us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/polymorphia-backend/polymorphia-backend:prodlatest
             sudo docker stop polymorphia-backend || true
             sudo docker rm polymorphia-backend || true
             sudo docker run -d --name polymorphia-backend -p 8080:8080 \
@@ -59,4 +59,3 @@ jobs:
               -v ~/polymorphia-static:/app/static \
               us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/polymorphia-backend/polymorphia-backend:prod-latest \
               --spring.config.location=file:/app/config/application.properties
-              
