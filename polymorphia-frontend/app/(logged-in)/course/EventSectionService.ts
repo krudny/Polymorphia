@@ -106,7 +106,7 @@ export const EventSectionService = {
           type: "test",
           name: "Test 1",
           topic: "Instrukcje sterujące",
-          gainedXp: 1.5,
+          gainedXp: "1.5",
           orderIndex: 1,
         },
         {
@@ -114,7 +114,7 @@ export const EventSectionService = {
           type: "test",
           name: "Test 2",
           topic: "Model obiektowy",
-          gainedXp: 0.0,
+          gainedXp: "0.0",
           orderIndex: 2,
         },
         {
@@ -122,7 +122,7 @@ export const EventSectionService = {
           type: "test",
           name: "Test 3",
           topic: "Interakcje między obiektami",
-          gainedXp: 0.0,
+          gainedXp: "0.0",
           orderIndex: 3,
         },
         {
@@ -130,7 +130,7 @@ export const EventSectionService = {
           type: "test",
           name: "Test 4",
           topic: "Interfejsy i mapy",
-          gainedXp: 0.0,
+          gainedXp: "0.0",
           orderIndex: 4,
         },
         {
@@ -138,7 +138,7 @@ export const EventSectionService = {
           type: "test",
           name: "Test 5",
           topic: "Dziedziczenie",
-          gainedXp: 0.0,
+          gainedXp: "0.0",
           orderIndex: 5,
         },
         {
@@ -146,7 +146,7 @@ export const EventSectionService = {
           type: "test",
           name: "Test 6",
           topic: "Refactoring kodu",
-          gainedXp: 0.0,
+          gainedXp: "0.0",
           orderIndex: 6,
         },
         {
@@ -154,7 +154,7 @@ export const EventSectionService = {
           type: "test",
           name: "Test 7",
           topic: "Wielowątkowość",
-          gainedXp: 0.0,
+          gainedXp: "0.0",
           orderIndex: 7,
         },
         {
@@ -162,7 +162,7 @@ export const EventSectionService = {
           type: "test",
           name: "Test 8",
           topic: "Interfejs graficzny",
-          gainedXp: 0.0,
+          gainedXp: "0.0",
           orderIndex: 8,
         },
         {
@@ -170,7 +170,7 @@ export const EventSectionService = {
           type: "test",
           name: "Test 9",
           topic: "Lambdy, streamy i zarządzanie zasobami",
-          gainedXp: 0.0,
+          gainedXp: "0.0",
           orderIndex: 9,
         },
         {
@@ -178,7 +178,7 @@ export const EventSectionService = {
           type: "test",
           name: "Test 10",
           topic: "Kotlin jako alternatywa dla Javy",
-          gainedXp: 0.0,
+          gainedXp: "0.0",
           orderIndex: 10,
         },
         {
@@ -186,7 +186,7 @@ export const EventSectionService = {
           type: "test",
           name: "Test 11",
           topic: "A może Rust?",
-          gainedXp: 0.0,
+          gainedXp: "0.0",
           orderIndex: 11,
         },
         {
@@ -194,7 +194,7 @@ export const EventSectionService = {
           type: "test",
           name: "Test 12",
           topic: "Jak wycentrować diva",
-          gainedXp: 0.0,
+          gainedXp: "0.0",
           orderIndex: 12,
         },
       ];
@@ -206,7 +206,7 @@ export const EventSectionService = {
           type: "assignment",
           name: "Lab 1",
           topic: "Instrukcje sterujące w Javie",
-          gainedXp: 2.0,
+          gainedXp: "2.0",
           orderIndex: 1,
         },
         {
@@ -214,7 +214,7 @@ export const EventSectionService = {
           type: "assignment",
           name: "Lab 2",
           topic: "Model obiektowy",
-          gainedXp: 0.0,
+          gainedXp: "0.0",
           orderIndex: 2,
         },
         {
@@ -222,7 +222,7 @@ export const EventSectionService = {
           type: "assignment",
           name: "Lab 3",
           topic: "Interakcje między obiektami",
-          gainedXp: 0.0,
+          gainedXp: "0.0",
           orderIndex: 3,
         },
         {
@@ -230,7 +230,7 @@ export const EventSectionService = {
           type: "assignment",
           name: "Lab 4",
           topic: "Interfejsy i mapy",
-          gainedXp: 0.0,
+          gainedXp: "0.0",
           orderIndex: 4,
         },
         {
@@ -238,7 +238,7 @@ export const EventSectionService = {
           type: "assignment",
           name: "Lab 5",
           topic: "Dziedziczenie",
-          gainedXp: 0.0,
+          gainedXp: "0.0",
           orderIndex: 5,
         },
         {
@@ -246,7 +246,7 @@ export const EventSectionService = {
           type: "assignment",
           name: "Lab 6",
           topic: "Refactoring kodu",
-          gainedXp: 0.0,
+          gainedXp: "0.0",
           orderIndex: 6,
         },
         {
@@ -254,7 +254,7 @@ export const EventSectionService = {
           type: "assignment",
           name: "Lab 7",
           topic: "Wielowątkowość",
-          gainedXp: 0.0,
+          gainedXp: "0.0",
           orderIndex: 7,
         },
         {
@@ -262,7 +262,7 @@ export const EventSectionService = {
           type: "assignment",
           name: "Lab 8",
           topic: "Interfejs graficzny",
-          gainedXp: 0.0,
+          gainedXp: "0.0",
           orderIndex: 8,
         },
       ];
@@ -274,7 +274,7 @@ export const EventSectionService = {
           type: "assignment",
           name: "Lab 0",
           topic: "Git jest cool",
-          gainedXp: 0.0,
+          gainedXp: "0.0",
           orderIndex: 1,
         },
       ];
@@ -285,7 +285,7 @@ export const EventSectionService = {
           type: "project",
           name: "Projekt 2",
           topic: "Refactoring hell",
-          gainedXp: 0.0,
+          gainedXp: "0.0",
           orderIndex: 1,
         },
       ];
@@ -296,7 +296,7 @@ export const EventSectionService = {
           type: "project",
           name: "Projekt 1a",
           topic: "Darwin World",
-          gainedXp: 0.0,
+          gainedXp: "0.0",
           orderIndex: 1,
         },
         {
@@ -304,7 +304,7 @@ export const EventSectionService = {
           type: "project",
           name: "Projekt 1b",
           topic: "Polymorphia",
-          gainedXp: 0.0,
+          gainedXp: "0.0",
           orderIndex: 2,
         },
       ];
@@ -317,9 +317,9 @@ export const EventSectionService = {
   ): Promise<PointsSummaryResponseDTO> => {
     if (eventSectionId === 1) {
       return {
-        gainedXp: 3.5,
+        gainedXp: "3.5",
         percentageBonus: {
-          xp: 0.2,
+          xp: "0.2",
           percentage: 5,
           assignedItems: [
             {
@@ -332,44 +332,44 @@ export const EventSectionService = {
               assignmentDetails: {
                 id: 1,
                 receivedDate: "07.06.2025",
-                xp: 0.2,
+                xp: "0.2",
               },
             },
           ],
         },
         flatBonus: {
-          xp: 0,
+          xp: "0",
           assignedItems: [],
         },
-        totalXp: 3.7,
+        totalXp: "3.7",
       };
     } else if (eventSectionId === 2) {
       return {
-        gainedXp: 2.0,
+        gainedXp: "2.0",
         percentageBonus: {
-          xp: 0.0,
+          xp: "0.0",
           percentage: 0,
           assignedItems: [],
         },
         flatBonus: {
-          xp: 0,
+          xp: "0",
           assignedItems: [],
         },
-        totalXp: 2.0,
+        totalXp: "2.0",
       };
     } else {
       return {
-        gainedXp: 0,
+        gainedXp: "0",
         percentageBonus: {
-          xp: 0.0,
+          xp: "0.0",
           percentage: 0,
           assignedItems: [],
         },
         flatBonus: {
-          xp: 0,
+          xp: "0",
           assignedItems: [],
         },
-        totalXp: 0,
+        totalXp: "0",
       };
     }
   },
@@ -404,10 +404,10 @@ export const EventSectionService = {
           {
             id: 1,
             name: "Wykonanie zadania",
-            maxXp: 4,
+            maxXp: "4",
             criterionGrade: {
               id: 1,
-              xp: 3.5,
+              xp: "3.5",
               assignedChests: [
                 {
                   id: 3,
@@ -437,10 +437,10 @@ export const EventSectionService = {
           {
             id: 1,
             name: "Wykonanie zadania",
-            maxXp: 2.0,
+            maxXp: "2.0",
             criterionGrade: {
               id: 1,
-              xp: 0.75,
+              xp: "0.75",
               assignedChests: [
                 {
                   id: 3,
@@ -466,7 +466,7 @@ export const EventSectionService = {
         {
           id: 1,
           name: "Wykonanie zadania",
-          maxXp: 4,
+          maxXp: "4",
         },
       ],
     };
