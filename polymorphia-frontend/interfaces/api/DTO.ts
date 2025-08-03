@@ -104,7 +104,7 @@ export interface AssignedChestResponseDTO {
 export interface EquipmentChestResponseDTO {
   assignedChest: AssignedChestResponseDTO;
   receivedItems?: AssignedItemResponseDTO[]; // if chest has been opened
-  chestContent?: BaseItemResponseDTO[]; // if chest hasn't been opened yet
+  chestItems?: BaseItemResponseDTO[]; // if chest hasn't been opened yet
 }
 
 // Course

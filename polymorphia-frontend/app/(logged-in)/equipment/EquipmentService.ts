@@ -130,7 +130,7 @@ const EquipmentService = {
           receivedDate: "13.06.2026",
           openedDate: undefined,
         },
-        chestContent: [
+        chestItems: [
           {
             id: 1,
             name: "Marchewka",

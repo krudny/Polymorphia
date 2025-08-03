@@ -17,7 +17,7 @@ export default function OpeningChestModalContent() {
   if (
     openingChest !== null &&
     (openingChest?.assignedChest.openedDate !== undefined ||
-      !openingChest?.chestContent)
+      !openingChest?.chestItems)
   ) {
     throw new Error("OpeningChestModalContent handles only unopened chests!");
   }
@@ -40,7 +40,7 @@ export default function OpeningChestModalContent() {
   return (
     <>
       <div className="opening-chest-modal">
-        {openingChest?.chestContent!.map((item: BaseItemResponseDTO) => (
+        {openingChest?.chestItems!.map((item: BaseItemResponseDTO) => (
           <div
             key={item.id}
             className="opening-chest-modal-image-wrapper"
