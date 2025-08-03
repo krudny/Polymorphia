@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Show actor
-        run: echo "Actor: $GITHUB_ACTOR"
+        run: echo "Actor ${{ github.actor }}"
 
       - name: Checkout repository
         uses: actions/checkout@v4
