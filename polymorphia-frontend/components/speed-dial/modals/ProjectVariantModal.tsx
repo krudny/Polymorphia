@@ -45,7 +45,7 @@ export default function ProjectVariantModal({
           {data.map((projectVariant, index) => (
             <XPCard
               title={projectVariant.name}
-              subtitle={projectVariant.category}
+              subtitle={projectVariant.categoryName}
               image={{
                 url: `${API_STATIC_URL}/${projectVariant.imageUrl}`,
                 alt: projectVariant.name,

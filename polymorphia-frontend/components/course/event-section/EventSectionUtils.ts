@@ -1,7 +1,7 @@
 "use client";
 
-import { EventSectionResponseDTO } from "@/components/course/event-section/types";
 import { MenuOption } from "@/components/navigation/types";
+import { EventSectionResponseDTO } from "@/interfaces/api/DTO";
 import { RefObject } from "react";
 
 export function updateMenuItems(
@@ -14,15 +14,13 @@ export function updateMenuItems(
 
   courseItem.link = `course/${eventSections[0].type}/${eventSections[0].id}`;
 
-  courseItem.subItems = eventSections
-    .filter((eventSection) => !eventSection.hidden)
-    .map((eventSection) => {
-      // TODO: use correct courseID
-      return {
-        text: eventSection.name,
-        link: `course/${eventSection.type}/${eventSection.id}`,
-      };
-    });
+  courseItem.subItems = eventSections.map((eventSection) => {
+    // TODO: use correct courseID
+    return {
+      text: eventSection.name,
+      link: `course/${eventSection.type}/${eventSection.id}`,
+    };
+  });
 }
 
 export function setResizeObserver(

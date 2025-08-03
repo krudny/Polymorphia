@@ -1,5 +1,8 @@
+import {
+  AssignedItemResponseDTO,
+  PointsSummaryBonusResponseDTO,
+} from "@/interfaces/api/DTO";
 import { ModalProps } from "../../../modal/types";
-import { BonusInfo, BonusInfoItem } from "../types";
 import { RefObject } from "react";
 
 export interface PointsSummaryProps {
@@ -7,8 +10,13 @@ export interface PointsSummaryProps {
   ref: RefObject<HTMLDivElement | null>;
 }
 
+export interface PointsSummaryBonus {
+  title: string;
+  data: PointsSummaryBonusResponseDTO;
+}
+
 export interface PointsSummaryElementProps {
-  bonus: BonusInfo;
+  bonus: PointsSummaryBonus;
   onClick?: () => void;
   horizontal?: boolean;
 }
@@ -18,9 +26,9 @@ export interface BonusInfoModalProps
     ModalProps,
     "title" | "isDataPresented" | "children" | "onRequestClose"
   > {
-  bonusInfo: BonusInfo | null;
+  bonusInfo: PointsSummaryBonus | null;
 }
 
 export interface BonusItemCardProps {
-  item: BonusInfoItem;
+  assignedItem: AssignedItemResponseDTO;
 }
