@@ -38,7 +38,7 @@ export default function RewardsInfo({ reward }: RewardsInfoProps) {
               */}
               <div className="gradable-event-section-chest">
                 <h2>Skrzynki</h2>
-                {(criterion.criterionGrade?.assignedChests.length ?? 0) > 0 ? (
+                {criterion.criterionGrade?.assignedChests?.length ? (
                   <div className="gradable-event-section-chests-inner ">
                     {criterion.criterionGrade?.assignedChests.map(
                       (assignedChest) => (

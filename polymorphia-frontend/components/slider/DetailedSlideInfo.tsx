@@ -27,10 +27,6 @@ export default function DetailedSlideInfo({
     );
   }
 
-  const sortedRelatedRewards = relatedRewards.sort(
-    (a, b) => a.orderIndex - b.orderIndex
-  );
-
   return (
     <div className="slide-details">
       <div className="slide-details-info">
@@ -38,7 +34,7 @@ export default function DetailedSlideInfo({
         <h3 className="text-xl 2xl:text-2xl">{`Kliknij na ${type === "item" ? "skrzynkę" : "przedmiot"} aby dowiedzieć się więcej`}</h3>
       </div>
       <div className="slide-details-content">
-        {sortedRelatedRewards.map((relatedReward) => {
+        {relatedRewards.map((relatedReward) => {
           return (
             <Link
               href={`/knowledge-base/${type === "item" ? "chests" : "items"}?slide=${relatedReward.orderIndex}`}

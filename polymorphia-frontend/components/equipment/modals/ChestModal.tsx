@@ -25,7 +25,7 @@ export default function ChestModal() {
       isDataPresented={equipmentChest !== null}
       onClosed={() => setCurrentChestModalData(null)}
       title={equipmentChest?.assignedChest.chest.name ?? ""}
-      subtitle="Wygrane nagrody"
+      subtitle="Zdobyte nagrody"
     >
       <div className="bonus-info-modal">
         {equipmentChest?.receivedItems!.map(
