@@ -164,8 +164,10 @@ export interface GradableEventResponseDTO {
   type: EventType;
   name: string;
   topic?: string;
-  gainedXp: string;
+  gainedXp?: string;
   orderIndex: number;
+  locked: boolean;
+  hasChest: boolean;
 }
 
 // Points Summary

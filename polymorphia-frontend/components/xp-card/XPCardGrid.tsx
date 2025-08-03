@@ -127,14 +127,16 @@ export default function XPCardGrid({
                 )}
               >
                 {gradableEventsPage.map((gradableEvent) => (
+                  // TODO: handle locked
                   <XPCard
                     title={gradableEvent.name}
                     subtitle={gradableEvent.topic ?? ""}
                     key={gradableEvent.id}
-                    color={gradableEvent.gainedXp !== 0 ? "green" : "silver"}
+                    color={gradableEvent.gainedXp ? "green" : "silver"}
                     component={
+                      // TODO: handle no grade, hasChest
                       <XPCardPoints
-                        points={gradableEvent.gainedXp}
+                        points={gradableEvent.gainedXp ?? "0.0"}
                         isSumLabelVisible={true}
                       />
                     }
