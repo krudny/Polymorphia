@@ -5,11 +5,9 @@ on:
 
 jobs:
   promote-to-production:
+    if: github.actor == 'krudny'
     runs-on: ubuntu-latest
     steps:
-      - name: Show actor
-        run: echo Actor ${{ github.actor }}
-
       - name: Checkout repository
         uses: actions/checkout@v4
       
