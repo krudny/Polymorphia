@@ -1,11 +1,10 @@
-// #region Login
+// Login
 export interface LoginDto {
   email: string;
   password: string;
 }
-// #endregion Login
 
-// #region Hall of Fame
+// Hall of Fame
 export interface HallOfFameResponseDTO {
   content: HallOfFameRecordDTO[];
   page: {
@@ -18,9 +17,8 @@ export interface HallOfFameRecordDTO {
   userDetails: UserDetailsDTO;
   xpDetails: Record<string, string>;
 }
-// #endregion Hall of Fame
 
-// #region User Details
+// User Details
 //TODO: handle which one is optional
 export interface UserDetailsDTO {
   studentName: string;
@@ -30,9 +28,8 @@ export interface UserDetailsDTO {
   imageUrl: string;
   position: number;
 }
-// #endregion User Details
 
-// #region Knowledge Base
+// Knowledge Base
 export type KnowledgeBaseSlideType = "evolution-stage" | "item" | "chest";
 
 export interface KnowledgeBaseSlideRelatedRewardResponseDTO {
@@ -52,9 +49,8 @@ export interface KnowledgeBaseSlideResponseDTO {
   imageUrl: string;
   relatedRewards?: KnowledgeBaseSlideRelatedRewardResponseDTO[];
 }
-// #endregion Knowledge Base
 
-// #region Items
+// Items
 // Contains general information about the item (without any assignment details)
 export interface BaseItemResponseDTO {
   id: number;
@@ -88,9 +84,8 @@ export interface EquipmentItemResponseDTO {
   // between this interface and AssignedItemResponseDTO
   assignmentDetailsArray: ItemAssignmentDetailsResponseDTO[];
 }
-// #endregion Items
 
-// #region Chests
+// Chests
 export type ChestBehavior = "ALL" | "ONE_OF_MANY";
 
 export interface BaseChestResponseDTO {
@@ -113,9 +108,8 @@ export interface EquipmentChestResponseDTO {
   receivedItems?: AssignedItemResponseDTO[]; // if chest has been opened
   chestContent?: BaseItemResponseDTO[]; // if chest hasn't been opened yet
 }
-// #endregion Chests
 
-// #region Course
+// Course
 export type EventType = "assignment" | "project" | "test";
 
 export interface EventSectionResponseDTO {
@@ -133,9 +127,8 @@ export interface GradableEventResponseDTO {
   gainedXp: number;
   order_index: number;
 }
-// #endregion Course
 
-// #region Points Summary
+// Points Summary
 export interface PointsSummaryBonusResponseDTO {
   xp: number;
   percentage?: number;
@@ -148,15 +141,13 @@ export interface PointsSummaryResponseDTO {
   percentageBonus: PointsSummaryBonusResponseDTO;
   totalXp: number;
 }
-// #endregion Points Summary
 
-// #region Markdown
+// Markdown
 export interface MarkdownResponseDTO {
   markdown: string;
 }
-// #endregion Markdown
 
-// #region Rewards
+// Rewards
 export interface CriterionGradeResponseDTO {
   id: number;
   xp: number;
@@ -179,9 +170,8 @@ export interface RewardResponseDTO {
   grade?: GradeResponseDTO;
   criteria: CriterionResponseDTO[]; // technically they should be a part of the grade but I think this will be a better interface for frontend
 }
-// #endregion Rewards
 
-// #region Project Variant
+// Project Variant
 export interface ProjectVariantResponseDTO {
   id: number;
   name: string;
@@ -190,4 +180,3 @@ export interface ProjectVariantResponseDTO {
   imageUrl: string;
   // currently without description
 }
-// #endregion Project Variant
