@@ -63,7 +63,7 @@ export interface BaseItemResponseDTO {
 export interface ItemAssignmentDetailsResponseDTO {
   id: number;
   receivedDate: string;
-  xp?: number; // undefined if item hasn't been 'used' yet
+  xp?: string; // undefined if item hasn't been 'used' yet
 }
 
 // Meant to be used as complete information about the item
@@ -124,22 +124,22 @@ export interface GradableEventResponseDTO {
   type: EventType;
   name: string;
   topic?: string;
-  gainedXp: number;
+  gainedXp: string;
   order_index: number;
 }
 
 // Points Summary
 export interface PointsSummaryBonusResponseDTO {
-  xp: number;
+  xp: string;
   percentage?: number;
   assignedItems: AssignedItemResponseDTO[];
 }
 
 export interface PointsSummaryResponseDTO {
-  gainedXp: number;
+  gainedXp: string;
   flatBonus: PointsSummaryBonusResponseDTO;
   percentageBonus: PointsSummaryBonusResponseDTO;
-  totalXp: number;
+  totalXp: string;
 }
 
 // Markdown
@@ -150,14 +150,14 @@ export interface MarkdownResponseDTO {
 // Rewards
 export interface CriterionGradeResponseDTO {
   id: number;
-  xp: number;
+  xp: string;
   assignedChests: AssignedChestResponseDTO[];
 }
 
 export interface CriterionResponseDTO {
   id: number;
   name: string;
-  maxXp: number;
+  maxXp: string;
   criterionGrade?: CriterionGradeResponseDTO;
 }
 

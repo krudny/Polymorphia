@@ -134,7 +134,7 @@ export default function XPCardGrid({
                     color={gradableEvent.gainedXp !== 0 ? "green" : "silver"}
                     component={
                       <XPCardPoints
-                        points={gradableEvent.gainedXp.toFixed(1).toString()}
+                        points={gradableEvent.gainedXp}
                         isSumLabelVisible={true}
                       />
                     }
