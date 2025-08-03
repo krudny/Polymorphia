@@ -16,7 +16,7 @@ export default function BonusInfoModal({
       <div className="bonus-info-modal">
         {bonusInfo?.data.assignedItems.map((assignedItem) => (
           <BonusItemCard
-            key={assignedItem.assignmentDetails.id}
+            key={assignedItem.details.id}
             assignedItem={assignedItem}
           />
         ))}

@@ -14,19 +14,32 @@ export default function OpeningChestModalContent() {
     useContext(EquipmentContext);
   const openingChest = currentOpeningChestModalData;
 
+  if (openingChest !== null && openingChest.details.length !== 1) {
+    throw new Error(
+      "OpeningChestModalContent handles only one chest at a time!"
+    );
+  }
+
+  const assignedChest =
+    openingChest !== null
+      ? {
+          base: openingChest.base,
+          details: openingChest.details[0],
+        }
+      : null;
+
   if (
-    openingChest !== null &&
-    (openingChest?.assignedChest.openedDate !== undefined ||
-      !openingChest?.chestItems)
+    assignedChest !== null &&
+    assignedChest.details.openedDate !== undefined
   ) {
     throw new Error("OpeningChestModalContent handles only unopened chests!");
   }
 
   const handlePickItem = (itemId: number) => {
-    if (!openingChest) return;
+    if (!assignedChest) return;
     const isPicked = pickedItemsIds.includes(itemId);
 
-    if (openingChest.assignedChest.chest.behavior === "ONE_OF_MANY") {
+    if (assignedChest.base.behavior === "ONE_OF_MANY") {
       setPickedItemsIds([itemId]);
     } else {
       setPickedItemsIds((prev: number[]) =>
@@ -40,7 +53,8 @@ export default function OpeningChestModalContent() {
   return (
     <>
       <div className="opening-chest-modal">
-        {openingChest?.chestItems!.map((item: BaseItemResponseDTO) => (
+        {/* TODO: handle chests that reached the limit */}
+        {openingChest?.base.chestItems.map((item: BaseItemResponseDTO) => (
           <div
             key={item.id}
             className="opening-chest-modal-image-wrapper"

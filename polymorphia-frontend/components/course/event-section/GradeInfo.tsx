@@ -1,17 +1,17 @@
 import ProgressBar from "@/components/progressbar/ProgressBar";
-import { RewardsInfoProps } from "@/components/course/event-section/types";
 import { API_STATIC_URL } from "@/services/api";
 import Image from "next/image";
 import "./index.css";
 import { Fragment } from "react";
+import { GradeResponseDTO } from "@/interfaces/api/DTO";
 
-export default function RewardsInfo({ reward }: RewardsInfoProps) {
+export default function GradeInfo({ grade }: { grade: GradeResponseDTO }) {
   return (
     <section className="gradable-event-section">
       {/* TODO: handle scroll, gaps between criteria, show criteria even if there is no grade */}
-      {reward.grade !== undefined ? (
+      {grade.details !== undefined ? (
         <>
-          {reward.criteria.map((criterion) => (
+          {grade.criteria.map((criterion) => (
             <Fragment key={criterion.id}>
               <h1>{criterion.name}</h1>
               <div className="gradable-event-section-xp">
@@ -44,11 +44,11 @@ export default function RewardsInfo({ reward }: RewardsInfoProps) {
                       (assignedChest) => (
                         <div
                           className="gradable-event-section-chests-image-wrapper"
-                          key={assignedChest.id}
+                          key={assignedChest.details.id}
                         >
                           <Image
-                            src={`${API_STATIC_URL}/${assignedChest.chest.imageUrl}`}
-                            alt={assignedChest.chest.name}
+                            src={`${API_STATIC_URL}/${assignedChest.base.imageUrl}`}
+                            alt={assignedChest.base.name}
                             fill
                           />
                         </div>

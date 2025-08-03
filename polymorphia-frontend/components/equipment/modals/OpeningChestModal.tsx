@@ -20,8 +20,8 @@ export default function OpeningChestModal() {
     <Modal
       isDataPresented={currentOpeningChestModalData !== null}
       onClosed={onClosed}
-      title={openingChest?.assignedChest.chest.name ?? ""}
-      subtitle={openingChest?.assignedChest.chest.behaviorText ?? ""}
+      title={openingChest?.base.name ?? ""}
+      subtitle={openingChest?.base.behaviorText ?? ""}
     >
       <OpeningChestModalContent />
     </Modal>

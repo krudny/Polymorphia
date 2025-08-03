@@ -31,13 +31,13 @@ export function EquipmentSection({ type, data }: EquipmentSectionProps) {
               <div
                 key={itemData.base.id}
                 onClick={
-                  itemData.assignmentDetails.length > 0
+                  itemData.details.length > 0
                     ? () => setCurrentItemModalData(itemData)
                     : undefined
                 }
               >
                 <div
-                  className={`equipment-grid-item ${itemData.assignmentDetails.length > 0 ? "hover:cursor-pointer" : ""}`}
+                  className={`equipment-grid-item ${itemData.details.length > 0 ? "hover:cursor-pointer" : ""}`}
                 >
                   <Image
                     src={`${API_STATIC_URL}/${itemData.base.imageUrl}`}
@@ -47,9 +47,9 @@ export function EquipmentSection({ type, data }: EquipmentSectionProps) {
                     priority
                     sizes="(min-width: 1024px) 25vw, 50vw"
                   />
-                  {itemData.assignmentDetails.length > 0 ? (
+                  {itemData.details.length > 0 ? (
                     <ImageBadge
-                      text={itemData.assignmentDetails.length.toString()}
+                      text={itemData.details.length.toString()}
                       className="equipment-image-badge"
                     />
                   ) : (
@@ -64,22 +64,29 @@ export function EquipmentSection({ type, data }: EquipmentSectionProps) {
             );
           } else {
             const chestData = item as EquipmentChestResponseDTO;
+
+            if (chestData.details.length !== 1) {
+              throw new Error(
+                "EquipmentSection supports only one chest per EquipmentChestResponseDTO!"
+              );
+            }
+
             return (
-              <div key={chestData.assignedChest.chest.id}>
+              <div key={chestData.base.id}>
                 <div className="equipment-grid-item">
                   <Image
-                    src={`${API_STATIC_URL}/${chestData.assignedChest.chest.imageUrl}`}
-                    alt={chestData.assignedChest.chest.name}
+                    src={`${API_STATIC_URL}/${chestData.base.imageUrl}`}
+                    alt={chestData.base.name}
                     fill
                     className="equipment-image"
                     priority
                     sizes="(min-width: 1024px) 25vw, 50vw"
                   />
                 </div>
-                {chestData.assignedChest.openedDate ? (
+                {chestData.details[0].openedDate ? (
                   <div className="equipment-chest-btn-wrapper">
                     <ButtonWithBorder
-                      text={`Otwarta ${chestData.assignedChest.openedDate}`}
+                      text={`Otwarta ${chestData.details[0].openedDate}`}
                       onClick={() => setCurrentChestModalData(chestData)}
                       className="equipment-chest-btn"
                     />

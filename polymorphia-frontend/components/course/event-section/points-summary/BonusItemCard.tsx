@@ -7,17 +7,15 @@ import XPCardPoints from "@/components/xp-card/inner-components/XPCardPoints";
 export default function BonusItemCard({ assignedItem }: BonusItemCardProps) {
   return (
     <XPCard
-      title={assignedItem.item.name}
-      subtitle={`Zdobyto: ${assignedItem.assignmentDetails.receivedDate}`}
+      title={assignedItem.base.name}
+      subtitle={`Zdobyto: ${assignedItem.details.receivedDate}`}
       image={{
-        url: `${API_STATIC_URL}/${assignedItem.item.imageUrl}`,
-        alt: assignedItem.item.name,
+        url: `${API_STATIC_URL}/${assignedItem.base.imageUrl}`,
+        alt: assignedItem.base.name,
       }}
       size="xs"
       // TODO: handle undefined xp
-      component={
-        <XPCardPoints points={`+${assignedItem.assignmentDetails.xp}`} />
-      }
+      component={<XPCardPoints points={`+${assignedItem.details.xp}`} />}
     />
   );
 }

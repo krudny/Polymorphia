@@ -12,10 +12,22 @@ export default function ChestModal() {
     useContext(EquipmentContext);
   const equipmentChest = currentChestModalData;
 
+  if (equipmentChest !== null && equipmentChest.details.length !== 1) {
+    throw new Error("ChestModal handles only one chest at a time!");
+  }
+
+  const assignedChest =
+    equipmentChest !== null
+      ? {
+          base: equipmentChest.base,
+          details: equipmentChest.details[0],
+        }
+      : null;
+
   if (
-    equipmentChest !== null &&
-    (!equipmentChest?.assignedChest.openedDate ||
-      !equipmentChest?.receivedItems)
+    assignedChest !== null &&
+    (assignedChest.details.openedDate === undefined ||
+      assignedChest?.details.receivedItems === undefined)
   ) {
     throw new Error("ChestModal handles only opened chests!");
   }
@@ -24,26 +36,24 @@ export default function ChestModal() {
     <Modal
       isDataPresented={equipmentChest !== null}
       onClosed={() => setCurrentChestModalData(null)}
-      title={equipmentChest?.assignedChest.chest.name ?? ""}
+      title={assignedChest?.base.name ?? ""}
       subtitle="Zdobyte nagrody"
     >
       <div className="bonus-info-modal">
-        {equipmentChest?.receivedItems!.map(
+        {assignedChest?.details.receivedItems!.map(
           (assignedItem: AssignedItemResponseDTO) => (
             <XPCard
-              key={assignedItem.assignmentDetails.id}
-              title={assignedItem.item.name}
-              subtitle={`Zdobyto ${assignedItem.assignmentDetails.receivedDate}`}
+              key={assignedItem.details.id}
+              title={assignedItem.base.name}
+              subtitle={`Zdobyto ${assignedItem.details.receivedDate}`}
               image={{
-                url: `${API_STATIC_URL}/${assignedItem.item.imageUrl}`,
-                alt: assignedItem.item.name,
+                url: `${API_STATIC_URL}/${assignedItem.base.imageUrl}`,
+                alt: assignedItem.base.name,
               }}
               size="xs"
               // TODO: handle undefined xp
               component={
-                <XPCardPoints
-                  points={`+${assignedItem.assignmentDetails.xp}`}
-                />
+                <XPCardPoints points={`+${assignedItem.details.xp}`} />
               }
             />
           )

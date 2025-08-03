@@ -322,13 +322,18 @@ export const EventSectionService = {
           xp: "0.2",
           assignedItems: [
             {
-              item: {
+              base: {
                 id: 1,
+                type: "PERCENTAGE_BONUS",
                 name: "Pietruszka",
                 bonusText: "+5% do kategorii Kartkówka",
                 imageUrl: "images/items/parsley.jpg",
+                percentage: 5,
+                orderIndex: 0,
+                limit: 3,
+                reachedLimit: false,
               },
-              assignmentDetails: {
+              details: {
                 id: 1,
                 receivedDate: "07.06.2025",
                 xp: "0.2",
@@ -337,7 +342,7 @@ export const EventSectionService = {
           ],
         },
         flatBonus: {
-          xp: "0",
+          xp: "0.0",
           assignedItems: [],
         },
         totalXp: "3.7",
@@ -350,23 +355,23 @@ export const EventSectionService = {
           assignedItems: [],
         },
         flatBonus: {
-          xp: "0",
+          xp: "0.0",
           assignedItems: [],
         },
         totalXp: "2.0",
       };
     } else {
       return {
-        gainedXp: "0",
+        gainedXp: "0.0",
         percentageBonus: {
           xp: "0.0",
           assignedItems: [],
         },
         flatBonus: {
-          xp: "0",
+          xp: "0.0",
           assignedItems: [],
         },
-        totalXp: "0",
+        totalXp: "0.0",
       };
     }
   },
@@ -391,32 +396,50 @@ export const EventSectionService = {
     mockMarkdownStore[gradableEventId] = newMarkdown;
   },
 
-  getReward: async (gradableEventId: number): Promise<GradeResponseDTO> => {
+  getGrade: async (gradableEventId: number): Promise<GradeResponseDTO> => {
     if (gradableEventId === 30) {
       return {
-        grade: {
+        details: {
           id: 1,
+          createdDate: "07.06.2025",
+          modifiedDate: "07.06.2025",
         },
         criteria: [
           {
             id: 1,
             name: "Wykonanie zadania",
-            maxXp: "4",
+            maxXp: "4.0",
             criterionGrade: {
               id: 1,
               xp: "3.5",
               assignedChests: [
                 {
-                  id: 3,
-                  chest: {
+                  base: {
                     id: 1,
                     name: "Srebrna Skrzynia",
                     imageUrl: "images/chests/s1.png",
                     behavior: "ONE_OF_MANY",
                     behaviorText: "Wybierz jeden przedmiot ze skrzynki",
+                    orderIndex: 0,
+                    chestItems: [
+                      {
+                        id: 1,
+                        type: "PERCENTAGE_BONUS",
+                        name: "Pietruszka",
+                        bonusText: "+5% do kategorii Kartkówka",
+                        imageUrl: "images/items/parsley.jpg",
+                        percentage: 5,
+                        orderIndex: 0,
+                        limit: 3,
+                        reachedLimit: false,
+                      },
+                    ],
                   },
-                  receivedDate: "07.06.2025",
-                  openedDate: "08.06.2025",
+                  details: {
+                    id: 3,
+                    receivedDate: "07.06.2025",
+                    openedDate: "08.06.2025",
+                  },
                 },
               ],
             },
@@ -427,8 +450,10 @@ export const EventSectionService = {
 
     if (gradableEventId === 15 || gradableEventId === 1) {
       return {
-        grade: {
+        details: {
           id: 1,
+          createdDate: "07.06.2025",
+          modifiedDate: "07.06.2025",
         },
         criteria: [
           {
@@ -437,19 +462,35 @@ export const EventSectionService = {
             maxXp: "2.0",
             criterionGrade: {
               id: 1,
-              xp: "0.75",
+              xp: "0.7",
               assignedChests: [
                 {
-                  id: 3,
-                  chest: {
+                  base: {
                     id: 1,
                     name: "Srebrna Skrzynia",
-                    imageUrl: "images/chests/s2.jpg",
+                    imageUrl: "images/chests/s1.png",
                     behavior: "ONE_OF_MANY",
                     behaviorText: "Wybierz jeden przedmiot ze skrzynki",
+                    orderIndex: 0,
+                    chestItems: [
+                      {
+                        id: 1,
+                        type: "PERCENTAGE_BONUS",
+                        name: "Pietruszka",
+                        bonusText: "+5% do kategorii Kartkówka",
+                        imageUrl: "images/items/parsley.jpg",
+                        percentage: 5,
+                        orderIndex: 0,
+                        limit: 3,
+                        reachedLimit: false,
+                      },
+                    ],
                   },
-                  receivedDate: "07.06.2025",
-                  openedDate: "07.06.2025",
+                  details: {
+                    id: 3,
+                    receivedDate: "07.06.2025",
+                    openedDate: "08.06.2025",
+                  },
                 },
               ],
             },
@@ -463,7 +504,7 @@ export const EventSectionService = {
         {
           id: 1,
           name: "Wykonanie zadania",
-          maxXp: "4",
+          maxXp: "4.0",
         },
       ],
     };

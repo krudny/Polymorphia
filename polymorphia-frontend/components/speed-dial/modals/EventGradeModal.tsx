@@ -1,17 +1,17 @@
 import Modal from "@/components/modal/Modal";
-import RewardsInfo from "@/components/course/event-section/RewardsInfo";
+import GradeInfo from "@/components/course/event-section/GradeInfo";
 import Loading from "@/components/loading/Loading";
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 
-export default function EventRewardModal({
+export default function EventGradeModal({
   gradableEventId,
   onClosed,
 }: SpeedDialModalProps) {
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["eventReward", gradableEventId],
-    queryFn: () => EventSectionService.getReward(gradableEventId!),
+    queryKey: ["grades", gradableEventId],
+    queryFn: () => EventSectionService.getGrade(gradableEventId!),
     enabled: !!gradableEventId,
   });
 
@@ -31,7 +31,7 @@ export default function EventRewardModal({
           <Loading />
         </div>
       )}
-      {!isLoading && data && <RewardsInfo reward={data} />}
+      {!isLoading && data && <GradeInfo grade={data} />}
     </Modal>
   );
 }
