@@ -55,3 +55,4 @@ jobs:
               -v ~/polymorphia-static:/app/static \
               us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/polymorphia-backend/polymorphia-backend:prod-latest \
               --spring.config.location=file:/app/config/application.properties
+              
