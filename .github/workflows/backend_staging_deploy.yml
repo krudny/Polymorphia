@@ -42,13 +42,13 @@ jobs:
           username: ${{ secrets.STAGING_VM_USER }}
           key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
           script: |
-            gcloud auth configure-docker REGION-docker.pkg.dev --quiet
-            docker pull REGION-docker.pkg.dev/PROJECT_ID/REPO/IMAGE:${{ github.sha }}
+            gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
+            docker pull us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/polymorphia-backend/polymorphia-backend:latest
             docker stop polymorphia-backend || true
             docker rm polymorphia-backend || true
             docker run -d --name polymorphia-backend -p 8080:8080 \
               -v /app/config:/app/config \
               -v ~/polymorphia-static:/app/static \
-              REGION-docker.pkg.dev/PROJECT_ID/REPO/IMAGE:${{ github.sha }} \
+              us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/polymorphia-backend/polymorphia-backend:latest \
               --spring.config.location=file:/app/config/application.properties
               
