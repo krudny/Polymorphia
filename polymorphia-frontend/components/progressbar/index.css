@@ -26,7 +26,7 @@
 /* ProgressBarLine */
 
 .progressbar-line {
-  @apply absolute top-1/2 overflow-hidden z-50;
+  @apply absolute top-1/2 overflow-hidden z-40;
   @apply bg-primary-gray dark:bg-primary-dark;
 
   div {

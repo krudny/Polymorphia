@@ -191,6 +191,6 @@
     @apply absolute w-full h-full bg-secondary-gray/70 dark:bg-primary-dark/80 flex-col-centered cursor-default hover:drop-shadow-none;
 
     span {
-        @apply text-6xl text-primary-dark;
+        @apply text-5xl md:text-6xl text-primary-dark;
     }
 }

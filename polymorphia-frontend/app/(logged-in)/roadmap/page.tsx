@@ -13,6 +13,7 @@ import { useMediaQuery } from "react-responsive";
 import RoadmapModals from "@/app/(logged-in)/roadmap/RoadmapModals";
 import { getCardComponent } from "@/shared/card/getCardComponent";
 import { GradableEventResponseDTO } from "@/app/(logged-in)/course/EventSectionService";
+import "./styles.css";
 
 export default function Roadmap() {
   const { setTitle } = useTitle();
@@ -22,6 +23,7 @@ export default function Roadmap() {
   const wrapperRef = useFadeInAnimate();
   const isXL = useMediaQuery({ minWidth: 1280 });
   const isMd = useMediaQuery({ minWidth: 768 });
+  const isSm = useMediaQuery({ minWidth: 400 });
 
   useEffect(() => {
     setTitle("Roadmapa");
@@ -37,7 +39,6 @@ export default function Roadmap() {
   }
 
   const handleClick = (gradableEvent: GradableEventResponseDTO) => {
-    console.log("click", gradableEvent);
     setSelectedEvent(gradableEvent);
   };
 
@@ -59,12 +60,12 @@ export default function Roadmap() {
     );
   });
 
+  const cardHeightWithGap = isXL ? 8 : isMd ? 6.5 : isSm ? 9 : 7;
+  const totalHeight = `${cards.length * cardHeightWithGap}rem`;
+
   return (
     <>
-      <div
-        ref={wrapperRef}
-        className=" w-[17rem] min-[400px]:w-[20rem] md:w-[44rem] h-[2300px] xl:w-[57rem] xl:h-[2500px] mx-auto flex-col-centered py-24 2xl:py-32"
-      >
+      <div ref={wrapperRef} style={{ height: totalHeight }} className="roadmap">
         <ProgressBar
           minXP={0}
           currentXP={27}
