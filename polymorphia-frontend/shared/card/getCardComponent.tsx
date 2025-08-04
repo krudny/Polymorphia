@@ -6,7 +6,7 @@ export const getCardComponent = (gainedXp: number, hasChest: boolean) => {
   return (
     <XPCardPoints
       points={gainedXp.toFixed(1).toString()}
-      isSumVisible={true}
+      isSumLabelVisible={true}
       hasChest={hasChest}
     />
   );

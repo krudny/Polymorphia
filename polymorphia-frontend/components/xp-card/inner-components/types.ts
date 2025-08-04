@@ -1,7 +1,7 @@
 export interface XPCardPointsProps {
   points: string;
-  isSumVisible?: boolean;
-  isXPVisible?: boolean;
+  isSumLabelVisible?: boolean;
+  isXPLabelVisible?: boolean;
   hasChest?: boolean;
 }
 

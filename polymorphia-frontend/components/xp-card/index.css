@@ -39,6 +39,19 @@
     @apply hidden;
 }
 
+.xp-card-fading-edges {
+    @apply max-xl:w-full px-2;
+    mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 1%,
+            black 99%,
+            transparent
+    );
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+}
+
 .xp-card-middle {
     @apply flex flex-col justify-center h-full px-7 min-w-0 flex-1;
 

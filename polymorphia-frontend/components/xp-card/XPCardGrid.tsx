@@ -132,28 +132,30 @@ export default function XPCardGrid({
       {gradableEventsPage.length > 1 ? (
         <div className="xp-card-grid-center-vertically">
           <div className="xp-card-grid-point-summary-layout">
-            <div
-              ref={sliderRef}
-              className={clsx(
-                "xp-card-grid",
-                `grid-cols-${pageCols}`,
-                `grid-rows-${pageRows}`
-              )}
-            >
-              {gradableEventsPage.map(
-                ({ id, name, topic, gainedXp, hasChest }) => (
-                  <XPCard
-                    title={name}
-                    subtitle={topic ?? ""}
-                    key={id}
-                    color={gainedXp !== 0 ? "green" : "silver"}
-                    component={getCardComponent(gainedXp, hasChest)}
-                    size={mobile ? "sm" : "md"}
-                    forceWidth={!mobile}
-                    onClick={() => handleGradableEventClick(id)}
-                  />
-                )
-              )}
+            <div className="xp-card-fading-edges">
+              <div
+                ref={sliderRef}
+                className={clsx(
+                  "xp-card-grid",
+                  `grid-cols-${pageCols}`,
+                  `grid-rows-${pageRows}`
+                )}
+              >
+                {gradableEventsPage.map(
+                  ({ id, name, topic, gainedXp, hasChest }) => (
+                    <XPCard
+                      title={name}
+                      subtitle={topic ?? ""}
+                      key={id}
+                      color={gainedXp !== 0 ? "green" : "silver"}
+                      component={getCardComponent(gainedXp, hasChest)}
+                      size={mobile ? "sm" : "md"}
+                      forceWidth={!mobile}
+                      onClick={() => handleGradableEventClick(id)}
+                    />
+                  )
+                )}
+              </div>
             </div>
             {mobile && gradableEventsPage.length > 0 && pagination}
             <PointsSummary ref={summaryRef} eventSectionId={eventSectionId} />
