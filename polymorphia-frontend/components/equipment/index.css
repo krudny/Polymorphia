@@ -38,7 +38,7 @@
         @apply material-symbols;
 
         p {
-            @apply text-8xl opacity-80;
+            @apply text-8xl;
         }
     }
 }

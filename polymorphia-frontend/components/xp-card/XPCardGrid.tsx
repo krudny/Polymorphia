@@ -12,9 +12,9 @@ import { EventSectionService } from "@/app/(logged-in)/course/EventSectionServic
 import Pagination from "@/components/pagination/Pagination";
 import PointsSummary from "@/components/course/event-section/points-summary/PointsSummary";
 import { setResizeObserver } from "@/components/course/event-section/EventSectionUtils";
-import EventRewardModal from "@/components/speed-dial/modals/EventRewardModal";
+import GradableEventRewardModal from "@/components/speed-dial/modals/GradableEventRewardModal";
 import { useTitle } from "@/components/navigation/TitleContext";
-import XPCardPoints from "@/components/xp-card/inner-components/XPCardPoints";
+import { getCardComponent } from "@/shared/card/getCardComponent";
 
 export default function XPCardGrid({
   eventSectionId,
@@ -48,7 +48,6 @@ export default function XPCardGrid({
 
   const { data: eventSections } = useQuery({
     queryKey: ["eventSections"],
-    // TODO: use real courseId
     queryFn: () => EventSectionService.getEventSections(1),
   });
 
@@ -142,23 +141,20 @@ export default function XPCardGrid({
                   `grid-rows-${pageRows}`
                 )}
               >
-                {gradableEventsPage.map((gradableEvent) => (
-                  <XPCard
-                    title={gradableEvent.name}
-                    subtitle={gradableEvent.topic ?? ""}
-                    key={gradableEvent.id}
-                    color={gradableEvent.gainedXp !== 0 ? "green" : "silver"}
-                    component={
-                      <XPCardPoints
-                        points={gradableEvent.gainedXp.toFixed(1).toString()}
-                        isSumLabelVisible={true}
-                      />
-                    }
-                    size={mobile ? "sm" : "md"}
-                    forceWidth={!mobile}
-                    onClick={() => handleGradableEventClick(gradableEvent.id)}
-                  />
-                ))}
+                {gradableEventsPage.map(
+                  ({ id, name, topic, gainedXp, hasChest }) => (
+                    <XPCard
+                      title={name}
+                      subtitle={topic ?? ""}
+                      key={id}
+                      color={gainedXp !== 0 ? "green" : "silver"}
+                      component={getCardComponent(gainedXp, hasChest)}
+                      size={mobile ? "sm" : "md"}
+                      forceWidth={!mobile}
+                      onClick={() => handleGradableEventClick(id)}
+                    />
+                  )
+                )}
               </div>
             </div>
             {mobile && gradableEventsPage.length > 0 && pagination}
@@ -169,9 +165,8 @@ export default function XPCardGrid({
       ) : (
         <div className="xp-card-no-grid">Brak aktywności.</div>
       )}
-
       {eventSectionType === "test" && (
-        <EventRewardModal
+        <GradableEventRewardModal
           gradableEventId={selectedEventId ?? undefined}
           onClosed={() => setSelectedEventId(null)}
         />

@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 
-export default function EventRewardModal({
+export default function GradableEventRewardModal({
   gradableEventId,
   onClosed,
 }: SpeedDialModalProps) {

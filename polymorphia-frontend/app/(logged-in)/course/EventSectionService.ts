@@ -35,6 +35,8 @@ export interface GradableEventResponseDTO {
   topic?: string;
   gainedXp: number;
   order: number;
+  hasChest: boolean;
+  isLocked: boolean;
 }
 
 interface PointsSummaryResponseDTO {
@@ -133,6 +135,8 @@ export const EventSectionService = {
           topic: "Instrukcje sterujące",
           gainedXp: 1.5,
           order: 1,
+          hasChest: false,
+          isLocked: false,
         },
         {
           id: 2,
@@ -140,6 +144,8 @@ export const EventSectionService = {
           topic: "Model obiektowy",
           gainedXp: 0.0,
           order: 2,
+          hasChest: false,
+          isLocked: false,
         },
         {
           id: 3,
@@ -147,6 +153,8 @@ export const EventSectionService = {
           topic: "Interakcje między obiektami",
           gainedXp: 0.0,
           order: 3,
+          hasChest: true,
+          isLocked: false,
         },
         {
           id: 4,
@@ -154,6 +162,8 @@ export const EventSectionService = {
           topic: "Interfejsy i mapy",
           gainedXp: 0.0,
           order: 4,
+          hasChest: false,
+          isLocked: false,
         },
         {
           id: 5,
@@ -161,6 +171,8 @@ export const EventSectionService = {
           topic: "Dziedziczenie",
           gainedXp: 0.0,
           order: 5,
+          hasChest: false,
+          isLocked: false,
         },
         {
           id: 6,
@@ -168,6 +180,8 @@ export const EventSectionService = {
           topic: "Refactoring kodu",
           gainedXp: 0.0,
           order: 6,
+          hasChest: false,
+          isLocked: false,
         },
         {
           id: 7,
@@ -175,6 +189,8 @@ export const EventSectionService = {
           topic: "Wielowątkowość",
           gainedXp: 0.0,
           order: 7,
+          hasChest: false,
+          isLocked: false,
         },
         {
           id: 8,
@@ -182,6 +198,8 @@ export const EventSectionService = {
           topic: "Interfejs graficzny",
           gainedXp: 0.0,
           order: 8,
+          hasChest: true,
+          isLocked: false,
         },
         {
           id: 9,
@@ -189,6 +207,8 @@ export const EventSectionService = {
           topic: "Lambdy, streamy i zarządzanie zasobami",
           gainedXp: 0.0,
           order: 9,
+          hasChest: false,
+          isLocked: false,
         },
         {
           id: 10,
@@ -196,6 +216,8 @@ export const EventSectionService = {
           topic: "Kotlin jako alternatywa dla Javy",
           gainedXp: 0.0,
           order: 10,
+          hasChest: false,
+          isLocked: false,
         },
         {
           id: 11,
@@ -203,6 +225,8 @@ export const EventSectionService = {
           topic: "A może Rust?",
           gainedXp: 0.0,
           order: 11,
+          hasChest: false,
+          isLocked: false,
         },
         {
           id: 12,
@@ -210,6 +234,8 @@ export const EventSectionService = {
           topic: "Jak wycentrować diva",
           gainedXp: 0.0,
           order: 12,
+          hasChest: false,
+          isLocked: false,
         },
       ];
       return events.sort((a, b) => a.order - b.order);
@@ -221,6 +247,8 @@ export const EventSectionService = {
           topic: "Instrukcje sterujące w Javie",
           gainedXp: 2.0,
           order: 1,
+          hasChest: false,
+          isLocked: false,
         },
         {
           id: 16,
@@ -228,6 +256,8 @@ export const EventSectionService = {
           topic: "Model obiektowy",
           gainedXp: 0.0,
           order: 2,
+          hasChest: false,
+          isLocked: false,
         },
         {
           id: 17,
@@ -235,6 +265,8 @@ export const EventSectionService = {
           topic: "Interakcje między obiektami",
           gainedXp: 0.0,
           order: 3,
+          hasChest: true,
+          isLocked: false,
         },
         {
           id: 18,
@@ -242,6 +274,8 @@ export const EventSectionService = {
           topic: "Interfejsy i mapy",
           gainedXp: 0.0,
           order: 4,
+          hasChest: false,
+          isLocked: false,
         },
         {
           id: 19,
@@ -249,6 +283,8 @@ export const EventSectionService = {
           topic: "Dziedziczenie",
           gainedXp: 0.0,
           order: 5,
+          hasChest: false,
+          isLocked: false,
         },
         {
           id: 20,
@@ -256,6 +292,8 @@ export const EventSectionService = {
           topic: "Refactoring kodu",
           gainedXp: 0.0,
           order: 6,
+          hasChest: false,
+          isLocked: false,
         },
         {
           id: 21,
@@ -263,6 +301,8 @@ export const EventSectionService = {
           topic: "Wielowątkowość",
           gainedXp: 0.0,
           order: 7,
+          hasChest: false,
+          isLocked: false,
         },
         {
           id: 22,
@@ -270,6 +310,8 @@ export const EventSectionService = {
           topic: "Interfejs graficzny",
           gainedXp: 0.0,
           order: 8,
+          hasChest: false,
+          isLocked: false,
         },
       ];
       return events.sort((a, b) => a.order - b.order);
@@ -281,6 +323,8 @@ export const EventSectionService = {
           topic: "Git jest cool",
           gainedXp: 0.0,
           order: 1,
+          hasChest: true,
+          isLocked: false,
         },
       ];
     } else if (eventSectionId === 6) {
@@ -291,6 +335,8 @@ export const EventSectionService = {
           topic: "Refactoring hell",
           gainedXp: 0.0,
           order: 1,
+          hasChest: false,
+          isLocked: false,
         },
       ];
     } else if (eventSectionId === 3) {
@@ -301,6 +347,8 @@ export const EventSectionService = {
           topic: "Darwin World",
           gainedXp: 0.0,
           order: 1,
+          hasChest: false,
+          isLocked: false,
         },
         {
           id: 34,
@@ -308,6 +356,8 @@ export const EventSectionService = {
           topic: "Polymorphia",
           gainedXp: 0.0,
           order: 2,
+          hasChest: true,
+          isLocked: false,
         },
       ];
     } else {

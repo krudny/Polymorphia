@@ -35,7 +35,6 @@
     @apply flex flex-col;
 }
 
-
 .gradable-event-section-chests-inner {
     @apply flex flex-row gap-5 pt-3;
 }
