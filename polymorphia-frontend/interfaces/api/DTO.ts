@@ -91,3 +91,11 @@ export interface UserDetailsDTO {
   imageUrl: string;
   position: number;
 }
+
+export const Roles = {
+  STUDENT: "STUDENT",
+  INSTRUCTOR: "INSTRUCTOR",
+  COORDINATOR: "COORDINATOR",
+} as const;
+
+export type Role = (typeof Roles)[keyof typeof Roles];

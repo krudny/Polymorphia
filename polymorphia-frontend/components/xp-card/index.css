@@ -7,12 +7,12 @@
 }
 
 .xp-card-grid-center-vertically {
-    @apply flex flex-col justify-between w-full max-h-full;
+    @apply flex flex-col justify-between w-full max-h-full bg-blue-300;
 }
 
 .xp-card-grid-point-summary-layout {
-    @apply flex flex-col items-center gap-5;
-    @apply lg:flex-row lg:justify-between lg:gap-10;
+    @apply flex flex-col items-start gap-5 bg-purple-300;
+    @apply lg:gap-10;
 }
 
 .xp-card-grid {
@@ -207,3 +207,13 @@
         @apply text-5xl md:text-6xl text-primary-dark;
     }
 }
+
+
+.card-grid-wrapper {
+    @apply bg-green-500 w-full h-full flex flex-col justify-center;
+}
+
+.card-grid {
+    @apply w-full bg-purple-400 flex flex-wrap items-start content-start gap-4 p-3;
+}
+

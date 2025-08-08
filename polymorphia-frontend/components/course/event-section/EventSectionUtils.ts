@@ -27,7 +27,6 @@ export function updateMenuItems(
 
 export function setResizeObserver(
   containerRef: RefObject<HTMLDivElement | null>,
-  summaryRef: RefObject<HTMLDivElement | null>,
   setMobile: (v: boolean) => void,
   setPageCols: (n: number) => void,
   setPageRows: (n: number) => void
@@ -53,10 +52,8 @@ export function setResizeObserver(
         expandedSidebar !== null ? expandedSidebar.offsetWidth : 0;
 
       const gridCardsGap = 20;
-      const gridPointsSummaryGap = 40;
       const cardWidth = 416;
       const cardHeight = 160;
-      const summaryApproxOffset = 300;
       const heightApproxOffset = 80;
       const widthApproxOffset = 100;
 
@@ -65,12 +62,7 @@ export function setResizeObserver(
           (cardHeight + gridCardsGap)
       );
       const cols = Math.floor(
-        (width -
-          gridPointsSummaryGap -
-          widthApproxOffset -
-          (summaryRef?.current?.offsetWidth ?? summaryApproxOffset) +
-          sidebarOffset +
-          gridCardsGap) /
+        (width - widthApproxOffset - sidebarOffset + gridCardsGap) /
           (cardWidth + gridCardsGap)
       );
 
@@ -83,9 +75,6 @@ export function setResizeObserver(
 
   const resizeObserver = new ResizeObserver(handleResize);
   resizeObserver.observe(containerRef.current);
-  if (summaryRef.current !== null) {
-    resizeObserver.observe(summaryRef.current);
-  }
 
   handleResize();
 

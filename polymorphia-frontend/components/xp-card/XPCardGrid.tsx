@@ -10,7 +10,6 @@ import "./index.css";
 import { XPCardGridProps } from "@/components/xp-card/types";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import Pagination from "@/components/pagination/Pagination";
-import PointsSummary from "@/components/course/event-section/points-summary/PointsSummary";
 import { setResizeObserver } from "@/components/course/event-section/EventSectionUtils";
 import GradableEventRewardModal from "@/components/speed-dial/modals/GradableEventRewardModal";
 import { useTitle } from "@/components/navigation/TitleContext";
@@ -25,7 +24,6 @@ export default function XPCardGrid({
   const { setTitle } = useTitle();
 
   const sliderRef = useRef<HTMLDivElement | null>(null);
-  const summaryRef = useRef<HTMLDivElement | null>(null);
 
   const [currentPage, setCurrentPage] = useState(0);
   const [pageRows, setPageRows] = useState(3);
@@ -81,14 +79,8 @@ export default function XPCardGrid({
   );
 
   useEffect(() => {
-    return setResizeObserver(
-      containerRef,
-      summaryRef,
-      setMobile,
-      setPageCols,
-      setPageRows
-    );
-  }, [containerRef, summaryRef]);
+    return setResizeObserver(containerRef, setMobile, setPageCols, setPageRows);
+  }, [containerRef]);
 
   if (isLoading) {
     return <Loading />;
@@ -158,7 +150,6 @@ export default function XPCardGrid({
               </div>
             </div>
             {mobile && gradableEventsPage.length > 0 && pagination}
-            <PointsSummary ref={summaryRef} eventSectionId={eventSectionId} />
           </div>
           {!mobile && pagination}
         </div>
