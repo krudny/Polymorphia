@@ -10,5 +10,4 @@ public record StudentDetailsResponseDto(
         String group,
         String imageUrl,
         int position
-) {
-}
+) { }

@@ -1,6 +1,5 @@
 package com.agh.polymorphia_backend.model.course;
 
-import com.agh.polymorphia_backend.model.HallOfFame;
 import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.user.Student;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -45,9 +44,4 @@ public class Animal {
     @ToString.Exclude
     @JsonIgnore
     private CourseGroup courseGroup;
-
-    @OneToOne(mappedBy = "animal", cascade = CascadeType.ALL, orphanRemoval = true)
-    @ToString.Exclude
-    @JsonIgnore
-    private HallOfFame hallOfFame;
 }

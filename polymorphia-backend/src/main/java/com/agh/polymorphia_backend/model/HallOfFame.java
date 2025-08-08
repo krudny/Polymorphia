@@ -1,36 +1,30 @@
 package com.agh.polymorphia_backend.model;
 
-import com.agh.polymorphia_backend.model.course.Animal;
-import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import org.hibernate.annotations.Immutable;
 
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "hall_of_fame")
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode
+@Table(name = "hall_of_fame_view")
+@Immutable
+@Getter
 public class HallOfFame {
     @Id
-    @Column(name = "animal_id")
-    private Long id;
-
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "animal_id")
-    private Animal animal;
-
-    // TODO: czy defaulty != 0?
-    @ColumnDefault("0")
-    private BigDecimal totalXp = BigDecimal.ZERO;
-
-    @ColumnDefault("0")
-    private BigDecimal flatBonusXp = BigDecimal.ZERO;
-
-    @ColumnDefault("0")
-    private BigDecimal percentageBonusXp = BigDecimal.ZERO;
+    private Long animalId;
+    private String animalName;
+    private String studentName;
+    private String groupName;
+    private Long courseId;
+    private Integer position;
+    private String evolutionStage;
+    private String imageUrl;
+    private BigDecimal rawXpSum;
+    private BigDecimal flatBonusSum;
+    private BigDecimal percentageBonusSum;
+    private BigDecimal totalBonusSum;
+    private BigDecimal totalXpSum;
 }
