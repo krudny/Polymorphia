@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import Loading from "@/components/loading/Loading";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import XPCard from "@/components/xp-card/XPCard";
 import { getCardComponent } from "@/shared/card/getCardComponent";
 import Pagination from "@/components/pagination/Pagination";
@@ -21,10 +21,13 @@ export default function CardGrid({
   const [currentPage, setCurrentPage] = useState(0);
   const [firstRender, setFirstRender] = useState(true);
   const [minGridHeight, setMinGridHeight] = useState<number>(0);
-  const [hasInitialHeight, setHasInitialHeight] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
   const sliderRef = useRef<HTMLDivElement | null>(null);
   const mobile = false;
+
+  useEffect(() => {
+    console.log(minGridHeight);
+  }, [minGridHeight]);
 
   const {
     data: gradableEvents,
@@ -40,11 +43,15 @@ export default function CardGrid({
       return;
     }
 
-    if (currentPage === 0 && minGridHeight === 0) {
-      const height = sliderRef.current.scrollHeight;
-      if (height > 0) {
-        setMinGridHeight(height);
-      }
+    if (currentPage === 0) {
+      setTimeout(() => {
+        if (sliderRef.current) {
+          const height = sliderRef.current.scrollHeight;
+          if (height > 0) {
+            setMinGridHeight(Math.max(530, height));
+          }
+        }
+      }, 50);
     }
   }, [gradableEvents, currentPage, minGridHeight]);
 
@@ -83,7 +90,7 @@ export default function CardGrid({
   };
 
   return (
-    <div className="card-grid-wrapper p-3">
+    <div className="card-grid-wrapper">
       <div className="xp-card-fading-edges">
         <div
           className="card-grid"
@@ -105,17 +112,15 @@ export default function CardGrid({
         </div>
       </div>
 
-      {pageCount > 1 && (
-        <div className="ml-3">
-          <Pagination
-            pageCount={pageCount}
-            onPageChange={handlePageChange}
-            forcePage={currentPage}
-            pageRangeDisplayed={2}
-            marginPagesDisplayed={1}
-          />
-        </div>
-      )}
+      <div className="ml-3">
+        <Pagination
+          pageCount={pageCount}
+          onPageChange={handlePageChange}
+          forcePage={currentPage}
+          pageRangeDisplayed={2}
+          marginPagesDisplayed={1}
+        />
+      </div>
     </div>
   );
 }
