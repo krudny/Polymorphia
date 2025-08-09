@@ -1,5 +1,5 @@
 import { RefObject, useEffect, useRef } from "react";
-import { GradableEventResponseDTO } from "@/app/(logged-in)/course/EventSectionService";
+import { BaseGradableEventResponseDTO } from "@/app/(logged-in)/course/EventSectionService";
 import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
@@ -11,7 +11,7 @@ export function useXPGridAnimation(
   sliderRef: RefObject<HTMLDivElement | null>,
   setPageToShow: (n: number) => void,
   setCurrentPage: (n: number) => void,
-  gradableEventsData: GradableEventResponseDTO[] | undefined,
+  gradableEventsData: BaseGradableEventResponseDTO[] | undefined,
   direction: 1 | -1,
   firstRender: boolean,
   setFirstRender: (b: boolean) => void
@@ -47,15 +47,11 @@ export function useXPGridAnimation(
       });
 
       if (hasWindowScroll) {
-        tl.to(
-          window,
-          {
-            scrollTo: { y: 0 },
-            duration: 0.3,
-            ease: "power2.out",
-          },
-          0
-        );
+        tl.to(window, {
+          scrollTo: { y: 0 },
+          duration: 0.3,
+          ease: "power2.out",
+        });
       }
     }
   };

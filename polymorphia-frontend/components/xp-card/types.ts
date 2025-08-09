@@ -1,5 +1,6 @@
 import { EventSectionType } from "@/components/course/event-section/types";
 import { ReactNode, RefObject } from "react";
+import { BaseGradableEventResponseDTO } from "@/app/(logged-in)/course/EventSectionService";
 
 export interface XPCardProps {
   title: string;
@@ -19,10 +20,10 @@ export type XPCardVariantProps = {
   isLocked?: boolean;
 };
 
-export interface XPCardGridProps {
-  eventSectionId: number;
-  eventSectionType: EventSectionType;
+export interface XPCardGridProps<T extends BaseGradableEventResponseDTO> {
   containerRef: RefObject<HTMLDivElement | null>;
+  gradableEvents: T[];
+  renderCard: (event: T, mobile: boolean) => ReactNode;
 }
 
 export interface CardGridProps {

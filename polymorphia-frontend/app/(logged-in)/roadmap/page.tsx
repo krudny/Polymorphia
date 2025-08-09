@@ -12,13 +12,13 @@ import Loading from "@/components/loading/Loading";
 import { useMediaQuery } from "react-responsive";
 import RoadmapModals from "@/app/(logged-in)/roadmap/RoadmapModals";
 import { getCardComponent } from "@/shared/card/getCardComponent";
-import { GradableEventResponseDTO } from "@/app/(logged-in)/course/EventSectionService";
+import { BaseGradableEventResponseDTO } from "@/app/(logged-in)/course/EventSectionService";
 import "./styles.css";
 
 export default function Roadmap() {
   const { setTitle } = useTitle();
   const [selectedEvent, setSelectedEvent] = useState<
-    GradableEventResponseDTO | undefined
+    BaseGradableEventResponseDTO | undefined
   >(undefined);
   const wrapperRef = useFadeInAnimate();
   const isXL = useMediaQuery({ minWidth: 1280 });
@@ -38,7 +38,7 @@ export default function Roadmap() {
     return <Loading />;
   }
 
-  const handleClick = (gradableEvent: GradableEventResponseDTO) => {
+  const handleClick = (gradableEvent: BaseGradableEventResponseDTO) => {
     setSelectedEvent(gradableEvent);
   };
 

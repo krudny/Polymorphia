@@ -1,7 +1,7 @@
-import { GradableEventResponseDTO } from "@/app/(logged-in)/course/EventSectionService";
+import { BaseGradableEventResponseDTO } from "@/app/(logged-in)/course/EventSectionService";
 
 export const RoadmapService = {
-  getRoadmapData: async (): Promise<GradableEventResponseDTO[]> => {
+  getRoadmapData: async (): Promise<BaseGradableEventResponseDTO[]> => {
     return [
       {
         id: 1,

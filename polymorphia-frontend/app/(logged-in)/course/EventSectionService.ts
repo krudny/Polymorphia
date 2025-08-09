@@ -29,14 +29,23 @@ for (let i = 0; i < 250; i++) {
   allData.push(item);
 }
 
-export interface GradableEventResponseDTO {
+export interface BaseGradableEventResponseDTO {
   id: number;
   name: string;
   topic?: string;
-  gainedXp: number;
   order: number;
+}
+
+export interface StudentGradableEventResponseDTO
+  extends BaseGradableEventResponseDTO {
+  gainedXp: number;
   hasChest: boolean;
   isLocked: boolean;
+}
+
+export interface InstructorGradableEventResponseDTO
+  extends BaseGradableEventResponseDTO {
+  ungraded: number;
 }
 
 interface PointsSummaryResponseDTO {
@@ -124,9 +133,10 @@ export const EventSectionService = {
     ];
     return data.sort((a, b) => a.order - b.order);
   },
+
   getGradableEvents: async (
     eventSectionId: number
-  ): Promise<GradableEventResponseDTO[]> => {
+  ): Promise<StudentGradableEventResponseDTO[]> => {
     if (eventSectionId === 1) {
       const events = [
         {
@@ -364,6 +374,7 @@ export const EventSectionService = {
       return [];
     }
   },
+
   getPointsSummary: async (
     eventSectionId: number
   ): Promise<PointsSummaryResponseDTO> => {
@@ -426,6 +437,7 @@ export const EventSectionService = {
       };
     }
   },
+
   getMarkdown: async (
     gradableEventId: number
   ): Promise<MarkdownResponseDTO> => {
@@ -542,6 +554,7 @@ export const EventSectionService = {
       },
     ];
   },
+
   getRandomPeople: async (searchTerm: string): Promise<UserDetailsDTO[]> => {
     let filteredData = allData;
 
