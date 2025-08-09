@@ -8,7 +8,7 @@ import { EventSectionService } from "@/app/(logged-in)/course/EventSectionServic
 import Loading from "@/components/loading/Loading";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import XPCard from "@/components/xp-card/XPCard";
-import { getCardComponent } from "@/shared/card/getCardComponent";
+import { getStudentCardComponent } from "@/shared/card/getCardComponent";
 import Pagination from "@/components/pagination/Pagination";
 import { useXPGridAnimation } from "@/animations/XPGrid";
 
@@ -35,7 +35,7 @@ export default function CardGrid({
     error,
   } = useQuery({
     queryKey: ["gradableEvents", eventSectionId],
-    queryFn: () => EventSectionService.getGradableEvents(eventSectionId),
+    queryFn: () => EventSectionService.getStudentGradableEvents(eventSectionId),
   });
 
   useLayoutEffect(() => {
@@ -105,7 +105,7 @@ export default function CardGrid({
               subtitle={topic ?? ""}
               key={id}
               color={gainedXp !== 0 ? "green" : "silver"}
-              component={getCardComponent(gainedXp, hasChest)}
+              component={getStudentCardComponent(gainedXp, hasChest)}
               size={mobile ? "sm" : "md"}
               forceWidth={false}
               onClick={() => handleGradableEventClick(id)}

@@ -29,7 +29,7 @@ export default function StudentView({
     error,
   } = useQuery({
     queryKey: ["gradableEvents", eventSectionId],
-    queryFn: () => EventSectionService.getGradableEvents(eventSectionId),
+    queryFn: () => EventSectionService.getStudentGradableEvents(eventSectionId),
   });
 
   const containerRef = useScaleShow(!isLoading);

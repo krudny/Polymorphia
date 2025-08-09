@@ -11,7 +11,7 @@
 }
 
 .xp-card-grid-point-summary-layout {
-    @apply flex flex-col items-start gap-5 bg-purple-300;
+    @apply flex flex-col items-start gap-5 p-2 bg-purple-300;
     @apply lg:gap-10;
 }
 

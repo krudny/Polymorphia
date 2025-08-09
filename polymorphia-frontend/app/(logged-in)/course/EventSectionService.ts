@@ -134,7 +134,7 @@ export const EventSectionService = {
     return data.sort((a, b) => a.order - b.order);
   },
 
-  getGradableEvents: async (
+  getStudentGradableEvents: async (
     eventSectionId: number
   ): Promise<StudentGradableEventResponseDTO[]> => {
     if (eventSectionId === 1) {
@@ -368,6 +368,199 @@ export const EventSectionService = {
           order: 2,
           hasChest: true,
           isLocked: false,
+        },
+      ];
+    } else {
+      return [];
+    }
+  },
+
+  getInstructorGradableEvents: async (
+    eventSectionId: number
+  ): Promise<InstructorGradableEventResponseDTO[]> => {
+    if (eventSectionId === 1) {
+      const events = [
+        {
+          id: 1,
+          name: "Kartkówka 1",
+          topic: "Instrukcje sterujące",
+          order: 1,
+          ungraded: 3,
+        },
+        {
+          id: 2,
+          name: "Kartkówka 2",
+          topic: "Model obiektowy",
+          order: 2,
+          ungraded: 12,
+        },
+        {
+          id: 3,
+          name: "Kartkówka 3",
+          topic: "Interakcje między obiektami",
+          order: 3,
+          ungraded: 0,
+        },
+        {
+          id: 4,
+          name: "Kartkówka 4",
+          topic: "Interfejsy i mapy",
+          order: 4,
+          ungraded: 8,
+        },
+        {
+          id: 5,
+          name: "Kartkówka 5",
+          topic: "Dziedziczenie",
+          order: 5,
+          ungraded: 15,
+        },
+        {
+          id: 6,
+          name: "Kartkówka 6",
+          topic: "Refactoring kodu",
+          order: 6,
+          ungraded: 5,
+        },
+        {
+          id: 7,
+          name: "Kartkówka 7",
+          topic: "Wielowątkowość",
+          order: 7,
+          ungraded: 21,
+        },
+        {
+          id: 8,
+          name: "Kartkówka 8",
+          topic: "Interfejs graficzny",
+          order: 8,
+          ungraded: 7,
+        },
+        {
+          id: 9,
+          name: "Kartkówka 9",
+          topic: "Lambdy, streamy i zarządzanie zasobami",
+          order: 9,
+          ungraded: 18,
+        },
+        {
+          id: 10,
+          name: "Kartkówka 10",
+          topic: "Kotlin jako alternatywa dla Javy",
+          order: 10,
+          ungraded: 2,
+        },
+        {
+          id: 11,
+          name: "Kartkówka 11",
+          topic: "A może Rust?",
+          order: 11,
+          ungraded: 9,
+        },
+        {
+          id: 12,
+          name: "Kartkówka 12",
+          topic: "Jak wycentrować diva",
+          order: 12,
+          ungraded: 14,
+        },
+      ];
+      return events.sort((a, b) => a.order - b.order);
+    } else if (eventSectionId === 2) {
+      const events = [
+        {
+          id: 15,
+          name: "Laboratorium 1",
+          topic: "Instrukcje sterujące w Javie",
+          order: 1,
+          ungraded: 6,
+        },
+        {
+          id: 16,
+          name: "Laboratorium 2",
+          topic: "Model obiektowy",
+          order: 2,
+          ungraded: 11,
+        },
+        {
+          id: 17,
+          name: "Laboratorium 3",
+          topic: "Interakcje między obiektami",
+          order: 3,
+          ungraded: 4,
+        },
+        {
+          id: 18,
+          name: "Laboratorium 4",
+          topic: "Interfejsy i mapy",
+          order: 4,
+          ungraded: 17,
+        },
+        {
+          id: 19,
+          name: "Laboratorium 5",
+          topic: "Dziedziczenie",
+          order: 5,
+          ungraded: 1,
+        },
+        {
+          id: 20,
+          name: "Laboratorium 6",
+          topic: "Refactoring kodu",
+          order: 6,
+          ungraded: 13,
+        },
+        {
+          id: 21,
+          name: "Laboratorium 7",
+          topic: "Wielowątkowość",
+          order: 7,
+          ungraded: 8,
+        },
+        {
+          id: 22,
+          name: "Laboratorium 8",
+          topic: "Interfejs graficzny",
+          order: 8,
+          ungraded: 22,
+        },
+      ];
+      return events.sort((a, b) => a.order - b.order);
+    } else if (eventSectionId === 4) {
+      return [
+        {
+          id: 30,
+          name: "Laboratorium 0",
+          topic: "Git jest cool",
+          order: 1,
+          ungraded: 5,
+        },
+      ];
+    } else if (eventSectionId === 6) {
+      return [
+        {
+          id: 32,
+          name: "Projekt 2",
+          topic: "Refactoring hell",
+          order: 1,
+          ungraded: 19,
+        },
+      ];
+    } else if (eventSectionId === 3) {
+      return [
+        {
+          id: 33,
+          name: "Projekt 1a",
+          topic: "Darwin World",
+          order: 1,
+          ungraded: 7,
+        },
+        {
+          id: 34,
+          name: "Projekt 1b",
+          topic: "Polymorphia",
+          order: 2,
+          ungraded: 3,
         },
       ];
     } else {

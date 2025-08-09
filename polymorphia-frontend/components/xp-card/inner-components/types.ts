@@ -5,6 +5,10 @@ export interface XPCardPointsProps {
   hasChest?: boolean;
 }
 
+export interface XPCardUngradedProps {
+  ungraded: number;
+}
+
 export interface XPCardProjectVariantProps {
   shortCode: string;
 }
