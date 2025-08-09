@@ -32,8 +32,8 @@ const UserService = {
     ];
   },
   getRole: async (): Promise<{ role: Role }> => {
-    // return { role: Roles.INSTRUCTOR };
-    return { role: Roles.STUDENT };
+    return { role: Roles.INSTRUCTOR };
+    // return { role: Roles.STUDENT };
   },
 };
 

@@ -28,7 +28,12 @@ export default function Page() {
         />
       );
     case Roles.INSTRUCTOR:
-      return <InstructorView />;
+      return (
+        <InstructorView
+          eventSectionType={eventSectionType}
+          eventSectionId={eventSectionId}
+        />
+      );
     case Roles.COORDINATOR:
       return null;
   }

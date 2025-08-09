@@ -39,37 +39,40 @@ export function setResizeObserver(
     const height = containerRef.current.offsetHeight;
     const width = containerRef.current.offsetWidth;
 
-    console.log("container", width, height);
-
     if (window.outerWidth < 1024) {
       setMobile(true);
 
       setPageCols(width > 650 ? 2 : 1);
-      setPageRows(5);
+
+      const gridCardsGap = 20;
+      const cardHeight = 125;
+
+      const rows = Math.floor(
+        (height + gridCardsGap) / (cardHeight + gridCardsGap)
+      );
+
+      setPageRows(rows);
     } else {
       setMobile(false);
 
-      const expandedSidebar = document.getElementById("sidebar-animated");
-      const sidebarOffset =
-        expandedSidebar !== null ? expandedSidebar.offsetWidth : 0;
-
       const gridCardsGap = 20;
-      const cardWidth = 300;
+      const minCardWidth = 330;
       const cardHeight = 160;
 
       const rows = Math.floor(
         (height + gridCardsGap) / (cardHeight + gridCardsGap)
       );
       const cols = Math.floor(
-        (width - sidebarOffset + gridCardsGap) / (cardWidth + gridCardsGap)
+        (width + gridCardsGap) / (minCardWidth + gridCardsGap)
       );
 
       const maxRows = height <= 550 ? 2 : height >= 900 ? 4 : 3;
+      const minCols = window.innerWidth >= 1280 ? 2 : 1;
 
       console.log(rows, cols);
 
       setPageRows(Math.max(Math.min(rows, maxRows), 1));
-      setPageCols(Math.max(Math.min(cols, 3), 1));
+      setPageCols(Math.max(Math.min(cols, 3), minCols));
     }
   };
 

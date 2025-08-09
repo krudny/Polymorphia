@@ -131,7 +131,7 @@ export const EventSectionService = {
       const events = [
         {
           id: 1,
-          name: "Test 1",
+          name: "Kartkówka 1",
           topic: "Instrukcje sterujące",
           gainedXp: 1.5,
           order: 1,
@@ -140,7 +140,7 @@ export const EventSectionService = {
         },
         {
           id: 2,
-          name: "Test 2",
+          name: "Kartkówka 2",
           topic: "Model obiektowy",
           gainedXp: 0.0,
           order: 2,
@@ -149,7 +149,7 @@ export const EventSectionService = {
         },
         {
           id: 3,
-          name: "Test 3",
+          name: "Kartkówka 3",
           topic: "Interakcje między obiektami",
           gainedXp: 0.0,
           order: 3,
@@ -158,7 +158,7 @@ export const EventSectionService = {
         },
         {
           id: 4,
-          name: "Test 4",
+          name: "Kartkówka 4",
           topic: "Interfejsy i mapy",
           gainedXp: 0.0,
           order: 4,
@@ -167,7 +167,7 @@ export const EventSectionService = {
         },
         {
           id: 5,
-          name: "Test 5",
+          name: "Kartkówka 5",
           topic: "Dziedziczenie",
           gainedXp: 0.0,
           order: 5,
@@ -176,7 +176,7 @@ export const EventSectionService = {
         },
         {
           id: 6,
-          name: "Test 6",
+          name: "Kartkówka 6",
           topic: "Refactoring kodu",
           gainedXp: 0.0,
           order: 6,
@@ -185,7 +185,7 @@ export const EventSectionService = {
         },
         {
           id: 7,
-          name: "Test 7",
+          name: "Kartkówka 7",
           topic: "Wielowątkowość",
           gainedXp: 0.0,
           order: 7,
@@ -194,7 +194,7 @@ export const EventSectionService = {
         },
         {
           id: 8,
-          name: "Test 8",
+          name: "Kartkówka 8",
           topic: "Interfejs graficzny",
           gainedXp: 0.0,
           order: 8,
@@ -203,7 +203,7 @@ export const EventSectionService = {
         },
         {
           id: 9,
-          name: "Test 9",
+          name: "Kartkówka 9",
           topic: "Lambdy, streamy i zarządzanie zasobami",
           gainedXp: 0.0,
           order: 9,
@@ -212,7 +212,7 @@ export const EventSectionService = {
         },
         {
           id: 10,
-          name: "Test 10",
+          name: "Kartkówka 10",
           topic: "Kotlin jako alternatywa dla Javy",
           gainedXp: 0.0,
           order: 10,
@@ -221,7 +221,7 @@ export const EventSectionService = {
         },
         {
           id: 11,
-          name: "Test 11",
+          name: "Kartkówka 11",
           topic: "A może Rust?",
           gainedXp: 0.0,
           order: 11,
@@ -230,7 +230,7 @@ export const EventSectionService = {
         },
         {
           id: 12,
-          name: "Test 12",
+          name: "Kartkówka 12",
           topic: "Jak wycentrować diva",
           gainedXp: 0.0,
           order: 12,
@@ -243,7 +243,7 @@ export const EventSectionService = {
       const events = [
         {
           id: 15,
-          name: "Lab 1",
+          name: "Laboratorium 1",
           topic: "Instrukcje sterujące w Javie",
           gainedXp: 2.0,
           order: 1,
@@ -252,7 +252,7 @@ export const EventSectionService = {
         },
         {
           id: 16,
-          name: "Lab 2",
+          name: "Laboratorium 2",
           topic: "Model obiektowy",
           gainedXp: 0.0,
           order: 2,
@@ -261,7 +261,7 @@ export const EventSectionService = {
         },
         {
           id: 17,
-          name: "Lab 3",
+          name: "Laboratorium 3",
           topic: "Interakcje między obiektami",
           gainedXp: 0.0,
           order: 3,
@@ -270,7 +270,7 @@ export const EventSectionService = {
         },
         {
           id: 18,
-          name: "Lab 4",
+          name: "Laboratorium 4",
           topic: "Interfejsy i mapy",
           gainedXp: 0.0,
           order: 4,
@@ -279,7 +279,7 @@ export const EventSectionService = {
         },
         {
           id: 19,
-          name: "Lab 5",
+          name: "Laboratorium 5",
           topic: "Dziedziczenie",
           gainedXp: 0.0,
           order: 5,
@@ -288,7 +288,7 @@ export const EventSectionService = {
         },
         {
           id: 20,
-          name: "Lab 6",
+          name: "Laboratorium 6",
           topic: "Refactoring kodu",
           gainedXp: 0.0,
           order: 6,
@@ -297,7 +297,7 @@ export const EventSectionService = {
         },
         {
           id: 21,
-          name: "Lab 7",
+          name: "Laboratorium 7",
           topic: "Wielowątkowość",
           gainedXp: 0.0,
           order: 7,
@@ -306,7 +306,7 @@ export const EventSectionService = {
         },
         {
           id: 22,
-          name: "Lab 8",
+          name: "Laboratorium 8",
           topic: "Interfejs graficzny",
           gainedXp: 0.0,
           order: 8,
@@ -319,7 +319,7 @@ export const EventSectionService = {
       return [
         {
           id: 30,
-          name: "Lab 0",
+          name: "Laboratorium 0",
           topic: "Git jest cool",
           gainedXp: 0.0,
           order: 1,
@@ -474,7 +474,7 @@ export const EventSectionService = {
     if (gradableEventId === 15) {
       return {
         id: 1,
-        name: "Lab 1",
+        name: "Laboratorium 1",
         grade: {
           gainedXp: 0.75,
           createdDate: "07.06.2025",
@@ -492,14 +492,14 @@ export const EventSectionService = {
         },
         maxXp: 2.0,
         hidden: false,
-        topic: "Lab 1",
+        topic: "Laboratorium 1",
       };
     }
 
     if (gradableEventId === 1) {
       return {
         id: 1,
-        name: "Lab 1",
+        name: "Laboratorium 1",
         grade: {
           gainedXp: 0.75,
           createdDate: "07.06.2025",
@@ -517,7 +517,7 @@ export const EventSectionService = {
         },
         maxXp: 2.0,
         hidden: false,
-        topic: "Lab 1",
+        topic: "Laboratorium 1",
       };
     }
 

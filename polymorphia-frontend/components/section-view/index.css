@@ -3,7 +3,7 @@
 
 
 .section-view {
-    @apply w-full px-3 flex flex-col flex-1 mx-auto bg-purple-600;
+    @apply w-full p-3 flex flex-col flex-1 mx-auto bg-purple-600;
     @apply lg:h-full lg:justify-center;
-    @apply xl:mx-auto min-[1480px]:max-w-6/7 min-[1024px]:max-[1277px]:max-w-4/5 3xl:max-w-full;
+    @apply 3xl:extra-large-center;
 }

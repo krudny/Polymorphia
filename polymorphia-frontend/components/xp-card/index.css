@@ -40,7 +40,7 @@
 }
 
 .xp-card-fading-edges {
-    @apply max-xl:w-full px-2;
+    @apply max-xl:w-full p-2;
     mask-image: linear-gradient(
             to right,
             transparent,
@@ -135,11 +135,11 @@
     .xp-card-middle,
     .xp-card-component {
         h1 {
-            @apply text-5xl;
+            @apply text-[2.5rem];
         }
 
         h2 {
-            @apply text-2xl;
+            @apply text-[1.5rem];
         }
     }
 }

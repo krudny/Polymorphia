@@ -1,6 +1,9 @@
 import { RefObject, useEffect, useRef } from "react";
-import gsap from "gsap";
 import { GradableEventResponseDTO } from "@/app/(logged-in)/course/EventSectionService";
+import gsap from "gsap";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+
+gsap.registerPlugin(ScrollToPlugin);
 
 export function useXPGridAnimation(
   pageToShow: number,
@@ -13,6 +16,12 @@ export function useXPGridAnimation(
   firstRender: boolean,
   setFirstRender: (b: boolean) => void
 ): { handlePageChange: (selected: { selected: number }) => void } {
+  const firstRenderRef = useRef(firstRender);
+  firstRenderRef.current = firstRender;
+
+  const directionRef = useRef(direction);
+  directionRef.current = direction;
+
   const handlePageChange = (selected: { selected: number }) => {
     const newPage = selected.selected;
     if (newPage === pageToShow) return;
@@ -22,7 +31,11 @@ export function useXPGridAnimation(
     setFirstRender(false);
 
     if (sliderRef.current) {
-      gsap.to(sliderRef.current, {
+      const hasWindowScroll = window.scrollY > 0;
+
+      const tl = gsap.timeline();
+
+      tl.to(sliderRef.current, {
         xPercent: -dir * 20,
         opacity: 0,
         duration: 0.2,
@@ -32,14 +45,20 @@ export function useXPGridAnimation(
           setCurrentPage(newPage);
         },
       });
+
+      if (hasWindowScroll) {
+        tl.to(
+          window,
+          {
+            scrollTo: { y: 0 },
+            duration: 0.3,
+            ease: "power2.out",
+          },
+          0
+        );
+      }
     }
   };
-
-  const firstRenderRef = useRef(firstRender);
-  firstRenderRef.current = firstRender;
-
-  const directionRef = useRef(direction);
-  directionRef.current = direction;
 
   useEffect(() => {
     if (!gradableEventsData || !sliderRef.current) return;
