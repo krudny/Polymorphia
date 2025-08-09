@@ -39,6 +39,8 @@ export function setResizeObserver(
     const height = containerRef.current.offsetHeight;
     const width = containerRef.current.offsetWidth;
 
+    console.log("container", width, height);
+
     if (window.outerWidth < 1024) {
       setMobile(true);
 
@@ -52,21 +54,19 @@ export function setResizeObserver(
         expandedSidebar !== null ? expandedSidebar.offsetWidth : 0;
 
       const gridCardsGap = 20;
-      const cardWidth = 416;
+      const cardWidth = 300;
       const cardHeight = 160;
-      const heightApproxOffset = 80;
-      const widthApproxOffset = 100;
 
       const rows = Math.floor(
-        (height - heightApproxOffset + gridCardsGap) /
-          (cardHeight + gridCardsGap)
+        (height + gridCardsGap) / (cardHeight + gridCardsGap)
       );
       const cols = Math.floor(
-        (width - widthApproxOffset - sidebarOffset + gridCardsGap) /
-          (cardWidth + gridCardsGap)
+        (width - sidebarOffset + gridCardsGap) / (cardWidth + gridCardsGap)
       );
 
-      const maxRows = height <= 650 ? 2 : height >= 900 ? 4 : 3;
+      const maxRows = height <= 550 ? 2 : height >= 900 ? 4 : 3;
+
+      console.log(rows, cols);
 
       setPageRows(Math.max(Math.min(rows, maxRows), 1));
       setPageCols(Math.max(Math.min(cols, 3), 1));

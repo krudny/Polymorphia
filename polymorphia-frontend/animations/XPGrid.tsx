@@ -1,31 +1,25 @@
-import React, { useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { GradableEventResponseDTO } from "@/app/(logged-in)/course/EventSectionService";
 
 export function useXPGridAnimation(
-  currentPage: number,
-  sliderRef: React.RefObject<HTMLDivElement | null>,
+  pageToShow: number,
+  setDirection: (n: 1 | -1) => void,
+  sliderRef: RefObject<HTMLDivElement | null>,
+  setPageToShow: (n: number) => void,
   setCurrentPage: (n: number) => void,
   gradableEventsData: GradableEventResponseDTO[] | undefined,
+  direction: 1 | -1,
   firstRender: boolean,
   setFirstRender: (b: boolean) => void
-): {
-  handlePageChange: (selected: { selected: number }) => void;
-  isAnimating: boolean;
-} {
-  const [direction, setDirection] = React.useState<1 | -1>(1);
-  const [isAnimating, setIsAnimating] = React.useState(false);
-  const previousPageRef = useRef(currentPage);
-
+): { handlePageChange: (selected: { selected: number }) => void } {
   const handlePageChange = (selected: { selected: number }) => {
     const newPage = selected.selected;
-    if (newPage === currentPage || isAnimating) return;
+    if (newPage === pageToShow) return;
 
-    const dir = newPage > currentPage ? 1 : -1;
+    const dir = newPage > pageToShow ? 1 : -1;
     setDirection(dir);
     setFirstRender(false);
-    setIsAnimating(true);
-    previousPageRef.current = currentPage;
 
     if (sliderRef.current) {
       gsap.to(sliderRef.current, {
@@ -34,46 +28,37 @@ export function useXPGridAnimation(
         duration: 0.2,
         ease: "power2.inOut",
         onComplete: () => {
+          setPageToShow(newPage);
           setCurrentPage(newPage);
         },
       });
     }
   };
 
+  const firstRenderRef = useRef(firstRender);
+  firstRenderRef.current = firstRender;
+
+  const directionRef = useRef(direction);
+  directionRef.current = direction;
+
   useEffect(() => {
     if (!gradableEventsData || !sliderRef.current) return;
-
-    if (firstRender) {
-      setIsAnimating(false);
+    if (firstRenderRef.current) {
       return;
     }
 
-    if (previousPageRef.current === currentPage) {
-      setIsAnimating(false);
-      return;
-    }
+    const dir = directionRef.current;
 
-    gsap.fromTo(
-      sliderRef.current,
-      {
-        xPercent: direction * 100,
-        opacity: 0,
-      },
-      {
-        xPercent: 0,
-        opacity: 1,
-        duration: 0.2,
-        ease: "power2.out",
-        onComplete: () => {
-          setIsAnimating(false);
-          previousPageRef.current = currentPage;
-        },
-      }
-    );
-  }, [currentPage, gradableEventsData, direction, firstRender]);
+    if (sliderRef.current) {
+      gsap.fromTo(
+        sliderRef.current,
+        { xPercent: dir * 100, opacity: 0 },
+        { xPercent: 0, opacity: 1, duration: 0.2, ease: "power2.out" }
+      );
+    }
+  }, [pageToShow, gradableEventsData, sliderRef]);
 
   return {
-    handlePageChange,
-    isAnimating,
+    handlePageChange: handlePageChange,
   };
 }

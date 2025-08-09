@@ -16,7 +16,7 @@ export default function CardGrid({
   eventSectionId,
   eventSectionType,
 }: CardGridProps) {
-  const ITEMS_PER_PAGE = 6;
+  const ITEMS_PER_PAGE = 3;
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(0);
   const [firstRender, setFirstRender] = useState(true);
@@ -48,7 +48,9 @@ export default function CardGrid({
         if (sliderRef.current) {
           const height = sliderRef.current.scrollHeight;
           if (height > 0) {
-            setMinGridHeight(Math.max(530, height));
+            setMinGridHeight(
+              Math.min(window.innerHeight - 150, Math.max(530, height))
+            );
           }
         }
       }, 50);
@@ -105,14 +107,14 @@ export default function CardGrid({
               color={gainedXp !== 0 ? "green" : "silver"}
               component={getCardComponent(gainedXp, hasChest)}
               size={mobile ? "sm" : "md"}
-              forceWidth={!mobile}
+              forceWidth={false}
               onClick={() => handleGradableEventClick(id)}
             />
           ))}
         </div>
       </div>
 
-      <div className="ml-3">
+      <div className="ml-3 mt-3">
         <Pagination
           pageCount={pageCount}
           onPageChange={handlePageChange}

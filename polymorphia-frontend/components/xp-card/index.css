@@ -210,10 +210,10 @@
 
 
 .card-grid-wrapper {
-    @apply bg-green-500 w-full h-full flex flex-col justify-center;
+    @apply  w-full h-full flex flex-col justify-center;
 }
 
 .card-grid {
-    @apply w-full bg-purple-400 flex flex-wrap items-start content-start gap-4 px-3;
+    @apply w-full  flex flex-wrap 2xl:justify-start items-start content-start gap-4 px-1;
 }
 
