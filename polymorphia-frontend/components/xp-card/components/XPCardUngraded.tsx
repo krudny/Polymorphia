@@ -1,4 +1,4 @@
-import { XPCardUngradedProps } from "@/components/xp-card/inner-components/types";
+import { XPCardUngradedProps } from "@/components/xp-card/components/types";
 
 export default function XPCardUngraded({ ungraded }: XPCardUngradedProps) {
   return (

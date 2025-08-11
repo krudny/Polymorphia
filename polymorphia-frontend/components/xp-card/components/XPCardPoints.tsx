@@ -1,4 +1,4 @@
-import { XPCardPointsProps } from "@/components/xp-card/inner-components/types";
+import { XPCardPointsProps } from "@/components/xp-card/components/types";
 import "./index.css";
 
 export default function XPCardPoints({

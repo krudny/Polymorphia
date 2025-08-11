@@ -5,7 +5,7 @@ import { EquipmentContext } from "@/components/providers/equipment/EquipmentCont
 import { useContext } from "react";
 import Modal from "@/components/modal/Modal";
 import { Item } from "@/components/equipment/types";
-import XPCardPoints from "@/components/xp-card/inner-components/XPCardPoints";
+import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 
 export default function ItemModal() {
   const { currentItemModalData, setCurrentItemModalData } =

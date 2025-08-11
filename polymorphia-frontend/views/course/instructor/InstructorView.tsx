@@ -1,13 +1,13 @@
 import { useScaleShow } from "@/animations/ScaleShow";
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
 import SectionView from "@/components/section-view/SectionView";
-import { InstructorViewProps } from "@/views/course/instructor-view/types";
+import { InstructorViewProps } from "@/views/course/instructor/types";
 import { useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { useRouter } from "next/navigation";
 import Loading from "@/components/loading/Loading";
-import renderCard from "@/views/course/instructor-view/RenderCard";
+import renderCard from "@/views/course/instructor/RenderCard";
 
 export default function InstructorView({
   eventSectionType,
@@ -48,6 +48,14 @@ export default function InstructorView({
     return <div>No gradable events.</div>;
   }
 
+  const handleClick = (id: number) => {
+    if (eventSectionType === "test") {
+      router.replace(`/course/${eventSectionType}/${eventSectionId}/${id}/grading`);
+    } else {
+
+    }
+  };
+
   return (
     <SectionView ref={containerRef}>
       <div className="flex flex-col lg:flex-col-centered flex-1 gap-x-10 overflow-hidden 2xl:px-10 bg-red-400">
@@ -58,7 +66,7 @@ export default function InstructorView({
           <XPCardGrid
             containerRef={wrapperRef}
             gradableEvents={gradableEvents}
-            renderCard={(event, mobile) => renderCard(event, mobile)}
+            renderCard={(event, mobile) => renderCard(event, mobile, handleClick)}
           />
         </div>
       </div>

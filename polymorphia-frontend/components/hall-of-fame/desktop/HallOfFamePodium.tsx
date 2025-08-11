@@ -3,7 +3,7 @@ import "./index.css";
 import Loading from "@/components/loading/Loading";
 import HallOfFameService from "@/app/(logged-in)/hall-of-fame/HallOfFameService";
 import { useQuery } from "@tanstack/react-query";
-import XPCardPoints from "@/components/xp-card/inner-components/XPCardPoints";
+import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 
 export default function HallOfFamePodium() {
   const { data: podium = [], isLoading } = useQuery({

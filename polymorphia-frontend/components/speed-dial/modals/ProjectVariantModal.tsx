@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import XPCard from "@/components/xp-card/XPCard";
-import XPCardProjectVariant from "@/components/xp-card/inner-components/XPCardProjectVariant";
+import XPCardProjectVariant from "@/components/xp-card/components/XPCardProjectVariant";
 import { API_STATIC_URL } from "@/services/api";
 
 export default function ProjectVariantModal({

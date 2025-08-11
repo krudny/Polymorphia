@@ -1,6 +1,6 @@
 "use client";
 
-import { StudentViewProps } from "@/views/course/student-view/types";
+import { StudentViewProps } from "@/views/course/student/types";
 import SectionView from "@/components/section-view/SectionView";
 import { useScaleShow } from "@/animations/ScaleShow";
 import { useEffect, useRef, useState } from "react";
@@ -11,7 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import Loading from "@/components/loading/Loading";
 import { useRouter } from "next/navigation";
-import renderCard from "@/views/course/student-view/RenderCard";
+import renderCard from "@/views/course/student/RenderCard";
 import GradableEventRewardModal from "@/components/speed-dial/modals/GradableEventRewardModal";
 
 export default function StudentView({
@@ -54,13 +54,13 @@ export default function StudentView({
     return <div>No gradable events.</div>;
   }
 
-  const handleGradableEventClick = (id: number, isLocked: boolean) => {
+  const handleClick = (id: number, isLocked: boolean) => {
     if (isLocked) return;
 
     if (eventSectionType === "test") {
       setSelectedEventId(id);
     } else {
-      router.push(`/course/${eventSectionType}/${eventSectionId}/${id}`);
+      router.replace(`/course/${eventSectionType}/${eventSectionId}/${id}`);
     }
   };
 
@@ -75,7 +75,7 @@ export default function StudentView({
             containerRef={wrapperRef}
             gradableEvents={gradableEvents}
             renderCard={(event, mobile) =>
-              renderCard(event, mobile, handleGradableEventClick)
+              renderCard(event, mobile, handleClick)
             }
           />
         </div>

@@ -5,7 +5,7 @@ import { EquipmentContext } from "@/components/providers/equipment/EquipmentCont
 import Modal from "@/components/modal/Modal";
 import { Item } from "@/components/equipment/types";
 import "../index.css";
-import XPCardPoints from "@/components/xp-card/inner-components/XPCardPoints";
+import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 
 export default function ChestModal() {
   const { currentChestModalData, setCurrentChestModalData } =

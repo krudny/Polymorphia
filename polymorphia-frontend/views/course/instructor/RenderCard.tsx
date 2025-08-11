@@ -1,12 +1,13 @@
 import { InstructorGradableEventResponseDTO } from "@/app/(logged-in)/course/EventSectionService";
 import XPCard from "@/components/xp-card/XPCard";
-import XPCardUngraded from "@/components/xp-card/inner-components/XPCardUngraded";
+import XPCardUngraded from "@/components/xp-card/components/XPCardUngraded";
+import {ReactNode} from "react";
 
 export default function renderCard(
   gradableEvent: InstructorGradableEventResponseDTO,
-  isMobile: boolean
-  // handleGradableEventClick: (id: number, isLocked: boolean) => void
-) {
+  isMobile: boolean,
+  handleClick: (id: number) => void
+): ReactNode {
   return (
     <XPCard
       title={gradableEvent.name}
@@ -15,7 +16,7 @@ export default function renderCard(
       component={<XPCardUngraded ungraded={gradableEvent.ungraded} />}
       size={isMobile ? "sm" : "md"}
       forceWidth={!isMobile}
-      // onClick={() => handleGradableEventClick(event.id, event.isLocked)}
+      onClick={() => handleClick(gradableEvent.id)}
     />
   );
 }
