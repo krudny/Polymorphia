@@ -7,10 +7,13 @@ import ProgressBar from "@/components/progressbar/ProgressBar";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
 import UserPoints from "@/components/user-points/UserPoints";
+import ProgressBarTextLabels from "@/components/progressbar/ProgressBarTextLabels";
+import { useMediaQuery } from "react-responsive";
 
 export default function Profile() {
   const wrapperRef = useScaleShow();
   const { setTitle } = useTitle();
+  const isSm = useMediaQuery({ maxWidth: 920 });
 
   useEffect(() => {
     setTitle("Profil");
@@ -69,6 +72,7 @@ export default function Profile() {
             </div>
           </div>
         </div>
+        {/* TODO: maybe merge that */}
         <div className="profile-progress-bar-mobile">
           <ProgressBar
             minXP={60}
@@ -76,9 +80,19 @@ export default function Profile() {
             maxXP={70}
             numSquares={2}
             segmentSizes={[0, 100, 0]}
-            upperTextLabels={["3.5 (60xp)", "4.0 (70xp)"]}
-            bottomTextLabels={["Żółtodziób", "Nieopierzony Odkrywca"]}
-            labelsSize="sm"
+            upperElement={
+              <ProgressBarTextLabels
+                textLabels={["3.5 (60xp)", "4.0 (70xp)"]}
+                className="!min-h-8"
+                size="sm"
+              />
+            }
+            lowerElement={
+              <ProgressBarTextLabels
+                textLabels={["Nieopierzony Odkrywca", "Samodzielny Zwierzak"]}
+                size="sm"
+              />
+            }
           />
         </div>
 
@@ -89,27 +103,37 @@ export default function Profile() {
             maxXP={100}
             numSquares={8}
             segmentSizes={[0, 25, 0, 25, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0]}
-            upperTextLabels={[
-              "2.0 (0xp)",
-              "2.0 (25xp)",
-              "3.0 (50xp)",
-              "3.5 (60xp)",
-              "4.0 (70xp)",
-              "4.5 (80xp)",
-              "5.0 (90xp)",
-              "5.0 (100xp)",
-            ]}
-            bottomTextLabels={[
-              "Jajo",
-              "Pisklak",
-              "Podlot",
-              "Żółtodziób",
-              "Nieopierzony Odkrywca",
-              "Samodzielny Zwierzak",
-              "Majestatyczna Bestia",
-              "Władca Polymorphii",
-            ]}
-            labelsSize="sm"
+            upperElement={
+              <ProgressBarTextLabels
+                textLabels={[
+                  "2.0 (0xp)",
+                  "2.0 (25xp)",
+                  "3.0 (50xp)",
+                  "3.5 (60xp)",
+                  "4.0 (70xp)",
+                  "4.5 (80xp)",
+                  "5.0 (90xp)",
+                  "5.0 (100xp)",
+                ]}
+                className="!min-h-8"
+                size={isSm ? "sm" : "md"}
+              />
+            }
+            lowerElement={
+              <ProgressBarTextLabels
+                textLabels={[
+                  "Jajo",
+                  "Pisklak",
+                  "Podlot",
+                  "Żółtodziób",
+                  "Nieopierzony Odkrywca",
+                  "Samodzielny Zwierzak",
+                  "Majestatyczna Bestia",
+                  "Władca Polymorphii",
+                ]}
+                size={isSm ? "sm" : "md"}
+              />
+            }
           />
         </div>
       </div>

@@ -25,11 +25,16 @@ const xpCard = tv({
       true: "xp-card-force-width",
       false: "",
     },
+    isLocked: {
+      true: "xp-card-locked",
+      false: "",
+    },
   },
   defaultVariants: {
     size: "md",
     color: "none",
     forceWidth: false,
+    isLocked: false,
   },
 });
 
@@ -42,18 +47,25 @@ export default function XPCard({
   size,
   color,
   forceWidth,
+  isLocked,
 }: XPCardProps & XPCardVariantProps) {
   return (
     <div
       className={clsx(
         xpCard({ size, color, forceWidth }),
-        onClick && "xp-card-hover"
+        onClick && "xp-card-hover",
+        isLocked && "pointer-events-none border-none"
       )}
       onClick={onClick}
     >
       {image && (
         <div className="xp-card-image">
           <Image src={image.url} alt={image.alt} fill />
+        </div>
+      )}
+      {isLocked && (
+        <div className="xp-card-locked">
+          <span className="material-symbols">lock</span>
         </div>
       )}
       <div className="xp-card-middle">

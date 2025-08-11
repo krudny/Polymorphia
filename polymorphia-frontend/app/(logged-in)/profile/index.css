@@ -2,7 +2,7 @@
 @import "../../../styles/globals.css";
 
 .profile {
-  @apply flex-1 w-full opacity-0 flex-col-centered lg:max-h-[calc(100dvh-5rem)];
+  @apply flex-1 w-full opacity-0 flex-col-centered extra-large-center my-auto max-h-[50rem] h-[calc(100dvh-6rem)] 3xl:flex-none;
 }
 
 .profile-wrapper {
@@ -10,11 +10,11 @@
 }
 
 .profile-content-wrapper {
-  @apply flex-col-centered w-full mx-auto lg:flex-row lg:my-6;
+  @apply flex-col-centered w-full mx-auto lg:flex-row lg:my-auto;
 }
 
 .profile-image-wrapper {
-  @apply flex-centered relative w-full max-w-72 mt-4 aspect-square lg:w-2/5 lg:max-w-full;
+  @apply flex-centered relative w-full mt-14 max-w-72 aspect-square md:mt-0 lg:w-2/5 lg:max-w-[25rem];
 }
 
 .profile-img {
@@ -62,5 +62,5 @@
 }
 
 .profile-progress-bar-desktop {
-  @apply hidden md:block w-full h-fit pt-5 px-8 my-auto;
+  @apply hidden md:block w-full h-fit pb-3 px-8;
 }

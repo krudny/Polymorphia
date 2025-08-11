@@ -3,6 +3,7 @@ import { RewardsInfoProps } from "@/components/course/event-section/types";
 import { API_STATIC_URL } from "@/services/api";
 import Image from "next/image";
 import "./index.css";
+import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLabels";
 
 export default function RewardsInfo({ grade, maxXp }: RewardsInfoProps) {
   return (
@@ -19,6 +20,13 @@ export default function RewardsInfo({ grade, maxXp }: RewardsInfoProps) {
                 maxXP={Number(maxXp)}
                 numSquares={2}
                 segmentSizes={[0, 100, 0]}
+                lowerElement={
+                  <ProgressBarRangeLabels
+                    minXP={0}
+                    currentXP={Number(grade?.gainedXp)}
+                    maxXP={Number(maxXp)}
+                  />
+                }
               />
             </div>
           </div>

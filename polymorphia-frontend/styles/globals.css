@@ -50,10 +50,8 @@
   line-height: 1;
 }
 
-@layer utilities {
-  .extra-large-center {
-    @apply 3xl:max-h-[56rem] 3xl:max-w-[1750px];
-  }
+@utility extra-large-center {
+    @apply 3xl:max-h-[56rem] 3xl:max-w-[1750px] 3xl:m-auto;
 }
 
 @source inline('grid-rows-1');

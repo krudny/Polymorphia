@@ -4,6 +4,7 @@ import {
   GraduationCapIcon,
   LogOutIcon,
   MedalIcon,
+  MilestoneIcon,
   SettingsIcon,
   TrophyIcon,
   UserIcon,
@@ -29,6 +30,7 @@ export const MainMenuItems: MenuOption[] = [
     link: "equipment",
   },
   { icon: MedalIcon, text: "Hall of Fame", link: "hall-of-fame" },
+  { icon: MilestoneIcon, text: "Roadmapa", link: "roadmap" },
 ];
 
 export const BottomDesktopMenuItems: MenuOption[] = [
