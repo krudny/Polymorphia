@@ -1,16 +1,10 @@
 import Grading from "@/components/grading/grading";
-import StudentList from "@/components/grading/components/student-list/StudentList";
+import StudentsList from "@/components/grading/components/student-list";
 import {useQuery} from "@tanstack/react-query";
 import {EventSectionService} from "@/app/(logged-in)/course/EventSectionService";
 import Loading from "@/components/loading/Loading";
-
-const HelloWorld = () => {
-    return (
-        <div className="bg-blue-400 h-fit">
-            Hello World
-        </div>
-    )
-}
+import Reward from "@/components/grading/components/reward";
+import PullRequest from "@/components/grading/components/pull-request";
 
 export default function GradingTestView() {
     const { data: studentsList, isLoading } = useQuery({
@@ -24,9 +18,9 @@ export default function GradingTestView() {
 
     return (
         <Grading columns={3} components={[
-            <StudentList key="1" students={studentsList} />,
-            <HelloWorld key="hello-2" />,
-            <HelloWorld key="hello-3" />,
+            <StudentsList key="1" students={studentsList} />,
+            <Reward key="2" criteria={[{ id: 1, name: "Punkty doświadczenia", maxXP: 4 }, { id: 2, name: "Punkty doświadczenia", maxXP: 4 }]} />,
+            <PullRequest key="3" pullRequests={[{ id: 1, name: "Laboratorium", url: "https://github.com/krudny/Polymorphia/pull/32"}, { id: 2, name: "Zadanie dodatkowe", url: "https://github.com/krudny/Polymorphia/pull/32"}]} />
         ]}/>
     )
 }

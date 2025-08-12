@@ -99,3 +99,15 @@ export const Roles = {
 } as const;
 
 export type Role = (typeof Roles)[keyof typeof Roles];
+
+export interface Criterion {
+  id: number;
+  name: string;
+  maxXP: number;
+}
+
+export interface PullRequest {
+    id: number;
+    name: string;
+    url: string;
+}

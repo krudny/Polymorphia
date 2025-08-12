@@ -4,9 +4,9 @@ import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import {API_STATIC_URL} from "@/services/api";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 
-export default function StudentList({ students }: StudentListProps) {
+export default function StudentsList({ students }: StudentListProps) {
     return (
-        <div className="w-full max-h-[calc(100dvh-5rem)] overflow-y-hidden flex flex-col  gap-y-4 bg-yellow-300">
+        <div className="w-full overflow-y-hidden flex flex-col flex-1 gap-y-4 bg-yellow-300">
             <div className="w-full max-w-sm mx-auto bg-green-600">
                 <ButtonWithBorder
                     text="Filtry"
