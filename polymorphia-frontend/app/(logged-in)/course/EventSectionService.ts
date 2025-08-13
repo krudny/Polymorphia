@@ -108,7 +108,7 @@ export const EventSectionService = {
           topic: "Instrukcje sterujące",
           gainedXp: "1.5",
           orderIndex: 1,
-          locked: false,
+          isLocked: false,
           hasChest: false,
         },
         {
@@ -118,7 +118,7 @@ export const EventSectionService = {
           topic: "Model obiektowy",
           gainedXp: "0.0",
           orderIndex: 2,
-          locked: false,
+          isLocked: false,
           hasChest: false,
         },
         {
@@ -127,7 +127,7 @@ export const EventSectionService = {
           name: "Test 3",
           topic: "Interakcje między obiektami",
           orderIndex: 3,
-          locked: false,
+          isLocked: false,
           hasChest: false,
         },
         {
@@ -136,7 +136,7 @@ export const EventSectionService = {
           name: "Test 4",
           topic: "Interfejsy i mapy",
           orderIndex: 4,
-          locked: false,
+          isLocked: false,
           hasChest: false,
         },
         {
@@ -145,7 +145,7 @@ export const EventSectionService = {
           name: "Test 5",
           topic: "Dziedziczenie",
           orderIndex: 5,
-          locked: false,
+          isLocked: false,
           hasChest: false,
         },
         {
@@ -154,7 +154,7 @@ export const EventSectionService = {
           name: "Test 6",
           topic: "Refactoring kodu",
           orderIndex: 6,
-          locked: false,
+          isLocked: false,
           hasChest: false,
         },
         {
@@ -163,7 +163,7 @@ export const EventSectionService = {
           name: "Test 7",
           topic: "Wielowątkowość",
           orderIndex: 7,
-          locked: false,
+          isLocked: false,
           hasChest: false,
         },
         {
@@ -172,7 +172,7 @@ export const EventSectionService = {
           name: "Test 8",
           topic: "Interfejs graficzny",
           orderIndex: 8,
-          locked: false,
+          isLocked: false,
           hasChest: false,
         },
         {
@@ -181,7 +181,7 @@ export const EventSectionService = {
           name: "Test 9",
           topic: "Lambdy, streamy i zarządzanie zasobami",
           orderIndex: 9,
-          locked: false,
+          isLocked: false,
           hasChest: false,
         },
         {
@@ -190,7 +190,7 @@ export const EventSectionService = {
           name: "Test 10",
           topic: "Kotlin jako alternatywa dla Javy",
           orderIndex: 10,
-          locked: false,
+          isLocked: false,
           hasChest: false,
         },
         {
@@ -199,7 +199,7 @@ export const EventSectionService = {
           name: "Test 11",
           topic: "A może Rust?",
           orderIndex: 11,
-          locked: false,
+          isLocked: false,
           hasChest: false,
         },
         {
@@ -208,7 +208,7 @@ export const EventSectionService = {
           name: "Test 12",
           topic: "Jak wycentrować diva",
           orderIndex: 12,
-          locked: false,
+          isLocked: false,
           hasChest: false,
         },
       ];
@@ -222,7 +222,7 @@ export const EventSectionService = {
           topic: "Instrukcje sterujące w Javie",
           gainedXp: "2.0",
           orderIndex: 1,
-          locked: false,
+          isLocked: false,
           hasChest: false,
         },
         {
@@ -232,7 +232,7 @@ export const EventSectionService = {
           topic: "Model obiektowy",
           gainedXp: "0.0",
           orderIndex: 2,
-          locked: false,
+          isLocked: false,
           hasChest: false,
         },
         {
@@ -241,7 +241,7 @@ export const EventSectionService = {
           name: "Lab 3",
           topic: "Interakcje między obiektami",
           orderIndex: 3,
-          locked: false,
+          isLocked: false,
           hasChest: true,
         },
         {
@@ -250,7 +250,7 @@ export const EventSectionService = {
           name: "Lab 4",
           topic: "Interfejsy i mapy",
           orderIndex: 4,
-          locked: false,
+          isLocked: false,
           hasChest: true,
         },
         {
@@ -259,7 +259,7 @@ export const EventSectionService = {
           name: "Lab 5",
           topic: "Dziedziczenie",
           orderIndex: 5,
-          locked: false,
+          isLocked: false,
           hasChest: false,
         },
         {
@@ -268,7 +268,7 @@ export const EventSectionService = {
           name: "Lab 6",
           topic: "Refactoring kodu",
           orderIndex: 6,
-          locked: false,
+          isLocked: false,
           hasChest: true,
         },
         {
@@ -277,7 +277,7 @@ export const EventSectionService = {
           name: "Lab 7",
           topic: "Wielowątkowość",
           orderIndex: 7,
-          locked: false,
+          isLocked: false,
           hasChest: false,
         },
         {
@@ -286,7 +286,7 @@ export const EventSectionService = {
           name: "Lab 8",
           topic: "Interfejs graficzny",
           orderIndex: 8,
-          locked: false,
+          isLocked: false,
           hasChest: false,
         },
       ];
@@ -299,7 +299,7 @@ export const EventSectionService = {
           name: "Lab 0",
           topic: "Git jest cool",
           orderIndex: 1,
-          locked: false,
+          isLocked: false,
           hasChest: false,
         },
       ];
@@ -311,7 +311,7 @@ export const EventSectionService = {
           name: "Projekt 2",
           topic: "Refactoring hell",
           orderIndex: 1,
-          locked: true,
+          isLocked: true,
           hasChest: false,
         },
       ];
@@ -323,7 +323,7 @@ export const EventSectionService = {
           name: "Projekt 1a",
           topic: "Darwin World",
           orderIndex: 1,
-          locked: false,
+          isLocked: false,
           hasChest: false,
         },
         {
@@ -332,7 +332,7 @@ export const EventSectionService = {
           name: "Projekt 1b",
           topic: "Polymorphia",
           orderIndex: 2,
-          locked: false,
+          isLocked: false,
           hasChest: false,
         },
       ];

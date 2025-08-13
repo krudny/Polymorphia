@@ -1,6 +1,6 @@
 import {
   AssignedItemResponseDTO,
-  PointsSummaryBonusResponseDTO,
+  PointsSummaryDetailsResponseDTO,
 } from "@/interfaces/api/DTO";
 import { ModalProps } from "../../../modal/types";
 import { RefObject } from "react";
@@ -12,7 +12,7 @@ export interface PointsSummaryProps {
 
 export interface PointsSummaryBonus {
   title: string;
-  data: PointsSummaryBonusResponseDTO;
+  data: PointsSummaryDetailsResponseDTO;
 }
 
 export interface PointsSummaryElementProps {

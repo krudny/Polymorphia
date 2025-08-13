@@ -57,15 +57,15 @@ export interface BaseReward {
   id: number;
   name: string;
   description: string;
-  image_url: string;
-  order_index: number;
+  imageUrl: string;
+  orderIndex: number;
 }
 
 export interface BaseRewardAssignmentDetails {
   id: number;
   receivedDate: string;
   usedDate?: string;
-  used: boolean;
+  isUsed: boolean;
 }
 
 export type RewardResponseDTO =
@@ -83,7 +83,7 @@ export interface BaseItem extends BaseReward {
   itemBonusType: ItemBonusType;
   bonusText: string;
   limit: number;
-  reachedLimit: boolean;
+  isLimitReached: boolean;
   // add event section name it impacts?
 }
 
@@ -182,21 +182,22 @@ export interface GradableEventResponseDTO {
   topic?: string;
   gainedXp?: string;
   orderIndex: number;
-  locked: boolean;
+  isLocked: boolean;
   hasChest: boolean;
 }
 
 // Points Summary
-export interface PointsSummaryBonusResponseDTO {
+export interface PointsSummaryDetailsResponseDTO {
+  title: string;
   xp: string;
   assignedItems: AssignedItemResponseDTO[];
 }
 
 export interface PointsSummaryResponseDTO {
-  gainedXp: string;
-  flatBonus: PointsSummaryBonusResponseDTO;
-  percentageBonus: PointsSummaryBonusResponseDTO;
-  totalXp: string;
+  gainedXp: PointsSummaryDetailsResponseDTO;
+  flatBonus: PointsSummaryDetailsResponseDTO;
+  percentageBonus: PointsSummaryDetailsResponseDTO;
+  totalXp: PointsSummaryDetailsResponseDTO;
 }
 
 // Markdown
