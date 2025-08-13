@@ -6,13 +6,12 @@ import "./index.css";
 import { XPCardGridProps } from "@/components/xp-card/types";
 import Pagination from "@/components/pagination/Pagination";
 import { setResizeObserver } from "@/components/course/event-section/EventSectionUtils";
-import { BaseGradableEventResponseDTO } from "@/app/(logged-in)/course/EventSectionService";
 
-export default function XPCardGrid<T extends BaseGradableEventResponseDTO>({
+export default function XPCardGrid({
   containerRef,
-  gradableEvents,
-  renderCard,
-}: XPCardGridProps<T>) {
+  cards,
+  maxColumns = 3,
+}: XPCardGridProps) {
   const sliderRef = useRef<HTMLDivElement | null>(null);
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -29,19 +28,25 @@ export default function XPCardGrid<T extends BaseGradableEventResponseDTO>({
     sliderRef,
     setPageToShow,
     setCurrentPage,
-    gradableEvents,
+    cards,
     direction,
     firstRender,
     setFirstRender
   );
 
   useEffect(() => {
-    return setResizeObserver(containerRef, setMobile, setPageCols, setPageRows);
-  }, [containerRef]);
+    return setResizeObserver(
+      containerRef,
+      setMobile,
+      setPageCols,
+      setPageRows,
+      maxColumns
+    );
+  }, [containerRef, maxColumns]);
 
   const pageSize = pageRows * pageCols;
-  const pageCount = Math.ceil(gradableEvents.length / pageSize);
-  const gradableEventsPage = gradableEvents.slice(
+  const pageCount = Math.ceil(cards.length / pageSize);
+  const cardsPage = cards.slice(
     pageToShow * pageSize,
     pageToShow * pageSize + pageSize
   );
@@ -56,9 +61,13 @@ export default function XPCardGrid<T extends BaseGradableEventResponseDTO>({
     />
   );
 
+  useEffect(() => {
+    console.log(pageCols, pageRows);
+  }, [pageCols, pageRows]);
+
   return (
     <>
-      {gradableEventsPage.length > 1 ? (
+      {cardsPage.length > 1 ? (
         <div className="xp-card-grid-center-vertically">
           <div className="xp-card-grid-point-summary-layout">
             <div className="xp-card-fading-edges">
@@ -70,14 +79,12 @@ export default function XPCardGrid<T extends BaseGradableEventResponseDTO>({
                   `grid-rows-${pageRows}`
                 )}
               >
-                {gradableEventsPage.map((event) => (
-                  <Fragment key={event.id}>
-                    {renderCard(event, mobile)}
-                  </Fragment>
+                {cardsPage.map((card, index) => (
+                  <Fragment key={index}>{card}</Fragment>
                 ))}
               </div>
             </div>
-            {mobile && gradableEventsPage.length > 0 && pagination}
+            {mobile && cardsPage.length > 0 && pagination}
           </div>
           {!mobile && pagination}
         </div>

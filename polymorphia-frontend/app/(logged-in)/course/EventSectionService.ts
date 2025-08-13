@@ -74,6 +74,12 @@ interface ProjectVariantResponseDTO {
   imageUrl: string;
 }
 
+export interface ProjectGroupResponseDTO {
+  id: number;
+  gainedXp: number;
+  members: UserDetailsDTO[];
+}
+
 const mockMarkdownStore: Record<number, string> = {
   15: lab1,
   16: lab2,
@@ -759,5 +765,20 @@ export const EventSectionService = {
     }
 
     return filteredData;
+  },
+
+  getRandomProjectGroups: async (): Promise<ProjectGroupResponseDTO[]> => {
+    let data = [];
+
+    for (let i = 0; i < 30; i++) {
+      const group = {
+        id: i + 1,
+        gainedXp: (Math.random() * 2.8).toFixed(2),
+        members: allData.slice(i * 2, (i + 1) * 2),
+      };
+      data.push(group);
+    }
+
+    return data;
   },
 };

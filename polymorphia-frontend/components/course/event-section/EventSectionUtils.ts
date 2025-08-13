@@ -27,9 +27,10 @@ export function updateMenuItems(
 
 export function setResizeObserver(
   containerRef: RefObject<HTMLDivElement | null>,
-  setMobile: (v: boolean) => void,
-  setPageCols: (n: number) => void,
-  setPageRows: (n: number) => void
+  setMobile: (isMobile: boolean) => void,
+  setPageCols: (cols: number) => void,
+  setPageRows: (rows: number) => void,
+  maxColumns: number
 ) {
   if (!containerRef.current) return;
 
@@ -69,8 +70,10 @@ export function setResizeObserver(
       const maxRows = height <= 550 ? 2 : height >= 900 ? 4 : 3;
       const minCols = window.innerWidth >= 1280 ? 2 : 1;
 
+      console.log(cols, maxColumns, minCols);
+
       setPageRows(Math.max(Math.min(rows, maxRows), 1));
-      setPageCols(Math.max(Math.min(cols, 3), minCols));
+      setPageCols(Math.max(Math.min(cols, maxColumns), minCols));
     }
   };
 

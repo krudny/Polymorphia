@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef } from "react";
+import {ReactNode, RefObject, useEffect, useRef} from "react";
 import { BaseGradableEventResponseDTO } from "@/app/(logged-in)/course/EventSectionService";
 import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
@@ -11,7 +11,7 @@ export function useXPGridAnimation(
   sliderRef: RefObject<HTMLDivElement | null>,
   setPageToShow: (n: number) => void,
   setCurrentPage: (n: number) => void,
-  gradableEventsData: BaseGradableEventResponseDTO[] | undefined,
+  cards: ReactNode[] | undefined,
   direction: 1 | -1,
   firstRender: boolean,
   setFirstRender: (b: boolean) => void
@@ -57,7 +57,7 @@ export function useXPGridAnimation(
   };
 
   useEffect(() => {
-    if (!gradableEventsData || !sliderRef.current) return;
+    if (!cards || !sliderRef.current) return;
     if (firstRenderRef.current) {
       return;
     }
@@ -71,7 +71,7 @@ export function useXPGridAnimation(
         { xPercent: 0, opacity: 1, duration: 0.2, ease: "power2.out" }
       );
     }
-  }, [pageToShow, gradableEventsData, sliderRef]);
+  }, [pageToShow, cards, sliderRef]);
 
   return {
     handlePageChange: handlePageChange,

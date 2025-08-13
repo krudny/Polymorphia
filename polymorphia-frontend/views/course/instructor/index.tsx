@@ -50,11 +50,19 @@ export default function InstructorView({
 
   const handleClick = (id: number) => {
     if (eventSectionType === "test" || eventSectionType === "assignment") {
-      router.replace(`/course/${eventSectionType}/${eventSectionId}/${id}/grading`);
+      router.replace(
+        `/course/${eventSectionType}/${eventSectionId}/${id}/grading`
+      );
     } else {
-      router.replace(`/course/${eventSectionType}/${eventSectionId}/${id}/pick-group`);
+      router.replace(
+        `/course/${eventSectionType}/${eventSectionId}/${id}/pick-group`
+      );
     }
   };
+
+  const cards = gradableEvents.map((gradableEvent) =>
+    renderCard(gradableEvent, false, handleClick)
+  );
 
   return (
     <SectionView ref={containerRef}>
@@ -63,11 +71,7 @@ export default function InstructorView({
           className="max-w-full flex-1 lg:flex-0 lg:min-h-[600px] lg:w-4xl 2xl:w-7xl bg-green-500"
           ref={wrapperRef}
         >
-          <XPCardGrid
-            containerRef={wrapperRef}
-            gradableEvents={gradableEvents}
-            renderCard={(event, mobile) => renderCard(event, mobile, handleClick)}
-          />
+          <XPCardGrid containerRef={wrapperRef} cards={cards} />
         </div>
       </div>
     </SectionView>

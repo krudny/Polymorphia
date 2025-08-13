@@ -13,6 +13,7 @@ const xpCard = tv({
       md: "xp-card-md",
       lg: "xp-card-lg",
       hofDesktop: "xp-card-hall-of-fame-desktop",
+      projectGroup: "xp-card-project-group",
     },
     color: {
       gold: "border-b-6 border-amber-400",

@@ -64,6 +64,10 @@ export default function StudentView({
     }
   };
 
+  const cards = gradableEvents.map((gradableEvent) =>
+    renderCard(gradableEvent, false, handleClick)
+  );
+
   return (
     <SectionView ref={containerRef}>
       <div className="flex flex-col gap-x-10 overflow-hidden lg:flex-row 2xl:px-10 bg-red-400">
@@ -71,13 +75,7 @@ export default function StudentView({
           className="w-full min-h-full flex-col-centered bg-green-500"
           ref={wrapperRef}
         >
-          <XPCardGrid
-            containerRef={wrapperRef}
-            gradableEvents={gradableEvents}
-            renderCard={(event, mobile) =>
-              renderCard(event, mobile, handleClick)
-            }
-          />
+          <XPCardGrid containerRef={wrapperRef} cards={cards} />
         </div>
         <PointsSummary ref={summaryRef} eventSectionId={eventSectionId} />
       </div>
