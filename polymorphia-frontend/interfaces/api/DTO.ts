@@ -50,103 +50,119 @@ export interface KnowledgeBaseResponseDTO {
   relatedRewards?: KnowledgeBaseRelatedRewardResponseDTO[];
 }
 
-// Items
-export type ItemType = "FLAT_BONUS" | "PERCENTAGE_BONUS";
+// Rewards
+export type RewardType = "ITEM" | "CHEST";
 
-interface BaseItem {
+export interface BaseReward {
   id: number;
-  type: ItemType;
   name: string;
-  imageUrl: string;
-  orderIndex: number;
+  description: string;
+  image_url: string;
+  order_index: number;
+}
+
+export interface BaseRewardAssignmentDetails {
+  id: number;
+  receivedDate: string;
+  usedDate?: string;
+  used: boolean;
+}
+
+export type RewardResponseDTO =
+  | ItemResponseDTOWithType
+  | ChestResponseDTOWithType;
+
+export type AssignedRewardResponseDTO =
+  | AssignedItemResponseDTOWithType
+  | AssignedChestResponseDTOWithType;
+
+// Items
+export type ItemBonusType = "FLAT_BONUS" | "PERCENTAGE_BONUS";
+
+export interface BaseItem extends BaseReward {
+  itemBonusType: ItemBonusType;
   bonusText: string;
   limit: number;
   reachedLimit: boolean;
-  // add description + event section name it impacts?
+  // add event section name it impacts?
 }
 
 export type FlatBonusItemBehavior =
   | "ONE_EVENT_TRIGGERED"
   | "MULTIPLE_EVENTS_INSTANT";
 
-export interface BaseFlatBonusItemResponseDTO extends BaseItem {
-  type: "FLAT_BONUS";
+export interface BaseFlatBonusItem extends BaseItem {
+  itemBonusType: "FLAT_BONUS";
   xp: string;
   behavior: FlatBonusItemBehavior;
 }
 
-export interface BasePercentageBonusItemResponseDTO extends BaseItem {
-  type: "PERCENTAGE_BONUS";
+export interface BasePercentageBonusItem extends BaseItem {
+  itemBonusType: "PERCENTAGE_BONUS";
   percentage: number;
 }
 
-export type BaseItemResponseDTO =
-  | BaseFlatBonusItemResponseDTO
-  | BasePercentageBonusItemResponseDTO;
+export type ItemResponseDTO = BaseFlatBonusItem | BasePercentageBonusItem;
 
-/*
-  Those interfaces above look very weird at the first glance
-  but I think that this is the best approach for handling this in TS
-  to avoid casting and still have type safety. Look at the example:
+interface ItemResponseDTOWithType {
+  rewardType: "ITEM";
+  reward: ItemResponseDTO;
+}
 
-  function handleItem(item: BaseItemResponseDTO) {
-    if (item.type === "FLAT_BONUS") {
-      const behavior = item.behavior;
-      // do sth
-    } else {
-      const percentage = item.percentage;
-      // do sth
-    }
-  }
-
-  It works without any warnings :D
-*/
-
-export interface ItemAssignmentDetailsResponseDTO {
-  id: number;
-  receivedDate: string;
-  xp?: string; // undefined if item hasn't been 'used' yet
+export interface ItemAssignmentDetails extends BaseRewardAssignmentDetails {
+  assignedChestId: number; // need to think about this more...
+  xp?: string; // undefined if item hasn't been used
 }
 
 export interface AssignedItemResponseDTO {
-  base: BaseItemResponseDTO;
-  details: ItemAssignmentDetailsResponseDTO;
+  base: ItemResponseDTO;
+  details: ItemAssignmentDetails;
 }
 
-export interface EquipmentItemResponseDTO {
-  base: BaseItemResponseDTO;
-  details: ItemAssignmentDetailsResponseDTO[];
+interface AssignedItemResponseDTOWithType {
+  rewardType: "ITEM";
+  assignedReward: AssignedItemResponseDTO;
 }
 
 // Chests
 export type ChestBehavior = "ALL" | "ONE_OF_MANY";
 
-export interface BaseChestResponseDTO {
-  id: number;
-  name: string;
-  imageUrl: string;
-  orderIndex: number;
+export interface BaseChest extends BaseReward {
   behaviorText: string;
   behavior: ChestBehavior;
-  chestItems: BaseItemResponseDTO[];
-  // add description?
+  chestItems: ItemResponseDTO[];
 }
 
-export interface ChestAssignmentDetailsResponseDTO {
-  id: number;
-  receivedDate: string;
-  openedDate?: string; // undefined if chest hasn't been opened yet
-  receivedItems?: AssignedItemResponseDTO[]; // undefined if chest hasn't been opened yet
+export type ChestResponseDTO = BaseChest;
+
+interface ChestResponseDTOWithType {
+  rewardType: "CHEST";
+  reward: ChestResponseDTO;
+}
+
+export interface ChestAssignmentDetails extends BaseRewardAssignmentDetails {
+  receivedItems?: AssignedItemResponseDTO[]; // undefined if chest hasn't been opened (used)
 }
 
 export interface AssignedChestResponseDTO {
-  base: BaseChestResponseDTO;
-  details: ChestAssignmentDetailsResponseDTO;
+  base: ChestResponseDTO;
+  details: ChestAssignmentDetails;
+}
+
+interface AssignedChestResponseDTOWithType {
+  rewardType: "CHEST";
+  assignedReward: AssignedChestResponseDTO;
+}
+
+// Equipment
+export interface EquipmentItemResponseDTO {
+  base: ItemResponseDTO;
+  details: ItemAssignmentDetails[];
 }
 
 export interface EquipmentChestResponseDTO {
-  base: BaseChestResponseDTO;
-  details: ChestAssignmentDetailsResponseDTO[];
+  base: ChestResponseDTO;
+  details: ChestAssignmentDetails;
 }
 
 // Course
