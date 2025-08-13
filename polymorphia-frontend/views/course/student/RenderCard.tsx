@@ -1,7 +1,7 @@
 import { StudentGradableEventResponseDTO } from "@/app/(logged-in)/course/EventSectionService";
 import XPCard from "@/components/xp-card/XPCard";
 import { getStudentCardComponent } from "@/shared/card/getCardComponent";
-import {ReactNode} from "react";
+import { ReactNode } from "react";
 
 export default function renderCard(
   gradableEvent: StudentGradableEventResponseDTO,
@@ -13,7 +13,7 @@ export default function renderCard(
       title={gradableEvent.name}
       subtitle={gradableEvent.topic ?? ""}
       color={gradableEvent.gainedXp !== 0 ? "green" : "silver"}
-      component={getStudentCardComponent(
+      rightComponent={getStudentCardComponent(
         gradableEvent.gainedXp,
         gradableEvent.hasChest
       )}

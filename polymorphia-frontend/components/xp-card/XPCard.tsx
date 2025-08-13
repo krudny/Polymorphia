@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import { tv } from "tailwind-variants";
-import Image from "next/image";
 import "./index.css";
 import { XPCardProps, XPCardVariantProps } from "@/components/xp-card/types";
 
@@ -42,8 +41,8 @@ const xpCard = tv({
 export default function XPCard({
   title,
   subtitle,
-  component,
-  image,
+  leftComponent,
+  rightComponent,
   onClick,
   size,
   color,
@@ -59,21 +58,25 @@ export default function XPCard({
       )}
       onClick={onClick}
     >
-      {image && (
-        <div className="xp-card-image">
-          <Image src={image.url} alt={image.alt} fill />
-        </div>
-      )}
       {isLocked && (
         <div className="xp-card-locked">
           <span className="material-symbols">lock</span>
+        </div>
+      )}
+      {leftComponent && (
+        <div className="xp-card-component xp-card-left-component">
+          {leftComponent}
         </div>
       )}
       <div className="xp-card-middle">
         <h1>{title}</h1>
         <h2>{subtitle}</h2>
       </div>
-      <div className="xp-card-component">{component}</div>
+      {rightComponent && (
+        <div className="xp-card-component xp-card-right-component">
+          {rightComponent}
+        </div>
+      )}
     </div>
   );
 }

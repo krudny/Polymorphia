@@ -4,7 +4,8 @@ import { ReactNode, RefObject } from "react";
 export interface XPCardProps {
   title: string;
   subtitle?: string;
-  component?: ReactNode;
+  leftComponent?: ReactNode;
+  rightComponent?: ReactNode;
   image?: {
     url: string;
     alt: string;

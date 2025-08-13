@@ -1,11 +1,11 @@
 import "../index.css";
-import { API_STATIC_URL } from "@/services/api";
 import XPCard from "@/components/xp-card/XPCard";
 import { EquipmentContext } from "@/components/providers/equipment/EquipmentContext";
 import { useContext } from "react";
 import Modal from "@/components/modal/Modal";
 import { Item } from "@/components/equipment/types";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
+import XPCardImage from "@/components/xp-card/components/XPCardImage";
 
 export default function ItemModal() {
   const { currentItemModalData, setCurrentItemModalData } =
@@ -25,12 +25,11 @@ export default function ItemModal() {
             key={item.itemId}
             title={item.title}
             subtitle={item.subtitle}
-            image={{
-              url: `${API_STATIC_URL}/${item.imageUrl}`,
-              alt: item.title,
-            }}
             size="xs"
-            component={<XPCardPoints points={`+${item.bonusXp}`} />}
+            leftComponent={
+              <XPCardImage imageUrl={item.imageUrl} alt={item.title} />
+            }
+            rightComponent={<XPCardPoints points={`+${item.bonusXp}`} />}
           />
         ))}
       </div>

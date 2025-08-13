@@ -55,7 +55,7 @@ export default function Roadmap() {
         forceWidth={true}
         isLocked={isLocked}
         onClick={() => handleClick(gradableEvent)}
-        component={getStudentCardComponent(gainedXp, hasChest)}
+        rightComponent={getStudentCardComponent(gainedXp, hasChest)}
       />
     );
   });

@@ -3,6 +3,7 @@ import XPCard from "@/components/xp-card/XPCard";
 import { ProjectGroupResponseDTO } from "@/app/(logged-in)/course/EventSectionService";
 import { API_STATIC_URL } from "@/services/api";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
+import XPCardDoubleImage from "@/components/xp-card/components/XPCardDoubleImage";
 
 //TODO: napisac util dla splitu
 export default function renderCard(
@@ -37,7 +38,21 @@ export default function renderCard(
         alt: firstPersonName,
       }}
       color={projectGroup.gainedXp !== undefined ? "green" : "silver"}
-      component={
+      leftComponent={
+        <XPCardDoubleImage
+          images={[
+            {
+              imageUrl: firstPerson.imageUrl,
+              alt: firstPerson.evolutionStage,
+            },
+            {
+              imageUrl: secondPerson.imageUrl,
+              alt: secondPerson.evolutionStage,
+            },
+          ]}
+        />
+      }
+      rightComponent={
         <XPCardPoints
           points={projectGroup.gainedXp.toString()}
           isSumLabelVisible={true}

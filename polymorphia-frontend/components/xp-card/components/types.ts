@@ -12,3 +12,17 @@ export interface XPCardUngradedProps {
 export interface XPCardProjectVariantProps {
   shortCode: string;
 }
+
+export interface XPCardImageProps {
+  imageUrl: string;
+  alt: string;
+}
+
+export interface XPCardDoubleImageProps {
+  images: singleImage[];
+}
+
+interface singleImage {
+  imageUrl: string;
+  alt: string;
+}

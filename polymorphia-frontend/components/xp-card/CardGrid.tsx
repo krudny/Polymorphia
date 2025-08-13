@@ -105,7 +105,7 @@ export default function CardGrid({
               subtitle={topic ?? ""}
               key={id}
               color={gainedXp !== 0 ? "green" : "silver"}
-              component={getStudentCardComponent(gainedXp, hasChest)}
+              rightComponent={getStudentCardComponent(gainedXp, hasChest)}
               size={mobile ? "sm" : "md"}
               forceWidth={false}
               onClick={() => handleGradableEventClick(id)}

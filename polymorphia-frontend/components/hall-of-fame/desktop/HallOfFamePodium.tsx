@@ -21,29 +21,29 @@ export default function HallOfFamePodium() {
 
   return (
     <>
-      {podium.map((item, index) => (
-        <div className="hall-of-fame-podium" key={index}>
-          <XPCard
-            title={item.userDetails.animalName}
-            subtitle={item.userDetails.evolutionStage}
-            color={
-              item.userDetails.position === 1
-                ? "gold"
-                : item.userDetails.position === 2
-                  ? "silver"
-                  : "bronze"
-            }
-            component={
-              <XPCardPoints
-                points={item.xpDetails.total}
-                isSumLabelVisible={true}
-                isXPLabelVisible={false}
-              />
-            }
-            size={"hofDesktop"}
-          />
-        </div>
-      ))}
+      {podium.map((student, index) => {
+        const { animalName, evolutionStage, position } = student.userDetails;
+
+        return (
+          <div className="hall-of-fame-podium" key={index}>
+            <XPCard
+              title={animalName}
+              subtitle={evolutionStage}
+              color={
+                position === 1 ? "gold" : position === 2 ? "silver" : "bronze"
+              }
+              rightComponent={
+                <XPCardPoints
+                  points={student.xpDetails.total}
+                  isSumLabelVisible={true}
+                  isXPLabelVisible={false}
+                />
+              }
+              size={"hofDesktop"}
+            />
+          </div>
+        );
+      })}
     </>
   );
 }

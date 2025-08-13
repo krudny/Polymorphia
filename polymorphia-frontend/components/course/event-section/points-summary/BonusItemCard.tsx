@@ -14,7 +14,7 @@ export default function BonusItemCard({ item }: BonusItemCardProps) {
         alt: item.item.name,
       }}
       size="xs"
-      component={<XPCardPoints points={`+${item.bonusXp}`} />}
+      rightComponent={<XPCardPoints points={`+${item.bonusXp}`} />}
     />
   );
 }

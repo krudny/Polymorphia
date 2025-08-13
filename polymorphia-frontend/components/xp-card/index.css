@@ -31,10 +31,6 @@
     @apply cursor-pointer hover:drop-shadow-xl;
 }
 
-.xp-card-image {
-    @apply relative shrink-0;
-}
-
 .xp-card-lock {
     @apply hidden;
 }
@@ -68,7 +64,6 @@
 .xp-card-xs {
     @apply h-20 min-[400px]:h-24 drop-shadow-sm rounded-lg;
 
-    .xp-card-image,
     .xp-card-component {
         @apply w-20 h-20 min-[400px]:w-24 min-[400px]:h-24;
     }
@@ -97,10 +92,6 @@
 .xp-card-sm {
     @apply h-30;
 
-    .xp-card-image {
-        @apply w-30 h-30;
-    }
-
     .xp-card-component {
         @apply w-30 h-30;
     }
@@ -124,10 +115,6 @@
 .xp-card-md {
     @apply h-40 lg:max-w-[26rem];
 
-    .xp-card-image {
-        @apply w-40 h-40;
-    }
-
     .xp-card-component {
         @apply w-40 h-40;
     }
@@ -150,10 +137,6 @@
 
 .xp-card-lg {
     @apply h-50 lg:max-w-[35rem];
-
-    .xp-card-image {
-        @apply w-50 h-50;
-    }
 
     .xp-card-component {
         @apply w-50 h-50;
@@ -211,10 +194,6 @@
 .xp-card-project-group {
     @apply w-full h-40;
 
-    .xp-card-image {
-        @apply w-40 h-40;
-    }
-
     .xp-card-middle,
     .xp-card-component {
         h1 {
@@ -226,7 +205,11 @@
         }
     }
 
-    .xp-card-component {
+    .xp-card-left-component {
+        @apply w-40 h-40 bg-green-300;
+    }
+
+    .xp-card-right-component {
         @apply w-24 h-40 bg-orange-600;
     }
 }

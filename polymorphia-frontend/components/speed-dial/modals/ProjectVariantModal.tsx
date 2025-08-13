@@ -51,7 +51,7 @@ export default function ProjectVariantModal({
                 alt: projectVariant.name,
               }}
               key={index}
-              component={
+              rightComponent={
                 <XPCardProjectVariant shortCode={projectVariant.shortCode} />
               }
               size="sm"
