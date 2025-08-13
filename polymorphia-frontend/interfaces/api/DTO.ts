@@ -221,8 +221,7 @@ export interface CriterionResponseDTO {
 
 export interface GradeDetailsResponseDTO {
   id: number;
-  createdDate: string;
-  modifiedDate: string;
+  comment: string;
 }
 
 export interface GradeResponseDTO {
