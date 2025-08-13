@@ -1,5 +1,5 @@
 export interface XPCardPointsProps {
-  points: string;
+  points: number | undefined;
   isSumLabelVisible?: boolean;
   isXPLabelVisible?: boolean;
   hasChest?: boolean;

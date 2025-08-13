@@ -40,6 +40,8 @@ export function setResizeObserver(
     const height = containerRef.current.offsetHeight;
     const width = containerRef.current.offsetWidth;
 
+    console.log(window.outerWidth, containerRef?.current?.offsetWidth);
+
     if (window.outerWidth < 1024) {
       setMobile(true);
 
@@ -57,7 +59,7 @@ export function setResizeObserver(
       setMobile(false);
 
       const gridCardsGap = 20;
-      const minCardWidth = 330;
+      const minCardWidth = 350;
       const cardHeight = 160;
 
       const rows = Math.floor(

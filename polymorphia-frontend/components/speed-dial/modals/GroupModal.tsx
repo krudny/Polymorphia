@@ -5,12 +5,10 @@ import Loading from "@/components/loading/Loading";
 import { useQuery } from "@tanstack/react-query";
 import UserService from "@/app/(logged-in)/profile/UserService";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
+import { useEventParams } from "@/shared/params/useSeachParams";
 
-export default function GroupModal({
-  gradableEventId,
-  onClosed,
-}: SpeedDialModalProps) {
-  // TODO: currently mocked
+export default function GroupModal({ onClosed }: SpeedDialModalProps) {
+  const { gradableEventId } = useEventParams();
   const { data, isLoading, isError } = useQuery({
     queryKey: ["randomUsers", gradableEventId],
     queryFn: () => UserService.getRandomUsers(),

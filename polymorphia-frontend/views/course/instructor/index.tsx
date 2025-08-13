@@ -1,18 +1,16 @@
 import { useScaleShow } from "@/animations/ScaleShow";
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
 import SectionView from "@/components/section-view/SectionView";
-import { InstructorViewProps } from "@/views/course/instructor/types";
 import { useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { useRouter } from "next/navigation";
 import Loading from "@/components/loading/Loading";
 import renderCard from "@/views/course/instructor/RenderCard";
+import { useEventParams } from "@/shared/params/useSeachParams";
 
-export default function InstructorView({
-  eventSectionType,
-  eventSectionId,
-}: InstructorViewProps) {
+export default function InstructorView() {
+  const { eventSectionType, eventSectionId } = useEventParams();
   const router = useRouter();
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
@@ -68,7 +66,7 @@ export default function InstructorView({
     <SectionView ref={containerRef}>
       <div className="flex flex-col lg:flex-col-centered flex-1 gap-x-10 overflow-hidden 2xl:px-10 bg-red-400">
         <div
-          className="max-w-full flex-1 lg:flex-0 lg:min-h-[600px] lg:w-4xl 2xl:w-7xl bg-green-500"
+          className="max-w-full flex-col-centeredlg:min-h-[600px] lg:w-4xl 2xl:w-7xl bg-green-500"
           ref={wrapperRef}
         >
           <XPCardGrid containerRef={wrapperRef} cards={cards} />

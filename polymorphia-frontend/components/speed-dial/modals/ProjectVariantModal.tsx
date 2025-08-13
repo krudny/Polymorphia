@@ -6,12 +6,10 @@ import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardProjectVariant from "@/components/xp-card/components/XPCardProjectVariant";
 import { API_STATIC_URL } from "@/services/api";
+import { useEventParams } from "@/shared/params/useSeachParams";
 
-export default function ProjectVariantModal({
-  gradableEventId,
-  eventSectionType,
-  onClosed,
-}: SpeedDialModalProps) {
+export default function ProjectVariantModal({ onClosed }: SpeedDialModalProps) {
+  const { gradableEventId, eventSectionType } = useEventParams();
   const { data, isLoading, isError } = useQuery({
     queryKey: ["projectVariant", gradableEventId],
     queryFn: () => EventSectionService.getProjectVariant(gradableEventId!),

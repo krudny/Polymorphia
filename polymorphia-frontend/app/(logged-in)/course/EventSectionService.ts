@@ -735,9 +735,7 @@ export const EventSectionService = {
     return {};
   },
 
-  getProjectVariant: async (
-    gradableEventId: number
-  ): Promise<ProjectVariantResponseDTO[]> => {
+  getProjectVariant: async (): Promise<ProjectVariantResponseDTO[]> => {
     return [
       {
         shortCode: "G",
@@ -773,7 +771,8 @@ export const EventSectionService = {
     for (let i = 0; i < 30; i++) {
       const group = {
         id: i + 1,
-        gainedXp: (Math.random() * 2.8).toFixed(2),
+        gainedXp:
+          Math.random() < 0.4 ? undefined : (Math.random() * 2.8).toFixed(2),
         members: allData.slice(i * 2, (i + 1) * 2),
       };
       data.push(group);

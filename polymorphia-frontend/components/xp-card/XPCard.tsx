@@ -19,6 +19,7 @@ const xpCard = tv({
       silver: "border-b-6 border-slate-400",
       bronze: "border-b-6 border-amber-800",
       green: "border-b-6 border-green-600",
+      sky: "border-b-6 border-sky-100",
       none: "border-0",
     },
     forceWidth: {

@@ -7,10 +7,12 @@ export default function XPCardPoints({
   isXPLabelVisible = true,
   hasChest = false,
 }: XPCardPointsProps) {
+  const backgroundColor = points ? "bg-secondary-gray" : "bg-secondary-gray";
+
   return (
-    <div className="xp-card-points">
+    <div className={`xp-card-points ${backgroundColor}`}>
       <h1>
-        {points} {isXPLabelVisible && "xp"}
+        {points || "-"} {isXPLabelVisible && "xp"}
       </h1>
       {isSumLabelVisible && <h2>Suma</h2>}
       {hasChest && (

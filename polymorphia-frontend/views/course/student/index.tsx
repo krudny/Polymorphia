@@ -1,6 +1,5 @@
 "use client";
 
-import { StudentViewProps } from "@/views/course/student/types";
 import SectionView from "@/components/section-view/SectionView";
 import { useScaleShow } from "@/animations/ScaleShow";
 import { useEffect, useRef, useState } from "react";
@@ -13,11 +12,10 @@ import Loading from "@/components/loading/Loading";
 import { useRouter } from "next/navigation";
 import renderCard from "@/views/course/student/RenderCard";
 import GradableEventRewardModal from "@/components/speed-dial/modals/GradableEventRewardModal";
+import { useEventParams } from "@/shared/params/useSeachParams";
 
-export default function StudentView({
-  eventSectionType,
-  eventSectionId,
-}: StudentViewProps) {
+export default function StudentView() {
+  const { eventSectionType, eventSectionId } = useEventParams();
   const router = useRouter();
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const summaryRef = useRef<HTMLDivElement | null>(null);
@@ -75,15 +73,12 @@ export default function StudentView({
           className="w-full min-h-full flex-col-centered bg-green-500"
           ref={wrapperRef}
         >
-          <XPCardGrid containerRef={wrapperRef} cards={cards} />
+          <XPCardGrid containerRef={wrapperRef} cards={cards} maxColumns={2} />
         </div>
         <PointsSummary ref={summaryRef} eventSectionId={eventSectionId} />
       </div>
       {eventSectionType === "test" && (
-        <GradableEventRewardModal
-          gradableEventId={selectedEventId ?? undefined}
-          onClosed={() => setSelectedEventId(null)}
-        />
+        <GradableEventRewardModal onClosed={() => setSelectedEventId(null)} />
       )}
     </SectionView>
   );

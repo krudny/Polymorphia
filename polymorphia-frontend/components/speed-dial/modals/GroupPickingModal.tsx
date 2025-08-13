@@ -122,10 +122,7 @@ function GroupPickingModalContent() {
   );
 }
 
-export default function GroupPickingModal({
-  gradableEventId,
-  onClosed,
-}: SpeedDialModalProps) {
+export default function GroupPickingModal({ onClosed }: SpeedDialModalProps) {
   return (
     <Modal
       isDataPresented={true}

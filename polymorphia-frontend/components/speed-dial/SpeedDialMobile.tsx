@@ -1,17 +1,13 @@
 "use client";
 
 import { ReactNode, useState } from "react";
-import { SpeedDialProps } from "@/components/speed-dial/types";
 import "./index.css";
 import { useSpeedDialItemsFactory } from "@/components/speed-dial/SpeedDialFactory";
 import Loading from "@/components/loading/Loading";
 import { SpeedDial as SpeedDialMui, SpeedDialAction } from "@mui/material";
 
-export default function SpeedDialMobile({
-  eventSectionType,
-  gradableEventId,
-}: SpeedDialProps) {
-  const items = useSpeedDialItemsFactory(eventSectionType, gradableEventId);
+export default function SpeedDialMobile() {
+  const items = useSpeedDialItemsFactory();
   const [activeModal, setActiveModal] = useState<ReactNode | null>(null);
 
   if (!items) {

@@ -4,11 +4,12 @@ import Loading from "@/components/loading/Loading";
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
+import { useEventParams } from "@/shared/params/useSeachParams";
 
 export default function GradableEventRewardModal({
-  gradableEventId,
   onClosed,
 }: SpeedDialModalProps) {
+  const { gradableEventId } = useEventParams();
   const { data, isLoading, isError } = useQuery({
     queryKey: ["eventReward", gradableEventId],
     queryFn: () => EventSectionService.getReward(gradableEventId!),

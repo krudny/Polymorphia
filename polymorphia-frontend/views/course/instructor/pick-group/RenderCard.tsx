@@ -37,7 +37,7 @@ export default function renderCard(
         url: `${API_STATIC_URL}/${firstPerson.imageUrl}`,
         alt: firstPersonName,
       }}
-      color={projectGroup.gainedXp !== undefined ? "green" : "silver"}
+      color={projectGroup.gainedXp ? "green" : "silver"}
       leftComponent={
         <XPCardDoubleImage
           images={[
@@ -54,8 +54,9 @@ export default function renderCard(
       }
       rightComponent={
         <XPCardPoints
-          points={projectGroup.gainedXp.toString()}
+          points={projectGroup.gainedXp}
           isSumLabelVisible={true}
+          isXPLabelVisible={!!projectGroup.gainedXp}
         />
       }
       size="projectGroup"

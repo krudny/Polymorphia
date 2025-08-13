@@ -5,11 +5,10 @@ import GroupModal from "@/components/speed-dial/modals/GroupModal";
 import GroupPickingModal from "@/components/speed-dial/modals/GroupPickingModal";
 import { useContext } from "react";
 import { MarkdownContext } from "@/components/providers/markdown/MarkdownContext";
+import { useEventParams } from "@/shared/params/useSeachParams";
 
-export function useSpeedDialItemsFactory(
-  eventSectionType: string,
-  gradableEventId: number
-): SpeedDialItem[] {
+export function useSpeedDialItemsFactory(): SpeedDialItem[] {
+  const { eventSectionType } = useEventParams();
   const { isEditing, setIsEditing, saveMarkdown, rejectMarkdown } =
     useContext(MarkdownContext);
 
@@ -18,12 +17,7 @@ export function useSpeedDialItemsFactory(
     order: 5,
     label: "Nagrody",
     icon: "trophy",
-    modal: (onClose) => (
-      <GradableEventRewardModal
-        gradableEventId={gradableEventId}
-        onClosed={onClose}
-      />
-    ),
+    modal: (onClose) => <GradableEventRewardModal onClosed={onClose} />,
   };
 
   const projectVariantItem: SpeedDialItem = {
@@ -31,13 +25,7 @@ export function useSpeedDialItemsFactory(
     order: 2,
     label: "Wariant",
     icon: "arrow_split",
-    modal: (onClose) => (
-      <ProjectVariantModal
-        gradableEventId={gradableEventId}
-        eventSectionType={eventSectionType}
-        onClosed={onClose}
-      />
-    ),
+    modal: (onClose) => <ProjectVariantModal onClosed={onClose} />,
   };
 
   const projectGroupItem: SpeedDialItem = {
@@ -45,9 +33,7 @@ export function useSpeedDialItemsFactory(
     order: 3,
     label: "Grupa",
     icon: "person",
-    modal: (onClose) => (
-      <GroupModal gradableEventId={gradableEventId} onClosed={onClose} />
-    ),
+    modal: (onClose) => <GroupModal onClosed={onClose} />,
   };
 
   const projectGroupPickingItem: SpeedDialItem = {
@@ -55,9 +41,7 @@ export function useSpeedDialItemsFactory(
     order: 4,
     label: "Utwórz grupę",
     icon: "person_add",
-    modal: (onClose) => (
-      <GroupPickingModal gradableEventId={gradableEventId} onClosed={onClose} />
-    ),
+    modal: (onClose) => <GroupPickingModal onClosed={onClose} />,
   };
 
   const saveMarkdownItem: SpeedDialItem = {

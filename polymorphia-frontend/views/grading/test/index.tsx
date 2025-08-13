@@ -5,7 +5,7 @@ import { EventSectionService } from "@/app/(logged-in)/course/EventSectionServic
 import Loading from "@/components/loading/Loading";
 import Reward from "@/components/grading/components/reward";
 
-export default function GradingTestView() {
+export default function TestGradingView() {
   const { data: studentsList, isLoading } = useQuery({
     queryKey: ["allUsers", ""],
     queryFn: () => EventSectionService.getRandomPeople(""),

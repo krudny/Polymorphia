@@ -1,25 +1,20 @@
-"use client"
+"use client";
 
-import {useParams} from "next/navigation";
-import {EventSectionType} from "@/components/course/event-section/types";
-import GradingTestView from "@/views/grading/test";
-import GradingAssignmentView from "@/views/grading/assignment";
+import { EventSectionType } from "@/components/course/event-section/types";
+import TestGradingView from "@/views/grading/test";
+import AssignmentGradingView from "@/views/grading/assignment";
+import ProjectGradingView from "@/views/grading/project";
+import { useEventParams } from "@/shared/params/useSeachParams";
 
 export default function Grading() {
-    const params = useParams();
-    const gradableEventId = Number(params.gradableEventId);
-    const eventSectionType = params.eventSectionType as EventSectionType;
+  const { eventSectionType } = useEventParams();
 
-    switch (eventSectionType) {
-        case EventSectionType.TEST:
-            return (
-                <GradingTestView />
-            );
-        case EventSectionType.ASSIGNMENT:
-            return (
-                <GradingAssignmentView />
-            )
-        case EventSectionType.PROJECT:
-            return null;
-    }
+  switch (eventSectionType) {
+    case EventSectionType.TEST:
+      return <TestGradingView />;
+    case EventSectionType.ASSIGNMENT:
+      return <AssignmentGradingView />;
+    case EventSectionType.PROJECT:
+      return <ProjectGradingView />;
+  }
 }

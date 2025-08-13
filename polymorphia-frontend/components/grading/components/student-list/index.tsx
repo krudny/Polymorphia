@@ -1,8 +1,8 @@
 import { StudentListProps } from "@/components/grading/components/student-list/types";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
-import { API_STATIC_URL } from "@/services/api";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import XPCardImage from "@/components/xp-card/components/XPCardImage";
 
 export default function StudentsList({ students }: StudentListProps) {
   return (
@@ -21,14 +21,16 @@ export default function StudentsList({ students }: StudentListProps) {
           >
             <XPCard
               key={index}
-              image={{
-                url: `${API_STATIC_URL}/${student.imageUrl}`,
-                alt: student.evolutionStage,
-              }}
               title={student.studentName}
               color={"green"}
               subtitle={student.group}
               size={"xs"}
+              leftComponent={
+                <XPCardImage
+                  imageUrl={student.imageUrl}
+                  alt={student.evolutionStage}
+                />
+              }
               rightComponent={
                 <XPCardPoints
                   points={(Math.random() * 2.6 + 0.3).toFixed(1)}
