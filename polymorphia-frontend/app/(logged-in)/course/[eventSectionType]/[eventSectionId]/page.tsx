@@ -3,8 +3,8 @@
 import { useQuery } from "@tanstack/react-query";
 import UserService from "@/app/(logged-in)/profile/UserService";
 import { Roles } from "@/interfaces/api/DTO";
-import StudentView from "@/views/course/student/StudentView";
-import InstructorView from "@/views/course/instructor/InstructorView";
+import StudentView from "@/views/course/student";
+import InstructorView from "@/views/course/instructor";
 import { useParams } from "next/navigation";
 import { EventSectionType } from "@/components/course/event-section/types";
 

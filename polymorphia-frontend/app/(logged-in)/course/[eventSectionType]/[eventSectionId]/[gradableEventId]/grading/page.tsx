@@ -3,6 +3,7 @@
 import {useParams} from "next/navigation";
 import {EventSectionType} from "@/components/course/event-section/types";
 import GradingTestView from "@/views/grading/test";
+import GradingAssignmentView from "@/views/grading/assignment";
 
 export default function Grading() {
     const params = useParams();
@@ -15,7 +16,9 @@ export default function Grading() {
                 <GradingTestView />
             );
         case EventSectionType.ASSIGNMENT:
-            return null;
+            return (
+                <GradingAssignmentView />
+            )
         case EventSectionType.PROJECT:
             return null;
     }
