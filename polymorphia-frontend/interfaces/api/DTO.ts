@@ -56,7 +56,7 @@ export type RewardType = "ITEM" | "CHEST";
 export interface BaseReward {
   id: number;
   name: string;
-  description: string;
+  // description: string;
   imageUrl: string;
   orderIndex: number;
 }
@@ -110,7 +110,6 @@ interface ItemResponseDTOWithType {
 }
 
 export interface ItemAssignmentDetails extends BaseRewardAssignmentDetails {
-  assignedChestId: number; // need to think about this more...
   xp?: string; // undefined if item hasn't been used
 }
 
@@ -203,10 +202,10 @@ export interface PointsSummaryDetailsResponseDTO {
 }
 
 export interface PointsSummaryResponseDTO {
-  gainedXp: PointsSummaryDetailsResponseDTO;
+  gained: PointsSummaryDetailsResponseDTO;
   flatBonus: PointsSummaryDetailsResponseDTO;
   percentageBonus: PointsSummaryDetailsResponseDTO;
-  totalXp: PointsSummaryDetailsResponseDTO;
+  total: PointsSummaryDetailsResponseDTO;
 }
 
 // Markdown
@@ -230,7 +229,7 @@ export interface CriterionResponseDTO {
 
 export interface GradeDetailsResponseDTO {
   id: number;
-  comment: string;
+  comment?: string;
 }
 
 export interface GradeResponseDTO {

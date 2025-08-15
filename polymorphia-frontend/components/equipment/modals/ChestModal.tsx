@@ -12,35 +12,15 @@ export default function ChestModal() {
     useContext(EquipmentContext);
   const equipmentChest = currentChestModalData;
 
-  if (equipmentChest !== null && equipmentChest.details.length !== 1) {
-    throw new Error("ChestModal handles only one chest at a time!");
-  }
-
-  const assignedChest =
-    equipmentChest !== null
-      ? {
-          base: equipmentChest.base,
-          details: equipmentChest.details[0],
-        }
-      : null;
-
-  if (
-    assignedChest !== null &&
-    (assignedChest.details.openedDate === undefined ||
-      assignedChest?.details.receivedItems === undefined)
-  ) {
-    throw new Error("ChestModal handles only opened chests!");
-  }
-
   return (
     <Modal
       isDataPresented={equipmentChest !== null}
       onClosed={() => setCurrentChestModalData(null)}
-      title={assignedChest?.base.name ?? ""}
+      title={equipmentChest?.base.name ?? ""}
       subtitle="Zdobyte nagrody"
     >
       <div className="bonus-info-modal">
-        {assignedChest?.details.receivedItems!.map(
+        {equipmentChest?.details.receivedItems!.map(
           (assignedItem: AssignedItemResponseDTO) => (
             <XPCard
               key={assignedItem.details.id}

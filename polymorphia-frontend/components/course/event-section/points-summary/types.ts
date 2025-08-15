@@ -10,13 +10,8 @@ export interface PointsSummaryProps {
   ref: RefObject<HTMLDivElement | null>;
 }
 
-export interface PointsSummaryBonus {
-  title: string;
-  data: PointsSummaryDetailsResponseDTO;
-}
-
 export interface PointsSummaryElementProps {
-  bonus: PointsSummaryBonus;
+  bonus: PointsSummaryDetailsResponseDTO;
   onClick?: () => void;
   horizontal?: boolean;
 }
@@ -26,7 +21,7 @@ export interface BonusInfoModalProps
     ModalProps,
     "title" | "isDataPresented" | "children" | "onRequestClose"
   > {
-  bonusInfo: PointsSummaryBonus | null;
+  bonusInfo: PointsSummaryDetailsResponseDTO | null;
 }
 
 export interface BonusItemCardProps {

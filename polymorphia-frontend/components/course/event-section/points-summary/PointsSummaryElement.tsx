@@ -28,7 +28,7 @@ export default function PointsSummaryElement({
         {onClick && <SquareMousePointer className="text-neutral-500" />}
         <h1>{bonus.title}</h1>
       </div>
-      <h2>{bonus.data.xp} xp</h2>
+      <h2>{bonus.xp} xp</h2>
     </div>
   );
 }

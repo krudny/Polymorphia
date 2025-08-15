@@ -5,7 +5,7 @@ import { useContext } from "react";
 import Image from "next/image";
 import { useModal } from "@/components/providers/modal/ModalContext";
 import "../index.css";
-import { BaseItemResponseDTO } from "@/interfaces/api/DTO";
+import { BaseItem } from "@/interfaces/api/DTO";
 
 export default function OpeningChestModalContent() {
   const { closeModal } = useModal();
@@ -14,32 +14,11 @@ export default function OpeningChestModalContent() {
     useContext(EquipmentContext);
   const openingChest = currentOpeningChestModalData;
 
-  if (openingChest !== null && openingChest.details.length !== 1) {
-    throw new Error(
-      "OpeningChestModalContent handles only one chest at a time!"
-    );
-  }
-
-  const assignedChest =
-    openingChest !== null
-      ? {
-          base: openingChest.base,
-          details: openingChest.details[0],
-        }
-      : null;
-
-  if (
-    assignedChest !== null &&
-    assignedChest.details.openedDate !== undefined
-  ) {
-    throw new Error("OpeningChestModalContent handles only unopened chests!");
-  }
-
   const handlePickItem = (itemId: number) => {
-    if (!assignedChest) return;
+    if (!openingChest) return;
     const isPicked = pickedItemsIds.includes(itemId);
 
-    if (assignedChest.base.behavior === "ONE_OF_MANY") {
+    if (openingChest.base.behavior === "ONE_OF_MANY") {
       setPickedItemsIds([itemId]);
     } else {
       setPickedItemsIds((prev: number[]) =>
@@ -54,7 +33,7 @@ export default function OpeningChestModalContent() {
     <>
       <div className="opening-chest-modal">
         {/* TODO: handle chests that reached the limit */}
-        {openingChest?.base.chestItems.map((item: BaseItemResponseDTO) => (
+        {openingChest?.base.chestItems.map((item: BaseItem) => (
           <div
             key={item.id}
             className="opening-chest-modal-image-wrapper"

@@ -14,7 +14,7 @@ export default function BonusInfoModal({
       onClosed={onClosed}
     >
       <div className="bonus-info-modal">
-        {bonusInfo?.data.assignedItems.map((assignedItem) => (
+        {bonusInfo?.assignedItems.map((assignedItem) => (
           <BonusItemCard
             key={assignedItem.details.id}
             assignedItem={assignedItem}

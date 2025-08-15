@@ -65,12 +65,6 @@ export function EquipmentSection({ type, data }: EquipmentSectionProps) {
           } else {
             const chestData = item as EquipmentChestResponseDTO;
 
-            if (chestData.details.length !== 1) {
-              throw new Error(
-                "EquipmentSection supports only one chest per EquipmentChestResponseDTO!"
-              );
-            }
-
             return (
               <div key={chestData.base.id}>
                 <div className="equipment-grid-item">
@@ -83,10 +77,10 @@ export function EquipmentSection({ type, data }: EquipmentSectionProps) {
                     sizes="(min-width: 1024px) 25vw, 50vw"
                   />
                 </div>
-                {chestData.details[0].openedDate ? (
+                {chestData.details.isUsed ? (
                   <div className="equipment-chest-btn-wrapper">
                     <ButtonWithBorder
-                      text={`Otwarta ${chestData.details[0].openedDate}`}
+                      text={`Otwarta ${chestData.details.usedDate}`}
                       onClick={() => setCurrentChestModalData(chestData)}
                       className="equipment-chest-btn"
                     />

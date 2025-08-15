@@ -7,7 +7,7 @@ import {
 } from "@/app/(logged-in)/hall-of-fame/HallOfFameService";
 import {
   EventSectionResponseDTO,
-  GradableEventResponseDTO,
+  StudentGradableEventResponseDTO,
   MarkdownResponseDTO,
   PointsSummaryResponseDTO,
   ProjectVariantResponseDTO,
@@ -98,9 +98,9 @@ export const EventSectionService = {
   },
   getGradableEvents: async (
     eventSectionId: number
-  ): Promise<GradableEventResponseDTO[]> => {
+  ): Promise<StudentGradableEventResponseDTO[]> => {
     if (eventSectionId === 1) {
-      const events: GradableEventResponseDTO[] = [
+      const events: StudentGradableEventResponseDTO[] = [
         {
           id: 1,
           type: "test",
@@ -214,7 +214,7 @@ export const EventSectionService = {
       ];
       return events.sort((a, b) => a.orderIndex - b.orderIndex);
     } else if (eventSectionId === 2) {
-      const events: GradableEventResponseDTO[] = [
+      const events: StudentGradableEventResponseDTO[] = [
         {
           id: 15,
           type: "assignment",
@@ -345,61 +345,92 @@ export const EventSectionService = {
   ): Promise<PointsSummaryResponseDTO> => {
     if (eventSectionId === 1) {
       return {
-        gainedXp: "3.5",
+        gained: {
+          title: "Zdobyte xp",
+          xp: "3.5",
+          assignedItems: [],
+        },
         percentageBonus: {
+          title: "Bonusy procentowe",
           xp: "0.2",
           assignedItems: [
             {
               base: {
                 id: 1,
-                type: "PERCENTAGE_BONUS",
+                itemBonusType: "PERCENTAGE_BONUS",
                 name: "Pietruszka",
                 bonusText: "+5% do kategorii Kartkówka",
                 imageUrl: "images/items/parsley.jpg",
                 percentage: 5,
                 orderIndex: 0,
                 limit: 3,
-                reachedLimit: false,
+                isLimitReached: false,
               },
               details: {
                 id: 1,
                 receivedDate: "07.06.2025",
                 xp: "0.2",
+                isUsed: false,
               },
             },
           ],
         },
         flatBonus: {
+          title: "Bonusy punktowe",
           xp: "0.0",
           assignedItems: [],
         },
-        totalXp: "3.7",
+        total: {
+          title: "Łącznie",
+          xp: "3.7",
+          assignedItems: [],
+        },
       };
     } else if (eventSectionId === 2) {
       return {
-        gainedXp: "2.0",
+        gained: {
+          title: "Zdobyte xp",
+          xp: "2.0",
+          assignedItems: [],
+        },
         percentageBonus: {
+          title: "Bonusy procentowe",
           xp: "0.0",
           assignedItems: [],
         },
         flatBonus: {
+          title: "Bonusy punktowe",
           xp: "0.0",
           assignedItems: [],
         },
-        totalXp: "2.0",
+        total: {
+          title: "Łącznie",
+          xp: "2.0",
+          assignedItems: [],
+        },
       };
     } else {
       return {
-        gainedXp: "0.0",
+        gained: {
+          title: "Zdobyte xp",
+          xp: "0.0",
+          assignedItems: [],
+        },
         percentageBonus: {
+          title: "Bonusy procentowe",
           xp: "0.0",
           assignedItems: [],
         },
         flatBonus: {
+          title: "Bonusy punktowe",
           xp: "0.0",
           assignedItems: [],
         },
-        totalXp: "0.0",
+        total: {
+          title: "Łącznie",
+          xp: "0.0",
+          assignedItems: [],
+        },
       };
     }
   },
@@ -429,8 +460,6 @@ export const EventSectionService = {
       return {
         details: {
           id: 1,
-          createdDate: "07.06.2025",
-          modifiedDate: "07.06.2025",
         },
         criteria: [
           {
@@ -452,21 +481,22 @@ export const EventSectionService = {
                     chestItems: [
                       {
                         id: 1,
-                        type: "PERCENTAGE_BONUS",
+                        itemBonusType: "PERCENTAGE_BONUS",
                         name: "Pietruszka",
                         bonusText: "+5% do kategorii Kartkówka",
                         imageUrl: "images/items/parsley.jpg",
                         percentage: 5,
                         orderIndex: 0,
                         limit: 3,
-                        reachedLimit: false,
+                        isLimitReached: false,
                       },
                     ],
                   },
                   details: {
                     id: 3,
                     receivedDate: "07.06.2025",
-                    openedDate: "08.06.2025",
+                    usedDate: "08.06.2025",
+                    isUsed: true,
                   },
                 },
               ],
@@ -480,8 +510,6 @@ export const EventSectionService = {
       return {
         details: {
           id: 1,
-          createdDate: "07.06.2025",
-          modifiedDate: "07.06.2025",
         },
         criteria: [
           {
@@ -503,21 +531,22 @@ export const EventSectionService = {
                     chestItems: [
                       {
                         id: 1,
-                        type: "PERCENTAGE_BONUS",
+                        itemBonusType: "PERCENTAGE_BONUS",
                         name: "Pietruszka",
                         bonusText: "+5% do kategorii Kartkówka",
                         imageUrl: "images/items/parsley.jpg",
                         percentage: 5,
                         orderIndex: 0,
                         limit: 3,
-                        reachedLimit: false,
+                        isLimitReached: false,
                       },
                     ],
                   },
                   details: {
                     id: 3,
                     receivedDate: "07.06.2025",
-                    openedDate: "08.06.2025",
+                    usedDate: "08.06.2025",
+                    isUsed: true,
                   },
                 },
               ],
