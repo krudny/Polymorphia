@@ -58,7 +58,7 @@ export default function StudentView() {
     if (eventSectionType === "test") {
       setSelectedEventId(id);
     } else {
-      router.replace(`/course/${eventSectionType}/${eventSectionId}/${id}`);
+      router.push(`/course/${eventSectionType}/${eventSectionId}/${id}`);
     }
   };
 

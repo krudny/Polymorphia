@@ -33,7 +33,7 @@ export default function StudentsList({ students }: StudentListProps) {
               }
               rightComponent={
                 <XPCardPoints
-                  points={(Math.random() * 2.6 + 0.3).toFixed(1)}
+                  points={Math.random() * 2.6 + 0.3}
                   isSumLabelVisible={true}
                 />
               }

@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "../../../styles/globals.css";
+
 @tailwind utilities;
 
 @utility hall-of-fame-rank-wrapper {
@@ -29,7 +30,7 @@
 }
 
 .hall-of-fame-image {
-    @apply object-cover rounded-xl lg:rounded-bl-xl lg:rounded-tr-none;
+    @apply object-cover rounded-xl lg:rounded-bl-xl lg:rounded-tr-none lg:rounded-br-none;
 }
 
 .hall-of-fame-image-badge {

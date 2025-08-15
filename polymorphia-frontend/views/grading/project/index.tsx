@@ -2,17 +2,17 @@ import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import Loading from "@/components/loading/Loading";
 import Grading from "@/components/grading/grading";
-import StudentsList from "@/components/grading/components/student-list";
 import Reward from "@/components/grading/components/reward";
 import PullRequest from "@/components/grading/components/pull-request";
+import ProjectGroupList from "@/components/grading/components/project-group-list";
 
 export default function ProjectGradingView() {
-  const { data: studentsList, isLoading } = useQuery({
-    queryKey: ["allUsers", ""],
-    queryFn: () => EventSectionService.getRandomPeople(""),
+  const { data: projectGroupList, isLoading } = useQuery({
+    queryKey: ["projectGroupList"],
+    queryFn: () => EventSectionService.getRandomProjectGroups(),
   });
 
-  if (isLoading || !studentsList) {
+  if (isLoading || !projectGroupList) {
     return <Loading />;
   }
 
@@ -20,7 +20,7 @@ export default function ProjectGradingView() {
     <Grading
       columns={3}
       components={[
-        <StudentsList key="1" students={studentsList} />,
+        <ProjectGroupList projectGroups={projectGroupList} key="1" />,
         <Reward
           key="2"
           criteria={[
@@ -38,11 +38,6 @@ export default function ProjectGradingView() {
             {
               id: 1,
               name: "Laboratorium",
-              url: "https://github.com/krudny/Polymorphia/pull/32",
-            },
-            {
-              id: 2,
-              name: "Zadanie dodatkowe",
               url: "https://github.com/krudny/Polymorphia/pull/32",
             },
           ]}

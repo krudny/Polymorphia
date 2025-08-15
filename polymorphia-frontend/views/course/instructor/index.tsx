@@ -48,11 +48,11 @@ export default function InstructorView() {
 
   const handleClick = (id: number) => {
     if (eventSectionType === "test" || eventSectionType === "assignment") {
-      router.replace(
+      router.push(
         `/course/${eventSectionType}/${eventSectionId}/${id}/grading`
       );
     } else {
-      router.replace(
+      router.push(
         `/course/${eventSectionType}/${eventSectionId}/${id}/pick-group`
       );
     }

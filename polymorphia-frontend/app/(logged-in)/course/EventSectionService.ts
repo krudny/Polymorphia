@@ -77,7 +77,7 @@ interface ProjectVariantResponseDTO {
 export interface ProjectGroupResponseDTO {
   id: number;
   gainedXp: number;
-  members: UserDetailsDTO[];
+  members: (UserDetailsDTO & { gainedXp: number | undefined })[];
 }
 
 const mockMarkdownStore: Record<number, string> = {
@@ -769,11 +769,17 @@ export const EventSectionService = {
     let data = [];
 
     for (let i = 0; i < 30; i++) {
+      const xp =
+        Math.random() < 0.4 ? undefined : (Math.random() * 2.8).toFixed(2);
+
+      const members = allData.slice(i * 2, (i + 1) * 2).map((member) => ({
+        ...member,
+        gainedXp: xp,
+      }));
+
       const group = {
         id: i + 1,
-        gainedXp:
-          Math.random() < 0.4 ? undefined : (Math.random() * 2.8).toFixed(2),
-        members: allData.slice(i * 2, (i + 1) * 2),
+        members: members,
       };
       data.push(group);
     }
