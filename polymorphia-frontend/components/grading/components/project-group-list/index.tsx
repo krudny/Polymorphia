@@ -3,13 +3,15 @@ import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import { ProjectGroupListProps } from "@/components/grading/components/project-group-list/types";
+import Search from "@/components/search";
 
 export default function ProjectGroupList({
   projectGroups,
 }: ProjectGroupListProps) {
   return (
-    <div className="w-full overflow-y-hidden flex flex-col flex-1 gap-y-4 bg-yellow-300">
-      <div className="w-full max-w-sm mx-auto bg-green-600">
+    <div className="w-full overflow-y-hidden flex flex-col flex-1  bg-yellow-300">
+      <div className="w-full flex justify-between max-w-[25rem] mx-auto min-h-12 bg-green-600">
+        <Search search="" setSearch={() => {}} placeholder="Szukaj grupy..." />
         <ButtonWithBorder
           text="Filtry"
           className="!mx-0 !py-0 !border-0 !border-b-2 !align-self-start"
@@ -19,7 +21,7 @@ export default function ProjectGroupList({
         {projectGroups.map((group, index) => (
           <div
             key={index}
-            className="max-w-sm mx-auto my-3 first:mt-0 last:mb-0 flex flex-col gap-y-2"
+            className="max-w-[25rem] mx-auto my-3 first:mt-0 last:mb-0 flex flex-col gap-y-2"
           >
             {group.members.map((student, index) => (
               <XPCard

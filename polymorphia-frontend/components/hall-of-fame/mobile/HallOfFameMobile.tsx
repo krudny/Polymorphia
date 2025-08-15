@@ -1,6 +1,5 @@
 "use client";
 
-import HallOfFameSearch from "@/components/hall-of-fame/general/HallOfFameSearch";
 import Pagination from "@/components/pagination/Pagination";
 import RankCardMobile from "@/components/hall-of-fame/mobile/HallOfFameCardMobile";
 import { useContext } from "react";
@@ -11,16 +10,21 @@ import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFam
 import { HallOfFameRecordDTO } from "@/interfaces/api/DTO";
 import { handlePageChange } from "@/components/providers/hall-of-fame/utils/handlePageChange";
 import Loading from "@/components/loading/Loading";
+import Search from "@/components/search";
 
 export default function HallOfFameMobile() {
   const wrapperRef = useScaleShow();
-  const { data, setPage, isLoading, setIsModalOpen } =
+  const { data, setPage, isLoading, setIsModalOpen, search, setSearch } =
     useContext(HallOfFameContext);
 
   return (
     <div ref={wrapperRef} className="hall-of-fame-mobile">
       <div className="hall-of-fame-mobile-search-wrapper">
-        <HallOfFameSearch />
+        <Search
+          search={search}
+          setSearch={setSearch}
+          placeholder="Znajdź zwierzaka..."
+        />
         <ButtonWithBorder
           text="Filtry"
           className="!mx-0 !py-0 !border-0 !border-b-2"

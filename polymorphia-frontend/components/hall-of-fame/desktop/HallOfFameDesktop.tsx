@@ -6,16 +6,16 @@ import { useContext } from "react";
 import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
 import { handlePageChange } from "@/components/providers/hall-of-fame/utils/handlePageChange";
 import HallOfFamePodium from "@/components/hall-of-fame/desktop/HallOfFamePodium";
-import HallOfFameSearch from "@/components/hall-of-fame/general/HallOfFameSearch";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import Loading from "@/components/loading/Loading";
 import { HallOfFameRecordDTO } from "@/interfaces/api/DTO";
 import HallOfFameCardDesktop from "@/components/hall-of-fame/desktop/HallOfFameCardDesktop";
+import Search from "@/components/search";
 
 export default function HallOfFameDesktop() {
   const wrapperRef = useScaleShow();
 
-  const { data, setPage, isLoading, setIsModalOpen } =
+  const { data, setPage, isLoading, setIsModalOpen, search, setSearch } =
     useContext(HallOfFameContext);
 
   return (
@@ -31,7 +31,11 @@ export default function HallOfFameDesktop() {
         </div>
         <div className="hall-of-fame-desktop-content-wrapper">
           <div className="hall-of-fame-desktop-search-wrapper">
-            <HallOfFameSearch />
+            <Search
+              search={search}
+              setSearch={setSearch}
+              placeholder="Znajdź zwierzaka..."
+            />
             <ButtonWithBorder
               text="Filtry"
               className="!mx-0 !py-0 !border-0 !border-b-2"
