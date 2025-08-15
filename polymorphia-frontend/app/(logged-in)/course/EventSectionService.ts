@@ -109,7 +109,7 @@ export const EventSectionService = {
           gainedXp: "1.5",
           orderIndex: 1,
           isLocked: false,
-          hasChest: false,
+          hasReward: false,
         },
         {
           id: 2,
@@ -119,7 +119,7 @@ export const EventSectionService = {
           gainedXp: "0.0",
           orderIndex: 2,
           isLocked: false,
-          hasChest: false,
+          hasReward: false,
         },
         {
           id: 3,
@@ -128,7 +128,7 @@ export const EventSectionService = {
           topic: "Interakcje między obiektami",
           orderIndex: 3,
           isLocked: false,
-          hasChest: true,
+          hasReward: true,
         },
         {
           id: 4,
@@ -137,7 +137,7 @@ export const EventSectionService = {
           topic: "Interfejsy i mapy",
           orderIndex: 4,
           isLocked: false,
-          hasChest: false,
+          hasReward: false,
         },
         {
           id: 5,
@@ -146,7 +146,7 @@ export const EventSectionService = {
           topic: "Dziedziczenie",
           orderIndex: 5,
           isLocked: false,
-          hasChest: false,
+          hasReward: false,
         },
         {
           id: 6,
@@ -155,7 +155,7 @@ export const EventSectionService = {
           topic: "Refactoring kodu",
           orderIndex: 6,
           isLocked: false,
-          hasChest: false,
+          hasReward: false,
         },
         {
           id: 7,
@@ -164,7 +164,7 @@ export const EventSectionService = {
           topic: "Wielowątkowość",
           orderIndex: 7,
           isLocked: false,
-          hasChest: false,
+          hasReward: false,
         },
         {
           id: 8,
@@ -173,7 +173,7 @@ export const EventSectionService = {
           topic: "Interfejs graficzny",
           orderIndex: 8,
           isLocked: false,
-          hasChest: true,
+          hasReward: true,
         },
         {
           id: 9,
@@ -182,7 +182,7 @@ export const EventSectionService = {
           topic: "Lambdy, streamy i zarządzanie zasobami",
           orderIndex: 9,
           isLocked: false,
-          hasChest: false,
+          hasReward: false,
         },
         {
           id: 10,
@@ -191,7 +191,7 @@ export const EventSectionService = {
           topic: "Kotlin jako alternatywa dla Javy",
           orderIndex: 10,
           isLocked: false,
-          hasChest: false,
+          hasReward: false,
         },
         {
           id: 11,
@@ -200,7 +200,7 @@ export const EventSectionService = {
           topic: "A może Rust?",
           orderIndex: 11,
           isLocked: false,
-          hasChest: false,
+          hasReward: false,
         },
         {
           id: 12,
@@ -209,7 +209,7 @@ export const EventSectionService = {
           topic: "Jak wycentrować diva",
           orderIndex: 12,
           isLocked: false,
-          hasChest: false,
+          hasReward: false,
         },
       ];
       return events.sort((a, b) => a.orderIndex - b.orderIndex);
@@ -223,7 +223,7 @@ export const EventSectionService = {
           gainedXp: "2.0",
           orderIndex: 1,
           isLocked: false,
-          hasChest: false,
+          hasReward: false,
         },
         {
           id: 16,
@@ -233,7 +233,7 @@ export const EventSectionService = {
           gainedXp: "0.0",
           orderIndex: 2,
           isLocked: false,
-          hasChest: false,
+          hasReward: false,
         },
         {
           id: 17,
@@ -242,7 +242,7 @@ export const EventSectionService = {
           topic: "Interakcje między obiektami",
           orderIndex: 3,
           isLocked: false,
-          hasChest: true,
+          hasReward: true,
         },
         {
           id: 18,
@@ -251,7 +251,7 @@ export const EventSectionService = {
           topic: "Interfejsy i mapy",
           orderIndex: 4,
           isLocked: false,
-          hasChest: false,
+          hasReward: false,
         },
         {
           id: 19,
@@ -260,7 +260,7 @@ export const EventSectionService = {
           topic: "Dziedziczenie",
           orderIndex: 5,
           isLocked: false,
-          hasChest: false,
+          hasReward: false,
         },
         {
           id: 20,
@@ -269,7 +269,7 @@ export const EventSectionService = {
           topic: "Refactoring kodu",
           orderIndex: 6,
           isLocked: false,
-          hasChest: false,
+          hasReward: false,
         },
         {
           id: 21,
@@ -278,7 +278,7 @@ export const EventSectionService = {
           topic: "Wielowątkowość",
           orderIndex: 7,
           isLocked: false,
-          hasChest: false,
+          hasReward: false,
         },
         {
           id: 22,
@@ -287,7 +287,7 @@ export const EventSectionService = {
           topic: "Interfejs graficzny",
           orderIndex: 8,
           isLocked: false,
-          hasChest: false,
+          hasReward: false,
         },
       ];
       return events.sort((a, b) => a.orderIndex - b.orderIndex);
@@ -300,7 +300,7 @@ export const EventSectionService = {
           topic: "Git jest cool",
           orderIndex: 1,
           isLocked: false,
-          hasChest: true,
+          hasReward: true,
         },
       ];
     } else if (eventSectionId === 6) {
@@ -312,7 +312,7 @@ export const EventSectionService = {
           topic: "Refactoring hell",
           orderIndex: 1,
           isLocked: false,
-          hasChest: false,
+          hasReward: false,
         },
       ];
     } else if (eventSectionId === 3) {
@@ -324,7 +324,7 @@ export const EventSectionService = {
           topic: "Darwin World",
           orderIndex: 1,
           isLocked: false,
-          hasChest: false,
+          hasReward: false,
         },
         {
           id: 34,
@@ -333,7 +333,7 @@ export const EventSectionService = {
           topic: "Polymorphia",
           orderIndex: 2,
           isLocked: false,
-          hasChest: true,
+          hasReward: true,
         },
       ];
     } else {
@@ -469,34 +469,37 @@ export const EventSectionService = {
             criterionGrade: {
               id: 1,
               xp: "3.5",
-              assignedChests: [
+              assignedRewards: [
                 {
-                  base: {
-                    id: 1,
-                    name: "Srebrna Skrzynia",
-                    imageUrl: "images/chests/s1.png",
-                    behavior: "ONE_OF_MANY",
-                    behaviorText: "Wybierz jeden przedmiot ze skrzynki",
-                    orderIndex: 0,
-                    chestItems: [
-                      {
-                        id: 1,
-                        itemBonusType: "PERCENTAGE_BONUS",
-                        name: "Pietruszka",
-                        bonusText: "+5% do kategorii Kartkówka",
-                        imageUrl: "images/items/parsley.jpg",
-                        percentage: 5,
-                        orderIndex: 0,
-                        limit: 3,
-                        isLimitReached: false,
-                      },
-                    ],
-                  },
-                  details: {
-                    id: 3,
-                    receivedDate: "07.06.2025",
-                    usedDate: "08.06.2025",
-                    isUsed: true,
+                  rewardType: "CHEST",
+                  assignedReward: {
+                    base: {
+                      id: 1,
+                      name: "Srebrna Skrzynia",
+                      imageUrl: "images/chests/s1.png",
+                      behavior: "ONE_OF_MANY",
+                      behaviorText: "Wybierz jeden przedmiot ze skrzynki",
+                      orderIndex: 0,
+                      chestItems: [
+                        {
+                          id: 1,
+                          itemBonusType: "PERCENTAGE_BONUS",
+                          name: "Pietruszka",
+                          bonusText: "+5% do kategorii Kartkówka",
+                          imageUrl: "images/items/parsley.jpg",
+                          percentage: 5,
+                          orderIndex: 0,
+                          limit: 3,
+                          isLimitReached: false,
+                        },
+                      ],
+                    },
+                    details: {
+                      id: 3,
+                      receivedDate: "07.06.2025",
+                      usedDate: "08.06.2025",
+                      isUsed: true,
+                    },
                   },
                 },
               ],
@@ -519,34 +522,37 @@ export const EventSectionService = {
             criterionGrade: {
               id: 1,
               xp: "0.7",
-              assignedChests: [
+              assignedRewards: [
                 {
-                  base: {
-                    id: 1,
-                    name: "Srebrna Skrzynia",
-                    imageUrl: "images/chests/s1.png",
-                    behavior: "ONE_OF_MANY",
-                    behaviorText: "Wybierz jeden przedmiot ze skrzynki",
-                    orderIndex: 0,
-                    chestItems: [
-                      {
-                        id: 1,
-                        itemBonusType: "PERCENTAGE_BONUS",
-                        name: "Pietruszka",
-                        bonusText: "+5% do kategorii Kartkówka",
-                        imageUrl: "images/items/parsley.jpg",
-                        percentage: 5,
-                        orderIndex: 0,
-                        limit: 3,
-                        isLimitReached: false,
-                      },
-                    ],
-                  },
-                  details: {
-                    id: 3,
-                    receivedDate: "07.06.2025",
-                    usedDate: "08.06.2025",
-                    isUsed: true,
+                  rewardType: "CHEST",
+                  assignedReward: {
+                    base: {
+                      id: 1,
+                      name: "Srebrna Skrzynia",
+                      imageUrl: "images/chests/s1.png",
+                      behavior: "ONE_OF_MANY",
+                      behaviorText: "Wybierz jeden przedmiot ze skrzynki",
+                      orderIndex: 0,
+                      chestItems: [
+                        {
+                          id: 1,
+                          itemBonusType: "PERCENTAGE_BONUS",
+                          name: "Pietruszka",
+                          bonusText: "+5% do kategorii Kartkówka",
+                          imageUrl: "images/items/parsley.jpg",
+                          percentage: 5,
+                          orderIndex: 0,
+                          limit: 3,
+                          isLimitReached: false,
+                        },
+                      ],
+                    },
+                    details: {
+                      id: 3,
+                      receivedDate: "07.06.2025",
+                      usedDate: "08.06.2025",
+                      isUsed: true,
+                    },
                   },
                 },
               ],

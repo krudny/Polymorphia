@@ -9,7 +9,7 @@ import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLab
 export default function GradeInfo({ grade }: { grade: GradeResponseDTO }) {
   return (
     <section className="gradable-event-section">
-      {/* TODO: handle scroll, gaps between criteria, show criteria even if there is no grade */}
+      {/* TODO: handle scroll/folding, gaps between criteria, show criteria even if there is no grade */}
       {grade.details !== undefined ? (
         <>
           {grade.criteria.map((criterion) => (
@@ -34,38 +34,37 @@ export default function GradeInfo({ grade }: { grade: GradeResponseDTO }) {
                   />
                 </div>
               </div>
-              {/*
-              TODO: How to handle chests for multiple criteria?
-              1. For every criterion, show both XP and chests, even if not assigned
-              2. Add another prop to indicate whether you can get a chest for a critetion,
-                 if so, show chests section (display error if no chest assigned)
-              3. Show chests section only if there are chests assigned
-              4. Aggregate all chests from all criteria into one section at the bottom
+              <div className="gradable-event-section-reward">
+                <h2>Nagrody</h2>
+                {criterion.criterionGrade?.assignedRewards?.length ? (
+                  <div className="gradable-event-section-reward-inner ">
+                    {criterion.criterionGrade?.assignedRewards.map(
+                      (assignedReward) => {
+                        const {
+                          assignedReward: {
+                            base: { name, imageUrl },
+                            details: { id },
+                          },
+                        } = assignedReward;
 
-              The first option is currently implemented.
-              */}
-              <div className="gradable-event-section-chest">
-                <h2>Skrzynki</h2>
-                {criterion.criterionGrade?.assignedChests?.length ? (
-                  <div className="gradable-event-section-chests-inner ">
-                    {criterion.criterionGrade?.assignedChests.map(
-                      (assignedChest) => (
-                        <div
-                          className="gradable-event-section-chests-image-wrapper"
-                          key={assignedChest.details.id}
-                        >
-                          <Image
-                            src={`${API_STATIC_URL}/${assignedChest.base.imageUrl}`}
-                            alt={assignedChest.base.name}
-                            fill
-                          />
-                        </div>
-                      )
+                        return (
+                          <div
+                            className="gradable-event-section-reward-image-wrapper"
+                            key={id}
+                          >
+                            <Image
+                              src={`${API_STATIC_URL}/${imageUrl}`}
+                              alt={name}
+                              fill
+                            />
+                          </div>
+                        );
+                      }
                     )}
                   </div>
                 ) : (
                   <div className="text-xl 2xl:text-2xl">
-                    Nie przydzielono żadnej skrzynki.
+                    Nie przydzielono żadnej nagrody.
                   </div>
                 )}
               </div>

@@ -180,13 +180,13 @@ export interface BaseGradableEventResponseDTO {
   name: string;
   topic?: string;
   orderIndex: number;
+  hasReward: boolean;
+  isLocked: boolean;
 }
 
 export interface StudentGradableEventResponseDTO
   extends BaseGradableEventResponseDTO {
   gainedXp?: string;
-  hasChest: boolean;
-  isLocked: boolean;
 }
 
 export interface InstructorGradableEventResponseDTO
@@ -217,7 +217,7 @@ export interface MarkdownResponseDTO {
 export interface CriterionGradeResponseDTO {
   id: number;
   xp: string;
-  assignedChests: AssignedChestResponseDTO[];
+  assignedRewards: AssignedRewardResponseDTO[];
 }
 
 export interface CriterionResponseDTO {
@@ -234,7 +234,7 @@ export interface GradeDetailsResponseDTO {
 
 export interface GradeResponseDTO {
   details?: GradeDetailsResponseDTO;
-  criteria: CriterionResponseDTO[]; // technically they should be a part of the grade but I think this will be a better interface for frontend
+  criteria: CriterionResponseDTO[];
 }
 
 // Project Variant

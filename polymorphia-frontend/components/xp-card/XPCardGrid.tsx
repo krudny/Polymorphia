@@ -127,7 +127,7 @@ export default function XPCardGrid({
                 )}
               >
                 {gradableEventsPage.map(
-                  ({ id, name, topic, gainedXp, hasChest }) => (
+                  ({ id, name, topic, gainedXp, hasReward: hasChest }) => (
                     <XPCard
                       title={name}
                       subtitle={topic ?? ""}
