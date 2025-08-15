@@ -13,7 +13,7 @@ import Pagination from "@/components/pagination/Pagination";
 import PointsSummary from "@/components/course/event-section/points-summary/PointsSummary";
 import { setResizeObserver } from "@/components/course/event-section/EventSectionUtils";
 import GradeModal from "@/components/speed-dial/modals/GradeModal";
-import XPCardPoints from "@/components/xp-card/inner-components/XPCardPoints";
+import { getCardComponent } from "@/shared/card/getCardComponent";
 
 export default function XPCardGrid({
   eventSectionId,
@@ -126,25 +126,20 @@ export default function XPCardGrid({
                   `grid-rows-${pageRows}`
                 )}
               >
-                {gradableEventsPage.map((gradableEvent) => (
-                  // TODO: handle locked
-                  <XPCard
-                    title={gradableEvent.name}
-                    subtitle={gradableEvent.topic ?? ""}
-                    key={gradableEvent.id}
-                    color={gradableEvent.gainedXp ? "green" : "silver"}
-                    component={
-                      // TODO: handle no grade, hasChest
-                      <XPCardPoints
-                        points={gradableEvent.gainedXp ?? "0.0"}
-                        isSumLabelVisible={true}
-                      />
-                    }
-                    size={mobile ? "sm" : "md"}
-                    forceWidth={!mobile}
-                    onClick={() => handleGradableEventClick(gradableEvent.id)}
-                  />
-                ))}
+                {gradableEventsPage.map(
+                  ({ id, name, topic, gainedXp, hasChest }) => (
+                    <XPCard
+                      title={name}
+                      subtitle={topic ?? ""}
+                      key={id}
+                      color={gainedXp !== "0.0" ? "green" : "silver"}
+                      component={getCardComponent(gainedXp, hasChest)}
+                      size={mobile ? "sm" : "md"}
+                      forceWidth={!mobile}
+                      onClick={() => handleGradableEventClick(id)}
+                    />
+                  )
+                )}
               </div>
             </div>
             {mobile && gradableEventsPage.length > 0 && pagination}
@@ -155,7 +150,6 @@ export default function XPCardGrid({
       ) : (
         <div className="xp-card-no-grid">Brak aktywności.</div>
       )}
-
       {eventSectionType === "test" && (
         <GradeModal
           gradableEventId={selectedEventId ?? undefined}

@@ -128,7 +128,7 @@ export const EventSectionService = {
           topic: "Interakcje między obiektami",
           orderIndex: 3,
           isLocked: false,
-          hasChest: false,
+          hasChest: true,
         },
         {
           id: 4,
@@ -173,7 +173,7 @@ export const EventSectionService = {
           topic: "Interfejs graficzny",
           orderIndex: 8,
           isLocked: false,
-          hasChest: false,
+          hasChest: true,
         },
         {
           id: 9,
@@ -251,7 +251,7 @@ export const EventSectionService = {
           topic: "Interfejsy i mapy",
           orderIndex: 4,
           isLocked: false,
-          hasChest: true,
+          hasChest: false,
         },
         {
           id: 19,
@@ -269,7 +269,7 @@ export const EventSectionService = {
           topic: "Refactoring kodu",
           orderIndex: 6,
           isLocked: false,
-          hasChest: true,
+          hasChest: false,
         },
         {
           id: 21,
@@ -300,7 +300,7 @@ export const EventSectionService = {
           topic: "Git jest cool",
           orderIndex: 1,
           isLocked: false,
-          hasChest: false,
+          hasChest: true,
         },
       ];
     } else if (eventSectionId === 6) {
@@ -311,7 +311,7 @@ export const EventSectionService = {
           name: "Projekt 2",
           topic: "Refactoring hell",
           orderIndex: 1,
-          isLocked: true,
+          isLocked: false,
           hasChest: false,
         },
       ];
@@ -333,7 +333,7 @@ export const EventSectionService = {
           topic: "Polymorphia",
           orderIndex: 2,
           isLocked: false,
-          hasChest: false,
+          hasChest: true,
         },
       ];
     } else {

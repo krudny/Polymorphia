@@ -4,6 +4,7 @@ import Image from "next/image";
 import "./index.css";
 import { Fragment } from "react";
 import { GradeResponseDTO } from "@/interfaces/api/DTO";
+import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLabels";
 
 export default function GradeInfo({ grade }: { grade: GradeResponseDTO }) {
   return (
@@ -23,6 +24,13 @@ export default function GradeInfo({ grade }: { grade: GradeResponseDTO }) {
                     maxXP={Number(criterion.maxXp)}
                     numSquares={2}
                     segmentSizes={[0, 100, 0]}
+                    lowerElement={
+                      <ProgressBarRangeLabels
+                        minXP={0}
+                        currentXP={Number(criterion.criterionGrade?.xp)}
+                        maxXP={Number(criterion.maxXp)}
+                      />
+                    }
                   />
                 </div>
               </div>

@@ -2,14 +2,10 @@ name: Promote Staging Image to Production
 
 on:
   workflow_dispatch:
-    inputs:
-      image_tag:
-        description: latest
-        required: true
-        default: latest
-
+  
 jobs:
   promote-to-production:
+    if: github.actor == 'krudny'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

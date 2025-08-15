@@ -14,8 +14,6 @@ export default function SpeedDialDesktop({
   const items = useSpeedDialItemsFactory(eventSectionType, gradableEventId);
   const [activeModal, setActiveModal] = useState<ReactNode | null>(null);
 
-  console.log(items);
-
   if (!items) {
     return <Loading />;
   }

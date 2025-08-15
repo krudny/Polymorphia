@@ -16,6 +16,7 @@ export type XPCardVariantProps = {
   size?: "xs" | "sm" | "md" | "lg" | "hofDesktop";
   color?: "gold" | "silver" | "bronze" | "green";
   forceWidth?: boolean;
+  isLocked?: boolean;
 };
 
 export interface XPCardGridProps {
