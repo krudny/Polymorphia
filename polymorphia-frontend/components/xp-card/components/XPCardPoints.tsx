@@ -6,8 +6,9 @@ export default function XPCardPoints({
   isSumLabelVisible = false,
   isXPLabelVisible = true,
   hasChest = false,
+  color,
 }: XPCardPointsProps) {
-  const backgroundColor = points ? "bg-secondary-gray" : "bg-secondary-gray";
+  const backgroundColor = color ?? "bg-secondary-gray";
 
   return (
     <div className={`xp-card-points ${backgroundColor}`}>

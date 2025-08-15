@@ -6,7 +6,7 @@
 }
 
 .search-wrapper {
-    @apply w-full h-full flex-centered text-xl border-b-2  border-primary-dark dark:border-secondary-light rounded;
+    @apply w-full h-full flex-centered text-xl border-b-2  border-primary-dark dark:border-secondary-light;
     @apply md:px-2 md:text-2xl lg:text-3xl;
 
     span {

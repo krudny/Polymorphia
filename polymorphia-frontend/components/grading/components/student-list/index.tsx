@@ -4,14 +4,23 @@ import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import Search from "@/components/search";
+import { useContext } from "react";
 
-export default function StudentsList({ students }: StudentListProps) {
+export default function StudentsList({ context }: StudentListProps) {
+  const {
+    search,
+    setSearch,
+    studentList: students,
+    selectedStudent,
+    setSelectedStudent,
+  } = useContext(context);
+
   return (
     <div className="w-full overflow-y-hidden flex flex-col flex-1 gap-y-4 bg-yellow-300">
       <div className="w-full flex justify-between max-w-[25rem] mx-auto min-h-12 bg-green-600">
         <Search
-          search=""
-          setSearch={() => {}}
+          search={search}
+          setSearch={setSearch}
           placeholder="Szukaj studenta..."
         />
         <ButtonWithBorder
@@ -24,11 +33,12 @@ export default function StudentsList({ students }: StudentListProps) {
           <div
             key={index}
             className="max-w-[25rem] mx-auto my-3 first:mt-0 last:mb-0"
+            onClick={() => setSelectedStudent(student)}
           >
             <XPCard
               key={index}
               title={student.studentName}
-              color={"green"}
+              color={student === selectedStudent ? "sky" : "green"}
               subtitle={student.group}
               size={"xs"}
               leftComponent={
@@ -39,7 +49,12 @@ export default function StudentsList({ students }: StudentListProps) {
               }
               rightComponent={
                 <XPCardPoints
-                  points={Number((Math.random() * 2.6 + 0.3).toFixed(1))}
+                  points={student.gainedXp}
+                  color={
+                    student === selectedStudent
+                      ? "bg-sky-100"
+                      : "bg-secondary-gray"
+                  }
                   isSumLabelVisible={true}
                 />
               }

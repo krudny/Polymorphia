@@ -3,6 +3,7 @@ export interface XPCardPointsProps {
   isSumLabelVisible?: boolean;
   isXPLabelVisible?: boolean;
   hasChest?: boolean;
+  color?: string;
 }
 
 export interface XPCardUngradedProps {
@@ -25,4 +26,11 @@ export interface XPCardDoubleImageProps {
 interface singleImage {
   imageUrl: string;
   alt: string;
+}
+
+export interface XPCardAssignProps {
+  currentAssigned: number;
+  maxAssigned: number;
+  increment: () => void;
+  decrement: () => void;
 }

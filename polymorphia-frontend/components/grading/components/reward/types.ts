@@ -1,5 +1,6 @@
-import {Criterion} from "@/interfaces/api/DTO";
+import { Context } from "react";
+import { TestGradingContextType } from "@/components/providers/grading/test/TestGradingContext";
 
 export interface RewardProps {
-    criteria: Criterion[];
+  context: Context<TestGradingContextType>;
 }

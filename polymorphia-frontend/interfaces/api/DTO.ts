@@ -100,14 +100,31 @@ export const Roles = {
 
 export type Role = (typeof Roles)[keyof typeof Roles];
 
-export interface Criterion {
+export interface GradeResponseDTO {
+  details?: GradeDetailsResponseDTO;
+  criteria: CriterionResponseDTO[];
+}
+
+export interface GradeDetailsResponseDTO {
+  id: number;
+  comment?: string;
+}
+
+export interface CriterionResponseDTO {
   id: number;
   name: string;
-  maxXP: number;
+  maxXp: string;
+  criterionGrade?: CriterionGradeResponseDTO;
+}
+
+export interface CriterionGradeResponseDTO {
+  id: number;
+  gainedXp: string;
+  assignedRewards: any[];
 }
 
 export interface PullRequest {
-    id: number;
-    name: string;
-    url: string;
+  id: number;
+  name: string;
+  url: string;
 }

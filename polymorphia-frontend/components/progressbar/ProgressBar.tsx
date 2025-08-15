@@ -9,6 +9,7 @@ import { ProgressBarProps } from "@/components/progressbar/types";
 import ProgressBarSquare from "@/components/progressbar/ProgressBarSquare";
 
 export default function ProgressBar(props: ProgressBarProps) {
+  console.log(props);
   if (!isProgressBarInputValid(props)) {
     toast.error("Invalid progress bar config");
     return null;

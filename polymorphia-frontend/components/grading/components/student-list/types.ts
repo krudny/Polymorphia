@@ -1,5 +1,6 @@
-import {UserDetailsDTO} from "@/interfaces/api/DTO";
+import { TestGradingContextType } from "@/components/providers/grading/test/TestGradingContext";
+import { Context } from "react";
 
 export interface StudentListProps {
-    students: UserDetailsDTO[]
+  context: Context<TestGradingContextType>;
 }

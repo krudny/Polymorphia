@@ -17,37 +17,39 @@ export default function AssignmentGradingView() {
   }
 
   return (
-    <Grading
-      columns={3}
-      components={[
-        <StudentsList key="1" students={studentsList} />,
-        <Reward
-          key="2"
-          criteria={[
-            { id: 1, name: "Punkty doświadczenia", maxXP: 4 },
-            {
-              id: 2,
-              name: "Punkty doświadczenia",
-              maxXP: 4,
-            },
-          ]}
-        />,
-        <PullRequest
-          key="3"
-          pullRequests={[
-            {
-              id: 1,
-              name: "Laboratorium",
-              url: "https://github.com/krudny/Polymorphia/pull/32",
-            },
-            {
-              id: 2,
-              name: "Zadanie dodatkowe",
-              url: "https://github.com/krudny/Polymorphia/pull/32",
-            },
-          ]}
-        />,
-      ]}
-    />
+    <>
+      <Grading
+        columns={3}
+        components={[
+          <StudentsList key="1" students={studentsList} />,
+          <Reward
+            key="2"
+            criteria={[
+              { id: 1, name: "Punkty doświadczenia", maxXP: 4 },
+              {
+                id: 2,
+                name: "Punkty doświadczenia",
+                maxXP: 4,
+              },
+            ]}
+          />,
+          <PullRequest
+            key="3"
+            pullRequests={[
+              {
+                id: 1,
+                name: "Laboratorium",
+                url: "https://github.com/krudny/Polymorphia/pull/32",
+              },
+              {
+                id: 2,
+                name: "Zadanie dodatkowe",
+                url: "https://github.com/krudny/Polymorphia/pull/32",
+              },
+            ]}
+          />,
+        ]}
+      />
+    </>
   );
 }
