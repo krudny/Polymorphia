@@ -10,7 +10,7 @@ export default function XPCardPoints({
   return (
     <div className="xp-card-points">
       <h1>
-        {points ? points : "-"} {isXPLabelVisible && "xp"}
+        {points ? points : "0.0"} {isXPLabelVisible && "xp"}
       </h1>
       {isSumLabelVisible && <h2>Suma</h2>}
       {hasChest && (

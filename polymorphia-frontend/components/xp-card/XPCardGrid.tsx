@@ -132,7 +132,7 @@ export default function XPCardGrid({
                       title={name}
                       subtitle={topic ?? ""}
                       key={id}
-                      color={gainedXp !== "0.0" ? "green" : "silver"}
+                      color={gainedXp ? "green" : "silver"}
                       component={getCardComponent(gainedXp, hasChest)}
                       size={mobile ? "sm" : "md"}
                       forceWidth={!mobile}
