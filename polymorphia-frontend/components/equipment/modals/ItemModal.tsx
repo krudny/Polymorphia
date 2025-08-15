@@ -5,7 +5,7 @@ import { EquipmentContext } from "@/components/providers/equipment/EquipmentCont
 import { useContext } from "react";
 import Modal from "@/components/modal/Modal";
 import XPCardPoints from "@/components/xp-card/inner-components/XPCardPoints";
-import { ItemAssignmentDetails } from "@/interfaces/api/DTO";
+import { ItemAssignmentDetailsResponseDTO } from "@/interfaces/api/DTO";
 
 export default function ItemModal() {
   const { currentItemModalData, setCurrentItemModalData } =
@@ -21,7 +21,7 @@ export default function ItemModal() {
     >
       <div className="bonus-info-modal">
         {equipmentItem?.details.map(
-          (itemAssignmentDetails: ItemAssignmentDetails) => (
+          (itemAssignmentDetails: ItemAssignmentDetailsResponseDTO) => (
             <XPCard
               key={itemAssignmentDetails.id}
               title={equipmentItem.base.name}

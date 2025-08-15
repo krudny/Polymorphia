@@ -61,22 +61,19 @@ export interface BaseReward {
   orderIndex: number;
 }
 
-export interface BaseRewardAssignmentDetails {
-  id: number;
-  receivedDate: string;
-  usedDate?: string;
-  isUsed: boolean;
+interface BaseRewardResponseDTOWithType<
+  T extends RewardType,
+  R extends BaseReward,
+> {
+  rewardType: T;
+  reward: R;
 }
 
 export type RewardResponseDTO =
   | ItemResponseDTOWithType
   | ChestResponseDTOWithType;
 
-export type AssignedRewardResponseDTO =
-  | AssignedItemResponseDTOWithType
-  | AssignedChestResponseDTOWithType;
-
-// Items
+// Rewards: Items
 export type ItemBonusType = "FLAT_BONUS" | "PERCENTAGE_BONUS";
 
 export interface BaseItem extends BaseReward {
@@ -104,26 +101,12 @@ export interface BasePercentageBonusItem extends BaseItem {
 
 export type ItemResponseDTO = BaseFlatBonusItem | BasePercentageBonusItem;
 
-interface ItemResponseDTOWithType {
-  rewardType: "ITEM";
-  reward: ItemResponseDTO;
-}
+type ItemResponseDTOWithType = BaseRewardResponseDTOWithType<
+  "ITEM",
+  ItemResponseDTO
+>;
 
-export interface ItemAssignmentDetails extends BaseRewardAssignmentDetails {
-  xp?: string; // undefined if item hasn't been used
-}
-
-export interface AssignedItemResponseDTO {
-  base: ItemResponseDTO;
-  details: ItemAssignmentDetails;
-}
-
-interface AssignedItemResponseDTOWithType {
-  rewardType: "ITEM";
-  assignedReward: AssignedItemResponseDTO;
-}
-
-// Chests
+// Rewards: Chests
 export type ChestBehavior = "ALL" | "ONE_OF_MANY";
 
 export interface BaseChest extends BaseReward {
@@ -134,34 +117,81 @@ export interface BaseChest extends BaseReward {
 
 export type ChestResponseDTO = BaseChest;
 
-interface ChestResponseDTOWithType {
-  rewardType: "CHEST";
-  reward: ChestResponseDTO;
+type ChestResponseDTOWithType = BaseRewardResponseDTOWithType<
+  "CHEST",
+  ChestResponseDTO
+>;
+
+// Reward Assignment Details
+export interface BaseRewardAssignmentDetails {
+  id: number;
+  receivedDate: string;
+  usedDate?: string;
+  isUsed: boolean;
 }
 
-export interface ChestAssignmentDetails extends BaseRewardAssignmentDetails {
+export interface ItemAssignmentDetailsResponseDTO
+  extends BaseRewardAssignmentDetails {
+  xp?: string; // undefined if item hasn't been used
+}
+
+export interface ChestAssignmentDetailsResponseDTO
+  extends BaseRewardAssignmentDetails {
   receivedItems?: AssignedItemResponseDTO[]; // undefined if chest hasn't been opened (used)
 }
 
-export interface AssignedChestResponseDTO {
-  base: ChestResponseDTO;
-  details: ChestAssignmentDetails;
+// Assigned Rewards
+interface BaseAssignedReward<B, D> {
+  base: B;
+  details: D;
 }
 
-interface AssignedChestResponseDTOWithType {
-  rewardType: "CHEST";
-  assignedReward: AssignedChestResponseDTO;
+interface BaseAssignedRewardResponseDTOWithType<
+  T extends RewardType,
+  B extends BaseReward,
+  D extends BaseRewardAssignmentDetails,
+> {
+  rewardType: T;
+  assignedReward: BaseAssignedReward<B, D>;
 }
+
+export type AssignedRewardResponseDTO =
+  | AssignedItemResponseDTOWithType
+  | AssignedChestResponseDTOWithType;
+
+// Assigned Rewards: Items
+export type AssignedItemResponseDTO = BaseAssignedReward<
+  ItemResponseDTO,
+  ItemAssignmentDetailsResponseDTO
+>;
+
+type AssignedItemResponseDTOWithType = BaseAssignedRewardResponseDTOWithType<
+  "ITEM",
+  ItemResponseDTO,
+  ItemAssignmentDetailsResponseDTO
+>;
+
+// Assigned Rewards: Chests
+export interface AssignedChestResponseDTO {
+  base: ChestResponseDTO;
+  details: ChestAssignmentDetailsResponseDTO;
+}
+
+type AssignedChestResponseDTOWithType = BaseAssignedRewardResponseDTOWithType<
+  "CHEST",
+  ChestResponseDTO,
+  ChestAssignmentDetailsResponseDTO
+>;
 
 // Equipment
 export interface EquipmentItemResponseDTO {
   base: ItemResponseDTO;
-  details: ItemAssignmentDetails[];
+  details: ItemAssignmentDetailsResponseDTO[];
 }
 
 export interface EquipmentChestResponseDTO {
   base: ChestResponseDTO;
-  details: ChestAssignmentDetails;
+  details: ChestAssignmentDetailsResponseDTO;
 }
 
 // Course
