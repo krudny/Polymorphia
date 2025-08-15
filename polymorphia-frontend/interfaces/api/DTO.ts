@@ -210,18 +210,18 @@ export interface BaseGradableEventResponseDTO {
   name: string;
   topic?: string;
   orderIndex: number;
-  hasReward: boolean;
-  isLocked: boolean;
 }
 
 export interface StudentGradableEventResponseDTO
   extends BaseGradableEventResponseDTO {
   gainedXp?: string;
+  hasReward: boolean;
+  isLocked: boolean;
 }
 
 export interface InstructorGradableEventResponseDTO
   extends BaseGradableEventResponseDTO {
-  ungradedCount: number;
+  ungraded: number;
 }
 
 // Points Summary
