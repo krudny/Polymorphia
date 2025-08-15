@@ -34,9 +34,5 @@ export default function EvolutionStages() {
     return <div>No evolution stages found.</div>;
   }
 
-  return (
-    <Slider
-      slides={evolutionStages.sort((a, b) => a.orderIndex - b.orderIndex)}
-    />
-  );
+  return <Slider slides={evolutionStages} />;
 }

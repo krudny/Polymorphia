@@ -1,5 +1,5 @@
 import { SpeedDialItem } from "@/components/speed-dial/types";
-import EventGradeModal from "@/components/speed-dial/modals/EventGradeModal";
+import GradeModal from "@/components/speed-dial/modals/GradeModal";
 import ProjectVariantModal from "@/components/speed-dial/modals/ProjectVariantModal";
 import GroupModal from "@/components/speed-dial/modals/GroupModal";
 import GroupPickingModal from "@/components/speed-dial/modals/GroupPickingModal";
@@ -15,17 +15,17 @@ export function useSpeedDialItemsFactory(
 
   const rewardsItem: SpeedDialItem = {
     id: 1,
-    order: 5,
+    orderIndex: 5,
     label: "Nagrody",
     icon: "trophy",
     modal: (onClose) => (
-      <EventGradeModal gradableEventId={gradableEventId} onClosed={onClose} />
+      <GradeModal gradableEventId={gradableEventId} onClosed={onClose} />
     ),
   };
 
   const projectVariantItem: SpeedDialItem = {
     id: 2,
-    order: 2,
+    orderIndex: 2,
     label: "Wariant",
     icon: "arrow_split",
     modal: (onClose) => (
@@ -39,7 +39,7 @@ export function useSpeedDialItemsFactory(
 
   const projectGroupItem: SpeedDialItem = {
     id: 3,
-    order: 3,
+    orderIndex: 3,
     label: "Grupa",
     icon: "person",
     modal: (onClose) => (
@@ -49,7 +49,7 @@ export function useSpeedDialItemsFactory(
 
   const projectGroupPickingItem: SpeedDialItem = {
     id: 4,
-    order: 4,
+    orderIndex: 4,
     label: "Utwórz grupę",
     icon: "person_add",
     modal: (onClose) => (
@@ -59,7 +59,7 @@ export function useSpeedDialItemsFactory(
 
   const saveMarkdownItem: SpeedDialItem = {
     id: 5,
-    order: 1,
+    orderIndex: 1,
     label: "Zapisz markdown",
     icon: "save",
     onClick: () => saveMarkdown(),
@@ -68,7 +68,7 @@ export function useSpeedDialItemsFactory(
 
   const editMarkdownItem: SpeedDialItem = {
     id: 6,
-    order: 1,
+    orderIndex: 1,
     label: "Edytuj treść",
     icon: "edit",
     onClick: () => setIsEditing(true),
@@ -76,7 +76,7 @@ export function useSpeedDialItemsFactory(
 
   const rejectMarkdownItem: SpeedDialItem = {
     id: 7,
-    order: 0,
+    orderIndex: 0,
     label: "Anuluj edycję",
     icon: "close",
     onClick: () => rejectMarkdown(),

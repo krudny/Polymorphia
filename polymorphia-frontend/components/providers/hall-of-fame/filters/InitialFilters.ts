@@ -22,7 +22,7 @@ export const filters: HallOfFameFilter[] = [
       {
         label: "Nazwa",
         value: "name",
-        order: Number.NEGATIVE_INFINITY,
+        orderIndex: Number.NEGATIVE_INFINITY,
         isSelected: false,
       },
     ],

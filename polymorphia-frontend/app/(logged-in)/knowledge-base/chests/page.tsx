@@ -39,8 +39,8 @@ export default function Chests() {
 
   return (
     <Slider
-      slides={chests.sort((a, b) => a.orderIndex - b.orderIndex)}
-      initialSlide={parseInt(searchParams.get("slide") ?? "0") || 0}
+      slides={chests}
+      initialSlide={parseInt(searchParams.get("slide") ?? "0")}
     />
   );
 }

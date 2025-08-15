@@ -11,7 +11,20 @@ export default function DetailedSlideInfo({
   type,
   relatedRewards,
 }: DetailedSlideInfoProps) {
-  if (!relatedRewards || relatedRewards.length === 0) {
+  if (!relatedRewards) {
+    return (
+      <div className="slide-details">
+        <div className="slide-details-info">
+          <CircleX size={20} />
+          <h3 className="text-xl 2xl:text-2xl">
+            Błąd ładowania {type === "item" ? "skrzynek" : "przedmiotów"}.
+          </h3>
+        </div>
+      </div>
+    );
+  }
+
+  if (relatedRewards.length === 0) {
     return (
       <div className="slide-details">
         <div className="slide-details-info">
