@@ -175,15 +175,24 @@ export interface EventSectionResponseDTO {
   orderIndex: number;
 }
 
-export interface GradableEventResponseDTO {
+export interface BaseGradableEventResponseDTO {
   id: number;
   type: EventType;
   name: string;
   topic?: string;
-  gainedXp?: string;
   orderIndex: number;
-  isLocked: boolean;
+}
+
+export interface StudentGradableEventResponseDTO
+  extends BaseGradableEventResponseDTO {
+  gainedXp?: string;
   hasChest: boolean;
+  isLocked: boolean;
+}
+
+export interface InstructorGradableEventResponseDTO
+  extends BaseGradableEventResponseDTO {
+  ungradedCount: number;
 }
 
 // Points Summary
