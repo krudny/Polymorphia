@@ -1,7 +1,7 @@
 "use client";
 
 import { MenuOption } from "@/components/navigation/types";
-import { EventSectionResponseDTO } from "@/interfaces/api/DTO";
+import { EventSectionResponseDTO } from "@/interfaces/api/course";
 import { RefObject } from "react";
 
 export function updateMenuItems(

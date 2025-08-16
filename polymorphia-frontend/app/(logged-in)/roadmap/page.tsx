@@ -13,7 +13,7 @@ import { useMediaQuery } from "react-responsive";
 import RoadmapModals from "@/app/(logged-in)/roadmap/RoadmapModals";
 import { getCardComponent } from "@/shared/card/getCardComponent";
 import "./styles.css";
-import { StudentGradableEventResponseDTO } from "@/interfaces/api/DTO";
+import { StudentGradableEventResponseDTO } from "@/interfaces/api/course";
 
 export default function Roadmap() {
   const { setTitle } = useTitle();

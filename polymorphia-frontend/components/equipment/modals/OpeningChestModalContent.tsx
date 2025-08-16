@@ -5,7 +5,7 @@ import { useContext } from "react";
 import Image from "next/image";
 import { useModal } from "@/components/providers/modal/ModalContext";
 import "../index.css";
-import { BaseItem } from "@/interfaces/api/DTO";
+import { BaseItem } from "@/interfaces/api/reward";
 
 export default function OpeningChestModalContent() {
   const { closeModal } = useModal();

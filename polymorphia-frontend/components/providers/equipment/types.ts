@@ -1,7 +1,7 @@
 import {
   EquipmentChestResponseDTO,
   EquipmentItemResponseDTO,
-} from "@/interfaces/api/DTO";
+} from "@/interfaces/api/equipment";
 import { Dispatch, SetStateAction } from "react";
 
 export interface EquipmentContextInterface {

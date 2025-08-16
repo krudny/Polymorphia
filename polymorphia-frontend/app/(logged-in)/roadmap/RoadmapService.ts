@@ -1,4 +1,4 @@
-import { StudentGradableEventResponseDTO } from "@/interfaces/api/DTO";
+import { StudentGradableEventResponseDTO } from "@/interfaces/api/course";
 
 export const RoadmapService = {
   getRoadmapData: async (): Promise<StudentGradableEventResponseDTO[]> => {

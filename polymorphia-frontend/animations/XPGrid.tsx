@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { StudentGradableEventResponseDTO } from "@/interfaces/api/DTO";
+import { StudentGradableEventResponseDTO } from "@/interfaces/api/course";
 
 export function useXPGridAnimation(
   pageToShow: number,

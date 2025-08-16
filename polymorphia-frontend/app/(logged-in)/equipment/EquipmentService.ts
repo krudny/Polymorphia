@@ -1,7 +1,7 @@
 import {
   EquipmentChestResponseDTO,
   EquipmentItemResponseDTO,
-} from "@/interfaces/api/DTO";
+} from "@/interfaces/api/equipment";
 
 const EquipmentService = {
   getItems: async (): Promise<EquipmentItemResponseDTO[]> => {

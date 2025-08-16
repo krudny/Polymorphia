@@ -9,7 +9,7 @@ import HallOfFamePodium from "@/components/hall-of-fame/desktop/HallOfFamePodium
 import HallOfFameSearch from "@/components/hall-of-fame/general/HallOfFameSearch";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import Loading from "@/components/loading/Loading";
-import { HallOfFameRecordDTO } from "@/interfaces/api/DTO";
+import { HallOfFameRecordDTO } from "@/interfaces/api/hall-of-fame";
 import HallOfFameCardDesktop from "@/components/hall-of-fame/desktop/HallOfFameCardDesktop";
 
 export default function HallOfFameDesktop() {

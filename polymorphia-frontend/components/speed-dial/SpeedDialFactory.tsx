@@ -5,7 +5,7 @@ import GroupModal from "@/components/speed-dial/modals/GroupModal";
 import GroupPickingModal from "@/components/speed-dial/modals/GroupPickingModal";
 import { useContext } from "react";
 import { MarkdownContext } from "@/components/providers/markdown/MarkdownContext";
-import { EventType } from "@/interfaces/api/DTO";
+import { EventType } from "@/interfaces/api/course";
 
 export function useSpeedDialItemsFactory(
   eventSectionType: EventType,

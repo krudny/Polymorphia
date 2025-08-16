@@ -1,4 +1,4 @@
-import { EventType } from "@/interfaces/api/DTO";
+import { EventType } from "@/interfaces/api/course";
 
 export interface SpeedDialModalProps {
   gradableEventId: number | undefined;

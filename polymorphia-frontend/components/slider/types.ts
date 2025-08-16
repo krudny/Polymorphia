@@ -1,4 +1,4 @@
-import { KnowledgeBaseResponseDTO } from "@/interfaces/api/DTO";
+import { KnowledgeBaseResponseDTO } from "@/interfaces/api/knowledge-base";
 
 export interface SingleSlideProps {
   slide: KnowledgeBaseResponseDTO;

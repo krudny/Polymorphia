@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import { useScaleShow } from "@/animations/ScaleShow";
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
-import { EventType } from "@/interfaces/api/DTO";
+import { EventType } from "@/interfaces/api/course";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";

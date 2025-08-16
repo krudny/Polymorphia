@@ -3,7 +3,7 @@ import { EquipmentContextInterface } from "@/components/providers/equipment/type
 import {
   EquipmentChestResponseDTO,
   EquipmentItemResponseDTO,
-} from "@/interfaces/api/DTO";
+} from "@/interfaces/api/equipment";
 
 export const EquipmentContext = createContext<EquipmentContextInterface>({
   currentItemModalData: null,

@@ -3,7 +3,7 @@ import HallOfFamePointsSummary from "@/components/hall-of-fame/general/HallOfFam
 import HallOfFameUserData from "@/components/hall-of-fame/general/HallOfFameUserData";
 import UserPoints from "@/components/user-points/UserPoints";
 import "./index.css";
-import { HallOfFameRecordDTO } from "@/interfaces/api/DTO";
+import { HallOfFameRecordDTO } from "@/interfaces/api/hall-of-fame";
 import { useContext } from "react";
 import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
 import { getAllFilters } from "@/components/providers/hall-of-fame/utils/getAllFilters";

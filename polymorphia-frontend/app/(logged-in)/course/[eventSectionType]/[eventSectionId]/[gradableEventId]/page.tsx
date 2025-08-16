@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { EventType } from "@/interfaces/api/DTO";
+import { EventType } from "@/interfaces/api/course";
 import { MarkdownProvider } from "@/components/providers/markdown/MarkdownContext";
 import SpeedDialMobile from "@/components/speed-dial/SpeedDialMobile";
 import SpeedDialDesktop from "@/components/speed-dial/SpeedDialDesktop";

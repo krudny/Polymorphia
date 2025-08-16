@@ -3,7 +3,7 @@ import { API_STATIC_URL } from "@/services/api";
 import Image from "next/image";
 import "./index.css";
 import { Fragment } from "react";
-import { GradeResponseDTO } from "@/interfaces/api/DTO";
+import { GradeResponseDTO } from "@/interfaces/api/grade";
 import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLabels";
 
 export default function GradeInfo({ grade }: { grade: GradeResponseDTO }) {

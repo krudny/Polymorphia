@@ -1,4 +1,4 @@
-import { EventType } from "@/interfaces/api/DTO";
+import { EventType } from "@/interfaces/api/course";
 import { ReactNode } from "react";
 
 export interface SpeedDialProps {

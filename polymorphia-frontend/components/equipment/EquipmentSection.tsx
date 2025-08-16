@@ -9,7 +9,7 @@ import { EquipmentSectionProps } from "@/components/equipment/types";
 import {
   EquipmentChestResponseDTO,
   EquipmentItemResponseDTO,
-} from "@/interfaces/api/DTO";
+} from "@/interfaces/api/equipment";
 
 export function EquipmentSection({ type, data }: EquipmentSectionProps) {
   const {

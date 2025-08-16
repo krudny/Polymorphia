@@ -2,7 +2,7 @@ import {
   HallOfFameFilter,
   HallOfFameFilterOption,
 } from "@/components/hall-of-fame/general/types";
-import { EventSectionResponseDTO } from "@/interfaces/api/DTO";
+import { EventSectionResponseDTO } from "@/interfaces/api/course";
 
 export const addEventSectionsToFilters = (
   eventSections: EventSectionResponseDTO[],

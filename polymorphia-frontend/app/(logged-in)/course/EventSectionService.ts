@@ -5,15 +5,15 @@ import {
   groups,
   studentNames,
 } from "@/app/(logged-in)/hall-of-fame/HallOfFameService";
+import { ProjectVariantResponseDTO } from "@/interfaces/api/course/project";
+import { GradeResponseDTO } from "@/interfaces/api/grade";
+import { MarkdownResponseDTO } from "@/interfaces/api/markdown";
+import { PointsSummaryResponseDTO } from "@/interfaces/api/course/points-summary";
 import {
   EventSectionResponseDTO,
   StudentGradableEventResponseDTO,
-  MarkdownResponseDTO,
-  PointsSummaryResponseDTO,
-  ProjectVariantResponseDTO,
-  GradeResponseDTO,
-  UserDetailsDTO,
-} from "@/interfaces/api/DTO";
+} from "@/interfaces/api/course";
+import { UserDetailsDTO } from "@/interfaces/api/user";
 
 const allData: UserDetailsDTO[] = [];
 

@@ -6,7 +6,7 @@ import { EventSectionService } from "@/app/(logged-in)/course/EventSectionServic
 import Loading from "@/components/loading/Loading";
 import BonusInfoModal from "@/components/course/event-section/points-summary/BonusInfoModal";
 import PointsSummaryElement from "@/components/course/event-section/points-summary/PointsSummaryElement";
-import { PointsSummaryDetailsResponseDTO } from "@/interfaces/api/DTO";
+import { PointsSummaryDetailsResponseDTO } from "@/interfaces/api/course/points-summary";
 
 export default function PointsSummary({
   eventSectionId,

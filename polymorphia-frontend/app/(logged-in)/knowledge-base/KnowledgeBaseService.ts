@@ -1,6 +1,6 @@
 /* eslint-disable -- unused variables because of mocks, TODO: remove this line */
 
-import { KnowledgeBaseResponseDTO } from "@/interfaces/api/DTO";
+import { KnowledgeBaseResponseDTO } from "@/interfaces/api/knowledge-base";
 // import { API_HOST } from "@/services/api";
 
 const KnowledgeBaseService = {
