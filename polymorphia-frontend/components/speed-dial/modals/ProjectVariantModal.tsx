@@ -15,7 +15,7 @@ export default function ProjectVariantModal({
   const { data, isLoading, isError } = useQuery({
     queryKey: ["projectVariant", gradableEventId],
     queryFn: () => EventSectionService.getProjectVariant(gradableEventId!),
-    enabled: !!gradableEventId && eventSectionType === "project",
+    enabled: !!gradableEventId && eventSectionType === "PROJECT",
   });
 
   const subtitle =

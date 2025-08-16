@@ -187,7 +187,7 @@ export interface EquipmentChestResponseDTO {
 }
 
 // Course
-export type EventType = "assignment" | "project" | "test";
+export type EventType = "ASSIGNMENT" | "PROJECT" | "TEST";
 
 export interface EventSectionResponseDTO {
   id: number;

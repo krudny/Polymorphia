@@ -5,7 +5,7 @@ export const RoadmapService = {
     return [
       {
         id: 1,
-        type: "test",
+        type: "TEST",
         name: "Kartkówka 1",
         topic: "Instrukcje sterujące",
         gainedXp: "1.5",
@@ -15,7 +15,7 @@ export const RoadmapService = {
       },
       {
         id: 15,
-        type: "assignment",
+        type: "ASSIGNMENT",
         name: "Laboratorium 1",
         topic: "Instrukcje sterujące w Javie",
         gainedXp: "2.0",
@@ -25,7 +25,7 @@ export const RoadmapService = {
       },
       {
         id: 2,
-        type: "test",
+        type: "TEST",
         name: "Kartkówka 2",
         topic: "Model obiektowy",
         orderIndex: 3,
@@ -34,7 +34,7 @@ export const RoadmapService = {
       },
       {
         id: 16,
-        type: "assignment",
+        type: "ASSIGNMENT",
         name: "Laboratorium 2",
         topic: "Model obiektowy",
         orderIndex: 4,
@@ -43,7 +43,7 @@ export const RoadmapService = {
       },
       {
         id: 30,
-        type: "assignment",
+        type: "ASSIGNMENT",
         name: "Dziady",
         topic: "Straszenie programistów",
         orderIndex: 5,
@@ -52,7 +52,7 @@ export const RoadmapService = {
       },
       {
         id: 33,
-        type: "assignment",
+        type: "ASSIGNMENT",
         name: "Dziady 2",
         topic: "Straszenie programistów 2",
         orderIndex: 5,
@@ -61,7 +61,7 @@ export const RoadmapService = {
       },
       {
         id: 3,
-        type: "test",
+        type: "TEST",
         name: "Kartkówka 3",
         topic: "Interakcje między obiektami",
         orderIndex: 6,
@@ -70,7 +70,7 @@ export const RoadmapService = {
       },
       {
         id: 17,
-        type: "assignment",
+        type: "ASSIGNMENT",
         name: "Laboratorium 3",
         topic: "Interakcje między obiektami",
         orderIndex: 7,
@@ -79,7 +79,7 @@ export const RoadmapService = {
       },
       {
         id: 4,
-        type: "test",
+        type: "TEST",
         name: "Kartkówka 4",
         topic: "Interfejsy i mapy",
         orderIndex: 8,
@@ -88,7 +88,7 @@ export const RoadmapService = {
       },
       {
         id: 18,
-        type: "assignment",
+        type: "ASSIGNMENT",
         name: "Laboratorium 4",
         topic: "Interfejsy i mapy",
         orderIndex: 9,
@@ -97,7 +97,7 @@ export const RoadmapService = {
       },
       {
         id: 5,
-        type: "test",
+        type: "TEST",
         name: "Kartkówka 5",
         topic: "Dziedziczenie",
         orderIndex: 10,
@@ -106,7 +106,7 @@ export const RoadmapService = {
       },
       {
         id: 19,
-        type: "assignment",
+        type: "ASSIGNMENT",
         name: "Laboratorium 5",
         topic: "Dziedziczenie",
         orderIndex: 11,
@@ -115,7 +115,7 @@ export const RoadmapService = {
       },
       {
         id: 6,
-        type: "test",
+        type: "TEST",
         name: "Kartkówka 6",
         topic: "Refactoring kodu",
         orderIndex: 12,
@@ -124,7 +124,7 @@ export const RoadmapService = {
       },
       {
         id: 20,
-        type: "assignment",
+        type: "ASSIGNMENT",
         name: "Laboratorium 6",
         topic: "Refactoring kodu",
         orderIndex: 13,
@@ -133,7 +133,7 @@ export const RoadmapService = {
       },
       {
         id: 7,
-        type: "test",
+        type: "TEST",
         name: "Kartkówka 7",
         topic: "Wielowątkowość",
         orderIndex: 14,
@@ -142,7 +142,7 @@ export const RoadmapService = {
       },
       {
         id: 21,
-        type: "assignment",
+        type: "ASSIGNMENT",
         name: "Laboratorium 7",
         topic: "Wielowątkowość",
         orderIndex: 15,
@@ -151,7 +151,7 @@ export const RoadmapService = {
       },
       {
         id: 8,
-        type: "test",
+        type: "TEST",
         name: "Kartkówka 8",
         topic: "Interfejs graficzny",
         orderIndex: 16,
@@ -160,7 +160,7 @@ export const RoadmapService = {
       },
       {
         id: 22,
-        type: "assignment",
+        type: "ASSIGNMENT",
         name: "Laboratorium 8",
         topic: "Interfejs graficzny",
         orderIndex: 17,
@@ -169,7 +169,7 @@ export const RoadmapService = {
       },
       {
         id: 9,
-        type: "test",
+        type: "TEST",
         name: "Kartkówka 9",
         topic: "Lambdy, streamy i zarządzanie zasobami",
         orderIndex: 18,
@@ -178,7 +178,7 @@ export const RoadmapService = {
       },
       {
         id: 10,
-        type: "test",
+        type: "TEST",
         name: "Kartkówka 10",
         topic: "Kotlin jako alternatywa dla Javy",
         orderIndex: 19,
@@ -187,7 +187,7 @@ export const RoadmapService = {
       },
       {
         id: 11,
-        type: "test",
+        type: "TEST",
         name: "Kartkówka 11",
         topic: "A może Rust?",
         orderIndex: 20,
@@ -196,7 +196,7 @@ export const RoadmapService = {
       },
       {
         id: 12,
-        type: "test",
+        type: "TEST",
         name: "Kartkówka 12",
         topic: "Jak wycentrować diva",
         orderIndex: 21,

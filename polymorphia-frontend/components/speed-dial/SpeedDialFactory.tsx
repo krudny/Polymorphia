@@ -5,9 +5,10 @@ import GroupModal from "@/components/speed-dial/modals/GroupModal";
 import GroupPickingModal from "@/components/speed-dial/modals/GroupPickingModal";
 import { useContext } from "react";
 import { MarkdownContext } from "@/components/providers/markdown/MarkdownContext";
+import { EventType } from "@/interfaces/api/DTO";
 
 export function useSpeedDialItemsFactory(
-  eventSectionType: string,
+  eventSectionType: EventType,
   gradableEventId: number
 ): SpeedDialItem[] {
   const { isEditing, setIsEditing, saveMarkdown, rejectMarkdown } =
@@ -84,9 +85,9 @@ export function useSpeedDialItemsFactory(
   };
 
   switch (eventSectionType) {
-    case "assignment":
+    case "ASSIGNMENT":
       return [rewardsItem];
-    case "project":
+    case "PROJECT":
       return [
         ...(isEditing
           ? [saveMarkdownItem, rejectMarkdownItem]

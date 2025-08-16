@@ -95,7 +95,7 @@ export default function XPCardGrid({
   );
 
   const handleGradableEventClick = (id: number) => {
-    if (eventSectionType === "test") {
+    if (eventSectionType === "TEST") {
       setSelectedEventId(id);
     } else {
       router.push(`/course/${eventSectionType}/${eventSectionId}/${id}`);
@@ -150,7 +150,7 @@ export default function XPCardGrid({
       ) : (
         <div className="xp-card-no-grid">Brak aktywności.</div>
       )}
-      {eventSectionType === "test" && (
+      {eventSectionType === "TEST" && (
         <GradeModal
           gradableEventId={selectedEventId ?? undefined}
           onClosed={() => setSelectedEventId(null)}

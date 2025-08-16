@@ -45,37 +45,37 @@ const eventSectionData: EventSectionResponseDTO[] = [
   {
     id: 2,
     name: "Laboratorium",
-    type: "assignment",
+    type: "ASSIGNMENT",
     orderIndex: 2,
   },
   {
     id: 3,
     name: "Projekt 1",
-    type: "project",
+    type: "PROJECT",
     orderIndex: 4,
   },
   {
     id: 1,
     name: "Kartkówka",
-    type: "test",
+    type: "TEST",
     orderIndex: 1,
   },
   {
     id: 4,
     name: "Git",
-    type: "assignment",
+    type: "ASSIGNMENT",
     orderIndex: 0,
   },
   {
     id: 5,
     name: "Specjalny lab",
-    type: "assignment",
+    type: "ASSIGNMENT",
     orderIndex: 3,
   },
   {
     id: 6,
     name: "Projekt 2",
-    type: "project",
+    type: "PROJECT",
     orderIndex: 5,
   },
 ];
@@ -103,7 +103,7 @@ export const EventSectionService = {
       const events: StudentGradableEventResponseDTO[] = [
         {
           id: 1,
-          type: "test",
+          type: "TEST",
           name: "Test 1",
           topic: "Instrukcje sterujące",
           gainedXp: "1.5",
@@ -113,7 +113,7 @@ export const EventSectionService = {
         },
         {
           id: 2,
-          type: "test",
+          type: "TEST",
           name: "Test 2",
           topic: "Model obiektowy",
           gainedXp: "0.0",
@@ -123,7 +123,7 @@ export const EventSectionService = {
         },
         {
           id: 3,
-          type: "test",
+          type: "TEST",
           name: "Test 3",
           topic: "Interakcje między obiektami",
           orderIndex: 3,
@@ -132,7 +132,7 @@ export const EventSectionService = {
         },
         {
           id: 4,
-          type: "test",
+          type: "TEST",
           name: "Test 4",
           topic: "Interfejsy i mapy",
           orderIndex: 4,
@@ -141,7 +141,7 @@ export const EventSectionService = {
         },
         {
           id: 5,
-          type: "test",
+          type: "TEST",
           name: "Test 5",
           topic: "Dziedziczenie",
           orderIndex: 5,
@@ -150,7 +150,7 @@ export const EventSectionService = {
         },
         {
           id: 6,
-          type: "test",
+          type: "TEST",
           name: "Test 6",
           topic: "Refactoring kodu",
           orderIndex: 6,
@@ -159,7 +159,7 @@ export const EventSectionService = {
         },
         {
           id: 7,
-          type: "test",
+          type: "TEST",
           name: "Test 7",
           topic: "Wielowątkowość",
           orderIndex: 7,
@@ -168,7 +168,7 @@ export const EventSectionService = {
         },
         {
           id: 8,
-          type: "test",
+          type: "TEST",
           name: "Test 8",
           topic: "Interfejs graficzny",
           orderIndex: 8,
@@ -177,7 +177,7 @@ export const EventSectionService = {
         },
         {
           id: 9,
-          type: "test",
+          type: "TEST",
           name: "Test 9",
           topic: "Lambdy, streamy i zarządzanie zasobami",
           orderIndex: 9,
@@ -186,7 +186,7 @@ export const EventSectionService = {
         },
         {
           id: 10,
-          type: "test",
+          type: "TEST",
           name: "Test 10",
           topic: "Kotlin jako alternatywa dla Javy",
           orderIndex: 10,
@@ -195,7 +195,7 @@ export const EventSectionService = {
         },
         {
           id: 11,
-          type: "test",
+          type: "TEST",
           name: "Test 11",
           topic: "A może Rust?",
           orderIndex: 11,
@@ -204,7 +204,7 @@ export const EventSectionService = {
         },
         {
           id: 12,
-          type: "test",
+          type: "TEST",
           name: "Test 12",
           topic: "Jak wycentrować diva",
           orderIndex: 12,
@@ -217,7 +217,7 @@ export const EventSectionService = {
       const events: StudentGradableEventResponseDTO[] = [
         {
           id: 15,
-          type: "assignment",
+          type: "ASSIGNMENT",
           name: "Lab 1",
           topic: "Instrukcje sterujące w Javie",
           gainedXp: "2.0",
@@ -227,7 +227,7 @@ export const EventSectionService = {
         },
         {
           id: 16,
-          type: "assignment",
+          type: "ASSIGNMENT",
           name: "Lab 2",
           topic: "Model obiektowy",
           gainedXp: "0.0",
@@ -237,7 +237,7 @@ export const EventSectionService = {
         },
         {
           id: 17,
-          type: "assignment",
+          type: "ASSIGNMENT",
           name: "Lab 3",
           topic: "Interakcje między obiektami",
           orderIndex: 3,
@@ -246,7 +246,7 @@ export const EventSectionService = {
         },
         {
           id: 18,
-          type: "assignment",
+          type: "ASSIGNMENT",
           name: "Lab 4",
           topic: "Interfejsy i mapy",
           orderIndex: 4,
@@ -255,7 +255,7 @@ export const EventSectionService = {
         },
         {
           id: 19,
-          type: "assignment",
+          type: "ASSIGNMENT",
           name: "Lab 5",
           topic: "Dziedziczenie",
           orderIndex: 5,
@@ -264,7 +264,7 @@ export const EventSectionService = {
         },
         {
           id: 20,
-          type: "assignment",
+          type: "ASSIGNMENT",
           name: "Lab 6",
           topic: "Refactoring kodu",
           orderIndex: 6,
@@ -273,7 +273,7 @@ export const EventSectionService = {
         },
         {
           id: 21,
-          type: "assignment",
+          type: "ASSIGNMENT",
           name: "Lab 7",
           topic: "Wielowątkowość",
           orderIndex: 7,
@@ -282,7 +282,7 @@ export const EventSectionService = {
         },
         {
           id: 22,
-          type: "assignment",
+          type: "ASSIGNMENT",
           name: "Lab 8",
           topic: "Interfejs graficzny",
           orderIndex: 8,
@@ -295,7 +295,7 @@ export const EventSectionService = {
       return [
         {
           id: 30,
-          type: "assignment",
+          type: "ASSIGNMENT",
           name: "Lab 0",
           topic: "Git jest cool",
           orderIndex: 1,
@@ -307,7 +307,7 @@ export const EventSectionService = {
       return [
         {
           id: 32,
-          type: "project",
+          type: "PROJECT",
           name: "Projekt 2",
           topic: "Refactoring hell",
           orderIndex: 1,
@@ -319,7 +319,7 @@ export const EventSectionService = {
       return [
         {
           id: 33,
-          type: "project",
+          type: "PROJECT",
           name: "Projekt 1a",
           topic: "Darwin World",
           orderIndex: 1,
@@ -328,7 +328,7 @@ export const EventSectionService = {
         },
         {
           id: 34,
-          type: "project",
+          type: "PROJECT",
           name: "Projekt 1b",
           topic: "Polymorphia",
           orderIndex: 2,
