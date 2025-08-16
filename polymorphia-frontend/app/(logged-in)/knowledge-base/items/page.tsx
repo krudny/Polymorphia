@@ -41,7 +41,7 @@ export default function Items() {
   return (
     <Slider
       slides={items}
-      initialSlide={parseInt(searchParams.get("slide") ?? "0") || 0}
+      initialSlide={parseInt(searchParams.get("slide") ?? "0")}
     />
   );
 }

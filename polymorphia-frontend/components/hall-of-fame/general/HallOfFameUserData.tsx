@@ -1,5 +1,5 @@
 import "./index.css";
-import { UserDetailsDTO } from "@/interfaces/api/DTO";
+import { UserDetailsDTO } from "@/interfaces/api/user";
 
 export default function HallOfFameUserData({
   animalName,

@@ -8,7 +8,7 @@ import { handlePageChange } from "@/components/providers/hall-of-fame/utils/hand
 import HallOfFamePodium from "@/components/hall-of-fame/desktop/HallOfFamePodium";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import Loading from "@/components/loading/Loading";
-import { HallOfFameRecordDTO } from "@/interfaces/api/DTO";
+import { HallOfFameRecordDTO } from "@/interfaces/api/hall-of-fame";
 import HallOfFameCardDesktop from "@/components/hall-of-fame/desktop/HallOfFameCardDesktop";
 import Search from "@/components/search";
 

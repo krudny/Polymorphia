@@ -14,7 +14,7 @@ export default function SpeedDialMobile() {
     return <Loading />;
   }
 
-  items.sort((a, b) => b.order - a.order);
+  items.sort((a, b) => b.orderIndex - a.orderIndex);
 
   return (
     <>

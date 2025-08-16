@@ -1,11 +1,11 @@
 import { SpeedDialItem } from "@/components/speed-dial/types";
-import GradableEventRewardModal from "@/components/speed-dial/modals/GradableEventRewardModal";
 import ProjectVariantModal from "@/components/speed-dial/modals/ProjectVariantModal";
 import GroupModal from "@/components/speed-dial/modals/GroupModal";
 import GroupPickingModal from "@/components/speed-dial/modals/GroupPickingModal";
 import { useContext } from "react";
 import { MarkdownContext } from "@/components/providers/markdown/MarkdownContext";
 import { useEventParams } from "@/shared/params/useSeachParams";
+import GradeModal from "@/components/speed-dial/modals/GradeModal";
 
 export function useSpeedDialItemsFactory(): SpeedDialItem[] {
   const { eventSectionType } = useEventParams();
@@ -14,15 +14,17 @@ export function useSpeedDialItemsFactory(): SpeedDialItem[] {
 
   const rewardsItem: SpeedDialItem = {
     id: 1,
-    order: 5,
+    orderIndex: 5,
     label: "Nagrody",
     icon: "trophy",
-    modal: (onClose) => <GradableEventRewardModal onClosed={onClose} />,
+    modal: (onClose) => (
+      <GradeModal onClosed={onClose} />
+    ),
   };
 
   const projectVariantItem: SpeedDialItem = {
     id: 2,
-    order: 2,
+    orderIndex: 2,
     label: "Wariant",
     icon: "arrow_split",
     modal: (onClose) => <ProjectVariantModal onClosed={onClose} />,
@@ -30,7 +32,7 @@ export function useSpeedDialItemsFactory(): SpeedDialItem[] {
 
   const projectGroupItem: SpeedDialItem = {
     id: 3,
-    order: 3,
+    orderIndex: 3,
     label: "Grupa",
     icon: "person",
     modal: (onClose) => <GroupModal onClosed={onClose} />,
@@ -38,7 +40,7 @@ export function useSpeedDialItemsFactory(): SpeedDialItem[] {
 
   const projectGroupPickingItem: SpeedDialItem = {
     id: 4,
-    order: 4,
+    orderIndex: 4,
     label: "Utwórz grupę",
     icon: "person_add",
     modal: (onClose) => <GroupPickingModal onClosed={onClose} />,
@@ -46,7 +48,7 @@ export function useSpeedDialItemsFactory(): SpeedDialItem[] {
 
   const saveMarkdownItem: SpeedDialItem = {
     id: 5,
-    order: 1,
+    orderIndex: 1,
     label: "Zapisz markdown",
     icon: "save",
     onClick: () => saveMarkdown(),
@@ -55,7 +57,7 @@ export function useSpeedDialItemsFactory(): SpeedDialItem[] {
 
   const editMarkdownItem: SpeedDialItem = {
     id: 6,
-    order: 1,
+    orderIndex: 1,
     label: "Edytuj treść",
     icon: "edit",
     onClick: () => setIsEditing(true),
@@ -63,7 +65,7 @@ export function useSpeedDialItemsFactory(): SpeedDialItem[] {
 
   const rejectMarkdownItem: SpeedDialItem = {
     id: 7,
-    order: 0,
+    orderIndex: 0,
     label: "Anuluj edycję",
     icon: "close",
     onClick: () => rejectMarkdown(),
@@ -71,9 +73,9 @@ export function useSpeedDialItemsFactory(): SpeedDialItem[] {
   };
 
   switch (eventSectionType) {
-    case "assignment":
+    case "ASSIGNMENT":
       return [rewardsItem];
-    case "project":
+    case "PROJECT":
       return [
         ...(isEditing
           ? [saveMarkdownItem, rejectMarkdownItem]

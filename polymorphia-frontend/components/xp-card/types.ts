@@ -1,4 +1,4 @@
-import { EventSectionType } from "@/components/course/event-section/types";
+import { EventType } from "@/interfaces/api/course";
 import { ReactNode, RefObject } from "react";
 
 export interface XPCardProps {
@@ -28,6 +28,6 @@ export interface XPCardGridProps {
 
 export interface CardGridProps {
   eventSectionId: number;
-  eventSectionType: EventSectionType;
+  eventSectionType: EventType;
   containerRef: RefObject<HTMLDivElement | null>;
 }

@@ -1,6 +1,9 @@
 import { createContext, ReactNode, useState } from "react";
 import { EquipmentContextInterface } from "@/components/providers/equipment/types";
-import { ChestData, ItemData } from "@/components/equipment/types";
+import {
+  EquipmentChestResponseDTO,
+  EquipmentItemResponseDTO,
+} from "@/interfaces/api/equipment";
 
 export const EquipmentContext = createContext<EquipmentContextInterface>({
   currentItemModalData: null,
@@ -15,11 +18,11 @@ export const EquipmentContext = createContext<EquipmentContextInterface>({
 
 export const EquipmentProvider = ({ children }: { children: ReactNode }) => {
   const [currentItemModalData, setCurrentItemModalData] =
-    useState<ItemData | null>(null);
+    useState<EquipmentItemResponseDTO | null>(null);
   const [currentChestModalData, setCurrentChestModalData] =
-    useState<ChestData | null>(null);
+    useState<EquipmentChestResponseDTO | null>(null);
   const [currentOpeningChestModalData, setCurrentOpeningChestModalData] =
-    useState<ChestData | null>(null);
+    useState<EquipmentChestResponseDTO | null>(null);
   const [pickedItemsIds, setPickedItemsIds] = useState<number[]>([]);
 
   return (

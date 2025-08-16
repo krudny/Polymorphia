@@ -1,4 +1,5 @@
-import { Role, Roles, UserDetailsDTO } from "@/interfaces/api/DTO";
+import { UserDetailsDTO } from "@/interfaces/api/user";
+import { Role, Roles } from "@/interfaces/api/DTO";
 
 const UserService = {
   getCurrentUser: async (): Promise<UserDetailsDTO> => {

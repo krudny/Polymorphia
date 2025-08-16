@@ -1,53 +1,24 @@
-import { UseQueryResult } from "@tanstack/react-query";
-
-export type ItemQueryResult = UseQueryResult<ItemSlide[] | undefined, Error>;
-
-export type ChestQueryResult = UseQueryResult<ChestSlide[] | undefined, Error>;
-
-export type SliderSlide = EvolutionStageSlide | ItemSlide | ChestSlide;
-
-export interface EvolutionStageSlide {
-  type: "evolution-stage";
-  name: string;
-  description: string;
-  imageUrl: string;
-  gradingText: string;
-}
-
-export interface ItemSlide {
-  type: "item";
-  id: number;
-  name: string;
-  description: string;
-  imageUrl: string;
-  textBonus: string;
-  chestIds: number[];
-}
-
-export interface ChestSlide {
-  type: "chest";
-  id: number;
-  name: string;
-  description: string;
-  imageUrl: string;
-  behavior: string;
-  itemIds: number[];
-}
+import { KnowledgeBaseResponseDTO } from "@/interfaces/api/knowledge-base";
 
 export interface SingleSlideProps {
-  slide: SliderSlide;
+  slide: KnowledgeBaseResponseDTO;
   position: number;
   prevSlideAction: () => void;
   nextSlideAction: () => void;
 }
 
 export interface SliderProps {
-  slides: SliderSlide[];
+  slides: KnowledgeBaseResponseDTO[];
   initialSlide?: number;
 }
 
+export interface DetailedSlideInfoProps {
+  type: KnowledgeBaseResponseDTO["type"];
+  relatedRewards: KnowledgeBaseResponseDTO["relatedRewards"];
+}
+
 export interface NavigationDotsProps {
-  slides: SliderSlide[];
+  slides: KnowledgeBaseResponseDTO[];
   currentSlide: number;
   goToSlide: (index: number) => void;
 }

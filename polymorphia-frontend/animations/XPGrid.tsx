@@ -1,5 +1,4 @@
-import {ReactNode, RefObject, useEffect, useRef} from "react";
-import { BaseGradableEventResponseDTO } from "@/app/(logged-in)/course/EventSectionService";
+import { useEffect, useRef, RefObject, ReactNode } from "react";
 import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 

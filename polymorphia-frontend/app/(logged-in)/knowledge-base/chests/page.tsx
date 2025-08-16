@@ -40,7 +40,7 @@ export default function Chests() {
   return (
     <Slider
       slides={chests}
-      initialSlide={parseInt(searchParams.get("slide") ?? "0") || 0}
+      initialSlide={parseInt(searchParams.get("slide") ?? "0")}
     />
   );
 }
