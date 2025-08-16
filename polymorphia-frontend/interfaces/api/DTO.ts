@@ -32,13 +32,6 @@ export interface UserDetailsDTO {
 // Knowledge Base
 export type KnowledgeBaseType = "evolution-stage" | "item" | "chest";
 
-export interface KnowledgeBaseRelatedRewardResponseDTO {
-  id: number;
-  orderIndex: number;
-  name: string;
-  imageUrl: string;
-}
-
 export interface KnowledgeBaseResponseDTO {
   type: KnowledgeBaseType;
   id: number;
@@ -48,6 +41,13 @@ export interface KnowledgeBaseResponseDTO {
   description: string;
   imageUrl: string;
   relatedRewards?: KnowledgeBaseRelatedRewardResponseDTO[];
+}
+
+export interface KnowledgeBaseRelatedRewardResponseDTO {
+  id: number;
+  orderIndex: number;
+  name: string;
+  imageUrl: string;
 }
 
 // Rewards
@@ -225,17 +225,17 @@ export interface InstructorGradableEventResponseDTO
 }
 
 // Points Summary
-export interface PointsSummaryDetailsResponseDTO {
-  title: string;
-  xp: string;
-  assignedItems: AssignedItemResponseDTO[];
-}
-
 export interface PointsSummaryResponseDTO {
   gained: PointsSummaryDetailsResponseDTO;
   flatBonus: PointsSummaryDetailsResponseDTO;
   percentageBonus: PointsSummaryDetailsResponseDTO;
   total: PointsSummaryDetailsResponseDTO;
+}
+
+export interface PointsSummaryDetailsResponseDTO {
+  title: string;
+  xp: string;
+  assignedItems: AssignedItemResponseDTO[];
 }
 
 // Markdown
@@ -244,15 +244,14 @@ export interface MarkdownResponseDTO {
 }
 
 // Grade
-export interface CriterionAssignableRewardResponseDTO {
-  reward: RewardResponseDTO;
-  maxAmount: number;
+export interface GradeResponseDTO {
+  details?: GradeDetailsResponseDTO;
+  criteria: CriterionResponseDTO[];
 }
 
-export interface CriterionGradeResponseDTO {
+export interface GradeDetailsResponseDTO {
   id: number;
-  xp: string;
-  assignedRewards: AssignedRewardResponseDTO[];
+  comment?: string;
 }
 
 export interface CriterionResponseDTO {
@@ -263,14 +262,15 @@ export interface CriterionResponseDTO {
   criterionGrade?: CriterionGradeResponseDTO;
 }
 
-export interface GradeDetailsResponseDTO {
-  id: number;
-  comment?: string;
+export interface CriterionAssignableRewardResponseDTO {
+  reward: RewardResponseDTO;
+  maxAmount: number;
 }
 
-export interface GradeResponseDTO {
-  details?: GradeDetailsResponseDTO;
-  criteria: CriterionResponseDTO[];
+export interface CriterionGradeResponseDTO {
+  id: number;
+  xp: string;
+  assignedRewards: AssignedRewardResponseDTO[];
 }
 
 // Project Variant
