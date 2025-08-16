@@ -347,12 +347,12 @@ export const EventSectionService = {
       return {
         gained: {
           title: "Zdobyte xp",
-          xp: "3.5",
+          gainedXp: "3.5",
           assignedItems: [],
         },
         percentageBonus: {
           title: "Bonusy procentowe",
-          xp: "0.2",
+          gainedXp: "0.2",
           assignedItems: [
             {
               base: {
@@ -369,7 +369,7 @@ export const EventSectionService = {
               details: {
                 id: 1,
                 receivedDate: "07.06.2025",
-                xp: "0.2",
+                gainedXp: "0.2",
                 isUsed: false,
               },
             },
@@ -377,12 +377,12 @@ export const EventSectionService = {
         },
         flatBonus: {
           title: "Bonusy punktowe",
-          xp: "0.0",
+          gainedXp: "0.0",
           assignedItems: [],
         },
         total: {
           title: "Łącznie",
-          xp: "3.7",
+          gainedXp: "3.7",
           assignedItems: [],
         },
       };
@@ -390,22 +390,22 @@ export const EventSectionService = {
       return {
         gained: {
           title: "Zdobyte xp",
-          xp: "2.0",
+          gainedXp: "2.0",
           assignedItems: [],
         },
         percentageBonus: {
           title: "Bonusy procentowe",
-          xp: "0.0",
+          gainedXp: "0.0",
           assignedItems: [],
         },
         flatBonus: {
           title: "Bonusy punktowe",
-          xp: "0.0",
+          gainedXp: "0.0",
           assignedItems: [],
         },
         total: {
           title: "Łącznie",
-          xp: "2.0",
+          gainedXp: "2.0",
           assignedItems: [],
         },
       };
@@ -413,22 +413,22 @@ export const EventSectionService = {
       return {
         gained: {
           title: "Zdobyte xp",
-          xp: "0.0",
+          gainedXp: "0.0",
           assignedItems: [],
         },
         percentageBonus: {
           title: "Bonusy procentowe",
-          xp: "0.0",
+          gainedXp: "0.0",
           assignedItems: [],
         },
         flatBonus: {
           title: "Bonusy punktowe",
-          xp: "0.0",
+          gainedXp: "0.0",
           assignedItems: [],
         },
         total: {
           title: "Łącznie",
-          xp: "0.0",
+          gainedXp: "0.0",
           assignedItems: [],
         },
       };
@@ -497,7 +497,7 @@ export const EventSectionService = {
             ],
             criterionGrade: {
               id: 1,
-              xp: "3.5",
+              gainedXp: "3.5",
               assignedRewards: [
                 {
                   rewardType: "CHEST",
@@ -579,7 +579,7 @@ export const EventSectionService = {
             ],
             criterionGrade: {
               id: 1,
-              xp: "0.7",
+              gainedXp: "0.7",
               assignedRewards: [
                 {
                   rewardType: "CHEST",

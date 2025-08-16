@@ -33,7 +33,7 @@ export default function ItemModal() {
               size="xs"
               // TODO: handle undefined xp
               component={
-                <XPCardPoints points={`+${itemAssignmentDetails.xp}`} />
+                <XPCardPoints points={`+${itemAssignmentDetails.gainedXp}`} />
               }
             />
           )

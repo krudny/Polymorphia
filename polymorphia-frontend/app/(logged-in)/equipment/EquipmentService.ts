@@ -22,13 +22,13 @@ const EquipmentService = {
           {
             id: 1,
             receivedDate: "2.06.2026",
-            xp: "1.2",
+            gainedXp: "1.2",
             isUsed: true,
           },
           {
             id: 2,
             receivedDate: "5.06.2026",
-            xp: "1.2",
+            gainedXp: "1.2",
             isUsed: true,
           },
         ],
@@ -49,7 +49,7 @@ const EquipmentService = {
           {
             id: 3,
             receivedDate: "2.06.2025",
-            xp: "2.5",
+            gainedXp: "2.5",
             isUsed: true,
           },
         ],
@@ -70,13 +70,13 @@ const EquipmentService = {
           {
             id: 4,
             receivedDate: "2.06.2026",
-            xp: "3.5",
+            gainedXp: "3.5",
             isUsed: true,
           },
           {
             id: 5,
             receivedDate: "5.06.2026",
-            xp: "4.0",
+            gainedXp: "4.0",
             isUsed: true,
           },
         ],
@@ -143,7 +143,7 @@ const EquipmentService = {
               details: {
                 id: 6,
                 receivedDate: "12.06.2026",
-                xp: "1.2",
+                gainedXp: "1.2",
                 isUsed: true,
               },
             },
@@ -162,7 +162,7 @@ const EquipmentService = {
               details: {
                 id: 7,
                 receivedDate: "12.06.2026",
-                xp: "1.2",
+                gainedXp: "1.2",
                 isUsed: true,
               },
             },

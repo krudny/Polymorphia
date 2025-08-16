@@ -132,7 +132,7 @@ export interface BaseRewardAssignmentDetails {
 
 export interface ItemAssignmentDetailsResponseDTO
   extends BaseRewardAssignmentDetails {
-  xp?: string; // undefined if item hasn't been used
+  gainedXp?: string; // undefined if item hasn't been used
 }
 
 export interface ChestAssignmentDetailsResponseDTO
@@ -234,7 +234,7 @@ export interface PointsSummaryResponseDTO {
 
 export interface PointsSummaryDetailsResponseDTO {
   title: string;
-  xp: string;
+  gainedXp: string;
   assignedItems: AssignedItemResponseDTO[];
 }
 
@@ -269,7 +269,7 @@ export interface CriterionAssignableRewardResponseDTO {
 
 export interface CriterionGradeResponseDTO {
   id: number;
-  xp: string;
+  gainedXp: string;
   assignedRewards: AssignedRewardResponseDTO[];
 }
 

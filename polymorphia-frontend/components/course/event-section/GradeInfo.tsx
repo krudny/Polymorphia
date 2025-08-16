@@ -20,14 +20,14 @@ export default function GradeInfo({ grade }: { grade: GradeResponseDTO }) {
                 <div className="gradable-event-section-progress-bar">
                   <ProgressBar
                     minXP={0}
-                    currentXP={Number(criterion.criterionGrade?.xp)}
+                    currentXP={Number(criterion.criterionGrade?.gainedXp)}
                     maxXP={Number(criterion.maxXp)}
                     numSquares={2}
                     segmentSizes={[0, 100, 0]}
                     lowerElement={
                       <ProgressBarRangeLabels
                         minXP={0}
-                        currentXP={Number(criterion.criterionGrade?.xp)}
+                        currentXP={Number(criterion.criterionGrade?.gainedXp)}
                         maxXP={Number(criterion.maxXp)}
                       />
                     }

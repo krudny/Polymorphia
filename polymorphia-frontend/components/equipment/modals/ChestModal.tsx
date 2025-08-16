@@ -33,7 +33,7 @@ export default function ChestModal() {
               size="xs"
               // TODO: handle undefined xp
               component={
-                <XPCardPoints points={`+${assignedItem.details.xp}`} />
+                <XPCardPoints points={`+${assignedItem.details.gainedXp}`} />
               }
             />
           )
