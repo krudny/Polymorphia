@@ -1,4 +1,4 @@
-import { LoginDto } from "@/interfaces/api/DTO";
+import { LoginDto } from "@/interfaces/api/login";
 import { API_HOST } from "@/services/api";
 
 const AuthService = {

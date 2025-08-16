@@ -4,7 +4,7 @@ import {
 } from "@/components/hall-of-fame/general/types";
 
 export const addFieldToFilter = (
-  { label, value, order, isSelected }: HallOfFameFilterOption,
+  { label, value, orderIndex, isSelected }: HallOfFameFilterOption,
   filter: HallOfFameFilter
 ) => {
   const existingValues = new Set(
@@ -15,7 +15,7 @@ export const addFieldToFilter = (
     filter.options.push({
       label: label,
       value: value,
-      order: order,
+      orderIndex: orderIndex,
       isSelected: isSelected,
     });
   }

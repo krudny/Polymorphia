@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import { HallOfFameResponseDTO } from "@/interfaces/api/DTO";
+import { HallOfFameResponseDTO } from "@/interfaces/api/hall-of-fame";
 
 export const studentNames = [
   "Gerard Małoduszny",

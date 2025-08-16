@@ -2,7 +2,7 @@ import { createContext, ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import UserService from "@/app/(logged-in)/profile/UserService";
 import Loading from "@/components/loading/Loading";
-import { UserDetailsDTO } from "@/interfaces/api/DTO";
+import { UserDetailsDTO } from "@/interfaces/api/user";
 
 export const UserContext = createContext<UserDetailsDTO>({
   studentName: "",

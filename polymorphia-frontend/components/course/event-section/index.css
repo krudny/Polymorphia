@@ -31,18 +31,18 @@
     @apply pt-7 w-full px-6;
 }
 
-.gradable-event-section-chests {
+.gradable-event-section-reward {
     @apply flex flex-col;
 }
 
-.gradable-event-section-chests-inner {
+.gradable-event-section-reward-inner {
     @apply flex flex-row gap-5 pt-3;
 }
 
-.gradable-event-section-chests-image-wrapper {
+.gradable-event-section-reward-image-wrapper {
     @apply rounded-xl shadow-lg w-30 h-30 relative;
 }
 
-.gradable-event-section-chests-image-wrapper img {
+.gradable-event-section-reward-image-wrapper img {
     @apply rounded-xl;
 }

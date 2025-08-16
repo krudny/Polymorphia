@@ -56,27 +56,16 @@ export default function SingleSlide({
                   className="lg:hidden"
                 />
                 <h1>{slide.name}</h1>
-                {(() => {
-                  switch (slide.type) {
-                    case "item":
-                      return <h2>{slide.textBonus.toLowerCase()}</h2>;
-                    case "evolution-stage":
-                      return <h2>{slide.gradingText}</h2>;
-                    case "chest":
-                      return <h2>{slide.behavior}</h2>;
-                    default:
-                      return null;
-                  }
-                })()}
+                <h2>{slide.subtitle}</h2>
               </div>
               <p>{slide.description}</p>
             </div>
 
-            {(slide.type === "item" || slide.type === "chest") && (
+            {(slide.type === "ITEM" || slide.type === "CHEST") && (
               <div className="slide-details-wrapper">
                 <DetailedSlideInfo
                   type={slide.type}
-                  ids={slide.type === "item" ? slide.chestIds : slide.itemIds}
+                  relatedRewards={slide.relatedRewards}
                 />
               </div>
             )}

@@ -3,36 +3,41 @@ import XPCard from "@/components/xp-card/XPCard";
 import { useContext } from "react";
 import { EquipmentContext } from "@/components/providers/equipment/EquipmentContext";
 import Modal from "@/components/modal/Modal";
-import { Item } from "@/components/equipment/types";
 import "../index.css";
 import XPCardPoints from "@/components/xp-card/inner-components/XPCardPoints";
+import { AssignedItemResponseDTO } from "@/interfaces/api/reward/assigned";
 
 export default function ChestModal() {
   const { currentChestModalData, setCurrentChestModalData } =
     useContext(EquipmentContext);
-  const chest = currentChestModalData;
+  const equipmentChest = currentChestModalData;
 
   return (
     <Modal
-      isDataPresented={chest !== null}
+      isDataPresented={equipmentChest !== null}
       onClosed={() => setCurrentChestModalData(null)}
-      title={chest?.title ?? ""}
-      subtitle={chest?.subtitle ?? ""}
+      title={equipmentChest?.base.name ?? ""}
+      subtitle="Zdobyte nagrody"
     >
       <div className="bonus-info-modal">
-        {chest?.items.map((item: Item) => (
-          <XPCard
-            key={item.itemId}
-            title={item.title}
-            subtitle={item.subtitle}
-            image={{
-              url: `${API_STATIC_URL}/${item.imageUrl}`,
-              alt: item.title,
-            }}
-            size="xs"
-            component={<XPCardPoints points={`+${item.bonusXp}`} />}
-          />
-        ))}
+        {equipmentChest?.details.receivedItems!.map(
+          (assignedItem: AssignedItemResponseDTO) => (
+            <XPCard
+              key={assignedItem.details.id}
+              title={assignedItem.base.name}
+              subtitle={`Zdobyto ${assignedItem.details.receivedDate}`}
+              image={{
+                url: `${API_STATIC_URL}/${assignedItem.base.imageUrl}`,
+                alt: assignedItem.base.name,
+              }}
+              size="xs"
+              // TODO: handle undefined xp
+              component={
+                <XPCardPoints points={`+${assignedItem.details.gainedXp}`} />
+              }
+            />
+          )
+        )}
       </div>
     </Modal>
   );

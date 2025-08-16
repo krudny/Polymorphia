@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { GradableEventResponseDTO } from "@/app/(logged-in)/course/EventSectionService";
+import { StudentGradableEventResponseDTO } from "@/interfaces/api/course";
 
 export function useXPGridAnimation(
   pageToShow: number,
@@ -8,7 +8,7 @@ export function useXPGridAnimation(
   sliderRef: React.RefObject<HTMLDivElement | null>,
   setPageToShow: (n: number) => void,
   setCurrentPage: (n: number) => void,
-  gradableEventsData: GradableEventResponseDTO[] | undefined,
+  gradableEventsData: StudentGradableEventResponseDTO[] | undefined,
   direction: 1 | -1,
   firstRender: boolean,
   setFirstRender: (b: boolean) => void

@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { HallOfFameResponseDTO } from "@/interfaces/api/DTO";
+import { HallOfFameResponseDTO } from "@/interfaces/api/hall-of-fame";
 import { HallOfFameFilter } from "@/components/hall-of-fame/general/types";
 
 export type HallOfFameAction =
