@@ -45,7 +45,7 @@ export default function PointsSummary({
             <PointsSummaryElement
               bonus={pointsSummary.flatBonus}
               onClick={
-                pointsSummary.flatBonus.assignedItems.length > 0
+                pointsSummary.flatBonus.assignedItems?.length
                   ? () => setCurrentBonusInfoModal(pointsSummary.flatBonus)
                   : undefined
               }
@@ -53,7 +53,7 @@ export default function PointsSummary({
             <PointsSummaryElement
               bonus={pointsSummary.percentageBonus}
               onClick={
-                pointsSummary.percentageBonus.assignedItems.length > 0
+                pointsSummary.percentageBonus.assignedItems?.length
                   ? () =>
                       setCurrentBonusInfoModal(pointsSummary.percentageBonus)
                   : undefined

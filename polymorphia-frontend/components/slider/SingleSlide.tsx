@@ -61,7 +61,7 @@ export default function SingleSlide({
               <p>{slide.description}</p>
             </div>
 
-            {(slide.type === "item" || slide.type === "chest") && (
+            {(slide.type === "ITEM" || slide.type === "CHEST") && (
               <div className="slide-details-wrapper">
                 <DetailedSlideInfo
                   type={slide.type}

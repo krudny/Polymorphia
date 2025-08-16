@@ -348,7 +348,6 @@ export const EventSectionService = {
         gained: {
           title: "Zdobyte xp",
           gainedXp: "3.5",
-          assignedItems: [],
         },
         percentageBonus: {
           title: "Bonusy procentowe",
@@ -365,6 +364,7 @@ export const EventSectionService = {
                 orderIndex: 0,
                 limit: 3,
                 isLimitReached: false,
+                eventSectionId: 1,
               },
               details: {
                 id: 1,
@@ -383,7 +383,6 @@ export const EventSectionService = {
         total: {
           title: "Łącznie",
           gainedXp: "3.7",
-          assignedItems: [],
         },
       };
     } else if (eventSectionId === 2) {
@@ -391,7 +390,6 @@ export const EventSectionService = {
         gained: {
           title: "Zdobyte xp",
           gainedXp: "2.0",
-          assignedItems: [],
         },
         percentageBonus: {
           title: "Bonusy procentowe",
@@ -406,7 +404,6 @@ export const EventSectionService = {
         total: {
           title: "Łącznie",
           gainedXp: "2.0",
-          assignedItems: [],
         },
       };
     } else {
@@ -414,7 +411,6 @@ export const EventSectionService = {
         gained: {
           title: "Zdobyte xp",
           gainedXp: "0.0",
-          assignedItems: [],
         },
         percentageBonus: {
           title: "Bonusy procentowe",
@@ -429,7 +425,6 @@ export const EventSectionService = {
         total: {
           title: "Łącznie",
           gainedXp: "0.0",
-          assignedItems: [],
         },
       };
     }
@@ -488,6 +483,7 @@ export const EventSectionService = {
                         orderIndex: 0,
                         limit: 3,
                         isLimitReached: false,
+                        eventSectionId: 1,
                       },
                     ],
                   },
@@ -520,6 +516,7 @@ export const EventSectionService = {
                           orderIndex: 0,
                           limit: 3,
                           isLimitReached: false,
+                          eventSectionId: 1,
                         },
                       ],
                     },
@@ -570,6 +567,7 @@ export const EventSectionService = {
                         orderIndex: 0,
                         limit: 3,
                         isLimitReached: false,
+                        eventSectionId: 1,
                       },
                     ],
                   },
@@ -602,6 +600,7 @@ export const EventSectionService = {
                           orderIndex: 0,
                           limit: 3,
                           isLimitReached: false,
+                          eventSectionId: 1,
                         },
                       ],
                     },
@@ -648,6 +647,7 @@ export const EventSectionService = {
                       orderIndex: 0,
                       limit: 3,
                       isLimitReached: false,
+                      eventSectionId: 1,
                     },
                   ],
                 },

@@ -16,7 +16,7 @@ const KnowledgeBaseService = {
     // mocked
     return [
       {
-        type: "evolution-stage",
+        type: "EVOLUTION_STAGE",
         id: 1,
         orderIndex: 0,
         name: "Jajo",
@@ -26,7 +26,7 @@ const KnowledgeBaseService = {
         imageUrl: "images/evolution-stages/egg.jpg",
       },
       {
-        type: "evolution-stage",
+        type: "EVOLUTION_STAGE",
         id: 2,
         orderIndex: 1,
         name: "Jajo2",
@@ -36,7 +36,7 @@ const KnowledgeBaseService = {
         imageUrl: "images/evolution-stages/egg.jpg",
       },
       {
-        type: "evolution-stage",
+        type: "EVOLUTION_STAGE",
         id: 3,
         orderIndex: 2,
         name: "Jajo3",
@@ -57,7 +57,7 @@ const KnowledgeBaseService = {
     // mocked
     return [
       {
-        type: "item",
+        type: "ITEM",
         id: 1,
         orderIndex: 0,
         name: "Apteczka",
@@ -67,7 +67,7 @@ const KnowledgeBaseService = {
         imageUrl: "images/items/aid.jpg",
       },
       {
-        type: "item",
+        type: "ITEM",
         id: 2,
         orderIndex: 1,
         name: "Apteczka2",
@@ -77,7 +77,7 @@ const KnowledgeBaseService = {
         imageUrl: "images/items/aid.jpg",
       },
       {
-        type: "item",
+        type: "ITEM",
         id: 3,
         orderIndex: 2,
         name: "Apteczka3",
@@ -106,7 +106,7 @@ const KnowledgeBaseService = {
     // mocked
     return [
       {
-        type: "chest",
+        type: "CHEST",
         id: 1,
         orderIndex: 0,
         name: "Srebrna skrzynia",
@@ -116,7 +116,7 @@ const KnowledgeBaseService = {
         imageUrl: "images/chests/s1.png",
       },
       {
-        type: "chest",
+        type: "CHEST",
         id: 2,
         orderIndex: 1,
         name: "Srebrna skrzynia 2",
@@ -134,7 +134,7 @@ const KnowledgeBaseService = {
         ],
       },
       {
-        type: "chest",
+        type: "CHEST",
         id: 3,
         orderIndex: 2,
         name: "Srebrna skrzynia 3",

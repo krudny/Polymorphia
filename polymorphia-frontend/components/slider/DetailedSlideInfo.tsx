@@ -17,7 +17,7 @@ export default function DetailedSlideInfo({
         <div className="slide-details-info">
           <CircleX size={20} />
           <h3 className="text-xl 2xl:text-2xl">
-            Błąd ładowania {type === "item" ? "skrzynek" : "przedmiotów"}.
+            Błąd ładowania {type === "ITEM" ? "skrzynek" : "przedmiotów"}.
           </h3>
         </div>
       </div>
@@ -30,7 +30,7 @@ export default function DetailedSlideInfo({
         <div className="slide-details-info">
           <CircleX size={20} />
           <h3 className="text-xl 2xl:text-2xl">
-            {type === "item"
+            {type === "ITEM"
               ? "Ten przedmiot nie występuje w żadnej ze skrzynek"
               : "W tej skrzynce nie znajdują się żadne przedmioty"}
             .
@@ -44,13 +44,13 @@ export default function DetailedSlideInfo({
     <div className="slide-details">
       <div className="slide-details-info">
         <SquareMousePointer size={20} />
-        <h3 className="text-xl 2xl:text-2xl">{`Kliknij na ${type === "item" ? "skrzynkę" : "przedmiot"} aby dowiedzieć się więcej`}</h3>
+        <h3 className="text-xl 2xl:text-2xl">{`Kliknij na ${type === "ITEM" ? "skrzynkę" : "przedmiot"} aby dowiedzieć się więcej`}</h3>
       </div>
       <div className="slide-details-content">
         {relatedRewards.map((relatedReward) => {
           return (
             <Link
-              href={`/knowledge-base/${type === "item" ? "chests" : "items"}?slide=${relatedReward.orderIndex}`}
+              href={`/knowledge-base/${type === "ITEM" ? "chests" : "items"}?slide=${relatedReward.orderIndex}`}
               key={relatedReward.id}
             >
               <div className="slide-details-image">

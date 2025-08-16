@@ -30,7 +30,7 @@ export interface UserDetailsDTO {
 }
 
 // Knowledge Base
-export type KnowledgeBaseType = "evolution-stage" | "item" | "chest";
+export type KnowledgeBaseType = "EVOLUTION_STAGE" | "ITEM" | "CHEST";
 
 export interface KnowledgeBaseResponseDTO {
   type: KnowledgeBaseType;
@@ -40,14 +40,7 @@ export interface KnowledgeBaseResponseDTO {
   subtitle: string;
   description: string;
   imageUrl: string;
-  relatedRewards?: KnowledgeBaseRelatedRewardResponseDTO[];
-}
-
-export interface KnowledgeBaseRelatedRewardResponseDTO {
-  id: number;
-  orderIndex: number;
-  name: string;
-  imageUrl: string;
+  relatedRewards?: BaseReward[];
 }
 
 // Rewards
@@ -56,7 +49,6 @@ export type RewardType = "ITEM" | "CHEST";
 export interface BaseReward {
   id: number;
   name: string;
-  // description: string;
   imageUrl: string;
   orderIndex: number;
 }
@@ -81,7 +73,7 @@ export interface BaseItem extends BaseReward {
   bonusText: string;
   limit: number;
   isLimitReached: boolean;
-  // add event section name it impacts?
+  eventSectionId: number;
 }
 
 export type FlatBonusItemBehavior =
@@ -221,7 +213,7 @@ export interface StudentGradableEventResponseDTO
 
 export interface InstructorGradableEventResponseDTO
   extends BaseGradableEventResponseDTO {
-  ungraded: number;
+  ungradedStudents: number;
 }
 
 // Points Summary
@@ -235,7 +227,7 @@ export interface PointsSummaryResponseDTO {
 export interface PointsSummaryDetailsResponseDTO {
   title: string;
   gainedXp: string;
-  assignedItems: AssignedItemResponseDTO[];
+  assignedItems?: AssignedItemResponseDTO[];
 }
 
 // Markdown

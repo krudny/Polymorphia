@@ -17,6 +17,7 @@ const EquipmentService = {
           orderIndex: 0,
           limit: 4,
           isLimitReached: false,
+          eventSectionId: 2,
         },
         details: [
           {
@@ -44,6 +45,7 @@ const EquipmentService = {
           orderIndex: 1,
           limit: 4,
           isLimitReached: false,
+          eventSectionId: 2,
         },
         details: [
           {
@@ -65,6 +67,7 @@ const EquipmentService = {
           orderIndex: 2,
           limit: 4,
           isLimitReached: false,
+          eventSectionId: 2,
         },
         details: [
           {
@@ -92,6 +95,7 @@ const EquipmentService = {
           orderIndex: 3,
           limit: 4,
           isLimitReached: false,
+          eventSectionId: 2,
         },
         details: [],
       },
@@ -119,6 +123,7 @@ const EquipmentService = {
               orderIndex: 0,
               limit: 4,
               isLimitReached: false,
+              eventSectionId: 2,
             },
           ],
         },
@@ -139,6 +144,7 @@ const EquipmentService = {
                 orderIndex: 0,
                 limit: 4,
                 isLimitReached: false,
+                eventSectionId: 2,
               },
               details: {
                 id: 6,
@@ -158,6 +164,7 @@ const EquipmentService = {
                 orderIndex: 0,
                 limit: 4,
                 isLimitReached: false,
+                eventSectionId: 2,
               },
               details: {
                 id: 7,
@@ -188,6 +195,7 @@ const EquipmentService = {
               orderIndex: 0,
               limit: 4,
               isLimitReached: false,
+              eventSectionId: 2,
             },
             {
               id: 2,
@@ -199,6 +207,7 @@ const EquipmentService = {
               orderIndex: 0,
               limit: 4,
               isLimitReached: false,
+              eventSectionId: 2,
             },
           ],
         },
