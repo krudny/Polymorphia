@@ -244,6 +244,11 @@ export interface MarkdownResponseDTO {
 }
 
 // Grade
+export interface CriterionAssignableRewardResponseDTO {
+  reward: RewardResponseDTO;
+  maxAmount: number;
+}
+
 export interface CriterionGradeResponseDTO {
   id: number;
   xp: string;
@@ -254,6 +259,7 @@ export interface CriterionResponseDTO {
   id: number;
   name: string;
   maxXp: string;
+  assignableRewards: CriterionAssignableRewardResponseDTO[];
   criterionGrade?: CriterionGradeResponseDTO;
 }
 
