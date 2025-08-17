@@ -1,10 +1,7 @@
 package com.agh.polymorphia_backend.controller;
 
-import com.agh.polymorphia_backend.dto.response.course.EvolutionStageResponseDto;
-import com.agh.polymorphia_backend.dto.response.course.reward.ChestResponseDto;
-import com.agh.polymorphia_backend.dto.response.course.reward.item.ItemResponseDto;
-import com.agh.polymorphia_backend.dto.response.event.section.EventSectionShortResponseDto;
-import com.agh.polymorphia_backend.service.course.CourseService;
+import com.agh.polymorphia_backend.dto.response.knowledge.base.KnowledgeBaseResponseDto;
+import com.agh.polymorphia_backend.service.course.KnowledgeBaseService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,28 +16,24 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/courses")
 public class CourseController {
-    private final CourseService courseService;
-
-    @GetMapping("/{courseId}/event-sections")
-    @PreAuthorize("hasRole('STUDENT')")
-    public ResponseEntity<List<EventSectionShortResponseDto>> getAllCourseEventSections(@PathVariable Long courseId) {
-        return ResponseEntity.ok(courseService.getAllCourseEvents(courseId));
-    }
+    private final KnowledgeBaseService knowledgeBaseService;
 
     @GetMapping("/{courseId}/evolution-stages")
-    public ResponseEntity<List<EvolutionStageResponseDto>> getEvolutionStages(@PathVariable Long courseId) {
-        return ResponseEntity.ok(courseService.getEvolutionStages(courseId));
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<List<KnowledgeBaseResponseDto>> getEvolutionStages(@PathVariable Long courseId) {
+        return ResponseEntity.ok(knowledgeBaseService.getEvolutionStages(courseId));
     }
 
     @GetMapping("/{courseId}/chests")
-    public ResponseEntity<List<ChestResponseDto>> getChests(@PathVariable Long courseId) {
-        return ResponseEntity.ok(courseService.getAllChests(courseId));
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<List<KnowledgeBaseResponseDto>> getChests(@PathVariable Long courseId) {
+        return ResponseEntity.ok(knowledgeBaseService.getChests(courseId));
     }
 
     @GetMapping("/{courseId}/items")
-    public ResponseEntity<List<ItemResponseDto>> getItems(@PathVariable Long courseId) {
-        List<ItemResponseDto> itemRequestDtos = courseService.getAllCourseItems(courseId);
-        return ResponseEntity.ok(itemRequestDtos);
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<List<KnowledgeBaseResponseDto>> getItems(@PathVariable Long courseId) {
+        return ResponseEntity.ok(knowledgeBaseService.getItems(courseId));
     }
 
 }

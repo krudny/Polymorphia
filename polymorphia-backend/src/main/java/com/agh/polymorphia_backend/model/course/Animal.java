@@ -1,6 +1,5 @@
 package com.agh.polymorphia_backend.model.course;
 
-import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.user.Student;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -9,10 +8,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
-import java.util.Set;
-
 @Entity
-@Table(name = "students_course_groups")
+@Table(name = "animals")
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -27,11 +24,6 @@ public class Animal {
 
     @NotEmpty
     private String name;
-
-    @ManyToMany(mappedBy = "animals", fetch = FetchType.LAZY)
-    @JsonIgnore
-    @ToString.Exclude
-    Set<ProjectGroup> projectGroups;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")

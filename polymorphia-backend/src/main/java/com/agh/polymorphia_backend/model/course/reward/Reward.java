@@ -1,21 +1,20 @@
-package com.agh.polymorphia_backend.model.course;
+package com.agh.polymorphia_backend.model.course.reward;
 
+import com.agh.polymorphia_backend.model.course.Course;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
-
-import java.math.BigDecimal;
+import lombok.experimental.SuperBuilder;
 
 @Entity
-@Table(name = "evolution_stages")
-@NoArgsConstructor
-@Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Data
-public class EvolutionStage {
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Inheritance(strategy = InheritanceType.JOINED)
+@NoArgsConstructor
+@SuperBuilder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public abstract class Reward {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
@@ -29,21 +28,11 @@ public class EvolutionStage {
     @Column(length = 1000)
     private String description;
 
-    @NotNull
-    @PositiveOrZero
-    @Column(precision = 4, scale = 1)
-    private BigDecimal minXp;
+    @NotEmpty
+    private String imageUrl;
 
     @NotNull
     private Long orderIndex;
-
-    @NotNull
-    @PositiveOrZero
-    @Column(precision = 2, scale = 1)
-    private BigDecimal grade;
-
-    @NotEmpty
-    private String imageUrl;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
