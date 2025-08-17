@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.model;
+package com.agh.polymorphia_backend.model.hall_of_fame;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -22,9 +22,6 @@ public class HallOfFame {
     private Integer position;
     private String evolutionStage;
     private String imageUrl;
-    private BigDecimal rawXpSum;
-    private BigDecimal flatBonusSum;
-    private BigDecimal percentageBonusSum;
     private BigDecimal totalBonusSum;
     private BigDecimal totalXpSum;
 }

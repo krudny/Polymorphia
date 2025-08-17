@@ -1,18 +1,20 @@
 package com.agh.polymorphia_backend.service;
 
 import com.agh.polymorphia_backend.dto.response.hall_of_fame.HallOfFameRecordDto;
-import com.agh.polymorphia_backend.model.HallOfFame;
+import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFame;
 import com.agh.polymorphia_backend.model.StudentScoreDetail;
 import com.agh.polymorphia_backend.model.event.section.EventSection;
+import com.agh.polymorphia_backend.model.hall_of_fame.OverviewField;
+import com.agh.polymorphia_backend.model.hall_of_fame.SortOrder;
 import com.agh.polymorphia_backend.repository.HallOfFameRepository;
 import com.agh.polymorphia_backend.repository.StudentScoreDetailRepository;
 import com.agh.polymorphia_backend.repository.event.section.EventSectionRepository;
 import com.agh.polymorphia_backend.service.mapper.HallOfFameMapper;
+import com.agh.polymorphia_backend.util.NumberFormatter;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -24,42 +26,38 @@ public class HallOfFameService {
     private final HallOfFameRepository hallOfFameRepository;
     private final HallOfFameMapper hallOfFameMapper;
 
-    private static final Map<String, String> OVERVIEW_FIELDS = Map.ofEntries(Map.entry("animalName", "animalName"), Map.entry("total", "totalXpSum"), Map.entry("bonus", "totalBonusSum"));
-    private static final String NUMBER_FORMAT = "%.02f";
-
     public Page<HallOfFameRecordDto> getHallOfFame(
             Long courseId,
             int page,
             int size,
             String searchTerm,
             String sortBy,
-            String sortOrder,
+            String sortOrderString,
             List<String> groupNames,
             boolean includeStudentName
     ) {
-        if (searchTerm == null || searchTerm.isBlank()) {
-            searchTerm = "";
-        }
-        if (!sortOrder.equals("asc") && !sortOrder.equals("desc")) {
-            throw new IllegalArgumentException("Invalid sortOrder: " + sortOrder);
+        searchTerm = (searchTerm == null || searchTerm.isBlank()) ? "" : searchTerm;
+
+        SortOrder sortOrder = SortOrder.fromString(sortOrderString);
+
+        Optional<String> overviewDbField = OverviewField.getDbField(sortBy);
+        if (overviewDbField.isPresent()){
+            List<String> groups = (groupNames == null || groupNames.isEmpty()) ? null : groupNames;
+            return getSortedByOverviewFields(courseId, page, size, searchTerm, overviewDbField.get(), sortOrder, groups, includeStudentName);
         }
 
         List<String> eventSectionNames = eventSectionRepository.findByCourseId(courseId).stream().map(EventSection::getName).toList();
-        if (OVERVIEW_FIELDS.containsKey(sortBy)){
-            List<String> groups = (groupNames == null || groupNames.isEmpty()) ? null : groupNames;
-            return getSortedByOverviewFields(courseId, page, size, searchTerm, OVERVIEW_FIELDS.get(sortBy), sortOrder, groups, includeStudentName);
-        } else if (eventSectionNames.contains(sortBy)) {
+        if (eventSectionNames.contains(sortBy)) {
             String[] groups = (groupNames == null || groupNames.isEmpty()) ? new String[0] : groupNames.toArray(String[]::new);
             return getSortedByEventSection(courseId, page, size, searchTerm, sortBy, sortOrder, groups, includeStudentName);
-        } else {
-            throw new IllegalArgumentException("Invalid sortBy: " + sortBy);
         }
+
+        throw new IllegalArgumentException("Invalid sortBy: " + sortBy);
     }
 
 
-    public Page<HallOfFameRecordDto> getSortedByOverviewFields(Long courseId, int page, int size, String searchTerm, String sortBy, String sortOrder, List<String> groupNames, boolean includeStudentName) {
-        Sort.Direction direction = Sort.Direction.fromString(sortOrder);
-        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
+    public Page<HallOfFameRecordDto> getSortedByOverviewFields(Long courseId, int page, int size, String searchTerm, String sortBy, SortOrder sortOrder, List<String> groupNames, boolean includeStudentName) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortOrder.getDirection(), sortBy));
 
         Page<HallOfFame> pageResult = hallOfFameRepository.findHofPage(courseId, searchTerm, groupNames, pageable);
 
@@ -74,11 +72,11 @@ public class HallOfFameService {
     }
 
     private Map<Long, Map<String, String>> groupScoreDetails(List<Long> animalIds) {
-        List<StudentScoreDetail> details = scoreDetailRepository.findByAnimalIdIn(animalIds);
+        List<StudentScoreDetail> detailsList = scoreDetailRepository.findByAnimalIdIn(animalIds);
         Map<Long, Map<String, String>> result = new HashMap<>();
-        for (StudentScoreDetail d : details) {
-            result.computeIfAbsent(d.getAnimalId(), id -> new HashMap<>())
-                    .put(d.getEventSectionName(), formatNumber(d.getRawXp()));
+        for (StudentScoreDetail details : detailsList) {
+            result.computeIfAbsent(details.getAnimalId(), id -> new HashMap<>())
+                    .put(details.getEventSectionName(), NumberFormatter.format(details.getRawXp()));
         }
         return result;
     }
@@ -90,10 +88,10 @@ public class HallOfFameService {
                 .toList();
     }
 
-    public Page<HallOfFameRecordDto> getSortedByEventSection(Long courseId, int page, int size, String searchTerm, String sortBy, String sortOrder, String[] groups, boolean includeStudentName) {
+    public Page<HallOfFameRecordDto> getSortedByEventSection(Long courseId, int page, int size, String searchTerm, String sortBy, SortOrder sortOrder, String[] groups, boolean includeStudentName) {
         int offset = page * size;
 
-        List<Long> animalIds = hallOfFameRepository.findAnimalIdsSortedByEventSection(courseId, searchTerm, groups, sortBy, sortOrder, size, offset);
+        List<Long> animalIds = hallOfFameRepository.findAnimalIdsSortedByEventSection(courseId, searchTerm, groups, sortBy, sortOrder.name(), size, offset);
 
         if (animalIds.isEmpty()) {
             return Page.empty();
@@ -118,9 +116,5 @@ public class HallOfFameService {
 
         hofViews.sort(Comparator.comparingInt(view -> orderMap.get(view.getAnimalId())));
         return hofViews;
-    }
-
-    public static String formatNumber(BigDecimal number) {
-        return String.format(Locale.US, NUMBER_FORMAT, number);
     }
 }

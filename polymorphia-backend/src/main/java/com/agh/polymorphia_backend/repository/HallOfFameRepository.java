@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.repository;
 
-import com.agh.polymorphia_backend.model.HallOfFame;
+import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFame;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -34,8 +34,8 @@ public interface HallOfFameRepository extends JpaRepository<HallOfFame, Long> {
           AND (cardinality(:groups) = 0 OR hof.group_name IN (:groups))
           AND ssd.event_section_name = :sortBy
         ORDER BY
-          CASE WHEN :sortOrder = 'asc' THEN ssd.raw_xp END,
-          CASE WHEN :sortOrder = 'desc' THEN ssd.raw_xp END DESC
+          CASE WHEN :sortOrder = 'ASC' THEN ssd.raw_xp END,
+          CASE WHEN :sortOrder = 'DESC' THEN ssd.raw_xp END DESC
         LIMIT :limit OFFSET :offset
     """, nativeQuery = true)
     List<Long> findAnimalIdsSortedByEventSection(

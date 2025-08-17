@@ -30,7 +30,6 @@ WITH scored AS (SELECT scg.id                                                   
                        MAX(student_name)                              AS student_name,
                        MAX(group_name)                                AS group_name,
                        MAX(course_id)                                 AS course_id,
-                       SUM(raw_xp)                                    AS raw_xp_sum,
                        SUM(flat_bonus)                                AS flat_bonus_sum,
                        SUM(percentage_bonus_xp)                       AS percentage_bonus_sum,
                        SUM(raw_xp + flat_bonus + percentage_bonus_xp) AS total_xp_sum
@@ -44,9 +43,6 @@ WITH scored AS (SELECT scg.id                                                   
                                                             r.student_name,
                                                             r.group_name,
                                                             r.course_id,
-                                                            r.raw_xp_sum,
-                                                            r.flat_bonus_sum,
-                                                            r.percentage_bonus_sum,
                                                             r.flat_bonus_sum + r.percentage_bonus_sum AS total_bonus_sum,
                                                             r.total_xp_sum,
                                                             r.position,

@@ -2,18 +2,17 @@ package com.agh.polymorphia_backend.service.mapper;
 
 import com.agh.polymorphia_backend.dto.response.hall_of_fame.HallOfFameRecordDto;
 import com.agh.polymorphia_backend.dto.response.user.StudentDetailsResponseDto;
-import com.agh.polymorphia_backend.model.HallOfFame;
+import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFame;
+import com.agh.polymorphia_backend.util.NumberFormatter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
-import static com.agh.polymorphia_backend.service.HallOfFameService.formatNumber;
-
 @Service
 @AllArgsConstructor
 public class HallOfFameMapper {
-    public HallOfFameRecordDto hallOfFameToRecordDto(HallOfFame hallOfFame, Map<String, String> scoreDetailsList, boolean includeStudentName) {
+    public HallOfFameRecordDto hallOfFameToRecordDto(HallOfFame hallOfFame, Map<String, String> xpDetails, boolean includeStudentName) {
         StudentDetailsResponseDto userDetails = StudentDetailsResponseDto.builder()
                 .studentName(includeStudentName ? hallOfFame.getStudentName() : null)
                 .animalName(hallOfFame.getAnimalName())
@@ -23,17 +22,17 @@ public class HallOfFameMapper {
                 .position(hallOfFame.getPosition())
                 .build();
 
-        if (!scoreDetailsList.containsKey("bonus")){
-            scoreDetailsList.put("bonus", formatNumber(hallOfFame.getFlatBonusSum().add(hallOfFame.getPercentageBonusSum())));
+        if (!xpDetails.containsKey("bonus")){
+            xpDetails.put("bonus", NumberFormatter.format(hallOfFame.getTotalBonusSum()));
         }
 
-        if (!scoreDetailsList.containsKey("total")) {
-            scoreDetailsList.put("total", formatNumber(hallOfFame.getTotalXpSum()));
+        if (!xpDetails.containsKey("total")) {
+            xpDetails.put("total", NumberFormatter.format(hallOfFame.getTotalXpSum()));
         }
 
         return HallOfFameRecordDto.builder()
                 .userDetails(userDetails)
-                .xpDetails(scoreDetailsList)
+                .xpDetails(xpDetails)
                 .build();
     }
 }
