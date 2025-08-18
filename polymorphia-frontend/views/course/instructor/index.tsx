@@ -47,11 +47,7 @@ export default function InstructorView() {
   }
 
   const handleClick = (id: number) => {
-    if (eventType === "test" || eventType === "assignment") {
-      router.push(`/course/${eventType}/${eventSectionId}/${id}/grading`);
-    } else {
-      router.push(`/course/${eventType}/${eventSectionId}/${id}/pick-group`);
-    }
+    router.push(`/course/${eventType}/${eventSectionId}/${id}/grading`);
   };
 
   const cards = gradableEvents.map((gradableEvent) =>

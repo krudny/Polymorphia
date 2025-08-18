@@ -2,125 +2,96 @@
 
 import { CardGridProps } from "@/components/xp-card/types";
 import "./index.css";
-import { useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
-import Loading from "@/components/loading/Loading";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import XPCard from "@/components/xp-card/XPCard";
-import { getStudentCardComponent } from "@/shared/card/getCardComponent";
+import { Fragment, useEffect, useRef, useState } from "react";
 import Pagination from "@/components/pagination/Pagination";
 import { useXPGridAnimation } from "@/animations/XPGrid";
-import { EventType } from "@/interfaces/api/course";
+import { setResizeObserver } from "@/components/course/event-section/EventSectionUtils";
+import clsx from "clsx";
 
-export default function CardGrid({ eventSectionId, eventType }: CardGridProps) {
-  const ITEMS_PER_PAGE = 3;
-  const router = useRouter();
-  const [currentPage, setCurrentPage] = useState(0);
-  const [firstRender, setFirstRender] = useState(true);
-  const [minGridHeight, setMinGridHeight] = useState<number>(0);
-  const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
+export default function CardGrid({
+  containerRef,
+  cards,
+  maxColumns = 3,
+}: CardGridProps) {
   const sliderRef = useRef<HTMLDivElement | null>(null);
-  const mobile = false;
 
-  useEffect(() => {
-    console.log(minGridHeight);
-  }, [minGridHeight]);
-
-  const {
-    data: gradableEvents,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["gradableEvents", eventSectionId],
-    queryFn: () => EventSectionService.getStudentGradableEvents(eventSectionId),
-  });
-
-  useLayoutEffect(() => {
-    if (!gradableEvents || gradableEvents.length === 0 || !sliderRef.current) {
-      return;
-    }
-
-    if (currentPage === 0) {
-      setTimeout(() => {
-        if (sliderRef.current) {
-          const height = sliderRef.current.scrollHeight;
-          if (height > 0) {
-            setMinGridHeight(
-              Math.min(window.innerHeight - 150, Math.max(530, height))
-            );
-          }
-        }
-      }, 50);
-    }
-  }, [gradableEvents, currentPage, minGridHeight]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pageRows, setPageRows] = useState(3);
+  const [pageCols, setPageCols] = useState(2);
+  const [mobile, setMobile] = useState(false);
+  const [pageToShow, setPageToShow] = useState(0);
+  const [direction, setDirection] = useState<1 | -1>(1);
+  const [firstRender, setFirstRender] = useState(true);
 
   const { handlePageChange } = useXPGridAnimation(
-    currentPage,
+    pageToShow,
+    setDirection,
     sliderRef,
+    setPageToShow,
     setCurrentPage,
-    gradableEvents,
+    cards,
+    direction,
     firstRender,
     setFirstRender
   );
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  useEffect(() => {
+    return setResizeObserver(
+      containerRef,
+      setMobile,
+      setPageCols,
+      setPageRows,
+      maxColumns
+    );
+  }, [containerRef, maxColumns]);
 
-  if (error) {
-    return <div>Error loading gradable events: {error.message}</div>;
-  }
+  const pageSize = pageRows * pageCols;
+  const pageCount = Math.ceil(cards.length / pageSize);
+  const cardsPage = cards.slice(
+    pageToShow * pageSize,
+    pageToShow * pageSize + pageSize
+  );
 
-  if (!gradableEvents || gradableEvents.length === 0) {
-    return <div>No gradable events.</div>;
-  }
+  const pagination = (
+    <Pagination
+      pageCount={pageCount}
+      onPageChange={handlePageChange}
+      forcePage={pageCount > 0 ? currentPage : undefined}
+      pageRangeDisplayed={2}
+      marginPagesDisplayed={1}
+    />
+  );
 
-  const startIndex = currentPage * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const currentItems = gradableEvents.slice(startIndex, endIndex);
-  const pageCount = Math.ceil(gradableEvents.length / ITEMS_PER_PAGE);
-
-  const handleGradableEventClick = (id: number) => {
-    if (eventType === EventType.TEST) {
-      setSelectedEventId(id);
-    } else {
-      router.push(`/course/${eventType}/${eventSectionId}/${id}`);
-    }
-  };
+  useEffect(() => {
+    console.log(pageCols, pageRows);
+  }, [pageCols, pageRows]);
 
   return (
-    <div className="card-grid-wrapper">
-      <div className="xp-card-fading-edges">
-        <div
-          className="card-grid"
-          ref={sliderRef}
-          style={{ minHeight: minGridHeight }}
-        >
-          {currentItems.map(({ id, name, topic, gainedXp, hasChest }) => (
-            <XPCard
-              title={name}
-              subtitle={topic ?? ""}
-              key={id}
-              color={gainedXp !== 0 ? "green" : "silver"}
-              rightComponent={getStudentCardComponent(gainedXp, hasChest)}
-              size={mobile ? "sm" : "md"}
-              forceWidth={false}
-              onClick={() => handleGradableEventClick(id)}
-            />
-          ))}
+    <>
+      {cardsPage.length > 1 ? (
+        <div className="xp-card-grid-center-vertically">
+          <div className="xp-card-grid-point-summary-layout">
+            <div className="xp-card-fading-edges">
+              <div
+                ref={sliderRef}
+                className={clsx(
+                  "xp-card-grid",
+                  `grid-cols-${pageCols}`,
+                  `grid-rows-${pageRows}`
+                )}
+              >
+                {cardsPage.map((card, index) => (
+                  <Fragment key={index}>{card}</Fragment>
+                ))}
+              </div>
+            </div>
+            {mobile && cardsPage.length > 0 && pagination}
+          </div>
+          {!mobile && pagination}
         </div>
-      </div>
-
-      <div className="ml-3 mt-3">
-        <Pagination
-          pageCount={pageCount}
-          onPageChange={handlePageChange}
-          forcePage={currentPage}
-          pageRangeDisplayed={2}
-          marginPagesDisplayed={1}
-        />
-      </div>
-    </div>
+      ) : (
+        <div className="xp-card-no-grid">Brak aktywności.</div>
+      )}
+    </>
   );
 }

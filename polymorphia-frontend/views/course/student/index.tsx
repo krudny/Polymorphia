@@ -11,8 +11,9 @@ import { EventSectionService } from "@/app/(logged-in)/course/EventSectionServic
 import Loading from "@/components/loading/Loading";
 import { useRouter } from "next/navigation";
 import renderCard from "@/views/course/student/RenderCard";
-import GradableEventRewardModal from "@/components/speed-dial/modals/GradableEventRewardModal";
 import { useEventParams } from "@/shared/params/useSeachParams";
+import { EventType } from "@/interfaces/api/course";
+import GradeModal from "@/components/speed-dial/modals/GradeModal";
 
 export default function StudentView() {
   const { eventType, eventSectionId } = useEventParams();
@@ -55,7 +56,7 @@ export default function StudentView() {
   const handleClick = (id: number, isLocked: boolean) => {
     if (isLocked) return;
 
-    if (eventType === "test") {
+    if (eventType === EventType.TEST) {
       setSelectedEventId(id);
     } else {
       router.push(`/course/${eventType}/${eventSectionId}/${id}`);
@@ -77,8 +78,8 @@ export default function StudentView() {
         </div>
         <PointsSummary ref={summaryRef} eventSectionId={eventSectionId} />
       </div>
-      {eventType === "test" && (
-        <GradableEventRewardModal onClosed={() => setSelectedEventId(null)} />
+      {eventType === EventType.TEST && (
+        <GradeModal onClosedAction={() => setSelectedEventId(null)} />
       )}
     </SectionView>
   );

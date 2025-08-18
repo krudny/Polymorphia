@@ -2,9 +2,9 @@
 
 import { useQuery } from "@tanstack/react-query";
 import UserService from "@/app/(logged-in)/profile/UserService";
-import { Roles } from "@/interfaces/api/DTO";
 import StudentView from "@/views/course/student";
 import InstructorView from "@/views/course/instructor";
+import { Roles } from "@/interfaces/api/temp";
 
 export default function Page() {
   const { data: role } = useQuery({

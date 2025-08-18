@@ -17,7 +17,7 @@ export function useSpeedDialItemsFactory(): SpeedDialItem[] {
     orderIndex: 5,
     label: "Nagrody",
     icon: "trophy",
-    modal: (onClose) => <GradeModal onClosed={onClose} />,
+    modal: (onClose) => <GradeModal onClosedAction={onClose} />,
   };
 
   const projectVariantItem: SpeedDialItem = {
@@ -25,7 +25,7 @@ export function useSpeedDialItemsFactory(): SpeedDialItem[] {
     orderIndex: 2,
     label: "Wariant",
     icon: "arrow_split",
-    modal: (onClose) => <ProjectVariantModal onClosed={onClose} />,
+    modal: (onClose) => <ProjectVariantModal onClosedAction={onClose} />,
   };
 
   const projectGroupItem: SpeedDialItem = {
@@ -33,7 +33,7 @@ export function useSpeedDialItemsFactory(): SpeedDialItem[] {
     orderIndex: 3,
     label: "Grupa",
     icon: "person",
-    modal: (onClose) => <GroupModal onClosed={onClose} />,
+    modal: (onClose) => <GroupModal onClosedAction={onClose} />,
   };
 
   const projectGroupPickingItem: SpeedDialItem = {
@@ -41,7 +41,7 @@ export function useSpeedDialItemsFactory(): SpeedDialItem[] {
     orderIndex: 4,
     label: "Utwórz grupę",
     icon: "person_add",
-    modal: (onClose) => <GroupPickingModal onClosed={onClose} />,
+    modal: (onClose) => <GroupPickingModal onClosedAction={onClose} />,
   };
 
   const saveMarkdownItem: SpeedDialItem = {

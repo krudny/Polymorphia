@@ -6,9 +6,7 @@ import { EventSectionService } from "@/app/(logged-in)/course/EventSectionServic
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import { useEventParams } from "@/shared/params/useSeachParams";
 
-export default function GradeModal({
-  onClosed,
-}: SpeedDialModalProps) {
+export default function GradeModal({ onClosedAction }: SpeedDialModalProps) {
   const { gradableEventId } = useEventParams();
   const { data, isLoading, isError } = useQuery({
     queryKey: ["grades", gradableEventId],
@@ -19,7 +17,7 @@ export default function GradeModal({
   return (
     <Modal
       isDataPresented={data !== undefined}
-      onClosed={onClosed}
+      onClosed={onClosedAction}
       title="Nagrody"
     >
       {isError && (

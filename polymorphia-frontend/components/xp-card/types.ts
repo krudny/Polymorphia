@@ -1,4 +1,3 @@
-import { EventType } from "@/interfaces/api/course";
 import { ReactNode, RefObject } from "react";
 
 export interface XPCardProps {
@@ -20,13 +19,8 @@ export type XPCardVariantProps = {
   isLocked?: boolean;
 };
 
-export interface XPCardGridProps {
+export interface CardGridProps {
   containerRef: RefObject<HTMLDivElement | null>;
   cards: ReactNode[];
   maxColumns?: number;
-}
-
-export interface CardGridProps {
-  eventSectionId: number;
-  eventType: EventType;
 }

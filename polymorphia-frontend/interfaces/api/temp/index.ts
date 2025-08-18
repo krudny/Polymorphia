@@ -9,3 +9,9 @@ export interface ProjectGroupResponseDTO {
   id: number;
   members: (UserDetailsDTO & { gainedXp: string | undefined })[];
 }
+
+export enum Roles {
+  STUDENT = "STUDENT",
+  INSTRUCTOR = "INSTRUCTOR",
+  COORDINATOR = "COORDINATOR",
+}

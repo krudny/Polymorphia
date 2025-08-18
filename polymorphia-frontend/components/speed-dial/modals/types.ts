@@ -1,3 +1,3 @@
 export interface SpeedDialModalProps {
-  onClosed: () => void;
+  onClosedAction: () => void;
 }

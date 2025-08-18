@@ -1,7 +1,7 @@
-import { InstructorGradableEventResponseDTO } from "@/app/(logged-in)/course/EventSectionService";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardUngraded from "@/components/xp-card/components/XPCardUngraded";
 import { ReactNode } from "react";
+import { InstructorGradableEventResponseDTO } from "@/interfaces/api/course";
 
 export default function renderCard(
   gradableEvent: InstructorGradableEventResponseDTO,
@@ -12,8 +12,10 @@ export default function renderCard(
     <XPCard
       title={gradableEvent.name}
       subtitle={gradableEvent.topic ?? ""}
-      color={gradableEvent.ungraded === 0 ? "green" : "silver"}
-      rightComponent={<XPCardUngraded ungraded={gradableEvent.ungraded} />}
+      color={gradableEvent.ungradedStudents === 0 ? "green" : "silver"}
+      rightComponent={
+        <XPCardUngraded ungraded={gradableEvent.ungradedStudents} />
+      }
       size={isMobile ? "sm" : "md"}
       forceWidth={!isMobile}
       onClick={() => handleClick(gradableEvent.id)}

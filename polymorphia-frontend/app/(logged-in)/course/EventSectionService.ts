@@ -878,9 +878,7 @@ export const EventSectionService = {
       ],
     };
   },
-  getProjectVariant: async (
-    gradableEventId: number
-  ): Promise<ProjectVariantResponseDTO[]> => {
+  getProjectVariant: async (): Promise<ProjectVariantResponseDTO[]> => {
     return [
       {
         id: 1,
