@@ -1,8 +1,10 @@
-export enum EventType {
-  ASSIGNMENT = "ASSIGNMENT",
-  PROJECT = "PROJECT",
-  TEST = "TEST",
-}
+export const EventTypes = {
+  ASSIGNMENT: "assignment",
+  PROJECT: "project",
+  TEST: "test",
+} as const;
+
+export type EventType = (typeof EventTypes)[keyof typeof EventTypes];
 
 export interface EventSectionResponseDTO {
   id: number;

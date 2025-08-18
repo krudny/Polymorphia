@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { MarkdownContext } from "@/components/providers/markdown/MarkdownContext";
 import { useEventParams } from "@/shared/params/useSeachParams";
 import GradeModal from "@/components/speed-dial/modals/GradeModal";
+import { EventTypes } from "@/interfaces/api/course";
 
 export function useSpeedDialItemsFactory(): SpeedDialItem[] {
   const { eventType } = useEventParams();
@@ -71,9 +72,9 @@ export function useSpeedDialItemsFactory(): SpeedDialItem[] {
   };
 
   switch (eventType) {
-    case "ASSIGNMENT":
+    case EventTypes.ASSIGNMENT:
       return [rewardsItem];
-    case "PROJECT":
+    case EventTypes.PROJECT:
       return [
         ...(isEditing
           ? [saveMarkdownItem, rejectMarkdownItem]

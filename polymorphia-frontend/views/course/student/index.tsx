@@ -12,8 +12,8 @@ import Loading from "@/components/loading/Loading";
 import { useRouter } from "next/navigation";
 import renderCard from "@/views/course/student/RenderCard";
 import { useEventParams } from "@/shared/params/useSeachParams";
-import { EventType } from "@/interfaces/api/course";
 import GradeModal from "@/components/speed-dial/modals/GradeModal";
+import { EventTypes } from "@/interfaces/api/course";
 
 export default function StudentView() {
   const { eventType, eventSectionId } = useEventParams();
@@ -35,7 +35,7 @@ export default function StudentView() {
 
   useEffect(() => {
     if (!isLoading && gradableEvents && gradableEvents.length === 1) {
-      router.replace(
+      router.push(
         `/course/${eventType}/${eventSectionId}/${gradableEvents[0].id}`
       );
     }
@@ -56,7 +56,7 @@ export default function StudentView() {
   const handleClick = (id: number, isLocked: boolean) => {
     if (isLocked) return;
 
-    if (eventType === EventType.TEST) {
+    if (eventType === EventTypes.TEST) {
       setSelectedEventId(id);
     } else {
       router.push(`/course/${eventType}/${eventSectionId}/${id}`);
@@ -78,7 +78,7 @@ export default function StudentView() {
         </div>
         <PointsSummary ref={summaryRef} eventSectionId={eventSectionId} />
       </div>
-      {eventType === EventType.TEST && (
+      {eventType === EventTypes.TEST && (
         <GradeModal onClosedAction={() => setSelectedEventId(null)} />
       )}
     </SectionView>

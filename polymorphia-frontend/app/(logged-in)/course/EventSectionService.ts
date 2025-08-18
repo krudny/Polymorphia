@@ -8,7 +8,7 @@ import { MarkdownResponseDTO } from "@/interfaces/api/markdown";
 import { PointsSummaryResponseDTO } from "@/interfaces/api/course/points-summary";
 import {
   EventSectionResponseDTO,
-  EventType,
+  EventTypes,
   InstructorGradableEventResponseDTO,
   StudentGradableEventResponseDTO,
 } from "@/interfaces/api/course";
@@ -45,37 +45,37 @@ const eventSectionData: EventSectionResponseDTO[] = [
   {
     id: 2,
     name: "Laboratorium",
-    type: EventType.ASSIGNMENT,
+    type: EventTypes.ASSIGNMENT,
     orderIndex: 2,
   },
   {
     id: 3,
     name: "Projekt 1",
-    type: EventType.PROJECT,
+    type: EventTypes.PROJECT,
     orderIndex: 4,
   },
   {
     id: 1,
     name: "Kartkówka",
-    type: EventType.TEST,
+    type: EventTypes.TEST,
     orderIndex: 1,
   },
   {
     id: 4,
     name: "Git",
-    type: EventType.ASSIGNMENT,
+    type: EventTypes.ASSIGNMENT,
     orderIndex: 0,
   },
   {
     id: 5,
     name: "Specjalny lab",
-    type: EventType.ASSIGNMENT,
+    type: EventTypes.ASSIGNMENT,
     orderIndex: 3,
   },
   {
     id: 6,
     name: "Projekt 2",
-    type: EventType.PROJECT,
+    type: EventTypes.PROJECT,
     orderIndex: 5,
   },
 ];
@@ -104,7 +104,7 @@ export const EventSectionService = {
       const events: StudentGradableEventResponseDTO[] = [
         {
           id: 1,
-          type: EventType.TEST,
+          type: EventTypes.TEST,
           name: "Kartkówka 1",
           topic: "Instrukcje sterujące",
           gainedXp: "1.5",
@@ -114,7 +114,7 @@ export const EventSectionService = {
         },
         {
           id: 2,
-          type: EventType.TEST,
+          type: EventTypes.TEST,
           name: "Kartkówka 2",
           topic: "Model obiektowy",
           gainedXp: "0.0",
@@ -124,7 +124,7 @@ export const EventSectionService = {
         },
         {
           id: 3,
-          type: EventType.TEST,
+          type: EventTypes.TEST,
           name: "Kartkówka 3",
           topic: "Interakcje między obiektami",
           orderIndex: 3,
@@ -133,7 +133,7 @@ export const EventSectionService = {
         },
         {
           id: 4,
-          type: EventType.TEST,
+          type: EventTypes.TEST,
           name: "Kartkówka 4",
           topic: "Interfejsy i mapy",
           orderIndex: 4,
@@ -142,7 +142,7 @@ export const EventSectionService = {
         },
         {
           id: 5,
-          type: EventType.TEST,
+          type: EventTypes.TEST,
           name: "Kartkówka 5",
           topic: "Dziedziczenie",
           orderIndex: 5,
@@ -151,7 +151,7 @@ export const EventSectionService = {
         },
         {
           id: 6,
-          type: EventType.TEST,
+          type: EventTypes.TEST,
           name: "Kartkówka 6",
           topic: "Refactoring kodu",
           orderIndex: 6,
@@ -160,7 +160,7 @@ export const EventSectionService = {
         },
         {
           id: 7,
-          type: EventType.TEST,
+          type: EventTypes.TEST,
           name: "Kartkówka 7",
           topic: "Wielowątkowość",
           orderIndex: 7,
@@ -169,7 +169,7 @@ export const EventSectionService = {
         },
         {
           id: 8,
-          type: EventType.TEST,
+          type: EventTypes.TEST,
           name: "Kartkówka 8",
           topic: "Interfejs graficzny",
           orderIndex: 8,
@@ -178,7 +178,7 @@ export const EventSectionService = {
         },
         {
           id: 9,
-          type: EventType.TEST,
+          type: EventTypes.TEST,
           name: "Kartkówka 9",
           topic: "Lambdy, streamy i zarządzanie zasobami",
           orderIndex: 9,
@@ -187,7 +187,7 @@ export const EventSectionService = {
         },
         {
           id: 10,
-          type: EventType.TEST,
+          type: EventTypes.TEST,
           name: "Kartkówka 10",
           topic: "Kotlin jako alternatywa dla Javy",
           orderIndex: 10,
@@ -196,7 +196,7 @@ export const EventSectionService = {
         },
         {
           id: 11,
-          type: EventType.TEST,
+          type: EventTypes.TEST,
           name: "Kartkówka 11",
           topic: "A może Rust?",
           orderIndex: 11,
@@ -205,7 +205,7 @@ export const EventSectionService = {
         },
         {
           id: 12,
-          type: EventType.TEST,
+          type: EventTypes.TEST,
           name: "Kartkówka 12",
           topic: "Jak wycentrować diva",
           orderIndex: 12,
@@ -218,7 +218,7 @@ export const EventSectionService = {
       const events: StudentGradableEventResponseDTO[] = [
         {
           id: 15,
-          type: EventType.ASSIGNMENT,
+          type: EventTypes.ASSIGNMENT,
           name: "Laboratorium 1",
           topic: "Instrukcje sterujące w Javie",
           gainedXp: "2.0",
@@ -228,7 +228,7 @@ export const EventSectionService = {
         },
         {
           id: 16,
-          type: EventType.ASSIGNMENT,
+          type: EventTypes.ASSIGNMENT,
           name: "Laboratorium 2",
           topic: "Model obiektowy",
           gainedXp: "0.0",
@@ -238,7 +238,7 @@ export const EventSectionService = {
         },
         {
           id: 17,
-          type: EventType.ASSIGNMENT,
+          type: EventTypes.ASSIGNMENT,
           name: "Laboratorium 3",
           topic: "Interakcje między obiektami",
           orderIndex: 3,
@@ -247,7 +247,7 @@ export const EventSectionService = {
         },
         {
           id: 18,
-          type: EventType.ASSIGNMENT,
+          type: EventTypes.ASSIGNMENT,
           name: "Laboratorium 4",
           topic: "Interfejsy i mapy",
           orderIndex: 4,
@@ -256,7 +256,7 @@ export const EventSectionService = {
         },
         {
           id: 19,
-          type: EventType.ASSIGNMENT,
+          type: EventTypes.ASSIGNMENT,
           name: "Laboratorium 5",
           topic: "Dziedziczenie",
           orderIndex: 5,
@@ -265,7 +265,7 @@ export const EventSectionService = {
         },
         {
           id: 20,
-          type: EventType.ASSIGNMENT,
+          type: EventTypes.ASSIGNMENT,
           name: "Laboratorium 6",
           topic: "Refactoring kodu",
           orderIndex: 6,
@@ -274,7 +274,7 @@ export const EventSectionService = {
         },
         {
           id: 21,
-          type: EventType.ASSIGNMENT,
+          type: EventTypes.ASSIGNMENT,
           name: "Laboratorium 7",
           topic: "Wielowątkowość",
           orderIndex: 7,
@@ -283,7 +283,7 @@ export const EventSectionService = {
         },
         {
           id: 22,
-          type: EventType.ASSIGNMENT,
+          type: EventTypes.ASSIGNMENT,
           name: "Laboratorium 8",
           topic: "Interfejs graficzny",
           orderIndex: 8,
@@ -296,7 +296,7 @@ export const EventSectionService = {
       return [
         {
           id: 30,
-          type: EventType.ASSIGNMENT,
+          type: EventTypes.ASSIGNMENT,
           name: "Laboratorium 0",
           topic: "Git jest cool",
           orderIndex: 1,
@@ -308,7 +308,7 @@ export const EventSectionService = {
       return [
         {
           id: 32,
-          type: EventType.PROJECT,
+          type: EventTypes.PROJECT,
           name: "Projekt 2",
           topic: "Refactoring hell",
           orderIndex: 1,
@@ -320,7 +320,7 @@ export const EventSectionService = {
       return [
         {
           id: 33,
-          type: EventType.PROJECT,
+          type: EventTypes.PROJECT,
           name: "Projekt 1a",
           topic: "Darwin World",
           orderIndex: 1,
@@ -329,7 +329,7 @@ export const EventSectionService = {
         },
         {
           id: 34,
-          type: EventType.PROJECT,
+          type: EventTypes.PROJECT,
           name: "Projekt 1b",
           topic: "Polymorphia",
           orderIndex: 2,
@@ -348,7 +348,7 @@ export const EventSectionService = {
     if (eventSectionId === 1) {
       const events = [
         {
-          type: EventType.TEST,
+          type: EventTypes.TEST,
           id: 1,
           name: "Kartkówka 1",
           topic: "Instrukcje sterujące",
@@ -356,7 +356,7 @@ export const EventSectionService = {
           ungradedStudents: 3,
         },
         {
-          type: EventType.TEST,
+          type: EventTypes.TEST,
           id: 2,
           name: "Kartkówka 2",
           topic: "Model obiektowy",
@@ -364,7 +364,7 @@ export const EventSectionService = {
           ungradedStudents: 12,
         },
         {
-          type: EventType.TEST,
+          type: EventTypes.TEST,
           id: 3,
           name: "Kartkówka 3",
           topic: "Interakcje między obiektami",
@@ -372,7 +372,7 @@ export const EventSectionService = {
           ungradedStudents: 0,
         },
         {
-          type: EventType.TEST,
+          type: EventTypes.TEST,
           id: 4,
           name: "Kartkówka 4",
           topic: "Interfejsy i mapy",
@@ -380,7 +380,7 @@ export const EventSectionService = {
           ungradedStudents: 8,
         },
         {
-          type: EventType.TEST,
+          type: EventTypes.TEST,
           id: 5,
           name: "Kartkówka 5",
           topic: "Dziedziczenie",
@@ -388,7 +388,7 @@ export const EventSectionService = {
           ungradedStudents: 15,
         },
         {
-          type: EventType.TEST,
+          type: EventTypes.TEST,
           id: 6,
           name: "Kartkówka 6",
           topic: "Refactoring kodu",
@@ -396,7 +396,7 @@ export const EventSectionService = {
           ungradedStudents: 5,
         },
         {
-          type: EventType.TEST,
+          type: EventTypes.TEST,
           id: 7,
           name: "Kartkówka 7",
           topic: "Wielowątkowość",
@@ -404,7 +404,7 @@ export const EventSectionService = {
           ungradedStudents: 21,
         },
         {
-          type: EventType.TEST,
+          type: EventTypes.TEST,
           id: 8,
           name: "Kartkówka 8",
           topic: "Interfejs graficzny",
@@ -412,7 +412,7 @@ export const EventSectionService = {
           ungradedStudents: 7,
         },
         {
-          type: EventType.TEST,
+          type: EventTypes.TEST,
           id: 9,
           name: "Kartkówka 9",
           topic: "Lambdy, streamy i zarządzanie zasobami",
@@ -420,7 +420,7 @@ export const EventSectionService = {
           ungradedStudents: 18,
         },
         {
-          type: EventType.TEST,
+          type: EventTypes.TEST,
           id: 10,
           name: "Kartkówka 10",
           topic: "Kotlin jako alternatywa dla Javy",
@@ -428,7 +428,7 @@ export const EventSectionService = {
           ungradedStudents: 2,
         },
         {
-          type: EventType.TEST,
+          type: EventTypes.TEST,
           id: 11,
           name: "Kartkówka 11",
           topic: "A może Rust?",
@@ -436,7 +436,7 @@ export const EventSectionService = {
           ungradedStudents: 9,
         },
         {
-          type: EventType.TEST,
+          type: EventTypes.TEST,
           id: 12,
           name: "Kartkówka 12",
           topic: "Jak wycentrować diva",
@@ -448,7 +448,7 @@ export const EventSectionService = {
     } else if (eventSectionId === 2) {
       const events = [
         {
-          type: EventType.ASSIGNMENT,
+          type: EventTypes.ASSIGNMENT,
           id: 15,
           name: "Laboratorium 1",
           topic: "Instrukcje sterujące w Javie",
@@ -456,7 +456,7 @@ export const EventSectionService = {
           ungradedStudents: 6,
         },
         {
-          type: EventType.ASSIGNMENT,
+          type: EventTypes.ASSIGNMENT,
           id: 16,
           name: "Laboratorium 2",
           topic: "Model obiektowy",
@@ -464,7 +464,7 @@ export const EventSectionService = {
           ungradedStudents: 11,
         },
         {
-          type: EventType.ASSIGNMENT,
+          type: EventTypes.ASSIGNMENT,
           id: 17,
           name: "Laboratorium 3",
           topic: "Interakcje między obiektami",
@@ -472,7 +472,7 @@ export const EventSectionService = {
           ungradedStudents: 4,
         },
         {
-          type: EventType.ASSIGNMENT,
+          type: EventTypes.ASSIGNMENT,
           id: 18,
           name: "Laboratorium 4",
           topic: "Interfejsy i mapy",
@@ -480,7 +480,7 @@ export const EventSectionService = {
           ungradedStudents: 17,
         },
         {
-          type: EventType.ASSIGNMENT,
+          type: EventTypes.ASSIGNMENT,
           id: 19,
           name: "Laboratorium 5",
           topic: "Dziedziczenie",
@@ -488,7 +488,7 @@ export const EventSectionService = {
           ungradedStudents: 1,
         },
         {
-          type: EventType.ASSIGNMENT,
+          type: EventTypes.ASSIGNMENT,
           id: 20,
           name: "Laboratorium 6",
           topic: "Refactoring kodu",
@@ -496,7 +496,7 @@ export const EventSectionService = {
           ungradedStudents: 13,
         },
         {
-          type: EventType.ASSIGNMENT,
+          type: EventTypes.ASSIGNMENT,
           id: 21,
           name: "Laboratorium 7",
           topic: "Wielowątkowość",
@@ -504,7 +504,7 @@ export const EventSectionService = {
           ungradedStudents: 8,
         },
         {
-          type: EventType.ASSIGNMENT,
+          type: EventTypes.ASSIGNMENT,
           id: 22,
           name: "Laboratorium 8",
           topic: "Interfejs graficzny",
@@ -516,7 +516,7 @@ export const EventSectionService = {
     } else if (eventSectionId === 4) {
       return [
         {
-          type: EventType.ASSIGNMENT,
+          type: EventTypes.ASSIGNMENT,
           id: 30,
           name: "Laboratorium 0",
           topic: "Git jest cool",
@@ -527,7 +527,7 @@ export const EventSectionService = {
     } else if (eventSectionId === 6) {
       return [
         {
-          type: EventType.PROJECT,
+          type: EventTypes.PROJECT,
           id: 32,
           name: "Projekt 2",
           topic: "Refactoring hell",
@@ -538,7 +538,7 @@ export const EventSectionService = {
     } else if (eventSectionId === 3) {
       return [
         {
-          type: EventType.PROJECT,
+          type: EventTypes.PROJECT,
           id: 33,
           name: "Projekt 1a",
           topic: "Darwin World",
@@ -546,7 +546,7 @@ export const EventSectionService = {
           ungradedStudents: 7,
         },
         {
-          type: EventType.PROJECT,
+          type: EventTypes.PROJECT,
           id: 34,
           name: "Projekt 1b",
           topic: "Polymorphia",
