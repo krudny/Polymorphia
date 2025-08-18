@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { useEventParams } from "@/shared/params/useSeachParams";
 
 export default function PickGroupView() {
-  const { eventSectionType, eventSectionId } = useEventParams();
+  const { eventType, eventSectionId } = useEventParams();
   const router = useRouter();
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
@@ -28,9 +28,7 @@ export default function PickGroupView() {
   }
 
   const handleClick = (id: number) => {
-    router.replace(
-      `/course/${eventSectionType}/${eventSectionId}/${id}/grading`
-    );
+    router.replace(`/course/${eventType}/${eventSectionId}/${id}/grading`);
   };
 
   const cards = projectGroups.map((projectGroup) =>

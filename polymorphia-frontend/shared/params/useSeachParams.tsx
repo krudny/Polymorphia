@@ -1,17 +1,17 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { EventSectionType } from "@/components/course/event-section/types";
+import { EventType } from "@/interfaces/api/course";
 
 export function useEventParams() {
   const params = useParams();
   const gradableEventId = Number(params.gradableEventId);
   const eventSectionId = Number(params.eventSectionId);
-  const eventSectionType = params.eventSectionType as EventSectionType;
+  const eventType = params.eventType as EventType;
 
   return {
     gradableEventId,
     eventSectionId,
-    eventSectionType,
+    eventType,
   };
 }

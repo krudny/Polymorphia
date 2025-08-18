@@ -28,6 +28,5 @@ export interface XPCardGridProps {
 
 export interface CardGridProps {
   eventSectionId: number;
-  eventSectionType: EventType;
-  containerRef: RefObject<HTMLDivElement | null>;
+  eventType: EventType;
 }

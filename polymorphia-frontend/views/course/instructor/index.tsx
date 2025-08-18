@@ -10,7 +10,7 @@ import renderCard from "@/views/course/instructor/RenderCard";
 import { useEventParams } from "@/shared/params/useSeachParams";
 
 export default function InstructorView() {
-  const { eventSectionType, eventSectionId } = useEventParams();
+  const { eventType, eventSectionId } = useEventParams();
   const router = useRouter();
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
@@ -29,10 +29,10 @@ export default function InstructorView() {
   useEffect(() => {
     if (!isLoading && gradableEvents && gradableEvents.length === 1) {
       router.replace(
-        `/course/${eventSectionType}/${eventSectionId}/${gradableEvents[0].id}`
+        `/course/${eventType}/${eventSectionId}/${gradableEvents[0].id}`
       );
     }
-  }, [isLoading, gradableEvents, eventSectionType, eventSectionId, router]);
+  }, [isLoading, gradableEvents, eventType, eventSectionId, router]);
 
   if (isLoading || (gradableEvents && gradableEvents.length < 2)) {
     return <Loading />;
@@ -47,14 +47,10 @@ export default function InstructorView() {
   }
 
   const handleClick = (id: number) => {
-    if (eventSectionType === "test" || eventSectionType === "assignment") {
-      router.push(
-        `/course/${eventSectionType}/${eventSectionId}/${id}/grading`
-      );
+    if (eventType === "test" || eventType === "assignment") {
+      router.push(`/course/${eventType}/${eventSectionId}/${id}/grading`);
     } else {
-      router.push(
-        `/course/${eventSectionType}/${eventSectionId}/${id}/pick-group`
-      );
+      router.push(`/course/${eventType}/${eventSectionId}/${id}/pick-group`);
     }
   };
 

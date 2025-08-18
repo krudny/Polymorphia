@@ -4,14 +4,18 @@ import { useState } from "react";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCardAssign from "@/components/xp-card/components/XPCardAssign";
+import { AssignRewardModalProps } from "@/components/grading/modals/assign-reward/types";
 
-export default function AssignRewardModal({ isVisible, setIsVisible }) {
+export default function AssignRewardModal({
+  isVisible,
+  setIsVisibleAction,
+}: AssignRewardModalProps) {
   const [curr, setCurr] = useState(0);
 
   return (
     <Modal
       isDataPresented={isVisible}
-      onClosed={() => setIsVisible(false)}
+      onClosed={() => setIsVisibleAction(false)}
       title="Przypisz nagrody"
     >
       <div className="w-full flex flex-col gap-y-2">

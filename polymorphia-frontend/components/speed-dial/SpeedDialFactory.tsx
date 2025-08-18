@@ -8,7 +8,7 @@ import { useEventParams } from "@/shared/params/useSeachParams";
 import GradeModal from "@/components/speed-dial/modals/GradeModal";
 
 export function useSpeedDialItemsFactory(): SpeedDialItem[] {
-  const { eventSectionType } = useEventParams();
+  const { eventType } = useEventParams();
   const { isEditing, setIsEditing, saveMarkdown, rejectMarkdown } =
     useContext(MarkdownContext);
 
@@ -17,9 +17,7 @@ export function useSpeedDialItemsFactory(): SpeedDialItem[] {
     orderIndex: 5,
     label: "Nagrody",
     icon: "trophy",
-    modal: (onClose) => (
-      <GradeModal onClosed={onClose} />
-    ),
+    modal: (onClose) => <GradeModal onClosed={onClose} />,
   };
 
   const projectVariantItem: SpeedDialItem = {
@@ -72,7 +70,7 @@ export function useSpeedDialItemsFactory(): SpeedDialItem[] {
     color: "#a30d0d",
   };
 
-  switch (eventSectionType) {
+  switch (eventType) {
     case "ASSIGNMENT":
       return [rewardsItem];
     case "PROJECT":

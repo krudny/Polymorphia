@@ -11,11 +11,9 @@ import XPCard from "@/components/xp-card/XPCard";
 import { getStudentCardComponent } from "@/shared/card/getCardComponent";
 import Pagination from "@/components/pagination/Pagination";
 import { useXPGridAnimation } from "@/animations/XPGrid";
+import { EventType } from "@/interfaces/api/course";
 
-export default function CardGrid({
-  eventSectionId,
-  eventSectionType,
-}: CardGridProps) {
+export default function CardGrid({ eventSectionId, eventType }: CardGridProps) {
   const ITEMS_PER_PAGE = 3;
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(0);
@@ -84,10 +82,10 @@ export default function CardGrid({
   const pageCount = Math.ceil(gradableEvents.length / ITEMS_PER_PAGE);
 
   const handleGradableEventClick = (id: number) => {
-    if (eventSectionType === "test") {
+    if (eventType === EventType.TEST) {
       setSelectedEventId(id);
     } else {
-      router.push(`/course/${eventSectionType}/${eventSectionId}/${id}`);
+      router.push(`/course/${eventType}/${eventSectionId}/${id}`);
     }
   };
 

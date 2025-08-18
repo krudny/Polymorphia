@@ -1,4 +1,8 @@
-export type EventType = "ASSIGNMENT" | "PROJECT" | "TEST";
+export enum EventType {
+  ASSIGNMENT = "ASSIGNMENT",
+  PROJECT = "PROJECT",
+  TEST = "TEST",
+}
 
 export interface EventSectionResponseDTO {
   id: number;

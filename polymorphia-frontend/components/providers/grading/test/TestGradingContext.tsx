@@ -3,15 +3,16 @@ import { createContext, ReactNode, useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
-import { GradeResponseDTO, UserDetailsDTO } from "@/interfaces/api/DTO";
 import Loading from "@/components/loading/Loading";
+import { UserDetailsDTO } from "@/interfaces/api/user";
+import { GradeResponseDTO } from "@/interfaces/api/grade";
 
 export type TestGradingContextType = {
   search: string;
   setSearch: (search: string) => void;
   selectedStudent: UserDetailsDTO | null;
   setSelectedStudent: (student: UserDetailsDTO | null) => void;
-  studentList: (UserDetailsDTO & { gainedXp?: number })[];
+  studentList: (UserDetailsDTO & { gainedXp?: string })[];
   grade: GradeResponseDTO;
   setGrade: (grade: GradeResponseDTO) => void;
 };
@@ -37,7 +38,7 @@ export const TestGradingProvider = ({ children }: { children: ReactNode }) => {
 
   const { data: gradeResponse } = useQuery({
     queryKey: ["grade"],
-    queryFn: () => EventSectionService.getGrade(),
+    queryFn: () => EventSectionService.getGrade(30),
   });
 
   useEffect(() => {
@@ -49,7 +50,6 @@ export const TestGradingProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (gradeResponse) {
       setGrade(gradeResponse);
-      console.log(gradeResponse);
     }
   }, [gradeResponse]);
 

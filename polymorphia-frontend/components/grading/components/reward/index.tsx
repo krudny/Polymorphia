@@ -88,7 +88,7 @@ export default function Reward({ context }: RewardProps) {
       </div>
       <AssignRewardModal
         isVisible={isModalVisible}
-        setIsVisible={setIsModalVisible}
+        setIsVisibleAction={setIsModalVisible}
       />
     </>
   );

@@ -1,5 +1,5 @@
-import {PullRequest} from "@/interfaces/api/DTO";
+import { PullRequest } from "@/interfaces/api/temp";
 
 export interface PullRequestProps {
-    pullRequests: PullRequest[];
+  pullRequests: PullRequest[];
 }

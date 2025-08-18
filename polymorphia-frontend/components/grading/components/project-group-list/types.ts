@@ -1,4 +1,4 @@
-import { ProjectGroupResponseDTO } from "@/app/(logged-in)/course/EventSectionService";
+import { ProjectGroupResponseDTO } from "@/interfaces/api/temp";
 
 export interface ProjectGroupListProps {
   projectGroups: ProjectGroupResponseDTO[];

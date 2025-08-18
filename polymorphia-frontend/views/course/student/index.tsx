@@ -15,7 +15,7 @@ import GradableEventRewardModal from "@/components/speed-dial/modals/GradableEve
 import { useEventParams } from "@/shared/params/useSeachParams";
 
 export default function StudentView() {
-  const { eventSectionType, eventSectionId } = useEventParams();
+  const { eventType, eventSectionId } = useEventParams();
   const router = useRouter();
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const summaryRef = useRef<HTMLDivElement | null>(null);
@@ -35,10 +35,10 @@ export default function StudentView() {
   useEffect(() => {
     if (!isLoading && gradableEvents && gradableEvents.length === 1) {
       router.replace(
-        `/course/${eventSectionType}/${eventSectionId}/${gradableEvents[0].id}`
+        `/course/${eventType}/${eventSectionId}/${gradableEvents[0].id}`
       );
     }
-  }, [isLoading, gradableEvents, eventSectionType, eventSectionId, router]);
+  }, [isLoading, gradableEvents, eventType, eventSectionId, router]);
 
   if (isLoading || (gradableEvents && gradableEvents.length < 2)) {
     return <Loading />;
@@ -55,10 +55,10 @@ export default function StudentView() {
   const handleClick = (id: number, isLocked: boolean) => {
     if (isLocked) return;
 
-    if (eventSectionType === "test") {
+    if (eventType === "test") {
       setSelectedEventId(id);
     } else {
-      router.push(`/course/${eventSectionType}/${eventSectionId}/${id}`);
+      router.push(`/course/${eventType}/${eventSectionId}/${id}`);
     }
   };
 
@@ -77,7 +77,7 @@ export default function StudentView() {
         </div>
         <PointsSummary ref={summaryRef} eventSectionId={eventSectionId} />
       </div>
-      {eventSectionType === "test" && (
+      {eventType === "test" && (
         <GradableEventRewardModal onClosed={() => setSelectedEventId(null)} />
       )}
     </SectionView>

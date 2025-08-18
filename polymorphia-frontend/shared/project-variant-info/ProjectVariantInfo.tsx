@@ -7,12 +7,12 @@ import { EventSectionService } from "@/app/(logged-in)/course/EventSectionServic
 import { useEventParams } from "@/shared/params/useSeachParams";
 
 export default function ProjectVariantInfo() {
-  const { gradableEventId, eventSectionType } = useEventParams();
+  const { gradableEventId, eventType } = useEventParams();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["projectVariant", gradableEventId],
     queryFn: () => EventSectionService.getProjectVariant(),
-    enabled: !!gradableEventId && eventSectionType === "project",
+    enabled: !!gradableEventId && eventType === "project",
   });
 
   return (
@@ -32,7 +32,7 @@ export default function ProjectVariantInfo() {
           {data.map((projectVariant, index) => (
             <XPCard
               title={projectVariant.name}
-              subtitle={projectVariant.category}
+              subtitle={projectVariant.categoryName}
               key={index}
               leftComponent={
                 <XPCardImage

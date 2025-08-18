@@ -10,7 +10,7 @@ export default function StudentsList({ context }: StudentListProps) {
   const {
     search,
     setSearch,
-    studentList: students,
+    studentList,
     selectedStudent,
     setSelectedStudent,
   } = useContext(context);
@@ -29,7 +29,7 @@ export default function StudentsList({ context }: StudentListProps) {
         />
       </div>
       <div className="overflow-y-scroll w-full bg-red-400 py-4 custom-scrollbar">
-        {students.map((student, index) => (
+        {studentList.map((student, index) => (
           <div
             key={index}
             className="max-w-[25rem] mx-auto my-3 first:mt-0 last:mb-0"
