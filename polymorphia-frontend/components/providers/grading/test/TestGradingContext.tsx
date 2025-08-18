@@ -6,6 +6,7 @@ import { EventSectionService } from "@/app/(logged-in)/course/EventSectionServic
 import Loading from "@/components/loading/Loading";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import { GradeResponseDTO } from "@/interfaces/api/grade";
+import { useEventParams } from "@/shared/params/useSeachParams";
 
 export type TestGradingContextType = {
   search: string;
@@ -23,6 +24,7 @@ export const TestGradingContext = createContext<
 
 // TODO: loading
 export const TestGradingProvider = ({ children }: { children: ReactNode }) => {
+  const { gradableEventId } = useEventParams();
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 400);
   const [selectedStudent, setSelectedStudent] = useState<UserDetailsDTO | null>(
@@ -36,9 +38,11 @@ export const TestGradingProvider = ({ children }: { children: ReactNode }) => {
       EventSectionService.getRandomPeopleWithPoints(debouncedSearch),
   });
 
+  // TODO: !
   const { data: gradeResponse } = useQuery({
     queryKey: ["grade"],
-    queryFn: () => EventSectionService.getGrade(30),
+    queryFn: () =>
+      EventSectionService.getGrade2(selectedStudent!.id, gradableEventId),
   });
 
   useEffect(() => {

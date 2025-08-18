@@ -61,10 +61,6 @@ export default function XPCardGrid({
     />
   );
 
-  useEffect(() => {
-    console.log(pageCols, pageRows);
-  }, [pageCols, pageRows]);
-
   return (
     <>
       {cardsPage.length > 1 ? (

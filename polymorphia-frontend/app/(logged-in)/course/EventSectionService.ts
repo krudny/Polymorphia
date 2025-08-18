@@ -22,6 +22,7 @@ for (let i = 0; i < 250; i++) {
   const stage = Math.max(1, 6 - Math.floor(i / 50));
 
   const item = {
+    id: i,
     studentName: studentName,
     animalName: studentName,
     evolutionStage: "Majestatyczna Bestia",
@@ -91,6 +92,7 @@ export const EventSectionService = {
     }
     return eventSection;
   },
+
   getEventSections: async (
     courseId: number
   ): Promise<EventSectionResponseDTO[]> => {
@@ -670,7 +672,7 @@ export const EventSectionService = {
   },
 
   getGrade: async (gradableEventId: number): Promise<GradeResponseDTO> => {
-    if (gradableEventId === 30) {
+    if (gradableEventId === 1) {
       return {
         details: {
           id: 1,
@@ -682,7 +684,7 @@ export const EventSectionService = {
             maxXp: "4.0",
             assignableRewards: [
               {
-                reward: {
+                assignableReward: {
                   rewardType: "CHEST",
                   reward: {
                     id: 1,
@@ -766,7 +768,7 @@ export const EventSectionService = {
             maxXp: "2.0",
             assignableRewards: [
               {
-                reward: {
+                assignableReward: {
                   rewardType: "CHEST",
                   reward: {
                     id: 1,
@@ -846,7 +848,7 @@ export const EventSectionService = {
           maxXp: "4.0",
           assignableRewards: [
             {
-              reward: {
+              assignableReward: {
                 rewardType: "CHEST",
                 reward: {
                   id: 1,
@@ -878,6 +880,239 @@ export const EventSectionService = {
       ],
     };
   },
+
+  getGrade2: async (
+    studentId: number,
+    gradableEventId: number
+  ): Promise<GradeResponseDTO> => {
+    if (studentId === 1) {
+      return {
+        details: {
+          id: 1,
+        },
+        criteria: [
+          {
+            id: 1,
+            name: "Wykonanie zadania",
+            maxXp: "4.0",
+            assignableRewards: [
+              {
+                assignableReward: {
+                  rewardType: "CHEST",
+                  reward: {
+                    id: 1,
+                    name: "Srebrna Skrzynia",
+                    imageUrl: "images/chests/s1.png",
+                    behavior: "ONE_OF_MANY",
+                    behaviorText: "Wybierz jeden przedmiot ze skrzynki",
+                    orderIndex: 0,
+                    chestItems: [
+                      {
+                        id: 1,
+                        itemBonusType: "PERCENTAGE_BONUS",
+                        name: "Pietruszka",
+                        bonusText: "+5% do kategorii Kartkówka",
+                        imageUrl: "images/items/parsley.jpg",
+                        percentage: 5,
+                        orderIndex: 0,
+                        limit: 3,
+                        isLimitReached: false,
+                        eventSectionId: 1,
+                      },
+                    ],
+                  },
+                },
+                maxAmount: 1,
+              },
+            ],
+            criterionGrade: {
+              id: 1,
+              gainedXp: "3.5",
+              assignedRewards: [
+                {
+                  rewardType: "CHEST",
+                  assignedReward: {
+                    base: {
+                      id: 1,
+                      name: "Srebrna Skrzynia",
+                      imageUrl: "images/chests/s1.png",
+                      behavior: "ONE_OF_MANY",
+                      behaviorText: "Wybierz jeden przedmiot ze skrzynki",
+                      orderIndex: 0,
+                      chestItems: [
+                        {
+                          id: 1,
+                          itemBonusType: "PERCENTAGE_BONUS",
+                          name: "Pietruszka",
+                          bonusText: "+5% do kategorii Kartkówka",
+                          imageUrl: "images/items/parsley.jpg",
+                          percentage: 5,
+                          orderIndex: 0,
+                          limit: 3,
+                          isLimitReached: false,
+                          eventSectionId: 1,
+                        },
+                      ],
+                    },
+                    details: {
+                      id: 3,
+                      receivedDate: "07.06.2025",
+                      usedDate: "08.06.2025",
+                      isUsed: true,
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      };
+    }
+
+    if (studentId === 2) {
+      return {
+        details: {
+          id: 1,
+        },
+        criteria: [
+          {
+            id: 1,
+            name: "Wykonanie zadania",
+            maxXp: "2.0",
+            assignableRewards: [
+              {
+                assignableReward: {
+                  rewardType: "CHEST",
+                  reward: {
+                    id: 1,
+                    name: "Srebrna Skrzynia",
+                    imageUrl: "images/chests/s1.png",
+                    behavior: "ONE_OF_MANY",
+                    behaviorText: "Wybierz jeden przedmiot ze skrzynki",
+                    orderIndex: 0,
+                    chestItems: [
+                      {
+                        id: 1,
+                        itemBonusType: "PERCENTAGE_BONUS",
+                        name: "Pietruszka",
+                        bonusText: "+5% do kategorii Kartkówka",
+                        imageUrl: "images/items/parsley.jpg",
+                        percentage: 5,
+                        orderIndex: 0,
+                        limit: 3,
+                        isLimitReached: false,
+                        eventSectionId: 1,
+                      },
+                    ],
+                  },
+                },
+                maxAmount: 1,
+              },
+            ],
+            criterionGrade: {
+              id: 1,
+              gainedXp: "0.7",
+              assignedRewards: [
+                {
+                  rewardType: "CHEST",
+                  assignedReward: {
+                    base: {
+                      id: 1,
+                      name: "Srebrna Skrzynia",
+                      imageUrl: "images/chests/s1.png",
+                      behavior: "ONE_OF_MANY",
+                      behaviorText: "Wybierz jeden przedmiot ze skrzynki",
+                      orderIndex: 0,
+                      chestItems: [
+                        {
+                          id: 1,
+                          itemBonusType: "PERCENTAGE_BONUS",
+                          name: "Pietruszka",
+                          bonusText: "+5% do kategorii Kartkówka",
+                          imageUrl: "images/items/parsley.jpg",
+                          percentage: 5,
+                          orderIndex: 0,
+                          limit: 3,
+                          isLimitReached: false,
+                          eventSectionId: 1,
+                        },
+                      ],
+                    },
+                    details: {
+                      id: 3,
+                      receivedDate: "07.06.2025",
+                      usedDate: "08.06.2025",
+                      isUsed: true,
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      };
+    }
+
+    return {
+      criteria: [
+        {
+          id: 1,
+          name: "Wykonanie zadania",
+          maxXp: "4.0",
+          assignableRewards: [
+            {
+              assignableReward: {
+                rewardType: "CHEST",
+                reward: {
+                  id: 1,
+                  name: "Srebrna Skrzynia",
+                  imageUrl: "images/chests/s1.png",
+                  behavior: "ONE_OF_MANY",
+                  behaviorText: "Wybierz jeden przedmiot ze skrzynki",
+                  orderIndex: 0,
+                  chestItems: [
+                    {
+                      id: 1,
+                      itemBonusType: "PERCENTAGE_BONUS",
+                      name: "Pietruszka",
+                      bonusText: "+5% do kategorii Kartkówka",
+                      imageUrl: "images/items/parsley.jpg",
+                      percentage: 5,
+                      orderIndex: 0,
+                      limit: 3,
+                      isLimitReached: false,
+                      eventSectionId: 1,
+                    },
+                  ],
+                },
+              },
+              maxAmount: 2,
+            },
+            {
+              assignableReward: {
+                rewardType: "ITEM",
+                reward: {
+                  id: 2,
+                  name: "Marchewka",
+                  imageUrl: "images/items/carrot.jpg",
+                  orderIndex: 0,
+                  itemBonusType: "FLAT_BONUS",
+                  xp: "5",
+                  behavior: "ONE_EVENT_TRIGGERED",
+                  bonusText: "+5 do kategorii Kartkówka",
+                  limit: 3,
+                  isLimitReached: false,
+                  eventSectionId: 1,
+                },
+              },
+              maxAmount: 3,
+            },
+          ],
+        },
+      ],
+    };
+  },
+
   getProjectVariant: async (): Promise<ProjectVariantResponseDTO[]> => {
     return [
       {

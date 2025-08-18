@@ -20,7 +20,7 @@ export interface CriterionResponseDTO {
 }
 
 export interface CriterionAssignableRewardResponseDTO {
-  reward: RewardResponseDTO;
+  assignableReward: RewardResponseDTO;
   maxAmount: number;
 }
 

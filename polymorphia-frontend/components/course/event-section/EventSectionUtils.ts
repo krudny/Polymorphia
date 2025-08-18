@@ -38,8 +38,6 @@ export function setResizeObserver(
     const height = containerRef.current.offsetHeight;
     const width = containerRef.current.offsetWidth;
 
-    console.log(window.outerWidth, containerRef?.current?.offsetWidth);
-
     if (window.outerWidth < 1024) {
       setMobile(true);
 
@@ -69,8 +67,6 @@ export function setResizeObserver(
 
       const maxRows = height <= 550 ? 2 : height >= 900 ? 4 : 3;
       const minCols = window.innerWidth >= 1280 ? 2 : 1;
-
-      console.log(cols, maxColumns, minCols);
 
       setPageRows(Math.max(Math.min(rows, maxRows), 1));
       setPageCols(Math.max(Math.min(cols, maxColumns), minCols));

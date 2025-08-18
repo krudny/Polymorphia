@@ -7,9 +7,12 @@ import { useContext, useState } from "react";
 import { API_STATIC_URL } from "@/services/api";
 import Image from "next/image";
 import AssignRewardModal from "@/components/grading/modals/assign-reward";
+import { CriterionAssignableRewardResponseDTO } from "@/interfaces/api/grade";
 
 export default function Reward({ context }: RewardProps) {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [assignableRewards, setAssignableRewards] = useState<
+    CriterionAssignableRewardResponseDTO[] | null
+  >(null);
   const { grade } = useContext(context);
 
   return (
@@ -51,14 +54,14 @@ export default function Reward({ context }: RewardProps) {
               <h2 className="text-4xl my-5">Nagrody</h2>
               <div className="grid grid-cols-3 gap-4">
                 {criterion.criterionGrade?.assignedRewards.map(
-                  (reward, index) => (
+                  (assignedRewards, index) => (
                     <div
                       key={index}
                       className="relative w-full aspect-square rounded-xl border-3 border-primary-dark drop-shadow-xl overflow-hidden"
                     >
                       <div className="w-full h-full rounded-xl overflow-hidden">
                         <Image
-                          src={`${API_STATIC_URL}/images/chests/s1.png`}
+                          src={`${API_STATIC_URL}/${assignedRewards.assignedReward.base.imageUrl}`}
                           alt="User profile"
                           fill
                           priority
@@ -71,7 +74,9 @@ export default function Reward({ context }: RewardProps) {
                 )}
                 <div
                   className="aspect-square border-3 border-primary-dark rounded-xl flex-col-centered hover:bg-primary-dark hover:text-secondary-gray cursor-pointer"
-                  onClick={() => setIsModalVisible(true)}
+                  onClick={() =>
+                    setAssignableRewards(criterion.assignableRewards)
+                  }
                 >
                   <span className="material-symbols text-4xl">add</span>
                 </div>
@@ -87,8 +92,8 @@ export default function Reward({ context }: RewardProps) {
         </div>
       </div>
       <AssignRewardModal
-        isVisible={isModalVisible}
-        setIsVisibleAction={setIsModalVisible}
+        assignableRewards={assignableRewards}
+        onClosedAction={() => setAssignableRewards(null)}
       />
     </>
   );

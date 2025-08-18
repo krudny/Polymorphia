@@ -1,4 +1,6 @@
+import { CriterionAssignableRewardResponseDTO } from "@/interfaces/api/grade";
+
 export interface AssignRewardModalProps {
-  isVisible: boolean;
-  setIsVisibleAction: (isVisible: boolean) => void;
+  assignableRewards: null | CriterionAssignableRewardResponseDTO[];
+  onClosedAction: () => void;
 }

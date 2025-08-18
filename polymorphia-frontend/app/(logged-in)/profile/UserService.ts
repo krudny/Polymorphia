@@ -4,6 +4,7 @@ import { Role, Roles } from "@/interfaces/api/temp";
 const UserService = {
   getCurrentUser: async (): Promise<UserDetailsDTO> => {
     return {
+      id: 1,
       studentName: "Kamil Rudny",
       animalName: "Gerard Pocieszny",
       evolutionStage: "Majestatyczna bestia",
@@ -15,6 +16,7 @@ const UserService = {
   getRandomUsers: async (): Promise<UserDetailsDTO[]> => {
     return [
       {
+        id: 1,
         studentName: "Kamil Rudny",
         animalName: "Gerard Pocieszny",
         evolutionStage: "Majestatyczna bestia",
@@ -23,6 +25,7 @@ const UserService = {
         position: 1,
       },
       {
+        id: 2,
         studentName: "Kamil Śmieszny",
         animalName: "Gerard Wesoły",
         evolutionStage: "Majestatyczna bestia",

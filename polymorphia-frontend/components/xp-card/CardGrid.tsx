@@ -62,10 +62,6 @@ export default function CardGrid({
     />
   );
 
-  useEffect(() => {
-    console.log(pageCols, pageRows);
-  }, [pageCols, pageRows]);
-
   return (
     <>
       {cardsPage.length > 1 ? (

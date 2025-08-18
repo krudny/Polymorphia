@@ -55,6 +55,7 @@ export default function StudentsList({ context }: StudentListProps) {
                       ? "bg-sky-100"
                       : "bg-secondary-gray"
                   }
+                  isXPLabelVisible={false}
                   isSumLabelVisible={true}
                 />
               }
