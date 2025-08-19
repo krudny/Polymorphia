@@ -9,3 +9,7 @@ export interface SpeedDialItem {
   onClick?: () => void;
   color?: string;
 }
+
+export interface SpeedDialProps {
+  strategyName: string;
+}

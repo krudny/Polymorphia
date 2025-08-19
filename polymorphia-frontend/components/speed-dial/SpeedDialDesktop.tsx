@@ -5,9 +5,10 @@ import "./index.css";
 import { useSpeedDialItemsFactory } from "@/components/speed-dial/SpeedDialFactory";
 import Loading from "@/components/loading/Loading";
 import { SpeedDial as SpeedDialMui, SpeedDialAction } from "@mui/material";
+import { SpeedDialProps } from "./types";
 
-export default function SpeedDialDesktop() {
-  const items = useSpeedDialItemsFactory();
+export default function SpeedDialDesktop({ strategyName }: SpeedDialProps) {
+  const items = useSpeedDialItemsFactory({ strategyName });
   const [activeModal, setActiveModal] = useState<ReactNode | null>(null);
 
   if (!items) {
