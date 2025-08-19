@@ -30,7 +30,9 @@ export default function AssignRewardModal({
           const subtitle =
             rewardType === "ITEM"
               ? (rewardData as ItemResponseDTO).bonusText
-              : (rewardData as ChestResponseDTO).behaviorText;
+              : (rewardData as ChestResponseDTO).chestItems
+                  .map((item) => item.name)
+                  .join(" | ");
 
           return (
             <XPCard

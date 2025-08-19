@@ -73,7 +73,7 @@ export default function Reward({ context }: RewardProps) {
                   )
                 )}
                 <div
-                  className="aspect-square border-3 border-primary-dark rounded-xl flex-col-centered hover:bg-primary-dark hover:text-secondary-gray cursor-pointer"
+                  className="aspect-square border-3 border-primary-dark rounded-xl flex-col-centered hover:bg-primary-dark hover:text-secondary-gray cursor-pointer transition-colors duration-400 ease-[cubic-bezier(0.34,1,0.2,1)] hover:cursor-pointer"
                   onClick={() =>
                     setAssignableRewards(criterion.assignableRewards)
                   }
@@ -83,6 +83,21 @@ export default function Reward({ context }: RewardProps) {
               </div>
             </div>
           ))}
+          <h2 className="text-4xl my-5">Komentarz</h2>
+          <div className="w-full">
+            <textarea
+              className="w-full p-4 text-xl bg-yellow-400 resize-none border-3 border-primary-dark dark:border-secondary-light text-primary-dark dark:text-secondary-light placeholder-primary-dark dark:placeholder-secondary-light focus:outline-none rounded-xl"
+              placeholder="Dodaj komentarz..."
+              value={grade.details?.comment ?? ""}
+              onChange={() => {}}
+              style={{
+                minHeight: "8rem",
+                height: "auto",
+                // @ts-expect-error "New CSS feature not supported by TS yet"
+                fieldSizing: "content",
+              }}
+            />
+          </div>
           <div className="w-full my-4">
             <ButtonWithBorder
               text="Zapisz"

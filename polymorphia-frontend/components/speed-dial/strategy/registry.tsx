@@ -2,6 +2,7 @@ import { EventTypes } from "@/interfaces/api/course";
 import { AssignmentStrategy } from "@/components/speed-dial/strategy/assignment";
 import { ProjectStrategy } from "@/components/speed-dial/strategy/project";
 import { SpeedDialStrategy } from "@/components/speed-dial/strategy/types";
+import { GradingTestStrategy } from "@/components/speed-dial/strategy/grading-test";
 
 class SpeedDialStrategyRegistry {
   private strategies = new Map<string, SpeedDialStrategy>();
@@ -9,6 +10,7 @@ class SpeedDialStrategyRegistry {
   constructor() {
     this.registerStrategy(EventTypes.ASSIGNMENT, new AssignmentStrategy());
     this.registerStrategy(EventTypes.PROJECT, new ProjectStrategy());
+    this.registerStrategy("GradingTest", new GradingTestStrategy());
   }
 
   registerStrategy(strategyName: string, strategy: SpeedDialStrategy): void {
