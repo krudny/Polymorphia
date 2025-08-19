@@ -1,14 +1,15 @@
 import { RewardResponseDTO } from "../reward";
 import { AssignedRewardResponseDTO } from "../reward/assigned";
 
+// TODO: to sie zwraca jak jest ocena
 export interface GradeResponseDTO {
-  details?: GradeDetailsResponseDTO;
-  criteria: CriterionResponseDTO[];
+  details: GradeDetailsResponseDTO;
+  criteria: CriterionGradeResponseDTO[];
 }
 
 export interface GradeDetailsResponseDTO {
   id: number;
-  comment?: string;
+  comment: string;
 }
 
 export interface CriterionResponseDTO {
@@ -16,7 +17,7 @@ export interface CriterionResponseDTO {
   name: string;
   maxXp: string;
   assignableRewards: CriterionAssignableRewardResponseDTO[];
-  criterionGrade?: CriterionGradeResponseDTO;
+  criterionGrade?: CriterionGradeResponseDTO; // TODO: to do usuniecia
 }
 
 export interface CriterionAssignableRewardResponseDTO {

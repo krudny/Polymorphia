@@ -5,15 +5,16 @@ import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import Search from "@/components/search";
 import { useContext } from "react";
+import Loading from "@/components/loading/Loading";
+import { GradingReducerActions } from "@/components/providers/grading/test/TestGradingContext";
 
 export default function StudentsList({ context }: StudentListProps) {
-  const {
-    search,
-    setSearch,
-    studentList,
-    selectedStudent,
-    setSelectedStudent,
-  } = useContext(context);
+  const { search, setSearch, students, isStudentsLoading, state, dispatch } =
+    useContext(context);
+
+  if (isStudentsLoading || !students) {
+    return <Loading />;
+  }
 
   return (
     <div className="w-full overflow-y-hidden flex flex-col flex-1 gap-y-4 bg-yellow-300">
@@ -29,16 +30,21 @@ export default function StudentsList({ context }: StudentListProps) {
         />
       </div>
       <div className="overflow-y-scroll w-full bg-red-400 py-4 custom-scrollbar">
-        {studentList.map((student, index) => (
+        {students.map((student, index) => (
           <div
             key={index}
             className="max-w-[25rem] mx-auto my-3 first:mt-0 last:mb-0"
-            onClick={() => setSelectedStudent(student)}
+            onClick={() =>
+              dispatch({
+                type: GradingReducerActions.SET_STUDENT,
+                payload: student,
+              })
+            }
           >
             <XPCard
               key={index}
               title={student.studentName}
-              color={student === selectedStudent ? "sky" : "green"}
+              color={student === state.selectedStudent ? "sky" : "green"}
               subtitle={student.group}
               size={"xs"}
               leftComponent={
@@ -51,7 +57,7 @@ export default function StudentsList({ context }: StudentListProps) {
                 <XPCardPoints
                   points={student.gainedXp}
                   color={
-                    student === selectedStudent
+                    student === state.selectedStudent
                       ? "bg-sky-100"
                       : "bg-secondary-gray"
                   }

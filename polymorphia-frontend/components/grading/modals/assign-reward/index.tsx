@@ -1,6 +1,6 @@
 "use client";
 import Modal from "@/components/modal/Modal";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCardAssign from "@/components/xp-card/components/XPCardAssign";
@@ -10,9 +10,32 @@ import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 
 export default function AssignRewardModal({
   assignableRewards,
+  context,
   onClosedAction,
 }: AssignRewardModalProps) {
-  const [curr, setCurr] = useState(0);
+  const { state, dispatch } = useContext(context);
+
+  const [assignedItems, setAssignedItems] = useState<Record<number, number>>(
+    {}
+  );
+
+  const handleAssign = () => {
+    // dispatch({
+    //   type: "UPDATE_ASSIGNED_REWARDS",
+    //   payload: { assignedItems },
+    // });
+  };
+
+  const updateAssignedAmount = (rewardId: number, amount: number) => {
+    setAssignedItems((prev) => ({
+      ...prev,
+      [rewardId]: amount,
+    }));
+  };
+
+  useEffect(() => {
+    console.log(assignedItems);
+  }, [assignedItems]);
 
   return (
     <Modal
@@ -26,6 +49,9 @@ export default function AssignRewardModal({
             maxAmount,
             assignableReward: { reward: rewardData, rewardType },
           } = possibleReward;
+
+          const rewardId = rewardData.id;
+          const currentAssigned = assignedItems[rewardId] || 0;
 
           const subtitle =
             rewardType === "ITEM"
@@ -45,10 +71,20 @@ export default function AssignRewardModal({
               }
               rightComponent={
                 <XPCardAssign
-                  currentAssigned={curr}
+                  currentAssigned={currentAssigned}
                   maxAssigned={maxAmount}
-                  increment={() => setCurr(Math.min(curr + 1, maxAmount))}
-                  decrement={() => setCurr(Math.max(curr - 1, 0))}
+                  increment={() =>
+                    updateAssignedAmount(
+                      rewardId,
+                      Math.min(currentAssigned + 1, maxAmount)
+                    )
+                  }
+                  decrement={() =>
+                    updateAssignedAmount(
+                      rewardId,
+                      Math.max(currentAssigned - 1, 0)
+                    )
+                  }
                 />
               }
             />
@@ -58,6 +94,7 @@ export default function AssignRewardModal({
           <ButtonWithBorder
             text="Przypisz"
             className="w-full !border-3 !rounded-md"
+            onClick={handleAssign}
           />
         </div>
       </div>
