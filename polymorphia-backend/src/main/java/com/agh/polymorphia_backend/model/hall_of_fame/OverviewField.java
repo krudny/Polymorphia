@@ -4,7 +4,8 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public enum OverviewField {
-    ANIMAL_NAME("animalName", "animalName"),
+    STUDENT_NAME("studentName"),
+    ANIMAL_NAME("animalName"),
     TOTAL("total", "totalXpSum"),
     BONUS("bonus", "totalBonusSum");
 
@@ -14,6 +15,11 @@ public enum OverviewField {
     OverviewField(String key, String dbField) {
         this.key = key;
         this.dbField = dbField;
+    }
+
+    OverviewField(String key){
+        this.key = key;
+        this.dbField = key;
     }
 
     public static Optional<String> getDbField(String key) {

@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface EventSectionRepository extends JpaRepository<EventSection, Long> {
     List<EventSection> findByCourseId(Long courseId);
+
+    boolean existsByCourseIdAndName(Long courseId, String name);
 }
