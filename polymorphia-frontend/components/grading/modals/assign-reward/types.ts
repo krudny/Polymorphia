@@ -1,6 +1,6 @@
 import { CriterionAssignableRewardResponseDTO } from "@/interfaces/api/grade";
 import { Context } from "react";
-import { TestGradingContextType } from "@/components/providers/grading/test/TestGradingContext";
+import { TestGradingContextType } from "@/components/providers/grading/GradingContext";
 
 export interface AssignRewardModalProps {
   assignableRewards: null | CriterionAssignableRewardResponseDTO[];

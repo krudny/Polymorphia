@@ -1,4 +1,4 @@
-import { TestGradingContextType } from "@/components/providers/grading/test/TestGradingContext";
+import { TestGradingContextType } from "@/components/providers/grading/GradingContext";
 import { Context } from "react";
 
 export interface StudentListProps {

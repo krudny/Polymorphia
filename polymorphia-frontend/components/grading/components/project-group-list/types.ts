@@ -1,5 +1,6 @@
-import { ProjectGroupResponseDTO } from "@/interfaces/api/temp";
+import { Context } from "react";
+import { TestGradingContextType } from "@/components/providers/grading/GradingContext";
 
 export interface ProjectGroupListProps {
-  projectGroups: ProjectGroupResponseDTO[];
+  context: Context<TestGradingContextType>;
 }

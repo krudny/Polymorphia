@@ -2,14 +2,24 @@ import { Dispatch, SetStateAction } from "react";
 import { HallOfFameResponseDTO } from "@/interfaces/api/hall-of-fame";
 import { HallOfFameFilter } from "@/components/hall-of-fame/general/types";
 
+export const HallOfFameActions = {
+  OPEN_FILTER: "open_filter",
+  ADD_TO_FILTER: "add_to_filter",
+  REMOVE_FROM_FILTER: "remove_from_filter",
+  CLOSE_ALL_FILTERS: "close_all_filters",
+} as const;
+
 export type HallOfFameAction =
-  | { type: "OPEN_FILTER"; payload: { id: string } }
-  | { type: "ADD_TO_FILTER"; payload: { id: string; value: string } }
+  | { type: typeof HallOfFameActions.OPEN_FILTER; payload: { id: string } }
   | {
-      type: "REMOVE_FROM_FILTER";
+      type: typeof HallOfFameActions.ADD_TO_FILTER;
       payload: { id: string; value: string };
     }
-  | { type: "CLOSE_ALL_FILTERS" };
+  | {
+      type: typeof HallOfFameActions.REMOVE_FROM_FILTER;
+      payload: { id: string; value: string };
+    }
+  | { type: typeof HallOfFameActions.CLOSE_ALL_FILTERS };
 
 export interface HallOfFameContextInterface {
   data: HallOfFameResponseDTO;

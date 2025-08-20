@@ -14,12 +14,16 @@ import { UserDetailsDTO } from "@/interfaces/api/user";
 import { useEventParams } from "@/shared/params/useSeachParams";
 import { BaseReward } from "@/interfaces/api/reward";
 import { CriterionResponseDTO } from "@/interfaces/api/grade";
+import { ProjectGroupResponseDTO } from "@/interfaces/api/temp";
+import { EventTypes } from "@/interfaces/api/course";
 
 export type TestGradingContextType = {
   search: string;
   setSearch: (search: string) => void;
   students: (UserDetailsDTO & { gainedXp?: string })[] | undefined;
   isStudentsLoading: boolean;
+  projectGroups: ProjectGroupResponseDTO[] | undefined;
+  isProjectGroupsLoading: boolean;
   isGradeLoading: boolean;
   criteria: CriterionResponseDTO[] | undefined;
   state: GradingReducerState;
@@ -28,27 +32,28 @@ export type TestGradingContextType = {
 
 interface CriteriaDetails {
   gainedXp?: string;
-  assignedRewards: BaseReward[];
+  assignedRewards: (BaseReward & { quantity: number })[];
 }
 
 export interface GradingReducerState {
-  selectedStudent: UserDetailsDTO | null;
+  selectedTarget: UserDetailsDTO | UserDetailsDTO[] | null;
   criteria: Record<number, CriteriaDetails>;
   comment: string;
 }
 
 export const GradingReducerActions = {
-  SET_STUDENT: "set_student",
+  SET_TARGET: "set_target",
   ADD_CRITERION: "add_criterion",
   ADD_XP_TO_CRITERION: "add_xp_to_criterion",
   ADD_REWARD_TO_CRITERION: "add_reward_to_criterion",
+  UPDATE_REWARD_QUANTITY: "update_reward_quantity",
   ADD_COMMENT: "add_comment",
 } as const;
 
 export type GradingReducerActionType =
   | {
-      type: typeof GradingReducerActions.SET_STUDENT;
-      payload: UserDetailsDTO | null;
+      type: typeof GradingReducerActions.SET_TARGET;
+      payload: UserDetailsDTO | UserDetailsDTO[] | null;
     }
   | {
       type: typeof GradingReducerActions.ADD_CRITERION;
@@ -62,7 +67,15 @@ export type GradingReducerActionType =
       type: typeof GradingReducerActions.ADD_REWARD_TO_CRITERION;
       payload: {
         criterionId: number;
-        assignedReward: BaseReward;
+        assignedReward: BaseReward & { quantity: number };
+      };
+    }
+  | {
+      type: typeof GradingReducerActions.UPDATE_REWARD_QUANTITY;
+      payload: {
+        criterionId: number;
+        rewardId: number;
+        quantity: number;
       };
     }
   | {
@@ -71,7 +84,7 @@ export type GradingReducerActionType =
     };
 
 const initialState: GradingReducerState = {
-  selectedStudent: null,
+  selectedTarget: null,
   criteria: {},
   comment: "",
 };
@@ -81,10 +94,10 @@ const GradingReducer = (
   action: GradingReducerActionType
 ): GradingReducerState => {
   switch (action.type) {
-    case GradingReducerActions.SET_STUDENT:
+    case GradingReducerActions.SET_TARGET:
       return {
         ...state,
-        selectedStudent: action.payload,
+        selectedTarget: action.payload,
       };
 
     case GradingReducerActions.ADD_CRITERION:
@@ -111,12 +124,29 @@ const GradingReducer = (
     case GradingReducerActions.ADD_REWARD_TO_CRITERION:
       const currentCriterion = state.criteria[action.payload.criterionId];
       const existingRewards = currentCriterion?.assignedRewards || [];
-      const rewardExists = existingRewards.some(
+      const existingRewardIndex = existingRewards.findIndex(
         (reward) => reward.id === action.payload.assignedReward.id
       );
 
-      if (rewardExists) {
-        return state;
+      if (existingRewardIndex !== -1) {
+        const updatedRewards = [...existingRewards];
+        updatedRewards[existingRewardIndex] = {
+          ...updatedRewards[existingRewardIndex],
+          quantity:
+            updatedRewards[existingRewardIndex].quantity +
+            action.payload.assignedReward.quantity,
+        };
+
+        return {
+          ...state,
+          criteria: {
+            ...state.criteria,
+            [action.payload.criterionId]: {
+              ...currentCriterion,
+              assignedRewards: updatedRewards,
+            },
+          },
+        };
       }
 
       return {
@@ -124,9 +154,9 @@ const GradingReducer = (
         criteria: {
           ...state.criteria,
           [action.payload.criterionId]: {
-            ...state.criteria[action.payload.criterionId],
+            ...currentCriterion,
             assignedRewards: [
-              ...state.criteria[action.payload.criterionId].assignedRewards,
+              ...existingRewards,
               action.payload.assignedReward,
             ],
           },
@@ -144,43 +174,59 @@ const GradingReducer = (
   }
 };
 
-export const TestGradingContext = createContext<
-  TestGradingContextType | undefined
->(undefined);
+export const GradingContext = createContext<TestGradingContextType | undefined>(
+  undefined
+);
 
-export const TestGradingProvider = ({ children }: { children: ReactNode }) => {
-  const { gradableEventId } = useEventParams();
+export const GradingProvider = ({ children }: { children: ReactNode }) => {
+  const { gradableEventId, eventType } = useEventParams();
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 400);
   const [state, dispatch] = useReducer(GradingReducer, initialState);
 
   const { data: students, isLoading: isStudentsLoading } = useQuery({
-    queryKey: ["allUsers", debouncedSearch],
+    queryKey: ["students", debouncedSearch],
     queryFn: () =>
       EventSectionService.getRandomPeopleWithPoints(debouncedSearch),
+    enabled: eventType !== EventTypes.PROJECT,
   });
 
   const { data: criteria } = useQuery({
-    queryKey: ["criterion", gradableEventId],
+    queryKey: ["criteria", gradableEventId],
     queryFn: () => EventSectionService.getCriteria(gradableEventId),
   });
 
+  const selectedStudentId = Array.isArray(state.selectedTarget)
+    ? state.selectedTarget[0]?.id
+    : state.selectedTarget?.id;
+
   const { data: grade, isLoading: isGradeLoading } = useQuery({
-    queryKey: ["grade", state.selectedStudent?.id ?? -1, gradableEventId],
+    queryKey: ["grade", selectedStudentId, gradableEventId],
     queryFn: () =>
-      EventSectionService.getGrade2(
-        state.selectedStudent?.id ?? -1,
-        gradableEventId
-      ),
+      EventSectionService.getGrade2(selectedStudentId ?? -1, gradableEventId),
+  });
+
+  const { data: projectGroups, isLoading: isProjectGroupsLoading } = useQuery({
+    queryKey: ["projectGroups", debouncedSearch],
+    queryFn: () => EventSectionService.getRandomProjectGroups(),
+    enabled: eventType === EventTypes.PROJECT,
   });
 
   useEffect(() => {
-    if (!students || students.length < 1) return;
-    dispatch({
-      type: GradingReducerActions.SET_STUDENT,
-      payload: students[0],
-    });
-  }, [students, dispatch]);
+    if (eventType === EventTypes.PROJECT) {
+      if (!projectGroups || projectGroups.length < 1) return;
+      dispatch({
+        type: GradingReducerActions.SET_TARGET,
+        payload: projectGroups[0].members,
+      });
+    } else {
+      if (!students || students.length < 1) return;
+      dispatch({
+        type: GradingReducerActions.SET_TARGET,
+        payload: students[0],
+      });
+    }
+  }, [students, projectGroups, eventType, dispatch]);
 
   useEffect(() => {
     if (!criteria || criteria.length < 1) return;
@@ -223,7 +269,10 @@ export const TestGradingProvider = ({ children }: { children: ReactNode }) => {
           type: GradingReducerActions.ADD_REWARD_TO_CRITERION,
           payload: {
             criterionId: criterion.id,
-            assignedReward: assignedReward.assignedReward.base,
+            assignedReward: {
+              ...assignedReward.assignedReward.base,
+              quantity: 1,
+            },
           },
         });
       }
@@ -235,19 +284,21 @@ export const TestGradingProvider = ({ children }: { children: ReactNode }) => {
   }, [state]);
 
   return (
-    <TestGradingContext.Provider
+    <GradingContext.Provider
       value={{
         state,
         dispatch,
         search,
         setSearch,
         students,
-        criteria,
         isStudentsLoading,
+        projectGroups,
+        isProjectGroupsLoading,
+        criteria,
         isGradeLoading,
       }}
     >
       {children}
-    </TestGradingContext.Provider>
+    </GradingContext.Provider>
   );
 };

@@ -4,13 +4,12 @@ import { MarkdownContext } from "@/components/providers/markdown/MarkdownContext
 import { speedDialStrategyRegistry } from "@/components/speed-dial/strategy/registry";
 
 export function useSpeedDialItemsFactory({
-  strategyName,
+  strategy,
 }: SpeedDialProps): SpeedDialItem[] {
   const markdownContext = useContext(MarkdownContext);
 
   return useMemo(() => {
-    const selectedStrategy =
-      speedDialStrategyRegistry.getStrategy(strategyName);
+    const selectedStrategy = speedDialStrategyRegistry.getStrategy(strategy);
 
     if (!selectedStrategy) {
       return [];
@@ -18,5 +17,5 @@ export function useSpeedDialItemsFactory({
 
     const items: SpeedDialItem[] = selectedStrategy.getItems(markdownContext);
     return items.sort((a, b) => b.orderIndex - a.orderIndex);
-  }, [strategyName, markdownContext]);
+  }, [strategy, markdownContext]);
 }

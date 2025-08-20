@@ -1,4 +1,6 @@
 import { ReactNode } from "react";
+import { GradingType } from "@/components/grading/types";
+import { EventType } from "@/interfaces/api/course";
 
 export interface SpeedDialItem {
   id: number;
@@ -11,5 +13,5 @@ export interface SpeedDialItem {
 }
 
 export interface SpeedDialProps {
-  strategyName: string;
+  strategy: EventType | GradingType;
 }

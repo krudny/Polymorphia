@@ -2,7 +2,7 @@
 
 import { RewardProps } from "@/components/grading/components/reward/types";
 import "./index.css";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { API_STATIC_URL } from "@/services/api";
 import Image from "next/image";
 import ProgressBar from "@/components/progressbar/ProgressBar";
@@ -11,12 +11,32 @@ import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import Loading from "@/components/loading/Loading";
 import AssignRewardModal from "@/components/grading/modals/assign-reward";
 import { CriterionAssignableRewardResponseDTO } from "@/interfaces/api/grade";
+import ImageBadge from "@/components/image-badge/ImageBadge";
+import { GradingReducerActions } from "@/components/providers/grading/GradingContext";
+import { useDebounce } from "use-debounce";
 
 export default function Reward({ context }: RewardProps) {
-  const { state, criteria, isGradeLoading } = useContext(context);
+  const { state, dispatch, criteria, isGradeLoading } = useContext(context);
   const [assignableRewards, setAssignableRewards] = useState<
     CriterionAssignableRewardResponseDTO[] | null
   >(null);
+  const [localComment, setLocalComment] = useState(state.comment ?? "");
+  const [debouncedComment] = useDebounce(localComment, 400);
+
+  useEffect(() => {
+    setLocalComment(state.comment ?? "");
+  }, [state.comment]);
+
+  useEffect(() => {
+    if (debouncedComment !== state.comment) {
+      dispatch({
+        type: GradingReducerActions.ADD_COMMENT,
+        payload: {
+          comment: debouncedComment,
+        },
+      });
+    }
+  }, [debouncedComment, state.comment, dispatch]);
 
   if (isGradeLoading || !criteria) {
     return <Loading />;
@@ -59,7 +79,15 @@ export default function Reward({ context }: RewardProps) {
                       type="text"
                       placeholder="Punkty"
                       value={gainedXp}
-                      onChange={() => {}}
+                      onChange={(event) => {
+                        dispatch({
+                          type: GradingReducerActions.ADD_XP_TO_CRITERION,
+                          payload: {
+                            criterionId: Number(criterionId),
+                            xp: event.target.value,
+                          },
+                        });
+                      }}
                       className="text-3xl w-full text-center bg-yellow-400 border-b-3 border-primary-dark dark:border-secondary-light text-primary-dark dark:text-secondary-light placeholder-primary-dark dark:placeholder-secondary-light focus:outline-none"
                     />
                   </div>
@@ -69,7 +97,7 @@ export default function Reward({ context }: RewardProps) {
                       (assignedReward, index) => (
                         <div
                           key={index}
-                          className="relative w-full aspect-square rounded-xl border-3 border-primary-dark drop-shadow-xl overflow-hidden"
+                          className="relative w-full aspect-square rounded-xl border-3 shadow-sm border-primary-dark drop-shadow-xl overflow-hidden"
                         >
                           <div className="w-full h-full rounded-xl overflow-hidden">
                             <Image
@@ -79,6 +107,11 @@ export default function Reward({ context }: RewardProps) {
                               priority
                               className="object-cover"
                               sizes="(min-width: 1024px) 25vw, 50vw"
+                              onClick={() => {}}
+                            />
+                            <ImageBadge
+                              text={assignedReward.quantity.toString()}
+                              className="text-xl w-7 rounded-tl-lg rounded-br-lg"
                             />
                           </div>
                         </div>
@@ -102,8 +135,8 @@ export default function Reward({ context }: RewardProps) {
             <textarea
               className="w-full p-4 text-xl bg-yellow-400 resize-none border-3 border-primary-dark dark:border-secondary-light text-primary-dark dark:text-secondary-light placeholder-primary-dark dark:placeholder-secondary-light focus:outline-none rounded-xl"
               placeholder="Dodaj komentarz..."
-              value={state.comment ?? ""}
-              onChange={() => {}}
+              value={localComment}
+              onChange={(e) => setLocalComment(e.target.value)}
               style={{
                 minHeight: "8rem",
                 height: "auto",

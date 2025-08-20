@@ -16,10 +16,10 @@ export default function GradableEventView() {
     <MarkdownProvider>
       <div className="gradable-event" ref={wrapperRef}>
         <div className="gradable-event-speed-dial-mobile">
-          <SpeedDialMobile strategyName={eventType} />
+          <SpeedDialMobile strategy={eventType} />
         </div>
         <div className="gradable-event-speed-dial-desktop">
-          <SpeedDialDesktop strategyName={eventType} />
+          <SpeedDialDesktop strategy={eventType} />
         </div>
         <div className="gradable-event-markdown-wrapper">
           <MarkdownWrapper />

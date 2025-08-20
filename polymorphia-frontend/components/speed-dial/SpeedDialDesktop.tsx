@@ -7,8 +7,8 @@ import Loading from "@/components/loading/Loading";
 import { SpeedDial as SpeedDialMui, SpeedDialAction } from "@mui/material";
 import { SpeedDialProps } from "./types";
 
-export default function SpeedDialDesktop({ strategyName }: SpeedDialProps) {
-  const items = useSpeedDialItemsFactory({ strategyName });
+export default function SpeedDialDesktop({ strategy }: SpeedDialProps) {
+  const items = useSpeedDialItemsFactory({ strategy });
   const [activeModal, setActiveModal] = useState<ReactNode | null>(null);
 
   if (!items) {

@@ -1,38 +1,19 @@
-import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
-import Loading from "@/components/loading/Loading";
 import Grading from "@/components/grading/grading";
 import StudentsList from "@/components/grading/components/student-list";
 import Reward from "@/components/grading/components/reward";
 import PullRequest from "@/components/grading/components/pull-request";
+import { GradingContext } from "@/components/providers/grading/GradingContext";
+import { GradingTypes } from "@/components/grading/types";
 
 export default function AssignmentGradingView() {
-  const { data: studentsList, isLoading } = useQuery({
-    queryKey: ["allUsers", ""],
-    queryFn: () => EventSectionService.getRandomPeople(""),
-  });
-
-  if (isLoading || !studentsList) {
-    return <Loading />;
-  }
-
   return (
     <>
       <Grading
+        gradingType={GradingTypes.ASSIGNMENT_GRADING}
         columns={3}
         components={[
-          <StudentsList key="1" students={studentsList} />,
-          <Reward
-            key="2"
-            criteria={[
-              { id: 1, name: "Punkty doświadczenia", maxXP: 4 },
-              {
-                id: 2,
-                name: "Punkty doświadczenia",
-                maxXP: 4,
-              },
-            ]}
-          />,
+          <StudentsList key="1" context={GradingContext} />,
+          <Reward key="2" context={GradingContext} />,
           <PullRequest
             key="3"
             pullRequests={[

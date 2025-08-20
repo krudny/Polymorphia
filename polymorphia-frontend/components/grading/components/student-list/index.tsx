@@ -6,7 +6,7 @@ import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import Search from "@/components/search";
 import { useContext } from "react";
 import Loading from "@/components/loading/Loading";
-import { GradingReducerActions } from "@/components/providers/grading/test/TestGradingContext";
+import { GradingReducerActions } from "@/components/providers/grading/GradingContext";
 
 export default function StudentsList({ context }: StudentListProps) {
   const { search, setSearch, students, isStudentsLoading, state, dispatch } =
@@ -36,7 +36,7 @@ export default function StudentsList({ context }: StudentListProps) {
             className="max-w-[25rem] mx-auto my-3 first:mt-0 last:mb-0"
             onClick={() =>
               dispatch({
-                type: GradingReducerActions.SET_STUDENT,
+                type: GradingReducerActions.SET_TARGET,
                 payload: student,
               })
             }
@@ -44,7 +44,7 @@ export default function StudentsList({ context }: StudentListProps) {
             <XPCard
               key={index}
               title={student.studentName}
-              color={student === state.selectedStudent ? "sky" : "green"}
+              color={student === state.selectedTarget ? "sky" : "green"}
               subtitle={student.group}
               size={"xs"}
               leftComponent={
@@ -57,7 +57,7 @@ export default function StudentsList({ context }: StudentListProps) {
                 <XPCardPoints
                   points={student.gainedXp}
                   color={
-                    student === state.selectedStudent
+                    student === state.selectedTarget
                       ? "bg-sky-100"
                       : "bg-secondary-gray"
                   }
