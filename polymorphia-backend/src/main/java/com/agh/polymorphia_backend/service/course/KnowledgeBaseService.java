@@ -6,6 +6,7 @@ import com.agh.polymorphia_backend.repository.course.EvolutionStagesRepository;
 import com.agh.polymorphia_backend.repository.course.reward.ChestRepository;
 import com.agh.polymorphia_backend.repository.course.reward.ItemRepository;
 import com.agh.polymorphia_backend.service.mapper.KnowledgeBaseMapper;
+import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ public class KnowledgeBaseService {
     private final ChestRepository chestRepository;
     private final ItemRepository itemRepository;
     private final KnowledgeBaseMapper knowledgeBaseMapper;
+    private final AccessAuthorizer accessAuthorizer;
 
     public List<KnowledgeBaseResponseDto> getEvolutionStages(Long courseId) {
         return getKnowledgeBaseResponseDto(
@@ -51,6 +53,7 @@ public class KnowledgeBaseService {
             Function<Long, List<T>> repositoryFetcher,
             Function<T, KnowledgeBaseResponseDto> mapper
     ) {
+        accessAuthorizer.authorizeCourseAccess(courseId);
         return repositoryFetcher.apply(courseId)
                 .stream()
                 .map(mapper)

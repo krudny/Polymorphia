@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.dto.response.knowledge.base;
 
 import com.agh.polymorphia_backend.dto.response.reward.RewardResponseDto;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Builder
 @Getter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class KnowledgeBaseResponseDto {
     @NotNull
     private Long id;

@@ -25,3 +25,6 @@ initial.user.firstName=
 initial.user.lastName=
 initial.user.email=
 initial.user.password=
+
+# Include the message of ResponseStatusException in response
+server.error.include-message=always

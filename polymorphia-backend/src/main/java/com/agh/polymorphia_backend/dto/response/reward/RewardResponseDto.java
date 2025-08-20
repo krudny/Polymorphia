@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 public class RewardResponseDto {
     @NotNull
-    private String id;
+    private Long id;
 
     @NotEmpty
     private String name;

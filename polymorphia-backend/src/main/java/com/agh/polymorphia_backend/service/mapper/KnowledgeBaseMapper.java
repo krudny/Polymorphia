@@ -27,7 +27,7 @@ public class KnowledgeBaseMapper {
     private static KnowledgeBaseResponseDto.KnowledgeBaseResponseDtoBuilder getDtoBuilderForReward(Reward reward) {
         return KnowledgeBaseResponseDto.builder()
                 .id(reward.getId())
-                .orderIndex(reward.getId())
+                .orderIndex(reward.getOrderIndex())
                 .name(reward.getName())
                 .description(reward.getDescription())
                 .imageUrl(reward.getImageUrl());
@@ -53,16 +53,20 @@ public class KnowledgeBaseMapper {
                 .build();
     }
 
-    public KnowledgeBaseResponseDto itemToResponseDto(Item item) {
-        String subtitle = item.getItemType().equals(ItemType.FLAT_BONUS) ?
-                String.format(FLAT_BONUS_ITEM_SUBTITLE, ((FlatBonusItem) item).getXpBonus(), item.getEventSection().getName()) :
-                String.format(PERCENTAGE_BONUS_ITEM_SUBTITLE, ((PercentageBonusItem) item).getPercentageBonus(), item.getEventSection().getName());
-
-        return getDtoBuilderForReward(item)
-                .type(KnowledgeBaseType.ITEM)
-                .subtitle(subtitle)
-                .relatedRewards(relatedRewardsToResponseDto(item.getChests()))
-                .build();
+    private static String getItemSubtitle(Item item) {
+        if (item.getItemType().equals(ItemType.FLAT_BONUS)) {
+            return String.format(
+                    FLAT_BONUS_ITEM_SUBTITLE,
+                    ((FlatBonusItem) item).getXpBonus(),
+                    item.getEventSection().getName()
+            );
+        } else {
+            return String.format(
+                    PERCENTAGE_BONUS_ITEM_SUBTITLE,
+                    ((PercentageBonusItem) item).getPercentageBonus(),
+                    item.getEventSection().getName()
+            );
+        }
     }
 
     private <T extends Reward> List<RewardResponseDto> relatedRewardsToResponseDto(List<T> rewards) {
@@ -70,5 +74,15 @@ public class KnowledgeBaseMapper {
                 .map(rewardMapper::rewardToRewardResponseDto)
                 .sorted(Comparator.comparing(RewardResponseDto::getOrderIndex))
                 .toList();
+    }
+
+    public KnowledgeBaseResponseDto itemToResponseDto(Item item) {
+        String subtitle = getItemSubtitle(item);
+
+        return getDtoBuilderForReward(item)
+                .type(KnowledgeBaseType.ITEM)
+                .subtitle(subtitle)
+                .relatedRewards(relatedRewardsToResponseDto(item.getChests()))
+                .build();
     }
 }

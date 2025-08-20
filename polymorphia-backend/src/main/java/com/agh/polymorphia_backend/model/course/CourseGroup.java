@@ -13,6 +13,7 @@ import java.util.List;
 @Table(name = "course_groups")
 @Data
 @NoArgsConstructor
+@Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class CourseGroup {

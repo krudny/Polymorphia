@@ -11,6 +11,7 @@ import lombok.*;
 @Entity
 @Table(name = "animals")
 @Data
+@Builder
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
