@@ -21,7 +21,7 @@ export default function TestAccordion() {
           <AccordionSection id="s1" title="Sekcja 1">
             <div className="h-[300px] bg-pink-300">Content</div>
           </AccordionSection>
-          <AccordionSection id="s2" title="Sekcja 2">
+          <AccordionSection id="s2" title="Sekcja 2" initiallyOpened={true}>
             <div className="h-[150px] bg-cyan-600">Content</div>
           </AccordionSection>
           <AccordionSection id="s3" title="Sekcja 3">

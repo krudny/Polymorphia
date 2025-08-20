@@ -8,21 +8,25 @@ export default function AccordionSection({
   id,
   title,
   children,
+  initiallyOpened,
 }: AccordionSectionProps) {
-  const { register, unregister, isOpen, toggle } = useAccordion();
+  const { register, unregister, isOpen, toggle, open } = useAccordion();
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     register(id);
+    if (initiallyOpened) {
+      open(id);
+    }
     return () => unregister(id);
-  }, [id, register, unregister]);
+  }, [id, initiallyOpened, open, register, unregister]);
 
-  const open = isOpen(id);
+  const opened = isOpen(id);
   useEffect(() => {
     if (contentRef.current) {
-      animateAccordion(contentRef.current, open);
+      animateAccordion(contentRef.current, opened);
     }
-  }, [open]);
+  }, [opened]);
 
   return (
     <div className="flex flex-col">
@@ -32,7 +36,7 @@ export default function AccordionSection({
           className="flex-centered cursor-pointer hover:opacity-70 transition-opacity select-none"
           onClick={() => toggle(id)}
         >
-          {open ? (
+          {opened ? (
             <div className="flex-centered gap-x-1">
               <ArrowUp className="w-5 h-5 transition-transform duration-300" />
               <h2 className="text-2xl">Zamknij</h2>
