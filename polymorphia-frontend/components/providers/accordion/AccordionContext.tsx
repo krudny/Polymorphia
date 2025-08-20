@@ -64,6 +64,10 @@ export function useAccordionState(
     setOpenSections((prev) => prev.filter((sectionId) => sectionId !== id));
   }, []);
 
+  const closeAll = useCallback(() => {
+    setOpenSections([]);
+  }, []);
+
   const toggle = useCallback(
     (id: string) => {
       if (openSections.includes(id)) {
@@ -80,5 +84,5 @@ export function useAccordionState(
     [openSections]
   );
 
-  return { open, close, toggle, isOpen, register, unregister };
+  return { open, close, closeAll, toggle, isOpen, register, unregister };
 }

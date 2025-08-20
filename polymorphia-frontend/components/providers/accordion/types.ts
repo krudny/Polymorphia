@@ -3,6 +3,7 @@ type AccordionAction<T> = (id: string) => T;
 export interface AccordionRef {
   open: AccordionAction<void>;
   close: AccordionAction<void>;
+  closeAll: () => void;
   toggle: AccordionAction<void>;
 }
 

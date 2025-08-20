@@ -15,6 +15,7 @@ export const AccordionComponent = forwardRef<AccordionRef, AccordionProps>(
     useImperativeHandle(ref, () => ({
       open: accordionContext.open,
       close: accordionContext.close,
+      closeAll: accordionContext.closeAll,
       toggle: accordionContext.toggle,
     }));
 

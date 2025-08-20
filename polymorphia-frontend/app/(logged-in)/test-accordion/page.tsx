@@ -23,8 +23,8 @@ export default function TestAccordion() {
       className="py-6 px-32 flex flex-col items-center gap-3"
     >
       <div className="w-xl">
-        {/*<Accordion ref={accordionRef} maxOpen="unlimited">*/}
-        <Accordion ref={accordionRef} maxOpen={1}>
+        {/*<Accordion ref={accordionRef} maxOpen={1}>*/}
+        <Accordion ref={accordionRef} maxOpen="unlimited">
           <AccordionSection id="s1" title="Sekcja 1">
             <div className="h-[300px] bg-pink-300">Content</div>
           </AccordionSection>
@@ -40,6 +40,12 @@ export default function TestAccordion() {
         text="Toggle S1 programmatically"
         onClick={() => {
           accordionRef.current?.toggle("s1");
+        }}
+      />
+      <ButtonWithBorder
+        text="Close all"
+        onClick={() => {
+          accordionRef.current?.closeAll();
         }}
       />
     </div>
