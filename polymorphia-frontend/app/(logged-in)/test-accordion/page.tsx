@@ -24,7 +24,7 @@ export default function TestAccordion() {
     >
       <div className="w-xl">
         {/*<Accordion ref={accordionRef} maxOpen={1}>*/}
-        <Accordion ref={accordionRef} maxOpen="unlimited">
+        <Accordion ref={accordionRef}>
           <AccordionSection id="s1" title="Sekcja 1">
             <div className="h-[300px] bg-pink-300">Content</div>
           </AccordionSection>

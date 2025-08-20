@@ -1,4 +1,3 @@
-import { AccordionMaxOpen } from "@/components/accordion/types";
 import {
   createContext,
   useCallback,
@@ -22,9 +21,7 @@ export function useAccordion() {
   return context;
 }
 
-export function useAccordionState(
-  maxOpen: AccordionMaxOpen
-): AccordionContextInterface {
+export function useAccordionState(maxOpen?: number): AccordionContextInterface {
   const [openSections, setOpenSections] = useState<string[]>([]);
   const registeredIds = useRef<Set<string>>(new Set());
 
@@ -47,7 +44,7 @@ export function useAccordionState(
         if (prev.includes(id)) {
           return prev;
         }
-        if (maxOpen !== "unlimited" && prev.length >= maxOpen) {
+        if (maxOpen !== undefined && prev.length >= maxOpen) {
           return [...prev.slice(prev.length - maxOpen + 1), id];
         }
         return [...prev, id];

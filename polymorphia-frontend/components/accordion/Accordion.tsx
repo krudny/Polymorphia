@@ -9,7 +9,7 @@ import { AccordionProps } from "./types";
 import clsx from "clsx";
 
 export const AccordionComponent = forwardRef<AccordionRef, AccordionProps>(
-  ({ children, className, maxOpen = "unlimited" }, ref) => {
+  ({ children, className, maxOpen }, ref) => {
     const accordionContext = useAccordionState(maxOpen);
 
     useImperativeHandle(ref, () => ({

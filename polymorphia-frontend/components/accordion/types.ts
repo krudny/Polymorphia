@@ -1,10 +1,8 @@
 import { ReactNode } from "react";
 
-export type AccordionMaxOpen = number | "unlimited";
-
 export interface AccordionProps {
   children: ReactNode;
-  maxOpen?: AccordionMaxOpen;
+  maxOpen?: number;
   className?: string;
 }
 
