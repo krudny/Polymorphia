@@ -10,7 +10,7 @@ export default function AccordionSection({
   id,
   title,
   children,
-  initiallyOpened,
+  isInitiallyOpened,
   headerClassName,
 }: AccordionSectionProps) {
   const { register, unregister, isOpen, toggle, open } = useAccordion();
@@ -18,25 +18,25 @@ export default function AccordionSection({
 
   useEffect(() => {
     register(id);
-    if (initiallyOpened) {
+    if (isInitiallyOpened) {
       open(id);
     }
     return () => unregister(id);
-  }, [id, initiallyOpened, open, register, unregister]);
+  }, [id, isInitiallyOpened, open, register, unregister]);
 
-  const opened = isOpen(id);
+  const isOpened = isOpen(id);
   useEffect(() => {
     if (contentRef.current) {
-      animateAccordion(contentRef.current, opened);
+      animateAccordion(contentRef.current, isOpened);
     }
-  }, [opened]);
+  }, [isOpened]);
 
   return (
     <div className="accordion-section">
       <div className={clsx("accordion-section-header", headerClassName)}>
         <h1>{title}</h1>
         <div className="accordion-toggle-button" onClick={() => toggle(id)}>
-          {opened ? (
+          {isOpened ? (
             <div className="accordion-toggle">
               <ArrowUp className="accordion-toggle-arrow" />
               <h2>Zamknij</h2>

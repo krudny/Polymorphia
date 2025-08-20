@@ -34,7 +34,7 @@ export function useAccordionState(
 
   const unregister = useCallback((id: string) => {
     registeredIds.current.delete(id);
-    setOpenSections((prev) => prev.filter((s) => s !== id));
+    setOpenSections((prev) => prev.filter((sectionId) => sectionId !== id));
   }, []);
 
   const open = useCallback(
@@ -44,9 +44,12 @@ export function useAccordionState(
         return;
       }
       setOpenSections((prev) => {
-        if (prev.includes(id)) return prev;
-        if (maxOpen !== "unlimited" && prev.length >= maxOpen)
+        if (prev.includes(id)) {
+          return prev;
+        }
+        if (maxOpen !== "unlimited" && prev.length >= maxOpen) {
           return [...prev.slice(prev.length - maxOpen + 1), id];
+        }
         return [...prev, id];
       });
     },
@@ -58,13 +61,16 @@ export function useAccordionState(
       console.warn(`[Accordion] Tried to close invalid id "${id}"`);
       return;
     }
-    setOpenSections((prev) => prev.filter((s) => s !== id));
+    setOpenSections((prev) => prev.filter((sectionId) => sectionId !== id));
   }, []);
 
   const toggle = useCallback(
     (id: string) => {
-      if (openSections.includes(id)) close(id);
-      else open(id);
+      if (openSections.includes(id)) {
+        close(id);
+      } else {
+        open(id);
+      }
     },
     [openSections, open, close]
   );

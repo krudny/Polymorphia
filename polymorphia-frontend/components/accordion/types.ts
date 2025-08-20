@@ -12,6 +12,6 @@ export interface AccordionSectionProps {
   id: string;
   title: string;
   children: ReactNode;
-  initiallyOpened?: boolean;
+  isInitiallyOpened?: boolean;
   headerClassName?: string;
 }

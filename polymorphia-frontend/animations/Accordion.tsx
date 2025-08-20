@@ -21,6 +21,9 @@ export const closeAccordion = (element: HTMLElement) => {
 };
 
 export const animateAccordion = (element: HTMLElement, open: boolean) => {
-  if (open) openAccordion(element);
-  else closeAccordion(element);
+  if (open) {
+    openAccordion(element);
+  } else {
+    closeAccordion(element);
+  }
 };
