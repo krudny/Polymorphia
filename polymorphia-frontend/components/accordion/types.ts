@@ -5,6 +5,7 @@ export type AccordionMaxOpen = number | "unlimited";
 export interface AccordionProps {
   children: ReactNode;
   maxOpen?: AccordionMaxOpen;
+  className?: string;
 }
 
 export interface AccordionSectionProps {
@@ -12,4 +13,5 @@ export interface AccordionSectionProps {
   title: string;
   children: ReactNode;
   initiallyOpened?: boolean;
+  headerClassName?: string;
 }

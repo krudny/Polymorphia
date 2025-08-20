@@ -1,13 +1,15 @@
 import { forwardRef, useImperativeHandle } from "react";
-import { AccordionRef } from "../providers/accordion/types";
-import { AccordionProps } from "./types";
 import {
   AccordionContext,
   useAccordionState,
 } from "../providers/accordion/AccordionContext";
+import { AccordionRef } from "../providers/accordion/types";
+import "./index.css";
+import { AccordionProps } from "./types";
+import clsx from "clsx";
 
 export const AccordionComponent = forwardRef<AccordionRef, AccordionProps>(
-  ({ children, maxOpen = "unlimited" }, ref) => {
+  ({ children, className, maxOpen = "unlimited" }, ref) => {
     const accordionContext = useAccordionState(maxOpen);
 
     useImperativeHandle(ref, () => ({
@@ -18,7 +20,7 @@ export const AccordionComponent = forwardRef<AccordionRef, AccordionProps>(
 
     return (
       <AccordionContext.Provider value={accordionContext}>
-        <div className="flex flex-col gap-2">{children}</div>
+        <div className={clsx("accordion", className)}>{children}</div>
       </AccordionContext.Provider>
     );
   }

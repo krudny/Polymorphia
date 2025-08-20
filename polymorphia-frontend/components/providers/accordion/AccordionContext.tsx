@@ -1,3 +1,4 @@
+import { AccordionMaxOpen } from "@/components/accordion/types";
 import {
   createContext,
   useCallback,
@@ -6,7 +7,6 @@ import {
   useState,
 } from "react";
 import { AccordionContextInterface } from "./types";
-import { AccordionMaxOpen } from "@/components/accordion/types";
 
 export const AccordionContext = createContext<
   AccordionContextInterface | undefined

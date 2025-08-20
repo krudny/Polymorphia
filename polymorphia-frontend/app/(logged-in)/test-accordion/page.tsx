@@ -22,7 +22,8 @@ export default function TestAccordion() {
       ref={wrapperRef}
       className="py-6 px-32 flex flex-col items-center gap-3"
     >
-      <div className="w-xl bg-gray-300">
+      <div className="w-xl">
+        {/*<Accordion ref={accordionRef} maxOpen="unlimited">*/}
         <Accordion ref={accordionRef} maxOpen={1}>
           <AccordionSection id="s1" title="Sekcja 1">
             <div className="h-[300px] bg-pink-300">Content</div>

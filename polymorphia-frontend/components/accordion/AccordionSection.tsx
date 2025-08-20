@@ -1,14 +1,17 @@
+import { animateAccordion } from "@/animations/Accordion";
+import clsx from "clsx";
+import { ArrowDown, ArrowUp } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useAccordion } from "../providers/accordion/AccordionContext";
+import "./index.css";
 import { AccordionSectionProps } from "./types";
-import { ArrowDown, ArrowUp } from "lucide-react";
-import { animateAccordion } from "@/animations/Accordion";
 
 export default function AccordionSection({
   id,
   title,
   children,
   initiallyOpened,
+  headerClassName,
 }: AccordionSectionProps) {
   const { register, unregister, isOpen, toggle, open } = useAccordion();
   const contentRef = useRef<HTMLDivElement>(null);
@@ -29,27 +32,24 @@ export default function AccordionSection({
   }, [opened]);
 
   return (
-    <div className="flex flex-col">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl">{title}</h1>
-        <div
-          className="flex-centered cursor-pointer hover:opacity-70 transition-opacity select-none"
-          onClick={() => toggle(id)}
-        >
+    <div className="accordion-section">
+      <div className={clsx("accordion-section-header", headerClassName)}>
+        <h1>{title}</h1>
+        <div className="accordion-toggle-button" onClick={() => toggle(id)}>
           {opened ? (
-            <div className="flex-centered gap-x-1">
-              <ArrowUp className="w-5 h-5 transition-transform duration-300" />
-              <h2 className="text-2xl">Zamknij</h2>
+            <div className="accordion-toggle">
+              <ArrowUp className="accordion-toggle-arrow" />
+              <h2>Zamknij</h2>
             </div>
           ) : (
-            <div className="flex-centered gap-x-1">
-              <ArrowDown className="w-5 h-5 transition-transform duration-300" />
-              <h2 className="text-2xl">Otwórz</h2>
+            <div className="accordion-toggle">
+              <ArrowDown className="accordion-toggle-arrow" />
+              <h2>Otwórz</h2>
             </div>
           )}
         </div>
       </div>
-      <div ref={contentRef} className="overflow-hidden h-0">
+      <div ref={contentRef} className="accordion-section-content">
         {children}
       </div>
     </div>
