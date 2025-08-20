@@ -43,9 +43,7 @@ export function useAccordionState(
         console.warn(`[Accordion] Tried to open invalid id "${id}"`);
         return;
       }
-      // console.log("open", id);
       setOpenSections((prev) => {
-        // console.log("open", id, prev, maxOpen);
         if (prev.includes(id)) return prev;
         if (maxOpen !== "unlimited" && prev.length >= maxOpen)
           return [...prev.slice(prev.length - maxOpen + 1), id];
@@ -60,13 +58,11 @@ export function useAccordionState(
       console.warn(`[Accordion] Tried to close invalid id "${id}"`);
       return;
     }
-    // console.log("close", id);
     setOpenSections((prev) => prev.filter((s) => s !== id));
   }, []);
 
   const toggle = useCallback(
     (id: string) => {
-      // console.log("toggle", id);
       if (openSections.includes(id)) close(id);
       else open(id);
     },
