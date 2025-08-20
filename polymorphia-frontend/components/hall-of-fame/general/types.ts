@@ -1,7 +1,6 @@
 export interface HallOfFameFilter {
   id: HallOfFameFilterID;
   name: string;
-  isOpen: boolean;
   minSelections: number;
   maxSelections: number;
   options: HallOfFameFilterOption[];

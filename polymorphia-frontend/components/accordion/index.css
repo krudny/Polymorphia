@@ -2,11 +2,11 @@
 @import "../../styles/globals.css";
 
 .accordion {
-  @apply flex flex-col gap-2;
+  @apply flex flex-col;
 }
 
 .accordion-section {
-  @apply flex flex-col;
+  @apply flex flex-col my-2;
 }
 
 .accordion-section-header {

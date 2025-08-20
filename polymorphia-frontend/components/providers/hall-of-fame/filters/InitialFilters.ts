@@ -4,7 +4,6 @@ export const filters: HallOfFameFilter[] = [
   {
     id: "sort",
     name: "Sortowanie",
-    isOpen: false,
     minSelections: 1,
     maxSelections: 1,
     options: [
@@ -15,7 +14,6 @@ export const filters: HallOfFameFilter[] = [
   {
     id: "sortBy",
     name: "Sortowanie po kategorii",
-    isOpen: false,
     minSelections: 1,
     maxSelections: 1,
     options: [
@@ -30,7 +28,6 @@ export const filters: HallOfFameFilter[] = [
   {
     id: "groups",
     name: "Grupy",
-    isOpen: false,
     minSelections: 1,
     maxSelections: 100,
     options: [
@@ -52,7 +49,6 @@ export const filters: HallOfFameFilter[] = [
   {
     id: "rankingOptions",
     name: "Wyświetlanie",
-    isOpen: false,
     minSelections: 4,
     maxSelections: 4,
     options: [],
