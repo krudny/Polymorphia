@@ -15,17 +15,17 @@ export default function TestAccordion() {
   }, [setTitle]);
 
   return (
-    <div ref={wrapperRef} className="py-6 px-32">
-      <div className="w-2xl bg-gray-300">
-        <Accordion>
+    <div ref={wrapperRef} className="py-6 px-32 flex justify-center">
+      <div className="w-xl bg-gray-300">
+        <Accordion maxOpen={1}>
           <AccordionSection id="s1" title="Sekcja 1">
-            <div className="h-5 bg-pink-300">Content</div>
+            <div className="h-[300px] bg-pink-300">Content</div>
           </AccordionSection>
           <AccordionSection id="s2" title="Sekcja 2">
-            <div className="h-10 bg-cyan-600">Content</div>
+            <div className="h-[150px] bg-cyan-600">Content</div>
           </AccordionSection>
           <AccordionSection id="s3" title="Sekcja 3">
-            <div className="h-7 bg-orange-300">Content</div>
+            <div className="h-[400px] bg-orange-300">Content</div>
           </AccordionSection>
         </Accordion>
       </div>

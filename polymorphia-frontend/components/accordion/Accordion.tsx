@@ -18,7 +18,7 @@ export const AccordionComponent = forwardRef<AccordionRef, AccordionProps>(
 
     return (
       <AccordionContext.Provider value={accordionContext}>
-        <div>{children}</div>
+        <div className="flex flex-col gap-2">{children}</div>
       </AccordionContext.Provider>
     );
   }
