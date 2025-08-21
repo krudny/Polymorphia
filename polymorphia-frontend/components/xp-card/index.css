@@ -7,16 +7,16 @@
 }
 
 .xp-card-grid-center-vertically {
-    @apply flex flex-col justify-between w-fit max-h-full bg-blue-300;
+    @apply flex flex-col justify-between w-fit max-h-full;
 }
 
 .xp-card-grid-point-summary-layout {
-    @apply flex flex-col items-start gap-5 p-2 bg-purple-300;
+    @apply flex flex-col items-start gap-5 p-2;
     @apply lg:gap-10;
 }
 
 .xp-card-grid {
-    @apply grid gap-5 w-fit bg-yellow-400 justify-items-start items-start;
+    @apply grid gap-5 w-fit justify-items-start items-start;
 }
 
 .xp-card-no-grid {

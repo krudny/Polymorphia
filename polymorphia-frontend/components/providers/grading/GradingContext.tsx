@@ -36,7 +36,7 @@ interface CriteriaDetails {
 }
 
 export interface GradingReducerState {
-  selectedTarget: UserDetailsDTO | UserDetailsDTO[] | null;
+  selectedTarget: UserDetailsDTO[] | null;
   criteria: Record<number, CriteriaDetails>;
   comment: string;
 }
@@ -53,7 +53,7 @@ export const GradingReducerActions = {
 export type GradingReducerActionType =
   | {
       type: typeof GradingReducerActions.SET_TARGET;
-      payload: UserDetailsDTO | UserDetailsDTO[] | null;
+      payload: UserDetailsDTO[];
     }
   | {
       type: typeof GradingReducerActions.ADD_CRITERION;
@@ -174,9 +174,18 @@ const GradingReducer = (
   }
 };
 
-export const GradingContext = createContext<TestGradingContextType | undefined>(
-  undefined
-);
+export const GradingContext = createContext<TestGradingContextType>({
+  search: "",
+  setSearch: () => {},
+  students: undefined,
+  isStudentsLoading: false,
+  projectGroups: undefined,
+  isProjectGroupsLoading: false,
+  isGradeLoading: false,
+  criteria: undefined,
+  state: initialState,
+  dispatch: () => {},
+});
 
 export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const { gradableEventId, eventType } = useEventParams();
@@ -196,9 +205,7 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
     queryFn: () => EventSectionService.getCriteria(gradableEventId),
   });
 
-  const selectedStudentId = Array.isArray(state.selectedTarget)
-    ? state.selectedTarget[0]?.id
-    : state.selectedTarget?.id;
+  const selectedStudentId = state?.selectedTarget?.[0]?.id ?? null;
 
   const { data: grade, isLoading: isGradeLoading } = useQuery({
     queryKey: ["grade", selectedStudentId, gradableEventId],
@@ -223,7 +230,7 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
       if (!students || students.length < 1) return;
       dispatch({
         type: GradingReducerActions.SET_TARGET,
-        payload: students[0],
+        payload: [students[0]],
       });
     }
   }, [students, projectGroups, eventType, dispatch]);

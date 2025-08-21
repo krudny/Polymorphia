@@ -56,9 +56,9 @@ export default function InstructorView() {
 
   return (
     <SectionView ref={containerRef}>
-      <div className="flex flex-col lg:flex-col-centered flex-1 gap-x-10 overflow-hidden 2xl:px-10 bg-red-400">
+      <div className="flex flex-col lg:flex-col-centered flex-1 gap-x-10 overflow-hidden 2xl:px-10">
         <div
-          className="max-w-full flex-col-centeredlg:min-h-[600px] lg:w-4xl 2xl:w-7xl bg-green-500"
+          className="max-w-full flex-col-centeredlg:min-h-[600px] lg:w-4xl 2xl:w-7xl"
           ref={wrapperRef}
         >
           <XPCardGrid containerRef={wrapperRef} cards={cards} />

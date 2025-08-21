@@ -1,6 +1,5 @@
 "use client";
 
-import { RewardProps } from "@/components/grading/components/reward/types";
 import "./index.css";
 import { useContext, useEffect, useState } from "react";
 import { API_STATIC_URL } from "@/services/api";
@@ -12,11 +11,15 @@ import Loading from "@/components/loading/Loading";
 import AssignRewardModal from "@/components/grading/modals/assign-reward";
 import { CriterionAssignableRewardResponseDTO } from "@/interfaces/api/grade";
 import ImageBadge from "@/components/image-badge/ImageBadge";
-import { GradingReducerActions } from "@/components/providers/grading/GradingContext";
+import {
+  GradingContext,
+  GradingReducerActions,
+} from "@/components/providers/grading/GradingContext";
 import { useDebounce } from "use-debounce";
 
-export default function Reward({ context }: RewardProps) {
-  const { state, dispatch, criteria, isGradeLoading } = useContext(context);
+export default function Reward() {
+  const { state, dispatch, criteria, isGradeLoading } =
+    useContext(GradingContext);
   const [assignableRewards, setAssignableRewards] = useState<
     CriterionAssignableRewardResponseDTO[] | null
   >(null);
@@ -45,7 +48,7 @@ export default function Reward({ context }: RewardProps) {
   return (
     <>
       <div className="w-full overflow-y-scroll flex flex-col flex-1 gap-y-4 py-3 custom-scrollbar mt-16">
-        <div className="w-full max-w-[25rem] mx-auto bg-blue-600">
+        <div className="w-full max-w-[25rem] mx-auto">
           <h1 className="text-6xl">Nagroda</h1>
           {Object.entries(state.criteria).map(
             ([criterionId, criterionGrade]) => {
@@ -59,7 +62,7 @@ export default function Reward({ context }: RewardProps) {
               return (
                 <div key={criterionId} className="flex flex-col">
                   <h2 className="text-4xl my-5">{criterion.name}</h2>
-                  <div className="w-full px-6 pt-6 bg-red-400">
+                  <div className="w-full px-6 pt-6">
                     <ProgressBar
                       minXP={0}
                       currentXP={Number(gainedXp)}
@@ -74,7 +77,7 @@ export default function Reward({ context }: RewardProps) {
                       }
                     />
                   </div>
-                  <div className="w-16 bg-purple-200 mx-auto flex items-center -mt-6 z-[20]">
+                  <div className="w-16  mx-auto flex items-center -mt-6 z-[20]">
                     <input
                       type="text"
                       placeholder="Punkty"
@@ -88,7 +91,7 @@ export default function Reward({ context }: RewardProps) {
                           },
                         });
                       }}
-                      className="text-3xl w-full text-center bg-yellow-400 border-b-3 border-primary-dark dark:border-secondary-light text-primary-dark dark:text-secondary-light placeholder-primary-dark dark:placeholder-secondary-light focus:outline-none"
+                      className="text-3xl w-full text-center border-b-3 border-primary-dark dark:border-secondary-light text-primary-dark dark:text-secondary-light placeholder-primary-dark dark:placeholder-secondary-light focus:outline-none"
                     />
                   </div>
                   <h2 className="text-4xl my-5">Nagrody</h2>
@@ -133,7 +136,7 @@ export default function Reward({ context }: RewardProps) {
           <h2 className="text-4xl my-5">Komentarz</h2>
           <div className="w-full">
             <textarea
-              className="w-full p-4 text-xl bg-yellow-400 resize-none border-3 border-primary-dark dark:border-secondary-light text-primary-dark dark:text-secondary-light placeholder-primary-dark dark:placeholder-secondary-light focus:outline-none rounded-xl"
+              className="w-full p-4 text-xl  resize-none border-3 border-primary-dark dark:border-secondary-light text-primary-dark dark:text-secondary-light placeholder-primary-dark dark:placeholder-secondary-light focus:outline-none rounded-xl"
               placeholder="Dodaj komentarz..."
               value={localComment}
               onChange={(e) => setLocalComment(e.target.value)}
@@ -155,7 +158,6 @@ export default function Reward({ context }: RewardProps) {
       </div>
       <AssignRewardModal
         assignableRewards={assignableRewards}
-        context={context}
         onClosedAction={() => setAssignableRewards(null)}
       />
     </>

@@ -51,5 +51,11 @@
         object-fit: cover;
         object-position: center;
     }
-
 }
+
+/* XPCardUngraded */
+
+.xp-card-ungraded {
+    @apply w-full flex-1 flex-col-centered bg-secondary-gray;
+}
+

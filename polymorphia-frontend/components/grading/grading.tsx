@@ -6,10 +6,9 @@ export default function Grading({
   components,
   columns,
 }: GradingProps) {
-  console.log(gradingType);
   return (
     <div
-      className={`w-full max-w-[1400px] m-auto bg-purple-300 h-[calc(100dvh-6rem)] grid grid-cols-${columns} items-start content-start gap-4`}
+      className={`w-full max-w-[1400px] m-auto h-[calc(100dvh-6rem)] grid grid-cols-${columns} items-start content-start gap-4`}
     >
       <div className="fixed bottom-4 right-5 z-[999]">
         <SpeedDialDesktop strategy={gradingType} />

@@ -15,11 +15,12 @@ const xpCard = tv({
       projectGroup: "xp-card-project-group",
     },
     color: {
-      gold: "border-b-6 border-amber-400",
-      silver: "border-b-6 border-slate-400",
-      bronze: "border-b-6 border-amber-800",
-      green: "border-b-6 border-green-600",
-      sky: "border-b-6 border-sky-100",
+      gold: "border-b-8 border-amber-200",
+      silver: "border-b-8 border-slate-200",
+      bronze: "border-b-8 border-amber-800",
+      green: "border-b-8 border-primary-success",
+      sky: "border-b-8 border-primary-sky",
+      gray: "border-b-8 border-primary-gray",
       none: "border-0",
     },
     forceWidth: {

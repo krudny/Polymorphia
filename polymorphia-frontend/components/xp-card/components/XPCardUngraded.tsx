@@ -3,7 +3,7 @@ import "./index.css";
 
 export default function XPCardUngraded({ ungraded }: XPCardUngradedProps) {
   return (
-    <div className="xp-card-points">
+    <div className="xp-card-ungraded">
       <h1>{ungraded}</h1>
       <h2>Nieocenionych</h2>
     </div>

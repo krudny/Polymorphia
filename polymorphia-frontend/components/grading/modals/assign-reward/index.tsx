@@ -1,19 +1,19 @@
 "use client";
 import Modal from "@/components/modal/Modal";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCardAssign from "@/components/xp-card/components/XPCardAssign";
 import { AssignRewardModalProps } from "@/components/grading/modals/assign-reward/types";
 import { ChestResponseDTO, ItemResponseDTO } from "@/interfaces/api/reward";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import { GradingContext } from "@/components/providers/grading/GradingContext";
 
 export default function AssignRewardModal({
   assignableRewards,
-  context,
   onClosedAction,
 }: AssignRewardModalProps) {
-  const { state, dispatch } = useContext(context);
+  const { state, dispatch } = useContext(GradingContext);
 
   const [assignedItems, setAssignedItems] = useState<Record<number, number>>(
     {}
@@ -32,10 +32,6 @@ export default function AssignRewardModal({
       [rewardId]: amount,
     }));
   };
-
-  useEffect(() => {
-    console.log(assignedItems);
-  }, [assignedItems]);
 
   return (
     <Modal

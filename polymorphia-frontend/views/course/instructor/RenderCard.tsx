@@ -12,7 +12,7 @@ export default function renderCard(
     <XPCard
       title={gradableEvent.name}
       subtitle={gradableEvent.topic ?? ""}
-      color={gradableEvent.ungradedStudents === 0 ? "green" : "silver"}
+      color={gradableEvent.ungradedStudents === 0 ? "green" : "sky"}
       rightComponent={
         <XPCardUngraded ungraded={gradableEvent.ungradedStudents} />
       }

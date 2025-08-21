@@ -2,21 +2,24 @@ import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
-import { ProjectGroupListProps } from "@/components/grading/components/project-group-list/types";
 import Search from "@/components/search";
 import { useContext } from "react";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import Loading from "@/components/loading/Loading";
+import {
+  GradingContext,
+  GradingReducerActions,
+} from "@/components/providers/grading/GradingContext";
 
-export default function ProjectGroupList({ context }: ProjectGroupListProps) {
+export default function ProjectGroupList() {
   const {
+    state,
+    dispatch,
     search,
     setSearch,
     projectGroups,
     isProjectGroupsLoading,
-    state,
-    dispatch,
-  } = useContext(context);
+  } = useContext(GradingContext);
 
   if (isProjectGroupsLoading || !projectGroups) {
     return <Loading />;
@@ -40,6 +43,12 @@ export default function ProjectGroupList({ context }: ProjectGroupListProps) {
           <div
             key={index}
             className="max-w-[25rem] mx-auto my-3 first:mt-0 last:mb-0 flex flex-col gap-y-2"
+            onClick={() =>
+              dispatch({
+                type: GradingReducerActions.SET_TARGET,
+                payload: [...group.members],
+              })
+            }
           >
             {group.members.map(
               (
@@ -49,7 +58,9 @@ export default function ProjectGroupList({ context }: ProjectGroupListProps) {
                 <XPCard
                   key={index}
                   title={student.studentName}
-                  color={"green"}
+                  color={
+                    state.selectedTarget?.includes(student) ? "sky" : "green"
+                  }
                   subtitle={student.group}
                   size={"xs"}
                   leftComponent={
@@ -61,6 +72,11 @@ export default function ProjectGroupList({ context }: ProjectGroupListProps) {
                   rightComponent={
                     <XPCardPoints
                       points={student.gainedXp}
+                      color={
+                        state.selectedTarget?.includes(student)
+                          ? "bg-sky-100"
+                          : "bg-secondary-gray"
+                      }
                       isSumLabelVisible={true}
                       isXPLabelVisible={!!student.gainedXp}
                     />
