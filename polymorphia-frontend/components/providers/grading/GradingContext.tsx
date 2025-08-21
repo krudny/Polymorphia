@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import { useDebounce } from "use-debounce";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import { useEventParams } from "@/shared/params/useSeachParams";
@@ -16,6 +16,7 @@ import { BaseReward } from "@/interfaces/api/reward";
 import { CriterionResponseDTO } from "@/interfaces/api/grade";
 import { ProjectGroupResponseDTO } from "@/interfaces/api/temp";
 import { EventTypes } from "@/interfaces/api/course";
+import toast from "react-hot-toast";
 
 export type TestGradingContextType = {
   search: string;
@@ -28,9 +29,10 @@ export type TestGradingContextType = {
   criteria: CriterionResponseDTO[] | undefined;
   state: GradingReducerState;
   dispatch: Dispatch<GradingReducerActionType>;
+  submitGrade: () => void;
 };
 
-interface CriteriaDetails {
+export interface CriteriaDetails {
   gainedXp?: string;
   assignedRewards: (BaseReward & { quantity: number })[];
 }
@@ -185,6 +187,7 @@ export const GradingContext = createContext<TestGradingContextType>({
   criteria: undefined,
   state: initialState,
   dispatch: () => {},
+  submitGrade: () => {},
 });
 
 export const GradingProvider = ({ children }: { children: ReactNode }) => {
@@ -286,6 +289,37 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [grade, dispatch]);
 
+  const queryClient = useQueryClient();
+
+  const submitGradeMutation = useMutation({
+    mutationFn: EventSectionService.submitGrade,
+    onSuccess: () => {
+      toast.success("Ocena została pomyślnie zapisana!");
+      queryClient.invalidateQueries({
+        queryKey: ["grade"],
+      });
+    },
+    onError: () => {
+      toast.error("Wystąpił błąd podczas zapisywania oceny");
+    },
+  });
+
+  const submitGrade = () => {
+    console.log("submitGrade");
+    if (!selectedStudentId) {
+      return;
+    }
+
+    console.log("tu");
+
+    submitGradeMutation.mutate({
+      studentId: selectedStudentId,
+      gradableEventId,
+      criteria: state.criteria,
+      comment: state.comment,
+    });
+  };
+
   useEffect(() => {
     console.log(state);
   }, [state]);
@@ -303,6 +337,7 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
         isProjectGroupsLoading,
         criteria,
         isGradeLoading,
+        submitGrade,
       }}
     >
       {children}

@@ -36,7 +36,7 @@ export default function StudentView() {
   useEffect(() => {
     if (!isLoading && gradableEvents && gradableEvents.length === 1) {
       router.push(
-        `/course/${eventType}/${eventSectionId}/${gradableEvents[0].id}`
+        `/course/${eventType.toLowerCase()}/${eventSectionId}/${gradableEvents[0].id}`
       );
     }
   }, [isLoading, gradableEvents, eventType, eventSectionId, router]);
@@ -59,7 +59,7 @@ export default function StudentView() {
     if (eventType === EventTypes.TEST) {
       setSelectedEventId(id);
     } else {
-      router.push(`/course/${eventType}/${eventSectionId}/${id}`);
+      router.push(`/course/${eventType.toLowerCase()}/${eventSectionId}/${id}`);
     }
   };
 

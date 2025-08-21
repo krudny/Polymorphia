@@ -1,7 +1,7 @@
 export const EventTypes = {
-  ASSIGNMENT: "assignment",
-  PROJECT: "project",
-  TEST: "test",
+  ASSIGNMENT: "ASSIGNMENT",
+  PROJECT: "PROJECT",
+  TEST: "TEST",
 } as const;
 
 export type EventType = (typeof EventTypes)[keyof typeof EventTypes];

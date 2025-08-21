@@ -26,8 +26,7 @@
     --color-secondary-success: #C4D7AF;
     --color-primary-sky: #B7C5D7;
     --color-secondary-sky: #D9E4F2;
-    --color-primary-gold: #ffbc36;
-    --color-secondary-gold: #ffde80;
+    --color-primary-error: #e35a5a;
 }
 
 @utility flex-centered {

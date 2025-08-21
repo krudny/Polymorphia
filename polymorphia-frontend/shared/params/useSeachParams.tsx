@@ -7,7 +7,7 @@ export function useEventParams() {
   const params = useParams();
   const gradableEventId = Number(params.gradableEventId);
   const eventSectionId = Number(params.eventSectionId);
-  const eventType = params.eventType as EventType;
+  const eventType = String(params.eventType).toUpperCase() as EventType;
 
   return {
     gradableEventId,

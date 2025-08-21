@@ -1,5 +1,7 @@
 import { XPCardPointsProps } from "@/components/xp-card/components/types";
 import "./index.css";
+import clsx from "clsx";
+import { colorVariants } from "@/components/xp-card/XPCard";
 
 export default function XPCardPoints({
   points,
@@ -8,10 +10,13 @@ export default function XPCardPoints({
   hasChest = false,
   color,
 }: XPCardPointsProps) {
-  const backgroundColor = color ?? "bg-secondary-gray";
-
   return (
-    <div className={`xp-card-points ${backgroundColor}`}>
+    <div
+      className={clsx(
+        "xp-card-points",
+        colorVariants({ color }).backgroundSecondary()
+      )}
+    >
       <h1>
         {points || "-"} {isXPLabelVisible && "xp"}
       </h1>

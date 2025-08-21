@@ -12,9 +12,17 @@ export interface XPCardProps {
   onClick?: () => void;
 }
 
+export type XPCardColors =
+  | "gold"
+  | "silver"
+  | "bronze"
+  | "green"
+  | "sky"
+  | "gray";
+
 export type XPCardVariantProps = {
   size?: "xs" | "sm" | "md" | "lg" | "hofDesktop" | "projectGroup";
-  color?: "gold" | "silver" | "bronze" | "green" | "sky" | "gray";
+  color?: XPCardColors;
   forceWidth?: boolean;
   isLocked?: boolean;
 };

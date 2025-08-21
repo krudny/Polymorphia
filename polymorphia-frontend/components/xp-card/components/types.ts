@@ -1,9 +1,11 @@
+import { XPCardColors } from "@/components/xp-card/types";
+
 export interface XPCardPointsProps {
   points: string | undefined;
   isSumLabelVisible?: boolean;
   isXPLabelVisible?: boolean;
   hasChest?: boolean;
-  color?: string;
+  color?: XPCardColors;
 }
 
 export interface XPCardUngradedProps {

@@ -1,7 +1,7 @@
 "use client";
 
 import "./index.css";
-import { useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useRef, useState } from "react";
 import { API_STATIC_URL } from "@/services/api";
 import Image from "next/image";
 import ProgressBar from "@/components/progressbar/ProgressBar";
@@ -15,31 +15,46 @@ import {
   GradingContext,
   GradingReducerActions,
 } from "@/components/providers/grading/GradingContext";
-import { useDebounce } from "use-debounce";
 
 export default function Reward() {
-  const { state, dispatch, criteria, isGradeLoading } =
+  const { state, dispatch, criteria, isGradeLoading, submitGrade } =
     useContext(GradingContext);
   const [assignableRewards, setAssignableRewards] = useState<
     CriterionAssignableRewardResponseDTO[] | null
   >(null);
-  const [localComment, setLocalComment] = useState(state.comment ?? "");
-  const [debouncedComment] = useDebounce(localComment, 400);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const inputValueRefs = useRef<Record<number, string>>({});
 
-  useEffect(() => {
-    setLocalComment(state.comment ?? "");
-  }, [state.comment]);
+  const [xpErrors, setXpErrors] = useState<Record<number, boolean>>({});
 
-  useEffect(() => {
-    if (debouncedComment !== state.comment) {
+  const handleXPChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    criterionId: number,
+    maxXp: number
+  ) => {
+    const value = event.target.value;
+    inputValueRefs.current[criterionId] = value;
+
+    const numValue = Number(value);
+    const isValid =
+      value === "" || (!isNaN(numValue) && numValue >= 0 && numValue <= maxXp);
+
+    setXpErrors((prev) => ({
+      ...prev,
+      [criterionId]: !isValid && value !== "",
+    }));
+
+    if (isValid) {
       dispatch({
-        type: GradingReducerActions.ADD_COMMENT,
+        type: GradingReducerActions.ADD_XP_TO_CRITERION,
         payload: {
-          comment: debouncedComment,
+          criterionId,
+          xp: value,
         },
       });
+      delete inputValueRefs.current[criterionId];
     }
-  }, [debouncedComment, state.comment, dispatch]);
+  };
 
   if (isGradeLoading || !criteria) {
     return <Loading />;
@@ -77,21 +92,25 @@ export default function Reward() {
                       }
                     />
                   </div>
-                  <div className="w-16  mx-auto flex items-center -mt-6 z-[20]">
+                  <div className="w-20 mx-auto flex items-center -mt-6 z-[20]">
                     <input
                       type="text"
                       placeholder="Punkty"
-                      value={gainedXp}
-                      onChange={(event) => {
-                        dispatch({
-                          type: GradingReducerActions.ADD_XP_TO_CRITERION,
-                          payload: {
-                            criterionId: Number(criterionId),
-                            xp: event.target.value,
-                          },
-                        });
-                      }}
-                      className="text-3xl w-full text-center border-b-3 border-primary-dark dark:border-secondary-light text-primary-dark dark:text-secondary-light placeholder-primary-dark dark:placeholder-secondary-light focus:outline-none"
+                      value={
+                        inputValueRefs.current[Number(criterionId)] ?? gainedXp
+                      }
+                      onChange={(event) =>
+                        handleXPChange(
+                          event,
+                          Number(criterionId),
+                          Number(criterion.maxXp)
+                        )
+                      }
+                      className={`text-3xl w-full text-center border-b-3 focus:outline-none transition-colors duration-300 ease-[cubic-bezier(0.34,1,0.2,1)] ${
+                        xpErrors[Number(criterionId)]
+                          ? "border-primary-error text-primary-error"
+                          : "border-primary-dark dark:border-secondary-light text-primary-dark dark:text-secondary-light placeholder-primary-dark dark:placeholder-secondary-light"
+                      }`}
                     />
                   </div>
                   <h2 className="text-4xl my-5">Nagrody</h2>
@@ -100,7 +119,7 @@ export default function Reward() {
                       (assignedReward, index) => (
                         <div
                           key={index}
-                          className="relative w-full aspect-square rounded-xl border-3 shadow-sm border-primary-dark drop-shadow-xl overflow-hidden"
+                          className="relative w-full aspect-square rounded-xl shadow-sm  drop-shadow-xl overflow-hidden"
                         >
                           <div className="w-full h-full rounded-xl overflow-hidden">
                             <Image
@@ -136,10 +155,18 @@ export default function Reward() {
           <h2 className="text-4xl my-5">Komentarz</h2>
           <div className="w-full">
             <textarea
-              className="w-full p-4 text-xl  resize-none border-3 border-primary-dark dark:border-secondary-light text-primary-dark dark:text-secondary-light placeholder-primary-dark dark:placeholder-secondary-light focus:outline-none rounded-xl"
+              ref={textareaRef}
+              className="w-full p-4 text-xl resize-none border-3 border-primary-dark dark:border-secondary-light text-primary-dark dark:text-secondary-light placeholder-primary-dark dark:placeholder-secondary-light focus:outline-none rounded-xl"
               placeholder="Dodaj komentarz..."
-              value={localComment}
-              onChange={(e) => setLocalComment(e.target.value)}
+              defaultValue={state.comment}
+              onBlur={(e) => {
+                dispatch({
+                  type: GradingReducerActions.ADD_COMMENT,
+                  payload: {
+                    comment: e.target.value,
+                  },
+                });
+              }}
               style={{
                 minHeight: "8rem",
                 height: "auto",
@@ -152,6 +179,7 @@ export default function Reward() {
             <ButtonWithBorder
               text="Zapisz"
               className="w-full !border-3 !rounded-xl"
+              onClick={submitGrade}
             />
           </div>
         </div>

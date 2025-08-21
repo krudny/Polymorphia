@@ -12,9 +12,9 @@ export interface ProjectGroupResponseDTO {
 }
 
 export const Roles = {
-  STUDENT: "student",
-  INSTRUCTOR: "instructor",
-  COORDINATOR: "coordinator",
+  STUDENT: "STUDENT",
+  INSTRUCTOR: "INSTRUCTOR",
+  COORDINATOR: "COORDINATOR",
 } as const;
 
 export type Role = (typeof Roles)[keyof typeof Roles];

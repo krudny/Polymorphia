@@ -14,6 +14,7 @@ import {
 } from "@/interfaces/api/course";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import { ProjectGroupResponseDTO } from "@/interfaces/api/temp";
+import { CriteriaDetails } from "@/components/providers/grading/GradingContext";
 
 const allData: UserDetailsDTO[] = [];
 
@@ -671,228 +672,6 @@ export const EventSectionService = {
     mockMarkdownStore[gradableEventId] = newMarkdown;
   },
 
-  getGrade: async (gradableEventId: number): Promise<GradeResponseDTO> => {
-    if (gradableEventId === 1) {
-      return {
-        details: {
-          id: 1,
-        },
-        criteria: [
-          {
-            id: 1,
-            name: "Wykonanie zadania",
-            maxXp: "4.0",
-            assignableRewards: [
-              {
-                assignableReward: {
-                  rewardType: "CHEST",
-                  reward: {
-                    id: 1,
-                    name: "Srebrna Skrzynia",
-                    imageUrl: "images/chests/s1.png",
-                    behavior: "ONE_OF_MANY",
-                    behaviorText: "Wybierz jeden przedmiot ze skrzynki",
-                    orderIndex: 0,
-                    chestItems: [
-                      {
-                        id: 1,
-                        itemBonusType: "PERCENTAGE_BONUS",
-                        name: "Pietruszka",
-                        bonusText: "+5% do kategorii Kartkówka",
-                        imageUrl: "images/items/parsley.jpg",
-                        percentage: 5,
-                        orderIndex: 0,
-                        limit: 3,
-                        isLimitReached: false,
-                        eventSectionId: 1,
-                      },
-                    ],
-                  },
-                },
-                maxAmount: 1,
-              },
-            ],
-            criterionGrade: {
-              id: 1,
-              gainedXp: "3.5",
-              assignedRewards: [
-                {
-                  rewardType: "CHEST",
-                  assignedReward: {
-                    base: {
-                      id: 1,
-                      name: "Srebrna Skrzynia",
-                      imageUrl: "images/chests/s1.png",
-                      behavior: "ONE_OF_MANY",
-                      behaviorText: "Wybierz jeden przedmiot ze skrzynki",
-                      orderIndex: 0,
-                      chestItems: [
-                        {
-                          id: 1,
-                          itemBonusType: "PERCENTAGE_BONUS",
-                          name: "Pietruszka",
-                          bonusText: "+5% do kategorii Kartkówka",
-                          imageUrl: "images/items/parsley.jpg",
-                          percentage: 5,
-                          orderIndex: 0,
-                          limit: 3,
-                          isLimitReached: false,
-                          eventSectionId: 1,
-                        },
-                      ],
-                    },
-                    details: {
-                      id: 3,
-                      receivedDate: "07.06.2025",
-                      usedDate: "08.06.2025",
-                      isUsed: true,
-                    },
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      };
-    }
-
-    if (gradableEventId === 15 || gradableEventId === 1) {
-      return {
-        details: {
-          id: 1,
-        },
-        criteria: [
-          {
-            id: 1,
-            name: "Wykonanie zadania",
-            maxXp: "2.0",
-            assignableRewards: [
-              {
-                assignableReward: {
-                  rewardType: "CHEST",
-                  reward: {
-                    id: 1,
-                    name: "Srebrna Skrzynia",
-                    imageUrl: "images/chests/s1.png",
-                    behavior: "ONE_OF_MANY",
-                    behaviorText: "Wybierz jeden przedmiot ze skrzynki",
-                    orderIndex: 0,
-                    chestItems: [
-                      {
-                        id: 1,
-                        itemBonusType: "PERCENTAGE_BONUS",
-                        name: "Pietruszka",
-                        bonusText: "+5% do kategorii Kartkówka",
-                        imageUrl: "images/items/parsley.jpg",
-                        percentage: 5,
-                        orderIndex: 0,
-                        limit: 3,
-                        isLimitReached: false,
-                        eventSectionId: 1,
-                      },
-                    ],
-                  },
-                },
-                maxAmount: 1,
-              },
-            ],
-            criterionGrade: {
-              id: 1,
-              gainedXp: "0.7",
-              assignedRewards: [
-                {
-                  rewardType: "CHEST",
-                  assignedReward: {
-                    base: {
-                      id: 1,
-                      name: "Srebrna Skrzynia",
-                      imageUrl: "images/chests/s1.png",
-                      behavior: "ONE_OF_MANY",
-                      behaviorText: "Wybierz jeden przedmiot ze skrzynki",
-                      orderIndex: 0,
-                      chestItems: [
-                        {
-                          id: 1,
-                          itemBonusType: "PERCENTAGE_BONUS",
-                          name: "Pietruszka",
-                          bonusText: "+5% do kategorii Kartkówka",
-                          imageUrl: "images/items/parsley.jpg",
-                          percentage: 5,
-                          orderIndex: 0,
-                          limit: 3,
-                          isLimitReached: false,
-                          eventSectionId: 1,
-                        },
-                      ],
-                    },
-                    details: {
-                      id: 3,
-                      receivedDate: "07.06.2025",
-                      usedDate: "08.06.2025",
-                      isUsed: true,
-                    },
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      };
-    }
-
-    return {
-      criteria: [
-        {
-          id: 1,
-          name: "Wykonanie zadania",
-          maxXp: "4.0",
-          assignableRewards: [
-            {
-              assignableReward: {
-                rewardType: "CHEST",
-                reward: {
-                  id: 1,
-                  name: "Srebrna Skrzynia",
-                  imageUrl: "images/chests/s1.png",
-                  behavior: "ONE_OF_MANY",
-                  behaviorText: "Wybierz jeden przedmiot ze skrzynki",
-                  orderIndex: 0,
-                  chestItems: [
-                    {
-                      id: 1,
-                      itemBonusType: "PERCENTAGE_BONUS",
-                      name: "Pietruszka",
-                      bonusText: "+5% do kategorii Kartkówka",
-                      imageUrl: "images/items/parsley.jpg",
-                      percentage: 5,
-                      orderIndex: 0,
-                      limit: 3,
-                      isLimitReached: false,
-                      eventSectionId: 1,
-                    },
-                    {
-                      id: 2,
-                      itemBonusType: "PERCENTAGE_BONUS",
-                      name: "Marchewka",
-                      bonusText: "+5% do kategorii Kartkówka",
-                      imageUrl: "images/items/parsley.jpg",
-                      percentage: 5,
-                      orderIndex: 0,
-                      limit: 3,
-                      isLimitReached: false,
-                      eventSectionId: 1,
-                    },
-                  ],
-                },
-              },
-              maxAmount: 2,
-            },
-          ],
-        },
-      ],
-    };
-  },
-
   getCriteria: async (
     gradableEventId: number
   ): Promise<CriterionResponseDTO[]> => {
@@ -1225,5 +1004,15 @@ export const EventSectionService = {
     }
 
     return data;
+  },
+
+  submitGrade: async (gradeData: {
+    studentId: number;
+    gradableEventId: number;
+    criteria: Record<number, CriteriaDetails>;
+    comment: string;
+  }): Promise<void> => {
+    await new Promise<void>((resolve) => setTimeout(resolve, 200));
+    console.log("Submitting grade:", gradeData);
   },
 };

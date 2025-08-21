@@ -29,7 +29,7 @@ export default function InstructorView() {
   useEffect(() => {
     if (!isLoading && gradableEvents && gradableEvents.length === 1) {
       router.replace(
-        `/course/${eventType}/${eventSectionId}/${gradableEvents[0].id}`
+        `/course/${eventType.toLowerCase()}/${eventSectionId}/${gradableEvents[0].id}`
       );
     }
   }, [isLoading, gradableEvents, eventType, eventSectionId, router]);
@@ -47,7 +47,9 @@ export default function InstructorView() {
   }
 
   const handleClick = (id: number) => {
-    router.push(`/course/${eventType}/${eventSectionId}/${id}/grading`);
+    router.push(
+      `/course/${eventType.toLowerCase()}/${eventSectionId}/${id}/grading`
+    );
   };
 
   const cards = gradableEvents.map((gradableEvent) =>
