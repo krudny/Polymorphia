@@ -35,6 +35,7 @@ public class EvolutionStage {
     private BigDecimal minXp;
 
     @NotNull
+    @PositiveOrZero
     private Long orderIndex;
 
     @NotNull

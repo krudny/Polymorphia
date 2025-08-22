@@ -4,6 +4,7 @@ import com.agh.polymorphia_backend.model.course.Course;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -32,6 +33,7 @@ public abstract class Reward {
     private String imageUrl;
 
     @NotNull
+    @PositiveOrZero
     private Long orderIndex;
 
     @NotNull

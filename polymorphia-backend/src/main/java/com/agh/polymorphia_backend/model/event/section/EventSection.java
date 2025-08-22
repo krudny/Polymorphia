@@ -4,7 +4,7 @@ import com.agh.polymorphia_backend.model.course.Course;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -30,7 +30,7 @@ public abstract class EventSection {
     private boolean isShownInRoadMap = false;
 
     @NotNull
-    private boolean eventsWithTopics = false;
+    private boolean hasGradableEventsWithTopics = false;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -38,7 +38,7 @@ public abstract class EventSection {
     private Course course;
 
     @NotNull
-    @Positive
+    @PositiveOrZero
     private Long orderIndex;
 
     @NotNull

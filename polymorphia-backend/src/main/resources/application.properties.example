@@ -28,3 +28,9 @@ initial.user.password=
 
 # Include the message of ResponseStatusException in response
 server.error.include-message=always
+
+# Flyway configuration (db migrations)
+spring.flyway.enabled=true
+spring.flyway.locations=classpath:db/migration
+spring.flyway.baseline-on-migrate=false
+spring.flyway.baseline-version=1

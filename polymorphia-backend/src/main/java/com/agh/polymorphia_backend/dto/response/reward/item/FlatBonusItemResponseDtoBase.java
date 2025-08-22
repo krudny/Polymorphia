@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 import java.math.BigDecimal;
 
 @SuperBuilder
-public class FlatBonusItemResponseDto extends ItemResponseDto {
+public class FlatBonusItemResponseDtoBase extends ItemResponseDtoBase {
     @NotNull
     private ItemType itemBonusType = ItemType.FLAT_BONUS;
 

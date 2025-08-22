@@ -7,7 +7,7 @@ import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 @Getter
-public class RewardResponseDto {
+public class BaseRewardResponseDto {
     @NotNull
     private Long id;
 

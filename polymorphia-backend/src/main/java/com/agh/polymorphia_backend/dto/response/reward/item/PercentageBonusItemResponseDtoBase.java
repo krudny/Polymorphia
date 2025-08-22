@@ -6,7 +6,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
-public class PercentageBonusItemResponseDto extends ItemResponseDto {
+public class PercentageBonusItemResponseDtoBase extends ItemResponseDtoBase {
     @NotNull
     private ItemType itemBonusType = ItemType.PERCENTAGE_BONUS;
 

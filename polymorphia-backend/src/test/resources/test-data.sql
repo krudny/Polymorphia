@@ -43,10 +43,10 @@ VALUES (1, 'Pisklak', 20, 'description', 2.0, 'imageUrl_pisklak', 1, 1),
        (4, 'Podlot2', 50, 'description2', 3.0, 'imageUrl2', 3, 2);
 
 -- Event sections
-INSERT INTO public.event_sections (id, events_with_topics, is_hidden, is_shown_in_road_map, name, order_index,
+INSERT INTO public.event_sections (id, has_gradable_events_with_topics, is_hidden, is_shown_in_road_map, name, order_index,
                                    course_id)
 VALUES (2, true, true, true, 'Lab', 1, 1);
-INSERT INTO public.event_sections (id, events_with_topics, is_hidden, is_shown_in_road_map, name, order_index,
+INSERT INTO public.event_sections (id, has_gradable_events_with_topics, is_hidden, is_shown_in_road_map, name, order_index,
                                    course_id)
 VALUES (1, true, true, true, 'Kartkówka', 2, 1);
 

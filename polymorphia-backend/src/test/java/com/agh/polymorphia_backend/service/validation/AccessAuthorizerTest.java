@@ -6,6 +6,7 @@ import com.agh.polymorphia_backend.repository.course.AnimalRepository;
 import com.agh.polymorphia_backend.repository.course.CourseGroupRepository;
 import com.agh.polymorphia_backend.repository.course.CourseRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
@@ -16,6 +17,8 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -43,6 +46,7 @@ class AccessAuthorizerTest {
     @InjectMocks
     private AccessAuthorizer accessAuthorizer;
 
+    @Mock
     private Course course;
 
     private static Stream<AccessAuthorizationScenario> scenariosProvider() {
@@ -58,7 +62,7 @@ class AccessAuthorizerTest {
         MockitoAnnotations.openMocks(this);
         SecurityContextHolder.setContext(securityContext);
 
-        course = new Course();
+        doReturn(1L).when(course).getId();
 
         doReturn(authentication).when(securityContext).getAuthentication();
     }
@@ -76,39 +80,16 @@ class AccessAuthorizerTest {
             case INSTRUCTOR -> doReturn(Optional.empty())
                     .when(courseGroupRepository)
                     .findByCourseIdAndInstructorId(1L, scenario.id);
-            case COORDINATOR -> course.setCoordinator(new Coordinator());
+            case COORDINATOR -> doReturn(new Coordinator())
+                    .when(course).getCoordinator();
         }
 
         ResponseStatusException ex = assertThrows(ResponseStatusException.class, () ->
-                accessAuthorizer.authorizeCourseAccess(1L));
+                accessAuthorizer.authorizeCourseAccess(course));
 
-        assertEquals(403, ex.getStatusCode().value());
-        assertEquals(AccessAuthorizer.COURSE_UNAUTHORIZED, ex.getReason());
+        assertEquals(404, ex.getStatusCode().value());
+        assertEquals(AccessAuthorizer.COURSE_NOT_FOUND, ex.getReason());
     }
-
-    @ParameterizedTest
-    @MethodSource("scenariosProvider")
-    void authorizeCourseAccess_courseNotExist_throwsForbidden(AccessAuthorizationScenario scenario) {
-        when(authentication.getPrincipal()).thenReturn(scenario.user);
-        doReturn(Optional.empty()).when(courseRepository).findById(1L);
-
-        switch (scenario.role) {
-            case STUDENT -> doReturn(Optional.of(new Student()))
-                    .when(animalRepository)
-                    .findByCourseIdAndStudentId(1L, scenario.id);
-            case INSTRUCTOR -> doReturn(Optional.of(new Instructor()))
-                    .when(courseGroupRepository)
-                    .findByCourseIdAndInstructorId(1L, scenario.id);
-            case COORDINATOR -> course.setCoordinator((Coordinator) scenario.user);
-        }
-
-        ResponseStatusException ex = assertThrows(ResponseStatusException.class, () ->
-                accessAuthorizer.authorizeCourseAccess(1L));
-
-        assertEquals(403, ex.getStatusCode().value());
-        assertEquals(AccessAuthorizer.COURSE_UNAUTHORIZED, ex.getReason());
-    }
-
 
     @ParameterizedTest
     @MethodSource("scenariosProvider")
@@ -123,10 +104,58 @@ class AccessAuthorizerTest {
             case INSTRUCTOR -> doReturn(Optional.of(new Instructor()))
                     .when(courseGroupRepository)
                     .findByCourseIdAndInstructorId(1L, scenario.id);
-            case COORDINATOR -> course.setCoordinator((Coordinator) scenario.user);
+            case COORDINATOR -> doReturn(scenario.user)
+                    .when(course).getCoordinator();
         }
 
-        assertDoesNotThrow(() -> accessAuthorizer.authorizeCourseAccess(1L));
+        assertDoesNotThrow(() -> accessAuthorizer.authorizeCourseAccess(course));
+    }
+
+
+    @Test
+    void authorizeCourseAccess_userWithNoRoles_throwsIllegalState() {
+        User user = mock(User.class);
+        when(user.getAuthorities()).thenReturn(Collections.emptySet()); // no roles
+        when(authentication.getPrincipal()).thenReturn(user);
+
+        IllegalStateException ex = assertThrows(IllegalStateException.class,
+                () -> accessAuthorizer.authorizeCourseAccess(course));
+
+        assertEquals(AccessAuthorizer.USER_HAS_NO_VALID_ROLES, ex.getMessage());
+    }
+
+    @Test
+    void hasAnyRole_returnsTrue_whenUserHasRole() {
+        User user = mock(User.class);
+        when(authentication.getPrincipal()).thenReturn(user);
+        doReturn(Set.of(UserType.INSTRUCTOR, UserType.STUDENT)).when(user).getAuthorities();
+
+        boolean result = accessAuthorizer.hasAnyRole(List.of(UserType.INSTRUCTOR));
+
+        assertTrue(result);
+    }
+
+    @Test
+    void hasAnyRole_returnsFalse_whenUserDoesNotHaveRole() {
+        User user = mock(User.class);
+        when(authentication.getPrincipal()).thenReturn(user);
+        doReturn(Set.of(UserType.STUDENT)).when(user).getAuthorities();
+
+        boolean result = accessAuthorizer.hasAnyRole(java.util.List.of(UserType.INSTRUCTOR));
+
+        assertFalse(result);
+    }
+
+    @Test
+    void hasAnyRole_throwsIllegalState_whenUserHasNoRoles() {
+        User user = mock(User.class);
+        when(user.getAuthorities()).thenReturn(Collections.emptySet());
+        when(authentication.getPrincipal()).thenReturn(user);
+
+        IllegalStateException ex = assertThrows(IllegalStateException.class,
+                () -> accessAuthorizer.hasAnyRole(List.of(UserType.STUDENT)));
+
+        assertEquals(AccessAuthorizer.USER_HAS_NO_VALID_ROLES, ex.getMessage());
     }
 
     private static class AccessAuthorizationScenario {

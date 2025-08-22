@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.service.mapper;
 
-import com.agh.polymorphia_backend.dto.response.reward.RewardResponseDto;
+import com.agh.polymorphia_backend.dto.response.reward.BaseRewardResponseDto;
 import com.agh.polymorphia_backend.model.course.reward.Reward;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class RewardMapper {
-    public RewardResponseDto rewardToRewardResponseDto(Reward reward) {
-        return RewardResponseDto.builder()
+    public BaseRewardResponseDto rewardToRewardResponseDto(Reward reward) {
+        return BaseRewardResponseDto.builder()
                 .id(reward.getId())
                 .orderIndex(reward.getOrderIndex())
                 .name(reward.getName())
