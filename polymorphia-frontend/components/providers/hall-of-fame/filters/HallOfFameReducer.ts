@@ -6,20 +6,6 @@ export function HallOfFameReducer(
   action: HallOfFameAction
 ) {
   switch (action.type) {
-    case "OPEN_FILTER":
-      return filters.map((filter) => {
-        return {
-          ...filter,
-          isOpen: filter.id === action.payload.id ? !filter.isOpen : false,
-        };
-      });
-
-    case "CLOSE_ALL_FILTERS":
-      return filters.map((filter) => ({
-        ...filter,
-        isOpen: false,
-      }));
-
     case "ADD_TO_FILTER":
       return filters.map((filter) => {
         if (filter.id !== action.payload.id) {
