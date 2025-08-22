@@ -40,10 +40,10 @@ jobs:
             IMAGE_NAME="us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/polymorphia-backend/polymorphia-backend"
             
             gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
-            sudo docker pull $IMAGE_NAME:prod-latest
-            sudo docker stop polymorphia-backend || true
-            sudo docker rm polymorphia-backend || true
-            sudo docker run -d --name polymorphia-backend -p 8080:8080 \
+            docker pull $IMAGE_NAME:prod-latest
+            docker stop polymorphia-backend || true
+            docker rm polymorphia-backend || true
+            docker run -d --name polymorphia-backend -p 8080:8080 \
               -v /app/config:/app/config \
               -v ~/polymorphia-static:/app/static \
               $IMAGE_NAME:prod-latest \
