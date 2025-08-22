@@ -101,7 +101,7 @@ const HallOfFameService = {
 
     if (groups && !groups?.includes("all")) {
       filteredData = filteredData.filter((item) =>
-        groups.includes(item.userDetails.group.toLowerCase())
+        groups.includes(item.userDetails.group)
       );
     }
 
