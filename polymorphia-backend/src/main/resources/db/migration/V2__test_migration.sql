@@ -1,0 +1,5 @@
+ALTER TABLE items
+    DROP COLUMN quantity;
+
+ALTER TABLE animals
+    ALTER COLUMN name DROP NOT NULL;
