@@ -11,6 +11,7 @@ import { useEffect } from "react";
 export default function Items() {
   const searchParams = useSearchParams();
   const { setTitle } = useTitle();
+  const COURSE_ID = 1;
 
   useEffect(() => {
     setTitle("Przedmioty");
@@ -22,7 +23,7 @@ export default function Items() {
     error,
   } = useQuery({
     queryKey: ["items", 1],
-    queryFn: () => KnowledgeBaseService.getItems(1),
+    queryFn: () => KnowledgeBaseService.getItems(COURSE_ID),
     retry: false,
   });
 

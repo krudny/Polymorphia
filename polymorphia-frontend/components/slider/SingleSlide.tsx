@@ -19,7 +19,9 @@ export default function SingleSlide({
   const sliderRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!sliderRef.current) return;
+    if (!sliderRef.current) {
+      return;
+    }
     animateSingleSlide(sliderRef.current, position);
   }, [position]);
 

@@ -15,7 +15,9 @@ export function useXPGridAnimation(
 ): { handlePageChange: (selected: { selected: number }) => void } {
   const handlePageChange = (selected: { selected: number }) => {
     const newPage = selected.selected;
-    if (newPage === pageToShow) return;
+    if (newPage === pageToShow) {
+      return;
+    }
 
     const dir = newPage > pageToShow ? 1 : -1;
     setDirection(dir);
@@ -42,7 +44,10 @@ export function useXPGridAnimation(
   directionRef.current = direction;
 
   useEffect(() => {
-    if (!gradableEventsData || !sliderRef.current) return;
+    if (!gradableEventsData || !sliderRef.current) {
+      return;
+    }
+
     if (firstRenderRef.current) {
       return;
     }

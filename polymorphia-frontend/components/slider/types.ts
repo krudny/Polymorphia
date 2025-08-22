@@ -1,5 +1,13 @@
 import { KnowledgeBaseResponseDTO } from "@/interfaces/api/knowledge-base";
 
+export const KnowledgeBaseTypes = {
+  CHEST: "CHEST",
+  ITEM: "ITEM",
+  EVOLUTION_STAGE: "EVOLUTION_STAGE",
+} as const;
+
+export type KnowledgeBaseType = (typeof KnowledgeBaseTypes)[keyof typeof KnowledgeBaseTypes];
+
 export interface SingleSlideProps {
   slide: KnowledgeBaseResponseDTO;
   position: number;
@@ -13,7 +21,7 @@ export interface SliderProps {
 }
 
 export interface DetailedSlideInfoProps {
-  type: KnowledgeBaseResponseDTO["type"];
+  type: KnowledgeBaseType;
   relatedRewards: KnowledgeBaseResponseDTO["relatedRewards"];
 }
 

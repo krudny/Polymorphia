@@ -1,6 +1,6 @@
-import { BaseReward } from "../reward";
+import {BaseReward} from "../reward";
+import {KnowledgeBaseType} from "@/components/slider/types";
 
-export type KnowledgeBaseType = "EVOLUTION_STAGE" | "ITEM" | "CHEST";
 
 export interface KnowledgeBaseResponseDTO {
   type: KnowledgeBaseType;

@@ -22,7 +22,9 @@ export function HallOfFameReducer(
 
     case "ADD_TO_FILTER":
       return filters.map((filter) => {
-        if (filter.id !== action.payload.id) return filter;
+        if (filter.id !== action.payload.id) {
+          return filter;
+        }
 
         let updatedOptions;
 
@@ -55,7 +57,9 @@ export function HallOfFameReducer(
 
     case "REMOVE_FROM_FILTER":
       return filters.map((filter) => {
-        if (filter.id !== action.payload.id) return filter;
+        if (filter.id !== action.payload.id) {
+          return filter;
+        }
 
         const updatedOptions = filter.options.map((option) =>
           option.value === action.payload.value
