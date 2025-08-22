@@ -7,15 +7,18 @@ import { HallOfFameRecordDTO } from "@/interfaces/api/hall-of-fame";
 import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
 import { useContext } from "react";
 import { filterXpDetails } from "@/components/providers/hall-of-fame/utils/filterXpDetails";
-import { getAllFilters } from "@/components/providers/hall-of-fame/utils/getAllFilters";
 
 export default function HallOfFameCardDesktop({
   userDetails,
   xpDetails,
 }: HallOfFameRecordDTO) {
-  const { appliedFiltersState } = useContext(HallOfFameContext);
-  const { rankingOptionsFilter } = getAllFilters(appliedFiltersState);
-  const filteredXpDetails = filterXpDetails(xpDetails, rankingOptionsFilter);
+  const { filters } = useContext(HallOfFameContext);
+  const filteredXpDetails = filterXpDetails(
+    xpDetails,
+    // TODO: remove null assertion
+    filters.configs.find((config) => config.id === "rankingOptions")!,
+    filters.appliedState["rankingOptions"]
+  );
 
   return (
     <div className="hall-of-fame-desktop-record-wrapper">

@@ -1,20 +1,17 @@
-import { HallOfFameFilter } from "@/components/hall-of-fame/general/types";
+import { FilterConfig } from "@/components/filters/types";
 
 export const filterXpDetails = (
   xpDetails: Record<string, string>,
-  rankingOptionsFilter: HallOfFameFilter
+  rankingOptionsFilterConfig: FilterConfig,
+  rangingOptionsFilterValues: string[]
 ): Record<string, string> => {
-  if (rankingOptionsFilter.id !== "rankingOptions") {
+  if (rankingOptionsFilterConfig.id !== "rankingOptions") {
     throw new Error(
-      `filterXpDetails: Expected filter id 'rankingOptions', got '${rankingOptionsFilter.id}'`
+      `filterXpDetails: Expected filter id 'rankingOptions', got '${rankingOptionsFilterConfig.id}'`
     );
   }
 
-  const selectedKeys = new Set(
-    rankingOptionsFilter.options
-      .filter((option) => option.isSelected)
-      .map((option) => option.value)
-  );
+  const selectedKeys = new Set(rangingOptionsFilterValues);
 
   return Object.fromEntries(
     Object.entries(xpDetails).filter(([key]) => selectedKeys.has(key))

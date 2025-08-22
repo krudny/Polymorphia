@@ -1,38 +1,29 @@
-import Modal from "@/components/modal/Modal";
-import { useContext, useRef } from "react";
-import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import {
-  HallOfFameFilterID,
-  HallOfFameFilterOption,
-} from "@/components/hall-of-fame/general/types";
-import { useQueryClient } from "@tanstack/react-query";
-import "./index.css";
-import { hallOfFameConfirmAction } from "@/components/providers/hall-of-fame/utils/hallOfFameConfirmAction";
 import { Accordion } from "@/components/accordion/Accordion";
 import AccordionSection from "@/components/accordion/AccordionSection";
+import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import { FilterOption } from "@/components/filters/types";
+import Modal from "@/components/modal/Modal";
 import { AccordionRef } from "@/components/providers/accordion/types";
+import { FilterablePageableContextInterface } from "@/components/providers/filters/types";
+import { useContext, useRef } from "react";
+import toast from "react-hot-toast";
+import "./index.css";
+import { FiltersModalProps } from "./types";
 
-export default function FiltersModal() {
-  const queryClient = useQueryClient();
-  const {
-    filtersState,
-    setAppliedFiltersState,
-    filtersDispatch,
-    isModalOpen,
-    setIsModalOpen,
-    setPage,
-  } = useContext(HallOfFameContext);
+export default function FiltersModal<
+  T extends FilterablePageableContextInterface,
+>({ context, onFiltersApplied }: FiltersModalProps<T>) {
+  const { filters, isModalOpen, setIsModalOpen, setPage } = useContext(context);
+  const { dispatch, configs, state, applyFilters, resetFiltersToApplied } =
+    filters;
 
   const accordionRef = useRef<AccordionRef>(null);
 
-  const handleSelect = (
-    filterId: HallOfFameFilterID,
-    option: HallOfFameFilterOption
-  ) => {
-    filtersDispatch({
-      type: option.isSelected ? "REMOVE_FROM_FILTER" : "ADD_TO_FILTER",
-      payload: { id: filterId, value: option.value },
+  const handleSelect = (filterId: string, option: FilterOption) => {
+    dispatch({
+      type: "TOGGLE",
+      id: filterId,
+      value: option.value,
     });
   };
 
@@ -42,6 +33,7 @@ export default function FiltersModal() {
       title="Filtry"
       onClosed={() => {
         accordionRef.current?.closeAll();
+        resetFiltersToApplied();
         setIsModalOpen(false);
       }}
     >
@@ -51,24 +43,24 @@ export default function FiltersModal() {
           maxOpen={1}
           className="filters-modal-wrapper"
         >
-          {filtersState.map((filter) => (
+          {configs.map((filterConfig) => (
             <AccordionSection
-              key={filter.id}
-              id={filter.id}
-              title={filter.name}
+              key={filterConfig.id}
+              id={filterConfig.id}
+              title={filterConfig.title}
             >
               <div className="filters-modal-filter-grid">
-                {filter.options.map((option) => (
+                {filterConfig.options.map((option) => (
                   <div
                     key={option.value}
-                    onClick={() => handleSelect(filter.id, option)}
+                    onClick={() => handleSelect(filterConfig.id, option)}
                     className={`filters-modal-filter-option ${
-                      option.isSelected
+                      (state[filterConfig.id] ?? []).includes(option.value)
                         ? "filters-modal-filter-option-selected "
                         : "filters-modal-filter-option-unselected"
                     }`}
                   >
-                    {option.label}
+                    {option.label ?? option.value}
                   </div>
                 ))}
               </div>
@@ -81,16 +73,16 @@ export default function FiltersModal() {
             className="w-full rounded-md"
             size="sm"
             onClick={() => {
-              if (
-                hallOfFameConfirmAction(
-                  filtersState,
-                  setAppliedFiltersState,
-                  queryClient
-                )
-              ) {
+              const result = applyFilters();
+              if (result.ok) {
+                onFiltersApplied?.();
                 accordionRef.current?.closeAll();
                 setIsModalOpen(false);
                 setPage(0);
+              } else if (result.errors) {
+                Object.keys(result.errors).forEach((configId) => {
+                  toast.error(result.errors[configId]);
+                });
               }
             }}
           />

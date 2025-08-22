@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { HallOfFameResponseDTO } from "@/interfaces/api/hall-of-fame";
-import { HallOfFameFilter } from "@/components/hall-of-fame/general/types";
+import { FilterablePageableContextInterface } from "../filters/types";
 
 export type HallOfFameAction =
   | { type: "ADD_TO_FILTER"; payload: { id: string; value: string } }
@@ -9,17 +9,15 @@ export type HallOfFameAction =
       payload: { id: string; value: string };
     };
 
-export interface HallOfFameContextInterface {
+export interface HallOfFameContextInterface
+  extends FilterablePageableContextInterface {
   data: HallOfFameResponseDTO;
-  page: number;
-  setPage: Dispatch<SetStateAction<number>>;
+  // page: number;
+  // setPage: Dispatch<SetStateAction<number>>;
   search: string;
   setSearch: Dispatch<SetStateAction<string>>;
-  isModalOpen: boolean;
-  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
-  filtersState: HallOfFameFilter[];
-  filtersDispatch: Dispatch<HallOfFameAction>;
+  // isModalOpen: boolean;
+  // setIsModalOpen: Dispatch<SetStateAction<boolean>>;
   isLoading: boolean;
-  appliedFiltersState: HallOfFameFilter[];
-  setAppliedFiltersState: Dispatch<SetStateAction<HallOfFameFilter[]>>;
+  // filters: ReturnType<typeof useFilters>;
 }

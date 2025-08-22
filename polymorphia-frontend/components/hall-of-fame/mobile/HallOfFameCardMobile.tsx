@@ -6,7 +6,6 @@ import "./index.css";
 import { HallOfFameRecordDTO } from "@/interfaces/api/hall-of-fame";
 import { useContext } from "react";
 import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
-import { getAllFilters } from "@/components/providers/hall-of-fame/utils/getAllFilters";
 import { filterXpDetails } from "@/components/providers/hall-of-fame/utils/filterXpDetails";
 
 export default function RankCard({
@@ -20,9 +19,13 @@ export default function RankCard({
   };
   const border =
     borderColors[userDetails.position as 1 | 2 | 3] ?? "border-none";
-  const { appliedFiltersState } = useContext(HallOfFameContext);
-  const { rankingOptionsFilter } = getAllFilters(appliedFiltersState);
-  const filteredXpDetails = filterXpDetails(xpDetails, rankingOptionsFilter);
+  const { filters } = useContext(HallOfFameContext);
+  const filteredXpDetails = filterXpDetails(
+    xpDetails,
+    // TODO: remove null assertion
+    filters.configs.find((config) => config.id === "rankingOptions")!,
+    filters.appliedState["rankingOptions"]
+  );
 
   return (
     <div className={`hall-of-fame-mobile-record-wrapper ${border}`}>
