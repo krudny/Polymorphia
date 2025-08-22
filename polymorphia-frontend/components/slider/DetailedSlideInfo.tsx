@@ -10,9 +10,7 @@ import { ReactNode } from "react";
 
 const SlideDetailsErrorMessage = ({
                                       message,
-                                  }: {
-    message: ReactNode;
-}): ReactNode => (
+                                  }: { message: string; }): ReactNode => (
     <div className="slide-details">
         <div className="slide-details-info">
             <CircleX size={20}/>
@@ -28,7 +26,7 @@ export default function DetailedSlideInfo({
   if (!relatedRewards) {
       return <SlideDetailsErrorMessage
           message={
-              "Błąd ładowania " + (type === KnowledgeBaseTypes.ITEM ? "skrzynek" : "przedmiotów")
+              `Błąd ładowania ${type === KnowledgeBaseTypes.ITEM ? "skrzynek" : "przedmiotów"}`
           }
       />
   }

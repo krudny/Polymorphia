@@ -11,7 +11,7 @@ import { useEffect } from "react";
 export default function Chests() {
   const searchParams = useSearchParams();
   const { setTitle } = useTitle();
-    const COURSE_ID = 1;
+  const COURSE_ID = 1;
 
   useEffect(() => {
     setTitle("Skrzynki");
@@ -23,7 +23,7 @@ export default function Chests() {
     error,
   } = useQuery({
     queryKey: ["chests", 1],
-      queryFn: () => KnowledgeBaseService.getChests(COURSE_ID),
+    queryFn: () => KnowledgeBaseService.getChests(COURSE_ID),
   });
 
   if (isLoading) {
