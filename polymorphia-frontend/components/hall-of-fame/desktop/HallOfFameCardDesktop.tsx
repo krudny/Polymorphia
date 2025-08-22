@@ -15,8 +15,7 @@ export default function HallOfFameCardDesktop({
   const { filters } = useContext(HallOfFameContext);
   const filteredXpDetails = filterXpDetails(
     xpDetails,
-    // TODO: remove null assertion
-    filters.configs.find((config) => config.id === "rankingOptions")!,
+    filters.configs.find((config) => config.id === "rankingOptions"),
     filters.appliedState["rankingOptions"]
   );
 

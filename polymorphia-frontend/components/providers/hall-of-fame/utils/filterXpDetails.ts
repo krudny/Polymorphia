@@ -2,9 +2,13 @@ import { FilterConfig } from "../../filters/types";
 
 export const filterXpDetails = (
   xpDetails: Record<string, string>,
-  rankingOptionsFilterConfig: FilterConfig,
+  rankingOptionsFilterConfig: FilterConfig | undefined,
   rangingOptionsFilterValues: string[]
 ): Record<string, string> => {
+  if (!rankingOptionsFilterConfig) {
+    return {};
+  }
+
   if (rankingOptionsFilterConfig.id !== "rankingOptions") {
     throw new Error(
       `filterXpDetails: Expected filter id 'rankingOptions', got '${rankingOptionsFilterConfig.id}'`
