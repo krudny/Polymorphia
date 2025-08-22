@@ -5,8 +5,8 @@ import { useDebounce } from "use-debounce";
 import { useQuery } from "@tanstack/react-query";
 import HallOfFameService from "@/app/(logged-in)/hall-of-fame/HallOfFameService";
 import { HallOfFameContextInterface } from "@/components/providers/hall-of-fame/types";
-import { useFilters } from "@/components/filters/useFilters";
-import { FilterConfig } from "@/components/filters/types";
+import { FilterConfig } from "../filters/types";
+import { useFilters } from "../filters/useFilters";
 
 const emptyDataObject = {
   content: [],

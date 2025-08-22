@@ -1,7 +1,7 @@
 import { Accordion } from "@/components/accordion/Accordion";
 import AccordionSection from "@/components/accordion/AccordionSection";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import { FilterOption } from "@/components/filters/types";
+import { FilterOption } from "@/components/providers/filters/types";
 import Modal from "@/components/modal/Modal";
 import { AccordionRef } from "@/components/providers/accordion/types";
 import { FilterablePageableContextInterface } from "@/components/providers/filters/types";
@@ -25,6 +25,21 @@ export default function FiltersModal<
       id: filterId,
       value: option.value,
     });
+  };
+
+  const handleConfirm = () => {
+    const result = applyFilters();
+
+    if (result.ok) {
+      onFiltersApplied?.();
+      accordionRef.current?.closeAll();
+      setIsModalOpen(false);
+      setPage(0);
+    } else if (result.errors) {
+      Object.keys(result.errors).forEach((configId) => {
+        toast.error(result.errors[configId]);
+      });
+    }
   };
 
   return (
@@ -72,19 +87,7 @@ export default function FiltersModal<
             text={"Potwierdź zmiany"}
             className="w-full rounded-md"
             size="sm"
-            onClick={() => {
-              const result = applyFilters();
-              if (result.ok) {
-                onFiltersApplied?.();
-                accordionRef.current?.closeAll();
-                setIsModalOpen(false);
-                setPage(0);
-              } else if (result.errors) {
-                Object.keys(result.errors).forEach((configId) => {
-                  toast.error(result.errors[configId]);
-                });
-              }
-            }}
+            onClick={handleConfirm}
           />
         </div>
       </div>

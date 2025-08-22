@@ -1,4 +1,4 @@
-import { FilterConfig } from "@/components/filters/types";
+import { FilterConfig } from "../../filters/types";
 
 export const filterXpDetails = (
   xpDetails: Record<string, string>,
