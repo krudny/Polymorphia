@@ -13,6 +13,11 @@ import java.math.BigDecimal;
 @Immutable
 @Getter
 public class HallOfFame {
+    public static final String FIELD_ANIMAL_NAME = "animalName";
+    public static final String FIELD_STUDENT_NAME = "studentName";
+    public static final String FIELD_TOTAL_XP_SUM = "totalXpSum";
+    public static final String FIELD_TOTAL_BONUS_SUM = "totalBonusSum";
+
     @Id
     private Long animalId;
     private String animalName;

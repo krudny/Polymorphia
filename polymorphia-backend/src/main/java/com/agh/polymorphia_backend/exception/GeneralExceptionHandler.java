@@ -17,10 +17,10 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 @Order(2)
 public class GeneralExceptionHandler {
-    private static final String INVALID_PARAMS = "Invalid request parameter type";
+    private static final String INVALID_PARAMS = "Invalid request parameter";
     private static final String MISSING_PARAMS = "Missing request parameter";
 
-    @ExceptionHandler({MethodArgumentTypeMismatchException.class, ConstraintViolationException.class})
+    @ExceptionHandler({MethodArgumentTypeMismatchException.class, ConstraintViolationException.class, IllegalArgumentException.class})
     public ResponseEntity<CustomExceptionResponse> handleArgumentNotValidException(Exception ex) {
         CustomExceptionResponse response = CustomExceptionResponse.builder()
                 .title(INVALID_PARAMS)

@@ -13,7 +13,7 @@ public enum SortOrder {
 
     @JsonCreator
     public static SortOrder fromString(String value) {
-        if (value == null) return null;
+        if (value == null) throw new IllegalArgumentException("sortOrder cannot be null");
         return SortOrder.valueOf(value.toUpperCase());
     }
 }

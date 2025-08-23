@@ -5,6 +5,7 @@ import com.agh.polymorphia_backend.dto.response.user.StudentDetailsResponseDto;
 import com.agh.polymorphia_backend.dto.response.user.StudentDetailsWithNameResponseDto;
 import com.agh.polymorphia_backend.dto.response.user.StudentDetailsWithoutNameResponseDto;
 import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFame;
+import com.agh.polymorphia_backend.model.hall_of_fame.OverviewField;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.service.AuthService;
 import com.agh.polymorphia_backend.util.NumberFormatter;
@@ -33,12 +34,12 @@ public class HallOfFameMapper {
                 new StudentDetailsWithNameResponseDto(hallOfFame.getStudentName(), studentDetailsWithoutName)
                 : studentDetailsWithoutName;
 
-        if (!xpDetails.containsKey("bonus")){
-            xpDetails.put("bonus", NumberFormatter.format(hallOfFame.getTotalBonusSum()));
+        if (!xpDetails.containsKey(OverviewField.BONUS.name())) {
+            xpDetails.put(OverviewField.BONUS.name(), NumberFormatter.format(hallOfFame.getTotalBonusSum()));
         }
 
-        if (!xpDetails.containsKey("total")) {
-            xpDetails.put("total", NumberFormatter.format(hallOfFame.getTotalXpSum()));
+        if (!xpDetails.containsKey(OverviewField.TOTAL.name())) {
+            xpDetails.put(OverviewField.TOTAL.name(), NumberFormatter.format(hallOfFame.getTotalXpSum()));
         }
 
         return HallOfFameRecordDto.builder()

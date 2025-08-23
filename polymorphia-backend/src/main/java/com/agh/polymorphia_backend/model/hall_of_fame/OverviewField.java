@@ -3,11 +3,13 @@ package com.agh.polymorphia_backend.model.hall_of_fame;
 import java.util.Arrays;
 import java.util.Optional;
 
+import static com.agh.polymorphia_backend.model.hall_of_fame.HallOfFame.*;
+
 public enum OverviewField {
-    STUDENT_NAME("studentName"),
-    ANIMAL_NAME("animalName"),
-    TOTAL("total", "totalXpSum"),
-    BONUS("bonus", "totalBonusSum");
+    STUDENT_NAME(FIELD_STUDENT_NAME),
+    ANIMAL_NAME(FIELD_ANIMAL_NAME),
+    TOTAL("total", FIELD_TOTAL_XP_SUM),
+    BONUS("bonus", FIELD_TOTAL_BONUS_SUM);
 
     private final String key;
     private final String dbField;

@@ -41,6 +41,7 @@ public class HallOfFameService {
         Page<HallOfFame> pageResult = hallOfFameRepository.findHofPage(
                 requestDto.courseId(),
                 requestDto.searchTerm(),
+                requestDto.searchBy(),
                 requestDto.groups().isEmpty() ? null : requestDto.groups(),
                 pageable
         );
