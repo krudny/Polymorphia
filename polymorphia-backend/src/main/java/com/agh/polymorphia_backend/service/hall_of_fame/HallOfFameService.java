@@ -33,15 +33,15 @@ public class HallOfFameService {
 
     public Page<HallOfFameRecordDto> getSortedByOverviewFields(HallOfFameRequestDto requestDto, String sortBy) {
         Pageable pageable = PageRequest.of(
-                requestDto.getPage(),
-                requestDto.getSize(),
-                Sort.by(requestDto.getSortOrder().getDirection(), sortBy)
+                requestDto.page(),
+                requestDto.size(),
+                Sort.by(requestDto.sortOrder().getDirection(), sortBy)
         );
 
         Page<HallOfFame> pageResult = hallOfFameRepository.findHofPage(
-                requestDto.getCourseId(),
-                requestDto.getSearchTerm(),
-                requestDto.getGroups(),
+                requestDto.courseId(),
+                requestDto.searchTerm(),
+                requestDto.groups().isEmpty() ? null : requestDto.groups(),
                 pageable
         );
 
@@ -75,16 +75,16 @@ public class HallOfFameService {
     }
 
     public Page<HallOfFameRecordDto> getSortedByEventSection(HallOfFameRequestDto requestDto) {
-        int page = requestDto.getPage();
-        int size = requestDto.getSize();
+        int page = requestDto.page();
+        int size = requestDto.size();
         int offset = page * size;
 
         List<Long> animalIds = hallOfFameRepository.findAnimalIdsSortedByEventSection(
-                requestDto.getCourseId(),
-                requestDto.getSearchTerm(),
+                requestDto.courseId(),
+                requestDto.searchTerm(),
                 requestDto.getGroupsAsArray(),
-                requestDto.getSortBy(),
-                requestDto.getSortOrder().name(),
+                requestDto.sortBy(),
+                requestDto.sortOrder().name(),
                 size,
                 offset
         );
@@ -98,8 +98,8 @@ public class HallOfFameService {
         List<HallOfFameRecordDto> dtoList = getDtoList(hofViews.stream(), detailsByAnimalId);
 
         long total = hallOfFameRepository.countByCourseIdAndFilters(
-                requestDto.getCourseId(),
-                requestDto.getSearchTerm(),
+                requestDto.courseId(),
+                requestDto.searchTerm(),
                 requestDto.getGroupsAsArray()
         );
 

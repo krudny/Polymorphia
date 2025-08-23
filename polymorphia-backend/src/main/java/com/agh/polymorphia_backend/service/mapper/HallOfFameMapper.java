@@ -20,13 +20,13 @@ public class HallOfFameMapper {
     private final AuthService authService;
 
     public HallOfFameRecordDto hallOfFameToRecordDto(HallOfFame hallOfFame, Map<String, String> xpDetails) {
-        StudentDetailsWithoutNameResponseDto studentDetailsWithoutName = StudentDetailsWithoutNameResponseDto.builder()
-                .animalName(hallOfFame.getAnimalName())
-                .evolutionStage(hallOfFame.getEvolutionStage())
-                .group(hallOfFame.getGroupName())
-                .imageUrl(hallOfFame.getImageUrl())
-                .position(hallOfFame.getPosition())
-                .build();
+        StudentDetailsWithoutNameResponseDto studentDetailsWithoutName = new StudentDetailsWithoutNameResponseDto(
+                hallOfFame.getAnimalName(),
+                hallOfFame.getEvolutionStage(),
+                hallOfFame.getGroupName(),
+                hallOfFame.getImageUrl(),
+                hallOfFame.getPosition()
+        );
 
         boolean includeStudentName = authService.hasAnyRole(List.of(UserType.COORDINATOR, UserType.INSTRUCTOR));
         StudentDetailsResponseDto userDetails = includeStudentName ?

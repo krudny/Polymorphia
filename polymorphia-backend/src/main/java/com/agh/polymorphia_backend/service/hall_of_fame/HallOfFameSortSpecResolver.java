@@ -14,14 +14,14 @@ public class HallOfFameSortSpecResolver {
     private final EventSectionRepository eventSectionRepository;
 
     public HallOfFameSortSpec resolve(HallOfFameRequestDto requestDto) {
-        String sortBy = requestDto.getSortBy();
+        String sortBy = requestDto.sortBy();
 
         Optional<String> overviewDbField = OverviewField.getDbField(sortBy);
         if (overviewDbField.isPresent()){
             return new OverviewFieldSort(overviewDbField.get());
         }
 
-        boolean eventSectionExists = eventSectionRepository.existsByCourseIdAndName(requestDto.getCourseId(), sortBy);
+        boolean eventSectionExists = eventSectionRepository.existsByCourseIdAndName(requestDto.courseId(), sortBy);
         if (eventSectionExists){
             return new EventSectionSort();
         }
