@@ -3,11 +3,12 @@ import { FilterConfig } from "../../filters/types";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { CourseService } from "@/app/(logged-in)/course/CourseService";
 import { EventSectionResponseDTO } from "@/interfaces/api/course";
+import { HallOfFameFilterId } from "../types";
 
 export function useHallOfFameFilterConfigs(courseId: number) {
   return useQuery({
     queryKey: ["hallOfFameFilters", courseId],
-    queryFn: async (): Promise<FilterConfig[]> => {
+    queryFn: async (): Promise<FilterConfig<HallOfFameFilterId>[]> => {
       const [sections, groups] = await Promise.all([
         EventSectionService.getEventSections(courseId),
         CourseService.getCourseGroups(courseId),
@@ -15,7 +16,7 @@ export function useHallOfFameFilterConfigs(courseId: number) {
 
       console.log(groups);
 
-      const configs: FilterConfig[] = [
+      const configs: FilterConfig<HallOfFameFilterId>[] = [
         {
           id: "sortOrder",
           title: "Sortowanie",

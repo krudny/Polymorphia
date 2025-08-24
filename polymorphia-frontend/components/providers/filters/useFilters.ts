@@ -4,19 +4,26 @@ import { filterReducer } from "./utils/filterReducer";
 import { getInitialState } from "./utils/getInitialState";
 import { validateFilters } from "./utils/validateFilters";
 
-export function useFilters(configs: FilterConfig[]) {
+export function useFilters<FilterIdType extends string>(
+  configs: FilterConfig<FilterIdType>[]
+) {
+  const reducer = (
+    state: FilterState<FilterIdType>,
+    action: FilterAction<FilterIdType>
+  ): FilterState<FilterIdType> => filterReducer(state, action, configs);
+
   const [state, dispatch] = useReducer(
-    (s: FilterState, a: FilterAction) => filterReducer(s, a, configs),
-    getInitialState(configs)
+    reducer,
+    getInitialState<FilterIdType>(configs)
   );
 
-  const [appliedState, setAppliedState] = useState<FilterState>(
+  const [appliedState, setAppliedState] = useState<FilterState<FilterIdType>>(
     getInitialState(configs)
   );
 
   useEffect(() => {
     dispatch({ type: "RESET" });
-    setAppliedState(getInitialState(configs));
+    setAppliedState(getInitialState<FilterIdType>(configs));
   }, [configs]);
 
   const applyFilters = () => {
@@ -34,7 +41,15 @@ export function useFilters(configs: FilterConfig[]) {
 
   const resetFiltersToInitial = () => {
     dispatch({ type: "RESET" });
-    setAppliedState(getInitialState(configs));
+    setAppliedState(getInitialState<FilterIdType>(configs));
+  };
+
+  const getFilterValues = (filterId: FilterIdType): string[] => {
+    return state[filterId] || [];
+  };
+
+  const getAppliedFilterValues = (filterId: FilterIdType): string[] => {
+    return appliedState[filterId] || [];
   };
 
   return {
@@ -42,6 +57,8 @@ export function useFilters(configs: FilterConfig[]) {
     state,
     appliedState,
     dispatch,
+    getFilterValues,
+    getAppliedFilterValues,
     applyFilters,
     resetFiltersToInitial,
     resetFiltersToApplied,

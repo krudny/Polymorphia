@@ -16,7 +16,7 @@ export default function HallOfFameCardDesktop({
   const filteredXpDetails = filterXpDetails(
     xpDetails,
     filters.configs.find((config) => config.id === "rankingOptions"),
-    filters.appliedState["rankingOptions"]
+    filters.getAppliedFilterValues
   );
 
   return (

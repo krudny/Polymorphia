@@ -1,10 +1,13 @@
 import { FilterConfig, FilterState } from "../types";
 
-export function validateFilters(
-  state: FilterState,
-  configs: FilterConfig[]
-): { valid: boolean; errors: Record<string, string> } {
-  const errors: Record<string, string> = {};
+export function validateFilters<FilterIdType extends string>(
+  state: FilterState<FilterIdType>,
+  configs: FilterConfig<FilterIdType>[]
+): { valid: boolean; errors: Record<FilterIdType, string> } {
+  const errors: Record<FilterIdType, string> = {} as Record<
+    FilterIdType,
+    string
+  >;
 
   for (const cfg of configs) {
     const selected = state[cfg.id] ?? [];

@@ -2,8 +2,9 @@ import { FilterablePageableContextInterface } from "@/components/providers/filte
 import { Context } from "react";
 
 export interface FiltersModalProps<
-  T extends FilterablePageableContextInterface,
+  FilterIdType extends string,
+  ContextType extends FilterablePageableContextInterface<FilterIdType>,
 > {
-  context: Context<T>;
+  context: Context<ContextType>;
   onFiltersApplied?: () => void;
 }

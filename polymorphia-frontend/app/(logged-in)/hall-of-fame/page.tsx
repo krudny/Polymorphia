@@ -9,6 +9,10 @@ import HallOfFameMobile from "@/components/hall-of-fame/mobile/HallOfFameMobile"
 import FiltersModal from "@/components/hall-of-fame/modals/FiltersModal";
 import HallOfFameDesktop from "@/components/hall-of-fame/desktop/HallOfFameDesktop";
 import { useQueryClient } from "@tanstack/react-query";
+import {
+  HallOfFameContextInterface,
+  HallOfFameFilterId,
+} from "@/components/providers/hall-of-fame/types";
 
 export default function HallOfFame() {
   const queryClient = useQueryClient();
@@ -26,7 +30,7 @@ export default function HallOfFame() {
       <div className="w-full hidden lg:flex flex-col-centered flex-1">
         <HallOfFameDesktop />
       </div>
-      <FiltersModal
+      <FiltersModal<HallOfFameFilterId, HallOfFameContextInterface>
         context={HallOfFameContext}
         onFiltersApplied={() => {
           queryClient.invalidateQueries({

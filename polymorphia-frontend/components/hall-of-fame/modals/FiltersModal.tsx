@@ -11,15 +11,16 @@ import "./index.css";
 import { FiltersModalProps } from "./types";
 
 export default function FiltersModal<
-  T extends FilterablePageableContextInterface,
->({ context, onFiltersApplied }: FiltersModalProps<T>) {
+  FilterIdType extends string,
+  ContextType extends FilterablePageableContextInterface<FilterIdType>,
+>({ context, onFiltersApplied }: FiltersModalProps<FilterIdType, ContextType>) {
   const { filters, isModalOpen, setIsModalOpen, setPage } = useContext(context);
   const { dispatch, configs, state, applyFilters, resetFiltersToApplied } =
     filters;
 
   const accordionRef = useRef<AccordionRef>(null);
 
-  const handleSelect = (filterId: string, option: FilterOption) => {
+  const handleSelect = (filterId: FilterIdType, option: FilterOption) => {
     dispatch({
       type: "TOGGLE",
       id: filterId,
@@ -35,10 +36,12 @@ export default function FiltersModal<
       accordionRef.current?.closeAll();
       setIsModalOpen(false);
       setPage(0);
-    } else if (result.errors) {
-      Object.keys(result.errors).forEach((configId) => {
-        toast.error(result.errors[configId]);
-      });
+    } else if (result.errors !== undefined) {
+      (Object.keys(result.errors) as FilterIdType[]).forEach(
+        (configId: FilterIdType) => {
+          toast.error(result.errors![configId]);
+        }
+      );
     }
   };
 

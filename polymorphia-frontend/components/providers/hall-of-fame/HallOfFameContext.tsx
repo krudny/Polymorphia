@@ -4,9 +4,13 @@ import { createContext, ReactNode, useState } from "react";
 import { useDebounce } from "use-debounce";
 import { useQuery } from "@tanstack/react-query";
 import HallOfFameService from "@/app/(logged-in)/hall-of-fame/HallOfFameService";
-import { HallOfFameContextInterface } from "@/components/providers/hall-of-fame/types";
+import {
+  HallOfFameContextInterface,
+  HallOfFameFilterId,
+} from "@/components/providers/hall-of-fame/types";
 import { useFilters } from "../filters/useFilters";
 import { useHallOfFameFilterConfigs } from "./utils/useHallOfFameFilterConfigs";
+import { FilterState } from "../filters/types";
 
 const emptyDataObject = {
   content: [],
@@ -27,12 +31,14 @@ export const HallOfFameContext = createContext<HallOfFameContextInterface>({
   isLoading: true,
   filters: {
     configs: [],
-    state: {},
-    appliedState: {},
+    state: {} as FilterState<HallOfFameFilterId>,
+    appliedState: {} as FilterState<HallOfFameFilterId>,
     dispatch: () => {},
     applyFilters: () => {
       return { ok: false };
     },
+    getFilterValues: () => [],
+    getAppliedFilterValues: () => [],
     resetFiltersToApplied: () => {},
     resetFiltersToInitial: () => {},
   },
@@ -47,11 +53,11 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
 
   const COURSE_ID = 1;
   const filterConfigs = useHallOfFameFilterConfigs(COURSE_ID);
-  const filters = useFilters(filterConfigs ?? []);
+  const filters = useFilters<HallOfFameFilterId>(filterConfigs ?? []);
 
-  const sortBy = filters.appliedState.sortBy ?? ["total"];
-  const sortOrder = filters.appliedState.sortOrder ?? ["desc"];
-  const groups = filters.appliedState.groups ?? ["all"];
+  const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["total"];
+  const sortOrder = filters.getAppliedFilterValues("sortOrder") ?? ["desc"];
+  const groups = filters.getAppliedFilterValues("groups") ?? ["all"];
 
   const { data = emptyDataObject, isLoading } = useQuery({
     queryKey: [
