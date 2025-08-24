@@ -8,6 +8,7 @@ import { useEffect } from "react";
 
 export default function EvolutionStages() {
   const { setTitle } = useTitle();
+  const COURSE_ID = 1;
 
   useEffect(() => {
     setTitle("Postacie");
@@ -19,7 +20,7 @@ export default function EvolutionStages() {
     error,
   } = useQuery({
     queryKey: ["evolution_stages", 1],
-    queryFn: () => KnowledgeBaseService.getEvolutionStages(1),
+    queryFn: () => KnowledgeBaseService.getEvolutionStages(COURSE_ID),
   });
 
   if (isLoading) {

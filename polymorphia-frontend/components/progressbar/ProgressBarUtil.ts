@@ -19,9 +19,13 @@ export function FillsCalc(
     const start = accStart;
     const end = start + size;
     let fill;
-    if (percentage >= end) fill = 100;
-    else if (percentage <= start) fill = 0;
-    else fill = ((percentage - start) / size) * 100;
+    if (percentage >= end) {
+      fill = 100;
+    } else if (percentage <= start) {
+      fill = 0;
+    } else {
+      fill = ((percentage - start) / size) * 100;
+    }
 
     fills.push(Math.min(Math.max(0, fill), 100));
     accStart = end;

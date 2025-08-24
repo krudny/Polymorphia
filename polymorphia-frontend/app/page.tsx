@@ -42,8 +42,9 @@ export default function Home() {
       !hasMountedRef.current ||
       !loginFormRef.current ||
       !titleSectionRef.current
-    )
+    ) {
       return;
+    }
     animateLoginFormVisibility(
       loginFormRef.current,
       titleSectionRef.current,

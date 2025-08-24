@@ -1,15 +1,18 @@
 package com.agh.polymorphia_backend.model.course.reward.item;
 
 
-import com.agh.polymorphia_backend.model.course.reward.Chest;
-import com.agh.polymorphia_backend.model.event.section.EventSection;
+import com.agh.polymorphia_backend.model.course.reward.Reward;
+import com.agh.polymorphia_backend.model.course.reward.chest.Chest;
+import com.agh.polymorphia_backend.model.event_section.EventSection;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Data
@@ -18,24 +21,9 @@ import java.util.Set;
 @Table(name = "items")
 @ToString(exclude = {"chests"})
 @Inheritance(strategy = InheritanceType.JOINED)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Item {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
-    @EqualsAndHashCode.Include
-    private Long id;
-
-    @NotEmpty
-    private String name;
-
-    @NotEmpty
-    @Column(length = 1000)
-    private String description;
-
-    @NotEmpty
-    private String imageUrl;
-
+@PrimaryKeyJoinColumn(name = "reward_id")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+public abstract class Item extends Reward {
     @NotNull
     @Column(name = "\"limit\"")
     private Integer limit;
@@ -50,6 +38,8 @@ public class Item {
             joinColumns = @JoinColumn(name = "item_id"),
             inverseJoinColumns = @JoinColumn(name = "chest_id")
     )
-    private Set<Chest> chests;
+    private List<Chest> chests;
+
+    public abstract ItemType getItemType();
 
 }
