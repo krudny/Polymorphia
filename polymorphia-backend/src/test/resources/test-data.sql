@@ -59,15 +59,15 @@ INSERT INTO public.test_sections (id)
 VALUES (2);
 
 -- Rewards
-INSERT INTO public.reward (id, description, image_url, name, order_index, course_id)
+INSERT INTO public.rewards (id, description, image_url, name, order_index, course_id)
 VALUES (4, 'desc', 'url', 'Srebrna', 0, 1);
-INSERT INTO public.reward (id, description, image_url, name, order_index, course_id)
+INSERT INTO public.rewards (id, description, image_url, name, order_index, course_id)
 VALUES (5, 'desc', 'url', 'Złota', 1, 1);
-INSERT INTO public.reward (id, description, image_url, name, order_index, course_id)
+INSERT INTO public.rewards (id, description, image_url, name, order_index, course_id)
 VALUES (3, 'desc', 'url', 'Marchewka', 0, 1);
-INSERT INTO public.reward (id, description, image_url, name, order_index, course_id)
+INSERT INTO public.rewards (id, description, image_url, name, order_index, course_id)
 VALUES (2, 'desc', 'url', 'Apteczka2', 2, 1);
-INSERT INTO public.reward (id, description, image_url, name, order_index, course_id)
+INSERT INTO public.rewards (id, description, image_url, name, order_index, course_id)
 VALUES (1, 'desc', 'url', 'Apteczka', 1, 1);
 
 -- Items
