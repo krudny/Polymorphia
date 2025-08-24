@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.exception;
+package com.agh.polymorphia_backend.exception.validation;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;

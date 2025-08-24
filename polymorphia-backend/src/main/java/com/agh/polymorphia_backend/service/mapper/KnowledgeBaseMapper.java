@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.service.mapper;
 
-import com.agh.polymorphia_backend.dto.response.knowledge.base.KnowledgeBaseResponseDto;
-import com.agh.polymorphia_backend.dto.response.knowledge.base.KnowledgeBaseType;
+import com.agh.polymorphia_backend.dto.response.knowledge_base.KnowledgeBaseResponseDto;
+import com.agh.polymorphia_backend.dto.response.knowledge_base.KnowledgeBaseType;
 import com.agh.polymorphia_backend.dto.response.reward.BaseRewardResponseDto;
 import com.agh.polymorphia_backend.model.course.EvolutionStage;
 import com.agh.polymorphia_backend.model.course.reward.Reward;

@@ -23,6 +23,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import static com.agh.polymorphia_backend.service.course.CourseService.COURSE_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -88,7 +89,7 @@ class AccessAuthorizerTest {
                 accessAuthorizer.authorizeCourseAccess(course));
 
         assertEquals(404, ex.getStatusCode().value());
-        assertEquals(AccessAuthorizer.COURSE_NOT_FOUND, ex.getReason());
+        assertEquals(COURSE_NOT_FOUND, ex.getReason());
     }
 
     @ParameterizedTest

@@ -137,13 +137,13 @@ export const animateSubMenuSection = (
 ): void => {
   options.forEach((opt, idx) => {
     const container = containers[idx];
-      if (!container) {
-          return;
-      }
+    if (!container) {
+      return;
+    }
 
-      if (container.dataset.animating) {
-          return;
-      }
+    if (container.dataset.animating) {
+      return;
+    }
     container.dataset.animating = "true";
 
     gsap.killTweensOf(container);

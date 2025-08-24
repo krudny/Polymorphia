@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.model.event.section;
+package com.agh.polymorphia_backend.model.event_section;
 
 import com.agh.polymorphia_backend.model.course.Course;
 import jakarta.persistence.*;

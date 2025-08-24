@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.dto.response.knowledge.base;
+package com.agh.polymorphia_backend.dto.response.knowledge_base;
 
 import com.agh.polymorphia_backend.dto.response.reward.BaseRewardResponseDto;
 import com.fasterxml.jackson.annotation.JsonInclude;

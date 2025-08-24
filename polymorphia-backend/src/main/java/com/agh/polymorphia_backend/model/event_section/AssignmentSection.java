@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.model.event.section;
+package com.agh.polymorphia_backend.model.event_section;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
@@ -10,17 +10,16 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@Table(name = "project_sections")
+@Table(name = "assignment_sections")
 @Inheritance(strategy = InheritanceType.JOINED)
 
 @Data
-@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-@SuperBuilder
 @NoArgsConstructor
-public class ProjectSection extends EventSection {
-
+@SuperBuilder
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
+public class AssignmentSection extends EventSection {
     @Override
     public EventSectionType getEventSectionType() {
-        return EventSectionType.PROJECT;
+        return EventSectionType.ASSIGNMENT;
     }
 }

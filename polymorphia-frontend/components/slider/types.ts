@@ -6,7 +6,8 @@ export const KnowledgeBaseTypes = {
   EVOLUTION_STAGE: "EVOLUTION_STAGE",
 } as const;
 
-export type KnowledgeBaseType = (typeof KnowledgeBaseTypes)[keyof typeof KnowledgeBaseTypes];
+export type KnowledgeBaseType =
+  (typeof KnowledgeBaseTypes)[keyof typeof KnowledgeBaseTypes];
 
 export interface SingleSlideProps {
   slide: KnowledgeBaseResponseDTO;

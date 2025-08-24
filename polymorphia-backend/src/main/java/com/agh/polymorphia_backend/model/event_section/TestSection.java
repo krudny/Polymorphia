@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.model.event.section;
+package com.agh.polymorphia_backend.model.event_section;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;

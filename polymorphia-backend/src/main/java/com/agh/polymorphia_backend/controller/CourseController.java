@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.controller;
 
-import com.agh.polymorphia_backend.dto.response.knowledge.base.KnowledgeBaseResponseDto;
+import com.agh.polymorphia_backend.dto.response.knowledge_base.KnowledgeBaseResponseDto;
 import com.agh.polymorphia_backend.service.course.KnowledgeBaseService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

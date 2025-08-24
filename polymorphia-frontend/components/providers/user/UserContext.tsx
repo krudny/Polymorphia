@@ -19,9 +19,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     queryFn: () => UserService.getCurrentUser(),
   });
 
-    if (isLoading) {
-        return <Loading/>;
-    }
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <UserContext.Provider

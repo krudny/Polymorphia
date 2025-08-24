@@ -16,10 +16,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.agh.polymorphia_backend.service.course.CourseService.COURSE_NOT_FOUND;
+
 @Service
 @AllArgsConstructor
 public class AccessAuthorizer {
-    public static final String COURSE_NOT_FOUND = "Course does not exist or you're not authorized to access it";
     public static final String USER_HAS_NO_VALID_ROLES = "User has no valid roles";
     private final CourseGroupRepository courseGroupRepository;
     private final AnimalRepository animalRepository;
@@ -28,7 +29,7 @@ public class AccessAuthorizer {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
 
-        if (isCourseAccessNotAuthorized(user, course)) {
+        if (!isCourseAccessAuthorized(user, course)) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,
                     COURSE_NOT_FOUND
@@ -54,34 +55,34 @@ public class AccessAuthorizer {
         return roles;
     }
 
-    private boolean isCourseAccessNotAuthorized(User user, Course course) {
+    private boolean isCourseAccessAuthorized(User user, Course course) {
         Set<UserType> roles = getUserRoles(user);
-        boolean notAuthorized = false;
+        boolean authorized = false;
 
         for (UserType role : roles) {
             switch (role) {
-                case STUDENT -> notAuthorized = isCourseAccessNotAuthorizedStudent(user, course);
-                case INSTRUCTOR -> notAuthorized = isCourseAccessNotAuthorizedInstructor(user, course);
-                case COORDINATOR -> notAuthorized = isCourseAccessNotAuthorizedCoordinator(user, course);
+                case STUDENT -> authorized = isCourseAccessAuthorizedStudent(user, course);
+                case INSTRUCTOR -> authorized = isCourseAccessAuthorizedInstructor(user, course);
+                case COORDINATOR -> authorized = isCourseAccessAuthorizedCoordinator(user, course);
             }
 
-            if (notAuthorized) {
+            if (authorized) {
                 break;
             }
         }
 
-        return notAuthorized;
+        return authorized;
     }
 
-    private boolean isCourseAccessNotAuthorizedCoordinator(User user, Course course) {
-        return !course.getCoordinator().equals(user);
+    private boolean isCourseAccessAuthorizedCoordinator(User user, Course course) {
+        return course.getCoordinator().equals(user);
     }
 
-    private boolean isCourseAccessNotAuthorizedInstructor(User user, Course course) {
-        return courseGroupRepository.findByCourseIdAndInstructorId(course.getId(), user.getId()).isEmpty();
+    private boolean isCourseAccessAuthorizedInstructor(User user, Course course) {
+        return courseGroupRepository.findByCourseIdAndInstructorId(course.getId(), user.getId()).isPresent();
     }
 
-    private boolean isCourseAccessNotAuthorizedStudent(User user, Course course) {
-        return animalRepository.findByCourseIdAndStudentId(course.getId(), user.getId()).isEmpty();
+    private boolean isCourseAccessAuthorizedStudent(User user, Course course) {
+        return animalRepository.findByCourseIdAndStudentId(course.getId(), user.getId()).isPresent();
     }
 }
