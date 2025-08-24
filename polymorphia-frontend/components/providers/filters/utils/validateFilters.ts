@@ -9,24 +9,31 @@ export function validateFilters<FilterIdType extends string>(
     string
   >;
 
-  for (const cfg of configs) {
-    const selected = state[cfg.id] ?? [];
+  for (const config of configs) {
+    const selected = state[config.id] ?? [];
 
-    const selectedOptions = cfg.options.filter((o) =>
-      selected.includes(o.value)
+    const selectedOptions = config.options.filter((option) =>
+      selected.includes(option.value)
     );
-    const hasExclusive = selectedOptions.some(
-      (o) => o.specialBehavior === "EXCLUSIVE"
+    const exclusiveOption = selectedOptions.find(
+      (option) => option.specialBehavior === "EXCLUSIVE"
     );
-    if (hasExclusive) continue;
+    if (exclusiveOption) {
+      // This will never happen in normal scenario but we should validate all conditions
+      if (selectedOptions.length !== 1) {
+        errors[config.id] =
+          `Opcja ${exclusiveOption.label ?? exclusiveOption.value} musi być jedyną wybraną opcją dla kategorii ${config.title.toLowerCase()}.`;
+      }
+      continue;
+    }
 
-    const min = cfg.min ?? 1;
-    const max = cfg.max ?? 1;
+    const min = config.min ?? 1;
+    const max = config.max ?? 1;
 
     if (selected.length < min || selected.length > max) {
       const rangeText = min === max ? min : `od ${min} do ${max}`;
-      errors[cfg.id] =
-        `Dla kategorii ${cfg.title.toLowerCase()} wymagana liczba zaznaczonych opcji wynosi ${rangeText}.`;
+      errors[config.id] =
+        `Dla kategorii ${config.title.toLowerCase()} wymagana liczba zaznaczonych opcji wynosi ${rangeText}.`;
     }
   }
 

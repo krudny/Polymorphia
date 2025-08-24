@@ -9,12 +9,10 @@ export function useHallOfFameFilterConfigs(courseId: number) {
   return useQuery({
     queryKey: ["hallOfFameFilters", courseId],
     queryFn: async (): Promise<FilterConfig<HallOfFameFilterId>[]> => {
-      const [sections, groups] = await Promise.all([
+      const [eventSections, courseGroups] = await Promise.all([
         EventSectionService.getEventSections(courseId),
         CourseService.getCourseGroups(courseId),
       ]);
-
-      console.log(groups);
 
       const configs: FilterConfig<HallOfFameFilterId>[] = [
         {
@@ -31,8 +29,8 @@ export function useHallOfFameFilterConfigs(courseId: number) {
           title: "Sortowanie po kategorii",
           options: [
             { value: "name", label: "Nazwa" },
-            ...sections.map((s: EventSectionResponseDTO) => ({
-              value: s.name,
+            ...eventSections.map((eventSection: EventSectionResponseDTO) => ({
+              value: eventSection.name,
             })),
             { value: "Bonusy" },
             { value: "total", label: "Suma" },
@@ -44,7 +42,7 @@ export function useHallOfFameFilterConfigs(courseId: number) {
           title: "Grupy",
           options: [
             { value: "all", label: "Wszystkie", specialBehavior: "EXCLUSIVE" },
-            ...groups.map((g) => ({ value: g })),
+            ...courseGroups.map((courseGroup) => ({ value: courseGroup })),
           ],
           defaultValues: ["all"],
           max: 12,
@@ -53,17 +51,17 @@ export function useHallOfFameFilterConfigs(courseId: number) {
           id: "rankingOptions",
           title: "Wyświetlanie",
           options: [
-            ...sections.map((s) => ({
-              value: s.name,
+            ...eventSections.map((eventSection) => ({
+              value: eventSection.name,
             })),
             { value: "Bonusy" },
           ],
-          min: Math.min(4, sections.length),
-          max: Math.min(4, sections.length),
+          min: Math.min(4, eventSections.length),
+          max: Math.min(4, eventSections.length),
           defaultValues: [
-            ...sections
-              .slice(0, Math.min(3, Math.max(0, sections.length - 1)))
-              .map((s) => s.name),
+            ...eventSections
+              .slice(0, Math.min(3, Math.max(0, eventSections.length - 1)))
+              .map((eventSection) => eventSection.name),
             "Bonusy",
           ],
         },

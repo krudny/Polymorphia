@@ -9,32 +9,44 @@ export function filterReducer<FilterIdType extends string>(
   switch (action.type) {
     case "TOGGLE": {
       const current = state[action.id] ?? [];
-      const config = configs.find((c) => c.id === action.id);
+      const config = configs.find((config) => config.id === action.id);
       if (!config) return state;
 
-      const option = config.options.find((o) => o.value === action.value);
+      const option = config.options.find(
+        (option) => option.value === action.value
+      );
       if (!option) return state;
 
-      const alreadySelected = current.includes(action.value);
+      const min = config.min ?? 1;
+      const max = config.max ?? 1;
 
+      // Handle deselect
+      const alreadySelected = current.includes(action.value);
       if (alreadySelected) {
+        // Prevent deselecting all items if min === max === 1
+        if (min === 1 && max === 1 && current.length <= 1) {
+          return state;
+        }
+
         return {
           ...state,
           [action.id]: current.filter((value) => value !== action.value),
         };
       }
 
-      const min = config.min ?? 1;
-      const max = config.max ?? 1;
-
-      if (option.specialBehavior === "EXCLUSIVE" || (min === 1 && max === 1)) {
+      // Handle selection of special "EXCLUSIVE" option or when maximum one option is allowed
+      if (option.specialBehavior === "EXCLUSIVE" || max === 1) {
         return { ...state, [action.id]: [option.value] };
       }
 
+      // Handle selection of regular option
       const newValues = [
+        // Deselct all "EXCLUSIVE" options
         ...current.filter((value) => {
-          const opt = config.options.find((o) => o.value === value);
-          return opt?.specialBehavior !== "EXCLUSIVE";
+          const optionDetails = config.options.find(
+            (optionDetails) => optionDetails.value === value
+          );
+          return optionDetails?.specialBehavior !== "EXCLUSIVE";
         }),
         option.value,
       ];

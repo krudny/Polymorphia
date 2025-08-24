@@ -10,7 +10,7 @@ import {
 } from "@/components/providers/hall-of-fame/types";
 import { useFilters } from "../filters/useFilters";
 import { useHallOfFameFilterConfigs } from "./utils/useHallOfFameFilterConfigs";
-import { FilterState } from "../filters/types";
+import { getEmptyFiltersObject } from "../filters/utils/getEmptyFiltersObject";
 
 const emptyDataObject = {
   content: [],
@@ -29,19 +29,7 @@ export const HallOfFameContext = createContext<HallOfFameContextInterface>({
   isModalOpen: false,
   setIsModalOpen: () => {},
   isLoading: true,
-  filters: {
-    configs: [],
-    state: {} as FilterState<HallOfFameFilterId>,
-    appliedState: {} as FilterState<HallOfFameFilterId>,
-    dispatch: () => {},
-    applyFilters: () => {
-      return { ok: false };
-    },
-    getFilterValues: () => [],
-    getAppliedFilterValues: () => [],
-    resetFiltersToApplied: () => {},
-    resetFiltersToInitial: () => {},
-  },
+  filters: getEmptyFiltersObject(),
 });
 
 export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {

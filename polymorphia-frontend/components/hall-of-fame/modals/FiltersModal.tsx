@@ -15,8 +15,13 @@ export default function FiltersModal<
   ContextType extends FilterablePageableContextInterface<FilterIdType>,
 >({ context, onFiltersApplied }: FiltersModalProps<FilterIdType, ContextType>) {
   const { filters, isModalOpen, setIsModalOpen, setPage } = useContext(context);
-  const { dispatch, configs, state, applyFilters, resetFiltersToApplied } =
-    filters;
+  const {
+    dispatch,
+    configs,
+    applyFilters,
+    getFilterValues,
+    resetFiltersToApplied,
+  } = filters;
 
   const accordionRef = useRef<AccordionRef>(null);
 
@@ -73,7 +78,9 @@ export default function FiltersModal<
                     key={option.value}
                     onClick={() => handleSelect(filterConfig.id, option)}
                     className={`filters-modal-filter-option ${
-                      (state[filterConfig.id] ?? []).includes(option.value)
+                      (getFilterValues(filterConfig.id) ?? []).includes(
+                        option.value
+                      )
                         ? "filters-modal-filter-option-selected "
                         : "filters-modal-filter-option-unselected"
                     }`}
