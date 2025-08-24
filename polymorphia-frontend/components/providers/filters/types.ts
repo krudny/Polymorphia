@@ -1,0 +1,42 @@
+import { useFilters } from "@/components/providers/filters/useFilters";
+import { Dispatch, SetStateAction } from "react";
+
+export interface FilterablePageableContextInterface<
+  FilterIdType extends string,
+> {
+  filters: ReturnType<typeof useFilters<FilterIdType>>;
+  isFiltersLoading: boolean;
+  isFiltersError: boolean;
+  isModalOpen: boolean;
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+  page: number;
+  setPage: Dispatch<SetStateAction<number>>;
+}
+
+// can be extended in the future with different options
+export type SpecialBehavior = "EXCLUSIVE";
+
+export interface FilterOption {
+  value: string;
+  label?: string;
+  specialBehavior?: SpecialBehavior;
+}
+
+export interface FilterConfig<FilterIdType extends string> {
+  id: FilterIdType;
+  title: string;
+  options: FilterOption[];
+  min?: number; // defaults to 1
+  max?: number; // defaults to 1
+  defaultValues?: string[];
+}
+
+export type FilterState<FilterIdType extends string> = Record<
+  FilterIdType,
+  string[]
+>;
+
+export type FilterAction<FilterIdType extends string> =
+  | { type: "TOGGLE"; id: FilterIdType; value: string }
+  | { type: "SET"; state: FilterState<FilterIdType> }
+  | { type: "RESET" };
