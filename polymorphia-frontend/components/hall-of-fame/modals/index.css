@@ -2,11 +2,14 @@
 @import "../../../styles/globals.css";
 
 .filters-modal {
-    @apply overflow-visible;
+    @apply md:w-[28rem] min-h-30 overflow-visible;
+    h1 {
+        @apply text-2xl;
+    }
 }
 
 .filters-modal-wrapper {
-    @apply w-full md:w-[28rem];
+    @apply w-full;
 }
 
 .filters-modal-filter-grid {

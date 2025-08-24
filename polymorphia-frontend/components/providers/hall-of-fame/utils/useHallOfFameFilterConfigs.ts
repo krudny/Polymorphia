@@ -69,5 +69,5 @@ export function useHallOfFameFilterConfigs(courseId: number) {
 
       return configs;
     },
-  }).data;
+  });
 }

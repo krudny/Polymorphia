@@ -5,6 +5,8 @@ export interface FilterablePageableContextInterface<
   FilterIdType extends string,
 > {
   filters: ReturnType<typeof useFilters<FilterIdType>>;
+  isFiltersLoading: boolean;
+  isFiltersError: boolean;
   isModalOpen: boolean;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
   page: number;

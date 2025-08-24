@@ -22,8 +22,10 @@ export function useFilters<FilterIdType extends string>(
   );
 
   useEffect(() => {
-    dispatch({ type: "RESET" });
-    setAppliedState(getInitialState<FilterIdType>(configs));
+    if (configs.length > 0) {
+      dispatch({ type: "RESET" });
+      setAppliedState(getInitialState<FilterIdType>(configs));
+    }
   }, [configs]);
 
   const applyFilters = () => {

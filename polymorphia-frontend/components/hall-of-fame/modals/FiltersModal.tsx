@@ -9,12 +9,20 @@ import { useContext, useRef } from "react";
 import toast from "react-hot-toast";
 import "./index.css";
 import { FiltersModalProps } from "./types";
+import Loading from "@/components/loading/Loading";
 
 export default function FiltersModal<
   FilterIdType extends string,
   ContextType extends FilterablePageableContextInterface<FilterIdType>,
 >({ context, onFiltersApplied }: FiltersModalProps<FilterIdType, ContextType>) {
-  const { filters, isModalOpen, setIsModalOpen, setPage } = useContext(context);
+  const {
+    filters,
+    isModalOpen,
+    setIsModalOpen,
+    setPage,
+    isFiltersLoading,
+    isFiltersError,
+  } = useContext(context);
   const {
     dispatch,
     configs,
@@ -50,17 +58,14 @@ export default function FiltersModal<
     }
   };
 
-  return (
-    <Modal
-      isDataPresented={isModalOpen}
-      title="Filtry"
-      onClosed={() => {
-        accordionRef.current?.closeAll();
-        resetFiltersToApplied();
-        setIsModalOpen(false);
-      }}
-    >
-      <div className="filters-modal">
+  let modalContent;
+  if (isFiltersLoading) {
+    modalContent = <Loading />;
+  } else if (isFiltersError) {
+    modalContent = <h1>Nie udało się załadować filtrów.</h1>;
+  } else {
+    modalContent = (
+      <>
         <Accordion
           ref={accordionRef}
           maxOpen={1}
@@ -100,7 +105,21 @@ export default function FiltersModal<
             onClick={handleConfirm}
           />
         </div>
-      </div>
+      </>
+    );
+  }
+
+  return (
+    <Modal
+      isDataPresented={isModalOpen}
+      title="Filtry"
+      onClosed={() => {
+        accordionRef.current?.closeAll();
+        resetFiltersToApplied();
+        setIsModalOpen(false);
+      }}
+    >
+      <div className="filters-modal">{modalContent}</div>
     </Modal>
   );
 }

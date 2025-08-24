@@ -30,6 +30,8 @@ export const HallOfFameContext = createContext<HallOfFameContextInterface>({
   setIsModalOpen: () => {},
   isLoading: true,
   filters: getEmptyFiltersObject(),
+  isFiltersLoading: true,
+  isFiltersError: false,
 });
 
 export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
@@ -40,7 +42,11 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const COURSE_ID = 1;
-  const filterConfigs = useHallOfFameFilterConfigs(COURSE_ID);
+  const {
+    data: filterConfigs,
+    isLoading: isFiltersLoading,
+    isError: isFiltersError,
+  } = useHallOfFameFilterConfigs(COURSE_ID);
   const filters = useFilters<HallOfFameFilterId>(filterConfigs ?? []);
 
   const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["total"];
@@ -82,6 +88,8 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
         setIsModalOpen,
         isLoading,
         filters,
+        isFiltersLoading,
+        isFiltersError,
       }}
     >
       {children}
