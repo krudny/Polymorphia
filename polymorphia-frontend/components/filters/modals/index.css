@@ -3,7 +3,7 @@
 
 .filters-modal {
     @apply md:w-[28rem] min-h-30 overflow-visible;
-    h1 {
+    > h1 {
         @apply text-2xl;
     }
 }

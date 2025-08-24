@@ -6,7 +6,7 @@ import {
   HallOfFameProvider,
 } from "@/components/providers/hall-of-fame/HallOfFameContext";
 import HallOfFameMobile from "@/components/hall-of-fame/mobile/HallOfFameMobile";
-import FiltersModal from "@/components/hall-of-fame/modals/FiltersModal";
+import FiltersModal from "@/components/filters/modals/FiltersModal";
 import HallOfFameDesktop from "@/components/hall-of-fame/desktop/HallOfFameDesktop";
 import { useQueryClient } from "@tanstack/react-query";
 import {
