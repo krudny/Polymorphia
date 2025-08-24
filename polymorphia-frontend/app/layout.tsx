@@ -43,7 +43,7 @@ export default function RootLayout({
       <link rel="icon" type="image/x-icon" href="/favicon.png" />
     </head>
     <body
-      className={`${leagueGothic.className} ${leagueGothic.variable} ${materialSymbols.variable} text-primary-dark dark:text-secondary-light`}
+      className={`${leagueGothic.className} ${leagueGothic.variable} ${materialSymbols.variable} text-primary-dark dark:text-secondary-gray`}
     >
     <ThemeProviderMui theme={themeConfig}>
       <ThemeProvider
