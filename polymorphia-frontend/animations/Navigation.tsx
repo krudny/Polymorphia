@@ -135,7 +135,7 @@ export const animateSubMenuSection = (
   isExpanded: boolean,
   options: { text: string }[]
 ): void => {
-  options.forEach((opt, idx) => {
+  options.forEach((options, idx) => {
     const container = containers[idx];
     if (!container) {
       return;
@@ -148,7 +148,7 @@ export const animateSubMenuSection = (
 
     gsap.killTweensOf(container);
 
-    const isOpen = openSubMenu.includes(opt.text);
+    const isOpen = openSubMenu.includes(options.text);
 
     const onComplete = () => {
       delete container.dataset.animating;
