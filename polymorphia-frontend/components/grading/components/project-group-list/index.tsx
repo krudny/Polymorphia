@@ -6,10 +6,7 @@ import Search from "@/components/search";
 import { useContext } from "react";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import Loading from "@/components/loading/Loading";
-import {
-  GradingContext,
-  GradingReducerActions,
-} from "@/components/providers/grading/GradingContext";
+import { GradingContext, GradingReducerActions } from "@/components/providers/grading/GradingContext";
 import GradingComponentWrapper from "@/components/grading/components/grading-wrapper";
 
 export default function ProjectGroupList() {
@@ -31,11 +28,11 @@ export default function ProjectGroupList() {
       <Search
         search={search}
         setSearch={setSearch}
-        placeholder="Szukaj grupy..."
+        placeholder="Szukaj studenta..."
       />
       <ButtonWithBorder
         text="Filtry"
-        className="!mx-0 !py-0 !border-0 !border-b-2 !align-self-start"
+        className="!mx-0 !py-0 !rounded-none !border-0 !border-b-2 !align-self-start !h-[42px]"
       />
     </>
   );
@@ -56,7 +53,7 @@ export default function ProjectGroupList() {
           {group.members.map(
             (
               student: UserDetailsDTO & { gainedXp?: string },
-              index: number
+              index: number,
             ) => {
               const color = state.selectedTarget?.includes(student)
                 ? "sky"
@@ -87,7 +84,7 @@ export default function ProjectGroupList() {
                   }
                 />
               );
-            }
+            },
           )}
           <div className="w-full border-2 border-secondary-dark"></div>
         </div>

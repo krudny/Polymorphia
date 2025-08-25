@@ -9,12 +9,12 @@ export default function PullRequest({ pullRequests }: PullRequestProps) {
   const mainComponent = (
     <>
       {pullRequests.map((pullRequest, index) => (
-        <div key={index} className="flex flex-col">
+        <div key={index} className="flex flex-col mb-8">
           <h2 className="text-4xl">{pullRequest.name}</h2>
           <h3 className="text-3xl text-primary-gray dark:text-primary-dark my-3 hover:cursor-pointer">
             {pullRequest.url}
           </h3>
-          <div className="flex gap-x-2 h-fit mt-4">
+          <div className="flex gap-x-2 h-fit">
             <ButtonWithBorder
               text="Zobacz"
               className="w-full !border-3 !rounded-lg !py-1"
