@@ -26,6 +26,11 @@ export abstract class BaseGradingStrategy {
             name: "Laboratorium",
             url: "https://github.com/krudny/Polymorphia/pull/32",
           },
+          {
+            id: 2,
+            name: "Zadanie dodatkowe",
+            url: "https://github.com/krudny/Polymorphia/pull/32",
+          },
         ]}
       />
     );
