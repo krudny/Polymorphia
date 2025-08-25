@@ -28,7 +28,7 @@ export default function Grade() {
 
   const mainComponent = (
     <>
-      <Accordion ref={accordionRef} className="gap-y-5" maxOpen={1}>
+      <Accordion ref={accordionRef} className="gap-y-5" maxOpen={2}>
         {Object.entries(state.criteria).map(
           ([criterionId, criterionGrade], index) => {
             const criterion = criteria?.find(

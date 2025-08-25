@@ -38,7 +38,7 @@ export default function ChestModal() {
                 <XPCardPoints points={`+${assignedItem.details.gainedXp}`} />
               }
             />
-          ),
+          )
         )}
       </div>
     </Modal>

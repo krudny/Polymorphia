@@ -65,33 +65,31 @@ export default function ProjectGroupList() {
                   : "gray";
 
               return (
-                <>
-                  <XPCard
-                    key={index}
-                    title={student.studentName}
-                    color={color}
-                    subtitle={student.group}
-                    size={"xs"}
-                    leftComponent={
-                      <XPCardImage
-                        imageUrl={student.imageUrl}
-                        alt={student.evolutionStage}
-                      />
-                    }
-                    rightComponent={
-                      <XPCardPoints
-                        points={student.gainedXp}
-                        color={color}
-                        isSumLabelVisible={true}
-                        isXPLabelVisible={!!student.gainedXp}
-                      />
-                    }
-                  />
-                  <div className="w-full border-2 border-secondary-dark"></div>
-                </>
+                <XPCard
+                  key={index}
+                  title={student.studentName}
+                  color={color}
+                  subtitle={student.group}
+                  size={"xs"}
+                  leftComponent={
+                    <XPCardImage
+                      imageUrl={student.imageUrl}
+                      alt={student.evolutionStage}
+                    />
+                  }
+                  rightComponent={
+                    <XPCardPoints
+                      points={student.gainedXp}
+                      color={color}
+                      isSumLabelVisible={true}
+                      isXPLabelVisible={!!student.gainedXp}
+                    />
+                  }
+                />
               );
             }
           )}
+          <div className="w-full border-2 border-secondary-dark"></div>
         </div>
       ))}
     </>

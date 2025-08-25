@@ -9,13 +9,13 @@ import { ChestResponseDTO, ItemResponseDTO } from "@/interfaces/api/reward";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 
 export default function AssignRewardModal({
-                                            assignableRewards,
-                                            onClosedAction,
-                                          }: AssignRewardModalProps) {
+  assignableRewards,
+  onClosedAction,
+}: AssignRewardModalProps) {
   // const { state, dispatch } = useContext(GradingContext);
 
   const [assignedItems, setAssignedItems] = useState<Record<number, number>>(
-    {},
+    {}
   );
 
   const handleAssign = () => {
@@ -52,8 +52,8 @@ export default function AssignRewardModal({
             rewardType === "ITEM"
               ? (rewardData as ItemResponseDTO).bonusText
               : (rewardData as ChestResponseDTO).chestItems
-                .map((item) => item.name)
-                .join(" | ");
+                  .map((item) => item.name)
+                  .join(" | ");
 
           return (
             <XPCard
@@ -71,13 +71,13 @@ export default function AssignRewardModal({
                   increment={() =>
                     updateAssignedAmount(
                       rewardId,
-                      Math.min(currentAssigned + 1, maxAmount),
+                      Math.min(currentAssigned + 1, maxAmount)
                     )
                   }
                   decrement={() =>
                     updateAssignedAmount(
                       rewardId,
-                      Math.max(currentAssigned - 1, 0),
+                      Math.max(currentAssigned - 1, 0)
                     )
                   }
                 />

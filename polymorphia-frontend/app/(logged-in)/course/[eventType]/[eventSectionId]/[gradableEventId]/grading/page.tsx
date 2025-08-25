@@ -7,12 +7,11 @@ import { GradingTypes } from "@/components/grading/types";
 import Grading from "@/components/grading";
 
 const GRADING_CONFIG = {
-  [EventTypes.TEST]: { type: GradingTypes.TEST_GRADING, columns: 3 },
+  [EventTypes.TEST]: { type: GradingTypes.TEST_GRADING },
   [EventTypes.ASSIGNMENT]: {
     type: GradingTypes.ASSIGNMENT_GRADING,
-    columns: 3,
   },
-  [EventTypes.PROJECT]: { type: GradingTypes.PROJECT_GRADING, columns: 3 },
+  [EventTypes.PROJECT]: { type: GradingTypes.PROJECT_GRADING },
 } as const;
 
 export default function GradingView() {
@@ -21,7 +20,7 @@ export default function GradingView() {
 
   return (
     <GradingProvider>
-      <Grading gradingType={config.type} columns={config.columns} />
+      <Grading gradingType={config.type} columns={3} />
     </GradingProvider>
   );
 }
