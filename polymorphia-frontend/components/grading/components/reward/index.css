@@ -1,2 +1,8 @@
 @import "tailwindcss";
 @import "../../../../styles/globals.css";
+
+.reward-header {
+    h1 {
+        @apply text-4xl my-1;
+    }
+}

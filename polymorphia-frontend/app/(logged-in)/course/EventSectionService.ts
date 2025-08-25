@@ -84,7 +84,7 @@ const eventSectionData: EventSectionResponseDTO[] = [
 
 export const EventSectionService = {
   getEventSection: async (
-    eventSectionId: number
+    eventSectionId: number,
   ): Promise<EventSectionResponseDTO> => {
     const eventSection: EventSectionResponseDTO | undefined =
       eventSectionData.find((section) => section.id === eventSectionId);
@@ -95,13 +95,13 @@ export const EventSectionService = {
   },
 
   getEventSections: async (
-    courseId: number
+    courseId: number,
   ): Promise<EventSectionResponseDTO[]> => {
     return eventSectionData.sort((a, b) => a.orderIndex - b.orderIndex);
   },
 
   getStudentGradableEvents: async (
-    eventSectionId: number
+    eventSectionId: number,
   ): Promise<StudentGradableEventResponseDTO[]> => {
     if (eventSectionId === 1) {
       const events: StudentGradableEventResponseDTO[] = [
@@ -346,7 +346,7 @@ export const EventSectionService = {
   },
 
   getInstructorGradableEvents: async (
-    eventSectionId: number
+    eventSectionId: number,
   ): Promise<InstructorGradableEventResponseDTO[]> => {
     if (eventSectionId === 1) {
       const events = [
@@ -563,7 +563,7 @@ export const EventSectionService = {
   },
 
   getPointsSummary: async (
-    eventSectionId: number
+    eventSectionId: number,
   ): Promise<PointsSummaryResponseDTO> => {
     if (eventSectionId === 1) {
       return {
@@ -653,7 +653,7 @@ export const EventSectionService = {
   },
 
   getMarkdown: async (
-    gradableEventId: number
+    gradableEventId: number,
   ): Promise<MarkdownResponseDTO> => {
     const markdown = mockMarkdownStore[gradableEventId];
     if (markdown !== undefined) {
@@ -666,14 +666,14 @@ export const EventSectionService = {
 
   saveMarkdown: async (
     gradableEventId: number,
-    newMarkdown: string
+    newMarkdown: string,
   ): Promise<void> => {
     await new Promise<void>((resolve) => setTimeout(resolve, 100));
     mockMarkdownStore[gradableEventId] = newMarkdown;
   },
 
   getCriteria: async (
-    gradableEventId: number
+    gradableEventId: number,
   ): Promise<CriterionResponseDTO[]> => {
     return [
       {
@@ -815,10 +815,222 @@ export const EventSectionService = {
     ];
   },
 
+  //TODO: xd
+  getGrade: async (gradableEventId: number): Promise<GradeResponseDTO> => {
+    if (gradableEventId === 30) {
+      return {
+        details: {
+          id: 1,
+        },
+        criteria: [
+          {
+            id: 1,
+            name: "Wykonanie zadania",
+            maxXp: "4.0",
+            assignableRewards: [
+              {
+                reward: {
+                  rewardType: "CHEST",
+                  reward: {
+                    id: 1,
+                    name: "Srebrna Skrzynia",
+                    imageUrl: "images/chests/s1.png",
+                    behavior: "ONE_OF_MANY",
+                    behaviorText: "Wybierz jeden przedmiot ze skrzynki",
+                    orderIndex: 0,
+                    chestItems: [
+                      {
+                        id: 1,
+                        itemBonusType: "PERCENTAGE_BONUS",
+                        name: "Pietruszka",
+                        bonusText: "+5% do kategorii Kartkówka",
+                        imageUrl: "images/items/parsley.jpg",
+                        percentage: 5,
+                        orderIndex: 0,
+                        limit: 3,
+                        isLimitReached: false,
+                        eventSectionId: 1,
+                      },
+                    ],
+                  },
+                },
+                maxAmount: 1,
+              },
+            ],
+            criterionGrade: {
+              id: 1,
+              gainedXp: "3.5",
+              assignedRewards: [
+                {
+                  rewardType: "CHEST",
+                  assignedReward: {
+                    base: {
+                      id: 1,
+                      name: "Srebrna Skrzynia",
+                      imageUrl: "images/chests/s1.png",
+                      behavior: "ONE_OF_MANY",
+                      behaviorText: "Wybierz jeden przedmiot ze skrzynki",
+                      orderIndex: 0,
+                      chestItems: [
+                        {
+                          id: 1,
+                          itemBonusType: "PERCENTAGE_BONUS",
+                          name: "Pietruszka",
+                          bonusText: "+5% do kategorii Kartkówka",
+                          imageUrl: "images/items/parsley.jpg",
+                          percentage: 5,
+                          orderIndex: 0,
+                          limit: 3,
+                          isLimitReached: false,
+                          eventSectionId: 1,
+                        },
+                      ],
+                    },
+                    details: {
+                      id: 3,
+                      receivedDate: "07.06.2025",
+                      usedDate: "08.06.2025",
+                      isUsed: true,
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      };
+    }
+
+    if (gradableEventId === 15 || gradableEventId === 1) {
+      return {
+        details: {
+          id: 1,
+        },
+        criteria: [
+          {
+            id: 1,
+            name: "Wykonanie zadania",
+            maxXp: "2.0",
+            assignableRewards: [
+              {
+                reward: {
+                  rewardType: "CHEST",
+                  reward: {
+                    id: 1,
+                    name: "Srebrna Skrzynia",
+                    imageUrl: "images/chests/s1.png",
+                    behavior: "ONE_OF_MANY",
+                    behaviorText: "Wybierz jeden przedmiot ze skrzynki",
+                    orderIndex: 0,
+                    chestItems: [
+                      {
+                        id: 1,
+                        itemBonusType: "PERCENTAGE_BONUS",
+                        name: "Pietruszka",
+                        bonusText: "+5% do kategorii Kartkówka",
+                        imageUrl: "images/items/parsley.jpg",
+                        percentage: 5,
+                        orderIndex: 0,
+                        limit: 3,
+                        isLimitReached: false,
+                        eventSectionId: 1,
+                      },
+                    ],
+                  },
+                },
+                maxAmount: 1,
+              },
+            ],
+            criterionGrade: {
+              id: 1,
+              gainedXp: "0.7",
+              assignedRewards: [
+                {
+                  rewardType: "CHEST",
+                  assignedReward: {
+                    base: {
+                      id: 1,
+                      name: "Srebrna Skrzynia",
+                      imageUrl: "images/chests/s1.png",
+                      behavior: "ONE_OF_MANY",
+                      behaviorText: "Wybierz jeden przedmiot ze skrzynki",
+                      orderIndex: 0,
+                      chestItems: [
+                        {
+                          id: 1,
+                          itemBonusType: "PERCENTAGE_BONUS",
+                          name: "Pietruszka",
+                          bonusText: "+5% do kategorii Kartkówka",
+                          imageUrl: "images/items/parsley.jpg",
+                          percentage: 5,
+                          orderIndex: 0,
+                          limit: 3,
+                          isLimitReached: false,
+                          eventSectionId: 1,
+                        },
+                      ],
+                    },
+                    details: {
+                      id: 3,
+                      receivedDate: "07.06.2025",
+                      usedDate: "08.06.2025",
+                      isUsed: true,
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      };
+    }
+
+    return {
+      criteria: [
+        {
+          id: 1,
+          name: "Wykonanie zadania",
+          maxXp: "4.0",
+          assignableRewards: [
+            {
+              reward: {
+                rewardType: "CHEST",
+                reward: {
+                  id: 1,
+                  name: "Srebrna Skrzynia",
+                  imageUrl: "images/chests/s1.png",
+                  behavior: "ONE_OF_MANY",
+                  behaviorText: "Wybierz jeden przedmiot ze skrzynki",
+                  orderIndex: 0,
+                  chestItems: [
+                    {
+                      id: 1,
+                      itemBonusType: "PERCENTAGE_BONUS",
+                      name: "Pietruszka",
+                      bonusText: "+5% do kategorii Kartkówka",
+                      imageUrl: "images/items/parsley.jpg",
+                      percentage: 5,
+                      orderIndex: 0,
+                      limit: 3,
+                      isLimitReached: false,
+                      eventSectionId: 1,
+                    },
+                  ],
+                },
+              },
+              maxAmount: 2,
+            },
+          ],
+        },
+      ],
+    };
+  },
+
+
   // TODO: assume that id is criterion id XD
   getGrade2: async (
     studentId: number,
-    gradableEventId: number
+    gradableEventId: number,
   ): Promise<GradeResponseDTO> => {
     await new Promise<void>((resolve) => setTimeout(resolve, 150));
     return {
@@ -954,7 +1166,7 @@ export const EventSectionService = {
     if (searchTerm && searchTerm.trim() !== "") {
       const lowerSearch = searchTerm.toLowerCase();
       filteredData = filteredData.filter((item) =>
-        item.studentName.toLowerCase().includes(lowerSearch)
+        item.studentName.toLowerCase().includes(lowerSearch),
       );
     }
 
@@ -962,7 +1174,7 @@ export const EventSectionService = {
   },
 
   getRandomPeopleWithPoints: async (
-    searchTerm: string
+    searchTerm: string,
   ): Promise<(UserDetailsDTO & { gainedXp?: string })[]> => {
     // await new Promise<void>((resolve) => setTimeout(resolve, 1000));
 
@@ -977,7 +1189,7 @@ export const EventSectionService = {
     if (searchTerm && searchTerm.trim() !== "") {
       const lowerSearch = searchTerm.toLowerCase();
       filteredData = filteredData.filter((item) =>
-        item.studentName.toLowerCase().includes(lowerSearch)
+        item.studentName.toLowerCase().includes(lowerSearch),
       );
     }
 

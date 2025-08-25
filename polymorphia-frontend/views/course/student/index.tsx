@@ -36,10 +36,14 @@ export default function StudentView() {
   useEffect(() => {
     if (!isLoading && gradableEvents && gradableEvents.length === 1) {
       router.push(
-        `/course/${eventType.toLowerCase()}/${eventSectionId}/${gradableEvents[0].id}`
+        `/course/${eventType.toLowerCase()}/${eventSectionId}/${gradableEvents[0].id}`,
       );
     }
   }, [isLoading, gradableEvents, eventType, eventSectionId, router]);
+
+  useEffect(() => {
+    console.log(selectedEventId);
+  }, [selectedEventId]);
 
   if (isLoading || (gradableEvents && gradableEvents.length < 2)) {
     return <Loading />;
@@ -54,7 +58,9 @@ export default function StudentView() {
   }
 
   const handleClick = (id: number, isLocked: boolean) => {
-    if (isLocked) return;
+    if (isLocked) {
+      return;
+    }
 
     if (eventType === EventTypes.TEST) {
       setSelectedEventId(id);
@@ -64,7 +70,7 @@ export default function StudentView() {
   };
 
   const cards = gradableEvents.map((gradableEvent) =>
-    renderCard(gradableEvent, false, handleClick)
+    renderCard(gradableEvent, false, handleClick),
   );
 
   return (
@@ -78,7 +84,7 @@ export default function StudentView() {
         </div>
         <PointsSummary ref={summaryRef} eventSectionId={eventSectionId} />
       </div>
-      {eventType === EventTypes.TEST && (
+      {eventType === EventTypes.TEST && selectedEventId && (
         <GradeModal onClosedAction={() => setSelectedEventId(null)} />
       )}
     </SectionView>

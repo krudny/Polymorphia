@@ -20,7 +20,7 @@
 }
 
 .gradable-event-section-progress-bar {
-    @apply pt-7 w-full px-6;
+    @apply pt-9 w-full px-6;
 }
 
 .gradable-event-section-reward {

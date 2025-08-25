@@ -7,6 +7,7 @@ import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import { useEventParams } from "@/shared/params/useSeachParams";
 
 export default function GradeModal({ onClosedAction }: SpeedDialModalProps) {
+  console.log("Rendering GradeModal");
   const { gradableEventId } = useEventParams();
   const { data, isLoading, isError } = useQuery({
     queryKey: ["grades", gradableEventId],
