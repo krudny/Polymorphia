@@ -1,4 +1,3 @@
-import { API_STATIC_URL } from "@/services/api";
 import XPCard from "@/components/xp-card/XPCard";
 import { useContext } from "react";
 import { EquipmentContext } from "@/components/providers/equipment/EquipmentContext";
@@ -39,7 +38,7 @@ export default function ChestModal() {
                 <XPCardPoints points={`+${assignedItem.details.gainedXp}`} />
               }
             />
-          )
+          ),
         )}
       </div>
     </Modal>
