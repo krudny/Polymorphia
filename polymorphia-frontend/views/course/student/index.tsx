@@ -36,7 +36,7 @@ export default function StudentView() {
   useEffect(() => {
     if (!isLoading && gradableEvents && gradableEvents.length === 1) {
       router.push(
-        `/course/${eventType.toLowerCase()}/${eventSectionId}/${gradableEvents[0].id}`,
+        `/course/${eventType.toLowerCase()}/${eventSectionId}/${gradableEvents[0].id}`
       );
     }
   }, [isLoading, gradableEvents, eventType, eventSectionId, router]);
@@ -70,7 +70,7 @@ export default function StudentView() {
   };
 
   const cards = gradableEvents.map((gradableEvent) =>
-    renderCard(gradableEvent, false, handleClick),
+    renderCard(gradableEvent, false, handleClick)
   );
 
   return (

@@ -16,7 +16,9 @@ export default function BonusItemCard({ assignedItem }: BonusItemCardProps) {
       size="xs"
       // TODO: handle undefined xp
       // TODO: left component
-      rightComponent={<XPCardPoints points={`+${assignedItem.details.gainedXp}`} />}
+      rightComponent={
+        <XPCardPoints points={`+${assignedItem.details.gainedXp}`} />
+      }
     />
   );
 }

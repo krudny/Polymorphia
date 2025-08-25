@@ -18,12 +18,16 @@ export abstract class BaseGradingStrategy {
   }
 
   protected createPullRequestComponent(): ReactNode {
-    return <PullRequest pullRequests={[
-      {
-        id: 1,
-        name: "Laboratorium",
-        url: "https://github.com/krudny/Polymorphia/pull/32",
-      },
-    ]} />;
+    return (
+      <PullRequest
+        pullRequests={[
+          {
+            id: 1,
+            name: "Laboratorium",
+            url: "https://github.com/krudny/Polymorphia/pull/32",
+          },
+        ]}
+      />
+    );
   }
 }

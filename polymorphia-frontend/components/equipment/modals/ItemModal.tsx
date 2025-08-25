@@ -26,11 +26,13 @@ export default function ItemModal() {
               key={itemAssignmentDetails.id}
               title={equipmentItem.base.name}
               subtitle={`Zdobyto ${itemAssignmentDetails.receivedDate}`}
-
               size="xs"
               // TODO: handle undefined xp
               leftComponent={
-                <XPCardImage imageUrl={equipmentItem.base.imageUrl} alt={equipmentItem.base.name} />
+                <XPCardImage
+                  imageUrl={equipmentItem.base.imageUrl}
+                  alt={equipmentItem.base.name}
+                />
               }
               rightComponent={
                 <XPCardPoints points={`+${itemAssignmentDetails.gainedXp}`} />

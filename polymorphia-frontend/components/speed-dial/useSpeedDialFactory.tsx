@@ -3,9 +3,7 @@ import { useContext, useMemo } from "react";
 import { MarkdownContext } from "@/components/providers/markdown/MarkdownContext";
 import { speedDialStrategyRegistry } from "@/components/speed-dial/strategy/Registry";
 
-export function useSpeedDialFactory({
-                                      type,
-                                    }: SpeedDialProps): SpeedDialItem[] {
+export function useSpeedDialFactory({ type }: SpeedDialProps): SpeedDialItem[] {
   const markdownContext = useContext(MarkdownContext);
 
   return useMemo(() => {

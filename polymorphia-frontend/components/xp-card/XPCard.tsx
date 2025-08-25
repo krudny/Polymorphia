@@ -81,23 +81,23 @@ const xpCard = tv({
 });
 
 export default function XPCard({
-                                 title,
-                                 subtitle,
-                                 leftComponent,
-                                 rightComponent,
-                                 onClick,
-                                 size,
-                                 color,
-                                 forceWidth,
-                                 isLocked,
-                               }: XPCardProps & XPCardVariantProps) {
+  title,
+  subtitle,
+  leftComponent,
+  rightComponent,
+  onClick,
+  size,
+  color,
+  forceWidth,
+  isLocked,
+}: XPCardProps & XPCardVariantProps) {
   return (
     <div
       className={clsx(
         xpCard({ size, forceWidth }),
         colorVariants({ color }).borderPrimary(),
         onClick && "xp-card-hover",
-        isLocked && "pointer-events-none border-none",
+        isLocked && "pointer-events-none border-none"
       )}
       onClick={onClick}
     >

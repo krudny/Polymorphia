@@ -37,10 +37,8 @@ export default function SpeedDialDesktop({ type }: SpeedDialProps) {
           },
         }}
         open={true}
-        onOpen={() => {
-        }}
-        onClose={() => {
-        }}
+        onOpen={() => {}}
+        onClose={() => {}}
       >
         {items.map((item) => (
           <SpeedDialAction

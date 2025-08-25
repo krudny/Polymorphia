@@ -13,6 +13,5 @@ export function useGradingFactory(type: GradingType) {
     }
 
     return selectedStrategy.getGradingComponents();
-
   }, [type]);
 }

@@ -3,12 +3,15 @@ import "./index.css";
 import clsx from "clsx";
 import { colorVariants } from "@/components/xp-card/XPCard";
 
-export default function XPCardUngraded({ ungraded, color }: XPCardUngradedProps) {
+export default function XPCardUngraded({
+  ungraded,
+  color,
+}: XPCardUngradedProps) {
   return (
     <div
       className={clsx(
         "xp-card-ungraded",
-        colorVariants({ color }).backgroundSecondary(),
+        colorVariants({ color }).backgroundSecondary()
       )}
     >
       <h1>{ungraded}</h1>

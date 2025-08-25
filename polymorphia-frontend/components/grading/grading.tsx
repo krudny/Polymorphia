@@ -2,16 +2,13 @@ import { GradingProps } from "@/components/grading/types";
 import SpeedDialDesktop from "@/components/speed-dial/SpeedDialDesktop";
 import { useGradingFactory } from "@/components/grading/useGradingFactory";
 
-export default function Grading({
-                                  gradingType,
-                                  columns,
-                                }: GradingProps) {
+export default function Grading({ gradingType, columns }: GradingProps) {
   const components = useGradingFactory(gradingType);
 
   if (!components) {
     return null;
   }
-  
+
   return (
     <div
       className={`w-full max-w-[1400px] m-auto h-[calc(100dvh-6rem)] grid grid-cols-${columns} items-start content-start gap-4`}

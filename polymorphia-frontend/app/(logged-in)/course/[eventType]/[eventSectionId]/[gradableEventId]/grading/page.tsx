@@ -8,7 +8,10 @@ import Grading from "@/components/grading/grading";
 
 const GRADING_CONFIG = {
   [EventTypes.TEST]: { type: GradingTypes.TEST_GRADING, columns: 3 },
-  [EventTypes.ASSIGNMENT]: { type: GradingTypes.ASSIGNMENT_GRADING, columns: 3 },
+  [EventTypes.ASSIGNMENT]: {
+    type: GradingTypes.ASSIGNMENT_GRADING,
+    columns: 3,
+  },
   [EventTypes.PROJECT]: { type: GradingTypes.PROJECT_GRADING, columns: 3 },
 } as const;
 

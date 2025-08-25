@@ -8,8 +8,14 @@ class GradingStrategyRegistry {
 
   constructor() {
     this.registerStrategy(GradingTypes.TEST_GRADING, new TestGradingStrategy());
-    this.registerStrategy(GradingTypes.ASSIGNMENT_GRADING, new AssignmentGradingStrategy());
-    this.registerStrategy(GradingTypes.PROJECT_GRADING, new ProjectGradingStrategy());
+    this.registerStrategy(
+      GradingTypes.ASSIGNMENT_GRADING,
+      new AssignmentGradingStrategy()
+    );
+    this.registerStrategy(
+      GradingTypes.PROJECT_GRADING,
+      new ProjectGradingStrategy()
+    );
   }
 
   registerStrategy(strategyName: string, strategy: GradingStrategy): void {

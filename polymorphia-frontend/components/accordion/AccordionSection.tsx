@@ -7,12 +7,12 @@ import "./index.css";
 import { AccordionSectionProps } from "./types";
 
 export default function AccordionSection({
-                                           id,
-                                           title,
-                                           children,
-                                           isInitiallyOpened,
-                                           headerClassName,
-                                         }: AccordionSectionProps) {
+  id,
+  title,
+  children,
+  isInitiallyOpened,
+  headerClassName,
+}: AccordionSectionProps) {
   const { register, unregister, isOpen, toggle, open } = useAccordion();
   const contentRef = useRef<HTMLDivElement>(null);
 

@@ -8,7 +8,6 @@ import { AssignedItemResponseDTO } from "@/interfaces/api/reward/assigned";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 
-
 export default function ChestModal() {
   const { currentChestModalData, setCurrentChestModalData } =
     useContext(EquipmentContext);
@@ -30,7 +29,10 @@ export default function ChestModal() {
               subtitle={`Zdobyto ${assignedItem.details.receivedDate}`}
               size="xs"
               leftComponent={
-                <XPCardImage imageUrl={assignedItem.base.imageUrl} alt={assignedItem.base.name} />
+                <XPCardImage
+                  imageUrl={assignedItem.base.imageUrl}
+                  alt={assignedItem.base.name}
+                />
               }
               // TODO: handle undefined xp
               rightComponent={

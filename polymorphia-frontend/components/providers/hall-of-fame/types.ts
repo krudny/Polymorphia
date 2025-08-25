@@ -15,7 +15,7 @@ export type HallOfFameAction =
   | {
       type: typeof HallOfFameActions.REMOVE_FROM_FILTER;
       payload: { id: string; value: string };
-    }
+    };
 
 export interface HallOfFameContextInterface {
   data: HallOfFameResponseDTO;

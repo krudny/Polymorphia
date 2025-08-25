@@ -4,7 +4,8 @@ import { SpeedDialItem } from "@/components/speed-dial/types";
 
 export class TestGradingStrategy
   extends BaseSpeedDialStrategy
-  implements SpeedDialStrategy {
+  implements SpeedDialStrategy
+{
   getItems(): SpeedDialItem[] {
     return [this.createImportCSVItem()];
   }
