@@ -10,6 +10,7 @@ export interface XPCardPointsProps {
 
 export interface XPCardUngradedProps {
   ungraded: number;
+  color?: XPCardColors;
 }
 
 export interface XPCardProjectVariantProps {

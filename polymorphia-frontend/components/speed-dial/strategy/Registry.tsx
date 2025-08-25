@@ -1,8 +1,8 @@
 import { EventTypes } from "@/interfaces/api/course";
-import { AssignmentStrategy } from "@/components/speed-dial/strategy/assignment";
-import { ProjectStrategy } from "@/components/speed-dial/strategy/project";
+import { AssignmentStrategy } from "@/components/speed-dial/strategy/Assignment";
+import { ProjectStrategy } from "@/components/speed-dial/strategy/Project";
 import { SpeedDialStrategy } from "@/components/speed-dial/strategy/types";
-import { GradingTestStrategy } from "@/components/speed-dial/strategy/grading-test";
+import { TestGradingStrategy } from "@/components/speed-dial/strategy/TestGrading";
 import { GradingTypes } from "@/components/grading/types";
 
 class SpeedDialStrategyRegistry {
@@ -11,7 +11,7 @@ class SpeedDialStrategyRegistry {
   constructor() {
     this.registerStrategy(EventTypes.ASSIGNMENT, new AssignmentStrategy());
     this.registerStrategy(EventTypes.PROJECT, new ProjectStrategy());
-    this.registerStrategy(GradingTypes.TEST_GRADING, new GradingTestStrategy());
+    this.registerStrategy(GradingTypes.TEST_GRADING, new TestGradingStrategy());
   }
 
   registerStrategy(strategyName: string, strategy: SpeedDialStrategy): void {

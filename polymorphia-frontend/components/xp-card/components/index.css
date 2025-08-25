@@ -56,6 +56,6 @@
 /* XPCardUngraded */
 
 .xp-card-ungraded {
-    @apply w-full flex-1 flex-col-centered bg-secondary-gray;
+    @apply w-full flex-1 flex-col-centered;
 }
 

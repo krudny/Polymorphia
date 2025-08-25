@@ -82,7 +82,6 @@ export default function Reward() {
                 if (!criterion) return null;
 
                 const gainedXp = criterionGrade.gainedXp ?? "0";
-                console.log("dsdsd");
                 return (
                   <AccordionSection key={criterionId} id={criterionId} title={criterion.name}
                                     headerClassName="reward-header">
@@ -164,8 +163,11 @@ export default function Reward() {
                 );
               },
             )}
-            <AccordionSection key={criteria.length + 1} id="Komentarz" title="Komentarz"
-                              headerClassName="reward-header">
+            <AccordionSection
+              key={criteria.length + 1}
+              id="Komentarz"
+              title="Komentarz"
+              headerClassName="reward-header">
               <div className="w-full">
             <textarea
               ref={textareaRef}

@@ -37,6 +37,7 @@ export default function HallOfFamePodium() {
                   points={student.xpDetails.total}
                   isSumLabelVisible={true}
                   isXPLabelVisible={false}
+                  color="gray"
                 />
               }
               size={"hofDesktop"}

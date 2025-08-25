@@ -2,13 +2,13 @@
 
 import { ReactNode, useState } from "react";
 import "./index.css";
-import { useSpeedDialItemsFactory } from "@/components/speed-dial/SpeedDialFactory";
+import { useSpeedDialFactory } from "@/components/speed-dial/useSpeedDialFactory";
 import Loading from "@/components/loading/Loading";
 import { SpeedDial as SpeedDialMui, SpeedDialAction } from "@mui/material";
 import { SpeedDialProps } from "./types";
 
-export default function SpeedDialDesktop({ strategy }: SpeedDialProps) {
-  const items = useSpeedDialItemsFactory({ strategy });
+export default function SpeedDialDesktop({ type }: SpeedDialProps) {
+  const items = useSpeedDialFactory({ type });
   const [activeModal, setActiveModal] = useState<ReactNode | null>(null);
 
   if (!items) {
@@ -37,8 +37,10 @@ export default function SpeedDialDesktop({ strategy }: SpeedDialProps) {
           },
         }}
         open={true}
-        onOpen={() => {}}
-        onClose={() => {}}
+        onOpen={() => {
+        }}
+        onClose={() => {
+        }}
       >
         {items.map((item) => (
           <SpeedDialAction

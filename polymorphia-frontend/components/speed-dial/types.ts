@@ -13,5 +13,5 @@ export interface SpeedDialItem {
 }
 
 export interface SpeedDialProps {
-  strategy: EventType | GradingType;
+  type: EventType | GradingType;
 }

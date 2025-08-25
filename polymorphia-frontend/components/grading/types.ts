@@ -2,7 +2,6 @@ import { ReactNode } from "react";
 
 export interface GradingProps {
   gradingType: GradingType;
-  components: ReactNode[];
   columns: number;
 }
 
@@ -13,3 +12,7 @@ export const GradingTypes = {
 } as const;
 
 export type GradingType = (typeof GradingTypes)[keyof typeof GradingTypes];
+
+export interface GradingStrategy {
+  getGradingComponents: () => ReactNode[];
+}

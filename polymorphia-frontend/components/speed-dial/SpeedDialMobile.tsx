@@ -2,13 +2,13 @@
 
 import { ReactNode, useState } from "react";
 import "./index.css";
-import { useSpeedDialItemsFactory } from "@/components/speed-dial/SpeedDialFactory";
+import { useSpeedDialFactory } from "@/components/speed-dial/useSpeedDialFactory";
 import Loading from "@/components/loading/Loading";
 import { SpeedDial as SpeedDialMui, SpeedDialAction } from "@mui/material";
 import { SpeedDialProps } from "@/components/speed-dial/types";
 
-export default function SpeedDialMobile({ strategy }: SpeedDialProps) {
-  const items = useSpeedDialItemsFactory({ strategy: strategy });
+export default function SpeedDialMobile({ type }: SpeedDialProps) {
+  const items = useSpeedDialFactory({ type: type });
   const [activeModal, setActiveModal] = useState<ReactNode | null>(null);
 
   if (!items) {

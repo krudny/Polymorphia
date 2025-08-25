@@ -1,11 +1,7 @@
 import clsx from "clsx";
 import { tv } from "tailwind-variants";
 import "./index.css";
-import {
-  XPCardColors,
-  XPCardProps,
-  XPCardVariantProps,
-} from "@/components/xp-card/types";
+import { XPCardProps, XPCardVariantProps } from "@/components/xp-card/types";
 
 export const colorVariants = tv({
   slots: {
@@ -50,7 +46,7 @@ export const colorVariants = tv({
         borderPrimary: "border-b-8 border-primary-gray",
         borderSecondary: "border-b-4 border-secondary-gray",
         backgroundPrimary: "bg-primary-gray",
-        backgroundSecondary: "bg-secondary-gray",
+        backgroundSecondary: "bg-secondary-gray dark:bg-secondary-dark",
       },
     },
   },
@@ -85,23 +81,23 @@ const xpCard = tv({
 });
 
 export default function XPCard({
-  title,
-  subtitle,
-  leftComponent,
-  rightComponent,
-  onClick,
-  size,
-  color,
-  forceWidth,
-  isLocked,
-}: XPCardProps & XPCardVariantProps & XPCardColors) {
+                                 title,
+                                 subtitle,
+                                 leftComponent,
+                                 rightComponent,
+                                 onClick,
+                                 size,
+                                 color,
+                                 forceWidth,
+                                 isLocked,
+                               }: XPCardProps & XPCardVariantProps) {
   return (
     <div
       className={clsx(
         xpCard({ size, forceWidth }),
         colorVariants({ color }).borderPrimary(),
         onClick && "xp-card-hover",
-        isLocked && "pointer-events-none border-none"
+        isLocked && "pointer-events-none border-none",
       )}
       onClick={onClick}
     >
