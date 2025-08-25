@@ -38,28 +38,29 @@ export default function RootLayout({
       className="custom-scrollbar bg-neutral-200"
       suppressHydrationWarning
     >
-      <head>
-        <meta name="theme-color" content="#262626" />
-      </head>
-      <body
-        className={`${leagueGothic.className} ${leagueGothic.variable} ${materialSymbols.variable} text-primary-dark dark:text-secondary-light`}
+    <head>
+      <meta name="theme-color" content="#262626" />
+      <link rel="icon" type="image/x-icon" href="/favicon.png" />
+    </head>
+    <body
+      className={`${leagueGothic.className} ${leagueGothic.variable} ${materialSymbols.variable} text-primary-dark dark:text-secondary-gray`}
+    >
+    <ThemeProviderMui theme={themeConfig}>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        storageKey="theme"
       >
-        <ThemeProviderMui theme={themeConfig}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            storageKey="theme"
-          >
-            <TitleProvider>
-              <QueryClientProvider client={queryClient}>
-                <Toaster toastOptions={{ style: { fontSize: "1.5rem" } }} />
-                {children}
-              </QueryClientProvider>
-            </TitleProvider>
-          </ThemeProvider>
-        </ThemeProviderMui>
-      </body>
+        <TitleProvider>
+          <QueryClientProvider client={queryClient}>
+            <Toaster toastOptions={{ style: { fontSize: "1.5rem" } }} />
+            {children}
+          </QueryClientProvider>
+        </TitleProvider>
+      </ThemeProvider>
+    </ThemeProviderMui>
+    </body>
     </html>
   );
 }

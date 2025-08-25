@@ -13,6 +13,6 @@
     }
 
     .selected a {
-        @apply bg-primary-dark text-primary-light dark:bg-secondary-light dark:text-primary-dark;
+        @apply bg-primary-dark text-primary-light dark:bg-secondary-gray dark:text-primary-dark;
     }
 }

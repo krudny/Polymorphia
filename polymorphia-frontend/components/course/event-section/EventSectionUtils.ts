@@ -30,10 +30,14 @@ export function setResizeObserver(
   setPageRows: (rows: number) => void,
   maxColumns: number
 ) {
-  if (!containerRef.current) return;
+  if (!containerRef.current) {
+    return;
+  }
 
   const handleResize = () => {
-    if (!containerRef.current) return;
+    if (!containerRef.current) {
+      return;
+    }
 
     const height = containerRef.current.offsetHeight;
     const width = containerRef.current.offsetWidth;

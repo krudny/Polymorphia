@@ -23,7 +23,9 @@ export default function Navbar() {
 
   useEffect(() => {
     const drawer = drawerRef.current;
-    if (!drawer) return;
+    if (!drawer) {
+      return;
+    }
     animateNavbar(drawer, isNavbarExpanded);
   }, [isNavbarExpanded]);
 

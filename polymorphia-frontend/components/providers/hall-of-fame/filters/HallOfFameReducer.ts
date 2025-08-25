@@ -9,23 +9,11 @@ export function HallOfFameReducer(
   action: HallOfFameAction
 ) {
   switch (action.type) {
-    case HallOfFameActions.OPEN_FILTER:
-      return filters.map((filter) => {
-        return {
-          ...filter,
-          isOpen: filter.id === action.payload.id ? !filter.isOpen : false,
-        };
-      });
-
-    case HallOfFameActions.CLOSE_ALL_FILTERS:
-      return filters.map((filter) => ({
-        ...filter,
-        isOpen: false,
-      }));
-
     case HallOfFameActions.ADD_TO_FILTER:
       return filters.map((filter) => {
-        if (filter.id !== action.payload.id) return filter;
+        if (filter.id !== action.payload.id) {
+          return filter;
+        }
 
         let updatedOptions;
 
@@ -58,7 +46,9 @@ export function HallOfFameReducer(
 
     case HallOfFameActions.REMOVE_FROM_FILTER:
       return filters.map((filter) => {
-        if (filter.id !== action.payload.id) return filter;
+        if (filter.id !== action.payload.id) {
+          return filter;
+        }
 
         const updatedOptions = filter.options.map((option) =>
           option.value === action.payload.value

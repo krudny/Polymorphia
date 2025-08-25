@@ -23,7 +23,9 @@ export function useXPGridAnimation(
 
   const handlePageChange = (selected: { selected: number }) => {
     const newPage = selected.selected;
-    if (newPage === pageToShow) return;
+    if (newPage === pageToShow) {
+      return;
+    }
 
     const dir = newPage > pageToShow ? 1 : -1;
     setDirection(dir);
@@ -56,8 +58,7 @@ export function useXPGridAnimation(
   };
 
   useEffect(() => {
-    if (!cards || !sliderRef.current) return;
-    if (firstRenderRef.current) {
+    if (!cards || !sliderRef.current || firstRenderRef.current) {
       return;
     }
 

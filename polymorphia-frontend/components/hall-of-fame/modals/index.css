@@ -6,35 +6,7 @@
 }
 
 .filters-modal-wrapper {
-    @apply w-full md:w-[28rem] flex flex-col;
-}
-
-.filters-modal-filter-wrapper {
-    @apply flex flex-col my-2;
-}
-
-.filters-modal-filter {
-    @apply flex justify-between items-center;
-
-    h1 {
-        @apply text-3xl;
-    }
-}
-
-.filters-modal-toggle-button {
-    @apply flex-centered cursor-pointer hover:opacity-70 transition-opacity;
-}
-
-.filters-modal-toggle {
-    @apply flex-centered gap-x-1;
-
-    h2 {
-        @apply text-2xl;
-    }
-}
-
-.filters-modal-toggle-arrow {
-    @apply w-5 h-5 transition-transform duration-300;
+    @apply w-full md:w-[28rem];
 }
 
 .filters-modal-filter-grid {
@@ -46,7 +18,7 @@
 }
 
 .filters-modal-filter-option-selected {
-    @apply bg-primary-dark text-secondary-light dark:bg-secondary-light dark:text-primary-dark shadow-md;
+    @apply bg-primary-dark text-secondary-light dark:bg-secondary-gray dark:text-primary-dark shadow-md;
 }
 
 .filters-modal-filter-option-unselected {

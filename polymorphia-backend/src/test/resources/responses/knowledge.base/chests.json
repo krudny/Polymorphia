@@ -1,0 +1,54 @@
+[
+  {
+    "id": 4,
+    "type": "CHEST",
+    "orderIndex": 0,
+    "name": "Srebrna",
+    "subtitle": "Wybierz jeden przedmiot ze skrzynki",
+    "description": "desc",
+    "imageUrl": "url",
+    "relatedRewards": [
+      {
+        "id": 1,
+        "name": "Apteczka",
+        "imageUrl": "url",
+        "orderIndex": 1
+      },
+      {
+        "id": 2,
+        "name": "Apteczka2",
+        "imageUrl": "url",
+        "orderIndex": 2
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "type": "CHEST",
+    "orderIndex": 1,
+    "name": "Złota",
+    "subtitle": "Otrzymujesz pełną zawartość skrzynki",
+    "description": "desc",
+    "imageUrl": "url",
+    "relatedRewards": [
+      {
+        "id": 3,
+        "name": "Marchewka",
+        "imageUrl": "url",
+        "orderIndex": 0
+      },
+      {
+        "id": 1,
+        "name": "Apteczka",
+        "imageUrl": "url",
+        "orderIndex": 1
+      },
+      {
+        "id": 2,
+        "name": "Apteczka2",
+        "imageUrl": "url",
+        "orderIndex": 2
+      }
+    ]
+  }
+]
