@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import StudentsList from "@/components/grading/components/student-list";
 import ProjectGroupList from "@/components/grading/components/project-group-list";
-import Reward from "@/components/grading/components/reward";
+import Grade from "@/components/grading/components/grade";
 import PullRequest from "@/components/grading/components/pull-request";
 
 export abstract class BaseGradingStrategy {
@@ -14,7 +14,7 @@ export abstract class BaseGradingStrategy {
   }
 
   protected createRewardComponent(): ReactNode {
-    return <Reward />;
+    return <Grade />;
   }
 
   protected createPullRequestComponent(): ReactNode {

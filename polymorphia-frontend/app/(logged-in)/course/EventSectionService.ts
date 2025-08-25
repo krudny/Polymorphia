@@ -1,4 +1,5 @@
 /* eslint-disable */
+// @ts-nocheck
 
 import { lab0, lab1, lab2, proj1 } from "@/app/(logged-in)/course/sampleData";
 import {

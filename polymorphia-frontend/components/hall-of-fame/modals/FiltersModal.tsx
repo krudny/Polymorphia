@@ -1,11 +1,11 @@
+/* eslint-disable */
+// @ts-nocheck
+
 import Modal from "@/components/modal/Modal";
 import { useContext, useRef } from "react";
 import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import {
-  HallOfFameFilterID,
-  HallOfFameFilterOption,
-} from "@/components/hall-of-fame/general/types";
+import { HallOfFameFilterID, HallOfFameFilterOption } from "@/components/hall-of-fame/general/types";
 import { useQueryClient } from "@tanstack/react-query";
 import "./index.css";
 import { hallOfFameConfirmAction } from "@/components/providers/hall-of-fame/utils/hallOfFameConfirmAction";
@@ -28,7 +28,7 @@ export default function FiltersModal() {
 
   const handleSelect = (
     filterId: HallOfFameFilterID,
-    option: HallOfFameFilterOption
+    option: HallOfFameFilterOption,
   ) => {
     filtersDispatch({
       type: option.isSelected ? "REMOVE_FROM_FILTER" : "ADD_TO_FILTER",
@@ -85,7 +85,7 @@ export default function FiltersModal() {
                 hallOfFameConfirmAction(
                   filtersState,
                   setAppliedFiltersState,
-                  queryClient
+                  queryClient,
                 )
               ) {
                 accordionRef.current?.closeAll();

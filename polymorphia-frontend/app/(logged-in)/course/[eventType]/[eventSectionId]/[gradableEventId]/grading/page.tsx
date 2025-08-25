@@ -4,7 +4,7 @@ import { useEventParams } from "@/shared/params/useSeachParams";
 import { GradingProvider } from "@/components/providers/grading/GradingContext";
 import { EventTypes } from "@/interfaces/api/course";
 import { GradingTypes } from "@/components/grading/types";
-import Grading from "@/components/grading/grading";
+import Grading from "@/components/grading";
 
 const GRADING_CONFIG = {
   [EventTypes.TEST]: { type: GradingTypes.TEST_GRADING, columns: 3 },

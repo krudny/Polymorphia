@@ -2,7 +2,7 @@
 @import "../../styles/globals.css";
 
 .search {
-    @apply w-44 md:w-64 flex-centered;
+    @apply w-44 md:w-64 flex-centered min-h-full h-full;
 }
 
 .search-wrapper {
