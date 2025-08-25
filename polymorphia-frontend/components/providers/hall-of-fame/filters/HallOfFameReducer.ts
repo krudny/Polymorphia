@@ -1,12 +1,15 @@
 import { HallOfFameFilter } from "@/components/hall-of-fame/general/types";
-import { HallOfFameAction } from "@/components/providers/hall-of-fame/types";
+import {
+  HallOfFameAction,
+  HallOfFameActions,
+} from "@/components/providers/hall-of-fame/types";
 
 export function HallOfFameReducer(
   filters: HallOfFameFilter[],
   action: HallOfFameAction
 ) {
   switch (action.type) {
-    case "ADD_TO_FILTER":
+    case HallOfFameActions.ADD_TO_FILTER:
       return filters.map((filter) => {
         if (filter.id !== action.payload.id) {
           return filter;
@@ -41,7 +44,7 @@ export function HallOfFameReducer(
         };
       });
 
-    case "REMOVE_FROM_FILTER":
+    case HallOfFameActions.REMOVE_FROM_FILTER:
       return filters.map((filter) => {
         if (filter.id !== action.payload.id) {
           return filter;

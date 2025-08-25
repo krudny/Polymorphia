@@ -18,7 +18,7 @@ export function useFadeInAnimate(shouldAnimate: boolean = true) {
     gsap.fromTo(
       ref.current,
       { autoAlpha: 0 },
-      { autoAlpha: 1, duration: 0.4, ease: "power1.out" }
+      { autoAlpha: 1, duration: 0.3, ease: "power1.inOut" }
     );
   }, [shouldAnimate]);
 

@@ -6,6 +6,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import toast from "react-hot-toast";
+import { useEventParams } from "@/shared/params/useSeachParams";
 
 export const MarkdownContext = createContext<MarkdownContextInterface>({
   markdown: "",
@@ -20,11 +21,9 @@ export const MarkdownContext = createContext<MarkdownContextInterface>({
   rejectMarkdown: () => {},
 });
 
-export const MarkdownProvider = ({
-  children,
-  gradableEventId,
-}: MarkdownProviderProps) => {
+export const MarkdownProvider = ({ children }: MarkdownProviderProps) => {
   const queryClient = useQueryClient();
+  const { gradableEventId } = useEventParams();
 
   const [markdown, setMarkdown] = useState("");
   const [newMarkdown, setNewMarkdown] = useState("");

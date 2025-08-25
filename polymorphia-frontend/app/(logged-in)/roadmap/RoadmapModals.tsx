@@ -11,10 +11,5 @@ export default function RoadmapModals({ gradableEvent, setSelectedEvent }) {
     return null;
   }
 
-  return (
-    <GradeModal
-      gradableEventId={gradableEvent.id}
-      onClosed={() => setSelectedEvent(null)}
-    />
-  );
+  return <GradeModal onClosedAction={() => setSelectedEvent(null)} />;
 }

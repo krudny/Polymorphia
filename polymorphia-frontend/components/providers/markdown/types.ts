@@ -15,5 +15,4 @@ export interface MarkdownContextInterface {
 
 export interface MarkdownProviderProps {
   children: ReactNode;
-  gradableEventId: number;
 }

@@ -11,8 +11,8 @@ import { RoadmapService } from "@/app/(logged-in)/roadmap/RoadmapService";
 import Loading from "@/components/loading/Loading";
 import { useMediaQuery } from "react-responsive";
 import RoadmapModals from "@/app/(logged-in)/roadmap/RoadmapModals";
-import { getCardComponent } from "@/shared/card/getCardComponent";
 import "./styles.css";
+import { getStudentCardComponent } from "@/shared/card/getCardComponent";
 import { StudentGradableEventResponseDTO } from "@/interfaces/api/course";
 
 export default function Roadmap() {
@@ -55,7 +55,7 @@ export default function Roadmap() {
         forceWidth={true}
         isLocked={isLocked}
         onClick={() => handleClick(gradableEvent)}
-        component={getCardComponent(gainedXp, hasReward)}
+        rightComponent={getStudentCardComponent(gainedXp, hasReward)}
       />
     );
   });

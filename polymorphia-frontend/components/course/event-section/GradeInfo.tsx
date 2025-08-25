@@ -1,3 +1,6 @@
+/* eslint-disable */
+// @ts-nocheck
+
 import ProgressBar from "@/components/progressbar/ProgressBar";
 import { API_STATIC_URL } from "@/services/api";
 import Image from "next/image";

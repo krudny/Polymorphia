@@ -1,12 +1,11 @@
 import { HallOfFameFilter } from "@/components/hall-of-fame/general/types";
 import { QueryClient } from "@tanstack/query-core";
 import toast from "react-hot-toast";
+import { Dispatch, SetStateAction } from "react";
 
 export const hallOfFameConfirmAction = (
   filters: HallOfFameFilter[],
-  setAppliedFiltersState: React.Dispatch<
-    React.SetStateAction<HallOfFameFilter[]>
-  >,
+  setAppliedFiltersState: Dispatch<SetStateAction<HallOfFameFilter[]>>,
   queryClient: QueryClient
 ): boolean => {
   const invalidFilterCount = filters.find((filter) => {

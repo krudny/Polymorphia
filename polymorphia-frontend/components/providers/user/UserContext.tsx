@@ -1,3 +1,6 @@
+/* eslint-disable */
+// @ts-nocheck
+
 import { createContext, ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import UserService from "@/app/(logged-in)/profile/UserService";

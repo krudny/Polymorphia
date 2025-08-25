@@ -1,11 +1,11 @@
-import { API_STATIC_URL } from "@/services/api";
 import XPCard from "@/components/xp-card/XPCard";
 import { useContext } from "react";
 import { EquipmentContext } from "@/components/providers/equipment/EquipmentContext";
 import Modal from "@/components/modal/Modal";
 import "../index.css";
-import XPCardPoints from "@/components/xp-card/inner-components/XPCardPoints";
 import { AssignedItemResponseDTO } from "@/interfaces/api/reward/assigned";
+import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
+import XPCardImage from "@/components/xp-card/components/XPCardImage";
 
 export default function ChestModal() {
   const { currentChestModalData, setCurrentChestModalData } =
@@ -26,13 +26,15 @@ export default function ChestModal() {
               key={assignedItem.details.id}
               title={assignedItem.base.name}
               subtitle={`Zdobyto ${assignedItem.details.receivedDate}`}
-              image={{
-                url: `${API_STATIC_URL}/${assignedItem.base.imageUrl}`,
-                alt: assignedItem.base.name,
-              }}
               size="xs"
+              leftComponent={
+                <XPCardImage
+                  imageUrl={assignedItem.base.imageUrl}
+                  alt={assignedItem.base.name}
+                />
+              }
               // TODO: handle undefined xp
-              component={
+              rightComponent={
                 <XPCardPoints points={`+${assignedItem.details.gainedXp}`} />
               }
             />

@@ -33,7 +33,7 @@ export default function AccordionSection({
 
   return (
     <div className="accordion-section">
-      <div className={clsx("accordion-section-header", headerClassName)}>
+      <div className={clsx(headerClassName, "accordion-section-header")}>
         <h1>{title}</h1>
         <div className="accordion-toggle-button" onClick={() => toggle(id)}>
           {isOpened ? (

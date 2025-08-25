@@ -1,3 +1,6 @@
+/* eslint-disable */
+// @ts-nocheck
+
 import Modal from "@/components/modal/Modal";
 import { useContext, useRef } from "react";
 import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";

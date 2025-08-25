@@ -122,11 +122,13 @@ function GroupPickingModalContent() {
   );
 }
 
-export default function GroupPickingModal({ onClosed }: SpeedDialModalProps) {
+export default function GroupPickingModal({
+  onClosedAction,
+}: SpeedDialModalProps) {
   return (
     <Modal
       isDataPresented={true}
-      onClosed={onClosed}
+      onClosed={onClosedAction}
       title="Grupa"
       subtitle="Zaproś jedną osobę do grupy"
     >

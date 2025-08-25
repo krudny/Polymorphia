@@ -43,6 +43,7 @@ const generateAllData = () => {
 
     const item = {
       userDetails: {
+        id: i,
         studentName: studentName,
         animalName: studentName,
         evolutionStage: "Majestatyczna Bestia",

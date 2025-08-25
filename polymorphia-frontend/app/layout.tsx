@@ -5,7 +5,7 @@ import localFont from "next/font/local";
 import { League_Gothic } from "next/font/google";
 import { QueryClient } from "@tanstack/query-core";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { TitleProvider } from "@/components/navigation/TitleContext";
 import { ThemeProvider } from "next-themes";
@@ -27,9 +27,9 @@ const materialSymbols = localFont({
 });
 
 export default function RootLayout({
-                                     children,
-                                   }: Readonly<{
-  children: React.ReactNode;
+  children,
+}: Readonly<{
+  children: ReactNode;
 }>) {
   const [queryClient] = useState(() => new QueryClient());
   return (
@@ -38,29 +38,29 @@ export default function RootLayout({
       className="custom-scrollbar bg-neutral-200"
       suppressHydrationWarning
     >
-    <head>
-      <meta name="theme-color" content="#262626" />
-      <link rel="icon" type="image/x-icon" href="/favicon.png" />
-    </head>
-    <body
-      className={`${leagueGothic.className} ${leagueGothic.variable} ${materialSymbols.variable} text-primary-dark dark:text-secondary-gray`}
-    >
-    <ThemeProviderMui theme={themeConfig}>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        storageKey="theme"
+      <head>
+        <meta name="theme-color" content="#262626" />
+        <link rel="icon" type="image/x-icon" href="/favicon.png" />
+      </head>
+      <body
+        className={`${leagueGothic.className} ${leagueGothic.variable} ${materialSymbols.variable} text-primary-dark dark:text-secondary-gray`}
       >
-        <TitleProvider>
-          <QueryClientProvider client={queryClient}>
-            <Toaster toastOptions={{ style: { fontSize: "1.5rem" } }} />
-            {children}
-          </QueryClientProvider>
-        </TitleProvider>
-      </ThemeProvider>
-    </ThemeProviderMui>
-    </body>
+        <ThemeProviderMui theme={themeConfig}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            storageKey="theme"
+          >
+            <TitleProvider>
+              <QueryClientProvider client={queryClient}>
+                <Toaster toastOptions={{ style: { fontSize: "1.5rem" } }} />
+                {children}
+              </QueryClientProvider>
+            </TitleProvider>
+          </ThemeProvider>
+        </ThemeProviderMui>
+      </body>
     </html>
   );
 }
