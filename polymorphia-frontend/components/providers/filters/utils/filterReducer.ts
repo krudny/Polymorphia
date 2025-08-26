@@ -10,12 +10,16 @@ export function filterReducer<FilterIdType extends string>(
     case "TOGGLE": {
       const current = state[action.id] ?? [];
       const config = configs.find((config) => config.id === action.id);
-      if (!config) return state;
+      if (!config) {
+        return state;
+      }
 
       const option = config.options.find(
         (option) => option.value === action.value
       );
-      if (!option) return state;
+      if (!option) {
+        return state;
+      }
 
       const min = config.min ?? 1;
       const max = config.max ?? 1;
