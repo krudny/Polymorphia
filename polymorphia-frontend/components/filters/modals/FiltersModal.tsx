@@ -58,13 +58,16 @@ export default function FiltersModal<
     }
   };
 
-  let modalContent;
-  if (isFiltersLoading) {
-    modalContent = <Loading />;
-  } else if (isFiltersError) {
-    modalContent = <h1>Nie udało się załadować filtrów.</h1>;
-  } else {
-    modalContent = (
+  const getModalContent = () => {
+    if (isFiltersLoading) {
+      return <Loading />;
+    }
+
+    if (isFiltersError) {
+      return <h1>Nie udało się załadować filtrów.</h1>;
+    }
+
+    return (
       <>
         <Accordion
           ref={accordionRef}
@@ -107,7 +110,7 @@ export default function FiltersModal<
         </div>
       </>
     );
-  }
+  };
 
   return (
     <Modal
@@ -119,7 +122,7 @@ export default function FiltersModal<
         setIsModalOpen(false);
       }}
     >
-      <div className="filters-modal">{modalContent}</div>
+      <div className="filters-modal">{getModalContent()}</div>
     </Modal>
   );
 }
