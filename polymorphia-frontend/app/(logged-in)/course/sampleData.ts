@@ -206,7 +206,7 @@ export const lab1 =
   "19. Zamknij IntelliJ.\n" +
   "\n" +
   "20. W pliku `build.gradle` w sekcji `plugins` dodaj linię `id 'application'`: \n" +
-  "    ```\n" +
+  "    ```groovy\n" +
   "    plugins {\n" +
   "      id 'application'\n" +
   "      id 'java'\n" +
@@ -214,14 +214,14 @@ export const lab1 =
   "    ```\n" +
   "\n" +
   "21. W tym samym pliku dodaj sekcję:\n" +
-  "    ```\n" +
+  "    ```groovy\n" +
   "    application {\n" +
   "      getMainClass().set('agh.ics.oop.World')\n" +
   "    }\n" +
   "    ```\n" +
   "\n" +
   "22. W tym samym pliku dodaj sekcję:\n" +
-  "    ```\n" +
+  "    ```groovy\n" +
   "    java {\n" +
   "        toolchain {\n" +
   "            languageVersion.set(JavaLanguageVersion.of(21))\n" +
@@ -433,7 +433,7 @@ export const lab2 =
   "* Słowo kluczowe `this` odnosi się do obiektu, na rzecz którego wywołano metodę.\n" +
   "  Przykładowo w języku C moglibyśmy zdefiniować metodę `createPoint`:\n" +
   "\n" +
-  "    ```C\n" +
+  "    ```c\n" +
   "    struct Point {\n" +
   "      int x;\n" +
   "      int y;\n" +

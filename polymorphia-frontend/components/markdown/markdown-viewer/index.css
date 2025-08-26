@@ -8,7 +8,7 @@
 }
 
 .markdown-config-code-block {
-    @apply bg-primary-dark text-secondary-light text-base p-4 rounded overflow-x-auto my-4;
+    @apply bg-primary-dark text-secondary-light !text-base p-4 rounded overflow-x-auto my-4;
 }
 
 /* Markdown viewer */

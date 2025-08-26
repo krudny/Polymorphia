@@ -4,7 +4,7 @@ import { ComponentProps } from "react";
 import { API_STATIC_URL } from "@/services/api";
 import Image from "next/image";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { cb } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import { tomorrow } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 export const markdownConfig: Components = {
   h1: ({ ...props }) => (
@@ -91,7 +91,7 @@ export const markdownConfig: Components = {
       <SyntaxHighlighter
         PreTag="div"
         language={match[1]}
-        style={cb}
+        style={tomorrow}
         className="markdown-config-code-block"
       >
         {String(children).replace(/\n$/, "")}
