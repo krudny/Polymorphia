@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  createContext,
-  ReactNode,
-  useEffect,
-  useReducer,
-  useRef,
-  useState,
-} from "react";
+import { createContext, ReactNode, useEffect, useReducer, useRef, useState } from "react";
 import { useDebounce } from "use-debounce";
 import { useQuery } from "@tanstack/react-query";
 import { filters } from "@/components/providers/hall-of-fame/filters/InitialFilters";
@@ -20,7 +13,7 @@ import { addFieldToFilter } from "@/components/providers/hall-of-fame/utils/addF
 import { addEventSectionsToFilters } from "@/components/providers/hall-of-fame/utils/addEventSectionsToFilters";
 import { sortFilters } from "@/components/providers/hall-of-fame/utils/sortFilters";
 import { selectMinimumOptions } from "@/components/providers/hall-of-fame/utils/selectMinimumOptions";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
+import useEventSections from "@/hooks/useEventSections";
 
 const emptyDataObject = {
   content: [],
@@ -33,16 +26,21 @@ const emptyDataObject = {
 export const HallOfFameContext = createContext<HallOfFameContextInterface>({
   data: emptyDataObject,
   page: 0,
-  setPage: () => {},
+  setPage: () => {
+  },
   search: "",
-  setSearch: () => {},
+  setSearch: () => {
+  },
   isModalOpen: false,
-  setIsModalOpen: () => {},
+  setIsModalOpen: () => {
+  },
   filtersState: [],
-  filtersDispatch: () => {},
+  filtersDispatch: () => {
+  },
   isLoading: true,
   appliedFiltersState: [],
-  setAppliedFiltersState: () => {},
+  setAppliedFiltersState: () => {
+  },
 });
 
 export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
@@ -53,18 +51,14 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filtersState, filtersDispatch] = useReducer(
     HallOfFameReducer,
-    filters
+    filters,
   );
   const [appliedFiltersState, setAppliedFiltersState] = useState(filtersState);
   const { sortByFilter, rankingOptionsFilter } = getAllFilters(filtersState);
   const { sortOrder, sortBy, groups } =
     getAppliedQueryParams(appliedFiltersState);
   const initRef = useRef(false);
-
-  const { data: eventSections } = useQuery({
-    queryKey: ["eventSections"],
-    queryFn: () => EventSectionService.getEventSections(1),
-  });
+  const { data: eventSections } = useEventSections();
 
   const { data = emptyDataObject, isLoading } = useQuery({
     queryKey: [
@@ -85,7 +79,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
         sortOrder[0] === "asc" || sortOrder[0] === "desc"
           ? sortOrder[0]
           : undefined,
-        groups
+        groups,
       ),
   });
 
@@ -104,7 +98,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
           orderIndex: Number.MAX_SAFE_INTEGER,
           isSelected: false,
         },
-        sortByFilter
+        sortByFilter,
       );
       addFieldToFilter(
         {
@@ -113,7 +107,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
           orderIndex: Number.MAX_SAFE_INTEGER,
           isSelected: true,
         },
-        rankingOptionsFilter
+        rankingOptionsFilter,
       );
       addFieldToFilter(
         {
@@ -122,7 +116,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
           orderIndex: Number.MAX_SAFE_INTEGER,
           isSelected: true,
         },
-        sortByFilter
+        sortByFilter,
       );
       addEventSectionsToFilters(eventSections, sortByFilter);
       addEventSectionsToFilters(eventSections, rankingOptionsFilter);

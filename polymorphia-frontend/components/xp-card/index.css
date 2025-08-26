@@ -36,7 +36,7 @@
 }
 
 .xp-card-fading-edges {
-    @apply w-full p-2;
+    @apply w-full px-3;
     mask-image: linear-gradient(
             to right,
             transparent,

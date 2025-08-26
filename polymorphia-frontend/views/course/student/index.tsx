@@ -11,7 +11,7 @@ import { EventSectionService } from "@/app/(logged-in)/course/EventSectionServic
 import Loading from "@/components/loading/Loading";
 import { useRouter } from "next/navigation";
 import renderCard from "@/views/course/student/RenderCard";
-import { useEventParams } from "@/shared/params/useSeachParams";
+import { useEventParams } from "@/hooks/useEventParams";
 import GradeModal from "@/components/speed-dial/modals/GradeModal";
 import { EventTypes } from "@/interfaces/api/course";
 
@@ -36,7 +36,7 @@ export default function StudentView() {
   useEffect(() => {
     if (!isLoading && gradableEvents && gradableEvents.length === 1) {
       router.push(
-        `/course/${eventType.toLowerCase()}/${eventSectionId}/${gradableEvents[0].id}`
+        `/course/${eventType.toLowerCase()}/${eventSectionId}/${gradableEvents[0].id}`,
       );
     }
   }, [isLoading, gradableEvents, eventType, eventSectionId, router]);
@@ -70,7 +70,7 @@ export default function StudentView() {
   };
 
   const cards = gradableEvents.map((gradableEvent) =>
-    renderCard(gradableEvent, false, handleClick)
+    renderCard(gradableEvent, false, handleClick),
   );
 
   return (

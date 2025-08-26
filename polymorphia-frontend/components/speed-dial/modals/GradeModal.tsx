@@ -4,7 +4,7 @@ import Loading from "@/components/loading/Loading";
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
-import { useEventParams } from "@/shared/params/useSeachParams";
+import { useEventParams } from "@/hooks/useEventParams";
 
 export default function GradeModal({ onClosedAction }: SpeedDialModalProps) {
   console.log("Rendering GradeModal");

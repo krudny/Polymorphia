@@ -7,7 +7,7 @@ import { EventSectionService } from "@/app/(logged-in)/course/EventSectionServic
 import { useRouter } from "next/navigation";
 import Loading from "@/components/loading/Loading";
 import renderCard from "@/views/course/instructor/RenderCard";
-import { useEventParams } from "@/shared/params/useSeachParams";
+import { useEventParams } from "@/hooks/useEventParams";
 
 export default function InstructorView() {
   const { eventType, eventSectionId } = useEventParams();
@@ -29,7 +29,7 @@ export default function InstructorView() {
   useEffect(() => {
     if (!isLoading && gradableEvents && gradableEvents.length === 1) {
       router.replace(
-        `/course/${eventType.toLowerCase()}/${eventSectionId}/${gradableEvents[0].id}`
+        `/course/${eventType.toLowerCase()}/${eventSectionId}/${gradableEvents[0].id}`,
       );
     }
   }, [isLoading, gradableEvents, eventType, eventSectionId, router]);
@@ -48,12 +48,12 @@ export default function InstructorView() {
 
   const handleClick = (id: number) => {
     router.push(
-      `/course/${eventType.toLowerCase()}/${eventSectionId}/${id}/grading`
+      `/course/${eventType.toLowerCase()}/${eventSectionId}/${id}/grading`,
     );
   };
 
   const cards = gradableEvents.map((gradableEvent) =>
-    renderCard(gradableEvent, false, handleClick)
+    renderCard(gradableEvent, false, handleClick),
   );
 
   return (

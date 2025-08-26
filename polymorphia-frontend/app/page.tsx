@@ -4,11 +4,8 @@ import Image from "next/image";
 import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import LoginForm from "@/components/home/LoginForm";
-import { useEffect, useRef, useState } from "react";
-import {
-  animateInitialMount,
-  animateLoginFormVisibility,
-} from "@/animations/Home";
+import { useLayoutEffect, useRef, useState } from "react";
+import { animateInitialMount, animateLoginFormVisibility } from "@/animations/Home";
 import "./index.css";
 
 export default function Home() {
@@ -18,36 +15,35 @@ export default function Home() {
   const closeLoginForm = () => setIsLoginFormVisible(false);
 
   const loginFormRef = useRef<HTMLDivElement>(null);
-  const titleSectionRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
   const backgroundRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const hasMountedRef = useRef(false);
 
-  useEffect(() => {
-    if (!backgroundRef.current || !titleSectionRef.current || !imageRef.current)
+  useLayoutEffect(() => {
+    if (!backgroundRef.current || !titleRef.current || !imageRef.current) {
       return;
+    }
+
     animateInitialMount(
       backgroundRef.current,
-      titleSectionRef.current,
+      titleRef.current,
       imageRef.current,
       () => {
         hasMountedRef.current = true;
-      }
+      },
     );
   }, []);
 
-  useEffect(() => {
-    if (
-      !hasMountedRef.current ||
-      !loginFormRef.current ||
-      !titleSectionRef.current
-    ) {
+  useLayoutEffect(() => {
+    if (!hasMountedRef.current || !loginFormRef.current || !titleRef.current) {
       return;
     }
+
     animateLoginFormVisibility(
       loginFormRef.current,
-      titleSectionRef.current,
-      isLoginFormVisible
+      titleRef.current,
+      isLoginFormVisible,
     );
   }, [isLoginFormVisible]);
 
@@ -76,7 +72,7 @@ export default function Home() {
         </div>
       </div>
       <div className="hero-right-wrapper">
-        <div ref={titleSectionRef}>
+        <div ref={titleRef}>
           <h1>Polymorphia</h1>
           <div className="hero-buttons">
             <ButtonWithBorder

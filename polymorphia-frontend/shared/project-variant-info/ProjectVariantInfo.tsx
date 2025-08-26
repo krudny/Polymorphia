@@ -4,7 +4,7 @@ import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCardProjectVariant from "@/components/xp-card/components/XPCardProjectVariant";
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
-import { useEventParams } from "@/shared/params/useSeachParams";
+import { useEventParams } from "@/hooks/useEventParams";
 import { EventTypes } from "@/interfaces/api/course";
 
 export default function ProjectVariantInfo() {

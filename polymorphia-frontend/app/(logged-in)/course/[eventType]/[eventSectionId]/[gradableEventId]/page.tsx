@@ -5,7 +5,7 @@ import SpeedDialDesktop from "@/components/speed-dial/SpeedDialDesktop";
 import MarkdownWrapper from "@/components/markdown/MarkdownWrapper";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import "./index.css";
-import { useEventParams } from "@/shared/params/useSeachParams";
+import { useEventParams } from "@/hooks/useEventParams";
 import SpeedDialMobile from "@/components/speed-dial/SpeedDialMobile";
 
 export default function GradableEventView() {

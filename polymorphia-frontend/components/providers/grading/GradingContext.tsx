@@ -1,17 +1,10 @@
 "use client";
-import {
-  createContext,
-  Dispatch,
-  ReactNode,
-  useEffect,
-  useReducer,
-  useState,
-} from "react";
+import { createContext, Dispatch, ReactNode, useEffect, useReducer, useState } from "react";
 import { useDebounce } from "use-debounce";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { UserDetailsDTO } from "@/interfaces/api/user";
-import { useEventParams } from "@/shared/params/useSeachParams";
+import { useEventParams } from "@/hooks/useEventParams";
 import { BaseReward } from "@/interfaces/api/reward";
 import { CriterionResponseDTO } from "@/interfaces/api/grade";
 import { ProjectGroupResponseDTO } from "@/interfaces/api/temp";
@@ -54,36 +47,36 @@ export const GradingReducerActions = {
 
 export type GradingReducerActionType =
   | {
-      type: typeof GradingReducerActions.SET_TARGET;
-      payload: UserDetailsDTO[];
-    }
+  type: typeof GradingReducerActions.SET_TARGET;
+  payload: UserDetailsDTO[];
+}
   | {
-      type: typeof GradingReducerActions.ADD_CRITERION;
-      payload: { criterionId: number; details: CriteriaDetails };
-    }
+  type: typeof GradingReducerActions.ADD_CRITERION;
+  payload: { criterionId: number; details: CriteriaDetails };
+}
   | {
-      type: typeof GradingReducerActions.ADD_XP_TO_CRITERION;
-      payload: { criterionId: number; xp: string };
-    }
+  type: typeof GradingReducerActions.ADD_XP_TO_CRITERION;
+  payload: { criterionId: number; xp: string };
+}
   | {
-      type: typeof GradingReducerActions.ADD_REWARD_TO_CRITERION;
-      payload: {
-        criterionId: number;
-        assignedReward: BaseReward & { quantity: number };
-      };
-    }
+  type: typeof GradingReducerActions.ADD_REWARD_TO_CRITERION;
+  payload: {
+    criterionId: number;
+    assignedReward: BaseReward & { quantity: number };
+  };
+}
   | {
-      type: typeof GradingReducerActions.UPDATE_REWARD_QUANTITY;
-      payload: {
-        criterionId: number;
-        rewardId: number;
-        quantity: number;
-      };
-    }
+  type: typeof GradingReducerActions.UPDATE_REWARD_QUANTITY;
+  payload: {
+    criterionId: number;
+    rewardId: number;
+    quantity: number;
+  };
+}
   | {
-      type: typeof GradingReducerActions.ADD_COMMENT;
-      payload: { comment: string };
-    };
+  type: typeof GradingReducerActions.ADD_COMMENT;
+  payload: { comment: string };
+};
 
 const initialState: GradingReducerState = {
   selectedTarget: null,
@@ -93,7 +86,7 @@ const initialState: GradingReducerState = {
 
 const GradingReducer = (
   state: GradingReducerState,
-  action: GradingReducerActionType
+  action: GradingReducerActionType,
 ): GradingReducerState => {
   switch (action.type) {
     case GradingReducerActions.SET_TARGET:
@@ -127,7 +120,7 @@ const GradingReducer = (
       const currentCriterion = state.criteria[action.payload.criterionId];
       const existingRewards = currentCriterion?.assignedRewards || [];
       const existingRewardIndex = existingRewards.findIndex(
-        (reward) => reward.id === action.payload.assignedReward.id
+        (reward) => reward.id === action.payload.assignedReward.id,
       );
 
       if (existingRewardIndex !== -1) {
@@ -178,7 +171,8 @@ const GradingReducer = (
 
 export const GradingContext = createContext<TestGradingContextType>({
   search: "",
-  setSearch: () => {},
+  setSearch: () => {
+  },
   students: undefined,
   isStudentsLoading: false,
   projectGroups: undefined,
@@ -186,8 +180,10 @@ export const GradingContext = createContext<TestGradingContextType>({
   isGradeLoading: false,
   criteria: undefined,
   state: initialState,
-  dispatch: () => {},
-  submitGrade: () => {},
+  dispatch: () => {
+  },
+  submitGrade: () => {
+  },
 });
 
 export const GradingProvider = ({ children }: { children: ReactNode }) => {

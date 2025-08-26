@@ -1,24 +1,26 @@
 import { createContext, useEffect, useState } from "react";
-import {
-  MarkdownContextInterface,
-  MarkdownProviderProps,
-} from "@/components/providers/markdown/types";
+import { MarkdownContextInterface, MarkdownProviderProps } from "@/components/providers/markdown/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import toast from "react-hot-toast";
-import { useEventParams } from "@/shared/params/useSeachParams";
+import { useEventParams } from "@/hooks/useEventParams";
 
 export const MarkdownContext = createContext<MarkdownContextInterface>({
   markdown: "",
-  setMarkdown: () => {},
+  setMarkdown: () => {
+  },
   newMarkdown: "",
-  setNewMarkdown: () => {},
+  setNewMarkdown: () => {
+  },
   isEditing: false,
-  setIsEditing: () => {},
+  setIsEditing: () => {
+  },
   isLoading: true,
   isError: false,
-  saveMarkdown: () => {},
-  rejectMarkdown: () => {},
+  saveMarkdown: () => {
+  },
+  rejectMarkdown: () => {
+  },
 });
 
 export const MarkdownProvider = ({ children }: MarkdownProviderProps) => {

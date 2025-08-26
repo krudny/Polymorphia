@@ -6,14 +6,14 @@ import ProgressBar from "@/components/progressbar/ProgressBar";
 import XPCard from "@/components/xp-card/XPCard";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import ProgressBarElement from "@/components/progressbar/ProgressBarElement";
-import { useQuery } from "@tanstack/react-query";
-import { RoadmapService } from "@/app/(logged-in)/roadmap/RoadmapService";
 import Loading from "@/components/loading/Loading";
 import { useMediaQuery } from "react-responsive";
 import RoadmapModals from "@/app/(logged-in)/roadmap/RoadmapModals";
 import "./styles.css";
-import { getStudentCardComponent } from "@/shared/card/getCardComponent";
 import { StudentGradableEventResponseDTO } from "@/interfaces/api/course";
+import { useRoadmap } from "@/hooks/useRoadmap";
+import XPCardChest from "@/components/xp-card/components/XPCardChest";
+import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 
 export default function Roadmap() {
   const { setTitle } = useTitle();
@@ -21,6 +21,7 @@ export default function Roadmap() {
     StudentGradableEventResponseDTO | undefined
   >(undefined);
   const wrapperRef = useFadeInAnimate();
+  const { data: roadmap, isLoading } = useRoadmap();
   const isXL = useMediaQuery({ minWidth: 1280 });
   const isMd = useMediaQuery({ minWidth: 768 });
   const isSm = useMediaQuery({ minWidth: 400 });
@@ -29,12 +30,8 @@ export default function Roadmap() {
     setTitle("Roadmapa");
   }, [setTitle]);
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["roadmap"],
-    queryFn: () => RoadmapService.getRoadmapData(),
-  });
 
-  if (isLoading || !data) {
+  if (isLoading || !roadmap) {
     return <Loading />;
   }
 
@@ -42,20 +39,27 @@ export default function Roadmap() {
     setSelectedEvent(gradableEvent);
   };
 
-  const cards = data.map((gradableEvent) => {
+  const cards = roadmap.map((gradableEvent) => {
     const { name, topic, id, gainedXp, isLocked, hasReward } = gradableEvent;
+    const color = gainedXp ? "green" : "silver";
+    const rightComponent = hasReward ? <XPCardChest /> : <XPCardPoints
+      points={gainedXp}
+      isSumLabelVisible={true}
+      hasChest={true}
+      color={color}
+    />;
 
     return (
       <XPCard
         title={name}
         subtitle={topic}
         key={id}
-        color={gainedXp ? "green" : "silver"}
+        color={color}
         size={isXL ? "md" : isMd ? "sm" : "xs"}
         forceWidth={true}
         isLocked={isLocked}
         onClick={() => handleClick(gradableEvent)}
-        rightComponent={getStudentCardComponent(gainedXp, hasReward)}
+        rightComponent={rightComponent}
       />
     );
   });
@@ -72,7 +76,7 @@ export default function Roadmap() {
           maxXP={100}
           numSquares={cards?.length ?? 0}
           segmentSizes={Array.from({ length: cards.length * 2 - 1 }, (_, i) =>
-            i % 2 === 0 ? 0 : 100 / (cards.length - 1)
+            i % 2 === 0 ? 0 : 100 / (cards.length - 1),
           )}
           isHorizontal={false}
           upperElement={

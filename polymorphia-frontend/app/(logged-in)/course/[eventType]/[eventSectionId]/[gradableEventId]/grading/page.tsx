@@ -1,6 +1,6 @@
 "use client";
 
-import { useEventParams } from "@/shared/params/useSeachParams";
+import { useEventParams } from "@/hooks/useEventParams";
 import { GradingProvider } from "@/components/providers/grading/GradingContext";
 import { EventTypes } from "@/interfaces/api/course";
 import { GradingTypes } from "@/components/grading/types";
