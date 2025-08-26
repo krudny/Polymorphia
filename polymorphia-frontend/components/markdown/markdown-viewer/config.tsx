@@ -3,6 +3,8 @@ import "./index.css";
 import { ComponentProps } from "react";
 import { API_STATIC_URL } from "@/services/api";
 import Image from "next/image";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { cb } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 export const markdownConfig: Components = {
   h1: ({ ...props }) => (
@@ -71,6 +73,7 @@ export const markdownConfig: Components = {
 
   code({ node, className, children, ...props }) {
     const isBlock = node?.position?.start.line !== node?.position?.end.line;
+    const match = /language-(\w+)/.exec(className || "");
 
     if (!isBlock) {
       return (
@@ -84,7 +87,16 @@ export const markdownConfig: Components = {
       );
     }
 
-    return (
+    return match ? (
+      <SyntaxHighlighter
+        PreTag="div"
+        language={match[1]}
+        style={cb}
+        className="markdown-config-code-block"
+      >
+        {String(children).replace(/\n$/, "")}
+      </SyntaxHighlighter>
+    ) : (
       <pre className="markdown-config-code-block">
         <code className={`${className}`} {...props}>
           {children}
