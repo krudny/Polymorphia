@@ -27,7 +27,9 @@ export default function Sidebar() {
 
   useEffect(() => {
     const sidebar = sidebarRef.current;
-    if (!sidebar) return;
+    if (!sidebar) {
+      return;
+    }
     animateSidebar(sidebar, isSidebarExpanded);
   }, [isSidebarExpanded]);
 

@@ -6,7 +6,9 @@ export function useScaleShow(shouldAnimate: boolean = true) {
   const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (!ref.current) return;
+    if (!ref.current) {
+      return;
+    }
 
     gsap.set(ref.current, { scale: 0.9, autoAlpha: 0 });
 

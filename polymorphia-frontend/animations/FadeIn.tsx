@@ -5,11 +5,15 @@ export function useFadeInAnimate(shouldAnimate: boolean = true) {
   const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (!ref.current) return;
+    if (!ref.current) {
+      return;
+    }
 
     gsap.set(ref.current, { autoAlpha: 0 });
 
-    if (!shouldAnimate) return;
+    if (!shouldAnimate) {
+      return;
+    }
 
     gsap.fromTo(
       ref.current,

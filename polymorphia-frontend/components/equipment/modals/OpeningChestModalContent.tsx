@@ -15,7 +15,9 @@ export default function OpeningChestModalContent() {
   const openingChest = currentOpeningChestModalData;
 
   const handlePickItem = (itemId: number) => {
-    if (!openingChest) return;
+    if (!openingChest) {
+      return;
+    }
     const isPicked = pickedItemsIds.includes(itemId);
 
     if (openingChest.base.behavior === "ONE_OF_MANY") {

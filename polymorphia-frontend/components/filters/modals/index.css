@@ -21,7 +21,7 @@
 }
 
 .filters-modal-filter-option-selected {
-    @apply bg-primary-dark text-secondary-light dark:bg-secondary-light dark:text-primary-dark shadow-md;
+    @apply bg-primary-dark text-secondary-light dark:bg-secondary-gray dark:text-primary-dark shadow-md;
 }
 
 .filters-modal-filter-option-unselected {

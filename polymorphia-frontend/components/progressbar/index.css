@@ -4,92 +4,92 @@
 /* ProgressBar */
 
 .progressbar-vertical {
-  @apply w-full h-full flex justify-center gap-10;
+    @apply w-full h-full flex justify-center gap-10;
 }
 
 .progressbar-horizontal {
-  @apply w-full h-full m-auto flex flex-col gap-10 justify-center;
+    @apply w-full h-full m-auto flex flex-col gap-10 justify-center;
 }
 
 .progressbar-label-container {
-  @apply whitespace-nowrap w-full;
+    @apply whitespace-nowrap w-full;
 }
 
-.progressbar-container-vertical{
-  @apply w-fit relative;
+.progressbar-container-vertical {
+    @apply w-fit relative;
 }
 
 .progressbar-container-horizontal {
-  @apply w-full relative;
+    @apply w-full relative;
 }
 
 /* ProgressBarLine */
 
 .progressbar-line {
-  @apply absolute top-1/2 overflow-hidden z-40;
-  @apply bg-primary-gray dark:bg-primary-dark;
+    @apply absolute top-1/2 overflow-hidden z-40;
+    @apply bg-primary-gray dark:bg-primary-dark;
 
-  div {
-    @apply bg-primary-dark dark:bg-secondary-light;
-  }
+    div {
+        @apply bg-primary-dark dark:bg-secondary-gray;
+    }
 }
 
 .progressbar-line-horizontal {
-  @apply -translate-y-1/2 h-2
+    @apply -translate-y-1/2 h-2
 }
 
 .progressbar-line-vertical {
-  @apply -translate-x-1/2 w-2;
+    @apply -translate-x-1/2 w-2;
 }
 
 /* ProgressBarRangeLabels */
 
 .progressbar-range-container {
-  @apply w-full h-full min-h-8 relative;
+    @apply w-full h-full min-h-8 relative;
 }
 
 .progressbar-range-label {
-  @apply absolute w-14 text-center;
+    @apply absolute w-14 text-center;
 
-  span {
-    @apply text-2xl;
-  }
+    span {
+        @apply text-2xl;
+    }
 }
 
 /* ProgressBarSquare */
 
 .progressbar-square {
-  @apply absolute top-1/2 -translate-y-1/2 -ml-4  z-40;
+    @apply absolute top-1/2 -translate-y-1/2 -ml-4  z-40;
 
-  div {
-    @apply w-8 h-8;
-  }
+    div {
+        @apply w-8 h-8;
+    }
 }
 
 /* ProgressBarTextLabels */
 
 .progressbar-text-container {
-  @apply relative;
+    @apply relative;
 }
 
 .progressbar-text-label {
-  @apply absolute w-28 text-center;
+    @apply absolute w-28 text-center;
 
-  span {
-    @apply block whitespace-normal break-normal;
-  }
+    span {
+        @apply block whitespace-normal break-normal;
+    }
 }
 
 /* ProgressBarElements */
 
 .progressbar-element-container {
-  @apply relative;
+    @apply relative;
 }
 
 .progressbar-element {
-  @apply absolute w-fit;
+    @apply absolute w-fit;
 
-  span {
-    @apply block whitespace-normal break-normal;
-  }
+    span {
+        @apply block whitespace-normal break-normal;
+    }
 }

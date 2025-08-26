@@ -5,7 +5,24 @@ import Image from "next/image";
 import Link from "next/link";
 import { API_STATIC_URL } from "@/services/api";
 import "./index.css";
-import { DetailedSlideInfoProps } from "@/components/slider/types";
+import {
+  DetailedSlideInfoProps,
+  KnowledgeBaseTypes,
+} from "@/components/slider/types";
+import { ReactNode } from "react";
+
+const SlideDetailsErrorMessage = ({
+  message,
+}: {
+  message: string;
+}): ReactNode => (
+  <div className="slide-details">
+    <div className="slide-details-info">
+      <CircleX size={20} />
+      <h3>{message}</h3>
+    </div>
+  </div>
+);
 
 export default function DetailedSlideInfo({
   type,
@@ -13,30 +30,21 @@ export default function DetailedSlideInfo({
 }: DetailedSlideInfoProps) {
   if (!relatedRewards) {
     return (
-      <div className="slide-details">
-        <div className="slide-details-info">
-          <CircleX size={20} />
-          <h3 className="text-xl 2xl:text-2xl">
-            Błąd ładowania {type === "ITEM" ? "skrzynek" : "przedmiotów"}.
-          </h3>
-        </div>
-      </div>
+      <SlideDetailsErrorMessage
+        message={`Błąd ładowania ${type === KnowledgeBaseTypes.ITEM ? "skrzynek" : "przedmiotów"}`}
+      />
     );
   }
 
   if (relatedRewards.length === 0) {
     return (
-      <div className="slide-details">
-        <div className="slide-details-info">
-          <CircleX size={20} />
-          <h3 className="text-xl 2xl:text-2xl">
-            {type === "ITEM"
-              ? "Ten przedmiot nie występuje w żadnej ze skrzynek"
-              : "W tej skrzynce nie znajdują się żadne przedmioty"}
-            .
-          </h3>
-        </div>
-      </div>
+      <SlideDetailsErrorMessage
+        message={
+          type === KnowledgeBaseTypes.ITEM
+            ? "Ten przedmiot nie występuje w żadnej ze skrzynek"
+            : "W tej skrzynce nie znajdują się żadne przedmioty"
+        }
+      />
     );
   }
 

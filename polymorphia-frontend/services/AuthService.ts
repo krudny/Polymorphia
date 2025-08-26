@@ -16,7 +16,9 @@ const AuthService = {
       credentials: "include",
     });
 
-    if (!response.ok) throw new Error("Failed to login");
+    if (!response.ok) {
+      throw new Error("Failed to login");
+    }
   },
 };
 

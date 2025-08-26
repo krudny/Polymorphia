@@ -5,11 +5,7 @@ import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import LoginForm from "@/components/home/LoginForm";
 import { useEffect, useRef, useState } from "react";
-import {
-  animateInitialMount,
-  animateLoginFormVisibility,
-} from "@/animations/Home";
-import { API_STATIC_URL } from "@/services/api";
+import { animateInitialMount, animateLoginFormVisibility } from "@/animations/Home";
 import "./index.css";
 
 export default function Home() {
@@ -33,7 +29,7 @@ export default function Home() {
       imageRef.current,
       () => {
         hasMountedRef.current = true;
-      }
+      },
     );
   }, []);
 
@@ -42,12 +38,13 @@ export default function Home() {
       !hasMountedRef.current ||
       !loginFormRef.current ||
       !titleSectionRef.current
-    )
+    ) {
       return;
+    }
     animateLoginFormVisibility(
       loginFormRef.current,
       titleSectionRef.current,
-      isLoginFormVisible
+      isLoginFormVisible,
     );
   }, [isLoginFormVisible]);
 
@@ -55,7 +52,7 @@ export default function Home() {
     <BackgroundWrapper className="hero-background-wrapper" forceTheme="light">
       <div className="hero-background-image" ref={backgroundRef}>
         <Image
-          src={`${API_STATIC_URL}/images/general/hero_bg.png`}
+          src="/hero-bg.png"
           alt="Hero background"
           fill
           className="object-cover"
@@ -66,7 +63,7 @@ export default function Home() {
       <div className="hero-image-wrapper" ref={imageRef}>
         <div>
           <Image
-            src={`${API_STATIC_URL}/images/general/owl.png`}
+            src="/owl.png"
             alt="Hero owl"
             width={1000}
             height={1000}
