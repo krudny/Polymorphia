@@ -1,18 +1,3 @@
-import { useFilters } from "@/components/providers/filters/useFilters";
-import { Dispatch, SetStateAction } from "react";
-
-export interface FilterablePageableContextInterface<
-  FilterIdType extends string,
-> {
-  filters: ReturnType<typeof useFilters<FilterIdType>>;
-  isFiltersLoading: boolean;
-  isFiltersError: boolean;
-  isModalOpen: boolean;
-  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
-  page: number;
-  setPage: Dispatch<SetStateAction<number>>;
-}
-
 // can be extended in the future with different options
 export type SpecialBehavior = "EXCLUSIVE";
 

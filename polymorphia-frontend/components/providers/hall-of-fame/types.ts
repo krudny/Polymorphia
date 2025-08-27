@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { HallOfFameResponseDTO } from "@/interfaces/api/hall-of-fame";
-import { FilterablePageableContextInterface } from "../filters/types";
+import { useFilters } from "../filters/useFilters";
 
 export type HallOfFameFilterId =
   | "sortOrder"
@@ -8,8 +8,14 @@ export type HallOfFameFilterId =
   | "groups"
   | "rankingOptions";
 
-export interface HallOfFameContextInterface
-  extends FilterablePageableContextInterface<HallOfFameFilterId> {
+export interface HallOfFameContextInterface {
+  filters: ReturnType<typeof useFilters<HallOfFameFilterId>>;
+  isFiltersLoading: boolean;
+  isFiltersError: boolean;
+  isModalOpen: boolean;
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+  page: number;
+  setPage: Dispatch<SetStateAction<number>>;
   data: HallOfFameResponseDTO;
   search: string;
   setSearch: Dispatch<SetStateAction<string>>;

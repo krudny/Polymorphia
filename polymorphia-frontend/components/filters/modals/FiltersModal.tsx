@@ -4,25 +4,20 @@ import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { FilterOption } from "@/components/providers/filters/types";
 import Modal from "@/components/modal/Modal";
 import { AccordionRef } from "@/components/providers/accordion/types";
-import { FilterablePageableContextInterface } from "@/components/providers/filters/types";
-import { useContext, useRef } from "react";
+import { useRef } from "react";
 import toast from "react-hot-toast";
 import "./index.css";
 import { FiltersModalProps } from "./types";
 import Loading from "@/components/loading/Loading";
 
-export default function FiltersModal<
-  FilterIdType extends string,
-  ContextType extends FilterablePageableContextInterface<FilterIdType>,
->({ context, onFiltersApplied }: FiltersModalProps<FilterIdType, ContextType>) {
-  const {
-    filters,
-    isModalOpen,
-    setIsModalOpen,
-    setPage,
-    isFiltersLoading,
-    isFiltersError,
-  } = useContext(context);
+export default function FiltersModal<FilterIdType extends string>({
+  filters,
+  isModalOpen,
+  setIsModalOpen,
+  isFiltersLoading,
+  isFiltersError,
+  onFiltersApplied,
+}: FiltersModalProps<FilterIdType>) {
   const {
     dispatch,
     configs,
@@ -48,7 +43,6 @@ export default function FiltersModal<
       onFiltersApplied?.();
       accordionRef.current?.closeAll();
       setIsModalOpen(false);
-      setPage(0);
     } else if (result.errors !== undefined) {
       (Object.keys(result.errors) as FilterIdType[]).forEach(
         (configId: FilterIdType) => {
