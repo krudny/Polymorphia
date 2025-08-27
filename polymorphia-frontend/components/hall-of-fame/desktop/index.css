@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "../../../styles/globals.css";
 @import "../general/index.css";
+
 @tailwind utilities;
 
 /* Hall of fame desktop */
@@ -29,7 +30,7 @@
 }
 
 .hall-of-fame-podium {
-    @apply w-full h-full max-h-36 rounded-xl 2xl:max-h-52 2xl:h-[calc(33.333%-1rem)];
+    @apply w-full h-full max-h-36 pb-2 rounded-xl 2xl:max-h-52 2xl:h-[calc(33.333%-1rem)];
 }
 
 .hall-of-fame-desktop-content-wrapper {

@@ -4,7 +4,7 @@ import { useDebounce } from "use-debounce";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { UserDetailsDTO } from "@/interfaces/api/user";
-import { useEventParams } from "@/hooks/useEventParams";
+import { useEventParams } from "@/hooks/general/useEventParams";
 import { BaseReward } from "@/interfaces/api/reward";
 import { CriterionResponseDTO } from "@/interfaces/api/grade";
 import { ProjectGroupResponseDTO } from "@/interfaces/api/temp";

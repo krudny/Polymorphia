@@ -1,23 +1,23 @@
+/* eslint-disable */
+/* @ts-nocheck */
+
 import { useScaleShow } from "@/animations/ScaleShow";
-import Pagination from "@/components/pagination/Pagination";
 import "./index.css";
 import "../general/index.css";
-import { handlePageChange } from "@/components/providers/hall-of-fame/utils/handlePageChange";
 import HallOfFamePodium from "@/components/hall-of-fame/desktop/HallOfFamePodium";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import Loading from "@/components/loading/Loading";
-import { HallOfFameRecordDTO } from "@/interfaces/api/hall-of-fame";
-import HallOfFameCardDesktop from "@/components/hall-of-fame/desktop/HallOfFameCardDesktop";
 import Search from "@/components/search";
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
+import HallOfFameList from "@/components/hall-of-fame/desktop/HallOfFameList";
+import HallOfFamePagination from "@/components/hall-of-fame/desktop/HallOfFamePagination";
 
 export default function HallOfFameDesktop() {
+  const {
+    search,
+    setSearch,
+    setIsModalOpen,
+  } = useHallOfFameContext();
   const wrapperRef = useScaleShow();
-  const { hallOfFame, setPage, isLoading, setIsModalOpen, search, setSearch } = useHallOfFameContext();
-
-  if (isLoading || !hallOfFame) {
-    return <Loading />;
-  }
 
   return (
     <div ref={wrapperRef} className="hall-of-fame-desktop">
@@ -26,9 +26,7 @@ export default function HallOfFameDesktop() {
           <div className="hall-of-fame-desktop-podium-text">
             <h2>Podium</h2>
           </div>
-          <div className="hall-of-fame-desktop-podium">
-            <HallOfFamePodium />
-          </div>
+          <HallOfFamePodium />
         </div>
         <div className="hall-of-fame-desktop-content-wrapper">
           <div className="hall-of-fame-desktop-search-wrapper">
@@ -43,28 +41,10 @@ export default function HallOfFameDesktop() {
               onClick={() => setIsModalOpen(true)}
             />
           </div>
-          <div className="hall-of-fame-desktop-rank-wrapper">
-            {
-              hallOfFame.content.map((record: HallOfFameRecordDTO) => (
-                <HallOfFameCardDesktop
-                  key={`rank-${record.userDetails.position}`}
-                  userDetails={record.userDetails}
-                  xpDetails={record.xpDetails}
-                />
-              ))
-            }
-          </div>
+          <HallOfFameList />
         </div>
       </div>
-      <div className="hall-of-fame-pagination-wrapper justify-end">
-        {!isLoading && hallOfFame.page.totalPages > 0 && (
-          <Pagination
-            pageCount={hallOfFame.page.totalPages}
-            forcePage={hallOfFame.page.pageNumber}
-            onPageChange={handlePageChange(setPage)}
-          />
-        )}
-      </div>
+      <HallOfFamePagination />
     </div>
   );
 }

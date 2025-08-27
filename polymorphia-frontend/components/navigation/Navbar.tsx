@@ -8,7 +8,7 @@ import { animateNavbar } from "@/animations/Navigation";
 import "./index.css";
 import { updateMenuItems } from "@/components/course/event-section/EventSectionUtils";
 import { useTitle } from "./TitleContext";
-import useEventSections from "@/hooks/useEventSections";
+import useEventSections from "@/hooks/course/useEventSections";
 
 export default function Navbar() {
   const { isNavbarExpanded, setIsNavbarExpanded } = useContext(NavigationContext);

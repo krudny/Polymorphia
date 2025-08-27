@@ -10,7 +10,7 @@ import "./index.css";
 import clsx from "clsx";
 import { animateSidebar } from "@/animations/Navigation";
 import { updateMenuItems } from "@/components/course/event-section/EventSectionUtils";
-import useEventSections from "@/hooks/useEventSections";
+import useEventSections from "@/hooks/course/useEventSections";
 
 export default function Sidebar() {
   const {
@@ -27,7 +27,7 @@ export default function Sidebar() {
     if (!sidebar) {
       return;
     }
-    
+
     animateSidebar(sidebar, isSidebarExpanded);
   }, [isSidebarExpanded]);
 

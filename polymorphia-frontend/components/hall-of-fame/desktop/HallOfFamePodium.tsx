@@ -1,17 +1,16 @@
 import XPCard from "@/components/xp-card/XPCard";
 import "./index.css";
 import Loading from "@/components/loading/Loading";
-import HallOfFameService from "@/app/(logged-in)/hall-of-fame/HallOfFameService";
-import { useQuery } from "@tanstack/react-query";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
+import { useScaleShow } from "@/animations/ScaleShow";
+import useHallOfFamePodium from "@/hooks/course/useHallOfFamePodium";
 
 export default function HallOfFamePodium() {
-  const { data: podium = [], isLoading } = useQuery({
-    queryKey: ["podium"],
-    queryFn: () => HallOfFameService.getPodium(),
-  });
+  const { data: podium, isLoading } = useHallOfFamePodium();
+  const wrapperRef = useScaleShow(!isLoading);
 
-  if (isLoading) {
+
+  if (isLoading || !podium) {
     return (
       <div className="hall-of-fame-loading-wrapper">
         <Loading />
@@ -20,7 +19,7 @@ export default function HallOfFamePodium() {
   }
 
   return (
-    <>
+    <div className="hall-of-fame-desktop-podium" ref={wrapperRef}>
       {podium.map((student, index) => {
         const { animalName, evolutionStage, position } = student.userDetails;
 
@@ -45,6 +44,6 @@ export default function HallOfFamePodium() {
           </div>
         );
       })}
-    </>
+    </div>
   );
 }

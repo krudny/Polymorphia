@@ -11,7 +11,7 @@ import { useMediaQuery } from "react-responsive";
 import RoadmapModals from "@/app/(logged-in)/roadmap/RoadmapModals";
 import "./styles.css";
 import { StudentGradableEventResponseDTO } from "@/interfaces/api/course";
-import { useRoadmap } from "@/hooks/useRoadmap";
+import { useRoadmap } from "@/hooks/course/useRoadmap";
 import XPCardChest from "@/components/xp-card/components/XPCardChest";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import KnowledgeBaseService from "@/app/(logged-in)/knowledge-base/KnowledgeBaseService";
-import { UseItems } from "@/hooks/useItems/types";
+import { UseItems } from "@/hooks/course/useItems/types";
 
 const COURSE_ID = 1;
 

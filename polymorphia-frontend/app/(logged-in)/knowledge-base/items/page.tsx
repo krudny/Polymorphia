@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Loading from "@/components/loading/Loading";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
-import useItems from "@/hooks/useItems";
+import useItems from "@/hooks/course/useItems";
 
 export default function Items() {
   const searchParams = useSearchParams();

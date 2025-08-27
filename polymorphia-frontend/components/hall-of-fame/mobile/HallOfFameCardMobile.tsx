@@ -4,15 +4,14 @@ import HallOfFameUserData from "@/components/hall-of-fame/general/HallOfFameUser
 import UserPoints from "@/components/user-points/UserPoints";
 import "./index.css";
 import { HallOfFameRecordDTO } from "@/interfaces/api/hall-of-fame";
-import { useContext } from "react";
-import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
 import { getAllFilters } from "@/components/providers/hall-of-fame/utils/getAllFilters";
 import { filterXpDetails } from "@/components/providers/hall-of-fame/utils/filterXpDetails";
+import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
 
 export default function RankCard({
-  userDetails,
-  xpDetails,
-}: HallOfFameRecordDTO) {
+                                   userDetails,
+                                   xpDetails,
+                                 }: HallOfFameRecordDTO) {
   const borderColors: Record<1 | 2 | 3, string> = {
     1: "border-amber-400",
     2: "border-slate-400",
@@ -20,7 +19,7 @@ export default function RankCard({
   };
   const border =
     borderColors[userDetails.position as 1 | 2 | 3] ?? "border-none";
-  const { appliedFiltersState } = useContext(HallOfFameContext);
+  const { appliedFiltersState } = useHallOfFameContext();
   const { rankingOptionsFilter } = getAllFilters(appliedFiltersState);
   const filteredXpDetails = filterXpDetails(xpDetails, rankingOptionsFilter);
 

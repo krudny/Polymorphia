@@ -30,4 +30,5 @@ export interface HallOfFameContextInterface {
   isLoading: boolean;
   appliedFiltersState: HallOfFameFilter[];
   setAppliedFiltersState: Dispatch<SetStateAction<HallOfFameFilter[]>>;
+  areFiltersReady: boolean;
 }

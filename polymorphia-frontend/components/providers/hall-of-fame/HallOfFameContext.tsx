@@ -11,8 +11,8 @@ import { addFieldToFilter } from "@/components/providers/hall-of-fame/utils/addF
 import { addEventSectionsToFilters } from "@/components/providers/hall-of-fame/utils/addEventSectionsToFilters";
 import { sortFilters } from "@/components/providers/hall-of-fame/utils/sortFilters";
 import { selectMinimumOptions } from "@/components/providers/hall-of-fame/utils/selectMinimumOptions";
-import useEventSections from "@/hooks/useEventSections";
-import useHallOfFame from "@/hooks/useHallOfFame";
+import useEventSections from "@/hooks/course/useEventSections";
+import useHallOfFame from "@/hooks/course/useHallOfFame";
 
 export const HallOfFameContext = createContext<HallOfFameContextInterface | undefined>(undefined);
 
@@ -31,6 +31,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   const { sortOrder, sortBy, groups } =
     getAppliedQueryParams(appliedFiltersState);
   const initRef = useRef(false);
+  const [areFiltersReady, setAreFiltersReady] = useState(false);
   const { data: eventSections } = useEventSections();
   const { data: hallOfFame, isLoading } = useHallOfFame({ page, pageSize, debouncedSearch, sortOrder, sortBy, groups });
 
@@ -74,6 +75,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
       sortFilters(filtersState);
       selectMinimumOptions(rankingOptionsFilter);
       initRef.current = true;
+      setAreFiltersReady(true);
     }
   }, [hallOfFame, eventSections, sortByFilter, rankingOptionsFilter, filtersState]);
 
@@ -92,6 +94,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
         isLoading,
         appliedFiltersState,
         setAppliedFiltersState,
+        areFiltersReady,
       }}
     >
       {children}

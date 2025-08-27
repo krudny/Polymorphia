@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { RoadmapService } from "@/app/(logged-in)/roadmap/RoadmapService";
-import { UseRoadmap } from "@/hooks/useRoadmap/types";
+import { UseRoadmap } from "@/hooks/course/useRoadmap/types";
 
 export function useRoadmap(): UseRoadmap {
   const { data, isLoading } = useQuery({

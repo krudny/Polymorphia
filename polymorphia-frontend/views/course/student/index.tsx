@@ -11,7 +11,7 @@ import { EventSectionService } from "@/app/(logged-in)/course/EventSectionServic
 import Loading from "@/components/loading/Loading";
 import { useRouter } from "next/navigation";
 import renderCard from "@/views/course/student/RenderCard";
-import { useEventParams } from "@/hooks/useEventParams";
+import { useEventParams } from "@/hooks/general/useEventParams";
 import GradeModal from "@/components/speed-dial/modals/GradeModal";
 import { EventTypes } from "@/interfaces/api/course";
 

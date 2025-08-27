@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import KnowledgeBaseService from "@/app/(logged-in)/knowledge-base/KnowledgeBaseService";
-import { UseEvolutionStages } from "@/hooks/useEvolutionStages/types";
+import { UseEvolutionStages } from "@/hooks/course/useEvolutionStages/types";
 
 const COURSE_ID = 1;
 

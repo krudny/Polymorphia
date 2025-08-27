@@ -7,7 +7,7 @@ import { EventSectionService } from "@/app/(logged-in)/course/EventSectionServic
 import { useRouter } from "next/navigation";
 import Loading from "@/components/loading/Loading";
 import renderCard from "@/views/course/instructor/RenderCard";
-import { useEventParams } from "@/hooks/useEventParams";
+import { useEventParams } from "@/hooks/general/useEventParams";
 
 export default function InstructorView() {
   const { eventType, eventSectionId } = useEventParams();

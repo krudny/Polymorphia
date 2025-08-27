@@ -5,16 +5,14 @@ import Modal from "@/components/modal/Modal";
 import { useContext, useRef } from "react";
 import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import {
-  HallOfFameFilterID,
-  HallOfFameFilterOption,
-} from "@/components/hall-of-fame/general/types";
+import { HallOfFameFilterID, HallOfFameFilterOption } from "@/components/hall-of-fame/general/types";
 import { useQueryClient } from "@tanstack/react-query";
 import "./index.css";
 import { hallOfFameConfirmAction } from "@/components/providers/hall-of-fame/utils/hallOfFameConfirmAction";
 import { Accordion } from "@/components/accordion/Accordion";
 import AccordionSection from "@/components/accordion/AccordionSection";
 import { AccordionRef } from "@/components/providers/accordion/types";
+import { HallOfFameActions } from "@/components/providers/hall-of-fame/types";
 
 export default function FiltersModal() {
   const queryClient = useQueryClient();
@@ -31,10 +29,11 @@ export default function FiltersModal() {
 
   const handleSelect = (
     filterId: HallOfFameFilterID,
-    option: HallOfFameFilterOption
+    option: HallOfFameFilterOption,
   ) => {
+
     filtersDispatch({
-      type: option.isSelected ? "REMOVE_FROM_FILTER" : "ADD_TO_FILTER",
+      type: option.isSelected ? HallOfFameActions.REMOVE_FROM_FILTER : HallOfFameActions.ADD_TO_FILTER,
       payload: { id: filterId, value: option.value },
     });
   };
@@ -88,7 +87,7 @@ export default function FiltersModal() {
                 hallOfFameConfirmAction(
                   filtersState,
                   setAppliedFiltersState,
-                  queryClient
+                  queryClient,
                 )
               ) {
                 accordionRef.current?.closeAll();

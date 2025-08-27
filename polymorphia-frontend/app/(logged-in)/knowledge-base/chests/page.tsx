@@ -3,7 +3,7 @@ import Slider from "@/components/slider/Slider";
 import Loading from "@/components/loading/Loading";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
-import useChests from "@/hooks/useChests";
+import useChests from "@/hooks/course/useChests";
 
 export default function Chests() {
   const { data: chests, isLoading, error } = useChests();

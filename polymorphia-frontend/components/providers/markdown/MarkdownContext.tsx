@@ -3,7 +3,7 @@ import { MarkdownContextInterface, MarkdownProviderProps } from "@/components/pr
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import toast from "react-hot-toast";
-import { useEventParams } from "@/hooks/useEventParams";
+import { useEventParams } from "@/hooks/general/useEventParams";
 
 export const MarkdownContext = createContext<MarkdownContextInterface>({
   markdown: "",

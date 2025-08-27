@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { EventType } from "@/interfaces/api/course";
-import { UseEventParams } from "@/hooks/useEventParams/types";
+import { UseEventParams } from "@/hooks/general/useEventParams/types";
 
 export function useEventParams(): UseEventParams {
   const params = useParams();

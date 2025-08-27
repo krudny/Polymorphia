@@ -1,9 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import HallOfFameService from "@/app/(logged-in)/hall-of-fame/HallOfFameService";
-import { UseHallOfFame, useHallOfFameProps } from "@/hooks/useHallOfFame/types";
-import { useEffect } from "react";
+import { UseHallOfFame, useHallOfFameProps } from "@/hooks/course/useHallOfFame/types";
 
-// TODO
 export default function useHallOfFame({
                                         page,
                                         pageSize,
@@ -32,11 +30,6 @@ export default function useHallOfFame({
         groups,
       ),
   });
-
-  useEffect(() => {
-    console.log(" tutaj", data, isLoading);
-  }, [data, isLoading]);
-
 
   return { data, isLoading };
 }

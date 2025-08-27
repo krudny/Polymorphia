@@ -4,16 +4,20 @@ import HallOfFameUserData from "@/components/hall-of-fame/general/HallOfFameUser
 import UserPoints from "@/components/user-points/UserPoints";
 import "./index.css";
 import { HallOfFameRecordDTO } from "@/interfaces/api/hall-of-fame";
-import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
-import { useContext } from "react";
 import { filterXpDetails } from "@/components/providers/hall-of-fame/utils/filterXpDetails";
 import { getAllFilters } from "@/components/providers/hall-of-fame/utils/getAllFilters";
+import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
 
 export default function HallOfFameCardDesktop({
-  userDetails,
-  xpDetails,
-}: HallOfFameRecordDTO) {
-  const { appliedFiltersState } = useContext(HallOfFameContext);
+                                                userDetails,
+                                                xpDetails,
+                                              }: HallOfFameRecordDTO) {
+  const { appliedFiltersState, areFiltersReady } = useHallOfFameContext();
+
+  if (!areFiltersReady) {
+    return null;
+  }
+
   const { rankingOptionsFilter } = getAllFilters(appliedFiltersState);
   const filteredXpDetails = filterXpDetails(xpDetails, rankingOptionsFilter);
 
