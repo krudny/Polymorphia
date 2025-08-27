@@ -11,8 +11,8 @@ export const getAppliedQueryParams = (filtersState: HallOfFameFilter[]) => {
   };
 
   return {
-    sortOrder: getSelectedValues(sortFilter),
-    sortBy: getSelectedValues(sortByFilter),
+    sortOrder: getSelectedValues(sortFilter)[0],
+    sortBy: getSelectedValues(sortByFilter)[0],
     groups: getSelectedValues(groupsFilter),
     rankingOptions: getSelectedValues(rankingOptionsFilter),
   };

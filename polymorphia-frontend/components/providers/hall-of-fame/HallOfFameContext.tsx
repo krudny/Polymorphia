@@ -2,10 +2,8 @@
 
 import { createContext, ReactNode, useEffect, useReducer, useRef, useState } from "react";
 import { useDebounce } from "use-debounce";
-import { useQuery } from "@tanstack/react-query";
 import { filters } from "@/components/providers/hall-of-fame/filters/InitialFilters";
 import { HallOfFameReducer } from "@/components/providers/hall-of-fame/filters/HallOfFameReducer";
-import HallOfFameService from "@/app/(logged-in)/hall-of-fame/HallOfFameService";
 import { HallOfFameContextInterface } from "@/components/providers/hall-of-fame/types";
 import { getAllFilters } from "@/components/providers/hall-of-fame/utils/getAllFilters";
 import { getAppliedQueryParams } from "@/components/providers/hall-of-fame/utils/getAppliedQueryParams";
@@ -14,34 +12,9 @@ import { addEventSectionsToFilters } from "@/components/providers/hall-of-fame/u
 import { sortFilters } from "@/components/providers/hall-of-fame/utils/sortFilters";
 import { selectMinimumOptions } from "@/components/providers/hall-of-fame/utils/selectMinimumOptions";
 import useEventSections from "@/hooks/useEventSections";
+import useHallOfFame from "@/hooks/useHallOfFame";
 
-const emptyDataObject = {
-  content: [],
-  page: {
-    pageNumber: 0,
-    totalPages: 0,
-  },
-};
-
-export const HallOfFameContext = createContext<HallOfFameContextInterface>({
-  data: emptyDataObject,
-  page: 0,
-  setPage: () => {
-  },
-  search: "",
-  setSearch: () => {
-  },
-  isModalOpen: false,
-  setIsModalOpen: () => {
-  },
-  filtersState: [],
-  filtersDispatch: () => {
-  },
-  isLoading: true,
-  appliedFiltersState: [],
-  setAppliedFiltersState: () => {
-  },
-});
+export const HallOfFameContext = createContext<HallOfFameContextInterface | undefined>(undefined);
 
 export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   const pageSize = 50;
@@ -59,34 +32,12 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
     getAppliedQueryParams(appliedFiltersState);
   const initRef = useRef(false);
   const { data: eventSections } = useEventSections();
-
-  const { data = emptyDataObject, isLoading } = useQuery({
-    queryKey: [
-      "hallOfFame",
-      page,
-      pageSize,
-      debouncedSearch,
-      sortOrder,
-      sortBy,
-      groups,
-    ],
-    queryFn: () =>
-      HallOfFameService.getHallOfFame(
-        page,
-        pageSize,
-        debouncedSearch,
-        sortBy[0],
-        sortOrder[0] === "asc" || sortOrder[0] === "desc"
-          ? sortOrder[0]
-          : undefined,
-        groups,
-      ),
-  });
+  const { data: hallOfFame, isLoading } = useHallOfFame({ page, pageSize, debouncedSearch, sortOrder, sortBy, groups });
 
   useEffect(() => {
     if (
       !initRef.current &&
-      data &&
+      hallOfFame &&
       eventSections &&
       sortByFilter &&
       rankingOptionsFilter
@@ -124,12 +75,12 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
       selectMinimumOptions(rankingOptionsFilter);
       initRef.current = true;
     }
-  }, [data, eventSections, sortByFilter, rankingOptionsFilter, filtersState]);
+  }, [hallOfFame, eventSections, sortByFilter, rankingOptionsFilter, filtersState]);
 
   return (
     <HallOfFameContext.Provider
       value={{
-        data,
+        hallOfFame,
         page,
         setPage,
         search,

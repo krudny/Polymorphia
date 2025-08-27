@@ -2,8 +2,6 @@ import { useScaleShow } from "@/animations/ScaleShow";
 import Pagination from "@/components/pagination/Pagination";
 import "./index.css";
 import "../general/index.css";
-import { useContext } from "react";
-import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
 import { handlePageChange } from "@/components/providers/hall-of-fame/utils/handlePageChange";
 import HallOfFamePodium from "@/components/hall-of-fame/desktop/HallOfFamePodium";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
@@ -11,12 +9,15 @@ import Loading from "@/components/loading/Loading";
 import { HallOfFameRecordDTO } from "@/interfaces/api/hall-of-fame";
 import HallOfFameCardDesktop from "@/components/hall-of-fame/desktop/HallOfFameCardDesktop";
 import Search from "@/components/search";
+import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
 
 export default function HallOfFameDesktop() {
   const wrapperRef = useScaleShow();
+  const { hallOfFame, setPage, isLoading, setIsModalOpen, search, setSearch } = useHallOfFameContext();
 
-  const { data, setPage, isLoading, setIsModalOpen, search, setSearch } =
-    useContext(HallOfFameContext);
+  if (isLoading || !hallOfFame) {
+    return <Loading />;
+  }
 
   return (
     <div ref={wrapperRef} className="hall-of-fame-desktop">
@@ -43,27 +44,23 @@ export default function HallOfFameDesktop() {
             />
           </div>
           <div className="hall-of-fame-desktop-rank-wrapper">
-            {isLoading ? (
-              <div className="hall-of-fame-loading-wrapper hidden lg:block">
-                <Loading />
-              </div>
-            ) : (
-              data.content.map((record: HallOfFameRecordDTO) => (
+            {
+              hallOfFame.content.map((record: HallOfFameRecordDTO) => (
                 <HallOfFameCardDesktop
                   key={`rank-${record.userDetails.position}`}
                   userDetails={record.userDetails}
                   xpDetails={record.xpDetails}
                 />
               ))
-            )}
+            }
           </div>
         </div>
       </div>
       <div className="hall-of-fame-pagination-wrapper justify-end">
-        {!isLoading && data.page.totalPages > 0 && (
+        {!isLoading && hallOfFame.page.totalPages > 0 && (
           <Pagination
-            pageCount={data.page.totalPages}
-            forcePage={data.page.pageNumber}
+            pageCount={hallOfFame.page.totalPages}
+            forcePage={hallOfFame.page.pageNumber}
             onPageChange={handlePageChange(setPage)}
           />
         )}

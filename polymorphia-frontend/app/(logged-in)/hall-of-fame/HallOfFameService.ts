@@ -76,7 +76,7 @@ const generateAllData = () => {
   }
 
   allData.sort(
-    (a, b) => parseFloat(b.xpDetails.total) - parseFloat(a.xpDetails.total)
+    (a, b) => parseFloat(b.xpDetails.total) - parseFloat(a.xpDetails.total),
   );
   allData.forEach((item, index) => {
     item.userDetails.position = index + 1;
@@ -93,8 +93,8 @@ const HallOfFameService = {
     size: number,
     searchTerm: string,
     sortBy?: string,
-    sortOrder?: "asc" | "desc",
-    groups?: string[]
+    sortOrder?: string,
+    groups?: string[],
   ): Promise<HallOfFameResponseDTO> => {
     await new Promise((resolve) => setTimeout(resolve, 400));
 
@@ -102,14 +102,14 @@ const HallOfFameService = {
 
     if (groups && !groups?.includes("all")) {
       filteredData = filteredData.filter((item) =>
-        groups.includes(item.userDetails.group.toLowerCase())
+        groups.includes(item.userDetails.group.toLowerCase()),
       );
     }
 
     if (searchTerm && searchTerm.trim() !== "") {
       const lowerSearch = searchTerm.toLowerCase();
       filteredData = filteredData.filter((item) =>
-        item.userDetails.studentName.toLowerCase().includes(lowerSearch)
+        item.userDetails.studentName.toLowerCase().includes(lowerSearch),
       );
     }
 

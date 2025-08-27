@@ -9,16 +9,16 @@ export const HallOfFameActions = {
 
 export type HallOfFameAction =
   | {
-      type: typeof HallOfFameActions.ADD_TO_FILTER;
-      payload: { id: string; value: string };
-    }
+  type: typeof HallOfFameActions.ADD_TO_FILTER;
+  payload: { id: string; value: string };
+}
   | {
-      type: typeof HallOfFameActions.REMOVE_FROM_FILTER;
-      payload: { id: string; value: string };
-    };
+  type: typeof HallOfFameActions.REMOVE_FROM_FILTER;
+  payload: { id: string; value: string };
+};
 
 export interface HallOfFameContextInterface {
-  data: HallOfFameResponseDTO;
+  hallOfFame: HallOfFameResponseDTO | undefined;
   page: number;
   setPage: Dispatch<SetStateAction<number>>;
   search: string;
