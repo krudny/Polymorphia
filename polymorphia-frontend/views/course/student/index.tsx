@@ -6,31 +6,21 @@ import { useEffect, useRef, useState } from "react";
 import "./index.css";
 import PointsSummary from "@/components/course/event-section/points-summary/PointsSummary";
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
-import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import Loading from "@/components/loading/Loading";
 import { useRouter } from "next/navigation";
 import renderCard from "@/views/course/student/RenderCard";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import GradeModal from "@/components/speed-dial/modals/GradeModal";
 import { EventTypes } from "@/interfaces/api/course";
+import useStudentsGradableEvents from "@/hooks/course/useStudentsGradableEvents";
 
 export default function StudentView() {
   const { eventType, eventSectionId } = useEventParams();
+  const { data: gradableEvents, isLoading, isError } = useStudentsGradableEvents();
   const router = useRouter();
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const summaryRef = useRef<HTMLDivElement | null>(null);
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
-
-  const {
-    data: gradableEvents,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["gradableEvents", eventSectionId],
-    queryFn: () => EventSectionService.getStudentGradableEvents(eventSectionId),
-  });
-
   const containerRef = useScaleShow(!isLoading);
 
   useEffect(() => {
@@ -41,16 +31,12 @@ export default function StudentView() {
     }
   }, [isLoading, gradableEvents, eventType, eventSectionId, router]);
 
-  useEffect(() => {
-    console.log(selectedEventId);
-  }, [selectedEventId]);
-
   if (isLoading || (gradableEvents && gradableEvents.length < 2)) {
     return <Loading />;
   }
 
-  if (error) {
-    return <div>Error loading gradable events: {error.message}</div>;
+  if (isError) {
+    return <div>Error loading gradable events</div>;
   }
 
   if (!gradableEvents || gradableEvents.length === 0) {
