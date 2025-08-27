@@ -1,9 +1,5 @@
-/* eslint-disable */
-// @ts-nocheck
-
 import Modal from "@/components/modal/Modal";
-import { useContext, useRef } from "react";
-import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
+import { useRef } from "react";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { HallOfFameFilterID, HallOfFameFilterOption } from "@/components/hall-of-fame/general/types";
 import { useQueryClient } from "@tanstack/react-query";
@@ -13,6 +9,7 @@ import { Accordion } from "@/components/accordion/Accordion";
 import AccordionSection from "@/components/accordion/AccordionSection";
 import { AccordionRef } from "@/components/providers/accordion/types";
 import { HallOfFameActions } from "@/components/providers/hall-of-fame/types";
+import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
 
 export default function FiltersModal() {
   const queryClient = useQueryClient();
@@ -23,7 +20,7 @@ export default function FiltersModal() {
     isModalOpen,
     setIsModalOpen,
     setPage,
-  } = useContext(HallOfFameContext);
+  } = useHallOfFameContext();
 
   const accordionRef = useRef<AccordionRef>(null);
 

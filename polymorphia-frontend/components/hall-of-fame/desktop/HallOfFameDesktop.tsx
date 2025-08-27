@@ -8,8 +8,8 @@ import HallOfFamePodium from "@/components/hall-of-fame/desktop/HallOfFamePodium
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import Search from "@/components/search";
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
-import HallOfFameList from "@/components/hall-of-fame/desktop/HallOfFameList";
-import HallOfFamePagination from "@/components/hall-of-fame/desktop/HallOfFamePagination";
+import HallOfFameList from "@/components/hall-of-fame/general/HallOfFameList";
+import HallOfFamePagination from "@/components/hall-of-fame/general/HallOfFamePagination";
 
 export default function HallOfFameDesktop() {
   const {

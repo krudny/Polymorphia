@@ -1,23 +1,16 @@
 "use client";
 
-import Pagination from "@/components/pagination/Pagination";
-import RankCardMobile from "@/components/hall-of-fame/mobile/HallOfFameCardMobile";
 import "./index.css";
 import { useScaleShow } from "@/animations/ScaleShow";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import { HallOfFameRecordDTO } from "@/interfaces/api/hall-of-fame";
-import { handlePageChange } from "@/components/providers/hall-of-fame/utils/handlePageChange";
-import Loading from "@/components/loading/Loading";
 import Search from "@/components/search";
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
+import HallOfFamePagination from "@/components/hall-of-fame/general/HallOfFamePagination";
+import HallOfFameList from "@/components/hall-of-fame/general/HallOfFameList";
 
 export default function HallOfFameMobile() {
   const wrapperRef = useScaleShow();
-  const { hallOfFame, setPage, isLoading, setIsModalOpen, search, setSearch } = useHallOfFameContext();
-
-  if (isLoading || !hallOfFame) {
-    return <Loading />;
-  }
+  const { setIsModalOpen, search, setSearch } = useHallOfFameContext();
 
   return (
     <div ref={wrapperRef} className="hall-of-fame-mobile">
@@ -34,28 +27,8 @@ export default function HallOfFameMobile() {
           onClick={() => setIsModalOpen(true)}
         />
       </div>
-
-      <div className="hall-of-fame-mobile-rank-wrapper">
-        {
-          hallOfFame.content.map((record: HallOfFameRecordDTO) => (
-            <RankCardMobile
-              key={`rank-${record.userDetails.position}`}
-              userDetails={record.userDetails}
-              xpDetails={record.xpDetails}
-            />
-          ))
-        }
-      </div>
-
-      <div className="hall-of-fame-pagination-wrapper">
-        {!isLoading && hallOfFame.page.totalPages > 0 && (
-          <Pagination
-            pageCount={hallOfFame.page.totalPages}
-            forcePage={hallOfFame.page.pageNumber}
-            onPageChange={handlePageChange(setPage)}
-          />
-        )}
-      </div>
+      <HallOfFameList />
+      <HallOfFamePagination />
     </div>
   );
 }
