@@ -1,14 +1,10 @@
 import Loading from "@/components/loading/Loading";
 import XPCard from "@/components/xp-card/XPCard";
-import { useQuery } from "@tanstack/react-query";
-import UserService from "@/app/(logged-in)/profile/UserService";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
+import useRandomUsers from "@/hooks/course/useRandomUsers";
 
 export default function StudentInfo() {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["randomUsers"],
-    queryFn: () => UserService.getRandomUsers(),
-  });
+  const { data, isLoading, isError } = useRandomUsers();
 
   return (
     <>

@@ -10,7 +10,7 @@ export default function useItems(): UseItems {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["items", 1],
+    queryKey: ["items", COURSE_ID],
     queryFn: () => KnowledgeBaseService.getItems(COURSE_ID),
     retry: false,
   });

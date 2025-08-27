@@ -75,14 +75,14 @@ export default function StudentView() {
 
   return (
     <SectionView ref={containerRef}>
-      <div className="flex flex-col gap-x-10 overflow-hidden lg:flex-row 2xl:px-10 bg-red-400">
+      <div className="flex flex-col gap-x-10 overflow-hidden lg:flex-row 2xl:px-10">
         <div
-          className="w-full min-h-full flex-col-centered bg-green-500"
+          className="w-full min-h-full flex-col-centered"
           ref={wrapperRef}
         >
           <XPCardGrid containerRef={wrapperRef} cards={cards} maxColumns={2} />
         </div>
-        <PointsSummary ref={summaryRef} eventSectionId={eventSectionId} />
+        <PointsSummary ref={summaryRef} />
       </div>
       {eventType === EventTypes.TEST && selectedEventId && (
         <GradeModal onClosedAction={() => setSelectedEventId(null)} gradableEventId={selectedEventId} />

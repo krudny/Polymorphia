@@ -2,7 +2,7 @@ import Modal from "@/components/modal/Modal";
 import GradeInfo from "@/components/course/event-section/GradeInfo";
 import Loading from "@/components/loading/Loading";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
-import useGrade from "@/hooks/general/useGrade";
+import useGrade from "@/hooks/course/useGrade";
 
 export default function GradeModal({ gradableEventId, onClosedAction }: SpeedDialModalProps & {
   gradableEventId: number

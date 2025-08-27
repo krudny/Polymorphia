@@ -15,9 +15,9 @@ export default function renderCard(
     points={gainedXp}
     isSumLabelVisible={true}
     hasChest={hasReward}
-    color={color}
+    color="gray"
   />;
-  
+
   return (
     <XPCard
       title={gradableEvent.name}

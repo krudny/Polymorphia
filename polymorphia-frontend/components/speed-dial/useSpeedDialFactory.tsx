@@ -1,10 +1,10 @@
 import { SpeedDialItem, SpeedDialProps } from "@/components/speed-dial/types";
-import { useContext, useMemo } from "react";
-import { MarkdownContext } from "@/components/providers/markdown/MarkdownContext";
+import { useMemo } from "react";
 import { speedDialStrategyRegistry } from "@/components/speed-dial/strategy/Registry";
+import useMarkdownContext from "@/hooks/contexts/useMarkdownContext";
 
 export function useSpeedDialFactory({ type }: SpeedDialProps): SpeedDialItem[] {
-  const markdownContext = useContext(MarkdownContext);
+  const markdownContext = useMarkdownContext();
 
   return useMemo(() => {
     const selectedType = speedDialStrategyRegistry.getStrategy(type);
