@@ -18,7 +18,6 @@ export default function Equipment() {
     setTitle("Ekwipunek");
   }, [setTitle]);
 
-
   if (isLoading) {
     return <Loading />;
   }

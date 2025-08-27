@@ -1,24 +1,19 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import UserService from "@/app/(logged-in)/profile/UserService";
 import StudentView from "@/views/course/student";
 import InstructorView from "@/views/course/instructor";
 import { Roles } from "@/interfaces/api/temp";
+import useUserRole from "@/hooks/general/useUserRole";
 
 export default function Page() {
-  const { data: role } = useQuery({
-    queryKey: ["role"],
-    queryFn: () => UserService.getRole(),
-    select: (data) => data.role,
-  });
+  const { data: role } = useUserRole();
 
   switch (role) {
     case Roles.STUDENT:
       return <StudentView />;
     case Roles.INSTRUCTOR:
       return <InstructorView />;
-    case Roles.COORDINATOR:
+    default:
       return null;
   }
 }
