@@ -1,9 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
-import { FilterConfig, SpecialBehaviors } from "../../filters/types";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { CourseService } from "@/app/(logged-in)/course/CourseService";
+import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
+import { HallOfFameFilterId } from "@/components/providers/hall-of-fame/types";
 import { EventSectionResponseDTO } from "@/interfaces/api/course";
-import { HallOfFameFilterId } from "../types";
+import { useQuery } from "@tanstack/react-query";
+import { FilterConfig, SpecialBehaviors } from "../useFilters/types";
 
 export function useHallOfFameFilterConfigs(courseId: number) {
   return useQuery({

@@ -1,4 +1,4 @@
-import { FilterConfig } from "../../filters/types";
+import { FilterConfig } from "../../../../hooks/course/useFilters/types";
 
 export const filterXpDetails = <FilterIdType extends string>(
   xpDetails: Record<string, string>,

@@ -1,17 +1,14 @@
 import { Accordion } from "@/components/accordion/Accordion";
 import AccordionSection from "@/components/accordion/AccordionSection";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import {
-  FilterActions,
-  FilterOption,
-} from "@/components/providers/filters/types";
+import Loading from "@/components/loading/Loading";
 import Modal from "@/components/modal/Modal";
 import { AccordionRef } from "@/components/providers/accordion/types";
+import { FilterActions, FilterOption } from "@/hooks/course/useFilters/types";
 import { useRef } from "react";
 import toast from "react-hot-toast";
 import "./index.css";
 import { FiltersModalProps } from "./types";
-import Loading from "@/components/loading/Loading";
 
 export default function FiltersModal<FilterIdType extends string>({
   filters,

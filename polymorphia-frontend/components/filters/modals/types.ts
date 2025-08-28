@@ -1,4 +1,4 @@
-import { useFilters } from "@/components/providers/filters/useFilters";
+import { useFilters } from "@/hooks/course/useFilters";
 import { Dispatch, SetStateAction } from "react";
 
 export interface FiltersModalProps<FilterIdType extends string> {

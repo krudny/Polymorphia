@@ -1,6 +1,6 @@
-import { Dispatch, SetStateAction } from "react";
+import { useFilters } from "@/hooks/course/useFilters";
 import { HallOfFameResponseDTO } from "@/interfaces/api/hall-of-fame";
-import { useFilters } from "../filters/useFilters";
+import { Dispatch, SetStateAction } from "react";
 
 export type HallOfFameFilterId =
   | "sortOrder"
