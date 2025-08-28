@@ -2,11 +2,12 @@ import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { PullRequestProps } from "@/components/grading/components/pull-request/types";
 import toast from "react-hot-toast";
 import GradingComponentWrapper from "@/components/grading/components/grading-wrapper";
+import { ReactNode } from "react";
 
 export default function PullRequest({ pullRequests }: PullRequestProps) {
   const topComponent = <h1 className="text-5xl">Pull Request</h1>;
 
-  const mainComponent = (
+  const mainComponent = (): ReactNode => (
     <>
       {pullRequests.map((pullRequest, index) => (
         <div key={index} className="flex flex-col mb-8">
@@ -34,7 +35,7 @@ export default function PullRequest({ pullRequests }: PullRequestProps) {
   return (
     <GradingComponentWrapper
       topComponent={topComponent}
-      mainComponent={mainComponent}
+      mainComponent={mainComponent()}
     />
   );
 }

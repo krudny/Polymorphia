@@ -22,7 +22,7 @@ export default function HallOfFameMobile() {
         />
         <ButtonWithBorder
           text="Filtry"
-          className="!mx-0 !py-0 !border-0 !border-b-2"
+          className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none"
           size="sm"
           onClick={() => setIsModalOpen(true)}
         />

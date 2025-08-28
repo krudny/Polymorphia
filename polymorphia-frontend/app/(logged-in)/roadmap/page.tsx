@@ -46,7 +46,7 @@ export default function Roadmap() {
       points={gainedXp}
       isSumLabelVisible={true}
       hasChest={true}
-      color={color}
+      color="gray"
     />;
 
     return (

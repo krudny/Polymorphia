@@ -33,7 +33,7 @@ export default function ItemModal() {
                 />
               }
               rightComponent={
-                <XPCardPoints points={`+${itemAssignmentDetails.gainedXp}`} />
+                <XPCardPoints points={`+${itemAssignmentDetails.gainedXp}`} color="gray" />
               }
             />
           ),

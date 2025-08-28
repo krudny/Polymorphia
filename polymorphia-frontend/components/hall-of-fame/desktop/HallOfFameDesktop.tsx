@@ -34,7 +34,7 @@ export default function HallOfFameDesktop() {
             />
             <ButtonWithBorder
               text="Filtry"
-              className="!mx-0 !py-0 !border-0 !border-b-2"
+              className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none"
               onClick={() => setIsModalOpen(true)}
             />
           </div>
