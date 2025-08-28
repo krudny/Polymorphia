@@ -1,12 +1,10 @@
-import {
-  GradingContext,
-  GradingReducerActions,
-} from "@/components/providers/grading/GradingContext";
-import { useContext, useRef } from "react";
+import { GradingReducerActions } from "@/components/providers/grading/GradingContext";
+import { useRef } from "react";
+import useGradingContext from "@/hooks/contexts/useGradingContext";
 
 export default function Comment() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const { state, dispatch } = useContext(GradingContext);
+  const { state, dispatch } = useGradingContext();
 
   return (
     <textarea

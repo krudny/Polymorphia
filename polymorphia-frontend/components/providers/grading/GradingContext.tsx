@@ -1,29 +1,16 @@
 "use client";
-import { createContext, Dispatch, ReactNode, useEffect, useReducer, useState } from "react";
+import { createContext, ReactNode, useEffect, useReducer, useState } from "react";
 import { useDebounce } from "use-debounce";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import { BaseReward } from "@/interfaces/api/reward";
-import { CriterionResponseDTO } from "@/interfaces/api/grade";
-import { ProjectGroupResponseDTO } from "@/interfaces/api/temp";
 import { EventTypes } from "@/interfaces/api/course";
-import toast from "react-hot-toast";
-
-export type TestGradingContextType = {
-  search: string;
-  setSearch: (search: string) => void;
-  students: (UserDetailsDTO & { gainedXp?: string })[] | undefined;
-  isStudentsLoading: boolean;
-  projectGroups: ProjectGroupResponseDTO[] | undefined;
-  isProjectGroupsLoading: boolean;
-  isGradeLoading: boolean;
-  criteria: CriterionResponseDTO[] | undefined;
-  state: GradingReducerState;
-  dispatch: Dispatch<GradingReducerActionType>;
-  submitGrade: () => void;
-};
+import useRandomPeopleWithPoints from "@/hooks/course/useRandomPeopleWithPoints";
+import useCriteria from "@/hooks/course/useCriteria";
+import useGrade2 from "@/hooks/course/useGrade2";
+import useProjectGroups from "@/hooks/course/useProjectGroups";
+import useGradeUpdate from "@/hooks/course/useGradeUpdate";
+import { GradingContextInterface } from "@/components/providers/grading/types";
 
 export interface CriteriaDetails {
   gainedXp?: string;
@@ -169,64 +156,34 @@ const GradingReducer = (
   }
 };
 
-export const GradingContext = createContext<TestGradingContextType>({
-  search: "",
-  setSearch: () => {
-  },
-  students: undefined,
-  isStudentsLoading: false,
-  projectGroups: undefined,
-  isProjectGroupsLoading: false,
-  isGradeLoading: false,
-  criteria: undefined,
-  state: initialState,
-  dispatch: () => {
-  },
-  submitGrade: () => {
-  },
-});
+export const GradingContext = createContext<GradingContextInterface | undefined>(undefined);
 
 export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const { gradableEventId, eventType } = useEventParams();
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 400);
   const [state, dispatch] = useReducer(GradingReducer, initialState);
-
-  const { data: students, isLoading: isStudentsLoading } = useQuery({
-    queryKey: ["students", debouncedSearch],
-    queryFn: () =>
-      EventSectionService.getRandomPeopleWithPoints(debouncedSearch),
-    enabled: eventType !== EventTypes.PROJECT,
-  });
-
-  const { data: criteria } = useQuery({
-    queryKey: ["criteria", gradableEventId],
-    queryFn: () => EventSectionService.getCriteria(gradableEventId),
-  });
-
   const selectedStudentId = state?.selectedTarget?.[0]?.id ?? null;
+  const { data: criteria } = useCriteria();
+  const { data: students, isLoading: isStudentsLoading } = useRandomPeopleWithPoints(debouncedSearch);
+  const { data: projectGroups, isLoading: isProjectGroupsLoading } = useProjectGroups(debouncedSearch);
+  const { data: grade, isLoading: isGradeLoading } = useGrade2(selectedStudentId);
+  const { mutate } = useGradeUpdate();
 
-  const { data: grade, isLoading: isGradeLoading } = useQuery({
-    queryKey: ["grade", selectedStudentId, gradableEventId],
-    queryFn: () =>
-      EventSectionService.getGrade2(selectedStudentId ?? -1, gradableEventId),
-  });
-
-  const { data: projectGroups, isLoading: isProjectGroupsLoading } = useQuery({
-    queryKey: ["projectGroups", debouncedSearch],
-    queryFn: () => EventSectionService.getRandomProjectGroups(),
-    enabled: eventType === EventTypes.PROJECT,
-  });
 
   useEffect(() => {
     if (eventType === EventTypes.PROJECT) {
-      if (!projectGroups || projectGroups.length < 1) return;
+      if (!projectGroups || projectGroups.length < 1) {
+        return;
+      }
       dispatch({
         type: GradingReducerActions.SET_TARGET,
         payload: projectGroups[0].members,
       });
     } else {
-      if (!students || students.length < 1) return;
+      if (!students || students.length < 1) {
+        return;
+      }
       dispatch({
         type: GradingReducerActions.SET_TARGET,
         payload: [students[0]],
@@ -235,7 +192,9 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   }, [students, projectGroups, eventType, dispatch]);
 
   useEffect(() => {
-    if (!criteria || criteria.length < 1) return;
+    if (!criteria || criteria.length < 1) {
+      return;
+    }
 
     for (const criterion of criteria) {
       dispatch({
@@ -252,7 +211,9 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   }, [criteria, dispatch]);
 
   useEffect(() => {
-    if (!grade) return;
+    if (!grade) {
+      return;
+    }
 
     dispatch({
       type: GradingReducerActions.ADD_COMMENT,
@@ -285,40 +246,18 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [grade, dispatch]);
 
-  const queryClient = useQueryClient();
-
-  const submitGradeMutation = useMutation({
-    mutationFn: EventSectionService.submitGrade,
-    onSuccess: () => {
-      toast.success("Ocena została pomyślnie zapisana!");
-      queryClient.invalidateQueries({
-        queryKey: ["grade"],
-      });
-    },
-    onError: () => {
-      toast.error("Wystąpił błąd podczas zapisywania oceny");
-    },
-  });
-
   const submitGrade = () => {
-    console.log("submitGrade");
     if (!selectedStudentId) {
       return;
     }
 
-    console.log("tu");
-
-    submitGradeMutation.mutate({
+    mutate({
       studentId: selectedStudentId,
       gradableEventId,
       criteria: state.criteria,
       comment: state.comment,
     });
   };
-
-  useEffect(() => {
-    console.log(state);
-  }, [state]);
 
   return (
     <GradingContext.Provider

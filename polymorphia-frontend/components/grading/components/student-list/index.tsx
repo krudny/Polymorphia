@@ -3,18 +3,13 @@ import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import Search from "@/components/search";
-import { useContext } from "react";
 import Loading from "@/components/loading/Loading";
-import {
-  GradingContext,
-  GradingReducerActions,
-} from "@/components/providers/grading/GradingContext";
+import { GradingReducerActions } from "@/components/providers/grading/GradingContext";
 import GradingComponentWrapper from "@/components/grading/components/grading-wrapper";
+import useGradingContext from "@/hooks/contexts/useGradingContext";
 
 export default function StudentsList() {
-  const { search, setSearch, students, isStudentsLoading, state, dispatch } =
-    useContext(GradingContext);
-
+  const { search, setSearch, students, isStudentsLoading, state, dispatch } = useGradingContext();
   if (isStudentsLoading || !students) {
     return <Loading />;
   }

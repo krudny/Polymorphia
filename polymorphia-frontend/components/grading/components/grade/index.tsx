@@ -1,12 +1,11 @@
 "use client";
 
 import "./index.css";
-import { useContext, useRef } from "react";
+import { useRef } from "react";
 import ProgressBar from "@/components/progressbar/ProgressBar";
 import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLabels";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import Loading from "@/components/loading/Loading";
-import { GradingContext } from "@/components/providers/grading/GradingContext";
 import { Accordion } from "@/components/accordion/Accordion";
 import { AccordionRef } from "@/components/providers/accordion/types";
 import AccordionSection from "@/components/accordion/AccordionSection";
@@ -14,10 +13,10 @@ import GradingComponentWrapper from "@/components/grading/components/grading-wra
 import Reward from "@/components/grading/components/grade/Reward";
 import Comment from "@/components/grading/components/grade/Comment";
 import Input from "@/components/grading/components/grade/Input";
+import useGradingContext from "@/hooks/contexts/useGradingContext";
 
 export default function Grade() {
-  const { state, criteria, isGradeLoading, submitGrade } =
-    useContext(GradingContext);
+  const { state, criteria, isGradeLoading, submitGrade } = useGradingContext();
   const accordionRef = useRef<AccordionRef>(null);
 
   if (isGradeLoading || !criteria) {

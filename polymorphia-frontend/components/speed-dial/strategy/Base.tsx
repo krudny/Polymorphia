@@ -7,6 +7,8 @@ import GroupPickingModal from "@/components/speed-dial/modals/GroupPickingModal"
 import ImportCSVModal from "@/components/speed-dial/modals/ImportCSVModal";
 
 export abstract class BaseSpeedDialStrategy {
+  abstract getItems(context: SpeedDialContext): SpeedDialItem[];
+  
   protected createRewardsItem(): SpeedDialItem {
     return {
       id: 1,

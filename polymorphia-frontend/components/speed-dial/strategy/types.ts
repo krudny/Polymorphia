@@ -8,5 +8,5 @@ export interface SpeedDialContext {
 }
 
 export interface SpeedDialStrategy {
-  getItems(context: SpeedDialContext): SpeedDialItem[];
+  getItems(context: SpeedDialContext | undefined): SpeedDialItem[];
 }

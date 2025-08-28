@@ -3,11 +3,11 @@ import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import Search from "@/components/search";
-import { useContext } from "react";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import Loading from "@/components/loading/Loading";
-import { GradingContext, GradingReducerActions } from "@/components/providers/grading/GradingContext";
+import { GradingReducerActions } from "@/components/providers/grading/GradingContext";
 import GradingComponentWrapper from "@/components/grading/components/grading-wrapper";
+import useGradingContext from "@/hooks/contexts/useGradingContext";
 
 export default function ProjectGroupList() {
   const {
@@ -17,7 +17,7 @@ export default function ProjectGroupList() {
     setSearch,
     projectGroups,
     isProjectGroupsLoading,
-  } = useContext(GradingContext);
+  } = useGradingContext();
 
   if (isProjectGroupsLoading || !projectGroups) {
     return <Loading />;
