@@ -31,7 +31,7 @@ export default function GradableEventView() {
   useEffect(() => {
     setTitle(eventSection?.name ?? "");
   }, [eventSection, setTitle]);
-  
+
   return (
     <MarkdownProvider gradableEventId={gradableEventId}>
       <div className="gradable-event" ref={wrapperRef}>
