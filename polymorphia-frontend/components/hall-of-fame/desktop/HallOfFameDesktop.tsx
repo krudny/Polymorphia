@@ -1,6 +1,3 @@
-/* eslint-disable */
-/* @ts-nocheck */
-
 import { useScaleShow } from "@/animations/ScaleShow";
 import "./index.css";
 import "../general/index.css";

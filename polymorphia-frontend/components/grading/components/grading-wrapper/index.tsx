@@ -5,7 +5,7 @@ export default function GradingComponentWrapper({
                                                   mainComponent,
                                                 }: GradingComponentWrapperProps) {
   return (
-    <div className="w-full overflow-y-hidden flex flex-col flex-1 gap-y-4">
+    <div className="w-full overflow-y-hidden flex flex-col flex-1 gap-y-4 ">
       <div className="w-full flex justify-between items-center px-8 mx-auto min-h-12">
         {topComponent}
       </div>
