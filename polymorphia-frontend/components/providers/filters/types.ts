@@ -39,3 +39,8 @@ export type FilterAction<FilterIdType extends string> =
   | { type: typeof FilterActions.TOGGLE; id: FilterIdType; value: string }
   | { type: typeof FilterActions.SET; state: FilterState<FilterIdType> }
   | { type: typeof FilterActions.RESET };
+
+export interface ValidateFiltersProps<FilterIdType extends string> {
+  valid: boolean;
+  errors: Record<FilterIdType, string>;
+}

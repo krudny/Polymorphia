@@ -99,7 +99,7 @@ export default function FiltersModal<FilterIdType extends string>({
         </Accordion>
         <div className="filters-modal-button-wrapper">
           <ButtonWithBorder
-            text={"Potwierdź zmiany"}
+            text="Potwierdź zmiany"
             className="w-full rounded-md"
             size="sm"
             onClick={handleConfirm}

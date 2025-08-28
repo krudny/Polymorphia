@@ -1,9 +1,14 @@
-import { FilterConfig, FilterState, SpecialBehaviors } from "../types";
+import {
+  FilterConfig,
+  FilterState,
+  SpecialBehaviors,
+  ValidateFiltersProps,
+} from "../types";
 
 export function validateFilters<FilterIdType extends string>(
   state: FilterState<FilterIdType>,
   configs: FilterConfig<FilterIdType>[]
-): { valid: boolean; errors: Record<FilterIdType, string> } {
+): ValidateFiltersProps<FilterIdType> {
   const errors: Record<FilterIdType, string> = {} as Record<
     FilterIdType,
     string
