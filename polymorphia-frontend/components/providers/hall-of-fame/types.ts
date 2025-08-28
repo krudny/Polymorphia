@@ -1,34 +1,23 @@
 import { Dispatch, SetStateAction } from "react";
 import { HallOfFameResponseDTO } from "@/interfaces/api/hall-of-fame";
-import { HallOfFameFilter } from "@/components/hall-of-fame/general/types";
+import { useFilters } from "../filters/useFilters";
 
-export const HallOfFameActions = {
-  ADD_TO_FILTER: "add_to_filter",
-  REMOVE_FROM_FILTER: "remove_from_filter",
-} as const;
-
-export type HallOfFameAction =
-  | {
-  type: typeof HallOfFameActions.ADD_TO_FILTER;
-  payload: { id: string; value: string };
-}
-  | {
-  type: typeof HallOfFameActions.REMOVE_FROM_FILTER;
-  payload: { id: string; value: string };
-};
+export type HallOfFameFilterId =
+  | "sortOrder"
+  | "sortBy"
+  | "groups"
+  | "rankingOptions";
 
 export interface HallOfFameContextInterface {
-  hallOfFame: HallOfFameResponseDTO | undefined;
-  page: number;
-  setPage: Dispatch<SetStateAction<number>>;
-  search: string;
-  setSearch: Dispatch<SetStateAction<string>>;
+  filters: ReturnType<typeof useFilters<HallOfFameFilterId>>;
+  isFiltersLoading: boolean;
+  isFiltersError: boolean;
   isModalOpen: boolean;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
-  filtersState: HallOfFameFilter[];
-  filtersDispatch: Dispatch<HallOfFameAction>;
+  page: number;
+  setPage: Dispatch<SetStateAction<number>>;
+  hallOfFame: HallOfFameResponseDTO | undefined;
+  search: string;
+  setSearch: Dispatch<SetStateAction<string>>;
   isLoading: boolean;
-  appliedFiltersState: HallOfFameFilter[];
-  setAppliedFiltersState: Dispatch<SetStateAction<HallOfFameFilter[]>>;
-  areFiltersReady: boolean;
 }

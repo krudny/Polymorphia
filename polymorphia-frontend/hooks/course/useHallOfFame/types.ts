@@ -4,8 +4,8 @@ export interface useHallOfFameProps {
   page: number;
   pageSize: number;
   debouncedSearch: string;
-  sortOrder: string,
-  sortBy: string;
+  sortOrder: string[];
+  sortBy: string[];
   groups: string[];
 }
 

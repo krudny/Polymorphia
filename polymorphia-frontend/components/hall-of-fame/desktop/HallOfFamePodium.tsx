@@ -9,7 +9,6 @@ export default function HallOfFamePodium() {
   const { data: podium, isLoading } = useHallOfFamePodium();
   const wrapperRef = useScaleShow(!isLoading);
 
-
   if (isLoading || !podium) {
     return (
       <div className="hall-of-fame-loading-wrapper">

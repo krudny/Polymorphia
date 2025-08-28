@@ -10,4 +10,4 @@ export default function useUserContext(): UserDetailsDTO {
   }
 
   return context;
-};
+}

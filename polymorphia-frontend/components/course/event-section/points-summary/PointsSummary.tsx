@@ -7,9 +7,7 @@ import PointsSummaryElement from "@/components/course/event-section/points-summa
 import { PointsSummaryDetailsResponseDTO } from "@/interfaces/api/course/points-summary";
 import usePointsSummary from "@/hooks/course/usePointsSummary";
 
-export default function PointsSummary({
-                                        ref,
-                                      }: PointsSummaryProps) {
+export default function PointsSummary({ ref }: PointsSummaryProps) {
   const { data: pointsSummary, isLoading, isError } = usePointsSummary();
   const [currentBonusInfoModal, setCurrentBonusInfoModal] =
     useState<PointsSummaryDetailsResponseDTO | null>(null);
@@ -45,7 +43,7 @@ export default function PointsSummary({
               onClick={
                 pointsSummary.percentageBonus.assignedItems?.length
                   ? () =>
-                    setCurrentBonusInfoModal(pointsSummary.percentageBonus)
+                      setCurrentBonusInfoModal(pointsSummary.percentageBonus)
                   : undefined
               }
             />

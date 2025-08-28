@@ -5,21 +5,23 @@ import UserPoints from "@/components/user-points/UserPoints";
 import "./index.css";
 import { HallOfFameRecordDTO } from "@/interfaces/api/hall-of-fame";
 import { filterXpDetails } from "@/components/providers/hall-of-fame/utils/filterXpDetails";
-import { getAllFilters } from "@/components/providers/hall-of-fame/utils/getAllFilters";
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
 
 export default function HallOfFameCardDesktop({
-                                                userDetails,
-                                                xpDetails,
-                                              }: HallOfFameRecordDTO) {
-  const { appliedFiltersState, areFiltersReady } = useHallOfFameContext();
+  userDetails,
+  xpDetails,
+}: HallOfFameRecordDTO) {
+  const { filters, isFiltersLoading, isFiltersError } = useHallOfFameContext();
 
-  if (!areFiltersReady) {
+  if (isFiltersLoading || isFiltersError) {
     return null;
   }
 
-  const { rankingOptionsFilter } = getAllFilters(appliedFiltersState);
-  const filteredXpDetails = filterXpDetails(xpDetails, rankingOptionsFilter);
+  const filteredXpDetails = filterXpDetails(
+    xpDetails,
+    filters.configs.find((config) => config.id === "rankingOptions"),
+    filters.getAppliedFilterValues
+  );
 
   return (
     <div className="hall-of-fame-desktop-record-wrapper">

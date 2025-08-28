@@ -2,7 +2,10 @@ import { UserDetailsDTO } from "@/interfaces/api/user";
 import { ProjectGroupResponseDTO } from "@/interfaces/api/temp";
 import { CriterionResponseDTO } from "@/interfaces/api/grade";
 import { Dispatch } from "react";
-import { GradingReducerActionType, GradingReducerState } from "@/components/providers/grading/GradingContext";
+import {
+  GradingReducerActionType,
+  GradingReducerState,
+} from "@/components/providers/grading/GradingContext";
 
 export type GradingContextInterface = {
   search: string;

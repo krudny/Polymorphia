@@ -2,7 +2,10 @@
 import UserSection from "@/components/navigation/UserSection";
 import Line from "@/components/navigation/Line";
 import MenuSection from "@/components/navigation/MenuSection";
-import { BottomDesktopMenuItems, MainMenuItems } from "@/components/navigation/MenuOptions";
+import {
+  BottomDesktopMenuItems,
+  MainMenuItems,
+} from "@/components/navigation/MenuOptions";
 import { useEffect, useRef } from "react";
 import "./index.css";
 
@@ -43,12 +46,14 @@ export default function Sidebar() {
       id={isSidebarLockedOpened ? "sidebar-locked" : "sidebar-animated"}
       className="sidebar"
       onMouseEnter={() => {
-        if (!isSidebarLockedOpened && !isSidebarLockedClosed)
+        if (!isSidebarLockedOpened && !isSidebarLockedClosed) {
           setIsSidebarExpanded(true);
+        }
       }}
       onMouseLeave={() => {
-        if (!isSidebarLockedOpened && !isSidebarLockedClosed)
+        if (!isSidebarLockedOpened && !isSidebarLockedClosed) {
           setIsSidebarExpanded(false);
+        }
       }}
     >
       <UserSection />
@@ -57,7 +62,7 @@ export default function Sidebar() {
         className={clsx(
           `sidebar-menu-section-base ${
             isSidebarExpanded ? "sidebar-menu-section-expanded" : ""
-          }`,
+          }`
         )}
       >
         <MenuSection options={menuItems} />

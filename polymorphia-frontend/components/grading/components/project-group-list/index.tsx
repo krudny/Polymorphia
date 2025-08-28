@@ -53,7 +53,7 @@ export default function ProjectGroupList() {
           {group.members.map(
             (
               student: UserDetailsDTO & { gainedXp?: string },
-              index: number,
+              index: number
             ) => {
               const color = state.selectedTarget?.includes(student)
                 ? "sky"
@@ -84,7 +84,7 @@ export default function ProjectGroupList() {
                   }
                 />
               );
-            },
+            }
           )}
           <div className="w-full border-2 border-secondary-dark"></div>
         </div>

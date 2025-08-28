@@ -5,4 +5,3 @@ export interface UseProjectVariant {
   isLoading: boolean;
   isError: boolean;
 }
-

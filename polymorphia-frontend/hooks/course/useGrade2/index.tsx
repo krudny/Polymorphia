@@ -8,7 +8,8 @@ export default function useGrade2(selectedStudentId: number | null): UseGrade2 {
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["grade", selectedStudentId, gradableEventId],
-    queryFn: () => EventSectionService.getGrade2(selectedStudentId ?? -1, gradableEventId),
+    queryFn: () =>
+      EventSectionService.getGrade2(selectedStudentId ?? -1, gradableEventId),
   });
 
   return { data, isLoading, isError };

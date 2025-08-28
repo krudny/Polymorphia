@@ -7,8 +7,13 @@ export default function useMarkdownUpdate(): UseMarkdownUpdate {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ gradableEventId, newMarkdown }: { gradableEventId: number; newMarkdown: string }) =>
-      EventSectionService.saveMarkdown(gradableEventId, newMarkdown),
+    mutationFn: ({
+      gradableEventId,
+      newMarkdown,
+    }: {
+      gradableEventId: number;
+      newMarkdown: string;
+    }) => EventSectionService.saveMarkdown(gradableEventId, newMarkdown),
     onSuccess: (_, { gradableEventId }) => {
       queryClient.invalidateQueries({
         queryKey: ["markdown", gradableEventId],

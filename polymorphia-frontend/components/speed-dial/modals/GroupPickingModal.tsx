@@ -49,8 +49,7 @@ function GroupPickingModalContent() {
         autoComplete="off"
         onSubmit={(e) => e.preventDefault()}
       >
-        <div
-          className="w-full h-full flex align-center text-2xl border-b-2  border-primary-dark dark:border-secondary-light min-w-92">
+        <div className="w-full h-full flex align-center text-2xl border-b-2  border-primary-dark dark:border-secondary-light min-w-92">
           <span className="material-symbols text-3xl text-primary-dark dark:text-secondary-light">
             search
           </span>
@@ -63,8 +62,7 @@ function GroupPickingModalContent() {
           />
         </div>
         {debouncedSearch && (
-          <div
-            className="w-full h-fit max-h-[250px] mt-2 overflow-y-scroll flex flex-col gap-y-1 z-[999] custom-scrollbar">
+          <div className="w-full h-fit max-h-[250px] mt-2 overflow-y-scroll flex flex-col gap-y-1 z-[999] custom-scrollbar">
             {allUsers && allUsers.length > 0 ? (
               allUsers?.map((user, index) => (
                 <div key={index} className="min-h-fit">
@@ -75,7 +73,8 @@ function GroupPickingModalContent() {
                       <XPCardImage
                         imageUrl={user.imageUrl}
                         alt={user.evolutionStage}
-                      />}
+                      />
+                    }
                     size="xs"
                     onClick={() => handleClick(user)}
                   />
@@ -100,7 +99,8 @@ function GroupPickingModalContent() {
                 <XPCardImage
                   imageUrl={user.imageUrl}
                   alt={user.evolutionStage}
-                />}
+                />
+              }
               size="xs"
             />
           </div>
@@ -117,7 +117,9 @@ function GroupPickingModalContent() {
   );
 }
 
-export default function GroupPickingModal({ onClosedAction }: SpeedDialModalProps) {
+export default function GroupPickingModal({
+  onClosedAction,
+}: SpeedDialModalProps) {
   return (
     <Modal
       isDataPresented={true}

@@ -1,7 +1,9 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { NavigationContextInterface } from "@/components/providers/navigation/types";
 
-export const NavigationContext = createContext<NavigationContextInterface | undefined>(undefined);
+export const NavigationContext = createContext<
+  NavigationContextInterface | undefined
+>(undefined);
 
 export const NavigationProvider = ({ children }: { children: ReactNode }) => {
   const [isSidebarLockedOpened, setIsSidebarLockedOpened] = useState(() => {
@@ -18,11 +20,11 @@ export const NavigationProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     localStorage.setItem(
       "sidebarLockedOpened",
-      isSidebarLockedOpened.toString(),
+      isSidebarLockedOpened.toString()
     );
     localStorage.setItem(
       "sidebarLockedClosed",
-      isSidebarLockedClosed.toString(),
+      isSidebarLockedClosed.toString()
     );
   }, [isSidebarLockedOpened, isSidebarLockedClosed]);
 

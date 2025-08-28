@@ -2,7 +2,10 @@
 // @ts-nocheck
 
 import { lab0, lab1, lab2, proj1 } from "@/app/(logged-in)/course/sampleData";
-import { groups, studentNames } from "@/app/(logged-in)/hall-of-fame/HallOfFameService";
+import {
+  groups,
+  studentNames,
+} from "@/app/(logged-in)/hall-of-fame/HallOfFameService";
 import { ProjectVariantResponseDTO } from "@/interfaces/api/course/project";
 import { CriterionResponseDTO, GradeResponseDTO } from "@/interfaces/api/grade";
 import { MarkdownResponseDTO } from "@/interfaces/api/markdown";
@@ -85,13 +88,13 @@ const eventSectionData: EventSectionResponseDTO[] = [
 
 export const EventSectionService = {
   getEventSections: async (
-    courseId: number,
+    courseId: number
   ): Promise<EventSectionResponseDTO[]> => {
     return eventSectionData.sort((a, b) => a.orderIndex - b.orderIndex);
   },
 
   getStudentGradableEvents: async (
-    eventSectionId: number,
+    eventSectionId: number
   ): Promise<StudentGradableEventResponseDTO[]> => {
     if (eventSectionId === 1) {
       const events: StudentGradableEventResponseDTO[] = [
@@ -336,7 +339,7 @@ export const EventSectionService = {
   },
 
   getInstructorGradableEvents: async (
-    eventSectionId: number,
+    eventSectionId: number
   ): Promise<InstructorGradableEventResponseDTO[]> => {
     if (eventSectionId === 1) {
       const events = [
@@ -553,7 +556,7 @@ export const EventSectionService = {
   },
 
   getPointsSummary: async (
-    eventSectionId: number,
+    eventSectionId: number
   ): Promise<PointsSummaryResponseDTO> => {
     if (eventSectionId === 1) {
       return {
@@ -643,7 +646,7 @@ export const EventSectionService = {
   },
 
   getMarkdown: async (
-    gradableEventId: number,
+    gradableEventId: number
   ): Promise<MarkdownResponseDTO> => {
     const markdown = mockMarkdownStore[gradableEventId];
     if (markdown !== undefined) {
@@ -656,14 +659,14 @@ export const EventSectionService = {
 
   saveMarkdown: async (
     gradableEventId: number,
-    newMarkdown: string,
+    newMarkdown: string
   ): Promise<void> => {
     await new Promise<void>((resolve) => setTimeout(resolve, 100));
     mockMarkdownStore[gradableEventId] = newMarkdown;
   },
 
   getCriteria: async (
-    gradableEventId: number,
+    gradableEventId: number
   ): Promise<CriterionResponseDTO[]> => {
     return [
       {
@@ -1019,7 +1022,7 @@ export const EventSectionService = {
   // TODO: assume that id is criterion id XD
   getGrade2: async (
     studentId: number,
-    gradableEventId: number,
+    gradableEventId: number
   ): Promise<GradeResponseDTO> => {
     await new Promise<void>((resolve) => setTimeout(resolve, 150));
     return {
@@ -1155,7 +1158,7 @@ export const EventSectionService = {
     if (searchTerm && searchTerm.trim() !== "") {
       const lowerSearch = searchTerm.toLowerCase();
       filteredData = filteredData.filter((item) =>
-        item.studentName.toLowerCase().includes(lowerSearch),
+        item.studentName.toLowerCase().includes(lowerSearch)
       );
     }
 
@@ -1163,7 +1166,7 @@ export const EventSectionService = {
   },
 
   getRandomPeopleWithPoints: async (
-    searchTerm: string,
+    searchTerm: string
   ): Promise<(UserDetailsDTO & { gainedXp?: string })[]> => {
     // await new Promise<void>((resolve) => setTimeout(resolve, 1000));
 
@@ -1178,7 +1181,7 @@ export const EventSectionService = {
     if (searchTerm && searchTerm.trim() !== "") {
       const lowerSearch = searchTerm.toLowerCase();
       filteredData = filteredData.filter((item) =>
-        item.studentName.toLowerCase().includes(lowerSearch),
+        item.studentName.toLowerCase().includes(lowerSearch)
       );
     }
 

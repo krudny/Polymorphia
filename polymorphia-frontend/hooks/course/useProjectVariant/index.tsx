@@ -15,4 +15,3 @@ export default function useProjectVariant(): UseProjectVariant {
 
   return { data, isLoading, isError };
 }
-

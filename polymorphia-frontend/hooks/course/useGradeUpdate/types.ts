@@ -5,6 +5,6 @@ export interface UseGradeUpdate {
     studentId: number;
     gradableEventId: number;
     criteria: Record<number, CriteriaDetails>;
-    comment: string
+    comment: string;
   }) => void;
 }

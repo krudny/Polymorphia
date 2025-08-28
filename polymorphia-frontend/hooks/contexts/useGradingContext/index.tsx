@@ -10,4 +10,4 @@ export default function useGradingContext(): GradingContextInterface {
   }
 
   return context;
-};
+}

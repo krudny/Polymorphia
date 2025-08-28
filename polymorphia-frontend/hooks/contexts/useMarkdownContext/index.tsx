@@ -10,8 +10,10 @@ export default function useMarkdownContext(): MarkdownContextInterface {
   }
 
   return context;
-};
+}
 
-export const useOptionalMarkdownContext = (): MarkdownContextInterface | undefined => {
+export const useOptionalMarkdownContext = ():
+  | MarkdownContextInterface
+  | undefined => {
   return useContext(MarkdownContext);
 };

@@ -1,10 +1,15 @@
 import { createContext, useEffect, useState } from "react";
-import { MarkdownContextInterface, MarkdownProviderProps } from "@/components/providers/markdown/types";
+import {
+  MarkdownContextInterface,
+  MarkdownProviderProps,
+} from "@/components/providers/markdown/types";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import useMarkdown from "@/hooks/general/useMarkdown";
 import useMarkdownUpdate from "@/hooks/course/useMarkdownUpdate";
 
-export const MarkdownContext = createContext<MarkdownContextInterface | undefined>(undefined);
+export const MarkdownContext = createContext<
+  MarkdownContextInterface | undefined
+>(undefined);
 
 export const MarkdownProvider = ({ children }: MarkdownProviderProps) => {
   const { data, isLoading, isError } = useMarkdown();

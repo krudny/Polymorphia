@@ -1,4 +1,7 @@
-import { EquipmentChestResponseDTO, EquipmentItemResponseDTO } from "@/interfaces/api/equipment";
+import {
+  EquipmentChestResponseDTO,
+  EquipmentItemResponseDTO,
+} from "@/interfaces/api/equipment";
 
 export interface UseEquipment {
   items: EquipmentItemResponseDTO[] | undefined;

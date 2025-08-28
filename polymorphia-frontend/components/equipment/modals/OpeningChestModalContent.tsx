@@ -8,7 +8,8 @@ import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
 
 export default function OpeningChestModalContent() {
   const { closeModal } = useModalContext();
-  const { currentOpeningChestModalData, pickedItemsIds, setPickedItemsIds } = useEquipmentContext();
+  const { currentOpeningChestModalData, pickedItemsIds, setPickedItemsIds } =
+    useEquipmentContext();
   const openingChest = currentOpeningChestModalData;
 
   const handlePickItem = (itemId: number) => {
@@ -23,7 +24,7 @@ export default function OpeningChestModalContent() {
       setPickedItemsIds((prev: number[]) =>
         isPicked
           ? prev.filter((id: number) => id !== itemId)
-          : [...prev, itemId],
+          : [...prev, itemId]
       );
     }
   };

@@ -6,8 +6,10 @@ export default function useEquipmentContext(): EquipmentContextInterface {
   const context = useContext(EquipmentContext);
 
   if (!context) {
-    throw new Error("useEquipmentContext must be used within EquipmentProvider");
+    throw new Error(
+      "useEquipmentContext must be used within EquipmentProvider"
+    );
   }
 
   return context;
-};
+}

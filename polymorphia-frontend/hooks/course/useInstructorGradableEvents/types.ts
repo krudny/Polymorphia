@@ -5,4 +5,3 @@ export interface UseInstructorGradableEvents {
   isLoading: boolean;
   isError: boolean;
 }
-

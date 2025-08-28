@@ -34,7 +34,7 @@ export function useAccordionState(maxOpen?: number): AccordionContextInterface {
         return [...prev, id];
       });
     },
-    [maxOpen],
+    [maxOpen]
   );
 
   const close = useCallback((id: string) => {
@@ -57,12 +57,12 @@ export function useAccordionState(maxOpen?: number): AccordionContextInterface {
         open(id);
       }
     },
-    [openSections, open, close],
+    [openSections, open, close]
   );
 
   const isOpen = useCallback(
     (id: string) => openSections.includes(id),
-    [openSections],
+    [openSections]
   );
 
   return { open, close, closeAll, toggle, isOpen, register, unregister };

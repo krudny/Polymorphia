@@ -4,12 +4,15 @@ import { UseRandomPeopleWithPoints } from "@/hooks/course/useRandomPeopleWithPoi
 import { EventTypes } from "@/interfaces/api/course";
 import { useEventParams } from "@/hooks/general/useEventParams";
 
-export default function useRandomPeopleWithPoints(debouncedSearch: string): UseRandomPeopleWithPoints {
+export default function useRandomPeopleWithPoints(
+  debouncedSearch: string
+): UseRandomPeopleWithPoints {
   const { eventType } = useEventParams();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["students", debouncedSearch],
-    queryFn: () => EventSectionService.getRandomPeopleWithPoints(debouncedSearch),
+    queryFn: () =>
+      EventSectionService.getRandomPeopleWithPoints(debouncedSearch),
     enabled: eventType !== EventTypes.PROJECT,
   });
 

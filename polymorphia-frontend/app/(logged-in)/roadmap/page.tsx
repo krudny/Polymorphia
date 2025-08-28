@@ -30,7 +30,6 @@ export default function Roadmap() {
     setTitle("Roadmapa");
   }, [setTitle]);
 
-
   if (isLoading || !roadmap) {
     return <Loading />;
   }
@@ -42,12 +41,16 @@ export default function Roadmap() {
   const cards = roadmap.map((gradableEvent) => {
     const { name, topic, id, gainedXp, isLocked, hasReward } = gradableEvent;
     const color = gainedXp ? "green" : "silver";
-    const rightComponent = hasReward ? <XPCardChest /> : <XPCardPoints
-      points={gainedXp}
-      isSumLabelVisible={true}
-      hasChest={true}
-      color="gray"
-    />;
+    const rightComponent = hasReward ? (
+      <XPCardChest />
+    ) : (
+      <XPCardPoints
+        points={gainedXp}
+        isSumLabelVisible={true}
+        hasChest={true}
+        color="gray"
+      />
+    );
 
     return (
       <XPCard
@@ -76,7 +79,7 @@ export default function Roadmap() {
           maxXP={100}
           numSquares={cards?.length ?? 0}
           segmentSizes={Array.from({ length: cards.length * 2 - 1 }, (_, i) =>
-            i % 2 === 0 ? 0 : 100 / (cards.length - 1),
+            i % 2 === 0 ? 0 : 100 / (cards.length - 1)
           )}
           isHorizontal={false}
           upperElement={

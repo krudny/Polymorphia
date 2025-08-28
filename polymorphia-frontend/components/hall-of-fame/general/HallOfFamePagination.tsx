@@ -15,7 +15,10 @@ export default function HallOfFamePagination() {
   }
 
   return (
-    <div className={`hall-of-fame-pagination-wrapper ${isDesktop && "justify-end"}`} ref={wrapperRef}>
+    <div
+      className={`hall-of-fame-pagination-wrapper ${isDesktop && "justify-end"}`}
+      ref={wrapperRef}
+    >
       {!isLoading && hallOfFame.page.totalPages > 0 && (
         <Pagination
           pageCount={hallOfFame.page.totalPages}

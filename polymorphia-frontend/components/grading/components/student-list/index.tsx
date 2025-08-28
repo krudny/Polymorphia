@@ -11,7 +11,8 @@ import { ReactNode } from "react";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 
 export default function StudentsList() {
-  const { search, setSearch, students, isStudentsLoading, state, dispatch } = useGradingContext();
+  const { search, setSearch, students, isStudentsLoading, state, dispatch } =
+    useGradingContext();
   const wrapperRef = useFadeInAnimate(!isStudentsLoading);
 
   const topComponent = (

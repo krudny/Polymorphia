@@ -16,7 +16,11 @@ import useStudentsGradableEvents from "@/hooks/course/useStudentsGradableEvents"
 
 export default function StudentView() {
   const { eventType, eventSectionId } = useEventParams();
-  const { data: gradableEvents, isLoading, isError } = useStudentsGradableEvents();
+  const {
+    data: gradableEvents,
+    isLoading,
+    isError,
+  } = useStudentsGradableEvents();
   const router = useRouter();
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const summaryRef = useRef<HTMLDivElement | null>(null);
@@ -26,7 +30,7 @@ export default function StudentView() {
   useEffect(() => {
     if (!isLoading && gradableEvents && gradableEvents.length === 1) {
       router.push(
-        `/course/${eventType.toLowerCase()}/${eventSectionId}/${gradableEvents[0].id}`,
+        `/course/${eventType.toLowerCase()}/${eventSectionId}/${gradableEvents[0].id}`
       );
     }
   }, [isLoading, gradableEvents, eventType, eventSectionId, router]);
@@ -56,16 +60,13 @@ export default function StudentView() {
   };
 
   const cards = gradableEvents.map((gradableEvent) =>
-    renderCard(gradableEvent, false, handleClick),
+    renderCard(gradableEvent, false, handleClick)
   );
 
   return (
     <SectionView ref={containerRef}>
       <div className="flex flex-col gap-x-10 overflow-hidden lg:flex-row 2xl:px-10">
-        <div
-          className="w-full min-h-full flex-col-centered"
-          ref={wrapperRef}
-        >
+        <div className="w-full min-h-full flex-col-centered" ref={wrapperRef}>
           <XPCardGrid containerRef={wrapperRef} cards={cards} maxColumns={2} />
         </div>
         <PointsSummary ref={summaryRef} />

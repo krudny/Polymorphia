@@ -19,9 +19,7 @@ export default function Grade() {
   const { state, criteria, isGradeLoading, submitGrade } = useGradingContext();
   const accordionRef = useRef<AccordionRef>(null);
 
-  const topComponent = (
-    <h1 className="text-5xl">Ocena</h1>
-  );
+  const topComponent = <h1 className="text-5xl">Ocena</h1>;
 
   const mainComponent = (): ReactNode => {
     if (isGradeLoading || !criteria) {
@@ -38,7 +36,7 @@ export default function Grade() {
           {Object.entries(state.criteria).map(
             ([criterionId, criterionGrade], index) => {
               const criterion = criteria?.find(
-                (criterion) => criterion.id === Number(criterionId),
+                (criterion) => criterion.id === Number(criterionId)
               );
               if (!criterion) {
                 return null;
@@ -80,7 +78,7 @@ export default function Grade() {
                   </div>
                 </AccordionSection>
               );
-            },
+            }
           )}
           <AccordionSection
             key={criteria.length + 1}

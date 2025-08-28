@@ -7,7 +7,8 @@ import "./index.css";
 import useNavigationContext from "@/hooks/contexts/useNavigationContext";
 
 export default function MenuSection({ options }: MenuSectionProps) {
-  const { isSidebarExpanded, isNavbarExpanded, setIsNavbarExpanded } = useNavigationContext();
+  const { isSidebarExpanded, isNavbarExpanded, setIsNavbarExpanded } =
+    useNavigationContext();
   const [openSubMenu, setOpenSubMenu] = useState<string[]>([]);
   const containerRefs = useRef<Array<HTMLDivElement | null>>([]);
 
@@ -28,7 +29,7 @@ export default function MenuSection({ options }: MenuSectionProps) {
       containerRefs.current,
       openSubMenu,
       isExpanded,
-      options,
+      options
     );
   }, [openSubMenu, isExpanded, options]);
 

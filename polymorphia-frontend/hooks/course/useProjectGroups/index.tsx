@@ -3,7 +3,9 @@ import { EventSectionService } from "@/app/(logged-in)/course/EventSectionServic
 import { UseProjectGroups } from "@/hooks/course/useProjectGroups/types";
 import { useEventParams } from "@/hooks/general/useEventParams";
 
-export default function useProjectGroups(debouncedSearch: string): UseProjectGroups {
+export default function useProjectGroups(
+  debouncedSearch: string
+): UseProjectGroups {
   const { eventType } = useEventParams();
 
   const { data, isLoading, isError } = useQuery({

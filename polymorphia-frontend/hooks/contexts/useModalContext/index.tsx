@@ -10,4 +10,4 @@ export default function useModalContext(): ModalContextInterface {
   }
 
   return context;
-};
+}

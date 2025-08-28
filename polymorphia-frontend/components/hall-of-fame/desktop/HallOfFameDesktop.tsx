@@ -9,11 +9,7 @@ import HallOfFameList from "@/components/hall-of-fame/general/HallOfFameList";
 import HallOfFamePagination from "@/components/hall-of-fame/general/HallOfFamePagination";
 
 export default function HallOfFameDesktop() {
-  const {
-    search,
-    setSearch,
-    setIsModalOpen,
-  } = useHallOfFameContext();
+  const { search, setSearch, setIsModalOpen } = useHallOfFameContext();
   const wrapperRef = useScaleShow();
 
   return (

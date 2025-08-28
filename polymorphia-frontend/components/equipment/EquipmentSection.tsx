@@ -4,7 +4,10 @@ import Image from "next/image";
 import ImageBadge from "@/components/image-badge/ImageBadge";
 import ButtonWithBorder from "../button/ButtonWithBorder";
 import { EquipmentSectionProps } from "@/components/equipment/types";
-import { EquipmentChestResponseDTO, EquipmentItemResponseDTO } from "@/interfaces/api/equipment";
+import {
+  EquipmentChestResponseDTO,
+  EquipmentItemResponseDTO,
+} from "@/interfaces/api/equipment";
 import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
 
 export function EquipmentSection({ type, data }: EquipmentSectionProps) {

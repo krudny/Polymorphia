@@ -4,7 +4,8 @@ import { SpeedDialStrategy } from "@/components/speed-dial/strategies/types";
 
 export class AssignmentStrategy
   extends BaseSpeedDialStrategy
-  implements SpeedDialStrategy {
+  implements SpeedDialStrategy
+{
   getItems(): SpeedDialItem[] {
     return [this.createRewardsItem()];
   }

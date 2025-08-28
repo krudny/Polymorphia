@@ -7,16 +7,20 @@ import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 export default function renderCard(
   gradableEvent: StudentGradableEventResponseDTO,
   isMobile: boolean,
-  handleGradableEventClick: (id: number, isLocked: boolean) => void,
+  handleGradableEventClick: (id: number, isLocked: boolean) => void
 ): ReactNode {
   const { hasReward, gainedXp } = gradableEvent;
   const color = gainedXp ? "green" : "sky";
-  const rightComponent = hasReward ? <XPCardChest /> : <XPCardPoints
-    points={gainedXp}
-    isSumLabelVisible={true}
-    hasChest={hasReward}
-    color="gray"
-  />;
+  const rightComponent = hasReward ? (
+    <XPCardChest />
+  ) : (
+    <XPCardPoints
+      points={gainedXp}
+      isSumLabelVisible={true}
+      hasChest={hasReward}
+      color="gray"
+    />
+  );
 
   return (
     <XPCard

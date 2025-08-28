@@ -8,9 +8,9 @@ export default function useInstructorGradableEvents(): UseInstructorGradableEven
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["gradableEvents", eventSectionId],
-    queryFn: () => EventSectionService.getInstructorGradableEvents(eventSectionId),
+    queryFn: () =>
+      EventSectionService.getInstructorGradableEvents(eventSectionId),
   });
 
   return { data, isLoading, isError };
 }
-

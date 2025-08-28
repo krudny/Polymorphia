@@ -5,7 +5,10 @@ import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import LoginForm from "@/components/home/LoginForm";
 import { useLayoutEffect, useRef, useState } from "react";
-import { animateInitialMount, animateLoginFormVisibility } from "@/animations/Home";
+import {
+  animateInitialMount,
+  animateLoginFormVisibility,
+} from "@/animations/Home";
 import "./index.css";
 
 export default function Home() {
@@ -31,7 +34,7 @@ export default function Home() {
       imageRef.current,
       () => {
         hasMountedRef.current = true;
-      },
+      }
     );
   }, []);
 
@@ -43,7 +46,7 @@ export default function Home() {
     animateLoginFormVisibility(
       loginFormRef.current,
       titleRef.current,
-      isLoginFormVisible,
+      isLoginFormVisible
     );
   }, [isLoginFormVisible]);
 

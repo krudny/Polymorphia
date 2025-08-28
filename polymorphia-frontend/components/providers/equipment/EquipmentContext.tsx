@@ -1,8 +1,13 @@
 import { createContext, ReactNode, useState } from "react";
 import { EquipmentContextInterface } from "@/components/providers/equipment/types";
-import { EquipmentChestResponseDTO, EquipmentItemResponseDTO } from "@/interfaces/api/equipment";
+import {
+  EquipmentChestResponseDTO,
+  EquipmentItemResponseDTO,
+} from "@/interfaces/api/equipment";
 
-export const EquipmentContext = createContext<EquipmentContextInterface | undefined>(undefined);
+export const EquipmentContext = createContext<
+  EquipmentContextInterface | undefined
+>(undefined);
 
 export const EquipmentProvider = ({ children }: { children: ReactNode }) => {
   const [currentItemModalData, setCurrentItemModalData] =

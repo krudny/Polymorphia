@@ -7,7 +7,8 @@ import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
 
 export default function ItemModal() {
-  const { currentItemModalData, setCurrentItemModalData } = useEquipmentContext();
+  const { currentItemModalData, setCurrentItemModalData } =
+    useEquipmentContext();
   const equipmentItem = currentItemModalData;
 
   return (
@@ -33,10 +34,13 @@ export default function ItemModal() {
                 />
               }
               rightComponent={
-                <XPCardPoints points={`+${itemAssignmentDetails.gainedXp}`} color="gray" />
+                <XPCardPoints
+                  points={`+${itemAssignmentDetails.gainedXp}`}
+                  color="gray"
+                />
               }
             />
-          ),
+          )
         )}
       </div>
     </Modal>

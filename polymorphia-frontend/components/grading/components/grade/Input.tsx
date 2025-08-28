@@ -4,9 +4,9 @@ import { GradingInputProps } from "@/components/grading/components/grade/types";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 
 export default function GradingInput({
-                                       criterion,
-                                       gainedXp,
-                                     }: GradingInputProps) {
+  criterion,
+  gainedXp,
+}: GradingInputProps) {
   const { dispatch } = useGradingContext();
   const inputValueRefs = useRef<Record<number, string>>({});
   const [errors, setErrors] = useState<Record<number, boolean>>({});
@@ -14,7 +14,7 @@ export default function GradingInput({
   const handleXPChange = (
     event: ChangeEvent<HTMLInputElement>,
     criterionId: number,
-    maxXp: number,
+    maxXp: number
   ) => {
     const xp = event.target.value;
     inputValueRefs.current[criterionId] = xp;

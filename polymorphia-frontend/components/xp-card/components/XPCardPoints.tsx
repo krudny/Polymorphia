@@ -4,17 +4,17 @@ import clsx from "clsx";
 import { colorVariants } from "@/components/xp-card/XPCard";
 
 export default function XPCardPoints({
-                                       points,
-                                       isSumLabelVisible = false,
-                                       isXPLabelVisible = true,
-                                       hasChest = false,
-                                       color,
-                                     }: XPCardPointsProps) {
+  points,
+  isSumLabelVisible = false,
+  isXPLabelVisible = true,
+  hasChest = false,
+  color,
+}: XPCardPointsProps) {
   return (
     <div
       className={clsx(
         "xp-card-points",
-        colorVariants({ color }).backgroundSecondary(),
+        colorVariants({ color }).backgroundSecondary()
       )}
     >
       <h1>

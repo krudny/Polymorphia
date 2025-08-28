@@ -7,7 +7,8 @@ import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
 
 export default function ChestModal() {
-  const { currentChestModalData, setCurrentChestModalData } = useEquipmentContext();
+  const { currentChestModalData, setCurrentChestModalData } =
+    useEquipmentContext();
   const equipmentChest = currentChestModalData;
 
   return (
@@ -33,10 +34,13 @@ export default function ChestModal() {
               }
               // TODO: handle undefined xp
               rightComponent={
-                <XPCardPoints points={`+${assignedItem.details.gainedXp}`} color="gray" />
+                <XPCardPoints
+                  points={`+${assignedItem.details.gainedXp}`}
+                  color="gray"
+                />
               }
             />
-          ),
+          )
         )}
       </div>
     </Modal>

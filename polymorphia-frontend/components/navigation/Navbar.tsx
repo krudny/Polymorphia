@@ -1,6 +1,9 @@
 import { MenuIcon } from "lucide-react";
 import { useEffect, useRef } from "react";
-import { BottomMenuItems, MainMenuItems } from "@/components/navigation/MenuOptions";
+import {
+  BottomMenuItems,
+  MainMenuItems,
+} from "@/components/navigation/MenuOptions";
 import MenuSection from "@/components/navigation/MenuSection";
 import Line from "@/components/navigation/Line";
 import { animateNavbar } from "@/animations/Navigation";
