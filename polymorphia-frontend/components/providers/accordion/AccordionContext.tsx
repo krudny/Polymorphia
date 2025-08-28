@@ -1,25 +1,9 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useRef,
-  useState,
-} from "react";
+import { createContext, useCallback, useRef, useState } from "react";
 import { AccordionContextInterface } from "./types";
 
 export const AccordionContext = createContext<
   AccordionContextInterface | undefined
 >(undefined);
-
-export function useAccordion() {
-  const context = useContext(AccordionContext);
-
-  if (context === undefined) {
-    throw new Error("useAccordion must be used within an Accordion");
-  }
-
-  return context;
-}
 
 export function useAccordionState(maxOpen?: number): AccordionContextInterface {
   const [openSections, setOpenSections] = useState<string[]>([]);
@@ -50,7 +34,7 @@ export function useAccordionState(maxOpen?: number): AccordionContextInterface {
         return [...prev, id];
       });
     },
-    [maxOpen]
+    [maxOpen],
   );
 
   const close = useCallback((id: string) => {
@@ -73,12 +57,12 @@ export function useAccordionState(maxOpen?: number): AccordionContextInterface {
         open(id);
       }
     },
-    [openSections, open, close]
+    [openSections, open, close],
   );
 
   const isOpen = useCallback(
     (id: string) => openSections.includes(id),
-    [openSections]
+    [openSections],
   );
 
   return { open, close, closeAll, toggle, isOpen, register, unregister };

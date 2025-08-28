@@ -71,7 +71,7 @@ export default function StudentView() {
         <PointsSummary ref={summaryRef} />
       </div>
       {eventType === EventTypes.TEST && selectedEventId && (
-        <GradeModal onClosedAction={() => setSelectedEventId(null)} gradableEventId={selectedEventId} />
+        <GradeModal onClosedAction={() => setSelectedEventId(null)} />
       )}
     </SectionView>
   );

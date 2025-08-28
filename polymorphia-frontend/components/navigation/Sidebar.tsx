@@ -3,14 +3,14 @@ import UserSection from "@/components/navigation/UserSection";
 import Line from "@/components/navigation/Line";
 import MenuSection from "@/components/navigation/MenuSection";
 import { BottomDesktopMenuItems, MainMenuItems } from "@/components/navigation/MenuOptions";
-import { useContext, useEffect, useRef } from "react";
-import { NavigationContext } from "@/components/providers/navigation/NavigationContext";
+import { useEffect, useRef } from "react";
 import "./index.css";
 
 import clsx from "clsx";
 import { animateSidebar } from "@/animations/Navigation";
 import { updateMenuItems } from "@/components/course/event-section/EventSectionUtils";
 import useEventSections from "@/hooks/course/useEventSections";
+import useNavigationContext from "@/hooks/contexts/useNavigationContext";
 
 export default function Sidebar() {
   const {
@@ -18,7 +18,7 @@ export default function Sidebar() {
     setIsSidebarExpanded,
     isSidebarLockedOpened,
     isSidebarLockedClosed,
-  } = useContext(NavigationContext);
+  } = useNavigationContext();
   const sidebarRef = useRef<HTMLDivElement | null>(null);
   const { data: eventSections } = useEventSections();
 

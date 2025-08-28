@@ -1,17 +1,14 @@
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import { EquipmentContext } from "@/components/providers/equipment/EquipmentContext";
 import { API_STATIC_URL } from "@/services/api";
-import { useContext } from "react";
 import Image from "next/image";
-import { useModal } from "@/components/providers/modal/ModalContext";
 import "../index.css";
 import { BaseItem } from "@/interfaces/api/reward";
+import useModalContext from "@/hooks/contexts/useModalContext";
+import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
 
 export default function OpeningChestModalContent() {
-  const { closeModal } = useModal();
-
-  const { currentOpeningChestModalData, pickedItemsIds, setPickedItemsIds } =
-    useContext(EquipmentContext);
+  const { closeModal } = useModalContext();
+  const { currentOpeningChestModalData, pickedItemsIds, setPickedItemsIds } = useEquipmentContext();
   const openingChest = currentOpeningChestModalData;
 
   const handlePickItem = (itemId: number) => {
@@ -26,7 +23,7 @@ export default function OpeningChestModalContent() {
       setPickedItemsIds((prev: number[]) =>
         isPicked
           ? prev.filter((id: number) => id !== itemId)
-          : [...prev, itemId]
+          : [...prev, itemId],
       );
     }
   };

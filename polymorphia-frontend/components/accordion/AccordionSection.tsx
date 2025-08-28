@@ -2,18 +2,18 @@ import { animateAccordion } from "@/animations/Accordion";
 import clsx from "clsx";
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { useEffect, useRef } from "react";
-import { useAccordion } from "../providers/accordion/AccordionContext";
 import "./index.css";
 import { AccordionSectionProps } from "./types";
+import { useAccordionContext } from "@/hooks/contexts/useAccordionContext";
 
 export default function AccordionSection({
-  id,
-  title,
-  children,
-  isInitiallyOpened,
-  headerClassName,
-}: AccordionSectionProps) {
-  const { register, unregister, isOpen, toggle, open } = useAccordion();
+                                           id,
+                                           title,
+                                           children,
+                                           isInitiallyOpened,
+                                           headerClassName,
+                                         }: AccordionSectionProps) {
+  const { register, unregister, isOpen, toggle, open } = useAccordionContext();
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

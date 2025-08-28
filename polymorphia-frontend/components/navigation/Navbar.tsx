@@ -1,6 +1,5 @@
 import { MenuIcon } from "lucide-react";
-import { NavigationContext } from "@/components/providers/navigation/NavigationContext";
-import { useContext, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { BottomMenuItems, MainMenuItems } from "@/components/navigation/MenuOptions";
 import MenuSection from "@/components/navigation/MenuSection";
 import Line from "@/components/navigation/Line";
@@ -9,9 +8,10 @@ import "./index.css";
 import { updateMenuItems } from "@/components/course/event-section/EventSectionUtils";
 import { useTitle } from "./TitleContext";
 import useEventSections from "@/hooks/course/useEventSections";
+import useNavigationContext from "@/hooks/contexts/useNavigationContext";
 
 export default function Navbar() {
-  const { isNavbarExpanded, setIsNavbarExpanded } = useContext(NavigationContext);
+  const { isNavbarExpanded, setIsNavbarExpanded } = useNavigationContext();
   const drawerRef = useRef<HTMLDivElement | null>(null);
   const { data: eventSections } = useEventSections();
   const { title } = useTitle();

@@ -1,15 +1,13 @@
 import XPCard from "@/components/xp-card/XPCard";
-import { useContext } from "react";
-import { EquipmentContext } from "@/components/providers/equipment/EquipmentContext";
 import Modal from "@/components/modal/Modal";
 import "../index.css";
 import { AssignedItemResponseDTO } from "@/interfaces/api/reward/assigned";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
+import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
 
 export default function ChestModal() {
-  const { currentChestModalData, setCurrentChestModalData } =
-    useContext(EquipmentContext);
+  const { currentChestModalData, setCurrentChestModalData } = useEquipmentContext();
   const equipmentChest = currentChestModalData;
 
   return (
@@ -38,7 +36,7 @@ export default function ChestModal() {
                 <XPCardPoints points={`+${assignedItem.details.gainedXp}`} />
               }
             />
-          )
+          ),
         )}
       </div>
     </Modal>

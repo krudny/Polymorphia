@@ -10,7 +10,7 @@ export default function renderCard(
   handleGradableEventClick: (id: number, isLocked: boolean) => void,
 ): ReactNode {
   const { hasReward, gainedXp } = gradableEvent;
-  const color = gainedXp ? "green" : "silver";
+  const color = gainedXp ? "green" : "sky";
   const rightComponent = hasReward ? <XPCardChest /> : <XPCardPoints
     points={gainedXp}
     isSumLabelVisible={true}

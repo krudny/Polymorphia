@@ -5,14 +5,14 @@ import { ChangeEvent, useEffect, useState } from "react";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { useDebounce } from "use-debounce";
 import XPCard from "@/components/xp-card/XPCard";
-import { useModal } from "@/components/providers/modal/ModalContext";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import useCurrentUser from "@/hooks/general/useUser";
 import useRandomUsers from "@/hooks/course/useRandomUsers";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
+import useModalContext from "@/hooks/contexts/useModalContext";
 
 function GroupPickingModalContent() {
-  const { closeModal } = useModal();
+  const { closeModal } = useModalContext();
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 300);
   // TODO: temporary logic
