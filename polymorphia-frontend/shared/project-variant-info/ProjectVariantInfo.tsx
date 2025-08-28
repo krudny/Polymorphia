@@ -2,19 +2,10 @@ import Loading from "@/components/loading/Loading";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCardProjectVariant from "@/components/xp-card/components/XPCardProjectVariant";
-import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
-import { useEventParams } from "@/hooks/general/useEventParams";
-import { EventTypes } from "@/interfaces/api/course";
+import useProjectVariant from "@/hooks/course/useProjectVariant";
 
 export default function ProjectVariantInfo() {
-  const { gradableEventId, eventType } = useEventParams();
-
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["projectVariant", gradableEventId],
-    queryFn: () => EventSectionService.getProjectVariant(),
-    enabled: !!gradableEventId && eventType === EventTypes.PROJECT,
-  });
+  const { data, isLoading, isError } = useProjectVariant();
 
   return (
     <>

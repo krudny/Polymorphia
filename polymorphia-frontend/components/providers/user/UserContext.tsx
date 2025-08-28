@@ -1,12 +1,12 @@
 import { createContext, ReactNode } from "react";
 import Loading from "@/components/loading/Loading";
 import { UserDetailsDTO } from "@/interfaces/api/user";
-import useUser from "@/hooks/general/useUser";
+import useCurrentUser from "@/hooks/general/useUser";
 
 export const UserContext = createContext<UserDetailsDTO | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const { data: userData, isLoading } = useUser();
+  const { data: userData, isLoading } = useCurrentUser();
 
   if (isLoading || !userData) {
     return <Loading />;

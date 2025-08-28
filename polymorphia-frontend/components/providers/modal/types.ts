@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export interface ModalContextValue {
+export interface ModalContextInterface {
   closeModal: () => void;
 }
 

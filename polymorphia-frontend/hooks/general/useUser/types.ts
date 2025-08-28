@@ -1,6 +1,6 @@
 import { UserDetailsDTO } from "@/interfaces/api/user";
 
-export interface UseUser {
+export interface UseCurrentUser {
   data: UserDetailsDTO | undefined;
   isLoading: boolean;
 }

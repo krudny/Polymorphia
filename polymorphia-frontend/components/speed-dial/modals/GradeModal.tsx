@@ -4,10 +4,9 @@ import Loading from "@/components/loading/Loading";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import useGrade from "@/hooks/course/useGrade";
 
-export default function GradeModal({ gradableEventId, onClosedAction }: SpeedDialModalProps & {
-  gradableEventId: number
-}) {
-  const { data, isLoading, isError } = useGrade(gradableEventId);
+//TODO: mocked gradableEventId
+export default function GradeModal({ onClosedAction }: SpeedDialModalProps) {
+  const { data, isLoading, isError } = useGrade(1);
 
   return (
     <Modal

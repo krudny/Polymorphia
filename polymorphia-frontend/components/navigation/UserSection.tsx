@@ -1,11 +1,10 @@
 import Image from "next/image";
 import "./index.css";
 import { API_STATIC_URL } from "@/services/api";
-import { useContext } from "react";
-import { UserContext } from "@/components/providers/user/UserContext";
+import useUserContext from "@/hooks/contexts/useUserContext";
 
 export default function UserSection() {
-  const { animalName, evolutionStage, imageUrl } = useContext(UserContext);
+  const { animalName, evolutionStage, imageUrl } = useUserContext();
 
   return (
     <div className="user-section">
