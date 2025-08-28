@@ -1,6 +1,6 @@
 import { GradingProps } from "@/components/grading/types";
 import SpeedDialDesktop from "@/components/speed-dial/SpeedDialDesktop";
-import { useGradingFactory } from "@/components/grading/useGradingFactory";
+import { useGradingFactory } from "@/hooks/factory/useGradingFactory";
 
 export default function Grading({ gradingType, columns }: GradingProps) {
   const components = useGradingFactory(gradingType);

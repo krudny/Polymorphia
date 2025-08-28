@@ -1,6 +1,6 @@
 import { SpeedDialItem, SpeedDialProps } from "@/components/speed-dial/types";
 import { useMemo } from "react";
-import { speedDialStrategyRegistry } from "@/components/speed-dial/strategy/Registry";
+import { speedDialStrategyRegistry } from "@/components/speed-dial/strategies/Registry";
 import { useOptionalMarkdownContext } from "@/hooks/contexts/useMarkdownContext";
 
 export function useSpeedDialFactory({ type }: SpeedDialProps): SpeedDialItem[] {

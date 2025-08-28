@@ -3,16 +3,16 @@ import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import Search from "@/components/search";
-import Loading from "@/components/loading/Loading";
 import { GradingReducerActions } from "@/components/providers/grading/GradingContext";
 import GradingComponentWrapper from "@/components/grading/components/grading-wrapper";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
+import Loading from "@/components/loading/Loading";
+import { ReactNode } from "react";
+import { useFadeInAnimate } from "@/animations/FadeIn";
 
 export default function StudentsList() {
   const { search, setSearch, students, isStudentsLoading, state, dispatch } = useGradingContext();
-  if (isStudentsLoading || !students) {
-    return <Loading />;
-  }
+  const wrapperRef = useFadeInAnimate(!isStudentsLoading);
 
   const topComponent = (
     <>
@@ -28,57 +28,67 @@ export default function StudentsList() {
     </>
   );
 
-  const mainComponent = (
-    <>
-      {students.map((student, index) => {
-        const color = state.selectedTarget?.includes(student)
-          ? "sky"
-          : student.gainedXp
-            ? "green"
-            : "gray";
+  const mainComponent = (): ReactNode => {
+    if (isStudentsLoading || !students) {
+      return (
+        <div className="h-48">
+          <Loading />
+        </div>
+      );
+    }
 
-        return (
-          <div
-            key={index}
-            className="mx-auto my-3 first:mt-0 last:mb-0"
-            onClick={() =>
-              dispatch({
-                type: GradingReducerActions.SET_TARGET,
-                payload: [student],
-              })
-            }
-          >
-            <XPCard
-              key={index}
-              title={student.studentName}
-              color={color}
-              subtitle={student.group}
-              size={"xs"}
-              leftComponent={
-                <XPCardImage
-                  imageUrl={student.imageUrl}
-                  alt={student.evolutionStage}
-                />
+    return (
+      <div ref={wrapperRef}>
+        {students.map((student) => {
+          const color = state.selectedTarget?.includes(student)
+            ? "sky"
+            : student.gainedXp
+              ? "green"
+              : "gray";
+
+          return (
+            <div
+              // Użyj stabilnego ID zamiast indexu, jeśli to możliwe (np. student.id)
+              key={student.id || student.studentName}
+              className="mx-auto my-3 first:mt-0 last:mb-0"
+              onClick={() =>
+                dispatch({
+                  type: GradingReducerActions.SET_TARGET,
+                  payload: [student],
+                })
               }
-              rightComponent={
-                <XPCardPoints
-                  points={student.gainedXp}
-                  color={color}
-                  isXPLabelVisible={false}
-                  isSumLabelVisible={true}
-                />
-              }
-            />
-          </div>
-        );
-      })}
-    </>
-  );
+            >
+              <XPCard
+                title={student.studentName}
+                color={color}
+                subtitle={student.group}
+                size={"xs"}
+                leftComponent={
+                  <XPCardImage
+                    imageUrl={student.imageUrl}
+                    alt={student.evolutionStage}
+                  />
+                }
+                rightComponent={
+                  <XPCardPoints
+                    points={student.gainedXp}
+                    color={color}
+                    isXPLabelVisible={false}
+                    isSumLabelVisible={true}
+                  />
+                }
+              />
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
 
   return (
     <GradingComponentWrapper
       topComponent={topComponent}
-      mainComponent={mainComponent}
+      mainComponent={mainComponent()}
     />
   );
 }

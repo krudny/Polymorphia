@@ -4,8 +4,7 @@ import { ReactNode } from "react";
 
 export class TestGradingStrategy
   extends BaseGradingStrategy
-  implements GradingStrategy
-{
+  implements GradingStrategy {
   getGradingComponents(): ReactNode[] {
     return [this.createStudentsList(), this.createRewardComponent()];
   }

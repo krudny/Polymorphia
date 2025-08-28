@@ -1,14 +1,14 @@
 import { SpeedDialItem } from "@/components/speed-dial/types";
 import GradeModal from "@/components/speed-dial/modals/GradeModal";
 import ProjectVariantModal from "@/components/speed-dial/modals/ProjectVariantModal";
-import { SpeedDialContext } from "@/components/speed-dial/strategy/types";
+import { SpeedDialContext } from "@/components/speed-dial/strategies/types";
 import GroupModal from "@/components/speed-dial/modals/GroupModal";
 import GroupPickingModal from "@/components/speed-dial/modals/GroupPickingModal";
 import ImportCSVModal from "@/components/speed-dial/modals/ImportCSVModal";
 
 export abstract class BaseSpeedDialStrategy {
   abstract getItems(context: SpeedDialContext): SpeedDialItem[];
-  
+
   protected createRewardsItem(): SpeedDialItem {
     return {
       id: 1,

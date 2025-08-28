@@ -1,6 +1,6 @@
 import { SpeedDialItem } from "@/components/speed-dial/types";
-import { BaseSpeedDialStrategy } from "@/components/speed-dial/strategy/Base";
-import { SpeedDialContext, SpeedDialStrategy } from "@/components/speed-dial/strategy/types";
+import { BaseSpeedDialStrategy } from "@/components/speed-dial/strategies/Base";
+import { SpeedDialContext, SpeedDialStrategy } from "@/components/speed-dial/strategies/types";
 
 export class ProjectStrategy
   extends BaseSpeedDialStrategy

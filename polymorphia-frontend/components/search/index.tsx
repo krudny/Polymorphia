@@ -1,8 +1,5 @@
-/* eslint-disable */
-/* @ts-nocheck */
-
 import "./index.css";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useCallback } from "react";
 import { SearchProps } from "@/components/search/types";
 
 export default function Search({
@@ -10,10 +7,10 @@ export default function Search({
                                  setSearch,
                                  placeholder,
                                }: SearchProps) {
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setSearch(e.target.value);
-  };
+  const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    setSearch(event.target.value);
+  }, [setSearch]);
 
   return (
     <form

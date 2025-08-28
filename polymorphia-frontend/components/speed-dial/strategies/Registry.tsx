@@ -1,8 +1,8 @@
 import { EventTypes } from "@/interfaces/api/course";
-import { AssignmentStrategy } from "@/components/speed-dial/strategy/Assignment";
-import { ProjectStrategy } from "@/components/speed-dial/strategy/Project";
-import { SpeedDialStrategy } from "@/components/speed-dial/strategy/types";
-import { TestGradingStrategy } from "@/components/speed-dial/strategy/TestGrading";
+import { AssignmentStrategy } from "@/components/speed-dial/strategies/Assignment";
+import { ProjectStrategy } from "@/components/speed-dial/strategies/Project";
+import { SpeedDialStrategy } from "@/components/speed-dial/strategies/types";
+import { TestGradingStrategy } from "@/components/speed-dial/strategies/TestGrading";
 import { GradingTypes } from "@/components/grading/types";
 
 class SpeedDialStrategyRegistry {

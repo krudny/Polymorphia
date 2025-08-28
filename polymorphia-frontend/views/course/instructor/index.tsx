@@ -2,27 +2,21 @@ import { useScaleShow } from "@/animations/ScaleShow";
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
 import SectionView from "@/components/section-view/SectionView";
 import { useEffect, useRef } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { useRouter } from "next/navigation";
 import Loading from "@/components/loading/Loading";
 import renderCard from "@/views/course/instructor/RenderCard";
 import { useEventParams } from "@/hooks/general/useEventParams";
+import useInstructorGradableEvents from "@/hooks/course/useInstructorGradableEvents";
 
 export default function InstructorView() {
   const { eventType, eventSectionId } = useEventParams();
   const router = useRouter();
   const wrapperRef = useRef<HTMLDivElement | null>(null);
-
   const {
     data: gradableEvents,
     isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["gradableEvents", eventSectionId],
-    queryFn: () =>
-      EventSectionService.getInstructorGradableEvents(eventSectionId),
-  });
+    isError,
+  } = useInstructorGradableEvents();
 
   const containerRef = useScaleShow(!isLoading);
 
@@ -38,8 +32,8 @@ export default function InstructorView() {
     return <Loading />;
   }
 
-  if (error) {
-    return <div>Error loading gradable events: {error.message}</div>;
+  if (isError) {
+    return <div>Error loading gradable events</div>;
   }
 
   if (!gradableEvents || gradableEvents.length === 0) {
