@@ -1,5 +1,10 @@
 // can be extended in the future with different options
-export type SpecialBehavior = "EXCLUSIVE";
+export const SpecialBehaviors = {
+  EXCLUSIVE: "EXCLUSIVE",
+} as const;
+
+export type SpecialBehavior =
+  (typeof SpecialBehaviors)[keyof typeof SpecialBehaviors];
 
 export interface FilterOption {
   value: string;
@@ -21,7 +26,16 @@ export type FilterState<FilterIdType extends string> = Record<
   string[]
 >;
 
+export const FilterActions = {
+  TOGGLE: "TOGGLE",
+  SET: "SET",
+  RESET: "RESET",
+} as const;
+
+export type FilterActionType =
+  (typeof FilterActions)[keyof typeof FilterActions];
+
 export type FilterAction<FilterIdType extends string> =
-  | { type: "TOGGLE"; id: FilterIdType; value: string }
-  | { type: "SET"; state: FilterState<FilterIdType> }
-  | { type: "RESET" };
+  | { type: typeof FilterActions.TOGGLE; id: FilterIdType; value: string }
+  | { type: typeof FilterActions.SET; state: FilterState<FilterIdType> }
+  | { type: typeof FilterActions.RESET };

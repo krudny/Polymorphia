@@ -1,4 +1,10 @@
-import { FilterAction, FilterConfig, FilterState } from "../types";
+import {
+  FilterAction,
+  FilterActions,
+  FilterConfig,
+  FilterState,
+  SpecialBehaviors,
+} from "../types";
 import { getInitialState } from "./getInitialState";
 
 export function filterReducer<FilterIdType extends string>(
@@ -7,7 +13,7 @@ export function filterReducer<FilterIdType extends string>(
   configs: FilterConfig<FilterIdType>[]
 ): FilterState<FilterIdType> {
   switch (action.type) {
-    case "TOGGLE": {
+    case FilterActions.TOGGLE: {
       const current = state[action.id] ?? [];
       const config = configs.find((config) => config.id === action.id);
       if (!config) {
@@ -39,7 +45,7 @@ export function filterReducer<FilterIdType extends string>(
       }
 
       // Handle selection of special "EXCLUSIVE" option or when maximum one option is allowed
-      if (option.specialBehavior === "EXCLUSIVE" || max === 1) {
+      if (option.specialBehavior === SpecialBehaviors.EXCLUSIVE || max === 1) {
         return { ...state, [action.id]: [option.value] };
       }
 
@@ -50,7 +56,7 @@ export function filterReducer<FilterIdType extends string>(
           const optionDetails = config.options.find(
             (optionDetails) => optionDetails.value === value
           );
-          return optionDetails?.specialBehavior !== "EXCLUSIVE";
+          return optionDetails?.specialBehavior !== SpecialBehaviors.EXCLUSIVE;
         }),
         option.value,
       ];
@@ -58,10 +64,10 @@ export function filterReducer<FilterIdType extends string>(
       return { ...state, [action.id]: newValues };
     }
 
-    case "SET":
+    case FilterActions.SET:
       return action.state;
 
-    case "RESET":
+    case FilterActions.RESET:
       return getInitialState(configs);
 
     default:

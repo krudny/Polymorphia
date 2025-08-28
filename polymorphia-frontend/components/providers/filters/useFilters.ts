@@ -1,5 +1,10 @@
 import { useReducer, useState, useEffect } from "react";
-import { FilterConfig, FilterState, FilterAction } from "./types";
+import {
+  FilterConfig,
+  FilterState,
+  FilterAction,
+  FilterActions,
+} from "./types";
 import { filterReducer } from "./utils/filterReducer";
 import { getInitialState } from "./utils/getInitialState";
 import { validateFilters } from "./utils/validateFilters";
@@ -23,7 +28,7 @@ export function useFilters<FilterIdType extends string>(
 
   useEffect(() => {
     if (configs.length > 0) {
-      dispatch({ type: "RESET" });
+      dispatch({ type: FilterActions.RESET });
       setAppliedState(getInitialState<FilterIdType>(configs));
     }
   }, [configs]);
@@ -38,11 +43,11 @@ export function useFilters<FilterIdType extends string>(
   };
 
   const resetFiltersToApplied = () => {
-    dispatch({ type: "SET", state: appliedState });
+    dispatch({ type: FilterActions.SET, state: appliedState });
   };
 
   const resetFiltersToInitial = () => {
-    dispatch({ type: "RESET" });
+    dispatch({ type: FilterActions.RESET });
     setAppliedState(getInitialState<FilterIdType>(configs));
   };
 

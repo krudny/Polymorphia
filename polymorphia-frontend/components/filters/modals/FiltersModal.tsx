@@ -1,7 +1,10 @@
 import { Accordion } from "@/components/accordion/Accordion";
 import AccordionSection from "@/components/accordion/AccordionSection";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import { FilterOption } from "@/components/providers/filters/types";
+import {
+  FilterActions,
+  FilterOption,
+} from "@/components/providers/filters/types";
 import Modal from "@/components/modal/Modal";
 import { AccordionRef } from "@/components/providers/accordion/types";
 import { useRef } from "react";
@@ -30,7 +33,7 @@ export default function FiltersModal<FilterIdType extends string>({
 
   const handleSelect = (filterId: FilterIdType, option: FilterOption) => {
     dispatch({
-      type: "TOGGLE",
+      type: FilterActions.TOGGLE,
       id: filterId,
       value: option.value,
     });

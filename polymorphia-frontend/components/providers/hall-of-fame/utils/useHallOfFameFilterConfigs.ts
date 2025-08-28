@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { FilterConfig } from "../../filters/types";
+import { FilterConfig, SpecialBehaviors } from "../../filters/types";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { CourseService } from "@/app/(logged-in)/course/CourseService";
 import { EventSectionResponseDTO } from "@/interfaces/api/course";
@@ -41,7 +41,11 @@ export function useHallOfFameFilterConfigs(courseId: number) {
           id: "groups",
           title: "Grupy",
           options: [
-            { value: "all", label: "Wszystkie", specialBehavior: "EXCLUSIVE" },
+            {
+              value: "all",
+              label: "Wszystkie",
+              specialBehavior: SpecialBehaviors.EXCLUSIVE,
+            },
             ...courseGroups.map((courseGroup) => ({ value: courseGroup })),
           ],
           defaultValues: ["all"],

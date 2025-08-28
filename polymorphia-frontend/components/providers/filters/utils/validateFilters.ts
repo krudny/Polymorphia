@@ -1,4 +1,4 @@
-import { FilterConfig, FilterState } from "../types";
+import { FilterConfig, FilterState, SpecialBehaviors } from "../types";
 
 export function validateFilters<FilterIdType extends string>(
   state: FilterState<FilterIdType>,
@@ -16,7 +16,7 @@ export function validateFilters<FilterIdType extends string>(
       selected.includes(option.value)
     );
     const exclusiveOption = selectedOptions.find(
-      (option) => option.specialBehavior === "EXCLUSIVE"
+      (option) => option.specialBehavior === SpecialBehaviors.EXCLUSIVE
     );
     if (exclusiveOption) {
       // This will never happen in normal scenario but we should validate all conditions
