@@ -57,16 +57,18 @@ const generateAllData = () => {
     item.xpDetails["Git"] = roundToTwo(2.0 + Math.random());
     item.xpDetails["Laboratorium"] = roundToTwo(40.0 + Math.random() * 20);
     item.xpDetails["Kartkówka"] = roundToTwo(30.0 + Math.random() * 15);
-    item.xpDetails["Specjalne"] = roundToTwo(10.0 + Math.random() * 15);
-    item.xpDetails["Projekt"] = roundToTwo(20.0 + Math.random() * 10);
+    item.xpDetails["Specjalny lab"] = roundToTwo(10.0 + Math.random() * 15);
+    item.xpDetails["Projekt 1"] = roundToTwo(20.0 + Math.random() * 10);
+    item.xpDetails["Projekt 2"] = roundToTwo(20.0 + Math.random() * 10);
     item.xpDetails["Bonusy"] = roundToTwo(15.2 + Math.random() * 5);
 
     const totalSum =
       parseFloat(item.xpDetails["Laboratorium"]) +
       parseFloat(item.xpDetails["Kartkówka"]) +
       parseFloat(item.xpDetails["Git"]) +
-      parseFloat(item.xpDetails["Specjalne"]) +
-      parseFloat(item.xpDetails["Projekt"]) +
+      parseFloat(item.xpDetails["Specjalny lab"]) +
+      parseFloat(item.xpDetails["Projekt 1"]) +
+      parseFloat(item.xpDetails["Projekt 2"]) +
       parseFloat(item.xpDetails["Bonusy"]);
 
     item.xpDetails["total"] = roundToTwo(totalSum);
@@ -101,7 +103,7 @@ const HallOfFameService = {
 
     if (groups && !groups?.includes("all")) {
       filteredData = filteredData.filter((item) =>
-        groups.includes(item.userDetails.group.toLowerCase())
+        groups.includes(item.userDetails.group)
       );
     }
 
