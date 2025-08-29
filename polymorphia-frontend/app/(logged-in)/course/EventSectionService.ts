@@ -680,7 +680,7 @@ export const EventSectionService = {
               reward: {
                 id: 1,
                 name: "Srebrna Skrzynia",
-                imageUrl: "images/chests/s1.png",
+                imageUrl: "images/chests/s1.webp",
                 behavior: "ONE_OF_MANY",
                 behaviorText: "Wybierz jeden przedmiot ze skrzynki",
                 orderIndex: 0,
@@ -739,7 +739,7 @@ export const EventSectionService = {
               reward: {
                 id: 1,
                 name: "Srebrna Skrzynia",
-                imageUrl: "images/chests/s1.png",
+                imageUrl: "images/chests/s1.webp",
                 behavior: "ONE_OF_MANY",
                 behaviorText: "Wybierz jeden przedmiot ze skrzynki",
                 orderIndex: 0,
@@ -827,7 +827,7 @@ export const EventSectionService = {
                   reward: {
                     id: 1,
                     name: "Srebrna Skrzynia",
-                    imageUrl: "images/chests/s1.png",
+                    imageUrl: "images/chests/s1.webp",
                     behavior: "ONE_OF_MANY",
                     behaviorText: "Wybierz jeden przedmiot ze skrzynki",
                     orderIndex: 0,
@@ -860,7 +860,7 @@ export const EventSectionService = {
                     base: {
                       id: 1,
                       name: "Srebrna Skrzynia",
-                      imageUrl: "images/chests/s1.png",
+                      imageUrl: "images/chests/s1.webp",
                       behavior: "ONE_OF_MANY",
                       behaviorText: "Wybierz jeden przedmiot ze skrzynki",
                       orderIndex: 0,
@@ -911,7 +911,7 @@ export const EventSectionService = {
                   reward: {
                     id: 1,
                     name: "Srebrna Skrzynia",
-                    imageUrl: "images/chests/s1.png",
+                    imageUrl: "images/chests/s1.webp",
                     behavior: "ONE_OF_MANY",
                     behaviorText: "Wybierz jeden przedmiot ze skrzynki",
                     orderIndex: 0,
@@ -944,7 +944,7 @@ export const EventSectionService = {
                     base: {
                       id: 1,
                       name: "Srebrna Skrzynia",
-                      imageUrl: "images/chests/s1.png",
+                      imageUrl: "images/chests/s1.webp",
                       behavior: "ONE_OF_MANY",
                       behaviorText: "Wybierz jeden przedmiot ze skrzynki",
                       orderIndex: 0,
@@ -991,7 +991,7 @@ export const EventSectionService = {
                 reward: {
                   id: 1,
                   name: "Srebrna Skrzynia",
-                  imageUrl: "images/chests/s1.png",
+                  imageUrl: "images/chests/s1.webp",
                   behavior: "ONE_OF_MANY",
                   behaviorText: "Wybierz jeden przedmiot ze skrzynki",
                   orderIndex: 0,
@@ -1042,7 +1042,7 @@ export const EventSectionService = {
                 base: {
                   id: 1,
                   name: "Srebrna Skrzynia",
-                  imageUrl: "images/chests/s1.png",
+                  imageUrl: "images/chests/s1.webp",
                   behavior: "ONE_OF_MANY",
                   behaviorText: "Wybierz jeden przedmiot ze skrzynki",
                   orderIndex: 0,
@@ -1075,7 +1075,7 @@ export const EventSectionService = {
                 base: {
                   id: 1,
                   name: "Srebrna Skrzynia",
-                  imageUrl: "images/chests/s1.png",
+                  imageUrl: "images/chests/s1.webp",
                   behavior: "ONE_OF_MANY",
                   behaviorText: "Wybierz jeden przedmiot ze skrzynki",
                   orderIndex: 0,
