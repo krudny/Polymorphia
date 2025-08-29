@@ -93,5 +93,3 @@ export const markdownConfig: Components = {
     );
   },
 };
-
-
