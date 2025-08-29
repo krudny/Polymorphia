@@ -8,6 +8,7 @@ export default function useEvolutionStages(): UseEvolutionStages {
   const { data, isLoading, error } = useQuery({
     queryKey: ["evolution_stages", COURSE_ID],
     queryFn: () => KnowledgeBaseService.getEvolutionStages(COURSE_ID),
+    refetchOnWindowFocus: false,
   });
 
   return { data, isLoading, error };

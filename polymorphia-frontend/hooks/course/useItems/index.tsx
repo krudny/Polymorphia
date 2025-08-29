@@ -8,7 +8,7 @@ export default function useItems(): UseItems {
   const { data, isLoading, error } = useQuery({
     queryKey: ["items", COURSE_ID],
     queryFn: () => KnowledgeBaseService.getItems(COURSE_ID),
-    retry: false,
+    refetchOnWindowFocus: false,
   });
 
   return { data, isLoading, error };

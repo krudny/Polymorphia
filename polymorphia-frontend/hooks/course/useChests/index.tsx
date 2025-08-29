@@ -8,6 +8,7 @@ export default function useChests(): UseChests {
   const { data, isLoading, error } = useQuery({
     queryKey: ["chests", COURSE_ID],
     queryFn: () => KnowledgeBaseService.getChests(COURSE_ID),
+    refetchOnWindowFocus: false,
   });
 
   return { data: data, isLoading, error };

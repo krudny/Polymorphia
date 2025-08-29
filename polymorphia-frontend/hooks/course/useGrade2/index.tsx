@@ -10,6 +10,7 @@ export default function useGrade2(selectedStudentId: number | null): UseGrade2 {
     queryKey: ["grade", selectedStudentId, gradableEventId],
     queryFn: () =>
       EventSectionService.getGrade2(selectedStudentId ?? -1, gradableEventId),
+    refetchOnWindowFocus: false,
   });
 
   return { data, isLoading, isError };

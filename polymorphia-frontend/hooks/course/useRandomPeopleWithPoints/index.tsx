@@ -14,6 +14,7 @@ export default function useRandomPeopleWithPoints(
     queryFn: () =>
       EventSectionService.getRandomPeopleWithPoints(debouncedSearch),
     enabled: eventType !== EventTypes.PROJECT,
+    refetchOnWindowFocus: false,
   });
 
   return { data, isLoading, isError };

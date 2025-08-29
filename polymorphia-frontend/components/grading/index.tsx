@@ -17,13 +17,13 @@ export default function Grading({ gradingType, columns }: GradingProps) {
 
   return (
     <div
-      className={`w-full max-w-[1400px] m-auto h-[calc(100dvh-6rem)] flex justify-center gap-4`}
+      className={`w-full max-w-[1500px] m-auto h-[calc(100dvh-6rem)] flex justify-center gap-4`}
     >
       <div className="fixed bottom-4 right-5 z-[999]">
         <SpeedDialDesktop type={gradingType} />
       </div>
 
-      <div className="w-full max-w-md flex flex-col overflow-hidden max-h-full">
+      <div className="w-full max-w-[30rem] flex flex-col overflow-hidden max-h-full">
         {firstComponent}
       </div>
 

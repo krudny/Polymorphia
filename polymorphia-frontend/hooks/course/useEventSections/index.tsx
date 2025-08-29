@@ -8,6 +8,7 @@ export default function useEventSections(): UseEventSections {
   const { data, isLoading, error } = useQuery({
     queryKey: ["eventSections", COURSE_ID],
     queryFn: () => EventSectionService.getEventSections(COURSE_ID),
+    refetchOnWindowFocus: false,
   });
 
   return { data, isLoading, error };
