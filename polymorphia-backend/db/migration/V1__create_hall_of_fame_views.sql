@@ -1,3 +1,6 @@
+DROP VIEW IF EXISTS hall_of_fame_view;
+DROP VIEW IF EXISTS student_score_detail_view;
+
 CREATE VIEW student_score_detail_view AS
 SELECT (a.id || '-' || es.id)::text        AS id,
        a.id                                AS animal_id,
