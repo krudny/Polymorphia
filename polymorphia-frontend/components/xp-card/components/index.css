@@ -4,7 +4,7 @@
 /* XPCardPoints */
 
 .xp-card-points {
-    @apply w-full flex-1 flex-col-centered;
+    @apply w-full flex-1 flex-col-centered shrink-0 aspect-square;
 }
 
 /* XPCardProjectVariant */
@@ -30,7 +30,7 @@
 /* XPCardImage */
 
 .xp-card-image {
-    @apply w-full h-full relative shrink-0 select-none;
+    @apply w-full h-full relative shrink-0 select-none aspect-square;
 }
 
 /* XPCardDoubleImage */

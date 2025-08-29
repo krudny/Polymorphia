@@ -5,6 +5,7 @@ import { GradingProvider } from "@/components/providers/grading/GradingContext";
 import { EventTypes } from "@/interfaces/api/course";
 import { GradingTypes } from "@/components/grading/types";
 import Grading from "@/components/grading";
+import { useMediaQuery } from "react-responsive";
 
 const GRADING_CONFIG = {
   [EventTypes.TEST]: { type: GradingTypes.TEST_GRADING },
@@ -17,10 +18,11 @@ const GRADING_CONFIG = {
 export default function GradingView() {
   const { eventType } = useEventParams();
   const config = GRADING_CONFIG[eventType];
+  const isXL = useMediaQuery({ minWidth: "1400px" });
 
   return (
     <GradingProvider>
-      <Grading gradingType={config.type} columns={3} />
+      <Grading gradingType={config.type} columns={isXL ? 3 : 2} />
     </GradingProvider>
   );
 }

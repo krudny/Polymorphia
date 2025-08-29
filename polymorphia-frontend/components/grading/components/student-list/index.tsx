@@ -49,7 +49,6 @@ export default function StudentsList() {
 
           return (
             <div
-              // Użyj stabilnego ID zamiast indexu, jeśli to możliwe (np. student.id)
               key={student.id || student.studentName}
               className="mx-auto my-3 first:mt-0 last:mb-0"
               onClick={() =>

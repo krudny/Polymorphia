@@ -1,6 +1,6 @@
 "use client";
 
-import "./index.css";
+import "../../index.css";
 import { ReactNode, useRef } from "react";
 import ProgressBar from "@/components/progressbar/ProgressBar";
 import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLabels";
@@ -14,10 +14,12 @@ import Reward from "@/components/grading/components/grade/Reward";
 import Comment from "@/components/grading/components/grade/Comment";
 import Input from "@/components/grading/components/grade/Input";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
+import { useMediaQuery } from "react-responsive";
 
 export default function Grade() {
   const { state, criteria, isGradeLoading, submitGrade } = useGradingContext();
   const accordionRef = useRef<AccordionRef>(null);
+  const isXL = useMediaQuery({ minWidth: "1400px" });
 
   const topComponent = <h1 className="text-5xl">Ocena</h1>;
 
@@ -48,8 +50,8 @@ export default function Grade() {
                   key={criterionId}
                   id={criterionId}
                   title={criterion.name}
-                  headerClassName="reward-header"
-                  isInitiallyOpened={index == 0}
+                  headerClassName="grading-accordion-header"
+                  isInitiallyOpened={index == 0 && isXL}
                 >
                   <div key={criterionId} className="flex flex-col">
                     <div className="w-full px-6 pt-6">
@@ -84,7 +86,7 @@ export default function Grade() {
             key={criteria.length + 1}
             id="Komentarz"
             title="Komentarz"
-            headerClassName="reward-header"
+            headerClassName="grading-accordion-header"
           >
             <div className="w-full">
               <Comment />

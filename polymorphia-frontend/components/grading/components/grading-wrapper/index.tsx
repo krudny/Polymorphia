@@ -9,7 +9,7 @@ export default function GradingComponentWrapper({
       <div className="w-full flex justify-between items-center px-8 mx-auto min-h-12">
         {topComponent}
       </div>
-      <div className="w-full overflow-y-scroll px-8 py-4 mx-auto custom-scrollbar flex-1 relative">
+      <div className="w-full overflow-y-auto px-8 py-4 mx-auto custom-scrollbar flex-1 relative">
         {mainComponent}
       </div>
     </div>
