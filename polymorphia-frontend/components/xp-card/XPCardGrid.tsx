@@ -58,6 +58,7 @@ export default function XPCardGrid({
       forcePage={pageCount > 0 ? currentPage : undefined}
       pageRangeDisplayed={2}
       marginPagesDisplayed={1}
+      containerClassName="ml-3"
     />
   );
 
