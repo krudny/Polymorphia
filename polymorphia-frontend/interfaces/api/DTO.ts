@@ -72,7 +72,7 @@ export interface EquipmentChestItemsResponseDTO {
 export interface HallOfFameResponseDTO {
   content: HallOfFameRecordDTO[];
   page: {
-    pageNumber: number;
+    number: number;
     totalPages: number;
   };
 }

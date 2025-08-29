@@ -16,7 +16,7 @@ public class HallOfFameSortSpecResolver {
     public HallOfFameSortSpec resolve(HallOfFameRequestDto requestDto) {
         String sortBy = requestDto.sortBy();
 
-        Optional<String> overviewDbField = OverviewField.getDbField(sortBy);
+        Optional<String> overviewDbField = OverviewField.getDbFieldFromKey(sortBy);
         if (overviewDbField.isPresent()){
             return new OverviewFieldSort(overviewDbField.get());
         }

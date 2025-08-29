@@ -1,10 +1,13 @@
 package com.agh.polymorphia_backend.model.hall_of_fame;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 import java.util.Optional;
 
 import static com.agh.polymorphia_backend.model.hall_of_fame.HallOfFame.*;
 
+@Getter
 public enum OverviewField {
     STUDENT_NAME(FIELD_STUDENT_NAME),
     ANIMAL_NAME(FIELD_ANIMAL_NAME),
@@ -24,7 +27,7 @@ public enum OverviewField {
         this.dbField = key;
     }
 
-    public static Optional<String> getDbField(String key) {
+    public static Optional<String> getDbFieldFromKey(String key) {
         return Arrays.stream(values())
                 .filter(overviewField -> overviewField.key.equals(key))
                 .map(overviewField -> overviewField.dbField)

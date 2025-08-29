@@ -4,6 +4,9 @@ import com.agh.polymorphia_backend.dto.request.HallOfFameRequestDto;
 import com.agh.polymorphia_backend.dto.response.hall_of_fame.HallOfFameRecordDto;
 import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFame;
 import com.agh.polymorphia_backend.model.StudentScoreDetail;
+import com.agh.polymorphia_backend.model.hall_of_fame.OverviewField;
+import com.agh.polymorphia_backend.model.hall_of_fame.SearchBy;
+import com.agh.polymorphia_backend.model.hall_of_fame.SortOrder;
 import com.agh.polymorphia_backend.repository.HallOfFameRepository;
 import com.agh.polymorphia_backend.repository.StudentScoreDetailRepository;
 import com.agh.polymorphia_backend.service.mapper.HallOfFameMapper;
@@ -117,5 +120,19 @@ public class HallOfFameService {
 
         hofViews.sort(Comparator.comparingInt(view -> orderMap.get(view.getAnimalId())));
         return hofViews;
+    }
+
+    public List<HallOfFameRecordDto> getPodium(Long courseId) {
+        HallOfFameRequestDto requestDto = new HallOfFameRequestDto(
+                courseId,
+                0,
+                3,
+                "",
+                SearchBy.ANIMAL_NAME,
+                OverviewField.TOTAL.getDbField(),
+                SortOrder.DESC,
+                Collections.emptyList()
+        );
+        return getSortedByOverviewFields(requestDto, requestDto.sortBy()).getContent();
     }
 }

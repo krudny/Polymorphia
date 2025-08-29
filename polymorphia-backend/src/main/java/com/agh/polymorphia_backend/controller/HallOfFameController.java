@@ -7,10 +7,9 @@ import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/hall-of-fame")
@@ -18,8 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class HallOfFameController {
     private final HallOfFameService hallOfFameService;
 
-    @GetMapping
+    @PostMapping
     public Page<HallOfFameRecordDto> getHallOfFame(@Valid @RequestBody HallOfFameRequestDto hallOfFameRequestDto) {
         return hallOfFameService.getHallOfFame(hallOfFameRequestDto);
+    }
+
+    @GetMapping("/podium")
+    public List<HallOfFameRecordDto> getPodium(@RequestParam Long courseId){
+        return hallOfFameService.getPodium(courseId);
     }
 }

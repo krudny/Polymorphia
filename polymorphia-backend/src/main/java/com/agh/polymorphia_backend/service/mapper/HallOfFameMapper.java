@@ -34,12 +34,12 @@ public class HallOfFameMapper {
                 new StudentDetailsWithNameResponseDto(hallOfFame.getStudentName(), studentDetailsWithoutName)
                 : studentDetailsWithoutName;
 
-        if (!xpDetails.containsKey(OverviewField.BONUS.name())) {
-            xpDetails.put(OverviewField.BONUS.name(), NumberFormatter.format(hallOfFame.getTotalBonusSum()));
+        if (!xpDetails.containsKey(OverviewField.BONUS.getKey())) {
+            xpDetails.put(OverviewField.BONUS.getKey(), NumberFormatter.format(hallOfFame.getTotalBonusSum()));
         }
 
-        if (!xpDetails.containsKey(OverviewField.TOTAL.name())) {
-            xpDetails.put(OverviewField.TOTAL.name(), NumberFormatter.format(hallOfFame.getTotalXpSum()));
+        if (!xpDetails.containsKey(OverviewField.TOTAL.getKey())) {
+            xpDetails.put(OverviewField.TOTAL.getKey(), NumberFormatter.format(hallOfFame.getTotalXpSum()));
         }
 
         return HallOfFameRecordDto.builder()
