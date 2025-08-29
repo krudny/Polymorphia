@@ -54,7 +54,7 @@ export default function Home() {
     <BackgroundWrapper className="hero-background-wrapper" forceTheme="light">
       <div className="hero-background-image" ref={backgroundRef}>
         <Image
-          src="/hero-bg.png"
+          src="/hero-bg.webp"
           alt="Hero background"
           fill
           className="object-cover"
@@ -65,7 +65,7 @@ export default function Home() {
       <div className="hero-image-wrapper" ref={imageRef}>
         <div>
           <Image
-            src="/owl.png"
+            src="/owl.webp"
             alt="Hero owl"
             width={1000}
             height={1000}

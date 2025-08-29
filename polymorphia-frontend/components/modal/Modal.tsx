@@ -20,8 +20,8 @@ export default function Modal(props: ModalProps) {
   const { resolvedTheme } = useTheme();
   const background =
     resolvedTheme === "dark"
-      ? "bg-[url(/background-modal-dark.png)]"
-      : "bg-[url(/background-modal.png)]";
+      ? "bg-[url(/background-modal-dark.webp)]"
+      : "bg-[url(/background-modal.webp)]";
 
   useEffect(() => {
     setModalVisible(isDataPresented);
