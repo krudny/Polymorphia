@@ -2,6 +2,7 @@ import { ChangeEvent, useRef, useState } from "react";
 import { GradingReducerActions } from "@/components/providers/grading/GradingContext";
 import { GradingInputProps } from "@/components/grading/components/grade/types";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
+import "./index.css";
 
 export default function GradingInput({
   criterion,
@@ -48,11 +49,7 @@ export default function GradingInput({
       onChange={(event) =>
         handleXPChange(event, Number(criterion.id), Number(criterion.maxXp))
       }
-      className={`text-3xl w-full text-center border-b-3 focus:outline-none transition-colors duration-300 ease-[cubic-bezier(0.34,1,0.2,1)] ${
-        errors[Number(criterion.id)]
-          ? "border-primary-error text-primary-error"
-          : "border-primary-dark dark:border-secondary-light text-primary-dark dark:text-secondary-light placeholder-primary-dark dark:placeholder-secondary-light"
-      }`}
+      className={`input ${errors[Number(criterion.id)] ? "error" : "valid"}`}
     />
   );
 }

@@ -1,2 +1,31 @@
 @import "tailwindcss";
 @import "../../../../styles/globals.css";
+
+@tailwind utilities;
+
+@utility default-color {
+    @apply border-primary-dark dark:border-secondary-light text-primary-dark dark:text-secondary-light placeholder-primary-dark dark:placeholder-secondary-light;
+}
+
+/* Comment.tsx */
+
+.comment {
+    @apply w-full p-4 text-xl resize-none border-3 focus:outline-none rounded-xl default-color;
+}
+
+/* Input.tsx */
+
+.input {
+    @apply text-3xl w-full text-center border-b-3;
+    @apply focus:outline-none transition-colors duration-300 ease-[cubic-bezier(0.34,1,0.2,1)];
+}
+
+.valid {
+    @apply default-color;
+}
+
+.error {
+    @apply border-primary-error text-primary-error;
+}
+
+
