@@ -9,7 +9,7 @@ SELECT (a.id || '-' || es.id)::text        AS id,
        ROUND((RANDOM() * 10)::numeric, 2)  AS raw_xp,
        ROUND((RANDOM() * 2)::numeric, 2)   AS flat_bonus,
        ROUND((RANDOM() * 0.3)::numeric, 2) AS percentage_bonus
-FROM students_course_groups a
+FROM animals a
          JOIN course_groups cg ON cg.id = a.course_group_id
          JOIN event_sections es ON es.course_id = cg.course_id;
 
@@ -22,7 +22,7 @@ WITH scored AS (SELECT scg.id                                                   
                        COALESCE(ssd.raw_xp, 0)                                     AS raw_xp,
                        COALESCE(ssd.flat_bonus, 0)                                 AS flat_bonus,
                        COALESCE(ssd.raw_xp, 0) * COALESCE(ssd.percentage_bonus, 0) AS percentage_bonus_xp
-                FROM students_course_groups scg
+                FROM animals scg
                          JOIN students s ON s.user_id = scg.student_id
                          JOIN users u ON u.id = s.user_id
                          JOIN course_groups cg ON cg.id = scg.course_group_id
