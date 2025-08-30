@@ -7,7 +7,7 @@ import com.agh.polymorphia_backend.dto.response.user.StudentDetailsWithoutNameRe
 import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFame;
 import com.agh.polymorphia_backend.model.hall_of_fame.OverviewField;
 import com.agh.polymorphia_backend.model.user.UserType;
-import com.agh.polymorphia_backend.service.AuthService;
+import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import com.agh.polymorphia_backend.util.NumberFormatter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.util.Map;
 @Service
 @AllArgsConstructor
 public class HallOfFameMapper {
-    private final AuthService authService;
+    private final AccessAuthorizer accessAuthorizer;
 
     public HallOfFameRecordDto hallOfFameToRecordDto(HallOfFame hallOfFame, Map<String, String> xpDetails) {
         StudentDetailsWithoutNameResponseDto studentDetailsWithoutName = new StudentDetailsWithoutNameResponseDto(
@@ -29,7 +29,7 @@ public class HallOfFameMapper {
                 hallOfFame.getPosition()
         );
 
-        boolean includeStudentName = authService.hasAnyRole(List.of(UserType.COORDINATOR, UserType.INSTRUCTOR));
+        boolean includeStudentName = accessAuthorizer.hasAnyRole(List.of(UserType.COORDINATOR, UserType.INSTRUCTOR));
         StudentDetailsResponseDto userDetails = includeStudentName ?
                 new StudentDetailsWithNameResponseDto(hallOfFame.getStudentName(), studentDetailsWithoutName)
                 : studentDetailsWithoutName;
