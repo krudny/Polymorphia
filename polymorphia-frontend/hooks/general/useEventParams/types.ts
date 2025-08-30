@@ -1,7 +1,7 @@
 import { EventType } from "@/interfaces/api/course";
 
 export interface UseEventParams {
-  gradableEventId: number;
-  eventSectionId: number;
+  gradableEventId: number | undefined;
+  eventSectionId: number | undefined;
   eventType: EventType;
 }

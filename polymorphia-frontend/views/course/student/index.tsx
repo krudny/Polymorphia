@@ -35,6 +35,10 @@ export default function StudentView() {
     }
   }, [isLoading, gradableEvents, eventType, eventSectionId, router]);
 
+  useEffect(() => {
+    console.log("selected", selectedEventId);
+  }, [selectedEventId]);
+
   if (isLoading || (gradableEvents && gradableEvents.length < 2)) {
     return <Loading />;
   }
@@ -72,7 +76,10 @@ export default function StudentView() {
         <PointsSummary ref={summaryRef} />
       </div>
       {eventType === EventTypes.TEST && selectedEventId && (
-        <GradeModal onClosedAction={() => setSelectedEventId(null)} />
+        <GradeModal
+          onClosedAction={() => setSelectedEventId(null)}
+          gradableEventIdProp={selectedEventId}
+        />
       )}
     </SectionView>
   );

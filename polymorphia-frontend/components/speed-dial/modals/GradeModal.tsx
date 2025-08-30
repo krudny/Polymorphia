@@ -3,10 +3,22 @@ import GradeInfo from "@/components/course/event-section/GradeInfo";
 import Loading from "@/components/loading/Loading";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import useGrade from "@/hooks/course/useGrade";
+import { useEventParams } from "@/hooks/general/useEventParams";
 
-//TODO: mocked gradableEventId
-export default function GradeModal({ onClosedAction }: SpeedDialModalProps) {
-  const { data, isLoading, isError } = useGrade(1);
+export default function GradeModal({
+  onClosedAction,
+  gradableEventIdProp,
+}: SpeedDialModalProps & {
+  gradableEventIdProp?: number;
+}) {
+  const { gradableEventId } = useEventParams();
+  const id = gradableEventId ?? gradableEventIdProp;
+
+  if (id === undefined) {
+    throw new Error("Brak gradableEventId lub gradableEventIdProp");
+  }
+
+  const { data, isLoading, isError } = useGrade(id);
 
   return (
     <Modal

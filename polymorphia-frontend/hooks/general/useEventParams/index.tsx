@@ -11,8 +11,8 @@ export function useEventParams(): UseEventParams {
   const eventType = String(params.eventType).toUpperCase() as EventType;
 
   return {
-    gradableEventId,
-    eventSectionId,
+    gradableEventId: isNaN(gradableEventId) ? undefined : gradableEventId,
+    eventSectionId: isNaN(eventSectionId) ? undefined : eventSectionId,
     eventType,
   };
 }
