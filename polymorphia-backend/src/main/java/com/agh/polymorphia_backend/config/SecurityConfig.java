@@ -1,6 +1,5 @@
 package com.agh.polymorphia_backend.config;
 
-import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -26,6 +26,7 @@ import java.util.List;
 @AllArgsConstructor
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(jsr250Enabled = true)
 public class SecurityConfig {
     private final PasswordEncoder passwordEncoder;
     private final CorsProperties corsProperties;
@@ -46,7 +47,6 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers(HttpMethod.GET, "/static/**", "/error").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/courses/**", "/rewards/**", "/users/**").hasAuthority(UserType.COORDINATOR.getAuthority())
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginProcessingUrl("/login")

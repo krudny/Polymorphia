@@ -15,8 +15,9 @@ export function useAnimatedModalState(
 
   // Set timeline only once
   useLayoutEffect(() => {
-    if (!modalRef.current || !backdropRef.current || !!timelineRef.current)
+    if (!modalRef.current || !backdropRef.current || !!timelineRef.current) {
       return;
+    }
 
     const tl = gsap.timeline({
       paused: true,
@@ -46,7 +47,10 @@ export function useAnimatedModalState(
   // Handle changes to onClosed callback separately to setting timeline
   // to avoid resetting the timeline on re-renders
   useLayoutEffect(() => {
-    if (!timelineRef.current) return;
+    if (!timelineRef.current) {
+      return;
+    }
+
     timelineRef.current.eventCallback("onReverseComplete", () => {
       onClosed();
       setModalState("closed");
@@ -56,7 +60,9 @@ export function useAnimatedModalState(
   // Handle modal state
   useEffect(() => {
     const tl = timelineRef.current;
-    if (!tl) return;
+    if (!tl) {
+      return;
+    }
 
     if (isOpen && modalState === "closed") {
       setModalState("opening");

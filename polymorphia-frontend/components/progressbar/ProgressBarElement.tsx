@@ -14,8 +14,12 @@ export default function ProgressBarElement({
     >
       {elements.map((element, i) => {
         if (alternate) {
-          if (isUpper && i % 2 !== 0) return null;
-          if (!isUpper && i % 2 === 0) return null;
+          if (isUpper && i % 2 !== 0) {
+            return null;
+          }
+          if (!isUpper && i % 2 === 0) {
+            return null;
+          }
         }
 
         const positionStyle = isHorizontal

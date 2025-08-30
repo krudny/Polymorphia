@@ -6,8 +6,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum FlatBonusItemBehavior {
-    ONE_EVENT_TRIGGERED("Wymaga aktywacji, pozwala odrobić punkty z jednego eventu"),
-    MULTIPLE_EVENTS_INSTANT("Działa natychmiastowo, pozwala odrobić punkty z kilku eventów");
+    ONE_EVENT("Pozwala odrobić punkty z jednego eventu"),
+    MULTIPLE_EVENTS("Pozwala odrobić punkty z kilku eventów");
 
     private final String textValue;
 

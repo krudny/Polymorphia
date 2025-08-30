@@ -1,4 +1,4 @@
-import { LoginDto } from "@/interfaces/api/DTO";
+import { LoginDto } from "@/interfaces/api/login";
 import { API_HOST } from "@/services/api";
 
 const AuthService = {
@@ -16,7 +16,9 @@ const AuthService = {
       credentials: "include",
     });
 
-    if (!response.ok) throw new Error("Failed to login");
+    if (!response.ok) {
+      throw new Error("Failed to login");
+    }
   },
 };
 

@@ -40,9 +40,10 @@ export default function RootLayout({
     >
       <head>
         <meta name="theme-color" content="#262626" />
+        <link rel="icon" type="image/x-icon" href="/favicon.png" />
       </head>
       <body
-        className={`${leagueGothic.className} ${leagueGothic.variable} ${materialSymbols.variable} text-primary-dark dark:text-secondary-light`}
+        className={`${leagueGothic.className} ${leagueGothic.variable} ${materialSymbols.variable} text-primary-dark dark:text-secondary-gray`}
       >
         <ThemeProviderMui theme={themeConfig}>
           <ThemeProvider

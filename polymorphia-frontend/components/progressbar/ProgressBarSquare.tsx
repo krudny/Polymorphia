@@ -25,7 +25,7 @@ export default function ProgressBarSquare({
 
       <div className="progressbar-square" style={positionStyle}>
         <div
-          className="bg-primary-dark dark:bg-secondary-light dark:scale-105"
+          className="bg-primary-dark dark:bg-secondary-gray dark:scale-105"
           style={{
             transform: "rotate(45deg)",
             transformOrigin: "center center",

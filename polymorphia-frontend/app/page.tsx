@@ -9,7 +9,6 @@ import {
   animateInitialMount,
   animateLoginFormVisibility,
 } from "@/animations/Home";
-import { API_STATIC_URL } from "@/services/api";
 import "./index.css";
 
 export default function Home() {
@@ -25,8 +24,13 @@ export default function Home() {
   const hasMountedRef = useRef(false);
 
   useEffect(() => {
-    if (!backgroundRef.current || !titleSectionRef.current || !imageRef.current)
+    if (
+      !backgroundRef.current ||
+      !titleSectionRef.current ||
+      !imageRef.current
+    ) {
       return;
+    }
     animateInitialMount(
       backgroundRef.current,
       titleSectionRef.current,
@@ -42,8 +46,9 @@ export default function Home() {
       !hasMountedRef.current ||
       !loginFormRef.current ||
       !titleSectionRef.current
-    )
+    ) {
       return;
+    }
     animateLoginFormVisibility(
       loginFormRef.current,
       titleSectionRef.current,
@@ -55,7 +60,7 @@ export default function Home() {
     <BackgroundWrapper className="hero-background-wrapper" forceTheme="light">
       <div className="hero-background-image" ref={backgroundRef}>
         <Image
-          src={`${API_STATIC_URL}/images/general/hero_bg.png`}
+          src="/hero-bg.png"
           alt="Hero background"
           fill
           className="object-cover"
@@ -66,7 +71,7 @@ export default function Home() {
       <div className="hero-image-wrapper" ref={imageRef}>
         <div>
           <Image
-            src={`${API_STATIC_URL}/images/general/owl.png`}
+            src="/owl.png"
             alt="Hero owl"
             width={1000}
             height={1000}

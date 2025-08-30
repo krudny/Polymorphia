@@ -4,17 +4,18 @@ import { BonusItemCardProps } from "@/components/course/event-section/points-sum
 import XPCard from "../../../xp-card/XPCard";
 import XPCardPoints from "@/components/xp-card/inner-components/XPCardPoints";
 
-export default function BonusItemCard({ item }: BonusItemCardProps) {
+export default function BonusItemCard({ assignedItem }: BonusItemCardProps) {
   return (
     <XPCard
-      title={item.item.name}
-      subtitle={`Zdobyto: ${item.receivedDate}`}
+      title={assignedItem.base.name}
+      subtitle={`Zdobyto: ${assignedItem.details.receivedDate}`}
       image={{
-        url: `${API_STATIC_URL}/${item.item.imageUrl}`,
-        alt: item.item.name,
+        url: `${API_STATIC_URL}/${assignedItem.base.imageUrl}`,
+        alt: assignedItem.base.name,
       }}
       size="xs"
-      component={<XPCardPoints points={`+${item.bonusXp}`} />}
+      // TODO: handle undefined xp
+      component={<XPCardPoints points={`+${assignedItem.details.gainedXp}`} />}
     />
   );
 }

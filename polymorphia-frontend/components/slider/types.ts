@@ -1,53 +1,33 @@
-import { UseQueryResult } from "@tanstack/react-query";
+import { KnowledgeBaseResponseDTO } from "@/interfaces/api/knowledge-base";
 
-export type ItemQueryResult = UseQueryResult<ItemSlide[] | undefined, Error>;
+export const KnowledgeBaseTypes = {
+  CHEST: "CHEST",
+  ITEM: "ITEM",
+  EVOLUTION_STAGE: "EVOLUTION_STAGE",
+} as const;
 
-export type ChestQueryResult = UseQueryResult<ChestSlide[] | undefined, Error>;
-
-export type SliderSlide = EvolutionStageSlide | ItemSlide | ChestSlide;
-
-export interface EvolutionStageSlide {
-  type: "evolution-stage";
-  name: string;
-  description: string;
-  imageUrl: string;
-  gradingText: string;
-}
-
-export interface ItemSlide {
-  type: "item";
-  id: number;
-  name: string;
-  description: string;
-  imageUrl: string;
-  textBonus: string;
-  chestIds: number[];
-}
-
-export interface ChestSlide {
-  type: "chest";
-  id: number;
-  name: string;
-  description: string;
-  imageUrl: string;
-  behavior: string;
-  itemIds: number[];
-}
+export type KnowledgeBaseType =
+  (typeof KnowledgeBaseTypes)[keyof typeof KnowledgeBaseTypes];
 
 export interface SingleSlideProps {
-  slide: SliderSlide;
+  slide: KnowledgeBaseResponseDTO;
   position: number;
   prevSlideAction: () => void;
   nextSlideAction: () => void;
 }
 
 export interface SliderProps {
-  slides: SliderSlide[];
+  slides: KnowledgeBaseResponseDTO[];
   initialSlide?: number;
 }
 
+export interface DetailedSlideInfoProps {
+  type: KnowledgeBaseType;
+  relatedRewards: KnowledgeBaseResponseDTO["relatedRewards"];
+}
+
 export interface NavigationDotsProps {
-  slides: SliderSlide[];
+  slides: KnowledgeBaseResponseDTO[];
   currentSlide: number;
   goToSlide: (index: number) => void;
 }

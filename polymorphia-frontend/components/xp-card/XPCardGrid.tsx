@@ -12,8 +12,7 @@ import { EventSectionService } from "@/app/(logged-in)/course/EventSectionServic
 import Pagination from "@/components/pagination/Pagination";
 import PointsSummary from "@/components/course/event-section/points-summary/PointsSummary";
 import { setResizeObserver } from "@/components/course/event-section/EventSectionUtils";
-import GradableEventRewardModal from "@/components/speed-dial/modals/GradableEventRewardModal";
-import { useTitle } from "@/components/navigation/TitleContext";
+import GradeModal from "@/components/speed-dial/modals/GradeModal";
 import { getCardComponent } from "@/shared/card/getCardComponent";
 
 export default function XPCardGrid({
@@ -22,7 +21,6 @@ export default function XPCardGrid({
   containerRef,
 }: XPCardGridProps) {
   const router = useRouter();
-  const { setTitle } = useTitle();
 
   const sliderRef = useRef<HTMLDivElement | null>(null);
   const summaryRef = useRef<HTMLDivElement | null>(null);
@@ -45,19 +43,6 @@ export default function XPCardGrid({
     queryKey: ["gradableEvents", eventSectionId],
     queryFn: () => EventSectionService.getGradableEvents(eventSectionId),
   });
-
-  const { data: eventSections } = useQuery({
-    queryKey: ["eventSections"],
-    queryFn: () => EventSectionService.getEventSections(1),
-  });
-
-  useEffect(() => {
-    const section = eventSections?.find(
-      (section) => section.id === eventSectionId
-    );
-    const eventSectionName = section?.name ?? "";
-    setTitle(eventSectionName);
-  }, [setTitle, eventSectionId, eventSections]);
 
   // if there's only one gradable event, there's fast forward to content omitting XPCardGrid.
   useEffect(() => {
@@ -110,7 +95,7 @@ export default function XPCardGrid({
   );
 
   const handleGradableEventClick = (id: number) => {
-    if (eventSectionType === "test") {
+    if (eventSectionType === "TEST") {
       setSelectedEventId(id);
     } else {
       router.push(`/course/${eventSectionType}/${eventSectionId}/${id}`);
@@ -142,12 +127,12 @@ export default function XPCardGrid({
                 )}
               >
                 {gradableEventsPage.map(
-                  ({ id, name, topic, gainedXp, hasChest }) => (
+                  ({ id, name, topic, gainedXp, hasReward: hasChest }) => (
                     <XPCard
                       title={name}
                       subtitle={topic ?? ""}
                       key={id}
-                      color={gainedXp !== 0 ? "green" : "silver"}
+                      color={gainedXp ? "green" : "silver"}
                       component={getCardComponent(gainedXp, hasChest)}
                       size={mobile ? "sm" : "md"}
                       forceWidth={!mobile}
@@ -165,8 +150,8 @@ export default function XPCardGrid({
       ) : (
         <div className="xp-card-no-grid">Brak aktywności.</div>
       )}
-      {eventSectionType === "test" && (
-        <GradableEventRewardModal
+      {eventSectionType === "TEST" && (
+        <GradeModal
           gradableEventId={selectedEventId ?? undefined}
           onClosed={() => setSelectedEventId(null)}
         />

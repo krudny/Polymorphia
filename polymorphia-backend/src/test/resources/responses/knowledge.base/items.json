@@ -1,0 +1,65 @@
+[
+  {
+    "id": 3,
+    "type": "ITEM",
+    "orderIndex": 0,
+    "name": "Marchewka",
+    "subtitle": "+10% do eventów z kategorii Kartkówka",
+    "description": "desc",
+    "imageUrl": "url",
+    "relatedRewards": [
+      {
+        "id": 5,
+        "name": "Złota",
+        "imageUrl": "url",
+        "orderIndex": 1
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "type": "ITEM",
+    "orderIndex": 1,
+    "name": "Apteczka",
+    "subtitle": "+2.0 xp do eventów z kategorii Kartkówka",
+    "description": "desc",
+    "imageUrl": "url",
+    "relatedRewards": [
+      {
+        "id": 4,
+        "name": "Srebrna",
+        "imageUrl": "url",
+        "orderIndex": 0
+      },
+      {
+        "id": 5,
+        "name": "Złota",
+        "imageUrl": "url",
+        "orderIndex": 1
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "type": "ITEM",
+    "orderIndex": 2,
+    "name": "Apteczka2",
+    "subtitle": "+3.0 xp do eventów z kategorii Kartkówka",
+    "description": "desc",
+    "imageUrl": "url",
+    "relatedRewards": [
+      {
+        "id": 4,
+        "name": "Srebrna",
+        "imageUrl": "url",
+        "orderIndex": 0
+      },
+      {
+        "id": 5,
+        "name": "Złota",
+        "imageUrl": "url",
+        "orderIndex": 1
+      }
+    ]
+  }
+]

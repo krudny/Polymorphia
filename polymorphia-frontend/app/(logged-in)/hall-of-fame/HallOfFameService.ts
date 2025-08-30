@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import {HallOfFameRecordDTO, HallOfFameResponseDTO} from "@/interfaces/api/DTO";
+import { HallOfFameResponseDTO} from "@/interfaces/api/hall-of-fame";
 import {API_HOST} from "@/services/api";
 
 const HallOfFameService = {
@@ -46,7 +46,7 @@ const HallOfFameService = {
     if (!response.ok) throw new Error("Failed to fetch hall of fame!");
     return await response.json();
   },
-  getPodium: async (): Promise<HallOfFameRecordDTO[]> => {
+  getPodium: async () => {
     await new Promise((resolve) => setTimeout(resolve, 300));
     const response = await fetch(
         `${API_HOST}/hall-of-fame/podium?courseId=1`,

@@ -11,6 +11,7 @@ import { useEffect } from "react";
 export default function Chests() {
   const searchParams = useSearchParams();
   const { setTitle } = useTitle();
+  const COURSE_ID = 1;
 
   useEffect(() => {
     setTitle("Skrzynki");
@@ -22,7 +23,7 @@ export default function Chests() {
     error,
   } = useQuery({
     queryKey: ["chests", 1],
-    queryFn: () => KnowledgeBaseService.getChests(1),
+    queryFn: () => KnowledgeBaseService.getChests(COURSE_ID),
   });
 
   if (isLoading) {
@@ -40,7 +41,7 @@ export default function Chests() {
   return (
     <Slider
       slides={chests}
-      initialSlide={parseInt(searchParams.get("slide") ?? "0") || 0}
+      initialSlide={parseInt(searchParams.get("slide") ?? "0")}
     />
   );
 }

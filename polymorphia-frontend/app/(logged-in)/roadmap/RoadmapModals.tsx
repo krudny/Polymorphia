@@ -1,7 +1,7 @@
 /* @ts-nocheck */
 /* eslint-disable */
 
-import GradableEventRewardModal from "@/components/speed-dial/modals/GradableEventRewardModal";
+import GradeModal from "@/components/speed-dial/modals/GradeModal";
 
 // @ts-ignore
 export default function RoadmapModals({ gradableEvent, setSelectedEvent }) {
@@ -12,7 +12,7 @@ export default function RoadmapModals({ gradableEvent, setSelectedEvent }) {
   }
 
   return (
-    <GradableEventRewardModal
+    <GradeModal
       gradableEventId={gradableEvent.id}
       onClosed={() => setSelectedEvent(null)}
     />

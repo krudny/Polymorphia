@@ -12,13 +12,13 @@ import Loading from "@/components/loading/Loading";
 import { useMediaQuery } from "react-responsive";
 import RoadmapModals from "@/app/(logged-in)/roadmap/RoadmapModals";
 import { getCardComponent } from "@/shared/card/getCardComponent";
-import { GradableEventResponseDTO } from "@/app/(logged-in)/course/EventSectionService";
 import "./styles.css";
+import { StudentGradableEventResponseDTO } from "@/interfaces/api/course";
 
 export default function Roadmap() {
   const { setTitle } = useTitle();
   const [selectedEvent, setSelectedEvent] = useState<
-    GradableEventResponseDTO | undefined
+    StudentGradableEventResponseDTO | undefined
   >(undefined);
   const wrapperRef = useFadeInAnimate();
   const isXL = useMediaQuery({ minWidth: 1280 });
@@ -38,24 +38,24 @@ export default function Roadmap() {
     return <Loading />;
   }
 
-  const handleClick = (gradableEvent: GradableEventResponseDTO) => {
+  const handleClick = (gradableEvent: StudentGradableEventResponseDTO) => {
     setSelectedEvent(gradableEvent);
   };
 
   const cards = data.map((gradableEvent) => {
-    const { name, topic, id, gainedXp, isLocked, hasChest } = gradableEvent;
+    const { name, topic, id, gainedXp, isLocked, hasReward } = gradableEvent;
 
     return (
       <XPCard
         title={name}
         subtitle={topic}
         key={id}
-        color={gainedXp > 0 ? "green" : "silver"}
+        color={gainedXp ? "green" : "silver"}
         size={isXL ? "md" : isMd ? "sm" : "xs"}
         forceWidth={true}
         isLocked={isLocked}
         onClick={() => handleClick(gradableEvent)}
-        component={getCardComponent(gainedXp, hasChest)}
+        component={getCardComponent(gainedXp, hasReward)}
       />
     );
   });

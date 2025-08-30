@@ -27,7 +27,9 @@ export default function Sidebar() {
 
   useEffect(() => {
     const sidebar = sidebarRef.current;
-    if (!sidebar) return;
+    if (!sidebar) {
+      return;
+    }
     animateSidebar(sidebar, isSidebarExpanded);
   }, [isSidebarExpanded]);
 
@@ -48,12 +50,14 @@ export default function Sidebar() {
       id={isSidebarLockedOpened ? "sidebar-locked" : "sidebar-animated"}
       className="sidebar"
       onMouseEnter={() => {
-        if (!isSidebarLockedOpened && !isSidebarLockedClosed)
+        if (!isSidebarLockedOpened && !isSidebarLockedClosed) {
           setIsSidebarExpanded(true);
+        }
       }}
       onMouseLeave={() => {
-        if (!isSidebarLockedOpened && !isSidebarLockedClosed)
+        if (!isSidebarLockedOpened && !isSidebarLockedClosed) {
           setIsSidebarExpanded(false);
+        }
       }}
     >
       <UserSection />

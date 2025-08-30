@@ -2,7 +2,7 @@ name: Promote Staging Image to Production
 
 on:
   workflow_dispatch:
-  
+
 jobs:
   promote-to-production:
     if: github.actor == 'krudny'
@@ -10,31 +10,25 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Auth to Google Cloud
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      - name: Setup Google Cloud 
+      - name: Setup Google Cloud
         uses: google-github-actions/setup-gcloud@v2
 
       - name: Configure Docker for Artifact Registry
         run: |
           gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
 
-      - name: Pull staging image
+      - name: Promote staging to production
         run: |
-          docker pull us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/polymorphia-backend/polymorphia-backend:latest
-
-      - name: Tag as production
-        run: |
-          docker tag us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/polymorphia-backend/polymorphia-backend:latest \
-            us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/polymorphia-backend/polymorphia-backend:prod-latest
-
-      - name: Push to production tag
-        run: |
-          docker push us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/polymorphia-backend/polymorphia-backend:prod-latest
+          IMAGE_NAME="us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/polymorphia-backend/polymorphia-backend"
+          docker pull $IMAGE_NAME:staging-latest
+          docker tag $IMAGE_NAME:staging-latest $IMAGE_NAME:prod-latest
+          docker push $IMAGE_NAME:prod-latest
 
       - name: Deploy on production VM
         uses: appleboy/ssh-action@v1
@@ -43,12 +37,14 @@ jobs:
           username: ${{ secrets.PROD_VM_USER }}
           key: ${{ secrets.PROD_SSH_PRIVATE_KEY }}
           script: |
+            IMAGE_NAME="us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/polymorphia-backend/polymorphia-backend"
+            
             gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
-            sudo docker pull us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/polymorphia-backend/polymorphia-backend:prodlatest
-            sudo docker stop polymorphia-backend || true
-            sudo docker rm polymorphia-backend || true
-            sudo docker run -d --name polymorphia-backend -p 8080:8080 \
+            docker pull $IMAGE_NAME:prod-latest
+            docker stop polymorphia-backend || true
+            docker rm polymorphia-backend || true
+            docker run -d --name polymorphia-backend -p 8080:8080 \
               -v /app/config:/app/config \
               -v ~/polymorphia-static:/app/static \
-              us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/polymorphia-backend/polymorphia-backend:prod-latest \
+              $IMAGE_NAME:prod-latest \
               --spring.config.location=file:/app/config/application.properties

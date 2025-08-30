@@ -48,6 +48,10 @@
 
 .slide-details-info {
     @apply flex-centered my-1 gap-x-1 text-primary-gray;
+
+    h3 {
+        @apply text-xl 2xl:text-2xl
+    }
 }
 
 .slide-details-content {

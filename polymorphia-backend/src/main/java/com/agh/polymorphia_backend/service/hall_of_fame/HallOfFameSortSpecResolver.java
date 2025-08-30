@@ -2,7 +2,7 @@ package com.agh.polymorphia_backend.service.hall_of_fame;
 
 import com.agh.polymorphia_backend.dto.request.HallOfFameRequestDto;
 import com.agh.polymorphia_backend.model.hall_of_fame.OverviewField;
-import com.agh.polymorphia_backend.repository.event.section.EventSectionRepository;
+import com.agh.polymorphia_backend.repository.EventSectionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

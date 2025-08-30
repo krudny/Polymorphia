@@ -1,14 +1,14 @@
+import { EventType } from "@/interfaces/api/course";
 import { ReactNode } from "react";
-import { EventSectionType } from "@/components/course/event-section/types";
 
 export interface SpeedDialProps {
-  eventSectionType: EventSectionType;
+  eventSectionType: EventType;
   gradableEventId: number;
 }
 
 export interface SpeedDialItem {
   id: number;
-  order: number;
+  orderIndex: number;
   label: string;
   icon: string;
   modal?: (onClose: () => void) => ReactNode;

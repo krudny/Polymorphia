@@ -1,5 +1,5 @@
 "use client";
-import { UserDetailsDTO } from "@/interfaces/api/DTO";
+import { UserDetailsDTO } from "@/interfaces/api/user";
 import Modal from "@/components/modal/Modal";
 import { useEffect, useState } from "react";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
@@ -122,10 +122,7 @@ function GroupPickingModalContent() {
   );
 }
 
-export default function GroupPickingModal({
-  gradableEventId,
-  onClosed,
-}: SpeedDialModalProps) {
+export default function GroupPickingModal({ onClosed }: SpeedDialModalProps) {
   return (
     <Modal
       isDataPresented={true}

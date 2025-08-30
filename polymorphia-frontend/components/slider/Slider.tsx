@@ -25,7 +25,9 @@ export default function Slider({ slides, initialSlide = 0 }: SliderProps) {
     setCurrentSlide(index);
   };
 
-  if (initialSlide != 0) shiftArray(slides, initialSlide - currentSlide);
+  if (initialSlide != 0) {
+    shiftArray(slides, initialSlide - currentSlide);
+  }
 
   return (
     <>

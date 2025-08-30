@@ -1,70 +1,44 @@
-import {
-  ChestResponseDto,
-  EvolutionStageResponseDto,
-  ItemResponseDTO,
-} from "@/interfaces/api/DTO";
+import { KnowledgeBaseResponseDTO } from "@/interfaces/api/knowledge-base";
 import { API_HOST } from "@/services/api";
-import {
-  ChestSlide,
-  EvolutionStageSlide,
-  ItemSlide,
-} from "@/components/slider/types";
 
 const KnowledgeBaseService = {
   getEvolutionStages: async (
     courseId: number
-  ): Promise<EvolutionStageSlide[]> => {
+  ): Promise<KnowledgeBaseResponseDTO[]> => {
     const response = await fetch(
       `${API_HOST}/courses/${courseId}/evolution-stages`,
       { credentials: "include" }
     );
-    if (!response.ok) throw new Error("Failed to fetch evolution stages!");
-    const data = await response.json();
-    return data.map((evolutionStage: EvolutionStageResponseDto) => ({
-      type: "evolution-stage",
-      name: evolutionStage.name,
-      description: evolutionStage.description,
-      imageUrl: evolutionStage.imageUrl,
-      gradingText: evolutionStage.gradingText,
-    }));
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch evolution stages!");
+    }
+
+    return await response.json();
   },
 
-  getItems: async (courseId: number): Promise<ItemSlide[]> => {
+  getItems: async (courseId: number): Promise<KnowledgeBaseResponseDTO[]> => {
     const response = await fetch(`${API_HOST}/courses/${courseId}/items`, {
       credentials: "include",
     });
-    if (!response.ok) throw new Error("Failed to fetch items!");
-    const data = await response.json();
-    return data.map((item: ItemResponseDTO) => {
-      return {
-        type: "item",
-        id: item.id,
-        name: item.name,
-        description: item.description,
-        imageUrl: item.imageUrl,
-        textBonus: item.textBonus,
-        chestIds: item.chestIds,
-      } as ItemSlide;
-    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch items!");
+    }
+
+    return await response.json();
   },
 
-  getChests: async (courseId: number): Promise<ChestSlide[]> => {
+  getChests: async (courseId: number): Promise<KnowledgeBaseResponseDTO[]> => {
     const response = await fetch(`${API_HOST}/courses/${courseId}/chests`, {
       credentials: "include",
     });
-    if (!response.ok) throw new Error("Failed to fetch chests");
-    const data = await response.json();
-    return data.map((chest: ChestResponseDto) => {
-      return {
-        type: "chest",
-        id: chest.id,
-        name: chest.name,
-        description: chest.description,
-        imageUrl: chest.imageUrl,
-        behavior: chest.behavior,
-        itemIds: chest.itemIds,
-      } as ChestSlide;
-    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch chests");
+    }
+
+    return await response.json();
   },
 };
 

@@ -1,12 +1,15 @@
 /* eslint-disable */
-// @ts-nocheck
 
 import { lab0, lab1, lab2, proj1 } from "@/app/(logged-in)/course/sampleData";
-import { UserDetailsDTO } from "@/interfaces/api/DTO";
+import { ProjectVariantResponseDTO } from "@/interfaces/api/course/project";
+import { GradeResponseDTO } from "@/interfaces/api/grade";
+import { MarkdownResponseDTO } from "@/interfaces/api/markdown";
+import { PointsSummaryResponseDTO } from "@/interfaces/api/course/points-summary";
 import {
-  BonusInfoItem,
   EventSectionResponseDTO,
-} from "@/components/course/event-section/types";
+  StudentGradableEventResponseDTO,
+} from "@/interfaces/api/course";
+import { UserDetailsDTO } from "@/interfaces/api/user";
 
 export const studentNames = [
   "Gerard Małoduszny",
@@ -53,42 +56,6 @@ for (let i = 0; i < 250; i++) {
   allData.push(item);
 }
 
-export interface GradableEventResponseDTO {
-  id: number;
-  name: string;
-  topic?: string;
-  gainedXp: number;
-  order: number;
-  hasChest: boolean;
-  isLocked: boolean;
-}
-
-interface PointsSummaryResponseDTO {
-  name: string;
-  gainedXp: number;
-  percentageBonus: PercentageBonus;
-  flatBonus: FlatBonus;
-  totalXp: number;
-}
-
-interface PercentageBonus {
-  xp: number;
-  items: BonusInfoItem[];
-  percentage: number;
-}
-
-interface FlatBonus {
-  xp: number;
-  items: BonusInfoItem[];
-}
-
-interface ProjectVariantResponseDTO {
-  name: string;
-  category: string;
-  shortCode: string;
-  imageUrl: string;
-}
-
 const mockMarkdownStore: Record<number, string> = {
   15: lab1,
   16: lab2,
@@ -98,290 +65,299 @@ const mockMarkdownStore: Record<number, string> = {
   32: "# Dlaczego refactoring hell to zło? \n < Content >",
 };
 
+const eventSectionData: EventSectionResponseDTO[] = [
+  {
+    id: 2,
+    name: "Laboratorium",
+    type: "ASSIGNMENT",
+    orderIndex: 2,
+  },
+  {
+    id: 3,
+    name: "Projekt 1",
+    type: "PROJECT",
+    orderIndex: 4,
+  },
+  {
+    id: 1,
+    name: "Kartkówka",
+    type: "TEST",
+    orderIndex: 1,
+  },
+  {
+    id: 4,
+    name: "Git",
+    type: "ASSIGNMENT",
+    orderIndex: 0,
+  },
+  {
+    id: 5,
+    name: "Specjalny lab",
+    type: "ASSIGNMENT",
+    orderIndex: 3,
+  },
+  {
+    id: 6,
+    name: "Projekt 2",
+    type: "PROJECT",
+    orderIndex: 5,
+  },
+];
+
 export const EventSectionService = {
+  getEventSection: async (
+    eventSectionId: number
+  ): Promise<EventSectionResponseDTO> => {
+    const eventSection: EventSectionResponseDTO | undefined =
+      eventSectionData.find((section) => section.id === eventSectionId);
+    if (!eventSection) {
+      throw new Error("This event section does not exist.");
+    }
+    return eventSection;
+  },
   getEventSections: async (
     courseId: number
   ): Promise<EventSectionResponseDTO[]> => {
-    const data = [
-      {
-        id: 2,
-        name: "Laboratorium",
-        type: "assignment",
-        order: 2,
-        hidden: false,
-      },
-      {
-        id: 3,
-        name: "Projekt 1",
-        type: "project",
-        order: 4,
-        hidden: false,
-      },
-      {
-        id: 1,
-        name: "Kartkówka",
-        type: "test",
-        order: 1,
-        hidden: false,
-      },
-      {
-        id: 4,
-        name: "Git",
-        type: "assignment",
-        order: 0,
-        hidden: false,
-      },
-      {
-        id: 5,
-        name: "Specjalny lab",
-        type: "assignment",
-        order: 3,
-        hidden: false,
-      },
-      {
-        id: 6,
-        name: "Projekt 2",
-        type: "project",
-        order: 5,
-        hidden: false,
-      },
-    ];
-    return data.sort((a, b) => a.order - b.order);
+    return eventSectionData.sort((a, b) => a.orderIndex - b.orderIndex);
   },
   getGradableEvents: async (
     eventSectionId: number
-  ): Promise<GradableEventResponseDTO[]> => {
+  ): Promise<StudentGradableEventResponseDTO[]> => {
     if (eventSectionId === 1) {
-      const events = [
+      const events: StudentGradableEventResponseDTO[] = [
         {
           id: 1,
+          type: "TEST",
           name: "Test 1",
           topic: "Instrukcje sterujące",
-          gainedXp: 1.5,
-          order: 1,
-          hasChest: false,
+          gainedXp: "1.5",
+          orderIndex: 1,
           isLocked: false,
+          hasReward: false,
         },
         {
           id: 2,
+          type: "TEST",
           name: "Test 2",
           topic: "Model obiektowy",
-          gainedXp: 0.0,
-          order: 2,
-          hasChest: false,
+          gainedXp: "0.0",
+          orderIndex: 2,
           isLocked: false,
+          hasReward: false,
         },
         {
           id: 3,
+          type: "TEST",
           name: "Test 3",
           topic: "Interakcje między obiektami",
-          gainedXp: 0.0,
-          order: 3,
-          hasChest: true,
+          orderIndex: 3,
           isLocked: false,
+          hasReward: true,
         },
         {
           id: 4,
+          type: "TEST",
           name: "Test 4",
           topic: "Interfejsy i mapy",
-          gainedXp: 0.0,
-          order: 4,
-          hasChest: false,
+          orderIndex: 4,
           isLocked: false,
+          hasReward: false,
         },
         {
           id: 5,
+          type: "TEST",
           name: "Test 5",
           topic: "Dziedziczenie",
-          gainedXp: 0.0,
-          order: 5,
-          hasChest: false,
+          orderIndex: 5,
           isLocked: false,
+          hasReward: false,
         },
         {
           id: 6,
+          type: "TEST",
           name: "Test 6",
           topic: "Refactoring kodu",
-          gainedXp: 0.0,
-          order: 6,
-          hasChest: false,
+          orderIndex: 6,
           isLocked: false,
+          hasReward: false,
         },
         {
           id: 7,
+          type: "TEST",
           name: "Test 7",
           topic: "Wielowątkowość",
-          gainedXp: 0.0,
-          order: 7,
-          hasChest: false,
+          orderIndex: 7,
           isLocked: false,
+          hasReward: false,
         },
         {
           id: 8,
+          type: "TEST",
           name: "Test 8",
           topic: "Interfejs graficzny",
-          gainedXp: 0.0,
-          order: 8,
-          hasChest: true,
+          orderIndex: 8,
           isLocked: false,
+          hasReward: true,
         },
         {
           id: 9,
+          type: "TEST",
           name: "Test 9",
           topic: "Lambdy, streamy i zarządzanie zasobami",
-          gainedXp: 0.0,
-          order: 9,
-          hasChest: false,
+          orderIndex: 9,
           isLocked: false,
+          hasReward: false,
         },
         {
           id: 10,
+          type: "TEST",
           name: "Test 10",
           topic: "Kotlin jako alternatywa dla Javy",
-          gainedXp: 0.0,
-          order: 10,
-          hasChest: false,
+          orderIndex: 10,
           isLocked: false,
+          hasReward: false,
         },
         {
           id: 11,
+          type: "TEST",
           name: "Test 11",
           topic: "A może Rust?",
-          gainedXp: 0.0,
-          order: 11,
-          hasChest: false,
+          orderIndex: 11,
           isLocked: false,
+          hasReward: false,
         },
         {
           id: 12,
+          type: "TEST",
           name: "Test 12",
           topic: "Jak wycentrować diva",
-          gainedXp: 0.0,
-          order: 12,
-          hasChest: false,
+          orderIndex: 12,
           isLocked: false,
+          hasReward: false,
         },
       ];
-      return events.sort((a, b) => a.order - b.order);
+      return events.sort((a, b) => a.orderIndex - b.orderIndex);
     } else if (eventSectionId === 2) {
-      const events = [
+      const events: StudentGradableEventResponseDTO[] = [
         {
           id: 15,
+          type: "ASSIGNMENT",
           name: "Lab 1",
           topic: "Instrukcje sterujące w Javie",
-          gainedXp: 2.0,
-          order: 1,
-          hasChest: false,
+          gainedXp: "2.0",
+          orderIndex: 1,
           isLocked: false,
+          hasReward: false,
         },
         {
           id: 16,
+          type: "ASSIGNMENT",
           name: "Lab 2",
           topic: "Model obiektowy",
-          gainedXp: 0.0,
-          order: 2,
-          hasChest: false,
+          gainedXp: "0.0",
+          orderIndex: 2,
           isLocked: false,
+          hasReward: false,
         },
         {
           id: 17,
+          type: "ASSIGNMENT",
           name: "Lab 3",
           topic: "Interakcje między obiektami",
-          gainedXp: 0.0,
-          order: 3,
-          hasChest: true,
+          orderIndex: 3,
           isLocked: false,
+          hasReward: true,
         },
         {
           id: 18,
+          type: "ASSIGNMENT",
           name: "Lab 4",
           topic: "Interfejsy i mapy",
-          gainedXp: 0.0,
-          order: 4,
-          hasChest: false,
+          orderIndex: 4,
           isLocked: false,
+          hasReward: false,
         },
         {
           id: 19,
+          type: "ASSIGNMENT",
           name: "Lab 5",
           topic: "Dziedziczenie",
-          gainedXp: 0.0,
-          order: 5,
-          hasChest: false,
+          orderIndex: 5,
           isLocked: false,
+          hasReward: false,
         },
         {
           id: 20,
+          type: "ASSIGNMENT",
           name: "Lab 6",
           topic: "Refactoring kodu",
-          gainedXp: 0.0,
-          order: 6,
-          hasChest: false,
+          orderIndex: 6,
           isLocked: false,
+          hasReward: false,
         },
         {
           id: 21,
+          type: "ASSIGNMENT",
           name: "Lab 7",
           topic: "Wielowątkowość",
-          gainedXp: 0.0,
-          order: 7,
-          hasChest: false,
+          orderIndex: 7,
           isLocked: false,
+          hasReward: false,
         },
         {
           id: 22,
+          type: "ASSIGNMENT",
           name: "Lab 8",
           topic: "Interfejs graficzny",
-          gainedXp: 0.0,
-          order: 8,
-          hasChest: false,
+          orderIndex: 8,
           isLocked: false,
+          hasReward: false,
         },
       ];
-      return events.sort((a, b) => a.order - b.order);
+      return events.sort((a, b) => a.orderIndex - b.orderIndex);
     } else if (eventSectionId === 4) {
       return [
         {
           id: 30,
+          type: "ASSIGNMENT",
           name: "Lab 0",
           topic: "Git jest cool",
-          gainedXp: 0.0,
-          order: 1,
-          hasChest: true,
+          orderIndex: 1,
           isLocked: false,
+          hasReward: true,
         },
       ];
     } else if (eventSectionId === 6) {
       return [
         {
           id: 32,
+          type: "PROJECT",
           name: "Projekt 2",
           topic: "Refactoring hell",
-          gainedXp: 0.0,
-          order: 1,
-          hasChest: false,
+          orderIndex: 1,
           isLocked: false,
+          hasReward: false,
         },
       ];
     } else if (eventSectionId === 3) {
       return [
         {
           id: 33,
+          type: "PROJECT",
           name: "Projekt 1a",
           topic: "Darwin World",
-          gainedXp: 0.0,
-          order: 1,
-          hasChest: false,
+          orderIndex: 1,
           isLocked: false,
+          hasReward: false,
         },
         {
           id: 34,
+          type: "PROJECT",
           name: "Projekt 1b",
           topic: "Polymorphia",
-          gainedXp: 0.0,
-          order: 2,
-          hasChest: true,
+          orderIndex: 2,
           isLocked: false,
+          hasReward: true,
         },
       ];
     } else {
@@ -393,63 +369,91 @@ export const EventSectionService = {
   ): Promise<PointsSummaryResponseDTO> => {
     if (eventSectionId === 1) {
       return {
-        name: "Kartkówka",
-        gainedXp: 3.5,
+        gained: {
+          title: "Zdobyte xp",
+          gainedXp: "3.5",
+        },
         percentageBonus: {
-          xp: 0.2,
-          percentage: 5,
-          items: [
+          title: "Bonusy procentowe",
+          gainedXp: "0.2",
+          assignedItems: [
             {
-              assignedId: 1,
-              item: {
+              base: {
                 id: 1,
+                itemBonusType: "PERCENTAGE_BONUS",
                 name: "Pietruszka",
+                bonusText: "+5% do kategorii Kartkówka",
                 imageUrl: "images/items/parsley.jpg",
+                percentage: 5,
+                orderIndex: 0,
+                limit: 3,
+                isLimitReached: false,
+                eventSectionId: 1,
               },
-              receivedDate: "07.06.2025",
-              bonusXp: "0.2",
-              bonusPercentage: "5",
+              details: {
+                id: 1,
+                receivedDate: "07.06.2025",
+                gainedXp: "0.2",
+                isUsed: false,
+              },
             },
           ],
         },
         flatBonus: {
-          xp: 0,
-          items: [],
+          title: "Bonusy punktowe",
+          gainedXp: "0.0",
+          assignedItems: [],
         },
-        totalXp: 3.7,
+        total: {
+          title: "Łącznie",
+          gainedXp: "3.7",
+        },
       };
     } else if (eventSectionId === 2) {
       return {
-        name: "Laboratorium",
-        gainedXp: 2.0,
+        gained: {
+          title: "Zdobyte xp",
+          gainedXp: "2.0",
+        },
         percentageBonus: {
-          xp: 0.0,
-          percentage: 0,
-          items: [],
+          title: "Bonusy procentowe",
+          gainedXp: "0.0",
+          assignedItems: [],
         },
         flatBonus: {
-          xp: 0,
-          items: [],
+          title: "Bonusy punktowe",
+          gainedXp: "0.0",
+          assignedItems: [],
         },
-        totalXp: 2.0,
+        total: {
+          title: "Łącznie",
+          gainedXp: "2.0",
+        },
       };
     } else {
       return {
-        name: "",
-        gainedXp: 0,
+        gained: {
+          title: "Zdobyte xp",
+          gainedXp: "0.0",
+        },
         percentageBonus: {
-          xp: 0.0,
-          percentage: 0,
-          items: [],
+          title: "Bonusy procentowe",
+          gainedXp: "0.0",
+          assignedItems: [],
         },
         flatBonus: {
-          xp: 0,
-          items: [],
+          title: "Bonusy punktowe",
+          gainedXp: "0.0",
+          assignedItems: [],
         },
-        totalXp: 0,
+        total: {
+          title: "Łącznie",
+          gainedXp: "0.0",
+        },
       };
     }
   },
+
   getMarkdown: async (
     gradableEventId: number
   ): Promise<MarkdownResponseDTO> => {
@@ -470,98 +474,231 @@ export const EventSectionService = {
     mockMarkdownStore[gradableEventId] = newMarkdown;
   },
 
-  getReward: async (gradableEventId: number): Promise<GradableEvent> => {
+  getGrade: async (gradableEventId: number): Promise<GradeResponseDTO> => {
     if (gradableEventId === 30) {
       return {
-        id: 1,
-        name: "Git",
-        grade: {
-          gainedXp: 2.0,
-          createdDate: "07.06.2025",
-          modifiedDate: "07.06.2025",
-          chests: [
-            {
-              id: 1,
-              assignedChestId: 3,
-              name: "Srebrna Skrzynia",
-              imageUrl: "images/chests/s1.png",
-              opened: true,
-              receivedDate: "07.06.2025",
-            },
-          ],
+        details: {
+          id: 1,
         },
-        maxXp: 2.0,
-        hidden: false,
-        topic: "Git jest cool",
-      };
-    }
-    if (gradableEventId === 15) {
-      return {
-        id: 1,
-        name: "Lab 1",
-        grade: {
-          gainedXp: 0.75,
-          createdDate: "07.06.2025",
-          modifiedDate: "07.06.2025",
-          chests: [
-            {
+        criteria: [
+          {
+            id: 1,
+            name: "Wykonanie zadania",
+            maxXp: "4.0",
+            assignableRewards: [
+              {
+                reward: {
+                  rewardType: "CHEST",
+                  reward: {
+                    id: 1,
+                    name: "Srebrna Skrzynia",
+                    imageUrl: "images/chests/s1.png",
+                    behavior: "ONE_OF_MANY",
+                    behaviorText: "Wybierz jeden przedmiot ze skrzynki",
+                    orderIndex: 0,
+                    chestItems: [
+                      {
+                        id: 1,
+                        itemBonusType: "PERCENTAGE_BONUS",
+                        name: "Pietruszka",
+                        bonusText: "+5% do kategorii Kartkówka",
+                        imageUrl: "images/items/parsley.jpg",
+                        percentage: 5,
+                        orderIndex: 0,
+                        limit: 3,
+                        isLimitReached: false,
+                        eventSectionId: 1,
+                      },
+                    ],
+                  },
+                },
+                maxAmount: 1,
+              },
+            ],
+            criterionGrade: {
               id: 1,
-              assignedChestId: 3,
-              name: "Srebrna Skrzynia",
-              imageUrl: "images/chests/s2.jpg",
-              opened: true,
-              receivedDate: "07.06.2025",
+              gainedXp: "3.5",
+              assignedRewards: [
+                {
+                  rewardType: "CHEST",
+                  assignedReward: {
+                    base: {
+                      id: 1,
+                      name: "Srebrna Skrzynia",
+                      imageUrl: "images/chests/s1.png",
+                      behavior: "ONE_OF_MANY",
+                      behaviorText: "Wybierz jeden przedmiot ze skrzynki",
+                      orderIndex: 0,
+                      chestItems: [
+                        {
+                          id: 1,
+                          itemBonusType: "PERCENTAGE_BONUS",
+                          name: "Pietruszka",
+                          bonusText: "+5% do kategorii Kartkówka",
+                          imageUrl: "images/items/parsley.jpg",
+                          percentage: 5,
+                          orderIndex: 0,
+                          limit: 3,
+                          isLimitReached: false,
+                          eventSectionId: 1,
+                        },
+                      ],
+                    },
+                    details: {
+                      id: 3,
+                      receivedDate: "07.06.2025",
+                      usedDate: "08.06.2025",
+                      isUsed: true,
+                    },
+                  },
+                },
+              ],
             },
-          ],
-        },
-        maxXp: 2.0,
-        hidden: false,
-        topic: "Lab 1",
+          },
+        ],
       };
     }
 
-    if (gradableEventId === 1) {
+    if (gradableEventId === 15 || gradableEventId === 1) {
       return {
-        id: 1,
-        name: "Lab 1",
-        grade: {
-          gainedXp: 0.75,
-          createdDate: "07.06.2025",
-          modifiedDate: "07.06.2025",
-          chests: [
-            {
-              id: 1,
-              assignedChestId: 3,
-              name: "Srebrna Skrzynia",
-              imageUrl: "images/chests/s2.jpg",
-              opened: true,
-              receivedDate: "07.06.2025",
-            },
-          ],
+        details: {
+          id: 1,
         },
-        maxXp: 2.0,
-        hidden: false,
-        topic: "Lab 1",
+        criteria: [
+          {
+            id: 1,
+            name: "Wykonanie zadania",
+            maxXp: "2.0",
+            assignableRewards: [
+              {
+                reward: {
+                  rewardType: "CHEST",
+                  reward: {
+                    id: 1,
+                    name: "Srebrna Skrzynia",
+                    imageUrl: "images/chests/s1.png",
+                    behavior: "ONE_OF_MANY",
+                    behaviorText: "Wybierz jeden przedmiot ze skrzynki",
+                    orderIndex: 0,
+                    chestItems: [
+                      {
+                        id: 1,
+                        itemBonusType: "PERCENTAGE_BONUS",
+                        name: "Pietruszka",
+                        bonusText: "+5% do kategorii Kartkówka",
+                        imageUrl: "images/items/parsley.jpg",
+                        percentage: 5,
+                        orderIndex: 0,
+                        limit: 3,
+                        isLimitReached: false,
+                        eventSectionId: 1,
+                      },
+                    ],
+                  },
+                },
+                maxAmount: 1,
+              },
+            ],
+            criterionGrade: {
+              id: 1,
+              gainedXp: "0.7",
+              assignedRewards: [
+                {
+                  rewardType: "CHEST",
+                  assignedReward: {
+                    base: {
+                      id: 1,
+                      name: "Srebrna Skrzynia",
+                      imageUrl: "images/chests/s1.png",
+                      behavior: "ONE_OF_MANY",
+                      behaviorText: "Wybierz jeden przedmiot ze skrzynki",
+                      orderIndex: 0,
+                      chestItems: [
+                        {
+                          id: 1,
+                          itemBonusType: "PERCENTAGE_BONUS",
+                          name: "Pietruszka",
+                          bonusText: "+5% do kategorii Kartkówka",
+                          imageUrl: "images/items/parsley.jpg",
+                          percentage: 5,
+                          orderIndex: 0,
+                          limit: 3,
+                          isLimitReached: false,
+                          eventSectionId: 1,
+                        },
+                      ],
+                    },
+                    details: {
+                      id: 3,
+                      receivedDate: "07.06.2025",
+                      usedDate: "08.06.2025",
+                      isUsed: true,
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        ],
       };
     }
 
-    return {};
+    return {
+      criteria: [
+        {
+          id: 1,
+          name: "Wykonanie zadania",
+          maxXp: "4.0",
+          assignableRewards: [
+            {
+              reward: {
+                rewardType: "CHEST",
+                reward: {
+                  id: 1,
+                  name: "Srebrna Skrzynia",
+                  imageUrl: "images/chests/s1.png",
+                  behavior: "ONE_OF_MANY",
+                  behaviorText: "Wybierz jeden przedmiot ze skrzynki",
+                  orderIndex: 0,
+                  chestItems: [
+                    {
+                      id: 1,
+                      itemBonusType: "PERCENTAGE_BONUS",
+                      name: "Pietruszka",
+                      bonusText: "+5% do kategorii Kartkówka",
+                      imageUrl: "images/items/parsley.jpg",
+                      percentage: 5,
+                      orderIndex: 0,
+                      limit: 3,
+                      isLimitReached: false,
+                      eventSectionId: 1,
+                    },
+                  ],
+                },
+              },
+              maxAmount: 2,
+            },
+          ],
+        },
+      ],
+    };
   },
-
   getProjectVariant: async (
     gradableEventId: number
   ): Promise<ProjectVariantResponseDTO[]> => {
     return [
       {
+        id: 1,
         shortCode: "G",
         name: "Pożary",
-        category: "Mapa i roślinność",
+        categoryName: "Mapa i roślinność",
         imageUrl: "images/general/pozary.jpg",
       },
       {
+        id: 2,
         shortCode: "2",
         name: "Podmianka",
-        category: "Zwierzaki",
+        categoryName: "Zwierzaki",
         imageUrl: "images/general/podmianka.jpg",
       },
     ];
