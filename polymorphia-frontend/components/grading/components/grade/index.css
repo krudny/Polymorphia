@@ -7,6 +7,32 @@
     @apply border-primary-dark dark:border-secondary-light text-primary-dark dark:text-secondary-light placeholder-primary-dark dark:placeholder-secondary-light;
 }
 
+/* Index.tsx */
+
+.grade-accordion-override {
+    @apply gap-y-5;
+}
+
+.grade-criterion {
+    @apply flex flex-col;
+
+    h2 {
+        @apply text-3xl my-3;
+    }
+}
+
+.grade-criterion-progress-bar {
+    @apply w-full px-6 pt-6;
+}
+
+.grade-input-wrapper {
+    @apply w-20 mx-auto flex items-center -mt-6 z-[20];
+}
+
+.grade-comment-wrapper {
+    @apply w-full;
+}
+
 /* Comment.tsx */
 
 .comment {

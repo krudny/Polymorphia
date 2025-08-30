@@ -8,6 +8,7 @@ import Loading from "@/components/loading/Loading";
 import { GradingReducerActions } from "@/components/providers/grading/GradingContext";
 import GradingComponentWrapper from "@/components/grading/components/grading-wrapper";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
+import "./index.css";
 
 export default function ProjectGroupList() {
   const {
@@ -42,7 +43,7 @@ export default function ProjectGroupList() {
       {projectGroups.map((group, index: number) => (
         <div
           key={index}
-          className="max-w-[25rem] mx-auto my-3 first:mt-0 last:mb-0 flex flex-col gap-y-2"
+          className="group-record"
           onClick={() =>
             dispatch({
               type: GradingReducerActions.SET_TARGET,
@@ -86,7 +87,7 @@ export default function ProjectGroupList() {
               );
             }
           )}
-          <div className="w-full border-2 border-secondary-dark"></div>
+          <div className="divider"></div>
         </div>
       ))}
     </>

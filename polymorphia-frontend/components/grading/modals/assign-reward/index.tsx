@@ -7,6 +7,7 @@ import XPCardAssign from "@/components/xp-card/components/XPCardAssign";
 import { AssignRewardModalProps } from "@/components/grading/modals/assign-reward/types";
 import { ChestResponseDTO, ItemResponseDTO } from "@/interfaces/api/reward";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import "./index.css";
 
 export default function AssignRewardModal({
   assignableRewards,
@@ -38,7 +39,7 @@ export default function AssignRewardModal({
       onClosed={onClosedAction}
       title="Przypisz nagrody"
     >
-      <div className="w-full flex flex-col gap-y-2">
+      <div className="assign-reward">
         {assignableRewards?.map((possibleReward, index) => {
           const {
             maxAmount,
@@ -85,7 +86,7 @@ export default function AssignRewardModal({
             />
           );
         })}
-        <div className="w-full mt-2">
+        <div className="assign-reward-button-wrapper">
           <ButtonWithBorder
             text="Przypisz"
             className="w-full !border-3 !rounded-md"

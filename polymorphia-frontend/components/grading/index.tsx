@@ -2,6 +2,7 @@ import { GradingProps } from "@/components/grading/types";
 import SpeedDialDesktop from "@/components/speed-dial/SpeedDialDesktop";
 import { useGradingFactory } from "@/hooks/factory/useGradingFactory";
 import { Fragment } from "react";
+import "./index.css";
 
 export default function Grading({ gradingType, columns }: GradingProps) {
   const components = useGradingFactory(gradingType);
@@ -16,16 +17,12 @@ export default function Grading({ gradingType, columns }: GradingProps) {
   const perDiv = Math.ceil(restComponents.length / (columns - 1));
 
   return (
-    <div
-      className={`w-full max-w-[1500px] m-auto h-[calc(100dvh-6rem)] flex justify-center gap-4`}
-    >
-      <div className="fixed bottom-4 right-5 z-[999]">
+    <div className="grading">
+      <div className="grading-speed-dial">
         <SpeedDialDesktop type={gradingType} />
       </div>
 
-      <div className="w-full max-w-[30rem] flex flex-col overflow-hidden max-h-full">
-        {firstComponent}
-      </div>
+      <div className="grading-list">{firstComponent}</div>
 
       {[...Array(columns - 1)].map((_, i) => {
         const start = i * perDiv;
@@ -33,10 +30,7 @@ export default function Grading({ gradingType, columns }: GradingProps) {
         const slice = restComponents.slice(start, end);
 
         return (
-          <div
-            key={i}
-            className="w-full max-w-md flex flex-col overflow-hidden max-h-full h-fit gap-y-4"
-          >
+          <div key={i} className="grading-columns">
             {slice.map((component, index) => (
               <Fragment key={index}>{component}</Fragment>
             ))}

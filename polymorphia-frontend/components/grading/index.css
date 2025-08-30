@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "../../styles/globals.css";
 
+.grading {
+    @apply w-full max-w-[1500px] m-auto h-[calc(100dvh-5rem)] flex justify-center gap-4;
+}
+
 .grading-accordion-header {
     h1 {
         @apply !text-4xl;
@@ -9,4 +13,16 @@
     h2 {
         @apply !text-3xl;
     }
+}
+
+.grading-speed-dial {
+    @apply fixed bottom-4 right-5 z-[999];
+}
+
+.grading-list {
+    @apply w-full max-w-md flex flex-col overflow-hidden max-h-full;
+}
+
+.grading-columns {
+    @apply w-full max-w-md flex flex-col overflow-hidden max-h-full h-fit gap-y-4;
 }

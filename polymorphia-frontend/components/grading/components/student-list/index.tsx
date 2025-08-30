@@ -9,6 +9,7 @@ import useGradingContext from "@/hooks/contexts/useGradingContext";
 import Loading from "@/components/loading/Loading";
 import { ReactNode } from "react";
 import { useFadeInAnimate } from "@/animations/FadeIn";
+import "./index.css";
 
 export default function StudentsList() {
   const { search, setSearch, students, isStudentsLoading, state, dispatch } =
@@ -50,7 +51,7 @@ export default function StudentsList() {
           return (
             <div
               key={student.id || student.studentName}
-              className="mx-auto my-3 first:mt-0 last:mb-0"
+              className="student-record"
               onClick={() =>
                 dispatch({
                   type: GradingReducerActions.SET_TARGET,

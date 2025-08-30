@@ -1,6 +1,7 @@
 "use client";
 
 import "../../index.css";
+import "./index.css";
 import { ReactNode, useRef } from "react";
 import ProgressBar from "@/components/progressbar/ProgressBar";
 import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLabels";
@@ -34,7 +35,11 @@ export default function Grade() {
 
     return (
       <>
-        <Accordion ref={accordionRef} className="gap-y-5" maxOpen={1}>
+        <Accordion
+          ref={accordionRef}
+          className="grade-accordion-override"
+          maxOpen={1}
+        >
           {Object.entries(state.criteria).map(
             ([criterionId, criterionGrade], index) => {
               const criterion = criteria?.find(
@@ -53,8 +58,8 @@ export default function Grade() {
                   headerClassName="grading-accordion-header"
                   isInitiallyOpened={index == 0 && isXL}
                 >
-                  <div key={criterionId} className="flex flex-col">
-                    <div className="w-full px-6 pt-6">
+                  <div key={criterionId} className="grade-criterion">
+                    <div className="grade-criterion-progress-bar">
                       <ProgressBar
                         minXP={0}
                         currentXP={Number(gainedXp)}
@@ -69,10 +74,10 @@ export default function Grade() {
                         }
                       />
                     </div>
-                    <div className="w-20 mx-auto flex items-center -mt-6 z-[20]">
+                    <div className="grade-input-wrapper">
                       <Input criterion={criterion} gainedXp={gainedXp} />
                     </div>
-                    <h2 className="text-3xl my-3">Nagrody</h2>
+                    <h2>Nagrody</h2>
                     <Reward
                       criterion={criterion}
                       criterionGrade={criterionGrade}
@@ -88,7 +93,7 @@ export default function Grade() {
             title="Komentarz"
             headerClassName="grading-accordion-header"
           >
-            <div className="w-full">
+            <div className="grade-comment-wrapper">
               <Comment />
             </div>
           </AccordionSection>
