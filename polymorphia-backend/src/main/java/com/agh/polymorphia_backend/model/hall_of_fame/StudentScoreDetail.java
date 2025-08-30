@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.model;
+package com.agh.polymorphia_backend.model.hall_of_fame;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

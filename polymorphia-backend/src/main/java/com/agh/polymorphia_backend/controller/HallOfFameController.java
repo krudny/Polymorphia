@@ -7,6 +7,7 @@ import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,11 +19,13 @@ public class HallOfFameController {
     private final HallOfFameService hallOfFameService;
 
     @PostMapping
+    @PreAuthorize("isAuthenticated()")
     public Page<HallOfFameRecordDto> getHallOfFame(@Valid @RequestBody HallOfFameRequestDto hallOfFameRequestDto) {
         return hallOfFameService.getHallOfFame(hallOfFameRequestDto);
     }
 
     @GetMapping("/podium")
+    @PreAuthorize("isAuthenticated()")
     public List<HallOfFameRecordDto> getPodium(@RequestParam Long courseId){
         return hallOfFameService.getPodium(courseId);
     }

@@ -1,6 +1,6 @@
-package com.agh.polymorphia_backend.repository;
+package com.agh.polymorphia_backend.repository.hall_of_fame;
 
-import com.agh.polymorphia_backend.model.StudentScoreDetail;
+import com.agh.polymorphia_backend.model.hall_of_fame.StudentScoreDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -2,14 +2,17 @@ package com.agh.polymorphia_backend.service.hall_of_fame;
 
 import com.agh.polymorphia_backend.dto.request.HallOfFameRequestDto;
 import com.agh.polymorphia_backend.dto.response.hall_of_fame.HallOfFameRecordDto;
+import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFame;
-import com.agh.polymorphia_backend.model.StudentScoreDetail;
+import com.agh.polymorphia_backend.model.hall_of_fame.StudentScoreDetail;
 import com.agh.polymorphia_backend.model.hall_of_fame.OverviewField;
 import com.agh.polymorphia_backend.model.hall_of_fame.SearchBy;
 import com.agh.polymorphia_backend.model.hall_of_fame.SortOrder;
-import com.agh.polymorphia_backend.repository.HallOfFameRepository;
-import com.agh.polymorphia_backend.repository.StudentScoreDetailRepository;
+import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
+import com.agh.polymorphia_backend.repository.hall_of_fame.StudentScoreDetailRepository;
+import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.mapper.HallOfFameMapper;
+import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import com.agh.polymorphia_backend.util.NumberFormatter;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.*;
@@ -25,8 +28,13 @@ public class HallOfFameService {
     private final HallOfFameRepository hallOfFameRepository;
     private final HallOfFameMapper hallOfFameMapper;
     private final HallOfFameSortSpecResolver sortSpecResolver;
+    private final AccessAuthorizer accessAuthorizer;
+    private final CourseService courseService;
 
     public Page<HallOfFameRecordDto> getHallOfFame(HallOfFameRequestDto requestDto) {
+        Course course = courseService.getCourseById(requestDto.courseId());
+        accessAuthorizer.authorizeCourseAccess(course);
+
         HallOfFameSortSpec sortSpec = sortSpecResolver.resolve(requestDto);
         return switch (sortSpec){
             case OverviewFieldSort overviewFieldSort -> getSortedByOverviewFields(requestDto, overviewFieldSort.field());
@@ -123,6 +131,9 @@ public class HallOfFameService {
     }
 
     public List<HallOfFameRecordDto> getPodium(Long courseId) {
+        Course course = courseService.getCourseById(courseId);
+        accessAuthorizer.authorizeCourseAccess(course);
+
         HallOfFameRequestDto requestDto = new HallOfFameRequestDto(
                 courseId,
                 0,

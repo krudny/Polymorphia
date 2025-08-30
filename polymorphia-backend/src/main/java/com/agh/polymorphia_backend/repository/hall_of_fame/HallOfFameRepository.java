@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.repository;
+package com.agh.polymorphia_backend.repository.hall_of_fame;
 
 import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFame;
 import com.agh.polymorphia_backend.model.hall_of_fame.SearchBy;
