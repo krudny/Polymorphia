@@ -12,10 +12,10 @@ export default function GradeModal({
   gradableEventIdProp?: number;
 }) {
   const { gradableEventId } = useEventParams();
-  const id = gradableEventId ?? gradableEventIdProp;
+  const id = isNaN(gradableEventId) ? gradableEventIdProp : gradableEventId;
 
   if (id === undefined) {
-    throw new Error("Brak gradableEventId lub gradableEventIdProp");
+    throw new Error("Coś poszło nie tak");
   }
 
   const { data, isLoading, isError } = useGrade(id);

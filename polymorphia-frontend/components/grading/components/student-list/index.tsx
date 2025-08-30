@@ -25,7 +25,7 @@ export default function StudentsList() {
       />
       <ButtonWithBorder
         text="Filtry"
-        className="!mx-0 !py-0 !rounded-none !border-0 !border-b-2 !align-self-start !h-[42px]"
+        className="!mx-0 !py-0 !rounded-none !border-0 !border-b-2 !align-self-start !h-full"
       />
     </>
   );

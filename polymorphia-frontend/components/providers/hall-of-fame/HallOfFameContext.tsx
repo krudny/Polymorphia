@@ -6,8 +6,8 @@ import {
   HallOfFameContextInterface,
   HallOfFameFilterId,
 } from "@/components/providers/hall-of-fame/types";
-import { useFilters } from "../../../hooks/course/useFilters";
-import { useHallOfFameFilterConfigs } from "../../../hooks/course/useHallOfFameFilterConfigs";
+import { useFilters } from "@/hooks/course/useFilters";
+import { useHallOfFameFilterConfigs } from "@/hooks/course/useHallOfFameFilterConfigs";
 import useHallOfFame from "@/hooks/course/useHallOfFame";
 
 export const HallOfFameContext = createContext<

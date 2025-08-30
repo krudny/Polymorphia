@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@import "../../../../styles/globals.css";
+
+.grading-wrapper {
+    @apply w-full overflow-y-hidden flex flex-col flex-1 gap-y-4;
+}
+
+.grading-wrapper-top {
+    @apply w-full flex justify-between items-center px-8 mx-auto min-h-12;
+}
+
+.grading-wrapper-main {
+    @apply w-full overflow-y-auto px-8 py-4 mx-auto custom-scrollbar flex-1 relative;
+}

@@ -36,6 +36,7 @@ export const GradingReducerActions = {
   ADD_REWARD_TO_CRITERION: "add_reward_to_criterion",
   UPDATE_REWARD_QUANTITY: "update_reward_quantity",
   ADD_COMMENT: "add_comment",
+  RESET_GRADE: "reset_grade",
 } as const;
 
 export type GradingReducerActionType =
@@ -69,6 +70,9 @@ export type GradingReducerActionType =
   | {
       type: typeof GradingReducerActions.ADD_COMMENT;
       payload: { comment: string };
+    }
+  | {
+      type: typeof GradingReducerActions.RESET_GRADE;
     };
 
 const initialState: GradingReducerState = {
@@ -157,6 +161,13 @@ const GradingReducer = (
         comment: action.payload.comment,
       };
 
+    case GradingReducerActions.RESET_GRADE:
+      return {
+        ...state,
+        comment: "",
+        criteria: {},
+      };
+
     default:
       return state;
   }
@@ -224,6 +235,10 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
     if (!grade) {
       return;
     }
+
+    dispatch({
+      type: GradingReducerActions.RESET_GRADE,
+    });
 
     dispatch({
       type: GradingReducerActions.ADD_COMMENT,
