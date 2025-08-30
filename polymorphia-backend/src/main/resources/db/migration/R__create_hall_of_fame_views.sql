@@ -39,7 +39,12 @@ WITH scored AS (SELECT scg.id                                                   
                 FROM scored
                 GROUP BY animal_id),
      ranked AS (SELECT *,
-                       RANK() OVER (PARTITION BY course_id ORDER BY total_xp_sum DESC) AS position
+                       ROW_NUMBER() OVER (
+                           PARTITION BY course_id
+                           ORDER BY total_xp_sum DESC,
+                               animal_name,
+                               animal_id
+                           ) AS position
                 FROM summed),
      evolution_mapping AS (SELECT DISTINCT ON (r.animal_id) r.animal_id,
                                                             r.animal_name,

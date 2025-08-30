@@ -22,6 +22,7 @@ public interface HallOfFameRepository extends JpaRepository<HallOfFame, Long> {
                         (:#{#searchBy.searchByStudent()} = TRUE AND LOWER(h.studentName) LIKE LOWER(CONCAT('%', :searchTerm, '%')))
                     ))
                 AND (:groups IS NULL OR h.groupName IN :groups)
+              ORDER BY h.position
             """)
     Page<HallOfFame> findHofPage(
             @Param("courseId") Long courseId,
@@ -41,7 +42,8 @@ public interface HallOfFameRepository extends JpaRepository<HallOfFame, Long> {
                   AND ssd.event_section_name = :sortBy
                 ORDER BY
                   CASE WHEN :sortOrder = 'ASC' THEN ssd.raw_xp END,
-                  CASE WHEN :sortOrder = 'DESC' THEN ssd.raw_xp END DESC
+                  CASE WHEN :sortOrder = 'DESC' THEN ssd.raw_xp END DESC,
+                  hof.position
                 LIMIT :limit OFFSET :offset
             """, nativeQuery = true)
     List<Long> findAnimalIdsSortedByEventSection(
