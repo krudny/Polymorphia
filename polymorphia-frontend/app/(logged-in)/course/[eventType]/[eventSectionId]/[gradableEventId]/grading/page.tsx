@@ -1,7 +1,7 @@
 "use client";
 
 import { useEventParams } from "@/hooks/general/useEventParams";
-import { GradingProvider } from "@/components/providers/grading/GradingContext";
+import { GradingProvider } from "@/providers/grading/GradingContext";
 import { EventTypes } from "@/interfaces/api/course";
 import { GradingTypes } from "@/components/grading/types";
 import Grading from "@/components/grading";

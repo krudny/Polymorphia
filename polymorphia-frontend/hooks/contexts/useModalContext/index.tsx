@@ -1,6 +1,6 @@
-import { ModalContextInterface } from "@/components/providers/modal/types";
+import { ModalContextInterface } from "@/providers/modal/types";
 import { useContext } from "react";
-import { ModalContext } from "@/components/providers/modal/ModalContext";
+import { ModalContext } from "@/providers/modal/ModalContext";
 
 export default function useModalContext(): ModalContextInterface {
   const context = useContext(ModalContext);

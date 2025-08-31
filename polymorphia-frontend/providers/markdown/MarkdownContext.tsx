@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import {
   MarkdownContextInterface,
   MarkdownProviderProps,
-} from "@/components/providers/markdown/types";
+} from "@/providers/markdown/types";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import useMarkdown from "@/hooks/general/useMarkdown";
 import useMarkdownUpdate from "@/hooks/course/useMarkdownUpdate";

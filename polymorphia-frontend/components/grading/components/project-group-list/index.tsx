@@ -5,7 +5,7 @@ import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import Search from "@/components/search";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import Loading from "@/components/loading/Loading";
-import { GradingReducerActions } from "@/components/providers/grading/GradingContext";
+import { GradingReducerActions } from "@/providers/grading/GradingContext";
 import GradingComponentWrapper from "@/components/grading/components/grading-wrapper";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import "./index.css";

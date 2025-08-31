@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { HallOfFameContextInterface } from "@/components/providers/hall-of-fame/types";
-import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
+import { HallOfFameContextInterface } from "@/providers/hall-of-fame/types";
+import { HallOfFameContext } from "@/providers/hall-of-fame/HallOfFameContext";
 
 export default function useHallOfFameContext(): HallOfFameContextInterface {
   const context = useContext(HallOfFameContext);

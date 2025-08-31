@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { GradingContextInterface } from "@/components/providers/grading/types";
-import { GradingContext } from "@/components/providers/grading/GradingContext";
+import { GradingContextInterface } from "@/providers/grading/types";
+import { GradingContext } from "@/providers/grading/GradingContext";
 
 export default function useGradingContext(): GradingContextInterface {
   const context = useContext(GradingContext);

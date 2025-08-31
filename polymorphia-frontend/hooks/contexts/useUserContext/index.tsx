@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { UserContext } from "@/components/providers/user/UserContext";
+import { UserContext } from "@/providers/user/UserContext";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 
 export default function useUserContext(): UserDetailsDTO {

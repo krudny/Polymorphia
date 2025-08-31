@@ -8,7 +8,7 @@ import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLab
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import Loading from "@/components/loading/Loading";
 import { Accordion } from "@/components/accordion/Accordion";
-import { AccordionRef } from "@/components/providers/accordion/types";
+import { AccordionRef } from "@/providers/accordion/types";
 import AccordionSection from "@/components/accordion/AccordionSection";
 import GradingComponentWrapper from "@/components/grading/components/grading-wrapper";
 import Reward from "@/components/grading/components/grade/Reward";

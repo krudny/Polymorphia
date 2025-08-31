@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useState } from "react";
-import { EquipmentContextInterface } from "@/components/providers/equipment/types";
+import { EquipmentContextInterface } from "@/providers/equipment/types";
 import {
   EquipmentChestResponseDTO,
   EquipmentItemResponseDTO,

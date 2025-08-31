@@ -1,4 +1,4 @@
-import { CriteriaDetails } from "@/components/providers/grading/GradingContext";
+import { CriteriaDetails } from "@/providers/grading/GradingContext";
 import { CriterionResponseDTO } from "@/interfaces/api/grade";
 
 export interface RewardProps {

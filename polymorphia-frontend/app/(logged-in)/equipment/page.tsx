@@ -7,7 +7,7 @@ import ChestModal from "@/components/equipment/modals/ChestModal";
 import Loading from "@/components/loading/Loading";
 import EquipmentSectionWrapper from "@/components/equipment/EquipmentSectionWrapper";
 import OpeningChestModal from "@/components/equipment/modals/OpeningChestModal";
-import { EquipmentProvider } from "@/components/providers/equipment/EquipmentContext";
+import { EquipmentProvider } from "@/providers/equipment/EquipmentContext";
 import useEquipment from "@/hooks/course/useEquipment";
 
 export default function Equipment() {

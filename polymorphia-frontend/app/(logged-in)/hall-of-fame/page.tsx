@@ -1,12 +1,12 @@
 "use client";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
-import { HallOfFameProvider } from "@/components/providers/hall-of-fame/HallOfFameContext";
+import { HallOfFameProvider } from "@/providers/hall-of-fame/HallOfFameContext";
 import HallOfFameMobile from "@/components/hall-of-fame/mobile/HallOfFameMobile";
 import FiltersModal from "@/components/filters/modals/FiltersModal";
 import HallOfFameDesktop from "@/components/hall-of-fame/desktop/HallOfFameDesktop";
 import { useQueryClient } from "@tanstack/react-query";
-import { HallOfFameFilterId } from "@/components/providers/hall-of-fame/types";
+import { HallOfFameFilterId } from "@/providers/hall-of-fame/types";
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
 
 function HallOfFameContent() {
@@ -19,6 +19,13 @@ function HallOfFameContent() {
     isFiltersLoading,
     isFiltersError,
   } = useHallOfFameContext();
+
+  const handleApplyFilters = () => {
+    queryClient.invalidateQueries({
+      queryKey: ["hallOfFame"],
+    });
+    setPage(0);
+  };
 
   return (
     <>
@@ -34,12 +41,7 @@ function HallOfFameContent() {
         setIsModalOpen={setIsModalOpen}
         isFiltersLoading={isFiltersLoading}
         isFiltersError={isFiltersError}
-        onFiltersApplied={() => {
-          queryClient.invalidateQueries({
-            queryKey: ["hallOfFame"],
-          });
-          setPage(0);
-        }}
+        onFiltersApplied={() => handleApplyFilters()}
       />
     </>
   );

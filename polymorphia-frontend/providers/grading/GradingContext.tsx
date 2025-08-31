@@ -16,7 +16,12 @@ import useCriteria from "@/hooks/course/useCriteria";
 import useGrade2 from "@/hooks/course/useGrade2";
 import useProjectGroups from "@/hooks/course/useProjectGroups";
 import useGradeUpdate from "@/hooks/course/useGradeUpdate";
-import { GradingContextInterface } from "@/components/providers/grading/types";
+import {
+  GradingContextInterface,
+  GradingFilterId,
+} from "@/providers/grading/types";
+import { useFilters } from "@/hooks/course/useFilters";
+import { useGradingFilterConfigs } from "@/hooks/course/useGradingFilterConfigs";
 
 export interface CriteriaDetails {
   gainedXp?: string;
@@ -179,13 +184,27 @@ export const GradingContext = createContext<
 
 export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const { gradableEventId, eventType } = useEventParams();
+  const [areFiltersOpen, setAreFiltersOpen] = useState(false);
+
+  const COURSE_ID = 1;
+  const {
+    data: filterConfigs,
+    isLoading: isFiltersLoading,
+    isError: isFiltersError,
+  } = useGradingFilterConfigs(COURSE_ID);
+  const filters = useFilters<GradingFilterId>(filterConfigs ?? []);
+
+  const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["total"];
+  const sortOrder = filters.getAppliedFilterValues("sortOrder") ?? ["asc"];
+  const groups = filters.getAppliedFilterValues("groups") ?? ["all"];
+
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 400);
   const [state, dispatch] = useReducer(GradingReducer, initialState);
   const selectedStudentId = state?.selectedTarget?.[0]?.id ?? null;
   const { data: criteria } = useCriteria();
   const { data: students, isLoading: isStudentsLoading } =
-    useRandomPeopleWithPoints(debouncedSearch);
+    useRandomPeopleWithPoints(debouncedSearch, sortBy, sortOrder, groups);
   const { data: projectGroups, isLoading: isProjectGroupsLoading } =
     useProjectGroups(debouncedSearch);
   const { data: grade, isLoading: isGradeLoading } =
@@ -287,6 +306,11 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   return (
     <GradingContext.Provider
       value={{
+        areFiltersOpen,
+        setAreFiltersOpen,
+        isFiltersLoading,
+        isFiltersError,
+        filters,
         state,
         dispatch,
         search,

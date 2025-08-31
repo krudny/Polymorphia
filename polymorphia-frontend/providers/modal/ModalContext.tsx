@@ -2,7 +2,7 @@ import React, { createContext, FC } from "react";
 import {
   ModalContextInterface,
   ModalProviderProps,
-} from "@/components/providers/modal/types";
+} from "@/providers/modal/types";
 
 export const ModalContext = createContext<ModalContextInterface | undefined>(
   undefined

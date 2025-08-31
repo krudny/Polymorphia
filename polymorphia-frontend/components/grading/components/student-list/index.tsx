@@ -3,20 +3,25 @@ import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import Search from "@/components/search";
-import { GradingReducerActions } from "@/components/providers/grading/GradingContext";
+import { GradingReducerActions } from "@/providers/grading/GradingContext";
 import GradingComponentWrapper from "@/components/grading/components/grading-wrapper";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import Loading from "@/components/loading/Loading";
-import { ReactNode, useRef } from "react";
+import { ReactNode } from "react";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import "./index.css";
-import { AccordionRef } from "@/components/providers/accordion/types";
 
 export default function StudentsList() {
-  const { search, setSearch, students, isStudentsLoading, state, dispatch } =
-    useGradingContext();
+  const {
+    search,
+    setSearch,
+    students,
+    isStudentsLoading,
+    state,
+    dispatch,
+    setAreFiltersOpen,
+  } = useGradingContext();
   const wrapperRef = useFadeInAnimate(!isStudentsLoading);
-  const accordionRef = useRef<AccordionRef>(null);
 
   const topComponent = (
     <>
@@ -27,6 +32,7 @@ export default function StudentsList() {
       />
       <ButtonWithBorder
         text="Filtry"
+        onClick={() => setAreFiltersOpen(true)}
         className="!mx-0 !py-0 !rounded-none !border-0 !border-b-2 !align-self-start !h-full"
       />
     </>

@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { EquipmentContext } from "@/components/providers/equipment/EquipmentContext";
-import { EquipmentContextInterface } from "@/components/providers/equipment/types";
+import { EquipmentContext } from "@/providers/equipment/EquipmentContext";
+import { EquipmentContextInterface } from "@/providers/equipment/types";
 
 export default function useEquipmentContext(): EquipmentContextInterface {
   const context = useContext(EquipmentContext);

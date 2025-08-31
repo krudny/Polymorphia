@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
-import { NavigationContextInterface } from "@/components/providers/navigation/types";
+import { NavigationContextInterface } from "@/providers/navigation/types";
 
 export const NavigationContext = createContext<
   NavigationContextInterface | undefined

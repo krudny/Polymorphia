@@ -1,5 +1,5 @@
 import { ChangeEvent, useRef, useState } from "react";
-import { GradingReducerActions } from "@/components/providers/grading/GradingContext";
+import { GradingReducerActions } from "@/providers/grading/GradingContext";
 import { GradingInputProps } from "@/components/grading/components/grade/types";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import "./index.css";

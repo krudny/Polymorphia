@@ -1,4 +1,4 @@
-import { GradingReducerActions } from "@/components/providers/grading/GradingContext";
+import { GradingReducerActions } from "@/providers/grading/GradingContext";
 import { useRef } from "react";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import "./index.css";

@@ -18,7 +18,7 @@ import {
 } from "@/interfaces/api/course";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import { ProjectGroupResponseDTO } from "@/interfaces/api/temp";
-import { CriteriaDetails } from "@/components/providers/grading/GradingContext";
+import { CriteriaDetails } from "@/providers/grading/GradingContext";
 
 const allData: UserDetailsDTO[] = [];
 
@@ -1166,11 +1166,18 @@ export const EventSectionService = {
   },
 
   getRandomPeopleWithPoints: async (
-    searchTerm: string
+    searchTerm: string,
+    sortBy: string[],
+    sortOrder: string[],
+    groups: string[]
   ): Promise<(UserDetailsDTO & { gainedXp?: string })[]> => {
     // await new Promise<void>((resolve) => setTimeout(resolve, 1000));
 
     let filteredData = allData;
+
+    if (groups && !groups.includes("all")) {
+      filteredData = filteredData.filter((item) => groups.includes(item.group));
+    }
 
     filteredData = filteredData.map((item) => {
       const xp =
@@ -1183,6 +1190,25 @@ export const EventSectionService = {
       filteredData = filteredData.filter((item) =>
         item.studentName.toLowerCase().includes(lowerSearch)
       );
+    }
+
+    if (sortBy && sortOrder) {
+      filteredData.sort((a, b) => {
+        let valueA: any;
+        let valueB: any;
+
+        if (sortBy[0] === "name") {
+          valueA = a.studentName;
+          valueB = b.studentName;
+          const comparison = valueA.localeCompare(valueB);
+          return sortOrder[0] === "asc" ? comparison : -comparison;
+        } else {
+          valueA = a.gainedXp ?? -100;
+          valueB = b.gainedXp ?? -100;
+          const comparison = valueA - valueB;
+          return sortOrder[0] === "asc" ? comparison : -comparison;
+        }
+      });
     }
 
     return filteredData;

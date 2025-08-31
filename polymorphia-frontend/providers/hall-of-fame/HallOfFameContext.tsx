@@ -5,7 +5,7 @@ import { useDebounce } from "use-debounce";
 import {
   HallOfFameContextInterface,
   HallOfFameFilterId,
-} from "@/components/providers/hall-of-fame/types";
+} from "@/providers/hall-of-fame/types";
 import { useFilters } from "@/hooks/course/useFilters";
 import { useHallOfFameFilterConfigs } from "@/hooks/course/useHallOfFameFilterConfigs";
 import useHallOfFame from "@/hooks/course/useHallOfFame";
@@ -19,7 +19,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   const [page, setPage] = useState(0);
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 400);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [areFiltersOpen, setAreFiltersOpen] = useState(false);
 
   const COURSE_ID = 1;
   const {
@@ -50,8 +50,8 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
         setPage,
         search,
         setSearch,
-        isModalOpen,
-        setIsModalOpen,
+        isModalOpen: areFiltersOpen,
+        setIsModalOpen: setAreFiltersOpen,
         isLoading,
         filters,
         isFiltersLoading,

@@ -4,7 +4,7 @@ import HallOfFameUserData from "@/components/hall-of-fame/general/HallOfFameUser
 import UserPoints from "@/components/user-points/UserPoints";
 import "./index.css";
 import { HallOfFameRecordDTO } from "@/interfaces/api/hall-of-fame";
-import { filterXpDetails } from "@/components/providers/hall-of-fame/utils/filterXpDetails";
+import { filterXpDetails } from "@/providers/hall-of-fame/utils/filterXpDetails";
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
 
 export default function RankCard({

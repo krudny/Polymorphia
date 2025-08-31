@@ -3,7 +3,7 @@ import { PullRequestProps } from "@/components/grading/components/pull-request/t
 import toast from "react-hot-toast";
 import GradingComponentWrapper from "@/components/grading/components/grading-wrapper";
 import { ReactNode, useRef } from "react";
-import { AccordionRef } from "@/components/providers/accordion/types";
+import { AccordionRef } from "@/providers/accordion/types";
 import { Accordion } from "@/components/accordion/Accordion";
 import AccordionSection from "@/components/accordion/AccordionSection";
 import "../../index.css";

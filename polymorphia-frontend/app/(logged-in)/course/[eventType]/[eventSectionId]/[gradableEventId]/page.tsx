@@ -1,6 +1,6 @@
 "use client";
 
-import { MarkdownProvider } from "@/components/providers/markdown/MarkdownContext";
+import { MarkdownProvider } from "@/providers/markdown/MarkdownContext";
 import SpeedDialDesktop from "@/components/speed-dial/SpeedDialDesktop";
 import MarkdownWrapper from "@/components/markdown/MarkdownWrapper";
 import { useFadeInAnimate } from "@/animations/FadeIn";

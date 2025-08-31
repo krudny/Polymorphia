@@ -1,4 +1,4 @@
-import { handlePageChange } from "@/components/providers/hall-of-fame/utils/handlePageChange";
+import { handlePageChange } from "@/providers/hall-of-fame/utils/handlePageChange";
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
 import Pagination from "@/components/pagination/Pagination";
 import { useFadeInAnimate } from "@/animations/FadeIn";
