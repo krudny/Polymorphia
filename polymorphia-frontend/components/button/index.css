@@ -1,0 +1,15 @@
+@import "tailwindcss";
+@import "../../styles/globals.css";
+
+.button-with-border {
+    @apply block mx-auto border-2 rounded;
+    @apply transition-colors duration-400 ease-[cubic-bezier(0.34,1,0.2,1)] hover:cursor-pointer;
+}
+
+.button-with-border-dark {
+    @apply text-primary-dark border-primary-dark hover:bg-primary-dark hover:text-secondary-gray;
+}
+
+.button-with-border-light {
+    @apply dark:text-secondary-light dark:border-secondary-light hover:dark:bg-secondary-light hover:dark:text-primary-dark;
+}

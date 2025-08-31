@@ -1,0 +1,30 @@
+@import "tailwindcss";
+@import "../../../styles/globals.css";
+
+/* Config */
+
+.markdown-config-code-inline {
+    @apply bg-[#c3c3c3] text-primary-dark  rounded px-1 text-[1.6rem] lg:px-2 lg:text-3xl;
+}
+
+.markdown-config-code-block {
+    @apply bg-primary-dark text-secondary-light text-sm p-4 rounded overflow-x-auto my-4;
+}
+
+/* Markdown viewer */
+
+.markdown-viewer {
+    @apply w-full opacity-0 custom-scrollbar;
+
+    h1 code {
+        @apply text-4xl lg:text-5xl;
+    }
+
+    h2 code {
+        @apply text-[2rem] lg:text-[2.5rem];
+    }
+
+    h3 code {
+        @apply text-[1.6rem] lg:text-[2.2rem];
+    }
+}

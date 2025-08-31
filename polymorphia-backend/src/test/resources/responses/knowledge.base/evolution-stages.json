@@ -1,0 +1,29 @@
+[
+  {
+    "id": 2,
+    "type": "EVOLUTION_STAGE",
+    "orderIndex": 0,
+    "name": "Jajo",
+    "subtitle": "0.0 xp odblokowuje ocenę 2.0",
+    "description": "description",
+    "imageUrl": "imageUrl_jajo"
+  },
+  {
+    "id": 1,
+    "type": "EVOLUTION_STAGE",
+    "orderIndex": 1,
+    "name": "Pisklak",
+    "subtitle": "20.0 xp odblokowuje ocenę 2.0",
+    "description": "description",
+    "imageUrl": "imageUrl_pisklak"
+  },
+  {
+    "id": 3,
+    "type": "EVOLUTION_STAGE",
+    "orderIndex": 2,
+    "name": "Podlot",
+    "subtitle": "50.0 xp odblokowuje ocenę 3.0",
+    "description": "description",
+    "imageUrl": "imageUrl_podlot"
+  }
+]

@@ -1,7 +1,17 @@
-import type { NextConfig } from "next";
+import { API_STATIC_HOST_PATTERN } from "./services/api";
 
-const nextConfig: NextConfig = {
-  /* config options here */
+/** @type {import('next').NextConfig} */
+module.exports = {
+  async redirects() {
+    return [
+      {
+        source: "/knowledge-base",
+        destination: "/knowledge-base/evolution-stages/",
+        permanent: true,
+      },
+    ];
+  },
+  images: {
+    remotePatterns: [API_STATIC_HOST_PATTERN],
+  },
 };
-
-export default nextConfig;
