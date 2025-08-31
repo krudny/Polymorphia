@@ -1,9 +1,9 @@
-import { GradingType } from "@/components/grading/types";
-import { ReactNode, useMemo } from "react";
+import { GradingComponents, GradingType } from "@/components/grading/types";
+import { useMemo } from "react";
 import toast from "react-hot-toast";
 import { gradingStrategyRegistry } from "@/components/grading/strategies/Registry";
 
-export function useGradingFactory(type: GradingType): ReactNode[] | null {
+export function useGradingFactory(type: GradingType): GradingComponents | null {
   return useMemo(() => {
     const selectedStrategy = gradingStrategyRegistry.getStrategy(type);
 

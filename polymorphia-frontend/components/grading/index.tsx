@@ -5,16 +5,11 @@ import { Fragment } from "react";
 import "./index.css";
 
 export default function Grading({ gradingType, columns }: GradingProps) {
-  const components = useGradingFactory(gradingType);
+  const gradingComponents = useGradingFactory(gradingType);
 
-  if (!components) {
+  if (!gradingComponents) {
     return null;
   }
-
-  const firstComponent = components[0];
-  const restComponents = components.slice(1);
-
-  const perDiv = Math.ceil(restComponents.length / (columns - 1));
 
   return (
     <div className="grading">
@@ -22,21 +17,21 @@ export default function Grading({ gradingType, columns }: GradingProps) {
         <SpeedDialDesktop type={gradingType} />
       </div>
 
-      <div className="grading-list">{firstComponent}</div>
+      <div className="grading-list">{gradingComponents.list}</div>
 
-      {[...Array(columns - 1)].map((_, i) => {
-        const start = i * perDiv;
-        const end = start + perDiv;
-        const slice = restComponents.slice(start, end);
+      {[...Array(Math.max(columns, gradingComponents.components.length))].map(
+        (_, i) => {
+          const components = gradingComponents.components[i];
 
-        return (
-          <div key={i} className="grading-columns">
-            {slice.map((component, index) => (
-              <Fragment key={index}>{component}</Fragment>
-            ))}
-          </div>
-        );
-      })}
+          return (
+            <div key={i} className="grading-columns">
+              {components.map((component, index) => (
+                <Fragment key={index}>{component}</Fragment>
+              ))}
+            </div>
+          );
+        }
+      )}
     </div>
   );
 }

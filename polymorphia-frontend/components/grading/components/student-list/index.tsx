@@ -7,14 +7,16 @@ import { GradingReducerActions } from "@/components/providers/grading/GradingCon
 import GradingComponentWrapper from "@/components/grading/components/grading-wrapper";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import Loading from "@/components/loading/Loading";
-import { ReactNode } from "react";
+import { ReactNode, useRef } from "react";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import "./index.css";
+import { AccordionRef } from "@/components/providers/accordion/types";
 
 export default function StudentsList() {
   const { search, setSearch, students, isStudentsLoading, state, dispatch } =
     useGradingContext();
   const wrapperRef = useFadeInAnimate(!isStudentsLoading);
+  const accordionRef = useRef<AccordionRef>(null);
 
   const topComponent = (
     <>

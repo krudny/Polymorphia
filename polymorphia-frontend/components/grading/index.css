@@ -2,7 +2,8 @@
 @import "../../styles/globals.css";
 
 .grading {
-    @apply w-full max-w-[1500px] m-auto h-[calc(100dvh-5rem)] flex justify-center gap-4;
+    @apply w-full max-w-[1500px] m-auto h-full flex flex-col justify-center gap-4;
+    @apply md:flex-row md:h-[calc(100dvh-5rem)];
 }
 
 .grading-accordion-header {
@@ -20,9 +21,9 @@
 }
 
 .grading-list {
-    @apply w-full max-w-md flex flex-col overflow-hidden max-h-full;
+    @apply w-full max-w-md flex flex-col  max-h-full;
 }
 
 .grading-columns {
-    @apply w-full max-w-md flex flex-col overflow-hidden max-h-full h-fit gap-y-4;
+    @apply w-full max-w-md flex flex-col  max-h-full h-fit gap-y-4;
 }

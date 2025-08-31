@@ -14,5 +14,10 @@ export const GradingTypes = {
 export type GradingType = (typeof GradingTypes)[keyof typeof GradingTypes];
 
 export interface GradingStrategy {
-  getGradingComponents: () => ReactNode[];
+  getGradingComponents: () => GradingComponents;
+}
+
+export interface GradingComponents {
+  list: ReactNode;
+  components: ReactNode[][];
 }

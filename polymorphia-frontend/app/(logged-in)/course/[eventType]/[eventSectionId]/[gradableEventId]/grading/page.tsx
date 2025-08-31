@@ -22,7 +22,7 @@ export default function GradingView() {
 
   return (
     <GradingProvider>
-      <Grading gradingType={config.type} columns={isXL ? 3 : 2} />
+      <Grading gradingType={config.type} columns={isXL ? 2 : 1} />
     </GradingProvider>
   );
 }
