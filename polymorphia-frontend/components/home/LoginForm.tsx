@@ -34,7 +34,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
     mutationFn: AuthService.login,
     onSuccess: () => {
       toast.success("Zalogowano pomyślnie!");
-      router.push("/profile");
+      router.push("/welcome");
       form.reset();
     },
     onError: (error: Error) => {

@@ -5,10 +5,9 @@ import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.course.AnimalRepository;
 import com.agh.polymorphia_backend.repository.course.CourseGroupRepository;
+import com.agh.polymorphia_backend.service.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -24,10 +23,10 @@ public class AccessAuthorizer {
     public static final String USER_HAS_NO_VALID_ROLES = "User has no valid roles";
     private final CourseGroupRepository courseGroupRepository;
     private final AnimalRepository animalRepository;
+    private final UserService userService;
 
     public void authorizeCourseAccess(Course course) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
+        User user = userService.getCurrentUser();
 
         if (!isCourseAccessAuthorized(user, course)) {
             throw new ResponseStatusException(
@@ -38,12 +37,11 @@ public class AccessAuthorizer {
     }
 
     public boolean hasAnyRole(List<UserType> roles) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
+        User user = userService.getCurrentUser();
         return getUserRoles(user).stream().anyMatch(roles::contains);
     }
 
-    private Set<UserType> getUserRoles(User user) {
+    public Set<UserType> getUserRoles(User user) {
         Set<UserType> roles = user.getAuthorities().stream()
                 .map(a -> UserType.valueOf(a.getAuthority()))
                 .collect(Collectors.toSet());

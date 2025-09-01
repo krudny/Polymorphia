@@ -7,6 +7,8 @@ import { useScaleShow } from "@/animations/ScaleShow";
 import { useTitle } from "@/components/navigation/TitleContext";
 import toast from "react-hot-toast";
 import { useTheme } from "next-themes";
+import CourseChoiceComponent from "@/components/course-choice/CourseChoice";
+import { UserContext } from "@/components/providers/user/UserContext";
 
 export default function Settings() {
   const {
@@ -18,6 +20,7 @@ export default function Settings() {
   const { setTitle } = useTitle();
   const wrapperRef = useScaleShow();
   const { resolvedTheme, setTheme } = useTheme();
+  const userContext = useContext(UserContext);
 
   const toggleSidebarLockOpened = () => {
     if (isSidebarLockedClosed) {
@@ -75,6 +78,7 @@ export default function Settings() {
           className="!mx-0 !ml-6"
         />
       </div>
+      <CourseChoiceComponent currentCourseId={userContext?.courseId} />
     </div>
   );
 }

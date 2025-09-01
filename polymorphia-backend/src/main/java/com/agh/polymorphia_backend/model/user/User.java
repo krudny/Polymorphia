@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.model.user;
 
+import com.agh.polymorphia_backend.model.course.Course;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
@@ -33,6 +34,10 @@ public abstract class User implements UserDetails {
 
     @NotEmpty
     private String password;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "preferred_course_id")
+    private Course preferredCourse;
 
     @Override
     public String getUsername() {

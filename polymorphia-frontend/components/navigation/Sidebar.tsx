@@ -15,6 +15,7 @@ import { animateSidebar } from "@/animations/Navigation";
 import { useQuery } from "@tanstack/react-query";
 import { updateMenuItems } from "@/components/course/event-section/EventSectionUtils";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
+import { UserContext } from "@/components/providers/user/UserContext";
 
 export default function Sidebar() {
   const {
@@ -24,6 +25,7 @@ export default function Sidebar() {
     isSidebarLockedClosed,
   } = useContext(NavigationContext);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
+  const { courseId } = useContext(UserContext);
 
   useEffect(() => {
     const sidebar = sidebarRef.current;
@@ -36,7 +38,7 @@ export default function Sidebar() {
   const { data: eventSections, isSuccess } = useQuery({
     queryKey: ["eventSections"],
     // TODO: use real courseId
-    queryFn: () => EventSectionService.getEventSections(1),
+    queryFn: () => EventSectionService.getEventSections(courseId),
   });
 
   const menuItems = [...MainMenuItems];

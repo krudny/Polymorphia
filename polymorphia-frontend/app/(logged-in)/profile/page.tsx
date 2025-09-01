@@ -5,19 +5,34 @@ import { API_STATIC_URL } from "@/services/api";
 import "./index.css";
 import ProgressBar from "@/components/progressbar/ProgressBar";
 import { useTitle } from "@/components/navigation/TitleContext";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import UserPoints from "@/components/user-points/UserPoints";
 import ProgressBarTextLabels from "@/components/progressbar/ProgressBarTextLabels";
 import { useMediaQuery } from "react-responsive";
+import { useQuery } from "@tanstack/react-query";
+import KnowledgeBaseService from "@/app/(logged-in)/knowledge-base/KnowledgeBaseService";
+import Loading from "@/components/loading/Loading";
+import { UserContext } from "@/components/providers/user/UserContext";
 
 export default function Profile() {
   const wrapperRef = useScaleShow();
   const { setTitle } = useTitle();
   const isSm = useMediaQuery({ maxWidth: 920 });
+  const userContext = useContext(UserContext);
 
   useEffect(() => {
     setTitle("Profil");
   }, [setTitle]);
+
+  const { data: evolutionStages, isLoading } = useQuery({
+    queryKey: ["evolution_stages", 1],
+    queryFn: () =>
+      KnowledgeBaseService.getEvolutionStages(userContext?.courseId),
+  });
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   const sampleXpDetails = {
     Laboratoria: "54.32",
@@ -32,7 +47,7 @@ export default function Profile() {
         <div className="profile-content-wrapper">
           <div className="profile-image-wrapper">
             <Image
-              src={`${API_STATIC_URL}/images/evolution-stages/4.jpg`}
+              src={`${API_STATIC_URL}/${userContext?.imageUrl || "/"}`}
               alt="User profile"
               fill
               className="profile-img"
@@ -42,8 +57,8 @@ export default function Profile() {
           </div>
           <div className="profile-content">
             <div className="profile-content-text">
-              <h1>Kamil Rudny</h1>
-              <h2>Gerard Pocieszny</h2>
+              <h1>{userContext?.userName}</h1>
+              <h2>{userContext?.animalName}</h2>
               <h3>Jesteś 36 na 139 zwierzaków!</h3>
             </div>
             <div className="profile-user-points-xs">
@@ -82,14 +97,24 @@ export default function Profile() {
             segmentSizes={[0, 100, 0]}
             upperElement={
               <ProgressBarTextLabels
-                textLabels={["3.5 (60xp)", "4.0 (70xp)"]}
+                textLabels={
+                  (evolutionStages
+                    ?.map(
+                      (evolutionStage) => evolutionStage.additionalGradingInfo
+                    )
+                    .filter(Boolean) as string[]) || []
+                }
                 className="!min-h-8"
                 size="sm"
               />
             }
             lowerElement={
               <ProgressBarTextLabels
-                textLabels={["Nieopierzony Odkrywca", "Samodzielny Zwierzak"]}
+                textLabels={
+                  evolutionStages?.map(
+                    (evolutionStage) => evolutionStage.name
+                  ) || []
+                }
                 size="sm"
               />
             }
@@ -105,32 +130,24 @@ export default function Profile() {
             segmentSizes={[0, 25, 0, 25, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0]}
             upperElement={
               <ProgressBarTextLabels
-                textLabels={[
-                  "2.0 (0xp)",
-                  "2.0 (25xp)",
-                  "3.0 (50xp)",
-                  "3.5 (60xp)",
-                  "4.0 (70xp)",
-                  "4.5 (80xp)",
-                  "5.0 (90xp)",
-                  "5.0 (100xp)",
-                ]}
+                textLabels={
+                  (evolutionStages
+                    ?.map(
+                      (evolutionStage) => evolutionStage.additionalGradingInfo
+                    )
+                    .filter(Boolean) as string[]) || []
+                }
                 className="!min-h-8"
                 size={isSm ? "sm" : "md"}
               />
             }
             lowerElement={
               <ProgressBarTextLabels
-                textLabels={[
-                  "Jajo",
-                  "Pisklak",
-                  "Podlot",
-                  "Żółtodziób",
-                  "Nieopierzony Odkrywca",
-                  "Samodzielny Zwierzak",
-                  "Majestatyczna Bestia",
-                  "Władca Polymorphii",
-                ]}
+                textLabels={
+                  evolutionStages?.map(
+                    (evolutionStage) => evolutionStage.name
+                  ) || []
+                }
                 size={isSm ? "sm" : "md"}
               />
             }

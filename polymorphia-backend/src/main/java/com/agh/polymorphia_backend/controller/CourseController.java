@@ -1,7 +1,9 @@
 package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.response.knowledge_base.KnowledgeBaseResponseDto;
+import com.agh.polymorphia_backend.dto.response.user_context.AvailableCoursesResponseDto;
 import com.agh.polymorphia_backend.service.course.KnowledgeBaseService;
+import com.agh.polymorphia_backend.service.user.UserContextService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +19,7 @@ import java.util.List;
 @RequestMapping("/courses")
 public class CourseController {
     private final KnowledgeBaseService knowledgeBaseService;
+    private final UserContextService userContextService;
 
     @GetMapping("/{courseId}/evolution-stages")
     @PreAuthorize("isAuthenticated()")
@@ -36,4 +39,9 @@ public class CourseController {
         return ResponseEntity.ok(knowledgeBaseService.getItems(courseId));
     }
 
+    @GetMapping()
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<List<AvailableCoursesResponseDto>> getAvailableCourses() {
+        return ResponseEntity.ok(userContextService.getAvailableCourses());
+    }
 }

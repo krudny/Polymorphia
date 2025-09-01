@@ -3,6 +3,7 @@
 import {
   createContext,
   ReactNode,
+  useContext,
   useEffect,
   useReducer,
   useRef,
@@ -21,6 +22,7 @@ import { addEventSectionsToFilters } from "@/components/providers/hall-of-fame/u
 import { sortFilters } from "@/components/providers/hall-of-fame/utils/sortFilters";
 import { selectMinimumOptions } from "@/components/providers/hall-of-fame/utils/selectMinimumOptions";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
+import { UserContext } from "@/components/providers/user/UserContext";
 
 const emptyDataObject = {
   content: [],
@@ -60,10 +62,11 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   const { sortOrder, sortBy, groups } =
     getAppliedQueryParams(appliedFiltersState);
   const initRef = useRef(false);
+  const { courseId } = useContext(UserContext);
 
   const { data: eventSections } = useQuery({
     queryKey: ["eventSections"],
-    queryFn: () => EventSectionService.getEventSections(1),
+    queryFn: () => EventSectionService.getEventSections(courseId),
   });
 
   const { data = emptyDataObject, isLoading } = useQuery({

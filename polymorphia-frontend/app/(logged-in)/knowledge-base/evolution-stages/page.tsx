@@ -4,11 +4,12 @@ import { useQuery } from "@tanstack/react-query";
 import KnowledgeBaseService from "@/app/(logged-in)/knowledge-base/KnowledgeBaseService";
 import Loading from "@/components/loading/Loading";
 import { useTitle } from "@/components/navigation/TitleContext";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { UserContext } from "@/components/providers/user/UserContext";
 
 export default function EvolutionStages() {
   const { setTitle } = useTitle();
-  const COURSE_ID = 1;
+  const { courseId } = useContext(UserContext);
 
   useEffect(() => {
     setTitle("Postacie");
@@ -20,7 +21,7 @@ export default function EvolutionStages() {
     error,
   } = useQuery({
     queryKey: ["evolution_stages", 1],
-    queryFn: () => KnowledgeBaseService.getEvolutionStages(COURSE_ID),
+    queryFn: () => KnowledgeBaseService.getEvolutionStages(courseId),
   });
 
   if (isLoading) {

@@ -8,6 +8,7 @@ import { useContext } from "react";
 import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
 import { getAllFilters } from "@/components/providers/hall-of-fame/utils/getAllFilters";
 import { filterXpDetails } from "@/components/providers/hall-of-fame/utils/filterXpDetails";
+import { API_STATIC_URL } from "@/services/api";
 
 export default function RankCard({
   userDetails,
@@ -29,7 +30,7 @@ export default function RankCard({
       <div>
         <HallOfFameImage
           position={userDetails.position}
-          imageUrl={userDetails.imageUrl}
+          imageUrl={`${API_STATIC_URL}/${userDetails.imageUrl}`}
         />
         <HallOfFameUserData {...userDetails} />
         <HallOfFamePointsSummary total={xpDetails.total} />

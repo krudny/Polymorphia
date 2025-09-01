@@ -6,12 +6,13 @@ import { useSearchParams } from "next/navigation";
 import KnowledgeBaseService from "@/app/(logged-in)/knowledge-base/KnowledgeBaseService";
 import Loading from "@/components/loading/Loading";
 import { useTitle } from "@/components/navigation/TitleContext";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { UserContext } from "@/components/providers/user/UserContext";
 
 export default function Chests() {
   const searchParams = useSearchParams();
   const { setTitle } = useTitle();
-  const COURSE_ID = 1;
+  const { courseId } = useContext(UserContext);
 
   useEffect(() => {
     setTitle("Skrzynki");
@@ -23,7 +24,7 @@ export default function Chests() {
     error,
   } = useQuery({
     queryKey: ["chests", 1],
-    queryFn: () => KnowledgeBaseService.getChests(COURSE_ID),
+    queryFn: () => KnowledgeBaseService.getChests(courseId),
   });
 
   if (isLoading) {

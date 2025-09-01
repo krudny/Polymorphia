@@ -22,12 +22,14 @@ for (let i = 0; i < 250; i++) {
   const stage = Math.max(1, 6 - Math.floor(i / 50));
 
   const item = {
-    studentName: studentName,
+    userName: studentName,
     animalName: studentName,
     evolutionStage: "Majestatyczna Bestia",
     imageUrl: `images/evolution-stages/${stage}.jpg`,
     position: i + 1,
     group: groups[i % groups.length],
+    courseId: 1,
+    id: i + 1,
   };
   allData.push(item);
 }
@@ -685,7 +687,7 @@ export const EventSectionService = {
     if (searchTerm && searchTerm.trim() !== "") {
       const lowerSearch = searchTerm.toLowerCase();
       filteredData = filteredData.filter((item) =>
-        item.studentName.toLowerCase().includes(lowerSearch)
+        item.userName.toLowerCase().includes(lowerSearch)
       );
     }
 
