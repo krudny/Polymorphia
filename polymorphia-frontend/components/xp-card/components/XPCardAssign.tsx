@@ -1,29 +1,27 @@
 import { XPCardAssignProps } from "@/components/xp-card/components/types";
 import "./index.css";
+import { colorVariants } from "@/components/xp-card/XPCard";
 
 export default function XPCardAssign({
   currentAssigned,
   maxAssigned,
   increment,
   decrement,
+  color,
 }: XPCardAssignProps) {
   return (
-    <div className="w-full flex-1 flex-col-centered bg-secondary-gray">
+    <div
+      className={`xp-card-assign ${colorVariants({ color }).backgroundSecondary()}`}
+    >
       <h1>
         {currentAssigned} / {maxAssigned}
       </h1>
-      <div className="w-4/5 flex justify-between -mb-2">
-        <div
-          className="w-8 h-8 rounded flex-col-centered select-none hover:bg-primary-gray"
-          onClick={increment}
-        >
-          <span className="material-symbols text-2xl">add</span>
+      <div className="xp-card-assign-wrapper">
+        <div className="xp-card-assign-button" onClick={increment}>
+          <span>add</span>
         </div>
-        <div
-          className="w-8 h-8 rounded flex-col-centered select-none hover:bg-primary-gray"
-          onClick={decrement}
-        >
-          <span className="material-symbols text-2xl">remove</span>
+        <div className="xp-card-assign-button" onClick={decrement}>
+          <span>remove</span>
         </div>
       </div>
     </div>

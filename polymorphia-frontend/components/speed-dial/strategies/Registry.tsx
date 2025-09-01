@@ -3,7 +3,7 @@ import { AssignmentStrategy } from "@/components/speed-dial/strategies/Assignmen
 import { ProjectStrategy } from "@/components/speed-dial/strategies/Project";
 import { SpeedDialStrategy } from "@/components/speed-dial/strategies/types";
 import { TestGradingStrategy } from "@/components/speed-dial/strategies/TestGrading";
-import { GradingTypes } from "@/components/grading/types";
+import { GradingTypes } from "@/views/course/grading/types";
 
 class SpeedDialStrategyRegistry {
   private strategies = new Map<string, SpeedDialStrategy>();

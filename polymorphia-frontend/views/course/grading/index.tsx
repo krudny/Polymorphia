@@ -1,4 +1,4 @@
-import { GradingProps } from "@/components/grading/types";
+import { GradingProps } from "@/views/course/grading/types";
 import SpeedDialDesktop from "@/components/speed-dial/SpeedDialDesktop";
 import { useGradingFactory } from "@/hooks/factory/useGradingFactory";
 import { Fragment } from "react";

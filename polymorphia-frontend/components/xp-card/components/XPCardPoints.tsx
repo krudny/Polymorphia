@@ -14,7 +14,8 @@ export default function XPCardPoints({
     <div
       className={clsx(
         "xp-card-points",
-        colorVariants({ color }).backgroundSecondary()
+        colorVariants({ color }).backgroundSecondary(),
+        `${color !== "gray" && "text-primary-dark"}`
       )}
     >
       <h1>

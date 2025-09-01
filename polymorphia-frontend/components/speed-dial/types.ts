@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { GradingType } from "@/components/grading/types";
+import { GradingType } from "@/views/course/grading/types";
 import { EventType } from "@/interfaces/api/course";
 
 export interface SpeedDialItem {

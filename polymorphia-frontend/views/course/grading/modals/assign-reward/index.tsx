@@ -4,7 +4,7 @@ import { useState } from "react";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCardAssign from "@/components/xp-card/components/XPCardAssign";
-import { AssignRewardModalProps } from "@/components/grading/modals/assign-reward/types";
+import { AssignRewardModalProps } from "@/views/course/grading/modals/assign-reward/types";
 import { ChestResponseDTO, ItemResponseDTO } from "@/interfaces/api/reward";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import "./index.css";
@@ -81,6 +81,7 @@ export default function AssignRewardModal({
                       Math.max(currentAssigned - 1, 0)
                     )
                   }
+                  color="gray"
                 />
               }
             />

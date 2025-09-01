@@ -24,8 +24,8 @@ export default function StudentView() {
   const router = useRouter();
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const summaryRef = useRef<HTMLDivElement | null>(null);
-  const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
   const containerRef = useScaleShow(!isLoading);
+  const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
 
   useEffect(() => {
     if (!isLoading && gradableEvents && gradableEvents.length === 1) {
@@ -34,10 +34,6 @@ export default function StudentView() {
       );
     }
   }, [isLoading, gradableEvents, eventType, eventSectionId, router]);
-
-  useEffect(() => {
-    console.log("selected", selectedEventId);
-  }, [selectedEventId]);
 
   if (isLoading || (gradableEvents && gradableEvents.length < 2)) {
     return <Loading />;
@@ -69,8 +65,8 @@ export default function StudentView() {
 
   return (
     <SectionView ref={containerRef}>
-      <div className="flex flex-col gap-x-10 overflow-hidden lg:flex-row 2xl:px-10">
-        <div className="w-full min-h-full flex-col-centered" ref={wrapperRef}>
+      <div className="student-view">
+        <div className="student-view-cards" ref={wrapperRef}>
           <XPCardGrid containerRef={wrapperRef} cards={cards} maxColumns={2} />
         </div>
         <PointsSummary ref={summaryRef} />

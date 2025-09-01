@@ -1,7 +1,7 @@
-import { GradingComponents, GradingType } from "@/components/grading/types";
+import { GradingComponents, GradingType } from "@/views/course/grading/types";
 import { useMemo } from "react";
 import toast from "react-hot-toast";
-import { gradingStrategyRegistry } from "@/components/grading/strategies/Registry";
+import { gradingStrategyRegistry } from "@/views/course/grading/strategies/Registry";
 
 export function useGradingFactory(type: GradingType): GradingComponents | null {
   return useMemo(() => {

@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
-import StudentsList from "@/components/grading/components/student-list";
-import ProjectGroupList from "@/components/grading/components/project-group-list";
-import Grade from "@/components/grading/components/grade";
-import PullRequest from "@/components/grading/components/pull-request";
+import StudentsList from "@/views/course/grading/components/student-list";
+import ProjectGroupList from "@/views/course/grading/components/project-group-list";
+import Grade from "@/views/course/grading/components/grade";
+import PullRequest from "@/views/course/grading/components/pull-request";
 
 export abstract class BaseGradingStrategy {
   protected createStudentsList(): ReactNode {

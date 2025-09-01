@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "../../../../styles/globals.css";
+@import "../../../../../node_modules/tailwindcss/dist/lib.d.mts";
+@import "../../../../../styles/globals.css";
 
 @tailwind utilities;
 
@@ -14,7 +14,7 @@
 }
 
 .grade-criterion {
-    @apply flex flex-col;
+    @apply flex flex-col mt-2;
 
     h2 {
         @apply text-3xl my-3;
@@ -30,7 +30,7 @@
 }
 
 .grade-comment-wrapper {
-    @apply w-full;
+    @apply w-full mt-2;
 }
 
 /* Comment.tsx */
@@ -54,4 +54,29 @@
     @apply border-primary-error text-primary-error;
 }
 
+/* AssignReward.tsx */
 
+.assign-reward {
+    @apply grid grid-cols-3 gap-4;
+}
+
+.assign-reward-wrapper {
+    @apply relative w-full aspect-square rounded-xl shadow-sm  drop-shadow-xl overflow-hidden;
+}
+
+.assign-reward-image-wrapper {
+    @apply w-full h-full rounded-xl overflow-hidden;
+}
+
+.assign-reward-image-badge {
+    @apply text-xl w-7 rounded-tl-lg rounded-br-lg;
+}
+
+.assign-reward-add {
+    @apply aspect-square border-3 border-primary-dark rounded-xl flex-col-centered;
+    @apply hover:bg-primary-dark hover:text-secondary-gray transition-colors duration-400 ease-[cubic-bezier(0.34,1,0.2,1)] hover:cursor-pointer;
+
+    span {
+        @apply material-symbols text-4xl;
+    }
+}

@@ -1,13 +1,16 @@
-import { BaseGradingStrategy } from "@/components/grading/strategies/Base";
-import { GradingComponents, GradingStrategy } from "@/components/grading/types";
+import { BaseGradingStrategy } from "@/views/course/grading/strategies/Base";
+import {
+  GradingComponents,
+  GradingStrategy,
+} from "@/views/course/grading/types";
 
-export class ProjectGradingStrategy
+export class AssignmentGradingStrategy
   extends BaseGradingStrategy
   implements GradingStrategy
 {
   getGradingComponents(): GradingComponents {
     return {
-      list: this.createProjectGroupList(),
+      list: this.createStudentsList(),
       components: [
         [this.createRewardComponent()],
         [this.createPullRequestComponent()],

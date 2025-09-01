@@ -36,4 +36,5 @@ export interface XPCardAssignProps {
   maxAssigned: number;
   increment: () => void;
   decrement: () => void;
+  color?: XPCardColors;
 }

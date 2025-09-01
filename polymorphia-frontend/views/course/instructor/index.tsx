@@ -7,6 +7,7 @@ import Loading from "@/components/loading/Loading";
 import renderCard from "@/views/course/instructor/RenderCard";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import useInstructorGradableEvents from "@/hooks/course/useInstructorGradableEvents";
+import "./index.css";
 
 export default function InstructorView() {
   const { eventType, eventSectionId } = useEventParams();
@@ -52,11 +53,8 @@ export default function InstructorView() {
 
   return (
     <SectionView ref={containerRef}>
-      <div className="flex flex-col lg:flex-col-centered flex-1 gap-x-10 overflow-hidden 2xl:px-10">
-        <div
-          className="max-w-full flex-col-centeredlg:min-h-[600px] lg:w-4xl 2xl:w-7xl"
-          ref={wrapperRef}
-        >
+      <div className="instructor-view">
+        <div className="instructor-view-cards" ref={wrapperRef}>
           <XPCardGrid containerRef={wrapperRef} cards={cards} />
         </div>
       </div>

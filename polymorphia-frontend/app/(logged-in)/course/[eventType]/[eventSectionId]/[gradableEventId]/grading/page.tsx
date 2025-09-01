@@ -3,8 +3,8 @@
 import { useEventParams } from "@/hooks/general/useEventParams";
 import { GradingProvider } from "@/providers/grading/GradingContext";
 import { EventTypes } from "@/interfaces/api/course";
-import { GradingTypes } from "@/components/grading/types";
-import Grading from "@/components/grading";
+import { GradingTypes } from "@/views/course/grading/types";
+import Grading from "../../../../../../../views/course/grading";
 import { useMediaQuery } from "react-responsive";
 
 const GRADING_CONFIG = {

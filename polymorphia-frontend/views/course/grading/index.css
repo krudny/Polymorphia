@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "../../styles/globals.css";
+@import "../../../node_modules/tailwindcss/dist/lib.d.mts";
+@import "../../../styles/globals.css";
 
 .grading {
     @apply w-full max-w-[1500px] m-auto h-full flex flex-col justify-center gap-4;

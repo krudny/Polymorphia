@@ -1,7 +1,7 @@
-import { GradingStrategy, GradingTypes } from "@/components/grading/types";
-import { AssignmentGradingStrategy } from "@/components/grading/strategies/Assignment";
-import { ProjectGradingStrategy } from "@/components/grading/strategies/Project";
-import { TestGradingStrategy } from "@/components/grading/strategies/Test";
+import { GradingStrategy, GradingTypes } from "@/views/course/grading/types";
+import { AssignmentGradingStrategy } from "@/views/course/grading/strategies/Assignment";
+import { ProjectGradingStrategy } from "@/views/course/grading/strategies/Project";
+import { TestGradingStrategy } from "@/views/course/grading/strategies/Test";
 
 class GradingStrategyRegistry {
   private strategies = new Map<string, GradingStrategy>();

@@ -10,10 +10,10 @@ import Loading from "@/components/loading/Loading";
 import { Accordion } from "@/components/accordion/Accordion";
 import { AccordionRef } from "@/providers/accordion/types";
 import AccordionSection from "@/components/accordion/AccordionSection";
-import GradingComponentWrapper from "@/components/grading/components/grading-wrapper";
-import Reward from "@/components/grading/components/grade/Reward";
-import Comment from "@/components/grading/components/grade/Comment";
-import Input from "@/components/grading/components/grade/Input";
+import GradingComponentWrapper from "@/views/course/grading/components/grading-wrapper";
+import AssignReward from "@/views/course/grading/components/grade/AssignReward";
+import Comment from "@/views/course/grading/components/grade/Comment";
+import Input from "@/views/course/grading/components/grade/Input";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import { useMediaQuery } from "react-responsive";
 
@@ -78,7 +78,7 @@ export default function Grade() {
                       <Input criterion={criterion} gainedXp={gainedXp} />
                     </div>
                     <h2>Nagrody</h2>
-                    <Reward
+                    <AssignReward
                       criterion={criterion}
                       criterionGrade={criterionGrade}
                     />

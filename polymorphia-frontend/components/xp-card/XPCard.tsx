@@ -44,7 +44,8 @@ export const colorVariants = tv({
       },
       gray: {
         borderPrimary: "border-b-8 border-primary-gray",
-        borderSecondary: "border-b-4 border-secondary-gray",
+        borderSecondary:
+          "border-b-4 border-secondary-gray dark:border-primary-dark",
         backgroundPrimary: "bg-primary-gray",
         backgroundSecondary: "bg-secondary-gray dark:bg-secondary-dark",
       },

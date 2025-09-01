@@ -1,5 +1,8 @@
-import { BaseGradingStrategy } from "@/components/grading/strategies/Base";
-import { GradingComponents, GradingStrategy } from "@/components/grading/types";
+import { BaseGradingStrategy } from "@/views/course/grading/strategies/Base";
+import {
+  GradingComponents,
+  GradingStrategy,
+} from "@/views/course/grading/types";
 
 export class TestGradingStrategy
   extends BaseGradingStrategy

@@ -1,4 +1,4 @@
-import { GradingComponentWrapperProps } from "@/components/grading/components/grading-wrapper/types";
+import { GradingComponentWrapperProps } from "@/views/course/grading/components/grading-wrapper/types";
 import "./index.css";
 
 export default function GradingComponentWrapper({
