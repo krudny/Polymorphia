@@ -56,23 +56,23 @@
 
 /* AssignReward.tsx */
 
-.assign-reward {
-    @apply grid grid-cols-3 gap-4;
+.grade-assign-reward {
+    @apply grid grid-cols-3 gap-4 w-full;
 }
 
-.assign-reward-wrapper {
+.grade-assign-reward-wrapper {
     @apply relative w-full aspect-square rounded-xl shadow-sm  drop-shadow-xl overflow-hidden;
 }
 
-.assign-reward-image-wrapper {
+.grade-assign-reward-image-wrapper {
     @apply w-full h-full rounded-xl overflow-hidden;
 }
 
-.assign-reward-image-badge {
+.grade-assign-reward-image-badge {
     @apply text-xl w-7 rounded-tl-lg rounded-br-lg;
 }
 
-.assign-reward-add {
+.grade-assign-reward-add {
     @apply aspect-square border-3 border-primary-dark rounded-xl flex-col-centered;
     @apply hover:bg-primary-dark hover:text-secondary-gray transition-colors duration-400 ease-[cubic-bezier(0.34,1,0.2,1)] hover:cursor-pointer;
 

@@ -1,12 +1,13 @@
 "use client";
 
-import Image from "next/image";
-import { API_STATIC_URL } from "@/services/api";
-import ImageBadge from "@/components/image-badge/ImageBadge";
 import { RewardProps } from "@/views/course/grading/components/grade/types";
 import AssignRewardModal from "@/views/course/grading/modals/assign-reward";
 import { useState } from "react";
 import { CriterionAssignableRewardResponseDTO } from "@/interfaces/api/grade";
+import "./index.css";
+import { API_STATIC_URL } from "@/services/api";
+import ImageBadge from "@/components/image-badge/ImageBadge";
+import Image from "next/image";
 
 export default function AssignReward({
   criterion,
@@ -18,10 +19,10 @@ export default function AssignReward({
 
   return (
     <>
-      <div className="assign-reward">
+      <div className="grade-assign-reward">
         {criterionGrade.assignedRewards.map((assignedReward, index) => (
-          <div key={index} className="assign-reward-wrapper">
-            <div className="assign-reward-image-wrapper">
+          <div key={index} className="grade-assign-reward-wrapper">
+            <div className="grade-assign-reward-image-wrapper">
               <Image
                 src={`${API_STATIC_URL}/${assignedReward.imageUrl}`}
                 alt="User profile"
@@ -39,7 +40,7 @@ export default function AssignReward({
           </div>
         ))}
         <div
-          className="assign-reward-add"
+          className="grade-assign-reward-add"
           onClick={() => setAssignableRewards(criterion?.assignableRewards)}
         >
           <span>add</span>
