@@ -6,5 +6,5 @@
 }
 
 .instructor-view-cards {
-    @apply max-w-full flex-col-centeredlg:min-h-[600px] lg:w-4xl 2xl:w-7xl;
+    @apply max-w-full flex-col-centered lg:min-h-[600px] lg:w-4xl 2xl:w-7xl;
 }
