@@ -33,7 +33,6 @@ export default function Grading({ gradingType, columns }: GradingProps) {
       if (isMd) {
         const columnsHeight = columnsRef.current!.offsetHeight;
         gradingRef.current!.style.height = `${columnsHeight}px`;
-        listRef.current!.style.removeProperty("max-height");
       } else {
         gradingRef.current!.style.height = `100%`;
         listRef.current!.style.maxHeight = `500px`;

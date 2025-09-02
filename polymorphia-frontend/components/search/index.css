@@ -10,7 +10,7 @@
     @apply md:px-2 md:text-2xl lg:text-3xl;
 
     span {
-        @apply material-symbols text-xl md:text-3xl lg:text-4xl text-primary-dark dark:text-secondary-light;
+        @apply material-symbols text-xl md:text-2xl lg:text-3xl text-primary-dark dark:text-secondary-light;
     }
 }
 
