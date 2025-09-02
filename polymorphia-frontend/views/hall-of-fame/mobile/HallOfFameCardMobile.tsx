@@ -4,10 +4,6 @@ import HallOfFameUserData from "@/views/hall-of-fame/general/HallOfFameUserData"
 import UserPoints from "@/components/user-points/UserPoints";
 import "./index.css";
 import { HallOfFameRecordDTO } from "@/interfaces/api/hall-of-fame";
-import { useContext } from "react";
-import { HallOfFameContext } from "@/components/providers/hall-of-fame/HallOfFameContext";
-import { getAllFilters } from "@/components/providers/hall-of-fame/utils/getAllFilters";
-import { filterXpDetails } from "@/components/providers/hall-of-fame/utils/filterXpDetails";
 import { API_STATIC_URL } from "@/services/api";
 import { filterXpDetails } from "@/providers/hall-of-fame/utils/filterXpDetails";
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";

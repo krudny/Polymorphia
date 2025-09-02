@@ -12,7 +12,7 @@ import { useMediaQuery } from "react-responsive";
 import { useQuery } from "@tanstack/react-query";
 import KnowledgeBaseService from "@/app/(logged-in)/knowledge-base/KnowledgeBaseService";
 import Loading from "@/components/loading/Loading";
-import { UserContext } from "@/components/providers/user/UserContext";
+import { UserContext } from "@/providers/user/UserContext";
 
 export default function Profile() {
   const wrapperRef = useScaleShow();
@@ -25,12 +25,12 @@ export default function Profile() {
   }, [setTitle]);
 
   const { data: evolutionStages, isLoading } = useQuery({
-    queryKey: ["evolution_stages", 1],
+    queryKey: ["evolution_stages", userContext?.courseId],
     queryFn: () =>
       KnowledgeBaseService.getEvolutionStages(userContext?.courseId),
   });
 
-  if (isLoading) {
+  if (isLoading && !userContext) {
     return <Loading />;
   }
 
@@ -47,7 +47,7 @@ export default function Profile() {
         <div className="profile-content-wrapper">
           <div className="profile-image-wrapper">
             <Image
-              src={`${API_STATIC_URL}/${userContext?.imageUrl || "/"}`}
+              src={`${API_STATIC_URL}/${userContext?.imageUrl}`}
               alt="User profile"
               fill
               className="profile-img"

@@ -1,5 +1,4 @@
 import XPCard from "@/components/xp-card/XPCard";
-import { API_STATIC_URL } from "@/services/api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import userService from "@/app/(logged-in)/profile/UserService";
 import UserService from "@/app/(logged-in)/profile/UserService";
@@ -7,15 +6,20 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Loading from "@/components/loading/Loading";
 import { AvailableCoursesDTO } from "@/interfaces/api/user";
+import XPCardImage from "@/components/xp-card/components/XPCardImage";
+import XPCardGrid from "@/components/xp-card/XPCardGrid";
+import { RefObject } from "react";
 
 interface CourseChoiceProps {
   currentCourseId?: number;
   redirectPage?: string;
+  containerRef: RefObject<HTMLDivElement | null>;
 }
 
-export default function CourseChoiceComponent({
+export default function CourseChoiceGrid({
   redirectPage,
   currentCourseId,
+  containerRef,
 }: CourseChoiceProps) {
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -23,7 +27,6 @@ export default function CourseChoiceComponent({
     queryKey: ["userCourses"],
     queryFn: () => UserService.getUserCourses(),
   });
-
   const setPreferredCourseMutation = useMutation({
     mutationFn: (courseId: number) =>
       userService.setUserPreferredCourse(courseId),
@@ -39,32 +42,26 @@ export default function CourseChoiceComponent({
     },
   });
 
-  if (isLoading) {
+  if (isLoading || !courses) {
     return <Loading />;
   }
+
+  const cards = courses?.map(
+    ({ id, name, coordinator, imageUrl, userRole }) => (
+      <XPCard
+        title={name}
+        subtitle={`Koordynator: ${coordinator}, Twoja rola: ${userRole}`}
+        key={id}
+        color={
+          currentCourseId != null && currentCourseId === id ? "green" : "silver"
+        }
+        size={"sm"}
+        leftComponent={<XPCardImage imageUrl={imageUrl} alt={name} />}
+        onClick={() => setPreferredCourseMutation.mutate(id)}
+      />
+    )
+  );
   return (
-    <div className="flex flex-col justify-start items-left mt-10 gap-4">
-      <h3 className="text-4xl ">Aktywny kurs</h3>
-      <div className="flex gap-5 justify-items-start items-start">
-        {courses?.map(({ id, name, coordinator, imageUrl, userRole }) => (
-          <XPCard
-            title={name}
-            subtitle={`Koordynator: ${coordinator}, Twoja rola: ${userRole}`}
-            key={id}
-            color={
-              currentCourseId != null && currentCourseId === id
-                ? "green"
-                : "silver"
-            }
-            size={"sm"}
-            image={{
-              url: `${API_STATIC_URL}/${imageUrl}`,
-              alt: name,
-            }}
-            onClick={() => setPreferredCourseMutation.mutate(id)}
-          />
-        ))}
-      </div>
-    </div>
+    <XPCardGrid containerRef={containerRef} cards={cards} maxColumns={2} />
   );
 }

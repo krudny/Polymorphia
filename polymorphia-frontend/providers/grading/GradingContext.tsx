@@ -2,6 +2,7 @@
 import {
   createContext,
   ReactNode,
+  useContext,
   useEffect,
   useReducer,
   useState,
@@ -22,6 +23,7 @@ import {
 } from "@/providers/grading/types";
 import { useFilters } from "@/hooks/course/useFilters";
 import { useGradingFilterConfigs } from "@/hooks/course/useGradingFilterConfigs";
+import { UserContext } from "@/providers/user/UserContext";
 
 export interface CriteriaDetails {
   gainedXp?: string;
@@ -186,12 +188,12 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const { gradableEventId, eventType } = useEventParams();
   const [areFiltersOpen, setAreFiltersOpen] = useState(false);
 
-  const COURSE_ID = 1;
+  const { courseId } = useContext(UserContext);
   const {
     data: filterConfigs,
     isLoading: isFiltersLoading,
     isError: isFiltersError,
-  } = useGradingFilterConfigs(COURSE_ID);
+  } = useGradingFilterConfigs(courseId);
   const filters = useFilters<GradingFilterId>(filterConfigs ?? []);
 
   const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["total"];

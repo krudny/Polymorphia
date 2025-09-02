@@ -67,7 +67,7 @@ function GroupPickingModalContent() {
               allUsers?.map((user, index) => (
                 <div key={index} className="min-h-fit">
                   <XPCard
-                    title={user.studentName}
+                    title={user.userName}
                     subtitle={user.group + " | " + user.evolutionStage}
                     leftComponent={
                       <XPCardImage
@@ -93,7 +93,7 @@ function GroupPickingModalContent() {
         {group?.map((user, index) => (
           <div key={index} className="min-h-fit">
             <XPCard
-              title={user.studentName}
+              title={user.userName}
               subtitle={user.group + " | " + user.evolutionStage}
               leftComponent={
                 <XPCardImage

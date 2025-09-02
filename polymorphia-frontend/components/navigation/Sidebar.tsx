@@ -34,12 +34,6 @@ export default function Sidebar() {
     animateSidebar(sidebar, isSidebarExpanded);
   }, [isSidebarExpanded]);
 
-  const { data: eventSections, isSuccess } = useQuery({
-    queryKey: ["eventSections"],
-    // TODO: use real courseId
-    queryFn: () => EventSectionService.getEventSections(1),
-  });
-
   const menuItems = [...MainMenuItems];
 
   if (eventSections) {

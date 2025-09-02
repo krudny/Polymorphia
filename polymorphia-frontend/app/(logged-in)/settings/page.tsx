@@ -1,14 +1,14 @@
 "use client";
 
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import { useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { useScaleShow } from "@/animations/ScaleShow";
 import { useTitle } from "@/components/navigation/TitleContext";
 import toast from "react-hot-toast";
 import { useTheme } from "next-themes";
 import useNavigationContext from "@/hooks/contexts/useNavigationContext";
-import CourseChoiceComponent from "@/components/course-choice/CourseChoice";
-import { UserContext } from "@/components/providers/user/UserContext";
+import CourseChoiceGrid from "@/components/course-choice/CourseChoice";
+import { UserContext } from "@/providers/user/UserContext";
 
 export default function Settings() {
   const {
@@ -21,6 +21,7 @@ export default function Settings() {
   const wrapperRef = useScaleShow();
   const { resolvedTheme, setTheme } = useTheme();
   const userContext = useContext(UserContext);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const toggleSidebarLockOpened = () => {
     if (isSidebarLockedClosed) {
@@ -43,7 +44,7 @@ export default function Settings() {
   }, [setTitle]);
 
   return (
-    <div ref={wrapperRef} className="py-6 px-32">
+    <div ref={wrapperRef} className="py-6 px-10 lg:px-32">
       <h1 className="text-7xl mb-10">Tymczasowe ustawienia</h1>
       <div className="flex justify-start items-center">
         <h3 className="text-4xl">Sidebar zawsze otwarty</h3>
@@ -78,7 +79,16 @@ export default function Settings() {
           className="!mx-0 !ml-6"
         />
       </div>
-      <CourseChoiceComponent currentCourseId={userContext?.courseId} />
+      <div
+        ref={containerRef}
+        className="flex flex-col flex-start justify-start h-50 mt-10"
+      >
+        <h3 className="text-4xl">Aktywny kurs</h3>
+        <CourseChoiceGrid
+          currentCourseId={userContext?.courseId}
+          containerRef={containerRef}
+        />
+      </div>
     </div>
   );
 }

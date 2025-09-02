@@ -23,7 +23,7 @@ export default function StudentInfo() {
           {data?.map((student) => (
             <XPCard
               key={student.animalName}
-              title={student.studentName}
+              title={student.userName}
               subtitle={student.evolutionStage}
               leftComponent={
                 <XPCardImage

@@ -64,7 +64,7 @@ export default function XPCardGrid({
 
   return (
     <>
-      {cardsPage.length > 1 ? (
+      {cardsPage.length >= 1 ? (
         <div className="xp-card-grid-center-vertically">
           <div className="xp-card-grid-point-summary-layout">
             <div className="xp-card-fading-edges">
