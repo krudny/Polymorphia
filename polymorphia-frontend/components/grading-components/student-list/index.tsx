@@ -97,7 +97,7 @@ export default function StudentsList() {
   return (
     <GradingComponentWrapper
       topComponent={topComponent}
-      mainComponent={mainComponent()}
+      mainComponent={mainComponent}
     />
   );
 }

@@ -8,7 +8,7 @@ import "./index.css";
 
 export default function ProjectVariantInfo({
   size = "sm",
-  color,
+  color = "gray",
 }: ProjectVariantInfoProps) {
   const { data, isLoading, isError } = useProjectVariant();
 

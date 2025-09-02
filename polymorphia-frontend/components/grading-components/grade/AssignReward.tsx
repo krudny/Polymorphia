@@ -34,7 +34,7 @@ export default function AssignReward({
               />
               <ImageBadge
                 text={assignedReward.quantity.toString()}
-                className="assign-reward-image-badge"
+                className="grade-assign-reward-image-badge"
               />
             </div>
           </div>

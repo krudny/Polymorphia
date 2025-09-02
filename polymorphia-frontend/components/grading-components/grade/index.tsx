@@ -113,7 +113,7 @@ export default function Grade() {
     <>
       <GradingComponentWrapper
         topComponent={topComponent}
-        mainComponent={mainComponent()}
+        mainComponent={mainComponent}
       />
     </>
   );

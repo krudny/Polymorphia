@@ -50,7 +50,7 @@ export default function PullRequest({ pullRequests }: PullRequestProps) {
   return (
     <GradingComponentWrapper
       topComponent={topComponent}
-      mainComponent={mainComponent()}
+      mainComponent={mainComponent}
     />
   );
 }

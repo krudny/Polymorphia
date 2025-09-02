@@ -2,7 +2,7 @@
 @import "../../../styles/globals.css";
 
 .grading {
-    @apply w-full max-w-[1500px] m-auto flex flex-col justify-center items-center gap-4 min-h-0;
+    @apply w-full max-w-[1500px] m-auto flex flex-col justify-center items-center gap-4;
     @apply md:flex-row md:items-start 2xl:max-h-[calc(100dvh-5rem)];
 }
 
@@ -21,7 +21,7 @@
 }
 
 .grading-list {
-    @apply w-full max-w-md flex flex-col;
+    @apply w-full max-w-md flex flex-col max-h-full 2xl:max-h-[calc(100dvh-5rem)];
 }
 
 .grading-columns {

@@ -42,7 +42,7 @@ export default function ProjectGroupList() {
     </>
   );
 
-  const mainComponent = (
+  const mainComponent = () => (
     <div className="group-list">
       {projectGroups.map((group, index: number) => (
         <Fragment key={index}>

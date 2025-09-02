@@ -8,7 +8,7 @@ export default function GradingComponentWrapper({
   return (
     <div className="grading-wrapper">
       <div className="grading-wrapper-top">{topComponent}</div>
-      <div className="grading-wrapper-main">{mainComponent}</div>
+      <div className="grading-wrapper-main">{mainComponent()}</div>
     </div>
   );
 }
