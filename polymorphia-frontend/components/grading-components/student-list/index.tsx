@@ -4,7 +4,7 @@ import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import Search from "@/components/search";
 import { GradingReducerActions } from "@/providers/grading/GradingContext";
-import GradingComponentWrapper from "@/views/course/grading/components/grading-wrapper";
+import GradingComponentWrapper from "@/components/grading-components/grading-wrapper";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import Loading from "@/components/loading/Loading";
 import { ReactNode } from "react";

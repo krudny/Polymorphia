@@ -1,6 +1,6 @@
-import HallOfFameImage from "@/components/hall-of-fame/general/HallOfFameImage";
-import HallOfFamePointsSummary from "@/components/hall-of-fame/general/HallOfFamePointsSummary";
-import HallOfFameUserData from "@/components/hall-of-fame/general/HallOfFameUserData";
+import HallOfFameImage from "@/views/hall-of-fame/general/HallOfFameImage";
+import HallOfFamePointsSummary from "@/views/hall-of-fame/general/HallOfFamePointsSummary";
+import HallOfFameUserData from "@/views/hall-of-fame/general/HallOfFameUserData";
 import UserPoints from "@/components/user-points/UserPoints";
 import "./index.css";
 import { HallOfFameRecordDTO } from "@/interfaces/api/hall-of-fame";

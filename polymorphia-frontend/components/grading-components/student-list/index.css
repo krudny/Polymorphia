@@ -1,0 +1,6 @@
+@import "../../../node_modules/tailwindcss/dist/lib.d.mts";
+@import "../../../styles/globals.css";
+
+.student-record {
+    @apply mx-auto my-3 first:mt-0 last:mb-0;
+}

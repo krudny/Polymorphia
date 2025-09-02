@@ -2,9 +2,9 @@
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
 import { HallOfFameProvider } from "@/providers/hall-of-fame/HallOfFameContext";
-import HallOfFameMobile from "@/components/hall-of-fame/mobile/HallOfFameMobile";
+import HallOfFameMobile from "@/views/hall-of-fame/mobile/HallOfFameMobile";
 import FiltersModal from "@/components/filters/modals/FiltersModal";
-import HallOfFameDesktop from "@/components/hall-of-fame/desktop/HallOfFameDesktop";
+import HallOfFameDesktop from "@/views/hall-of-fame/desktop/HallOfFameDesktop";
 import { useQueryClient } from "@tanstack/react-query";
 import { HallOfFameFilterId } from "@/providers/hall-of-fame/types";
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";

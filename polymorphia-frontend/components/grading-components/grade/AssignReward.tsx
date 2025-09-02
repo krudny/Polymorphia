@@ -1,6 +1,6 @@
 "use client";
 
-import { RewardProps } from "@/views/course/grading/components/grade/types";
+import { RewardProps } from "@/components/grading-components/grade/types";
 import AssignRewardModal from "@/views/course/grading/modals/assign-reward";
 import { useState } from "react";
 import { CriterionAssignableRewardResponseDTO } from "@/interfaces/api/grade";

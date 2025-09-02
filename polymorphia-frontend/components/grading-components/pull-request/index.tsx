@@ -1,12 +1,12 @@
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import { PullRequestProps } from "@/views/course/grading/components/pull-request/types";
+import { PullRequestProps } from "@/components/grading-components/pull-request/types";
 import toast from "react-hot-toast";
-import GradingComponentWrapper from "@/views/course/grading/components/grading-wrapper";
+import GradingComponentWrapper from "@/components/grading-components/grading-wrapper";
 import { ReactNode, useRef } from "react";
 import { AccordionRef } from "@/providers/accordion/types";
 import { Accordion } from "@/components/accordion/Accordion";
 import AccordionSection from "@/components/accordion/AccordionSection";
-import "../../index.css";
+import "../../../views/course/grading/index.css";
 import { useMediaQuery } from "react-responsive";
 
 export default function PullRequest({ pullRequests }: PullRequestProps) {

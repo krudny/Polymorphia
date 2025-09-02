@@ -1,6 +1,6 @@
 "use client";
 
-import "../../index.css";
+import "../../../views/course/grading/index.css";
 import "./index.css";
 import { ReactNode, useRef } from "react";
 import ProgressBar from "@/components/progressbar/ProgressBar";
@@ -10,10 +10,10 @@ import Loading from "@/components/loading/Loading";
 import { Accordion } from "@/components/accordion/Accordion";
 import { AccordionRef } from "@/providers/accordion/types";
 import AccordionSection from "@/components/accordion/AccordionSection";
-import GradingComponentWrapper from "@/views/course/grading/components/grading-wrapper";
-import AssignReward from "@/views/course/grading/components/grade/AssignReward";
-import Comment from "@/views/course/grading/components/grade/Comment";
-import Input from "@/views/course/grading/components/grade/Input";
+import GradingComponentWrapper from "@/components/grading-components/grading-wrapper";
+import AssignReward from "@/components/grading-components/grade/AssignReward";
+import Comment from "@/components/grading-components/grade/Comment";
+import Input from "@/components/grading-components/grade/Input";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import { useMediaQuery } from "react-responsive";
 

@@ -6,7 +6,7 @@ import Search from "@/components/search";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import Loading from "@/components/loading/Loading";
 import { GradingReducerActions } from "@/providers/grading/GradingContext";
-import GradingComponentWrapper from "@/views/course/grading/components/grading-wrapper";
+import GradingComponentWrapper from "@/components/grading-components/grading-wrapper";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import "./index.css";
 import { Fragment } from "react";

@@ -5,8 +5,8 @@ import { useScaleShow } from "@/animations/ScaleShow";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import Search from "@/components/search";
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
-import HallOfFamePagination from "@/components/hall-of-fame/general/HallOfFamePagination";
-import HallOfFameList from "@/components/hall-of-fame/general/HallOfFameList";
+import HallOfFamePagination from "@/views/hall-of-fame/general/HallOfFamePagination";
+import HallOfFameList from "@/views/hall-of-fame/general/HallOfFameList";
 
 export default function HallOfFameMobile() {
   const wrapperRef = useScaleShow();

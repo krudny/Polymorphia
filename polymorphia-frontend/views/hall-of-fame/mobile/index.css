@@ -1,6 +1,7 @@
-@import "tailwindcss";
+@import "../../../node_modules/tailwindcss/dist/lib.d.mts";
 @import "../../../styles/globals.css";
 @import "../general/index.css";
+
 @tailwind utilities;
 
 .hall-of-fame-mobile {

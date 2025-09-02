@@ -1,12 +1,12 @@
 import { useScaleShow } from "@/animations/ScaleShow";
 import "./index.css";
 import "../general/index.css";
-import HallOfFamePodium from "@/components/hall-of-fame/desktop/HallOfFamePodium";
+import HallOfFamePodium from "@/views/hall-of-fame/desktop/HallOfFamePodium";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import Search from "@/components/search";
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
-import HallOfFameList from "@/components/hall-of-fame/general/HallOfFameList";
-import HallOfFamePagination from "@/components/hall-of-fame/general/HallOfFamePagination";
+import HallOfFameList from "@/views/hall-of-fame/general/HallOfFameList";
+import HallOfFamePagination from "@/views/hall-of-fame/general/HallOfFamePagination";
 
 export default function HallOfFameDesktop() {
   const { search, setSearch, setIsModalOpen } = useHallOfFameContext();
