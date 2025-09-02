@@ -13,7 +13,10 @@ export class ProjectGradingStrategy
       list: this.createProjectGroupList(),
       components: [
         [this.createRewardComponent()],
-        [this.createPullRequestComponent()],
+        [
+          this.createPullRequestComponent(),
+          this.createProjectVariantComponent(),
+        ],
       ],
     };
   }

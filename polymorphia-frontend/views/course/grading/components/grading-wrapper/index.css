@@ -2,7 +2,7 @@
 @import "../../../../../styles/globals.css";
 
 .grading-wrapper {
-    @apply w-full overflow-y-hidden flex flex-col flex-1 gap-y-4;
+    @apply w-full overflow-y-hidden flex flex-col gap-y-4 min-h-0;
 }
 
 .grading-wrapper-top {
@@ -10,5 +10,5 @@
 }
 
 .grading-wrapper-main {
-    @apply w-full overflow-y-auto px-8 py-4 mx-auto custom-scrollbar flex-1 relative;
+    @apply w-full flex flex-col relative px-8 py-4 mx-auto custom-scrollbar flex-1 min-h-0 overflow-y-auto;
 }

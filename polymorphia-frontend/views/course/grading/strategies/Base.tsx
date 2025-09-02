@@ -3,6 +3,7 @@ import StudentsList from "@/views/course/grading/components/student-list";
 import ProjectGroupList from "@/views/course/grading/components/project-group-list";
 import Grade from "@/views/course/grading/components/grade";
 import PullRequest from "@/views/course/grading/components/pull-request";
+import { ProjectVariant } from "@/views/course/grading/components/project-variant";
 
 export abstract class BaseGradingStrategy {
   protected createStudentsList(): ReactNode {
@@ -34,5 +35,9 @@ export abstract class BaseGradingStrategy {
         ]}
       />
     );
+  }
+
+  protected createProjectVariantComponent(): ReactNode {
+    return <ProjectVariant />;
   }
 }

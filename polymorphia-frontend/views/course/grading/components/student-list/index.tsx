@@ -71,7 +71,7 @@ export default function StudentsList() {
                 title={student.studentName}
                 color={color}
                 subtitle={student.group}
-                size={"xs"}
+                size="xs"
                 leftComponent={
                   <XPCardImage
                     imageUrl={student.imageUrl}

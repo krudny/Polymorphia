@@ -1,6 +1,6 @@
 import Modal from "@/components/modal/Modal";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
-import ProjectVariantInfo from "@/shared/project-variant-info/ProjectVariantInfo";
+import ProjectVariantInfo from "@/shared/project-variant-info";
 
 export default function ProjectVariantModal({
   onClosedAction,

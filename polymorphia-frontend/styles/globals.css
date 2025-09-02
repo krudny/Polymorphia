@@ -15,6 +15,7 @@
 @theme {
     --shadow-3xl: 0px 0px 12px 0px rgba(66, 68, 90, 0.5);
     --breakpoint-3xl: 132rem;
+    --breakpoint-w-1400: 1400px;
     --color-primary-light: #fafafa;
     --color-secondary-light: #f5f5f5;
     --color-primary-dark: #262626;

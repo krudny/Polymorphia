@@ -3,24 +3,28 @@ import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCardProjectVariant from "@/components/xp-card/components/XPCardProjectVariant";
 import useProjectVariant from "@/hooks/course/useProjectVariant";
+import { ProjectVariantInfoProps } from "@/shared/project-variant-info/types";
+import "./index.css";
 
-export default function ProjectVariantInfo() {
+export default function ProjectVariantInfo({
+  size = "sm",
+}: ProjectVariantInfoProps) {
   const { data, isLoading, isError } = useProjectVariant();
 
   return (
     <>
       {isError && (
-        <div className="gradable-event-section text-xl 2xl:text-2xl">
+        <div className="project-variant-info">
           Wystąpił błąd przy ładowaniu szczegółów.
         </div>
       )}
       {isLoading && (
-        <div className="gradable-event-section h-50">
+        <div className="project-variant-info h-50">
           <Loading />
         </div>
       )}
       {!isLoading && data && (
-        <div className="flex flex-col gap-y-5 max-w-xl">
+        <div className="project-variant-info">
           {data.map((projectVariant, index) => (
             <XPCard
               title={projectVariant.name}
@@ -35,7 +39,7 @@ export default function ProjectVariantInfo() {
               rightComponent={
                 <XPCardProjectVariant shortCode={projectVariant.shortCode} />
               }
-              size="sm"
+              size={size}
             />
           ))}
         </div>

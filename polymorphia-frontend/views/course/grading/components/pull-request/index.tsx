@@ -10,9 +10,10 @@ import "../../index.css";
 import { useMediaQuery } from "react-responsive";
 
 export default function PullRequest({ pullRequests }: PullRequestProps) {
-  const topComponent = <h1 className="text-5xl">Pull Request</h1>;
   const accordionRef = useRef<AccordionRef>(null);
   const isXL = useMediaQuery({ minWidth: "1400px" });
+
+  const topComponent = <h1 className="text-5xl">Pull Request</h1>;
 
   const mainComponent = (): ReactNode => (
     <Accordion ref={accordionRef} className="gap-y-5" maxOpen={2}>

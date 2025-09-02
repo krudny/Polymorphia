@@ -10,8 +10,10 @@ import GradingComponentWrapper from "@/views/course/grading/components/grading-w
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import "./index.css";
 import { Fragment } from "react";
+import { useMediaQuery } from "react-responsive";
 
 export default function ProjectGroupList() {
+  const isMd = useMediaQuery({ minWidth: "786px" });
   const {
     state,
     dispatch,
@@ -34,13 +36,14 @@ export default function ProjectGroupList() {
       />
       <ButtonWithBorder
         text="Filtry"
-        className="!mx-0 !py-0 !rounded-none !border-0 !border-b-2 !align-self-start !h-full"
+        size={isMd ? "md" : "sm"}
+        className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none !h-full"
       />
     </>
   );
 
   const mainComponent = (
-    <>
+    <div className="group-list">
       {projectGroups.map((group, index: number) => (
         <Fragment key={index}>
           <div
@@ -93,7 +96,7 @@ export default function ProjectGroupList() {
           <div key={index} className="divider"></div>
         </Fragment>
       ))}
-    </>
+    </div>
   );
 
   return (
