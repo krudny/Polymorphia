@@ -1,4 +1,10 @@
-export type EventType = "ASSIGNMENT" | "PROJECT" | "TEST";
+export const EventTypes = {
+  ASSIGNMENT: "ASSIGNMENT",
+  PROJECT: "PROJECT",
+  TEST: "TEST",
+} as const;
+
+export type EventType = (typeof EventTypes)[keyof typeof EventTypes];
 
 export interface EventSectionResponseDTO {
   id: number;

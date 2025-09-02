@@ -1,0 +1,78 @@
+@import "tailwindcss";
+@import "../../../styles/globals.css";
+
+/* XPCardPoints */
+
+.xp-card-points {
+    @apply w-full flex-1 flex-col-centered shrink-0 aspect-square;
+}
+
+/* XPCardProjectVariant */
+
+.xp-card-project-variant {
+    @apply h-full flex-col-centered self-end aspect-square;
+
+    p {
+        @apply text-5xl;
+    }
+}
+
+/* XPCardChest */
+
+.xp-card-chest {
+    @apply w-full h-full flex-col-centered bg-secondary-gray dark:bg-secondary-dark box-border;
+
+    span {
+        @apply text-3xl md:text-5xl text-primary-dark dark:text-secondary-light;
+    }
+}
+
+/* XPCardImage */
+
+.xp-card-image {
+    @apply w-full h-full relative shrink-0 select-none aspect-square;
+}
+
+/* XPCardDoubleImage */
+
+.xp-card-double-image {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.xp-card-double-image-item {
+    position: relative;
+    height: 100%;
+    flex-shrink: 0;
+
+    img {
+        object-fit: cover;
+        object-position: center;
+    }
+}
+
+/* XPCardUngraded */
+
+.xp-card-ungraded {
+    @apply w-full flex-1 flex-col-centered;
+}
+
+/* XPCardAssign */
+
+.xp-card-assign {
+    @apply w-full flex-1 flex-col-centered;
+}
+
+.xp-card-assign-wrapper {
+    @apply w-4/5 flex justify-between -mb-2;
+}
+
+.xp-card-assign-button {
+    @apply w-8 h-8 rounded flex-col-centered select-none hover:bg-primary-gray;
+
+    span {
+        @apply material-symbols text-2xl;
+    }
+}

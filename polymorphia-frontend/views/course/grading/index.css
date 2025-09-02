@@ -1,0 +1,30 @@
+@import "tailwindcss";
+@import "../../../styles/globals.css";
+
+.grading {
+    @apply w-full max-w-[1500px] m-auto flex flex-col justify-center items-center gap-4;
+    @apply md:flex-row md:items-start 2xl:max-h-[calc(100dvh-5rem)];
+}
+
+.grading-accordion-header {
+    h1 {
+        @apply !text-4xl;
+    }
+
+    h2 {
+        @apply !text-3xl;
+    }
+}
+
+.grading-speed-dial {
+    @apply fixed bottom-4 right-5 z-[999];
+}
+
+.grading-list {
+    @apply w-full max-w-md flex flex-col max-h-full 2xl:max-h-[calc(100dvh-5rem)];
+}
+
+.grading-columns {
+    @apply w-full max-w-md flex flex-col gap-y-4 h-fit min-h-0;
+}
+

@@ -1,10 +1,6 @@
-import { EventType } from "@/interfaces/api/course";
 import { ReactNode } from "react";
-
-export interface SpeedDialProps {
-  eventSectionType: EventType;
-  gradableEventId: number;
-}
+import { GradingType } from "@/views/course/grading/types";
+import { EventType } from "@/interfaces/api/course";
 
 export interface SpeedDialItem {
   id: number;
@@ -14,4 +10,8 @@ export interface SpeedDialItem {
   modal?: (onClose: () => void) => ReactNode;
   onClick?: () => void;
   color?: string;
+}
+
+export interface SpeedDialProps {
+  type: EventType | GradingType;
 }

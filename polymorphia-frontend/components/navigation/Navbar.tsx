@@ -1,6 +1,5 @@
 import { MenuIcon } from "lucide-react";
-import { NavigationContext } from "@/components/providers/navigation/NavigationContext";
-import { useContext, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import {
   BottomMenuItems,
   MainMenuItems,
@@ -9,18 +8,15 @@ import MenuSection from "@/components/navigation/MenuSection";
 import Line from "@/components/navigation/Line";
 import { animateNavbar } from "@/animations/Navigation";
 import "./index.css";
-import { useQuery } from "@tanstack/react-query";
 import { updateMenuItems } from "@/components/course/event-section/EventSectionUtils";
 import { useTitle } from "./TitleContext";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
-import { UserContext } from "@/components/providers/user/UserContext";
+import useEventSections from "@/hooks/course/useEventSections";
+import useNavigationContext from "@/hooks/contexts/useNavigationContext";
 
 export default function Navbar() {
-  const { isNavbarExpanded, setIsNavbarExpanded } =
-    useContext(NavigationContext);
+  const { isNavbarExpanded, setIsNavbarExpanded } = useNavigationContext();
   const drawerRef = useRef<HTMLDivElement | null>(null);
-  const { courseId } = useContext(UserContext);
-
+  const { data: eventSections } = useEventSections();
   const { title } = useTitle();
 
   useEffect(() => {
@@ -28,6 +24,7 @@ export default function Navbar() {
     if (!drawer) {
       return;
     }
+
     animateNavbar(drawer, isNavbarExpanded);
   }, [isNavbarExpanded]);
 
@@ -35,19 +32,15 @@ export default function Navbar() {
     if (isNavbarExpanded) {
       document.body.style.overflow = isNavbarExpanded ? "hidden" : "auto";
     }
+
     return () => {
       document.body.style.overflow = "auto";
     };
   }, [isNavbarExpanded]);
 
-  const { data: eventSections, isSuccess } = useQuery({
-    queryKey: ["eventSections"],
-    // TODO: use real courseId
-    queryFn: () => EventSectionService.getEventSections(courseId),
-  });
-
   const menuItems = [...MainMenuItems];
-  if (isSuccess) {
+
+  if (eventSections) {
     updateMenuItems(menuItems, eventSections);
   }
 

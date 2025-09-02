@@ -6,7 +6,7 @@ import { createPortal } from "react-dom";
 import "./index.css";
 import { useAnimatedModalState } from "@/animations/Modal";
 import { useEffect, useRef, useState } from "react";
-import { ModalProvider } from "../providers/modal/ModalContext";
+import { ModalProvider } from "@/providers/modal/ModalContext";
 import { ModalProps } from "@/components/modal/types";
 import { useTheme } from "next-themes";
 
@@ -20,8 +20,8 @@ export default function Modal(props: ModalProps) {
   const { resolvedTheme } = useTheme();
   const background =
     resolvedTheme === "dark"
-      ? "bg-[url(/background-modal-dark.png)]"
-      : "bg-[url(/background-modal.png)]";
+      ? "bg-[url(/background-modal-dark.webp)]"
+      : "bg-[url(/background-modal.webp)]";
 
   useEffect(() => {
     setModalVisible(isDataPresented);

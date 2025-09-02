@@ -12,23 +12,23 @@ export function updateMenuItems(
     (menuOption) => menuOption.text === "Kurs"
   )[0];
 
-  courseItem.link = `course/${eventSections[0].type}/${eventSections[0].id}`;
+  courseItem.link = `course/${eventSections[0].type.toLowerCase()}/${eventSections[0].id}`;
 
   courseItem.subItems = eventSections.map((eventSection) => {
     // TODO: use correct courseID
     return {
       text: eventSection.name,
-      link: `course/${eventSection.type}/${eventSection.id}`,
+      link: `course/${eventSection.type.toLowerCase()}/${eventSection.id}`,
     };
   });
 }
 
 export function setResizeObserver(
   containerRef: RefObject<HTMLDivElement | null>,
-  summaryRef: RefObject<HTMLDivElement | null>,
-  setMobile: (v: boolean) => void,
-  setPageCols: (n: number) => void,
-  setPageRows: (n: number) => void
+  setMobile: (isMobile: boolean) => void,
+  setPageCols: (cols: number) => void,
+  setPageRows: (rows: number) => void,
+  maxColumns: number
 ) {
   if (!containerRef.current) {
     return;
@@ -46,48 +46,39 @@ export function setResizeObserver(
       setMobile(true);
 
       setPageCols(width > 650 ? 2 : 1);
-      setPageRows(5);
+
+      const gridCardsGap = 20;
+      const cardHeight = 125;
+
+      const rows = Math.floor(
+        (height + gridCardsGap) / (cardHeight + gridCardsGap)
+      );
+
+      setPageRows(rows);
     } else {
       setMobile(false);
 
-      const expandedSidebar = document.getElementById("sidebar-animated");
-      const sidebarOffset =
-        expandedSidebar !== null ? expandedSidebar.offsetWidth : 0;
-
       const gridCardsGap = 20;
-      const gridPointsSummaryGap = 40;
-      const cardWidth = 416;
+      const minCardWidth = 350;
       const cardHeight = 160;
-      const summaryApproxOffset = 300;
-      const heightApproxOffset = 80;
-      const widthApproxOffset = 100;
 
       const rows = Math.floor(
-        (height - heightApproxOffset + gridCardsGap) /
-          (cardHeight + gridCardsGap)
+        (height + gridCardsGap) / (cardHeight + gridCardsGap)
       );
       const cols = Math.floor(
-        (width -
-          gridPointsSummaryGap -
-          widthApproxOffset -
-          (summaryRef?.current?.offsetWidth ?? summaryApproxOffset) +
-          sidebarOffset +
-          gridCardsGap) /
-          (cardWidth + gridCardsGap)
+        (width + gridCardsGap) / (minCardWidth + gridCardsGap)
       );
 
-      const maxRows = height <= 650 ? 2 : height >= 900 ? 4 : 3;
+      const maxRows = height <= 550 ? 2 : height >= 900 ? 4 : 3;
+      const minCols = window.innerWidth >= 1280 ? 2 : 1;
 
       setPageRows(Math.max(Math.min(rows, maxRows), 1));
-      setPageCols(Math.max(Math.min(cols, 3), 1));
+      setPageCols(Math.max(Math.min(cols, maxColumns), minCols));
     }
   };
 
   const resizeObserver = new ResizeObserver(handleResize);
   resizeObserver.observe(containerRef.current);
-  if (summaryRef.current !== null) {
-    resizeObserver.observe(summaryRef.current);
-  }
 
   handleResize();
 

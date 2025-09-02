@@ -1,0 +1,33 @@
+@import "tailwindcss";
+@import "../../../styles/globals.css";
+
+.filters-modal {
+    @apply md:w-[28rem] min-h-30 overflow-visible;
+    > h1 {
+        @apply text-2xl;
+    }
+}
+
+.filters-modal-wrapper {
+    @apply w-full gap-y-2;
+}
+
+.filters-modal-filter-grid {
+    @apply grid grid-cols-3 md:grid-cols-4 gap-2 text-xl my-1;
+}
+
+.filters-modal-filter-option {
+    @apply w-full rounded-md flex-centered px-2 py-1 text-primary-dark border-2 border-primary-dark cursor-pointer select-none transition-colors duration-150 ease-in-out;
+}
+
+.filters-modal-filter-option-selected {
+    @apply bg-primary-dark text-secondary-light dark:bg-secondary-gray dark:text-primary-dark shadow-md;
+}
+
+.filters-modal-filter-option-unselected {
+    @apply dark:bg-primary-gray;
+}
+
+.filters-modal-button-wrapper {
+    @apply w-full mt-5;
+}

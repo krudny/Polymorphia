@@ -1,28 +1,17 @@
 "use client";
 import Slider from "@/components/slider/Slider";
-import { useQuery } from "@tanstack/react-query";
-import KnowledgeBaseService from "@/app/(logged-in)/knowledge-base/KnowledgeBaseService";
 import Loading from "@/components/loading/Loading";
 import { useTitle } from "@/components/navigation/TitleContext";
-import { useContext, useEffect } from "react";
-import { UserContext } from "@/components/providers/user/UserContext";
+import { useEffect } from "react";
+import useEvolutionStages from "@/hooks/course/useEvolutionStages";
 
 export default function EvolutionStages() {
+  const { data: evolutionStages, isLoading, error } = useEvolutionStages();
   const { setTitle } = useTitle();
-  const { courseId } = useContext(UserContext);
 
   useEffect(() => {
     setTitle("Postacie");
   }, [setTitle]);
-
-  const {
-    data: evolutionStages,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["evolution_stages", 1],
-    queryFn: () => KnowledgeBaseService.getEvolutionStages(courseId),
-  });
 
   if (isLoading) {
     return <Loading />;

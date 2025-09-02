@@ -1,5 +1,6 @@
 import { AvailableCoursesDTO, UserDetailsDTO } from "@/interfaces/api/user";
 import { API_HOST } from "@/services/api";
+import { Role, Roles } from "@/interfaces/api/temp";
 
 const UserService = {
   isCourseIdSet: async (): Promise<boolean> => {
@@ -74,6 +75,10 @@ const UserService = {
         courseId: 1,
       },
     ];
+  },
+  getRole: async (): Promise<{ role: Role }> => {
+    return { role: Roles.INSTRUCTOR };
+    // return { role: Roles.STUDENT };
   },
 };
 

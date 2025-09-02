@@ -2,7 +2,7 @@ import { API_STATIC_URL } from "@/services/api";
 import "./index.css";
 import { BonusItemCardProps } from "@/components/course/event-section/points-summary/types";
 import XPCard from "../../../xp-card/XPCard";
-import XPCardPoints from "@/components/xp-card/inner-components/XPCardPoints";
+import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 
 export default function BonusItemCard({ assignedItem }: BonusItemCardProps) {
   return (
@@ -15,7 +15,10 @@ export default function BonusItemCard({ assignedItem }: BonusItemCardProps) {
       }}
       size="xs"
       // TODO: handle undefined xp
-      component={<XPCardPoints points={`+${assignedItem.details.gainedXp}`} />}
+      // TODO: left component
+      rightComponent={
+        <XPCardPoints points={`+${assignedItem.details.gainedXp}`} />
+      }
     />
   );
 }

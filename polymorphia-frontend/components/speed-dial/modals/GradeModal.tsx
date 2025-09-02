@@ -1,24 +1,29 @@
 import Modal from "@/components/modal/Modal";
 import GradeInfo from "@/components/course/event-section/GradeInfo";
 import Loading from "@/components/loading/Loading";
-import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
+import useGrade from "@/hooks/course/useGrade";
+import { useEventParams } from "@/hooks/general/useEventParams";
 
 export default function GradeModal({
-  gradableEventId,
-  onClosed,
-}: SpeedDialModalProps) {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["grades", gradableEventId],
-    queryFn: () => EventSectionService.getGrade(gradableEventId!),
-    enabled: !!gradableEventId,
-  });
+  onClosedAction,
+  gradableEventIdProp,
+}: SpeedDialModalProps & {
+  gradableEventIdProp?: number;
+}) {
+  const { gradableEventId } = useEventParams();
+  const id = isNaN(gradableEventId) ? gradableEventIdProp : gradableEventId;
+
+  if (id === undefined) {
+    throw new Error("Coś poszło nie tak");
+  }
+
+  const { data, isLoading, isError } = useGrade(id);
 
   return (
     <Modal
       isDataPresented={data !== undefined}
-      onClosed={onClosed}
+      onClosed={onClosedAction}
       title="Nagrody"
     >
       {isError && (

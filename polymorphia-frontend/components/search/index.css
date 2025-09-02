@@ -1,0 +1,19 @@
+@import "tailwindcss";
+@import "../../styles/globals.css";
+
+.search {
+    @apply w-44 md:w-64 flex-centered min-h-full h-full;
+}
+
+.search-wrapper {
+    @apply w-full h-full flex-centered text-xl border-b-2  border-primary-dark dark:border-secondary-light;
+    @apply md:px-2 md:text-2xl lg:text-3xl;
+
+    span {
+        @apply material-symbols text-xl md:text-2xl lg:text-3xl text-primary-dark dark:text-secondary-light;
+    }
+}
+
+.search-input {
+    @apply text-primary-dark dark:text-secondary-light placeholder-primary-dark dark:placeholder-secondary-light ml-1 focus:outline-none;
+}
