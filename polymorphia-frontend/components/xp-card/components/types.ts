@@ -15,6 +15,7 @@ export interface XPCardUngradedProps {
 
 export interface XPCardProjectVariantProps {
   shortCode: string;
+  color?: XPCardColors;
 }
 
 export interface XPCardImageProps {

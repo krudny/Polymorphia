@@ -8,6 +8,7 @@ import "./index.css";
 
 export default function ProjectVariantInfo({
   size = "sm",
+  color,
 }: ProjectVariantInfoProps) {
   const { data, isLoading, isError } = useProjectVariant();
 
@@ -37,7 +38,10 @@ export default function ProjectVariantInfo({
                 />
               }
               rightComponent={
-                <XPCardProjectVariant shortCode={projectVariant.shortCode} />
+                <XPCardProjectVariant
+                  shortCode={projectVariant.shortCode}
+                  color={color}
+                />
               }
               size={size}
             />

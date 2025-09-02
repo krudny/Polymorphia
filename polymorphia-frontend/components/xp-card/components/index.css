@@ -10,7 +10,7 @@
 /* XPCardProjectVariant */
 
 .xp-card-project-variant {
-    @apply w-3/5 h-full flex-col-centered text-primary-gray self-end;
+    @apply h-full flex-col-centered self-end aspect-square;
 
     p {
         @apply text-5xl;

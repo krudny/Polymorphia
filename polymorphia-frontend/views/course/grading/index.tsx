@@ -61,12 +61,12 @@ export default function Grading({ gradingType, columns }: GradingProps) {
 
   return (
     <>
-      <div ref={gradingRef} className="grading">
+      <div ref={gradingRef} className="grading bg-blue-400">
         <div className="grading-speed-dial">
           <SpeedDialDesktop type={gradingType} />
         </div>
 
-        <div className="grading-list" ref={listRef}>
+        <div className="grading-list bg-red-400" ref={listRef}>
           {gradingComponents.list}
         </div>
 

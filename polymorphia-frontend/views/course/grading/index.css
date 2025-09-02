@@ -21,7 +21,7 @@
 }
 
 .grading-list {
-    @apply w-full max-w-md flex flex-col h-full;
+    @apply w-full max-w-md flex flex-col;
 }
 
 .grading-columns {
