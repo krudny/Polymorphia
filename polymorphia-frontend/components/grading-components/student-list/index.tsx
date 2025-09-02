@@ -10,6 +10,7 @@ import Loading from "@/components/loading/Loading";
 import { ReactNode } from "react";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import "./index.css";
+import { useMediaQuery } from "react-responsive";
 
 export default function StudentsList() {
   const {
@@ -22,6 +23,7 @@ export default function StudentsList() {
     setAreFiltersOpen,
   } = useGradingContext();
   const wrapperRef = useFadeInAnimate(!isStudentsLoading);
+  const isMd = useMediaQuery({ minWidth: "786px" });
 
   const topComponent = (
     <>
@@ -32,8 +34,9 @@ export default function StudentsList() {
       />
       <ButtonWithBorder
         text="Filtry"
+        size={isMd ? "md" : "sm"}
+        className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none !h-full"
         onClick={() => setAreFiltersOpen(true)}
-        className="!mx-0 !py-0 !rounded-none !border-0 !border-b-2 !align-self-start !h-full"
       />
     </>
   );

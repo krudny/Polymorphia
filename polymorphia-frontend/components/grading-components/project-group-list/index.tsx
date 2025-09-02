@@ -21,6 +21,7 @@ export default function ProjectGroupList() {
     setSearch,
     projectGroups,
     isProjectGroupsLoading,
+    setAreFiltersOpen,
   } = useGradingContext();
 
   if (isProjectGroupsLoading || !projectGroups) {
@@ -38,6 +39,7 @@ export default function ProjectGroupList() {
         text="Filtry"
         size={isMd ? "md" : "sm"}
         className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none !h-full"
+        onClick={() => setAreFiltersOpen(true)}
       />
     </>
   );
