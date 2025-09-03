@@ -51,7 +51,7 @@ export default function Grade() {
           shouldAnimateInitialOpen={false}
         >
           {Object.entries(state.criteria).map(
-            ([criterionId, criterionGrade], index) => {
+            ([criterionId, criterionGrade]) => {
               const criterion = criteria?.find(
                 (criterion) => criterion.id === Number(criterionId)
               );
