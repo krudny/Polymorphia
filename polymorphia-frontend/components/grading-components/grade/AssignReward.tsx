@@ -40,10 +40,10 @@ export default function AssignReward({
           </div>
         ))}
         <div
-          className="grade-assign-reward-add"
+          className="grade-assign-reward-edit"
           onClick={() => setAssignableRewards(criterion?.assignableRewards)}
         >
-          <span>add</span>
+          <span>edit</span>
         </div>
       </div>
       <AssignRewardModal
