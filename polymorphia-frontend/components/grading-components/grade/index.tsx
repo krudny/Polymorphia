@@ -2,7 +2,7 @@
 
 import "../../../views/course/grading/index.css";
 import "./index.css";
-import { ReactNode, useRef } from "react";
+import { Fragment, ReactNode, useRef } from "react";
 import ProgressBar from "@/components/progressbar/ProgressBar";
 import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLabels";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
@@ -16,6 +16,7 @@ import Comment from "@/components/grading-components/grade/Comment";
 import Input from "@/components/grading-components/grade/Input";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import { useMediaQuery } from "react-responsive";
+import { getKeyForSelectedTarget } from "@/providers/grading/utils/getKeyForSelectedTarget";
 
 export default function Grade() {
   const { state, criteria, isGradeLoading, submitGrade } = useGradingContext();
@@ -34,7 +35,7 @@ export default function Grade() {
     }
 
     return (
-      <>
+      <Fragment key={getKeyForSelectedTarget(state)}>
         <Accordion
           ref={accordionRef}
           className="grade-accordion-override"
@@ -105,7 +106,7 @@ export default function Grade() {
             onClick={submitGrade}
           />
         </div>
-      </>
+      </Fragment>
     );
   };
 
