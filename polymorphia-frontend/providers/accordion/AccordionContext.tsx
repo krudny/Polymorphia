@@ -10,6 +10,7 @@ export function useAccordionState({
   sectionIds,
   initiallyOpenedSectionIds = new Set(),
   maxOpen,
+  shouldAnimateInitialOpen = true,
 }: useAccordionStateProps): AccordionContextInterface {
   const [openSections, setOpenSections] = useState<string[]>(() =>
     getInitialOpenSections(sectionIds, initiallyOpenedSectionIds, maxOpen)
@@ -77,5 +78,13 @@ export function useAccordionState({
     [openSections]
   );
 
-  return { open, close, closeAll, resetToInitial, toggle, isOpen };
+  return {
+    open,
+    close,
+    closeAll,
+    resetToInitial,
+    toggle,
+    isOpen,
+    shouldAnimateInitialOpen,
+  };
 }

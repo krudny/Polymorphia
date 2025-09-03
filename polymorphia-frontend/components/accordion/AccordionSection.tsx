@@ -12,15 +12,20 @@ export default function AccordionSection({
   children,
   headerClassName,
 }: AccordionSectionProps) {
-  const { isOpen, toggle } = useAccordionContext();
+  const { isOpen, toggle, shouldAnimateInitialOpen } = useAccordionContext();
   const contentRef = useRef<HTMLDivElement>(null);
-
+  const isFirstRender = useRef(true);
   const isOpened = isOpen(id);
   useEffect(() => {
     if (contentRef.current) {
-      animateAccordion(contentRef.current, isOpened);
+      animateAccordion(
+        contentRef.current,
+        isOpened,
+        isFirstRender.current && !shouldAnimateInitialOpen
+      );
+      isFirstRender.current = false;
     }
-  }, [isOpened]);
+  }, [isOpened, shouldAnimateInitialOpen]);
 
   return (
     <div className="accordion-section">

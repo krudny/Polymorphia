@@ -48,6 +48,7 @@ export default function Grade() {
             )
           }
           maxOpen={1}
+          shouldAnimateInitialOpen={false}
         >
           {Object.entries(state.criteria).map(
             ([criterionId, criterionGrade], index) => {

@@ -10,10 +10,12 @@ export interface AccordionRef {
 
 export interface AccordionContextInterface extends AccordionRef {
   isOpen: AccordionAction<boolean>;
+  shouldAnimateInitialOpen: boolean;
 }
 
 export interface useAccordionStateProps {
   sectionIds: Set<string>;
   initiallyOpenedSectionIds?: Set<string>;
   maxOpen?: number;
+  shouldAnimateInitialOpen?: boolean;
 }
