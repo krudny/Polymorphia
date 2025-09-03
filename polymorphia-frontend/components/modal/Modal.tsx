@@ -11,8 +11,15 @@ import { ModalProps } from "@/components/modal/types";
 import { useTheme } from "next-themes";
 
 export default function Modal(props: ModalProps) {
-  const { isDataPresented, onClosed, title, subtitle, children, ...rest } =
-    props;
+  const {
+    isDataPresented,
+    onClosed,
+    title,
+    subtitle,
+    children,
+    shouldUnmountWhenClosed = false,
+    ...rest
+  } = props;
 
   const [modalVisible, setModalVisible] = useState(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
@@ -67,7 +74,7 @@ export default function Modal(props: ModalProps) {
               </div>
               <h2>{subtitle}</h2>
             </div>
-            {children}
+            {(!shouldUnmountWhenClosed || modalState !== "closed") && children}
           </div>
         </div>,
         document.body

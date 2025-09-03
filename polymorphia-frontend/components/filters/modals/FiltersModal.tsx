@@ -41,7 +41,6 @@ export default function FiltersModal<FilterIdType extends string>({
 
     if (result.ok) {
       onFiltersApplied?.();
-      accordionRef.current?.closeAll();
       setIsModalOpen(false);
     } else if (result.errors !== undefined) {
       (Object.keys(result.errors) as FilterIdType[]).forEach(
@@ -61,10 +60,18 @@ export default function FiltersModal<FilterIdType extends string>({
       return <h1>Nie udało się załadować filtrów.</h1>;
     }
 
+    const filterIds = configs.map(({ id }) => id);
+    const accordionSections = new Set(filterIds);
+    const initiallyOpenedAccordionSections = new Set(
+      filterIds.length > 0 ? [filterIds[0]] : []
+    );
+
     return (
       <>
         <Accordion
           ref={accordionRef}
+          sectionIds={accordionSections}
+          initiallyOpenedSectionIds={initiallyOpenedAccordionSections}
           maxOpen={1}
           className="filters-modal-wrapper"
         >
@@ -111,10 +118,11 @@ export default function FiltersModal<FilterIdType extends string>({
       isDataPresented={isModalOpen}
       title="Filtry"
       onClosed={() => {
-        accordionRef.current?.closeAll();
+        accordionRef.current?.resetToInitial();
         resetFiltersToApplied();
         setIsModalOpen(false);
       }}
+      shouldUnmountWhenClosed={true}
     >
       <div className="filters-modal">{getModalContent()}</div>
     </Modal>

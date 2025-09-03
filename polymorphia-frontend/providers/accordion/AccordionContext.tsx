@@ -1,26 +1,30 @@
-import { createContext, useCallback, useRef, useState } from "react";
-import { AccordionContextInterface } from "./types";
+import { createContext, useCallback, useEffect, useState } from "react";
+import { AccordionContextInterface, useAccordionStateProps } from "./types";
+import { getInitialOpenSections } from "./utils/getInitialOpenSections";
 
 export const AccordionContext = createContext<
   AccordionContextInterface | undefined
 >(undefined);
 
-export function useAccordionState(maxOpen?: number): AccordionContextInterface {
-  const [openSections, setOpenSections] = useState<string[]>([]);
-  const registeredIds = useRef<Set<string>>(new Set());
+export function useAccordionState({
+  sectionIds,
+  initiallyOpenedSectionIds = new Set(),
+  maxOpen,
+  shouldAnimateInitialOpen = true,
+}: useAccordionStateProps): AccordionContextInterface {
+  const [openSections, setOpenSections] = useState<string[]>(() =>
+    getInitialOpenSections(sectionIds, initiallyOpenedSectionIds, maxOpen)
+  );
 
-  const register = useCallback((id: string) => {
-    registeredIds.current.add(id);
-  }, []);
-
-  const unregister = useCallback((id: string) => {
-    registeredIds.current.delete(id);
-    setOpenSections((prev) => prev.filter((sectionId) => sectionId !== id));
-  }, []);
+  useEffect(() => {
+    setOpenSections((prev) =>
+      prev.filter((sectionId) => sectionIds.has(sectionId))
+    );
+  }, [sectionIds]);
 
   const open = useCallback(
     (id: string) => {
-      if (!registeredIds.current.has(id)) {
+      if (!sectionIds.has(id)) {
         console.warn(`[Accordion] Tried to open invalid id "${id}"`);
         return;
       }
@@ -34,20 +38,29 @@ export function useAccordionState(maxOpen?: number): AccordionContextInterface {
         return [...prev, id];
       });
     },
-    [maxOpen]
+    [maxOpen, sectionIds]
   );
 
-  const close = useCallback((id: string) => {
-    if (!registeredIds.current.has(id)) {
-      console.warn(`[Accordion] Tried to close invalid id "${id}"`);
-      return;
-    }
-    setOpenSections((prev) => prev.filter((sectionId) => sectionId !== id));
-  }, []);
+  const close = useCallback(
+    (id: string) => {
+      if (!sectionIds.has(id)) {
+        console.warn(`[Accordion] Tried to close invalid id "${id}"`);
+        return;
+      }
+      setOpenSections((prev) => prev.filter((sectionId) => sectionId !== id));
+    },
+    [sectionIds]
+  );
 
   const closeAll = useCallback(() => {
     setOpenSections([]);
   }, []);
+
+  const resetToInitial = useCallback(() => {
+    setOpenSections(
+      getInitialOpenSections(sectionIds, initiallyOpenedSectionIds, maxOpen)
+    );
+  }, [initiallyOpenedSectionIds, maxOpen, sectionIds]);
 
   const toggle = useCallback(
     (id: string) => {
@@ -65,5 +78,13 @@ export function useAccordionState(maxOpen?: number): AccordionContextInterface {
     [openSections]
   );
 
-  return { open, close, closeAll, toggle, isOpen, register, unregister };
+  return {
+    open,
+    close,
+    closeAll,
+    resetToInitial,
+    toggle,
+    isOpen,
+    shouldAnimateInitialOpen,
+  };
 }

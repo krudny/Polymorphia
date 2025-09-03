@@ -10,26 +10,22 @@ export default function AccordionSection({
   id,
   title,
   children,
-  isInitiallyOpened,
   headerClassName,
 }: AccordionSectionProps) {
-  const { register, unregister, isOpen, toggle, open } = useAccordionContext();
+  const { isOpen, toggle, shouldAnimateInitialOpen } = useAccordionContext();
   const contentRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    register(id);
-    if (isInitiallyOpened) {
-      open(id);
-    }
-    return () => unregister(id);
-  }, [id, isInitiallyOpened, open, register, unregister]);
-
+  const isFirstRender = useRef(true);
   const isOpened = isOpen(id);
   useEffect(() => {
     if (contentRef.current) {
-      animateAccordion(contentRef.current, isOpened);
+      animateAccordion(
+        contentRef.current,
+        isOpened,
+        isFirstRender.current && !shouldAnimateInitialOpen
+      );
+      isFirstRender.current = false;
     }
-  }, [isOpened]);
+  }, [isOpened, shouldAnimateInitialOpen]);
 
   return (
     <div className="accordion-section">

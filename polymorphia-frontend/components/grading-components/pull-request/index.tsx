@@ -15,15 +15,26 @@ export default function PullRequest({ pullRequests }: PullRequestProps) {
 
   const topComponent = <h1 className="text-5xl">Pull Request</h1>;
 
+  const pullRequestNames = pullRequests.map(({ name }) => String(name));
+  const accordionSections = new Set(pullRequestNames);
+  const initiallyOpenedAccordionSections = new Set(
+    pullRequestNames.length > 0 && isXL ? [pullRequestNames[0]] : []
+  );
+
   const mainComponent = (): ReactNode => (
-    <Accordion ref={accordionRef} className="gap-y-5" maxOpen={2}>
+    <Accordion
+      ref={accordionRef}
+      className="gap-y-5"
+      sectionIds={accordionSections}
+      initiallyOpenedSectionIds={initiallyOpenedAccordionSections}
+      maxOpen={2}
+    >
       {pullRequests.map((pullRequest, index) => (
         <AccordionSection
           key={index}
           id={pullRequest.name}
           title={pullRequest.name}
           headerClassName="grading-accordion-header"
-          isInitiallyOpened={index === 0 && isXL}
         >
           <div key={index} className="flex flex-col mb-3">
             <h3 className="text-2xl mb-2 hover:cursor-pointer">
