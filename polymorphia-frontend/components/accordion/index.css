@@ -13,7 +13,7 @@
     @apply flex justify-between items-center;
 
     h1 {
-        @apply text-3xl;
+        @apply text-3xl truncate;
     }
 }
 

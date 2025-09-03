@@ -25,6 +25,6 @@
 }
 
 .grading-columns {
-    @apply w-full max-w-md flex flex-col gap-y-4 h-fit min-h-0;
+    @apply w-full max-w-md flex flex-col gap-y-4 h-fit min-h-0 min-w-0;
 }
 
