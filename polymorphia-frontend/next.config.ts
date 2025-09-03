@@ -1,6 +1,7 @@
 import { API_STATIC_HOST_PATTERN } from "./services/api";
+import path from "node:path";
 
-/** @type {import('next').NextConfig} */
+/** @type {import("next").NextConfig} */
 module.exports = {
   async redirects() {
     return [
@@ -13,5 +14,8 @@ module.exports = {
   },
   images: {
     remotePatterns: [API_STATIC_HOST_PATTERN],
+  },
+  turbopack: {
+    root: path.resolve(__dirname, "./"),
   },
 };
