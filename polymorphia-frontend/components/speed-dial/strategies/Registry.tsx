@@ -1,25 +1,64 @@
-import { EventTypes } from "@/interfaces/api/course";
-import { AssignmentStrategy } from "@/components/speed-dial/strategies/Assignment";
-import { ProjectStrategy } from "@/components/speed-dial/strategies/Project";
+import { EventTypes, ViewTypes } from "@/interfaces/api/course";
+import { AssignmentStrategy } from "@/components/speed-dial/strategies/student/Assignment";
+import { ProjectStrategy } from "@/components/speed-dial/strategies/student/Project";
 import { SpeedDialStrategy } from "@/components/speed-dial/strategies/types";
-import { TestGradingStrategy } from "@/components/speed-dial/strategies/TestGrading";
-import { GradingTypes } from "@/views/course/grading/types";
+import { TestGradingStrategy } from "@/components/speed-dial/strategies/instructor/TestGrading";
+import { Roles } from "@/interfaces/api/temp";
+import { AssignmentGradingStrategy } from "@/components/speed-dial/strategies/instructor/AssignmentGrading";
 
 class SpeedDialStrategyRegistry {
   private strategies = new Map<string, SpeedDialStrategy>();
 
   constructor() {
-    this.registerStrategy(EventTypes.ASSIGNMENT, new AssignmentStrategy());
-    this.registerStrategy(EventTypes.PROJECT, new ProjectStrategy());
-    this.registerStrategy(GradingTypes.TEST_GRADING, new TestGradingStrategy());
+    this.registerStrategy(
+      EventTypes.ASSIGNMENT,
+      ViewTypes.MARKDOWN,
+      Roles.STUDENT,
+      new AssignmentStrategy()
+    );
+    this.registerStrategy(
+      EventTypes.PROJECT,
+      ViewTypes.MARKDOWN,
+      Roles.STUDENT,
+      new ProjectStrategy()
+    );
+    this.registerStrategy(
+      EventTypes.TEST,
+      ViewTypes.GRADING,
+      Roles.INSTRUCTOR,
+      new TestGradingStrategy()
+    );
+    this.registerStrategy(
+      EventTypes.ASSIGNMENT,
+      ViewTypes.GRADING,
+      Roles.INSTRUCTOR,
+      new AssignmentGradingStrategy()
+    );
   }
 
-  registerStrategy(strategyName: string, strategy: SpeedDialStrategy): void {
-    this.strategies.set(strategyName, strategy);
+  getKey(eventType: string, viewType: string, role: string) {
+    return `${eventType}:${viewType}:${role}`;
   }
 
-  getStrategy(strategyName: string): SpeedDialStrategy | undefined {
-    return this.strategies.get(strategyName);
+  registerStrategy(
+    eventType: string,
+    viewType: string,
+    role: string,
+    strategy: SpeedDialStrategy
+  ): void {
+    const key = this.getKey(eventType, viewType, role);
+
+    this.strategies.set(key, strategy);
+  }
+
+  getStrategy(
+    eventType: string,
+    viewType: string,
+    role: string
+  ): SpeedDialStrategy | undefined {
+    const key = this.getKey(eventType, viewType, role);
+
+    return this.strategies.get(key);
   }
 }
 

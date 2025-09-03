@@ -91,6 +91,19 @@ export abstract class BaseSpeedDialStrategy {
     };
   }
 
+  protected createRedirectToMarkdown(context: SpeedDialContext): SpeedDialItem {
+    return {
+      id: 9,
+      orderIndex: 0,
+      label: "Zobacz polecenie",
+      icon: "task",
+      onClick: () => {
+        const newPath = context.currentPath.split("/").slice(0, -1).join("/");
+        context.router.push(newPath);
+      },
+    };
+  }
+
   protected createEditingItems(context: SpeedDialContext): SpeedDialItem[] {
     return context.isEditing
       ? [this.createSaveItem(context), this.createRejectItem(context)]

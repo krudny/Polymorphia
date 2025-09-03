@@ -1,5 +1,4 @@
 import { GradingProps } from "@/views/course/grading/types";
-import SpeedDialDesktop from "@/components/speed-dial/SpeedDialDesktop";
 import { useGradingFactory } from "@/hooks/factory/useGradingFactory";
 import { Fragment, useEffect, useLayoutEffect, useRef } from "react";
 import "./index.css";
@@ -9,15 +8,18 @@ import useGradingContext from "@/hooks/contexts/useGradingContext";
 import { useQueryClient } from "@tanstack/react-query";
 import { useMediaQuery } from "react-responsive";
 import { useTitle } from "@/components/navigation/TitleContext";
+import SpeedDialDesktop from "@/components/speed-dial/SpeedDialDesktop";
+import { ViewTypes } from "@/interfaces/api/course";
+import { Roles } from "@/interfaces/api/temp";
 
-export default function Grading({ gradingType, columns }: GradingProps) {
+export default function Grading({ eventType, columns }: GradingProps) {
   const queryClient = useQueryClient();
   const isMd = useMediaQuery({ minWidth: "768px" });
   const { setTitle } = useTitle();
   const gradingRef = useRef<HTMLDivElement>(null);
   const columnsRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
-  const gradingComponents = useGradingFactory(gradingType);
+  const gradingComponents = useGradingFactory(eventType);
   const {
     filters,
     areFiltersOpen,
@@ -27,7 +29,7 @@ export default function Grading({ gradingType, columns }: GradingProps) {
   } = useGradingContext();
 
   useEffect(() => {
-    setTitle("Work in progress");
+    setTitle("Ocenianie");
   }, [setTitle]);
 
   useLayoutEffect(() => {
@@ -69,7 +71,11 @@ export default function Grading({ gradingType, columns }: GradingProps) {
     <>
       <div ref={gradingRef} className="grading">
         <div className="grading-speed-dial">
-          <SpeedDialDesktop type={gradingType} />
+          <SpeedDialDesktop
+            eventType={eventType}
+            viewType={ViewTypes.GRADING}
+            role={Roles.INSTRUCTOR}
+          />
         </div>
 
         <div className="grading-list" ref={listRef}>

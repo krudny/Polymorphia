@@ -1,21 +1,19 @@
-import { GradingStrategy, GradingTypes } from "@/views/course/grading/types";
+import { GradingStrategy } from "@/views/course/grading/types";
 import { AssignmentGradingStrategy } from "@/views/course/grading/strategies/Assignment";
 import { ProjectGradingStrategy } from "@/views/course/grading/strategies/Project";
 import { TestGradingStrategy } from "@/views/course/grading/strategies/Test";
+import { EventTypes } from "@/interfaces/api/course";
 
 class GradingStrategyRegistry {
   private strategies = new Map<string, GradingStrategy>();
 
   constructor() {
-    this.registerStrategy(GradingTypes.TEST_GRADING, new TestGradingStrategy());
+    this.registerStrategy(EventTypes.TEST, new TestGradingStrategy());
     this.registerStrategy(
-      GradingTypes.ASSIGNMENT_GRADING,
+      EventTypes.ASSIGNMENT,
       new AssignmentGradingStrategy()
     );
-    this.registerStrategy(
-      GradingTypes.PROJECT_GRADING,
-      new ProjectGradingStrategy()
-    );
+    this.registerStrategy(EventTypes.PROJECT, new ProjectGradingStrategy());
   }
 
   registerStrategy(strategyName: string, strategy: GradingStrategy): void {
