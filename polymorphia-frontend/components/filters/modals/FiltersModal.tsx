@@ -118,6 +118,7 @@ export default function FiltersModal<FilterIdType extends string>({
         resetFiltersToApplied();
         setIsModalOpen(false);
       }}
+      shouldUnmountWhenClosed={true}
     >
       <div className="filters-modal">{getModalContent()}</div>
     </Modal>
