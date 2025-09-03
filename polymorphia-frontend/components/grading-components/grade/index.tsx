@@ -34,11 +34,19 @@ export default function Grade() {
       );
     }
 
+    const accordionSections = [...Object.keys(state.criteria), "Komentarz"];
+
     return (
       <Fragment key={getKeyForSelectedTarget(state)}>
         <Accordion
           ref={accordionRef}
           className="grade-accordion-override"
+          sectionIds={new Set(accordionSections)}
+          initiallyOpenedSectionIds={
+            new Set(
+              accordionSections.length > 0 && isXL ? [accordionSections[0]] : []
+            )
+          }
           maxOpen={1}
         >
           {Object.entries(state.criteria).map(
@@ -57,7 +65,6 @@ export default function Grade() {
                   id={criterionId}
                   title={criterion.name}
                   headerClassName="grading-accordion-header"
-                  isInitiallyOpened={index == 0 && isXL}
                 >
                   <div key={criterionId} className="grade-criterion">
                     <div className="grade-criterion-progress-bar">

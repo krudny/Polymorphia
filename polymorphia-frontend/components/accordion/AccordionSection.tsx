@@ -10,19 +10,10 @@ export default function AccordionSection({
   id,
   title,
   children,
-  isInitiallyOpened,
   headerClassName,
 }: AccordionSectionProps) {
-  const { register, unregister, isOpen, toggle, open } = useAccordionContext();
+  const { isOpen, toggle } = useAccordionContext();
   const contentRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    register(id);
-    if (isInitiallyOpened) {
-      open(id);
-    }
-    return () => unregister(id);
-  }, [id, isInitiallyOpened, open, register, unregister]);
 
   const isOpened = isOpen(id);
   useEffect(() => {
