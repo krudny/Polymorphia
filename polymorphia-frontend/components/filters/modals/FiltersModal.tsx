@@ -60,14 +60,18 @@ export default function FiltersModal<FilterIdType extends string>({
       return <h1>Nie udało się załadować filtrów.</h1>;
     }
 
+    const filterIds = configs.map(({ id }) => id);
+    const accordionSections = new Set(filterIds);
+    const initiallyOpenedAccordionSections = new Set(
+      filterIds.length > 0 ? [filterIds[0]] : []
+    );
+
     return (
       <>
         <Accordion
           ref={accordionRef}
-          sectionIds={new Set(configs.map(({ id }) => id))}
-          initiallyOpenedSectionIds={
-            new Set(configs.length > 0 ? [configs[0].id] : [])
-          }
+          sectionIds={accordionSections}
+          initiallyOpenedSectionIds={initiallyOpenedAccordionSections}
           maxOpen={1}
           className="filters-modal-wrapper"
         >

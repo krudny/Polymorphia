@@ -6,7 +6,7 @@ export function getInitialOpenSections(
     useAccordionStateProps["initiallyOpenedSectionIds"]
   >,
   maxOpen: useAccordionStateProps["maxOpen"]
-) {
+): string[] {
   if (initiallyOpenedSectionIds.difference(sectionIds).size > 0) {
     console.warn(
       `[Accordion] Initially opened sections contain invalid id(s).`

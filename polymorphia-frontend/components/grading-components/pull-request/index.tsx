@@ -15,16 +15,18 @@ export default function PullRequest({ pullRequests }: PullRequestProps) {
 
   const topComponent = <h1 className="text-5xl">Pull Request</h1>;
 
+  const pullRequestNames = pullRequests.map(({ name }) => String(name));
+  const accordionSections = new Set(pullRequestNames);
+  const initiallyOpenedAccordionSections = new Set(
+    pullRequestNames.length > 0 && isXL ? [pullRequestNames[0]] : []
+  );
+
   const mainComponent = (): ReactNode => (
     <Accordion
       ref={accordionRef}
       className="gap-y-5"
-      sectionIds={new Set(pullRequests.map(({ name }) => String(name)))}
-      initiallyOpenedSectionIds={
-        new Set(
-          pullRequests.length > 0 && isXL ? [String(pullRequests[0].name)] : []
-        )
-      }
+      sectionIds={accordionSections}
+      initiallyOpenedSectionIds={initiallyOpenedAccordionSections}
       maxOpen={2}
     >
       {pullRequests.map((pullRequest, index) => (
