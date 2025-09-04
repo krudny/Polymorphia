@@ -1,5 +1,6 @@
 import { SpeedDialItem } from "@/components/speed-dial/types";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { Role } from "@/interfaces/general";
 
 export interface SpeedDialContext {
   isEditing: boolean;
@@ -8,8 +9,9 @@ export interface SpeedDialContext {
   rejectMarkdown: () => void;
   router: AppRouterInstance;
   currentPath: string;
+  role: Role;
 }
 
 export interface SpeedDialStrategy {
-  getItems(context: SpeedDialContext | undefined): SpeedDialItem[];
+  getItems(context: SpeedDialContext): SpeedDialItem[];
 }

@@ -26,14 +26,12 @@ export default function GradableEventMarkdownView() {
           <SpeedDialMobile
             eventType={eventType}
             viewType={ViewTypes.MARKDOWN}
-            role={role}
           />
         </div>
         <div className="gradable-event-speed-dial-desktop">
           <SpeedDialDesktop
             eventType={eventType}
             viewType={ViewTypes.MARKDOWN}
-            role={role}
           />
         </div>
         <div className="gradable-event-markdown-wrapper">

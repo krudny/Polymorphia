@@ -91,6 +91,16 @@ export abstract class BaseSpeedDialStrategy {
     };
   }
 
+  protected createGoBackItem(context: SpeedDialContext): SpeedDialItem {
+    return {
+      id: 10,
+      orderIndex: 50,
+      label: "Wróć",
+      icon: "undo",
+      onClick: () => context.router.back(),
+    };
+  }
+
   protected createRedirectToMarkdown(context: SpeedDialContext): SpeedDialItem {
     return {
       id: 9,

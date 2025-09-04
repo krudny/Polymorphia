@@ -10,9 +10,8 @@ import { SpeedDialProps } from "./types";
 export default function SpeedDialDesktop({
   eventType,
   viewType,
-  role,
 }: SpeedDialProps) {
-  const items = useSpeedDialFactory({ eventType, viewType, role });
+  const items = useSpeedDialFactory({ eventType, viewType });
   const [activeModal, setActiveModal] = useState<ReactNode | null>(null);
 
   if (!items) {

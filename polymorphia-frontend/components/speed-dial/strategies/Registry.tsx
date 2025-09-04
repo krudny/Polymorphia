@@ -1,5 +1,5 @@
-import { AssignmentStrategy } from "@/components/speed-dial/strategies/student/Assignment";
-import { ProjectStrategy } from "@/components/speed-dial/strategies/student/Project";
+import { AssignmentStrategy } from "@/components/speed-dial/strategies/markdown-view/Assignment";
+import { ProjectStrategy } from "@/components/speed-dial/strategies/markdown-view/Project";
 import { SpeedDialStrategy } from "@/components/speed-dial/strategies/types";
 import { TestGradingStrategy } from "@/components/speed-dial/strategies/instructor/TestGrading";
 import { AssignmentGradingStrategy } from "@/components/speed-dial/strategies/instructor/AssignmentGrading";
@@ -16,9 +16,21 @@ class SpeedDialStrategyRegistry {
       new AssignmentStrategy()
     );
     this.registerStrategy(
+      EventTypes.ASSIGNMENT,
+      ViewTypes.MARKDOWN,
+      Roles.INSTRUCTOR,
+      new AssignmentStrategy()
+    );
+    this.registerStrategy(
       EventTypes.PROJECT,
       ViewTypes.MARKDOWN,
       Roles.STUDENT,
+      new ProjectStrategy()
+    );
+    this.registerStrategy(
+      EventTypes.PROJECT,
+      ViewTypes.MARKDOWN,
+      Roles.INSTRUCTOR,
       new ProjectStrategy()
     );
     this.registerStrategy(
@@ -29,6 +41,12 @@ class SpeedDialStrategyRegistry {
     );
     this.registerStrategy(
       EventTypes.ASSIGNMENT,
+      ViewTypes.GRADING,
+      Roles.INSTRUCTOR,
+      new AssignmentGradingStrategy()
+    );
+    this.registerStrategy(
+      EventTypes.PROJECT,
       ViewTypes.GRADING,
       Roles.INSTRUCTOR,
       new AssignmentGradingStrategy()

@@ -8,8 +8,8 @@ import useGradingContext from "@/hooks/contexts/useGradingContext";
 import { useQueryClient } from "@tanstack/react-query";
 import { useMediaQuery } from "react-responsive";
 import { useTitle } from "@/components/navigation/TitleContext";
-import SpeedDialDesktop from "@/components/speed-dial/SpeedDialDesktop";
-import { Roles, ViewTypes } from "@/interfaces/general";
+import { ViewTypes } from "@/interfaces/general";
+import SpeedDialMobile from "@/components/speed-dial/SpeedDialMobile";
 
 export default function Grading({ eventType, columns }: GradingProps) {
   const queryClient = useQueryClient();
@@ -76,11 +76,7 @@ export default function Grading({ eventType, columns }: GradingProps) {
     <>
       <div ref={gradingRef} className="grading">
         <div className="grading-speed-dial">
-          <SpeedDialDesktop
-            eventType={eventType}
-            viewType={ViewTypes.GRADING}
-            role={Roles.INSTRUCTOR}
-          />
+          <SpeedDialMobile eventType={eventType} viewType={ViewTypes.GRADING} />
         </div>
 
         <div className="grading-list" ref={listRef}>

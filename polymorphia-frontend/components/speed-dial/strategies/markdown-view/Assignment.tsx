@@ -4,20 +4,20 @@ import {
   SpeedDialContext,
   SpeedDialStrategy,
 } from "@/components/speed-dial/strategies/types";
+import { Roles } from "@/interfaces/general";
 
-export class ProjectStrategy
+export class AssignmentStrategy
   extends BaseSpeedDialStrategy
   implements SpeedDialStrategy
 {
   getItems(context: SpeedDialContext): SpeedDialItem[] {
-    const editingItems = this.createEditingItems(context);
-    const baseItems = [
-      this.createRewardsItem(),
-      this.createProjectVariantItem(),
-      this.createProjectGroupItem(),
-      this.createProjectGroupPickingItem(),
-    ];
-
-    return [...editingItems, ...baseItems];
+    switch (context.role) {
+      case Roles.STUDENT:
+        return [this.createRewardsItem(), this.createGoBackItem(context)];
+      case Roles.INSTRUCTOR:
+        return [this.createGoBackItem(context)];
+      default:
+        return [];
+    }
   }
 }

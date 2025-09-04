@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { EventType, Role, ViewType } from "@/interfaces/general";
+import { EventType, ViewType } from "@/interfaces/general";
 
 export interface SpeedDialItem {
   id: number;
@@ -14,5 +14,4 @@ export interface SpeedDialItem {
 export interface SpeedDialProps {
   eventType: EventType;
   viewType: ViewType;
-  role: Role;
 }
