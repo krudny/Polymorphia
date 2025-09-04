@@ -6,12 +6,11 @@
 }
 
 .grading-wrapper-top {
-    @apply w-full flex justify-between my-3 mx-auto min-h-12 min-w-0 text-5xl;
+    @apply w-full flex justify-between my-3 mx-auto min-h-12 min-w-0 custom-scrollbar text-5xl;
+    scrollbar-gutter: stable;
+    overflow: hidden;
 }
 
 .grading-wrapper-main {
-    @apply w-full flex flex-col relative mx-auto flex-1 min-h-0  min-w-0;
-    overflow-y: scroll;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    @apply w-full flex flex-col relative mx-auto flex-1 min-h-0  min-w-0 custom-scrollbar overflow-y-auto;
 }
