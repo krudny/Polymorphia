@@ -8,3 +8,7 @@
 .student-record {
     @apply mx-auto my-3 first:mt-0 last:mb-0;
 }
+
+.divider {
+    @apply w-full border-2 border-secondary-dark dark:border-secondary-gray first:hidden;
+}

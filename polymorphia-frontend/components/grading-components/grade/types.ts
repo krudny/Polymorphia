@@ -1,5 +1,5 @@
-import { CriteriaDetails } from "@/providers/grading/GradingContext";
 import { CriterionResponseDTO } from "@/interfaces/api/grade";
+import { CriteriaDetails } from "@/providers/grading/types";
 
 export interface RewardProps {
   criterion: CriterionResponseDTO;

@@ -17,8 +17,8 @@ import {
 } from "@/interfaces/api/course";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import { ProjectGroupResponseDTO } from "@/interfaces/api/temp";
-import { CriteriaDetails } from "@/providers/grading/GradingContext";
-import {EventTypes} from "@/interfaces/general";
+import { EventType, EventTypes } from "@/interfaces/general";
+import { CriteriaDetails } from "@/providers/grading/types";
 
 const allData: UserDetailsDTO[] = [];
 
@@ -1169,10 +1169,9 @@ export const EventSectionService = {
     searchTerm: string,
     sortBy: string[],
     sortOrder: string[],
-    groups: string[]
-  ): Promise<(UserDetailsDTO & { gainedXp?: string })[]> => {
-    // await new Promise<void>((resolve) => setTimeout(resolve, 1000));
-
+    groups: string[],
+    eventType: EventType
+  ): Promise<(UserDetailsDTO & { gainedXp?: string })[][]> => {
     let filteredData = allData;
 
     if (groups && !groups.includes("all")) {
@@ -1211,7 +1210,16 @@ export const EventSectionService = {
       });
     }
 
-    return filteredData;
+    if (eventType === EventTypes.PROJECT) {
+      const groupedData: (UserDetailsDTO & { gainedXp?: string })[][] = [];
+      for (let i = 0; i < filteredData.length; i += 2) {
+        const group = filteredData.slice(i, i + 2);
+        groupedData.push(group);
+      }
+      return groupedData;
+    } else {
+      return filteredData.map((student) => [student]);
+    }
   },
 
   getRandomProjectGroups: async (): Promise<ProjectGroupResponseDTO[]> => {
