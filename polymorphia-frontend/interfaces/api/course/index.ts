@@ -1,26 +1,4 @@
-export const EventTypes = {
-  ASSIGNMENT: "ASSIGNMENT",
-  PROJECT: "PROJECT",
-  TEST: "TEST",
-} as const;
-
-export type EventType = (typeof EventTypes)[keyof typeof EventTypes];
-
-export const GradingTypes = {
-  TEST_GRADING: "TEST-GRADING",
-  ASSIGNMENT_GRADING: "ASSIGNMENT-GRADING",
-  PROJECT_GRADING: "PROJECT-GRADING",
-} as const;
-
-export type GradingType = (typeof GradingTypes)[keyof typeof GradingTypes];
-
-export const ViewTypes = {
-  CARD_GRID: "CARD_GRID",
-  MARKDOWN: "MARKDOWN",
-  GRADING: "GRADING",
-};
-
-export type ViewType = (typeof ViewTypes)[keyof typeof ViewTypes];
+import { EventType } from "@/interfaces/general";
 
 export interface EventSectionResponseDTO {
   id: number;

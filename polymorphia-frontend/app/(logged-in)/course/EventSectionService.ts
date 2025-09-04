@@ -12,13 +12,13 @@ import { MarkdownResponseDTO } from "@/interfaces/api/markdown";
 import { PointsSummaryResponseDTO } from "@/interfaces/api/course/points-summary";
 import {
   EventSectionResponseDTO,
-  EventTypes,
   InstructorGradableEventResponseDTO,
   StudentGradableEventResponseDTO,
 } from "@/interfaces/api/course";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import { ProjectGroupResponseDTO } from "@/interfaces/api/temp";
 import { CriteriaDetails } from "@/providers/grading/GradingContext";
+import {EventTypes} from "@/interfaces/general";
 
 const allData: UserDetailsDTO[] = [];
 

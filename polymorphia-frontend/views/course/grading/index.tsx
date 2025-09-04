@@ -9,8 +9,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useMediaQuery } from "react-responsive";
 import { useTitle } from "@/components/navigation/TitleContext";
 import SpeedDialDesktop from "@/components/speed-dial/SpeedDialDesktop";
-import { ViewTypes } from "@/interfaces/api/course";
-import { Roles } from "@/interfaces/api/temp";
+import { Roles, ViewTypes } from "@/interfaces/general";
 
 export default function Grading({ eventType, columns }: GradingProps) {
   const queryClient = useQueryClient();

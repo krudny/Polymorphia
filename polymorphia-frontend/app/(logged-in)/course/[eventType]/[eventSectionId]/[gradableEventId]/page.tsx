@@ -7,10 +7,10 @@ import { useFadeInAnimate } from "@/animations/FadeIn";
 import "./index.css";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import SpeedDialMobile from "@/components/speed-dial/SpeedDialMobile";
-import { ViewTypes } from "@/interfaces/api/course";
 import useUserRole from "@/hooks/general/useUserRole";
+import { ViewTypes } from "@/interfaces/general";
 
-export default function GradableEventView() {
+export default function GradableEventMarkdownView() {
   const wrapperRef = useFadeInAnimate();
   const { data: role } = useUserRole();
   const { eventType } = useEventParams();

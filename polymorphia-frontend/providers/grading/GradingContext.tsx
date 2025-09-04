@@ -10,7 +10,6 @@ import { useDebounce } from "use-debounce";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import { BaseReward } from "@/interfaces/api/reward";
-import { EventTypes } from "@/interfaces/api/course";
 import useRandomPeopleWithPoints from "@/hooks/course/useRandomPeopleWithPoints";
 import useCriteria from "@/hooks/course/useCriteria";
 import useGrade2 from "@/hooks/course/useGrade2";
@@ -22,6 +21,7 @@ import {
 } from "@/providers/grading/types";
 import { useFilters } from "@/hooks/course/useFilters";
 import { useGradingFilterConfigs } from "@/hooks/course/useGradingFilterConfigs";
+import {EventTypes} from "@/interfaces/general";
 
 export interface CriteriaDetails {
   gainedXp?: string;

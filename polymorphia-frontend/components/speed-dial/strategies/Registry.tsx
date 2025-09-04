@@ -1,10 +1,9 @@
-import { EventTypes, ViewTypes } from "@/interfaces/api/course";
 import { AssignmentStrategy } from "@/components/speed-dial/strategies/student/Assignment";
 import { ProjectStrategy } from "@/components/speed-dial/strategies/student/Project";
 import { SpeedDialStrategy } from "@/components/speed-dial/strategies/types";
 import { TestGradingStrategy } from "@/components/speed-dial/strategies/instructor/TestGrading";
-import { Roles } from "@/interfaces/api/temp";
 import { AssignmentGradingStrategy } from "@/components/speed-dial/strategies/instructor/AssignmentGrading";
+import { EventTypes, Roles, ViewTypes } from "@/interfaces/general";
 
 class SpeedDialStrategyRegistry {
   private strategies = new Map<string, SpeedDialStrategy>();

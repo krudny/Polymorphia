@@ -2,7 +2,8 @@ import { GradingStrategy } from "@/views/course/grading/types";
 import { AssignmentGradingStrategy } from "@/views/course/grading/strategies/Assignment";
 import { ProjectGradingStrategy } from "@/views/course/grading/strategies/Project";
 import { TestGradingStrategy } from "@/views/course/grading/strategies/Test";
-import { EventTypes } from "@/interfaces/api/course";
+
+import { EventTypes } from "@/interfaces/general";
 
 class GradingStrategyRegistry {
   private strategies = new Map<string, GradingStrategy>();

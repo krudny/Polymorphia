@@ -1,4 +1,4 @@
-import { Role } from "@/interfaces/api/temp";
+import {Role} from "@/interfaces/general";
 
 export interface UseUserRole {
   data: Role | undefined;

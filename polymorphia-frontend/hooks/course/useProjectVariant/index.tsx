@@ -2,7 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { UseProjectVariant } from "@/hooks/course/useProjectVariant/types";
 import { useEventParams } from "@/hooks/general/useEventParams";
-import { EventTypes } from "@/interfaces/api/course";
+
+import { EventTypes } from "@/interfaces/general";
 
 export default function useProjectVariant(): UseProjectVariant {
   const { gradableEventId, eventType } = useEventParams();

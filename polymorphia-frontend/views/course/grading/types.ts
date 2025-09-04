@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
-import { EventType } from "@/interfaces/api/course";
+
+import {EventType} from "@/interfaces/general";
 
 export interface GradingProps {
   eventType: EventType;
