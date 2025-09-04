@@ -23,7 +23,7 @@
     @apply w-full h-full flex-col-centered bg-secondary-gray dark:bg-secondary-dark box-border;
 
     span {
-        @apply text-3xl md:text-5xl text-primary-dark dark:text-secondary-light;
+        @apply text-5xl text-primary-dark dark:text-secondary-light;
     }
 }
 

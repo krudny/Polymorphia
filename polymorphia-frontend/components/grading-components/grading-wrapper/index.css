@@ -6,7 +6,7 @@
 }
 
 .grading-wrapper-top {
-    @apply w-full flex justify-between my-3 mx-auto min-h-12 bg-yellow-300 min-w-0 text-5xl;
+    @apply w-full flex justify-between my-3 mx-auto min-h-12 min-w-0 text-5xl;
 }
 
 .grading-wrapper-main {

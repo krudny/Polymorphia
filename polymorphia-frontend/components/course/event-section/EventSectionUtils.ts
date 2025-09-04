@@ -28,7 +28,8 @@ export function setResizeObserver(
   setMobile: (isMobile: boolean) => void,
   setPageCols: (cols: number) => void,
   setPageRows: (rows: number) => void,
-  maxColumns: number
+  maxColumns: number,
+  maxRows: number
 ) {
   if (!containerRef.current) {
     return;
@@ -43,6 +44,7 @@ export function setResizeObserver(
     const width = containerRef.current.offsetWidth;
 
     if (window.outerWidth < 1024) {
+      console.log("tutaj");
       setMobile(true);
 
       setPageCols(width > 650 ? 2 : 1);
@@ -54,7 +56,7 @@ export function setResizeObserver(
         (height + gridCardsGap) / (cardHeight + gridCardsGap)
       );
 
-      setPageRows(rows);
+      setPageRows(Math.min(rows, maxRows));
     } else {
       setMobile(false);
 

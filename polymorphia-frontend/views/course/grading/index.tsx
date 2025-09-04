@@ -75,7 +75,7 @@ export default function Grading({ eventType, columns }: GradingProps) {
 
   return (
     <>
-      <div ref={gradingRef} className="grading bg-blue-300">
+      <div ref={gradingRef} className="grading">
         <div className="grading-speed-dial">
           <SpeedDialDesktop
             eventType={eventType}
@@ -84,12 +84,12 @@ export default function Grading({ eventType, columns }: GradingProps) {
           />
         </div>
 
-        <div className="grading-list bg-red-400" ref={listRef}>
+        <div className="grading-list" ref={listRef}>
           {gradingComponents.list}
         </div>
 
         {columns === 1 ? (
-          <div ref={columnsRef} className="grading-columns bg-red-400">
+          <div ref={columnsRef} className="grading-columns">
             {gradingComponents.components.flat().map((component, index) => (
               <Fragment key={index}>{component}</Fragment>
             ))}
@@ -101,7 +101,7 @@ export default function Grading({ eventType, columns }: GradingProps) {
             ].map((_, i) => {
               const components = gradingComponents.components[i];
               return (
-                <div key={i} className="grading-columns bg-green-300">
+                <div key={i} className="grading-columns">
                   {components?.map((component, index) => (
                     <Fragment key={index}>{component}</Fragment>
                   ))}
