@@ -37,7 +37,7 @@ export default function PullRequest({ pullRequests }: PullRequestProps) {
           headerClassName="grading-accordion-header"
         >
           <div key={index} className="flex flex-col mb-3">
-            <h3 className="text-2xl mb-2 hover:cursor-pointer">
+            <h3 className="text-2xl mb-2 hover:cursor-pointer truncate">
               {pullRequest.url}
             </h3>
             <div className="flex gap-x-2 h-fit">
