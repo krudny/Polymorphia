@@ -15,7 +15,6 @@ export default function Grading({ eventType, columns }: GradingProps) {
   const queryClient = useQueryClient();
   const isMd = useMediaQuery({ minWidth: "768px" });
   const isXL = useMediaQuery({ minWidth: "1200px" });
-  const width = window.innerWidth;
   const { setTitle } = useTitle();
   const gradingRef = useRef<HTMLDivElement>(null);
   const columnsRef = useRef<HTMLDivElement>(null);

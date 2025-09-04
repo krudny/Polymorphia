@@ -26,7 +26,7 @@ export default function Grade() {
   const topComponent = <h1>Ocena</h1>;
 
   const mainComponent = (): ReactNode => {
-    if (isGradeLoading || !criteria) {
+    if (isGradeLoading || !criteria || !state.selectedTarget) {
       return (
         <div className="h-80">
           <Loading />
