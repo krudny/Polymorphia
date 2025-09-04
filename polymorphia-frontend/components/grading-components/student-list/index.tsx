@@ -3,6 +3,7 @@ import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import Search from "@/components/search";
+import { GradingReducerActions } from "@/providers/grading/GradingContext";
 import GradingComponentWrapper from "@/components/grading-components/grading-wrapper";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import Loading from "@/components/loading/Loading";
@@ -10,7 +11,6 @@ import { ReactNode } from "react";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import "./index.css";
 import { useMediaQuery } from "react-responsive";
-import { GradingReducerActions } from "@/providers/grading/types";
 
 export default function StudentsList() {
   const {
@@ -52,71 +52,44 @@ export default function StudentsList() {
 
     return (
       <div ref={wrapperRef}>
-        {students.map((studentGroup, groupIndex) => {
-          return (
-            <div key={`group-${groupIndex}`} className="student-record">
-              <div
-                className={studentGroup.length > 1 ? "flex flex-col gap-2" : ""}
-              >
-                {studentGroup.map((student) => {
-                  const isSelected =
-                    state.selectedTarget?.targets?.some(
-                      (selectedStudent) => selectedStudent.id === student.id
-                    ) || false;
+        {students.map((student) => {
+          const color = state.selectedTarget?.includes(student)
+            ? "sky"
+            : student.gainedXp
+              ? "green"
+              : "gray";
 
-                  return (
-                    <div
-                      key={student.id || student.studentName}
-                      onClick={() =>
-                        dispatch({
-                          type: GradingReducerActions.ADD_TO_TARGET,
-                          payload: {
-                            user: student,
-                            index: groupIndex,
-                          },
-                        })
-                      }
-                    >
-                      <XPCard
-                        title={student.studentName}
-                        color={
-                          isSelected
-                            ? "sky"
-                            : student.gainedXp
-                              ? "green"
-                              : "gray"
-                        }
-                        subtitle={student.group}
-                        size="xs"
-                        leftComponent={
-                          <XPCardImage
-                            imageUrl={student.imageUrl}
-                            alt={student.evolutionStage}
-                          />
-                        }
-                        rightComponent={
-                          <XPCardPoints
-                            points={student.gainedXp}
-                            color={
-                              isSelected
-                                ? "sky"
-                                : student.gainedXp
-                                  ? "green"
-                                  : "gray"
-                            }
-                            isXPLabelVisible={false}
-                            isSumLabelVisible={true}
-                          />
-                        }
-                      />
-                    </div>
-                  );
-                })}
-                {studentGroup.length > 1 &&
-                  groupIndex < students.length - 1 && (
-                    <div className="divider"></div>
-                  )}
-              </div>
+          return (
+            <div
+              key={student.id || student.studentName}
+              className="student-record"
+              onClick={() =>
+                dispatch({
+                  type: GradingReducerActions.SET_TARGET,
+                  payload: [student],
+                })
+              }
+            >
+              <XPCard
+                title={student.studentName}
+                color={color}
+                subtitle={student.group}
+                size="xs"
+                leftComponent={
+                  <XPCardImage
+                    imageUrl={student.imageUrl}
+                    alt={student.evolutionStage}
+                  />
+                }
+                rightComponent={
+                  <XPCardPoints
+                    points={student.gainedXp}
+                    color={color}
+                    isXPLabelVisible={false}
+                    isSumLabelVisible={true}
+                  />
+                }
+              />
             </div>
           );
         })}

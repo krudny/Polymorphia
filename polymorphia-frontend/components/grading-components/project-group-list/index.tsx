@@ -5,12 +5,12 @@ import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import Search from "@/components/search";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import Loading from "@/components/loading/Loading";
+import { GradingReducerActions } from "@/providers/grading/GradingContext";
 import GradingComponentWrapper from "@/components/grading-components/grading-wrapper";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import "./index.css";
 import { Fragment } from "react";
 import { useMediaQuery } from "react-responsive";
-import { GradingReducerActions } from "@/providers/grading/types";
 
 export default function ProjectGroupList() {
   const isMd = useMediaQuery({ minWidth: "786px" });
@@ -53,7 +53,7 @@ export default function ProjectGroupList() {
             className="group-record"
             onClick={() =>
               dispatch({
-                type: GradingReducerActions.ADD_TO_TARGET,
+                type: GradingReducerActions.SET_TARGET,
                 payload: [...group.members],
               })
             }
