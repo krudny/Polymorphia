@@ -17,7 +17,7 @@
 }
 
 .grading-speed-dial {
-    @apply fixed bottom-4 right-5 z-[999];
+    @apply fixed right-2 bottom-2 mb-2 z-[999] bg-red-400;
 }
 
 .grading-columns-wrapper {
