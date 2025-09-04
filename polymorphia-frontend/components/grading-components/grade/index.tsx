@@ -23,7 +23,7 @@ export default function Grade() {
   const accordionRef = useRef<AccordionRef>(null);
   const isXL = useMediaQuery({ minWidth: "1400px" });
 
-  const topComponent = <h1 className="text-5xl">Ocena</h1>;
+  const topComponent = <h1>Ocena</h1>;
 
   const mainComponent = (): ReactNode => {
     if (isGradeLoading || !criteria) {

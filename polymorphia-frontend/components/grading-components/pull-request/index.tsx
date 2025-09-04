@@ -13,7 +13,7 @@ export default function PullRequest({ pullRequests }: PullRequestProps) {
   const accordionRef = useRef<AccordionRef>(null);
   const isXL = useMediaQuery({ minWidth: "1400px" });
 
-  const topComponent = <h1 className="text-5xl">Pull Request</h1>;
+  const topComponent = <h1>Pull Request</h1>;
 
   const pullRequestNames = pullRequests.map(({ name }) => String(name));
   const accordionSections = new Set(pullRequestNames);

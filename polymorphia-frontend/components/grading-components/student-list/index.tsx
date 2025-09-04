@@ -26,7 +26,7 @@ export default function StudentsList() {
   const isMd = useMediaQuery({ minWidth: "786px" });
 
   const topComponent = (
-    <>
+    <div className="grading-search-wrapper">
       <Search
         search={search}
         setSearch={setSearch}
@@ -35,10 +35,10 @@ export default function StudentsList() {
       <ButtonWithBorder
         text="Filtry"
         size={isMd ? "md" : "sm"}
-        className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none !h-full"
+        className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none"
         onClick={() => setAreFiltersOpen(true)}
       />
-    </>
+    </div>
   );
 
   const mainComponent = (): ReactNode => {

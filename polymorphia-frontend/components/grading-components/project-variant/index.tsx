@@ -4,7 +4,7 @@ import GradingComponentWrapper from "@/components/grading-components/grading-wra
 export function ProjectVariant() {
   return (
     <GradingComponentWrapper
-      topComponent={<h1 className="text-5xl">Warianty</h1>}
+      topComponent={<h1>Warianty</h1>}
       mainComponent={() => <ProjectVariantInfo size="xs" color="gray" />}
     />
   );
