@@ -4,6 +4,8 @@
 .grading {
     @apply w-full max-w-[1500px] m-auto flex flex-col justify-center items-center px-4;
     @apply md:flex-row md:items-start md:px-10 md:gap-x-10 2xl:min-h-[calc(100dvh-5rem)];
+    scrollbar-gutter: stable;
+    overflow: hidden;
 }
 
 .grading-accordion-header {
@@ -17,7 +19,7 @@
 }
 
 .grading-speed-dial {
-    @apply fixed right-2 bottom-2 mb-2 z-[999] bg-red-400;
+    @apply fixed right-2 bottom-2 mb-2 z-[999];
 }
 
 .grading-columns-wrapper {
