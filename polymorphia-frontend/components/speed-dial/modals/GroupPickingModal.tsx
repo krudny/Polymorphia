@@ -1,28 +1,24 @@
 "use client";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import Modal from "@/components/modal/Modal";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { useDebounce } from "use-debounce";
-import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
-import { API_STATIC_URL } from "@/services/api";
 import XPCard from "@/components/xp-card/XPCard";
-import UserService from "@/app/(logged-in)/profile/UserService";
-import { useModal } from "@/components/providers/modal/ModalContext";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
+import useCurrentUser from "@/hooks/general/useUser";
+import useRandomUsers from "@/hooks/course/useRandomUsers";
+import XPCardImage from "@/components/xp-card/components/XPCardImage";
+import useModalContext from "@/hooks/contexts/useModalContext";
 
 function GroupPickingModalContent() {
-  const { closeModal } = useModal();
+  const { closeModal } = useModalContext();
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 300);
   // TODO: temporary logic
   const [group, setGroup] = useState<UserDetailsDTO[]>([]);
-
-  const { data: currentUser } = useQuery({
-    queryKey: ["currentUser"],
-    queryFn: () => UserService.getCurrentUser(),
-  });
+  const { data: currentUser } = useCurrentUser();
+  const { data: allUsers, isError } = useRandomUsers();
 
   useEffect(() => {
     if (currentUser) {
@@ -30,14 +26,9 @@ function GroupPickingModalContent() {
     }
   }, [currentUser]);
 
-  const { data, isError } = useQuery({
-    queryKey: ["allUsers", debouncedSearch],
-    queryFn: () => EventSectionService.getRandomPeople(debouncedSearch),
-  });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setSearch(e.target.value);
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    setSearch(event.target.value);
   };
 
   const handleClick = (user: UserDetailsDTO) => {
@@ -71,17 +62,19 @@ function GroupPickingModalContent() {
           />
         </div>
         {debouncedSearch && (
-          <div className="w-full h-[250px] mt-2 overflow-y-scroll flex flex-col gap-y-1 z-[999] custom-scrollbar">
-            {data && data.length > 0 ? (
-              data?.map((user, index) => (
+          <div className="w-full h-fit max-h-[250px] mt-2 overflow-y-scroll flex flex-col gap-y-1 z-[999] custom-scrollbar">
+            {allUsers && allUsers.length > 0 ? (
+              allUsers?.map((user, index) => (
                 <div key={index} className="min-h-fit">
                   <XPCard
                     title={user.studentName}
                     subtitle={user.group + " | " + user.evolutionStage}
-                    image={{
-                      url: `${API_STATIC_URL}/${user.imageUrl}`,
-                      alt: user.evolutionStage,
-                    }}
+                    leftComponent={
+                      <XPCardImage
+                        imageUrl={user.imageUrl}
+                        alt={user.evolutionStage}
+                      />
+                    }
                     size="xs"
                     onClick={() => handleClick(user)}
                   />
@@ -102,10 +95,12 @@ function GroupPickingModalContent() {
             <XPCard
               title={user.studentName}
               subtitle={user.group + " | " + user.evolutionStage}
-              image={{
-                url: `${API_STATIC_URL}/${user.imageUrl}`,
-                alt: user.evolutionStage,
-              }}
+              leftComponent={
+                <XPCardImage
+                  imageUrl={user.imageUrl}
+                  alt={user.evolutionStage}
+                />
+              }
               size="xs"
             />
           </div>
@@ -122,11 +117,13 @@ function GroupPickingModalContent() {
   );
 }
 
-export default function GroupPickingModal({ onClosed }: SpeedDialModalProps) {
+export default function GroupPickingModal({
+  onClosedAction,
+}: SpeedDialModalProps) {
   return (
     <Modal
       isDataPresented={true}
-      onClosed={onClosed}
+      onClosed={onClosedAction}
       title="Grupa"
       subtitle="Zaproś jedną osobę do grupy"
     >

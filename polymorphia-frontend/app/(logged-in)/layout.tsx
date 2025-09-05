@@ -1,8 +1,8 @@
 "use client";
 
 import { ReactNode } from "react";
-import { NavigationProvider } from "@/components/providers/navigation/NavigationContext";
-import { UserProvider } from "@/components/providers/user/UserContext";
+import { NavigationProvider } from "@/providers/navigation/NavigationContext";
+import { UserProvider } from "@/providers/user/UserContext";
 import MainLayout from "@/components/main-layout/MainLayout";
 import Navigation from "@/components/navigation/Navigation";
 import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";

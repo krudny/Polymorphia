@@ -6,6 +6,7 @@ export interface BaseReward {
   imageUrl: string;
   orderIndex: number;
 }
+
 interface BaseRewardResponseDTOWithType<
   T extends RewardType,
   R extends BaseReward,
@@ -45,6 +46,7 @@ export interface BasePercentageBonusItem extends BaseItem {
 }
 
 export type ItemResponseDTO = BaseFlatBonusItem | BasePercentageBonusItem;
+
 type ItemResponseDTOWithType = BaseRewardResponseDTOWithType<
   "ITEM",
   ItemResponseDTO

@@ -1,0 +1,69 @@
+@import "tailwindcss";
+@import "../../../styles/globals.css";
+
+@tailwind utilities;
+
+@utility hall-of-fame-rank-wrapper {
+    @apply w-full overflow-y-scroll custom-scrollbar;
+}
+
+@utility hall-of-fame-pagination-wrapper {
+    @apply w-full min-h-14 flex-centered text-2xl py-2;
+}
+
+@utility hall-of-fame-record-wrapper {
+    @apply w-full rounded-xl shadow-lg bg-primary-light dark:bg-primary-dark;
+}
+
+@utility hall-of-fame-search-wrapper {
+    @apply w-full flex justify-between my-3;
+}
+
+.hall-of-fame-loading-wrapper {
+    @apply relative min-h-[calc(100dvh-10rem)] flex flex-col flex-1 w-full h-full lg:min-h-20;
+}
+
+/* Hall of fame image */
+
+.hall-of-fame-image-wrapper {
+    @apply h-full relative aspect-square;
+}
+
+.hall-of-fame-image {
+    @apply object-cover rounded-xl lg:rounded-bl-xl lg:rounded-tr-none lg:rounded-br-none;
+}
+
+.hall-of-fame-image-badge {
+    @apply rounded-tl-xl rounded-br-xl w-5 text-base lg:text-2xl lg:min-w-8 lg:rounded-br-none;
+}
+
+/* Hall of fame user data */
+
+.hall-of-fame-user-data {
+    @apply w-full h-full flex-col-centered ml-3 overflow-hidden;
+    @apply lg:w-64 lg:mx-auto lg:px-4 2xl:ml-10 2xl:w-64;
+
+    h1 {
+        @apply w-full text-3xl truncate lg:text-4xl;
+    }
+
+    h2 {
+        @apply w-full text-xl truncate lg:text-2xl 2xl:mt-2;
+    }
+}
+
+/* Hall of fame summary points */
+
+.hall-of-fame-summary-points {
+    @apply w-24 h-full flex flex-col-reverse items-end justify-center;
+    @apply lg:items-center lg:flex-col;
+    @apply lg:bg-[#d4d4d4] lg:dark:bg-secondary-dark 2xl:rounded-tr-xl 2xl:rounded-br-xl;
+
+    h1 {
+        @apply text-3xl lg:text-4xl;
+    }
+
+    h3 {
+        @apply text-xl lg:text-2xl;
+    }
+}

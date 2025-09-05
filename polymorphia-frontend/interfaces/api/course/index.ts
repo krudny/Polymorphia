@@ -1,4 +1,4 @@
-export type EventType = "ASSIGNMENT" | "PROJECT" | "TEST";
+import { EventType } from "@/interfaces/general";
 
 export interface EventSectionResponseDTO {
   id: number;

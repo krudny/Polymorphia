@@ -6,15 +6,14 @@ import {
   BottomDesktopMenuItems,
   MainMenuItems,
 } from "@/components/navigation/MenuOptions";
-import { useContext, useEffect, useRef } from "react";
-import { NavigationContext } from "@/components/providers/navigation/NavigationContext";
+import { useEffect, useRef } from "react";
 import "./index.css";
 
 import clsx from "clsx";
 import { animateSidebar } from "@/animations/Navigation";
-import { useQuery } from "@tanstack/react-query";
 import { updateMenuItems } from "@/components/course/event-section/EventSectionUtils";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
+import useEventSections from "@/hooks/course/useEventSections";
+import useNavigationContext from "@/hooks/contexts/useNavigationContext";
 
 export default function Sidebar() {
   const {
@@ -22,25 +21,22 @@ export default function Sidebar() {
     setIsSidebarExpanded,
     isSidebarLockedOpened,
     isSidebarLockedClosed,
-  } = useContext(NavigationContext);
+  } = useNavigationContext();
   const sidebarRef = useRef<HTMLDivElement | null>(null);
+  const { data: eventSections } = useEventSections();
 
   useEffect(() => {
     const sidebar = sidebarRef.current;
     if (!sidebar) {
       return;
     }
+
     animateSidebar(sidebar, isSidebarExpanded);
   }, [isSidebarExpanded]);
 
-  const { data: eventSections, isSuccess } = useQuery({
-    queryKey: ["eventSections"],
-    // TODO: use real courseId
-    queryFn: () => EventSectionService.getEventSections(1),
-  });
-
   const menuItems = [...MainMenuItems];
-  if (isSuccess) {
+
+  if (eventSections) {
     updateMenuItems(menuItems, eventSections);
   }
 

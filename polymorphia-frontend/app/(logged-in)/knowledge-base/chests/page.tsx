@@ -1,30 +1,19 @@
 "use client";
-
-import { useQuery } from "@tanstack/react-query";
 import Slider from "@/components/slider/Slider";
-import { useSearchParams } from "next/navigation";
-import KnowledgeBaseService from "@/app/(logged-in)/knowledge-base/KnowledgeBaseService";
 import Loading from "@/components/loading/Loading";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
+import useChests from "@/hooks/course/useChests";
+import { useSearchParams } from "next/navigation";
 
 export default function Chests() {
   const searchParams = useSearchParams();
+  const { data: chests, isLoading, error } = useChests();
   const { setTitle } = useTitle();
-  const COURSE_ID = 1;
 
   useEffect(() => {
     setTitle("Skrzynki");
   }, [setTitle]);
-
-  const {
-    data: chests,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["chests", 1],
-    queryFn: () => KnowledgeBaseService.getChests(COURSE_ID),
-  });
 
   if (isLoading) {
     return <Loading />;

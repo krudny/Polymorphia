@@ -39,6 +39,7 @@ export default function SingleSlide({
               alt={slide.name}
               sizes="(max-width: 1024px) 400px, (max-width: 1920px) 50vw"
               priority
+              fetchPriority="high"
             />
           </div>
         </div>

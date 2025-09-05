@@ -1,15 +1,14 @@
 import "../index.css";
-import { API_STATIC_URL } from "@/services/api";
 import XPCard from "@/components/xp-card/XPCard";
-import { EquipmentContext } from "@/components/providers/equipment/EquipmentContext";
-import { useContext } from "react";
 import Modal from "@/components/modal/Modal";
-import XPCardPoints from "@/components/xp-card/inner-components/XPCardPoints";
 import { ItemAssignmentDetailsResponseDTO } from "@/interfaces/api/reward/assigned";
+import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
+import XPCardImage from "@/components/xp-card/components/XPCardImage";
+import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
 
 export default function ItemModal() {
   const { currentItemModalData, setCurrentItemModalData } =
-    useContext(EquipmentContext);
+    useEquipmentContext();
   const equipmentItem = currentItemModalData;
 
   return (
@@ -26,14 +25,19 @@ export default function ItemModal() {
               key={itemAssignmentDetails.id}
               title={equipmentItem.base.name}
               subtitle={`Zdobyto ${itemAssignmentDetails.receivedDate}`}
-              image={{
-                url: `${API_STATIC_URL}/${equipmentItem.base.imageUrl}`,
-                alt: equipmentItem.base.name,
-              }}
               size="xs"
               // TODO: handle undefined xp
-              component={
-                <XPCardPoints points={`+${itemAssignmentDetails.gainedXp}`} />
+              leftComponent={
+                <XPCardImage
+                  imageUrl={equipmentItem.base.imageUrl}
+                  alt={equipmentItem.base.name}
+                />
+              }
+              rightComponent={
+                <XPCardPoints
+                  points={`+${itemAssignmentDetails.gainedXp}`}
+                  color="gray"
+                />
               }
             />
           )

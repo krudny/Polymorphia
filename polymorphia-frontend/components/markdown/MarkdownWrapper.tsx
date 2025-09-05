@@ -1,10 +1,9 @@
-import { useContext } from "react";
-import { MarkdownContext } from "@/components/providers/markdown/MarkdownContext";
 import MarkdownViewer from "@/components/markdown/markdown-viewer";
 import MarkdownEditor from "@/components/markdown/markdown-editor";
+import useMarkdownContext from "@/hooks/contexts/useMarkdownContext";
 
 export default function MarkdownWrapper() {
-  const { isEditing } = useContext(MarkdownContext);
+  const { isEditing } = useMarkdownContext();
 
   return <>{isEditing ? <MarkdownEditor /> : <MarkdownViewer />}</>;
 }

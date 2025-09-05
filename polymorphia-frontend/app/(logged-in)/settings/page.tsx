@@ -1,12 +1,12 @@
 "use client";
 
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import { useContext, useEffect } from "react";
-import { NavigationContext } from "@/components/providers/navigation/NavigationContext";
+import { useEffect } from "react";
 import { useScaleShow } from "@/animations/ScaleShow";
 import { useTitle } from "@/components/navigation/TitleContext";
 import toast from "react-hot-toast";
 import { useTheme } from "next-themes";
+import useNavigationContext from "@/hooks/contexts/useNavigationContext";
 
 export default function Settings() {
   const {
@@ -14,7 +14,7 @@ export default function Settings() {
     setIsSidebarLockedOpened,
     isSidebarLockedClosed,
     setIsSidebarLockedClosed,
-  } = useContext(NavigationContext);
+  } = useNavigationContext();
   const { setTitle } = useTitle();
   const wrapperRef = useScaleShow();
   const { resolvedTheme, setTheme } = useTheme();

@@ -1,14 +1,13 @@
-import { useContext } from "react";
-import { EquipmentContext } from "@/components/providers/equipment/EquipmentContext";
 import Modal from "@/components/modal/Modal";
 import OpeningChestModalContent from "./OpeningChestModalContent";
+import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
 
 export default function OpeningChestModal() {
   const {
     currentOpeningChestModalData,
     setCurrentOpeningChestModalData,
     setPickedItemsIds,
-  } = useContext(EquipmentContext);
+  } = useEquipmentContext();
   const openingChest = currentOpeningChestModalData;
 
   const onClosed = () => {
