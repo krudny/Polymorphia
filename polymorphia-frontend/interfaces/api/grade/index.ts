@@ -7,6 +7,19 @@ export interface GradeResponseDTO {
   criteria: CriterionGradeResponseDTO[];
 }
 
+export interface ShortGradeResponseDTO {
+  comment: string;
+  criteria: {
+    id: number;
+    gainedXp: number;
+    assignedRewards: {
+      id: number;
+      quantity: number;
+      imageUrl: string;
+    }[];
+  }[];
+}
+
 export interface GradeDetailsResponseDTO {
   id: number;
   comment: string;

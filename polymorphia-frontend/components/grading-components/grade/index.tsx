@@ -17,9 +17,11 @@ import Input from "@/components/grading-components/grade/Input";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import { useMediaQuery } from "react-responsive";
 import { getKeyForSelectedTarget } from "@/providers/grading/utils/getKeyForSelectedTarget";
+import useCriteria from "@/hooks/course/useCriteria";
 
 export default function Grade() {
-  const { state, criteria, isGradeLoading, submitGrade } = useGradingContext();
+  const { state, isGradeLoading, submitGrade } = useGradingContext();
+  const { data: criteria } = useCriteria();
   const accordionRef = useRef<AccordionRef>(null);
   const isXL = useMediaQuery({ minWidth: "1400px" });
 

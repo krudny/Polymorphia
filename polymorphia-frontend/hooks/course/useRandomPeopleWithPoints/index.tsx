@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { UseRandomPeopleWithPoints } from "@/hooks/course/useRandomPeopleWithPoints/types";
 import { useEventParams } from "@/hooks/general/useEventParams";
-import {EventTypes} from "@/interfaces/general";
+import { EventTypes } from "@/interfaces/general";
 
 export default function useRandomPeopleWithPoints(
   debouncedSearch: string,

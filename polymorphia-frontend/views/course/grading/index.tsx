@@ -3,7 +3,7 @@ import { useGradingFactory } from "@/hooks/factory/useGradingFactory";
 import { Fragment, useEffect, useRef } from "react";
 import "./index.css";
 import { GradingFilterId } from "@/providers/grading/types";
-import FiltersModal from "@/components/filters/modals/FiltersModal";
+import FiltersModal from "@/components/filters-modals/FiltersModal";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import { useQueryClient } from "@tanstack/react-query";
 import { useMediaQuery } from "react-responsive";
