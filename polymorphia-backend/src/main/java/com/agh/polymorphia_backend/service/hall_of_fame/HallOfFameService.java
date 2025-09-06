@@ -94,6 +94,7 @@ public class HallOfFameService {
         List<Long> animalIds = hallOfFameRepository.findAnimalIdsSortedByEventSection(
                 requestDto.courseId(),
                 requestDto.searchTerm(),
+                requestDto.searchBy(),
                 requestDto.getGroupsAsArray(),
                 requestDto.sortBy(),
                 requestDto.sortOrder().name(),
@@ -112,6 +113,7 @@ public class HallOfFameService {
         long total = hallOfFameRepository.countByCourseIdAndFilters(
                 requestDto.courseId(),
                 requestDto.searchTerm(),
+                requestDto.searchBy(),
                 requestDto.getGroupsAsArray()
         );
 

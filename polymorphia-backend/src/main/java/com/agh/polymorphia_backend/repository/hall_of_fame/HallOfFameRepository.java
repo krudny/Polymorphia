@@ -37,7 +37,12 @@ public interface HallOfFameRepository extends JpaRepository<HallOfFame, Long> {
                 FROM hall_of_fame_view hof
                 JOIN student_score_detail_view ssd ON ssd.animal_id = hof.animal_id
                 WHERE hof.course_id = :courseId
-                  AND (:searchTerm = '' OR LOWER(hof.animal_name) LIKE LOWER(CONCAT('%', :searchTerm, '%')))
+                AND (:searchTerm = '' OR
+                    (
+                        (:#{#searchBy.searchByAnimal()} = TRUE AND LOWER(hof.animal_name) LIKE LOWER(CONCAT('%', :searchTerm, '%')))
+                        OR
+                        (:#{#searchBy.searchByStudent()} = TRUE AND LOWER(hof.student_name) LIKE LOWER(CONCAT('%', :searchTerm, '%')))
+                    ))
                   AND (cardinality(:groups) = 0 OR hof.group_name IN (:groups))
                   AND ssd.event_section_name = :sortBy
                 ORDER BY
@@ -49,6 +54,7 @@ public interface HallOfFameRepository extends JpaRepository<HallOfFame, Long> {
     List<Long> findAnimalIdsSortedByEventSection(
             @Param("courseId") Long courseId,
             @Param("searchTerm") String searchTerm,
+            @Param("searchBy") SearchBy searchBy,
             @Param("groups") String[] groups,
             @Param("sortBy") String sortBy,
             @Param("sortOrder") String sortOrder,
@@ -62,12 +68,18 @@ public interface HallOfFameRepository extends JpaRepository<HallOfFame, Long> {
                 SELECT COUNT(DISTINCT hof.animal_id)
                 FROM hall_of_fame_view hof
                 WHERE hof.course_id = :courseId
-                  AND (:searchTerm = '' OR LOWER(hof.animal_name) LIKE LOWER(CONCAT('%', :searchTerm, '%')))
+                  AND (:searchTerm = '' OR
+                    (
+                        (:#{#searchBy.searchByAnimal()} = TRUE AND LOWER(hof.animal_name) LIKE LOWER(CONCAT('%', :searchTerm, '%')))
+                        OR
+                        (:#{#searchBy.searchByStudent()} = TRUE AND LOWER(hof.student_name) LIKE LOWER(CONCAT('%', :searchTerm, '%')))
+                    ))
                   AND (cardinality(:groups) = 0 OR hof.group_name IN (:groups))
             """, nativeQuery = true)
     long countByCourseIdAndFilters(
             @Param("courseId") Long courseId,
             @Param("searchTerm") String searchTerm,
+            @Param("searchBy") SearchBy searchBy,
             @Param("groups") String[] groups
     );
 }
