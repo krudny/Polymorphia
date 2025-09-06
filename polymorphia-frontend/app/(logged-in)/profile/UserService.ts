@@ -1,6 +1,9 @@
-import { AvailableCoursesDTO, UserDetailsDTO } from "@/interfaces/api/user";
+import {
+  AvailableCoursesDTO,
+  StudentDetailsDTOWithType,
+  UserDetailsDTO,
+} from "@/interfaces/api/user";
 import { API_HOST } from "@/services/api";
-import { Role, Roles } from "@/interfaces/api/temp";
 
 const UserService = {
   isCourseIdSet: async (): Promise<boolean> => {
@@ -26,16 +29,15 @@ const UserService = {
     return await response.json();
   },
   getCurrentUser: async (): Promise<UserDetailsDTO> => {
-    return {
-      id: 1,
-      courseId: 1,
-      userName: "Kamil Rudny",
-      animalName: "Gerard Pocieszny",
-      evolutionStage: "Majestatyczna bestia",
-      imageUrl: "images/evolution-stages/4.jpg",
-      group: "BM-10-00",
-      position: 25,
-    };
+    const response = await fetch(`${API_HOST}/users/context`, {
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch user context!");
+    }
+
+    return await response.json();
   },
   setUserPreferredCourse: async (courseId: number): Promise<void> => {
     const response = await fetch(
@@ -52,33 +54,35 @@ const UserService = {
       throw new Error("Failed to set user preferences!");
     }
   },
-  getRandomUsers: async (): Promise<UserDetailsDTO[]> => {
+  getRandomUsers: async (): Promise<StudentDetailsDTOWithType[]> => {
     return [
       {
-        id: 1,
-        userName: "Kamil Rudny",
-        animalName: "Gerard Pocieszny",
-        evolutionStage: "Majestatyczna bestia",
-        group: "BM-20-00",
-        imageUrl: "images/evolution-stages/4.jpg",
-        position: 1,
-        courseId: 1,
+        userType: "STUDENT",
+        userDetails: {
+          id: 1,
+          userName: "Kamil Rudny",
+          animalName: "Gerard Pocieszny",
+          evolutionStage: "Majestatyczna bestia",
+          group: "BM-20-00",
+          imageUrl: "images/evolution-stages/4.jpg",
+          position: 1,
+          courseId: 1,
+        },
       },
       {
-        id: 2,
-        userName: "Kamil Śmieszny",
-        animalName: "Gerard Wesoły",
-        evolutionStage: "Majestatyczna bestia",
-        group: "BM-20-00",
-        imageUrl: "images/evolution-stages/5.jpg",
-        position: 2,
-        courseId: 1,
+        userType: "STUDENT",
+        userDetails: {
+          id: 2,
+          userName: "Kamil Śmieszny",
+          animalName: "Gerard Wesoły",
+          evolutionStage: "Majestatyczna bestia",
+          group: "BM-20-00",
+          imageUrl: "images/evolution-stages/5.jpg",
+          position: 2,
+          courseId: 1,
+        },
       },
     ];
-  },
-  getRole: async (): Promise<{ role: Role }> => {
-    return { role: Roles.INSTRUCTOR };
-    // return { role: Roles.STUDENT };
   },
 };
 

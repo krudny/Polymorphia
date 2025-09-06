@@ -22,13 +22,13 @@ export default function StudentInfo() {
         <div className="flex flex-col gap-2 min-w-80">
           {data?.map((student) => (
             <XPCard
-              key={student.animalName}
-              title={student.userName}
-              subtitle={student.evolutionStage}
+              key={student.userDetails.animalName}
+              title={student.userDetails.userName}
+              subtitle={student.userDetails.evolutionStage}
               leftComponent={
                 <XPCardImage
-                  imageUrl={student.imageUrl}
-                  alt={student.evolutionStage}
+                  imageUrl={student.userDetails.imageUrl}
+                  alt={student.userDetails.evolutionStage}
                 />
               }
               size="xs"

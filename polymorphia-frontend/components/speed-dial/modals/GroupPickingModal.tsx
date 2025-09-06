@@ -1,28 +1,31 @@
 "use client";
-import { UserDetailsDTO } from "@/interfaces/api/user";
+import isStudent, { StudentDetailsDTO } from "@/interfaces/api/user";
 import Modal from "@/components/modal/Modal";
 import { ChangeEvent, useEffect, useState } from "react";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { useDebounce } from "use-debounce";
 import XPCard from "@/components/xp-card/XPCard";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
-import useCurrentUser from "@/hooks/general/useUser";
 import useRandomUsers from "@/hooks/course/useRandomUsers";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import useModalContext from "@/hooks/contexts/useModalContext";
+import useUserContext from "@/hooks/contexts/useUserContext";
 
 function GroupPickingModalContent() {
   const { closeModal } = useModalContext();
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 300);
   // TODO: temporary logic
-  const [group, setGroup] = useState<UserDetailsDTO[]>([]);
-  const { data: currentUser } = useCurrentUser();
+  const [group, setGroup] = useState<StudentDetailsDTO[]>([]);
+  const currentUser = useUserContext();
   const { data: allUsers, isError } = useRandomUsers();
+  if (!isStudent(currentUser)) {
+    throw new Error("User is not a student");
+  }
 
   useEffect(() => {
-    if (currentUser) {
-      setGroup([currentUser]);
+    if (currentUser && isStudent(currentUser)) {
+      setGroup([currentUser.userDetails]);
     }
   }, [currentUser]);
 
@@ -31,7 +34,7 @@ function GroupPickingModalContent() {
     setSearch(event.target.value);
   };
 
-  const handleClick = (user: UserDetailsDTO) => {
+  const handleClick = (user: StudentDetailsDTO) => {
     if (currentUser && group.length < 2) {
       setGroup((prev) => [...prev, user]);
     }
@@ -67,16 +70,20 @@ function GroupPickingModalContent() {
               allUsers?.map((user, index) => (
                 <div key={index} className="min-h-fit">
                   <XPCard
-                    title={user.userName}
-                    subtitle={user.group + " | " + user.evolutionStage}
+                    title={user.userDetails.userName}
+                    subtitle={
+                      user.userDetails.group +
+                      " | " +
+                      user.userDetails.evolutionStage
+                    }
                     leftComponent={
                       <XPCardImage
-                        imageUrl={user.imageUrl}
-                        alt={user.evolutionStage}
+                        imageUrl={user.userDetails.imageUrl}
+                        alt={user.userDetails.evolutionStage}
                       />
                     }
                     size="xs"
-                    onClick={() => handleClick(user)}
+                    onClick={() => handleClick(user.userDetails)}
                   />
                 </div>
               ))

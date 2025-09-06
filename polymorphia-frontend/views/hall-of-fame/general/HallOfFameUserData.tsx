@@ -1,16 +1,12 @@
 import "./index.css";
-import { UserDetailsDTO } from "@/interfaces/api/user";
+import { StudentDetailsDTO } from "@/interfaces/api/user";
 
-export default function HallOfFameUserData({
-  animalName,
-  evolutionStage,
-  group,
-}: UserDetailsDTO) {
+export default function HallOfFameUserData(studentDetails: StudentDetailsDTO) {
   return (
     <div className="hall-of-fame-user-data">
-      <h1>{animalName}</h1>
+      <h1>{studentDetails.animalName}</h1>
       <h2>
-        {group} | {evolutionStage}
+        {studentDetails.group} | {studentDetails.evolutionStage}
       </h2>
     </div>
   );

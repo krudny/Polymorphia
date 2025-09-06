@@ -2,7 +2,6 @@
 import {
   createContext,
   ReactNode,
-  useContext,
   useEffect,
   useReducer,
   useState,
@@ -23,7 +22,7 @@ import {
 } from "@/providers/grading/types";
 import { useFilters } from "@/hooks/course/useFilters";
 import { useGradingFilterConfigs } from "@/hooks/course/useGradingFilterConfigs";
-import { UserContext } from "@/providers/user/UserContext";
+import useUserContext from "@/hooks/contexts/useUserContext";
 
 export interface CriteriaDetails {
   gainedXp?: string;
@@ -188,12 +187,12 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const { gradableEventId, eventType } = useEventParams();
   const [areFiltersOpen, setAreFiltersOpen] = useState(false);
 
-  const { courseId } = useContext(UserContext);
+  const userContext = useUserContext();
   const {
     data: filterConfigs,
     isLoading: isFiltersLoading,
     isError: isFiltersError,
-  } = useGradingFilterConfigs(courseId);
+  } = useGradingFilterConfigs(userContext.userDetails.courseId);
   const filters = useFilters<GradingFilterId>(filterConfigs ?? []);
 
   const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["total"];
@@ -203,7 +202,7 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 400);
   const [state, dispatch] = useReducer(GradingReducer, initialState);
-  const selectedStudentId = state?.selectedTarget?.[0]?.id ?? null;
+  const selectedStudentId = state?.selectedTarget?.[0]?.userDetails.id ?? null;
   const { data: criteria } = useCriteria();
   const { data: students, isLoading: isStudentsLoading } =
     useRandomPeopleWithPoints(debouncedSearch, sortBy, sortOrder, groups);

@@ -2,13 +2,13 @@
 
 import StudentView from "@/views/course/student";
 import InstructorView from "@/views/course/instructor";
-import { Roles } from "@/interfaces/api/temp";
-import useUserRole from "@/hooks/general/useUserRole";
+import useUserContext from "@/hooks/contexts/useUserContext";
+import { Roles } from "@/interfaces/api/user";
 
 export default function Page() {
-  const { data: role } = useUserRole();
+  const { userType } = useUserContext();
 
-  switch (role) {
+  switch (userType) {
     case Roles.STUDENT:
       return <StudentView />;
     case Roles.INSTRUCTOR:

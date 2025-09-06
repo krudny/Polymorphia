@@ -1,4 +1,4 @@
-import { UserDetailsDTO } from "@/interfaces/api/user";
+import { StudentDetailsDTOWithType } from "@/interfaces/api/user";
 
 export interface PullRequest {
   id: number;
@@ -8,13 +8,5 @@ export interface PullRequest {
 
 export interface ProjectGroupResponseDTO {
   id: number;
-  members: (UserDetailsDTO & { gainedXp: string | undefined })[];
+  members: (StudentDetailsDTOWithType & { gainedXp: string | undefined })[];
 }
-
-export const Roles = {
-  STUDENT: "STUDENT",
-  INSTRUCTOR: "INSTRUCTOR",
-  COORDINATOR: "COORDINATOR",
-} as const;
-
-export type Role = (typeof Roles)[keyof typeof Roles];

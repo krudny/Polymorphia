@@ -35,7 +35,7 @@ public abstract class User implements UserDetails {
     @NotEmpty
     private String password;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "preferred_course_id")
     private Course preferredCourse;
 

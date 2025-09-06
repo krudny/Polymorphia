@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.dto.response.user_context;
 
+import com.agh.polymorphia_backend.model.user.UserType;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,5 +21,5 @@ public class AvailableCoursesResponseDto {
     private String imageUrl;
 
     @NotNull
-    private String userRole;
+    private UserType userRole;
 }

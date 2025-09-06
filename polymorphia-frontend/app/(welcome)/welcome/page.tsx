@@ -23,9 +23,9 @@ export default function Welcome() {
   }, [setTitle]);
 
   useEffect(() => {
-    if (isLoading) return; // wait for query
-
-    if (!wrapperRef.current) return;
+    // if (isLoading || !wrapperRef.current) {
+    //   return;
+    // }
 
     gsap.fromTo(
       wrapperRef.current,
@@ -46,7 +46,9 @@ export default function Welcome() {
     );
   }, [isLoading, isCourseIdSet, router]);
 
-  if (isLoading) return <Loading />;
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div

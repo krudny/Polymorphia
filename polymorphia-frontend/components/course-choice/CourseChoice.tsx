@@ -5,7 +5,7 @@ import UserService from "@/app/(logged-in)/profile/UserService";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Loading from "@/components/loading/Loading";
-import { AvailableCoursesDTO } from "@/interfaces/api/user";
+import { AvailableCoursesDTO, RoleTextMap } from "@/interfaces/api/user";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
 import { RefObject } from "react";
@@ -50,7 +50,7 @@ export default function CourseChoiceGrid({
     ({ id, name, coordinator, imageUrl, userRole }) => (
       <XPCard
         title={name}
-        subtitle={`Koordynator: ${coordinator}, Twoja rola: ${userRole}`}
+        subtitle={`Koordynator: ${coordinator}, Twoja rola: ${RoleTextMap[userRole]}`}
         key={id}
         color={
           currentCourseId != null && currentCourseId === id ? "green" : "silver"

@@ -1,17 +1,69 @@
 //TODO: handle which one is optional
-export interface UserDetailsDTO {
+export const Roles = {
+  STUDENT: "STUDENT",
+  INSTRUCTOR: "INSTRUCTOR",
+  COORDINATOR: "COORDINATOR",
+  UNDEFINED: "UNDEFINED",
+} as const;
+
+export type Role = (typeof Roles)[keyof typeof Roles];
+
+export const RoleTextMap: Record<Role, string> = {
+  [Roles.STUDENT]: "Student",
+  [Roles.INSTRUCTOR]: "Prowadzący",
+  [Roles.COORDINATOR]: "Koordynator",
+  [Roles.UNDEFINED]: "Nieokreślony",
+};
+
+export interface BaseUserDetails {
   id: number;
   userName: string;
   courseId: number;
+  imageUrl: string;
+}
+
+interface BaseUserDetailsDTOWithType<
+  T extends Role,
+  R extends BaseUserDetails,
+> {
+  userType: T;
+  userDetails: R;
+}
+
+export interface StudentDetailsDTO extends BaseUserDetails {
   animalName: string;
   evolutionStage: string;
   group: string;
-  imageUrl: string;
   position: number;
 }
 
-export interface UserDetailsDTOWithRefresh extends UserDetailsDTO {
-  refresh: () => unknown;
+export type StudentDetailsDTOWithType = BaseUserDetailsDTOWithType<
+  "STUDENT",
+  StudentDetailsDTO
+>;
+export type InstructorDetailsDTOWithType = BaseUserDetailsDTOWithType<
+  "INSTRUCTOR",
+  BaseUserDetails
+>;
+export type CoordinatorDetailsDTOWithType = BaseUserDetailsDTOWithType<
+  "COORDINATOR",
+  BaseUserDetails
+>;
+export type UndefinedDetailsDTOWithType = BaseUserDetailsDTOWithType<
+  "UNDEFINED",
+  BaseUserDetails
+>;
+
+export type UserDetailsDTO =
+  | StudentDetailsDTOWithType
+  | InstructorDetailsDTOWithType
+  | CoordinatorDetailsDTOWithType
+  | UndefinedDetailsDTOWithType;
+
+export default function isStudent(
+  user: UserDetailsDTO
+): user is StudentDetailsDTOWithType {
+  return user.userType === "STUDENT";
 }
 
 export interface AvailableCoursesDTO {
@@ -19,5 +71,5 @@ export interface AvailableCoursesDTO {
   name: string;
   coordinator: string;
   imageUrl: string;
-  userRole: string;
+  userRole: Role;
 }

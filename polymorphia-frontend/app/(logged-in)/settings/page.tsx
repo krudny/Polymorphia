@@ -1,14 +1,14 @@
 "use client";
 
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import { useContext, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useScaleShow } from "@/animations/ScaleShow";
 import { useTitle } from "@/components/navigation/TitleContext";
 import toast from "react-hot-toast";
 import { useTheme } from "next-themes";
 import useNavigationContext from "@/hooks/contexts/useNavigationContext";
 import CourseChoiceGrid from "@/components/course-choice/CourseChoice";
-import { UserContext } from "@/providers/user/UserContext";
+import useUserContext from "@/hooks/contexts/useUserContext";
 
 export default function Settings() {
   const {
@@ -20,7 +20,7 @@ export default function Settings() {
   const { setTitle } = useTitle();
   const wrapperRef = useScaleShow();
   const { resolvedTheme, setTheme } = useTheme();
-  const userContext = useContext(UserContext);
+  const userContext = useUserContext();
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const toggleSidebarLockOpened = () => {
@@ -85,7 +85,7 @@ export default function Settings() {
       >
         <h3 className="text-4xl">Aktywny kurs</h3>
         <CourseChoiceGrid
-          currentCourseId={userContext?.courseId}
+          currentCourseId={userContext.userDetails.courseId}
           containerRef={containerRef}
         />
       </div>

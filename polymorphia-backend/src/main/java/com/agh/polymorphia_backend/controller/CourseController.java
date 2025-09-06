@@ -22,19 +22,19 @@ public class CourseController {
     private final UserContextService userContextService;
 
     @GetMapping("/{courseId}/evolution-stages")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<List<KnowledgeBaseResponseDto>> getEvolutionStages(@PathVariable Long courseId) {
         return ResponseEntity.ok(knowledgeBaseService.getEvolutionStages(courseId));
     }
 
     @GetMapping("/{courseId}/chests")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<List<KnowledgeBaseResponseDto>> getChests(@PathVariable Long courseId) {
         return ResponseEntity.ok(knowledgeBaseService.getChests(courseId));
     }
 
     @GetMapping("/{courseId}/items")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<List<KnowledgeBaseResponseDto>> getItems(@PathVariable Long courseId) {
         return ResponseEntity.ok(knowledgeBaseService.getItems(courseId));
     }

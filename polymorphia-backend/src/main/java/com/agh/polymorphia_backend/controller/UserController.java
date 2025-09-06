@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.controller;
 
+import com.agh.polymorphia_backend.dto.response.user_context.UserDetailsResponseDto;
 import com.agh.polymorphia_backend.service.user.UserContextService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,5 +24,11 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Boolean> isPreferredCourseSet() {
         return ResponseEntity.ok(userContextService.isPreferredCourseSet());
+    }
+
+    @GetMapping("/context")
+    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
+    public ResponseEntity<UserDetailsResponseDto> getUserContext() {
+        return ResponseEntity.ok(userContextService.getUserContext());
     }
 }
