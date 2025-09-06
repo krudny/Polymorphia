@@ -15,7 +15,7 @@ import { getEmptyFiltersObject } from "../filters/utils/getEmptyFiltersObject";
 const emptyDataObject = {
   content: [],
   page: {
-    pageNumber: 0,
+    number: 0,
     totalPages: 0,
   },
 };
