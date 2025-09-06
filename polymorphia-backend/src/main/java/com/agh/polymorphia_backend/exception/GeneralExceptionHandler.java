@@ -23,7 +23,7 @@ public class GeneralExceptionHandler {
     private static final String INVALID_PARAMS = "Invalid request parameter type";
     private static final String MISSING_PARAMS = "Missing request parameter: %s";
 
-    @ExceptionHandler({MethodArgumentTypeMismatchException.class, ConstraintViolationException.class, InvalidTypeIdException.class})
+    @ExceptionHandler({MethodArgumentTypeMismatchException.class, ConstraintViolationException.class, InvalidTypeIdException.class, IllegalArgumentException.class})
     public void handleArgumentNotValidException(Exception ex) {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INVALID_PARAMS, ex);
     }

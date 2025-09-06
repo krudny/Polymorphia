@@ -59,7 +59,7 @@ export default function HallOfFameDesktop() {
         {!isLoading && data.page.totalPages > 0 && (
           <Pagination
             pageCount={data.page.totalPages}
-            forcePage={data.page.pageNumber}
+            forcePage={data.page.number}
             onPageChange={handlePageChange(setPage)}
           />
         )}

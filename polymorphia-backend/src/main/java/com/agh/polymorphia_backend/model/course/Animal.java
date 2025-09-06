@@ -37,5 +37,4 @@ public class Animal {
     @ToString.Exclude
     @JsonIgnore
     private CourseGroup courseGroup;
-
 }
