@@ -4,7 +4,6 @@ import com.agh.polymorphia_backend.dto.response.user_context.AvailableCoursesRes
 import com.agh.polymorphia_backend.dto.response.user_context.UserDetailsResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.user.User;
-import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.service.course.CourseService;
@@ -28,7 +27,7 @@ public class UserContextService {
     public UserDetailsResponseDto getUserContext() {
         User user = userService.getCurrentUser();
         return UserDetailsResponseDto.builder()
-                .userType((UserType) user.getAuthorities().iterator().next())
+                .userType(userService.getUserRole(user))
                 .userDetails(userContextMapper.toBaseUserDetailsResponseDto(user))
                 .build();
 

@@ -34,7 +34,7 @@ public class UserContextMapper {
     }
 
     public BaseUserDetailsResponseDto toBaseUserDetailsResponseDto(User user) {
-        UserType userType = (UserType) user.getAuthorities().iterator().next();
+        UserType userType = userService.getUserRole(user);
 
         if (userType.equals(UserType.STUDENT)) {
             return toStudentDetailsResponseDto((Student) user);

@@ -3,6 +3,7 @@ package com.agh.polymorphia_backend.service.user;
 import com.agh.polymorphia_backend.model.user.UndefinedUser;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserCourseRole;
+import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.repository.user.role.CoordinatorRepository;
@@ -18,10 +19,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class UserService implements UserDetailsService {
+    public static final String USER_HAS_NO_VALID_ROLES = "User should have exactly one role";
     private static final String USER_NOT_FOUND = "User %s does not exist in the database";
     private final UserRepository userRepository;
     private final StudentRepository studentRepository;
@@ -43,6 +47,18 @@ public class UserService implements UserDetailsService {
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (User) authentication.getPrincipal();
+    }
+
+    public UserType getUserRole(User user) {
+        Set<UserType> roles = user.getAuthorities().stream()
+                .map(a -> UserType.valueOf(a.getAuthority()))
+                .collect(Collectors.toSet());
+
+        if (roles.size() != 1) {
+            throw new IllegalStateException(USER_HAS_NO_VALID_ROLES);
+        }
+
+        return roles.iterator().next();
     }
 
     public String getUserName(User user) {

@@ -12,15 +12,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static com.agh.polymorphia_backend.service.course.CourseService.COURSE_NOT_FOUND;
 
 @Service
 @AllArgsConstructor
 public class AccessAuthorizer {
-    public static final String USER_HAS_NO_VALID_ROLES = "User has no valid roles";
     private final UserService userService;
     private final InstructorRepository instructorRepository;
     private final StudentRepository studentRepository;
@@ -49,29 +46,17 @@ public class AccessAuthorizer {
 
     public boolean hasAnyRole(List<UserType> roles) {
         User user = userService.getCurrentUser();
-        return getUserRoles(user).stream().anyMatch(roles::contains);
-    }
-
-    public Set<UserType> getUserRoles(User user) {
-        Set<UserType> roles = user.getAuthorities().stream()
-                .map(a -> UserType.valueOf(a.getAuthority()))
-                .collect(Collectors.toSet());
-
-        if (roles.isEmpty()) {
-            throw new IllegalStateException(USER_HAS_NO_VALID_ROLES);
-        }
-
-        return roles;
+        return roles.contains(userService.getUserRole(user));
     }
 
     private boolean isCourseAccessAuthorized(User user, Course course) {
-        UserType role = getUserRoles(user).iterator().next();
+        UserType role = userService.getUserRole(user);
 
         return switch (role) {
             case STUDENT -> isCourseAccessAuthorizedStudent(user, course);
             case INSTRUCTOR -> isCourseAccessAuthorizedInstructor(user, course);
             case COORDINATOR -> isCourseAccessAuthorizedCoordinator(user, course);
-            case UNDEFINED -> throw new IllegalStateException(USER_HAS_NO_VALID_ROLES);
+            case UNDEFINED -> throw new ResponseStatusException(HttpStatus.NOT_FOUND, COURSE_NOT_FOUND);
         };
     }
 
