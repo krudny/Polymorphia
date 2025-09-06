@@ -6,7 +6,7 @@ import useUserContext from "@/hooks/contexts/useUserContext";
 import { Roles } from "@/interfaces/api/user";
 
 export default function GradableEventsView() {
-    const { userType } = useUserContext();
+  const { userType } = useUserContext();
 
   switch (userType) {
     case Roles.STUDENT:

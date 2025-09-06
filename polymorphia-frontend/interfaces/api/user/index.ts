@@ -63,7 +63,13 @@ export type UserDetailsDTO =
 export default function isStudent(
   user: UserDetailsDTO
 ): user is StudentDetailsDTOWithType {
-  return user.userType === "STUDENT";
+  return user.userType === Roles.STUDENT;
+}
+
+export function isUndefined(
+  user: UserDetailsDTO
+): user is StudentDetailsDTOWithType {
+  return user.userType === Roles.UNDEFINED;
 }
 
 export interface AvailableCoursesDTO {

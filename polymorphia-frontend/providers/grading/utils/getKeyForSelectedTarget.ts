@@ -7,5 +7,7 @@ export function getKeyForSelectedTarget(
     return undefined;
   }
 
-  return state.selectedTarget.map(({ id }) => String(id)).join("_");
+  return state.selectedTarget
+    .map(({ userDetails }) => String(userDetails.id))
+    .join("_");
 }
