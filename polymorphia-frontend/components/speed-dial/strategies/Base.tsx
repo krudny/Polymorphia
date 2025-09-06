@@ -91,6 +91,29 @@ export abstract class BaseSpeedDialStrategy {
     };
   }
 
+  protected createGoBackItem(context: SpeedDialContext): SpeedDialItem {
+    return {
+      id: 10,
+      orderIndex: 50,
+      label: "Wróć",
+      icon: "undo",
+      onClick: () => context.router.back(),
+    };
+  }
+
+  protected createRedirectToMarkdown(context: SpeedDialContext): SpeedDialItem {
+    return {
+      id: 9,
+      orderIndex: 0,
+      label: "Zobacz polecenie",
+      icon: "task",
+      onClick: () => {
+        const newPath = context.currentPath.split("/").slice(0, -1).join("/");
+        context.router.push(newPath);
+      },
+    };
+  }
+
   protected createEditingItems(context: SpeedDialContext): SpeedDialItem[] {
     return context.isEditing
       ? [this.createSaveItem(context), this.createRejectItem(context)]

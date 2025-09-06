@@ -59,6 +59,7 @@ export default function Home() {
           fill
           className="object-cover"
           priority
+          fetchPriority="high"
           sizes="60vw"
         />
       </div>
@@ -70,6 +71,7 @@ export default function Home() {
             width={1000}
             height={1000}
             priority
+            fetchPriority="high"
             sizes="(max-width: 1024px) 400px, (max-width: 1920px) 50vw"
           />
         </div>

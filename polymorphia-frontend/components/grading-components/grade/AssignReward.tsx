@@ -17,6 +17,8 @@ export default function AssignReward({
     CriterionAssignableRewardResponseDTO[] | null
   >(null);
 
+  console.log("TUTAAAAAAAAAAJ", criterion, assignableRewards);
+
   return (
     <>
       <div className="grade-assign-reward">
@@ -40,13 +42,14 @@ export default function AssignReward({
           </div>
         ))}
         <div
-          className="grade-assign-reward-add"
+          className="grade-assign-reward-edit"
           onClick={() => setAssignableRewards(criterion?.assignableRewards)}
         >
-          <span>add</span>
+          <span>edit</span>
         </div>
       </div>
       <AssignRewardModal
+        criterionId={criterion.id}
         assignableRewards={assignableRewards}
         onClosedAction={() => setAssignableRewards(null)}
       />

@@ -9,11 +9,7 @@ import {
 import { useDebounce } from "use-debounce";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import { useEventParams } from "@/hooks/general/useEventParams";
-import { BaseReward } from "@/interfaces/api/reward";
-import { EventTypes } from "@/interfaces/api/course";
 import useRandomPeopleWithPoints from "@/hooks/course/useRandomPeopleWithPoints";
-import useCriteria from "@/hooks/course/useCriteria";
-import useGrade2 from "@/hooks/course/useGrade2";
 import useProjectGroups from "@/hooks/course/useProjectGroups";
 import useGradeUpdate from "@/hooks/course/useGradeUpdate";
 import {
@@ -22,11 +18,18 @@ import {
 } from "@/providers/grading/types";
 import { useFilters } from "@/hooks/course/useFilters";
 import { useGradingFilterConfigs } from "@/hooks/course/useGradingFilterConfigs";
+import { EventTypes } from "@/interfaces/general";
+import { ShortGradeResponseDTO } from "@/interfaces/api/grade";
+import useGrade3 from "@/hooks/course/useGrade3";
 import useUserContext from "@/hooks/contexts/useUserContext";
 
 export interface CriteriaDetails {
   gainedXp?: string;
-  assignedRewards: (BaseReward & { quantity: number })[];
+  assignedRewards: {
+    id: number;
+    quantity: number;
+    imageUrl: string;
+  }[];
 }
 
 export interface GradingReducerState {
@@ -37,11 +40,9 @@ export interface GradingReducerState {
 
 export const GradingReducerActions = {
   SET_TARGET: "set_target",
-  ADD_CRITERION: "add_criterion",
-  ADD_XP_TO_CRITERION: "add_xp_to_criterion",
-  ADD_REWARD_TO_CRITERION: "add_reward_to_criterion",
-  UPDATE_REWARD_QUANTITY: "update_reward_quantity",
-  ADD_COMMENT: "add_comment",
+  SET_GRADE: "set_grade",
+  UPDATE_COMMENT: "update_comment",
+  UPDATE_GRADE: "update_grade",
   RESET_GRADE: "reset_grade",
 } as const;
 
@@ -51,31 +52,19 @@ export type GradingReducerActionType =
       payload: UserDetailsDTO[];
     }
   | {
-      type: typeof GradingReducerActions.ADD_CRITERION;
-      payload: { criterionId: number; details: CriteriaDetails };
+      type: typeof GradingReducerActions.SET_GRADE;
+      payload: { grade: ShortGradeResponseDTO };
     }
   | {
-      type: typeof GradingReducerActions.ADD_XP_TO_CRITERION;
-      payload: { criterionId: number; xp: string };
-    }
-  | {
-      type: typeof GradingReducerActions.ADD_REWARD_TO_CRITERION;
-      payload: {
-        criterionId: number;
-        assignedReward: BaseReward & { quantity: number };
-      };
-    }
-  | {
-      type: typeof GradingReducerActions.UPDATE_REWARD_QUANTITY;
-      payload: {
-        criterionId: number;
-        rewardId: number;
-        quantity: number;
-      };
-    }
-  | {
-      type: typeof GradingReducerActions.ADD_COMMENT;
+      type: typeof GradingReducerActions.UPDATE_COMMENT;
       payload: { comment: string };
+    }
+  | {
+      type: typeof GradingReducerActions.UPDATE_GRADE;
+      payload: {
+        criteria: Record<number, CriteriaDetails>;
+        comment: string;
+      };
     }
   | {
       type: typeof GradingReducerActions.RESET_GRADE;
@@ -98,72 +87,34 @@ const GradingReducer = (
         selectedTarget: action.payload,
       };
 
-    case GradingReducerActions.ADD_CRITERION:
+    case GradingReducerActions.UPDATE_COMMENT:
       return {
         ...state,
-        criteria: {
-          ...state.criteria,
-          [action.payload.criterionId]: action.payload.details,
-        },
+        comment: action.payload.comment,
       };
 
-    case GradingReducerActions.ADD_XP_TO_CRITERION:
-      return {
-        ...state,
-        criteria: {
-          ...state.criteria,
-          [action.payload.criterionId]: {
-            ...state.criteria[action.payload.criterionId],
-            gainedXp: action.payload.xp,
-          },
+    case GradingReducerActions.SET_GRADE:
+      const criteriaMap = action.payload.grade.criteria.reduce(
+        (acc, criterion) => {
+          acc[criterion.id] = {
+            gainedXp: criterion.gainedXp.toString(),
+            assignedRewards: criterion.assignedRewards,
+          };
+          return acc;
         },
-      };
-
-    case GradingReducerActions.ADD_REWARD_TO_CRITERION:
-      const currentCriterion = state.criteria[action.payload.criterionId];
-      const existingRewards = currentCriterion?.assignedRewards || [];
-      const existingRewardIndex = existingRewards.findIndex(
-        (reward) => reward.id === action.payload.assignedReward.id
+        {} as Record<number, CriteriaDetails>
       );
 
-      if (existingRewardIndex !== -1) {
-        const updatedRewards = [...existingRewards];
-        updatedRewards[existingRewardIndex] = {
-          ...updatedRewards[existingRewardIndex],
-          quantity:
-            updatedRewards[existingRewardIndex].quantity +
-            action.payload.assignedReward.quantity,
-        };
-
-        return {
-          ...state,
-          criteria: {
-            ...state.criteria,
-            [action.payload.criterionId]: {
-              ...currentCriterion,
-              assignedRewards: updatedRewards,
-            },
-          },
-        };
-      }
-
       return {
         ...state,
-        criteria: {
-          ...state.criteria,
-          [action.payload.criterionId]: {
-            ...currentCriterion,
-            assignedRewards: [
-              ...existingRewards,
-              action.payload.assignedReward,
-            ],
-          },
-        },
+        comment: action.payload.grade.comment,
+        criteria: criteriaMap,
       };
 
-    case GradingReducerActions.ADD_COMMENT:
+    case GradingReducerActions.UPDATE_GRADE:
       return {
         ...state,
+        criteria: action.payload.criteria,
         comment: action.payload.comment,
       };
 
@@ -183,11 +134,20 @@ export const GradingContext = createContext<
   GradingContextInterface | undefined
 >(undefined);
 
+const COURSE_ID = 1;
+
 export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const { gradableEventId, eventType } = useEventParams();
+  const [search, setSearch] = useState("");
+  const [debouncedSearch] = useDebounce(search, 400);
+  const [state, dispatch] = useReducer(GradingReducer, initialState);
   const [areFiltersOpen, setAreFiltersOpen] = useState(false);
 
   const userContext = useUserContext();
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
+
   const {
     data: filterConfigs,
     isLoading: isFiltersLoading,
@@ -199,17 +159,13 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const sortOrder = filters.getAppliedFilterValues("sortOrder") ?? ["asc"];
   const groups = filters.getAppliedFilterValues("groups") ?? ["all"];
 
-  const [search, setSearch] = useState("");
-  const [debouncedSearch] = useDebounce(search, 400);
-  const [state, dispatch] = useReducer(GradingReducer, initialState);
   const selectedStudentId = state?.selectedTarget?.[0]?.userDetails.id ?? null;
-  const { data: criteria } = useCriteria();
   const { data: students, isLoading: isStudentsLoading } =
     useRandomPeopleWithPoints(debouncedSearch, sortBy, sortOrder, groups);
   const { data: projectGroups, isLoading: isProjectGroupsLoading } =
     useProjectGroups(debouncedSearch);
   const { data: grade, isLoading: isGradeLoading } =
-    useGrade2(selectedStudentId);
+    useGrade3(selectedStudentId);
   const { mutate } = useGradeUpdate();
 
   useEffect(() => {
@@ -233,63 +189,17 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   }, [students, projectGroups, eventType, dispatch]);
 
   useEffect(() => {
-    if (!criteria || criteria.length < 1) {
-      return;
-    }
-
-    for (const criterion of criteria) {
-      dispatch({
-        type: GradingReducerActions.ADD_CRITERION,
-        payload: {
-          criterionId: criterion.id,
-          details: {
-            gainedXp: undefined,
-            assignedRewards: [],
-          },
-        },
-      });
-    }
-  }, [criteria, dispatch]);
-
-  useEffect(() => {
     if (!grade) {
       return;
     }
 
     dispatch({
-      type: GradingReducerActions.RESET_GRADE,
-    });
-
-    dispatch({
-      type: GradingReducerActions.ADD_COMMENT,
+      type: GradingReducerActions.SET_GRADE,
       payload: {
-        comment: grade.details.comment,
+        grade,
       },
     });
-
-    for (const criterion of grade.criteria) {
-      dispatch({
-        type: GradingReducerActions.ADD_XP_TO_CRITERION,
-        payload: {
-          criterionId: criterion.id,
-          xp: criterion.gainedXp,
-        },
-      });
-
-      for (const assignedReward of criterion.assignedRewards) {
-        dispatch({
-          type: GradingReducerActions.ADD_REWARD_TO_CRITERION,
-          payload: {
-            criterionId: criterion.id,
-            assignedReward: {
-              ...assignedReward.assignedReward.base,
-              quantity: 1,
-            },
-          },
-        });
-      }
-    }
-  }, [grade, dispatch]);
+  }, [grade]);
 
   const submitGrade = () => {
     if (!selectedStudentId) {
@@ -320,7 +230,6 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
         isStudentsLoading,
         projectGroups,
         isProjectGroupsLoading,
-        criteria,
         isGradeLoading,
         submitGrade,
       }}

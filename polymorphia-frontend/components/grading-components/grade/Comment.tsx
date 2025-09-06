@@ -13,11 +13,11 @@ export default function Comment() {
       className="comment"
       placeholder="Dodaj komentarz..."
       defaultValue={state.comment}
-      onBlur={(e) => {
+      onBlur={(event) => {
         dispatch({
-          type: GradingReducerActions.ADD_COMMENT,
+          type: GradingReducerActions.UPDATE_COMMENT,
           payload: {
-            comment: e.target.value,
+            comment: event.target.value,
           },
         });
       }}

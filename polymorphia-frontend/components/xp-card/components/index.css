@@ -10,7 +10,7 @@
 /* XPCardProjectVariant */
 
 .xp-card-project-variant {
-    @apply h-full flex-col-centered self-end aspect-square;
+    @apply h-full flex-col-centered self-end shrink-0 aspect-square;
 
     p {
         @apply text-5xl;
@@ -23,7 +23,7 @@
     @apply w-full h-full flex-col-centered bg-secondary-gray dark:bg-secondary-dark box-border;
 
     span {
-        @apply text-3xl md:text-5xl text-primary-dark dark:text-secondary-light;
+        @apply text-5xl text-primary-dark dark:text-secondary-light;
     }
 }
 

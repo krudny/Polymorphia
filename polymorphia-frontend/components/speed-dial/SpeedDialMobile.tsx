@@ -7,8 +7,11 @@ import Loading from "@/components/loading/Loading";
 import { SpeedDial as SpeedDialMui, SpeedDialAction } from "@mui/material";
 import { SpeedDialProps } from "@/components/speed-dial/types";
 
-export default function SpeedDialMobile({ type }: SpeedDialProps) {
-  const items = useSpeedDialFactory({ type: type });
+export default function SpeedDialMobile({
+  eventType,
+  viewType,
+}: SpeedDialProps) {
+  const items = useSpeedDialFactory({ eventType, viewType });
   const [activeModal, setActiveModal] = useState<ReactNode | null>(null);
 
   if (!items) {

@@ -1,8 +1,9 @@
-@import "tailwindcss";
-@import "../../../styles/globals.css";
+@import "../../node_modules/tailwindcss/dist/lib.d.mts";
+@import "../../styles/globals.css";
 
 .filters-modal {
     @apply md:w-[28rem] min-h-30 overflow-visible;
+
     > h1 {
         @apply text-2xl;
     }

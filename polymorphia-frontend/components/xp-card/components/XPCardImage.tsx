@@ -6,7 +6,13 @@ import "./index.css";
 export default function XPCardImage({ imageUrl, alt }: XPCardImageProps) {
   return (
     <div className="xp-card-image">
-      <Image src={`${API_STATIC_URL}/${imageUrl}`} alt={alt} fill />
+      <Image
+        src={`${API_STATIC_URL}/${imageUrl}`}
+        alt={alt}
+        fill
+        priority
+        fetchPriority="high"
+      />
     </div>
   );
 }

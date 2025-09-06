@@ -72,7 +72,7 @@
     @apply text-xl w-7 rounded-tl-lg rounded-br-lg;
 }
 
-.grade-assign-reward-add {
+.grade-assign-reward-edit {
     @apply aspect-square border-3 border-primary-dark rounded-xl flex-col-centered;
     @apply hover:bg-primary-dark hover:text-secondary-gray transition-colors duration-400 ease-[cubic-bezier(0.34,1,0.2,1)] hover:cursor-pointer;
 

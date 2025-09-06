@@ -1,23 +1,25 @@
 import { GradingProps } from "@/views/course/grading/types";
-import SpeedDialDesktop from "@/components/speed-dial/SpeedDialDesktop";
 import { useGradingFactory } from "@/hooks/factory/useGradingFactory";
-import { Fragment, useEffect, useLayoutEffect, useRef } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import "./index.css";
 import { GradingFilterId } from "@/providers/grading/types";
-import FiltersModal from "@/components/filters/modals/FiltersModal";
+import FiltersModal from "@/components/filters-modals/FiltersModal";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import { useQueryClient } from "@tanstack/react-query";
 import { useMediaQuery } from "react-responsive";
 import { useTitle } from "@/components/navigation/TitleContext";
+import { ViewTypes } from "@/interfaces/general";
+import SpeedDialMobile from "@/components/speed-dial/SpeedDialMobile";
 
-export default function Grading({ gradingType, columns }: GradingProps) {
+export default function Grading({ eventType, columns }: GradingProps) {
   const queryClient = useQueryClient();
   const isMd = useMediaQuery({ minWidth: "768px" });
+  const isXL = useMediaQuery({ minWidth: "1200px" });
   const { setTitle } = useTitle();
   const gradingRef = useRef<HTMLDivElement>(null);
   const columnsRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
-  const gradingComponents = useGradingFactory(gradingType);
+  const gradingComponents = useGradingFactory(eventType);
   const {
     filters,
     areFiltersOpen,
@@ -27,18 +29,23 @@ export default function Grading({ gradingType, columns }: GradingProps) {
   } = useGradingContext();
 
   useEffect(() => {
-    setTitle("Work in progress");
+    setTitle("Ocenianie");
   }, [setTitle]);
 
-  useLayoutEffect(() => {
-    if (!gradingRef.current || !columnsRef.current) {
+  useEffect(() => {
+    if (!gradingRef.current || !columnsRef.current || !listRef.current) {
       return;
     }
 
     const updateHeight = () => {
-      if (isMd) {
-        const columnsHeight = columnsRef.current!.offsetHeight;
+      const columnsHeight = columnsRef.current!.offsetHeight;
+
+      if (isXL) {
+        gradingRef.current!.style.height = `max(${columnsHeight}px, calc(100dvh - 5rem))`;
+        listRef.current!.style.maxHeight = `max(${columnsHeight}px, calc(100dvh - 5rem))`;
+      } else if (isMd) {
         gradingRef.current!.style.height = `${columnsHeight}px`;
+        listRef.current!.style.maxHeight = `${columnsHeight}px`;
       } else {
         gradingRef.current!.style.height = `100%`;
         listRef.current!.style.maxHeight = `500px`;
@@ -53,7 +60,7 @@ export default function Grading({ gradingType, columns }: GradingProps) {
     return () => {
       resizeObserver.disconnect();
     };
-  }, [columns, isMd]);
+  }, [columns, isMd, isXL]);
 
   const handleApplyFilters = () => {
     queryClient.invalidateQueries({
@@ -69,7 +76,7 @@ export default function Grading({ gradingType, columns }: GradingProps) {
     <>
       <div ref={gradingRef} className="grading">
         <div className="grading-speed-dial">
-          <SpeedDialDesktop type={gradingType} />
+          <SpeedDialMobile eventType={eventType} viewType={ViewTypes.GRADING} />
         </div>
 
         <div className="grading-list" ref={listRef}>
@@ -83,19 +90,20 @@ export default function Grading({ gradingType, columns }: GradingProps) {
             ))}
           </div>
         ) : (
-          [
-            ...Array(Math.max(columns, gradingComponents.components.length)),
-          ].map((_, i) => {
-            const components = gradingComponents.components[i];
-
-            return (
-              <div key={i} className="grading-columns">
-                {components?.map((component, index) => (
-                  <Fragment key={index}>{component}</Fragment>
-                ))}
-              </div>
-            );
-          })
+          <div ref={columnsRef} className="grading-columns-wrapper">
+            {[
+              ...Array(Math.max(columns, gradingComponents.components.length)),
+            ].map((_, i) => {
+              const components = gradingComponents.components[i];
+              return (
+                <div key={i} className="grading-columns">
+                  {components?.map((component, index) => (
+                    <Fragment key={index}>{component}</Fragment>
+                  ))}
+                </div>
+              );
+            })}
+          </div>
         )}
       </div>
       <FiltersModal<GradingFilterId>

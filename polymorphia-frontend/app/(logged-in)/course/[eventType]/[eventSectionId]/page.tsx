@@ -1,18 +1,18 @@
 "use client";
 
-import StudentView from "@/views/course/student";
-import InstructorView from "@/views/course/instructor";
+import StudentGradableEventsView from "@/views/course/student";
+import InstructorGradableEventsView from "@/views/course/instructor";
 import useUserContext from "@/hooks/contexts/useUserContext";
 import { Roles } from "@/interfaces/api/user";
 
-export default function Page() {
-  const { userType } = useUserContext();
+export default function GradableEventsView() {
+    const { userType } = useUserContext();
 
   switch (userType) {
     case Roles.STUDENT:
-      return <StudentView />;
+      return <StudentGradableEventsView />;
     case Roles.INSTRUCTOR:
-      return <InstructorView />;
+      return <InstructorGradableEventsView />;
     default:
       return null;
   }

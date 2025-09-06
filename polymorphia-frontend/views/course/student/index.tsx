@@ -11,8 +11,8 @@ import { useRouter } from "next/navigation";
 import renderCard from "@/views/course/student/RenderCard";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import GradeModal from "@/components/speed-dial/modals/GradeModal";
-import { EventTypes } from "@/interfaces/api/course";
 import useStudentsGradableEvents from "@/hooks/course/useStudentsGradableEvents";
+import { EventTypes } from "@/interfaces/general";
 
 export default function StudentView() {
   const { eventType, eventSectionId } = useEventParams();

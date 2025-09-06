@@ -18,11 +18,12 @@ export default function BackgroundWrapper({
   return (
     <div className={clsx("background-wrapper", className)}>
       <Image
-        src={`/${url}`}
+        src={`/${url ?? "background.webp"}`}
         alt="Background"
         fill={true}
         className="object-cover inset-0 -z-10"
         priority={true}
+        fetchPriority="high"
       />
       {children}
     </div>

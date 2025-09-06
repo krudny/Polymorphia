@@ -40,9 +40,10 @@ export default function XPCardGrid({
       setMobile,
       setPageCols,
       setPageRows,
-      maxColumns
+      maxColumns,
+      cards.length
     );
-  }, [containerRef, maxColumns]);
+  }, [containerRef, maxColumns, cards.length]);
 
   const pageSize = pageRows * pageCols;
   const pageCount = Math.ceil(cards.length / pageSize);
@@ -50,6 +51,10 @@ export default function XPCardGrid({
     pageToShow * pageSize,
     pageToShow * pageSize + pageSize
   );
+
+  useEffect(() => {
+    console.log(pageCols, pageRows);
+  }, [pageCols, pageRows]);
 
   const pagination = (
     <Pagination

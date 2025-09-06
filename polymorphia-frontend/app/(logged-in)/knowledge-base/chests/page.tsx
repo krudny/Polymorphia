@@ -4,13 +4,15 @@ import Loading from "@/components/loading/Loading";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
 import useChests from "@/hooks/course/useChests";
+import { useSearchParams } from "next/navigation";
 
 export default function Chests() {
+  const searchParams = useSearchParams();
   const { data: chests, isLoading, error } = useChests();
   const { setTitle } = useTitle();
 
   useEffect(() => {
-    setTitle("Skrzynie");
+    setTitle("Skrzynki");
   }, [setTitle]);
 
   if (isLoading) {
@@ -25,5 +27,10 @@ export default function Chests() {
     return <div>No chests found.</div>;
   }
 
-  return <Slider slides={chests} />;
+  return (
+    <Slider
+      slides={chests}
+      initialSlide={parseInt(searchParams.get("slide") ?? "0")}
+    />
+  );
 }

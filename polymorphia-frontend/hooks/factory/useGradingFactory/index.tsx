@@ -1,9 +1,11 @@
-import { GradingComponents, GradingType } from "@/views/course/grading/types";
+import { GradingComponents } from "@/views/course/grading/types";
 import { useMemo } from "react";
 import toast from "react-hot-toast";
 import { gradingStrategyRegistry } from "@/views/course/grading/strategies/Registry";
 
-export function useGradingFactory(type: GradingType): GradingComponents | null {
+import { EventType } from "@/interfaces/general";
+
+export function useGradingFactory(type: EventType): GradingComponents | null {
   return useMemo(() => {
     const selectedStrategy = gradingStrategyRegistry.getStrategy(type);
 

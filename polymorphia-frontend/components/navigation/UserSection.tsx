@@ -23,6 +23,7 @@ export default function UserSection() {
           alt="Zwierzak użytkownika"
           fill
           priority
+          fetchPriority="high"
           className="object-cover rounded-lg"
         />
       </div>

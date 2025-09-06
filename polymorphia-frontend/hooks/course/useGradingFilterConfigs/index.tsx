@@ -43,7 +43,7 @@ export function useGradingFilterConfigs(courseId: number) {
             ...courseGroups.map((courseGroup) => ({ value: courseGroup })),
           ],
           defaultValues: ["all"],
-          max: 12,
+          max: courseGroups.length,
         },
       ];
 

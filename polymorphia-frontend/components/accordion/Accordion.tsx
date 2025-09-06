@@ -9,13 +9,14 @@ import { AccordionProps } from "./types";
 import clsx from "clsx";
 
 export const AccordionComponent = forwardRef<AccordionRef, AccordionProps>(
-  ({ children, className, maxOpen }, ref) => {
-    const accordionContext = useAccordionState(maxOpen);
+  ({ children, className, ...rest }, ref) => {
+    const accordionContext = useAccordionState(rest);
 
     useImperativeHandle(ref, () => ({
       open: accordionContext.open,
       close: accordionContext.close,
       closeAll: accordionContext.closeAll,
+      resetToInitial: accordionContext.resetToInitial,
       toggle: accordionContext.toggle,
     }));
 

@@ -1,4 +1,4 @@
-import { EventType } from "@/interfaces/api/course";
+import { EventType } from "@/interfaces/general";
 
 export interface UseEventParams {
   gradableEventId: number;

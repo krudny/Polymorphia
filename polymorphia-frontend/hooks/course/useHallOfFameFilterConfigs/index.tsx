@@ -49,7 +49,7 @@ export function useHallOfFameFilterConfigs(courseId: number) {
             ...courseGroups.map((courseGroup) => ({ value: courseGroup })),
           ],
           defaultValues: ["all"],
-          max: 12,
+          max: courseGroups.length,
         },
         {
           id: "rankingOptions",

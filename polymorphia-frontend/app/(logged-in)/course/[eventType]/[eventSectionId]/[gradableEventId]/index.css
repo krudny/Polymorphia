@@ -6,11 +6,11 @@
 }
 
 .gradable-event-speed-dial-mobile {
-    @apply fixed block right-2 bottom-3 md:right-5 md:bottom-5 xl:hidden z-[999];
+    @apply fixed block right-2 bottom-2 mb-2 xl:hidden z-[999];
 }
 
 .gradable-event-speed-dial-desktop {
-    @apply right-5 bottom-5 hidden lg:fixed xl:block z-[999];
+    @apply right-2 bottom-2 hidden lg:fixed xl:block z-[999] -mb-4;
 }
 
 .gradable-event-markdown-wrapper {

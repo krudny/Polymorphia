@@ -1,6 +1,5 @@
 "use client";
 import Modal from "@/components/modal/Modal";
-import { useState } from "react";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCardAssign from "@/components/xp-card/components/XPCardAssign";
@@ -8,30 +7,66 @@ import { AssignRewardModalProps } from "@/views/course/grading/modals/assign-rew
 import { ChestResponseDTO, ItemResponseDTO } from "@/interfaces/api/reward";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import "./index.css";
+import useGradingContext from "@/hooks/contexts/useGradingContext";
+import { GradingReducerActions } from "@/providers/grading/GradingContext";
+import { useEffect, useState } from "react";
 
 export default function AssignRewardModal({
+  criterionId,
   assignableRewards,
   onClosedAction,
 }: AssignRewardModalProps) {
-  // const { state, dispatch } = useContext(GradingContext);
+  const { state, dispatch } = useGradingContext();
 
-  const [assignedItems, setAssignedItems] = useState<Record<number, number>>(
-    {}
-  );
+  const [localState, setLocalState] = useState({
+    criteria: { ...state.criteria },
+    comment: state.comment,
+  });
+
+  useEffect(() => {
+    console.log("local state", localState);
+  }, [localState]);
 
   const handleAssign = () => {
-    // dispatch({
-    //   type: "UPDATE_ASSIGNED_REWARDS",
-    //   payload: { assignedItems },
-    // });
+    dispatch({
+      type: GradingReducerActions.UPDATE_GRADE,
+      payload: {
+        criteria: localState.criteria,
+        comment: localState.comment,
+      },
+    });
+    onClosedAction();
   };
 
-  const updateAssignedAmount = (rewardId: number, amount: number) => {
-    setAssignedItems((prev) => ({
+  const updateAssignedAmount = (rewardId: number, value: number) => {
+    setLocalState((prev) => ({
       ...prev,
-      [rewardId]: amount,
+      criteria: {
+        ...prev.criteria,
+        [criterionId]: {
+          ...prev.criteria[criterionId],
+          assignedRewards: prev.criteria[criterionId].assignedRewards.map(
+            (reward) =>
+              reward.id === rewardId ? { ...reward, quantity: value } : reward
+          ),
+        },
+      },
     }));
   };
+  
+  if (!assignableRewards?.length) {
+    return (
+      <Modal
+        isDataPresented={!!assignableRewards?.length}
+        onClosed={onClosedAction}
+        title="Przypisz nagrody"
+      >
+        <div className="assign-reward">
+          <p>Brak dostępnych nagród do przypisania.</p>
+        </div>
+      </Modal>
+    );
+  }
 
   return (
     <Modal
@@ -40,14 +75,17 @@ export default function AssignRewardModal({
       title="Przypisz nagrody"
     >
       <div className="assign-reward">
-        {assignableRewards?.map((possibleReward, index) => {
+        {assignableRewards.map((possibleReward) => {
           const {
             maxAmount,
             assignableReward: { reward: rewardData, rewardType },
           } = possibleReward;
 
           const rewardId = rewardData.id;
-          const currentAssigned = assignedItems[rewardId] || 0;
+          const currentQuantity =
+            localState.criteria[criterionId].assignedRewards.find(
+              (reward) => reward.id === rewardId
+            )?.quantity ?? 0;
 
           const subtitle =
             rewardType === "ITEM"
@@ -58,27 +96,30 @@ export default function AssignRewardModal({
 
           return (
             <XPCard
-              key={index}
+              key={rewardId}
               title={rewardData.name}
               subtitle={subtitle}
               size="xs"
               leftComponent={
-                <XPCardImage imageUrl={`${rewardData.imageUrl}`} alt={""} />
+                <XPCardImage
+                  imageUrl={rewardData.imageUrl}
+                  alt={rewardData.name}
+                />
               }
               rightComponent={
                 <XPCardAssign
-                  currentAssigned={currentAssigned}
+                  currentAssigned={currentQuantity}
                   maxAssigned={maxAmount}
                   increment={() =>
                     updateAssignedAmount(
                       rewardId,
-                      Math.min(currentAssigned + 1, maxAmount)
+                      Math.min(currentQuantity + 1, maxAmount)
                     )
                   }
                   decrement={() =>
                     updateAssignedAmount(
                       rewardId,
-                      Math.max(currentAssigned - 1, 0)
+                      Math.max(currentQuantity - 1, 0)
                     )
                   }
                   color="gray"
@@ -87,6 +128,7 @@ export default function AssignRewardModal({
             />
           );
         })}
+
         <div className="assign-reward-button-wrapper">
           <ButtonWithBorder
             text="Przypisz"

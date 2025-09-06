@@ -44,6 +44,7 @@ export function EquipmentSection({ type, data }: EquipmentSectionProps) {
                     fill
                     className="equipment-image"
                     priority
+                    fetchPriority="high"
                     sizes="(min-width: 1024px) 25vw, 50vw"
                   />
                   {itemData.details.length > 0 ? (

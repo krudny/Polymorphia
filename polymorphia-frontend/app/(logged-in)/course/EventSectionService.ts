@@ -7,12 +7,15 @@ import {
   studentNames,
 } from "@/app/(logged-in)/hall-of-fame/HallOfFameService";
 import { ProjectVariantResponseDTO } from "@/interfaces/api/course/project";
-import { CriterionResponseDTO, GradeResponseDTO } from "@/interfaces/api/grade";
+import {
+  CriterionResponseDTO,
+  GradeResponseDTO,
+  ShortGradeResponseDTO,
+} from "@/interfaces/api/grade";
 import { MarkdownResponseDTO } from "@/interfaces/api/markdown";
 import { PointsSummaryResponseDTO } from "@/interfaces/api/course/points-summary";
 import {
   EventSectionResponseDTO,
-  EventTypes,
   InstructorGradableEventResponseDTO,
   StudentGradableEventResponseDTO,
 } from "@/interfaces/api/course";
@@ -22,6 +25,7 @@ import {
 } from "@/interfaces/api/user";
 import { ProjectGroupResponseDTO } from "@/interfaces/api/temp";
 import { CriteriaDetails } from "@/providers/grading/GradingContext";
+import { EventTypes } from "@/interfaces/general";
 
 const allData: UserDetailsDTO[] = [];
 
@@ -733,6 +737,20 @@ export const EventSectionService = {
             },
             maxAmount: 2,
           },
+          {
+            assignableReward: {
+              rewardType: "ITEM",
+              reward: {
+                id: 2,
+                name: "Pietruszka",
+                imageUrl: "images/items/parsley.webp",
+                itemBonusType: "PERCENTAGE_BONUS",
+                bonusText: "+5% do kategorii Kartkówka",
+                orderIndex: 1,
+              },
+            },
+            maxAmount: 3,
+          },
         ],
       },
       {
@@ -742,65 +760,13 @@ export const EventSectionService = {
         assignableRewards: [
           {
             assignableReward: {
-              rewardType: "CHEST",
-              reward: {
-                id: 1,
-                name: "Srebrna Skrzynia",
-                imageUrl: "images/chests/s1.webp",
-                behavior: "ONE_OF_MANY",
-                behaviorText: "Wybierz jeden przedmiot ze skrzynki",
-                orderIndex: 0,
-                chestItems: [
-                  {
-                    id: 1,
-                    itemBonusType: "PERCENTAGE_BONUS",
-                    name: "Pietruszka",
-                    bonusText: "+5% do kategorii Kartkówka",
-                    imageUrl: "images/items/parsley.jpg",
-                    percentage: 5,
-                    orderIndex: 0,
-                    limit: 3,
-                    isLimitReached: false,
-                    eventSectionId: 1,
-                  },
-                  {
-                    id: 2,
-                    itemBonusType: "PERCENTAGE_BONUS",
-                    name: "Marchewka",
-                    bonusText: "+5% do kategorii Kartkówka",
-                    imageUrl: "images/items/parsley.jpg",
-                    percentage: 5,
-                    orderIndex: 0,
-                    limit: 3,
-                    isLimitReached: false,
-                    eventSectionId: 1,
-                  },
-                  {
-                    id: 3,
-                    itemBonusType: "PERCENTAGE_BONUS",
-                    name: "Apteczka",
-                    bonusText: "+5% do kategorii Kartkówka",
-                    imageUrl: "images/items/parsley.jpg",
-                    percentage: 5,
-                    orderIndex: 0,
-                    limit: 3,
-                    isLimitReached: false,
-                    eventSectionId: 1,
-                  },
-                ],
-              },
-            },
-            maxAmount: 2,
-          },
-          {
-            assignableReward: {
               rewardType: "ITEM",
               reward: {
                 id: 3,
                 itemBonusType: "PERCENTAGE_BONUS",
-                name: "Apteczka",
+                name: "Marchewka",
                 bonusText: "+5% do kategorii Kartkówka",
-                imageUrl: "images/items/parsley.jpg",
+                imageUrl: "images/items/carrot.webp",
                 percentage: 5,
                 orderIndex: 0,
                 limit: 3,
@@ -808,7 +774,7 @@ export const EventSectionService = {
                 eventSectionId: 1,
               },
             },
-            maxAmount: 5,
+            maxAmount: 3,
           },
         ],
       },
@@ -1019,6 +985,45 @@ export const EventSectionService = {
                 },
               },
               maxAmount: 2,
+            },
+          ],
+        },
+      ],
+    };
+  },
+
+  getGrade3: async (
+    studentId,
+    gradableEventId
+  ): Promise<ShortGradeResponseDTO> => {
+    return {
+      comment:
+        "Bardzo dobra praca! Student wykazał się doskonałą znajomością tematu.",
+      criteria: [
+        {
+          id: 1,
+          gainedXp: "3.5",
+          assignedRewards: [
+            {
+              id: 1,
+              imageUrl: "images/chests/s1.webp",
+              quantity: 2,
+            },
+            {
+              id: 2,
+              imageUrl: "images/items/parsley.jpg",
+              quantity: 1,
+            },
+          ],
+        },
+        {
+          id: 2,
+          gainedXp: "2.7",
+          assignedRewards: [
+            {
+              id: 3,
+              imageUrl: "images/items/carrot.jpg",
+              quantity: 1,
             },
           ],
         },

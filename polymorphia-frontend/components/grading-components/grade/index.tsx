@@ -2,7 +2,7 @@
 
 import "../../../views/course/grading/index.css";
 import "./index.css";
-import { ReactNode, useRef } from "react";
+import { Fragment, ReactNode, useRef } from "react";
 import ProgressBar from "@/components/progressbar/ProgressBar";
 import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLabels";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
@@ -16,16 +16,19 @@ import Comment from "@/components/grading-components/grade/Comment";
 import Input from "@/components/grading-components/grade/Input";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import { useMediaQuery } from "react-responsive";
+import { getKeyForSelectedTarget } from "@/providers/grading/utils/getKeyForSelectedTarget";
+import useCriteria from "@/hooks/course/useCriteria";
 
 export default function Grade() {
-  const { state, criteria, isGradeLoading, submitGrade } = useGradingContext();
+  const { state, isGradeLoading, submitGrade } = useGradingContext();
+  const { data: criteria } = useCriteria();
   const accordionRef = useRef<AccordionRef>(null);
   const isXL = useMediaQuery({ minWidth: "1400px" });
 
-  const topComponent = <h1 className="text-5xl">Ocena</h1>;
+  const topComponent = <h1>Ocena</h1>;
 
   const mainComponent = (): ReactNode => {
-    if (isGradeLoading || !criteria) {
+    if (isGradeLoading || !criteria || !state.selectedTarget) {
       return (
         <div className="h-80">
           <Loading />
@@ -33,15 +36,24 @@ export default function Grade() {
       );
     }
 
+    const accordionSections = [...Object.keys(state.criteria), "Komentarz"];
+
     return (
-      <>
+      <Fragment key={getKeyForSelectedTarget(state)}>
         <Accordion
           ref={accordionRef}
           className="grade-accordion-override"
+          sectionIds={new Set(accordionSections)}
+          initiallyOpenedSectionIds={
+            new Set(
+              accordionSections.length > 0 && isXL ? [accordionSections[0]] : []
+            )
+          }
           maxOpen={1}
+          shouldAnimateInitialOpen={false}
         >
           {Object.entries(state.criteria).map(
-            ([criterionId, criterionGrade], index) => {
+            ([criterionId, criterionGrade]) => {
               const criterion = criteria?.find(
                 (criterion) => criterion.id === Number(criterionId)
               );
@@ -56,7 +68,6 @@ export default function Grade() {
                   id={criterionId}
                   title={criterion.name}
                   headerClassName="grading-accordion-header"
-                  isInitiallyOpened={index == 0 && isXL}
                 >
                   <div key={criterionId} className="grade-criterion">
                     <div className="grade-criterion-progress-bar">
@@ -105,7 +116,7 @@ export default function Grade() {
             onClick={submitGrade}
           />
         </div>
-      </>
+      </Fragment>
     );
   };
 
