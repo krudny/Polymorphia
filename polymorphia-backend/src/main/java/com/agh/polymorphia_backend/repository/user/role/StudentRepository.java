@@ -1,0 +1,18 @@
+package com.agh.polymorphia_backend.repository.user.role;
+
+import com.agh.polymorphia_backend.model.user.Student;
+import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.Optional;
+
+public interface StudentRepository extends JpaRepository<Student, Long>, UserCourseRoleRepository.UserDetailsRepository {
+    @Query(
+            "select s from Animal a " +
+                    "join  a.student s " +
+                    "where s.id=:userId and a.courseGroup.id=:courseId"
+    )
+    @Override
+    Optional<Student> findByUserIdAndCourseId(Long userId, Long courseId);
+}

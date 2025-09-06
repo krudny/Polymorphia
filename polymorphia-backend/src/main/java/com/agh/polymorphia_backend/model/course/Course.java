@@ -36,4 +36,10 @@ public class Course {
     @ToString.Exclude
     @JsonIgnore
     private List<CourseGroup> courseGroups;
+
+    @NotEmpty
+    private String coordinatorImageUrl;
+
+    @NotEmpty
+    private String instructorImageUrl;
 }

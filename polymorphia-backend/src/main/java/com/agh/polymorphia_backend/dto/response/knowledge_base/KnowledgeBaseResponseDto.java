@@ -34,4 +34,6 @@ public class KnowledgeBaseResponseDto {
     private String imageUrl;
 
     private List<BaseRewardResponseDto> relatedRewards;
+
+    private String additionalGradingInfo;
 }

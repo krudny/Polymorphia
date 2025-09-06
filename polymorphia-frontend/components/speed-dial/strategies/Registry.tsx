@@ -3,7 +3,8 @@ import { ProjectStrategy } from "@/components/speed-dial/strategies/markdown-vie
 import { SpeedDialStrategy } from "@/components/speed-dial/strategies/types";
 import { TestGradingStrategy } from "@/components/speed-dial/strategies/instructor/TestGrading";
 import { AssignmentGradingStrategy } from "@/components/speed-dial/strategies/instructor/AssignmentGrading";
-import { EventTypes, Roles, ViewTypes } from "@/interfaces/general";
+import { EventTypes, ViewTypes } from "@/interfaces/general";
+import { Roles } from "@/interfaces/api/user";
 
 class SpeedDialStrategyRegistry {
   private strategies = new Map<string, SpeedDialStrategy>();

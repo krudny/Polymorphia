@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.config;
 
-import com.agh.polymorphia_backend.service.UserService;
+import com.agh.polymorphia_backend.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -34,8 +34,7 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userService);
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userService);
         provider.setPasswordEncoder(passwordEncoder);
         return provider;
     }

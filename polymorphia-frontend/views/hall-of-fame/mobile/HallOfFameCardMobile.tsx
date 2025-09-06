@@ -4,6 +4,7 @@ import HallOfFameUserData from "@/views/hall-of-fame/general/HallOfFameUserData"
 import UserPoints from "@/components/user-points/UserPoints";
 import "./index.css";
 import { HallOfFameRecordDTO } from "@/interfaces/api/hall-of-fame";
+import { API_STATIC_URL } from "@/services/api";
 import { filterXpDetails } from "@/providers/hall-of-fame/utils/filterXpDetails";
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
 
@@ -30,7 +31,7 @@ export default function RankCard({
       <div>
         <HallOfFameImage
           position={userDetails.position}
-          imageUrl={userDetails.imageUrl}
+          imageUrl={`${API_STATIC_URL}/${userDetails.imageUrl}`}
         />
         <HallOfFameUserData {...userDetails} />
         <HallOfFamePointsSummary total={xpDetails.total} />

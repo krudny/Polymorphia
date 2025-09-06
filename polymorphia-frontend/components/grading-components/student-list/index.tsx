@@ -61,7 +61,7 @@ export default function StudentsList() {
 
           return (
             <div
-              key={student.id || student.studentName}
+              key={student.userDetails.id || student.userDetails.userName}
               className="student-record"
               onClick={() =>
                 dispatch({
@@ -71,14 +71,14 @@ export default function StudentsList() {
               }
             >
               <XPCard
-                title={student.studentName}
+                title={student.userDetails.userName}
                 color={color}
-                subtitle={student.group}
+                subtitle={student.userDetails.group}
                 size="xs"
                 leftComponent={
                   <XPCardImage
-                    imageUrl={student.imageUrl}
-                    alt={student.evolutionStage}
+                    imageUrl={student.userDetails.imageUrl}
+                    alt={student.userDetails.evolutionStage}
                   />
                 }
                 rightComponent={

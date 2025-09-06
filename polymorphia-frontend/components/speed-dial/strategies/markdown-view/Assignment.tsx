@@ -4,7 +4,7 @@ import {
   SpeedDialContext,
   SpeedDialStrategy,
 } from "@/components/speed-dial/strategies/types";
-import { Roles } from "@/interfaces/general";
+import { Roles } from "@/interfaces/api/user";
 
 export class AssignmentStrategy
   extends BaseSpeedDialStrategy

@@ -1,4 +1,4 @@
-import { UserDetailsDTO } from "../user";
+import { StudentDetailsDTO } from "../user";
 
 export interface HallOfFameResponseDTO {
   content: HallOfFameRecordDTO[];
@@ -9,6 +9,6 @@ export interface HallOfFameResponseDTO {
 }
 
 export interface HallOfFameRecordDTO {
-  userDetails: UserDetailsDTO;
+  userDetails: StudentDetailsDTO;
   xpDetails: Record<string, string>;
 }

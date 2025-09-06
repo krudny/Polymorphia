@@ -1,44 +1,88 @@
-import { UserDetailsDTO } from "@/interfaces/api/user";
-
-import { Role, Roles } from "@/interfaces/general";
+import {
+  AvailableCoursesDTO,
+  StudentDetailsDTOWithType,
+  UserDetailsDTO,
+} from "@/interfaces/api/user";
+import { API_HOST } from "@/services/api";
 
 const UserService = {
-  getCurrentUser: async (): Promise<UserDetailsDTO> => {
-    return {
-      id: 1,
-      studentName: "Kamil Rudny",
-      animalName: "Gerard Pocieszny",
-      evolutionStage: "Majestatyczna bestia",
-      imageUrl: "images/evolution-stages/4.jpg",
-      group: "BM-10-00",
-      position: 25,
-    };
+  isCourseIdSet: async (): Promise<boolean> => {
+    const response = await fetch(`${API_HOST}/users/preferred-course/exists`, {
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to check for user preferences!");
+    }
+
+    return await response.json();
   },
-  getRandomUsers: async (): Promise<UserDetailsDTO[]> => {
+  getUserCourses: async (): Promise<AvailableCoursesDTO[]> => {
+    const response = await fetch(`${API_HOST}/courses`, {
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch courses!");
+    }
+
+    return await response.json();
+  },
+  getCurrentUser: async (): Promise<UserDetailsDTO> => {
+    const response = await fetch(`${API_HOST}/users/context`, {
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch user context!");
+    }
+
+    return await response.json();
+  },
+  setUserPreferredCourse: async (courseId: number): Promise<void> => {
+    const response = await fetch(
+      `${API_HOST}/users/preferred-course?courseId=${courseId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Failed to set user preferences!");
+    }
+  },
+  getRandomUsers: async (): Promise<StudentDetailsDTOWithType[]> => {
     return [
       {
-        id: 1,
-        studentName: "Kamil Rudny",
-        animalName: "Gerard Pocieszny",
-        evolutionStage: "Majestatyczna bestia",
-        group: "BM-20-00",
-        imageUrl: "images/evolution-stages/4.jpg",
-        position: 1,
+        userType: "STUDENT",
+        userDetails: {
+          id: 1,
+          userName: "Kamil Rudny",
+          animalName: "Gerard Pocieszny",
+          evolutionStage: "Majestatyczna bestia",
+          group: "BM-20-00",
+          imageUrl: "images/evolution-stages/4.jpg",
+          position: 1,
+          courseId: 1,
+        },
       },
       {
-        id: 2,
-        studentName: "Kamil Śmieszny",
-        animalName: "Gerard Wesoły",
-        evolutionStage: "Majestatyczna bestia",
-        group: "BM-20-00",
-        imageUrl: "images/evolution-stages/5.jpg",
-        position: 2,
+        userType: "STUDENT",
+        userDetails: {
+          id: 2,
+          userName: "Kamil Śmieszny",
+          animalName: "Gerard Wesoły",
+          evolutionStage: "Majestatyczna bestia",
+          group: "BM-20-00",
+          imageUrl: "images/evolution-stages/5.jpg",
+          position: 2,
+          courseId: 1,
+        },
       },
     ];
-  },
-  getRole: async (): Promise<{ role: Role }> => {
-    return { role: Roles.INSTRUCTOR };
-    // return { role: Roles.STUDENT };
   },
 };
 

@@ -10,4 +10,5 @@ export interface KnowledgeBaseResponseDTO {
   description: string;
   imageUrl: string;
   relatedRewards?: BaseReward[];
+  additionalGradingInfo?: string;
 }
