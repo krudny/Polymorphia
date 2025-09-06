@@ -19,15 +19,4 @@ public record HallOfFameRequestDto (
         @NotBlank String sortBy,
         @NotNull SortOrder sortOrder,
         @NotNull List<String> groups
-){
-    public Pageable getPageable() {
-        return PageRequest.of(page, size, Sort.by(sortOrder.getDirection(), sortBy));
-    }
-
-    public String[] getGroupsAsArray() {
-        if (groups == null || groups.isEmpty()){
-            return new String[0];
-        }
-        return groups.toArray(String[]::new);
-    }
-}
+){ }
