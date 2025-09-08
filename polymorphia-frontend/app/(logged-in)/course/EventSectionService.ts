@@ -989,6 +989,8 @@ export const EventSectionService = {
     studentId,
     gradableEventId
   ): Promise<ShortGradeResponseDTO> => {
+    await new Promise<void>((resolve) => setTimeout(resolve, 300));
+
     return {
       comment:
         "Bardzo dobra praca! Student wykazał się doskonałą znajomością tematu.",
