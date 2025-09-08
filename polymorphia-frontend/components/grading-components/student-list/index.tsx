@@ -44,7 +44,7 @@ export default function StudentsList() {
   const mainComponent = (): ReactNode => {
     if (isStudentsLoading || !students) {
       return (
-        <div className="h-80">
+        <div className="student-list-loading">
           <Loading />
         </div>
       );

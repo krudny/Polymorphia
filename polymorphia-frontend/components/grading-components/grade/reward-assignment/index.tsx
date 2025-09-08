@@ -17,8 +17,6 @@ export default function AssignReward({
     CriterionAssignableRewardResponseDTO[] | null
   >(null);
 
-  console.log("TUTAAAAAAAAAAJ", criterion, assignableRewards);
-
   return (
     <>
       <div className="grade-assign-reward">

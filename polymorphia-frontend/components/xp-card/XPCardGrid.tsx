@@ -52,10 +52,6 @@ export default function XPCardGrid({
     pageToShow * pageSize + pageSize
   );
 
-  useEffect(() => {
-    console.log(pageCols, pageRows);
-  }, [pageCols, pageRows]);
-
   const pagination = (
     <Pagination
       pageCount={pageCount}

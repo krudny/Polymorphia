@@ -8,7 +8,7 @@ import { ChestResponseDTO, ItemResponseDTO } from "@/interfaces/api/reward";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import "./index.css";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { GradingReducerActions } from "@/providers/grading/gradingReducer/types";
 
 export default function AssignRewardModal({
@@ -22,10 +22,6 @@ export default function AssignRewardModal({
     criteria: { ...state.criteria },
     comment: state.comment,
   });
-
-  useEffect(() => {
-    console.log("local state", localState);
-  }, [localState]);
 
   const handleAssign = () => {
     dispatch({

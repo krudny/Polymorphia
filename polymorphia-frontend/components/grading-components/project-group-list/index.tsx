@@ -25,11 +25,15 @@ export default function ProjectGroupList() {
   } = useGradingContext();
 
   if (isProjectGroupsLoading || !projectGroups) {
-    return <Loading />;
+    return (
+      <div className="project-group-list-loading">
+        <Loading />
+      </div>
+    );
   }
 
   const topComponent = (
-    <>
+    <div className="grading-search-wrapper">
       <Search
         search={search}
         setSearch={setSearch}
@@ -38,10 +42,10 @@ export default function ProjectGroupList() {
       <ButtonWithBorder
         text="Filtry"
         size={isMd ? "md" : "sm"}
-        className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none !h-full"
+        className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none"
         onClick={() => setAreFiltersOpen(true)}
       />
-    </>
+    </div>
   );
 
   const mainComponent = () => (

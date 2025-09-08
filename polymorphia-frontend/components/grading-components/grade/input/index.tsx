@@ -1,20 +1,28 @@
-/* eslint-disable */
-// @ts-nocheck
-
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { GradingInputProps } from "@/components/grading-components/grade/types";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import "./index.css";
 import { GradingReducerActions } from "@/providers/grading/gradingReducer/types";
 
-// TODO: not working
 export default function GradingInput({
   criterion,
   gainedXp,
 }: GradingInputProps) {
-  const { dispatch } = useGradingContext();
+  const { state, dispatch } = useGradingContext();
   const inputValueRefs = useRef<Record<number, string>>({});
   const [errors, setErrors] = useState<Record<number, boolean>>({});
+
+  const [localState, setLocalState] = useState({
+    criteria: { ...state.criteria },
+    comment: state.comment,
+  });
+
+  useEffect(() => {
+    setLocalState({
+      criteria: { ...state.criteria },
+      comment: state.comment,
+    });
+  }, [state.criteria, state.comment]);
 
   const handleXPChange = (
     event: ChangeEvent<HTMLInputElement>,
@@ -34,13 +42,31 @@ export default function GradingInput({
     }));
 
     if (isValid) {
+      setLocalState((prev) => ({
+        ...prev,
+        criteria: {
+          ...prev.criteria,
+          [criterionId]: {
+            ...prev.criteria[criterionId],
+            gainedXp: xp,
+          },
+        },
+      }));
+
       dispatch({
-        type: GradingReducerActions.ADD_XP_TO_CRITERION,
+        type: GradingReducerActions.UPDATE_GRADE,
         payload: {
-          criterionId,
-          xp,
+          criteria: {
+            ...localState.criteria,
+            [criterionId]: {
+              ...localState.criteria[criterionId],
+              gainedXp: xp,
+            },
+          },
+          comment: localState.comment,
         },
       });
+
       delete inputValueRefs.current[criterionId];
     }
   };

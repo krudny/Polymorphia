@@ -35,10 +35,6 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(GradingReducer, initialState);
   const [areFiltersOpen, setAreFiltersOpen] = useState(false);
 
-  useEffect(() => {
-    console.log(state);
-  }, [state]);
-
   const {
     data: filterConfigs,
     isLoading: isFiltersLoading,

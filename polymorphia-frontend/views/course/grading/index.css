@@ -2,8 +2,8 @@
 @import "../../../styles/globals.css";
 
 .grading {
-    @apply w-full max-w-[1500px] m-auto flex flex-col justify-center items-center px-4;
-    @apply md:flex-row md:items-start md:px-10 md:gap-x-10 2xl:min-h-[calc(100dvh-5rem)];
+    @apply w-full max-w-[1500px] mx-auto flex flex-col justify-center items-center p-4;
+    @apply md:flex-row md:items-start md:px-10 gap-x-6 2xl:min-h-[calc(100dvh-5rem)];
     scrollbar-gutter: stable;
     overflow: hidden;
 }
@@ -23,15 +23,15 @@
 }
 
 .grading-columns-wrapper {
-    @apply w-full flex flex-col mx-auto gap-x-10;
+    @apply w-full max-w-[56rem] flex flex-col justify-center gap-x-6;
     @apply md:flex-row;
 }
 
 .grading-list {
-    @apply w-full md:max-w-[25rem] flex flex-col overflow-y-auto;
+    @apply w-full md:max-w-md flex flex-col overflow-y-auto;
 }
 
 .grading-columns {
-    @apply w-full md:max-w-md flex flex-col gap-y-4 h-fit min-h-0 min-w-0;
+    @apply w-full md:max-w-md flex flex-col justify-center gap-y-4 h-fit min-h-0 min-w-0;
 }
 

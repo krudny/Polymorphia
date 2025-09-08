@@ -44,7 +44,6 @@ export function setResizeObserver(
     const width = containerRef.current.offsetWidth;
 
     if (window.outerWidth < 1024) {
-      console.log("tutaj");
       setMobile(true);
 
       setPageCols(width > 650 ? 2 : 1);
