@@ -4,6 +4,7 @@ import Loading from "@/components/loading/Loading";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import useGrade from "@/hooks/course/useGrade";
 import { useEventParams } from "@/hooks/general/useEventParams";
+import "./index.css";
 
 export default function GradeModal({
   onClosedAction,
@@ -27,12 +28,12 @@ export default function GradeModal({
       title="Nagrody"
     >
       {isError && (
-        <div className="gradable-event-section text-xl 2xl:text-2xl">
+        <div className="grade-error">
           Wystąpił błąd przy ładowaniu szczegółów.
         </div>
       )}
       {isLoading && (
-        <div className="gradable-event-section h-50">
+        <div className="grade-loading">
           <Loading />
         </div>
       )}

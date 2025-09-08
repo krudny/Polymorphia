@@ -1,4 +1,4 @@
-import { GradingReducerState } from "@/providers/grading/GradingContext";
+import { GradingReducerState } from "@/providers/grading/gradingReducer/types";
 
 export function getKeyForSelectedTarget(
   state: GradingReducerState

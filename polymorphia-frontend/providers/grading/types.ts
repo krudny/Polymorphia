@@ -1,11 +1,11 @@
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import { ProjectGroupResponseDTO } from "@/interfaces/api/temp";
 import { Dispatch, SetStateAction } from "react";
+import { useFilters } from "@/hooks/course/useFilters";
 import {
   GradingReducerActionType,
   GradingReducerState,
-} from "@/providers/grading/GradingContext";
-import { useFilters } from "@/hooks/course/useFilters";
+} from "@/providers/grading/gradingReducer/types";
 
 export type GradingContextInterface = {
   areFiltersOpen: boolean;

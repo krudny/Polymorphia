@@ -1,4 +1,4 @@
-import { CriteriaDetails } from "@/providers/grading/GradingContext";
+import { CriteriaDetails } from "@/providers/grading/gradingReducer/types";
 
 export interface UseGradeUpdate {
   mutate: (variables: {

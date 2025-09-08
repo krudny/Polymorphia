@@ -5,12 +5,12 @@ import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import Search from "@/components/search";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import Loading from "@/components/loading/Loading";
-import { GradingReducerActions } from "@/providers/grading/GradingContext";
 import GradingComponentWrapper from "@/components/grading-components/grading-wrapper";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import "./index.css";
 import { Fragment } from "react";
 import { useMediaQuery } from "react-responsive";
+import { GradingReducerActions } from "@/providers/grading/gradingReducer/types";
 
 export default function ProjectGroupList() {
   const isMd = useMediaQuery({ minWidth: "786px" });
@@ -49,7 +49,6 @@ export default function ProjectGroupList() {
       {projectGroups.map((group, index: number) => (
         <Fragment key={index}>
           <div
-            key={index + group.id}
             className="group-record"
             onClick={() =>
               dispatch({
@@ -95,7 +94,7 @@ export default function ProjectGroupList() {
               }
             )}
           </div>
-          <div key={index} className="divider"></div>
+          <div className="divider"></div>
         </Fragment>
       ))}
     </div>

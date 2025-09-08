@@ -22,25 +22,31 @@ export default function AssignReward({
   return (
     <>
       <div className="grade-assign-reward">
-        {criterionGrade.assignedRewards.map((assignedReward, index) => (
-          <div key={index} className="grade-assign-reward-wrapper">
-            <div className="grade-assign-reward-image-wrapper">
-              <Image
-                src={`${API_STATIC_URL}/${assignedReward.imageUrl}`}
-                alt="User profile"
-                fill
-                priority
-                className="object-cover"
-                sizes="(min-width: 1024px) 25vw, 50vw"
-                onClick={() => {}}
-              />
-              <ImageBadge
-                text={assignedReward.quantity.toString()}
-                className="grade-assign-reward-image-badge"
-              />
+        {criterionGrade.assignedRewards.map((assignedReward, index) => {
+          if (assignedReward.quantity === 0) {
+            return;
+          }
+
+          return (
+            <div key={index} className="grade-assign-reward-wrapper">
+              <div className="grade-assign-reward-image-wrapper">
+                <Image
+                  src={`${API_STATIC_URL}/${assignedReward.imageUrl}`}
+                  alt="User profile"
+                  fill
+                  priority
+                  className="object-cover"
+                  sizes="(min-width: 1024px) 25vw, 50vw"
+                  onClick={() => {}}
+                />
+                <ImageBadge
+                  text={assignedReward.quantity.toString()}
+                  className="grade-assign-reward-image-badge"
+                />
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
         <div
           className="grade-assign-reward-edit"
           onClick={() => setAssignableRewards(criterion?.assignableRewards)}

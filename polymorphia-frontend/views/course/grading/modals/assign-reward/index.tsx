@@ -8,8 +8,8 @@ import { ChestResponseDTO, ItemResponseDTO } from "@/interfaces/api/reward";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import "./index.css";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
-import { GradingReducerActions } from "@/providers/grading/GradingContext";
 import { useEffect, useState } from "react";
+import { GradingReducerActions } from "@/providers/grading/gradingReducer/types";
 
 export default function AssignRewardModal({
   criterionId,

@@ -21,8 +21,8 @@ import {
 } from "@/interfaces/api/course";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import { ProjectGroupResponseDTO } from "@/interfaces/api/temp";
-import { CriteriaDetails } from "@/providers/grading/GradingContext";
 import { EventTypes } from "@/interfaces/general";
+import { CriteriaDetails } from "@/providers/grading/gradingReducer/types";
 
 const allData: UserDetailsDTO[] = [];
 
