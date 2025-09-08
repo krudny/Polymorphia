@@ -21,6 +21,7 @@ public class HallOfFame {
     @Id
     private Long animalId;
     private String animalName;
+    private Long studentId;
     private String studentName;
     private String groupName;
     private Long courseId;

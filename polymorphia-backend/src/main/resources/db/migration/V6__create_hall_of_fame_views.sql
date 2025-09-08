@@ -2,20 +2,35 @@ DROP VIEW IF EXISTS hall_of_fame_view;
 DROP VIEW IF EXISTS student_score_detail_view;
 
 CREATE VIEW student_score_detail_view AS
-SELECT (a.id || '-' || es.id)::text        AS id,
-       a.id                                AS animal_id,
-       es.id                               AS event_section_id,
-       es.name                             AS event_section_name,
-       ROUND((RANDOM() * 10)::numeric, 2)  AS raw_xp,
-       ROUND((RANDOM() * 2)::numeric, 2)   AS flat_bonus,
-       ROUND((RANDOM() * 0.3)::numeric, 2) AS percentage_bonus
-FROM animals a
-         JOIN course_groups cg ON cg.id = a.course_group_id
-         JOIN event_sections es ON es.course_id = cg.course_id;
+WITH base AS (SELECT a.id    AS animal_id,
+                     es.id   AS event_section_id,
+                     es.name AS event_section_name
+              FROM animals a
+                       JOIN course_groups cg ON cg.id = a.course_group_id
+                       JOIN event_sections es ON es.course_id = cg.course_id),
+     points AS (SELECT g.animal_id,
+                       ge.event_section_id,
+                       SUM(cg.xp) AS raw_xp
+                FROM grades g
+                         JOIN criteria_grades cg ON cg.grade_id = g.id
+                         JOIN gradable_events ge ON ge.id = g.gradable_event_id
+                GROUP BY g.animal_id, ge.event_section_id)
+SELECT (b.animal_id::text || '-' || b.event_section_id::text) AS id,
+       b.animal_id,
+       b.event_section_id,
+       b.event_section_name,
+       COALESCE(p.raw_xp, 0)                                  AS raw_xp,
+       0.0                                                    AS flat_bonus,
+       0.0                                                    AS percentage_bonus
+FROM base b
+         LEFT JOIN points p
+                   ON p.animal_id = b.animal_id
+                       AND p.event_section_id = b.event_section_id;
 
 CREATE VIEW hall_of_fame_view AS
 WITH scored AS (SELECT scg.id                                                      AS animal_id,
                        scg.name                                                    AS animal_name,
+                       scg.student_id                                              AS student_id,
                        u.first_name || ' ' || u.last_name                          AS student_name,
                        cg.name                                                     AS group_name,
                        cg.course_id,
@@ -30,6 +45,7 @@ WITH scored AS (SELECT scg.id                                                   
                          LEFT JOIN event_sections es ON es.id = ssd.event_section_id),
      summed AS (SELECT animal_id,
                        MAX(animal_name)                               AS animal_name,
+                       MAX(student_id)                                AS student_id,
                        MAX(student_name)                              AS student_name,
                        MAX(group_name)                                AS group_name,
                        MAX(course_id)                                 AS course_id,
@@ -48,13 +64,14 @@ WITH scored AS (SELECT scg.id                                                   
                 FROM summed),
      evolution_mapping AS (SELECT DISTINCT ON (r.animal_id) r.animal_id,
                                                             r.animal_name,
+                                                            r.student_id,
                                                             r.student_name,
                                                             r.group_name,
                                                             r.course_id,
                                                             r.flat_bonus_sum + r.percentage_bonus_sum AS total_bonus_sum,
                                                             r.total_xp_sum,
                                                             r.position,
-                                                            es.name AS evolution_stage,
+                                                            es.name                                   AS evolution_stage,
                                                             es.image_url
                            FROM ranked r
                                     LEFT JOIN evolution_stages es
