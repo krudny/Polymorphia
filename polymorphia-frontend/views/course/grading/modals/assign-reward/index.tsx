@@ -53,7 +53,7 @@ export default function AssignRewardModal({
       },
     }));
   };
-  
+
   if (!assignableRewards?.length) {
     return (
       <Modal
