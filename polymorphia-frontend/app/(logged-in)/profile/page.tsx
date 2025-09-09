@@ -15,10 +15,10 @@ import useUserContext from "@/hooks/contexts/useUserContext";
 import useStudentProfile from "@/hooks/course/useStudentProfile";
 
 export default function Profile() {
-  const wrapperRef = useScaleShow();
   const { setTitle } = useTitle();
   const isSm = useMediaQuery({ maxWidth: 920 });
   const { data: profile, isLoading } = useStudentProfile();
+  const wrapperRef = useScaleShow(!isLoading);
   const userContext = useUserContext();
 
   useEffect(() => {
@@ -28,6 +28,7 @@ export default function Profile() {
   if (isLoading || !userContext) {
     return <Loading />;
   }
+
 
   //TODO: handle profile for other roles
   if ((userContext && !isStudent(userContext)) || !profile) {
