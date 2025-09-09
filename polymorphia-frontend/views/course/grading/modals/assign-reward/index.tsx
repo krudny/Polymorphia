@@ -1,40 +1,33 @@
-"use client";
 import Modal from "@/components/modal/Modal";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCardAssign from "@/components/xp-card/components/XPCardAssign";
-import { AssignRewardModalProps } from "@/views/course/grading/modals/assign-reward/types";
+import {
+  AssignRewardModalContentProps,
+  AssignRewardModalProps,
+} from "@/views/course/grading/modals/assign-reward/types";
 import { ChestResponseDTO, ItemResponseDTO } from "@/interfaces/api/reward";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import "./index.css";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import { useState } from "react";
-import { GradingReducerActions } from "@/providers/grading/gradingReducer/types";
+import {
+  GradingReducerActions,
+  GradingReducerState,
+} from "@/providers/grading/gradingReducer/types";
+import useModalContext from "@/hooks/contexts/useModalContext";
 
-export default function AssignRewardModal({
+function AssignRewardModalContent({
   criterionId,
   assignableRewards,
-  onClosedAction,
-}: AssignRewardModalProps) {
+}: AssignRewardModalContentProps) {
+  const { closeModal } = useModalContext();
   const { state, dispatch } = useGradingContext();
-
-  const [localState, setLocalState] = useState({
-    criteria: { ...state.criteria },
-    comment: state.comment,
+  const [localState, setLocalState] = useState<GradingReducerState>({
+    ...state,
   });
 
-  const handleAssign = () => {
-    dispatch({
-      type: GradingReducerActions.UPDATE_GRADE,
-      payload: {
-        criteria: localState.criteria,
-        comment: localState.comment,
-      },
-    });
-    onClosedAction();
-  };
-
-  const updateAssignedAmount = (rewardId: number, value: number) => {
+  const updateAssignedAmount = (rewardId: number, value: number): void => {
     setLocalState((prev) => ({
       ...prev,
       criteria: {
@@ -50,12 +43,18 @@ export default function AssignRewardModal({
     }));
   };
 
+  const handleAssign = (): void => {
+    dispatch({
+      type: GradingReducerActions.UPDATE_GRADE,
+      payload: {
+        criteria: localState.criteria,
+        comment: localState.comment,
+      },
+    });
+  };
+
   return (
-    <Modal
-      isDataPresented={!!assignableRewards}
-      onClosed={onClosedAction}
-      title="Przypisz nagrody"
-    >
+    <>
       {!assignableRewards || assignableRewards.length < 1 ? (
         <div className="assign-reward">
           <p>Brak dostępnych nagród do przypisania.</p>
@@ -119,11 +118,34 @@ export default function AssignRewardModal({
             <ButtonWithBorder
               text="Przypisz"
               className="w-full !border-3 !rounded-md"
-              onClick={handleAssign}
+              onClick={() => {
+                handleAssign();
+                closeModal();
+              }}
             />
           </div>
         </div>
       )}
+    </>
+  );
+}
+
+export default function AssignRewardModal({
+  criterionId,
+  assignableRewards,
+  onClosedAction,
+}: AssignRewardModalProps) {
+  return (
+    <Modal
+      isDataPresented={!!assignableRewards}
+      onClosed={onClosedAction}
+      title="Przypisz nagrody"
+    >
+      <AssignRewardModalContent
+        criterionId={criterionId}
+        assignableRewards={assignableRewards}
+        onClosedAction={onClosedAction}
+      />
     </Modal>
   );
 }

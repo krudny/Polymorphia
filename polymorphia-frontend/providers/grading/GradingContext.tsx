@@ -32,6 +32,7 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const { gradableEventId, eventType } = useEventParams();
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 400);
+  // TODO: changing target doesnt reset state
   const [state, dispatch] = useReducer(GradingReducer, initialState);
   const [areFiltersOpen, setAreFiltersOpen] = useState(false);
 
