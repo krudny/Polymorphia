@@ -1,0 +1,19 @@
+@import "tailwindcss";
+@import "../../../../../../styles/globals.css";
+
+.gradable-event {
+    @apply w-full relative flex flex-col-centered flex-1 mx-auto z-20;
+}
+
+.gradable-event-speed-dial-mobile {
+    @apply fixed block right-2 bottom-2 mb-2 xl:hidden z-[999];
+}
+
+.gradable-event-speed-dial-desktop {
+    @apply right-5 bottom-5 hidden lg:fixed xl:block z-[999] -mb-4;
+}
+
+.gradable-event-markdown-wrapper {
+    @apply w-full h-full flex-col-centered flex-1 p-9;
+    @apply lg:p-6 lg:max-w-[840px] xl:max-w-[860px] 2xl:max-w-[1120px] 3xl:max-w-[1750px];
+}

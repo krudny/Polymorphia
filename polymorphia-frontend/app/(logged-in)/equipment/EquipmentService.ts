@@ -110,7 +110,7 @@ const EquipmentService = {
           name: "Złota skrzynia",
           behavior: "ONE_OF_MANY",
           behaviorText: "Wybierz jeden przedmiot ze skrzynki",
-          imageUrl: "images/chests/s1.png",
+          imageUrl: "images/chests/s1.webp",
           orderIndex: 0,
           chestItems: [
             {

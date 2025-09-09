@@ -1,17 +1,15 @@
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import { EquipmentContext } from "@/components/providers/equipment/EquipmentContext";
 import { API_STATIC_URL } from "@/services/api";
-import { useContext } from "react";
 import Image from "next/image";
-import { useModal } from "@/components/providers/modal/ModalContext";
 import "../index.css";
 import { BaseItem } from "@/interfaces/api/reward";
+import useModalContext from "@/hooks/contexts/useModalContext";
+import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
 
 export default function OpeningChestModalContent() {
-  const { closeModal } = useModal();
-
+  const { closeModal } = useModalContext();
   const { currentOpeningChestModalData, pickedItemsIds, setPickedItemsIds } =
-    useContext(EquipmentContext);
+    useEquipmentContext();
   const openingChest = currentOpeningChestModalData;
 
   const handlePickItem = (itemId: number) => {

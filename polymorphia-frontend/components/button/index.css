@@ -11,5 +11,5 @@
 }
 
 .button-with-border-light {
-    @apply dark:text-secondary-light dark:border-secondary-light hover:dark:bg-secondary-light hover:dark:text-primary-dark;
+    @apply dark:text-secondary-light dark:border-secondary-gray hover:dark:bg-secondary-gray hover:dark:text-primary-dark;
 }

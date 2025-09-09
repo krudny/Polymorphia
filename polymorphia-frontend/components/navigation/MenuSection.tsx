@@ -1,14 +1,14 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { NavigationContext } from "@/components/providers/navigation/NavigationContext";
 import { MenuSectionProps } from "@/components/navigation/types";
 import { animateSubMenuSection } from "@/animations/Navigation";
 import Link from "next/link";
 import "./index.css";
+import useNavigationContext from "@/hooks/contexts/useNavigationContext";
 
 export default function MenuSection({ options }: MenuSectionProps) {
   const { isSidebarExpanded, isNavbarExpanded, setIsNavbarExpanded } =
-    useContext(NavigationContext);
+    useNavigationContext();
   const [openSubMenu, setOpenSubMenu] = useState<string[]>([]);
   const containerRefs = useRef<Array<HTMLDivElement | null>>([]);
 

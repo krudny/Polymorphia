@@ -1,0 +1,24 @@
+@import "tailwindcss";
+@import "../../../../styles/globals.css";
+
+.import-csv {
+    @apply min-w-88;
+}
+
+.import-csv-upload-wrapper {
+    @apply w-full min-h-44 border-2 border-primary-dark border-dashed flex-col-centered gap-y-2;
+    @apply rounded hover:border-solid hover:bg-primary-dark hover:text-secondary-gray;
+    @apply transition-colors duration-400 ease-[cubic-bezier(0.34,1,0.2,1)] hover:cursor-pointer;
+}
+
+.import-csv-upload-icon {
+    @apply text-7xl material-symbols;
+}
+
+.import-csv-text {
+    @apply text-3xl;
+}
+
+.import-csv-button-wrapper {
+    @apply w-full mt-4;
+}

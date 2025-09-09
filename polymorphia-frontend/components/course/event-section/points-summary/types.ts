@@ -4,7 +4,6 @@ import { ModalProps } from "../../../modal/types";
 import { RefObject } from "react";
 
 export interface PointsSummaryProps {
-  eventSectionId: number;
   ref: RefObject<HTMLDivElement | null>;
 }
 

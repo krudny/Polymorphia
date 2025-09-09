@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@import "../../../../styles/globals.css";
+
+.comment {
+    @apply w-full p-4 text-xl resize-none border-3 focus:outline-none rounded-xl default-colors;
+}

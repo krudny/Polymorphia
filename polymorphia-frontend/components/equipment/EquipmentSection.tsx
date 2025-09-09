@@ -2,21 +2,20 @@ import { API_STATIC_URL } from "@/services/api";
 import "./index.css";
 import Image from "next/image";
 import ImageBadge from "@/components/image-badge/ImageBadge";
-import { useContext } from "react";
-import { EquipmentContext } from "@/components/providers/equipment/EquipmentContext";
 import ButtonWithBorder from "../button/ButtonWithBorder";
 import { EquipmentSectionProps } from "@/components/equipment/types";
 import {
   EquipmentChestResponseDTO,
   EquipmentItemResponseDTO,
 } from "@/interfaces/api/equipment";
+import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
 
 export function EquipmentSection({ type, data }: EquipmentSectionProps) {
   const {
     setCurrentItemModalData,
     setCurrentChestModalData,
     setCurrentOpeningChestModalData,
-  } = useContext(EquipmentContext);
+  } = useEquipmentContext();
 
   return (
     <section className="mb-5">
@@ -45,6 +44,7 @@ export function EquipmentSection({ type, data }: EquipmentSectionProps) {
                     fill
                     className="equipment-image"
                     priority
+                    fetchPriority="high"
                     sizes="(min-width: 1024px) 25vw, 50vw"
                   />
                   {itemData.details.length > 0 ? (

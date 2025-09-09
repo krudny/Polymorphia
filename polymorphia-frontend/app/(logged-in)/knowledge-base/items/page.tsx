@@ -1,42 +1,31 @@
 "use client";
 
 import Slider from "@/components/slider/Slider";
-import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
-import KnowledgeBaseService from "@/app/(logged-in)/knowledge-base/KnowledgeBaseService";
 import Loading from "@/components/loading/Loading";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
+import useItems from "@/hooks/course/useItems";
 
 export default function Items() {
   const searchParams = useSearchParams();
+  const { data: items, isLoading, error } = useItems();
   const { setTitle } = useTitle();
-  const COURSE_ID = 1;
 
   useEffect(() => {
     setTitle("Przedmioty");
   }, [setTitle]);
-
-  const {
-    data: items,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["items", 1],
-    queryFn: () => KnowledgeBaseService.getItems(COURSE_ID),
-    retry: false,
-  });
 
   if (isLoading) {
     return <Loading />;
   }
 
   if (error) {
-    return <div>Error loading items: {error.message}</div>;
+    return <div>Error loading data: {error.message}</div>;
   }
 
   if (!items || items.length === 0) {
-    return <div>No items found.</div>;
+    return <div>No data found.</div>;
   }
 
   return (

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { FormEvent } from "react";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
@@ -52,7 +52,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
       <div>
         <form
           className="login-form"
-          onSubmit={(event: React.FormEvent) => {
+          onSubmit={(event: FormEvent) => {
             event.preventDefault();
             form.handleSubmit();
           }}
@@ -66,7 +66,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
                   placeholder="Twój email"
                   value={field.state.value}
                   onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
+                  onChange={(event) => field.handleChange(event.target.value)}
                   required
                   autoComplete="off"
                 />
@@ -84,7 +84,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
                   placeholder="Twoje hasło"
                   value={field.state.value}
                   onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
+                  onChange={(event) => field.handleChange(event.target.value)}
                   required
                 />
                 <FieldInfo field={field} />

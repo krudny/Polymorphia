@@ -23,9 +23,11 @@ export default function ProgressBarRangeLabels({
       <div {...getLabelProps("0")}>
         <span>{minXP} xp</span>
       </div>
-      <div {...getLabelProps("50%")}>
-        <span className="!text-4xl">{currentXP} xp</span>
-      </div>
+      {currentXP && (
+        <div {...getLabelProps("50%")}>
+          <span className="!text-4xl">{currentXP} xp</span>
+        </div>
+      )}
       <div {...getLabelProps("100%")}>
         <span>{maxXP} xp</span>
       </div>
