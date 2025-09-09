@@ -23,6 +23,7 @@ export const GradingReducerActions = {
   UPDATE_COMMENT: "update_comment",
   UPDATE_GRADE: "update_grade",
   RESET_GRADE: "reset_grade",
+  ADD_XP_TO_CRITERION: "add_xp_to_criterion",
 } as const;
 
 export type GradingReducerActionType =
@@ -47,4 +48,11 @@ export type GradingReducerActionType =
     }
   | {
       type: typeof GradingReducerActions.RESET_GRADE;
+    }
+  | {
+      type: typeof GradingReducerActions.ADD_XP_TO_CRITERION;
+      payload: {
+        criterionId: number;
+        xp: string;
+      };
     };

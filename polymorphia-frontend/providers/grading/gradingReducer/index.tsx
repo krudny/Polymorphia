@@ -53,6 +53,17 @@ export const GradingReducer = (
         comment: action.payload.comment,
       };
 
+    case GradingReducerActions.ADD_XP_TO_CRITERION:
+      return {
+        ...state,
+        criteria: {
+          ...state.criteria,
+          [action.payload.criterionId]: {
+            ...state.criteria[action.payload.criterionId],
+            gainedXp: action.payload.xp.toString(),
+          },
+        },
+      };
     case GradingReducerActions.RESET_GRADE:
       return {
         ...state,
