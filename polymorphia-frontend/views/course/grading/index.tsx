@@ -39,12 +39,13 @@ export default function Grading({ eventType, columns }: GradingProps) {
 
     const updateHeight = () => {
       const columnsHeight = columnsRef.current!.offsetHeight;
+      console.log(columnsHeight);
 
       if (isXL) {
-        gradingRef.current!.style.height = `max(${columnsHeight}px, calc(100dvh - 5rem))`;
+        gradingRef.current!.style.height = `max(${columnsHeight + 16}px, calc(100dvh - 5rem))`;
         listRef.current!.style.maxHeight = `max(${columnsHeight}px, calc(100dvh - 5rem))`;
       } else if (isMd) {
-        gradingRef.current!.style.height = `${columnsHeight}px`;
+        gradingRef.current!.style.height = `${columnsHeight + 32}px`;
         listRef.current!.style.maxHeight = `${columnsHeight}px`;
       } else {
         gradingRef.current!.style.height = `100%`;

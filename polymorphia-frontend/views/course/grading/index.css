@@ -27,10 +27,10 @@
 }
 
 .grading-list {
-    @apply w-full md:max-w-md flex flex-col overflow-y-auto;
+    @apply w-full h-full md:max-w-md flex flex-col overflow-y-auto;
 }
 
 .grading-columns {
-    @apply w-full md:max-w-md flex flex-col justify-center gap-y-4 h-fit min-h-0 min-w-0;
+    @apply w-full md:max-w-md flex flex-col justify-center gap-y-4 h-fit;
 }
 

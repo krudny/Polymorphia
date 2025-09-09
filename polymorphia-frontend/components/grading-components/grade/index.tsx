@@ -36,7 +36,10 @@ export default function Grade() {
       );
     }
 
-    const accordionSections = [...criteria.map(({ id }) => String(id)), "Komentarz"];
+    const accordionSections = [
+      ...criteria.map(({ id }) => String(id)),
+      "Komentarz",
+    ];
 
     return (
       <Fragment key={getKeyForSelectedTarget(state)}>
@@ -49,7 +52,7 @@ export default function Grade() {
               accordionSections.length > 0 && isXL ? [accordionSections[0]] : []
             )
           }
-          maxOpen={1}
+          maxOpen={2}
           shouldAnimateInitialOpen={false}
         >
           {Object.entries(state.criteria).map(
