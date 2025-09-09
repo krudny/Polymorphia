@@ -36,7 +36,7 @@ export default function Grade() {
       );
     }
 
-    const accordionSections = [...Object.keys(state.criteria), "Komentarz"];
+    const accordionSections = [...criteria.map(({ id }) => String(id)), "Komentarz"];
 
     return (
       <Fragment key={getKeyForSelectedTarget(state)}>
