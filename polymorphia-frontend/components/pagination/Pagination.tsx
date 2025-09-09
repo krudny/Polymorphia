@@ -9,7 +9,7 @@ export default function Pagination(props: ReactPaginateProps) {
       {...props}
       pageRangeDisplayed={props.pageRangeDisplayed ?? 3}
       marginPagesDisplayed={props.marginPagesDisplayed ?? 3}
-      containerClassName={props.containerClassName ?? "pagination-container"}
+      containerClassName={`${props.containerClassName} pagination-container`}
       pageClassName={props.pageClassName ?? "pagination-page"}
       previousLabel={props.previousLabel ?? <ChevronLeft />}
       nextLabel={props.nextLabel ?? <ChevronRight />}

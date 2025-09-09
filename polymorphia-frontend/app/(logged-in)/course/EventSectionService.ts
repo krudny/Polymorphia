@@ -1,4 +1,5 @@
 /* eslint-disable */
+// @ts-nocheck
 
 import { lab0, lab1, lab2, proj1 } from "@/app/(logged-in)/course/sampleData";
 import {
@@ -6,14 +7,22 @@ import {
   studentNames,
 } from "@/app/(logged-in)/hall-of-fame/HallOfFameService";
 import { ProjectVariantResponseDTO } from "@/interfaces/api/course/project";
-import { GradeResponseDTO } from "@/interfaces/api/grade";
+import {
+  CriterionResponseDTO,
+  GradeResponseDTO,
+  ShortGradeResponseDTO,
+} from "@/interfaces/api/grade";
 import { MarkdownResponseDTO } from "@/interfaces/api/markdown";
 import { PointsSummaryResponseDTO } from "@/interfaces/api/course/points-summary";
 import {
   EventSectionResponseDTO,
+  InstructorGradableEventResponseDTO,
   StudentGradableEventResponseDTO,
 } from "@/interfaces/api/course";
 import { UserDetailsDTO } from "@/interfaces/api/user";
+import { ProjectGroupResponseDTO } from "@/interfaces/api/temp";
+import { EventTypes } from "@/interfaces/general";
+import { CriteriaDetails } from "@/providers/grading/gradingReducer/types";
 
 const allData: UserDetailsDTO[] = [];
 
@@ -22,6 +31,7 @@ for (let i = 0; i < 250; i++) {
   const stage = Math.max(1, 6 - Math.floor(i / 50));
 
   const item = {
+    id: i,
     studentName: studentName,
     animalName: studentName,
     evolutionStage: "Majestatyczna Bestia",
@@ -45,66 +55,57 @@ const eventSectionData: EventSectionResponseDTO[] = [
   {
     id: 2,
     name: "Laboratorium",
-    type: "ASSIGNMENT",
+    type: EventTypes.ASSIGNMENT,
     orderIndex: 2,
   },
   {
     id: 3,
     name: "Projekt 1",
-    type: "PROJECT",
+    type: EventTypes.PROJECT,
     orderIndex: 4,
   },
   {
     id: 1,
     name: "Kartkówka",
-    type: "TEST",
+    type: EventTypes.TEST,
     orderIndex: 1,
   },
   {
     id: 4,
     name: "Git",
-    type: "ASSIGNMENT",
+    type: EventTypes.ASSIGNMENT,
     orderIndex: 0,
   },
   {
     id: 5,
     name: "Specjalny lab",
-    type: "ASSIGNMENT",
+    type: EventTypes.ASSIGNMENT,
     orderIndex: 3,
   },
   {
     id: 6,
     name: "Projekt 2",
-    type: "PROJECT",
+    type: EventTypes.PROJECT,
     orderIndex: 5,
   },
 ];
 
 export const EventSectionService = {
-  getEventSection: async (
-    eventSectionId: number
-  ): Promise<EventSectionResponseDTO> => {
-    const eventSection: EventSectionResponseDTO | undefined =
-      eventSectionData.find((section) => section.id === eventSectionId);
-    if (!eventSection) {
-      throw new Error("This event section does not exist.");
-    }
-    return eventSection;
-  },
   getEventSections: async (
     courseId: number
   ): Promise<EventSectionResponseDTO[]> => {
     return eventSectionData.sort((a, b) => a.orderIndex - b.orderIndex);
   },
-  getGradableEvents: async (
+
+  getStudentGradableEvents: async (
     eventSectionId: number
   ): Promise<StudentGradableEventResponseDTO[]> => {
     if (eventSectionId === 1) {
       const events: StudentGradableEventResponseDTO[] = [
         {
           id: 1,
-          type: "TEST",
-          name: "Test 1",
+          type: EventTypes.TEST,
+          name: "Kartkówka 1",
           topic: "Instrukcje sterujące",
           gainedXp: "1.5",
           orderIndex: 1,
@@ -113,8 +114,8 @@ export const EventSectionService = {
         },
         {
           id: 2,
-          type: "TEST",
-          name: "Test 2",
+          type: EventTypes.TEST,
+          name: "Kartkówka 2",
           topic: "Model obiektowy",
           gainedXp: "0.0",
           orderIndex: 2,
@@ -123,8 +124,8 @@ export const EventSectionService = {
         },
         {
           id: 3,
-          type: "TEST",
-          name: "Test 3",
+          type: EventTypes.TEST,
+          name: "Kartkówka 3",
           topic: "Interakcje między obiektami",
           orderIndex: 3,
           isLocked: false,
@@ -132,8 +133,8 @@ export const EventSectionService = {
         },
         {
           id: 4,
-          type: "TEST",
-          name: "Test 4",
+          type: EventTypes.TEST,
+          name: "Kartkówka 4",
           topic: "Interfejsy i mapy",
           orderIndex: 4,
           isLocked: false,
@@ -141,8 +142,8 @@ export const EventSectionService = {
         },
         {
           id: 5,
-          type: "TEST",
-          name: "Test 5",
+          type: EventTypes.TEST,
+          name: "Kartkówka 5",
           topic: "Dziedziczenie",
           orderIndex: 5,
           isLocked: false,
@@ -150,8 +151,8 @@ export const EventSectionService = {
         },
         {
           id: 6,
-          type: "TEST",
-          name: "Test 6",
+          type: EventTypes.TEST,
+          name: "Kartkówka 6",
           topic: "Refactoring kodu",
           orderIndex: 6,
           isLocked: false,
@@ -159,8 +160,8 @@ export const EventSectionService = {
         },
         {
           id: 7,
-          type: "TEST",
-          name: "Test 7",
+          type: EventTypes.TEST,
+          name: "Kartkówka 7",
           topic: "Wielowątkowość",
           orderIndex: 7,
           isLocked: false,
@@ -168,8 +169,8 @@ export const EventSectionService = {
         },
         {
           id: 8,
-          type: "TEST",
-          name: "Test 8",
+          type: EventTypes.TEST,
+          name: "Kartkówka 8",
           topic: "Interfejs graficzny",
           orderIndex: 8,
           isLocked: false,
@@ -177,8 +178,8 @@ export const EventSectionService = {
         },
         {
           id: 9,
-          type: "TEST",
-          name: "Test 9",
+          type: EventTypes.TEST,
+          name: "Kartkówka 9",
           topic: "Lambdy, streamy i zarządzanie zasobami",
           orderIndex: 9,
           isLocked: false,
@@ -186,8 +187,8 @@ export const EventSectionService = {
         },
         {
           id: 10,
-          type: "TEST",
-          name: "Test 10",
+          type: EventTypes.TEST,
+          name: "Kartkówka 10",
           topic: "Kotlin jako alternatywa dla Javy",
           orderIndex: 10,
           isLocked: false,
@@ -195,8 +196,8 @@ export const EventSectionService = {
         },
         {
           id: 11,
-          type: "TEST",
-          name: "Test 11",
+          type: EventTypes.TEST,
+          name: "Kartkówka 11",
           topic: "A może Rust?",
           orderIndex: 11,
           isLocked: false,
@@ -204,8 +205,8 @@ export const EventSectionService = {
         },
         {
           id: 12,
-          type: "TEST",
-          name: "Test 12",
+          type: EventTypes.TEST,
+          name: "Kartkówka 12",
           topic: "Jak wycentrować diva",
           orderIndex: 12,
           isLocked: false,
@@ -217,8 +218,8 @@ export const EventSectionService = {
       const events: StudentGradableEventResponseDTO[] = [
         {
           id: 15,
-          type: "ASSIGNMENT",
-          name: "Lab 1",
+          type: EventTypes.ASSIGNMENT,
+          name: "Laboratorium 1",
           topic: "Instrukcje sterujące w Javie",
           gainedXp: "2.0",
           orderIndex: 1,
@@ -227,8 +228,8 @@ export const EventSectionService = {
         },
         {
           id: 16,
-          type: "ASSIGNMENT",
-          name: "Lab 2",
+          type: EventTypes.ASSIGNMENT,
+          name: "Laboratorium 2",
           topic: "Model obiektowy",
           gainedXp: "0.0",
           orderIndex: 2,
@@ -237,8 +238,8 @@ export const EventSectionService = {
         },
         {
           id: 17,
-          type: "ASSIGNMENT",
-          name: "Lab 3",
+          type: EventTypes.ASSIGNMENT,
+          name: "Laboratorium 3",
           topic: "Interakcje między obiektami",
           orderIndex: 3,
           isLocked: false,
@@ -246,8 +247,8 @@ export const EventSectionService = {
         },
         {
           id: 18,
-          type: "ASSIGNMENT",
-          name: "Lab 4",
+          type: EventTypes.ASSIGNMENT,
+          name: "Laboratorium 4",
           topic: "Interfejsy i mapy",
           orderIndex: 4,
           isLocked: false,
@@ -255,8 +256,8 @@ export const EventSectionService = {
         },
         {
           id: 19,
-          type: "ASSIGNMENT",
-          name: "Lab 5",
+          type: EventTypes.ASSIGNMENT,
+          name: "Laboratorium 5",
           topic: "Dziedziczenie",
           orderIndex: 5,
           isLocked: false,
@@ -264,8 +265,8 @@ export const EventSectionService = {
         },
         {
           id: 20,
-          type: "ASSIGNMENT",
-          name: "Lab 6",
+          type: EventTypes.ASSIGNMENT,
+          name: "Laboratorium 6",
           topic: "Refactoring kodu",
           orderIndex: 6,
           isLocked: false,
@@ -273,8 +274,8 @@ export const EventSectionService = {
         },
         {
           id: 21,
-          type: "ASSIGNMENT",
-          name: "Lab 7",
+          type: EventTypes.ASSIGNMENT,
+          name: "Laboratorium 7",
           topic: "Wielowątkowość",
           orderIndex: 7,
           isLocked: false,
@@ -282,8 +283,8 @@ export const EventSectionService = {
         },
         {
           id: 22,
-          type: "ASSIGNMENT",
-          name: "Lab 8",
+          type: EventTypes.ASSIGNMENT,
+          name: "Laboratorium 8",
           topic: "Interfejs graficzny",
           orderIndex: 8,
           isLocked: false,
@@ -295,8 +296,8 @@ export const EventSectionService = {
       return [
         {
           id: 30,
-          type: "ASSIGNMENT",
-          name: "Lab 0",
+          type: EventTypes.ASSIGNMENT,
+          name: "Laboratorium 0",
           topic: "Git jest cool",
           orderIndex: 1,
           isLocked: false,
@@ -307,7 +308,7 @@ export const EventSectionService = {
       return [
         {
           id: 32,
-          type: "PROJECT",
+          type: EventTypes.PROJECT,
           name: "Projekt 2",
           topic: "Refactoring hell",
           orderIndex: 1,
@@ -319,7 +320,7 @@ export const EventSectionService = {
       return [
         {
           id: 33,
-          type: "PROJECT",
+          type: EventTypes.PROJECT,
           name: "Projekt 1a",
           topic: "Darwin World",
           orderIndex: 1,
@@ -328,7 +329,7 @@ export const EventSectionService = {
         },
         {
           id: 34,
-          type: "PROJECT",
+          type: EventTypes.PROJECT,
           name: "Projekt 1b",
           topic: "Polymorphia",
           orderIndex: 2,
@@ -340,6 +341,224 @@ export const EventSectionService = {
       return [];
     }
   },
+
+  getInstructorGradableEvents: async (
+    eventSectionId: number
+  ): Promise<InstructorGradableEventResponseDTO[]> => {
+    if (eventSectionId === 1) {
+      const events = [
+        {
+          type: EventTypes.TEST,
+          id: 1,
+          name: "Kartkówka 1",
+          topic: "Instrukcje sterujące",
+          orderIndex: 1,
+          ungradedStudents: 3,
+        },
+        {
+          type: EventTypes.TEST,
+          id: 2,
+          name: "Kartkówka 2",
+          topic: "Model obiektowy",
+          orderIndex: 2,
+          ungradedStudents: 12,
+        },
+        {
+          type: EventTypes.TEST,
+          id: 3,
+          name: "Kartkówka 3",
+          topic: "Interakcje między obiektami",
+          orderIndex: 3,
+          ungradedStudents: 0,
+        },
+        {
+          type: EventTypes.TEST,
+          id: 4,
+          name: "Kartkówka 4",
+          topic: "Interfejsy i mapy",
+          orderIndex: 4,
+          ungradedStudents: 8,
+        },
+        {
+          type: EventTypes.TEST,
+          id: 5,
+          name: "Kartkówka 5",
+          topic: "Dziedziczenie",
+          orderIndex: 5,
+          ungradedStudents: 15,
+        },
+        {
+          type: EventTypes.TEST,
+          id: 6,
+          name: "Kartkówka 6",
+          topic: "Refactoring kodu",
+          orderIndex: 6,
+          ungradedStudents: 5,
+        },
+        {
+          type: EventTypes.TEST,
+          id: 7,
+          name: "Kartkówka 7",
+          topic: "Wielowątkowość",
+          orderIndex: 7,
+          ungradedStudents: 21,
+        },
+        {
+          type: EventTypes.TEST,
+          id: 8,
+          name: "Kartkówka 8",
+          topic: "Interfejs graficzny",
+          orderIndex: 8,
+          ungradedStudents: 7,
+        },
+        {
+          type: EventTypes.TEST,
+          id: 9,
+          name: "Kartkówka 9",
+          topic: "Lambdy, streamy i zarządzanie zasobami",
+          orderIndex: 9,
+          ungradedStudents: 18,
+        },
+        {
+          type: EventTypes.TEST,
+          id: 10,
+          name: "Kartkówka 10",
+          topic: "Kotlin jako alternatywa dla Javy",
+          orderIndex: 10,
+          ungradedStudents: 2,
+        },
+        {
+          type: EventTypes.TEST,
+          id: 11,
+          name: "Kartkówka 11",
+          topic: "A może Rust?",
+          orderIndex: 11,
+          ungradedStudents: 9,
+        },
+        {
+          type: EventTypes.TEST,
+          id: 12,
+          name: "Kartkówka 12",
+          topic: "Jak wycentrować diva",
+          orderIndex: 12,
+          ungradedStudents: 14,
+        },
+      ];
+      return events.sort((a, b) => a.orderIndex - b.orderIndex);
+    } else if (eventSectionId === 2) {
+      const events = [
+        {
+          type: EventTypes.ASSIGNMENT,
+          id: 15,
+          name: "Laboratorium 1",
+          topic: "Instrukcje sterujące w Javie",
+          orderIndex: 1,
+          ungradedStudents: 6,
+        },
+        {
+          type: EventTypes.ASSIGNMENT,
+          id: 16,
+          name: "Laboratorium 2",
+          topic: "Model obiektowy",
+          orderIndex: 2,
+          ungradedStudents: 11,
+        },
+        {
+          type: EventTypes.ASSIGNMENT,
+          id: 17,
+          name: "Laboratorium 3",
+          topic: "Interakcje między obiektami",
+          orderIndex: 3,
+          ungradedStudents: 4,
+        },
+        {
+          type: EventTypes.ASSIGNMENT,
+          id: 18,
+          name: "Laboratorium 4",
+          topic: "Interfejsy i mapy",
+          orderIndex: 4,
+          ungradedStudents: 17,
+        },
+        {
+          type: EventTypes.ASSIGNMENT,
+          id: 19,
+          name: "Laboratorium 5",
+          topic: "Dziedziczenie",
+          orderIndex: 5,
+          ungradedStudents: 1,
+        },
+        {
+          type: EventTypes.ASSIGNMENT,
+          id: 20,
+          name: "Laboratorium 6",
+          topic: "Refactoring kodu",
+          orderIndex: 6,
+          ungradedStudents: 13,
+        },
+        {
+          type: EventTypes.ASSIGNMENT,
+          id: 21,
+          name: "Laboratorium 7",
+          topic: "Wielowątkowość",
+          orderIndex: 7,
+          ungradedStudents: 8,
+        },
+        {
+          type: EventTypes.ASSIGNMENT,
+          id: 22,
+          name: "Laboratorium 8",
+          topic: "Interfejs graficzny",
+          orderIndex: 8,
+          ungradedStudents: 22,
+        },
+      ];
+      return events.sort((a, b) => a.orderIndex - b.orderIndex);
+    } else if (eventSectionId === 4) {
+      return [
+        {
+          type: EventTypes.ASSIGNMENT,
+          id: 30,
+          name: "Laboratorium 0",
+          topic: "Git jest cool",
+          orderIndex: 1,
+          ungradedStudents: 5,
+        },
+      ];
+    } else if (eventSectionId === 6) {
+      return [
+        {
+          type: EventTypes.PROJECT,
+          id: 32,
+          name: "Projekt 2",
+          topic: "Refactoring hell",
+          orderIndex: 1,
+          ungradedStudents: 19,
+        },
+      ];
+    } else if (eventSectionId === 3) {
+      return [
+        {
+          type: EventTypes.PROJECT,
+          id: 33,
+          name: "Projekt 1a",
+          topic: "Darwin World",
+          orderIndex: 1,
+          ungradedStudents: 7,
+        },
+        {
+          type: EventTypes.PROJECT,
+          id: 34,
+          name: "Projekt 1b",
+          topic: "Polymorphia",
+          orderIndex: 2,
+          ungradedStudents: 3,
+        },
+      ];
+    } else {
+      return [];
+    }
+  },
+
   getPointsSummary: async (
     eventSectionId: number
   ): Promise<PointsSummaryResponseDTO> => {
@@ -450,6 +669,112 @@ export const EventSectionService = {
     mockMarkdownStore[gradableEventId] = newMarkdown;
   },
 
+  getCriteria: async (
+    gradableEventId: number
+  ): Promise<CriterionResponseDTO[]> => {
+    return [
+      {
+        id: 1,
+        name: "Wykonanie zadania",
+        maxXp: "4.0",
+        assignableRewards: [
+          {
+            assignableReward: {
+              rewardType: "CHEST",
+              reward: {
+                id: 1,
+                name: "Srebrna Skrzynia",
+                imageUrl: "images/chests/s1.webp",
+                behavior: "ONE_OF_MANY",
+                behaviorText: "Wybierz jeden przedmiot ze skrzynki",
+                orderIndex: 0,
+                chestItems: [
+                  {
+                    id: 1,
+                    itemBonusType: "PERCENTAGE_BONUS",
+                    name: "Pietruszka",
+                    bonusText: "+5% do kategorii Kartkówka",
+                    imageUrl: "images/items/parsley.jpg",
+                    percentage: 5,
+                    orderIndex: 0,
+                    limit: 3,
+                    isLimitReached: false,
+                    eventSectionId: 1,
+                  },
+                  {
+                    id: 2,
+                    itemBonusType: "PERCENTAGE_BONUS",
+                    name: "Marchewka",
+                    bonusText: "+5% do kategorii Kartkówka",
+                    imageUrl: "images/items/parsley.jpg",
+                    percentage: 5,
+                    orderIndex: 0,
+                    limit: 3,
+                    isLimitReached: false,
+                    eventSectionId: 1,
+                  },
+                  {
+                    id: 3,
+                    itemBonusType: "PERCENTAGE_BONUS",
+                    name: "Apteczka",
+                    bonusText: "+5% do kategorii Kartkówka",
+                    imageUrl: "images/items/parsley.jpg",
+                    percentage: 5,
+                    orderIndex: 0,
+                    limit: 3,
+                    isLimitReached: false,
+                    eventSectionId: 1,
+                  },
+                ],
+              },
+            },
+            maxAmount: 2,
+          },
+          {
+            assignableReward: {
+              rewardType: "ITEM",
+              reward: {
+                id: 2,
+                name: "Pietruszka",
+                imageUrl: "images/items/parsley.webp",
+                itemBonusType: "PERCENTAGE_BONUS",
+                bonusText: "+5% do kategorii Kartkówka",
+                orderIndex: 1,
+              },
+            },
+            maxAmount: 3,
+          },
+        ],
+      },
+      {
+        id: 2,
+        name: "Dodatkowe kryterium",
+        maxXp: "4.0",
+        assignableRewards: [
+          {
+            assignableReward: {
+              rewardType: "ITEM",
+              reward: {
+                id: 3,
+                itemBonusType: "PERCENTAGE_BONUS",
+                name: "Marchewka",
+                bonusText: "+5% do kategorii Kartkówka",
+                imageUrl: "images/items/carrot.webp",
+                percentage: 5,
+                orderIndex: 0,
+                limit: 3,
+                isLimitReached: false,
+                eventSectionId: 1,
+              },
+            },
+            maxAmount: 3,
+          },
+        ],
+      },
+    ];
+  },
+
+  //TODO: xd
   getGrade: async (gradableEventId: number): Promise<GradeResponseDTO> => {
     if (gradableEventId === 30) {
       return {
@@ -468,7 +793,7 @@ export const EventSectionService = {
                   reward: {
                     id: 1,
                     name: "Srebrna Skrzynia",
-                    imageUrl: "images/chests/s1.png",
+                    imageUrl: "images/chests/s1.webp",
                     behavior: "ONE_OF_MANY",
                     behaviorText: "Wybierz jeden przedmiot ze skrzynki",
                     orderIndex: 0,
@@ -501,7 +826,7 @@ export const EventSectionService = {
                     base: {
                       id: 1,
                       name: "Srebrna Skrzynia",
-                      imageUrl: "images/chests/s1.png",
+                      imageUrl: "images/chests/s1.webp",
                       behavior: "ONE_OF_MANY",
                       behaviorText: "Wybierz jeden przedmiot ze skrzynki",
                       orderIndex: 0,
@@ -552,7 +877,7 @@ export const EventSectionService = {
                   reward: {
                     id: 1,
                     name: "Srebrna Skrzynia",
-                    imageUrl: "images/chests/s1.png",
+                    imageUrl: "images/chests/s1.webp",
                     behavior: "ONE_OF_MANY",
                     behaviorText: "Wybierz jeden przedmiot ze skrzynki",
                     orderIndex: 0,
@@ -585,7 +910,7 @@ export const EventSectionService = {
                     base: {
                       id: 1,
                       name: "Srebrna Skrzynia",
-                      imageUrl: "images/chests/s1.png",
+                      imageUrl: "images/chests/s1.webp",
                       behavior: "ONE_OF_MANY",
                       behaviorText: "Wybierz jeden przedmiot ze skrzynki",
                       orderIndex: 0,
@@ -632,7 +957,7 @@ export const EventSectionService = {
                 reward: {
                   id: 1,
                   name: "Srebrna Skrzynia",
-                  imageUrl: "images/chests/s1.png",
+                  imageUrl: "images/chests/s1.webp",
                   behavior: "ONE_OF_MANY",
                   behaviorText: "Wybierz jeden przedmiot ze skrzynki",
                   orderIndex: 0,
@@ -659,9 +984,161 @@ export const EventSectionService = {
       ],
     };
   },
-  getProjectVariant: async (
+
+  getGrade3: async (
+    studentId,
+    gradableEventId
+  ): Promise<ShortGradeResponseDTO> => {
+    await new Promise<void>((resolve) => setTimeout(resolve, 300));
+
+    return {
+      comment:
+        "Bardzo dobra praca! Student wykazał się doskonałą znajomością tematu.",
+      criteria: [
+        {
+          id: 1,
+          gainedXp: "3.5",
+          assignedRewards: [
+            {
+              id: 1,
+              imageUrl: "images/chests/s1.webp",
+              quantity: 2,
+            },
+            {
+              id: 2,
+              imageUrl: "images/items/parsley.jpg",
+              quantity: 1,
+            },
+          ],
+        },
+        {
+          id: 2,
+          gainedXp: "2.7",
+          assignedRewards: [
+            {
+              id: 3,
+              imageUrl: "images/items/carrot.jpg",
+              quantity: 1,
+            },
+          ],
+        },
+      ],
+    };
+  },
+
+  // TODO: assume that id is criterion id XD
+  getGrade2: async (
+    studentId: number,
     gradableEventId: number
-  ): Promise<ProjectVariantResponseDTO[]> => {
+  ): Promise<GradeResponseDTO> => {
+    await new Promise<void>((resolve) => setTimeout(resolve, 150));
+    return {
+      details: {
+        id: 1,
+        comment:
+          "Bardzo dobra praca! Student wykazał się doskonałą znajomością tematu.",
+      },
+      criteria: [
+        {
+          id: 1,
+          gainedXp: "3.5",
+          assignedRewards: [
+            {
+              rewardType: "CHEST",
+              assignedReward: {
+                base: {
+                  id: 1,
+                  name: "Srebrna Skrzynia",
+                  imageUrl: "images/chests/s1.webp",
+                  behavior: "ONE_OF_MANY",
+                  behaviorText: "Wybierz jeden przedmiot ze skrzynki",
+                  orderIndex: 0,
+                  chestItems: [
+                    {
+                      id: 1,
+                      itemBonusType: "PERCENTAGE_BONUS",
+                      name: "Pietruszka",
+                      bonusText: "+5% do kategorii Kartkówka",
+                      imageUrl: "images/items/parsley.jpg",
+                      percentage: 5,
+                      orderIndex: 0,
+                      limit: 3,
+                      isLimitReached: false,
+                      eventSectionId: 1,
+                    },
+                  ],
+                },
+                details: {
+                  id: 3,
+                  receivedDate: "07.06.2025",
+                  usedDate: "08.06.2025",
+                  isUsed: true,
+                },
+              },
+            },
+            {
+              rewardType: "CHEST",
+              assignedReward: {
+                base: {
+                  id: 1,
+                  name: "Srebrna Skrzynia",
+                  imageUrl: "images/chests/s1.webp",
+                  behavior: "ONE_OF_MANY",
+                  behaviorText: "Wybierz jeden przedmiot ze skrzynki",
+                  orderIndex: 0,
+                  chestItems: [
+                    {
+                      id: 1,
+                      itemBonusType: "PERCENTAGE_BONUS",
+                      name: "Pietruszka",
+                      bonusText: "+5% do kategorii Kartkówka",
+                      imageUrl: "images/items/parsley.jpg",
+                      percentage: 5,
+                      orderIndex: 0,
+                      limit: 3,
+                      isLimitReached: false,
+                      eventSectionId: 1,
+                    },
+                  ],
+                },
+                details: {
+                  id: 3,
+                  receivedDate: "07.06.2025",
+                  usedDate: "08.06.2025",
+                  isUsed: true,
+                },
+              },
+            },
+            {
+              rewardType: "ITEM",
+              assignedReward: {
+                base: {
+                  id: 3,
+                  itemBonusType: "PERCENTAGE_BONUS",
+                  name: "Apteczka",
+                  bonusText: "+5% do kategorii Kartkówka",
+                  imageUrl: "images/items/parsley.jpg",
+                  percentage: 5,
+                  orderIndex: 0,
+                  limit: 3,
+                  isLimitReached: false,
+                  eventSectionId: 1,
+                },
+                details: {
+                  id: 3,
+                  receivedDate: "07.06.2025",
+                  usedDate: "08.06.2025",
+                  isUsed: true,
+                },
+              },
+            },
+          ],
+        },
+      ],
+    };
+  },
+
+  getProjectVariant: async (): Promise<ProjectVariantResponseDTO[]> => {
     return [
       {
         id: 1,
@@ -679,7 +1156,10 @@ export const EventSectionService = {
       },
     ];
   },
+
   getRandomPeople: async (searchTerm: string): Promise<UserDetailsDTO[]> => {
+    // await new Promise<void>((resolve) => setTimeout(resolve, 1000));
+
     let filteredData = allData;
 
     if (searchTerm && searchTerm.trim() !== "") {
@@ -690,5 +1170,86 @@ export const EventSectionService = {
     }
 
     return filteredData;
+  },
+
+  getRandomPeopleWithPoints: async (
+    searchTerm: string,
+    sortBy: string[],
+    sortOrder: string[],
+    groups: string[]
+  ): Promise<(UserDetailsDTO & { gainedXp?: string })[]> => {
+    // await new Promise<void>((resolve) => setTimeout(resolve, 1000));
+
+    let filteredData = allData;
+
+    if (groups && !groups.includes("all")) {
+      filteredData = filteredData.filter((item) => groups.includes(item.group));
+    }
+
+    filteredData = filteredData.map((item) => {
+      const xp =
+        Math.random() < 0.4 ? undefined : (Math.random() * 2.8).toFixed(2);
+      return { ...item, gainedXp: xp };
+    });
+
+    if (searchTerm && searchTerm.trim() !== "") {
+      const lowerSearch = searchTerm.toLowerCase();
+      filteredData = filteredData.filter((item) =>
+        item.studentName.toLowerCase().includes(lowerSearch)
+      );
+    }
+
+    if (sortBy && sortOrder) {
+      filteredData.sort((a, b) => {
+        let valueA: any;
+        let valueB: any;
+
+        if (sortBy[0] === "name") {
+          valueA = a.studentName;
+          valueB = b.studentName;
+          const comparison = valueA.localeCompare(valueB);
+          return sortOrder[0] === "asc" ? comparison : -comparison;
+        } else {
+          valueA = a.gainedXp ?? -100;
+          valueB = b.gainedXp ?? -100;
+          const comparison = valueA - valueB;
+          return sortOrder[0] === "asc" ? comparison : -comparison;
+        }
+      });
+    }
+
+    return filteredData;
+  },
+
+  getRandomProjectGroups: async (): Promise<ProjectGroupResponseDTO[]> => {
+    let data = [];
+
+    for (let i = 0; i < 30; i++) {
+      const xp =
+        Math.random() < 0.4 ? undefined : (Math.random() * 2.8).toFixed(2);
+
+      const members = allData.slice(i * 2, (i + 1) * 2).map((member) => ({
+        ...member,
+        gainedXp: xp,
+      }));
+
+      const group = {
+        id: i + 1,
+        members: members,
+      };
+      data.push(group);
+    }
+
+    return data;
+  },
+
+  submitGrade: async (gradeData: {
+    studentId: number;
+    gradableEventId: number;
+    criteria: Record<number, CriteriaDetails>;
+    comment: string;
+  }): Promise<void> => {
+    await new Promise<void>((resolve) => setTimeout(resolve, 200));
+    console.log("Submitting grade:", gradeData);
   },
 };

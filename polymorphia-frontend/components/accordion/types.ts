@@ -1,8 +1,8 @@
+import { useAccordionStateProps } from "@/providers/accordion/types";
 import { ReactNode } from "react";
 
-export interface AccordionProps {
+export interface AccordionProps extends useAccordionStateProps {
   children: ReactNode;
-  maxOpen?: number;
   className?: string;
 }
 
@@ -10,6 +10,5 @@ export interface AccordionSectionProps {
   id: string;
   title: string;
   children: ReactNode;
-  isInitiallyOpened?: boolean;
   headerClassName?: string;
 }

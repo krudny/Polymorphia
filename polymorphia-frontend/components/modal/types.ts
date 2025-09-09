@@ -8,4 +8,5 @@ export interface ModalProps {
   title: string;
   subtitle?: string;
   children?: ReactNode;
+  shouldUnmountWhenClosed?: boolean;
 }
