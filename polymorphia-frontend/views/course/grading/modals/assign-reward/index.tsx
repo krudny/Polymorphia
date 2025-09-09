@@ -50,89 +50,80 @@ export default function AssignRewardModal({
     }));
   };
 
-  if (!assignableRewards?.length) {
-    return (
-      <Modal
-        isDataPresented={!!assignableRewards?.length}
-        onClosed={onClosedAction}
-        title="Przypisz nagrody"
-      >
-        <div className="assign-reward">
-          <p>Brak dostępnych nagród do przypisania.</p>
-        </div>
-      </Modal>
-    );
-  }
-
   return (
     <Modal
       isDataPresented={!!assignableRewards}
       onClosed={onClosedAction}
       title="Przypisz nagrody"
     >
-      <div className="assign-reward">
-        {assignableRewards.map((possibleReward) => {
-          const {
-            maxAmount,
-            assignableReward: { reward: rewardData, rewardType },
-          } = possibleReward;
-
-          const rewardId = rewardData.id;
-          const currentQuantity =
-            localState.criteria[criterionId].assignedRewards.find(
-              (reward) => reward.id === rewardId
-            )?.quantity ?? 0;
-
-          const subtitle =
-            rewardType === "ITEM"
-              ? (rewardData as ItemResponseDTO).bonusText
-              : (rewardData as ChestResponseDTO).chestItems
-                  .map((item) => item.name)
-                  .join(" | ");
-
-          return (
-            <XPCard
-              key={rewardId}
-              title={rewardData.name}
-              subtitle={subtitle}
-              size="xs"
-              leftComponent={
-                <XPCardImage
-                  imageUrl={rewardData.imageUrl}
-                  alt={rewardData.name}
-                />
-              }
-              rightComponent={
-                <XPCardAssign
-                  currentAssigned={currentQuantity}
-                  maxAssigned={maxAmount}
-                  increment={() =>
-                    updateAssignedAmount(
-                      rewardId,
-                      Math.min(currentQuantity + 1, maxAmount)
-                    )
-                  }
-                  decrement={() =>
-                    updateAssignedAmount(
-                      rewardId,
-                      Math.max(currentQuantity - 1, 0)
-                    )
-                  }
-                  color="gray"
-                />
-              }
-            />
-          );
-        })}
-
-        <div className="assign-reward-button-wrapper">
-          <ButtonWithBorder
-            text="Przypisz"
-            className="w-full !border-3 !rounded-md"
-            onClick={handleAssign}
-          />
+      {!assignableRewards || assignableRewards.length < 1 ? (
+        <div className="assign-reward">
+          <p>Brak dostępnych nagród do przypisania.</p>
         </div>
-      </div>
+      ) : (
+        <div className="assign-reward">
+          {assignableRewards.map((possibleReward) => {
+            const {
+              maxAmount,
+              assignableReward: { reward: rewardData, rewardType },
+            } = possibleReward;
+
+            const rewardId = rewardData.id;
+            const currentQuantity =
+              localState.criteria[criterionId].assignedRewards.find(
+                (reward) => reward.id === rewardId
+              )?.quantity ?? 0;
+
+            const subtitle =
+              rewardType === "ITEM"
+                ? (rewardData as ItemResponseDTO).bonusText
+                : (rewardData as ChestResponseDTO).chestItems
+                    .map((item) => item.name)
+                    .join(" | ");
+
+            return (
+              <XPCard
+                key={rewardId}
+                title={rewardData.name}
+                subtitle={subtitle}
+                size="xs"
+                leftComponent={
+                  <XPCardImage
+                    imageUrl={rewardData.imageUrl}
+                    alt={rewardData.name}
+                  />
+                }
+                rightComponent={
+                  <XPCardAssign
+                    currentAssigned={currentQuantity}
+                    maxAssigned={maxAmount}
+                    increment={() =>
+                      updateAssignedAmount(
+                        rewardId,
+                        Math.min(currentQuantity + 1, maxAmount)
+                      )
+                    }
+                    decrement={() =>
+                      updateAssignedAmount(
+                        rewardId,
+                        Math.max(currentQuantity - 1, 0)
+                      )
+                    }
+                    color="gray"
+                  />
+                }
+              />
+            );
+          })}
+          <div className="assign-reward-button-wrapper">
+            <ButtonWithBorder
+              text="Przypisz"
+              className="w-full !border-3 !rounded-md"
+              onClick={handleAssign}
+            />
+          </div>
+        </div>
+      )}
     </Modal>
   );
 }

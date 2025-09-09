@@ -46,10 +46,6 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const sortOrder = filters.getAppliedFilterValues("sortOrder") ?? ["asc"];
   const groups = filters.getAppliedFilterValues("groups") ?? ["all"];
 
-  useEffect(() => {
-    console.log(state);
-  }, [state]);
-
   //TODO: to be changed
   const selectedStudentId = state?.selectedTarget?.[0]?.id ?? null;
   const { data: students, isLoading: isStudentsLoading } =

@@ -39,7 +39,6 @@ export default function Grading({ eventType, columns }: GradingProps) {
 
     const updateHeight = () => {
       const columnsHeight = columnsRef.current!.offsetHeight;
-      console.log(columnsHeight);
 
       if (isXL) {
         gradingRef.current!.style.height = `max(${columnsHeight + 16}px, calc(100dvh - 5rem))`;
