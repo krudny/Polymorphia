@@ -9,7 +9,7 @@ import ImportCSVModal from "@/components/speed-dial/modals/import-csv";
 export abstract class BaseSpeedDialStrategy {
   abstract getItems(context: SpeedDialContext): SpeedDialItem[];
 
-  protected createRewardsItem(): SpeedDialItem {
+  protected createRewards(): SpeedDialItem {
     return {
       id: 1,
       orderIndex: 5,
@@ -19,7 +19,7 @@ export abstract class BaseSpeedDialStrategy {
     };
   }
 
-  protected createSaveItem(context: SpeedDialContext): SpeedDialItem {
+  protected createSave(context: SpeedDialContext): SpeedDialItem {
     return {
       id: 5,
       orderIndex: 1,
@@ -30,7 +30,7 @@ export abstract class BaseSpeedDialStrategy {
     };
   }
 
-  protected createEditItem(context: SpeedDialContext): SpeedDialItem {
+  protected createEdit(context: SpeedDialContext): SpeedDialItem {
     return {
       id: 6,
       orderIndex: 1,
@@ -40,7 +40,7 @@ export abstract class BaseSpeedDialStrategy {
     };
   }
 
-  protected createRejectItem(context: SpeedDialContext): SpeedDialItem {
+  protected createReject(context: SpeedDialContext): SpeedDialItem {
     return {
       id: 7,
       orderIndex: 0,
@@ -51,7 +51,7 @@ export abstract class BaseSpeedDialStrategy {
     };
   }
 
-  protected createProjectVariantItem(): SpeedDialItem {
+  protected createProjectVariant(): SpeedDialItem {
     return {
       id: 2,
       orderIndex: 2,
@@ -61,7 +61,7 @@ export abstract class BaseSpeedDialStrategy {
     };
   }
 
-  protected createProjectGroupItem(): SpeedDialItem {
+  protected createProjectGroup(): SpeedDialItem {
     return {
       id: 3,
       orderIndex: 3,
@@ -71,7 +71,7 @@ export abstract class BaseSpeedDialStrategy {
     };
   }
 
-  protected createProjectGroupPickingItem(): SpeedDialItem {
+  protected createProjectGroupPicking(): SpeedDialItem {
     return {
       id: 4,
       orderIndex: 4,
@@ -81,7 +81,7 @@ export abstract class BaseSpeedDialStrategy {
     };
   }
 
-  protected createImportCSVItem(): SpeedDialItem {
+  protected createImportCSV(): SpeedDialItem {
     return {
       id: 4,
       orderIndex: 9,
@@ -91,13 +91,26 @@ export abstract class BaseSpeedDialStrategy {
     };
   }
 
-  protected createGoBackItem(context: SpeedDialContext): SpeedDialItem {
+  protected createGoBack(context: SpeedDialContext): SpeedDialItem {
     return {
       id: 10,
       orderIndex: 50,
       label: "Wróć",
       icon: "undo",
       onClick: () => context.router.back(),
+    };
+  }
+
+  protected createRedirectToGrading(context: SpeedDialContext): SpeedDialItem {
+    return {
+      id: 11,
+      orderIndex: 51,
+      label: "Ocenianie",
+      icon: "assignment_turned_in",
+      onClick: () => {
+        const newPath = context.currentPath + "/grading";
+        context.router.push(newPath);
+      },
     };
   }
 
@@ -114,9 +127,9 @@ export abstract class BaseSpeedDialStrategy {
     };
   }
 
-  protected createEditingItems(context: SpeedDialContext): SpeedDialItem[] {
+  protected createEditing(context: SpeedDialContext): SpeedDialItem[] {
     return context.isEditing
-      ? [this.createSaveItem(context), this.createRejectItem(context)]
-      : [this.createEditItem(context)];
+      ? [this.createSave(context), this.createReject(context)]
+      : [this.createEdit(context)];
   }
 }

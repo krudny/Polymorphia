@@ -13,9 +13,9 @@ export class AssignmentStrategy
   getItems(context: SpeedDialContext): SpeedDialItem[] {
     switch (context.role) {
       case Roles.STUDENT:
-        return [this.createRewardsItem(), this.createGoBackItem(context)];
+        return [this.createRewards(), this.createGoBack(context)];
       case Roles.INSTRUCTOR:
-        return [this.createGoBackItem(context)];
+        return [this.createRedirectToGrading(context)];
       default:
         return [];
     }

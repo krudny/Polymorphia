@@ -10,7 +10,7 @@
 }
 
 .gradable-event-speed-dial-desktop {
-    @apply right-2 bottom-2 hidden lg:fixed xl:block z-[999] -mb-4;
+    @apply right-5 bottom-5 hidden lg:fixed xl:block z-[999] -mb-4;
 }
 
 .gradable-event-markdown-wrapper {

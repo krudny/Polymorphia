@@ -23,7 +23,7 @@ export default function Grade() {
   const { state, isGradeLoading, submitGrade } = useGradingContext();
   const { data: criteria } = useCriteria();
   const accordionRef = useRef<AccordionRef>(null);
-  const isXL = useMediaQuery({ minWidth: "1400px" });
+  const isMd = useMediaQuery({ minWidth: "768px" });
 
   const topComponent = <h1>Ocena</h1>;
 
@@ -49,10 +49,10 @@ export default function Grade() {
           sectionIds={new Set(accordionSections)}
           initiallyOpenedSectionIds={
             new Set(
-              accordionSections.length > 0 && isXL ? [accordionSections[0]] : []
+              accordionSections.length > 0 && isMd ? [accordionSections[0]] : []
             )
           }
-          maxOpen={2}
+          maxOpen={1}
           shouldAnimateInitialOpen={false}
         >
           {Object.entries(state.criteria).map(
@@ -112,7 +112,7 @@ export default function Grade() {
             </div>
           </AccordionSection>
         </Accordion>
-        <div className="w-full my-4">
+        <div className="w-full mt-3">
           <ButtonWithBorder
             text="Zapisz"
             className="w-full !border-3 !rounded-xl"

@@ -2,7 +2,7 @@
 @import "../../../styles/globals.css";
 
 .grading {
-    @apply w-full max-w-[1500px] mx-auto flex flex-col justify-center items-center p-4 overflow-hidden;
+    @apply w-full max-w-[1500px] mx-auto flex flex-col justify-center items-center p-4 overflow-hidden pb-28 md:pb-4;
     @apply md:flex-row md:items-start md:px-10 gap-x-6 2xl:min-h-[calc(100dvh-5rem)] 3xl:min-h-0 extra-large-center;
     scrollbar-gutter: stable;
 }
@@ -18,7 +18,7 @@
 }
 
 .grading-speed-dial {
-    @apply fixed right-2 bottom-2 mb-2 z-[999];
+    @apply fixed right-5 bottom-5 mb-2 z-[20];
 }
 
 .grading-columns-wrapper {

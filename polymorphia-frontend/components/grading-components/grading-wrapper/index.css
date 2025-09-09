@@ -2,15 +2,15 @@
 @import "../../../styles/globals.css";
 
 .grading-wrapper {
-    @apply w-full overflow-y-hidden flex flex-col min-h-0 min-w-0 ;
+    @apply w-full overflow-y-hidden flex flex-col min-h-0 min-w-0 mt-3 first:mt-0;
 }
 
 .grading-wrapper-top {
-    @apply w-full flex justify-between mb-3 mx-auto min-h-12 min-w-0 custom-scrollbar text-5xl md:px-3;
+    @apply w-full flex justify-between mx-auto min-h-12 min-w-0 custom-scrollbar text-5xl md:px-3;
     scrollbar-gutter: stable;
     overflow: hidden;
 }
 
 .grading-wrapper-main {
-    @apply w-full flex flex-col relative mx-auto flex-1 min-h-0 min-w-0 custom-scrollbar overflow-y-auto md:px-3;
+    @apply w-full flex flex-col relative mx-auto flex-1 min-h-0 min-w-0 custom-scrollbar overflow-y-auto mt-3 md:px-3;
 }

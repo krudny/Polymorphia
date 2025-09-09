@@ -45,7 +45,7 @@ export default function Grading({ eventType, columns }: GradingProps) {
         gradingRef.current!.style.height = `max(${columnsHeight + 16}px, calc(100dvh - 5rem))`;
         listRef.current!.style.maxHeight = `max(${columnsHeight}px, calc(100dvh - 5rem))`;
       } else if (isMd) {
-        gradingRef.current!.style.height = `${columnsHeight + 32}px`;
+        gradingRef.current!.style.height = `${columnsHeight + 28}px`;
         listRef.current!.style.maxHeight = `${columnsHeight}px`;
       } else {
         gradingRef.current!.style.height = `100%`;
