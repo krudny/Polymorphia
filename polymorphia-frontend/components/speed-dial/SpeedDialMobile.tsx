@@ -56,8 +56,6 @@ export default function SpeedDialMobile({
                   width: 56,
                   height: 56,
                   fontSize: 28,
-                  marginBottom: -2,
-                  paddingBottom: -2,
                 },
               },
             }}
