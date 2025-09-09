@@ -23,10 +23,6 @@ export default function Welcome() {
   }, [setTitle]);
 
   useEffect(() => {
-    // if (isLoading || !wrapperRef.current) {
-    //   return;
-    // }
-
     gsap.fromTo(
       wrapperRef.current,
       { opacity: 0, y: -50 },

@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@import "../../../styles/globals.css";
+
+.outer-grid-wrapper{
+    @apply flex justify-center items-center h-screen
+}
+
+.inner-grid-wrapper{
+    @apply flex justify-center items-center h-50
+}

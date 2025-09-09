@@ -4,7 +4,6 @@ import HallOfFameUserData from "@/views/hall-of-fame/general/HallOfFameUserData"
 import UserPoints from "@/components/user-points/UserPoints";
 import "./index.css";
 import { HallOfFameRecordDTO } from "@/interfaces/api/hall-of-fame";
-import { API_STATIC_URL } from "@/services/api";
 import { filterXpDetails } from "@/providers/hall-of-fame/utils/filterXpDetails";
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
 
@@ -17,8 +16,8 @@ export default function RankCard({
     2: "border-slate-400",
     3: "border-amber-800",
   };
-  const border =
-    borderColors[userDetails.position as 1 | 2 | 3] ?? "border-none";
+  const { position, imageUrl } = userDetails;
+  const border = borderColors[position as 1 | 2 | 3] ?? "border-none";
   const { filters } = useHallOfFameContext();
   const filteredXpDetails = filterXpDetails(
     xpDetails,
@@ -29,10 +28,7 @@ export default function RankCard({
   return (
     <div className={`hall-of-fame-mobile-record-wrapper ${border}`}>
       <div>
-        <HallOfFameImage
-          position={userDetails.position}
-          imageUrl={`${API_STATIC_URL}/${userDetails.imageUrl}`}
-        />
+        <HallOfFameImage position={position} imageUrl={`${imageUrl}`} />
         <HallOfFameUserData {...userDetails} />
         <HallOfFamePointsSummary total={xpDetails.total} />
       </div>

@@ -30,7 +30,6 @@ public class UserContextService {
                 .userType(userService.getUserRole(user))
                 .userDetails(userContextMapper.toBaseUserDetailsResponseDto(user))
                 .build();
-
     }
 
     public boolean isPreferredCourseSet() {
@@ -66,7 +65,7 @@ public class UserContextService {
         return userCourseRoleRepository.findAllByUserId(user.getId()).stream()
                 .map(userCourseRole ->
                         userContextMapper.toAvailableCoursesResponseDto(
-                                courseService.getCourseById(userCourseRole.getId()),
+                                courseService.getCourseById(userCourseRole.getId().getCourse().getId()),
                                 userCourseRole.getRole()
                         )
                 )

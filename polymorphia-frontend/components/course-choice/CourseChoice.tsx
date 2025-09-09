@@ -8,13 +8,7 @@ import Loading from "@/components/loading/Loading";
 import { AvailableCoursesDTO, RoleTextMap } from "@/interfaces/api/user";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
-import { RefObject } from "react";
-
-interface CourseChoiceProps {
-  currentCourseId?: number;
-  redirectPage?: string;
-  containerRef: RefObject<HTMLDivElement | null>;
-}
+import CourseChoiceProps from "@/components/course-choice/types";
 
 export default function CourseChoiceGrid({
   redirectPage,

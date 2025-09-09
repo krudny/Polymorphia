@@ -9,43 +9,35 @@ import { useEffect } from "react";
 import UserPoints from "@/components/user-points/UserPoints";
 import ProgressBarTextLabels from "@/components/progressbar/ProgressBarTextLabels";
 import { useMediaQuery } from "react-responsive";
-import { useQuery } from "@tanstack/react-query";
-import KnowledgeBaseService from "@/app/(logged-in)/knowledge-base/KnowledgeBaseService";
 import Loading from "@/components/loading/Loading";
 import isStudent from "@/interfaces/api/user";
 import useUserContext from "@/hooks/contexts/useUserContext";
+import useStudentProfile from "@/hooks/course/useStudentProfile";
 
 export default function Profile() {
   const wrapperRef = useScaleShow();
   const { setTitle } = useTitle();
   const isSm = useMediaQuery({ maxWidth: 920 });
+  const { data: profile, isLoading } = useStudentProfile();
   const userContext = useUserContext();
 
   useEffect(() => {
     setTitle("Profil");
   }, [setTitle]);
 
-  const { data: evolutionStages, isLoading } = useQuery({
-    queryKey: ["evolution_stages", userContext.userDetails.courseId],
-    queryFn: () =>
-      KnowledgeBaseService.getEvolutionStages(userContext.userDetails.courseId),
-  });
-
-  if (isLoading && !userContext) {
+  if (isLoading || !userContext) {
     return <Loading />;
   }
 
   //TODO: handle profile for other roles
-  if (userContext && !isStudent(userContext)) {
-    return null;
+  if ((userContext && !isStudent(userContext)) || !profile) {
+    console.log("aaaaaa");
+    return <div>No data found.</div>;
   }
 
-  const sampleXpDetails = {
-    Laboratoria: "54.32",
-    Kartkówki: "43.33",
-    Projekt: "18.33",
-    Bonusy: "12.98",
-  };
+  const { imageUrl, userName, animalName, position } = userContext.userDetails;
+
+  console.log(profile);
 
   return (
     <div ref={wrapperRef} className="profile">
@@ -53,7 +45,7 @@ export default function Profile() {
         <div className="profile-content-wrapper">
           <div className="profile-image-wrapper">
             <Image
-              src={`${API_STATIC_URL}/${userContext.userDetails.imageUrl}`}
+              src={`${API_STATIC_URL}/${imageUrl}`}
               alt="User profile"
               fill
               className="profile-img"
@@ -63,10 +55,10 @@ export default function Profile() {
           </div>
           <div className="profile-content">
             <div className="profile-content-text">
-              <h1>{userContext.userDetails.userName}</h1>
-              <h2>{userContext.userDetails.animalName}</h2>
+              <h1>{userName}</h1>
+              <h2>{animalName}</h2>
               <h3>
-                Jesteś {userContext.userDetails.position} na 139 zwierzaków!
+                Jesteś {position} na {profile.totalStudentsInCourse} zwierzaków!
               </h3>
             </div>
             <div className="profile-user-points-xs">
@@ -74,7 +66,7 @@ export default function Profile() {
                 separators
                 titleSize="sm"
                 xpSize="md"
-                xpDetails={sampleXpDetails}
+                xpDetails={profile.xpDetails}
               />
             </div>
             <div className="profile-user-points-md">
@@ -82,7 +74,7 @@ export default function Profile() {
                 separators
                 titleSize="sm"
                 xpSize="md"
-                xpDetails={sampleXpDetails}
+                xpDetails={profile.xpDetails}
               />
             </div>
             <div className="profile-user-points-2xl">
@@ -90,7 +82,7 @@ export default function Profile() {
                 separators
                 titleSize="md"
                 xpSize="lg"
-                xpDetails={sampleXpDetails}
+                xpDetails={profile.xpDetails}
               />
             </div>
           </div>
@@ -106,10 +98,8 @@ export default function Profile() {
             upperElement={
               <ProgressBarTextLabels
                 textLabels={
-                  (evolutionStages
-                    ?.map(
-                      (evolutionStage) => evolutionStage.additionalGradingInfo
-                    )
+                  (profile.evolutionStageThresholds
+                    ?.map((evolutionStage) => evolutionStage.gradingThreshold)
                     .filter(Boolean) as string[]) || []
                 }
                 className="!min-h-8"
@@ -119,7 +109,7 @@ export default function Profile() {
             lowerElement={
               <ProgressBarTextLabels
                 textLabels={
-                  evolutionStages?.map(
+                  profile.evolutionStageThresholds?.map(
                     (evolutionStage) => evolutionStage.name
                   ) || []
                 }
@@ -139,10 +129,8 @@ export default function Profile() {
             upperElement={
               <ProgressBarTextLabels
                 textLabels={
-                  (evolutionStages
-                    ?.map(
-                      (evolutionStage) => evolutionStage.additionalGradingInfo
-                    )
+                  (profile.evolutionStageThresholds
+                    ?.map((evolutionStage) => evolutionStage.gradingThreshold)
                     .filter(Boolean) as string[]) || []
                 }
                 className="!min-h-8"
@@ -152,7 +140,7 @@ export default function Profile() {
             lowerElement={
               <ProgressBarTextLabels
                 textLabels={
-                  evolutionStages?.map(
+                  profile.evolutionStageThresholds.map(
                     (evolutionStage) => evolutionStage.name
                   ) || []
                 }

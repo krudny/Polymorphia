@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.repository.hall_of_fame;
 
+import com.agh.polymorphia_backend.dto.request.HallOfFameRequestDto;
 import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFame;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -8,6 +9,17 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface HallOfFameRepository extends JpaRepository<HallOfFame, Long> {
+    String WHERE_NATIVE = """
+            hof.course_id = :#{#requestDto.courseId()}
+            AND (:#{#requestDto.searchTerm()} = '' OR
+              (
+                  (:#{#requestDto.searchBy().searchByAnimal()} = TRUE AND LOWER(hof.animal_name) LIKE LOWER(CONCAT('%', :#{#requestDto.searchTerm()}, '%')))
+                  OR
+                  (:#{#requestDto.searchBy().searchByStudent()} = TRUE AND LOWER(hof.student_name) LIKE LOWER(CONCAT('%', :#{#requestDto.searchTerm()}, '%')))
+              ))
+            AND (:#{#requestDto.groups().isEmpty()} = TRUE OR hof.group_name IN :#{#requestDto.groups()})
+            """;
+
     @Query(value = """
                 SELECT hof.*
                 FROM hall_of_fame_view hof
@@ -20,5 +32,14 @@ public interface HallOfFameRepository extends JpaRepository<HallOfFame, Long> {
     Optional<HallOfFame> findByStudentIdAndCourseId(
 
             @Param("courseId") Long courseId,
-            @Param("studentId") Long studentId);
+            @Param("studentId") Long studentId
+    );
+
+
+    @Query(value = """
+            SELECT COUNT(DISTINCT hof.animal_id)
+            FROM hall_of_fame_view hof
+            WHERE\s""" + WHERE_NATIVE
+            , nativeQuery = true)
+    long countByCourseIdAndFilters(@Param("requestDto") HallOfFameRequestDto requestDto);
 }

@@ -2,6 +2,7 @@ import Loading from "@/components/loading/Loading";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import useRandomUsers from "@/hooks/course/useRandomUsers";
+import toast from "react-hot-toast";
 
 export default function StudentInfo() {
   const { data, isLoading, isError } = useRandomUsers();
@@ -20,20 +21,21 @@ export default function StudentInfo() {
       )}
       {data && !isLoading && (
         <div className="flex flex-col gap-2 min-w-80">
-          {data?.map((student) => (
-            <XPCard
-              key={student.userDetails.animalName}
-              title={student.userDetails.userName}
-              subtitle={student.userDetails.evolutionStage}
-              leftComponent={
-                <XPCardImage
-                  imageUrl={student.userDetails.imageUrl}
-                  alt={student.userDetails.evolutionStage}
-                />
-              }
-              size="xs"
-            />
-          ))}
+          {data?.map((student) => {
+            const { animalName, userName, evolutionStage, imageUrl } =
+              student.userDetails;
+            return (
+              <XPCard
+                key={animalName}
+                title={userName ? userName : toast.error("No username found!")}
+                subtitle={evolutionStage}
+                leftComponent={
+                  <XPCardImage imageUrl={imageUrl} alt={evolutionStage} />
+                }
+                size="xs"
+              />
+            );
+          })}
         </div>
       )}
     </>

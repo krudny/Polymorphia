@@ -11,11 +11,15 @@ import java.util.Optional;
 public interface UserCourseRoleRepository extends JpaRepository<UserCourseRole, Long> {
     @Query(
             "select ucr from UserCourseRole ucr " +
-                    "join ucr.user u " +
-                    "where u.email=:email and u.preferredCourse=ucr.course"
+                    "join ucr.id.user u " +
+                    "where u.email=:email and u.preferredCourse=ucr.id.course"
     )
     Optional<UserCourseRole> findUserCourseRoleByEmail(String email);
 
+    @Query(
+            "select ucr from UserCourseRole ucr " +
+                    "where ucr.id.user.id=:userId"
+    )
     List<UserCourseRole> findAllByUserId(Long userId);
 
     interface UserDetailsRepository {

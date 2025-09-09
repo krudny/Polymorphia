@@ -6,6 +6,7 @@ import isStudent, { RoleTextMap } from "@/interfaces/api/user";
 
 export default function UserSection() {
   const userContext = useUserContext();
+  const { userDetails } = userContext;
 
   const title = isStudent(userContext)
     ? userContext.userDetails.animalName
@@ -19,7 +20,7 @@ export default function UserSection() {
     <div className="user-section">
       <div className="user-section-image-wrapper">
         <Image
-          src={`${API_STATIC_URL}/${userContext.userDetails.imageUrl}`}
+          src={`${API_STATIC_URL}/${userDetails.imageUrl}`}
           alt="Zwierzak użytkownika"
           fill
           priority

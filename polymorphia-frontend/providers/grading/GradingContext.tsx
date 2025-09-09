@@ -21,7 +21,7 @@ import { useGradingFilterConfigs } from "@/hooks/course/useGradingFilterConfigs"
 import { EventTypes } from "@/interfaces/general";
 import { ShortGradeResponseDTO } from "@/interfaces/api/grade";
 import useGrade3 from "@/hooks/course/useGrade3";
-import useUserContext from "@/hooks/contexts/useUserContext";
+import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export interface CriteriaDetails {
   gainedXp?: string;
@@ -134,8 +134,6 @@ export const GradingContext = createContext<
   GradingContextInterface | undefined
 >(undefined);
 
-const COURSE_ID = 1;
-
 export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const { gradableEventId, eventType } = useEventParams();
   const [search, setSearch] = useState("");
@@ -143,7 +141,7 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(GradingReducer, initialState);
   const [areFiltersOpen, setAreFiltersOpen] = useState(false);
 
-  const userContext = useUserContext();
+  const { courseId } = useUserDetails();
   useEffect(() => {
     console.log(state);
   }, [state]);
@@ -152,7 +150,7 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
     data: filterConfigs,
     isLoading: isFiltersLoading,
     isError: isFiltersError,
-  } = useGradingFilterConfigs(userContext.userDetails.courseId);
+  } = useGradingFilterConfigs(courseId);
   const filters = useFilters<GradingFilterId>(filterConfigs ?? []);
 
   const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["total"];

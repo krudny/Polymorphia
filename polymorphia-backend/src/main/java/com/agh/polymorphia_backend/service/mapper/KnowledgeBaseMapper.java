@@ -22,7 +22,6 @@ public class KnowledgeBaseMapper {
     private static final String EVOLUTION_STAGES_GRADING_SUBTITLE = "%.1f xp odblokowuje ocenę %.1f";
     private static final String FLAT_BONUS_ITEM_SUBTITLE = "+%.1f xp do eventów z kategorii %s";
     private static final String PERCENTAGE_BONUS_ITEM_SUBTITLE = "+%d%% do eventów z kategorii %s";
-    private static final String EVOLUTION_STAGE_GRADING_INFO = "%.1f (%.1f xp)";
     private RewardMapper rewardMapper;
 
     private static KnowledgeBaseResponseDto.KnowledgeBaseResponseDtoBuilder getDtoBuilderForReward(Reward reward) {
@@ -43,7 +42,6 @@ public class KnowledgeBaseMapper {
                 .subtitle(String.format(EVOLUTION_STAGES_GRADING_SUBTITLE, evolutionStage.getMinXp(), evolutionStage.getGrade()))
                 .description(evolutionStage.getDescription())
                 .imageUrl(evolutionStage.getImageUrl())
-                .additionalGradingInfo(String.format(EVOLUTION_STAGE_GRADING_INFO, evolutionStage.getGrade(), evolutionStage.getMinXp()))
                 .build();
     }
 

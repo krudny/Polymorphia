@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import { useTheme } from "next-themes";
 import useNavigationContext from "@/hooks/contexts/useNavigationContext";
 import CourseChoiceGrid from "@/components/course-choice/CourseChoice";
-import useUserContext from "@/hooks/contexts/useUserContext";
+import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export default function Settings() {
   const {
@@ -20,7 +20,7 @@ export default function Settings() {
   const { setTitle } = useTitle();
   const wrapperRef = useScaleShow();
   const { resolvedTheme, setTheme } = useTheme();
-  const userContext = useUserContext();
+  const { courseId } = useUserDetails();
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const toggleSidebarLockOpened = () => {
@@ -85,7 +85,7 @@ export default function Settings() {
       >
         <h3 className="text-4xl">Aktywny kurs</h3>
         <CourseChoiceGrid
-          currentCourseId={userContext.userDetails.courseId}
+          currentCourseId={courseId}
           containerRef={containerRef}
         />
       </div>

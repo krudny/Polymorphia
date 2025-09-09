@@ -17,7 +17,7 @@ export const RoleTextMap: Record<Role, string> = {
 
 export interface BaseUserDetails {
   id: number;
-  userName: string;
+  userName?: string;
   courseId: number;
   imageUrl: string;
 }
@@ -38,19 +38,19 @@ export interface StudentDetailsDTO extends BaseUserDetails {
 }
 
 export type StudentDetailsDTOWithType = BaseUserDetailsDTOWithType<
-  "STUDENT",
+  typeof Roles.STUDENT,
   StudentDetailsDTO
 >;
 export type InstructorDetailsDTOWithType = BaseUserDetailsDTOWithType<
-  "INSTRUCTOR",
+  typeof Roles.INSTRUCTOR,
   BaseUserDetails
 >;
 export type CoordinatorDetailsDTOWithType = BaseUserDetailsDTOWithType<
-  "COORDINATOR",
+  typeof Roles.COORDINATOR,
   BaseUserDetails
 >;
 export type UndefinedDetailsDTOWithType = BaseUserDetailsDTOWithType<
-  "UNDEFINED",
+  typeof Roles.UNDEFINED,
   BaseUserDetails
 >;
 

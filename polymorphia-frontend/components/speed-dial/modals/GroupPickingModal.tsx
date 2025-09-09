@@ -10,6 +10,7 @@ import useRandomUsers from "@/hooks/course/useRandomUsers";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import useModalContext from "@/hooks/contexts/useModalContext";
 import useUserContext from "@/hooks/contexts/useUserContext";
+import toast from "react-hot-toast";
 
 function GroupPickingModalContent() {
   const { closeModal } = useModalContext();
@@ -67,26 +68,25 @@ function GroupPickingModalContent() {
         {debouncedSearch && (
           <div className="w-full h-fit max-h-[250px] mt-2 overflow-y-scroll flex flex-col gap-y-1 z-[999] custom-scrollbar">
             {allUsers && allUsers.length > 0 ? (
-              allUsers?.map((user, index) => (
-                <div key={index} className="min-h-fit">
-                  <XPCard
-                    title={user.userDetails.userName}
-                    subtitle={
-                      user.userDetails.group +
-                      " | " +
-                      user.userDetails.evolutionStage
-                    }
-                    leftComponent={
-                      <XPCardImage
-                        imageUrl={user.userDetails.imageUrl}
-                        alt={user.userDetails.evolutionStage}
-                      />
-                    }
-                    size="xs"
-                    onClick={() => handleClick(user.userDetails)}
-                  />
-                </div>
-              ))
+              allUsers?.map((user, index) => {
+                const { userName, evolutionStage, group, imageUrl } =
+                  user.userDetails;
+                return (
+                  <div key={index} className="min-h-fit">
+                    <XPCard
+                      title={
+                        userName ? userName : toast.error("No username found!")
+                      }
+                      subtitle={group + " | " + evolutionStage}
+                      leftComponent={
+                        <XPCardImage imageUrl={imageUrl} alt={evolutionStage} />
+                      }
+                      size="xs"
+                      onClick={() => handleClick(user.userDetails)}
+                    />
+                  </div>
+                );
+              })
             ) : (
               <div className="w-full h-full flex-col-centered text-2xl">
                 Nie znaleziono pasujących osób
@@ -97,21 +97,21 @@ function GroupPickingModalContent() {
       </form>
       <h3 className="text-3xl mt-4">Twoja grupa</h3>
       <div className="w-full mt-2 overflow-y-scroll flex flex-col gap-y-1 z-[999]">
-        {group?.map((user, index) => (
-          <div key={index} className="min-h-fit">
-            <XPCard
-              title={user.userName}
-              subtitle={user.group + " | " + user.evolutionStage}
-              leftComponent={
-                <XPCardImage
-                  imageUrl={user.imageUrl}
-                  alt={user.evolutionStage}
-                />
-              }
-              size="xs"
-            />
-          </div>
-        ))}
+        {group?.map((user, index) => {
+          const { userName, evolutionStage, group, imageUrl } = user;
+          return (
+            <div key={index} className="min-h-fit">
+              <XPCard
+                title={userName ? userName : toast.error("No username found!")}
+                subtitle={group + " | " + evolutionStage}
+                leftComponent={
+                  <XPCardImage imageUrl={imageUrl} alt={evolutionStage} />
+                }
+                size="xs"
+              />
+            </div>
+          );
+        })}
       </div>
       <div className="w-full mt-4">
         <ButtonWithBorder

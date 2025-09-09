@@ -93,9 +93,9 @@ public class UserService implements UserDetailsService {
 
     private User buildUserWithDefinedRole(UserCourseRole userCourseRole, String email) {
         return (switch (userCourseRole.getRole()) {
-            case STUDENT -> studentRepository.findById(userCourseRole.getUser().getId());
-            case INSTRUCTOR -> instructorRepository.findById(userCourseRole.getUser().getId());
-            case COORDINATOR -> coordinatorRepository.findById(userCourseRole.getUser().getId());
+            case STUDENT -> studentRepository.findById(userCourseRole.getId().getUser().getId());
+            case INSTRUCTOR -> instructorRepository.findById(userCourseRole.getId().getUser().getId());
+            case COORDINATOR -> coordinatorRepository.findById(userCourseRole.getId().getUser().getId());
             default -> throw new UsernameNotFoundException(String.format(USER_NOT_FOUND, email));
         })
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND, email)));

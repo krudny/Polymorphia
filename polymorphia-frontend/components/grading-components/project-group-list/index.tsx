@@ -11,6 +11,7 @@ import useGradingContext from "@/hooks/contexts/useGradingContext";
 import "./index.css";
 import { Fragment } from "react";
 import { useMediaQuery } from "react-responsive";
+import toast from "react-hot-toast";
 
 export default function ProjectGroupList() {
   const isMd = useMediaQuery({ minWidth: "786px" });
@@ -68,19 +69,20 @@ export default function ProjectGroupList() {
                   : student.gainedXp
                     ? "green"
                     : "gray";
+                const { userName, group, imageUrl, evolutionStage } =
+                  student.userDetails;
 
                 return (
                   <XPCard
                     key={index}
-                    title={student.userDetails.userName}
+                    title={
+                      userName ? userName : toast.error("No username found!")
+                    }
                     color={color}
-                    subtitle={student.userDetails.group}
+                    subtitle={group}
                     size={"xs"}
                     leftComponent={
-                      <XPCardImage
-                        imageUrl={student.userDetails.imageUrl}
-                        alt={student.userDetails.evolutionStage}
-                      />
+                      <XPCardImage imageUrl={imageUrl} alt={evolutionStage} />
                     }
                     rightComponent={
                       <XPCardPoints

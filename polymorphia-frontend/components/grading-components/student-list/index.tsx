@@ -11,6 +11,7 @@ import { ReactNode } from "react";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import "./index.css";
 import { useMediaQuery } from "react-responsive";
+import toast from "react-hot-toast";
 
 export default function StudentsList() {
   const {
@@ -58,10 +59,12 @@ export default function StudentsList() {
             : student.gainedXp
               ? "green"
               : "gray";
+          const { userName, id, group, imageUrl, evolutionStage } =
+            student.userDetails;
 
           return (
             <div
-              key={student.userDetails.id || student.userDetails.userName}
+              key={id || userName}
               className="student-record"
               onClick={() =>
                 dispatch({
@@ -71,15 +74,12 @@ export default function StudentsList() {
               }
             >
               <XPCard
-                title={student.userDetails.userName}
+                title={userName ? userName : toast.error("No username found!")}
                 color={color}
-                subtitle={student.userDetails.group}
+                subtitle={group}
                 size="xs"
                 leftComponent={
-                  <XPCardImage
-                    imageUrl={student.userDetails.imageUrl}
-                    alt={student.userDetails.evolutionStage}
-                  />
+                  <XPCardImage imageUrl={imageUrl} alt={evolutionStage} />
                 }
                 rightComponent={
                   <XPCardPoints

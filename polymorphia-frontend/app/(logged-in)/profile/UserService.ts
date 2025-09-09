@@ -1,11 +1,24 @@
 import {
   AvailableCoursesDTO,
+  Roles,
   StudentDetailsDTOWithType,
   UserDetailsDTO,
 } from "@/interfaces/api/user";
 import { API_HOST } from "@/services/api";
+import { StudentProfileDTO } from "@/interfaces/api/profile";
 
 const UserService = {
+  getStudentProfile: async (courseId: number): Promise<StudentProfileDTO> => {
+    const response = await fetch(`${API_HOST}/profile?courseId=${courseId}`, {
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch student's profile!");
+    }
+
+    return await response.json();
+  },
   isCourseIdSet: async (): Promise<boolean> => {
     const response = await fetch(`${API_HOST}/users/preferred-course/exists`, {
       credentials: "include",
@@ -57,7 +70,7 @@ const UserService = {
   getRandomUsers: async (): Promise<StudentDetailsDTOWithType[]> => {
     return [
       {
-        userType: "STUDENT",
+        userType: Roles.STUDENT,
         userDetails: {
           id: 1,
           userName: "Kamil Rudny",
@@ -70,7 +83,7 @@ const UserService = {
         },
       },
       {
-        userType: "STUDENT",
+        userType: Roles.STUDENT,
         userDetails: {
           id: 2,
           userName: "Kamil Śmieszny",
