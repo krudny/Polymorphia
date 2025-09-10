@@ -1,7 +1,9 @@
 package com.agh.polymorphia_backend.service.csv;
 
+import com.agh.polymorphia_backend.dto.request.csv.CSVPreviewRequestDto;
 import com.agh.polymorphia_backend.dto.response.csv.CSVType;
 import com.agh.polymorphia_backend.dto.response.csv.HeadersResponseDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
@@ -16,6 +18,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class CSVService {
@@ -61,9 +64,7 @@ public class CSVService {
     public HeadersResponseDto getHeaders(MultipartFile file, String type) {
         CSVType csvType = CSVType.valueOf(type.toUpperCase());
 
-        String[] requiredHeaders = csvType.getRequiredHeaders().stream()
-                .map(String::toLowerCase)
-                .toArray(String[]::new);
+        String[] requiredHeaders = csvType.getRequiredHeaders().toArray(String[]::new);
 
         String[] fileHeaders = readCSV(file, type, CSVReadMode.HEADERS_ONLY).headers();
 
@@ -72,6 +73,46 @@ public class CSVService {
                 .requiredHeaders(requiredHeaders)
                 .fileHeaders(fileHeaders)
                 .build();
+    }
+
+    public CSVResult getPreview(CSVPreviewRequestDto request) {
+        MultipartFile file = request.getFile();
+        String type = request.getType();
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, String> headers;
+        try {
+            headers = mapper.readValue(request.getHeaders(), Map.class);
+        } catch (Exception e) {
+            throw new RuntimeException("Invalid headers JSON: " + e.getMessage());
+        }
+
+        CSVResult csv = readCSV(file, type, CSVReadMode.ALL);
+
+        int[] indices = headers.values().stream()
+                .mapToInt(header -> Arrays.asList(csv.headers()).indexOf(header))
+                .toArray();
+
+        String[] newHeaders = headers.keySet().toArray(new String[0]);
+
+        System.out.println("=== CSV PREVIEW DEBUG ===");
+        System.out.println("Original headers: " + Arrays.toString(csv.headers()));
+        System.out.println("Header mapping: " + headers);
+        System.out.println("Found indices: " + Arrays.toString(indices));
+        System.out.println("New headers: " + Arrays.toString(newHeaders));
+        System.out.println("Original data rows: " + csv.data().size());
+
+        List<String[]> newData = csv.data().stream()
+                .map(row -> Arrays.stream(indices).mapToObj(i -> row[i]).toArray(String[]::new))
+                .collect(Collectors.toList());
+
+        System.out.println("New data rows: " + newData.size());
+        System.out.println("First 3 rows preview:");
+        for (int i = 0; i < Math.min(3, newData.size()); i++) {
+            System.out.println("  Row " + i + ": " + Arrays.toString(newData.get(i)));
+        }
+        System.out.println("========================");
+
+        return new CSVResult(newHeaders, newData);
     }
 
     private boolean validateHeaders(String[] headers, String type) {
