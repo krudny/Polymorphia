@@ -1,8 +1,10 @@
 package com.agh.polymorphia_backend.service.csv;
 
 import com.agh.polymorphia_backend.dto.request.csv.CSVPreviewRequestDto;
+import com.agh.polymorphia_backend.dto.request.csv.CSVProcessRequestDto;
 import com.agh.polymorphia_backend.dto.response.csv.CSVType;
 import com.agh.polymorphia_backend.dto.response.csv.HeadersResponseDto;
+import com.agh.polymorphia_backend.service.csv.processors.CSVProcessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
@@ -22,6 +24,16 @@ import java.util.stream.Collectors;
 
 @Service
 public class CSVService {
+    private final Map<CSVType, CSVProcessor> processors;
+
+    public CSVService(List<CSVProcessor> processorList) {
+        this.processors = processorList.stream()
+                .collect(Collectors.toMap(
+                        CSVProcessor::getSupportedType,
+                        processor -> processor
+                ));
+    }
+
     public CSVResult readCSV(MultipartFile file, String type, CSVReadMode mode) {
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(file.getInputStream(), Charset.forName("ISO-8859-2")));
@@ -113,6 +125,17 @@ public class CSVService {
         System.out.println("========================");
 
         return new CSVResult(newHeaders, newData);
+    }
+
+    public void processCSV(CSVProcessRequestDto request) {
+        CSVType csvType = CSVType.valueOf(request.getType().toUpperCase());
+
+        CSVProcessor processor = processors.get(csvType);
+        if (processor == null) {
+            throw new IllegalArgumentException("No processor found for type: " + csvType);
+        }
+
+        processor.process(request);
     }
 
     private boolean validateHeaders(String[] headers, String type) {

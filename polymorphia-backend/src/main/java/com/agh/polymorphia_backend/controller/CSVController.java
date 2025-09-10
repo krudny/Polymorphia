@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.request.csv.CSVPreviewRequestDto;
+import com.agh.polymorphia_backend.dto.request.csv.CSVProcessRequestDto;
 import com.agh.polymorphia_backend.dto.response.csv.HeadersResponseDto;
 import com.agh.polymorphia_backend.service.csv.CSVReadMode;
 import com.agh.polymorphia_backend.service.csv.CSVResult;
@@ -26,5 +27,10 @@ public class CSVController {
     @PostMapping("/preview")
     public CSVResult getPreview(@ModelAttribute CSVPreviewRequestDto request) {
         return csvService.getPreview(request);
+    }
+
+    @PostMapping("/process")
+    public void processCSV(@RequestBody CSVProcessRequestDto request) {
+        csvService.processCSV(request);
     }
 }
