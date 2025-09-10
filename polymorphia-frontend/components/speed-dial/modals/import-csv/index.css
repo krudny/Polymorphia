@@ -27,12 +27,12 @@
     @apply w-full mt-4 flex gap-x-4;
 }
 
-.import-csv-success {
+.import-csv-headers {
     @apply bg-yellow-400 w-full h-full;
 }
 
 .csv-header-mapping {
-    @apply bg-red-400 w-full flex justify-between my-3;
+    @apply w-full flex justify-between my-2 gap-x-4;
 
     h3 {
         @apply text-3xl;
@@ -40,5 +40,6 @@
 }
 
 .csv-header-select {
+
 
 }
