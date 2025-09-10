@@ -5,14 +5,19 @@ import com.agh.polymorphia_backend.dto.request.csv.CSVProcessRequestDto;
 import com.agh.polymorphia_backend.dto.response.csv.CSVType;
 import com.agh.polymorphia_backend.dto.response.csv.HeadersResponseDto;
 import com.agh.polymorphia_backend.service.csv.processors.CSVProcessor;
+import com.agh.polymorphia_backend.service.mapper.GeneralMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,11 +27,15 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.agh.polymorphia_backend.service.course.CourseService.COURSE_NOT_FOUND;
+
 @Service
 public class CSVService {
+    private final GeneralMapper generalMapper;
     private final Map<CSVType, CSVProcessor> processors;
 
-    public CSVService(List<CSVProcessor> processorList) {
+    public CSVService(GeneralMapper generalMapper, List<CSVProcessor> processorList) {
+        this.generalMapper = generalMapper;
         this.processors = processorList.stream()
                 .collect(Collectors.toMap(
                         CSVProcessor::getSupportedType,
@@ -34,7 +43,7 @@ public class CSVService {
                 ));
     }
 
-    public CSVResult readCSV(MultipartFile file, String type, CSVReadMode mode) {
+    public CSVResult readCSV(MultipartFile file, CSVReadMode mode) {
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(file.getInputStream(), Charset.forName("ISO-8859-2")));
              CSVReader csvReader = new CSVReaderBuilder(reader)
@@ -46,13 +55,9 @@ public class CSVService {
                      .build()) {
 
             String[] headers = csvReader.readNext();
-//            if (!validateHeaders(headers, type)) {
-//                System.out.println("Walidacja nagłówków nieudana");
-//                return new CSVResult(null, new ArrayList<>());
-//            }
 
             if (mode == CSVReadMode.HEADERS_ONLY) {
-                return new CSVResult(headers, new ArrayList<>());
+                return new CSVResult(headers, null);
             }
 
             List<String[]> records = new ArrayList<>();
@@ -62,23 +67,27 @@ public class CSVService {
                 records.add(record);
             }
 
-            return switch (mode) {
-                case DATA_ONLY -> new CSVResult(null, records);
-                default -> new CSVResult(headers, records);
-            };
+            if (mode == CSVReadMode.DATA_ONLY) {
+                return new CSVResult(null, records);
+            }
 
+            return new CSVResult(headers, records);
         } catch (Exception e) {
-            System.out.println("Błąd parsowania CSV: " + e.getMessage());
-            return new CSVResult(null, new ArrayList<>());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error during CSV parsing");
         }
     }
 
     public HeadersResponseDto getHeaders(MultipartFile file, String type) {
-        CSVType csvType = CSVType.valueOf(type.toUpperCase());
+        CSVType csvType;
+
+        try {
+            csvType = CSVType.valueOf(type.toUpperCase().trim());
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid CSV type: " + type);
+        }
 
         String[] requiredHeaders = csvType.getRequiredHeaders().toArray(String[]::new);
-
-        String[] fileHeaders = readCSV(file, type, CSVReadMode.HEADERS_ONLY).headers();
+        String[] fileHeaders = readCSV(file, CSVReadMode.HEADERS_ONLY).headers();
 
         return HeadersResponseDto
                 .builder()
@@ -88,94 +97,37 @@ public class CSVService {
     }
 
     public CSVResult getPreview(CSVPreviewRequestDto request) {
-        MultipartFile file = request.getFile();
-        String type = request.getType();
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, String> headers;
-        try {
-            headers = mapper.readValue(request.getHeaders(), Map.class);
-        } catch (Exception e) {
-            throw new RuntimeException("Invalid headers JSON: " + e.getMessage());
+        Map<String, String> headers = generalMapper.stringToMap(request.getHeaders());
+        CSVResult csv = readCSV(request.getFile(), CSVReadMode.ALL);
+
+        List<Integer> indices = headers.values().stream()
+                .map(header -> CSVUtil.getColumnIndex(csv.headers(), header))
+                .toList();
+
+        if (indices.contains(-1)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Selected header not present in CSV");
         }
 
-        CSVResult csv = readCSV(file, type, CSVReadMode.ALL);
+        String[] previewHeaders = headers.keySet().toArray(new String[0]);
 
-        int[] indices = headers.values().stream()
-                .mapToInt(header -> Arrays.asList(csv.headers()).indexOf(header))
-                .toArray();
+        List<String[]> previewData = csv.data().stream()
+                .map(row -> indices.stream()
+                .mapToInt(i -> i)
+                .mapToObj(i -> row[i])
+                .toArray(String[]::new))
+                .toList();
 
-        String[] newHeaders = headers.keySet().toArray(new String[0]);
-
-        System.out.println("=== CSV PREVIEW DEBUG ===");
-        System.out.println("Original headers: " + Arrays.toString(csv.headers()));
-        System.out.println("Header mapping: " + headers);
-        System.out.println("Found indices: " + Arrays.toString(indices));
-        System.out.println("New headers: " + Arrays.toString(newHeaders));
-        System.out.println("Original data rows: " + csv.data().size());
-
-        List<String[]> newData = csv.data().stream()
-                .map(row -> Arrays.stream(indices).mapToObj(i -> row[i]).toArray(String[]::new))
-                .collect(Collectors.toList());
-
-        System.out.println("New data rows: " + newData.size());
-        System.out.println("First 3 rows preview:");
-        for (int i = 0; i < Math.min(3, newData.size()); i++) {
-            System.out.println("  Row " + i + ": " + Arrays.toString(newData.get(i)));
-        }
-        System.out.println("========================");
-
-        return new CSVResult(newHeaders, newData);
+        return new CSVResult(previewHeaders, previewData);
     }
 
     public void processCSV(CSVProcessRequestDto request) {
         CSVType csvType = CSVType.valueOf(request.getType().toUpperCase());
-
         CSVProcessor processor = processors.get(csvType);
+
         if (processor == null) {
-            throw new IllegalArgumentException("No processor found for type: " + csvType);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No processor found for type: " + csvType);
         }
 
         processor.process(request);
-    }
-
-    private boolean validateHeaders(String[] headers, String type) {
-        if (headers == null || headers.length == 0) {
-            System.out.println("Plik CSV jest pusty lub nie zawiera nagłówków");
-            return false;
-        }
-
-        try {
-            CSVType csvType = CSVType.valueOf(type.toUpperCase());
-
-            Set<String> fileHeaders = Set.of(Arrays.stream(headers)
-                    .map(String::toLowerCase)
-                    .map(String::trim)
-                    .toArray(String[]::new));
-
-            Set<String> requiredHeaders = Set.of(csvType.getRequiredHeaders().stream()
-                    .map(String::toLowerCase)
-                    .toArray(String[]::new));
-
-            System.out.println("file headers" + fileHeaders);
-            System.out.println("required headers" + requiredHeaders);
-
-            if (!fileHeaders.containsAll(requiredHeaders)) {
-                List<String> missingHeaders = new ArrayList<>();
-                for (String required : requiredHeaders) {
-                    if (!fileHeaders.contains(required)) {
-                        missingHeaders.add(required);
-                    }
-                }
-                System.out.println("Brakujące nagłówki: " + missingHeaders);
-                return false;
-            }
-
-
-            return true;
-
-        } catch (IllegalArgumentException e) {
-            System.out.println("Nieznany typ CSV: " + type);
-            return false;
-        }
     }
 }

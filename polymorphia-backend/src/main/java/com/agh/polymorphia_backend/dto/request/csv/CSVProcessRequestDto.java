@@ -1,14 +1,17 @@
 package com.agh.polymorphia_backend.dto.request.csv;
 
-import com.agh.polymorphia_backend.service.csv.CSVResult;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.util.List;
 
 @Data
 public class CSVProcessRequestDto {
+    @NotNull
     private String type;
+
+    @NotNull
     private String[] headers;
+
+    @NotNull
     private List<String[]> data;
 }
