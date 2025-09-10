@@ -11,6 +11,10 @@
     @apply transition-colors duration-400 ease-[cubic-bezier(0.34,1,0.2,1)] hover:cursor-pointer;
 }
 
+.drag-active {
+    @apply bg-primary-dark text-secondary-gray transition-colors duration-400 ease-[cubic-bezier(0.34,1,0.2,1)];
+}
+
 .import-csv-upload-icon {
     @apply text-7xl material-symbols;
 }
@@ -20,5 +24,21 @@
 }
 
 .import-csv-button-wrapper {
-    @apply w-full mt-4;
+    @apply w-full mt-4 flex gap-x-4;
+}
+
+.import-csv-success {
+    @apply bg-yellow-400 w-full h-full;
+}
+
+.csv-header-mapping {
+    @apply bg-red-400 w-full flex justify-between my-3;
+
+    h3 {
+        @apply text-3xl;
+    }
+}
+
+.csv-header-select {
+
 }
