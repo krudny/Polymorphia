@@ -78,7 +78,6 @@ export default function Profile() {
     filters.configs.find((config) => config.id === "rankingOptions"),
     filters.getAppliedFilterValues
   );
-  console.log(filteredXpDetails);
 
   return (
     <div ref={wrapperRef} className="profile">

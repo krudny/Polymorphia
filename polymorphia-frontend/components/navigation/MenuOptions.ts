@@ -29,7 +29,6 @@ export const getMainMenuItems = (userType: Role): MenuOption[] => {
     { icon: MedalIcon, text: "Hall of Fame", link: "hall-of-fame" },
     { icon: MilestoneIcon, text: "Roadmapa", link: "roadmap" },
   ];
-  console.log(userType);
 
   if (userType === Roles.STUDENT) {
     items.splice(3, 0, {

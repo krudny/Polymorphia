@@ -1258,6 +1258,5 @@ export const EventSectionService = {
     comment: string;
   }): Promise<void> => {
     await new Promise<void>((resolve) => setTimeout(resolve, 200));
-    console.log("Submitting grade:", gradeData);
   },
 };
