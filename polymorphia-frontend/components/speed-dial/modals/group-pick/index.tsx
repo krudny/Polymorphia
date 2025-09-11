@@ -1,15 +1,16 @@
 "use client";
-import { UserDetailsDTO } from "@/interfaces/api/user";
+import isStudent, { StudentDetailsDTO } from "@/interfaces/api/user";
 import Modal from "@/components/modal/Modal";
 import { ChangeEvent, useEffect, useState } from "react";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { useDebounce } from "use-debounce";
 import XPCard from "@/components/xp-card/XPCard";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
-import useCurrentUser from "@/hooks/general/useUser";
 import useRandomUsers from "@/hooks/course/useRandomUsers";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import useModalContext from "@/hooks/contexts/useModalContext";
+import useUserContext from "@/hooks/contexts/useUserContext";
+import toast from "react-hot-toast";
 
 function GroupPickingModalContent() {
   const { closeModal } = useModalContext();
