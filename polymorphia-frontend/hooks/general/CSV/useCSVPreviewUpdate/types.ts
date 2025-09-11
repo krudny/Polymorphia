@@ -1,5 +1,5 @@
 import {UseMutationResult} from "@tanstack/react-query";
-import {CSVPreviewResponseDTO} from "@/components/speed-dial/modals/import-csv/CSVService";
+import {CSVPreviewResponseDTO} from "@/interfaces/api/CSV";
 
 export interface UseCSVPreviewUpdateParams {
   file: File;

@@ -1,15 +1,6 @@
 import {API_HOST} from "@/services/api";
 import {ImportCSVType} from "@/interfaces/general";
-
-export interface CSVHeadersResponseDTO {
-  requiredHeaders: string[];
-  fileHeaders: string[];
-}
-
-export interface CSVPreviewResponseDTO {
-  headers: string[],
-  data: string[][],
-}
+import {CSVHeadersResponseDTO, CSVPreviewResponseDTO} from "@/interfaces/api/CSV";
 
 const CSVService = {
   getHeaders: async (file: File, type: ImportCSVType): Promise<CSVHeadersResponseDTO> => {
@@ -48,7 +39,7 @@ const CSVService = {
     return await response.json();
   },
 
-  processCSV: async (type: ImportCSVType, headers: Record<string, string>, data: string[][]): Promise<void> => {
+  processCSV: async (type: ImportCSVType, headers: string[], data: string[][]): Promise<void> => {
     const body = JSON.stringify({
       type: type,
       headers: headers,
