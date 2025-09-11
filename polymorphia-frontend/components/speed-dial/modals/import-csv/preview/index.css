@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @import "../../../../../styles/globals.css";
 
-
 .table-wrapper {
     @apply text-2xl max-h-[400px] overflow-y-auto overflow-x-hidden custom-scrollbar;
     overscrollBehavior: 'none';
@@ -17,4 +16,10 @@
 
 .table-cell {
     @apply p-2 border-[1px]  border-b-primary-dark border-r-primary-dark min-h-[40px] overflow-hidden overflow-ellipsis;
+}
+
+.preview-buttons-override {
+    @apply custom-scrollbar;
+    scrollbar-gutter: stable;
+    overflow: hidden;
 }

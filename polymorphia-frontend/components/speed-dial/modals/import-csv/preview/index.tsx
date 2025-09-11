@@ -42,7 +42,7 @@ export default function PreviewCSV() {
         </div>
       </div>
 
-      <div className="import-csv-button-wrapper">
+      <div className="import-csv-button-wrapper preview-buttons-override">
         <ButtonWithBorder
           text="Zatwierdź"
           className="!mx-0 !py-0 !w-full"

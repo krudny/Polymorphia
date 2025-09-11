@@ -17,6 +17,10 @@
     @apply text-primary-dark border-none outline-none text-base text-left;
 }
 
+.csv-header-select option::selection {
+    @apply border-none outline-none;
+}
+
 .csv-header-select option:hover {
     @apply bg-primary-dark text-secondary-light transition-colors duration-400 ease-[cubic-bezier(0.34,1,0.2,1)];
 }
