@@ -7,10 +7,9 @@ import com.agh.polymorphia_backend.service.csv.CSVResult;
 import com.agh.polymorphia_backend.service.csv.CSVService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-// TODO: is authenticated
 
 @RestController
 @RequestMapping("/csv")
@@ -19,16 +18,19 @@ public class CSVController {
     private CSVService csvService;
 
     @PostMapping("/headers")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<HeadersResponseDto> getHeaders(@RequestParam MultipartFile file, @RequestParam String type) {
         return ResponseEntity.ok(csvService.getHeaders(file, type));
     }
 
     @PostMapping("/preview")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<CSVResult> getPreview(@ModelAttribute CSVPreviewRequestDto request) {
         return ResponseEntity.ok(csvService.getPreview(request));
     }
 
     @PostMapping("/process")
+    @PreAuthorize("isAuthenticated()")
     public void processCSV(@RequestBody CSVProcessRequestDto request) {
         csvService.processCSV(request);
     }
