@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.service.csv.processors;
 
 import com.agh.polymorphia_backend.dto.request.csv.CSVProcessRequestDto;
-import com.agh.polymorphia_backend.dto.response.csv.CSVType;
+import com.agh.polymorphia_backend.service.csv.CSVType;
 import com.agh.polymorphia_backend.service.csv.CSVUtil;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +15,7 @@ public class TestGradingProcessor implements CSVProcessor {
 
     @Override
     public void process(CSVProcessRequestDto request) {
-        String[] headers =  request.getHeaders();
+        String[] headers = request.getHeaders();
 
         int indexColumnIndex = CSVUtil.getColumnIndex(headers,"Numer indeksu");
         int gradeColumnIndex = CSVUtil.getColumnIndex(headers,"Ocena");
@@ -24,7 +24,7 @@ public class TestGradingProcessor implements CSVProcessor {
             String studentIndex = row[indexColumnIndex].trim();
             String gainedXP = row[gradeColumnIndex].trim();
 
-            // Temporary
+            // TODO: this is temporary because we dont have grading logic and validation
             System.out.println("Przetworzono: " + studentIndex + " " + gainedXP);
         }
     }

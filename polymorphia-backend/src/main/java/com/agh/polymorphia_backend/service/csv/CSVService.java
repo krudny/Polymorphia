@@ -2,32 +2,26 @@ package com.agh.polymorphia_backend.service.csv;
 
 import com.agh.polymorphia_backend.dto.request.csv.CSVPreviewRequestDto;
 import com.agh.polymorphia_backend.dto.request.csv.CSVProcessRequestDto;
-import com.agh.polymorphia_backend.dto.response.csv.CSVType;
 import com.agh.polymorphia_backend.dto.response.csv.HeadersResponseDto;
 import com.agh.polymorphia_backend.service.csv.processors.CSVProcessor;
 import com.agh.polymorphia_backend.service.mapper.GeneralMapper;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
-import com.opencsv.exceptions.CsvException;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.ByteOrderMark;
+import org.apache.commons.io.input.BOMInputStream;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-
-import static com.agh.polymorphia_backend.service.course.CourseService.COURSE_NOT_FOUND;
 
 @Service
 public class CSVService {
@@ -44,8 +38,14 @@ public class CSVService {
     }
 
     public CSVResult readCSV(MultipartFile file, CSVReadMode mode) {
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(file.getInputStream(), Charset.forName("ISO-8859-2")));
+        Charset detectedCharset = CSVUtil.detectCharsetForPolish(file);
+
+        try (BOMInputStream bomIn = BOMInputStream.builder()
+                .setInputStream(file.getInputStream())
+                .setInclude(false)
+                .setByteOrderMarks(ByteOrderMark.UTF_8, ByteOrderMark.UTF_16BE, ByteOrderMark.UTF_16LE, ByteOrderMark.UTF_32BE, ByteOrderMark.UTF_32LE)
+                .get();
+             BufferedReader reader = new BufferedReader(new InputStreamReader(bomIn, detectedCharset));
              CSVReader csvReader = new CSVReaderBuilder(reader)
                      .withCSVParser(new CSVParserBuilder()
                              .withSeparator(';')
