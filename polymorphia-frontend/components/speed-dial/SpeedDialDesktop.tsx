@@ -1,24 +1,12 @@
 "use client";
 
-import { ReactNode, useState } from "react";
 import "./index.css";
-import { useSpeedDialFactory } from "@/hooks/factory/useSpeedDialFactory";
-import Loading from "@/components/loading/Loading";
 import { SpeedDial as SpeedDialMui, SpeedDialAction } from "@mui/material";
 import { SpeedDialProps } from "./types";
+import { ReactNode, useState } from "react";
 
-export default function SpeedDialDesktop({
-  eventType,
-  viewType,
-}: SpeedDialProps) {
-  const items = useSpeedDialFactory({ eventType, viewType });
+export default function SpeedDialDesktop({ items }: SpeedDialProps) {
   const [activeModal, setActiveModal] = useState<ReactNode | null>(null);
-
-  if (!items) {
-    return <Loading />;
-  }
-
-  items.sort((a, b) => b.orderIndex - a.orderIndex);
 
   return (
     <>

@@ -1,4 +1,7 @@
-import { SpeedDialItem, SpeedDialProps } from "@/components/speed-dial/types";
+import {
+  SpeedDialItem,
+  SpeedDialEventProps,
+} from "@/components/speed-dial/types";
 import { useMemo } from "react";
 import { speedDialStrategyRegistry } from "@/components/speed-dial/strategies/Registry";
 import { useOptionalMarkdownContext } from "@/hooks/contexts/useMarkdownContext";
@@ -10,7 +13,7 @@ import { isUndefined } from "@/interfaces/api/user";
 export function useSpeedDialFactory({
   eventType,
   viewType,
-}: SpeedDialProps): SpeedDialItem[] {
+}: SpeedDialEventProps): SpeedDialItem[] {
   const markdownContext = useOptionalMarkdownContext();
   const router = useRouter();
   const pathname = usePathname();

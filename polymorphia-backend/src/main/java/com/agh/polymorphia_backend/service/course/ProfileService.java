@@ -11,6 +11,7 @@ import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.repository.course.EvolutionStagesRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
+import com.agh.polymorphia_backend.service.mapper.HallOfFameMapper;
 import com.agh.polymorphia_backend.service.mapper.ProfileMapper;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
@@ -36,22 +37,29 @@ public class ProfileService {
     private final HallOfFameRepository hallOfFameRepository;
     private final EvolutionStagesRepository evolutionStagesRepository;
     private final ProfileMapper profileMapper;
+    private final HallOfFameMapper hallOfFameMapper;
 
     public ProfileResponseDto getProfile(Long courseId) {
         Course course = courseService.getCourseById(courseId);
         accessAuthorizer.authorizeCourseAccess(course);
         User user = userService.getCurrentUser().getUser();
 
-        Animal animal = animalService.getAnimal(user.getId(), courseId);
-        Map<String, String> xpDetails = hallOfFameService.groupScoreDetails(List.of(animal.getId())).get(animal.getId());
         BigDecimal totalXp = hallOfFameService.getStudentHallOfFame(user).getTotalXpSum();
 
         return ProfileResponseDto.builder()
                 .evolutionStageThresholds(getEvolutionStages(courseId))
                 .totalXp(NumberFormatter.formatToBigDecimal(totalXp))
                 .totalStudentsInCourse(getTotalStudentsInCourse(courseId))
-                .xpDetails(xpDetails)
+                .xpDetails(getXpDetails(user, courseId))
                 .build();
+    }
+
+    private Map<String, String> getXpDetails(User user, Long courseId) {
+        Animal animal = animalService.getAnimal(user.getId(), courseId);
+        Map<String, String> xpDetails = hallOfFameService.groupScoreDetails(List.of(animal.getId())).get(animal.getId());
+        hallOfFameMapper.updateXpDetails(xpDetails, hallOfFameService.getStudentHallOfFame(user));
+
+        return xpDetails;
     }
 
     private Long getTotalStudentsInCourse(Long courseId) {

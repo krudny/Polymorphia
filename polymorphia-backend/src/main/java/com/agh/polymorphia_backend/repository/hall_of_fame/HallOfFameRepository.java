@@ -35,6 +35,10 @@ public interface HallOfFameRepository extends JpaRepository<HallOfFame, Long> {
             @Param("studentId") Long studentId
     );
 
+    Optional<HallOfFame> findByAnimalId(
+             Long animalId
+    );
+
 
     @Query(value = """
             SELECT COUNT(DISTINCT hof.animal_id)

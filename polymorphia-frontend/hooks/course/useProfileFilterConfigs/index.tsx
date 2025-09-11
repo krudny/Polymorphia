@@ -2,10 +2,10 @@ import { EventSectionService } from "@/app/(logged-in)/course/EventSectionServic
 import { HallOfFameFilterId } from "@/providers/hall-of-fame/types";
 import { useQuery } from "@tanstack/react-query";
 import { FilterConfig } from "../useFilters/types";
-import useUserContext from "@/hooks/contexts/useUserContext";
+import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export function useProfileFilterConfigs() {
-  const { courseId } = useUserContext().userDetails;
+  const { courseId } = useUserDetails();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["profileFilters", courseId],

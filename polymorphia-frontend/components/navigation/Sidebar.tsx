@@ -25,7 +25,7 @@ export default function Sidebar() {
   } = useNavigationContext();
   const sidebarRef = useRef<HTMLDivElement | null>(null);
   const { data: eventSections } = useEventSections();
-  const userContext = useUserContext();
+  const userType = useUserContext().userType;
 
   useEffect(() => {
     const sidebar = sidebarRef.current;
@@ -36,7 +36,7 @@ export default function Sidebar() {
     animateSidebar(sidebar, isSidebarExpanded);
   }, [isSidebarExpanded]);
 
-  const menuItems = getMainMenuItems(userContext);
+  const menuItems = getMainMenuItems(userType);
 
   if (eventSections) {
     updateMenuItems(menuItems, eventSections);

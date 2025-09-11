@@ -36,21 +36,19 @@ export default function CourseChoiceGrid({
     return null;
   }
 
-  const cards = courses?.map(
-    ({ id, name, coordinator, imageUrl, userRole }) => (
-      <XPCard
-        title={name}
-        subtitle={`Koordynator: ${coordinator}, Twoja rola: ${RoleTextMap[userRole]}`}
-        key={id}
-        color={
-          currentCourseId != null && currentCourseId === id ? "green" : "silver"
-        }
-        size={"sm"}
-        leftComponent={<XPCardImage imageUrl={imageUrl} alt={name} />}
-        onClick={() => handleCourseSelection(id)}
-      />
-    )
-  );
+  const cards = courses.map(({ id, name, coordinator, imageUrl, userRole }) => (
+    <XPCard
+      title={name}
+      subtitle={`Koordynator: ${coordinator}, Twoja rola: ${RoleTextMap[userRole]}`}
+      key={id}
+      color={
+        currentCourseId != null && currentCourseId === id ? "green" : "silver"
+      }
+      size={"sm"}
+      leftComponent={<XPCardImage imageUrl={imageUrl} alt={name} />}
+      onClick={() => handleCourseSelection(id)}
+    />
+  ));
 
   return (
     <XPCardGrid containerRef={containerRef} cards={cards} maxColumns={2} />

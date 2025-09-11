@@ -19,6 +19,9 @@ import { HallOfFameFilterId } from "@/providers/hall-of-fame/types";
 import { useProfileFilterConfigs } from "@/hooks/course/useProfileFilterConfigs";
 import { useFilters } from "@/hooks/course/useFilters";
 import { useQueryClient } from "@tanstack/react-query";
+import { filterXpDetails } from "@/providers/hall-of-fame/utils/filterXpDetails";
+import SpeedDialDesktop from "@/components/speed-dial/SpeedDialDesktop";
+import SpeedDialMobile from "@/components/speed-dial/SpeedDialMobile";
 
 export default function Profile() {
   const { setTitle } = useTitle();
@@ -34,7 +37,17 @@ export default function Profile() {
     isError: isFiltersError,
   } = useProfileFilterConfigs();
   const filters = useFilters<HallOfFameFilterId>(filterConfigs ?? []);
-
+  const speedDialItems = [
+    {
+      id: 1,
+      orderIndex: 1,
+      label: "Filtry",
+      icon: "tune",
+      onClick: () => {
+        setIsModalOpen(true);
+      },
+    },
+  ];
   useEffect(() => {
     setTitle("Profil");
   }, [setTitle]);
@@ -59,8 +72,22 @@ export default function Profile() {
       queryKey: ["hallOfFame"],
     });
   };
+
+  const filteredXpDetails = filterXpDetails(
+    profile.xpDetails,
+    filters.configs.find((config) => config.id === "rankingOptions"),
+    filters.getAppliedFilterValues
+  );
+  console.log(filteredXpDetails);
+
   return (
     <div ref={wrapperRef} className="profile">
+      <div className="profile-speed-dial-desktop">
+        <SpeedDialDesktop items={speedDialItems} />
+      </div>
+      <div className="profile-speed-dial-mobile">
+        <SpeedDialMobile items={speedDialItems} />
+      </div>
       <div className="profile-wrapper">
         <div className="profile-content-wrapper">
           <div className="profile-image-wrapper">
@@ -88,7 +115,7 @@ export default function Profile() {
                 titleSize="sm"
                 xpSize="md"
                 maxCols={6}
-                xpDetails={profile.xpDetails}
+                xpDetails={filteredXpDetails}
               />
             </div>
             <div className="profile-user-points-md">
@@ -96,7 +123,7 @@ export default function Profile() {
                 separators
                 titleSize="sm"
                 xpSize="md"
-                xpDetails={profile.xpDetails}
+                xpDetails={filteredXpDetails}
               />
             </div>
             <div className="profile-user-points-2xl">
@@ -104,7 +131,7 @@ export default function Profile() {
                 separators
                 titleSize="md"
                 xpSize="lg"
-                xpDetails={profile.xpDetails}
+                xpDetails={filteredXpDetails}
               />
             </div>
           </div>

@@ -2,21 +2,17 @@
 
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect, useRef } from "react";
-import { useQuery } from "@tanstack/react-query";
-import UserService from "@/app/(logged-in)/profile/UserService";
 import { useRouter } from "next/navigation";
 import Loading from "@/components/loading/Loading";
 import gsap from "gsap";
+import useIsPreferredCourseSet from "@/hooks/course/useIsPreferredCourseSet";
 
 export default function Welcome() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const { setTitle } = useTitle();
   const router = useRouter();
 
-  const { data: isCourseIdSet, isLoading } = useQuery({
-    queryKey: ["isCourseSet"],
-    queryFn: () => UserService.isCourseIdSet(),
-  });
+  const { data: isCourseIdSet, isLoading } = useIsPreferredCourseSet();
 
   useEffect(() => {
     setTitle("Welcome!");

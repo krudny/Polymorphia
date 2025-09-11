@@ -10,9 +10,9 @@ import {
   UserIcon,
 } from "lucide-react";
 import { MenuOption } from "@/components/navigation/types";
-import isStudent, { UserDetailsDTO } from "@/interfaces/api/user";
+import { Role, Roles } from "@/interfaces/api/user";
 
-export const getMainMenuItems = (userContext: UserDetailsDTO): MenuOption[] => {
+export const getMainMenuItems = (userType: Role): MenuOption[] => {
   const items: MenuOption[] = [
     { icon: UserIcon, text: "Profil", link: "profile" },
     {
@@ -29,8 +29,9 @@ export const getMainMenuItems = (userContext: UserDetailsDTO): MenuOption[] => {
     { icon: MedalIcon, text: "Hall of Fame", link: "hall-of-fame" },
     { icon: MilestoneIcon, text: "Roadmapa", link: "roadmap" },
   ];
+  console.log(userType);
 
-  if (isStudent(userContext)) {
+  if (userType === Roles.STUDENT) {
     items.splice(3, 0, {
       icon: TrophyIcon,
       text: "Ekwipunek",

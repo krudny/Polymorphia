@@ -5,6 +5,7 @@ import { animateSubMenuSection } from "@/animations/Navigation";
 import Link from "next/link";
 import "./index.css";
 import useNavigationContext from "@/hooks/contexts/useNavigationContext";
+import useLogout from "@/hooks/course/useLogout";
 
 export default function MenuSection({ options }: MenuSectionProps) {
   const { isSidebarExpanded, isNavbarExpanded, setIsNavbarExpanded } =
@@ -33,19 +34,26 @@ export default function MenuSection({ options }: MenuSectionProps) {
     );
   }, [openSubMenu, isExpanded, options]);
 
+  const { mutate: logout } = useLogout();
   return (
     <div className="menu-section">
       {options.map((option, idx) => {
         const Icon = option.icon;
         const isOpen = openSubMenu.includes(option.text);
+        const handleClick = () => {
+          setIsNavbarExpanded(false);
 
+          if (option.text === "Wyloguj się") {
+            logout();
+          }
+        };
         return (
           <div key={option.text}>
             <div className="menu-option-row-wrapper">
               <Link
                 href={`/${option?.link ?? ""}`}
                 key={option.text}
-                onClick={() => setIsNavbarExpanded(false)}
+                onClick={() => handleClick()}
               >
                 <div className="menu-section-options-link-part">
                   <Icon />

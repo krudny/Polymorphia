@@ -19,7 +19,7 @@ export default function Navbar() {
   const drawerRef = useRef<HTMLDivElement | null>(null);
   const { data: eventSections } = useEventSections();
   const { title } = useTitle();
-  const userContext = useUserContext();
+  const userType = useUserContext().userType;
 
   useEffect(() => {
     const drawer = drawerRef.current;
@@ -40,7 +40,7 @@ export default function Navbar() {
     };
   }, [isNavbarExpanded]);
 
-  const menuItems = getMainMenuItems(userContext);
+  const menuItems = getMainMenuItems(userType);
 
   if (eventSections) {
     updateMenuItems(menuItems, eventSections);

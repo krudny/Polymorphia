@@ -20,6 +20,18 @@ const AuthService = {
       throw new Error("Failed to login");
     }
   },
-};
+  logout: async () => {
+    const response = await fetch(`${API_HOST}/logout`, {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/x-www-form-urlencoded",
+      }),
+      credentials: "include",
+    });
 
+    if (!response.ok) {
+      throw new Error("Failed to logout");
+    }
+  },
+};
 export default AuthService;
