@@ -21,3 +21,11 @@ export const Roles = {
 } as const;
 
 export type Role = (typeof Roles)[keyof typeof Roles];
+
+export const ImportCSVTypes = {
+  GRADE_IMPORT: "GRADE_IMPORT",
+  STUDENT_INVITE: "STUDENT_INVITE",
+} as const;
+
+export type ImportCSVType  = (typeof ImportCSVTypes)[keyof typeof ImportCSVTypes];
+

@@ -5,7 +5,7 @@ import "./index.css";
 import "../index.css";
 
 export default function PreviewCSV() {
-  const {selectedFile, previewMutation, processMutation, goBackToUpload} = useImportCSVContext();
+  const {selectedFile, importType, previewMutation, processMutation, goBackToUpload} = useImportCSVContext();
   const { closeModal } = useModalContext();
 
   if (!previewMutation.data || !selectedFile) {
@@ -13,7 +13,7 @@ export default function PreviewCSV() {
   }
 
   const handleConfirm = () => {
-    processMutation.mutate({ type: 'GRADE_IMPORT', headers: previewMutation.data.headers, data: previewMutation.data.data });
+    processMutation.mutate({ type: importType, headers: previewMutation.data.headers, data: previewMutation.data.data });
     closeModal();
   }
 

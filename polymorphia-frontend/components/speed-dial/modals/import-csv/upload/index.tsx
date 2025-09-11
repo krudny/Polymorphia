@@ -9,7 +9,7 @@ import "./index.css"
 import "../index.css"
 
 export default function UploadCSV(): ReactNode {
-  const { selectedFile, setSelectedFile, headersMutation, goBackToUpload } = useImportCSVContext();
+  const { selectedFile, importType, setSelectedFile, headersMutation, goBackToUpload } = useImportCSVContext();
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
@@ -36,7 +36,7 @@ export default function UploadCSV(): ReactNode {
 
   const handleUpload = () => {
     if (selectedFile) {
-      headersMutation.mutate({ file: selectedFile, type: 'GRADE_IMPORT' });
+      headersMutation.mutate({ file: selectedFile, type: importType });
     }
   };
 
