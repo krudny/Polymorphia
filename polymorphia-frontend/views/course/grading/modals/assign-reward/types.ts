@@ -5,3 +5,9 @@ export interface AssignRewardModalProps {
   assignableRewards: null | CriterionAssignableRewardResponseDTO[];
   onClosedAction: () => void;
 }
+
+export interface AssignRewardModalContentProps {
+  criterionId: number;
+  assignableRewards: AssignRewardModalProps["assignableRewards"];
+  onClosedAction: () => void;
+}

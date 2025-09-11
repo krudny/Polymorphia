@@ -3,7 +3,6 @@ import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import Search from "@/components/search";
-import { GradingReducerActions } from "@/providers/grading/GradingContext";
 import GradingComponentWrapper from "@/components/grading-components/grading-wrapper";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import Loading from "@/components/loading/Loading";
@@ -11,6 +10,7 @@ import { ReactNode } from "react";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import "./index.css";
 import { useMediaQuery } from "react-responsive";
+import { GradingReducerActions } from "@/providers/grading/gradingReducer/types";
 import toast from "react-hot-toast";
 
 export default function StudentsList() {
@@ -45,7 +45,7 @@ export default function StudentsList() {
   const mainComponent = (): ReactNode => {
     if (isStudentsLoading || !students) {
       return (
-        <div className="h-80">
+        <div className="student-list-loading">
           <Loading />
         </div>
       );

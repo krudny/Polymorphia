@@ -5,13 +5,13 @@ import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import Search from "@/components/search";
 import { StudentDetailsDTOWithType } from "@/interfaces/api/user";
 import Loading from "@/components/loading/Loading";
-import { GradingReducerActions } from "@/providers/grading/GradingContext";
 import GradingComponentWrapper from "@/components/grading-components/grading-wrapper";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import "./index.css";
 import { Fragment } from "react";
 import { useMediaQuery } from "react-responsive";
 import toast from "react-hot-toast";
+import { GradingReducerActions } from "@/providers/grading/gradingReducer/types";
 
 export default function ProjectGroupList() {
   const isMd = useMediaQuery({ minWidth: "786px" });
@@ -26,11 +26,15 @@ export default function ProjectGroupList() {
   } = useGradingContext();
 
   if (isProjectGroupsLoading || !projectGroups) {
-    return <Loading />;
+    return (
+      <div className="project-group-list-loading">
+        <Loading />
+      </div>
+    );
   }
 
   const topComponent = (
-    <>
+    <div className="grading-search-wrapper">
       <Search
         search={search}
         setSearch={setSearch}
@@ -39,10 +43,10 @@ export default function ProjectGroupList() {
       <ButtonWithBorder
         text="Filtry"
         size={isMd ? "md" : "sm"}
-        className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none !h-full"
+        className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none"
         onClick={() => setAreFiltersOpen(true)}
       />
-    </>
+    </div>
   );
 
   const mainComponent = () => (
@@ -50,7 +54,6 @@ export default function ProjectGroupList() {
       {projectGroups.map((group, index: number) => (
         <Fragment key={index}>
           <div
-            key={index + group.id}
             className="group-record"
             onClick={() =>
               dispatch({
@@ -97,7 +100,7 @@ export default function ProjectGroupList() {
               }
             )}
           </div>
-          <div key={index} className="divider"></div>
+          <div className="divider"></div>
         </Fragment>
       ))}
     </div>

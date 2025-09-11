@@ -25,8 +25,8 @@ import {
   UserDetailsDTO,
 } from "@/interfaces/api/user";
 import { ProjectGroupResponseDTO } from "@/interfaces/api/temp";
-import { CriteriaDetails } from "@/providers/grading/GradingContext";
 import { EventTypes } from "@/interfaces/general";
+import { CriteriaDetails } from "@/providers/grading/gradingReducer/types";
 
 const allData: UserDetailsDTO[] = [];
 
@@ -997,6 +997,8 @@ export const EventSectionService = {
     studentId,
     gradableEventId
   ): Promise<ShortGradeResponseDTO> => {
+    await new Promise<void>((resolve) => setTimeout(resolve, 300));
+
     return {
       comment:
         "Bardzo dobra praca! Student wykazał się doskonałą znajomością tematu.",

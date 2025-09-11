@@ -7,6 +7,6 @@ export class TestGradingStrategy
   implements SpeedDialStrategy
 {
   getItems(): SpeedDialItem[] {
-    return [this.createImportCSVItem()];
+    return [this.createImportCSV()];
   }
 }

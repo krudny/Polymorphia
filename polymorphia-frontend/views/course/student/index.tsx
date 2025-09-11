@@ -10,7 +10,7 @@ import Loading from "@/components/loading/Loading";
 import { useRouter } from "next/navigation";
 import renderCard from "@/views/course/student/RenderCard";
 import { useEventParams } from "@/hooks/general/useEventParams";
-import GradeModal from "@/components/speed-dial/modals/GradeModal";
+import GradeModal from "@/components/speed-dial/modals/grade";
 import useStudentsGradableEvents from "@/hooks/course/useStudentsGradableEvents";
 import { EventTypes } from "@/interfaces/general";
 

@@ -9,6 +9,7 @@ import { Fragment } from "react";
 import { GradeResponseDTO } from "@/interfaces/api/grade";
 import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLabels";
 
+// TODO; to check
 export default function GradeInfo({ grade }: { grade: GradeResponseDTO }) {
   return (
     <section className="gradable-event-section">

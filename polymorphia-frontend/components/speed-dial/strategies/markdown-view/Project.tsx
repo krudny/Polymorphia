@@ -11,20 +11,19 @@ export class ProjectStrategy
   implements SpeedDialStrategy
 {
   getItems(context: SpeedDialContext): SpeedDialItem[] {
-    const editingItems = this.createEditingItems(context);
-    const baseItems = [
-      this.createRewardsItem(),
-      this.createProjectVariantItem(),
-      this.createProjectGroupItem(),
-      this.createProjectGroupPickingItem(),
-      this.createGoBackItem(context),
-    ];
-
     switch (context.role) {
       case Roles.STUDENT:
-        return [...baseItems];
+        return [
+          this.createRewards(),
+          this.createProjectVariant(),
+          this.createProjectGroup(),
+        ];
       case Roles.INSTRUCTOR:
-        return [...editingItems, ...baseItems];
+        return [
+          ...this.createEditing(context),
+          this.createRedirectToGrading(context),
+          this.createProjectGroupPicking(),
+        ];
       default:
         return [];
     }
