@@ -39,6 +39,10 @@
   h3 {
     @apply text-3xl 2xl:text-5xl;
   }
+
+  h4 {
+    @apply text-2xl 2xl:text-4xl;
+  }
 }
 
 .profile-user-points-xs {

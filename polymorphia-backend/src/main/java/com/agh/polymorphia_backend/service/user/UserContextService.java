@@ -3,6 +3,7 @@ package com.agh.polymorphia_backend.service.user;
 import com.agh.polymorphia_backend.dto.response.user_context.AvailableCoursesResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.UserDetailsResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
+import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
@@ -25,7 +26,7 @@ public class UserContextService {
     private final UserCourseRoleRepository userCourseRoleRepository;
 
     public UserDetailsResponseDto getUserContext() {
-        User user = userService.getCurrentUser();
+        AbstractRoleUser user = userService.getCurrentUser();
         return UserDetailsResponseDto.builder()
                 .userType(userService.getUserRole(user))
                 .userDetails(userContextMapper.toBaseUserDetailsResponseDto(user))
@@ -33,24 +34,15 @@ public class UserContextService {
     }
 
     public boolean isPreferredCourseSet() {
-        User user = userService.getCurrentUser();
-        Course preferredCourse = user.getPreferredCourse();
-
-        if (preferredCourse == null) {
-            List<AvailableCoursesResponseDto> availableCourses = getAvailableCourses();
-            if (availableCourses.size() == 1) {
-                preferredCourse = savePreferredCourse(user, availableCourses);
-            }
-        }
-
-        return preferredCourse != null;
+        User user = userService.getCurrentUser().getUser();
+        return user.getPreferredCourse() != null;
     }
 
     public void setPreferredCourseId(Long courseId) {
         Course course = courseService.getCourseById(courseId);
         accessAuthorizer.authorizePreferredCourseSwitch(course);
 
-        User user = userService.getCurrentUser();
+        User user = userService.getCurrentUser().getUser();
         User dbUser = userRepository.findById(user.getId())
                 .orElseThrow(() -> new IllegalStateException("User not found"));
 
@@ -61,7 +53,7 @@ public class UserContextService {
     }
 
     public List<AvailableCoursesResponseDto> getAvailableCourses() {
-        User user = userService.getCurrentUser();
+        User user = userService.getCurrentUser().getUser();
         return userCourseRoleRepository.findAllByUserId(user.getId()).stream()
                 .map(userCourseRole ->
                         userContextMapper.toAvailableCoursesResponseDto(
@@ -70,15 +62,5 @@ public class UserContextService {
                         )
                 )
                 .toList();
-    }
-
-
-    private Course savePreferredCourse(User user, List<AvailableCoursesResponseDto> availableCourses) {
-        Course preferredCourse = courseService.getCourseById(availableCourses.getFirst().getId());
-
-        user.setPreferredCourse(preferredCourse);
-        userRepository.save(user);
-
-        return preferredCourse;
     }
 }

@@ -1,7 +1,9 @@
 package com.agh.polymorphia_backend.config;
 
 import com.agh.polymorphia_backend.model.user.Coordinator;
+import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
+import com.agh.polymorphia_backend.repository.user.role.CoordinatorRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,18 +15,24 @@ public class DbInit {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final InitialUserProperties initialUserProperties;
+    private final CoordinatorRepository coordinatorRepository;
 
     @PostConstruct
     public void init() {
         if (userRepository.findByEmail(initialUserProperties.email()).isEmpty()) {
-            Coordinator coordinator = Coordinator.builder()
+            User user = User.builder()
                     .firstName(initialUserProperties.firstName())
                     .lastName(initialUserProperties.lastName())
                     .email(initialUserProperties.email())
                     .password(passwordEncoder.encode(initialUserProperties.password()))
                     .build();
 
-            userRepository.save(coordinator);
+            Coordinator coordinator = Coordinator.builder()
+                    .user(user)
+                    .build();
+
+            userRepository.save(user);
+            coordinatorRepository.save(coordinator);
         }
     }
 }

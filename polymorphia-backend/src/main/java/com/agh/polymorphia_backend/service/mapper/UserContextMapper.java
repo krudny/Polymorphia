@@ -5,8 +5,8 @@ import com.agh.polymorphia_backend.dto.response.user_context.BaseUserDetailsResp
 import com.agh.polymorphia_backend.dto.response.user_context.StudentDetailsResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFame;
+import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.Coordinator;
-import com.agh.polymorphia_backend.model.user.Student;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
@@ -25,19 +25,21 @@ public class UserContextMapper {
 
     public AvailableCoursesResponseDto toAvailableCoursesResponseDto(Course course, UserType role) {
         Coordinator coordinator = course.getCoordinator();
+        User user = coordinator.getUser();
         return AvailableCoursesResponseDto.builder()
                 .id(course.getId())
-                .coordinator(String.join(" ", coordinator.getFirstName(), coordinator.getLastName()))
+                .coordinator(String.join(" ", user.getFirstName(), user.getLastName()))
                 .name(course.getName())
                 .userRole(role)
                 .build();
     }
 
-    public BaseUserDetailsResponseDto toBaseUserDetailsResponseDto(User user) {
-        UserType userType = userService.getUserRole(user);
+    public BaseUserDetailsResponseDto toBaseUserDetailsResponseDto(AbstractRoleUser roleUser) {
+        UserType userType = userService.getUserRole(roleUser);
+        User user = roleUser.getUser();
 
         if (userType.equals(UserType.STUDENT)) {
-            return toStudentDetailsResponseDto((Student) user);
+            return toStudentDetailsResponseDto(user);
         }
         Course course = user.getPreferredCourse();
         Hibernate.initialize(course);
@@ -58,7 +60,7 @@ public class UserContextMapper {
         };
     }
 
-    private BaseUserDetailsResponseDto toStudentDetailsResponseDto(Student student) {
+    private BaseUserDetailsResponseDto toStudentDetailsResponseDto(User student) {
         HallOfFame hallOfFame = hallOfFameService.getStudentHallOfFame(student);
 
         return StudentDetailsResponseDto.builder()

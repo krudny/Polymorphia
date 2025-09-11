@@ -7,7 +7,6 @@ import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.course.EvolutionStage;
 import com.agh.polymorphia_backend.model.hall_of_fame.SearchBy;
-import com.agh.polymorphia_backend.model.user.Student;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.repository.course.EvolutionStagesRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
@@ -21,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -40,13 +40,18 @@ public class ProfileService {
     public ProfileResponseDto getProfile(Long courseId) {
         Course course = courseService.getCourseById(courseId);
         accessAuthorizer.authorizeCourseAccess(course);
-        User user = userService.getCurrentUser();
+        User user = userService.getCurrentUser().getUser();
 
         Animal animal = animalService.getAnimal(user.getId(), courseId);
         Map<String, String> xpDetails = hallOfFameService.groupScoreDetails(List.of(animal.getId())).get(animal.getId());
-        BigDecimal totalXp = hallOfFameService.getStudentHallOfFame((Student) user).getTotalXpSum();
+        BigDecimal totalXp = hallOfFameService.getStudentHallOfFame(user).getTotalXpSum();
 
-        return ProfileResponseDto.builder().evolutionStageThresholds(getEvolutionStages(courseId)).totalXp(NumberFormatter.formatToBigDecimal(totalXp)).totalStudentsInCourse(getTotalStudentsInCourse(courseId)).xpDetails(xpDetails).build();
+        return ProfileResponseDto.builder()
+                .evolutionStageThresholds(getEvolutionStages(courseId))
+                .totalXp(NumberFormatter.formatToBigDecimal(totalXp))
+                .totalStudentsInCourse(getTotalStudentsInCourse(courseId))
+                .xpDetails(xpDetails)
+                .build();
     }
 
     private Long getTotalStudentsInCourse(Long courseId) {
@@ -57,6 +62,9 @@ public class ProfileService {
 
     private List<EvolutionStageThresholdResponseDto> getEvolutionStages(Long courseId) {
         List<EvolutionStage> evolutionStages = evolutionStagesRepository.findAllByCourseId(courseId);
-        return evolutionStages.stream().map(profileMapper::toEvolutionStageThresholdResponseDto).toList();
+        return evolutionStages.stream()
+                .sorted(Comparator.comparing(EvolutionStage::getOrderIndex))
+                .map(profileMapper::toEvolutionStageThresholdResponseDto)
+                .toList();
     }
 }

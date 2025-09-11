@@ -5,7 +5,7 @@ import { API_STATIC_URL } from "@/services/api";
 import "./index.css";
 import ProgressBar from "@/components/progressbar/ProgressBar";
 import { useTitle } from "@/components/navigation/TitleContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import UserPoints from "@/components/user-points/UserPoints";
 import ProgressBarTextLabels from "@/components/progressbar/ProgressBarTextLabels";
 import { useMediaQuery } from "react-responsive";
@@ -13,33 +13,52 @@ import Loading from "@/components/loading/Loading";
 import isStudent from "@/interfaces/api/user";
 import useUserContext from "@/hooks/contexts/useUserContext";
 import useStudentProfile from "@/hooks/course/useStudentProfile";
+import { min } from "@popperjs/core/lib/utils/math";
+import FiltersModal from "@/components/filters-modals/FiltersModal";
+import { HallOfFameFilterId } from "@/providers/hall-of-fame/types";
+import { useProfileFilterConfigs } from "@/hooks/course/useProfileFilterConfigs";
+import { useFilters } from "@/hooks/course/useFilters";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function Profile() {
   const { setTitle } = useTitle();
+  const queryClient = useQueryClient();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const isSm = useMediaQuery({ maxWidth: 920 });
   const { data: profile, isLoading } = useStudentProfile();
   const wrapperRef = useScaleShow(!isLoading);
   const userContext = useUserContext();
+  const {
+    data: filterConfigs,
+    isLoading: isFiltersLoading,
+    isError: isFiltersError,
+  } = useProfileFilterConfigs();
+  const filters = useFilters<HallOfFameFilterId>(filterConfigs ?? []);
 
   useEffect(() => {
     setTitle("Profil");
   }, [setTitle]);
 
-  if (isLoading || !userContext) {
+  if (isLoading && !userContext) {
     return <Loading />;
   }
 
-
   //TODO: handle profile for other roles
   if ((userContext && !isStudent(userContext)) || !profile) {
-    console.log("aaaaaa");
     return <div>No data found.</div>;
   }
 
   const { imageUrl, userName, animalName, position } = userContext.userDetails;
 
-  console.log(profile);
+  const lastEvolutionStageId = profile.evolutionStageThresholds.length - 1;
+  const maxPoints =
+    profile.evolutionStageThresholds[lastEvolutionStageId].minXp;
 
+  const handleApplyFilters = () => {
+    queryClient.invalidateQueries({
+      queryKey: ["hallOfFame"],
+    });
+  };
   return (
     <div ref={wrapperRef} className="profile">
       <div className="profile-wrapper">
@@ -61,12 +80,14 @@ export default function Profile() {
               <h3>
                 Jesteś {position} na {profile.totalStudentsInCourse} zwierzaków!
               </h3>
+              <h4>Suma: {profile.totalXp} xp</h4>
             </div>
             <div className="profile-user-points-xs">
               <UserPoints
                 separators
                 titleSize="sm"
                 xpSize="md"
+                maxCols={6}
                 xpDetails={profile.xpDetails}
               />
             </div>
@@ -91,16 +112,19 @@ export default function Profile() {
         {/* TODO: maybe merge that */}
         <div className="profile-progress-bar-mobile">
           <ProgressBar
-            minXP={60}
-            currentXP={65}
-            maxXP={70}
+            minXP={0}
+            currentXP={min(profile.totalXp, maxPoints)}
+            maxXP={maxPoints}
             numSquares={2}
             segmentSizes={[0, 100, 0]}
             upperElement={
               <ProgressBarTextLabels
                 textLabels={
                   (profile.evolutionStageThresholds
-                    ?.map((evolutionStage) => evolutionStage.gradingThreshold)
+                    ?.map(
+                      (evolutionStage) =>
+                        `${evolutionStage.grade.toFixed(1)} (${evolutionStage.minXp.toFixed(1)}xp)`
+                    )
                     .filter(Boolean) as string[]) || []
                 }
                 className="!min-h-8"
@@ -123,15 +147,18 @@ export default function Profile() {
         <div className="profile-progress-bar-desktop">
           <ProgressBar
             minXP={0}
-            currentXP={65}
-            maxXP={100}
+            currentXP={min(profile.totalXp, maxPoints)}
+            maxXP={maxPoints}
             numSquares={8}
             segmentSizes={[0, 25, 0, 25, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0]}
             upperElement={
               <ProgressBarTextLabels
                 textLabels={
                   (profile.evolutionStageThresholds
-                    ?.map((evolutionStage) => evolutionStage.gradingThreshold)
+                    ?.map(
+                      (evolutionStage) =>
+                        `${evolutionStage.grade.toFixed(1)} (${evolutionStage.minXp.toFixed(1)}xp)`
+                    )
                     .filter(Boolean) as string[]) || []
                 }
                 className="!min-h-8"
@@ -150,6 +177,14 @@ export default function Profile() {
             }
           />
         </div>
+        <FiltersModal<HallOfFameFilterId>
+          filters={filters}
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          isFiltersLoading={isFiltersLoading}
+          isFiltersError={isFiltersError}
+          onFiltersApplied={() => handleApplyFilters()}
+        />
       </div>
     </div>
   );

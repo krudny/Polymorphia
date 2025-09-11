@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.service.validation;
 
 import com.agh.polymorphia_backend.model.course.Course;
+import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.user.role.InstructorRepository;
@@ -23,7 +24,7 @@ public class AccessAuthorizer {
     private final StudentRepository studentRepository;
 
     public void authorizeCourseAccess(Course course) {
-        User user = userService.getCurrentUser();
+        AbstractRoleUser user = userService.getCurrentUser();
 
         if (!isCourseAccessAuthorized(user, course)) {
             throw new ResponseStatusException(
@@ -34,7 +35,7 @@ public class AccessAuthorizer {
     }
 
     public void authorizePreferredCourseSwitch(Course course) {
-        User user = userService.getCurrentUser();
+        User user = userService.getCurrentUser().getUser();
 
         if (!isPreferredCourseSwitchAuthorized(user, course)) {
             throw new ResponseStatusException(
@@ -45,12 +46,13 @@ public class AccessAuthorizer {
     }
 
     public boolean hasAnyRole(List<UserType> roles) {
-        User user = userService.getCurrentUser();
+        AbstractRoleUser user = userService.getCurrentUser();
         return roles.contains(userService.getUserRole(user));
     }
 
-    private boolean isCourseAccessAuthorized(User user, Course course) {
-        UserType role = userService.getUserRole(user);
+    private boolean isCourseAccessAuthorized(AbstractRoleUser roleUser, Course course) {
+        UserType role = userService.getUserRole(roleUser);
+        User user = roleUser.getUser();
 
         return switch (role) {
             case STUDENT -> isCourseAccessAuthorizedStudent(user, course);
@@ -68,7 +70,7 @@ public class AccessAuthorizer {
 
 
     private boolean isCourseAccessAuthorizedCoordinator(User user, Course course) {
-        return course.getCoordinator().equals(user);
+        return course.getCoordinator().getUser().equals(user);
     }
 
     private boolean isCourseAccessAuthorizedInstructor(User user, Course course) {

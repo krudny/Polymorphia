@@ -1,43 +1,39 @@
 import XPCard from "@/components/xp-card/XPCard";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import userService from "@/app/(logged-in)/profile/UserService";
+import { useQuery } from "@tanstack/react-query";
 import UserService from "@/app/(logged-in)/profile/UserService";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 import Loading from "@/components/loading/Loading";
 import { AvailableCoursesDTO, RoleTextMap } from "@/interfaces/api/user";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
 import CourseChoiceProps from "@/components/course-choice/types";
+import { useEffect } from "react";
+import usePreferredCourseUpdate from "@/hooks/course/usePreferredCourseUpdate";
 
 export default function CourseChoiceGrid({
   redirectPage,
   currentCourseId,
   containerRef,
+  fastForward,
 }: CourseChoiceProps) {
-  const queryClient = useQueryClient();
-  const router = useRouter();
   const { data: courses, isLoading } = useQuery<AvailableCoursesDTO[]>({
     queryKey: ["userCourses"],
     queryFn: () => UserService.getUserCourses(),
   });
-  const setPreferredCourseMutation = useMutation({
-    mutationFn: (courseId: number) =>
-      userService.setUserPreferredCourse(courseId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
-      toast.success("Aktywny kurs został zmieniony!");
-      if (redirectPage) {
-        router.push(redirectPage);
-      }
-    },
-    onError: () => {
-      toast.error("Nie udało się zmienić kursu!");
-    },
-  });
 
-  if (isLoading || !courses) {
+  const handleCourseSelection = usePreferredCourseUpdate(redirectPage);
+
+  useEffect(() => {
+    if (fastForward && courses?.length === 1) {
+      handleCourseSelection(courses[0].id);
+    }
+  }, [courses, fastForward, handleCourseSelection]);
+
+  if (isLoading || courses == undefined) {
     return <Loading />;
+  }
+
+  if (fastForward && courses.length === 1) {
+    return null;
   }
 
   const cards = courses?.map(
@@ -51,10 +47,11 @@ export default function CourseChoiceGrid({
         }
         size={"sm"}
         leftComponent={<XPCardImage imageUrl={imageUrl} alt={name} />}
-        onClick={() => setPreferredCourseMutation.mutate(id)}
+        onClick={() => handleCourseSelection(id)}
       />
     )
   );
+
   return (
     <XPCardGrid containerRef={containerRef} cards={cards} maxColumns={2} />
   );

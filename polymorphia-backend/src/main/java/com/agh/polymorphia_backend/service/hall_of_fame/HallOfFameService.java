@@ -2,7 +2,7 @@ package com.agh.polymorphia_backend.service.hall_of_fame;
 
 import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFame;
 import com.agh.polymorphia_backend.model.hall_of_fame.StudentScoreDetail;
-import com.agh.polymorphia_backend.model.user.Student;
+import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.StudentScoreDetailRepository;
 import com.agh.polymorphia_backend.util.NumberFormatter;
@@ -22,8 +22,8 @@ public class HallOfFameService {
     private final HallOfFameRepository hallOfFameRepository;
     private final StudentScoreDetailRepository studentScoreDetailRepository;
 
-    public HallOfFame getStudentHallOfFame(Student student) {
-        return hallOfFameRepository.findByStudentIdAndCourseId(student.getPreferredCourse().getId(), student.getId())
+    public HallOfFame getStudentHallOfFame(User user) {
+        return hallOfFameRepository.findByStudentIdAndCourseId(user.getPreferredCourse().getId(), user.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_HOF_NOT_FOUND));
     }
 

@@ -8,11 +8,12 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class ProfileMapper {
-    private static final String EVOLUTION_STAGE_GRADING_TEXT = "%.1f (%.1fxp)";
-
     public EvolutionStageThresholdResponseDto toEvolutionStageThresholdResponseDto(EvolutionStage evolutionStage) {
-        String gradingThreshold = String.format(EVOLUTION_STAGE_GRADING_TEXT, evolutionStage.getGrade(), evolutionStage.getMinXp());
-
-        return EvolutionStageThresholdResponseDto.builder().id(evolutionStage.getId()).name(evolutionStage.getName()).gradingThreshold(gradingThreshold).build();
+        return EvolutionStageThresholdResponseDto.builder()
+                .id(evolutionStage.getId())
+                .name(evolutionStage.getName())
+                .grade(evolutionStage.getGrade())
+                .minXp(evolutionStage.getMinXp())
+                .build();
     }
 }

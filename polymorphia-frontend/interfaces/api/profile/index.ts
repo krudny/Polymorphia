@@ -8,5 +8,6 @@ export interface StudentProfileDTO {
 export interface EvolutionStagesThresholdResponseDTO {
   id: number;
   name: string;
-  gradingThreshold: string;
+  minXp: number;
+  grade: number;
 }

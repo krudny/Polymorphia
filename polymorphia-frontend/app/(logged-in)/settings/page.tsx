@@ -87,6 +87,7 @@ export default function Settings() {
         <CourseChoiceGrid
           currentCourseId={courseId}
           containerRef={containerRef}
+          fastForward={false}
         />
       </div>
     </div>
