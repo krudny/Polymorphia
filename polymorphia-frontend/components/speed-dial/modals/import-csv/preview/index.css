@@ -3,7 +3,7 @@
 
 
 .table-wrapper {
-    @apply text-2xl max-h-[400px] overflow-y-auto overflow-x-hidden;
+    @apply text-2xl max-h-[400px] overflow-y-auto overflow-x-hidden custom-scrollbar;
     overscrollBehavior: 'none';
 }
 
