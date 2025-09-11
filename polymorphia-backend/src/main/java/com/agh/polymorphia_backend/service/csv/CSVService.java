@@ -18,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -38,44 +39,68 @@ public class CSVService {
     }
 
     public CSVResult readCSV(MultipartFile file, CSVReadMode mode) {
-        Charset detectedCharset = CSVUtil.detectCharsetForPolish(file);
+        Charset detectedCharset = CSVUtil.detectCharset(file);
 
-        try (BOMInputStream bomIn = BOMInputStream.builder()
-                .setInputStream(file.getInputStream())
-                .setInclude(false)
-                .setByteOrderMarks(ByteOrderMark.UTF_8, ByteOrderMark.UTF_16BE, ByteOrderMark.UTF_16LE, ByteOrderMark.UTF_32BE, ByteOrderMark.UTF_32LE)
-                .get();
-             BufferedReader reader = new BufferedReader(new InputStreamReader(bomIn, detectedCharset));
-             CSVReader csvReader = new CSVReaderBuilder(reader)
-                     .withCSVParser(new CSVParserBuilder()
-                             .withSeparator(';')
-                             .withIgnoreQuotations(false)
-                             .build())
-                     .withSkipLines(0)
-                     .build()) {
+        Charset[] charsetsToTry = {
+                detectedCharset,
+                StandardCharsets.UTF_8,
+                Charset.forName("windows-1250"),
+                Charset.forName("ISO-8859-2"),
+                StandardCharsets.ISO_8859_1
+        };
 
-            String[] headers = csvReader.readNext();
+        Exception lastException = null;
 
-            if (mode == CSVReadMode.HEADERS_ONLY) {
-                return new CSVResult(headers, null);
+        for (Charset charset : charsetsToTry) {
+            try (BOMInputStream bomIn = BOMInputStream.builder()
+                    .setInputStream(file.getInputStream())
+                    .setInclude(false)
+                    .setByteOrderMarks(ByteOrderMark.UTF_8, ByteOrderMark.UTF_16BE,
+                            ByteOrderMark.UTF_16LE, ByteOrderMark.UTF_32BE, ByteOrderMark.UTF_32LE)
+                    .get();
+                 BufferedReader reader = new BufferedReader(new InputStreamReader(bomIn, charset));
+                 CSVReader csvReader = new CSVReaderBuilder(reader)
+                         .withCSVParser(new CSVParserBuilder()
+                                 .withSeparator(';')
+                                 .withIgnoreQuotations(false)
+                                 .build())
+                         .withSkipLines(0)
+                         .build()) {
+
+                String[] headers = csvReader.readNext();
+
+                if (!CSVUtil.isValidEncoding(headers)) {
+                    continue;
+                }
+
+                if (mode == CSVReadMode.HEADERS_ONLY) {
+                    return new CSVResult(headers, null);
+                }
+
+                List<String[]> records = new ArrayList<>();
+                String[] record;
+
+                while ((record = csvReader.readNext()) != null) {
+                    records.add(record);
+                }
+
+                if (mode == CSVReadMode.DATA_ONLY) {
+                    return new CSVResult(null, records);
+                }
+
+                return new CSVResult(headers, records);
+
+            } catch (Exception e) {
+                lastException = e;
+                System.out.println("Failed to read CSV with charset " + charset.name() + ": " + e.getMessage());
+                continue;
             }
-
-            List<String[]> records = new ArrayList<>();
-            String[] record;
-
-            while ((record = csvReader.readNext()) != null) {
-                records.add(record);
-            }
-
-            if (mode == CSVReadMode.DATA_ONLY) {
-                return new CSVResult(null, records);
-            }
-
-            return new CSVResult(headers, records);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error during CSV parsing");
         }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                "Error during CSV parsing with all attempted charsets. Last error: " +
+                        (lastException != null ? lastException.getMessage() : "Unknown error"));
     }
+
 
     public HeadersResponseDto getHeaders(MultipartFile file, String type) {
         CSVType csvType;

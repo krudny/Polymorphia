@@ -1,8 +1,7 @@
 package com.agh.polymorphia_backend.service.csv;
 
-import org.springframework.http.HttpStatus;
+import org.mozilla.universalchardet.UniversalDetector;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,32 +14,45 @@ public class CSVUtil {
         return Arrays.asList(headers).indexOf(columnName);
     }
 
-    public static Charset detectCharsetForPolish(MultipartFile file) {
-        Charset[] charsets = {
-                Charset.forName("Windows-1250"),
-                StandardCharsets.UTF_8,
-                Charset.forName("ISO-8859-2")
-        };
+    public static Charset detectCharset(MultipartFile file) {
+        try (InputStream inputStream = file.getInputStream()) {
+            UniversalDetector detector = new UniversalDetector(null);
 
-        try {
-            byte[] sample = new byte[1024];
-            try (InputStream is = file.getInputStream()) {
-                int bytesRead = is.read(sample);
-
-                for (Charset charset : charsets) {
-                    String decoded = new String(sample, 0, bytesRead, charset);
-
-                    if (decoded.matches(".*[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ].*") &&
-                            !decoded.contains("?") &&
-                            !decoded.contains("�")) {
-                        return charset;
-                    }
-                }
+            byte[] buf = new byte[4096];
+            int nread;
+            while ((nread = inputStream.read(buf)) > 0 && !detector.isDone()) {
+                detector.handleData(buf, 0, nread);
             }
-        } catch (IOException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error during processing polish chars");
-        }
+            detector.dataEnd();
 
-        return Charset.forName("Windows-1250");
+            String encoding = detector.getDetectedCharset();
+            detector.reset();
+
+            if (encoding != null) {
+                if ("WINDOWS-1252".equals(encoding)) {
+                    return Charset.forName("windows-1250");
+                }
+
+                return Charset.forName(encoding);
+            }
+            return StandardCharsets.UTF_8;
+        } catch (IOException e) {
+            return StandardCharsets.UTF_8;
+        }
+    }
+
+    public static boolean isValidEncoding(String[] headers) {
+        if (headers == null) return false;
+
+        String combined = String.join(" ", headers);
+
+        boolean hasCorruptedChars = combined.contains("Ă") ||
+                combined.contains("Ĺ") ||
+                combined.contains("â€") ||
+                combined.contains("Å") ||
+                combined.contains("™") ||
+                combined.contains("ï¿½");
+
+        return !hasCorruptedChars;
     }
 }
