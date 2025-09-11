@@ -45,7 +45,30 @@ const CSVService = {
     }
 
     return await response.json();
-  }
+  },
+
+  processCSV: async (type: string, headers: Record<string, string>, data: string[][]): Promise<void> => {
+    const body = JSON.stringify({
+      type: type,
+      headers: headers,
+      data: data,
+    });
+
+    const response = await fetch(`${API_HOST}/csv/process`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: body,
+      credentials: "include"
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to process csv!");
+    }
+
+    return;
+  },
 }
 
 export default CSVService;

@@ -1,4 +1,4 @@
-import {UseCSVHeadersUpdate, UseCSVHeadersUpdateParams} from "@/hooks/general/CSV/useCSVHeaders/types";
+import {UseCSVHeadersUpdate, UseCSVHeadersUpdateParams} from "@/hooks/general/CSV/useCSVHeadersUpdate/types";
 import CSVService, {CSVHeadersResponseDTO} from "@/components/speed-dial/modals/import-csv/CSVService";
 import {useMutation} from "@tanstack/react-query";
 

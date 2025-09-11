@@ -1,6 +1,6 @@
 import CSVService, {CSVPreviewResponseDTO} from "@/components/speed-dial/modals/import-csv/CSVService";
 import {useMutation} from "@tanstack/react-query";
-import {UseCSVPreviewUpdate, UseCSVPreviewUpdateParams} from "@/hooks/general/CSV/useCSVPreview/types";
+import {UseCSVPreviewUpdate, UseCSVPreviewUpdateParams} from "@/hooks/general/CSV/useCSVPreviewUpdate/types";
 
 export default function useCSVPreviewUpdate(): UseCSVPreviewUpdate {
   const mutation = useMutation<CSVPreviewResponseDTO, Error, UseCSVPreviewUpdateParams>({
