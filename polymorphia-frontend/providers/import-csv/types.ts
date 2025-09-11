@@ -13,7 +13,6 @@ export interface ImportCSVContextInterface {
   processMutation: UseMutationResult<void, Error, UseCSVProcessUpdateParams>;
   headerMapping: Record<string, string>;
   setHeaderMapping: Dispatch<SetStateAction<Record<string, string>>>;
-  resetFile: () => void;
   goBackToUpload: () => void;
 }
 

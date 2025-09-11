@@ -5,9 +5,11 @@ import {ReactNode, useCallback} from "react";
 import toast from "react-hot-toast";
 import {useDropzone} from "react-dropzone";
 import useImportCSVContext from "@/hooks/contexts/useImportCSVContext";
+import "./index.css"
+import "../index.css"
 
 export default function UploadCSV(): ReactNode {
-  const { selectedFile, setSelectedFile, headersMutation, resetFile } = useImportCSVContext();
+  const { selectedFile, setSelectedFile, headersMutation, goBackToUpload } = useImportCSVContext();
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
@@ -23,7 +25,6 @@ export default function UploadCSV(): ReactNode {
     getRootProps,
     getInputProps,
     isDragActive,
-    isDragReject,
   } = useDropzone({
     onDrop,
     accept: {
@@ -46,9 +47,6 @@ export default function UploadCSV(): ReactNode {
         className={`
             import-csv-upload-wrapper
             ${isDragActive ? 'drag-active' : ''}
-            ${isDragReject ? 'drag-reject' : ''}
-            ${selectedFile ? 'file-selected' : ''}
-            ${headersMutation.isPending ? 'uploading' : ''}
           `}
       >
         <input {...getInputProps()} />
@@ -86,7 +84,7 @@ export default function UploadCSV(): ReactNode {
           <ButtonWithBorder
             text="Usuń"
             className="!mx-0 !py-0 !w-full"
-            onClick={resetFile}
+            onClick={goBackToUpload}
           />
         )}
       </div>

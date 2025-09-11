@@ -1,6 +1,8 @@
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import useImportCSVContext from "@/hooks/contexts/useImportCSVContext";
 import toast from "react-hot-toast";
+import "./index.css";
+import "../index.css";
 
 export default function PickCSVHeaders() {
   const {headersMutation, previewMutation, selectedFile, headerMapping, setHeaderMapping, goBackToUpload} = useImportCSVContext();
@@ -21,7 +23,7 @@ export default function PickCSVHeaders() {
   };
 
   return (
-    <div className="import-csv-headers">
+    <div className="import-csv">
       <div className="headers-mapping">
         {headersMutation.data?.requiredHeaders.map((header) => {
           return (
@@ -38,7 +40,7 @@ export default function PickCSVHeaders() {
                 }}
               >
                 <option value="" disabled>
-                  Wybierz kolumnę z pliku
+                  Wybierz kolumnę
                 </option>
                 {headersMutation.data?.fileHeaders.map((fileHeader) => (
                   <option key={fileHeader} value={fileHeader}>

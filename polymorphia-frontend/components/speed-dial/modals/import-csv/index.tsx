@@ -2,7 +2,7 @@
 import {SpeedDialModalProps} from "@/components/speed-dial/modals/types";
 import Modal from "@/components/modal/Modal";
 import "./index.css";
-import {ReactNode, useEffect} from "react";
+import {ReactNode} from "react";
 import {ImportCSVProvider} from "@/providers/import-csv";
 import UploadCSV from "@/components/speed-dial/modals/import-csv/upload";
 import useImportCSVContext from "@/hooks/contexts/useImportCSVContext";
@@ -13,36 +13,32 @@ const ImportCSVContent = ({ onClosedAction }: SpeedDialModalProps) => {
   const {
     headersMutation,
     previewMutation,
-    headerMapping,
   } = useImportCSVContext();
 
-  useEffect(() => {
-    console.log(headerMapping);
-  }, [headerMapping]);
-
-  const renderContent = (): ReactNode => {
+  const renderData = (): { content: ReactNode; subtitle?: string } => {
     if (previewMutation.isSuccess && previewMutation.data) {
-      return <PreviewCSV />
+      return {
+        content: <PreviewCSV />,
+        subtitle: "Sprawdź, czy dane się zgadzają:",
+      };
     }
     if (headersMutation.isSuccess && headersMutation.data) {
-      return <PickCSVHeaders />
+      return {
+        content: <PickCSVHeaders />,
+        subtitle: "Dopasuj kolumny z pliku do wymaganych pól:",
+      };
     }
-    return <UploadCSV />;
+    return {
+      content: <UploadCSV />,
+      subtitle: "",
+    };
   };
 
-  const getSubtitle = (): string | undefined => {
-    if (previewMutation.isSuccess && previewMutation.data) {
-      return "Sprawdź, czy dane się zgadzają:";
-    }
-    if (headersMutation.isSuccess && headersMutation.data) {
-      return "Dopasuj kolumny z pliku do wymaganych pól:";
-    }
-    return "";
-  };
+  const { content, subtitle } = renderData();
 
   return (
-    <Modal isDataPresented={true} onClosed={onClosedAction} title="Import CSV" subtitle={getSubtitle()}>
-      {renderContent()}
+    <Modal isDataPresented={true} onClosed={onClosedAction} title="Import CSV" subtitle={subtitle}>
+      {content}
     </Modal>
   );
 };

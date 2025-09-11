@@ -14,14 +14,10 @@ export const ImportCSVProvider = ({ children }: ImportCSVProviderProps) => {
   const { mutation: processMutation } = useCSVProcessUpdate();
 
   const goBackToUpload = () => {
-    setHeaderMapping({});
-    headersMutation.reset();
-  };
-
-  const resetFile = () => {
     setSelectedFile(null);
     setHeaderMapping({});
     headersMutation.reset();
+    previewMutation.reset();
   };
 
   return (
@@ -33,7 +29,6 @@ export const ImportCSVProvider = ({ children }: ImportCSVProviderProps) => {
       processMutation,
       headerMapping,
       setHeaderMapping,
-      resetFile,
       goBackToUpload,
     }}>
       {children}

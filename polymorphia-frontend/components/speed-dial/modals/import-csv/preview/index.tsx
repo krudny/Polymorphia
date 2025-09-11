@@ -1,12 +1,14 @@
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import useImportCSVContext from "@/hooks/contexts/useImportCSVContext";
 import useModalContext from "@/hooks/contexts/useModalContext";
+import "./index.css";
+import "../index.css";
 
 export default function PreviewCSV() {
-  const {previewMutation, processMutation, goBackToUpload} = useImportCSVContext();
+  const {selectedFile, previewMutation, processMutation, goBackToUpload} = useImportCSVContext();
   const { closeModal } = useModalContext();
 
-  if (!previewMutation.data) {
+  if (!previewMutation.data || !selectedFile) {
     return null;
   }
 
@@ -19,40 +21,20 @@ export default function PreviewCSV() {
   const gridTemplateColumns = `repeat(${headers.length}, minmax(150px, 1fr))`;
 
   return (
-    <div className="w-full h-full">
-      <div className="table-wrapper text-2xl" style={{ maxHeight: '400px', overflowY: 'auto', overflowX: 'hidden', overscrollBehavior: 'none' }}>
-        <div style={{
-          display: 'grid',
+    <div className="import-csv">
+      <div className="table-wrapper">
+        <div className="table" style={{
           gridTemplateColumns: gridTemplateColumns,
-          borderLeft: '1px solid #000',
         }}>
           {headers.map((header, index) => (
-            <div key={`header-${index}`} style={{
-              position: 'sticky',
-              top: 0,
-              padding: '8px',
-              backgroundColor: '#d4d4d4',
-              textAlign: 'left',
-              fontWeight: 'normal',
-              zIndex: 1,
-              borderTop: '1px solid #000',
-              borderBottom: '1px solid #000',
-              borderRight: '1px solid #000',
-            }}>
+            <div className="table-header" key={`header-${index}`}>
               {header}
             </div>
           ))}
 
           {data.flatMap((row, rowIndex) =>
             row.map((cell, cellIndex) => (
-              <div key={`${rowIndex}-${cellIndex}`} style={{
-                padding: '8px',
-                borderBottom: '1px solid #000',
-                borderRight: '1px solid #000',
-                minHeight: '40px',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              }}>
+              <div className="table-cell" key={`${rowIndex}-${cellIndex}`}>
                 {cell || '—'}
               </div>
             ))
