@@ -41,14 +41,14 @@ jobs:
           key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
           script: |
             if ! command -v flyway >/dev/null; then
-              curl -fsSL https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/10.13.0/flyway-commandline-10.13.0-linux-x64.tar.gz \
+              curl -fsSL https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/11.12.0/flyway-commandline-11.12.0-linux-x64.tar.gz \
               | tar -xz -C /tmp
-              sudo ln -sf /tmp/flyway-10.13.0/flyway /usr/local/bin/flyway
+              sudo ln -sf /tmp/flyway-11.12.0/flyway /usr/local/bin/flyway
             fi
 
-            export FLYWAY_URL="jdbc:postgresql://${{ secrets.TEST_DB_HOST }}:${{ secrets._TEST_DB_PORT }}/${{ secrets._TEST_DB_NAME }}"
-            export FLYWAY_USER="${{ secrets.DB_USER }}"
-            export FLYWAY_PASSWORD="${{ secrets.DB_PASSWORD }}"
+            export FLYWAY_URL="jdbc:postgresql://${{ secrets.TEST_DB_HOST }}:${{ secrets.TEST_DB_PORT }}/${{ secrets.TEST_DB_NAME }}"
+            export FLYWAY_USER="${{ secrets.TEST_DB_USER }}"
+            export FLYWAY_PASSWORD="${{ secrets.TEST_DB_PASSWORD }}"
 
             git clone --depth 1 https://github.com/${{ github.repository }} repo
 
