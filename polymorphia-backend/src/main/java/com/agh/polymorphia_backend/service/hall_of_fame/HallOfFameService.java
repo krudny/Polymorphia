@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.service.hall_of_fame;
 
 import com.agh.polymorphia_backend.dto.request.HallOfFameRequestDto;
-import com.agh.polymorphia_backend.dto.response.hall_of_fame.HallOfFameRecordDto;
+import com.agh.polymorphia_backend.dto.response.hall_of_fame.HallOfFameResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFame;
 import com.agh.polymorphia_backend.model.hall_of_fame.StudentScoreDetail;
@@ -19,7 +19,8 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Stream;
+
+import static com.agh.polymorphia_backend.model.hall_of_fame.HallOfFame.FIELD_POSITION;
 
 @Service
 @AllArgsConstructor
@@ -31,7 +32,7 @@ public class HallOfFameService {
     private final AccessAuthorizer accessAuthorizer;
     private final CourseService courseService;
 
-    public Page<HallOfFameRecordDto> getHallOfFame(HallOfFameRequestDto requestDto) {
+    public Page<HallOfFameResponseDto> getHallOfFame(HallOfFameRequestDto requestDto) {
         Course course = courseService.getCourseById(requestDto.courseId());
         accessAuthorizer.authorizeCourseAccess(course);
 
@@ -42,26 +43,32 @@ public class HallOfFameService {
         };
     }
 
-    public Page<HallOfFameRecordDto> getSortedByOverviewFields(HallOfFameRequestDto requestDto, String sortBy) {
+    public Page<HallOfFameResponseDto> getSortedByOverviewFields(HallOfFameRequestDto requestDto, String sortBy) {
         Pageable pageable = PageRequest.of(
                 requestDto.page(),
                 requestDto.size(),
-                Sort.by(requestDto.sortOrder().getDirection(), sortBy)
+                Sort.by(requestDto.sortOrder().getDirection(), sortBy).and(Sort.by(FIELD_POSITION).ascending())
         );
-
         Page<HallOfFame> pageResult = hallOfFameRepository.findHofPage(requestDto, pageable);
+        return hallOfFamePageToResponseDto(pageResult, pageable);
+    }
 
+    public Page<HallOfFameResponseDto> getSortedByEventSection(HallOfFameRequestDto requestDto) {
+        Pageable pageable = PageRequest.of(requestDto.page(), requestDto.size());
+        Page<HallOfFame> pageResult = hallOfFameRepository.findAnimalIdsSortedByEventSection(requestDto, pageable);
+        return hallOfFamePageToResponseDto(pageResult, pageable);
+    }
+
+    private Page<HallOfFameResponseDto> hallOfFamePageToResponseDto(Page<HallOfFame> hallOfFamePage, Pageable pageable) {
+        Map<Long, Map<String, String>> detailsByAnimalId = groupScoreDetails(hallOfFamePage);
+        List<HallOfFameResponseDto> dtoList = getDtoList(hallOfFamePage, detailsByAnimalId);
+        return new PageImpl<>(dtoList, pageable, hallOfFamePage.getTotalElements());
+    }
+
+    private Map<Long, Map<String, String>> groupScoreDetails(Page<HallOfFame> pageResult) {
         List<Long> animalIds = pageResult.getContent().stream()
                 .map(HallOfFame::getAnimalId)
                 .toList();
-
-        Map<Long, Map<String, String>> detailsByAnimalId = groupScoreDetails(animalIds);
-        List<HallOfFameRecordDto> dtoList = getDtoList(pageResult.stream(), detailsByAnimalId);
-
-        return new PageImpl<>(dtoList, pageable, pageResult.getTotalElements());
-    }
-
-    private Map<Long, Map<String, String>> groupScoreDetails(List<Long> animalIds) {
         List<StudentScoreDetail> detailsList = scoreDetailRepository.findByAnimalIdIn(animalIds);
         Map<Long, Map<String, String>> result = new HashMap<>();
         for (StudentScoreDetail details : detailsList) {
@@ -71,44 +78,16 @@ public class HallOfFameService {
         return result;
     }
 
-    private  List<HallOfFameRecordDto> getDtoList(
-            Stream<HallOfFame> stream, Map<Long, Map<String, String>> detailsByAnimalId
+    private  List<HallOfFameResponseDto> getDtoList(
+            Page<HallOfFame> page, Map<Long, Map<String, String>> detailsByAnimalId
     ){
-        return stream
+        return page.stream()
                 .map(hallOfFame ->
                         hallOfFameMapper.hallOfFameToRecordDto(hallOfFame, detailsByAnimalId.get(hallOfFame.getAnimalId())))
                 .toList();
     }
 
-    public Page<HallOfFameRecordDto> getSortedByEventSection(HallOfFameRequestDto requestDto) {
-        List<Long> animalIds = hallOfFameRepository.findAnimalIdsSortedByEventSection(requestDto);
-
-        if (animalIds.isEmpty()) {
-            return Page.empty();
-        }
-
-        List<HallOfFame> hofViews = getSortedHallOfFame(animalIds);
-        Map<Long, Map<String, String>> detailsByAnimalId = groupScoreDetails(animalIds);
-        List<HallOfFameRecordDto> dtoList = getDtoList(hofViews.stream(), detailsByAnimalId);
-
-        long total = hallOfFameRepository.countByCourseIdAndFilters(requestDto);
-
-        return new PageImpl<>(dtoList, PageRequest.of(requestDto.page(), requestDto.size()), total);
-    }
-
-    private List<HallOfFame> getSortedHallOfFame(List<Long> animalIds){
-        List<HallOfFame> hofViews = hallOfFameRepository.findByAnimalIdIn(animalIds);
-
-        Map<Long, Integer> orderMap = new HashMap<>();
-        for (int i = 0; i < animalIds.size(); i++) {
-            orderMap.put(animalIds.get(i), i);
-        }
-
-        hofViews.sort(Comparator.comparingInt(view -> orderMap.get(view.getAnimalId())));
-        return hofViews;
-    }
-
-    public List<HallOfFameRecordDto> getPodium(Long courseId) {
+    public List<HallOfFameResponseDto> getPodium(Long courseId) {
         Course course = courseService.getCourseById(courseId);
         accessAuthorizer.authorizeCourseAccess(course);
 

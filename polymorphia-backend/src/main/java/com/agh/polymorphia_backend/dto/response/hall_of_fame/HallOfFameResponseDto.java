@@ -6,7 +6,7 @@ import lombok.Builder;
 import java.util.Map;
 
 @Builder
-public record HallOfFameRecordDto (
+public record HallOfFameResponseDto(
         StudentDetailsResponseDto userDetails,
         Map<String, String> xpDetails
 ){}

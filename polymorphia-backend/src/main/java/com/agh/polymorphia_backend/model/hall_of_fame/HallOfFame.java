@@ -17,6 +17,7 @@ public class HallOfFame {
     public static final String FIELD_STUDENT_NAME = "studentName";
     public static final String FIELD_TOTAL_XP_SUM = "totalXpSum";
     public static final String FIELD_TOTAL_BONUS_SUM = "totalBonusSum";
+    public static final String FIELD_POSITION = "position";
 
     @Id
     private Long animalId;
