@@ -71,28 +71,28 @@ jobs:
           flyway -locations=filesystem:repo/polymorphia-backend/src/main/resources/db/migration migrate
 
 
-  # run-backend:
-  #   needs: migrate
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: SSH & deploy container
-  #       uses: appleboy/ssh-action@v1
-  #       with:
-  #         host: ${{ secrets.STAGING_VM_IP }}
-  #         username: ${{ secrets.STAGING_VM_USER }}
-  #         key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
-  #         script: |
-  #           IMAGE="us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/polymorphia-backend/polymorphia-backend:develop-latest"
+  run-backend:
+    needs: migrate
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH & deploy container
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.STAGING_VM_IP }}
+          username: ${{ secrets.STAGING_VM_USER }}
+          key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+          script: |
+            IMAGE="us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/polymorphia-backend/polymorphia-backend:develop-latest"
 
-  #           gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
-  #           docker pull "$IMAGE"
+            gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
+            docker pull "$IMAGE"
 
-  #           docker stop polymorphia-backend || true
-  #           docker rm polymorphia-backend || true
+            docker stop polymorphia-backend || true
+            docker rm polymorphia-backend || true
 
-  #           docker run -d --name polymorphia-backend \
-  #             -p 8080:8080 \
-  #             -v /app/config:/app/config \
-  #             -v ~/polymorphia-static:/app/static \
-  #             "$IMAGE" \
-  #             --spring.config.location=file:/app/config/application-dev.properties
+            docker run -d --name polymorphia-backend \
+              -p 8080:8080 \
+              -v /app/config:/app/config \
+              -v ~/polymorphia-static:/app/static \
+              "$IMAGE" \
+              --spring.config.location=file:/app/config/application-dev.properties
