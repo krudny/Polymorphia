@@ -32,13 +32,20 @@ jobs:
   migrate:
     needs: build-and-push
     runs-on: ubuntu-latest
+
     steps:
-      - name: SSH & run Flyway
+      - name: SSH + Flyway
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.STAGING_VM_IP }}
           username: ${{ secrets.STAGING_VM_USER }}
           key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+          envs: |
+            TEST_DB_HOST
+            TEST_DB_PORT
+            TEST_DB_NAME
+            TEST_DB_USER
+            TEST_DB_PASSWORD
           script: |
             if ! command -v flyway >/dev/null; then
               curl -fsSL https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/11.12.0/flyway-commandline-11.12.0-linux-x64.tar.gz \
@@ -46,16 +53,16 @@ jobs:
               sudo ln -sf /tmp/flyway-11.12.0/flyway /usr/local/bin/flyway
             fi
 
-            export FLYWAY_URL="jdbc:postgresql://${{ secrets.TEST_DB_HOST }}:${{ secrets.TEST_DB_PORT }}/${{ secrets.TEST_DB_NAME }}"
-            export FLYWAY_USER="${{ secrets.TEST_DB_USER }}"
-            export FLYWAY_PASSWORD="${{ secrets.TEST_DB_PASSWORD }}"
+            export FLYWAY_URL="jdbc:postgresql://${TEST_DB_HOST}:${TEST_DB_PORT}/${TEST_DB_NAME}"
+            export FLYWAY_USER="${TEST_DB_USER}"
+            export FLYWAY_PASSWORD="${TEST_DB_PASSWORD}"
 
             git clone --depth 1 https://github.com/${{ github.repository }} repo
 
             flyway -locations=filesystem:repo/polymorphia-backend/src/main/resources/db/migration clean
             flyway -locations=filesystem:repo/polymorphia-backend/src/main/resources/db/migration migrate
 
-  deploy:
+  run-backend:
     needs: migrate
     runs-on: ubuntu-latest
     steps:
