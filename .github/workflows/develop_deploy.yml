@@ -47,6 +47,16 @@ jobs:
             TEST_DB_USER=${{ secrets.TEST_DB_USER }}
             TEST_DB_PASSWORD=${{ secrets.TEST_DB_PASSWORD }}
           script: |
+            # Debug: Log database connection parameters
+            echo "=== Database Connection Debug ==="
+            echo "DB Host: ${TEST_DB_HOST:0:3}***"
+            echo "DB Port: ${TEST_DB_PORT}"
+            echo "DB Name: ${TEST_DB_NAME}"
+            echo "DB User: ${TEST_DB_USER}"
+            echo "DB Password: ${TEST_DB_PASSWORD:0:5}*****" 
+            echo "Full JDBC URL: jdbc:postgresql://${TEST_DB_HOST}:${TEST_DB_PORT}/${TEST_DB_NAME}"
+            echo "================================="
+
             if ! command -v flyway >/dev/null; then
               curl -fsSL https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/11.12.0/flyway-commandline-11.12.0-linux-x64.tar.gz \
               | tar -xz -C /tmp
