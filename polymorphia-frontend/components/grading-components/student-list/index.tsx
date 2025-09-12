@@ -11,7 +11,6 @@ import { useFadeInAnimate } from "@/animations/FadeIn";
 import "./index.css";
 import { useMediaQuery } from "react-responsive";
 import { GradingReducerActions } from "@/providers/grading/gradingReducer/types";
-import toast from "react-hot-toast";
 
 export default function StudentsList() {
   const {
@@ -62,6 +61,10 @@ export default function StudentsList() {
           const { userName, id, group, imageUrl, evolutionStage } =
             student.userDetails;
 
+          if (!userName) {
+            throw new Error("No username defined!");
+          }
+
           return (
             <div
               key={id || userName}
@@ -74,7 +77,7 @@ export default function StudentsList() {
               }
             >
               <XPCard
-                title={userName ? userName : toast.error("No username found!")}
+                title={userName}
                 color={color}
                 subtitle={group}
                 size="xs"

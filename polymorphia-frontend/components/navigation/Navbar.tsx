@@ -1,9 +1,5 @@
 import { MenuIcon } from "lucide-react";
 import { useEffect, useRef } from "react";
-import {
-  BottomMenuItems,
-  getMainMenuItems,
-} from "@/components/navigation/MenuOptions";
 import MenuSection from "@/components/navigation/MenuSection";
 import Line from "@/components/navigation/Line";
 import { animateNavbar } from "@/animations/Navigation";
@@ -12,14 +8,16 @@ import { updateMenuItems } from "@/components/course/event-section/EventSectionU
 import { useTitle } from "./TitleContext";
 import useEventSections from "@/hooks/course/useEventSections";
 import useNavigationContext from "@/hooks/contexts/useNavigationContext";
-import useUserContext from "@/hooks/contexts/useUserContext";
+import {
+  useBottomMenuItems,
+  useMainMenuItems,
+} from "@/hooks/general/useMenuOptions";
 
 export default function Navbar() {
   const { isNavbarExpanded, setIsNavbarExpanded } = useNavigationContext();
   const drawerRef = useRef<HTMLDivElement | null>(null);
   const { data: eventSections } = useEventSections();
   const { title } = useTitle();
-  const userType = useUserContext().userType;
 
   useEffect(() => {
     const drawer = drawerRef.current;
@@ -40,7 +38,7 @@ export default function Navbar() {
     };
   }, [isNavbarExpanded]);
 
-  const menuItems = getMainMenuItems(userType);
+  const menuItems = useMainMenuItems();
 
   if (eventSections) {
     updateMenuItems(menuItems, eventSections);
@@ -63,7 +61,7 @@ export default function Navbar() {
         </div>
         <div className="mt-3">
           <Line />
-          <MenuSection options={BottomMenuItems} />
+          <MenuSection options={useBottomMenuItems()} />
         </div>
       </div>
     </div>

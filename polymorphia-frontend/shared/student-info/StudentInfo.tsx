@@ -2,7 +2,6 @@ import Loading from "@/components/loading/Loading";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import useRandomUsers from "@/hooks/course/useRandomUsers";
-import toast from "react-hot-toast";
 
 export default function StudentInfo() {
   const { data, isLoading, isError } = useRandomUsers();
@@ -24,10 +23,15 @@ export default function StudentInfo() {
           {data?.map((student) => {
             const { animalName, userName, evolutionStage, imageUrl } =
               student.userDetails;
+
+            if (!userName) {
+              throw new Error("No userName defined!");
+            }
+
             return (
               <XPCard
                 key={animalName}
-                title={userName ? userName : toast.error("No username found!")}
+                title={userName}
                 subtitle={evolutionStage}
                 leftComponent={
                   <XPCardImage imageUrl={imageUrl} alt={evolutionStage} />

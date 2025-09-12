@@ -2,8 +2,14 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import userService from "@/app/(logged-in)/profile/UserService";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import {
+  UsePreferredCourseUpdate,
+  UsePreferredCourseUpdateProps,
+} from "@/hooks/course/usePreferredCourseUpdate/types";
 
-export default function usePreferredCourseUpdate(redirectPage?: string) {
+export default function usePreferredCourseUpdate({
+  redirectPage,
+}: UsePreferredCourseUpdateProps): UsePreferredCourseUpdate {
   const queryClient = useQueryClient();
   const router = useRouter();
   const setPreferredCourseMutation = useMutation({

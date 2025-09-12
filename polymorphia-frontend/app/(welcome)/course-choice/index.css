@@ -1,10 +1,10 @@
 @import "tailwindcss";
 @import "../../../styles/globals.css";
 
-.outer-grid-wrapper{
+.course-choice-outer-grid-wrapper{
     @apply flex justify-center items-center h-screen
 }
 
-.inner-grid-wrapper{
+.course-choice-inner-grid-wrapper{
     @apply flex justify-center items-center h-50
 }

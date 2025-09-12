@@ -1,13 +1,10 @@
-import XPCard from "@/components/xp-card/XPCard";
-import { useQuery } from "@tanstack/react-query";
-import UserService from "@/app/(logged-in)/profile/UserService";
 import Loading from "@/components/loading/Loading";
-import { AvailableCoursesDTO, RoleTextMap } from "@/interfaces/api/user";
-import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
-import CourseChoiceProps from "@/components/course-choice/types";
+import { CourseChoiceProps } from "@/components/course-choice/types";
 import { useEffect } from "react";
 import usePreferredCourseUpdate from "@/hooks/course/usePreferredCourseUpdate";
+import useUserCourses from "@/hooks/course/useUserCourses";
+import renderCard from "@/components/course-choice/RenderCard";
 
 export default function CourseChoiceGrid({
   redirectPage,
@@ -15,12 +12,9 @@ export default function CourseChoiceGrid({
   containerRef,
   fastForward,
 }: CourseChoiceProps) {
-  const { data: courses, isLoading } = useQuery<AvailableCoursesDTO[]>({
-    queryKey: ["userCourses"],
-    queryFn: () => UserService.getUserCourses(),
-  });
+  const { data: courses, isLoading } = useUserCourses();
 
-  const handleCourseSelection = usePreferredCourseUpdate(redirectPage);
+  const handleCourseSelection = usePreferredCourseUpdate({ redirectPage });
 
   useEffect(() => {
     if (fastForward && courses?.length === 1) {
@@ -28,7 +22,7 @@ export default function CourseChoiceGrid({
     }
   }, [courses, fastForward, handleCourseSelection]);
 
-  if (isLoading || courses == undefined) {
+  if (isLoading || !courses) {
     return <Loading />;
   }
 
@@ -36,19 +30,9 @@ export default function CourseChoiceGrid({
     return null;
   }
 
-  const cards = courses.map(({ id, name, coordinator, imageUrl, userRole }) => (
-    <XPCard
-      title={name}
-      subtitle={`Koordynator: ${coordinator}, Twoja rola: ${RoleTextMap[userRole]}`}
-      key={id}
-      color={
-        currentCourseId != null && currentCourseId === id ? "green" : "silver"
-      }
-      size={"sm"}
-      leftComponent={<XPCardImage imageUrl={imageUrl} alt={name} />}
-      onClick={() => handleCourseSelection(id)}
-    />
-  ));
+  const cards = courses.map((availableCourse) =>
+    renderCard({ availableCourse, currentCourseId, handleCourseSelection })
+  );
 
   return (
     <XPCardGrid containerRef={containerRef} cards={cards} maxColumns={2} />

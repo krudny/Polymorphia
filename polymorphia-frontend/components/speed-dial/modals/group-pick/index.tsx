@@ -1,5 +1,5 @@
 "use client";
-import isStudent, { StudentDetailsDTO } from "@/interfaces/api/user";
+import { Roles, StudentDetailsDTO } from "@/interfaces/api/user";
 import Modal from "@/components/modal/Modal";
 import { ChangeEvent, useEffect, useState } from "react";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
@@ -20,12 +20,12 @@ function GroupPickingModalContent() {
   const [group, setGroup] = useState<StudentDetailsDTO[]>([]);
   const currentUser = useUserContext();
   const { data: allUsers, isError } = useRandomUsers();
-  if (!isStudent(currentUser)) {
+  if (currentUser.userType !== Roles.STUDENT) {
     throw new Error("User is not a student");
   }
 
   useEffect(() => {
-    if (currentUser && isStudent(currentUser)) {
+    if (currentUser && currentUser.userType === Roles.STUDENT) {
       setGroup([currentUser.userDetails]);
     }
   }, [currentUser]);
@@ -97,10 +97,15 @@ function GroupPickingModalContent() {
       <div className="group-pick-group">
         {group?.map((user, index) => {
           const { userName, evolutionStage, group, imageUrl } = user;
+
+          if (!userName) {
+            throw new Error("No userName defined!");
+          }
+
           return (
             <div key={index} className="group-pick-card">
               <XPCard
-                title={userName ? userName : toast.error("No username found!")}
+                title={userName}
                 subtitle={group + " | " + evolutionStage}
                 leftComponent={
                   <XPCardImage imageUrl={imageUrl} alt={evolutionStage} />

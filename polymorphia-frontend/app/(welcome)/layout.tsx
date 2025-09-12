@@ -3,10 +3,11 @@
 import { ReactNode } from "react";
 import MainLayout from "@/components/main-layout/MainLayout";
 import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
+import "./index.css";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <div className="w-full min-h-[100dvh] relative flex flex-col lg:flex-row bg-black">
+    <div className="welcome-layout-wrapper">
       <BackgroundWrapper />
       <MainLayout>{children}</MainLayout>
     </div>

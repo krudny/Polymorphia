@@ -28,7 +28,7 @@ export default function RankCard({
   return (
     <div className={`hall-of-fame-mobile-record-wrapper ${border}`}>
       <div>
-        <HallOfFameImage position={position} imageUrl={`${imageUrl}`} />
+        <HallOfFameImage position={position} imageUrl={imageUrl} />
         <HallOfFameUserData {...userDetails} />
         <HallOfFamePointsSummary total={xpDetails.total} />
       </div>

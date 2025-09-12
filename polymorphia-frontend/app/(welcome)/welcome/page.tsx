@@ -4,8 +4,9 @@ import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Loading from "@/components/loading/Loading";
-import gsap from "gsap";
+import "./index.css";
 import useIsPreferredCourseSet from "@/hooks/course/useIsPreferredCourseSet";
+import { animateWelcome } from "@/animations/Welcome";
 
 export default function Welcome() {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -19,23 +20,19 @@ export default function Welcome() {
   }, [setTitle]);
 
   useEffect(() => {
-    gsap.fromTo(
-      wrapperRef.current,
-      { opacity: 0, y: -50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1.2,
-        ease: "power2.out",
-        onComplete: () => {
-          if (isCourseIdSet) {
-            router.push("/profile");
-          } else {
-            router.push("/course-choice");
-          }
-        },
+    if (!wrapperRef.current) {
+      return;
+    }
+
+    const onAnimationComplete = () => {
+      if (isCourseIdSet) {
+        router.push("/profile");
+      } else {
+        router.push("/course-choice");
       }
-    );
+    };
+
+    animateWelcome(wrapperRef.current, onAnimationComplete);
   }, [isLoading, isCourseIdSet, router]);
 
   if (isLoading) {
@@ -43,10 +40,7 @@ export default function Welcome() {
   }
 
   return (
-    <div
-      ref={wrapperRef}
-      className="flex flex-col items-center justify-center min-h-screen text-4xl font-bold"
-    >
+    <div ref={wrapperRef} className="welcome-wrapper">
       Witaj w Polymorphii!
     </div>
   );

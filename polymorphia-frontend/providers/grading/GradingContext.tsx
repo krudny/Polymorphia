@@ -7,7 +7,6 @@ import {
   useState,
 } from "react";
 import { useDebounce } from "use-debounce";
-import { UserDetailsDTO } from "@/interfaces/api/user";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import useRandomPeopleWithPoints from "@/hooks/course/useRandomPeopleWithPoints";
 import useProjectGroups from "@/hooks/course/useProjectGroups";
@@ -28,7 +27,6 @@ export const GradingContext = createContext<
   GradingContextInterface | undefined
 >(undefined);
 
-const COURSE_ID = 1;
 
 export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const { gradableEventId, eventType } = useEventParams();
@@ -39,9 +37,6 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const [areFiltersOpen, setAreFiltersOpen] = useState(false);
 
   const { courseId } = useUserDetails();
-  useEffect(() => {
-    console.log(state);
-  }, [state]);
 
   const {
     data: filterConfigs,

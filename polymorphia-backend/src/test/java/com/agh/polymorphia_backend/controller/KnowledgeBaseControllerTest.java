@@ -12,7 +12,7 @@ import static com.agh.polymorphia_backend.controller.ControllerTestUtil.getExpec
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-class CourseControllerTest extends ControllerTestConfig {
+class KnowledgeBaseControllerTest extends ControllerTestConfig {
     @Value("classpath:responses/knowledge.base/evolution-stages.json")
     private Resource evolutionStagesJson;
 

@@ -14,8 +14,8 @@ export default function CourseChoice() {
   }, [setTitle]);
 
   return (
-    <div className="outer-grid-wrapper">
-      <div ref={containerRef} className="inner-grid-wrapper">
+    <div className="course-choice-outer-grid-wrapper">
+      <div ref={containerRef} className="course-choice-inner-grid-wrapper">
         <CourseChoiceGrid
           redirectPage={"/profile"}
           containerRef={containerRef}

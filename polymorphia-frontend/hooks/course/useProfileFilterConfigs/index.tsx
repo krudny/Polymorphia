@@ -3,8 +3,9 @@ import { HallOfFameFilterId } from "@/providers/hall-of-fame/types";
 import { useQuery } from "@tanstack/react-query";
 import { FilterConfig } from "../useFilters/types";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
+import { UseProfileFilterConfigs } from "@/hooks/course/useProfileFilterConfigs/types";
 
-export function useProfileFilterConfigs() {
+export function useProfileFilterConfigs(): UseProfileFilterConfigs {
   const { courseId } = useUserDetails();
 
   const { data, isLoading, isError } = useQuery({

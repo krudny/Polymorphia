@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@import "../../styles/globals.css";
+
+.welcome-layout-wrapper{
+    @apply w-full min-h-[100dvh] relative flex flex-col lg:flex-row bg-black
+}

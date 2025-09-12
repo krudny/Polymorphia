@@ -1,16 +1,18 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AuthService from "@/services/AuthService";
+import toast from "react-hot-toast";
 
 export default function useLogout() {
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: () => AuthService.logout(),
     onSuccess: () => {
-      console.log("Logged out successfully");
       queryClient.clear();
+      toast.success("Wylogowałeś się z aplikacji");
     },
-    onError: (error) => {
-      console.error("Logout failed", error);
+    onError: () => {
+      toast.error("Błąd wylogowania");
     },
   });
 }

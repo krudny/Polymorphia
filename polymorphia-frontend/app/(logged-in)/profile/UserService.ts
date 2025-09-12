@@ -1,9 +1,9 @@
 import {
-  AvailableCoursesDTO,
   Roles,
   StudentDetailsDTOWithType,
   UserDetailsDTO,
 } from "@/interfaces/api/user";
+import { AvailableCoursesDTO } from "@/interfaces/api/user-context";
 import { API_HOST } from "@/services/api";
 import { StudentProfileDTO } from "@/interfaces/api/profile";
 

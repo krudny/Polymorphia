@@ -23,9 +23,6 @@ const AuthService = {
   logout: async () => {
     const response = await fetch(`${API_HOST}/logout`, {
       method: "POST",
-      headers: new Headers({
-        "Content-Type": "application/x-www-form-urlencoded",
-      }),
       credentials: "include",
     });
 

@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@import "../../../styles/globals.css";
+
+.welcome-wrapper{
+    @apply flex flex-col items-center justify-center min-h-screen text-4xl font-bold
+}

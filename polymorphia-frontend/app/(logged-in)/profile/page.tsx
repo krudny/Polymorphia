@@ -10,7 +10,7 @@ import UserPoints from "@/components/user-points/UserPoints";
 import ProgressBarTextLabels from "@/components/progressbar/ProgressBarTextLabels";
 import { useMediaQuery } from "react-responsive";
 import Loading from "@/components/loading/Loading";
-import isStudent from "@/interfaces/api/user";
+import { Roles } from "@/interfaces/api/user";
 import useUserContext from "@/hooks/contexts/useUserContext";
 import useStudentProfile from "@/hooks/course/useStudentProfile";
 import { min } from "@popperjs/core/lib/utils/math";
@@ -57,7 +57,7 @@ export default function Profile() {
   }
 
   //TODO: handle profile for other roles
-  if ((userContext && !isStudent(userContext)) || !profile) {
+  if ((userContext && userContext.userType !== Roles.STUDENT) || !profile) {
     return <div>No data found.</div>;
   }
 
