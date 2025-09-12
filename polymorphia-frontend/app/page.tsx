@@ -4,7 +4,7 @@ import Image from "next/image";
 import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import LoginForm from "@/components/home/LoginForm";
-import { useEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import {
   animateInitialMount,
   animateLoginFormVisibility,
@@ -18,22 +18,19 @@ export default function Home() {
   const closeLoginForm = () => setIsLoginFormVisible(false);
 
   const loginFormRef = useRef<HTMLDivElement>(null);
-  const titleSectionRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
   const backgroundRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const hasMountedRef = useRef(false);
 
-  useEffect(() => {
-    if (
-      !backgroundRef.current ||
-      !titleSectionRef.current ||
-      !imageRef.current
-    ) {
+  useLayoutEffect(() => {
+    if (!backgroundRef.current || !titleRef.current || !imageRef.current) {
       return;
     }
+
     animateInitialMount(
       backgroundRef.current,
-      titleSectionRef.current,
+      titleRef.current,
       imageRef.current,
       () => {
         hasMountedRef.current = true;
@@ -41,17 +38,14 @@ export default function Home() {
     );
   }, []);
 
-  useEffect(() => {
-    if (
-      !hasMountedRef.current ||
-      !loginFormRef.current ||
-      !titleSectionRef.current
-    ) {
+  useLayoutEffect(() => {
+    if (!hasMountedRef.current || !loginFormRef.current || !titleRef.current) {
       return;
     }
+
     animateLoginFormVisibility(
       loginFormRef.current,
-      titleSectionRef.current,
+      titleRef.current,
       isLoginFormVisible
     );
   }, [isLoginFormVisible]);
@@ -60,28 +54,30 @@ export default function Home() {
     <BackgroundWrapper className="hero-background-wrapper" forceTheme="light">
       <div className="hero-background-image" ref={backgroundRef}>
         <Image
-          src="/hero-bg.png"
+          src="/hero-bg.webp"
           alt="Hero background"
           fill
           className="object-cover"
           priority
+          fetchPriority="high"
           sizes="60vw"
         />
       </div>
       <div className="hero-image-wrapper" ref={imageRef}>
         <div>
           <Image
-            src="/owl.png"
+            src="/owl.webp"
             alt="Hero owl"
             width={1000}
             height={1000}
             priority
+            fetchPriority="high"
             sizes="(max-width: 1024px) 400px, (max-width: 1920px) 50vw"
           />
         </div>
       </div>
       <div className="hero-right-wrapper">
-        <div ref={titleSectionRef}>
+        <div ref={titleRef}>
           <h1>Polymorphia</h1>
           <div className="hero-buttons">
             <ButtonWithBorder

@@ -9,7 +9,7 @@ const HallOfFameService = {
     size: number,
     searchTerm: string,
     sortBy?: string,
-    sortOrder?: "asc" | "desc",
+    sortOrder?: string,
     groups?: string[]
   ): Promise<HallOfFameResponseDTO> => {
     await new Promise((resolve) => setTimeout(resolve, 400));
