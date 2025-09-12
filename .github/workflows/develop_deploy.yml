@@ -41,25 +41,11 @@ jobs:
         username: ${{ secrets.STAGING_VM_USER }}
         key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
         script: |
-          # Ustaw zmienne bezpośrednio
           TEST_DB_HOST="${{ secrets.TEST_DB_HOST }}"
           TEST_DB_PORT="${{ secrets.TEST_DB_PORT }}"
           TEST_DB_NAME="${{ secrets.TEST_DB_NAME }}"
           TEST_DB_USER="${{ secrets.TEST_DB_USER }}"
           TEST_DB_PASSWORD="${{ secrets.TEST_DB_PASSWORD }}"
-          
-          echo "=== Database Connection Debug ==="
-          echo "DB Host: ${TEST_DB_HOST}"
-          echo "DB Port: ${TEST_DB_PORT}"
-          echo "DB Name: ${TEST_DB_NAME}"
-          echo "DB User: ${TEST_DB_USER}"
-          echo "DB Password length: ${#TEST_DB_PASSWORD}"
-          echo "================================="
-          
-          if [[ -z "${TEST_DB_HOST}" || -z "${TEST_DB_PORT}" || -z "${TEST_DB_NAME}" || -z "${TEST_DB_USER}" || -z "${TEST_DB_PASSWORD}" ]]; then
-            echo "ERROR: Missing required database parameters!"
-            exit 1
-          fi
           
           if ! command -v flyway >/dev/null; then
             curl -fsSL https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/11.12.0/flyway-commandline-11.12.0-linux-x64.tar.gz \
@@ -79,42 +65,34 @@ jobs:
             BRANCH="${{ github.ref_name }}"
           fi
           
-          echo "Cloning branch: ${BRANCH}"
           git clone --depth 1 --branch "${BRANCH}" https://github.com/${{ github.repository }} repo
-          
-          if [[ ! -d "repo/polymorphia-backend/src/main/resources/db/migration" ]]; then
-            echo "ERROR: Migration directory not found!"
-            echo "Searching for migration directories:"
-            find repo -name "migration" -type d 2>/dev/null || echo "No migration directories found"
-            exit 1
-          fi
           
           flyway -locations=filesystem:repo/polymorphia-backend/src/main/resources/db/migration clean
           flyway -locations=filesystem:repo/polymorphia-backend/src/main/resources/db/migration migrate
 
 
-  run-backend:
-    needs: migrate
-    runs-on: ubuntu-latest
-    steps:
-      - name: SSH & deploy container
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.STAGING_VM_IP }}
-          username: ${{ secrets.STAGING_VM_USER }}
-          key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
-          script: |
-            IMAGE="us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/polymorphia-backend/polymorphia-backend:develop-latest"
+  # run-backend:
+  #   needs: migrate
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: SSH & deploy container
+  #       uses: appleboy/ssh-action@v1
+  #       with:
+  #         host: ${{ secrets.STAGING_VM_IP }}
+  #         username: ${{ secrets.STAGING_VM_USER }}
+  #         key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+  #         script: |
+  #           IMAGE="us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/polymorphia-backend/polymorphia-backend:develop-latest"
 
-            gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
-            docker pull "$IMAGE"
+  #           gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
+  #           docker pull "$IMAGE"
 
-            docker stop polymorphia-backend || true
-            docker rm polymorphia-backend || true
+  #           docker stop polymorphia-backend || true
+  #           docker rm polymorphia-backend || true
 
-            docker run -d --name polymorphia-backend \
-              -p 8080:8080 \
-              -v /app/config:/app/config \
-              -v ~/polymorphia-static:/app/static \
-              "$IMAGE" \
-              --spring.config.location=file:/app/config/application-dev.properties
+  #           docker run -d --name polymorphia-backend \
+  #             -p 8080:8080 \
+  #             -v /app/config:/app/config \
+  #             -v ~/polymorphia-static:/app/static \
+  #             "$IMAGE" \
+  #             --spring.config.location=file:/app/config/application-dev.properties
