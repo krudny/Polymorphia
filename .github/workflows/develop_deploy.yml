@@ -67,7 +67,7 @@ jobs:
           
           git clone --depth 1 --branch "${BRANCH}" https://github.com/${{ github.repository }} repo
           
-          flyway -locations=filesystem:repo/polymorphia-backend/src/main/resources/db/migration clean
+          flyway -locations=filesystem:repo/polymorphia-backend/src/main/resources/db/migration -cleanDisabled="false" clean
           flyway -locations=filesystem:repo/polymorphia-backend/src/main/resources/db/migration migrate
 
 
