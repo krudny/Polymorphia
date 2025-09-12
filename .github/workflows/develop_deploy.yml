@@ -1,6 +1,7 @@
 name: Build and Deploy Backend to Develop Testing
 
 on:
+  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -50,7 +51,7 @@ jobs:
             export FLYWAY_PASSWORD="${{ secrets.DB_PASSWORD }}"
 
             git clone --depth 1 https://github.com/${{ github.repository }} repo
-            
+
             flyway -locations=filesystem:repo/polymorphia-backend/src/main/resources/db/migration clean
             flyway -locations=filesystem:repo/polymorphia-backend/src/main/resources/db/migration migrate
 
