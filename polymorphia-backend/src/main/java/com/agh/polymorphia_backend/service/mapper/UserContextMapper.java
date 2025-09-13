@@ -28,7 +28,7 @@ public class UserContextMapper {
         User user = coordinator.getUser();
         return AvailableCoursesResponseDto.builder()
                 .id(course.getId())
-                .coordinator(String.join(" ", user.getFirstName(), user.getLastName()))
+                .coordinatorName(String.join(" ", user.getFirstName(), user.getLastName()))
                 .name(course.getName())
                 .userRole(role)
                 .build();

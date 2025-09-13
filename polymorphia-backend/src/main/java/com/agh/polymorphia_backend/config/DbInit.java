@@ -31,7 +31,6 @@ public class DbInit {
                     .user(user)
                     .build();
 
-            userRepository.save(user);
             coordinatorRepository.save(coordinator);
         }
     }

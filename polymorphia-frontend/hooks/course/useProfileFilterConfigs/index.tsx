@@ -1,16 +1,16 @@
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
-import { HallOfFameFilterId } from "@/providers/hall-of-fame/types";
 import { useQuery } from "@tanstack/react-query";
 import { FilterConfig } from "../useFilters/types";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { UseProfileFilterConfigs } from "@/hooks/course/useProfileFilterConfigs/types";
+import { ProfileFilterId } from "@/app/(logged-in)/profile/types";
 
 export function useProfileFilterConfigs(): UseProfileFilterConfigs {
   const { courseId } = useUserDetails();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["profileFilters", courseId],
-    queryFn: async (): Promise<FilterConfig<HallOfFameFilterId>[]> => {
+    queryFn: async (): Promise<FilterConfig<ProfileFilterId>[]> => {
       const eventSections =
         await EventSectionService.getEventSections(courseId);
       return [

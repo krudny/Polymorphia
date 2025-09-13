@@ -7,7 +7,7 @@ import { useTitle } from "@/components/navigation/TitleContext";
 import toast from "react-hot-toast";
 import { useTheme } from "next-themes";
 import useNavigationContext from "@/hooks/contexts/useNavigationContext";
-import CourseChoiceGrid from "@/components/course-choice/CourseChoice";
+import CourseChoiceGrid from "@/components/course-choice";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export default function Settings() {

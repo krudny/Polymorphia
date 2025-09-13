@@ -28,14 +28,14 @@ export function useBottomMenuItems(): MenuOption[] {
 }
 
 export function useBottomDesktopMenuItems(): MenuOption[] {
-  const logoutMutation = useLogout();
+  const { mutate: logout } = useLogout();
 
   return [
     { icon: BellIcon, text: "Powiadomienia" },
     {
       icon: LogOutIcon,
       text: "Wyloguj się",
-      onClick: () => logoutMutation.mutate(),
+      onClick: () => logout(),
     },
     {
       icon: SettingsIcon,

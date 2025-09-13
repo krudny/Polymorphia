@@ -3,7 +3,10 @@ package com.agh.polymorphia_backend.model.hall_of_fame;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Immutable;
 
 import java.math.BigDecimal;
@@ -12,6 +15,9 @@ import java.math.BigDecimal;
 @Table(name = "hall_of_fame_view")
 @Immutable
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class HallOfFame {
     public static final String FIELD_ANIMAL_NAME = "animalName";
     public static final String FIELD_STUDENT_NAME = "studentName";

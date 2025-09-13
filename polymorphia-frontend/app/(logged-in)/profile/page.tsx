@@ -15,13 +15,13 @@ import useUserContext from "@/hooks/contexts/useUserContext";
 import useStudentProfile from "@/hooks/course/useStudentProfile";
 import { min } from "@popperjs/core/lib/utils/math";
 import FiltersModal from "@/components/filters-modals/FiltersModal";
-import { HallOfFameFilterId } from "@/providers/hall-of-fame/types";
 import { useProfileFilterConfigs } from "@/hooks/course/useProfileFilterConfigs";
 import { useFilters } from "@/hooks/course/useFilters";
 import { useQueryClient } from "@tanstack/react-query";
 import { filterXpDetails } from "@/providers/hall-of-fame/utils/filterXpDetails";
 import SpeedDialDesktop from "@/components/speed-dial/SpeedDialDesktop";
 import SpeedDialMobile from "@/components/speed-dial/SpeedDialMobile";
+import { ProfileFilterId } from "@/app/(logged-in)/profile/types";
 
 export default function Profile() {
   const { setTitle } = useTitle();
@@ -36,7 +36,7 @@ export default function Profile() {
     isLoading: isFiltersLoading,
     isError: isFiltersError,
   } = useProfileFilterConfigs();
-  const filters = useFilters<HallOfFameFilterId>(filterConfigs ?? []);
+  const filters = useFilters<ProfileFilterId>(filterConfigs ?? []);
   const speedDialItems = [
     {
       id: 1,
@@ -79,6 +79,21 @@ export default function Profile() {
     filters.getAppliedFilterValues
   );
 
+  const currentIndex = profile.evolutionStageThresholds.findIndex(
+    (stage) => stage.name === userContext.userDetails.evolutionStage
+  );
+
+  let nextEvolutionStage;
+  let currentEvolutionStage;
+
+  if (profile.evolutionStageThresholds[currentIndex + 1]) {
+    nextEvolutionStage = profile.evolutionStageThresholds[currentIndex + 1];
+    currentEvolutionStage = profile.evolutionStageThresholds[currentIndex];
+  } else {
+    nextEvolutionStage = profile.evolutionStageThresholds[currentIndex];
+    currentEvolutionStage = profile.evolutionStageThresholds[currentIndex - 1];
+  }
+
   return (
     <div ref={wrapperRef} className="profile">
       <div className="profile-speed-dial-desktop">
@@ -106,7 +121,6 @@ export default function Profile() {
               <h3>
                 Jesteś {position} na {profile.totalStudentsInCourse} zwierzaków!
               </h3>
-              <h4>Suma: {profile.totalXp} xp</h4>
             </div>
             <div className="profile-user-points-xs">
               <UserPoints
@@ -146,7 +160,7 @@ export default function Profile() {
             upperElement={
               <ProgressBarTextLabels
                 textLabels={
-                  (profile.evolutionStageThresholds
+                  ([currentEvolutionStage, nextEvolutionStage]
                     ?.map(
                       (evolutionStage) =>
                         `${evolutionStage.grade.toFixed(1)} (${evolutionStage.minXp.toFixed(1)}xp)`
@@ -160,7 +174,7 @@ export default function Profile() {
             lowerElement={
               <ProgressBarTextLabels
                 textLabels={
-                  profile.evolutionStageThresholds?.map(
+                  [currentEvolutionStage, nextEvolutionStage].map(
                     (evolutionStage) => evolutionStage.name
                   ) || []
                 }
@@ -203,7 +217,7 @@ export default function Profile() {
             }
           />
         </div>
-        <FiltersModal<HallOfFameFilterId>
+        <FiltersModal<ProfileFilterId>
           filters={filters}
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}

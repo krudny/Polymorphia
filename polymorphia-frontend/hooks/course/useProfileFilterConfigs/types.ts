@@ -1,8 +1,8 @@
 import { FilterConfig } from "@/hooks/course/useFilters/types";
-import { HallOfFameFilterId } from "@/providers/hall-of-fame/types";
+import { ProfileFilterId } from "@/app/(logged-in)/profile/types";
 
 export type UseProfileFilterConfigs = {
-  data: FilterConfig<HallOfFameFilterId>[] | undefined;
+  data: FilterConfig<ProfileFilterId>[] | undefined;
   isLoading: boolean;
   isError: boolean;
 };

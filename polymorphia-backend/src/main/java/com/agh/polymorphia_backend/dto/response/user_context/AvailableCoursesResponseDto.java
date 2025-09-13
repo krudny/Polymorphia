@@ -15,7 +15,7 @@ public class AvailableCoursesResponseDto {
     private String name;
 
     @NotNull
-    private String coordinator;
+    private String coordinatorName;
 
     @NotNull
     private String imageUrl;

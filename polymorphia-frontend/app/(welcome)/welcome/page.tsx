@@ -16,7 +16,7 @@ export default function Welcome() {
   const { data: isCourseIdSet, isLoading } = useIsPreferredCourseSet();
 
   useEffect(() => {
-    setTitle("Welcome!");
+    setTitle("Witaj!");
   }, [setTitle]);
 
   useEffect(() => {
@@ -24,15 +24,7 @@ export default function Welcome() {
       return;
     }
 
-    const onAnimationComplete = () => {
-      if (isCourseIdSet) {
-        router.push("/profile");
-      } else {
-        router.push("/course-choice");
-      }
-    };
-
-    animateWelcome(wrapperRef.current, onAnimationComplete);
+    animateWelcome(wrapperRef.current, isCourseIdSet, router);
   }, [isLoading, isCourseIdSet, router]);
 
   if (isLoading) {

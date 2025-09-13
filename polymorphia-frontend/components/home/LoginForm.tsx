@@ -2,21 +2,16 @@
 
 import React, { FormEvent } from "react";
 import { useForm } from "@tanstack/react-form";
-import { useMutation } from "@tanstack/react-query";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import NavigationArrow from "@/components/slider/NavigationArrow";
 import { LoginDto } from "@/interfaces/api/login";
 import { FieldInfo } from "@/components/form/FieldInfo";
 import { loginSchema } from "@/components/form/schema";
-import AuthService from "@/services/AuthService";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
 import "./index.css";
 import LoginFormProps from "@/components/home/types";
+import useLogin from "@/hooks/course/useLogin";
 
 export default function LoginForm({ onBackAction }: LoginFormProps) {
-  const router = useRouter();
-
   const form = useForm({
     defaultValues: {
       email: "",
@@ -26,21 +21,10 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
       onBlur: loginSchema,
     },
     onSubmit: async ({ value }) => {
-      loginMutation.mutate(value);
+      login(value);
     },
   });
-
-  const loginMutation = useMutation({
-    mutationFn: AuthService.login,
-    onSuccess: () => {
-      toast.success("Zalogowano pomyślnie!");
-      router.push("/welcome");
-      form.reset();
-    },
-    onError: (error: Error) => {
-      toast.error(`Wystąpił błąd! ${error.message}`);
-    },
-  });
+  const { mutate: login } = useLogin({ form });
 
   return (
     <div className="login-wrapper">

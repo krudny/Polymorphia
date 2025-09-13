@@ -1,9 +1,11 @@
 import gsap from "gsap";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
-export const animateWelcome = (
+export function animateWelcome(
   wrapper: HTMLDivElement,
-  onAnimationComplete: () => void
-) => {
+  isCourseIdSet: boolean | undefined,
+  router: AppRouterInstance
+): void {
   gsap.fromTo(
     wrapper,
     { opacity: 0, y: -50 },
@@ -12,7 +14,13 @@ export const animateWelcome = (
       y: 0,
       duration: 1.2,
       ease: "power2.out",
-      onComplete: () => onAnimationComplete(),
+      onComplete: () => {
+        if (isCourseIdSet) {
+          router.push("/profile");
+        } else {
+          router.push("/course-choice");
+        }
+      },
     }
   );
-};
+}

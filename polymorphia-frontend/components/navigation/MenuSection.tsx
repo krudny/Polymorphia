@@ -5,7 +5,6 @@ import { animateSubMenuSection } from "@/animations/Navigation";
 import Link from "next/link";
 import "./index.css";
 import useNavigationContext from "@/hooks/contexts/useNavigationContext";
-import useLogout from "@/hooks/course/useLogout";
 
 export default function MenuSection({ options }: MenuSectionProps) {
   const { isSidebarExpanded, isNavbarExpanded, setIsNavbarExpanded } =
@@ -34,7 +33,6 @@ export default function MenuSection({ options }: MenuSectionProps) {
     );
   }, [openSubMenu, isExpanded, options]);
 
-  const { mutate: logout } = useLogout();
   return (
     <div className="menu-section">
       {options.map((option, idx) => {
@@ -42,9 +40,8 @@ export default function MenuSection({ options }: MenuSectionProps) {
         const isOpen = openSubMenu.includes(option.text);
         const handleClick = () => {
           setIsNavbarExpanded(false);
-
-          if (option.text === "Wyloguj się") {
-            logout();
+          if (option.onClick) {
+            option.onClick();
           }
         };
         return (

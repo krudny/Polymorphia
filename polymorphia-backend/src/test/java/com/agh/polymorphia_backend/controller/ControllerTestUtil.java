@@ -12,25 +12,38 @@ import static io.restassured.RestAssured.given;
 
 @Service
 public class ControllerTestUtil {
-    public static String callEndpoint(String endpoint, Object... args) {
+    public static String getEndpoint(String endpoint, String username, String password, Integer statusCode, Object... args) {
         return given()
-                .cookie("JSESSIONID", getStudentSessionId())
+                .cookie("JSESSIONID", getStudentSessionId(username, password))
                 .contentType(ContentType.JSON)
                 .when()
                 .get(endpoint, args)
                 .then()
-                .statusCode(200)
+                .statusCode(statusCode)
                 .extract()
                 .asString();
     }
+
+    public static String postEndpoint(String endpoint,String username, String password, Integer statusCode,Object... args) {
+        return given()
+                .cookie("JSESSIONID", getStudentSessionId(username, password))
+                .contentType(ContentType.JSON)
+                .when()
+                .post(endpoint, args)
+                .then()
+                .statusCode(statusCode)
+                .extract()
+                .asString();
+    }
+
 
     public static String getExpectedResponse(Resource resource) throws IOException {
         byte[] bdata = FileCopyUtils.copyToByteArray(resource.getInputStream());
         return new String(bdata, StandardCharsets.UTF_8);
     }
 
-    private static String getStudentSessionId() {
-        return getSessionId("student@agh.com", "password");
+    private static String getStudentSessionId(String username, String password) {
+        return getSessionId(username, password);
     }
 
     private static String getSessionId(String username, String password) {
