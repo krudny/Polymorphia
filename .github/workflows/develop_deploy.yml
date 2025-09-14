@@ -47,18 +47,7 @@ jobs:
           username: ${{ secrets.STAGING_VM_USER }}
           key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
           script: |
-            git clone --depth 1 --branch "${{ github.head_ref }}" https://github.com/${{ github.repository }}.git ~/polymorphia
-      
-      - name: Install frontend dependencies
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.STAGING_VM_IP }}
-          username: ${{ secrets.STAGING_VM_USER }}
-          key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
-          script: |
-            sudo apt install nodejs npm -y || true
-            cd ~/polymorphia/polymorphia-frontend
-            npm install
+            git clone --depth 1 --branch "${{ github.head_ref }}" https://github.com/${{ github.repository }}.git ~/polymorphia   
 
   migrate:
     needs: setup-environment
@@ -158,6 +147,22 @@ jobs:
               -v ~/polymorphia-static:/app/static \
               polymorphia-backend:test-latest \
               --spring.config.location=file:/app/config/application-dev.properties
+
+  install-frontend-deps: 
+    needs: setup-environment
+    runs-on: ubuntu-latest
+
+    steps: 
+      - name: Install frontend dependencies
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.STAGING_VM_IP }}
+          username: ${{ secrets.STAGING_VM_USER }}
+          key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+          script: |
+            sudo apt install nodejs npm -y || true
+            cd ~/polymorphia/polymorphia-frontend
+            npm install
 
   build-frontend:
     needs: setup-environment
