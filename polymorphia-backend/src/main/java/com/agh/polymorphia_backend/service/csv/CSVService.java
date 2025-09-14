@@ -105,16 +105,8 @@ public class CSVService {
     }
 
 
-    public CSVHeadersResponseDto getCSVHeaders(MultipartFile file, String type) {
-        CSVType csvType;
-
-        try {
-            csvType = CSVType.valueOf(type.toUpperCase().trim());
-        } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid CSV type: " + type);
-        }
-
-        List<String> requiredHeaders = new ArrayList<>(csvType.getRequiredCSVHeaders());
+    public CSVHeadersResponseDto getCSVHeaders(MultipartFile file, CSVType type) {
+        List<String> requiredHeaders = new ArrayList<>(type.getRequiredCSVHeaders());
         List<String> fileHeaders = readCSV(file, CSVReadMode.HEADERS_ONLY).csvHeaders();
 
         return CSVHeadersResponseDto
@@ -150,11 +142,10 @@ public class CSVService {
     }
 
     public void processCSV(CSVProcessRequestDto request) {
-        CSVType csvType = CSVType.valueOf(request.getType().toUpperCase());
-        CSVProcessor processor = processors.get(csvType);
+        CSVProcessor processor = processors.get(request.getType());
 
         if (processor == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No processor found for type: " + csvType);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No processor found for type: " + request.getType());
         }
 
         processor.process(request);

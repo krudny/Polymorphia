@@ -5,6 +5,7 @@ import com.agh.polymorphia_backend.dto.request.csv.CSVProcessRequestDto;
 import com.agh.polymorphia_backend.dto.response.csv.CSVHeadersResponseDto;
 import com.agh.polymorphia_backend.dto.response.csv.CSVResponseDto;
 import com.agh.polymorphia_backend.service.csv.CSVService;
+import com.agh.polymorphia_backend.service.csv.CSVType;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,7 +20,7 @@ public class CSVController {
 
     @PostMapping("/headers")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<CSVHeadersResponseDto> getCSVHeaders(@RequestParam MultipartFile file, @RequestParam String type) {
+    public ResponseEntity<CSVHeadersResponseDto> getCSVHeaders(@RequestParam MultipartFile file, @RequestParam CSVType type) {
         return ResponseEntity.ok(csvService.getCSVHeaders(file, type));
     }
 
