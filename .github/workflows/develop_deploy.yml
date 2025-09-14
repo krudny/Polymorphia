@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  setup:
+  setup-environment:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,23 +14,16 @@ jobs:
 
       - name: Clean target database
         run: |
-          PGPASSWORD="${{ secrets.STAGING_DB_PASSWORD }}" psql -h ${{ secrets.STAGING_VM_IP }} -U ${{ secrets.STAGING_DB_USER }} -d ${{ secrets.STAGING_DB_NAME }} -p ${{ secrets.STAGING_DB_PORT }} -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;"
+          PGPASSWORD="${{ secrets.TEST_DB_PASSWORD }}" psql -h "${{ secrets.STAGING_VM_IP }}" -U "${{ secrets.TEST_DB_USER }}" -d "${{ secrets.TEST_DB_NAME }}" -p "${{ secrets.TEST_DB_PORT }}" -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;" > /dev/null 2>&1
 
       - name: Copy data from staging database to test database
         env:
-          STAGING_DB_HOST: ${{ secrets.STAGING_DB_HOST }}
-          STAGING_DB_PORT: ${{ secrets.STAGING_DB_PORT }}
-          STAGING_DB_NAME: ${{ secrets.STAGING_DB_NAME }}
-          STAGING_DB_USER: ${{ secrets.STAGING_DB_USER }}
-          STAGING_DB_PASSWORD: ${{ secrets.STAGING_DB_PASSWORD }}
-          TEST_DB_HOST: ${{ secrets.TEST_DB_HOST }}
-          TEST_DB_PORT: ${{ secrets.TEST_DB_PORT }}
-          TEST_DB_NAME: ${{ secrets.TEST_DB_NAME }}
-          TEST_DB_USER: ${{ secrets.TEST_DB_USER }}
-          TEST_DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
+          PGPASSWORD: ${{ secrets.STAGING_DB_PASSWORD }}
         run: |
-          PGPASSWORD=$STAGING_DB_PASSWORD pg_dump -h $STAGING_DB_HOST -p $STAGING_DB_PORT -U $STAGING_DB_USER $STAGING_DB_NAME | \
-          PGPASSWORD=$TEST_DB_PASSWORD psql -h $TEST_DB_HOST -p $TEST_DB_PORT -U $TEST_DB_USER $TEST_DB_NAME
+          pg_dump -h "${{ secrets.STAGING_DB_HOST }}" -p "${{ secrets.STAGING_DB_PORT }}" -U "${{ secrets.STAGING_DB_USER }}" "${{ secrets.STAGING_DB_NAME }}" > staging_dump.sql
+          
+          PGPASSWORD="${{ secrets.TEST_DB_PASSWORD }}" psql -h "${{ secrets.TEST_DB_HOST }}" -p "${{ secrets.TEST_DB_PORT }}" -U "${{ secrets.TEST_DB_USER }}" "${{ secrets.TEST_DB_NAME }}" < staging_dump.sql > /dev/null 2>&1
+
 
 
 
