@@ -17,7 +17,8 @@ export function animateWelcome(
       onComplete: () => {
         if (isCourseIdSet) {
           router.push("/profile");
-        } else {
+        }
+        else {
           router.push("/course-choice");
         }
       },

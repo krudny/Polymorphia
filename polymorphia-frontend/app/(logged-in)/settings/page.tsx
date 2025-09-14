@@ -1,15 +1,17 @@
 "use client";
 
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import { useEffect, useRef } from "react";
-import { useScaleShow } from "@/animations/ScaleShow";
-import { useTitle } from "@/components/navigation/TitleContext";
+import {useEffect, useRef} from "react";
+import {useScaleShow} from "@/animations/ScaleShow";
+import {useTitle} from "@/components/navigation/TitleContext";
 import toast from "react-hot-toast";
-import { useTheme } from "next-themes";
+import {useTheme} from "next-themes";
 import useNavigationContext from "@/hooks/contexts/useNavigationContext";
 import CourseChoiceGrid from "@/components/course-choice";
-import { useUserDetails } from "@/hooks/contexts/useUserContext";
+import {useUserDetails} from "@/hooks/contexts/useUserContext";
 import "./index.css";
+import useUserCourses from "@/hooks/course/useUserCourses";
+import Loading from "@/components/loading/Loading";
 
 export default function Settings() {
   const {
@@ -23,6 +25,7 @@ export default function Settings() {
   const { resolvedTheme, setTheme } = useTheme();
   const { courseId } = useUserDetails();
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const { data: courses, isLoading } = useUserCourses();
 
   const toggleSidebarLockOpened = () => {
     if (isSidebarLockedClosed) {
@@ -43,6 +46,10 @@ export default function Settings() {
   useEffect(() => {
     setTitle("Ustawienia");
   }, [setTitle]);
+
+  if (isLoading || !courses) {
+    return <Loading />
+  }
 
   return (
     <div ref={wrapperRef} className="settings-outer-wrapper">
@@ -81,8 +88,9 @@ export default function Settings() {
         />
       </div>
       <div ref={containerRef} className="settings-grid-wrapper">
-        <h3>Aktywny kurs</h3>
+        <h3 className="text-4xl mb-6">Aktywny kurs</h3>
         <CourseChoiceGrid
+          courses={courses}
           currentCourseId={courseId}
           containerRef={containerRef}
           fastForward={false}

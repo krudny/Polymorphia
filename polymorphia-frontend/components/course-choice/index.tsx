@@ -34,7 +34,6 @@ export default function CourseChoiceGrid({
       containerRef={containerRef}
       cards={cards}
       maxColumns={colNumber}
-      maxRows={courses.length / 2}
     />
   );
 }

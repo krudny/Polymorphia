@@ -20,8 +20,4 @@
 
 .settings-grid-wrapper{
     @apply flex flex-col items-start justify-start mt-10 max-w-full lg:max-h-[400px] lg:w-4xl 2xl:w-7xl;
-
-    h3{
-        @apply text-4xl mb-6;
-    }
 }

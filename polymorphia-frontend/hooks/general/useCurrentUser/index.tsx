@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
+import {useQuery} from "@tanstack/react-query";
 import UserService from "@/app/(logged-in)/profile/UserService";
-import { UseCurrentUser } from "@/hooks/general/useUser/types";
+import {UseCurrentUser} from "@/hooks/general/useCurrentUser/types";
 
 export default function useCurrentUser(): UseCurrentUser {
   const { data, isLoading } = useQuery({

@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "../../../styles/globals.css";
+
 .profile-speed-dial-desktop{
   @apply right-5 bottom-5 hidden lg:fixed xl:block z-[999] -mb-4;
 
