@@ -31,6 +31,34 @@ jobs:
           
           PGPASSWORD="${{ secrets.TEST_DB_PASSWORD }}" psql -h "${{ secrets.TEST_DB_HOST }}" -p "${{ secrets.TEST_DB_PORT }}" -U "${{ secrets.TEST_DB_USER }}" "${{ secrets.TEST_DB_NAME }}" < staging_dump.sql > /dev/null 2>&1
 
+      - name: Clean old code on VM
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.STAGING_VM_IP }}
+          username: ${{ secrets.STAGING_VM_USER }}
+          key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+          script: |
+            rm -rf ~/polymorphia
+
+      - name: Clone repository to VM
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.STAGING_VM_IP }}
+          username: ${{ secrets.STAGING_VM_USER }}
+          key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+          script: |
+            git clone --depth 1 --branch "${{ github.head_ref }}" https://github.com/${{ github.repository }}.git ~/polymorphia
+      
+      - name: Install frontend dependencies
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.STAGING_VM_IP }}
+          username: ${{ secrets.STAGING_VM_USER }}
+          key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+          script: |
+            cd ~/polymorphia/polymorphia-frontend
+            npm install
+
   migrate:
     needs: setup-environment
     runs-on: ubuntu-latest
@@ -55,27 +83,10 @@ jobs:
             migrate
 
   build-backend:
+    needs: setup-environment
     runs-on: ubuntu-latest
     
     steps:
-      - name: Clean old code on VM
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.STAGING_VM_IP }}
-          username: ${{ secrets.STAGING_VM_USER }}
-          key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
-          script: |
-            rm -rf ~/polymorphia
-
-      - name: Clone repository to VM
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.STAGING_VM_IP }}
-          username: ${{ secrets.STAGING_VM_USER }}
-          key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
-          script: |
-            git clone --depth 1 --branch "${{ github.head_ref }}" https://github.com/${{ github.repository }}.git ~/polymorphia
-
       - name: Clean Docker resources
         uses: appleboy/ssh-action@v1
         with:
@@ -146,6 +157,43 @@ jobs:
               -v ~/polymorphia-static:/app/static \
               polymorphia-backend:test-latest \
               --spring.config.location=file:/app/config/application-dev.properties
+
+  build-frontend:
+    needs: setup-environment
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Build frontend
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.STAGING_VM_IP }}
+          username: ${{ secrets.STAGING_VM_USER }}
+          key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+          script: |
+            cd ~/polymorphia/polymorphia-frontend
+            npm run build
+        
+  run-frontend:
+    needs: [build-frontend, run-backend]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run frontend
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.STAGING_VM_IP }}
+          username: ${{ secrets.STAGING_VM_USER }}
+          key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+          script: |
+            npm install -g pm2 || true
+            
+            pm2 delete polymorphia-frontend || true
+            
+            cd ~/polymorphia/polymorphia-frontend
+            
+            pm2 serve build 3000 --spa --name "polymorphia-frontend"
+            
+            pm2 save
 
   deploy-success:
     needs: [setup-environment, migrate, build-backend, test-backend, run-backend]
