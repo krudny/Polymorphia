@@ -165,7 +165,7 @@ jobs:
             npm install
 
   build-frontend:
-    needs: setup-environment
+    needs: [setup-environment, install-frontend-deps]
     runs-on: ubuntu-latest
 
     steps:
