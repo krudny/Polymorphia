@@ -125,23 +125,13 @@ public class CSVService {
     }
 
     public CSVResponseDto getCSVPreview(CSVPreviewRequestDto request) {
-        // Logowanie request
-        System.out.println("=== CSV PREVIEW REQUEST ===");
-        System.out.println("Request csvHeaders: " + request.getCsvHeaders());
-        System.out.println("Request file name: " + (request.getFile() != null ? request.getFile().getOriginalFilename() : "null"));
-
         Map<String, String> headers = generalMapper.stringToMap(request.getCsvHeaders());
         CSVResponseDto csv = readCSV(request.getFile(), CSVReadMode.ALL);
-
-        // Logowanie po sparsowaniu
-        System.out.println("Parsed headers map: " + headers);
-        System.out.println("CSV original headers: " + csv.csvHeaders());
 
         List<Integer> indices = headers.values().stream()
                 .map(header -> CSVUtil.getColumnIndex(csv.csvHeaders(), header))
                 .toList();
 
-        System.out.println("Column indices: " + indices);
 
         if (indices.contains(-1)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Selected header not present in CSV");
@@ -149,29 +139,12 @@ public class CSVService {
 
         String[] previewHeaders = headers.keySet().toArray(new String[0]);
 
-        // Logowanie previewHeaders
-        System.out.println("=== PREVIEW HEADERS ===");
-        System.out.println("Preview Headers: " + Arrays.toString(previewHeaders));
-
         List<String[]> previewData = csv.data().stream()
                 .map(row -> indices.stream()
                         .mapToInt(i -> i)
                         .mapToObj(i -> row[i])
                         .toArray(String[]::new))
                 .toList();
-
-        // Logowanie previewData (pierwsze 5 wierszy, aby uniknąć zbyt dużego loga)
-        System.out.println("=== PREVIEW DATA ===");
-        System.out.println("Total rows: " + previewData.size());
-        previewData.stream()
-                .limit(5)
-                .forEach(row -> System.out.println("Preview Data Row: " + Arrays.toString(row)));
-
-        if (previewData.size() > 5) {
-            System.out.println("... (showing only first 5 rows)");
-        }
-
-        System.out.println("=== END PREVIEW LOG ===");
 
         return new CSVResponseDto(Arrays.asList(previewHeaders), previewData);
     }

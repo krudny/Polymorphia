@@ -26,8 +26,6 @@ const CSVService = {
     formData.append('file', file);
     formData.append('csvHeaders', JSON.stringify(headers));
 
-    console.log(formData);
-
     const response = await fetch(`${API_HOST}/csv/preview`, {
       method: 'POST',
       body: formData,
