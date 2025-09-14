@@ -37,10 +37,10 @@ public abstract class ControllerTestConfig {
         registry.add("spring.datasource.username", postgres::getUsername);
         registry.add("spring.datasource.password", postgres::getPassword);
 
-        registry.add("app.database.password", () -> System.getenv("DB_PASSWORD"));
-        registry.add("app.api.key", () -> System.getenv("API_KEY"));
-        registry.add("app.custom.secret", () -> System.getenv("CUSTOM_SECRET"));
-        registry.add("spring.jpa.hibernate.ddl-auto", () -> "update"); //TODO:!!!
+        registry.add("initial.user.firstName", () -> "Demo");
+        registry.add("initial.user.lastName", () -> "User");
+        registry.add("initial.user.email", () -> "demo@test.com");
+        registry.add("initial.user.password", () -> "testPassword");
     }
 
     @BeforeEach

@@ -160,7 +160,14 @@ jobs:
           username: ${{ secrets.STAGING_VM_USER }}
           key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
           script: |
-            sudo apt install nodejs npm -y || true
+            sudo fuser -vki /var/lib/dpkg/lock-frontend || true
+            sudo fuser -vki /var/cache/apt/archives/lock || true
+            
+            if ! command -v npm &> /dev/null; then
+              sudo apt update
+              sudo apt install nodejs npm -y
+            fi
+
             cd ~/polymorphia/polymorphia-frontend
             npm install
 
