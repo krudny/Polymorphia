@@ -1,27 +1,28 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { useTitle } from "@/components/navigation/TitleContext";
 import CourseChoiceGrid from "@/components/course-choice";
 import "./index.css";
+import useUserCourses from "@/hooks/course/useUserCourses";
+import Loading from "@/components/loading/Loading";
+import {useFadeInAnimate} from "@/animations/FadeIn";
 
 export default function CourseChoice() {
-  const { setTitle } = useTitle();
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const { data: courses, isLoading } = useUserCourses();
+  const wrapperRef = useFadeInAnimate(!isLoading);
 
-  useEffect(() => {
-    setTitle("Wybierz kurs");
-  }, [setTitle]);
+  if (isLoading || !courses) {
+    return <Loading />;
+  }
 
   return (
-    <div className="course-choice-outer-grid-wrapper">
-      <div ref={containerRef} className="course-choice-inner-grid-wrapper">
+      <div ref={wrapperRef} className="course-choice-wrapper">
+        <h1 className="course-choice-text">Wybierz kurs</h1>
         <CourseChoiceGrid
+          courses={courses}
           redirectPage="/profile"
-          containerRef={containerRef}
+          containerRef={wrapperRef}
           fastForward={true}
         />
-      </div>
     </div>
   );
 }

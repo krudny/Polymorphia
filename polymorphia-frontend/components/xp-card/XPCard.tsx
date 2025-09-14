@@ -1,7 +1,7 @@
 import clsx from "clsx";
-import { tv } from "tailwind-variants";
+import {tv} from "tailwind-variants";
 import "./index.css";
-import { XPCardProps, XPCardVariantProps } from "@/components/xp-card/types";
+import {XPCardProps, XPCardVariantProps} from "@/components/xp-card/types";
 
 export const colorVariants = tv({
   slots: {
@@ -84,6 +84,7 @@ const xpCard = tv({
 export default function XPCard({
   title,
   subtitle,
+  details,
   leftComponent,
   rightComponent,
   onClick,
@@ -115,6 +116,7 @@ export default function XPCard({
       <div className="xp-card-middle">
         <h1>{title}</h1>
         <h2>{subtitle}</h2>
+        <h2>{details}</h2>
       </div>
       {rightComponent && (
         <div className="xp-card-component xp-card-right-component">

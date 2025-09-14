@@ -1,8 +1,8 @@
 "use client";
 
-import { MenuOption } from "@/components/navigation/types";
-import { EventSectionResponseDTO } from "@/interfaces/api/course";
-import { RefObject } from "react";
+import {MenuOption} from "@/components/navigation/types";
+import {EventSectionResponseDTO} from "@/interfaces/api/course";
+import {RefObject} from "react";
 
 export function updateMenuItems(
   menuItems: MenuOption[],
@@ -72,6 +72,8 @@ export function setResizeObserver(
 
       const maxRows = height <= 550 ? 2 : height >= 900 ? 4 : 3;
       const minCols = window.innerWidth >= 1280 ? 2 : 1;
+
+      console.log(rows, maxRows, height)
 
       setPageRows(Math.max(Math.min(rows, maxRows), 1));
       setPageCols(Math.max(Math.min(cols, maxColumns), minCols));

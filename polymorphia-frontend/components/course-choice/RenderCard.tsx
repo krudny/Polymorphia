@@ -1,8 +1,8 @@
 import XPCard from "@/components/xp-card/XPCard";
-import { RoleTextMap } from "@/interfaces/api/user";
+import {RoleTextMap} from "@/interfaces/api/user";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
-import { RenderCardProps } from "@/components/course-choice/types";
-import { ReactNode } from "react";
+import {RenderCardProps} from "@/components/course-choice/types";
+import {ReactNode} from "react";
 
 export default function renderCard({
   availableCourse,
@@ -14,7 +14,8 @@ export default function renderCard({
   return (
     <XPCard
       title={name}
-      subtitle={`Koordynator: ${coordinatorName}, Twoja rola: ${RoleTextMap[userRole]}`}
+      subtitle={`Koordynator: ${coordinatorName}`}
+      details={`Twoja rola: ${RoleTextMap[userRole]}`}
       key={id}
       color={
         currentCourseId != null && currentCourseId === id ? "green" : "silver"

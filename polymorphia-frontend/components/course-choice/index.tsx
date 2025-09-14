@@ -1,19 +1,16 @@
-import Loading from "@/components/loading/Loading";
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
-import { CourseChoiceProps } from "@/components/course-choice/types";
-import { useEffect } from "react";
+import {CourseChoiceProps} from "@/components/course-choice/types";
+import {useEffect} from "react";
 import usePreferredCourseUpdate from "@/hooks/course/usePreferredCourseUpdate";
-import useUserCourses from "@/hooks/course/useUserCourses";
 import renderCard from "@/components/course-choice/RenderCard";
 
 export default function CourseChoiceGrid({
+  courses,
   redirectPage,
   currentCourseId,
   containerRef,
   fastForward,
 }: CourseChoiceProps) {
-  const { data: courses, isLoading } = useUserCourses();
-
   const handleCourseSelection = usePreferredCourseUpdate({ redirectPage });
 
   useEffect(() => {
@@ -21,10 +18,6 @@ export default function CourseChoiceGrid({
       handleCourseSelection(courses[0].id);
     }
   }, [courses, fastForward, handleCourseSelection]);
-
-  if (isLoading || !courses) {
-    return <Loading />;
-  }
 
   if (fastForward && courses.length === 1) {
     return null;
@@ -35,11 +28,13 @@ export default function CourseChoiceGrid({
   );
 
   const colNumber = Math.min(cards.length - (cards.length % 2), 4);
+
   return (
     <XPCardGrid
       containerRef={containerRef}
       cards={cards}
       maxColumns={colNumber}
+      maxRows={courses.length / 2}
     />
   );
 }

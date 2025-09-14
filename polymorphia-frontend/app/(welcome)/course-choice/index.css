@@ -1,10 +1,10 @@
 @import "tailwindcss";
 @import "../../../styles/globals.css";
 
-.course-choice-outer-grid-wrapper{
-    @apply flex justify-center items-center h-screen
+.course-choice-wrapper {
+    @apply flex-col-centered m-auto w-full sm:w-4/5 md:w-xl xl:w-5xl;
 }
 
-.course-choice-inner-grid-wrapper{
-    @apply max-w-full flex-col-centered lg:min-h-[600px] lg:w-4xl 2xl:w-7xl;
+.course-choice-text {
+    @apply text-5xl mb-7;
 }

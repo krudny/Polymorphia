@@ -1,16 +1,17 @@
 import "../pagination/index.css";
-import { Fragment, useEffect, useRef, useState } from "react";
+import {Fragment, useEffect, useRef, useState} from "react";
 import clsx from "clsx";
-import { useXPGridAnimation } from "@/animations/XPGrid";
+import {useXPGridAnimation} from "@/animations/XPGrid";
 import "./index.css";
-import { CardGridProps } from "@/components/xp-card/types";
+import {CardGridProps} from "@/components/xp-card/types";
 import Pagination from "@/components/pagination/Pagination";
-import { setResizeObserver } from "@/components/course/event-section/EventSectionUtils";
+import {setResizeObserver} from "@/components/course/event-section/EventSectionUtils";
 
 export default function XPCardGrid({
   containerRef,
   cards,
   maxColumns = 3,
+  maxRows = cards.length,
 }: CardGridProps) {
   const sliderRef = useRef<HTMLDivElement | null>(null);
 
@@ -34,6 +35,8 @@ export default function XPCardGrid({
     setFirstRender
   );
 
+  console.log(maxRows)
+
   useEffect(() => {
     return setResizeObserver(
       containerRef,
@@ -41,9 +44,9 @@ export default function XPCardGrid({
       setPageCols,
       setPageRows,
       maxColumns,
-      cards.length
+      maxRows,
     );
-  }, [containerRef, maxColumns, cards.length]);
+  }, [containerRef, maxColumns, maxRows]);
 
   const pageSize = pageRows * pageCols;
   const pageCount = Math.ceil(cards.length / pageSize);
