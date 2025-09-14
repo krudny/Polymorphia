@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class CSVProcessRequestDto {
+public class StudentInvitationProcessRequestDto {
     @NotNull
     private CSVType type;
 

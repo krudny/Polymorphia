@@ -1,14 +1,13 @@
 package com.agh.polymorphia_backend.service.csv;
 
 import com.agh.polymorphia_backend.dto.request.csv.CSVPreviewRequestDto;
-import com.agh.polymorphia_backend.dto.request.csv.CSVProcessRequestDto;
 import com.agh.polymorphia_backend.dto.response.csv.CSVHeadersResponseDto;
 import com.agh.polymorphia_backend.dto.response.csv.CSVResponseDto;
-import com.agh.polymorphia_backend.service.csv.processors.CSVProcessor;
 import com.agh.polymorphia_backend.service.mapper.GeneralMapper;
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import lombok.AllArgsConstructor;
 import org.apache.commons.io.ByteOrderMark;
 import org.apache.commons.io.input.BOMInputStream;
 import org.springframework.http.HttpStatus;
@@ -24,21 +23,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class CSVService {
     private final GeneralMapper generalMapper;
-    private final Map<CSVType, CSVProcessor> processors;
-
-    public CSVService(GeneralMapper generalMapper, List<CSVProcessor> processorList) {
-        this.generalMapper = generalMapper;
-        this.processors = processorList.stream()
-                .collect(Collectors.toMap(
-                        CSVProcessor::getSupportedType,
-                        processor -> processor
-                ));
-    }
 
     public CSVResponseDto readCSV(MultipartFile file, CSVReadMode mode) {
         Charset detectedCharset = CSVUtil.detectCharset(file);
@@ -142,15 +131,5 @@ public class CSVService {
                 .mapToInt(i -> i)
                 .mapToObj(i -> row[i])
                 .toArray(String[]::new);
-    }
-
-    public void processCSV(CSVProcessRequestDto request) {
-        CSVProcessor processor = processors.get(request.getType());
-
-        if (processor == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No processor found for type: " + request.getType());
-        }
-
-        processor.process(request);
     }
 }

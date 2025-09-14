@@ -5,6 +5,7 @@ export interface UseCSVProcessUpdateParams {
   type: ImportCSVType;
   csvHeaders: string[];
   data: string[][];
+  gradableEventId?: number;
 }
 
 export interface UseCSVProcessUpdate {

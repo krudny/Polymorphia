@@ -1,19 +1,11 @@
 package com.agh.polymorphia_backend.service.csv.processors;
 
-import com.agh.polymorphia_backend.dto.request.csv.CSVProcessRequestDto;
-import com.agh.polymorphia_backend.service.csv.CSVType;
+import com.agh.polymorphia_backend.dto.request.csv.StudentInvitationProcessRequestDto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class StudentInvitationProcessor implements CSVProcessor {
-
-    @Override
-    public CSVType getSupportedType() {
-        return CSVType.STUDENT_INVITE;
-    }
-
-    @Override
-    public void process(CSVProcessRequestDto request) {
+public class StudentInvitationProcessor  {
+    public void process(StudentInvitationProcessRequestDto request) {
         // TODO: logic
     }
 }

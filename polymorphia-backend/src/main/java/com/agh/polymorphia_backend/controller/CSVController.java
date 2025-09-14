@@ -1,11 +1,14 @@
 package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.request.csv.CSVPreviewRequestDto;
-import com.agh.polymorphia_backend.dto.request.csv.CSVProcessRequestDto;
+import com.agh.polymorphia_backend.dto.request.csv.StudentInvitationProcessRequestDto;
+import com.agh.polymorphia_backend.dto.request.csv.TestGradingProcessRequestDto;
 import com.agh.polymorphia_backend.dto.response.csv.CSVHeadersResponseDto;
 import com.agh.polymorphia_backend.dto.response.csv.CSVResponseDto;
 import com.agh.polymorphia_backend.service.csv.CSVService;
 import com.agh.polymorphia_backend.service.csv.CSVType;
+import com.agh.polymorphia_backend.service.csv.processors.StudentInvitationProcessor;
+import com.agh.polymorphia_backend.service.csv.processors.TestGradingProcessor;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,7 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/csv")
 @AllArgsConstructor
 public class CSVController {
-    private CSVService csvService;
+    private final CSVService csvService;
+    private final TestGradingProcessor testGradingProcessor;
+    private final StudentInvitationProcessor studentInvitationProcessor;
 
     @PostMapping("/headers")
     @PreAuthorize("isAuthenticated()")
@@ -30,9 +35,17 @@ public class CSVController {
         return ResponseEntity.ok(csvService.getCSVPreview(request));
     }
 
-    @PostMapping("/process")
+    @PostMapping("/process/test-grade")
     @PreAuthorize("isAuthenticated()")
-    public void processCSV(@RequestBody CSVProcessRequestDto request) {
-        csvService.processCSV(request);
+    public void processTestGradeCSV(@RequestBody TestGradingProcessRequestDto request) {
+        testGradingProcessor.process(request);
     }
+
+    @PostMapping("/process/student-invite")
+    @PreAuthorize("isAuthenticated()")
+    public void processStudentInviteCSV(@RequestBody StudentInvitationProcessRequestDto request) {
+        studentInvitationProcessor.process(request);
+    }
+
+
 }

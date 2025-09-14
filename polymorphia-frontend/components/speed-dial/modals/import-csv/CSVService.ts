@@ -1,5 +1,5 @@
 import {API_HOST} from "@/services/api";
-import {ImportCSVType} from "@/interfaces/general";
+import {ImportCSVType, ImportCSVTypes} from "@/interfaces/general";
 import {CSVHeadersResponseDTO, CSVPreviewResponseDTO} from "@/interfaces/api/CSV";
 
 const CSVService = {
@@ -39,28 +39,54 @@ const CSVService = {
     return await response.json();
   },
 
-  processCSV: async (type: ImportCSVType, csvHeaders: string[], data: string[][]): Promise<void> => {
+  processCSV: async (type: ImportCSVType, csvHeaders: string[], data: string[][], gradableEventId?: number): Promise<void> => {
+    console.log(type, csvHeaders, data, gradableEventId);
+
+    if (type === ImportCSVTypes.GRADE_IMPORT) {
+      await CSVService.processGradeImport(csvHeaders, data, gradableEventId);
+    } else {
+      await CSVService.processStudentInvite(csvHeaders, data);
+    }
+  },
+
+  processGradeImport: async (csvHeaders: string[], data: string[][], gradableEventId?: number): Promise<void> => {
     const body = JSON.stringify({
-      type: type,
+      type: ImportCSVTypes.GRADE_IMPORT,
       csvHeaders: csvHeaders,
       data: data,
+      ...(gradableEventId && { gradableEventId })
     });
 
-    const response = await fetch(`${API_HOST}/csv/process`, {
+    const response = await fetch(`${API_HOST}/csv/process/test-grade`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: body,
       credentials: "include"
     });
 
     if (!response.ok) {
-      throw new Error("Failed to process csv!");
+      throw new Error("Failed to process grade import!");
     }
-
-    return;
   },
+
+  processStudentInvite: async (csvHeaders: string[], data: string[][]): Promise<void> => {
+    const body = JSON.stringify({
+      type: ImportCSVTypes.STUDENT_INVITE,
+      csvHeaders: csvHeaders,
+      data: data,
+    });
+
+    const response = await fetch(`${API_HOST}/csv/process/student-invite`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: body,
+      credentials: "include"
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to process student invite!");
+    }
+  }
 }
 
 export default CSVService;
