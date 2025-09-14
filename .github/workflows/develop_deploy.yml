@@ -146,3 +146,11 @@ jobs:
               -v ~/polymorphia-static:/app/static \
               polymorphia-backend:test-latest \
               --spring.config.location=file:/app/config/application-dev.properties
+
+  deploy-success:
+    needs: [setup-environment, migrate, build-backend, test-backend, run-backend]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: All jobs completed successfully
+        run: echo "All deployment jobs completed successfully!"
