@@ -3,7 +3,7 @@ import {ImportCSVType} from "@/interfaces/general";
 import {CSVHeadersResponseDTO, CSVPreviewResponseDTO} from "@/interfaces/api/CSV";
 
 const CSVService = {
-  getHeaders: async (file: File, type: ImportCSVType): Promise<CSVHeadersResponseDTO> => {
+  getCSVHeaders: async (file: File, type: ImportCSVType): Promise<CSVHeadersResponseDTO> => {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('type', type);
@@ -21,10 +21,12 @@ const CSVService = {
     return await response.json();
   },
 
-  getPreview: async (file: File, headers: Record<string, string>): Promise<CSVPreviewResponseDTO> => {
+  getCSVPreview: async (file: File, headers: Record<string, string>): Promise<CSVPreviewResponseDTO> => {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('headers', JSON.stringify(headers));
+    formData.append('csvHeaders', JSON.stringify(headers));
+
+    console.log(formData);
 
     const response = await fetch(`${API_HOST}/csv/preview`, {
       method: 'POST',
@@ -39,10 +41,10 @@ const CSVService = {
     return await response.json();
   },
 
-  processCSV: async (type: ImportCSVType, headers: string[], data: string[][]): Promise<void> => {
+  processCSV: async (type: ImportCSVType, csvHeaders: string[], data: string[][]): Promise<void> => {
     const body = JSON.stringify({
       type: type,
-      headers: headers,
+      csvHeaders: csvHeaders,
       data: data,
     });
 

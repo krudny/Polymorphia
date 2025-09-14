@@ -1,9 +1,9 @@
 export interface CSVHeadersResponseDTO {
-  requiredHeaders: string[];
-  fileHeaders: string[];
+  requiredCSVHeaders: string[];
+  fileCSVHeaders: string[];
 }
 
 export interface CSVPreviewResponseDTO {
-  headers: string[],
+  csvHeaders: string[],
   data: string[][],
 }

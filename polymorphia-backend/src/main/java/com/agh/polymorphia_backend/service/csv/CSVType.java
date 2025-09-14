@@ -11,9 +11,9 @@ public enum CSVType {
     STUDENT_INVITE("Email", "Imię", "Nazwisko"),
     GRADE_IMPORT("Numer indeksu", "Ocena");
 
-    private final Set<String> requiredHeaders;
+    private final Set<String> requiredCSVHeaders;
 
-    CSVType(String... headers) {
-        this.requiredHeaders = Set.of(headers);
+    CSVType(String... csvHeaders) {
+        this.requiredCSVHeaders = Set.of(csvHeaders);
     }
 }

@@ -17,17 +17,11 @@ public class TestGradingProcessor implements CSVProcessor {
 
     @Override
     public void process(CSVProcessRequestDto request) {
-        List<String> headers = request.getHeaders();
+        List<String> headers = request.getCsvHeaders();
 
         int indexColumnIndex = CSVUtil.getColumnIndex(headers,"Numer indeksu");
         int gradeColumnIndex = CSVUtil.getColumnIndex(headers,"Ocena");
 
-        for (String[] row : request.getData()) {
-            String studentIndex = row[indexColumnIndex].trim();
-            String gainedXP = row[gradeColumnIndex].trim();
-
-            // TODO: this is temporary because we dont have grading logic and validation
-            System.out.println("Przetworzono: " + studentIndex + " " + gainedXP);
-        }
+        // TODO: logic
     }
 }

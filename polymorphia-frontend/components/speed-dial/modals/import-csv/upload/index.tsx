@@ -9,7 +9,7 @@ import "./index.css"
 import "../index.css"
 
 export default function UploadCSV(): ReactNode {
-  const { selectedFile, importType, setSelectedFile, headersMutation, goBackToUpload } = useImportCSVContext();
+  const { selectedFile, importType, setSelectedFile, csvHeadersMutation, goBackToUpload } = useImportCSVContext();
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
@@ -31,12 +31,12 @@ export default function UploadCSV(): ReactNode {
       'text/csv': ['.csv'],
     },
     multiple: false,
-    disabled: headersMutation.isPending,
+    disabled: csvHeadersMutation.isPending,
   });
 
   const handleUpload = () => {
     if (selectedFile) {
-      headersMutation.mutate({ file: selectedFile, type: importType });
+      csvHeadersMutation.mutate({ file: selectedFile, type: importType });
     }
   };
 
@@ -51,7 +51,7 @@ export default function UploadCSV(): ReactNode {
       >
         <input {...getInputProps()} />
 
-        {headersMutation.isPending ? (
+        {csvHeadersMutation.isPending ? (
           <>
             <span className="import-csv-upload-icon">hourglass_empty</span>
             <span className="import-csv-text">Przesyłanie...</span>
@@ -76,7 +76,7 @@ export default function UploadCSV(): ReactNode {
 
       <div className="import-csv-button-wrapper">
         <ButtonWithBorder
-          text={headersMutation.isPending ? "Przesyłanie..." : selectedFile ? "Analizuj plik" : "Prześlij"}
+          text={csvHeadersMutation.isPending ? "Przesyłanie..." : selectedFile ? "Analizuj plik" : "Prześlij"}
           className="!mx-0 !py-0 !w-full"
           onClick={handleUpload}
         />

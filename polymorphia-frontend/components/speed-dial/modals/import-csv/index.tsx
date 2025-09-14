@@ -11,18 +11,18 @@ import PreviewCSV from "@/components/speed-dial/modals/import-csv/preview";
 
 const ImportCSVContent = ({ onClosedAction }: SpeedDialModalProps) => {
   const {
-    headersMutation,
-    previewMutation,
+    csvHeadersMutation,
+    csvPreviewMutation,
   } = useImportCSVContext();
 
   const renderData = (): { content: ReactNode; subtitle?: string } => {
-    if (previewMutation.isSuccess && previewMutation.data) {
+    if (csvPreviewMutation.isSuccess && csvPreviewMutation.data) {
       return {
         content: <PreviewCSV />,
         subtitle: "Sprawdź, czy dane się zgadzają:",
       };
     }
-    if (headersMutation.isSuccess && headersMutation.data) {
+    if (csvHeadersMutation.isSuccess && csvHeadersMutation.data) {
       return {
         content: <PickCSVHeaders />,
         subtitle: "Dopasuj kolumny z pliku do wymaganych pól:",

@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 
 export default function useCSVProcessUpdate(): UseCSVProcessUpdate {
   const mutation = useMutation<void, Error, UseCSVProcessUpdateParams>({
-    mutationFn: ({ headers, type, data }) => CSVService.processCSV(type, headers, data),
+    mutationFn: ({ csvHeaders, type, data }) => CSVService.processCSV(type, csvHeaders, data),
     onSuccess: () => {
       toast.success("Przetwarzanie zakończyło się sukcesem");
     },

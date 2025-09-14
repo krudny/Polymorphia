@@ -2,8 +2,8 @@ package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.request.csv.CSVPreviewRequestDto;
 import com.agh.polymorphia_backend.dto.request.csv.CSVProcessRequestDto;
+import com.agh.polymorphia_backend.dto.response.csv.CSVHeadersResponseDto;
 import com.agh.polymorphia_backend.dto.response.csv.CSVResponseDto;
-import com.agh.polymorphia_backend.dto.response.csv.HeadersResponseDto;
 import com.agh.polymorphia_backend.service.csv.CSVService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +19,14 @@ public class CSVController {
 
     @PostMapping("/headers")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<HeadersResponseDto> getHeaders(@RequestParam MultipartFile file, @RequestParam String type) {
-        return ResponseEntity.ok(csvService.getHeaders(file, type));
+    public ResponseEntity<CSVHeadersResponseDto> getCSVHeaders(@RequestParam MultipartFile file, @RequestParam String type) {
+        return ResponseEntity.ok(csvService.getCSVHeaders(file, type));
     }
 
     @PostMapping("/preview")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<CSVResponseDto> getPreview(@ModelAttribute CSVPreviewRequestDto request) {
-        return ResponseEntity.ok(csvService.getPreview(request));
+    public ResponseEntity<CSVResponseDto> getCSVPreview(@ModelAttribute CSVPreviewRequestDto request) {
+        return ResponseEntity.ok(csvService.getCSVPreview(request));
     }
 
     @PostMapping("/process")

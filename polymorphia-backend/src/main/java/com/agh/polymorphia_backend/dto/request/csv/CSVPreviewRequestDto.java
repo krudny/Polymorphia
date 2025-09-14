@@ -10,5 +10,5 @@ public class CSVPreviewRequestDto {
     private MultipartFile file;
 
     @NotNull
-    private String headers;
+    private String csvHeaders;
 }

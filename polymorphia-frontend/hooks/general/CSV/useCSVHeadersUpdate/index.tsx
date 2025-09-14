@@ -5,7 +5,7 @@ import {CSVHeadersResponseDTO} from "@/interfaces/api/CSV";
 
 export default function useCSVHeadersUpdate(): UseCSVHeadersUpdate {
   const mutation = useMutation<CSVHeadersResponseDTO, Error, UseCSVHeadersUpdateParams>({
-    mutationFn: ({ file, type }) => CSVService.getHeaders(file, type),
+    mutationFn: ({ file, type }) => CSVService.getCSVHeaders(file, type),
   });
 
   return { mutation };

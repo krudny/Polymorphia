@@ -3,7 +3,7 @@ import {ImportCSVType} from "@/interfaces/general";
 
 export interface UseCSVProcessUpdateParams {
   type: ImportCSVType;
-  headers: string[];
+  csvHeaders: string[];
   data: string[][];
 }
 

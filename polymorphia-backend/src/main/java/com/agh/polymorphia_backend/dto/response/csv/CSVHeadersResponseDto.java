@@ -11,10 +11,10 @@ import java.util.List;
 @Builder
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class HeadersResponseDto {
+public class CSVHeadersResponseDto {
     @NotNull
-    private List<String> requiredHeaders;
+    private List<String> requiredCSVHeaders;
 
     @NotNull
-    private List<String> fileHeaders;
+    private List<String> fileCSVHeaders;
 }

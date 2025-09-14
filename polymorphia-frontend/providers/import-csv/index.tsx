@@ -14,9 +14,9 @@ export const ImportCSVProvider = ({ children }: ImportCSVProviderProps) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [importType, setImportType] = useState<ImportCSVType | null>(null);
   const [headerMapping, setHeaderMapping] = useState<Record<string, string>>({});
-  const { mutation: headersMutation } = useCSVHeadersUpdate();
-  const { mutation: previewMutation } = useCSVPreviewUpdate();
-  const { mutation: processMutation } = useCSVProcessUpdate();
+  const { mutation: csvHeadersMutation } = useCSVHeadersUpdate();
+  const { mutation: csvPreviewMutation } = useCSVPreviewUpdate();
+  const { mutation: csvProcessMutation } = useCSVProcessUpdate();
 
   // TODO: not super logic
   useEffect(() => {
@@ -30,8 +30,8 @@ export const ImportCSVProvider = ({ children }: ImportCSVProviderProps) => {
   const goBackToUpload = () => {
     setSelectedFile(null);
     setHeaderMapping({});
-    headersMutation.reset();
-    previewMutation.reset();
+    csvHeadersMutation.reset();
+    csvPreviewMutation.reset();
   };
 
   if(!importType) {
@@ -43,9 +43,9 @@ export const ImportCSVProvider = ({ children }: ImportCSVProviderProps) => {
       selectedFile,
       setSelectedFile,
       importType,
-      headersMutation,
-      previewMutation,
-      processMutation,
+      csvHeadersMutation,
+      csvPreviewMutation,
+      csvProcessMutation,
       headerMapping,
       setHeaderMapping,
       goBackToUpload,

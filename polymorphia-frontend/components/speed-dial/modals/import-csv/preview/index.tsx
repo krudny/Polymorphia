@@ -5,20 +5,20 @@ import "./index.css";
 import "../index.css";
 
 export default function PreviewCSV() {
-  const {selectedFile, importType, previewMutation, processMutation, goBackToUpload} = useImportCSVContext();
+  const {selectedFile, importType, csvPreviewMutation, csvProcessMutation, goBackToUpload} = useImportCSVContext();
   const { closeModal } = useModalContext();
 
-  if (!previewMutation.data || !selectedFile) {
+  if (!csvPreviewMutation.data || !selectedFile) {
     return null;
   }
 
   const handleConfirm = () => {
-    processMutation.mutate({ type: importType, headers: previewMutation.data.headers, data: previewMutation.data.data });
+    csvProcessMutation.mutate({ type: importType, csvHeaders: csvPreviewMutation.data.csvHeaders, data: csvPreviewMutation.data.data });
     closeModal();
   }
 
-  const { headers, data } = previewMutation.data;
-  const gridTemplateColumns = `repeat(${headers.length}, minmax(150px, 1fr))`;
+  const { csvHeaders, data } = csvPreviewMutation.data;
+  const gridTemplateColumns = `repeat(${csvHeaders.length}, minmax(150px, 1fr))`;
 
   return (
     <div className="import-csv">
@@ -26,9 +26,9 @@ export default function PreviewCSV() {
         <div className="table" style={{
           gridTemplateColumns: gridTemplateColumns,
         }}>
-          {headers.map((header, index) => (
+          {csvHeaders.map((csvHeader, index) => (
             <div className="table-header" key={`header-${index}`}>
-              {header}
+              {csvHeader}
             </div>
           ))}
 

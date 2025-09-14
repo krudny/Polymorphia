@@ -5,10 +5,10 @@ import "./index.css";
 import "../index.css";
 
 export default function PickCSVHeaders() {
-  const {headersMutation, previewMutation, selectedFile, headerMapping, setHeaderMapping, goBackToUpload} = useImportCSVContext();
+  const {csvHeadersMutation, csvPreviewMutation, selectedFile, headerMapping, setHeaderMapping, goBackToUpload} = useImportCSVContext();
 
-  const isAllMapped = headersMutation.data?.requiredHeaders.every(
-    header => headerMapping[header]
+  const isAllMapped = csvHeadersMutation.data?.requiredCSVHeaders.every(
+    csvHeader => headerMapping[csvHeader]
   );
 
   const handlePickHeaders = () => {
@@ -18,33 +18,33 @@ export default function PickCSVHeaders() {
     }
 
     if (selectedFile) {
-      previewMutation.mutate({ file: selectedFile, headers: headerMapping });
+      csvPreviewMutation.mutate({ file: selectedFile, csvHeaders: headerMapping });
     }
   };
 
   return (
     <div className="import-csv">
       <div className="headers-mapping">
-        {headersMutation.data?.requiredHeaders.map((header) => {
+        {csvHeadersMutation.data?.requiredCSVHeaders.map((csvHeader) => {
           return (
-            <div className="csv-header-mapping" key={header}>
-              <h3>{header}</h3>
+            <div className="csv-header-mapping" key={csvHeader}>
+              <h3>{csvHeader}</h3>
               <select
                 className="csv-header-select"
-                value={headerMapping[header] || ""}
+                value={headerMapping[csvHeader] || ""}
                 onChange={(event) => {
                   setHeaderMapping(prev => ({
                     ...prev,
-                    [header]: event.target.value
+                    [csvHeader]: event.target.value
                   }));
                 }}
               >
                 <option value="" disabled>
                   Wybierz kolumnę
                 </option>
-                {headersMutation.data?.fileHeaders.map((fileHeader) => (
-                  <option key={fileHeader} value={fileHeader}>
-                    {fileHeader}
+                {csvHeadersMutation.data?.fileCSVHeaders.map((fileCSVHeader) => (
+                  <option key={fileCSVHeader} value={fileCSVHeader}>
+                    {fileCSVHeader}
                   </option>
                 ))}
               </select>

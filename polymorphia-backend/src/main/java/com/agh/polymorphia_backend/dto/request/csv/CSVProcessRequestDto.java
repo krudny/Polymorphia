@@ -11,7 +11,7 @@ public class CSVProcessRequestDto {
     private String type;
 
     @NotNull
-    private List<String> headers;
+    private List<String> csvHeaders;
 
     @NotNull
     private List<String[]> data;

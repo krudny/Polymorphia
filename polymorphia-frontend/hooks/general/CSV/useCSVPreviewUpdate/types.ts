@@ -3,7 +3,7 @@ import {CSVPreviewResponseDTO} from "@/interfaces/api/CSV";
 
 export interface UseCSVPreviewUpdateParams {
   file: File;
-  headers: Record<string, string>;
+  csvHeaders: Record<string, string>;
 }
 
 export interface UseCSVPreviewUpdate {

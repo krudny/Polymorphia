@@ -10,9 +10,9 @@ export interface ImportCSVContextInterface {
   selectedFile: File | null;
   setSelectedFile: Dispatch<SetStateAction<File | null>>;
   importType: ImportCSVType;
-  headersMutation: UseMutationResult<CSVHeadersResponseDTO, Error, UseCSVHeadersUpdateParams>;
-  previewMutation: UseMutationResult<CSVPreviewResponseDTO, Error, UseCSVPreviewUpdateParams>;
-  processMutation: UseMutationResult<void, Error, UseCSVProcessUpdateParams>;
+  csvHeadersMutation: UseMutationResult<CSVHeadersResponseDTO, Error, UseCSVHeadersUpdateParams>;
+  csvPreviewMutation: UseMutationResult<CSVPreviewResponseDTO, Error, UseCSVPreviewUpdateParams>;
+  csvProcessMutation: UseMutationResult<void, Error, UseCSVProcessUpdateParams>;
   headerMapping: Record<string, string>;
   setHeaderMapping: Dispatch<SetStateAction<Record<string, string>>>;
   goBackToUpload: () => void;
