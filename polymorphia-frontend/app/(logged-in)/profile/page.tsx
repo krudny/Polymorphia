@@ -3,17 +3,14 @@ import Image from "next/image";
 import { useScaleShow } from "@/animations/ScaleShow";
 import { API_STATIC_URL } from "@/services/api";
 import "./index.css";
-import ProgressBar from "@/components/progressbar/ProgressBar";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect, useState } from "react";
 import UserPoints from "@/components/user-points/UserPoints";
-import ProgressBarTextLabels from "@/components/progressbar/ProgressBarTextLabels";
 import { useMediaQuery } from "react-responsive";
 import Loading from "@/components/loading/Loading";
 import { Roles } from "@/interfaces/api/user";
 import useUserContext from "@/hooks/contexts/useUserContext";
 import useStudentProfile from "@/hooks/course/useStudentProfile";
-import { min } from "@popperjs/core/lib/utils/math";
 import FiltersModal from "@/components/filters-modals/FiltersModal";
 import { useProfileFilterConfigs } from "@/hooks/course/useProfileFilterConfigs";
 import { useFilters } from "@/hooks/course/useFilters";
@@ -22,6 +19,7 @@ import { filterXpDetails } from "@/providers/hall-of-fame/utils/filterXpDetails"
 import SpeedDialDesktop from "@/components/speed-dial/SpeedDialDesktop";
 import SpeedDialMobile from "@/components/speed-dial/SpeedDialMobile";
 import { ProfileFilterId } from "@/app/(logged-in)/profile/types";
+import ProfileProgressBar from "@/components/progressbar/profile";
 
 export default function Profile() {
   const { setTitle } = useTitle();
@@ -48,6 +46,7 @@ export default function Profile() {
       },
     },
   ];
+
   useEffect(() => {
     setTitle("Profil");
   }, [setTitle]);
@@ -58,7 +57,7 @@ export default function Profile() {
 
   //TODO: handle profile for other roles
   if ((userContext && userContext.userType !== Roles.STUDENT) || !profile) {
-    return <div>No data found.</div>;
+    return null;
   }
 
   const { imageUrl, userName, animalName, position } = userContext.userDetails;
@@ -151,70 +150,26 @@ export default function Profile() {
         </div>
         {/* TODO: maybe merge that */}
         <div className="profile-progress-bar-mobile">
-          <ProgressBar
-            minXP={0}
-            currentXP={min(profile.totalXp, maxPoints)}
-            maxXP={maxPoints}
+          <ProfileProgressBar
+            profile={profile}
+            maxPoints={maxPoints}
+            evolutionStages={[currentEvolutionStage, nextEvolutionStage]}
             numSquares={2}
             segmentSizes={[0, 100, 0]}
-            upperElement={
-              <ProgressBarTextLabels
-                textLabels={
-                  ([currentEvolutionStage, nextEvolutionStage]
-                    ?.map(
-                      (evolutionStage) =>
-                        `${evolutionStage.grade.toFixed(1)} (${evolutionStage.minXp.toFixed(1)}xp)`
-                    )
-                    .filter(Boolean) as string[]) || []
-                }
-                className="!min-h-8"
-                size="sm"
-              />
-            }
-            lowerElement={
-              <ProgressBarTextLabels
-                textLabels={
-                  [currentEvolutionStage, nextEvolutionStage].map(
-                    (evolutionStage) => evolutionStage.name
-                  ) || []
-                }
-                size="sm"
-              />
-            }
+            size={"sm"}
           />
         </div>
 
         <div className="profile-progress-bar-desktop">
-          <ProgressBar
-            minXP={0}
-            currentXP={min(profile.totalXp, maxPoints)}
-            maxXP={maxPoints}
-            numSquares={8}
-            segmentSizes={[0, 25, 0, 25, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0]}
-            upperElement={
-              <ProgressBarTextLabels
-                textLabels={
-                  (profile.evolutionStageThresholds
-                    ?.map(
-                      (evolutionStage) =>
-                        `${evolutionStage.grade.toFixed(1)} (${evolutionStage.minXp.toFixed(1)}xp)`
-                    )
-                    .filter(Boolean) as string[]) || []
-                }
-                className="!min-h-8"
-                size={isSm ? "sm" : "md"}
-              />
-            }
-            lowerElement={
-              <ProgressBarTextLabels
-                textLabels={
-                  profile.evolutionStageThresholds.map(
-                    (evolutionStage) => evolutionStage.name
-                  ) || []
-                }
-                size={isSm ? "sm" : "md"}
-              />
-            }
+          <ProfileProgressBar
+            profile={profile}
+            maxPoints={maxPoints}
+            evolutionStages={profile.evolutionStageThresholds}
+            numSquares={profile.evolutionStageThresholds.length}
+            segmentSizes={distributeTo100(
+              profile.evolutionStageThresholds.length
+            )}
+            size={isSm ? "sm" : "md"}
           />
         </div>
         <FiltersModal<ProfileFilterId>
@@ -228,4 +183,16 @@ export default function Profile() {
       </div>
     </div>
   );
+}
+
+function distributeTo100(n: number) {
+  const result = new Array(2 * n + 1).fill(0);
+  const base = Math.floor(100 / n);
+  const remainder = 100 % n;
+
+  for (let i = 0; i < n; i++) {
+    result[i * 2 + 1] = base + (i < remainder ? 1 : 0);
+  }
+
+  return result;
 }

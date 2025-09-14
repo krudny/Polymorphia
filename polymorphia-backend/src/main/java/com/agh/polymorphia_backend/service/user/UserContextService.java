@@ -13,6 +13,7 @@ import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -61,6 +62,7 @@ public class UserContextService {
                                 userCourseRole.getRole()
                         )
                 )
+                .sorted(Comparator.comparing(AvailableCoursesResponseDto::getId).reversed())
                 .toList();
     }
 }

@@ -48,7 +48,6 @@ export function useBottomDesktopMenuItems(): MenuOption[] {
 export function useMainMenuItems(): MenuOption[] {
   const { userType } = useUserContext();
   const items: MenuOption[] = [
-    { icon: UserIcon, text: "Profil", link: "profile" },
     {
       icon: BadgeHelpIcon,
       text: "Baza wiedzy",
@@ -65,6 +64,12 @@ export function useMainMenuItems(): MenuOption[] {
   ];
 
   if (userType === Roles.STUDENT) {
+    items.splice(0, 0, {
+      icon: UserIcon,
+      text: "Profil",
+      link: "profile",
+    });
+
     items.splice(3, 0, {
       icon: TrophyIcon,
       text: "Ekwipunek",

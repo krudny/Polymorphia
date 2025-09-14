@@ -30,6 +30,7 @@ public class UserContextMapper {
                 .id(course.getId())
                 .coordinatorName(String.join(" ", user.getFirstName(), user.getLastName()))
                 .name(course.getName())
+                .imageUrl(course.getImageUrl())
                 .userRole(role)
                 .build();
     }

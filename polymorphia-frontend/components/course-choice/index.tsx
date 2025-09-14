@@ -34,7 +34,12 @@ export default function CourseChoiceGrid({
     renderCard({ availableCourse, currentCourseId, handleCourseSelection })
   );
 
+  const colNumber = Math.min(cards.length - (cards.length % 2), 4);
   return (
-    <XPCardGrid containerRef={containerRef} cards={cards} maxColumns={2} />
+    <XPCardGrid
+      containerRef={containerRef}
+      cards={cards}
+      maxColumns={colNumber}
+    />
   );
 }
