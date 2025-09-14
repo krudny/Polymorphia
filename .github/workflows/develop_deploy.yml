@@ -55,7 +55,6 @@ jobs:
             migrate
 
   build-backend:
-    needs: migrate
     runs-on: ubuntu-latest
     
     steps:
