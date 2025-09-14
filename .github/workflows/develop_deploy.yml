@@ -58,22 +58,43 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Remove old files
-        run: rm -rf polymorphia
-
-      - name: Clone repository
-        run: git clone --depth 1 --branch "${{ github.head_ref }}" https://github.com/${{ github.repository }} polymorphia
-
-      - name: Set up Java
-        uses: actions/setup-java@v4
+      - name: Clean old code on VM
+        uses: appleboy/ssh-action@v1
         with:
-          java-version: '21'
-          distribution: 'temurin'
+          host: ${{ secrets.STAGING_VM_IP }}
+          username: ${{ secrets.STAGING_VM_USER }}
+          key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+          script: |
+            rm -rf ~/polymorphia
+
+      - name: Clone repository to VM
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.STAGING_VM_IP }}
+          username: ${{ secrets.STAGING_VM_USER }}
+          key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+          script: |
+            git clone --depth 1 --branch "${{ github.head_ref }}" https://github.com/${{ github.repository }}.git ~/polymorphia
+
+      - name: Clean Docker resources
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.STAGING_VM_IP }}
+          username: ${{ secrets.STAGING_VM_USER }}
+          key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+          script: |
+            docker image prune -a --force --filter "until=168h" || true
+            docker container prune -f
 
       - name: Build Docker image
-        working-directory: ./polymorphia/polymorphia-backend
-        run: |
-          docker build -t polymorphia-backend:test-latest -f Dockerfile .
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.STAGING_VM_IP }}
+          username: ${{ secrets.STAGING_VM_USER }}
+          key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+          script: |
+            cd ~/polymorphia/polymorphia-backend
+            docker build -t polymorphia-backend:test-latest -f Dockerfile .
 
   test-backend:
     needs: [migrate, build-backend]
