@@ -58,8 +58,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Remove old files
+        run: rm -rf polymorphia
+
+      - name: Clone repository
+        run: git clone --depth 1 --branch "${{ github.head_ref }}" https://github.com/${{ github.repository }} polymorphia
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -68,7 +71,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Build Docker image
-        working-directory: ./polymorphia-backend
+        working-directory: ./polymorphia/polymorphia-backend
         run: |
           docker build -t polymorphia-backend:test-latest -f Dockerfile .
 
