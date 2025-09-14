@@ -1,24 +1,24 @@
 "use client";
 import Image from "next/image";
-import { useScaleShow } from "@/animations/ScaleShow";
-import { API_STATIC_URL } from "@/services/api";
+import {useScaleShow} from "@/animations/ScaleShow";
+import {API_STATIC_URL} from "@/services/api";
 import "./index.css";
-import { useTitle } from "@/components/navigation/TitleContext";
-import { useEffect, useState } from "react";
+import {useTitle} from "@/components/navigation/TitleContext";
+import {useEffect, useState} from "react";
 import UserPoints from "@/components/user-points/UserPoints";
-import { useMediaQuery } from "react-responsive";
+import {useMediaQuery} from "react-responsive";
 import Loading from "@/components/loading/Loading";
-import { Roles } from "@/interfaces/api/user";
+import {Roles} from "@/interfaces/api/user";
 import useUserContext from "@/hooks/contexts/useUserContext";
 import useStudentProfile from "@/hooks/course/useStudentProfile";
 import FiltersModal from "@/components/filters-modals/FiltersModal";
-import { useProfileFilterConfigs } from "@/hooks/course/useProfileFilterConfigs";
-import { useFilters } from "@/hooks/course/useFilters";
-import { useQueryClient } from "@tanstack/react-query";
-import { filterXpDetails } from "@/providers/hall-of-fame/utils/filterXpDetails";
+import {useProfileFilterConfigs} from "@/hooks/course/useProfileFilterConfigs";
+import {useFilters} from "@/hooks/course/useFilters";
+import {useQueryClient} from "@tanstack/react-query";
+import {filterXpDetails} from "@/providers/hall-of-fame/utils/filterXpDetails";
 import SpeedDialDesktop from "@/components/speed-dial/SpeedDialDesktop";
 import SpeedDialMobile from "@/components/speed-dial/SpeedDialMobile";
-import { ProfileFilterId } from "@/app/(logged-in)/profile/types";
+import {ProfileFilterId} from "@/app/(logged-in)/profile/types";
 import ProfileProgressBar from "@/components/progressbar/profile";
 
 export default function Profile() {
@@ -35,6 +35,7 @@ export default function Profile() {
     isError: isFiltersError,
   } = useProfileFilterConfigs();
   const filters = useFilters<ProfileFilterId>(filterConfigs ?? []);
+
   const speedDialItems = [
     {
       id: 1,
