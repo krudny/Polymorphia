@@ -27,7 +27,6 @@ export const GradingContext = createContext<
   GradingContextInterface | undefined
 >(undefined);
 
-
 export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const { gradableEventId, eventType } = useEventParams();
   const [search, setSearch] = useState("");

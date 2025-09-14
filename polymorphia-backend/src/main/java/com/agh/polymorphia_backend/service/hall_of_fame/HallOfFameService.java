@@ -44,9 +44,8 @@ public class HallOfFameService {
     }
 
     private void sortByEventSectionOrderIndex(List<StudentScoreDetail> detailsList) {
-        List<Long> eventSectionIds = detailsList.stream()
-                .map(StudentScoreDetail::getEventSectionId)
-                .toList();
+        Set<Long> eventSectionIds = detailsList.stream()
+                .map(StudentScoreDetail::getEventSectionId).collect(Collectors.toSet());
 
         Map<Long, EventSection> eventSectionMap = eventSectionRepository.findByIdIn(eventSectionIds)
                 .stream()

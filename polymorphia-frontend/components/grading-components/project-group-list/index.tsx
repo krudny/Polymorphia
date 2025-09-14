@@ -10,7 +10,6 @@ import useGradingContext from "@/hooks/contexts/useGradingContext";
 import "./index.css";
 import { Fragment } from "react";
 import { useMediaQuery } from "react-responsive";
-import toast from "react-hot-toast";
 import { GradingReducerActions } from "@/providers/grading/gradingReducer/types";
 
 export default function ProjectGroupList() {
@@ -75,12 +74,14 @@ export default function ProjectGroupList() {
                 const { userName, group, imageUrl, evolutionStage } =
                   student.userDetails;
 
+                if (!userName) {
+                  throw new Error("No userName defined!");
+                }
+
                 return (
                   <XPCard
                     key={index}
-                    title={
-                      userName ? userName : toast.error("No username found!")
-                    }
+                    title={userName}
                     color={color}
                     subtitle={group}
                     size={"xs"}

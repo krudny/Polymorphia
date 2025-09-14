@@ -10,7 +10,6 @@ import useRandomUsers from "@/hooks/course/useRandomUsers";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import useModalContext from "@/hooks/contexts/useModalContext";
 import useUserContext from "@/hooks/contexts/useUserContext";
-import toast from "react-hot-toast";
 
 function GroupPickingModalContent() {
   const { closeModal } = useModalContext();
@@ -69,12 +68,13 @@ function GroupPickingModalContent() {
               allUsers?.map((user, index) => {
                 const { userName, evolutionStage, group, imageUrl } =
                   user.userDetails;
+                if (!userName) {
+                  throw new Error("No userName defined!");
+                }
                 return (
                   <div key={index} className="group-pick-card">
                     <XPCard
-                      title={
-                        userName ? userName : toast.error("No username found!")
-                      }
+                      title={userName}
                       subtitle={group + " | " + evolutionStage}
                       leftComponent={
                         <XPCardImage imageUrl={imageUrl} alt={evolutionStage} />
