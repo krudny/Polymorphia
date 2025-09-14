@@ -24,25 +24,25 @@ public class CSVController {
     private final StudentInvitationProcessor studentInvitationProcessor;
 
     @PostMapping("/headers")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<CSVHeadersResponseDto> getCSVHeaders(@RequestParam MultipartFile file, @RequestParam CSVType type) {
         return ResponseEntity.ok(csvService.getCSVHeaders(file, type));
     }
 
     @PostMapping("/preview")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<CSVResponseDto> getCSVPreview(@ModelAttribute CSVPreviewRequestDto request) {
         return ResponseEntity.ok(csvService.getCSVPreview(request));
     }
 
     @PostMapping("/process/test-grade")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
     public void processTestGradeCSV(@RequestBody TestGradingProcessRequestDto request) {
         testGradingProcessor.process(request);
     }
 
     @PostMapping("/process/student-invite")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
     public void processStudentInviteCSV(@RequestBody StudentInvitationProcessRequestDto request) {
         studentInvitationProcessor.process(request);
     }
