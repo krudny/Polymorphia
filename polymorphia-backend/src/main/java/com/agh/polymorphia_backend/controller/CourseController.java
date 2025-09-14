@@ -36,4 +36,10 @@ public class CourseController {
         return ResponseEntity.ok(knowledgeBaseService.getItems(courseId));
     }
 
+    @GetMapping("/{courseId}/items1")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<List<KnowledgeBaseResponseDto>> getItems1(@PathVariable Long courseId) {
+        return ResponseEntity.ok(knowledgeBaseService.getItems(courseId));
+    }
+
 }
