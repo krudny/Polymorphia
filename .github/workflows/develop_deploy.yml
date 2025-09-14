@@ -56,6 +56,7 @@ jobs:
           username: ${{ secrets.STAGING_VM_USER }}
           key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
           script: |
+            sudo apt install nodejs npm -y || true
             cd ~/polymorphia/polymorphia-frontend
             npm install
 
