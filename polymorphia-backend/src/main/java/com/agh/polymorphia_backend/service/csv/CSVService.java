@@ -124,7 +124,6 @@ public class CSVService {
                 .map(header -> CSVUtil.getColumnIndex(csv.csvHeaders(), header))
                 .toList();
 
-
         if (indices.contains(-1)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Selected header not present in CSV");
         }
@@ -132,13 +131,17 @@ public class CSVService {
         String[] previewHeaders = headers.keySet().toArray(new String[0]);
 
         List<String[]> previewData = csv.data().stream()
-                .map(row -> indices.stream()
-                        .mapToInt(i -> i)
-                        .mapToObj(i -> row[i])
-                        .toArray(String[]::new))
+                .map(row -> extractSelectedColumns(row, indices))
                 .toList();
 
         return new CSVResponseDto(Arrays.asList(previewHeaders), previewData);
+    }
+
+    private String[] extractSelectedColumns(String[] row, List<Integer> indices) {
+        return indices.stream()
+                .mapToInt(i -> i)
+                .mapToObj(i -> row[i])
+                .toArray(String[]::new);
     }
 
     public void processCSV(CSVProcessRequestDto request) {
