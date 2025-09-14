@@ -45,17 +45,7 @@ public class CSVService {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid encoding detected");
             }
 
-            if (mode == CSVReadMode.HEADERS_ONLY) {
-                return new CSVResponseDto(headers, null);
-            }
-
-            List<String[]> data = allRows.subList(1, allRows.size());
-
-            if (mode == CSVReadMode.DATA_ONLY) {
-                return new CSVResponseDto(null, data);
-            }
-
-            return new CSVResponseDto(headers, data);
+            return buildCSVResponse(mode, headers, allRows);
 
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
@@ -63,6 +53,15 @@ public class CSVService {
         }
     }
 
+    private CSVResponseDto buildCSVResponse(CSVReadMode mode, List<String> headers, List<String[]> allRows) {
+        List<String[]> data = allRows.subList(1, allRows.size());
+
+        return switch (mode) {
+            case HEADERS_ONLY -> new CSVResponseDto(headers, null);
+            case DATA_ONLY -> new CSVResponseDto(null, data);
+            case ALL -> new CSVResponseDto(headers, data);
+        };
+    }
 
     public CSVHeadersResponseDto getCSVHeaders(MultipartFile file, CSVType type) {
         List<String> requiredHeaders = new ArrayList<>(type.getRequiredCSVHeaders());
@@ -87,13 +86,13 @@ public class CSVService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Selected header not present in CSV");
         }
 
-        String[] previewCSVHeaders = csvHeaders.keySet().toArray(new String[0]);
+        List<String> previewCSVHeaders = new ArrayList<>(csvHeaders.keySet());
 
         List<String[]> previewCSVData = csv.data().stream()
                 .map(row -> extractSelectedColumns(row, indices))
                 .toList();
 
-        return new CSVResponseDto(Arrays.asList(previewCSVHeaders), previewCSVData);
+        return new CSVResponseDto(previewCSVHeaders, previewCSVData);
     }
 
     private String[] extractSelectedColumns(String[] row, List<Integer> indices) {
