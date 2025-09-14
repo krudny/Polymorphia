@@ -197,9 +197,7 @@ jobs:
           host: ${{ secrets.STAGING_VM_IP }}
           username: ${{ secrets.STAGING_VM_USER }}
           key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
-          script: |
-            npm install -g pm2 || true
-            
+          script: |            
             pm2 delete polymorphia-frontend || true
             
             cd ~/polymorphia/polymorphia-frontend
@@ -215,4 +213,3 @@ jobs:
     steps:
       - name: All jobs completed successfully
         run: echo "All deployment jobs completed successfully!"
-        
