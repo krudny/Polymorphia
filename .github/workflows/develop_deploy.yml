@@ -99,17 +99,17 @@ jobs:
         run: |
           mvn test -Dspring.profiles.active=test
 
-    run-backend: 
-      needs: test-backend
-      runs-on: ubuntu-latest
+  run-backend: 
+    needs: test-backend
+    runs-on: ubuntu-latest
 
-      steps:
-        - name: Run backend
-          script: |
-            docker stop polymorphia-backend || true
-            docker rm polymorphia-backend || true
-            docker run -d --name polymorphia-backend -p 8080:8080 \
-              -v /app/config:/app/config \
-              -v ~/polymorphia-static:/app/static \
-              polymorphia-backend:test-latest \
-              --spring.config.location=file:/app/config/application-dev.properties
+    steps:
+      - name: Run backend
+        run: |
+          docker stop polymorphia-backend || true
+          docker rm polymorphia-backend || true
+          docker run -d --name polymorphia-backend -p 8080:8080 \
+            -v /app/config:/app/config \
+            -v ~/polymorphia-static:/app/static \
+            polymorphia-backend:test-latest \
+            --spring.config.location=file:/app/config/application-test.properties
