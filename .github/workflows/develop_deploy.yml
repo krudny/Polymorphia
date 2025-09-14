@@ -197,7 +197,7 @@ jobs:
             pm2 save
 
   deploy-success:
-    needs: [setup-environment, migrate, build-backend, test-backend, run-backend]
+    needs: [setup-environment, migrate, build-backend, test-backend, run-backend, build-frontend, run-frontend]
     runs-on: ubuntu-latest
     
     steps:
