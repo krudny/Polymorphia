@@ -2,8 +2,8 @@ package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.request.csv.CSVPreviewRequestDto;
 import com.agh.polymorphia_backend.dto.request.csv.CSVProcessRequestDto;
+import com.agh.polymorphia_backend.dto.response.csv.CSVResponseDto;
 import com.agh.polymorphia_backend.dto.response.csv.HeadersResponseDto;
-import com.agh.polymorphia_backend.service.csv.CSVResult;
 import com.agh.polymorphia_backend.service.csv.CSVService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ public class CSVController {
 
     @PostMapping("/preview")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<CSVResult> getPreview(@ModelAttribute CSVPreviewRequestDto request) {
+    public ResponseEntity<CSVResponseDto> getPreview(@ModelAttribute CSVPreviewRequestDto request) {
         return ResponseEntity.ok(csvService.getPreview(request));
     }
 

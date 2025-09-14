@@ -2,6 +2,7 @@ package com.agh.polymorphia_backend.service.csv;
 
 import com.agh.polymorphia_backend.dto.request.csv.CSVPreviewRequestDto;
 import com.agh.polymorphia_backend.dto.request.csv.CSVProcessRequestDto;
+import com.agh.polymorphia_backend.dto.response.csv.CSVResponseDto;
 import com.agh.polymorphia_backend.dto.response.csv.HeadersResponseDto;
 import com.agh.polymorphia_backend.service.csv.processors.CSVProcessor;
 import com.agh.polymorphia_backend.service.mapper.GeneralMapper;
@@ -20,6 +21,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -38,7 +40,7 @@ public class CSVService {
                 ));
     }
 
-    public CSVResult readCSV(MultipartFile file, CSVReadMode mode) {
+    public CSVResponseDto readCSV(MultipartFile file, CSVReadMode mode) {
         Charset detectedCharset = CSVUtil.detectCharset(file);
 
         Charset[] charsetsToTry = {
@@ -67,6 +69,7 @@ public class CSVService {
                          .withSkipLines(0)
                          .build()) {
 
+                // TODO: list
                 String[] headers = csvReader.readNext();
 
                 if (!CSVUtil.isValidEncoding(headers)) {
@@ -74,7 +77,7 @@ public class CSVService {
                 }
 
                 if (mode == CSVReadMode.HEADERS_ONLY) {
-                    return new CSVResult(headers, null);
+                    return new CSVResponseDto(Arrays.asList(headers), null);
                 }
 
                 List<String[]> records = new ArrayList<>();
@@ -85,10 +88,10 @@ public class CSVService {
                 }
 
                 if (mode == CSVReadMode.DATA_ONLY) {
-                    return new CSVResult(null, records);
+                    return new CSVResponseDto(null, records);
                 }
 
-                return new CSVResult(headers, records);
+                return new CSVResponseDto(Arrays.asList(headers), records);
 
             } catch (Exception e) {
                 lastException = e;
@@ -111,8 +114,8 @@ public class CSVService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid CSV type: " + type);
         }
 
-        String[] requiredHeaders = csvType.getRequiredHeaders().toArray(String[]::new);
-        String[] fileHeaders = readCSV(file, CSVReadMode.HEADERS_ONLY).headers();
+        List<String> requiredHeaders = new ArrayList<>(csvType.getRequiredHeaders());
+        List<String> fileHeaders = readCSV(file, CSVReadMode.HEADERS_ONLY).headers();
 
         return HeadersResponseDto
                 .builder()
@@ -121,9 +124,9 @@ public class CSVService {
                 .build();
     }
 
-    public CSVResult getPreview(CSVPreviewRequestDto request) {
+    public CSVResponseDto getPreview(CSVPreviewRequestDto request) {
         Map<String, String> headers = generalMapper.stringToMap(request.getHeaders());
-        CSVResult csv = readCSV(request.getFile(), CSVReadMode.ALL);
+        CSVResponseDto csv = readCSV(request.getFile(), CSVReadMode.ALL);
 
         List<Integer> indices = headers.values().stream()
                 .map(header -> CSVUtil.getColumnIndex(csv.headers(), header))
@@ -142,7 +145,7 @@ public class CSVService {
                 .toArray(String[]::new))
                 .toList();
 
-        return new CSVResult(previewHeaders, previewData);
+        return new CSVResponseDto(Arrays.asList(previewHeaders), previewData);
     }
 
     public void processCSV(CSVProcessRequestDto request) {

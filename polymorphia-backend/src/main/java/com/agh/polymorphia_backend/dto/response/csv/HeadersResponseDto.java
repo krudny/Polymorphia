@@ -5,14 +5,16 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 
 @Builder
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class HeadersResponseDto {
     @NotNull
-    private String[] requiredHeaders;
+    private List<String> requiredHeaders;
 
     @NotNull
-    private String[] fileHeaders;
+    private List<String> fileHeaders;
 }

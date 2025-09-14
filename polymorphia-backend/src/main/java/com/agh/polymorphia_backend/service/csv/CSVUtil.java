@@ -7,11 +7,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
+import java.util.List;
 
 public class CSVUtil {
-    public static int getColumnIndex(String[] headers, String columnName) {
-        return Arrays.asList(headers).indexOf(columnName);
+    public static int getColumnIndex(List<String> headers, String columnName) {
+        return headers.indexOf(columnName);
     }
 
     public static Charset detectCharset(MultipartFile file) {
