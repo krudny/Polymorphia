@@ -40,17 +40,70 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
 
       - name: Run flyway
         run: |
-          wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/10.17.0/flyway-commandline-10.17.0-linux-x64.tar.gz | tar xvz
-          ./flyway-10.17.0/flyway -url="jdbc:postgresql://${{ secrets.TEST_DB_HOST }}:${{ secrets.TEST_DB_PORT }}/${{ secrets.TEST_DB_NAME }}" \
+          wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/11.12.0/flyway-commandline-11.12.0-linux-x64.tar.gz | tar xvz
+          ./flyway-11.12.0/flyway -url="jdbc:postgresql://${{ secrets.TEST_DB_HOST }}:${{ secrets.TEST_DB_PORT }}/${{ secrets.TEST_DB_NAME }}" \
             -user="${{ secrets.TEST_DB_USER }}" \
             -password="${{ secrets.TEST_DB_PASSWORD }}" \
             -locations="filesystem:src/main/resources/db/migration" \
             migrate
+
+  build-backend:
+    needs: migrate
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Remove old files
+        run: rm -rf polymorphia
+
+      - name: Clone repository
+        run: git clone --depth 1 --branch "${{ github.head_ref }}" https://github.com/${{ github.repository }} polymorphia
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build Docker image
+        working-directory: ./polymorphia/polymorphia-backend
+        run: |
+          docker build -t polymorphia-backend:test-latest -f Dockerfile .
+
+  test-backend:
+    needs: [migrate, build-backend]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Remove old files
+        run: rm -rf polymorphia
+
+      - name: Clone repository
+        run: git clone --depth 1 --branch "${{ github.head_ref }}" https://github.com/${{ github.repository }} polymorphia
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Run tests with Maven
+        working-directory: ./polymorphia/polymorphia-backend
+        run: |
+          mvn test
+
+
 
 
 
