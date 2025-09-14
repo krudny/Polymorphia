@@ -19,7 +19,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y postgresql-client-17
 
-      - name: Clean target database
+      - name: Clean test database
         run: |
           PGPASSWORD="${{ secrets.TEST_DB_PASSWORD }}" psql -h "${{ secrets.STAGING_VM_IP }}" -U "${{ secrets.TEST_DB_USER }}" -d "${{ secrets.TEST_DB_NAME }}" -p "${{ secrets.TEST_DB_PORT }}" -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;" > /dev/null 2>&1
 
@@ -30,6 +30,27 @@ jobs:
           pg_dump -h "${{ secrets.STAGING_DB_HOST }}" -p "${{ secrets.STAGING_DB_PORT }}" -U "${{ secrets.STAGING_DB_USER }}" "${{ secrets.STAGING_DB_NAME }}" > staging_dump.sql
           
           PGPASSWORD="${{ secrets.TEST_DB_PASSWORD }}" psql -h "${{ secrets.TEST_DB_HOST }}" -p "${{ secrets.TEST_DB_PORT }}" -U "${{ secrets.TEST_DB_USER }}" "${{ secrets.TEST_DB_NAME }}" < staging_dump.sql > /dev/null 2>&1
+
+
+  migrate:
+    needs: setup-environment
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Run flyway
+        run: |
+          wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/10.17.0/flyway-commandline-10.17.0-linux-x64.tar.gz | tar xvz
+          ./flyway-10.17.0/flyway -url="jdbc:postgresql://${{ secrets.TEST_DB_HOST }}:${{ secrets.TEST_DB_PORT }}/${{ secrets.TEST_DB_NAME }}" \
+            -user="${{ secrets.TEST_DB_USER }}" \
+            -password="${{ secrets.TEST_DB_PASSWORD }}" \
+            -locations="filesystem:src/main/resources/db/migration" \
+            migrate
 
 
 
