@@ -128,7 +128,7 @@ jobs:
           mvn test -Dspring.profiles.active=test
 
   run-backend: 
-    needs: test-backend
+    needs: [test-backend, build-backend]
     runs-on: ubuntu-latest
 
     steps:
