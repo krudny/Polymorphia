@@ -1,15 +1,6 @@
 name: Run Backend Tests
 
 on:
-  push:
-    branches:
-      - main
-      - develop
-    paths:
-      - 'polymorphia-backend/**'
-  pull_request:
-    paths:
-      - 'polymorphia-backend/**'
   workflow_dispatch:
 
 jobs:
