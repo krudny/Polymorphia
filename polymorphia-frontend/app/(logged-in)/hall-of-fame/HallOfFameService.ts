@@ -13,10 +13,6 @@ const HallOfFameService = {
     sortOrder: string,
     groups?: string[]
   ): Promise<HallOfFameResponseDTO> => {
-    if (sortBy === "name") {
-      sortBy = "animalName";
-    }
-
     const response = await fetch(`${API_HOST}/hall-of-fame`, {
       method: "POST",
       credentials: "include",
