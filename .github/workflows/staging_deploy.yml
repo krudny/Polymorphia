@@ -33,6 +33,37 @@ jobs:
           script: |
             git clone --depth 1 --branch "develop" https://github.com/${{ github.repository }}.git ~/polymorphia
 
+  test-backend:
+    needs: setup-environment
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Set up application.properties
+        run: |
+          mkdir -p ./polymorphia-backend/src/main/resources
+          printf "%s" "${{ secrets.APPLICATION_PROPERTIES_TEST }}" > ./polymorphia-backend/src/main/resources/application.properties
+
+      - name: Run tests with Maven
+        working-directory: ./polymorphia-backend
+        run: |
+          mvn test -Dspring.profiles.active=test
+
   build-backend:
     needs: setup-environment
     runs-on: ubuntu-latest
@@ -49,7 +80,7 @@ jobs:
             docker build -t polymorphia-backend:staging-latest -f Dockerfile .
 
   run-backend: 
-    needs: build-backend
+    needs: [test-backend, build-backend]
     runs-on: ubuntu-latest
 
     steps:
@@ -62,14 +93,14 @@ jobs:
           script: |
             docker stop polymorphia-backend-staging || true
             docker rm polymorphia-backend-staging || true
-            docker run -d --name polymorphia-backend-staging -p 8080:8081 \
+            docker run -d --name polymorphia-backend-staging -p 8081:8080 \
               -v /app/config:/app/config \
               -v ~/polymorphia-static:/app/static \
               polymorphia-backend:staging-latest \
               --spring.config.location=file:/app/config/application-dev.properties 
 
   deploy-success:
-    needs: [setup-environment, build-backend, run-backend]
+    needs: [setup-environment, test-backend, build-backend, run-backend]
     runs-on: ubuntu-latest
     
     steps:

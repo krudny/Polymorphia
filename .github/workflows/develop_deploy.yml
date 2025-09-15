@@ -98,7 +98,7 @@ jobs:
             docker build -t polymorphia-backend:develop-latest -f Dockerfile .
 
   test-backend:
-    needs: migrate
+    needs: [setup-environment, migrate]
     runs-on: ubuntu-latest
     
     steps:
