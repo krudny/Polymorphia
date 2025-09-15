@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Table(name = "hall_of_fame_view")
 @Immutable
 @Getter
-public class HallOfFame {
+public class HallOfFameEntry {
     public static final String FIELD_ANIMAL_NAME = "animalName";
     public static final String FIELD_STUDENT_NAME = "studentName";
     public static final String FIELD_TOTAL_XP_SUM = "totalXpSum";

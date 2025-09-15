@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.util.Arrays;
 import java.util.Optional;
 
-import static com.agh.polymorphia_backend.model.hall_of_fame.HallOfFame.*;
+import static com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry.*;
 
 @Getter
 @AllArgsConstructor
@@ -14,7 +14,7 @@ public enum OverviewField {
     STUDENT_NAME(FIELD_STUDENT_NAME),
     ANIMAL_NAME(FIELD_ANIMAL_NAME),
     TOTAL("total", FIELD_TOTAL_XP_SUM),
-    BONUS("bonus", FIELD_TOTAL_BONUS_SUM);
+    BONUS("Bonusy", FIELD_TOTAL_BONUS_SUM);
 
     private final String key;
     private final String dbField;

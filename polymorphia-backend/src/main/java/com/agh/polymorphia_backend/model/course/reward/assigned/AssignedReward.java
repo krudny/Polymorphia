@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.model.course.reward.assigned;
 
-import com.agh.polymorphia_backend.model.criterion.CriteriaGrade;
+import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
 import com.agh.polymorphia_backend.model.course.reward.Reward;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -28,7 +28,7 @@ public class AssignedReward {
     @JoinColumn(name = "criterion_grade_id")
     @ToString.Exclude
     @JsonIgnore
-    private CriteriaGrade criteriaGrade;
+    private CriterionGrade criterionGrade;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)

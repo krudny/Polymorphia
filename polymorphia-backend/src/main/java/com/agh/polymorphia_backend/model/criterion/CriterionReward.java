@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
-@Table(name = "criteria_grades")
+@Table(name = "criteria_rewards")
 @Data
 @Builder
 @NoArgsConstructor

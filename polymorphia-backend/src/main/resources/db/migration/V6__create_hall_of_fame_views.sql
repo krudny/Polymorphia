@@ -22,7 +22,6 @@ WITH base AS (SELECT a.id         AS animal_id,
                  FROM grades g
                           JOIN criteria_grades cg ON cg.grade_id = g.id
                           JOIN assigned_rewards ar ON ar.criterion_grade_id = cg.id
-                          LEFT JOIN assigned_items ai ON ai.assigned_reward_id = ar.id
                           JOIN gradable_events ge ON ge.id = g.gradable_event_id
                           JOIN items it ON it.reward_id = ar.reward_id
                  WHERE (it.event_section_id = ge.event_section_id)),
@@ -47,15 +46,16 @@ FROM base b
          LEFT JOIN bonuses bn ON bn.animal_id = b.animal_id AND bn.event_section_id = b.event_section_id;
 
 CREATE VIEW hall_of_fame_view AS
-WITH scored AS (SELECT scg.id                                                             AS animal_id,
-                       scg.name                                                           AS animal_name,
-                       scg.student_id                                                     AS student_id,
-                       u.first_name || ' ' || u.last_name                                 AS student_name,
-                       cg.name                                                            AS group_name,
+WITH scored AS (SELECT scg.id                                        AS animal_id,
+                       scg.name                                      AS animal_name,
+                       scg.student_id                                AS student_id,
+                       u.first_name || ' ' || u.last_name            AS student_name,
+                       cg.name                                       AS group_name,
                        cg.course_id,
-                       COALESCE(ssd.raw_xp, 0)                                            AS raw_xp,
-                       COALESCE(ssd.flat_bonus, 0)                                        AS flat_bonus,
-                       COALESCE(ssd.raw_xp, 0) * COALESCE(ssd.percentage_bonus, 0) * 0.01 AS percentage_bonus_xp
+                       COALESCE(ssd.raw_xp, 0)                       AS raw_xp,
+                       COALESCE(ssd.flat_bonus, 0)                   AS flat_bonus,
+                       (COALESCE(ssd.raw_xp, 0) + COALESCE(ssd.flat_bonus, 0))
+                           * COALESCE(ssd.percentage_bonus, 0) / 100 AS percentage_bonus_xp
                 FROM animals scg
                          JOIN students s ON s.user_id = scg.student_id
                          JOIN users u ON u.id = s.user_id

@@ -1,14 +1,14 @@
 package com.agh.polymorphia_backend.repository.hall_of_fame;
 
 import com.agh.polymorphia_backend.dto.request.HallOfFameRequestDto;
-import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFame;
+import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface HallOfFameRepository extends JpaRepository<HallOfFame, Long> {
+public interface HallOfFameRepository extends JpaRepository<HallOfFameEntry, Long> {
     String WHERE_CLAUSE = """
             hof.courseId = :#{#requestDto.courseId()}
             and (
@@ -29,13 +29,13 @@ public interface HallOfFameRepository extends JpaRepository<HallOfFame, Long> {
 
     @Query("""
             select hof
-            from HallOfFame hof
+            from HallOfFameEntry hof
             where\s""" + WHERE_CLAUSE)
-    Page<HallOfFame> findHofPage(@Param("requestDto") HallOfFameRequestDto requestDto, Pageable pageable);
+    Page<HallOfFameEntry> findHofPageFromOverviewField(@Param("requestDto") HallOfFameRequestDto requestDto, Pageable pageable);
 
     @Query(value = """
             select hof
-            from HallOfFame hof
+            from HallOfFameEntry hof
             join StudentScoreDetail ssd
                  on ssd.animalId = hof.animalId
             where\s""" + WHERE_CLAUSE + """
@@ -46,7 +46,7 @@ public interface HallOfFameRepository extends JpaRepository<HallOfFame, Long> {
                 hof.position asc
             """, countQuery = """
             select count(distinct hof.animalId)
-            from HallOfFame hof
+            from HallOfFameEntry hof
             where\s""" + WHERE_CLAUSE)
-    Page<HallOfFame> findAnimalIdsSortedByEventSection(@Param("requestDto") HallOfFameRequestDto requestDto, Pageable pageable);
+    Page<HallOfFameEntry> findHofPageFromEventSection(@Param("requestDto") HallOfFameRequestDto requestDto, Pageable pageable);
 }
