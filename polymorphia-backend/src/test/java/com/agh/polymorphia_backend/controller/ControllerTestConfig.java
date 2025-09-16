@@ -37,10 +37,10 @@ public abstract class ControllerTestConfig {
         registry.add("spring.datasource.username", postgres::getUsername);
         registry.add("spring.datasource.password", postgres::getPassword);
 
-//        registry.add("initial.user.firstName", () -> "Demo");
-//        registry.add("initial.user.lastName", () -> "User");
-//        registry.add("initial.user.email", () -> "demo@test.com");
-//        registry.add("initial.user.password", () -> "testPassword");
+       registry.add("initial.user.firstName", () -> "Demo");
+       registry.add("initial.user.lastName", () -> "User");
+       registry.add("initial.user.email", () -> "demo@test.com");
+       registry.add("initial.user.password", () -> "testPassword");
     }
 
     @BeforeEach
