@@ -1,4 +1,4 @@
-name: Build and Deploy Backend to Staging
+name: Build and Deploy Backend to Production
 
 on:
   push:
