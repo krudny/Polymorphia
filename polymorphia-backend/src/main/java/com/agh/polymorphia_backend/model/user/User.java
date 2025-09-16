@@ -2,6 +2,7 @@ package com.agh.polymorphia_backend.model.user;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,6 +34,9 @@ public abstract class User implements UserDetails {
 
     @NotEmpty
     private String password;
+
+    @NotNull
+    private boolean isPasswordTemporary;
 
     @Override
     public String getUsername() {
