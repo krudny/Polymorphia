@@ -1,7 +1,8 @@
 name: Build and Deploy Backend to Develop Testing
 
 on:
-  workflow_dispatch:
+  pull_request:
+    types: [labeled] 
 
 permissions:
   statuses: write
@@ -162,6 +163,7 @@ jobs:
 
 
   deploy-develop-success:
+    if: contains(github.event.pull_request.labels.*.name, 'deploy-to-develop')
     needs: [setup-environment, migrate, build-backend, test-backend, run-backend]
     runs-on: ubuntu-latest
     
