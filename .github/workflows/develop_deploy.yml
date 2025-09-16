@@ -148,66 +148,24 @@ jobs:
               polymorphia-backend:develop-latest \
               --spring.config.location=file:/app/config/application-dev.properties
 
-  # install-frontend-deps: 
-  #   needs: setup-environment
-  #   runs-on: ubuntu-latest
+  validate-deploy:
+    needs: run-backend
+    runs-on: ubuntu-latest
 
-  #   steps: 
-  #     - name: Install frontend dependencies
-  #       uses: appleboy/ssh-action@v1
-  #       with:
-  #         host: ${{ secrets.STAGING_VM_IP }}
-  #         username: ${{ secrets.STAGING_VM_USER }}
-  #         key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
-  #         script: |
-  #           sudo fuser -vki /var/lib/dpkg/lock-frontend || true
-  #           sudo fuser -vki /var/cache/apt/archives/lock || true
-            
-  #           if ! command -v npm &> /dev/null; then
-  #             sudo apt update
-  #             sudo apt install nodejs npm -y
-  #           fi
+    steps:
+    - name: Wait 5 minutes and check backend
+      uses: appleboy/ssh-action@v1
+      with:
+        host: ${{ secrets.STAGING_VM_IP }}
+        username: ${{ secrets.STAGING_VM_USER }}
+        key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+        script: |
+          sleep 300
+          docker ps --filter name=polymorphia-backend-develop --quiet || exit 1
 
-  #           cd ~/polymorphia/polymorphia-frontend
-  #           npm install
-
-  # build-frontend:
-  #   needs: [setup-environment, install-frontend-deps]
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #     - name: Build frontend
-  #       uses: appleboy/ssh-action@v1
-  #       with:
-  #         host: ${{ secrets.STAGING_VM_IP }}
-  #         username: ${{ secrets.STAGING_VM_USER }}
-  #         key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
-  #         script: |
-  #           cd ~/polymorphia/polymorphia-frontend
-  #           npm run build
-        
-  # run-frontend:
-  #   needs: [build-frontend, run-backend]
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #     - name: Run frontend
-  #       uses: appleboy/ssh-action@v1
-  #       with:
-  #         host: ${{ secrets.STAGING_VM_IP }}
-  #         username: ${{ secrets.STAGING_VM_USER }}
-  #         key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
-  #         script: |            
-  #           pm2 delete polymorphia-frontend || true
-            
-  #           cd ~/polymorphia/polymorphia-frontend
-            
-  #           pm2 serve build 3000 --spa --name "polymorphia-frontend"
-            
-  #           pm2 save
 
   deploy-success:
-    needs: [setup-environment, migrate, build-backend, test-backend, run-backend]
+    needs: [setup-environment, migrate, build-backend, test-backend, run-backend, validate-deploy]
     runs-on: ubuntu-latest
     
     steps:
