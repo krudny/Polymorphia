@@ -6,6 +6,9 @@ on:
       - develop
   workflow_dispatch:
 
+permissions:
+  statuses: write
+
 jobs:
   setup-environment: 
     runs-on: ubuntu-latest
@@ -117,11 +120,11 @@ jobs:
         run: echo "All deployment jobs completed successfully!" 
 
       - name: Trigger GitHub Status Check for Successful Deployment
-        uses: EndBug/gh-commit-status-wrapper@v1
+        uses: myrotvorets/set-commit-status-action@master
         with:
-          auth: ${{ github.token }}
-          context: "deploy-staging-success"
-          description: "Deployment completed successfully"
-          state: "success"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: success
+          context: deploy-staging-success
+          description: Deployment completed successfully
       
 
