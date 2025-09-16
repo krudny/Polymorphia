@@ -54,11 +54,6 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Set up application.properties
-        run: |
-          mkdir -p ./polymorphia-backend/src/main/resources
-          printf "%s" "${{ secrets.APPLICATION_PROPERTIES_TEST }}" > ./polymorphia-backend/src/main/resources/application.properties
-
       - name: Run tests with Maven
         working-directory: ./polymorphia-backend
         run: |

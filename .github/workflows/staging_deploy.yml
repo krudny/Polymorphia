@@ -31,7 +31,7 @@ jobs:
           username: ${{ secrets.STAGING_VM_USER }}
           key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
           script: |
-            git clone --depth 1 --branch "${{ github.head_ref }}" https://github.com/${{ github.repository }}.git ~/polymorphia
+            git clone --depth 1 --branch "develop" https://github.com/${{ github.repository }}.git ~/polymorphia
 
   test-backend:
     needs: setup-environment
@@ -53,11 +53,6 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-
-      - name: Set up application.properties
-        run: |
-          mkdir -p ./polymorphia-backend/src/main/resources
-          printf "%s" "${{ secrets.APPLICATION_PROPERTIES_TEST }}" > ./polymorphia-backend/src/main/resources/application.properties
 
       - name: Run tests with Maven
         working-directory: ./polymorphia-backend
