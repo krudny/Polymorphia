@@ -1,16 +1,15 @@
 name: Build and Deploy Backend to Staging
 
 on:
-  push:
-    branches:
-      - develop
-  workflow_dispatch:
+  pull_request:
+    types: [labeled]
 
 permissions:
   statuses: write
 
 jobs:
   setup-environment:
+    if: github.event.label.name == 'deploy-to-staging'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -32,9 +31,10 @@ jobs:
           username: ${{ secrets.STAGING_VM_USER }}
           key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
           script: |
-            git clone --depth 1 --branch "develop" https://github.com/${{ github.repository }}.git ~/polymorphia
+            git clone --depth 1 --branch "${{ github.head_ref }}" https://github.com/${{ github.repository }}.git ~/polymorphia
 
   test-backend:
+    if: github.event.label.name == 'deploy-to-staging'
     needs: setup-environment
     runs-on: ubuntu-latest
     steps:
@@ -60,6 +60,7 @@ jobs:
           mvn test -Dspring.profiles.active=test
 
   build-backend:
+    if: github.event.label.name == 'deploy-to-staging'
     needs: setup-environment
     runs-on: ubuntu-latest
     steps:
@@ -74,6 +75,7 @@ jobs:
             docker build -t polymorphia-backend:staging-latest -f Dockerfile .
 
   run-backend:
+    if: github.event.label.name == 'deploy-to-staging'
     needs: [test-backend, build-backend]
     runs-on: ubuntu-latest
     steps:
@@ -93,6 +95,7 @@ jobs:
               --spring.config.location=file:/app/config/application.properties
 
   validate-deploy:
+    if: github.event.label.name == 'deploy-to-staging'
     needs: run-backend
     runs-on: ubuntu-latest
     steps:
@@ -107,8 +110,18 @@ jobs:
           docker ps --filter name=polymorphia-backend-staging --quiet || exit 1
 
   deploy-staging-success:
-    needs: [setup-environment, test-backend, build-backend, run-backend, validate-deploy]
+    if: github.event.label.name == 'deploy-to-staging'
+    needs: [validate-deploy]
     runs-on: ubuntu-latest
     steps:
+      - name: Trigger github status check
+        uses: myrotvorets/set-commit-status-action@master
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: success
+          context: deploy-staging-success
+          description: Deployment completed successfully
+          sha: ${{ github.event.pull_request.head.sha }}
+      
       - name: All jobs completed successfully
         run: echo "All deployment jobs completed successfully!"
