@@ -108,7 +108,7 @@ jobs:
           sleep 300
           docker ps --filter name=polymorphia-backend-staging --quiet || exit 1
 
-  deploy-success:
+  deploy-staging-success:
     needs: [setup-environment, test-backend, build-backend, run-backend, validate-deploy]
     runs-on: ubuntu-latest
     
