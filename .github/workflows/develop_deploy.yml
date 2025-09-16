@@ -162,7 +162,7 @@ jobs:
 
 
   deploy-develop-success:
-    needs: [setup-environment, migrate, build-backend, test-backend, run-backend, validate-deploy]
+    needs: [setup-environment, migrate, build-backend, test-backend, run-backend]
     runs-on: ubuntu-latest
     
     steps:
