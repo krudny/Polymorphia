@@ -10,10 +10,9 @@ permissions:
   statuses: write
 
 jobs:
-  setup-environment: 
+  setup-environment:
     runs-on: ubuntu-latest
-
-    steps: 
+    steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -38,7 +37,6 @@ jobs:
   test-backend:
     needs: setup-environment
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -64,7 +62,6 @@ jobs:
   build-backend:
     needs: setup-environment
     runs-on: ubuntu-latest
-    
     steps:
       - name: Build Docker image
         uses: appleboy/ssh-action@v1
@@ -76,10 +73,9 @@ jobs:
             cd ~/polymorphia/polymorphia-backend
             docker build -t polymorphia-backend:staging-latest -f Dockerfile .
 
-  run-backend: 
+  run-backend:
     needs: [test-backend, build-backend]
     runs-on: ubuntu-latest
-
     steps:
       - name: Run backend on VM
         uses: appleboy/ssh-action@v1
@@ -94,12 +90,11 @@ jobs:
               -v /app/config:/app/config \
               -v ~/polymorphia-static:/app/static \
               polymorphia-backend:staging-latest \
-              --spring.config.location=file:/app/config/application.properties 
+              --spring.config.location=file:/app/config/application.properties
 
   validate-deploy:
     needs: run-backend
     runs-on: ubuntu-latest
-
     steps:
     - name: Wait 5 minutes and check backend
       uses: appleboy/ssh-action@v1
@@ -114,11 +109,6 @@ jobs:
   deploy-staging-success:
     needs: [setup-environment, test-backend, build-backend, run-backend, validate-deploy]
     runs-on: ubuntu-latest
-    
     steps:
       - name: All jobs completed successfully
-        run: echo "All deployment jobs completed successfully!" 
-
-      
-      
-
+        run: echo "All deployment jobs completed successfully!"

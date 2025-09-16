@@ -2,15 +2,15 @@ name: Build and Deploy Backend to Develop Testing
 
 on:
   pull_request:
-    types: [labeled] 
+    types: [labeled]
 
 permissions:
   statuses: write
 
 jobs:
   setup-environment:
+    if: github.event.label.name == 'deploy-to-develop'
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -31,7 +31,6 @@ jobs:
           PGPASSWORD: ${{ secrets.STAGING_DB_PASSWORD }}
         run: |
           pg_dump -h "${{ secrets.STAGING_DB_HOST }}" -p "${{ secrets.STAGING_DB_PORT }}" -U "${{ secrets.STAGING_DB_USER }}" "${{ secrets.STAGING_DB_NAME }}" > staging_dump.sql
-          
           PGPASSWORD="${{ secrets.TEST_DB_PASSWORD }}" psql -h "${{ secrets.TEST_DB_HOST }}" -p "${{ secrets.TEST_DB_PORT }}" -U "${{ secrets.TEST_DB_USER }}" "${{ secrets.TEST_DB_NAME }}" < staging_dump.sql > /dev/null 2>&1
 
       - name: Clean old code on VM
@@ -50,12 +49,12 @@ jobs:
           username: ${{ secrets.STAGING_VM_USER }}
           key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
           script: |
-            git clone --depth 1 --branch "${{ github.head_ref }}" https://github.com/${{ github.repository }}.git ~/polymorphia   
+            git clone --depth 1 --branch "${{ github.head_ref }}" https://github.com/${{ github.repository }}.git ~/polymorphia
 
   migrate:
+    if: github.event.label.name == 'deploy-to-develop'
     needs: setup-environment
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -76,9 +75,9 @@ jobs:
             migrate
 
   build-backend:
+    if: github.event.label.name == 'deploy-to-develop'
     needs: setup-environment
     runs-on: ubuntu-latest
-    
     steps:
       - name: Clean Docker resources
         uses: appleboy/ssh-action@v1
@@ -101,9 +100,9 @@ jobs:
             docker build -t polymorphia-backend:develop-latest -f Dockerfile .
 
   test-backend:
+    if: github.event.label.name == 'deploy-to-develop'
     needs: [setup-environment, migrate]
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -126,10 +125,10 @@ jobs:
         run: |
           mvn test -Dspring.profiles.active=test
 
-  run-backend: 
+  run-backend:
+    if: github.event.label.name == 'deploy-to-develop'
     needs: [test-backend, build-backend]
     runs-on: ubuntu-latest
-
     steps:
       - name: Run backend on VM
         uses: appleboy/ssh-action@v1
@@ -147,9 +146,9 @@ jobs:
               --spring.config.location=file:/app/config/application-dev.properties
 
   validate-deploy:
+    if: github.event.label.name == 'deploy-to-develop'
     needs: run-backend
     runs-on: ubuntu-latest
-
     steps:
     - name: Wait 5 minutes and check backend
       uses: appleboy/ssh-action@v1
@@ -161,12 +160,10 @@ jobs:
           sleep 300
           docker ps --filter name=polymorphia-backend-develop --quiet || exit 1
 
-
   deploy-develop-success:
-    if: contains(github.event.pull_request.labels.*.name, 'deploy-to-develop')
-    needs: [setup-environment, migrate, build-backend, test-backend, run-backend, validate]
+    if: github.event.label.name == 'deploy-to-develop'
+    needs: [validate-deploy]
     runs-on: ubuntu-latest
-    
     steps:
       - name: Trigger github status check
         uses: myrotvorets/set-commit-status-action@master
@@ -179,4 +176,3 @@ jobs:
 
       - name: All jobs completed successfully
         run: echo "All deployment jobs completed successfully!"
-        
