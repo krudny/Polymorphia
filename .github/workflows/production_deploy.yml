@@ -6,6 +6,9 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  statuses: write
+
 jobs:
   setup-environment: 
     runs-on: ubuntu-latest
@@ -115,4 +118,3 @@ jobs:
     steps:
       - name: All jobs completed successfully
         run: echo "All deployment jobs completed successfully!" 
-
