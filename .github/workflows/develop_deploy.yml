@@ -164,7 +164,7 @@ jobs:
 
   deploy-develop-success:
     if: contains(github.event.pull_request.labels.*.name, 'deploy-to-develop')
-    needs: [setup-environment, migrate, build-backend, test-backend, run-backend]
+    needs: [setup-environment, migrate, build-backend, test-backend, run-backend, validate]
     runs-on: ubuntu-latest
     
     steps:

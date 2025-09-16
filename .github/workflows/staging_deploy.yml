@@ -116,15 +116,6 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Trigger github status check
-        uses: myrotvorets/set-commit-status-action@master
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          status: success
-          context: deploy-staging-success
-          description: Deployment completed successfully
-          sha: ${{ github.event.pull_request.head.sha }}
-          
       - name: All jobs completed successfully
         run: echo "All deployment jobs completed successfully!" 
 
