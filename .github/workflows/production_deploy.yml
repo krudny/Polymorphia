@@ -1,10 +1,10 @@
 name: Build and Deploy Backend to Staging
 
 on:
-  # push:
-  #   branches:
-  #     - develop
-  # pull_request:
+  push:
+    branches:
+      - main
+  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -18,20 +18,20 @@ jobs:
       - name: Clean old code on VM
         uses: appleboy/ssh-action@v1
         with:
-          host: ${{ secrets.STAGING_VM_IP }}
-          username: ${{ secrets.STAGING_VM_USER }}
-          key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+          host: ${{ secrets.PROD_VM_IP }}
+          username: ${{ secrets.PROD_VM_USER }}
+          key: ${{ secrets.PROD_SSH_PRIVATE_KEY }}
           script: |
             rm -rf ~/polymorphia
 
       - name: Clone repository to VM
         uses: appleboy/ssh-action@v1
         with:
-          host: ${{ secrets.STAGING_VM_IP }}
-          username: ${{ secrets.STAGING_VM_USER }}
-          key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+          host: ${{ secrets.PROD_VM_IP }}
+          username: ${{ secrets.PROD_VM_USER }}
+          key: ${{ secrets.PROD_SSH_PRIVATE_KEY }}
           script: |
-            git clone --depth 1 --branch "develop" https://github.com/${{ github.repository }}.git ~/polymorphia
+            git clone --depth 1 --branch "main" https://github.com/${{ github.repository }}.git ~/polymorphia
 
   test-backend:
     needs: setup-environment
@@ -72,12 +72,12 @@ jobs:
       - name: Build Docker image
         uses: appleboy/ssh-action@v1
         with:
-          host: ${{ secrets.STAGING_VM_IP }}
-          username: ${{ secrets.STAGING_VM_USER }}
-          key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+          host: ${{ secrets.PROD_VM_IP }}
+          username: ${{ secrets.PROD_VM_USER }}
+          key: ${{ secrets.PROD_SSH_PRIVATE_KEY }}
           script: |
             cd ~/polymorphia/polymorphia-backend
-            docker build -t polymorphia-backend:staging-latest -f Dockerfile .
+            docker build -t polymorphia-backend:prod-latest -f Dockerfile .
 
   run-backend: 
     needs: [test-backend, build-backend]
@@ -87,13 +87,13 @@ jobs:
       - name: Run backend on VM
         uses: appleboy/ssh-action@v1
         with:
-          host: ${{ secrets.STAGING_VM_IP }}
-          username: ${{ secrets.STAGING_VM_USER }}
-          key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+          host: ${{ secrets.PROD_VM_IP }}
+          username: ${{ secrets.PROD_VM_USER }}
+          key: ${{ secrets.PROD_SSH_PRIVATE_KEY }}
           script: |
-            docker stop polymorphia-backend-staging || true
-            docker rm polymorphia-backend-staging || true
-            docker run -d --name polymorphia-backend-staging -p 8081:8080 \
+            docker stop polymorphia-backend-prod|| true
+            docker rm polymorphia-backend-prod || true
+            docker run -d --name polymorphia-backend-prod -p 8080:8080 \
               -v /app/config:/app/config \
               -v ~/polymorphia-static:/app/static \
               polymorphia-backend:staging-latest \
@@ -107,12 +107,12 @@ jobs:
     - name: Wait 5 minutes and check backend
       uses: appleboy/ssh-action@v1
       with:
-        host: ${{ secrets.STAGING_VM_IP }}
-        username: ${{ secrets.STAGING_VM_USER }}
-        key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+        host: ${{ secrets.PROD_VM_IP }}
+        username: ${{ secrets.PROD_VM_USER }}
+        key: ${{ secrets.PROD_SSH_PRIVATE_KEY }}
         script: |
           sleep 300
-          docker ps --filter name=polymorphia-backend-staging --quiet || exit 1
+          docker ps --filter name=polymorphia-backend-prod --quiet || exit 1
 
   deploy-success:
     needs: [setup-environment, test-backend, build-backend, run-backend, validate-deploy]
