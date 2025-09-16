@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import {useTitle} from "@/components/navigation/TitleContext";
-import {useEffect} from "react";
+import { useTitle } from "@/components/navigation/TitleContext";
+import { useEffect } from "react";
 
 export default function Dashboard() {
   const { setTitle } = useTitle();
@@ -10,10 +10,9 @@ export default function Dashboard() {
     setTitle("Podsumowanie kursu");
   }, [setTitle]);
 
-
   return (
     <div className="m-auto text-4xl">
       Tu kiedyś będzie dashboard instruktora
     </div>
-  )
+  );
 }

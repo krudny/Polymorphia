@@ -11,7 +11,7 @@ import lombok.Data;
 public class UserDetailsResponseDto {
     @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING)
-    private UserType userType;
+    private UserType userRole;
 
     @NotNull
     private BaseUserDetailsResponseDto userDetails;

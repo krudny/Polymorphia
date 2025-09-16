@@ -17,7 +17,9 @@ import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import com.agh.polymorphia_backend.util.NumberFormatter;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -45,9 +47,13 @@ public class ProfileService {
         User user = userService.getCurrentUser().getUser();
 
         BigDecimal totalXp = hallOfFameService.getStudentHallOfFame(user).getTotalXpSum();
+        List<EvolutionStageThresholdResponseDto> evolutionStages = getEvolutionStages(courseId);
+        int evolutionStageId = getCurrentEvolutionStageId(evolutionStages, user);
 
         return ProfileResponseDto.builder()
-                .evolutionStageThresholds(getEvolutionStages(courseId))
+                .evolutionStageThresholds(evolutionStages)
+                .leftEvolutionStage(getLeftEvolutionStage(evolutionStages, evolutionStageId))
+                .rightEvolutionStage(getRightEvolutionStage(evolutionStages, evolutionStageId))
                 .totalXp(NumberFormatter.formatToBigDecimal(totalXp))
                 .totalStudentsInCourse(getTotalStudentsInCourse(courseId))
                 .xpDetails(getXpDetails(user, courseId))
@@ -62,8 +68,35 @@ public class ProfileService {
         return xpDetails;
     }
 
+    private int getCurrentEvolutionStageId(List<EvolutionStageThresholdResponseDto> evolutionStages, User user) {
+        String evolutionStageName = hallOfFameService.getStudentHallOfFame(user).getEvolutionStage();
+        for (int i = 0; i < evolutionStages.size(); i++) {
+            if (evolutionStages.get(i).getName().equals(evolutionStageName)) {
+                return i;
+            }
+        }
+        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    private EvolutionStageThresholdResponseDto getLeftEvolutionStage(List<EvolutionStageThresholdResponseDto> evolutionStages, int currentEvolutionStageId) {
+        return evolutionStages.size() > (currentEvolutionStageId + 1) ?
+                evolutionStages.get(currentEvolutionStageId)
+                : evolutionStages.get(currentEvolutionStageId - 1);
+    }
+
+    private EvolutionStageThresholdResponseDto getRightEvolutionStage(List<EvolutionStageThresholdResponseDto> evolutionStages, int currentEvolutionStageId) {
+        return evolutionStages.size() > (currentEvolutionStageId + 1) ?
+                evolutionStages.get(currentEvolutionStageId + 1)
+                : evolutionStages.get(currentEvolutionStageId);
+    }
+
     private Long getTotalStudentsInCourse(Long courseId) {
-        HallOfFameRequestDto request = HallOfFameRequestDto.builder().courseId(courseId).groups(Collections.emptyList()).searchBy(SearchBy.ANIMAL_NAME).searchTerm("").build();
+        HallOfFameRequestDto request = HallOfFameRequestDto.builder()
+                .courseId(courseId)
+                .groups(Collections.emptyList())
+                .searchBy(SearchBy.ANIMAL_NAME)
+                .searchTerm("")
+                .build();
 
         return hallOfFameRepository.countByCourseIdAndFilters(request);
     }

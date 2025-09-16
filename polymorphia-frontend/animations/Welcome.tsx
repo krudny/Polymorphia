@@ -1,5 +1,5 @@
 import gsap from "gsap";
-import {AppRouterInstance} from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export function animateWelcome(
   wrapper: HTMLDivElement,
@@ -17,8 +17,7 @@ export function animateWelcome(
       onComplete: () => {
         if (isCourseIdSet) {
           router.push("/profile");
-        }
-        else {
+        } else {
           router.push("/course-choice");
         }
       },

@@ -1,17 +1,18 @@
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
-import {CourseChoiceProps} from "@/components/course-choice/types";
-import {useEffect} from "react";
+import { CourseChoiceProps } from "@/components/course-choice/types";
+import { useEffect } from "react";
 import usePreferredCourseUpdate from "@/hooks/course/usePreferredCourseUpdate";
 import renderCard from "@/components/course-choice/RenderCard";
 
 export default function CourseChoiceGrid({
   courses,
-  redirectPage,
   currentCourseId,
   containerRef,
   fastForward,
 }: CourseChoiceProps) {
-  const handleCourseSelection = usePreferredCourseUpdate({ redirectPage });
+  const handleCourseSelection = usePreferredCourseUpdate({
+    redirectPage: fastForward,
+  });
 
   useEffect(() => {
     if (fastForward && courses?.length === 1) {

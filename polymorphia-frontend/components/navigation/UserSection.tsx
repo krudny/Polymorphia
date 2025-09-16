@@ -9,14 +9,14 @@ export default function UserSection() {
   const { userDetails } = userContext;
 
   const title =
-    userContext.userType === Roles.STUDENT
+    userContext.userRole === Roles.STUDENT
       ? userContext.userDetails.animalName
       : userContext.userDetails.userName;
 
   const subtitle =
-    userContext.userType === Roles.STUDENT
+    userContext.userRole === Roles.STUDENT
       ? userContext.userDetails.evolutionStage
-      : RoleTextMap[userContext.userType];
+      : RoleTextMap[userContext.userRole];
 
   return (
     <div className="user-section">

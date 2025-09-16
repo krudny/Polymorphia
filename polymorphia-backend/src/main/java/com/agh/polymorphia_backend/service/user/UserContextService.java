@@ -29,7 +29,7 @@ public class UserContextService {
     public UserDetailsResponseDto getUserContext() {
         AbstractRoleUser user = userService.getCurrentUser();
         return UserDetailsResponseDto.builder()
-                .userType(userService.getUserRole(user))
+                .userRole(userService.getUserRole(user))
                 .userDetails(userContextMapper.toBaseUserDetailsResponseDto(user))
                 .build();
     }

@@ -18,6 +18,12 @@ public class ProfileResponseDto {
     private List<EvolutionStageThresholdResponseDto> evolutionStageThresholds;
 
     @NotNull
+    private EvolutionStageThresholdResponseDto leftEvolutionStage;
+
+    @NotNull
+    private EvolutionStageThresholdResponseDto rightEvolutionStage;
+
+    @NotNull
     private Long totalStudentsInCourse;
 
     @NotNull

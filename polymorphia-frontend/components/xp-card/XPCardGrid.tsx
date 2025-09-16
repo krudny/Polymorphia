@@ -1,11 +1,11 @@
 import "../pagination/index.css";
-import {Fragment, useEffect, useRef, useState} from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import clsx from "clsx";
-import {useXPGridAnimation} from "@/animations/XPGrid";
+import { useXPGridAnimation } from "@/animations/XPGrid";
 import "./index.css";
-import {CardGridProps} from "@/components/xp-card/types";
+import { CardGridProps } from "@/components/xp-card/types";
 import Pagination from "@/components/pagination/Pagination";
-import {setResizeObserver} from "@/components/course/event-section/EventSectionUtils";
+import { setResizeObserver } from "@/components/course/event-section/EventSectionUtils";
 
 export default function XPCardGrid({
   containerRef,
@@ -35,7 +35,7 @@ export default function XPCardGrid({
     setFirstRender
   );
 
-  console.log(maxRows)
+  console.log(maxRows);
 
   useEffect(() => {
     return setResizeObserver(
@@ -44,7 +44,7 @@ export default function XPCardGrid({
       setPageCols,
       setPageRows,
       maxColumns,
-      maxRows,
+      maxRows
     );
   }, [containerRef, maxColumns, maxRows]);
 

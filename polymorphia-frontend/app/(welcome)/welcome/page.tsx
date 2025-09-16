@@ -1,11 +1,11 @@
 "use client";
 
-import {useEffect, useRef} from "react";
-import {useRouter} from "next/navigation";
+import { useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import Loading from "@/components/loading/Loading";
 import "./index.css";
 import useIsPreferredCourseSet from "@/hooks/course/useIsPreferredCourseSet";
-import {animateWelcome} from "@/animations/Welcome";
+import { animateWelcome } from "@/animations/Welcome";
 
 export default function Welcome() {
   const wrapperRef = useRef<HTMLDivElement>(null);

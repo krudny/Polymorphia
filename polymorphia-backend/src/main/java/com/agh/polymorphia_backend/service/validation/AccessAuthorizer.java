@@ -58,7 +58,7 @@ public class AccessAuthorizer {
             case STUDENT -> isCourseAccessAuthorizedStudent(user, course);
             case INSTRUCTOR -> isCourseAccessAuthorizedInstructor(user, course);
             case COORDINATOR -> isCourseAccessAuthorizedCoordinator(user, course);
-            case UNDEFINED -> throw new ResponseStatusException(HttpStatus.NOT_FOUND, COURSE_NOT_FOUND);
+            case UNDEFINED -> false;
         };
     }
 

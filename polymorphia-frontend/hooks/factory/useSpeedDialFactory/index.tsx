@@ -17,17 +17,17 @@ export function useSpeedDialFactory({
   const markdownContext = useOptionalMarkdownContext();
   const router = useRouter();
   const pathname = usePathname();
-  const { userType } = useUserContext();
+  const { userRole } = useUserContext();
 
   return useMemo(() => {
-    if (userType === Roles.UNDEFINED) {
+    if (userRole === Roles.UNDEFINED) {
       return [];
     }
 
     const selectedType = speedDialStrategyRegistry.getStrategy(
       eventType,
       viewType,
-      userType
+      userRole
     );
 
     if (!selectedType) {
@@ -36,7 +36,7 @@ export function useSpeedDialFactory({
 
     const combinedContext: SpeedDialContext = {
       router: router,
-      role: userType,
+      role: userRole,
       currentPath: pathname,
       saveMarkdown: markdownContext?.saveMarkdown || (() => {}),
       setIsEditing: markdownContext?.setIsEditing || (() => {}),
@@ -46,5 +46,5 @@ export function useSpeedDialFactory({
 
     const items: SpeedDialItem[] = selectedType.getItems(combinedContext);
     return items.sort((a, b) => b.orderIndex - a.orderIndex);
-  }, [eventType, viewType, userType, markdownContext, router, pathname]);
+  }, [eventType, viewType, userRole, markdownContext, router, pathname]);
 }

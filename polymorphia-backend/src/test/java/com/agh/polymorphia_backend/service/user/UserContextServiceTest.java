@@ -64,7 +64,7 @@ class UserContextServiceTest {
 
         var result = userContextService.getUserContext();
 
-        assertEquals(UserType.STUDENT, result.getUserType());
+        assertEquals(UserType.STUDENT, result.getUserRole());
         assertEquals(userDetails, result.getUserDetails());
     }
 

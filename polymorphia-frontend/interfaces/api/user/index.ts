@@ -26,7 +26,7 @@ interface BaseUserDetailsDTOWithType<
   T extends Role,
   R extends BaseUserDetails,
 > {
-  userType: T;
+  userRole: T;
   userDetails: R;
 }
 

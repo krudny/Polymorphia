@@ -70,7 +70,7 @@ const UserService = {
   getRandomUsers: async (): Promise<StudentDetailsDTOWithType[]> => {
     return [
       {
-        userType: Roles.STUDENT,
+        userRole: Roles.STUDENT,
         userDetails: {
           id: 1,
           userName: "Kamil Rudny",
@@ -83,7 +83,7 @@ const UserService = {
         },
       },
       {
-        userType: Roles.STUDENT,
+        userRole: Roles.STUDENT,
         userDetails: {
           id: 2,
           userName: "Kamil Śmieszny",

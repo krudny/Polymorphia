@@ -26,8 +26,9 @@ export function useProfileFilterConfigs(): UseProfileFilterConfigs {
           max: Math.min(4, labels.length),
           defaultValues: [
             ...labels
-              .slice(0, Math.min(4, Math.max(0, labels.length - 1)))
+              .slice(0, Math.min(3, Math.max(0, labels.length - 1)))
               .map((label) => label),
+            "Suma",
           ],
         },
       ];

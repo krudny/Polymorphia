@@ -35,7 +35,7 @@ for (let i = 0; i < 250; i++) {
   const stage = Math.max(1, 6 - Math.floor(i / 50));
 
   const item = {
-    userType: Roles.STUDENT,
+    userRole: Roles.STUDENT,
     userDetails: {
       id: i,
       userName: studentName,

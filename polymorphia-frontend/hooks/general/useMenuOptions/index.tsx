@@ -46,7 +46,7 @@ export function useBottomDesktopMenuItems(): MenuOption[] {
 }
 
 export function useMainMenuItems(): MenuOption[] {
-  const { userType } = useUserContext();
+  const { userRole } = useUserContext();
   const items: MenuOption[] = [
     {
       icon: BadgeHelpIcon,
@@ -63,7 +63,7 @@ export function useMainMenuItems(): MenuOption[] {
     { icon: MilestoneIcon, text: "Roadmapa", link: "roadmap" },
   ];
 
-  if (userType === Roles.STUDENT) {
+  if (userRole === Roles.STUDENT) {
     items.splice(0, 0, {
       icon: UserIcon,
       text: "Profil",

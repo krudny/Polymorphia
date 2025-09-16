@@ -19,12 +19,12 @@ function GroupPickingModalContent() {
   const [group, setGroup] = useState<StudentDetailsDTO[]>([]);
   const currentUser = useUserContext();
   const { data: allUsers, isError } = useRandomUsers();
-  if (currentUser.userType !== Roles.STUDENT) {
+  if (currentUser.userRole !== Roles.STUDENT) {
     throw new Error("User is not a student");
   }
 
   useEffect(() => {
-    if (currentUser && currentUser.userType === Roles.STUDENT) {
+    if (currentUser && currentUser.userRole === Roles.STUDENT) {
       setGroup([currentUser.userDetails]);
     }
   }, [currentUser]);

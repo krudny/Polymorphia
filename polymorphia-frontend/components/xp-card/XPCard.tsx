@@ -1,7 +1,7 @@
 import clsx from "clsx";
-import {tv} from "tailwind-variants";
+import { tv } from "tailwind-variants";
 import "./index.css";
-import {XPCardProps, XPCardVariantProps} from "@/components/xp-card/types";
+import { XPCardProps, XPCardVariantProps } from "@/components/xp-card/types";
 
 export const colorVariants = tv({
   slots: {

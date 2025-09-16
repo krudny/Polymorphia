@@ -1,14 +1,14 @@
 "use client";
 
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import {useEffect, useRef} from "react";
-import {useScaleShow} from "@/animations/ScaleShow";
-import {useTitle} from "@/components/navigation/TitleContext";
+import { useEffect, useRef } from "react";
+import { useScaleShow } from "@/animations/ScaleShow";
+import { useTitle } from "@/components/navigation/TitleContext";
 import toast from "react-hot-toast";
-import {useTheme} from "next-themes";
+import { useTheme } from "next-themes";
 import useNavigationContext from "@/hooks/contexts/useNavigationContext";
 import CourseChoiceGrid from "@/components/course-choice";
-import {useUserDetails} from "@/hooks/contexts/useUserContext";
+import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import "./index.css";
 import useUserCourses from "@/hooks/course/useUserCourses";
 import Loading from "@/components/loading/Loading";
@@ -48,7 +48,7 @@ export default function Settings() {
   }, [setTitle]);
 
   if (isLoading || !courses) {
-    return <Loading />
+    return <Loading />;
   }
 
   return (

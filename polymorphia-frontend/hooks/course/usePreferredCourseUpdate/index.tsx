@@ -6,6 +6,7 @@ import {
   UsePreferredCourseUpdate,
   UsePreferredCourseUpdateProps,
 } from "@/hooks/course/usePreferredCourseUpdate/types";
+import { Roles, UserDetailsDTO } from "@/interfaces/api/user";
 
 export default function usePreferredCourseUpdate({
   redirectPage,
@@ -15,11 +16,20 @@ export default function usePreferredCourseUpdate({
   const setPreferredCourseMutation = useMutation({
     mutationFn: (courseId: number) =>
       userService.setUserPreferredCourse(courseId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
+    onSuccess: async () => {
       toast.success("Aktywny kurs został zmieniony!");
+
+      const currentUser = await queryClient.fetchQuery<UserDetailsDTO>({
+        queryKey: ["currentUser"],
+        queryFn: () => userService.getCurrentUser(),
+      });
+
       if (redirectPage) {
-        router.push(redirectPage);
+        if (currentUser?.userRole === Roles.STUDENT) {
+          router.push("/profile");
+        } else {
+          router.push("/dashboard");
+        }
       }
     },
     onError: () => {
