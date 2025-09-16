@@ -17,11 +17,6 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      # - name: Set up application.properties
-      #   run: |
-      #     mkdir -p ./polymorphia-backend/src/main/resources
-      #     printf "%s" "${{ secrets.APPLICATION_PROPERTIES_TEST }}" > ./polymorphia-backend/src/main/resources/application.properties
-
       - name: Maven Build and Test
         working-directory: ./polymorphia-backend
         run: mvn clean install

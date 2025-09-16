@@ -22,6 +22,7 @@ public class DbInit {
                     .lastName(initialUserProperties.lastName())
                     .email(initialUserProperties.email())
                     .password(passwordEncoder.encode(initialUserProperties.password()))
+                    .isPasswordTemporary(false)
                     .build();
 
             userRepository.save(coordinator);
