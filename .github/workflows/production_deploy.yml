@@ -116,3 +116,10 @@ jobs:
       - name: All jobs completed successfully
         run: echo "All deployment jobs completed successfully!" 
 
+      - name: Trigger GitHub Status Check for Successful Deployment
+        uses: EndBug/gh-commit-status-wrapper@v1
+        with:
+          auth: ${{ github.token }}
+          context: "deploy-production-success"
+          description: "Deployment completed successfully"
+          state: "success"
