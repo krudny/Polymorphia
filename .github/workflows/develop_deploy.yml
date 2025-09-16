@@ -69,7 +69,7 @@ jobs:
           ./flyway-10.17.0/flyway -url="jdbc:postgresql://${{ secrets.TEST_DB_HOST }}:${{ secrets.TEST_DB_PORT }}/${{ secrets.TEST_DB_NAME }}" \
             -user="${{ secrets.TEST_DB_USER }}" \
             -password="${{ secrets.TEST_DB_PASSWORD }}" \
-            -locations="filesystem:src/main/resources/db/migration" \
+            -locations="filesystem:polymorphia/polymorphia-backend/src/main/resources/db/migration" \
             migrate
 
   build-backend:
