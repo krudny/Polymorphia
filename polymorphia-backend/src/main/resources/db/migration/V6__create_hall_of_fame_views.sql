@@ -27,7 +27,6 @@ WITH base AS (SELECT a.id         AS animal_id,
                  WHERE (it.event_section_id = ge.event_section_id)),
      bonuses AS (SELECT a.animal_id,
                         a.event_section_id,
-                        COALESCE(SUM(fbi.xp_bonus), 0.0)         AS flat_bonus,
                         COALESCE(SUM(pbi.percentage_bonus), 0.0) AS percentage_bonus
                  FROM awarded a
                           LEFT JOIN flat_bonus_items fbi ON fbi.item_id = a.reward_id
@@ -39,7 +38,7 @@ SELECT (b.animal_id::text || '-' || b.event_section_id::text) AS id,
        b.event_section_id,
        b.event_section_name,
        COALESCE(p.raw_xp, 0)                                  AS raw_xp,
-       COALESCE(bn.flat_bonus, 0.0)                           AS flat_bonus,
+       0.0                                                    AS flat_bonus,
        COALESCE(bn.percentage_bonus, 0.0)                     AS percentage_bonus
 FROM base b
          LEFT JOIN points p ON p.animal_id = b.animal_id AND p.event_section_id = b.event_section_id
