@@ -31,7 +31,7 @@ jobs:
           username: ${{ secrets.STAGING_VM_USER }}
           key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
           script: |
-            git clone --depth 1 --branch "develop" https://github.com/${{ github.repository }}.git ~/polymorphia
+            git clone --depth 1 --branch "${{ github.head_ref }}" https://github.com/${{ github.repository }}.git ~/polymorphia
 
   test-backend:
     needs: setup-environment
