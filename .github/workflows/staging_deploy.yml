@@ -92,7 +92,6 @@ jobs:
               -v ~/polymorphia-static:/app/static \
               polymorphia-backend:staging-latest \
               --spring.config.location=file:/app/config/application.properties 
-
   # validate-deploy:
   #   needs: run-backend
   #   runs-on: ubuntu-latest
