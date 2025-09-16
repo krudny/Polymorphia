@@ -96,7 +96,7 @@ jobs:
             docker run -d --name polymorphia-backend-prod -p 8080:8080 \
               -v /app/config:/app/config \
               -v ~/polymorphia-static:/app/static \
-              polymorphia-backend:staging-latest \
+              polymorphia-backend:prod-latest \
               --spring.config.location=file:/app/config/application.properties 
 
   validate-deploy:
