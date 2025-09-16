@@ -1,10 +1,10 @@
 name: Build and Deploy Backend to Staging
 
 on:
-  # push:
-  #   branches:
-  #     - develop
-  # pull_request:
+  push:
+    branches:
+      - develop
+  pull_request:
   workflow_dispatch:
 
 jobs:
