@@ -50,7 +50,7 @@ jobs:
           username: ${{ secrets.STAGING_VM_USER }}
           key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
           script: |
-            git clone --depth 1 --branch "${{ github.head_ref }}" https://github.com/${{ github.repository }}.git ~/polymorphia
+            git clone --depth 1 --branch "fix/CI-CD-validate" https://github.com/${{ github.repository }}.git ~/polymorphia
 
   migrate:
     needs: setup-environment
