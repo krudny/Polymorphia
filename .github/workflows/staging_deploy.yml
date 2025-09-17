@@ -11,6 +11,7 @@ jobs:
   setup-environment:
     if: github.event.label.name == 'deploy-to-staging'
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -37,6 +38,7 @@ jobs:
     if: github.event.label.name == 'deploy-to-staging'
     needs: setup-environment
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -63,6 +65,7 @@ jobs:
     if: github.event.label.name == 'deploy-to-staging'
     needs: setup-environment
     runs-on: ubuntu-latest
+
     steps:
       - name: Build Docker image
         uses: appleboy/ssh-action@v1
@@ -78,6 +81,7 @@ jobs:
     if: github.event.label.name == 'deploy-to-staging'
     needs: [test-backend, build-backend]
     runs-on: ubuntu-latest
+
     steps:
       - name: Run backend on VM
         uses: appleboy/ssh-action@v1
@@ -98,6 +102,7 @@ jobs:
     if: github.event.label.name == 'deploy-to-staging'
     needs: run-backend
     runs-on: ubuntu-latest
+
     steps:
     - name: Wait 5 minutes and check backend
       uses: appleboy/ssh-action@v1
@@ -111,7 +116,8 @@ jobs:
 
   deploy-staging-success:
     if: github.event.label.name == 'deploy-to-staging'
-    needs: [validate-deploy]
+    needs: validate-deploy
+
     runs-on: ubuntu-latest
     steps:
       - name: Trigger github status check

@@ -11,6 +11,7 @@ jobs:
   setup-environment:
     if: github.event.label.name == 'deploy-to-develop'
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -55,6 +56,7 @@ jobs:
     if: github.event.label.name == 'deploy-to-develop'
     needs: setup-environment
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -78,6 +80,7 @@ jobs:
     if: github.event.label.name == 'deploy-to-develop'
     needs: setup-environment
     runs-on: ubuntu-latest
+
     steps:
       - name: Clean Docker resources
         uses: appleboy/ssh-action@v1
@@ -103,6 +106,7 @@ jobs:
     if: github.event.label.name == 'deploy-to-develop'
     needs: [setup-environment, migrate]
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -129,6 +133,7 @@ jobs:
     if: github.event.label.name == 'deploy-to-develop'
     needs: [test-backend, build-backend]
     runs-on: ubuntu-latest
+
     steps:
       - name: Run backend on VM
         uses: appleboy/ssh-action@v1
@@ -149,6 +154,7 @@ jobs:
     if: github.event.label.name == 'deploy-to-develop'
     needs: run-backend
     runs-on: ubuntu-latest
+
     steps:
     - name: Wait 5 minutes and check backend
       uses: appleboy/ssh-action@v1
@@ -162,8 +168,9 @@ jobs:
 
   deploy-develop-success:
     if: github.event.label.name == 'deploy-to-develop'
-    needs: [validate-deploy]
+    needs: validate-deploy
     runs-on: ubuntu-latest
+
     steps:
       - name: Trigger github status check
         uses: myrotvorets/set-commit-status-action@master
