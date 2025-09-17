@@ -23,6 +23,7 @@ import {
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import { EventTypes } from "@/interfaces/general";
 import { CriteriaDetails } from "@/providers/grading/gradingReducer/types";
+import { TargetRequestDTO } from "@/hooks/course/useShortGrade/types";
 
 export const studentNames = [
   "Gerard Małoduszny",
@@ -802,10 +803,8 @@ export const EventSectionService = {
     ];
   },
 
-  getGrade: async (
-    target:
-      | { type: typeof TargetTypes.STUDENT; id: number }
-      | { type: typeof TargetTypes.STUDENT_GROUP; groupId: number },
+  getShortGrade: async (
+    target: TargetRequestDTO,
     gradableEventId: number
   ): Promise<ShortGradeResponseDTO> => {
     await new Promise<void>((resolve) => setTimeout(resolve, 300));
@@ -931,7 +930,7 @@ export const EventSectionService = {
 
   getRandomTargets: async (
     type: TargetType, // for mocking purposes only
-    eventSectionId: number
+    gradableEventId: number
   ): Promise<TargetResponseDTO[]> => {
     const data = [];
 
@@ -978,7 +977,7 @@ export const EventSectionService = {
   },
 
   submitGrade: async (gradeData: {
-    studentId: number;
+    target: TargetRequestDTO;
     gradableEventId: number;
     criteria: Record<number, CriteriaDetails>;
     comment: string;

@@ -8,8 +8,6 @@ import {
 } from "react";
 import { useDebounce } from "use-debounce";
 import { useEventParams } from "@/hooks/general/useEventParams";
-import useRandomPeopleWithPoints from "@/hooks/course/useRandomPeopleWithPoints";
-import useProjectGroups from "@/hooks/course/useProjectGroups";
 import useGradeUpdate from "@/hooks/course/useGradeUpdate";
 import {
   GradingContextInterface,
@@ -17,10 +15,11 @@ import {
 } from "@/providers/grading/types";
 import { useFilters } from "@/hooks/course/useFilters";
 import { useGradingFilterConfigs } from "@/hooks/course/useGradingFilterConfigs";
-import { EventTypes } from "@/interfaces/general";
-import useGrade3 from "@/hooks/course/useGrade3";
 import { GradingReducerActions } from "@/providers/grading/gradingReducer/types";
 import { GradingReducer, initialState } from "./gradingReducer";
+import useGradingTargets from "@/hooks/course/useGradingTargets";
+import useShortGrade from "@/hooks/course/useShortGrade";
+import { getRequestTargetFromResponseTarget } from "./utils/getRequestTargetFromResponseTarget";
 
 export const GradingContext = createContext<
   GradingContextInterface | undefined
@@ -29,7 +28,7 @@ export const GradingContext = createContext<
 const COURSE_ID = 1;
 
 export const GradingProvider = ({ children }: { children: ReactNode }) => {
-  const { gradableEventId, eventType } = useEventParams();
+  const { gradableEventId } = useEventParams();
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 400);
   // TODO: changing target doesnt reset state
@@ -47,36 +46,22 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const sortOrder = filters.getAppliedFilterValues("sortOrder") ?? ["asc"];
   const groups = filters.getAppliedFilterValues("groups") ?? ["all"];
 
-  //TODO: to be changed
-  const selectedStudentId = state?.selectedTarget?.[0]?.id ?? null;
-  const { data: students, isLoading: isStudentsLoading } =
-    useRandomPeopleWithPoints(debouncedSearch, sortBy, sortOrder, groups);
-  const { data: projectGroups, isLoading: isProjectGroupsLoading } =
-    useProjectGroups(debouncedSearch);
-  const { data: grade, isLoading: isGradeLoading } =
-    useGrade3(selectedStudentId);
+  const { data: targets, isLoading: isTargetsLoading } =
+    useGradingTargets(debouncedSearch);
+  const { data: grade, isLoading: isGradeLoading } = useShortGrade(
+    state.selectedTarget
+  );
   const { mutate } = useGradeUpdate();
 
   useEffect(() => {
-    if (eventType === EventTypes.PROJECT) {
-      if (!projectGroups || projectGroups.length < 1) {
-        return;
-      }
-      dispatch({
-        type: GradingReducerActions.SET_TARGET,
-        payload: projectGroups[0].members,
-      });
-    } else {
-      if (!students || students.length < 1) {
-        return;
-      }
-      dispatch({
-        type: GradingReducerActions.SET_TARGET,
-        payload: [students[0]],
-      });
+    if (!targets || targets.length < 1) {
+      return;
     }
-  }, [students, projectGroups, eventType, dispatch]);
-  // TODO: end of to be changed
+    dispatch({
+      type: GradingReducerActions.SET_TARGET,
+      payload: targets[0],
+    });
+  }, [targets, dispatch]);
 
   useEffect(() => {
     if (!grade) {
@@ -92,12 +77,12 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   }, [grade]);
 
   const submitGrade = () => {
-    if (!selectedStudentId) {
+    if (!state.selectedTarget) {
       return;
     }
 
     mutate({
-      studentId: selectedStudentId,
+      target: getRequestTargetFromResponseTarget(state.selectedTarget),
       gradableEventId,
       criteria: state.criteria,
       comment: state.comment,
@@ -116,10 +101,8 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
         dispatch,
         search,
         setSearch,
-        students,
-        isStudentsLoading,
-        projectGroups,
-        isProjectGroupsLoading,
+        targets,
+        isTargetsLoading,
         isGradeLoading,
         submitGrade,
       }}

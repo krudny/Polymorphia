@@ -32,7 +32,7 @@ export const GradingReducer = (
       const criteriaMap = action.payload.grade.criteria.reduce(
         (acc, criterion) => {
           acc[criterion.id] = {
-            gainedXp: criterion.gainedXp.toString(),
+            gainedXp: criterion.gainedXp,
             assignedRewards: criterion.assignedRewards,
           };
           return acc;
