@@ -33,27 +33,42 @@ export interface CriterionAssignableRewardResponseDTO {
 
 export interface CriterionGradeResponseDTO<AssignedRewardType> {
   id: number;
-  gainedXp: string;
+  gainedXp?: string;
   assignedRewards: AssignedRewardType[];
 }
 
 // GradingTarget
-interface StudentTargetData {
+export interface StudentTargetData {
   id: number;
   studentName: string;
   evolutionStage: string;
   group: string;
   imageUrl: string;
-  gainedXp: string;
+  gainedXp?: string;
 }
 
+export const TargetTypes = {
+  STUDENT: "STUDENT",
+  STUDENT_GROUP: "STUDENT_GROUP",
+} as const;
+
+export type TargetType = (typeof TargetTypes)[keyof typeof TargetTypes];
+
+export const GroupTargetTypes = {
+  MATCHING: "MATCHING",
+  DIVERGENT: "DIVERGENT",
+} as const;
+
+export type GroupTargetType =
+  (typeof GroupTargetTypes)[keyof typeof GroupTargetTypes];
+
 export interface StudentTargetResponseDTO extends StudentTargetData {
-  type: "STUDENT";
+  type: typeof TargetTypes.STUDENT;
 }
 
 export interface StudentGroupTargetResponseDTO {
-  type: "STUDENT_GROUP";
-  groupType: "MATCHING" | "DIVERGENT";
+  type: typeof TargetTypes.STUDENT_GROUP;
+  groupType: GroupTargetType;
   groupId: number;
   members: StudentTargetData[];
 }
