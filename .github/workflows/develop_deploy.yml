@@ -1,8 +1,9 @@
 name: Build and Deploy Backend to Develop Testing
 
 on:
-  pull_request:
-    types: [labeled]
+  push:
+    branches:
+      - fix/CI-CD-validate
 
 permissions:
   statuses: write
@@ -179,7 +180,7 @@ jobs:
           status: success
           context: deploy-develop-success
           description: Deployment completed successfully
-          sha: ${{ github.event.pull_request.head.sha }}
+          sha: ${{ github.sha }} 
 
       - name: All jobs completed successfully
         run: echo "All deployment jobs completed successfully!"
