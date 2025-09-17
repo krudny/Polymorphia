@@ -112,7 +112,7 @@ jobs:
           docker ps --filter name=polymorphia-backend-prod --quiet || exit 1
 
   deploy-production-success:
-    needs: [setup-environment, test-backend, build-backend, run-backend, validate-deploy]
+    needs: validate-deploy
     runs-on: ubuntu-latest
     
     steps:
