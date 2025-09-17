@@ -1,15 +1,15 @@
 name: Build and Deploy Backend to Develop Testing
 
 on:
-  push:
-    branches:
-      - fix/CI-CD-validate
+  pull_request:
+    types: [labeled]
 
 permissions:
   statuses: write
 
 jobs:
   setup-environment:
+    if: github.event.label.name == 'deploy-to-develop'
     runs-on: ubuntu-latest
 
     steps:
@@ -50,9 +50,10 @@ jobs:
           username: ${{ secrets.STAGING_VM_USER }}
           key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
           script: |
-            git clone --depth 1 --branch "fix/CI-CD-validate" https://github.com/${{ github.repository }}.git ~/polymorphia
+            git clone --depth 1 --branch "${{ github.head_ref }}" https://github.com/${{ github.repository }}.git ~/polymorphia
 
   migrate:
+    if: github.event.label.name == 'deploy-to-develop'
     needs: setup-environment
     runs-on: ubuntu-latest
 
@@ -76,6 +77,7 @@ jobs:
             migrate
 
   build-backend:
+    if: github.event.label.name == 'deploy-to-develop'
     needs: setup-environment
     runs-on: ubuntu-latest
 
@@ -101,6 +103,7 @@ jobs:
             docker build -t polymorphia-backend:develop-latest -f Dockerfile .
 
   test-backend:
+    if: github.event.label.name == 'deploy-to-develop'
     needs: [setup-environment, migrate]
     runs-on: ubuntu-latest
 
@@ -127,6 +130,7 @@ jobs:
           mvn test -Dspring.profiles.active=test
 
   run-backend:
+    if: github.event.label.name == 'deploy-to-develop'
     needs: [test-backend, build-backend]
     runs-on: ubuntu-latest
 
@@ -147,6 +151,7 @@ jobs:
               --spring.config.location=file:/app/config/application-dev.properties
 
   validate-deploy:
+    if: github.event.label.name == 'deploy-to-develop'
     needs: run-backend
     runs-on: ubuntu-latest
 
@@ -162,6 +167,7 @@ jobs:
           docker ps --filter name=polymorphia-backend-develop --quiet || exit 1
 
   deploy-develop-success:
+    if: github.event.label.name == 'deploy-to-develop'
     needs: validate-deploy
     runs-on: ubuntu-latest
 
@@ -173,7 +179,7 @@ jobs:
           status: success
           context: deploy-develop-success
           description: Deployment completed successfully
-          sha: ${{ github.sha }} 
+          sha: ${{ github.event.pull_request.head.sha }}
 
       - name: All jobs completed successfully
         run: echo "All deployment jobs completed successfully!"
