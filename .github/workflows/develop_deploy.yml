@@ -10,7 +10,6 @@ permissions:
 
 jobs:
   setup-environment:
-    if: github.event.label.name == 'deploy-to-develop'
     runs-on: ubuntu-latest
 
     steps:
@@ -54,7 +53,6 @@ jobs:
             git clone --depth 1 --branch "${{ github.head_ref }}" https://github.com/${{ github.repository }}.git ~/polymorphia
 
   migrate:
-    if: github.event.label.name == 'deploy-to-develop'
     needs: setup-environment
     runs-on: ubuntu-latest
 
@@ -78,7 +76,6 @@ jobs:
             migrate
 
   build-backend:
-    if: github.event.label.name == 'deploy-to-develop'
     needs: setup-environment
     runs-on: ubuntu-latest
 
@@ -104,7 +101,6 @@ jobs:
             docker build -t polymorphia-backend:develop-latest -f Dockerfile .
 
   test-backend:
-    if: github.event.label.name == 'deploy-to-develop'
     needs: [setup-environment, migrate]
     runs-on: ubuntu-latest
 
@@ -131,7 +127,6 @@ jobs:
           mvn test -Dspring.profiles.active=test
 
   run-backend:
-    if: github.event.label.name == 'deploy-to-develop'
     needs: [test-backend, build-backend]
     runs-on: ubuntu-latest
 
@@ -152,7 +147,6 @@ jobs:
               --spring.config.location=file:/app/config/application-dev.properties
 
   validate-deploy:
-    if: github.event.label.name == 'deploy-to-develop'
     needs: run-backend
     runs-on: ubuntu-latest
 
@@ -168,7 +162,6 @@ jobs:
           docker ps --filter name=polymorphia-backend-develop --quiet || exit 1
 
   deploy-develop-success:
-    if: github.event.label.name == 'deploy-to-develop'
     needs: validate-deploy
     runs-on: ubuntu-latest
 
