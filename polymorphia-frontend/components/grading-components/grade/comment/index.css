@@ -2,5 +2,5 @@
 @import "../../../../styles/globals.css";
 
 .comment {
-    @apply w-full p-4 text-xl resize-none border-3 focus:outline-none rounded-xl default-colors max-h-64;
+    @apply w-full p-4 text-xl border-3 focus:outline-none rounded-xl default-colors resize-none custom-scrollbar h-auto max-h-64 field-sizing-content;
 }
