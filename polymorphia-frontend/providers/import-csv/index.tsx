@@ -5,7 +5,6 @@ import useCSVPreviewUpdate from "@/hooks/general/CSV/useCSVPreviewUpdate";
 import useCSVProcessUpdate from "@/hooks/general/CSV/useCSVProcessUpdate";
 import {EventTypes, ImportCSVType, ImportCSVTypes} from "@/interfaces/general";
 import {useEventParams} from "@/hooks/general/useEventParams";
-import Loading from "@/components/loading/Loading";
 
 export const ImportCSVContext = createContext<ImportCSVContextInterface | undefined>(undefined);
 
@@ -35,7 +34,7 @@ export const ImportCSVProvider = ({ children }: ImportCSVProviderProps) => {
   };
 
   if(!importType) {
-    return <Loading />
+    return null;
   }
 
   return (
