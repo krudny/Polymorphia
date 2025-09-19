@@ -2,12 +2,12 @@
 
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import {ReactNode, useCallback} from "react";
-import toast from "react-hot-toast";
 import {useDropzone} from "react-dropzone";
 import useImportCSVContext from "@/hooks/contexts/useImportCSVContext";
 import "./index.css";
 import "../index.css";
 import Loading from "@/components/loading/Loading";
+import {importCSVError} from "@/components/speed-dial/modals/import-csv/upload/importCSVError";
 
 export default function UploadCSV(): ReactNode {
   const {
@@ -21,12 +21,7 @@ export default function UploadCSV(): ReactNode {
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       const file = acceptedFiles[0];
-
-      if (file && (file.type === "text/csv" || file.name.endsWith(".csv"))) {
-        setSelectedFile(file);
-      } else {
-        toast.error("Plik nie jest w formacie csv!");
-      }
+      setSelectedFile(file);
     },
     [setSelectedFile]
   );
@@ -36,8 +31,10 @@ export default function UploadCSV(): ReactNode {
     accept: {
       "text/csv": [".csv"],
     },
+    maxSize: 5 * 1024 * 1024,
     multiple: false,
     disabled: csvHeadersMutation.isPending,
+    onDropRejected: (rejectedFiles) => importCSVError(rejectedFiles),
   });
 
   const handleUpload = () => {
