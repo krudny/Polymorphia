@@ -1,15 +1,15 @@
 "use client";
-import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
+import {SpeedDialModalProps} from "@/components/speed-dial/modals/types";
 import Modal from "@/components/modal/Modal";
 import "./index.css";
-import { ReactNode } from "react";
-import { ImportCSVProvider } from "@/providers/import-csv";
+import {ReactNode} from "react";
+import {ImportCSVProvider} from "@/providers/import-csv";
 import UploadCSV from "@/components/speed-dial/modals/import-csv/upload";
 import useImportCSVContext from "@/hooks/contexts/useImportCSVContext";
 import PickCSVHeaders from "@/components/speed-dial/modals/import-csv/pick-headers";
 import PreviewCSV from "@/components/speed-dial/modals/import-csv/preview";
 
-const ImportCSVContent = ({ onClosedAction }: SpeedDialModalProps) => {
+const ImportCSVModalContent = ({ onClosedAction }: SpeedDialModalProps) => {
   const { csvHeadersMutation, csvPreviewMutation } = useImportCSVContext();
 
   const renderData = (): { content: ReactNode; subtitle?: string } => {
@@ -50,7 +50,7 @@ export default function ImportCSVModal({
 }: SpeedDialModalProps): ReactNode {
   return (
     <ImportCSVProvider>
-      <ImportCSVContent onClosedAction={onClosedAction} />
+      <ImportCSVModalContent onClosedAction={onClosedAction} />
     </ImportCSVProvider>
   );
 }
