@@ -28,7 +28,7 @@ export function useHallOfFameFilterConfigs(courseId: number) {
           id: "sortBy",
           title: "Sortowanie po kategorii",
           options: [
-            { value: "name", label: "Nazwa" },
+            { value: "animalName", label: "Nazwa" },
             ...eventSections.map((eventSection: EventSectionResponseDTO) => ({
               value: eventSection.name,
             })),

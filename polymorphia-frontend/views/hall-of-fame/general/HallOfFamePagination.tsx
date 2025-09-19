@@ -22,7 +22,7 @@ export default function HallOfFamePagination() {
       {!isLoading && hallOfFame.page.totalPages > 0 && (
         <Pagination
           pageCount={hallOfFame.page.totalPages}
-          forcePage={hallOfFame.page.pageNumber}
+          forcePage={hallOfFame.page.number}
           onPageChange={handlePageChange(setPage)}
         />
       )}

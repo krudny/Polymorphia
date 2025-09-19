@@ -1,155 +1,48 @@
-/* eslint-disable */
-
-import { HallOfFameResponseDTO } from "@/interfaces/api/hall-of-fame";
-
-export const studentNames = [
-  "Gerard Małoduszny",
-  "Gerard Małosolny",
-  "Gerard Kiszony",
-  "Gerard Solny",
-  "Kamil Rudny",
-  "Anna Nowak",
-  "Jan Kowalski",
-  "Maria Wiśniewska",
-  "Tomasz Zieliński",
-  "Paulina Kaczmarek",
-];
-
-export const groups = [
-  "MI-15-00",
-  "BM-16-00",
-  "BM-17-00",
-  "BM-18-00",
-  "BM-19-00",
-  "BM-20-00",
-  "BM-21-00",
-  "BM-22-00",
-  "BM-23-00",
-  "BM-01-00",
-  "BM-02-00",
-  "BM-03-00",
-];
-
-const roundToTwo = (num: number): string => {
-  return (Math.round(num * 100) / 100).toFixed(2);
-};
-
-const generateAllData = () => {
-  const allData = [];
-
-  for (let i = 0; i < 250; i++) {
-    const studentName = studentNames[i % studentNames.length];
-    const stage = Math.max(1, 6 - Math.floor(i / 50));
-
-    const item = {
-      userDetails: {
-        id: i,
-        studentName: studentName,
-        animalName: studentName,
-        evolutionStage: "Majestatyczna Bestia",
-        imageUrl: `images/evolution-stages/${stage}.jpg`,
-        position: i + 1,
-        group: groups[i % groups.length],
-      },
-      xpDetails: {} as Record<string, string>,
-    };
-
-    // needs to be sorted based on priority
-    item.xpDetails["Git"] = roundToTwo(2.0 + Math.random());
-    item.xpDetails["Laboratorium"] = roundToTwo(40.0 + Math.random() * 20);
-    item.xpDetails["Kartkówka"] = roundToTwo(30.0 + Math.random() * 15);
-    item.xpDetails["Specjalny lab"] = roundToTwo(10.0 + Math.random() * 15);
-    item.xpDetails["Projekt 1"] = roundToTwo(20.0 + Math.random() * 10);
-    item.xpDetails["Projekt 2"] = roundToTwo(20.0 + Math.random() * 10);
-    item.xpDetails["Bonusy"] = roundToTwo(15.2 + Math.random() * 5);
-
-    const totalSum =
-      parseFloat(item.xpDetails["Laboratorium"]) +
-      parseFloat(item.xpDetails["Kartkówka"]) +
-      parseFloat(item.xpDetails["Git"]) +
-      parseFloat(item.xpDetails["Specjalny lab"]) +
-      parseFloat(item.xpDetails["Projekt 1"]) +
-      parseFloat(item.xpDetails["Projekt 2"]) +
-      parseFloat(item.xpDetails["Bonusy"]);
-
-    item.xpDetails["total"] = roundToTwo(totalSum);
-
-    allData.push(item);
-  }
-
-  allData.sort(
-    (a, b) => parseFloat(b.xpDetails.total) - parseFloat(a.xpDetails.total)
-  );
-  allData.forEach((item, index) => {
-    item.userDetails.position = index + 1;
-  });
-
-  return allData;
-};
-
-const ALL_DATA = generateAllData();
+import {
+  HallOfFameRecordDTO,
+  HallOfFameResponseDTO,
+} from "@/interfaces/api/hall-of-fame";
+import { API_HOST } from "@/services/api";
 
 const HallOfFameService = {
   getHallOfFame: async (
     page: number,
     size: number,
     searchTerm: string,
-    sortBy?: string,
-    sortOrder?: string,
+    sortBy: string,
+    sortOrder: string,
     groups?: string[]
   ): Promise<HallOfFameResponseDTO> => {
-    await new Promise((resolve) => setTimeout(resolve, 400));
-
-    let filteredData = [...ALL_DATA];
-
-    if (groups && !groups?.includes("all")) {
-      filteredData = filteredData.filter((item) =>
-        groups.includes(item.userDetails.group)
-      );
-    }
-
-    if (searchTerm && searchTerm.trim() !== "") {
-      const lowerSearch = searchTerm.toLowerCase();
-      filteredData = filteredData.filter((item) =>
-        item.userDetails.studentName.toLowerCase().includes(lowerSearch)
-      );
-    }
-
-    if (sortBy && sortOrder) {
-      filteredData.sort((a, b) => {
-        let valueA: any;
-        let valueB: any;
-
-        if (sortBy === "name") {
-          valueA = a.userDetails.studentName;
-          valueB = b.userDetails.studentName;
-          const comparison = valueA.localeCompare(valueB);
-          return sortOrder === "asc" ? comparison : -comparison;
-        } else {
-          valueA = a.xpDetails[sortBy] || 0;
-          valueB = b.xpDetails[sortBy] || 0;
-          const comparison = valueA - valueB;
-          return sortOrder === "asc" ? comparison : -comparison;
-        }
-      });
-    }
-
-    const start = page * size;
-    const end = Math.min(start + size, filteredData.length);
-    const pageContent = filteredData.slice(start, end);
-    const totalPages = Math.ceil(filteredData.length / size);
-
-    return {
-      content: pageContent,
-      page: {
-        pageNumber: page,
-        totalPages: totalPages,
+    const response = await fetch(`${API_HOST}/hall-of-fame`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
       },
-    };
+      body: JSON.stringify({
+        courseId: 1,
+        page: page,
+        size: size,
+        searchTerm: !searchTerm || searchTerm.trim() === "" ? "" : searchTerm,
+        searchBy: "animalName",
+        sortBy: sortBy,
+        sortOrder: sortOrder,
+        groups: groups && !groups?.includes("all") ? groups : [],
+      }),
+    });
+    if (!response.ok) {
+      throw new Error("Failed to fetch hall of fame!");
+    }
+    return await response.json();
   },
-  getPodium: async () => {
-    await new Promise((resolve) => setTimeout(resolve, 300));
-    return [...ALL_DATA.slice(0, 3)];
+  getPodium: async (): Promise<HallOfFameRecordDTO[]> => {
+    const response = await fetch(`${API_HOST}/hall-of-fame/podium?courseId=1`, {
+      credentials: "include",
+    });
+    if (!response.ok) {
+      throw new Error("Failed to fetch hall of fame podium!");
+    }
+    return await response.json();
   },
 };
 
