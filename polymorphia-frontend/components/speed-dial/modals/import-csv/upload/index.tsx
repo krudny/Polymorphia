@@ -1,12 +1,13 @@
 "use client";
 
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import { ReactNode, useCallback } from "react";
+import {ReactNode, useCallback} from "react";
 import toast from "react-hot-toast";
-import { useDropzone } from "react-dropzone";
+import {useDropzone} from "react-dropzone";
 import useImportCSVContext from "@/hooks/contexts/useImportCSVContext";
 import "./index.css";
 import "../index.css";
+import Loading from "@/components/loading/Loading";
 
 export default function UploadCSV(): ReactNode {
   const {
@@ -57,10 +58,9 @@ export default function UploadCSV(): ReactNode {
         <input {...getInputProps()} />
 
         {csvHeadersMutation.isPending ? (
-          <>
-            <span className="import-csv-upload-icon">hourglass_empty</span>
-            <span className="import-csv-text">Przesyłanie...</span>
-          </>
+          <div className="import-csv-loading">
+            <Loading />
+          </div>
         ) : selectedFile ? (
           <>
             <span className="import-csv-upload-icon">description</span>
@@ -81,26 +81,20 @@ export default function UploadCSV(): ReactNode {
         )}
       </div>
 
-      <div className="import-csv-button-wrapper">
-        <ButtonWithBorder
-          text={
-            csvHeadersMutation.isPending
-              ? "Przesyłanie..."
-              : selectedFile
-                ? "Analizuj plik"
-                : "Prześlij"
-          }
-          className="!mx-0 !py-0 !w-full"
-          onClick={handleUpload}
-        />
-        {selectedFile && (
+      {selectedFile && (
+        <div className="import-csv-button-wrapper">
+          <ButtonWithBorder
+            text={csvHeadersMutation.isPending ? "Przesyłanie" : "Analizuj plik"}
+            className="!mx-0 !py-0 !w-full"
+            onClick={handleUpload}
+          />
           <ButtonWithBorder
             text="Usuń"
             className="!mx-0 !py-0 !w-full"
             onClick={goBackToUpload}
           />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

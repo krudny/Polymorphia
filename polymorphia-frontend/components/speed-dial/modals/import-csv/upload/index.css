@@ -11,6 +11,10 @@
     @apply bg-primary-dark text-secondary-gray transition-colors duration-400 ease-[cubic-bezier(0.34,1,0.2,1)];
 }
 
+.import-csv-loading {
+    @apply relative;
+}
+
 .import-csv-upload-icon {
     @apply text-7xl material-symbols;
 }
