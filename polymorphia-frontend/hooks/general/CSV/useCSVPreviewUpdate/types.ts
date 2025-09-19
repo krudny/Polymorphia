@@ -1,5 +1,5 @@
-import {UseMutationResult} from "@tanstack/react-query";
-import {CSVPreviewResponseDTO} from "@/interfaces/api/CSV";
+import { UseMutationResult } from "@tanstack/react-query";
+import { CSVPreviewResponseDTO } from "@/interfaces/api/CSV";
 
 export interface UseCSVPreviewUpdateParams {
   file: File;
@@ -7,5 +7,9 @@ export interface UseCSVPreviewUpdateParams {
 }
 
 export interface UseCSVPreviewUpdate {
-  mutation: UseMutationResult<CSVPreviewResponseDTO, Error, UseCSVPreviewUpdateParams>;
+  mutation: UseMutationResult<
+    CSVPreviewResponseDTO,
+    Error,
+    UseCSVPreviewUpdateParams
+  >;
 }

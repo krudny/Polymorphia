@@ -4,6 +4,6 @@ export interface CSVHeadersResponseDTO {
 }
 
 export interface CSVPreviewResponseDTO {
-  csvHeaders: string[],
-  data: string[][],
+  csvHeaders: string[];
+  data: string[][];
 }

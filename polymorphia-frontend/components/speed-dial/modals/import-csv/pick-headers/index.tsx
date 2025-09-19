@@ -5,10 +5,17 @@ import "./index.css";
 import "../index.css";
 
 export default function PickCSVHeaders() {
-  const {csvHeadersMutation, csvPreviewMutation, selectedFile, headerMapping, setHeaderMapping, goBackToUpload} = useImportCSVContext();
+  const {
+    csvHeadersMutation,
+    csvPreviewMutation,
+    selectedFile,
+    headerMapping,
+    setHeaderMapping,
+    goBackToUpload,
+  } = useImportCSVContext();
 
   const isAllMapped = csvHeadersMutation.data?.requiredCSVHeaders.every(
-    csvHeader => headerMapping[csvHeader]
+    (csvHeader) => headerMapping[csvHeader]
   );
 
   const handlePickHeaders = () => {
@@ -18,7 +25,10 @@ export default function PickCSVHeaders() {
     }
 
     if (selectedFile) {
-      csvPreviewMutation.mutate({ file: selectedFile, csvHeaders: headerMapping });
+      csvPreviewMutation.mutate({
+        file: selectedFile,
+        csvHeaders: headerMapping,
+      });
     }
   };
 
@@ -33,23 +43,25 @@ export default function PickCSVHeaders() {
                 className="csv-header-select"
                 value={headerMapping[csvHeader] || ""}
                 onChange={(event) => {
-                  setHeaderMapping(prev => ({
+                  setHeaderMapping((prev) => ({
                     ...prev,
-                    [csvHeader]: event.target.value
+                    [csvHeader]: event.target.value,
                   }));
                 }}
               >
                 <option value="" disabled>
                   Wybierz kolumnę
                 </option>
-                {csvHeadersMutation.data?.fileCSVHeaders.map((fileCSVHeader) => (
-                  <option key={fileCSVHeader} value={fileCSVHeader}>
-                    {fileCSVHeader}
-                  </option>
-                ))}
+                {csvHeadersMutation.data?.fileCSVHeaders.map(
+                  (fileCSVHeader) => (
+                    <option key={fileCSVHeader} value={fileCSVHeader}>
+                      {fileCSVHeader}
+                    </option>
+                  )
+                )}
               </select>
             </div>
-          )
+          );
         })}
       </div>
 
@@ -66,5 +78,5 @@ export default function PickCSVHeaders() {
         />
       </div>
     </div>
-  )
+  );
 }

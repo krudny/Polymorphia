@@ -27,5 +27,5 @@ export const ImportCSVTypes = {
   STUDENT_INVITE: "STUDENT_INVITE",
 } as const;
 
-export type ImportCSVType  = (typeof ImportCSVTypes)[keyof typeof ImportCSVTypes];
-
+export type ImportCSVType =
+  (typeof ImportCSVTypes)[keyof typeof ImportCSVTypes];

@@ -1,6 +1,6 @@
-import {UseMutationResult} from "@tanstack/react-query";
-import {ImportCSVType} from "@/interfaces/general";
-import {CSVHeadersResponseDTO} from "@/interfaces/api/CSV";
+import { UseMutationResult } from "@tanstack/react-query";
+import { ImportCSVType } from "@/interfaces/general";
+import { CSVHeadersResponseDTO } from "@/interfaces/api/CSV";
 
 export interface UseCSVHeadersUpdateParams {
   file: File;
@@ -8,5 +8,9 @@ export interface UseCSVHeadersUpdateParams {
 }
 
 export interface UseCSVHeadersUpdate {
-  mutation: UseMutationResult<CSVHeadersResponseDTO, Error, UseCSVHeadersUpdateParams>;
+  mutation: UseMutationResult<
+    CSVHeadersResponseDTO,
+    Error,
+    UseCSVHeadersUpdateParams
+  >;
 }

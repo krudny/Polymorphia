@@ -1,17 +1,23 @@
-import {API_HOST} from "@/services/api";
-import {ImportCSVType, ImportCSVTypes} from "@/interfaces/general";
-import {CSVHeadersResponseDTO, CSVPreviewResponseDTO} from "@/interfaces/api/CSV";
+import { API_HOST } from "@/services/api";
+import { ImportCSVType, ImportCSVTypes } from "@/interfaces/general";
+import {
+  CSVHeadersResponseDTO,
+  CSVPreviewResponseDTO,
+} from "@/interfaces/api/CSV";
 
 const CSVService = {
-  getCSVHeaders: async (file: File, type: ImportCSVType): Promise<CSVHeadersResponseDTO> => {
+  getCSVHeaders: async (
+    file: File,
+    type: ImportCSVType
+  ): Promise<CSVHeadersResponseDTO> => {
     const formData = new FormData();
-    formData.append('file', file);
-    formData.append('type', type);
+    formData.append("file", file);
+    formData.append("type", type);
 
     const response = await fetch(`${API_HOST}/csv/headers`, {
-      method: 'POST',
+      method: "POST",
       body: formData,
-      credentials: "include"
+      credentials: "include",
     });
 
     if (!response.ok) {
@@ -21,15 +27,18 @@ const CSVService = {
     return await response.json();
   },
 
-  getCSVPreview: async (file: File, headers: Record<string, string>): Promise<CSVPreviewResponseDTO> => {
+  getCSVPreview: async (
+    file: File,
+    headers: Record<string, string>
+  ): Promise<CSVPreviewResponseDTO> => {
     const formData = new FormData();
-    formData.append('file', file);
-    formData.append('csvHeaders', JSON.stringify(headers));
+    formData.append("file", file);
+    formData.append("csvHeaders", JSON.stringify(headers));
 
     const response = await fetch(`${API_HOST}/csv/preview`, {
-      method: 'POST',
+      method: "POST",
       body: formData,
-      credentials: "include"
+      credentials: "include",
     });
 
     if (!response.ok) {
@@ -39,7 +48,12 @@ const CSVService = {
     return await response.json();
   },
 
-  processCSV: async (type: ImportCSVType, csvHeaders: string[], data: string[][], gradableEventId?: number): Promise<void> => {
+  processCSV: async (
+    type: ImportCSVType,
+    csvHeaders: string[],
+    data: string[][],
+    gradableEventId?: number
+  ): Promise<void> => {
     console.log(type, csvHeaders, data, gradableEventId);
 
     if (type === ImportCSVTypes.GRADE_IMPORT) {
@@ -49,19 +63,23 @@ const CSVService = {
     }
   },
 
-  processGradeImport: async (csvHeaders: string[], data: string[][], gradableEventId?: number): Promise<void> => {
+  processGradeImport: async (
+    csvHeaders: string[],
+    data: string[][],
+    gradableEventId?: number
+  ): Promise<void> => {
     const body = JSON.stringify({
       type: ImportCSVTypes.GRADE_IMPORT,
       csvHeaders: csvHeaders,
       data: data,
-      ...(gradableEventId && { gradableEventId })
+      ...(gradableEventId && { gradableEventId }),
     });
 
     const response = await fetch(`${API_HOST}/csv/process/test-grade`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: body,
-      credentials: "include"
+      credentials: "include",
     });
 
     if (!response.ok) {
@@ -69,7 +87,10 @@ const CSVService = {
     }
   },
 
-  processStudentInvite: async (csvHeaders: string[], data: string[][]): Promise<void> => {
+  processStudentInvite: async (
+    csvHeaders: string[],
+    data: string[][]
+  ): Promise<void> => {
     const body = JSON.stringify({
       type: ImportCSVTypes.STUDENT_INVITE,
       csvHeaders: csvHeaders,
@@ -77,16 +98,16 @@ const CSVService = {
     });
 
     const response = await fetch(`${API_HOST}/csv/process/student-invite`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: body,
-      credentials: "include"
+      credentials: "include",
     });
 
     if (!response.ok) {
       throw new Error("Failed to process student invite!");
     }
-  }
-}
+  },
+};
 
 export default CSVService;

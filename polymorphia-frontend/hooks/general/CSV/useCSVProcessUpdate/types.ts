@@ -1,5 +1,5 @@
-import {UseMutationResult} from "@tanstack/react-query";
-import {ImportCSVType} from "@/interfaces/general";
+import { UseMutationResult } from "@tanstack/react-query";
+import { ImportCSVType } from "@/interfaces/general";
 
 export interface UseCSVProcessUpdateParams {
   type: ImportCSVType;
