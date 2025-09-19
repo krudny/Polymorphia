@@ -35,5 +35,4 @@ public class CourseController {
     public ResponseEntity<List<KnowledgeBaseResponseDto>> getItems(@PathVariable Long courseId) {
         return ResponseEntity.ok(knowledgeBaseService.getItems(courseId));
     }
-
 }

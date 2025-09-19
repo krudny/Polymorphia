@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.io.IOException;
 
@@ -11,7 +12,7 @@ import static com.agh.polymorphia_backend.controller.ControllerTestUtil.callEndp
 import static com.agh.polymorphia_backend.controller.ControllerTestUtil.getExpectedResponse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
+@ActiveProfiles("test")
 class CourseControllerTest extends ControllerTestConfig {
     @Value("classpath:responses/knowledge.base/evolution-stages.json")
     private Resource evolutionStagesJson;
