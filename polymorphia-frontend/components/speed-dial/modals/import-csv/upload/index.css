@@ -20,5 +20,5 @@
 }
 
 .import-csv-text {
-    @apply text-3xl;
+    @apply w-88 text-3xl break-words text-center;
 }
