@@ -1,9 +1,6 @@
-import { API_HOST } from "@/services/api";
-import { ImportCSVType, ImportCSVTypes } from "@/interfaces/general";
-import {
-  CSVHeadersResponseDTO,
-  CSVPreviewResponseDTO,
-} from "@/interfaces/api/CSV";
+import {API_HOST} from "@/services/api";
+import {ImportCSVType, ImportCSVTypes} from "@/interfaces/general";
+import {CSVHeadersResponseDTO, CSVPreviewResponseDTO,} from "@/interfaces/api/CSV";
 
 const CSVService = {
   getCSVHeaders: async (
@@ -54,8 +51,6 @@ const CSVService = {
     data: string[][],
     gradableEventId?: number
   ): Promise<void> => {
-    console.log(type, csvHeaders, data, gradableEventId);
-
     if (type === ImportCSVTypes.GRADE_IMPORT) {
       await CSVService.processGradeImport(csvHeaders, data, gradableEventId);
     } else {
