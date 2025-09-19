@@ -9,7 +9,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public enum CSVType {
     STUDENT_INVITE("Email", "Imię", "Nazwisko"),
-    GRADE_IMPORT("Numer indeksu", "Ocena");
+    GRADE_IMPORT("Numer indeksu", "Zdobyte XP");
 
     private final Set<String> requiredCSVHeaders;
 

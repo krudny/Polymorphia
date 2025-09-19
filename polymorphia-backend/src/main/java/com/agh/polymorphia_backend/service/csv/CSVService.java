@@ -39,21 +39,21 @@ public class CSVService {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CSV is empty");
             }
 
-            List<String> headers = Arrays.asList(allRows.getFirst());
-
-            if (!CSVUtil.isValidEncoding(allRows.getFirst())) {
+            if (!CSVUtil.isValidEncoding(allRows)) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid encoding detected");
             }
 
-            return buildCSVResponse(mode, headers, allRows);
+            return buildCSVResponse(mode, allRows);
 
         } catch (Exception e) {
+            System.err.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Error during CSV parsing: " + e.getMessage());
         }
     }
 
-    private CSVResponseDto buildCSVResponse(CSVReadMode mode, List<String> headers, List<String[]> allRows) {
+    private CSVResponseDto buildCSVResponse(CSVReadMode mode, List<String[]> allRows) {
+        List<String> headers = Arrays.asList(allRows.getFirst());
         List<String[]> data = allRows.subList(1, allRows.size());
 
         return switch (mode) {
