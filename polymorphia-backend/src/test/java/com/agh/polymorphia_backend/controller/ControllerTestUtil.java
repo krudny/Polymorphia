@@ -3,6 +3,7 @@ package com.agh.polymorphia_backend.controller;
 import io.restassured.http.ContentType;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.FileCopyUtils;
 
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 import static io.restassured.RestAssured.given;
 
 @Service
+@ActiveProfiles("test")
 public class ControllerTestUtil {
     public static String getEndpoint(String endpoint, String username, String password, Integer statusCode, Object... args) {
         return given()
