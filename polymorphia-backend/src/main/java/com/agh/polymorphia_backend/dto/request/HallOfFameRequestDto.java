@@ -4,12 +4,13 @@ import com.agh.polymorphia_backend.model.hall_of_fame.SearchBy;
 import com.agh.polymorphia_backend.model.hall_of_fame.SortOrder;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
-@Builder
-public record HallOfFameRequestDto(
+public record HallOfFameRequestDto (
         @NotNull Long courseId,
         @NotNull Integer page,
         @NotNull Integer size,
@@ -18,5 +19,4 @@ public record HallOfFameRequestDto(
         @NotBlank String sortBy,
         @NotNull SortOrder sortOrder,
         @NotNull List<String> groups
-) {
-}
+){ }

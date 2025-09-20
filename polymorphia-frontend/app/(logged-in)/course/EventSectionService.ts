@@ -2,10 +2,6 @@
 // @ts-nocheck
 
 import { lab0, lab1, lab2, proj1 } from "@/app/(logged-in)/course/sampleData";
-import {
-  groups,
-  studentNames,
-} from "@/app/(logged-in)/hall-of-fame/HallOfFameService";
 import { ProjectVariantResponseDTO } from "@/interfaces/api/course/project";
 import {
   CriterionResponseDTO,
@@ -27,6 +23,34 @@ import {
 import { ProjectGroupResponseDTO } from "@/interfaces/api/temp";
 import { EventTypes } from "@/interfaces/general";
 import { CriteriaDetails } from "@/providers/grading/gradingReducer/types";
+
+export const studentNames = [
+  "Gerard Małoduszny",
+  "Gerard Małosolny",
+  "Gerard Kiszony",
+  "Gerard Solny",
+  "Kamil Rudny",
+  "Anna Nowak",
+  "Jan Kowalski",
+  "Maria Wiśniewska",
+  "Tomasz Zieliński",
+  "Paulina Kaczmarek",
+];
+
+export const groups = [
+  "MI-15-00",
+  "BM-16-00",
+  "BM-17-00",
+  "BM-18-00",
+  "BM-19-00",
+  "BM-20-00",
+  "BM-21-00",
+  "BM-22-00",
+  "BM-23-00",
+  "BM-01-00",
+  "BM-02-00",
+  "BM-03-00",
+];
 
 const allData: UserDetailsDTO[] = [];
 

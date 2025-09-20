@@ -3,7 +3,6 @@ package com.agh.polymorphia_backend.util;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Locale;
 
 @UtilityClass

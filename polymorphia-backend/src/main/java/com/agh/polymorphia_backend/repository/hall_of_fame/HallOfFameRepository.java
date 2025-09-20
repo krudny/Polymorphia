@@ -2,23 +2,55 @@ package com.agh.polymorphia_backend.repository.hall_of_fame;
 
 import com.agh.polymorphia_backend.dto.request.HallOfFameRequestDto;
 import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFame;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface HallOfFameRepository extends JpaRepository<HallOfFame, Long> {
-    String WHERE_NATIVE = """
-            hof.course_id = :#{#requestDto.courseId()}
-            AND (:#{#requestDto.searchTerm()} = '' OR
+public interface HallOfFameRepository extends JpaRepository<HallOfFameEntry, Long> {
+    String WHERE_CLAUSE = """
+            hof.courseId = :#{#requestDto.courseId()}
+            and (
+              :#{#requestDto.searchTerm()} = '' or
               (
-                  (:#{#requestDto.searchBy().searchByAnimal()} = TRUE AND LOWER(hof.animal_name) LIKE LOWER(CONCAT('%', :#{#requestDto.searchTerm()}, '%')))
-                  OR
-                  (:#{#requestDto.searchBy().searchByStudent()} = TRUE AND LOWER(hof.student_name) LIKE LOWER(CONCAT('%', :#{#requestDto.searchTerm()}, '%')))
-              ))
-            AND (:#{#requestDto.groups().isEmpty()} = TRUE OR hof.group_name IN :#{#requestDto.groups()})
+                (:#{#requestDto.searchBy().searchByAnimal()} = true
+                   and lower(hof.animalName) like lower(concat('%', :#{#requestDto.searchTerm()}, '%')))
+                or
+                (:#{#requestDto.searchBy().searchByStudent()} = true
+                   and lower(hof.studentName) like lower(concat('%', :#{#requestDto.searchTerm()}, '%')))
+              )
+            )
+            and (
+              :#{#requestDto.groups().isEmpty()} = true
+              or hof.groupName in :#{#requestDto.groups()}
+            )
             """;
+
+    @Query("""
+            select hof
+            from HallOfFameEntry hof
+            where\s""" + WHERE_CLAUSE)
+    Page<HallOfFameEntry> findHofPageFromOverviewField(@Param("requestDto") HallOfFameRequestDto requestDto, Pageable pageable);
+
+    @Query(value = """
+            select hof
+            from HallOfFameEntry hof
+            join StudentScoreDetail ssd
+                 on ssd.animalId = hof.animalId
+            where\s""" + WHERE_CLAUSE + """
+                and ssd.eventSectionName = :#{#requestDto.sortBy()}
+              order by
+                case when :#{#requestDto.sortOrder().name()} = 'ASC' then ssd.rawXp end asc,
+                case when :#{#requestDto.sortOrder().name()} = 'DESC' then ssd.rawXp end desc,
+                hof.position asc
+            """, countQuery = """
+            select count(distinct hof.animalId)
+            from HallOfFameEntry hof
+            where\s""" + WHERE_CLAUSE)
+    Page<HallOfFameEntry> findHofPageFromEventSection(@Param("requestDto") HallOfFameRequestDto requestDto, Pageable pageable);
 
     @Query(value = """
                 SELECT hof.*
@@ -36,14 +68,14 @@ public interface HallOfFameRepository extends JpaRepository<HallOfFame, Long> {
     );
 
     Optional<HallOfFame> findByAnimalId(
-             Long animalId
+            Long animalId
     );
 
 
     @Query(value = """
             SELECT COUNT(DISTINCT hof.animal_id)
             FROM hall_of_fame_view hof
-            WHERE\s""" + WHERE_NATIVE
+            WHERE\s""" + WHERE_CLAUSE
             , nativeQuery = true)
     long countByCourseIdAndFilters(@Param("requestDto") HallOfFameRequestDto requestDto);
 }
