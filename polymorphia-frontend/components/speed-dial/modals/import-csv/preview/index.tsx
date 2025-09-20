@@ -15,7 +15,8 @@ export default function PreviewCSV() {
   const { closeModal } = useModalContext();
 
   if (!csvPreviewMutation.data || !selectedFile) {
-    return null;
+    closeModal();
+    return;
   }
 
   const handleConfirm = () => {

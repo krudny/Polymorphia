@@ -1,11 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
+import {useMutation} from "@tanstack/react-query";
 import CSVService from "@/components/speed-dial/modals/import-csv/CSVService";
-import {
-  UseCSVProcessUpdate,
-  UseCSVProcessUpdateParams,
-} from "@/hooks/general/CSV/useCSVProcessUpdate/types";
+import {UseCSVProcessUpdate, UseCSVProcessUpdateParams,} from "@/hooks/general/CSV/useCSVProcessUpdate/types";
 import toast from "react-hot-toast";
-import { useEventParams } from "@/hooks/general/useEventParams";
+import {useEventParams} from "@/hooks/general/useEventParams";
 
 export default function useCSVProcessUpdate(): UseCSVProcessUpdate {
   const { gradableEventId } = useEventParams();
@@ -16,9 +13,9 @@ export default function useCSVProcessUpdate(): UseCSVProcessUpdate {
     onSuccess: () => {
       toast.success("Przetwarzanie zakończyło się sukcesem");
     },
-    onError: (error) => {
-      toast.error("Wystąpił błąd " + error.message);
-    },
+    onError: ({ message }: Error) => {
+      toast.error(message);
+    }
   });
 
   return { mutation };

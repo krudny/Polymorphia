@@ -18,7 +18,7 @@ const CSVService = {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to fetch csv headers!");
+      throw new Error("Nie udało się odczytać nagłówków!");
     }
 
     return await response.json();
@@ -39,7 +39,7 @@ const CSVService = {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to fetch csv preview!");
+      throw new Error("Nie udało się wczytać podglądu!");
     }
 
     return await response.json();
@@ -78,7 +78,7 @@ const CSVService = {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to process grade import!");
+      throw new Error("Nie udało się zapisać ocen!");
     }
   },
 
@@ -100,7 +100,7 @@ const CSVService = {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to process student invite!");
+      throw new Error("Nie udało się zaprosić studentów!");
     }
   },
 };
