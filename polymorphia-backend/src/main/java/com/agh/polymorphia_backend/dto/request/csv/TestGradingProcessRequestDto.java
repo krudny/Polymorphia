@@ -2,9 +2,11 @@ package com.agh.polymorphia_backend.dto.request.csv;
 
 import com.agh.polymorphia_backend.service.csv.CSVType;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
 import java.util.List;
 
+@Data
 public class TestGradingProcessRequestDto {
     @NotNull
     private CSVType type;
@@ -13,7 +15,7 @@ public class TestGradingProcessRequestDto {
     private List<String> csvHeaders;
 
     @NotNull
-    private List<String[]> data;
+    private List<List<String>> data;
 
     @NotNull
     private Integer gradableEventId;

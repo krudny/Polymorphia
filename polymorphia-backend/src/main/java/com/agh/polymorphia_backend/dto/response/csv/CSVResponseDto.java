@@ -1,6 +1,9 @@
 package com.agh.polymorphia_backend.dto.response.csv;
 
+import lombok.Builder;
+
 import java.util.List;
 
-public record CSVResponseDto(List<String> csvHeaders, List<String[]> data) {}
+@Builder
+public record CSVResponseDto(List<String> csvHeaders, List<List<String>> data) {}
 

@@ -15,5 +15,5 @@ public class StudentInvitationProcessRequestDto {
     private List<String> csvHeaders;
 
     @NotNull
-    private List<String[]> data;
+    private List<List<String>> data;
 }

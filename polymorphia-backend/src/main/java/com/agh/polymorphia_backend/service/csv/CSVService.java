@@ -26,40 +26,42 @@ public class CSVService {
     private final GeneralMapper generalMapper;
 
     public CSVResponseDto readCSV(MultipartFile file, CSVReadMode mode) {
-        try (DecodedInputStreamReader reader = Chardet.decode(file.getInputStream(), StandardCharsets.UTF_8)) {
+        CSVUtil.validateCSV(file);
 
+        try (DecodedInputStreamReader reader = Chardet.decode(file.getInputStream(), StandardCharsets.UTF_8)) {
             CsvParserSettings settings = new CsvParserSettings();
             settings.getFormat().setDelimiter(';');
             settings.setHeaderExtractionEnabled(false);
 
             CsvParser parser = new CsvParser(settings);
-            List<String[]> allRows = parser.parseAll(reader);
+            List<String[]> rawRows = parser.parseAll(reader);
 
-            if (allRows.isEmpty()) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CSV is empty");
-            }
-
-            if (!CSVUtil.isValidEncoding(allRows)) {
+            if (!CSVUtil.isValidEncoding(rawRows)) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid encoding detected");
             }
 
-            return buildCSVResponse(mode, allRows);
+            List<List<String>> allRows = rawRows.stream()
+                    .map(Arrays::asList)
+                    .toList();
 
+            return buildCSVResponse(mode, allRows);
         } catch (Exception e) {
-            System.err.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Error during CSV parsing: " + e.getMessage());
         }
     }
 
-    private CSVResponseDto buildCSVResponse(CSVReadMode mode, List<String[]> allRows) {
-        List<String> headers = Arrays.asList(allRows.getFirst());
-        List<String[]> data = allRows.subList(1, allRows.size());
+    private CSVResponseDto buildCSVResponse(CSVReadMode mode, List<List<String>> allRows) {
+        List<String> headers = allRows.getFirst();
+        List<List<String>> data = allRows.subList(1, allRows.size());
 
         return switch (mode) {
-            case HEADERS_ONLY -> new CSVResponseDto(headers, null);
-            case DATA_ONLY -> new CSVResponseDto(null, data);
-            case ALL -> new CSVResponseDto(headers, data);
+            case HEADERS_ONLY -> CSVResponseDto.builder().csvHeaders(headers).build();
+            case DATA_ONLY -> CSVResponseDto.builder().data(data).build();
+            case ALL -> CSVResponseDto.builder()
+                    .csvHeaders(headers)
+                    .data(data)
+                    .build();
         };
     }
 
@@ -88,17 +90,13 @@ public class CSVService {
 
         List<String> previewCSVHeaders = new ArrayList<>(csvHeaders.keySet());
 
-        List<String[]> previewCSVData = csv.data().stream()
-                .map(row -> extractSelectedColumns(row, indices))
+        List<List<String>> previewCSVData = csv.data().stream()
+                .map(row -> CSVUtil.extractSelectedColumns(row, indices))
                 .toList();
 
-        return new CSVResponseDto(previewCSVHeaders, previewCSVData);
-    }
-
-    private String[] extractSelectedColumns(String[] row, List<Integer> indices) {
-        return indices.stream()
-                .mapToInt(i -> i)
-                .mapToObj(i -> row[i])
-                .toArray(String[]::new);
+        return CSVResponseDto.builder()
+                .csvHeaders(previewCSVHeaders)
+                .data(previewCSVData)
+                .build();
     }
 }
