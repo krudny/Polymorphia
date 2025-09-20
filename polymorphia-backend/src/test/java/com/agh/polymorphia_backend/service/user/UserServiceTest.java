@@ -55,7 +55,7 @@ class UserServiceTest {
 
         var result = userService.loadUserByUsername(email);
 
-        assertTrue(result instanceof UndefinedUser);
+        assertInstanceOf(UndefinedUser.class, result);
         assertEquals(user, ((UndefinedUser) result).getUser());
     }
 
@@ -75,7 +75,9 @@ class UserServiceTest {
         User user = User.builder().id(1L).email(email).firstName("John").build();
         Student student = Student.builder().user(user).build();
         UserCourseRole userCourseRole = UserCourseRole.builder()
-                .id(new UserCourseRoleId(user, new Course()))
+                .id(new UserCourseRoleId(user.getId(), 100L))
+                .user(user)
+                .course(new Course())
                 .role(UserType.STUDENT)
                         .build();
 
@@ -130,8 +132,10 @@ class UserServiceTest {
         User user = User.builder().id(1L).email("jane@example.com").build();
         Student reloadedUser = Student.builder().user(user).build();
         UserCourseRole userCourseRole = UserCourseRole.builder()
-                .id(new UserCourseRoleId(user, new Course()))
+                .id(new UserCourseRoleId(user.getId(), 100L))
                 .role(UserType.STUDENT)
+                .user(user)
+                .course(new Course())
                 .build();
 
         when(userCourseRoleRepository.findUserCourseRoleByEmail(user.getEmail()))

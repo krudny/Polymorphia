@@ -115,9 +115,14 @@ class UserContextServiceTest {
     void getAvailableCourses_shouldReturnAvailableCourses() {
         Course course = Course.builder().id(10L).build();
         UserCourseRoleId roleId = new UserCourseRoleId();
-        roleId.setUser(user);
-        roleId.setCourse(course);
-        UserCourseRole role = UserCourseRole.builder().id(roleId).role(UserType.STUDENT).build();
+        roleId.setUserId(user.getId());
+        roleId.setCourseId(course.getId());
+        UserCourseRole role = UserCourseRole.builder()
+                .id(roleId)
+                .role(UserType.STUDENT)
+                .course(course)
+                .user(user)
+                .build();
         AvailableCoursesResponseDto dto = AvailableCoursesResponseDto.builder()
                 .name("name")
                 .imageUrl("url")

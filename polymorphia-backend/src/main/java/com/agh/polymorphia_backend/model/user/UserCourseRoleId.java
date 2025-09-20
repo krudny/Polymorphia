@@ -1,9 +1,7 @@
 package com.agh.polymorphia_backend.model.user;
 
-import com.agh.polymorphia_backend.model.course.Course;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,11 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserCourseRoleId {
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "user_id")
+    private Long userId;
 
-    @ManyToOne
-    @JoinColumn(name = "course_id")
-    private Course course;
+    @Column(name = "course_id")
+    private Long courseId;
 }

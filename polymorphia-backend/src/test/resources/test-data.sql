@@ -53,9 +53,6 @@ update users
 where id=2;
 
 -- Instructors
-INSERT INTO users (id, first_name, last_name, email, password)
-VALUES (4, 'Sławomir', 'Nowak', 'instructor@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O');
-
 INSERT into instructors(user_id)
 values (4);
 

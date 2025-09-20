@@ -58,7 +58,7 @@ public class UserContextService {
         return userCourseRoleRepository.findAllByUserId(user.getId()).stream()
                 .map(userCourseRole ->
                         userContextMapper.toAvailableCoursesResponseDto(
-                                courseService.getCourseById(userCourseRole.getId().getCourse().getId()),
+                                courseService.getCourseById(userCourseRole.getCourse().getId()),
                                 userCourseRole.getRole()
                         )
                 )

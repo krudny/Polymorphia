@@ -83,7 +83,7 @@ public class UserService implements UserDetailsService {
     }
 
     private AbstractRoleUser buildUserWithDefinedRole(UserCourseRole userCourseRole, String email) {
-        Long userId = userCourseRole.getId().getUser().getId();
+        Long userId = userCourseRole.getUser().getId();
         return (switch (userCourseRole.getRole()) {
             case STUDENT -> studentRepository.findById(userId);
             case INSTRUCTOR -> instructorRepository.findById(userId);
