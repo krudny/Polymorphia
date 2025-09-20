@@ -46,8 +46,7 @@ public class CSVService {
 
             return buildCSVResponse(mode, allRows);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Error during CSV parsing: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error during CSV parsing");
         }
     }
 
