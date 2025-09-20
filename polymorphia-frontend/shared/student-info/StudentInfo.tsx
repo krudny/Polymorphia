@@ -20,20 +20,26 @@ export default function StudentInfo() {
       )}
       {data && !isLoading && (
         <div className="flex flex-col gap-2 min-w-80">
-          {data?.map((student) => (
-            <XPCard
-              key={student.animalName}
-              title={student.studentName}
-              subtitle={student.evolutionStage}
-              leftComponent={
-                <XPCardImage
-                  imageUrl={student.imageUrl}
-                  alt={student.evolutionStage}
-                />
-              }
-              size="xs"
-            />
-          ))}
+          {data?.map((student) => {
+            const { animalName, userName, evolutionStage, imageUrl } =
+              student.userDetails;
+
+            if (!userName) {
+              throw new Error("No userName defined!");
+            }
+
+            return (
+              <XPCard
+                key={animalName}
+                title={userName}
+                subtitle={evolutionStage}
+                leftComponent={
+                  <XPCardImage imageUrl={imageUrl} alt={evolutionStage} />
+                }
+                size="xs"
+              />
+            );
+          })}
         </div>
       )}
     </>

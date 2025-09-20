@@ -10,14 +10,7 @@ export const ViewTypes = {
   CARD_GRID: "CARD_GRID",
   MARKDOWN: "MARKDOWN",
   GRADING: "GRADING",
+  PROFILE: "PROFILE",
 };
 
 export type ViewType = (typeof ViewTypes)[keyof typeof ViewTypes];
-
-export const Roles = {
-  STUDENT: "STUDENT",
-  INSTRUCTOR: "INSTRUCTOR",
-  COORDINATOR: "COORDINATOR",
-} as const;
-
-export type Role = (typeof Roles)[keyof typeof Roles];

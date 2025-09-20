@@ -21,12 +21,11 @@ import { EventTypes } from "@/interfaces/general";
 import useGrade3 from "@/hooks/course/useGrade3";
 import { GradingReducerActions } from "@/providers/grading/gradingReducer/types";
 import { GradingReducer, initialState } from "./gradingReducer";
+import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export const GradingContext = createContext<
   GradingContextInterface | undefined
 >(undefined);
-
-const COURSE_ID = 1;
 
 export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const { gradableEventId, eventType } = useEventParams();
@@ -36,19 +35,20 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(GradingReducer, initialState);
   const [areFiltersOpen, setAreFiltersOpen] = useState(false);
 
+  const { courseId } = useUserDetails();
+
   const {
     data: filterConfigs,
     isLoading: isFiltersLoading,
     isError: isFiltersError,
-  } = useGradingFilterConfigs(COURSE_ID);
-
+  } = useGradingFilterConfigs(courseId);
   const filters = useFilters<GradingFilterId>(filterConfigs ?? []);
   const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["total"];
   const sortOrder = filters.getAppliedFilterValues("sortOrder") ?? ["asc"];
   const groups = filters.getAppliedFilterValues("groups") ?? ["all"];
 
   //TODO: to be changed
-  const selectedStudentId = state?.selectedTarget?.[0]?.id ?? null;
+  const selectedStudentId = state?.selectedTarget?.[0]?.userDetails.id ?? null;
   const { data: students, isLoading: isStudentsLoading } =
     useRandomPeopleWithPoints(debouncedSearch, sortBy, sortOrder, groups);
   const { data: projectGroups, isLoading: isProjectGroupsLoading } =

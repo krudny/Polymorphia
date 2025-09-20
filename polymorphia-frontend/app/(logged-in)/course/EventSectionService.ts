@@ -19,7 +19,11 @@ import {
   InstructorGradableEventResponseDTO,
   StudentGradableEventResponseDTO,
 } from "@/interfaces/api/course";
-import { UserDetailsDTO } from "@/interfaces/api/user";
+import {
+  Roles,
+  StudentDetailsDTOWithType,
+  UserDetailsDTO,
+} from "@/interfaces/api/user";
 import { ProjectGroupResponseDTO } from "@/interfaces/api/temp";
 import { EventTypes } from "@/interfaces/general";
 import { CriteriaDetails } from "@/providers/grading/gradingReducer/types";
@@ -31,13 +35,17 @@ for (let i = 0; i < 250; i++) {
   const stage = Math.max(1, 6 - Math.floor(i / 50));
 
   const item = {
-    id: i,
-    studentName: studentName,
-    animalName: studentName,
-    evolutionStage: "Majestatyczna Bestia",
-    imageUrl: `images/evolution-stages/${stage}.jpg`,
-    position: i + 1,
-    group: groups[i % groups.length],
+    userRole: Roles.STUDENT,
+    userDetails: {
+      id: i,
+      userName: studentName,
+      animalName: studentName,
+      evolutionStage: "Majestatyczna Bestia",
+      imageUrl: `images/evolution-stages/${stage}.jpg`,
+      position: i + 1,
+      group: groups[i % groups.length],
+      courseId: 1,
+    },
   };
   allData.push(item);
 }
@@ -1177,7 +1185,7 @@ export const EventSectionService = {
     sortBy: string[],
     sortOrder: string[],
     groups: string[]
-  ): Promise<(UserDetailsDTO & { gainedXp?: string })[]> => {
+  ): Promise<(StudentDetailsDTOWithType & { gainedXp?: string })[]> => {
     // await new Promise<void>((resolve) => setTimeout(resolve, 1000));
 
     let filteredData = allData;
@@ -1195,7 +1203,7 @@ export const EventSectionService = {
     if (searchTerm && searchTerm.trim() !== "") {
       const lowerSearch = searchTerm.toLowerCase();
       filteredData = filteredData.filter((item) =>
-        item.studentName.toLowerCase().includes(lowerSearch)
+        item.userName.toLowerCase().includes(lowerSearch)
       );
     }
 
@@ -1250,6 +1258,5 @@ export const EventSectionService = {
     comment: string;
   }): Promise<void> => {
     await new Promise<void>((resolve) => setTimeout(resolve, 200));
-    console.log("Submitting grade:", gradeData);
   },
 };

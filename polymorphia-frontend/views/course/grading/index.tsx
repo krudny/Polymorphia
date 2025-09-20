@@ -9,7 +9,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useMediaQuery } from "react-responsive";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { ViewTypes } from "@/interfaces/general";
-import SpeedDialMobile from "@/components/speed-dial/SpeedDialMobile";
+import SpeedDialEventMobile from "@/components/speed-dial/event/SpeedDialEventMobile";
 
 export default function Grading({ eventType, columns }: GradingProps) {
   const queryClient = useQueryClient();
@@ -76,7 +76,10 @@ export default function Grading({ eventType, columns }: GradingProps) {
     <>
       <div ref={gradingRef} className="grading">
         <div className="grading-speed-dial">
-          <SpeedDialMobile eventType={eventType} viewType={ViewTypes.GRADING} />
+          <SpeedDialEventMobile
+            eventType={eventType}
+            viewType={ViewTypes.GRADING}
+          />
         </div>
 
         <div className="grading-list" ref={listRef}>

@@ -2,10 +2,6 @@
 import UserSection from "@/components/navigation/UserSection";
 import Line from "@/components/navigation/Line";
 import MenuSection from "@/components/navigation/MenuSection";
-import {
-  BottomDesktopMenuItems,
-  MainMenuItems,
-} from "@/components/navigation/MenuOptions";
 import { useEffect, useRef } from "react";
 import "./index.css";
 
@@ -14,6 +10,10 @@ import { animateSidebar } from "@/animations/Navigation";
 import { updateMenuItems } from "@/components/course/event-section/EventSectionUtils";
 import useEventSections from "@/hooks/course/useEventSections";
 import useNavigationContext from "@/hooks/contexts/useNavigationContext";
+import {
+  useBottomDesktopMenuItems,
+  useMainMenuItems,
+} from "@/hooks/general/useMenuOptions";
 
 export default function Sidebar() {
   const {
@@ -34,7 +34,7 @@ export default function Sidebar() {
     animateSidebar(sidebar, isSidebarExpanded);
   }, [isSidebarExpanded]);
 
-  const menuItems = [...MainMenuItems];
+  const menuItems = useMainMenuItems();
 
   if (eventSections) {
     updateMenuItems(menuItems, eventSections);
@@ -69,7 +69,7 @@ export default function Sidebar() {
       </div>
       <div>
         <Line />
-        <MenuSection options={BottomDesktopMenuItems} />
+        <MenuSection options={useBottomDesktopMenuItems()} />
       </div>
     </div>
   );

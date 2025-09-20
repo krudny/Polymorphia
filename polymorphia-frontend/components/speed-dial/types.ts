@@ -11,7 +11,11 @@ export interface SpeedDialItem {
   color?: string;
 }
 
-export interface SpeedDialProps {
+export interface SpeedDialEventProps {
   eventType: EventType;
   viewType: ViewType;
+}
+
+export interface SpeedDialProps {
+  items: SpeedDialItem[];
 }

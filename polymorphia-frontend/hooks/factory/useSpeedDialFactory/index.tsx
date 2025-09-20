@@ -1,29 +1,33 @@
-import { SpeedDialItem, SpeedDialProps } from "@/components/speed-dial/types";
+import {
+  SpeedDialEventProps,
+  SpeedDialItem,
+} from "@/components/speed-dial/types";
 import { useMemo } from "react";
 import { speedDialStrategyRegistry } from "@/components/speed-dial/strategies/Registry";
 import { useOptionalMarkdownContext } from "@/hooks/contexts/useMarkdownContext";
 import { usePathname, useRouter } from "next/navigation";
 import { SpeedDialContext } from "@/components/speed-dial/strategies/types";
-import useUserRole from "@/hooks/general/useUserRole";
+import useUserContext from "@/hooks/contexts/useUserContext";
+import { Roles } from "@/interfaces/api/user";
 
 export function useSpeedDialFactory({
   eventType,
   viewType,
-}: SpeedDialProps): SpeedDialItem[] {
+}: SpeedDialEventProps): SpeedDialItem[] {
   const markdownContext = useOptionalMarkdownContext();
   const router = useRouter();
   const pathname = usePathname();
-  const { data: role } = useUserRole();
+  const { userRole } = useUserContext();
 
   return useMemo(() => {
-    if (!role) {
+    if (userRole === Roles.UNDEFINED) {
       return [];
     }
 
     const selectedType = speedDialStrategyRegistry.getStrategy(
       eventType,
       viewType,
-      role
+      userRole
     );
 
     if (!selectedType) {
@@ -32,7 +36,7 @@ export function useSpeedDialFactory({
 
     const combinedContext: SpeedDialContext = {
       router: router,
-      role: role,
+      role: userRole,
       currentPath: pathname,
       saveMarkdown: markdownContext?.saveMarkdown || (() => {}),
       setIsEditing: markdownContext?.setIsEditing || (() => {}),
@@ -42,5 +46,5 @@ export function useSpeedDialFactory({
 
     const items: SpeedDialItem[] = selectedType.getItems(combinedContext);
     return items.sort((a, b) => b.orderIndex - a.orderIndex);
-  }, [eventType, viewType, role, markdownContext, router, pathname]);
+  }, [eventType, viewType, userRole, markdownContext, router, pathname]);
 }

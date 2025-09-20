@@ -6,7 +6,7 @@ const KnowledgeBaseService = {
     courseId: number
   ): Promise<KnowledgeBaseResponseDTO[]> => {
     const response = await fetch(
-      `${API_HOST}/courses/${courseId}/evolution-stages`,
+      `${API_HOST}/knowledge-base/evolution-stages?courseId=${courseId}`,
       { credentials: "include" }
     );
 
@@ -18,9 +18,12 @@ const KnowledgeBaseService = {
   },
 
   getItems: async (courseId: number): Promise<KnowledgeBaseResponseDTO[]> => {
-    const response = await fetch(`${API_HOST}/courses/${courseId}/items`, {
-      credentials: "include",
-    });
+    const response = await fetch(
+      `${API_HOST}/knowledge-base/items?courseId=${courseId}`,
+      {
+        credentials: "include",
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Failed to fetch items!");
@@ -30,9 +33,12 @@ const KnowledgeBaseService = {
   },
 
   getChests: async (courseId: number): Promise<KnowledgeBaseResponseDTO[]> => {
-    const response = await fetch(`${API_HOST}/courses/${courseId}/chests`, {
-      credentials: "include",
-    });
+    const response = await fetch(
+      `${API_HOST}/knowledge-base/chests?courseId=${courseId}`,
+      {
+        credentials: "include",
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Failed to fetch chests");

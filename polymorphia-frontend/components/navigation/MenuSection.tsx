@@ -38,14 +38,19 @@ export default function MenuSection({ options }: MenuSectionProps) {
       {options.map((option, idx) => {
         const Icon = option.icon;
         const isOpen = openSubMenu.includes(option.text);
-
+        const handleClick = () => {
+          setIsNavbarExpanded(false);
+          if (option.onClick) {
+            option.onClick();
+          }
+        };
         return (
           <div key={option.text}>
             <div className="menu-option-row-wrapper">
               <Link
                 href={`/${option?.link ?? ""}`}
                 key={option.text}
-                onClick={() => setIsNavbarExpanded(false)}
+                onClick={() => handleClick()}
               >
                 <div className="menu-section-options-link-part">
                   <Icon />

@@ -5,7 +5,8 @@ import org.springframework.security.core.GrantedAuthority;
 public enum UserType implements GrantedAuthority {
     STUDENT,
     INSTRUCTOR,
-    COORDINATOR;
+    COORDINATOR,
+    UNDEFINED;
 
     @Override
     public String getAuthority() {

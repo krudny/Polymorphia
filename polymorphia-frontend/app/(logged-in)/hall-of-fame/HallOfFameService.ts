@@ -44,12 +44,13 @@ const generateAllData = () => {
     const item = {
       userDetails: {
         id: i,
-        studentName: studentName,
+        userName: studentName,
         animalName: studentName,
         evolutionStage: "Majestatyczna Bestia",
         imageUrl: `images/evolution-stages/${stage}.jpg`,
         position: i + 1,
         group: groups[i % groups.length],
+        courseId: 1,
       },
       xpDetails: {} as Record<string, string>,
     };
@@ -111,7 +112,7 @@ const HallOfFameService = {
     if (searchTerm && searchTerm.trim() !== "") {
       const lowerSearch = searchTerm.toLowerCase();
       filteredData = filteredData.filter((item) =>
-        item.userDetails.studentName.toLowerCase().includes(lowerSearch)
+        item.userDetails.userName.toLowerCase().includes(lowerSearch)
       );
     }
 
@@ -121,8 +122,8 @@ const HallOfFameService = {
         let valueB: any;
 
         if (sortBy === "name") {
-          valueA = a.userDetails.studentName;
-          valueB = b.userDetails.studentName;
+          valueA = a.userDetails.userName;
+          valueB = b.userDetails.userName;
           const comparison = valueA.localeCompare(valueB);
           return sortOrder === "asc" ? comparison : -comparison;
         } else {
