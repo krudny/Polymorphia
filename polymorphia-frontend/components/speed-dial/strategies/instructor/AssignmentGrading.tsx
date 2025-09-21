@@ -1,10 +1,6 @@
-import { BaseSpeedDialStrategy } from "@/components/speed-dial/strategies/Base";
-import {
-  SpeedDialContext,
-  SpeedDialStrategy,
-} from "@/components/speed-dial/strategies/types";
-import { SpeedDialItem } from "@/components/speed-dial/types";
-import { ImportCSVTypes } from "@/interfaces/general";
+import {BaseSpeedDialStrategy} from "@/components/speed-dial/strategies/Base";
+import {SpeedDialContext, SpeedDialStrategy,} from "@/components/speed-dial/strategies/types";
+import {SpeedDialItem} from "@/components/speed-dial/types";
 
 export class AssignmentGradingStrategy
   extends BaseSpeedDialStrategy
@@ -13,7 +9,6 @@ export class AssignmentGradingStrategy
   getItems(context: SpeedDialContext): SpeedDialItem[] {
     return [
       this.createRedirectToMarkdown(context),
-      this.createImportCSV(ImportCSVTypes.STUDENT_INVITE),
     ];
   }
 }

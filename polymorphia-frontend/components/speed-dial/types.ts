@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import {ReactNode} from "react";
 
 export interface SpeedDialItem {
   id: number;
@@ -22,6 +22,7 @@ export const SpeedDialKeys = {
   TEST_GRADING_INSTRUCTOR: "TEST_GRADING_INSTRUCTOR",
   ASSIGNMENT_GRADING_INSTRUCTOR: "ASSIGNMENT_GRADING_INSTRUCTOR",
   PROJECT_GRADING_INSTRUCTOR: "PROJECT_GRADING_INSTRUCTOR",
+  COURSE_GROUP_INSTRUCTOR: "COURSE_GROUP_INSTRUCTOR",
 } as const;
 
 export type SpeedDialKey = (typeof SpeedDialKeys)[keyof typeof SpeedDialKeys];
