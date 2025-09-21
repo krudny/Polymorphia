@@ -1,10 +1,10 @@
-import {EventType, Role, ViewType} from "@/interfaces/general";
-import {SpeedDialKey, SpeedDialKeys} from "./types";
+import { EventType, Role, ViewType } from "@/interfaces/general";
+import { SpeedDialKey, SpeedDialKeys } from "./types";
 
 export function getSpeedDialKey(
   eventType: EventType,
   viewType: ViewType,
-  role: Role | undefined,
+  role: Role | undefined
 ): SpeedDialKey | null {
   const key = `${eventType}_${viewType}_${role}`;
 
