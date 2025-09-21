@@ -17,10 +17,6 @@
     }
 }
 
-.grading-speed-dial {
-    @apply fixed right-5 bottom-5 mb-2 z-[20];
-}
-
 .grading-columns-wrapper {
     @apply w-full max-w-[56rem] flex flex-col justify-center gap-x-6;
     @apply md:flex-row;
