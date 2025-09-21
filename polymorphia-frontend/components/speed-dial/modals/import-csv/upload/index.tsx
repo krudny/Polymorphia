@@ -1,13 +1,13 @@
 "use client";
 
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import {ReactNode, useCallback} from "react";
-import {useDropzone} from "react-dropzone";
+import { ReactNode, useCallback } from "react";
+import { useDropzone } from "react-dropzone";
 import useImportCSVContext from "@/hooks/contexts/useImportCSVContext";
 import "./index.css";
 import "../index.css";
 import Loading from "@/components/loading/Loading";
-import {importCSVError} from "@/components/speed-dial/modals/import-csv/upload/importCSVError";
+import { importCSVError } from "@/components/speed-dial/modals/import-csv/upload/importCSVError";
 
 export default function UploadCSV(): ReactNode {
   const {
@@ -81,7 +81,9 @@ export default function UploadCSV(): ReactNode {
       {selectedFile && (
         <div className="import-csv-button-wrapper">
           <ButtonWithBorder
-            text={csvHeadersMutation.isPending ? "Przesyłanie" : "Analizuj plik"}
+            text={
+              csvHeadersMutation.isPending ? "Przesyłanie" : "Analizuj plik"
+            }
             className="!mx-0 !py-0 !w-full"
             onClick={handleUpload}
           />

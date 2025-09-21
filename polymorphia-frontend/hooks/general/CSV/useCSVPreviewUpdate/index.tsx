@@ -1,7 +1,10 @@
 import CSVService from "@/components/speed-dial/modals/import-csv/CSVService";
-import {useMutation} from "@tanstack/react-query";
-import {UseCSVPreviewUpdate, UseCSVPreviewUpdateParams,} from "@/hooks/general/CSV/useCSVPreviewUpdate/types";
-import {CSVPreviewResponseDTO} from "@/interfaces/api/CSV";
+import { useMutation } from "@tanstack/react-query";
+import {
+  UseCSVPreviewUpdate,
+  UseCSVPreviewUpdateParams,
+} from "@/hooks/general/CSV/useCSVPreviewUpdate/types";
+import { CSVPreviewResponseDTO } from "@/interfaces/api/CSV";
 import toast from "react-hot-toast";
 
 export default function useCSVPreviewUpdate(): UseCSVPreviewUpdate {
@@ -14,7 +17,7 @@ export default function useCSVPreviewUpdate(): UseCSVPreviewUpdate {
       CSVService.getCSVPreview(file, csvHeaders),
     onError: ({ message }: Error) => {
       toast.error(message);
-    }
+    },
   });
 
   return { mutation };
