@@ -103,8 +103,8 @@ export default function Roadmap() {
         />
       </div>
       <RoadmapModals
-        gradableEvent={selectedEvent}
-        setSelectedEvent={setSelectedEvent}
+        selectedGradableEvent={selectedEvent}
+        setSelectedGradableEvent={setSelectedEvent}
       />
     </>
   );

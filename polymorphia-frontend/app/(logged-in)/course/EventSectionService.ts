@@ -820,11 +820,13 @@ export const EventSectionService = {
           assignedRewards: [
             {
               id: 1,
+              name: "Srebrna Skrzynia",
               imageUrl: "images/chests/s1.webp",
               quantity: 2,
             },
             {
               id: 2,
+              name: "Pietruszka",
               imageUrl: "images/items/parsley.jpg",
               quantity: 1,
             },
@@ -836,6 +838,7 @@ export const EventSectionService = {
           assignedRewards: [
             {
               id: 3,
+              name: "Marchewka",
               imageUrl: "images/items/carrot.jpg",
               quantity: 1,
             },
@@ -930,7 +933,10 @@ export const EventSectionService = {
 
   getRandomTargets: async (
     type: TargetType, // for mocking purposes only
-    gradableEventId: number
+    gradableEventId: number,
+    sortBy: string[],
+    sortOrder: string[],
+    groups: string[]
   ): Promise<TargetResponseDTO[]> => {
     const data = [];
 

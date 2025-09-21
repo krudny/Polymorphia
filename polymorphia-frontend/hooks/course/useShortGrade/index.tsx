@@ -8,9 +8,16 @@ import { TargetTypes } from "@/interfaces/api/grade";
 import { useEventParams } from "@/hooks/general/useEventParams";
 
 export default function useShortGrade(
-  target: TargetRequestDTO | null
+  target: TargetRequestDTO | null,
+  gradableEventIdOverride?: number
 ): UseShortGrade {
-  const { gradableEventId } = useEventParams();
+  const { gradableEventId: paramsGradableEventId } = useEventParams();
+  const gradableEventId =
+    gradableEventIdOverride === undefined
+      ? paramsGradableEventId
+      : gradableEventIdOverride;
+
+  console.log(gradableEventId);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: target

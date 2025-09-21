@@ -3,6 +3,7 @@ import { RewardResponseDTO } from "../reward";
 // Grade
 export interface ShortAssignedRewardResponseDTO {
   id: number;
+  name: string;
   imageUrl: string;
   quantity: number;
 }

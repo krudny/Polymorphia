@@ -10,7 +10,7 @@ export class ProjectGradingStrategy
 {
   getGradingComponents(): GradingComponents {
     return {
-      list: this.createProjectGroupList(),
+      list: this.createTargetList(),
       components: [
         [this.createRewardComponent()],
         [

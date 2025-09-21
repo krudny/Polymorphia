@@ -6,7 +6,10 @@ import { EventTypes } from "@/interfaces/general";
 import { TargetTypes } from "@/interfaces/api/grade";
 
 export default function useGradingTargets(
-  debouncedSearch: string
+  debouncedSearch: string,
+  sortBy: string[],
+  sortOrder: string[],
+  groups: string[]
 ): UseGradingTargets {
   const { eventType, gradableEventId } = useEventParams();
 
@@ -17,7 +20,10 @@ export default function useGradingTargets(
         eventType === EventTypes.PROJECT
           ? TargetTypes.STUDENT_GROUP
           : TargetTypes.STUDENT,
-        gradableEventId
+        gradableEventId,
+        sortBy,
+        sortOrder,
+        groups
       ),
   });
 
