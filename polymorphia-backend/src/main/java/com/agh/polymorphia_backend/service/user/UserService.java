@@ -45,6 +45,7 @@ public class UserService implements UserDetailsService {
             invitationTokenRepository.save(token);
             emailService.sendInvitationEmail(email, token);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to send invitation");
         }
     }

@@ -1,4 +1,5 @@
 package com.agh.polymorphia_backend.service;
+
 import com.agh.polymorphia_backend.model.user.InvitationToken;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
