@@ -38,6 +38,9 @@ public abstract class User implements UserDetails {
     @NotNull
     private boolean isPasswordTemporary;
 
+    @NotEmpty
+    private boolean isActive;
+
     @Override
     public String getUsername() {
         return email;
