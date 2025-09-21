@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.model.user;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,15 +23,31 @@ public class InvitationToken {
     @Column(nullable = false, unique = true)
     private String token;
 
-    @Column(nullable = false)
+    @NotNull
     private String userEmail;
 
-    @Column(nullable = false)
+    @NotNull
+    private String firstName;
+
+    @NotNull
+    private String lastName;
+
+    @NotNull
     private LocalDateTime expiryDate;
 
     @Column(nullable = false)
     private boolean used = false;
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @NotNull
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
+        if (expiryDate == null) {
+            expiryDate = LocalDateTime.now().plusHours(72);
+        }
+    }
 }
