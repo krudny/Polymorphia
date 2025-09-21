@@ -28,7 +28,7 @@ export default function SpeedDial({ speedDialKey }: SpeedDialProps) {
         sx={{
           position: "fixed",
           bottom: isMd ? 4 : 20,
-          right: isMd ? 20 : 12,
+          right: isMd ? 22 : 12,
           margin: 0,
           ...(isMd ? {} : { zIndex: 9999 }),
         }}
