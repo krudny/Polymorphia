@@ -1,10 +1,11 @@
-import { SpeedDialItem } from "@/components/speed-dial/types";
+import {SpeedDialItem} from "@/components/speed-dial/types";
 import GradeModal from "@/components/speed-dial/modals/grade";
 import ProjectVariantModal from "@/components/speed-dial/modals/project-variant";
-import { SpeedDialContext } from "@/components/speed-dial/strategies/types";
+import {SpeedDialContext} from "@/components/speed-dial/strategies/types";
 import GroupModal from "@/components/speed-dial/modals/group-info";
 import GroupPickingModal from "@/components/speed-dial/modals/group-pick";
 import ImportCSVModal from "@/components/speed-dial/modals/import-csv";
+import {ImportCSVType} from "@/interfaces/general";
 
 export abstract class BaseSpeedDialStrategy {
   abstract getItems(context: SpeedDialContext): SpeedDialItem[];
@@ -81,13 +82,13 @@ export abstract class BaseSpeedDialStrategy {
     };
   }
 
-  protected createImportCSV(): SpeedDialItem {
+  protected createImportCSV(importType: ImportCSVType): SpeedDialItem {
     return {
       id: 4,
       orderIndex: 9,
       label: "Import CSV",
       icon: "cloud_upload",
-      modal: (onClose) => <ImportCSVModal onClosedAction={onClose} />,
+      modal: (onClose) => <ImportCSVModal onClosedAction={onClose} importType={importType} />,
     };
   }
 
