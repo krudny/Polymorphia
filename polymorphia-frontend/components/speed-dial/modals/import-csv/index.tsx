@@ -1,28 +1,58 @@
-import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
+"use client";
+import {SpeedDialModalProps} from "@/components/speed-dial/modals/types";
 import Modal from "@/components/modal/Modal";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import "./index.css";
+import {ReactNode} from "react";
+import {ImportCSVProvider} from "@/providers/import-csv";
+import UploadCSV from "@/components/speed-dial/modals/import-csv/upload";
+import useImportCSVContext from "@/hooks/contexts/useImportCSVContext";
+import PickCSVHeaders from "@/components/speed-dial/modals/import-csv/pick-headers";
+import PreviewCSV from "@/components/speed-dial/modals/import-csv/preview";
+import {ImportCSVModalProps} from "@/components/speed-dial/modals/import-csv/types";
+
+const ImportCSVModalContent = ({ onClosedAction }: SpeedDialModalProps) => {
+  const { csvHeadersMutation, csvPreviewMutation } = useImportCSVContext();
+
+  const renderData = (): { content: ReactNode; subtitle?: string } => {
+    if (csvPreviewMutation.isSuccess && csvPreviewMutation.data) {
+      return {
+        content: <PreviewCSV />,
+        subtitle: "Sprawdź, czy dane się zgadzają:",
+      };
+    }
+    if (csvHeadersMutation.isSuccess && csvHeadersMutation.data) {
+      return {
+        content: <PickCSVHeaders />,
+        subtitle: "Dopasuj kolumny z pliku do wymaganych pól:",
+      };
+    }
+    return {
+      content: <UploadCSV />,
+      subtitle: "",
+    };
+  };
+
+  const { content, subtitle } = renderData();
+
+  return (
+    <Modal
+      isDataPresented={true}
+      onClosed={onClosedAction}
+      title="Import CSV"
+      subtitle={subtitle}
+    >
+      {content}
+    </Modal>
+  );
+};
 
 export default function ImportCSVModal({
   onClosedAction,
-}: SpeedDialModalProps) {
+  importType
+}: ImportCSVModalProps): ReactNode {
   return (
-    <Modal isDataPresented={true} onClosed={onClosedAction} title="Import CSV">
-      <div className="import-csv">
-        <div className="import-csv-upload-wrapper">
-          <span className="import-csv-upload-icon">cloud_upload</span>
-          <span className="import-csv-text">
-            Przeciągnij i upuść plik CSV tutaj
-          </span>
-        </div>
-        <div className="import-csv-button-wrapper">
-          <ButtonWithBorder
-            text="Prześlij"
-            className="!mx-0 !py-0 !w-full"
-            onClick={() => {}}
-          />
-        </div>
-      </div>
-    </Modal>
+    <ImportCSVProvider importType={importType}>
+      <ImportCSVModalContent onClosedAction={onClosedAction} />
+    </ImportCSVProvider>
   );
 }
