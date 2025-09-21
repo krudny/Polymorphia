@@ -2,7 +2,7 @@
 
 import {useTitle} from "@/components/navigation/TitleContext";
 import {useEffect, useRef} from "react";
-import useCourseGroups2 from "@/hooks/course/useCourseGroups2";
+import useCourseGroups from "../../../../hooks/course/useCourseGroups";
 import Loading from "@/components/loading/Loading";
 import toast from "react-hot-toast";
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
@@ -28,7 +28,7 @@ export default function CourseGroupsPage() {
     data: courseGroups,
     isLoading,
     isError,
-  } = useCourseGroups2(courseId, userId);
+  } = useCourseGroups(courseId);
 
   const containerRef = useScaleShow(!isLoading);
 

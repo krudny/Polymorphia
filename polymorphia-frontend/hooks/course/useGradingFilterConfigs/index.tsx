@@ -1,10 +1,7 @@
-import {
-  FilterConfig,
-  SpecialBehaviors,
-} from "@/hooks/course/useFilters/types";
-import { GradingFilterId } from "@/providers/grading/types";
-import { useQuery } from "@tanstack/react-query";
-import { CourseService } from "@/app/(logged-in)/course/CourseService";
+import {FilterConfig, SpecialBehaviors,} from "@/hooks/course/useFilters/types";
+import {GradingFilterId} from "@/providers/grading/types";
+import {useQuery} from "@tanstack/react-query";
+import {CourseService} from "@/app/(logged-in)/course/CourseService";
 
 export function useGradingFilterConfigs(courseId: number) {
   return useQuery({
@@ -40,7 +37,7 @@ export function useGradingFilterConfigs(courseId: number) {
               label: "Wszystkie",
               specialBehavior: SpecialBehaviors.EXCLUSIVE,
             },
-            ...courseGroups.map((courseGroup) => ({ value: courseGroup })),
+            ...courseGroups.map((courseGroup) => ({ value: courseGroup.name })),
           ],
           defaultValues: ["all"],
           max: courseGroups.length,
