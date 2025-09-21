@@ -1,81 +1,29 @@
-import { AssignmentStrategy } from "@/components/speed-dial/strategies/markdown-view/Assignment";
-import { ProjectStrategy } from "@/components/speed-dial/strategies/markdown-view/Project";
-import { SpeedDialStrategy } from "@/components/speed-dial/strategies/types";
-import { TestGradingStrategy } from "@/components/speed-dial/strategies/instructor/TestGrading";
-import { AssignmentGradingStrategy } from "@/components/speed-dial/strategies/instructor/AssignmentGrading";
-import { EventTypes, Roles, ViewTypes } from "@/interfaces/general";
+import {AssignmentStrategy} from "@/components/speed-dial/strategies/markdown-view/Assignment";
+import {ProjectStrategy} from "@/components/speed-dial/strategies/markdown-view/Project";
+import {SpeedDialStrategy} from "@/components/speed-dial/strategies/types";
+import {TestGradingStrategy} from "@/components/speed-dial/strategies/instructor/TestGrading";
+import {AssignmentGradingStrategy} from "@/components/speed-dial/strategies/instructor/AssignmentGrading";
+import {SpeedDialKey, SpeedDialKeys} from "../types";
 
-class SpeedDialStrategyRegistry {
-  private strategies = new Map<string, SpeedDialStrategy>();
+export class SpeedDialStrategyRegistry {
+  private strategies = new Map<SpeedDialKey, SpeedDialStrategy>();
 
   constructor() {
-    this.registerStrategy(
-      EventTypes.ASSIGNMENT,
-      ViewTypes.MARKDOWN,
-      Roles.STUDENT,
-      new AssignmentStrategy()
-    );
-    this.registerStrategy(
-      EventTypes.ASSIGNMENT,
-      ViewTypes.MARKDOWN,
-      Roles.INSTRUCTOR,
-      new AssignmentStrategy()
-    );
-    this.registerStrategy(
-      EventTypes.PROJECT,
-      ViewTypes.MARKDOWN,
-      Roles.STUDENT,
-      new ProjectStrategy()
-    );
-    this.registerStrategy(
-      EventTypes.PROJECT,
-      ViewTypes.MARKDOWN,
-      Roles.INSTRUCTOR,
-      new ProjectStrategy()
-    );
-    this.registerStrategy(
-      EventTypes.TEST,
-      ViewTypes.GRADING,
-      Roles.INSTRUCTOR,
-      new TestGradingStrategy()
-    );
-    this.registerStrategy(
-      EventTypes.ASSIGNMENT,
-      ViewTypes.GRADING,
-      Roles.INSTRUCTOR,
-      new AssignmentGradingStrategy()
-    );
-    this.registerStrategy(
-      EventTypes.PROJECT,
-      ViewTypes.GRADING,
-      Roles.INSTRUCTOR,
-      new AssignmentGradingStrategy()
-    );
+    this.strategies.set(SpeedDialKeys.ASSIGNMENT_MARKDOWN_STUDENT, new AssignmentStrategy());
+    this.strategies.set(SpeedDialKeys.ASSIGNMENT_MARKDOWN_INSTRUCTOR, new AssignmentStrategy());
+    this.strategies.set(SpeedDialKeys.PROJECT_MARKDOWN_STUDENT, new ProjectStrategy());
+    this.strategies.set(SpeedDialKeys.PROJECT_MARKDOWN_INSTRUCTOR, new ProjectStrategy());
+    this.strategies.set(SpeedDialKeys.TEST_GRADING_INSTRUCTOR, new TestGradingStrategy());
+    this.strategies.set(SpeedDialKeys.ASSIGNMENT_GRADING_INSTRUCTOR, new AssignmentGradingStrategy());
+    this.strategies.set(SpeedDialKeys.PROJECT_GRADING_INSTRUCTOR, new AssignmentGradingStrategy());
   }
 
-  getKey(eventType: string, viewType: string, role: string) {
-    return `${eventType}:${viewType}:${role}`;
-  }
+  getStrategy(speedDialKey: SpeedDialKey): SpeedDialStrategy | null {
+    if (!speedDialKey) {
+      return null;
+    }
 
-  registerStrategy(
-    eventType: string,
-    viewType: string,
-    role: string,
-    strategy: SpeedDialStrategy
-  ): void {
-    const key = this.getKey(eventType, viewType, role);
-
-    this.strategies.set(key, strategy);
-  }
-
-  getStrategy(
-    eventType: string,
-    viewType: string,
-    role: string
-  ): SpeedDialStrategy | undefined {
-    const key = this.getKey(eventType, viewType, role);
-
-    return this.strategies.get(key);
+    return this.strategies.get(speedDialKey) || null;
   }
 }
 

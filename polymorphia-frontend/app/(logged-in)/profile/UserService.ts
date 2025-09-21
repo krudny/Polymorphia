@@ -1,6 +1,6 @@
-import { UserDetailsDTO } from "@/interfaces/api/user";
+import {UserDetailsDTO} from "@/interfaces/api/user";
 
-import { Role, Roles } from "@/interfaces/general";
+import {Role, Roles} from "@/interfaces/general";
 
 const UserService = {
   getCurrentUser: async (): Promise<UserDetailsDTO> => {
@@ -37,8 +37,8 @@ const UserService = {
     ];
   },
   getRole: async (): Promise<{ role: Role }> => {
-    return { role: Roles.INSTRUCTOR };
-    // return { role: Roles.STUDENT };
+    // return { role: Roles.INSTRUCTOR };
+    return { role: Roles.STUDENT };
   },
 };
 

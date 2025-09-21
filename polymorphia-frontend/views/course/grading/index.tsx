@@ -1,15 +1,16 @@
-import { GradingProps } from "@/views/course/grading/types";
-import { useGradingFactory } from "@/hooks/factory/useGradingFactory";
-import { Fragment, useEffect, useRef } from "react";
+import {GradingProps} from "@/views/course/grading/types";
+import {useGradingFactory} from "@/hooks/factory/useGradingFactory";
+import {Fragment, useEffect, useRef} from "react";
 import "./index.css";
-import { GradingFilterId } from "@/providers/grading/types";
+import {GradingFilterId} from "@/providers/grading/types";
 import FiltersModal from "@/components/filters-modals/FiltersModal";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
-import { useQueryClient } from "@tanstack/react-query";
-import { useMediaQuery } from "react-responsive";
-import { useTitle } from "@/components/navigation/TitleContext";
-import { ViewTypes } from "@/interfaces/general";
+import {useQueryClient} from "@tanstack/react-query";
+import {useMediaQuery} from "react-responsive";
+import {useTitle} from "@/components/navigation/TitleContext";
+import {Roles, ViewTypes} from "@/interfaces/general";
 import SpeedDialMobile from "@/components/speed-dial/SpeedDialMobile";
+import {getSpeedDialKey} from "@/components/speed-dial/util";
 
 export default function Grading({ eventType, columns }: GradingProps) {
   const queryClient = useQueryClient();
@@ -68,7 +69,11 @@ export default function Grading({ eventType, columns }: GradingProps) {
     });
   };
 
-  if (!gradingComponents) {
+  const speedDialKey = getSpeedDialKey(eventType, ViewTypes.GRADING, Roles.INSTRUCTOR);
+
+  console.log(speedDialKey);
+
+  if (!gradingComponents || !speedDialKey) {
     return null;
   }
 
@@ -76,7 +81,7 @@ export default function Grading({ eventType, columns }: GradingProps) {
     <>
       <div ref={gradingRef} className="grading">
         <div className="grading-speed-dial">
-          <SpeedDialMobile eventType={eventType} viewType={ViewTypes.GRADING} />
+          <SpeedDialMobile speedDialKey={speedDialKey} />
         </div>
 
         <div className="grading-list" ref={listRef}>
