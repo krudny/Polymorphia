@@ -37,7 +37,7 @@ export default function CourseGroupsPage() {
   }
 
   if (isError) {
-    toast.error("Nie udało się pobrać grup zjaęciowych.")
+    toast.error("Nie udało się załadować grup zajęciowych.")
   }
 
   const handleClick = (id: number) => {
