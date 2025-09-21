@@ -1,4 +1,4 @@
-import { XPCardColors } from "@/components/xp-card/types";
+import {XPCardColors} from "@/components/xp-card/types";
 
 export interface XPCardPointsProps {
   points: string | undefined;
@@ -8,8 +8,9 @@ export interface XPCardPointsProps {
   color?: XPCardColors;
 }
 
-export interface XPCardUngradedProps {
-  ungraded: number;
+export interface XPCardTextProps {
+  topText: string;
+  bottomText: string;
   color?: XPCardColors;
 }
 

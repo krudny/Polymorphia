@@ -1,4 +1,4 @@
-import { EventType } from "@/interfaces/general";
+import {EventType} from "@/interfaces/general";
 
 export interface EventSectionResponseDTO {
   id: number;
@@ -25,4 +25,11 @@ export interface StudentGradableEventResponseDTO
 export interface InstructorGradableEventResponseDTO
   extends BaseGradableEventResponseDTO {
   ungradedStudents: number;
+}
+
+export interface CourseGroupsResponseDTO {
+  id: number;
+  name: string;
+  subtitle: string;
+  studentCount: number;
 }

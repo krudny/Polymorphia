@@ -8,11 +8,13 @@ import {
   SettingsIcon,
   TrophyIcon,
   UserIcon,
+  UsersIcon,
 } from "lucide-react";
-import { MenuOption } from "@/components/navigation/types";
+import {MenuOption} from "@/components/navigation/types";
 
 export const MainMenuItems: MenuOption[] = [
   { icon: UserIcon, text: "Profil", link: "profile" },
+  { icon: UsersIcon, text: "Grupy", link: "course/groups"},
   {
     icon: BadgeHelpIcon,
     text: "Baza wiedzy",
