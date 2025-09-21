@@ -36,9 +36,6 @@ public abstract class User implements UserDetails {
     private String password;
 
     @NotNull
-    private boolean isPasswordTemporary;
-
-    @NotEmpty
     private boolean isActive;
 
     @Override

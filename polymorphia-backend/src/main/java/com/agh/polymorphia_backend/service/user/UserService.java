@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -22,8 +21,6 @@ public class UserService implements UserDetailsService {
     private static final String USER_NOT_FOUND = "User %s does not exist in the database";
     private final UserRepository userRepository;
     private final InvitationTokenRepository invitationTokenRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final PasswordService passwordService;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -35,16 +32,8 @@ public class UserService implements UserDetailsService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User already exists");
         }
 
-        String temporaryPassword = passwordService.generateTemporaryPassword(12);
-        String hashedPassword = passwordEncoder.encode(temporaryPassword);
-
-        User newUser = createUser(email, firstName, lastName, hashedPassword);
         InvitationToken token = createInvitationToken(email);
-
-        userRepository.save(newUser);
         invitationTokenRepository.save(token);
-
-
     }
 
     private InvitationToken createInvitationToken(String email) {
