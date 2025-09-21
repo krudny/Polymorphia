@@ -8,8 +8,9 @@ import useGradingContext from "@/hooks/contexts/useGradingContext";
 import { useQueryClient } from "@tanstack/react-query";
 import { useMediaQuery } from "react-responsive";
 import { useTitle } from "@/components/navigation/TitleContext";
-import { ViewTypes } from "@/interfaces/general";
-import SpeedDialMobile from "@/components/speed-dial/SpeedDialMobile";
+import { Roles, ViewTypes } from "@/interfaces/general";
+import { getSpeedDialKey } from "@/components/speed-dial/util";
+import SpeedDial from "@/components/speed-dial/SpeedDial";
 
 export default function Grading({ eventType, columns }: GradingProps) {
   const queryClient = useQueryClient();
@@ -68,16 +69,20 @@ export default function Grading({ eventType, columns }: GradingProps) {
     });
   };
 
-  if (!gradingComponents) {
+  const speedDialKey = getSpeedDialKey(
+    eventType,
+    ViewTypes.GRADING,
+    Roles.INSTRUCTOR
+  );
+
+  if (!gradingComponents || !speedDialKey) {
     return null;
   }
 
   return (
     <>
       <div ref={gradingRef} className="grading">
-        <div className="grading-speed-dial">
-          <SpeedDialMobile eventType={eventType} viewType={ViewTypes.GRADING} />
-        </div>
+        <SpeedDial speedDialKey={speedDialKey} />
 
         <div className="grading-list" ref={listRef}>
           {gradingComponents.list}
