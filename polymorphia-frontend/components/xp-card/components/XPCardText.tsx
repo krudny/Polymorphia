@@ -1,8 +1,8 @@
 import "./index.css";
 import clsx from "clsx";
-import {colorVariants} from "@/components/xp-card/XPCard";
-import {ReactNode} from "react";
-import {XPCardTextProps} from "@/components/xp-card/components/types";
+import { colorVariants } from "@/components/xp-card/XPCard";
+import { ReactNode } from "react";
+import { XPCardTextProps } from "@/components/xp-card/components/types";
 
 export default function XPCardText({
   topText,

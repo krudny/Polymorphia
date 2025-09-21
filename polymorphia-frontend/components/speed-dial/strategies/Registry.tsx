@@ -1,10 +1,10 @@
-import {AssignmentStrategy} from "@/components/speed-dial/strategies/markdown-view/Assignment";
-import {ProjectStrategy} from "@/components/speed-dial/strategies/markdown-view/Project";
-import {SpeedDialStrategy} from "@/components/speed-dial/strategies/types";
-import {TestGradingStrategy} from "@/components/speed-dial/strategies/instructor/TestGrading";
-import {AssignmentGradingStrategy} from "@/components/speed-dial/strategies/instructor/AssignmentGrading";
-import {SpeedDialKey, SpeedDialKeys} from "../types";
-import {CourseGroupStrategy} from "@/components/speed-dial/strategies/instructor/CourseGroup";
+import { AssignmentStrategy } from "@/components/speed-dial/strategies/markdown-view/Assignment";
+import { ProjectStrategy } from "@/components/speed-dial/strategies/markdown-view/Project";
+import { SpeedDialStrategy } from "@/components/speed-dial/strategies/types";
+import { TestGradingStrategy } from "@/components/speed-dial/strategies/instructor/TestGrading";
+import { AssignmentGradingStrategy } from "@/components/speed-dial/strategies/instructor/AssignmentGrading";
+import { SpeedDialKey, SpeedDialKeys } from "../types";
+import { CourseGroupStrategy } from "@/components/speed-dial/strategies/instructor/CourseGroup";
 
 export class SpeedDialStrategyRegistry {
   private strategies = new Map<SpeedDialKey, SpeedDialStrategy>();
@@ -40,7 +40,7 @@ export class SpeedDialStrategyRegistry {
     );
     this.strategies.set(
       SpeedDialKeys.COURSE_GROUP_INSTRUCTOR,
-      new CourseGroupStrategy(),
+      new CourseGroupStrategy()
     );
   }
 

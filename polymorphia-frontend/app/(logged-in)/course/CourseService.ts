@@ -1,8 +1,10 @@
 /* eslint-disable -- unused courseId due to mock */
-import {CourseGroupsResponseDTO} from "@/interfaces/api/course";
+import { CourseGroupsResponseDTO } from "@/interfaces/api/course";
 
 export const CourseService = {
-  getCourseGroups: async (courseId: number): Promise<CourseGroupsResponseDTO[]> => {
+  getCourseGroups: async (
+    courseId: number
+  ): Promise<CourseGroupsResponseDTO[]> => {
     return [
       {
         id: 1,
@@ -34,7 +36,6 @@ export const CourseService = {
         subtitle: "Subtitle",
         studentCount: 14,
       },
-    ]
-
-  }
+    ];
+  },
 };

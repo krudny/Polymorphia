@@ -1,11 +1,11 @@
-import {useScaleShow} from "@/animations/ScaleShow";
+import { useScaleShow } from "@/animations/ScaleShow";
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
 import SectionView from "@/components/section-view/SectionView";
-import {useEffect, useRef} from "react";
-import {useRouter} from "next/navigation";
+import { useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import Loading from "@/components/loading/Loading";
 import renderCard from "@/views/course/instructor/RenderCard";
-import {useEventParams} from "@/hooks/general/useEventParams";
+import { useEventParams } from "@/hooks/general/useEventParams";
 import useInstructorGradableEvents from "@/hooks/course/useInstructorGradableEvents";
 import "./index.css";
 

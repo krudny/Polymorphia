@@ -1,7 +1,7 @@
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardText from "@/components/xp-card/components/XPCardText";
-import {ReactNode} from "react";
-import {InstructorGradableEventResponseDTO} from "@/interfaces/api/course";
+import { ReactNode } from "react";
+import { InstructorGradableEventResponseDTO } from "@/interfaces/api/course";
 
 export default function renderCard(
   gradableEvent: InstructorGradableEventResponseDTO,

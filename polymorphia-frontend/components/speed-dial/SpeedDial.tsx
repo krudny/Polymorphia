@@ -53,12 +53,17 @@ export default function SpeedDial({ speedDialKey }: SpeedDialProps) {
             slotProps={{
               tooltip: {
                 title: item.label,
-                disableInteractive: true,
                 slotProps: {
                   transition: { timeout: 150 },
                   popper: {
                     modifiers: [
-                      { name: "computeStyles", options: { roundOffsets: false, gpuAcceleration: false } },
+                      {
+                        name: "computeStyles",
+                        options: {
+                          roundOffsets: false,
+                          gpuAcceleration: false,
+                        },
+                      },
                       { name: "offset", options: { offset: [0, 3] } },
                     ],
                   },

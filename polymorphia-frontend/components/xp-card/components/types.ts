@@ -1,4 +1,4 @@
-import {XPCardColors} from "@/components/xp-card/types";
+import { XPCardColors } from "@/components/xp-card/types";
 
 export interface XPCardPointsProps {
   points: string | undefined;

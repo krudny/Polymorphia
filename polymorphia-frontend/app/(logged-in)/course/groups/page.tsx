@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import {useTitle} from "@/components/navigation/TitleContext";
-import {useEffect, useRef} from "react";
+import { useTitle } from "@/components/navigation/TitleContext";
+import { useEffect, useRef } from "react";
 import useCourseGroups from "../../../../hooks/course/useCourseGroups";
 import Loading from "@/components/loading/Loading";
 import toast from "react-hot-toast";
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
 import SectionView from "@/components/section-view/SectionView";
-import "./index.css"
-import {useScaleShow} from "@/animations/ScaleShow";
+import "./index.css";
+import { useScaleShow } from "@/animations/ScaleShow";
 import renderCard from "@/app/(logged-in)/course/groups/RenderCard";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const courseId = 1;
 const userId = 5;
@@ -24,11 +24,7 @@ export default function CourseGroupsPage() {
     setTitle("Grupy zajęciowe");
   }, [setTitle]);
 
-  const {
-    data: courseGroups,
-    isLoading,
-    isError,
-  } = useCourseGroups(courseId);
+  const { data: courseGroups, isLoading, isError } = useCourseGroups(courseId);
 
   const containerRef = useScaleShow(!isLoading);
 
@@ -37,7 +33,7 @@ export default function CourseGroupsPage() {
   }
 
   if (isError) {
-    toast.error("Nie udało się załadować grup zajęciowych.")
+    toast.error("Nie udało się załadować grup zajęciowych.");
   }
 
   const handleClick = (id: number) => {
@@ -56,5 +52,5 @@ export default function CourseGroupsPage() {
         </div>
       </div>
     </SectionView>
-  )
+  );
 }
