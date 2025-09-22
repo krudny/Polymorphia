@@ -10,6 +10,7 @@ export const ViewTypes = {
   CARD_GRID: "CARD_GRID",
   MARKDOWN: "MARKDOWN",
   GRADING: "GRADING",
+  COURSE_GROUP: "COURSE_GROUP",
 };
 
 export type ViewType = (typeof ViewTypes)[keyof typeof ViewTypes];

@@ -1,12 +1,12 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import {ReactNode, useState} from "react";
 import "./index.css";
-import { useSpeedDialFactory } from "@/hooks/factory/useSpeedDialFactory";
+import {useSpeedDialFactory} from "@/hooks/factory/useSpeedDialFactory";
 import Loading from "@/components/loading/Loading";
-import { SpeedDial as SpeedDialMui, SpeedDialAction } from "@mui/material";
-import { SpeedDialProps } from "./types";
-import { useMediaQuery } from "react-responsive";
+import {SpeedDial as SpeedDialMui, SpeedDialAction} from "@mui/material";
+import {SpeedDialProps} from "./types";
+import {useMediaQuery} from "react-responsive";
 
 export default function SpeedDial({ speedDialKey }: SpeedDialProps) {
   const items = useSpeedDialFactory({ speedDialKey });
@@ -27,8 +27,8 @@ export default function SpeedDial({ speedDialKey }: SpeedDialProps) {
         icon={<span className="material-symbols">add</span>}
         sx={{
           position: "fixed",
-          bottom: isMd ? 0 : 16,
-          right: 16,
+          bottom: isMd ? 4 : 20,
+          right: isMd ? 22 : 12,
           margin: 0,
           ...(isMd ? {} : { zIndex: 9999 }),
         }}
@@ -53,6 +53,21 @@ export default function SpeedDial({ speedDialKey }: SpeedDialProps) {
             slotProps={{
               tooltip: {
                 title: item.label,
+                slotProps: {
+                  transition: { timeout: 150 },
+                  popper: {
+                    modifiers: [
+                      {
+                        name: "computeStyles",
+                        options: {
+                          roundOffsets: false,
+                          gpuAcceleration: false,
+                        },
+                      },
+                      { name: "offset", options: { offset: [0, 3] } },
+                    ],
+                  },
+                },
               },
               fab: {
                 style: {

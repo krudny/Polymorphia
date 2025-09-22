@@ -33,9 +33,9 @@
     @apply w-full h-full relative flex-shrink-0  select-none aspect-square;
 }
 
-/* XPCardUngraded */
+/* XPCardText */
 
-.xp-card-ungraded {
+.xp-card-text {
     @apply w-full flex-1 flex-col-centered;
 }
 
