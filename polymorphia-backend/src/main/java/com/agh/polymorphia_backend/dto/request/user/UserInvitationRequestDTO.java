@@ -24,4 +24,8 @@ public class UserInvitationRequestDTO {
     @NotBlank(message = "Last name is required")
     @Size(min = 2, max = 20, message = "Last name must be between 2 and 20 characters")
     private String lastName;
+
+    @NotBlank(message = "Index number is required")
+    @Size(min = 2, max = 7, message = "Index number must be between 2 and 7 characters")
+    private Integer indexNumber;
 }

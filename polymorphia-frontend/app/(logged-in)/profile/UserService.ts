@@ -1,6 +1,7 @@
-import { UserDetailsDTO } from "@/interfaces/api/user";
+import {InviteStudentRequestDTO, UserDetailsDTO} from "@/interfaces/api/user";
 
-import { Role, Roles } from "@/interfaces/general";
+import {Role, Roles} from "@/interfaces/general";
+import {API_HOST} from "@/services/api";
 
 const UserService = {
   getCurrentUser: async (): Promise<UserDetailsDTO> => {
@@ -40,6 +41,44 @@ const UserService = {
     return { role: Roles.INSTRUCTOR };
     // return { role: Roles.STUDENT };
   },
+  register: async (invitationToken: string, animalName: string, password: string): Promise<void> => {
+    const params = {
+      invitationToken,
+      animalName,
+      password,
+    }
+    console.log(params);
+    const response = await fetch(`${API_HOST}/user/register`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(params)
+    });
+
+    if (!response.ok) {
+      console.log(response);
+      throw new Error("Nie udało się utworzyć konta!");
+    }
+
+    // return await response.json();
+  },
+  inviteStudent: async (request: InviteStudentRequestDTO): Promise<void> => {
+    const response = await fetch(`${API_HOST}/user/invite`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({...request})
+    });
+
+    if (!response.ok) {
+      console.log(response);
+      throw new Error("Nie udało się utworzyć konta!");
+    }
+
+    // return await response.json();
+  }
 };
 
 export default UserService;

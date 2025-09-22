@@ -28,7 +28,7 @@ public class EmailService {
             helper.setTo(toEmail);
             helper.setSubject("Zaproszenie do aplikacji Polymorphia");
 
-            String htmlContent = buildInvitationEmailContent();
+            String htmlContent = buildInvitationEmailContent(invitationToken);
 
             helper.setText(htmlContent, true);
 
@@ -38,8 +38,9 @@ public class EmailService {
         }
     }
 
-    private String buildInvitationEmailContent() {
-        String registrationLink = "https://polymorphia-self.vercel.app/";
+    private String buildInvitationEmailContent(InvitationToken invitationToken) {
+        String registrationLink = "localhost:3000?invitationToken=" + invitationToken.getToken();
+
 
         return String.format("""
             <!DOCTYPE html>

@@ -1,0 +1,11 @@
+@import "tailwindcss";
+@import "../../../styles/globals.css";
+
+.register-wrapper {
+    @apply relative flex-centered w-full max-w-xl px-16 text-primary-dark;
+    @apply md:px-0;
+}
+
+.register-wrapper > div {
+    @apply w-full max-w-xs text-center;
+}

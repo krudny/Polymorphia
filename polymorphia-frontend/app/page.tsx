@@ -3,15 +3,17 @@
 import Image from "next/image";
 import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import LoginForm from "@/components/home/LoginForm";
-import { useLayoutEffect, useRef, useState } from "react";
-import {
-  animateInitialMount,
-  animateLoginFormVisibility,
-} from "@/animations/Home";
+import LoginForm from "@/components/home/login-form";
+import {useLayoutEffect, useRef, useState} from "react";
+import {animateInitialMount, animateLoginFormVisibility,} from "@/animations/Home";
 import "./index.css";
+import {useSearchParams} from "next/navigation";
+import RegisterForm from "@/components/home/register-form";
 
 export default function Home() {
+  const searchParams = useSearchParams();
+  const invitationToken = searchParams.get('invitationToken');
+
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
 
   const openLoginForm = () => setIsLoginFormVisible(true);
@@ -77,7 +79,14 @@ export default function Home() {
         </div>
       </div>
       <div className="hero-right-wrapper">
-        <div ref={titleRef}>
+        {invitationToken ?
+          <div className="flex-col-centered" ref={titleRef}>
+            <div className="hero-register">
+              <RegisterForm invitationToken={invitationToken}/>
+            </div>
+          </div> :
+          <>
+          <div ref={titleRef}>
           <h1>Polymorphia</h1>
           <div className="hero-buttons">
             <ButtonWithBorder
@@ -91,6 +100,8 @@ export default function Home() {
         <div className={`hero-login`} ref={loginFormRef}>
           <LoginForm onBackAction={closeLoginForm} />
         </div>
+          </>
+        }
       </div>
     </BackgroundWrapper>
   );

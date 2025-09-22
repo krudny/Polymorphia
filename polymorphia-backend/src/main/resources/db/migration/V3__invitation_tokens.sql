@@ -4,6 +4,7 @@ CREATE TABLE invitation_tokens (
                                    user_email VARCHAR(255) NOT NULL,
                                    first_name VARCHAR(255) NOT NULL,
                                    last_name VARCHAR(255) NOT NULL,
+                                   index_number INTEGER NOT NULL,
                                    expiry_date TIMESTAMP NOT NULL,
                                    used BOOLEAN NOT NULL DEFAULT FALSE,
                                    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
