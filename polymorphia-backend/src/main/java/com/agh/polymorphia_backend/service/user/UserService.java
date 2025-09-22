@@ -61,6 +61,7 @@ public class UserService implements UserDetailsService {
                 .userEmail(inviteDTO.getEmail())
                 .firstName(inviteDTO.getFirstName())
                 .lastName(inviteDTO.getLastName())
+                .indexNumber(inviteDTO.getIndexNumber())
                 .token(tokenValue)
                 .expiryDate(now.plusHours(72))
                 .createdAt(now)
@@ -78,7 +79,7 @@ public class UserService implements UserDetailsService {
                 .firstName(token.getFirstName())
                 .lastName(token.getLastName())
                 .password(passwordEncoder.encode(registerDTO.getPassword()))
-                .indexNumber(454554)
+                .indexNumber(token.getIndexNumber())
                 .build();
 
         userRepository.save(student);

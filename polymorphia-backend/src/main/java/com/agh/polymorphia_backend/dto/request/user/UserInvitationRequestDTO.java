@@ -2,6 +2,7 @@ package com.agh.polymorphia_backend.dto.request.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +26,6 @@ public class UserInvitationRequestDTO {
     @Size(min = 2, max = 20, message = "Last name must be between 2 and 20 characters")
     private String lastName;
 
-    @NotBlank(message = "Index number is required")
-    @Size(min = 2, max = 7, message = "Index number must be between 2 and 7 characters")
+    @NotNull
     private Integer indexNumber;
 }

@@ -39,7 +39,7 @@ public class EmailService {
     }
 
     private String buildInvitationEmailContent(InvitationToken invitationToken) {
-        String registrationLink = "localhost:3000?invitationToken=" + invitationToken.getToken();
+        String registrationLink = "http://localhost:3000?invitationToken=" + invitationToken.getToken();
 
 
         return String.format("""

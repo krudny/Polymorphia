@@ -33,6 +33,9 @@ public class InvitationToken {
     private String lastName;
 
     @NotNull
+    private Integer indexNumber;
+
+    @NotNull
     private LocalDateTime expiryDate;
 
     @Column(nullable = false)
