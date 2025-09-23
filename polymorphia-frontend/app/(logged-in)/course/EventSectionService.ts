@@ -5,10 +5,12 @@ import { lab0, lab1, lab2, proj1 } from "@/app/(logged-in)/course/sampleData";
 import { ProjectVariantResponseDTO } from "@/interfaces/api/course/project";
 import {
   CriterionResponseDTO,
+  GradeRequestDTO,
   GroupTargetTypes,
   ShortGradeResponseDTO,
   StudentGroupTargetResponseDTO,
   StudentTargetData,
+  TargetRequestDTO,
   TargetResponseDTO,
   TargetType,
   TargetTypes,
@@ -22,8 +24,6 @@ import {
 } from "@/interfaces/api/course";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import { EventTypes } from "@/interfaces/general";
-import { CriteriaDetails } from "@/providers/grading/gradingReducer/types";
-import { TargetRequestDTO } from "@/hooks/course/useShortGrade/types";
 
 export const studentNames = [
   "Gerard Małoduszny",
@@ -769,6 +769,10 @@ export const EventSectionService = {
                 itemBonusType: "PERCENTAGE_BONUS",
                 bonusText: "+5% do kategorii Kartkówka",
                 orderIndex: 1,
+                percentage: 5,
+                limit: 5,
+                isLimitReached: false,
+                eventSectionId: 1,
               },
             },
             maxAmount: 3,
@@ -982,12 +986,7 @@ export const EventSectionService = {
     return data;
   },
 
-  submitGrade: async (gradeData: {
-    target: TargetRequestDTO;
-    gradableEventId: number;
-    criteria: Record<number, CriteriaDetails>;
-    comment: string;
-  }): Promise<void> => {
+  submitGrade: async (gradeData: GradeRequestDTO): Promise<void> => {
     await new Promise<void>((resolve) => setTimeout(resolve, 200));
     console.log("Submitting grade:", gradeData);
   },

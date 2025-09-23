@@ -1,11 +1,5 @@
-import { CriteriaDetails } from "@/providers/grading/gradingReducer/types";
-import { TargetRequestDTO } from "../useShortGrade/types";
+import { GradeRequestDTO } from "@/interfaces/api/grade";
 
 export interface UseGradeUpdate {
-  mutate: (variables: {
-    target: TargetRequestDTO;
-    gradableEventId: number;
-    criteria: Record<number, CriteriaDetails>;
-    comment: string;
-  }) => void;
+  mutate: (variables: GradeRequestDTO) => void;
 }

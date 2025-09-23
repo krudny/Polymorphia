@@ -19,6 +19,13 @@ export type ShortGradeResponseDTO =
 
 // export type FullGradeResponseDTO = GradeResponseDTO<AssignedRewardResponseDTO>;
 
+export interface GradeRequestDTO {
+  target: TargetRequestDTO;
+  gradableEventId: number;
+  criteria: Record<number, CriteriaDetailsRequestDTO>;
+  comment: string;
+}
+
 // Criteria
 export interface CriterionResponseDTO {
   id: number;
@@ -37,6 +44,11 @@ export interface CriterionGradeResponseDTO<AssignedRewardType> {
   gainedXp?: string;
   assignedRewards: AssignedRewardType[];
 }
+
+export type CriteriaDetailsRequestDTO = Omit<
+  CriterionGradeResponseDTO<ShortAssignedRewardResponseDTO>,
+  "id"
+>;
 
 // GradingTarget
 export interface StudentTargetData {
@@ -77,3 +89,7 @@ export interface StudentGroupTargetResponseDTO {
 export type TargetResponseDTO =
   | StudentTargetResponseDTO
   | StudentGroupTargetResponseDTO;
+
+export type TargetRequestDTO =
+  | { type: typeof TargetTypes.STUDENT; id: number }
+  | { type: typeof TargetTypes.STUDENT_GROUP; groupId: number };

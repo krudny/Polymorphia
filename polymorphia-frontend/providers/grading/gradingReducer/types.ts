@@ -1,18 +1,12 @@
 import {
-  CriterionGradeResponseDTO,
-  ShortAssignedRewardResponseDTO,
+  CriteriaDetailsRequestDTO,
   ShortGradeResponseDTO,
   TargetResponseDTO,
 } from "@/interfaces/api/grade";
 
-export type CriteriaDetails = Omit<
-  CriterionGradeResponseDTO<ShortAssignedRewardResponseDTO>,
-  "id"
->;
-
 export interface GradingReducerState {
   selectedTarget: TargetResponseDTO | null;
-  criteria: Record<number, CriteriaDetails>;
+  criteria: Record<number, CriteriaDetailsRequestDTO>;
   comment: string;
 }
 
