@@ -1,18 +1,18 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import {ReactNode, useState} from "react";
 import "./index.css";
-import { useSpeedDialFactory } from "@/hooks/factory/useSpeedDialFactory";
+import {useSpeedDialFactory} from "@/hooks/factory/useSpeedDialFactory";
 import Loading from "@/components/loading/Loading";
-import { SpeedDial as SpeedDialMui, SpeedDialAction } from "@mui/material";
-import { SpeedDialProps } from "@/components/speed-dial/types";
+import {SpeedDial as SpeedDialMui, SpeedDialAction} from "@mui/material";
+import {SpeedDialProps} from "./types";
+import {useMediaQuery} from "react-responsive";
 
-export default function SpeedDialMobile({
-  eventType,
-  viewType,
-}: SpeedDialProps) {
-  const items = useSpeedDialFactory({ eventType, viewType });
+export default function SpeedDial({ speedDialKey }: SpeedDialProps) {
+  const items = useSpeedDialFactory({ speedDialKey });
   const [activeModal, setActiveModal] = useState<ReactNode | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const isMd = useMediaQuery({ minWidth: "768px" });
 
   if (!items) {
     return <Loading />;
@@ -26,10 +26,11 @@ export default function SpeedDialMobile({
         ariaLabel="SpeedDial"
         icon={<span className="material-symbols">add</span>}
         sx={{
-          position: "absolute",
-          bottom: 0,
-          right: 0,
-          zIndex: 9999,
+          position: "fixed",
+          bottom: isMd ? 4 : 20,
+          right: isMd ? 22 : 12,
+          margin: 0,
+          ...(isMd ? {} : { zIndex: 9999 }),
         }}
         FabProps={{
           style: {
@@ -37,8 +38,13 @@ export default function SpeedDialMobile({
             color: "#FAFAFA",
             borderRadius: 8,
             fontSize: 28,
+            margin: 0,
+            ...(isMd ? { display: "none" } : {}),
           },
         }}
+        open={isMd ? true : isOpen}
+        onOpen={() => setIsOpen(true)}
+        onClose={() => setIsOpen(false)}
       >
         {items.map((item) => (
           <SpeedDialAction
@@ -47,6 +53,21 @@ export default function SpeedDialMobile({
             slotProps={{
               tooltip: {
                 title: item.label,
+                slotProps: {
+                  transition: { timeout: 150 },
+                  popper: {
+                    modifiers: [
+                      {
+                        name: "computeStyles",
+                        options: {
+                          roundOffsets: false,
+                          gpuAcceleration: false,
+                        },
+                      },
+                      { name: "offset", options: { offset: [0, 3] } },
+                    ],
+                  },
+                },
               },
               fab: {
                 style: {

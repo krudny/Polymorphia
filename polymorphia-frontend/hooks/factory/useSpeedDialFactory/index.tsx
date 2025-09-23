@@ -7,8 +7,7 @@ import { SpeedDialContext } from "@/components/speed-dial/strategies/types";
 import useUserRole from "@/hooks/general/useUserRole";
 
 export function useSpeedDialFactory({
-  eventType,
-  viewType,
+  speedDialKey,
 }: SpeedDialProps): SpeedDialItem[] {
   const markdownContext = useOptionalMarkdownContext();
   const router = useRouter();
@@ -20,11 +19,7 @@ export function useSpeedDialFactory({
       return [];
     }
 
-    const selectedType = speedDialStrategyRegistry.getStrategy(
-      eventType,
-      viewType,
-      role
-    );
+    const selectedType = speedDialStrategyRegistry.getStrategy(speedDialKey);
 
     if (!selectedType) {
       return [];
@@ -42,5 +37,5 @@ export function useSpeedDialFactory({
 
     const items: SpeedDialItem[] = selectedType.getItems(combinedContext);
     return items.sort((a, b) => b.orderIndex - a.orderIndex);
-  }, [eventType, viewType, role, markdownContext, router, pathname]);
+  }, [speedDialKey, role, markdownContext, router, pathname]);
 }
