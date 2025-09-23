@@ -35,7 +35,7 @@ export type GradingReducerActionType =
   | {
       type: typeof GradingReducerActions.UPDATE_GRADE;
       payload: {
-        criteria: Record<number, CriteriaDetails>;
+        criteria: Record<number, CriteriaDetailsRequestDTO>;
         comment: string;
       };
     }

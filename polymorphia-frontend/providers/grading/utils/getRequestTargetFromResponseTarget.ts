@@ -1,5 +1,8 @@
-import { TargetRequestDTO } from "@/hooks/course/useShortGrade/types";
-import { TargetResponseDTO, TargetTypes } from "@/interfaces/api/grade";
+import {
+  TargetRequestDTO,
+  TargetResponseDTO,
+  TargetTypes,
+} from "@/interfaces/api/grade";
 
 export function getRequestTargetFromResponseTarget(
   response: TargetResponseDTO

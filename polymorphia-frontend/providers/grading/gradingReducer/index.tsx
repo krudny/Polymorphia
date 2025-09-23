@@ -1,5 +1,5 @@
+import { CriteriaDetailsRequestDTO } from "@/interfaces/api/grade";
 import {
-  CriteriaDetails,
   GradingReducerActions,
   GradingReducerActionType,
   GradingReducerState,
@@ -37,7 +37,7 @@ export const GradingReducer = (
           };
           return acc;
         },
-        {} as Record<number, CriteriaDetails>
+        {} as Record<number, CriteriaDetailsRequestDTO>
       );
 
       return {

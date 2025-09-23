@@ -9,7 +9,7 @@ import {
 } from "@/interfaces/api/grade";
 import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLabels";
 
-// TODO; to check
+// TODO: refactor
 export default function GradeInfo({
   grade,
   criteria,
@@ -54,7 +54,7 @@ export default function GradeInfo({
                   {gradeCriterion.assignedRewards.length ? (
                     <div className="gradable-event-section-reward-inner ">
                       {gradeCriterion.assignedRewards.map((assignedReward) => {
-                        const { id, name, imageUrl, quantity } = assignedReward;
+                        const { id, name, imageUrl } = assignedReward;
                         // TODO: add quantity indicator
                         return (
                           <div
