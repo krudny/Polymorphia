@@ -65,7 +65,6 @@ export default function TargetList() {
               ? [target]
               : target.members
             ).map((student: StudentTargetData, index: number) => {
-              // TODO: refactor
               const isSelected =
                 !!state.selectedTarget &&
                 ((state.selectedTarget.type === TargetTypes.STUDENT &&
