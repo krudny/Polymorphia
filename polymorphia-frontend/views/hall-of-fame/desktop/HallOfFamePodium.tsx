@@ -32,7 +32,7 @@ export default function HallOfFamePodium() {
               }
               rightComponent={
                 <XPCardPoints
-                  points={student.xpDetails.total}
+                  points={student.xpDetails.Suma}
                   isSumLabelVisible={true}
                   isXPLabelVisible={false}
                   color="gray"

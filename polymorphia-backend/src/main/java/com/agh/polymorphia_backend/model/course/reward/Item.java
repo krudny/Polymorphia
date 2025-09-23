@@ -1,8 +1,8 @@
-package com.agh.polymorphia_backend.model.course.reward.item;
+package com.agh.polymorphia_backend.model.course.reward;
 
 
-import com.agh.polymorphia_backend.model.course.reward.Reward;
-import com.agh.polymorphia_backend.model.course.reward.chest.Chest;
+import com.agh.polymorphia_backend.dto.response.reward.RewardType;
+import com.agh.polymorphia_backend.model.course.reward.item.ItemType;
 import com.agh.polymorphia_backend.model.event_section.EventSection;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -42,4 +42,8 @@ public abstract class Item extends Reward {
 
     public abstract ItemType getItemType();
 
+    @Override
+    public RewardType getRewardType() {
+        return RewardType.ITEM;
+    }
 }

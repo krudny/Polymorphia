@@ -2,7 +2,7 @@ package com.agh.polymorphia_backend.service.hall_of_fame;
 
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.event_section.AssignmentSection;
-import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFame;
+import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry;
 import com.agh.polymorphia_backend.model.hall_of_fame.StudentScoreDetail;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
@@ -35,7 +35,7 @@ class HallOfFameServiceTest {
     private HallOfFameService hallOfFameService;
 
     private User user;
-    private HallOfFame hof;
+    private HallOfFameEntry hof;
 
     @BeforeEach
     void setUp() {
@@ -45,7 +45,7 @@ class HallOfFameServiceTest {
         var course = Course.builder().id(10L).build();
         user.setPreferredCourse(course);
 
-        hof = new HallOfFame();
+        hof = new HallOfFameEntry();
     }
 
     @Test
@@ -53,7 +53,7 @@ class HallOfFameServiceTest {
         when(hallOfFameRepository.findByStudentIdAndCourseId(10L, 1L))
                 .thenReturn(Optional.of(hof));
 
-        HallOfFame result = hallOfFameService.getStudentHallOfFame(user);
+        HallOfFameEntry result = hallOfFameService.getStudentHallOfFame(user);
 
         assertThat(result).isEqualTo(hof);
     }

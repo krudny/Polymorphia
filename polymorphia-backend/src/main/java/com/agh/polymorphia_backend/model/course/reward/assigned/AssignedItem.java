@@ -1,27 +1,37 @@
 package com.agh.polymorphia_backend.model.course.reward.assigned;
 
+import com.agh.polymorphia_backend.dto.response.reward.RewardType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
+
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "assigned_items")
+@PrimaryKeyJoinColumn(name = "assigned_reward_id")
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class AssignedItem {
-    @Id
-    @Column(name = "assigned_reward_id")
-    @Setter(AccessLevel.NONE)
-    @EqualsAndHashCode.Include
-    private Long id;
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+public class AssignedItem extends AssignedReward {
+    @NotNull
+    @Column(nullable = false, columnDefinition = "default 0")
+    private BigDecimal bonusXp;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "assigned_reward_id")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assigned_chest_id")
+    @NotNull
     @ToString.Exclude
     @JsonIgnore
-    private AssignedReward assignedReward;
+    private AssignedChest assignedChest;
+
+    @Override
+    public RewardType getRewardType() {
+        return RewardType.ITEM;
+    }
 }

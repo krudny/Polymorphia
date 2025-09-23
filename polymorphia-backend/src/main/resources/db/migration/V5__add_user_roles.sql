@@ -1,29 +1,5 @@
-CREATE TABLE hall_of_fame_view
-(
-    animal_id       BIGINT NOT NULL,
-    animal_name     VARCHAR(255),
-    student_name    VARCHAR(255),
-    group_name      VARCHAR(255),
-    course_id       BIGINT,
-    position        INTEGER,
-    evolution_stage VARCHAR(255),
-    image_url       VARCHAR(255),
-    total_bonus_sum DECIMAL,
-    total_xp_sum    DECIMAL,
-    CONSTRAINT pk_hall_of_fame_view PRIMARY KEY (animal_id)
-);
-
-CREATE TABLE student_score_detail_view
-(
-    id                 VARCHAR(255) NOT NULL,
-    animal_id          BIGINT,
-    event_section_id   BIGINT,
-    event_section_name VARCHAR(255),
-    raw_xp             DECIMAL,
-    flat_bonus         DECIMAL,
-    percentage_bonus   DECIMAL,
-    CONSTRAINT pk_student_score_detail_view PRIMARY KEY (id)
-);
+ALTER TABLE assigned_items
+    DROP CONSTRAINT assigned_items_assigned_chest_id_fkey;
 
 CREATE TABLE user_course_roles
 (
@@ -53,3 +29,15 @@ ALTER TABLE user_course_roles
 
 ALTER TABLE user_course_roles
     ADD CONSTRAINT FK_USER_COURSE_ROLES_ON_USER FOREIGN KEY (user_id) REFERENCES users (id);
+
+ALTER TABLE assigned_items
+    DROP COLUMN assigned_chest_id;
+
+ALTER TABLE grades
+    ALTER COLUMN comment TYPE VARCHAR(255) USING (comment::VARCHAR(255));
+
+ALTER TABLE grades
+    ALTER COLUMN comment SET NOT NULL;
+
+ALTER TABLE gradable_events
+    ALTER COLUMN markdown TYPE VARCHAR(255) USING (markdown::VARCHAR(255));

@@ -66,7 +66,7 @@ export function EquipmentSection({ type, data }: EquipmentSectionProps) {
             const chestData = item as EquipmentChestResponseDTO;
 
             return (
-              <div key={chestData.base.id}>
+              <div key={chestData.details.id}>
                 <div className="equipment-grid-item">
                   <Image
                     src={`${API_STATIC_URL}/${chestData.base.imageUrl}`}

@@ -1,12 +1,10 @@
 package com.agh.polymorphia_backend.service.hall_of_fame;
 
-import com.agh.polymorphia_backend.dto.request.HallOfFameRequestDto;
+import com.agh.polymorphia_backend.dto.request.hall_of_fame.HallOfFameRequestDto;
+import com.agh.polymorphia_backend.dto.response.hall_of_fame.HallOfFameResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.event_section.EventSection;
 import com.agh.polymorphia_backend.model.hall_of_fame.*;
-import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFame;
-import com.agh.polymorphia_backend.model.user.User;
-import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
@@ -14,16 +12,14 @@ import com.agh.polymorphia_backend.repository.hall_of_fame.StudentScoreDetailRep
 import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.mapper.HallOfFameMapper;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
-import com.agh.polymorphia_backend.service.course.CourseService;
-import com.agh.polymorphia_backend.service.mapper.HallOfFameMapper;
-import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import com.agh.polymorphia_backend.util.NumberFormatter;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
@@ -43,7 +39,7 @@ public class HallOfFameService {
     private final AccessAuthorizer accessAuthorizer;
     private final CourseService courseService;
 
-    public HallOfFame getStudentHallOfFame(User user) {
+    public HallOfFameEntry getStudentHallOfFame(User user) {
         return hallOfFameRepository.findByStudentIdAndCourseId(user.getPreferredCourse().getId(), user.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_HOF_NOT_FOUND));
     }
@@ -76,7 +72,11 @@ public class HallOfFameService {
     }
 
     private Page<HallOfFameResponseDto> hallOfFamePageToResponseDto(Page<HallOfFameEntry> hallOfFamePage) {
-        Map<Long, Map<String, String>> detailsByAnimalId = groupScoreDetails(hallOfFamePage);
+        List<Long> animalIds = hallOfFamePage.getContent().stream()
+                .map(HallOfFameEntry::getAnimalId)
+                .toList();
+
+        Map<Long, Map<String, String>> detailsByAnimalId = groupScoreDetails(animalIds);
         return hallOfFamePage.map(hallOfFame -> {
             Map<String, String> xpDetails = detailsByAnimalId.get(hallOfFame.getAnimalId());
             updateXpDetails(xpDetails, hallOfFame);
@@ -98,11 +98,11 @@ public class HallOfFameService {
         return result;
     }
 
-    private void updateXpDetails(Map<String, String> xpDetails, HallOfFameEntry hallOfFameEntry) {
+    public void updateXpDetails(Map<String, String> xpDetails, HallOfFameEntry hallOfFameEntry) {
         xpDetails.computeIfAbsent(OverviewField.BONUS.getKey(),
-                k -> NumberFormatter.format(hallOfFameEntry.getTotalBonusSum()));
+                k -> NumberFormatter.formatToString(hallOfFameEntry.getTotalBonusSum()));
         xpDetails.computeIfAbsent(OverviewField.TOTAL.getKey(),
-                k -> NumberFormatter.format(hallOfFameEntry.getTotalXpSum()));
+                k -> NumberFormatter.formatToString(hallOfFameEntry.getTotalXpSum()));
     }
 
     public List<HallOfFameResponseDto> getPodium(Long courseId) {

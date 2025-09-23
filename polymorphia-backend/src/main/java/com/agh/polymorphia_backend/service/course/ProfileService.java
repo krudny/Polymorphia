@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.service.course;
 
-import com.agh.polymorphia_backend.dto.request.HallOfFameRequestDto;
+import com.agh.polymorphia_backend.dto.request.hall_of_fame.HallOfFameRequestDto;
 import com.agh.polymorphia_backend.dto.response.profile.EvolutionStageThresholdResponseDto;
 import com.agh.polymorphia_backend.dto.response.profile.ProfileResponseDto;
 import com.agh.polymorphia_backend.model.course.Animal;
@@ -11,7 +11,6 @@ import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.repository.course.EvolutionStagesRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
-import com.agh.polymorphia_backend.service.mapper.HallOfFameMapper;
 import com.agh.polymorphia_backend.service.mapper.ProfileMapper;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
@@ -39,7 +38,6 @@ public class ProfileService {
     private final HallOfFameRepository hallOfFameRepository;
     private final EvolutionStagesRepository evolutionStagesRepository;
     private final ProfileMapper profileMapper;
-    private final HallOfFameMapper hallOfFameMapper;
 
     public ProfileResponseDto getProfile(Long courseId) {
         Course course = courseService.getCourseById(courseId);
@@ -63,7 +61,7 @@ public class ProfileService {
     private Map<String, String> getXpDetails(User user, Long courseId) {
         Animal animal = animalService.getAnimal(user.getId(), courseId);
         Map<String, String> xpDetails = hallOfFameService.groupScoreDetails(List.of(animal.getId())).get(animal.getId());
-        hallOfFameMapper.updateXpDetails(xpDetails, hallOfFameService.getStudentHallOfFame(user));
+        hallOfFameService.updateXpDetails(xpDetails, hallOfFameService.getStudentHallOfFame(user));
 
         return xpDetails;
     }

@@ -11,7 +11,7 @@ public class ItemResponseDtoBase extends BaseRewardResponseDto {
     private String bonusText;
 
     @NotNull
-    private Long limit;
+    private Integer limit;
 
     @NotNull
     private Boolean isLimitReached;

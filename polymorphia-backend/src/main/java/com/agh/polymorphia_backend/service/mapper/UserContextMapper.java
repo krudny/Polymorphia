@@ -4,7 +4,7 @@ import com.agh.polymorphia_backend.dto.response.user_context.AvailableCoursesRes
 import com.agh.polymorphia_backend.dto.response.user_context.BaseUserDetailsResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.StudentDetailsResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
-import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFame;
+import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.Coordinator;
 import com.agh.polymorphia_backend.model.user.User;
@@ -62,7 +62,7 @@ public class UserContextMapper {
     }
 
     private BaseUserDetailsResponseDto toStudentDetailsResponseDto(User student) {
-        HallOfFame hallOfFame = hallOfFameService.getStudentHallOfFame(student);
+        HallOfFameEntry hallOfFame = hallOfFameService.getStudentHallOfFame(student);
 
         return StudentDetailsResponseDto.builder()
                 .id(student.getId())

@@ -27,9 +27,9 @@ export function useGradingFilterConfigs(courseId: number) {
           title: "Sortowanie po kategorii",
           options: [
             { value: "name", label: "Nazwa" },
-            { value: "total", label: "Suma" },
+            { value: "Suma", label: "Suma" },
           ],
-          defaultValues: ["total"],
+          defaultValues: ["Suma"],
         },
         {
           id: "groups",

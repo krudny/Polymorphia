@@ -40,7 +40,6 @@ public class Grade {
     @NotNull
     private LocalDateTime modifiedDate;
 
-    @NotNull
     private String comment;
 
     @PrePersist

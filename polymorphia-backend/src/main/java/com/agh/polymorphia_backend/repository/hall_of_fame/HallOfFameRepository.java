@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.repository.hall_of_fame;
 
-import com.agh.polymorphia_backend.dto.request.HallOfFameRequestDto;
-import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFame;
+import com.agh.polymorphia_backend.dto.request.hall_of_fame.HallOfFameRequestDto;
+import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -61,21 +61,17 @@ public interface HallOfFameRepository extends JpaRepository<HallOfFameEntry, Lon
                   AND s.user_id = :studentId
                 LIMIT 1
             """, nativeQuery = true)
-    Optional<HallOfFame> findByStudentIdAndCourseId(
+    Optional<HallOfFameEntry> findByStudentIdAndCourseId(
 
             @Param("courseId") Long courseId,
             @Param("studentId") Long studentId
     );
 
-    Optional<HallOfFame> findByAnimalId(
-            Long animalId
-    );
-
 
     @Query(value = """
-            SELECT COUNT(DISTINCT hof.animal_id)
-            FROM hall_of_fame_view hof
-            WHERE\s""" + WHERE_CLAUSE
-            , nativeQuery = true)
+            select count(distinct hof.animalId)
+            from HallOfFameEntry hof
+            where\s""" + WHERE_CLAUSE
+    )
     long countByCourseIdAndFilters(@Param("requestDto") HallOfFameRequestDto requestDto);
 }

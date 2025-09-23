@@ -1,28 +1,32 @@
 package com.agh.polymorphia_backend.model.course.reward.assigned;
 
+import com.agh.polymorphia_backend.dto.response.reward.RewardType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 
 @Entity
 @Table(name = "assigned_chests")
-@Data
-@Builder
-@NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class AssignedChest {
-    @Id
-    @Column(name = "assigned_reward_id")
-    @Setter(AccessLevel.NONE)
-    @EqualsAndHashCode.Include
-    private Long id;
+@PrimaryKeyJoinColumn(name = "assigned_reward_id")
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @MapsId
-    @JoinColumn(name = "assigned_reward_id")
+@Data
+@SuperBuilder
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class AssignedChest extends AssignedReward {
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "assignedChest")
     @ToString.Exclude
     @JsonIgnore
-    private AssignedReward assignedReward;
+    private List<AssignedItem> assignedItems;
+
+    @Override
+    public RewardType getRewardType() {
+        return RewardType.CHEST;
+    }
 }

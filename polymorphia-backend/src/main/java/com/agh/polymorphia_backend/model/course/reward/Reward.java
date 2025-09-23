@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.model.course.reward;
 
+import com.agh.polymorphia_backend.dto.response.reward.RewardType;
 import com.agh.polymorphia_backend.model.course.Course;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -41,4 +42,6 @@ public abstract class Reward {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     private Course course;
+
+    public abstract RewardType getRewardType();
 }

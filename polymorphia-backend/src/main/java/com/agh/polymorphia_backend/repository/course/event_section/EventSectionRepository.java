@@ -8,4 +8,6 @@ import java.util.Set;
 
 public interface EventSectionRepository extends JpaRepository<EventSection, Long> {
     List<EventSection> findByIdIn(Set<Long> ids);
+
+    boolean existsByCourseIdAndName(Long courseId, String name);
 }

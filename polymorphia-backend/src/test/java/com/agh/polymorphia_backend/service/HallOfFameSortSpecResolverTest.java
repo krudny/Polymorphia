@@ -1,9 +1,9 @@
 package com.agh.polymorphia_backend.service;
 
-import com.agh.polymorphia_backend.dto.request.HallOfFameRequestDto;
+import com.agh.polymorphia_backend.dto.request.hall_of_fame.HallOfFameRequestDto;
 import com.agh.polymorphia_backend.model.hall_of_fame.SearchBy;
 import com.agh.polymorphia_backend.model.hall_of_fame.SortOrder;
-import com.agh.polymorphia_backend.repository.EventSectionRepository;
+import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.service.hall_of_fame.EventSectionSort;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameSortSpec;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameSortSpecResolver;
@@ -22,7 +22,8 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class HallOfFameSortSpecResolverTest {
@@ -52,7 +53,7 @@ public class HallOfFameSortSpecResolverTest {
         return Stream.of(
                 Arguments.of("animalName", "animalName"),
                 Arguments.of("studentName", "studentName"),
-                Arguments.of("total", "totalXpSum"),
+                Arguments.of("Suma", "totalXpSum"),
                 Arguments.of("Bonusy", "totalBonusSum")
         );
     }

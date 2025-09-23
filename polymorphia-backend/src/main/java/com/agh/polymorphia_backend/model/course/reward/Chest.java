@@ -1,7 +1,7 @@
-package com.agh.polymorphia_backend.model.course.reward.chest;
+package com.agh.polymorphia_backend.model.course.reward;
 
-import com.agh.polymorphia_backend.model.course.reward.Reward;
-import com.agh.polymorphia_backend.model.course.reward.item.Item;
+import com.agh.polymorphia_backend.dto.response.reward.RewardType;
+import com.agh.polymorphia_backend.model.course.reward.chest.ChestBehavior;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -17,10 +17,15 @@ import java.util.List;
 @PrimaryKeyJoinColumn(name = "reward_id")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @ToString(exclude = {"items"})
-public class Chest extends Reward {
+public final class Chest extends Reward {
     @ManyToMany(mappedBy = "chests", fetch = FetchType.LAZY)
     private List<Item> items;
     @NotNull
     @Enumerated(EnumType.STRING)
     private ChestBehavior behavior;
+
+    @Override
+    public RewardType getRewardType() {
+        return RewardType.CHEST;
+    }
 }
