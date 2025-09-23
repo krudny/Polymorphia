@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "criteria")
 @Data
@@ -32,5 +34,6 @@ public class Criterion {
     private String name;
 
     @NotNull
-    private Integer maxXp;
+    @Column(precision = 4, scale = 1)
+    private BigDecimal maxXp;
 }

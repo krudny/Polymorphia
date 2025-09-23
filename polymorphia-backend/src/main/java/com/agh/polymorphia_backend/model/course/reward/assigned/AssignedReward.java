@@ -1,22 +1,24 @@
 package com.agh.polymorphia_backend.model.course.reward.assigned;
 
-import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
 import com.agh.polymorphia_backend.model.course.reward.Reward;
+import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "assigned_rewards")
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class AssignedReward {
+public abstract class AssignedReward {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
@@ -38,9 +40,9 @@ public class AssignedReward {
     private Reward reward;
 
     @NotNull
-    private LocalDateTime receivedDate;
+    private ZonedDateTime receivedDate;
 
-    private LocalDateTime usedDate;
+    private ZonedDateTime usedDate;
 
     @NotNull
     private Boolean isUsed;
