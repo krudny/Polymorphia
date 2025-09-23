@@ -11,6 +11,7 @@ import { useTitle } from "@/components/navigation/TitleContext";
 import { Roles, ViewTypes } from "@/interfaces/general";
 import { getSpeedDialKey } from "@/components/speed-dial/util";
 import SpeedDial from "@/components/speed-dial/SpeedDial";
+import TargetList from "@/components/grading-components/target-list";
 
 export default function Grading({ eventType, columns }: GradingProps) {
   const queryClient = useQueryClient();
@@ -85,7 +86,7 @@ export default function Grading({ eventType, columns }: GradingProps) {
         <SpeedDial speedDialKey={speedDialKey} />
 
         <div className="grading-list" ref={listRef}>
-          {gradingComponents.list}
+          <TargetList />
         </div>
 
         {columns === 1 ? (

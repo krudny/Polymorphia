@@ -10,7 +10,6 @@ export class TestGradingStrategy
 {
   getGradingComponents(): GradingComponents {
     return {
-      list: this.createTargetList(),
       components: [[this.createRewardComponent()]],
     };
   }

@@ -10,7 +10,6 @@ export class AssignmentGradingStrategy
 {
   getGradingComponents(): GradingComponents {
     return {
-      list: this.createTargetList(),
       components: [
         [this.createRewardComponent()],
         [this.createPullRequestComponent()],

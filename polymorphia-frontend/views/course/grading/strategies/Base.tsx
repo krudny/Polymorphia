@@ -2,13 +2,8 @@ import { ReactNode } from "react";
 import Grade from "@/components/grading-components/grade";
 import PullRequest from "@/components/grading-components/pull-request";
 import { ProjectVariant } from "@/components/grading-components/project-variant";
-import TargetList from "@/components/grading-components/target-list";
 
 export abstract class BaseGradingStrategy {
-  protected createTargetList(): ReactNode {
-    return <TargetList />;
-  }
-
   protected createRewardComponent(): ReactNode {
     return <Grade />;
   }

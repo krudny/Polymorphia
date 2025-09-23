@@ -12,6 +12,5 @@ export interface GradingStrategy {
 }
 
 export interface GradingComponents {
-  list: ReactNode;
   components: ReactNode[][];
 }
