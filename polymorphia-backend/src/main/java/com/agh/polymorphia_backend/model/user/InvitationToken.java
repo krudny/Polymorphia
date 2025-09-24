@@ -24,7 +24,7 @@ public class InvitationToken {
     private String token;
 
     @NotNull
-    private String userEmail;
+    private String email;
 
     @NotNull
     private String firstName;

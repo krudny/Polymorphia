@@ -77,7 +77,7 @@ public class UserService implements UserDetailsService {
         LocalDateTime now = LocalDateTime.now();
 
         return InvitationToken.builder()
-                .userEmail(inviteDTO.getEmail())
+                .email(inviteDTO.getEmail())
                 .firstName(inviteDTO.getFirstName())
                 .lastName(inviteDTO.getLastName())
                 .indexNumber(inviteDTO.getIndexNumber())
@@ -94,7 +94,7 @@ public class UserService implements UserDetailsService {
         System.out.println(token.getToken());
 
         Student student = Student.builder()
-                .email(token.getUserEmail())
+                .email(token.getEmail())
                 .firstName(token.getFirstName())
                 .lastName(token.getLastName())
                 .password(passwordEncoder.encode(registerDTO.getPassword()))
