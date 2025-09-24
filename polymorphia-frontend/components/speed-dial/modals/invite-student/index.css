@@ -16,21 +16,3 @@
     @apply w-full text-center text-3xl pb-2 border-b-2 border-b-primary-dark focus:outline-none text-primary-dark;
 }
 
-.invite-student-wrapper input:-webkit-autofill,
-.invite-student-wrapper input:-webkit-autofill:hover,
-.invite-student-wrapper input:-webkit-autofill:focus,
-.invite-student-wrapper input:-webkit-autofill:active {
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: #262626;
-    transition: background-color 5000s ease-in-out 0s;
-}
-
-.invite-student-wrapper input[type="number"]::-webkit-outer-spin-button,
-.invite-student-wrapper input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none !important;
-    margin: 0 !important;
-}
-
-.invite-student-wrapper input[type="number"] {
-    -moz-appearance: textfield !important;
-}

@@ -46,11 +46,9 @@ export default function HomeContent({ titleRef, loginFormRef, hasMountedRef, bac
   return (
     <div className="hero-right-wrapper">
       {invitationToken ? (
-        <div className="flex-col-centered" ref={titleRef}>
-          <div className="hero-register">
+          <div className="hero-register" ref={titleRef}>
             <RegisterForm invitationToken={invitationToken}/>
           </div>
-        </div>
       ) : (
         <>
           <div ref={titleRef}>

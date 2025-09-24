@@ -15,3 +15,9 @@ export interface InviteStudentRequestDTO {
   indexNumber: number;
   email: string;
 }
+
+export interface RegisterRequestDTO {
+  animalName: string;
+  invitationToken: string;
+  password: string;
+}

@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/invite")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<Void> inviteUser(@Valid @RequestBody UserInvitationRequestDTO inviteDTO) {
         userService.invite(inviteDTO);
         return ResponseEntity.status(HttpStatus.OK).build();
@@ -26,7 +28,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<Void> registerUser(@Valid @RequestBody RegisterRequestDTO registerDTO) {
-        userService.createUser(registerDTO);
+        userService.registerUser(registerDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

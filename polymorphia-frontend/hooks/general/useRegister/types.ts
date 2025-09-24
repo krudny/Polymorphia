@@ -1,15 +1,10 @@
 import {UseMutationResult} from "@tanstack/react-query";
-
-export interface UseRegisterParams {
-  invitationToken: string;
-  animalName: string;
-  password: string;
-}
+import {RegisterRequestDTO} from "@/interfaces/api/user";
 
 export interface UseRegister {
   mutation: UseMutationResult<
     void,
     Error,
-    UseRegisterParams
+    RegisterRequestDTO
   >;
 }

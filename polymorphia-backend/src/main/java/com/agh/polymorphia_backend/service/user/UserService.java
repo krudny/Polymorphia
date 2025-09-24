@@ -4,7 +4,6 @@ import com.agh.polymorphia_backend.dto.request.user.RegisterRequestDTO;
 import com.agh.polymorphia_backend.dto.request.user.UserInvitationRequestDTO;
 import com.agh.polymorphia_backend.model.user.InvitationToken;
 import com.agh.polymorphia_backend.model.user.Student;
-import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.repository.user.InvitationTokenRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.service.EmailService;
@@ -26,9 +25,11 @@ import java.util.UUID;
 public class UserService implements UserDetailsService {
     private static final String USER_NOT_FOUND = "User %s does not exist in the database";
     private final UserRepository userRepository;
+    private final UserValidation userValidation;
     private final InvitationTokenRepository invitationTokenRepository;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
+
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -38,9 +39,9 @@ public class UserService implements UserDetailsService {
     @Transactional
     public void invite(UserInvitationRequestDTO inviteDTO) {
         String email = inviteDTO.getEmail();
+        Integer indexNumber = inviteDTO.getIndexNumber();
 
-        validateUserNotExists(email);
-        validateInvitationToken(email);
+        userValidation.validateBeforeInvitation(email, indexNumber);
 
         try {
             InvitationToken newToken = createInvitationToken(inviteDTO);
@@ -51,25 +52,30 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    // TODO: those error messages have no usage, as they are not received by anyone
-    private void validateUserNotExists(String email) {
-        userRepository.findByEmail(email)
-                .ifPresent(user -> {
-                    throw new ResponseStatusException(HttpStatus.CONFLICT, "User already exists");
-                });
-    }
+    public void registerUser(RegisterRequestDTO registerDTO) {
+        InvitationToken token = invitationTokenRepository.findByToken(registerDTO.getInvitationToken()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nieprawidłowy token"));
 
-    private void validateInvitationToken(String email) {
-        invitationTokenRepository.findByEmail(email)
-                .ifPresent(token -> {
-                    if (token.getExpiryDate().isBefore(LocalDateTime.now())) {
-                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Existing token has expired");
-                    }
+        userValidation.validateBeforeRegister(token);
 
-                    if (token.isUsed()) {
-                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Token has already been used");
-                    }
-                });
+        Student student = Student.builder()
+                .email(token.getEmail())
+                .firstName(token.getFirstName())
+                .lastName(token.getLastName())
+                .password(passwordEncoder.encode(registerDTO.getPassword()))
+                .indexNumber(token.getIndexNumber())
+                .isActive(true)
+                .build();
+
+        token.setUsed(true);
+
+        try {
+            userRepository.save(student);
+            invitationTokenRepository.save(token);
+        } catch  (Exception e) {
+            System.err.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create account");
+        }
+
     }
 
     private InvitationToken createInvitationToken(UserInvitationRequestDTO inviteDTO) {
@@ -86,23 +92,5 @@ public class UserService implements UserDetailsService {
                 .createdAt(now)
                 .used(false)
                 .build();
-    }
-
-    public User createUser(RegisterRequestDTO registerDTO) {
-        InvitationToken token = invitationTokenRepository.findByToken(registerDTO.getInvitationToken()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nieprawidłowy token"));
-
-        System.out.println(token.getToken());
-
-        Student student = Student.builder()
-                .email(token.getEmail())
-                .firstName(token.getFirstName())
-                .lastName(token.getLastName())
-                .password(passwordEncoder.encode(registerDTO.getPassword()))
-                .indexNumber(token.getIndexNumber())
-                .build();
-
-        userRepository.save(student);
-        System.out.println(student.getEmail());
-        return student;
     }
 }

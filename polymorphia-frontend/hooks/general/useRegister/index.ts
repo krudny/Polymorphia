@@ -1,15 +1,19 @@
 import {useMutation} from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import {UseRegister, UseRegisterParams} from "./types";
+import {UseRegister} from "./types";
 import UserService from "@/app/(logged-in)/profile/UserService";
+import {RegisterRequestDTO} from "@/interfaces/api/user";
 
 export default function useRegister(): UseRegister {
   const mutation = useMutation<
     void,
     Error,
-    UseRegisterParams
+    RegisterRequestDTO
   >({
-    mutationFn: ({ invitationToken, animalName, password }) => UserService.register(invitationToken, animalName, password),
+    mutationFn: (request) => UserService.register(request),
+    onSuccess: () => {
+      toast.success("Utworzono konto!");
+    },
     onError: ({ message }: Error) => {
       toast.error(message);
     },

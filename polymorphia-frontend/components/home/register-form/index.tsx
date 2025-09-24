@@ -3,7 +3,6 @@ import {FieldInfo} from "@/components/form/FieldInfo";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import {useForm} from "@tanstack/react-form";
 import {registerSchema} from "@/components/form/schema";
-import "../login-form/index.css"
 import "./index.css"
 import {RegisterFormProps} from "@/components/home/register-form/types";
 import useRegister from "@/hooks/general/useRegister";
@@ -31,7 +30,7 @@ export default function RegisterForm({invitationToken}: RegisterFormProps) {
     <div className="register-wrapper">
       <div>
         <form
-          className="login-form"
+          className="register-form"
           onSubmit={(event: FormEvent) => {
             event.preventDefault();
             form.handleSubmit();
@@ -49,7 +48,7 @@ export default function RegisterForm({invitationToken}: RegisterFormProps) {
                   onBlur={field.handleBlur}
                   onChange={(event) => field.handleChange(event.target.value)}
                   required
-                  autoComplete="off"
+                  autoComplete="new-animal"
                 />
                 <FieldInfo field={field} />
               </div>
@@ -67,7 +66,7 @@ export default function RegisterForm({invitationToken}: RegisterFormProps) {
                   onBlur={field.handleBlur}
                   onChange={(event) => field.handleChange(event.target.value)}
                   required
-                  autoComplete="off"
+                  autoComplete="new-password"
                 />
                 <FieldInfo field={field} />
               </div>

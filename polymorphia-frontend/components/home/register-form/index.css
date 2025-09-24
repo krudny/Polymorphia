@@ -9,3 +9,7 @@
 .register-wrapper > div {
     @apply w-full max-w-xs text-center;
 }
+
+form {
+    @apply space-y-4;
+}
