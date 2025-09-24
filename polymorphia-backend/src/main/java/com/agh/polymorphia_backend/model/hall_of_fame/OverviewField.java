@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import static com.agh.polymorphia_backend.model.hall_of_fame.HallOfFame.*;
+import static com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry.*;
 
 @Getter
 @AllArgsConstructor

@@ -1,34 +1,25 @@
-import {
-  SpeedDialEventProps,
-  SpeedDialItem,
-} from "@/components/speed-dial/types";
+import { SpeedDialItem, SpeedDialProps } from "@/components/speed-dial/types";
 import { useMemo } from "react";
 import { speedDialStrategyRegistry } from "@/components/speed-dial/strategies/Registry";
 import { useOptionalMarkdownContext } from "@/hooks/contexts/useMarkdownContext";
 import { usePathname, useRouter } from "next/navigation";
 import { SpeedDialContext } from "@/components/speed-dial/strategies/types";
-import useUserContext from "@/hooks/contexts/useUserContext";
-import { Roles } from "@/interfaces/api/user";
+import useUserRole from "@/hooks/general/useUserRole";
 
 export function useSpeedDialFactory({
-  eventType,
-  viewType,
-}: SpeedDialEventProps): SpeedDialItem[] {
+  speedDialKey,
+}: SpeedDialProps): SpeedDialItem[] {
   const markdownContext = useOptionalMarkdownContext();
   const router = useRouter();
   const pathname = usePathname();
-  const { userRole } = useUserContext();
+  const { data: role } = useUserRole();
 
   return useMemo(() => {
-    if (userRole === Roles.UNDEFINED) {
+    if (!role) {
       return [];
     }
 
-    const selectedType = speedDialStrategyRegistry.getStrategy(
-      eventType,
-      viewType,
-      userRole
-    );
+    const selectedType = speedDialStrategyRegistry.getStrategy(speedDialKey);
 
     if (!selectedType) {
       return [];
@@ -36,7 +27,7 @@ export function useSpeedDialFactory({
 
     const combinedContext: SpeedDialContext = {
       router: router,
-      role: userRole,
+      role: role,
       currentPath: pathname,
       saveMarkdown: markdownContext?.saveMarkdown || (() => {}),
       setIsEditing: markdownContext?.setIsEditing || (() => {}),
@@ -46,5 +37,5 @@ export function useSpeedDialFactory({
 
     const items: SpeedDialItem[] = selectedType.getItems(combinedContext);
     return items.sort((a, b) => b.orderIndex - a.orderIndex);
-  }, [eventType, viewType, userRole, markdownContext, router, pathname]);
+  }, [speedDialKey, role, markdownContext, router, pathname]);
 }

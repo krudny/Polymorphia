@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 public class StudentScoreDetail {
     @Id
     private String id;
+    private Long studentId;
     private Long animalId;
     private Long eventSectionId;
     private String eventSectionName;

@@ -1,5 +1,5 @@
 import XPCard from "@/components/xp-card/XPCard";
-import XPCardUngraded from "@/components/xp-card/components/XPCardUngraded";
+import XPCardText from "@/components/xp-card/components/XPCardText";
 import { ReactNode } from "react";
 import { InstructorGradableEventResponseDTO } from "@/interfaces/api/course";
 
@@ -14,8 +14,9 @@ export default function renderCard(
       subtitle={gradableEvent.topic ?? ""}
       color={gradableEvent.ungradedStudents === 0 ? "green" : "sky"}
       rightComponent={
-        <XPCardUngraded
-          ungraded={gradableEvent.ungradedStudents}
+        <XPCardText
+          topText={gradableEvent.ungradedStudents.toString()}
+          bottomText="Nieocenionych"
           color="gray"
         />
       }

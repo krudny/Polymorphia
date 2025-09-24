@@ -28,7 +28,7 @@ export function useHallOfFameFilterConfigs(courseId: number) {
           id: "sortBy",
           title: "Sortowanie po kategorii",
           options: [
-            { value: "name", label: "Nazwa" },
+            { value: "animalName", label: "Nazwa" },
             ...eventSections.map((eventSection: EventSectionResponseDTO) => ({
               value: eventSection.name,
             })),
@@ -46,7 +46,7 @@ export function useHallOfFameFilterConfigs(courseId: number) {
               label: "Wszystkie",
               specialBehavior: SpecialBehaviors.EXCLUSIVE,
             },
-            ...courseGroups.map((courseGroup) => ({ value: courseGroup })),
+            ...courseGroups.map((courseGroup) => ({ value: courseGroup.name })),
           ],
           defaultValues: ["all"],
           max: courseGroups.length,
