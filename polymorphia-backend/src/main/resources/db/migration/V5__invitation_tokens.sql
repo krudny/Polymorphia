@@ -1,7 +1,7 @@
 CREATE TABLE invitation_tokens (
                                    id BIGSERIAL PRIMARY KEY,
                                    token VARCHAR(255) NOT NULL UNIQUE,
-                                   user_email VARCHAR(255) NOT NULL,
+                                   email VARCHAR(255) NOT NULL,
                                    first_name VARCHAR(255) NOT NULL,
                                    last_name VARCHAR(255) NOT NULL,
                                    index_number INTEGER NOT NULL,

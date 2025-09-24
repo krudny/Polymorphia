@@ -39,18 +39,37 @@ public class UserService implements UserDetailsService {
     public void invite(UserInvitationRequestDTO inviteDTO) {
         String email = inviteDTO.getEmail();
 
-        if (userRepository.findByEmail(email).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User already exists");
-        }
+        validateUserNotExists(email);
+        validateInvitationToken(email);
 
         try {
-            InvitationToken token = createInvitationToken(inviteDTO);
-            invitationTokenRepository.save(token);
-            emailService.sendInvitationEmail(email, token);
+            InvitationToken newToken = createInvitationToken(inviteDTO);
+            invitationTokenRepository.save(newToken);
+            emailService.sendInvitationEmail(email, newToken);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to send invitation");
         }
+    }
+
+    // TODO: those error messages have no usage, as they are not received by anyone
+    private void validateUserNotExists(String email) {
+        userRepository.findByEmail(email)
+                .ifPresent(user -> {
+                    throw new ResponseStatusException(HttpStatus.CONFLICT, "User already exists");
+                });
+    }
+
+    private void validateInvitationToken(String email) {
+        invitationTokenRepository.findByEmail(email)
+                .ifPresent(token -> {
+                    if (token.getExpiryDate().isBefore(LocalDateTime.now())) {
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Existing token has expired");
+                    }
+
+                    if (token.isUsed()) {
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Token has already been used");
+                    }
+                });
     }
 
     private InvitationToken createInvitationToken(UserInvitationRequestDTO inviteDTO) {
