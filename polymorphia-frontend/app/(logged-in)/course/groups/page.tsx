@@ -13,7 +13,6 @@ import renderCard from "@/app/(logged-in)/course/groups/RenderCard";
 import { useRouter } from "next/navigation";
 
 const courseId = 1;
-const userId = 5;
 
 export default function CourseGroupsPage() {
   const { setTitle } = useTitle();

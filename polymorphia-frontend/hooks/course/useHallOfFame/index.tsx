@@ -31,7 +31,7 @@ export default function useHallOfFame({
         sortBy[0],
         sortOrder[0] === "asc" || sortOrder[0] === "desc"
           ? sortOrder[0]
-          : undefined,
+          : "desc",
         groups[0] !== "all" ? groups : undefined
       ),
   });
