@@ -10,6 +10,7 @@ import com.agh.polymorphia_backend.service.csv.CSVType;
 import com.agh.polymorphia_backend.service.csv.processors.StudentInvitationProcessor;
 import com.agh.polymorphia_backend.service.csv.processors.TestGradingProcessor;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -38,15 +39,17 @@ public class CSVController {
     // TODO: should be moved to dedicated controller
     @PostMapping("/process/test-grade")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
-    public void processTestGradeCSV(@RequestBody TestGradingProcessRequestDto request) {
+    public ResponseEntity<Void> processTestGradeCSV(@RequestBody TestGradingProcessRequestDto request) {
         testGradingProcessor.process(request);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
     
     // TODO: should be moved to dedicated controller
     @PostMapping("/process/student-invite")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
-    public void processStudentInviteCSV(@RequestBody StudentInvitationProcessRequestDto request) {
+    public ResponseEntity<Void> processStudentInviteCSV(@RequestBody StudentInvitationProcessRequestDto request) {
         studentInvitationProcessor.process(request);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 
