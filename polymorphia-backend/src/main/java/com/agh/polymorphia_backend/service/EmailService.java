@@ -39,7 +39,7 @@ public class EmailService {
     }
 
     private String buildInvitationEmailContent(InvitationToken invitationToken) {
-        String registrationLink = "http://localhost:3000?invitationToken=" + invitationToken.getToken();
+        String registrationLink = "https://polymorphia-self.vercel.app?invitationToken=" + invitationToken.getToken();
 
 
         return String.format("""
