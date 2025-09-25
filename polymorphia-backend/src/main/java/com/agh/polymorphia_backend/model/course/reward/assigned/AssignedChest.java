@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.model.course.reward.assigned;
 
+import com.agh.polymorphia_backend.dto.response.reward.RewardType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,4 +23,8 @@ public class AssignedChest extends AssignedReward {
     @JsonIgnore
     private List<AssignedItem> assignedItems;
 
+    @Override
+    public RewardType getRewardType() {
+        return RewardType.CHEST;
+    }
 }
