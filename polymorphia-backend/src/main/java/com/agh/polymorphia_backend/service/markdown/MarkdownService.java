@@ -3,6 +3,7 @@ package com.agh.polymorphia_backend.service.markdown;
 import com.agh.polymorphia_backend.config.FetchClient;
 import com.agh.polymorphia_backend.dto.request.markdown.MarkdownRequestDTO;
 import com.agh.polymorphia_backend.dto.response.markdown.MarkdownResponseDTO;
+import com.agh.polymorphia_backend.dto.response.markdown.SourceUrlMarkdownResponseDTO;
 import com.agh.polymorphia_backend.model.event_section.EventSectionType;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.repository.course.GradableEventRepository;
@@ -27,6 +28,17 @@ public class MarkdownService {
                 .build();
     }
 
+    public SourceUrlMarkdownResponseDTO getSourceUrl(Long gradableEventId) {
+        GradableEvent gradableEvent = gradableEventRepository
+                .findById(gradableEventId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid gradable event id"));
+
+
+        return SourceUrlMarkdownResponseDTO.builder()
+                .sourceUrl(gradableEvent.getMarkdownSourceUrl())
+                .build();
+    }
+
     public void setMarkdown(MarkdownRequestDTO request) {
         GradableEvent gradableEvent = gradableEventRepository
                 .findById(request.getGradableEventId())
@@ -40,7 +52,7 @@ public class MarkdownService {
         }
     }
 
-    public void updateMarkdown(Long gradableEventId) {
+    public void resetMarkdown(Long gradableEventId) {
         GradableEvent gradableEvent = gradableEventRepository
                 .findById(gradableEventId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid gradable event id"));
@@ -60,7 +72,7 @@ public class MarkdownService {
             gradableEvent.setMarkdown(markdown);
             gradableEventRepository.save(gradableEvent);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Markdown update failed");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Markdown reset failed");
         }
     }
 }

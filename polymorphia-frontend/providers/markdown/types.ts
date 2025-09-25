@@ -1,4 +1,5 @@
-import { ReactNode } from "react";
+import {ReactNode} from "react";
+import {SourceMarkdownResponseDTO} from "@/interfaces/api/markdown";
 
 export interface MarkdownContextInterface {
   markdown: string;
@@ -11,6 +12,8 @@ export interface MarkdownContextInterface {
   isError: boolean;
   saveMarkdown: () => void;
   rejectMarkdown: () => void;
+  resetMarkdown: () => void;
+  markdownSource: SourceMarkdownResponseDTO | undefined;
 }
 
 export interface MarkdownProviderProps {

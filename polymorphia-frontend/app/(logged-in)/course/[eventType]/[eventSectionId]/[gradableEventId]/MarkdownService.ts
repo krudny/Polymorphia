@@ -1,4 +1,4 @@
-import {MarkdownRequestDTO, MarkdownResponseDTO} from "@/interfaces/api/markdown";
+import {MarkdownRequestDTO, MarkdownResponseDTO, SourceMarkdownResponseDTO} from "@/interfaces/api/markdown";
 import {API_HOST} from "@/services/api";
 
 export const MarkdownService = {
@@ -10,6 +10,19 @@ export const MarkdownService = {
 
     if (!response.ok) {
       throw new Error("Nie udało się pobrać pliku");
+    }
+
+    return await response.json();
+  },
+
+  getSourceUrl: async (gradableEventId: number): Promise<SourceMarkdownResponseDTO> => {
+    const response = await fetch(
+      `${API_HOST}/markdown/source?gradableEventId=${gradableEventId}`,
+      { credentials: "include" }
+    );
+
+    if (!response.ok) {
+      throw new Error("Nie udało się pobrać linku");
     }
 
     return await response.json();
@@ -33,7 +46,7 @@ export const MarkdownService = {
     }
   },
 
-  updateMarkdown: async (gradableEventId: number): Promise<void> => {
+  resetMarkdown: async (gradableEventId: number): Promise<void> => {
     const response = await fetch(
       `${API_HOST}/markdown?gradableEventId=${gradableEventId}`,
       { credentials: "include", method: "PUT" }

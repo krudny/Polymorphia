@@ -1,10 +1,7 @@
-import { SpeedDialItem } from "@/components/speed-dial/types";
-import { BaseSpeedDialStrategy } from "@/components/speed-dial/strategies/Base";
-import {
-  SpeedDialContext,
-  SpeedDialStrategy,
-} from "@/components/speed-dial/strategies/types";
-import { Roles } from "@/interfaces/general";
+import {SpeedDialItem} from "@/components/speed-dial/types";
+import {BaseSpeedDialStrategy} from "@/components/speed-dial/strategies/Base";
+import {SpeedDialContext, SpeedDialStrategy,} from "@/components/speed-dial/strategies/types";
+import {Roles} from "@/interfaces/general";
 
 export class ProjectStrategy
   extends BaseSpeedDialStrategy
@@ -20,7 +17,7 @@ export class ProjectStrategy
         ];
       case Roles.INSTRUCTOR:
         return [
-          ...this.createEditing(context),
+          ...this.createMarkdownGroup(context),
           this.createRedirectToGrading(context),
           this.createProjectGroupPicking(),
         ];

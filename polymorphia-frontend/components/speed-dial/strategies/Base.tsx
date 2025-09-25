@@ -1,11 +1,12 @@
-import { SpeedDialItem } from "@/components/speed-dial/types";
+import {SpeedDialItem} from "@/components/speed-dial/types";
 import GradeModal from "@/components/speed-dial/modals/grade";
 import ProjectVariantModal from "@/components/speed-dial/modals/project-variant";
-import { SpeedDialContext } from "@/components/speed-dial/strategies/types";
+import {SpeedDialContext} from "@/components/speed-dial/strategies/types";
 import GroupModal from "@/components/speed-dial/modals/group-info";
 import GroupPickingModal from "@/components/speed-dial/modals/group-pick";
 import ImportCSVModal from "@/components/speed-dial/modals/import-csv";
-import { ImportCSVType, ImportCSVTypes } from "@/interfaces/general";
+import {ImportCSVType, ImportCSVTypes} from "@/interfaces/general";
+import ResetMarkdown from "../modals/reset-markdown";
 
 export abstract class BaseSpeedDialStrategy {
   abstract getItems(context: SpeedDialContext): SpeedDialItem[];
@@ -20,7 +21,7 @@ export abstract class BaseSpeedDialStrategy {
     };
   }
 
-  protected createSave(context: SpeedDialContext): SpeedDialItem {
+  protected createSaveMarkdown(context: SpeedDialContext): SpeedDialItem {
     return {
       id: 5,
       orderIndex: 1,
@@ -31,7 +32,7 @@ export abstract class BaseSpeedDialStrategy {
     };
   }
 
-  protected createEdit(context: SpeedDialContext): SpeedDialItem {
+  protected createEditMarkdown(context: SpeedDialContext): SpeedDialItem {
     return {
       id: 6,
       orderIndex: 1,
@@ -41,7 +42,7 @@ export abstract class BaseSpeedDialStrategy {
     };
   }
 
-  protected createReject(context: SpeedDialContext): SpeedDialItem {
+  protected createRejectMarkdown(context: SpeedDialContext): SpeedDialItem {
     return {
       id: 7,
       orderIndex: 0,
@@ -49,6 +50,18 @@ export abstract class BaseSpeedDialStrategy {
       icon: "close",
       onClick: () => context.rejectMarkdown(),
       color: "#a30d0d",
+    };
+  }
+
+  protected createResetMarkdown(): SpeedDialItem {
+    return {
+      id: 7,
+      orderIndex: 0,
+      label: "Zresetuj",
+      icon: "update",
+      modal: (onClose) => (
+        <ResetMarkdown onClosedAction={onClose}/>
+      )
     };
   }
 
@@ -135,9 +148,15 @@ export abstract class BaseSpeedDialStrategy {
     };
   }
 
-  protected createEditing(context: SpeedDialContext): SpeedDialItem[] {
-    return context.isEditing
-      ? [this.createSave(context), this.createReject(context)]
-      : [this.createEdit(context)];
+  protected createMarkdownGroup(context: SpeedDialContext): SpeedDialItem[] {
+    if (context.isEditing) {
+      return [this.createSaveMarkdown(context), this.createRejectMarkdown(context)]
+    }
+
+    if (context.markdownSource) {
+      return [this.createEditMarkdown(context), this.createResetMarkdown()];
+    }
+
+    return [this.createEditMarkdown(context)]
   }
 }
