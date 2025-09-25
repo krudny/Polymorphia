@@ -1,14 +1,12 @@
 package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.request.csv.CSVPreviewRequestDto;
-import com.agh.polymorphia_backend.dto.request.csv.StudentInvitationProcessRequestDto;
-import com.agh.polymorphia_backend.dto.request.csv.TestGradingProcessRequestDto;
+import com.agh.polymorphia_backend.dto.request.csv.TestGradingCSVProcessRequestDto;
 import com.agh.polymorphia_backend.dto.response.csv.CSVHeadersResponseDto;
 import com.agh.polymorphia_backend.dto.response.csv.CSVResponseDto;
 import com.agh.polymorphia_backend.service.csv.CSVService;
 import com.agh.polymorphia_backend.service.csv.CSVType;
-import com.agh.polymorphia_backend.service.csv.processors.StudentInvitationProcessor;
-import com.agh.polymorphia_backend.service.csv.processors.TestGradingProcessor;
+import com.agh.polymorphia_backend.service.csv.processors.TestGradingCSVProcessor;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 public class CSVController {
     private final CSVService csvService;
-    private final TestGradingProcessor testGradingProcessor;
-    private final StudentInvitationProcessor studentInvitationProcessor;
+    private final TestGradingCSVProcessor testGradingCSVProcessor;
 
     @PostMapping("/headers")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
@@ -39,18 +36,8 @@ public class CSVController {
     // TODO: should be moved to dedicated controller
     @PostMapping("/process/test-grade")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
-    public ResponseEntity<Void> processTestGradeCSV(@RequestBody TestGradingProcessRequestDto request) {
-        testGradingProcessor.process(request);
+    public ResponseEntity<Void> processTestGradeCSV(@RequestBody TestGradingCSVProcessRequestDto request) {
+        testGradingCSVProcessor.process(request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-    
-    // TODO: should be moved to dedicated controller
-    @PostMapping("/process/student-invite")
-    @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
-    public ResponseEntity<Void> processStudentInviteCSV(@RequestBody StudentInvitationProcessRequestDto request) {
-        studentInvitationProcessor.process(request);
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
-
-
 }

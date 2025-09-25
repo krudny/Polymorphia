@@ -1,7 +1,9 @@
 package com.agh.polymorphia_backend.controller;
 
-import com.agh.polymorphia_backend.dto.request.user.RegisterRequestDTO;
-import com.agh.polymorphia_backend.dto.request.user.UserInvitationRequestDTO;
+import com.agh.polymorphia_backend.dto.request.csv.StudentInvitationCSVProcessRequestDto;
+import com.agh.polymorphia_backend.dto.request.user.StudentInvitationRequestDTO;
+import com.agh.polymorphia_backend.dto.request.user.StudentRegisterRequestDTO;
+import com.agh.polymorphia_backend.service.csv.processors.StudentInvitationCSVProcessor;
 import com.agh.polymorphia_backend.service.user.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -17,17 +19,25 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RequestMapping("/user")
 public class UserController {
-    private UserService userService;
+    private final UserService userService;
+    private final StudentInvitationCSVProcessor studentInvitationCSVProcessor;
 
     @PostMapping("/invite")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
-    public ResponseEntity<Void> inviteUser(@Valid @RequestBody UserInvitationRequestDTO inviteDTO) {
+    public ResponseEntity<Void> inviteStudent(@Valid @RequestBody StudentInvitationRequestDTO inviteDTO) {
         userService.invite(inviteDTO);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @PostMapping("/csv/invite")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
+    public ResponseEntity<Void> processStudentInviteCSV(@RequestBody StudentInvitationCSVProcessRequestDto requestDTO) {
+        studentInvitationCSVProcessor.process(requestDTO);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
     @PostMapping("/register")
-    public ResponseEntity<Void> registerUser(@Valid @RequestBody RegisterRequestDTO registerDTO) {
+    public ResponseEntity<Void> registerStudent(@Valid @RequestBody StudentRegisterRequestDTO registerDTO) {
         userService.registerUser(registerDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

@@ -1,9 +1,6 @@
-import { API_HOST } from "@/services/api";
-import { ImportCSVType, ImportCSVTypes } from "@/interfaces/general";
-import {
-  CSVHeadersResponseDTO,
-  CSVPreviewResponseDTO,
-} from "@/interfaces/api/CSV";
+import {API_HOST} from "@/services/api";
+import {ImportCSVType, ImportCSVTypes} from "@/interfaces/general";
+import {CSVHeadersResponseDTO, CSVPreviewResponseDTO,} from "@/interfaces/api/CSV";
 
 const CSVService = {
   getCSVHeaders: async (
@@ -67,7 +64,6 @@ const CSVService = {
     gradableEventId?: number
   ): Promise<void> => {
     const body = JSON.stringify({
-      type: ImportCSVTypes.GRADE_IMPORT,
       csvHeaders: csvHeaders,
       data: data,
       ...(gradableEventId && { gradableEventId }),
@@ -90,12 +86,11 @@ const CSVService = {
     data: string[][]
   ): Promise<void> => {
     const body = JSON.stringify({
-      type: ImportCSVTypes.STUDENT_INVITE,
       csvHeaders: csvHeaders,
       data: data,
     });
 
-    const response = await fetch(`${API_HOST}/csv/process/student-invite`, {
+    const response = await fetch(`${API_HOST}/user/csv/invite`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: body,

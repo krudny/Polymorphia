@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.service.user;
 
-import com.agh.polymorphia_backend.dto.request.user.RegisterRequestDTO;
-import com.agh.polymorphia_backend.dto.request.user.UserInvitationRequestDTO;
+import com.agh.polymorphia_backend.dto.request.user.StudentInvitationRequestDTO;
+import com.agh.polymorphia_backend.dto.request.user.StudentRegisterRequestDTO;
 import com.agh.polymorphia_backend.model.user.InvitationToken;
 import com.agh.polymorphia_backend.model.user.Student;
 import com.agh.polymorphia_backend.repository.user.InvitationTokenRepository;
@@ -37,7 +37,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void invite(UserInvitationRequestDTO inviteDTO) {
+    public void invite(StudentInvitationRequestDTO inviteDTO) {
         String email = inviteDTO.getEmail();
         Integer indexNumber = inviteDTO.getIndexNumber();
 
@@ -52,7 +52,7 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public void registerUser(RegisterRequestDTO registerDTO) {
+    public void registerUser(StudentRegisterRequestDTO registerDTO) {
         InvitationToken token = invitationTokenRepository.findByToken(registerDTO.getInvitationToken()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nieprawidłowy token"));
 
         userValidation.validateBeforeRegister(token);
@@ -78,7 +78,7 @@ public class UserService implements UserDetailsService {
 
     }
 
-    private InvitationToken createInvitationToken(UserInvitationRequestDTO inviteDTO) {
+    private InvitationToken createInvitationToken(StudentInvitationRequestDTO inviteDTO) {
         String tokenValue = UUID.randomUUID().toString();
         LocalDateTime now = LocalDateTime.now();
 
