@@ -5,13 +5,12 @@ import com.agh.polymorphia_backend.dto.response.profile.ProfileResponseDto;
 import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.course.EvolutionStage;
-import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFame;
+import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry;
 import com.agh.polymorphia_backend.model.user.Student;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.repository.course.EvolutionStagesRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
-import com.agh.polymorphia_backend.service.mapper.HallOfFameMapper;
 import com.agh.polymorphia_backend.service.mapper.ProfileMapper;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
@@ -46,8 +45,6 @@ class ProfileServiceTest {
     private EvolutionStagesRepository evolutionStagesRepository;
     @Mock
     private ProfileMapper profileMapper;
-    @Mock
-    private HallOfFameMapper hallOfFameMapper;
 
     @InjectMocks
     private ProfileService profileService;
@@ -73,7 +70,7 @@ class ProfileServiceTest {
 
     @Test
     void shouldReturnProfileResponseDto() {
-        HallOfFame hallOfFame = mock(HallOfFame.class);
+        HallOfFameEntry hallOfFame = mock(HallOfFameEntry.class);
         when(hallOfFame.getTotalXpSum()).thenReturn(BigDecimal.valueOf(1234));
         when(hallOfFame.getEvolutionStage())
                 .thenReturn("Stage 1")
@@ -129,7 +126,7 @@ class ProfileServiceTest {
         assertThat(result.getXpDetails()).isEqualTo(xpDetails);
 
         verify(accessAuthorizer).authorizeCourseAccess(course);
-        verify(hallOfFameMapper).updateXpDetails(eq(xpDetails), eq(hallOfFame));
+        verify(hallOfFameService).updateXpDetails(eq(xpDetails), eq(hallOfFame));
 
         ProfileResponseDto result2 = profileService.getProfile(course.getId());
         assertThat(result2.getLeftEvolutionStage()).isEqualTo(stageDto1);

@@ -33,9 +33,9 @@ export function useHallOfFameFilterConfigs(courseId: number) {
               value: eventSection.name,
             })),
             { value: "Bonusy" },
-            { value: "total", label: "Suma" },
+            { value: "Suma" },
           ],
-          defaultValues: ["total"],
+          defaultValues: ["Suma"],
         },
         {
           id: "groups",

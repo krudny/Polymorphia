@@ -35,8 +35,6 @@ export default function XPCardGrid({
     setFirstRender
   );
 
-  console.log(maxRows);
-
   useEffect(() => {
     return setResizeObserver(
       containerRef,

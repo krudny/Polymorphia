@@ -16,10 +16,9 @@ import { useProfileFilterConfigs } from "@/hooks/course/useProfileFilterConfigs"
 import { useFilters } from "@/hooks/course/useFilters";
 import { useQueryClient } from "@tanstack/react-query";
 import { filterXpDetails } from "@/providers/hall-of-fame/utils/filterXpDetails";
-import SpeedDialDesktop from "@/components/speed-dial/SpeedDialDesktop";
-import SpeedDialMobile from "@/components/speed-dial/SpeedDialMobile";
 import { ProfileFilterId } from "@/app/(logged-in)/profile/types";
 import ProfileProgressBar from "@/components/progressbar/profile";
+import SpeedDial from "@/components/speed-dial/SpeedDial";
 
 export default function Profile() {
   const { setTitle } = useTitle();
@@ -88,10 +87,7 @@ export default function Profile() {
   return (
     <div ref={wrapperRef} className="profile">
       <div className="profile-speed-dial-desktop">
-        <SpeedDialDesktop items={speedDialItems} />
-      </div>
-      <div className="profile-speed-dial-mobile">
-        <SpeedDialMobile items={speedDialItems} />
+        <SpeedDial items={speedDialItems} />
       </div>
       <div className="profile-wrapper">
         <div className="profile-content-wrapper">

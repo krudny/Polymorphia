@@ -9,7 +9,7 @@ import {
 import { useFilters } from "@/hooks/course/useFilters";
 import { useHallOfFameFilterConfigs } from "@/hooks/course/useHallOfFameFilterConfigs";
 import useHallOfFame from "@/hooks/course/useHallOfFame";
-import useUserContext from "@/hooks/contexts/useUserContext";
+import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export const HallOfFameContext = createContext<
   HallOfFameContextInterface | undefined
@@ -22,21 +22,22 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   const [debouncedSearch] = useDebounce(search, 400);
   const [areFiltersOpen, setAreFiltersOpen] = useState(false);
 
-  const { userDetails } = useUserContext();
+  const { courseId } = useUserDetails();
   const {
     data: filterConfigs,
     isLoading: isFiltersLoading,
     isError: isFiltersError,
-  } = useHallOfFameFilterConfigs(userDetails.courseId);
+  } = useHallOfFameFilterConfigs(courseId);
   const filters = useFilters<HallOfFameFilterId>(filterConfigs ?? []);
 
-  const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["total"];
+  const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["Suma"];
   const sortOrder = filters.getAppliedFilterValues("sortOrder") ?? ["desc"];
   const groups = filters.getAppliedFilterValues("groups") ?? ["all"];
 
   const { data: hallOfFame, isLoading } = useHallOfFame({
     page,
     pageSize,
+    courseId,
     debouncedSearch,
     sortOrder,
     sortBy,

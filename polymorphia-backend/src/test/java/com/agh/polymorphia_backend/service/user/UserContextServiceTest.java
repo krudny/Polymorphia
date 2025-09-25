@@ -69,20 +69,13 @@ class UserContextServiceTest {
     }
 
     @Test
-    void isPreferredCourseSet_shouldReturnTrueWhenCourseExists() {
-        user.setPreferredCourse(new Course());
+    void getUserRole_shouldReturnUserRole() {
         when(userService.getCurrentUser()).thenReturn(student);
+        when(userService.getUserRole(student)).thenReturn(UserType.STUDENT);
 
-        assertTrue(userContextService.isPreferredCourseSet());
+        assertEquals(userContextService.getUserRole(), UserType.STUDENT);
     }
 
-    @Test
-    void isPreferredCourseSet_shouldReturnFalseWhenNoCourse() {
-        user.setPreferredCourse(null);
-        when(userService.getCurrentUser()).thenReturn(student);
-
-        assertFalse(userContextService.isPreferredCourseSet());
-    }
 
     @Test
     void setPreferredCourseId_shouldUpdatePreferredCourse() {

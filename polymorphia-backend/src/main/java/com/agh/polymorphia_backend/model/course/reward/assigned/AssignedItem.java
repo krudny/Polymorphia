@@ -18,7 +18,10 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 public class AssignedItem extends AssignedReward {
     @NotNull
-    @Column(nullable = false, columnDefinition = "default 0")
+    @Column(
+            nullable = false,
+            columnDefinition = "NUMERIC(4,1) DEFAULT 0"
+    )
     private BigDecimal bonusXp;
 
 

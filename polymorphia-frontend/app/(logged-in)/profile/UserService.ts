@@ -1,4 +1,5 @@
 import {
+  Role,
   Roles,
   StudentDetailsDTOWithType,
   UserDetailsDTO,
@@ -19,8 +20,8 @@ const UserService = {
 
     return await response.json();
   },
-  isCourseIdSet: async (): Promise<boolean> => {
-    const response = await fetch(`${API_HOST}/users/preferred-course/exists`, {
+  getUserRole: async (): Promise<Role> => {
+    const response = await fetch(`${API_HOST}/users/role`, {
       credentials: "include",
     });
 
