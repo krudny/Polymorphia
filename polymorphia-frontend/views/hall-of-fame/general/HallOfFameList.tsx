@@ -1,9 +1,9 @@
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
-import { HallOfFameRecordDTO } from "@/interfaces/api/hall-of-fame";
+import {HallOfFameRecordDTO} from "@/interfaces/api/hall-of-fame";
 import HallOfFameCardDesktop from "@/views/hall-of-fame/desktop/HallOfFameCardDesktop";
 import Loading from "@/components/loading/Loading";
-import { useScaleShow } from "@/animations/ScaleShow";
-import { useMediaQuery } from "react-responsive";
+import {useScaleShow} from "@/animations/ScaleShow";
+import {useMediaQuery} from "react-responsive";
 import RankCardMobile from "@/views/hall-of-fame/mobile/HallOfFameCardMobile";
 
 export default function HallOfFameList() {
@@ -12,7 +12,7 @@ export default function HallOfFameList() {
   const wrapperRef = useScaleShow(!isLoading);
   const isDesktop = useMediaQuery({ minWidth: 1024 });
 
-  if (isLoading || !hallOfFame || isFiltersLoading || isFiltersError) {
+  if (isLoading || !hallOfFame) {
     return (
       <div className="hall-of-fame-loading-wrapper">
         <Loading />

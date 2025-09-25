@@ -1,6 +1,6 @@
-import { useScaleShow } from "@/animations/ScaleShow";
-import { useTitle } from "../navigation/TitleContext";
-import { ReactNode } from "react";
+import {useScaleShow} from "@/animations/ScaleShow";
+import {useTitle} from "../navigation/TitleContext";
+import {ReactNode} from "react";
 import "./index.css";
 
 export default function MainLayout({ children }: { children: ReactNode }) {
