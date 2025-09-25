@@ -1,6 +1,6 @@
 import { ShortGradeResponseDTO } from "@/interfaces/api/grade";
 
-export interface UseGrade3 {
+export interface UseShortGrade {
   data: ShortGradeResponseDTO | undefined;
   isLoading: boolean;
   isError: boolean;

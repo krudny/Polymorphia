@@ -30,7 +30,7 @@ export default function AssignReward({
               <div className="grade-assign-reward-image-wrapper">
                 <Image
                   src={`${API_STATIC_URL}/${assignedReward.imageUrl}`}
-                  alt="User profile"
+                  alt={assignedReward.name}
                   fill
                   priority
                   className="object-cover"

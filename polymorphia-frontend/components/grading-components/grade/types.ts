@@ -1,9 +1,11 @@
-import { CriterionResponseDTO } from "@/interfaces/api/grade";
-import { CriteriaDetails } from "@/providers/grading/gradingReducer/types";
+import {
+  CriteriaDetailsRequestDTO,
+  CriterionResponseDTO,
+} from "@/interfaces/api/grade";
 
 export interface RewardProps {
   criterion: CriterionResponseDTO;
-  criterionGrade: CriteriaDetails;
+  criterionGrade: CriteriaDetailsRequestDTO;
 }
 
 export interface GradingInputProps {

@@ -1,19 +1,12 @@
-import { UserDetailsDTO } from "@/interfaces/api/user";
-import { ShortGradeResponseDTO } from "@/interfaces/api/grade";
-
-// TODO: this should be moved, but i dont know where
-export interface CriteriaDetails {
-  gainedXp?: string;
-  assignedRewards: {
-    id: number;
-    quantity: number;
-    imageUrl: string;
-  }[];
-}
+import {
+  CriteriaDetailsRequestDTO,
+  ShortGradeResponseDTO,
+  TargetResponseDTO,
+} from "@/interfaces/api/grade";
 
 export interface GradingReducerState {
-  selectedTarget: UserDetailsDTO[] | null;
-  criteria: Record<number, CriteriaDetails>;
+  selectedTarget: TargetResponseDTO | null;
+  criteria: Record<number, CriteriaDetailsRequestDTO>;
   comment: string;
 }
 
@@ -29,7 +22,7 @@ export const GradingReducerActions = {
 export type GradingReducerActionType =
   | {
       type: typeof GradingReducerActions.SET_TARGET;
-      payload: UserDetailsDTO[];
+      payload: TargetResponseDTO | null;
     }
   | {
       type: typeof GradingReducerActions.SET_GRADE;
@@ -42,7 +35,7 @@ export type GradingReducerActionType =
   | {
       type: typeof GradingReducerActions.UPDATE_GRADE;
       payload: {
-        criteria: Record<number, CriteriaDetails>;
+        criteria: Record<number, CriteriaDetailsRequestDTO>;
         comment: string;
       };
     }

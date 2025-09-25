@@ -9,15 +9,9 @@ export class ProjectGradingStrategy
   implements GradingStrategy
 {
   getGradingComponents(): GradingComponents {
-    return {
-      list: this.createProjectGroupList(),
-      components: [
-        [this.createRewardComponent()],
-        [
-          this.createPullRequestComponent(),
-          this.createProjectVariantComponent(),
-        ],
-      ],
-    };
+    return [
+      [this.createRewardComponent()],
+      [this.createPullRequestComponent(), this.createProjectVariantComponent()],
+    ];
   }
 }

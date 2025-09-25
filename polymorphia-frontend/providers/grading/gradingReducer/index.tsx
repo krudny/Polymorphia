@@ -1,5 +1,5 @@
+import { CriteriaDetailsRequestDTO } from "@/interfaces/api/grade";
 import {
-  CriteriaDetails,
   GradingReducerActions,
   GradingReducerActionType,
   GradingReducerState,
@@ -32,12 +32,12 @@ export const GradingReducer = (
       const criteriaMap = action.payload.grade.criteria.reduce(
         (acc, criterion) => {
           acc[criterion.id] = {
-            gainedXp: criterion.gainedXp.toString(),
+            gainedXp: criterion.gainedXp,
             assignedRewards: criterion.assignedRewards,
           };
           return acc;
         },
-        {} as Record<number, CriteriaDetails>
+        {} as Record<number, CriteriaDetailsRequestDTO>
       );
 
       return {
