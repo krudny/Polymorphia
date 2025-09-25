@@ -1,14 +1,14 @@
 "use client";
 import Image from "next/image";
-import {useScaleShow} from "@/animations/ScaleShow";
-import {API_STATIC_URL} from "@/services/api";
+import { useScaleShow } from "@/animations/ScaleShow";
+import { API_STATIC_URL } from "@/services/api";
 import "./index.css";
 import ProgressBar from "@/components/progressbar/ProgressBar";
-import {useTitle} from "@/components/navigation/TitleContext";
-import {useEffect} from "react";
+import { useTitle } from "@/components/navigation/TitleContext";
+import { useEffect } from "react";
 import UserPoints from "@/components/user-points/UserPoints";
 import ProgressBarTextLabels from "@/components/progressbar/ProgressBarTextLabels";
-import {useMediaQuery} from "react-responsive";
+import { useMediaQuery } from "react-responsive";
 
 export default function Profile() {
   const wrapperRef = useScaleShow();

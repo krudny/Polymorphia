@@ -1,15 +1,15 @@
 "use client";
 
-import React, {FormEvent} from "react";
-import {useForm} from "@tanstack/react-form";
-import {useMutation} from "@tanstack/react-query";
+import React, { FormEvent } from "react";
+import { useForm } from "@tanstack/react-form";
+import { useMutation } from "@tanstack/react-query";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import NavigationArrow from "@/components/slider/NavigationArrow";
-import {LoginDto} from "@/interfaces/api/login";
-import {FieldInfo} from "@/components/form/FieldInfo";
-import {loginSchema} from "@/components/form/schema";
+import { LoginDto } from "@/interfaces/api/login";
+import { FieldInfo } from "@/components/form/FieldInfo";
+import { loginSchema } from "@/components/form/schema";
 import AuthService from "@/services/AuthService";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import "./index.css";
 import LoginFormProps from "@/components/home/login-form/types";

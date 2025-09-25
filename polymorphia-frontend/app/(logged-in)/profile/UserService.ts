@@ -1,7 +1,11 @@
-import {InviteStudentRequestDTO, RegisterRequestDTO, UserDetailsDTO} from "@/interfaces/api/user";
+import {
+  InviteStudentRequestDTO,
+  RegisterRequestDTO,
+  UserDetailsDTO,
+} from "@/interfaces/api/user";
 
-import {Role, Roles} from "@/interfaces/general";
-import {API_HOST} from "@/services/api";
+import { Role, Roles } from "@/interfaces/general";
+import { API_HOST } from "@/services/api";
 
 const UserService = {
   getCurrentUser: async (): Promise<UserDetailsDTO> => {
@@ -48,7 +52,7 @@ const UserService = {
     const response = await fetch(`${API_HOST}/user/register`, {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(request),
       credentials: "include",
@@ -63,7 +67,7 @@ const UserService = {
     const response = await fetch(`${API_HOST}/user/invite`, {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(request),
       credentials: "include",
@@ -72,7 +76,7 @@ const UserService = {
     if (!response.ok) {
       throw new Error("Nie udało się zaprosić studenta!");
     }
-  }
+  },
 };
 
 export default UserService;

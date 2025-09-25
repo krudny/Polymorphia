@@ -1,5 +1,5 @@
-import {ImportCSVType} from "@/interfaces/general";
-import {ReactNode} from "react";
+import { ImportCSVType } from "@/interfaces/general";
+import { ReactNode } from "react";
 
 export interface ImportCSVModalProps {
   onClosedAction: () => void;

@@ -1,15 +1,24 @@
 "use client";
 
-import {useLayoutEffect, useState} from "react";
-import {useInvitationToken} from "@/hooks/general/useInvitationToken";
-import {animateInitialMount, animateLoginFormVisibility} from "@/animations/Home";
-import {HomeContentProps} from "./types";
+import { useLayoutEffect, useState } from "react";
+import { useInvitationToken } from "@/hooks/general/useInvitationToken";
+import {
+  animateInitialMount,
+  animateLoginFormVisibility,
+} from "@/animations/Home";
+import { HomeContentProps } from "./types";
 import RegisterForm from "@/components/home/register-form";
 import LoginForm from "@/components/home/login-form";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import "./index.css";
 
-export default function HomeContent({ titleRef, loginFormRef, hasMountedRef, backgroundRef, imageRef }: HomeContentProps) {
+export default function HomeContent({
+  titleRef,
+  loginFormRef,
+  hasMountedRef,
+  backgroundRef,
+  imageRef,
+}: HomeContentProps) {
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
   const invitationToken = useInvitationToken();
 
@@ -46,9 +55,9 @@ export default function HomeContent({ titleRef, loginFormRef, hasMountedRef, bac
   return (
     <div className="hero-right-wrapper">
       {invitationToken ? (
-          <div className="hero-register" ref={titleRef}>
-            <RegisterForm invitationToken={invitationToken}/>
-          </div>
+        <div className="hero-register" ref={titleRef}>
+          <RegisterForm invitationToken={invitationToken} />
+        </div>
       ) : (
         <>
           <div ref={titleRef}>

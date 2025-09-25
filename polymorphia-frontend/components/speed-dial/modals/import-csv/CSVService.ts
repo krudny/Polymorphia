@@ -1,6 +1,9 @@
-import {API_HOST} from "@/services/api";
-import {ImportCSVType, ImportCSVTypes} from "@/interfaces/general";
-import {CSVHeadersResponseDTO, CSVPreviewResponseDTO,} from "@/interfaces/api/CSV";
+import { API_HOST } from "@/services/api";
+import { ImportCSVType, ImportCSVTypes } from "@/interfaces/general";
+import {
+  CSVHeadersResponseDTO,
+  CSVPreviewResponseDTO,
+} from "@/interfaces/api/CSV";
 
 const CSVService = {
   getCSVHeaders: async (

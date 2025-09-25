@@ -1,13 +1,13 @@
-import React, {FormEvent} from "react";
-import {FieldInfo} from "@/components/form/FieldInfo";
+import React, { FormEvent } from "react";
+import { FieldInfo } from "@/components/form/FieldInfo";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import {useForm} from "@tanstack/react-form";
-import {registerSchema} from "@/components/form/schema";
-import "./index.css"
-import {RegisterFormProps} from "@/components/home/register-form/types";
+import { useForm } from "@tanstack/react-form";
+import { registerSchema } from "@/components/form/schema";
+import "./index.css";
+import { RegisterFormProps } from "@/components/home/register-form/types";
 import useRegister from "@/hooks/general/useRegister";
 
-export default function RegisterForm({invitationToken}: RegisterFormProps) {
+export default function RegisterForm({ invitationToken }: RegisterFormProps) {
   const { mutation } = useRegister();
   const form = useForm({
     defaultValues: {
@@ -21,8 +21,8 @@ export default function RegisterForm({invitationToken}: RegisterFormProps) {
       mutation.mutate({
         invitationToken,
         animalName: value.animalName,
-        password: value.password
-      })
+        password: value.password,
+      });
     },
   });
 
@@ -88,7 +88,7 @@ export default function RegisterForm({invitationToken}: RegisterFormProps) {
             )}
           </form.Subscribe>
         </form>
-    </div>
+      </div>
     </div>
   );
 }
