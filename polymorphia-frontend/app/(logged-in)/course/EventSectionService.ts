@@ -1,24 +1,20 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { lab0, lab1, lab2, proj1 } from "@/app/(logged-in)/course/sampleData";
-import { ProjectVariantResponseDTO } from "@/interfaces/api/course/project";
-import {
-  CriterionResponseDTO,
-  GradeResponseDTO,
-  ShortGradeResponseDTO,
-} from "@/interfaces/api/grade";
-import { MarkdownResponseDTO } from "@/interfaces/api/markdown";
-import { PointsSummaryResponseDTO } from "@/interfaces/api/course/points-summary";
+import {lab0, lab1, lab2, proj1} from "@/app/(logged-in)/course/sampleData";
+import {ProjectVariantResponseDTO} from "@/interfaces/api/course/project";
+import {CriterionResponseDTO, GradeResponseDTO, ShortGradeResponseDTO,} from "@/interfaces/api/grade";
+import {MarkdownResponseDTO} from "@/interfaces/api/markdown";
+import {PointsSummaryResponseDTO} from "@/interfaces/api/course/points-summary";
 import {
   EventSectionResponseDTO,
   InstructorGradableEventResponseDTO,
   StudentGradableEventResponseDTO,
 } from "@/interfaces/api/course";
-import { UserDetailsDTO } from "@/interfaces/api/user";
-import { ProjectGroupResponseDTO } from "@/interfaces/api/temp";
-import { EventTypes } from "@/interfaces/general";
-import { CriteriaDetails } from "@/providers/grading/gradingReducer/types";
+import {UserDetailsDTO} from "@/interfaces/api/user";
+import {ProjectGroupResponseDTO} from "@/interfaces/api/temp";
+import {EventTypes} from "@/interfaces/general";
+import {CriteriaDetails} from "@/providers/grading/gradingReducer/types";
 
 export const studentNames = [
   "Gerard Małoduszny",
@@ -270,7 +266,7 @@ export const EventSectionService = {
           hasReward: true,
         },
         {
-          id: 18,
+          id: 12,
           type: EventTypes.ASSIGNMENT,
           name: "Laboratorium 4",
           topic: "Interfejsy i mapy",

@@ -1,3 +1,5 @@
+import {MarkdownRequestDTO} from "@/interfaces/api/markdown";
+
 export interface UseMarkdownUpdate {
-  mutate: (variables: { gradableEventId: number; newMarkdown: string }) => void;
+  mutate: (variables: MarkdownRequestDTO) => void;
 }

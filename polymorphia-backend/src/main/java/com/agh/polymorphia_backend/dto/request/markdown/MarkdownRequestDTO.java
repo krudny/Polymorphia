@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class SetMarkdownRequestDTO {
+public class MarkdownRequestDTO {
     @NotNull
     private Long gradableEventId;
 

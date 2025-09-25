@@ -1,28 +1,24 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { UseMarkdownUpdate } from "@/hooks/course/useMarkdownUpdate/types";
+import {UseMarkdownUpdate} from "@/hooks/course/useMarkdownUpdate/types";
+import {MarkdownService} from "@/app/(logged-in)/course/[eventType]/[eventSectionId]/[gradableEventId]/MarkdownService";
+import {MarkdownRequestDTO} from "@/interfaces/api/markdown";
+import {Dispatch, SetStateAction} from "react";
 
-export default function useMarkdownUpdate(): UseMarkdownUpdate {
+export default function useMarkdownUpdate(setIsEditing: Dispatch<SetStateAction<boolean>>): UseMarkdownUpdate {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({
-      gradableEventId,
-      newMarkdown,
-    }: {
-      gradableEventId: number;
-      newMarkdown: string;
-    }) => EventSectionService.saveMarkdown(gradableEventId, newMarkdown),
+    mutationFn: (request: MarkdownRequestDTO) => MarkdownService.saveMarkdown(request),
     onSuccess: (_, { gradableEventId }) => {
       queryClient.invalidateQueries({
         queryKey: ["markdown", gradableEventId],
       });
-      toast.error("Aktualizacja markdown (celowo) nie działa!");
+      toast.success("Zapisano zmiany!");
+      setIsEditing(false);
     },
     onError: (error) => {
-      console.error("Błąd zapisu markdown:", error);
-      alert("Nie udało się zapisać zmian.");
+      toast.error(error.message);
     },
   });
 }
