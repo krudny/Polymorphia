@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "grades")
@@ -35,21 +35,21 @@ public class Grade {
     private Animal animal;
 
     @NotNull
-    private LocalDateTime createdDate;
+    private ZonedDateTime createdDate;
 
     @NotNull
-    private LocalDateTime modifiedDate;
+    private ZonedDateTime modifiedDate;
 
     private String comment;
 
     @PrePersist
     void onCreate() {
-        if (createdDate == null) createdDate = LocalDateTime.now();
+        if (createdDate == null) createdDate = ZonedDateTime.now();
         if (modifiedDate == null) modifiedDate = createdDate;
     }
 
     @PreUpdate
     void onUpdate() {
-        modifiedDate = LocalDateTime.now();
+        modifiedDate = ZonedDateTime.now();
     }
 }

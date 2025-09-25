@@ -47,6 +47,7 @@ export default function InstructorView() {
     );
   };
 
+  // TODO: is mobile mocked
   const cards = gradableEvents.map((gradableEvent) =>
     renderCard(gradableEvent, false, handleClick)
   );

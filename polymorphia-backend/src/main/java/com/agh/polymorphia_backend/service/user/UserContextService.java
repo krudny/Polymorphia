@@ -5,6 +5,7 @@ import com.agh.polymorphia_backend.dto.response.user_context.UserDetailsResponse
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.User;
+import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.service.course.CourseService;
@@ -34,9 +35,9 @@ public class UserContextService {
                 .build();
     }
 
-    public boolean isPreferredCourseSet() {
-        User user = userService.getCurrentUser().getUser();
-        return user.getPreferredCourse() != null;
+    public UserType getUserRole() {
+        AbstractRoleUser user = userService.getCurrentUser();
+        return userService.getUserRole(user);
     }
 
     public void setPreferredCourseId(Long courseId) {

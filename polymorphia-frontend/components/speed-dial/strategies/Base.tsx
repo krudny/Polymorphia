@@ -5,6 +5,7 @@ import { SpeedDialContext } from "@/components/speed-dial/strategies/types";
 import GroupModal from "@/components/speed-dial/modals/group-info";
 import GroupPickingModal from "@/components/speed-dial/modals/group-pick";
 import ImportCSVModal from "@/components/speed-dial/modals/import-csv";
+import { ImportCSVType, ImportCSVTypes } from "@/interfaces/general";
 
 export abstract class BaseSpeedDialStrategy {
   abstract getItems(context: SpeedDialContext): SpeedDialItem[];
@@ -81,13 +82,20 @@ export abstract class BaseSpeedDialStrategy {
     };
   }
 
-  protected createImportCSV(): SpeedDialItem {
+  protected createImportCSV(importType: ImportCSVType): SpeedDialItem {
+    const importLabels = {
+      [ImportCSVTypes.STUDENT_INVITE]: "Zaproś studentów z CSV",
+      [ImportCSVTypes.GRADE_IMPORT]: "Wczytaj oceny z CSV",
+    } as const;
+
     return {
       id: 4,
       orderIndex: 9,
-      label: "Import CSV",
+      label: importLabels[importType] ?? "Import CSV",
       icon: "cloud_upload",
-      modal: (onClose) => <ImportCSVModal onClosedAction={onClose} />,
+      modal: (onClose) => (
+        <ImportCSVModal onClosedAction={onClose} importType={importType} />
+      ),
     };
   }
 

@@ -2,11 +2,21 @@
 
 import { ReactNode, useState } from "react";
 import "./index.css";
+import Loading from "@/components/loading/Loading";
 import { SpeedDial as SpeedDialMui, SpeedDialAction } from "@mui/material";
-import { SpeedDialProps } from "@/components/speed-dial/types";
+import { SpeedDialProps } from "./types";
+import { useMediaQuery } from "react-responsive";
 
-export default function SpeedDialMobile({ items }: SpeedDialProps) {
+export default function SpeedDial({ items }: SpeedDialProps) {
   const [activeModal, setActiveModal] = useState<ReactNode | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const isMd = useMediaQuery({ minWidth: "768px" });
+
+  if (!items) {
+    return <Loading />;
+  }
+
+  items.sort((a, b) => b.orderIndex - a.orderIndex);
 
   return (
     <>
@@ -14,10 +24,11 @@ export default function SpeedDialMobile({ items }: SpeedDialProps) {
         ariaLabel="SpeedDial"
         icon={<span className="material-symbols">add</span>}
         sx={{
-          position: "absolute",
-          bottom: 0,
-          right: 0,
-          zIndex: 9999,
+          position: "fixed",
+          bottom: isMd ? 4 : 20,
+          right: isMd ? 22 : 12,
+          margin: 0,
+          ...(isMd ? {} : { zIndex: 9999 }),
         }}
         FabProps={{
           style: {
@@ -25,8 +36,13 @@ export default function SpeedDialMobile({ items }: SpeedDialProps) {
             color: "#FAFAFA",
             borderRadius: 8,
             fontSize: 28,
+            margin: 0,
+            ...(isMd ? { display: "none" } : {}),
           },
         }}
+        open={isMd ? true : isOpen}
+        onOpen={() => setIsOpen(true)}
+        onClose={() => setIsOpen(false)}
       >
         {items.map((item) => (
           <SpeedDialAction
@@ -35,6 +51,21 @@ export default function SpeedDialMobile({ items }: SpeedDialProps) {
             slotProps={{
               tooltip: {
                 title: item.label,
+                slotProps: {
+                  transition: { timeout: 150 },
+                  popper: {
+                    modifiers: [
+                      {
+                        name: "computeStyles",
+                        options: {
+                          roundOffsets: false,
+                          gpuAcceleration: false,
+                        },
+                      },
+                      { name: "offset", options: { offset: [0, 3] } },
+                    ],
+                  },
+                },
               },
               fab: {
                 style: {

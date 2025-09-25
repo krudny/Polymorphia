@@ -10,7 +10,15 @@ export const ViewTypes = {
   CARD_GRID: "CARD_GRID",
   MARKDOWN: "MARKDOWN",
   GRADING: "GRADING",
-  PROFILE: "PROFILE",
+  COURSE_GROUP: "COURSE_GROUP",
 };
 
 export type ViewType = (typeof ViewTypes)[keyof typeof ViewTypes];
+
+export const ImportCSVTypes = {
+  GRADE_IMPORT: "GRADE_IMPORT",
+  STUDENT_INVITE: "STUDENT_INVITE",
+} as const;
+
+export type ImportCSVType =
+  (typeof ImportCSVTypes)[keyof typeof ImportCSVTypes];

@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.controller;
 
 
-import com.agh.polymorphia_backend.dto.request.hall_of_fame.HallOfFameRequestDto;
+import com.agh.polymorphia_backend.dto.request.HallOfFameRequestDto;
 import com.agh.polymorphia_backend.dto.response.hall_of_fame.HallOfFameResponseDto;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
 import jakarta.validation.Valid;

@@ -1,6 +1,3 @@
-ALTER TABLE assigned_items
-    DROP CONSTRAINT assigned_items_assigned_chest_id_fkey;
-
 CREATE TABLE user_course_roles
 (
     role      VARCHAR(255) NOT NULL,
@@ -31,7 +28,19 @@ ALTER TABLE user_course_roles
     ADD CONSTRAINT FK_USER_COURSE_ROLES_ON_USER FOREIGN KEY (user_id) REFERENCES users (id);
 
 ALTER TABLE assigned_items
-    DROP COLUMN assigned_chest_id;
+    ALTER COLUMN assigned_chest_id SET NOT NULL;
+
+ALTER TABLE assigned_items
+    DROP COLUMN bonus_xp;
+
+ALTER TABLE assigned_items
+    ADD bonus_xp numeric(4, 1) DEFAULT 0 NOT NULL;
+
+ALTER TABLE assigned_items
+    ALTER COLUMN bonus_xp SET NOT NULL;
+
+ALTER TABLE assigned_items
+    ALTER COLUMN bonus_xp SET DEFAULT 0;
 
 ALTER TABLE grades
     ALTER COLUMN comment TYPE VARCHAR(255) USING (comment::VARCHAR(255));

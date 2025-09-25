@@ -1,7 +1,8 @@
 package com.agh.polymorphia_backend.service.hall_of_fame;
 
-import com.agh.polymorphia_backend.dto.request.hall_of_fame.HallOfFameRequestDto;
+import com.agh.polymorphia_backend.dto.request.HallOfFameRequestDto;
 import com.agh.polymorphia_backend.dto.response.hall_of_fame.HallOfFameResponseDto;
+import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.event_section.EventSection;
 import com.agh.polymorphia_backend.model.hall_of_fame.*;
@@ -9,6 +10,7 @@ import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.StudentScoreDetailRepository;
+import com.agh.polymorphia_backend.service.course.AnimalService;
 import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.mapper.HallOfFameMapper;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
@@ -31,16 +33,18 @@ import static com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry.FIE
 @AllArgsConstructor
 public class HallOfFameService {
     private static final String STUDENT_HOF_NOT_FOUND = "Student's Hall of Fame scores not found";
+    private final StudentScoreDetailRepository scoreDetailRepository;
     private final HallOfFameRepository hallOfFameRepository;
-    private final StudentScoreDetailRepository studentScoreDetailRepository;
     private final EventSectionRepository eventSectionRepository;
     private final HallOfFameMapper hallOfFameMapper;
-    private final HallOfFameSortSpecResolver sortSpecResolver;
     private final AccessAuthorizer accessAuthorizer;
     private final CourseService courseService;
+    private final AnimalService animalService;
+    private final HallOfFameSortSpecResolver sortSpecResolver;
 
     public HallOfFameEntry getStudentHallOfFame(User user) {
-        return hallOfFameRepository.findByStudentIdAndCourseId(user.getPreferredCourse().getId(), user.getId())
+        Animal animal = animalService.getAnimal(user.getId(), user.getPreferredCourse().getId());
+        return hallOfFameRepository.findByAnimalId(animal.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_HOF_NOT_FOUND));
     }
 
@@ -50,7 +54,8 @@ public class HallOfFameService {
 
         HallOfFameSortSpec sortSpec = sortSpecResolver.resolve(requestDto);
         return switch (sortSpec) {
-            case OverviewFieldSort overviewFieldSort -> getSortedByOverviewFields(requestDto, overviewFieldSort.field());
+            case OverviewFieldSort overviewFieldSort ->
+                    getSortedByOverviewFields(requestDto, overviewFieldSort.field());
             case EventSectionSort eventSectionSort -> getSortedByEventSection(requestDto);
         };
     }
@@ -77,6 +82,7 @@ public class HallOfFameService {
                 .toList();
 
         Map<Long, Map<String, String>> detailsByAnimalId = groupScoreDetails(animalIds);
+
         return hallOfFamePage.map(hallOfFame -> {
             Map<String, String> xpDetails = detailsByAnimalId.get(hallOfFame.getAnimalId());
             updateXpDetails(xpDetails, hallOfFame);
@@ -85,7 +91,11 @@ public class HallOfFameService {
     }
 
     public Map<Long, Map<String, String>> groupScoreDetails(List<Long> animalIds) {
-        List<StudentScoreDetail> detailsList = studentScoreDetailRepository.findByAnimalIdIn(animalIds);
+        List<StudentScoreDetail> detailsList = scoreDetailRepository.findByAnimalIdIn(animalIds);
+
+        if (detailsList.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_HOF_NOT_FOUND);
+        }
 
         sortByEventSectionOrderIndex(detailsList);
         Map<Long, Map<String, String>> result = new HashMap<>();
@@ -96,6 +106,19 @@ public class HallOfFameService {
         }
 
         return result;
+    }
+
+    private void sortByEventSectionOrderIndex(List<StudentScoreDetail> detailsList) {
+        Set<Long> eventSectionIds = detailsList.stream()
+                .map(StudentScoreDetail::getEventSectionId).collect(Collectors.toSet());
+
+        Map<Long, EventSection> eventSectionMap = eventSectionRepository.findByIdIn(eventSectionIds)
+                .stream()
+                .collect(Collectors.toMap(EventSection::getId, e -> e));
+
+        detailsList.sort(Comparator.comparingLong(d ->
+                eventSectionMap.get(d.getEventSectionId()).getOrderIndex()
+        ));
     }
 
     public void updateXpDetails(Map<String, String> xpDetails, HallOfFameEntry hallOfFameEntry) {
@@ -120,15 +143,5 @@ public class HallOfFameService {
                 Collections.emptyList()
         );
         return getSortedByOverviewFields(requestDto, requestDto.sortBy()).getContent();
-    }
-
-    private void sortByEventSectionOrderIndex(List<StudentScoreDetail> detailsList) {
-        Set<Long> eventSectionIds = detailsList.stream()
-                .map(StudentScoreDetail::getEventSectionId).collect(Collectors.toSet());
-
-        Map<Long, EventSection> eventSectionMap = eventSectionRepository.findByIdIn(eventSectionIds)
-                .stream()
-                .collect(Collectors.toMap(EventSection::getId, e -> e));
-
     }
 }

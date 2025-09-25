@@ -8,11 +8,9 @@ import { useOptionalMarkdownContext } from "@/hooks/contexts/useMarkdownContext"
 import { usePathname, useRouter } from "next/navigation";
 import { SpeedDialContext } from "@/components/speed-dial/strategies/types";
 import useUserContext from "@/hooks/contexts/useUserContext";
-import { Roles } from "@/interfaces/api/user";
 
 export function useSpeedDialFactory({
-  eventType,
-  viewType,
+  speedDialKey,
 }: SpeedDialEventProps): SpeedDialItem[] {
   const markdownContext = useOptionalMarkdownContext();
   const router = useRouter();
@@ -20,15 +18,11 @@ export function useSpeedDialFactory({
   const { userRole } = useUserContext();
 
   return useMemo(() => {
-    if (userRole === Roles.UNDEFINED) {
+    if (!userRole) {
       return [];
     }
 
-    const selectedType = speedDialStrategyRegistry.getStrategy(
-      eventType,
-      viewType,
-      userRole
-    );
+    const selectedType = speedDialStrategyRegistry.getStrategy(speedDialKey);
 
     if (!selectedType) {
       return [];
@@ -46,5 +40,5 @@ export function useSpeedDialFactory({
 
     const items: SpeedDialItem[] = selectedType.getItems(combinedContext);
     return items.sort((a, b) => b.orderIndex - a.orderIndex);
-  }, [eventType, viewType, userRole, markdownContext, router, pathname]);
+  }, [speedDialKey, userRole, markdownContext, router, pathname]);
 }

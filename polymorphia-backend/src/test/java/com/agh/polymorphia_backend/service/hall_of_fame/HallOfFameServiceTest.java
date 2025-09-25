@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.service.hall_of_fame;
 
+import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.event_section.AssignmentSection;
 import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry;
@@ -8,6 +9,7 @@ import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.StudentScoreDetailRepository;
+import com.agh.polymorphia_backend.service.course.AnimalService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -30,6 +32,8 @@ class HallOfFameServiceTest {
     private StudentScoreDetailRepository studentScoreDetailRepository;
     @Mock
     private EventSectionRepository eventSectionRepository;
+    @Mock
+    private AnimalService animalService;
 
     @InjectMocks
     private HallOfFameService hallOfFameService;
@@ -50,7 +54,8 @@ class HallOfFameServiceTest {
 
     @Test
     void shouldReturnStudentHallOfFame_WhenFound() {
-        when(hallOfFameRepository.findByStudentIdAndCourseId(10L, 1L))
+        when(animalService.getAnimal(1L, 10L)).thenReturn(Animal.builder().id(10L).build());
+        when(hallOfFameRepository.findByAnimalId(10L))
                 .thenReturn(Optional.of(hof));
 
         HallOfFameEntry result = hallOfFameService.getStudentHallOfFame(user);
@@ -60,7 +65,8 @@ class HallOfFameServiceTest {
 
     @Test
     void shouldThrowException_WhenHallOfFameNotFound() {
-        when(hallOfFameRepository.findByStudentIdAndCourseId(10L, 1L))
+        when(animalService.getAnimal(1L, 10L)).thenReturn(Animal.builder().id(10L).build());
+        when(hallOfFameRepository.findByAnimalId(10L))
                 .thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> hallOfFameService.getStudentHallOfFame(user))
@@ -98,8 +104,8 @@ class HallOfFameServiceTest {
         List<Long> animalIds=List.of(5L, 6L);
         List<StudentScoreDetail> details = Arrays.asList(detail1, detail2, detail3, detail4);
         Map<Long, Map<String, String>> expectedResult=Map.of(
-                5L, Map.of("Kartkówka","1.80", "Laboratorium", "2.00"),
-                6L, Map.of("Kartkówka","2.00")
+                5L, Map.of("Kartkówka", "1.8", "Laboratorium", "2.0"),
+                6L, Map.of("Kartkówka", "2.0")
         );
         AssignmentSection section1 = AssignmentSection.builder()
                 .id(1L)

@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import { EventType, ViewType } from "@/interfaces/general";
 
 export interface SpeedDialItem {
   id: number;
@@ -12,10 +11,23 @@ export interface SpeedDialItem {
 }
 
 export interface SpeedDialEventProps {
-  eventType: EventType;
-  viewType: ViewType;
+  speedDialKey: SpeedDialKey;
 }
 
 export interface SpeedDialProps {
   items: SpeedDialItem[];
 }
+
+export const SpeedDialKeys = {
+  ASSIGNMENT_MARKDOWN_STUDENT: "ASSIGNMENT_MARKDOWN_STUDENT",
+  ASSIGNMENT_MARKDOWN_INSTRUCTOR: "ASSIGNMENT_MARKDOWN_INSTRUCTOR",
+  PROJECT_MARKDOWN_STUDENT: "PROJECT_MARKDOWN_STUDENT",
+  PROJECT_MARKDOWN_INSTRUCTOR: "PROJECT_MARKDOWN_INSTRUCTOR",
+  TEST_GRADING_INSTRUCTOR: "TEST_GRADING_INSTRUCTOR",
+  ASSIGNMENT_GRADING_INSTRUCTOR: "ASSIGNMENT_GRADING_INSTRUCTOR",
+  PROJECT_GRADING_INSTRUCTOR: "PROJECT_GRADING_INSTRUCTOR",
+  COURSE_GROUP_INSTRUCTOR: "COURSE_GROUP_INSTRUCTOR",
+  PROFILE_STUDENT: "PROFILE_STUDENT",
+} as const;
+
+export type SpeedDialKey = (typeof SpeedDialKeys)[keyof typeof SpeedDialKeys];

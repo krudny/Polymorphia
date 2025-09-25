@@ -42,7 +42,6 @@ public class GradableEvent {
     @Column(length =  128)
     private String markdownSourceUrl;
 
-    @NotNull
     private String markdown;
 
     @NotNull

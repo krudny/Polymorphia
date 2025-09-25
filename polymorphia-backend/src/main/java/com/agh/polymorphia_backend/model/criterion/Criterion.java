@@ -34,6 +34,6 @@ public class Criterion {
     private String name;
 
     @NotNull
-    @Column(name = "max_xp", precision = 4, scale = 1)
+    @Column(precision = 4, scale = 1)
     private BigDecimal maxXp;
 }

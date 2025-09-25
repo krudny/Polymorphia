@@ -28,7 +28,7 @@ export default function usePreferredCourseUpdate({
         if (currentUser?.userRole === Roles.STUDENT) {
           router.push("/profile");
         } else {
-          router.push("/dashboard");
+          router.push("/course/groups");
         }
       }
     },

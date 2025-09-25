@@ -8,7 +8,7 @@ import java.util.Locale;
 
 @UtilityClass
 public final class NumberFormatter {
-    private static final String NUMBER_FORMAT = "%.02f";
+    private static final String NUMBER_FORMAT = "%.01f";
 
     public static String formatToString(BigDecimal number) {
         return String.format(Locale.US, NUMBER_FORMAT, number);
