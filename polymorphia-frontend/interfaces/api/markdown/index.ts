@@ -10,4 +10,3 @@ export interface MarkdownRequestDTO {
 export interface SourceMarkdownResponseDTO {
   sourceUrl: string | null;
 }
-

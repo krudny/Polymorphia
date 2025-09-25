@@ -1,11 +1,11 @@
-import {SpeedDialItem} from "@/components/speed-dial/types";
+import { SpeedDialItem } from "@/components/speed-dial/types";
 import GradeModal from "@/components/speed-dial/modals/grade";
 import ProjectVariantModal from "@/components/speed-dial/modals/project-variant";
-import {SpeedDialContext} from "@/components/speed-dial/strategies/types";
+import { SpeedDialContext } from "@/components/speed-dial/strategies/types";
 import GroupModal from "@/components/speed-dial/modals/group-info";
 import GroupPickingModal from "@/components/speed-dial/modals/group-pick";
 import ImportCSVModal from "@/components/speed-dial/modals/import-csv";
-import {ImportCSVType, ImportCSVTypes} from "@/interfaces/general";
+import { ImportCSVType, ImportCSVTypes } from "@/interfaces/general";
 import ResetMarkdown from "../modals/reset-markdown";
 
 export abstract class BaseSpeedDialStrategy {
@@ -59,9 +59,7 @@ export abstract class BaseSpeedDialStrategy {
       orderIndex: 0,
       label: "Zresetuj",
       icon: "update",
-      modal: (onClose) => (
-        <ResetMarkdown onClosedAction={onClose}/>
-      )
+      modal: (onClose) => <ResetMarkdown onClosedAction={onClose} />,
     };
   }
 
@@ -150,13 +148,16 @@ export abstract class BaseSpeedDialStrategy {
 
   protected createMarkdownGroup(context: SpeedDialContext): SpeedDialItem[] {
     if (context.isEditing) {
-      return [this.createSaveMarkdown(context), this.createRejectMarkdown(context)]
+      return [
+        this.createSaveMarkdown(context),
+        this.createRejectMarkdown(context),
+      ];
     }
 
     if (context.markdownSource) {
       return [this.createEditMarkdown(context), this.createResetMarkdown()];
     }
 
-    return [this.createEditMarkdown(context)]
+    return [this.createEditMarkdown(context)];
   }
 }

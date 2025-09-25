@@ -1,5 +1,5 @@
-import {ReactNode} from "react";
-import {SourceMarkdownResponseDTO} from "@/interfaces/api/markdown";
+import { ReactNode } from "react";
+import { SourceMarkdownResponseDTO } from "@/interfaces/api/markdown";
 
 export interface MarkdownContextInterface {
   markdown: string;

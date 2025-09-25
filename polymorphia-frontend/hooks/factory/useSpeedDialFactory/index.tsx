@@ -1,9 +1,9 @@
-import {SpeedDialItem, SpeedDialProps} from "@/components/speed-dial/types";
-import {useMemo} from "react";
-import {speedDialStrategyRegistry} from "@/components/speed-dial/strategies/Registry";
-import {useOptionalMarkdownContext} from "@/hooks/contexts/useMarkdownContext";
-import {usePathname, useRouter} from "next/navigation";
-import {SpeedDialContext} from "@/components/speed-dial/strategies/types";
+import { SpeedDialItem, SpeedDialProps } from "@/components/speed-dial/types";
+import { useMemo } from "react";
+import { speedDialStrategyRegistry } from "@/components/speed-dial/strategies/Registry";
+import { useOptionalMarkdownContext } from "@/hooks/contexts/useMarkdownContext";
+import { usePathname, useRouter } from "next/navigation";
+import { SpeedDialContext } from "@/components/speed-dial/strategies/types";
 import useUserRole from "@/hooks/general/useUserRole";
 
 export function useSpeedDialFactory({

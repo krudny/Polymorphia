@@ -1,6 +1,9 @@
-import {createContext, useEffect, useState} from "react";
-import {MarkdownContextInterface, MarkdownProviderProps,} from "@/providers/markdown/types";
-import {useEventParams} from "@/hooks/general/useEventParams";
+import { createContext, useEffect, useState } from "react";
+import {
+  MarkdownContextInterface,
+  MarkdownProviderProps,
+} from "@/providers/markdown/types";
+import { useEventParams } from "@/hooks/general/useEventParams";
 import useMarkdown from "../../hooks/course/useMarkdown";
 import useMarkdownUpdate from "@/hooks/course/useMarkdownUpdate";
 import toast from "react-hot-toast";

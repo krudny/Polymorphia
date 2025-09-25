@@ -1,7 +1,7 @@
-import {useQuery} from "@tanstack/react-query";
-import {UseMarkdown} from "@/hooks/course/useMarkdown/types";
-import {useEventParams} from "@/hooks/general/useEventParams";
-import {MarkdownService} from "@/app/(logged-in)/course/[eventType]/[eventSectionId]/[gradableEventId]/MarkdownService";
+import { useQuery } from "@tanstack/react-query";
+import { UseMarkdown } from "@/hooks/course/useMarkdown/types";
+import { useEventParams } from "@/hooks/general/useEventParams";
+import { MarkdownService } from "@/app/(logged-in)/course/[eventType]/[eventSectionId]/[gradableEventId]/MarkdownService";
 
 export default function useMarkdown(): UseMarkdown {
   const { gradableEventId } = useEventParams();

@@ -1,4 +1,4 @@
-import {SourceMarkdownResponseDTO} from "@/interfaces/api/markdown";
+import { SourceMarkdownResponseDTO } from "@/interfaces/api/markdown";
 
 export interface UseMarkdownSource {
   data: SourceMarkdownResponseDTO | undefined;
