@@ -24,7 +24,7 @@ public class StudentInvitationCSVProcessor {
         int lastNameIdx = CSVUtil.getColumnIndex(headers, "Nazwisko");
 
         if (request.getData().size() > 2) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Attempt to send to much emails!");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Attempt to send too much emails!");
         }
 
         for (List<String> row : request.getData()) {
@@ -50,7 +50,7 @@ public class StudentInvitationCSVProcessor {
         try {
             return Integer.parseInt(beforeAt);
         } catch (NumberFormatException ex) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email don't contain index numbers");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email don't contain index number");
         }
     }
 }
