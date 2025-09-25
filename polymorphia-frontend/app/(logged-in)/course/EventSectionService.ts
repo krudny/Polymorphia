@@ -954,6 +954,7 @@ export const EventSectionService = {
           type: TargetTypes.STUDENT,
           id: student.id,
           studentName: student.studentName,
+          animalName: student.animalName,
           evolutionStage: student.evolutionStage,
           group: student.group,
           imageUrl: student.imageUrl,

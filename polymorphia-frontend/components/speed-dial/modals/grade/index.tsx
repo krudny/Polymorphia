@@ -1,20 +1,18 @@
 import Modal from "@/components/modal/Modal";
 import GradeInfo from "@/components/course/event-section/GradeInfo";
 import Loading from "@/components/loading/Loading";
-import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import "./index.css";
 import useShortGrade from "@/hooks/course/useShortGrade";
 import { TargetTypes } from "@/interfaces/api/grade";
 import useUserContext from "@/hooks/contexts/useUserContext";
 import useCriteria from "@/hooks/course/useCriteria";
+import { GradeModalProps } from "./types";
 
 export default function GradeModal({
   onClosedAction,
   gradableEventIdProp,
-}: SpeedDialModalProps & {
-  gradableEventIdProp?: number;
-}) {
+}: GradeModalProps) {
   const { gradableEventId } = useEventParams();
   const { id } = useUserContext();
   const target = {

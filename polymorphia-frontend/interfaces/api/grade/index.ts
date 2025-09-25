@@ -54,6 +54,7 @@ export type CriteriaDetailsRequestDTO = Omit<
 export interface StudentTargetData {
   id: number;
   studentName: string;
+  animalName: string;
   evolutionStage: string;
   group: string;
   imageUrl: string;
