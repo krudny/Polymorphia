@@ -55,6 +55,7 @@ public abstract class ControllerTestConfig {
         registry.add("spring.mail.properties.mail.smtp.starttls.required", () -> "false");
         registry.add("spring.mail.properties.mail.smtp.connectiontimeout", () -> "1000");
         registry.add("spring.mail.properties.mail.smtp.timeout", () -> "1000");
+        registry.add("invitation.allow-multiple-emails", () -> "false");
     }
 
     @BeforeEach
