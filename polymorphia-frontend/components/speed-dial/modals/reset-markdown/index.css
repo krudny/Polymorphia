@@ -2,15 +2,21 @@
 @import "../../../../styles/globals.css";
 
 .update-markdown-wrapper {
-    @apply w-96 flex flex-col gap-y-4;
+    @apply w-full md:w-lg flex flex-col gap-y-4;
 
     h1 {
         @apply text-3xl;
     }
 }
 
-.update-markdown-link > a {
-    @apply w-full text-2xl mt-2 transition-opacity duration-200 hover:cursor-pointer hover:opacity-70;
+
+.update-markdown-link {
+    @apply w-full;
+
+    a {
+        @apply w-full block text-2xl mt-2 transition-opacity duration-200 hover:cursor-pointer hover:opacity-70;
+    }
+
 }
 
 .update-markdown-buttons {

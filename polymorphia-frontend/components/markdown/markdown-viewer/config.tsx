@@ -1,8 +1,15 @@
-import { Components } from "react-markdown";
+import {Components} from "react-markdown";
 import "./index.css";
-import { ComponentProps } from "react";
-import { API_STATIC_URL } from "@/services/api";
 import Image from "next/image";
+
+interface ImageProps {
+  node?: any;
+  src?: string;
+  alt?: string;
+  'data-inline'?: boolean;
+  'data-width'?: string;
+  'data-height'?: string;
+}
 
 export const markdownConfig: Components = {
   h1: ({ ...props }) => (
@@ -35,22 +42,6 @@ export const markdownConfig: Components = {
       {children}
     </span>
   ),
-
-  img: (props: ComponentProps<"img">) => {
-    const { src = "", alt = "" } = props;
-    return (
-      <span className="relative flex items-start">
-        <Image
-          src={`${API_STATIC_URL}/images/general/${src}`}
-          alt={alt}
-          width={800}
-          height={600}
-          className="object-contain rounded-xl shadow-md my-4 max-w-xl w-full h-auto"
-          sizes="(max-width: 768px) 100vw, 500px"
-        />
-      </span>
-    );
-  },
   a: ({ children, ...props }) => (
     <a
       {...props}
@@ -68,6 +59,83 @@ export const markdownConfig: Components = {
       {children}
     </a>
   ),
+  img: ({ node, src, alt, ...props }: ImageProps) => {
+    // Sprawdzamy, czy obrazek ma być inline
+    const isInline = 'data-inline' in props;
+
+    // Pobieramy wymiary z data-attributes
+    const dataWidth = props['data-width'];
+    const dataHeight = props['data-height'];
+
+    // Warunek, czy możemy użyć Next/Image (musimy mieć src i wymiary)
+    const canUseNextImage = src && dataWidth && dataHeight;
+
+    // Usuwamy niestandardowe atrybuty, aby nie trafiły do finalnego tagu
+    const { 'data-inline': di, 'data-width': dw, 'data-height': dh, ...restProps } = props;
+
+    if (canUseNextImage) {
+      console.log("can")
+      const width = parseInt(dataWidth, 10);
+      const height = parseInt(dataHeight, 10);
+
+
+      if (isInline) {
+        return (
+          <span style={{
+            display: 'inline-block',
+            verticalAlign: 'middle',
+            marginLeft: '0.5rem',
+            marginBottom: '0.2rem',
+          }}>
+            <Image
+              src={src}
+              alt={alt || ""}
+              width={width}
+              height={height}
+              className="object-contain rounded-xl my-4"
+              sizes="(max-width: 768px) 100vw, 500px"
+            />
+          </span>
+        );
+      }
+
+      return (
+        <div>
+          <Image
+            src={src}
+            alt={alt || ""}
+            width={width}
+            height={height}
+            className="object-contain rounded-xl my-4"
+            sizes="(max-width: 768px) 100vw, 500px"
+          />
+        </div>
+      );
+    }
+
+    if (src) {
+      if (isInline) {
+        return (
+          <img
+            src={src}
+            alt={alt}
+            style={{ display: 'inline-block', verticalAlign: 'middle', height: '1.2em', marginLeft: '0.5rem' }}
+            {...restProps}
+          />
+        );
+      }
+      return (
+        <img
+          src={src}
+          alt={alt}
+          style={{ display: 'block', margin: '1rem 0', maxWidth: '100%' }}
+          {...restProps}
+        />
+      );
+    }
+
+    return null; // Nic nie renderuj, jeśli nie ma src
+  },
 
   code({ node, className, children, ...props }) {
     const isBlock = node?.position?.start.line !== node?.position?.end.line;

@@ -19,9 +19,11 @@ public class MarkdownService {
     private final GradableEventRepository gradableEventRepository;
 
     public MarkdownResponseDTO getMarkdown(Long gradableEventId) {
-        GradableEvent gradableEvent = gradableEventRepository
-                .findById(gradableEventId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid gradable event id"));
+        GradableEvent gradableEvent = findGradableEvent(gradableEventId);
+
+        if (gradableEvent.getMarkdown() == null || gradableEvent.getMarkdown().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Markdown is empty");
+        }
 
         return MarkdownResponseDTO.builder()
                 .markdown(gradableEvent.getMarkdown())
@@ -29,10 +31,7 @@ public class MarkdownService {
     }
 
     public SourceUrlMarkdownResponseDTO getSourceUrl(Long gradableEventId) {
-        GradableEvent gradableEvent = gradableEventRepository
-                .findById(gradableEventId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid gradable event id"));
-
+        GradableEvent gradableEvent = findGradableEvent(gradableEventId);
 
         return SourceUrlMarkdownResponseDTO.builder()
                 .sourceUrl(gradableEvent.getMarkdownSourceUrl())
@@ -40,9 +39,7 @@ public class MarkdownService {
     }
 
     public void setMarkdown(MarkdownRequestDTO request) {
-        GradableEvent gradableEvent = gradableEventRepository
-                .findById(request.getGradableEventId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid gradable event id"));
+        GradableEvent gradableEvent = findGradableEvent(request.getGradableEventId());
 
         try {
             gradableEvent.setMarkdown(request.getMarkdown());
@@ -53,10 +50,7 @@ public class MarkdownService {
     }
 
     public void resetMarkdown(Long gradableEventId) {
-        GradableEvent gradableEvent = gradableEventRepository
-                .findById(gradableEventId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid gradable event id"));
-
+        GradableEvent gradableEvent = findGradableEvent(gradableEventId);
         String sourceUrl = gradableEvent.getMarkdownSourceUrl();
 
         if (sourceUrl == null) {
@@ -74,5 +68,11 @@ public class MarkdownService {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Markdown reset failed");
         }
+    }
+
+    private GradableEvent findGradableEvent(Long gradableEventId) {
+        return gradableEventRepository
+                .findById(gradableEventId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid gradable event id"));
     }
 }

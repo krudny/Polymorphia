@@ -1,9 +1,5 @@
-import {
-  MarkdownRequestDTO,
-  MarkdownResponseDTO,
-  SourceMarkdownResponseDTO,
-} from "@/interfaces/api/markdown";
-import { API_HOST } from "@/services/api";
+import {MarkdownRequestDTO, MarkdownResponseDTO, SourceMarkdownResponseDTO,} from "@/interfaces/api/markdown";
+import {API_HOST} from "@/services/api";
 
 export const MarkdownService = {
   getMarkdown: async (
@@ -17,7 +13,7 @@ export const MarkdownService = {
     if (!response.ok) {
       throw new Error("Nie udało się pobrać pliku");
     }
-
+    
     return await response.json();
   },
 
