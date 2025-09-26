@@ -37,7 +37,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void invite(StudentInvitationRequestDTO inviteDTO) {
+    public void inviteStudent(StudentInvitationRequestDTO inviteDTO) {
         String email = inviteDTO.getEmail();
         Integer indexNumber = inviteDTO.getIndexNumber();
 
@@ -52,7 +52,8 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public void registerUser(StudentRegisterRequestDTO registerDTO) {
+    @Transactional
+    public void registerStudent(StudentRegisterRequestDTO registerDTO) {
         InvitationToken token = invitationTokenRepository.findByToken(registerDTO.getInvitationToken())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Token doesn't exist"));
 

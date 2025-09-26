@@ -36,11 +36,11 @@ public class InvitationTokenValidator {
 
     public void validateBeforeRegister(InvitationToken token) {
         if (token.getExpiryDate().isBefore(LocalDateTime.now())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Token was expired");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Token has expired");
         }
 
         if (token.isUsed()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Token is used");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Token has already been used");
         }
 
         userValidator.validateUserNotExistsByEmail(token.getEmail());

@@ -1,4 +1,4 @@
-import { z } from "zod";
+import {z} from "zod";
 
 export const emailField = z.string().email("Nieprawidłowy email");
 
@@ -13,8 +13,8 @@ export const registerSchema = z.object({
 });
 
 export const inviteStudentSchema = z.object({
-  firstName: z.string().min(2, "Imię musi mieć co najmniej 2 znaki"),
-  lastName: z.string().min(2, "Nazwisko musi mieć co najmniej 2 znaki"),
+  firstName: z.string().nonempty(),
+  lastName: z.string().nonempty(),
   email: emailField,
   indexNumber: z.number(),
 });

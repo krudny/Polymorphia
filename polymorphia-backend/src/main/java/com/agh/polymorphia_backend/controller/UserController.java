@@ -25,11 +25,11 @@ public class UserController {
     @PostMapping("/invite")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<Void> inviteStudent(@Valid @RequestBody StudentInvitationRequestDTO inviteDTO) {
-        userService.invite(inviteDTO);
+        userService.inviteStudent(inviteDTO);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PostMapping("/csv/invite")
+    @PostMapping("/invite/csv")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<Void> processStudentInviteCSV(@RequestBody StudentInvitationCSVProcessRequestDto requestDTO) {
         studentInvitationCSVProcessor.process(requestDTO);
@@ -38,7 +38,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<Void> registerStudent(@Valid @RequestBody StudentRegisterRequestDTO registerDTO) {
-        userService.registerUser(registerDTO);
+        userService.registerStudent(registerDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

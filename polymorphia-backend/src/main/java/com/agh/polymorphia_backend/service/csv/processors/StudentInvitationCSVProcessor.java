@@ -44,7 +44,7 @@ public class StudentInvitationCSVProcessor {
                     .indexNumber(indexNumber)
                     .build();
 
-            userService.invite(inviteDto);
+            userService.inviteStudent(inviteDto);
         }
     }
 

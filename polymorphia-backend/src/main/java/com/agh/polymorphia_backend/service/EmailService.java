@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class EmailService {
     private final JavaMailSender mailSender;
 
-    @Value("${app.from-email:noreply@polymorphia.com}")
+    @Value("${spring.mail.username}")
     private String fromEmail;
 
     @Value("${app.from-name:Polymorphia}")
@@ -34,7 +34,7 @@ public class EmailService {
 
             mailSender.send(message);
         } catch (Exception e) {
-            throw new RuntimeException("Wystąpił błąd podczas wysyłania emaila");
+            throw new RuntimeException("Failed to send invitation email");
         }
     }
 

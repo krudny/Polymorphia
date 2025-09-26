@@ -1,9 +1,6 @@
-import { API_HOST } from "@/services/api";
-import { ImportCSVType, ImportCSVTypes } from "@/interfaces/general";
-import {
-  CSVHeadersResponseDTO,
-  CSVPreviewResponseDTO,
-} from "@/interfaces/api/CSV";
+import {API_HOST} from "@/services/api";
+import {ImportCSVType, ImportCSVTypes} from "@/interfaces/general";
+import {CSVHeadersResponseDTO, CSVPreviewResponseDTO,} from "@/interfaces/api/CSV";
 
 const CSVService = {
   getCSVHeaders: async (
@@ -93,7 +90,7 @@ const CSVService = {
       data: data,
     });
 
-    const response = await fetch(`${API_HOST}/user/csv/invite`, {
+    const response = await fetch(`${API_HOST}/user/invite/csv`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: body,
