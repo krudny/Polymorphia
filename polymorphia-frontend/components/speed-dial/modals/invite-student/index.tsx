@@ -1,12 +1,12 @@
-import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
+import {SpeedDialModalProps} from "@/components/speed-dial/modals/types";
 import Modal from "@/components/modal/Modal";
 import "./index.css";
-import React, { FormEvent } from "react";
+import React, {FormEvent} from "react";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import { FieldInfo } from "@/components/form/FieldInfo";
-import { useForm } from "@tanstack/react-form";
-import { inviteStudentSchema } from "@/components/form/schema";
-import { InviteStudentRequestDTO } from "@/interfaces/api/user";
+import {FieldInfo} from "@/components/form/FieldInfo";
+import {useForm} from "@tanstack/react-form";
+import {inviteStudentSchema} from "@/components/form/schema";
+import {InviteStudentRequestDTO} from "@/interfaces/api/user";
 import useInviteStudent from "@/hooks/course/useInviteStudent";
 
 function InviteStudentModalContent() {
@@ -123,7 +123,6 @@ function InviteStudentModalContent() {
               text={mutation.isPending ? "Wysyłanie..." : "Wyślij zaproszenie"}
               className="!mx-0 !py-1 !w-full !mt-4"
               isActive={isPristine || !canSubmit || mutation.isPending}
-              forceDark
             />
           )}
         </form.Subscribe>

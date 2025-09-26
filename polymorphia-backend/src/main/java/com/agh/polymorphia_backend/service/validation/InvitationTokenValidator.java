@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Component
 @AllArgsConstructor
@@ -22,7 +22,7 @@ public class InvitationTokenValidator {
 
         invitationTokenRepository.findByEmail(email)
                 .ifPresent(token -> {
-                    if (token.getExpiryDate().isAfter(LocalDateTime.now())) {
+                    if (token.getExpiryDate().isAfter(ZonedDateTime.now())) {
                         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Existing token has not expired");
                     }
 
@@ -35,7 +35,7 @@ public class InvitationTokenValidator {
     }
 
     public void validateBeforeRegister(InvitationToken token) {
-        if (token.getExpiryDate().isBefore(LocalDateTime.now())) {
+        if (token.getExpiryDate().isBefore(ZonedDateTime.now())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Token has expired");
         }
 

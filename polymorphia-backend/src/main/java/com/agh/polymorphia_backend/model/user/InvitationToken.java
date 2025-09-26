@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "invitation_tokens")
@@ -36,21 +36,21 @@ public class InvitationToken {
     private Integer indexNumber;
 
     @NotNull
-    private LocalDateTime expiryDate;
+    private ZonedDateTime expiryDate;
 
     @Column(nullable = false)
     private boolean used = false;
 
     @NotNull
-    private LocalDateTime createdAt;
+    private ZonedDateTime createdAt;
 
     @PrePersist
     protected void onCreate() {
         if (createdAt == null) {
-            createdAt = LocalDateTime.now();
+            createdAt = ZonedDateTime.now();
         }
         if (expiryDate == null) {
-            expiryDate = LocalDateTime.now().plusHours(72);
+            expiryDate = ZonedDateTime.now().plusHours(72);
         }
     }
 }
