@@ -20,6 +20,4 @@
 
 .preview-buttons-override {
     @apply custom-scrollbar;
-    scrollbar-gutter: stable;
-    overflow: hidden;
 }

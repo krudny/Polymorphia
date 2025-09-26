@@ -10,7 +10,10 @@ import java.util.Objects;
 
 public class CSVUtil {
     public static int getColumnIndex(List<String> headers, String columnName) {
-        return headers.indexOf(columnName);
+        return headers.stream()
+                .map(String::toLowerCase)
+                .toList()
+                .indexOf(columnName.toLowerCase());
     }
 
     public static boolean isValidEncoding(List<String[]> data) {

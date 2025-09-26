@@ -64,3 +64,23 @@
 }
 
 @source inline('grid-rows-1 grid-rows-2 grid-rows-3 grid-rows-4 grid-cols-1 grid-cols-2 grid-cols-3');
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #262626 !important;
+    font-family: var(--font-league) !important;
+    transition: background-color 5000s ease-in-out 0s, font-family 0s;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0 !important;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield !important;
+}

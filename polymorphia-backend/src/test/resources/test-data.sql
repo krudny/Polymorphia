@@ -1,21 +1,21 @@
 -- Users
 -- Students
-INSERT INTO users (id, first_name, last_name, email, password, is_password_temporary)
-VALUES (2, 'Piotr', 'Budynek', 'student@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', false);
+INSERT INTO users (id, first_name, last_name, email, password, is_active)
+VALUES (2, 'Piotr', 'Budynek', 'student@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', true);
 
 INSERT INTO students(index_number, user_id)
 values (123456, 2);
 
 -- Coordinators
-INSERT INTO users (id, first_name, last_name, email, password, is_password_temporary)
-VALUES (3, 'Michał', 'Kowalski', 'coordinator@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', false);
+INSERT INTO users (id, first_name, last_name, email, password, is_active)
+VALUES (3, 'Michał', 'Kowalski', 'coordinator@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', true);
 
 INSERT into coordinators(user_id)
 values (3);
 
 -- Instructors
-INSERT INTO users (id, first_name, last_name, email, password, is_password_temporary)
-VALUES (4, 'Sławomir', 'Nowak', 'instructor@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', false);
+INSERT INTO users (id, first_name, last_name, email, password, is_active)
+VALUES (4, 'Sławomir', 'Nowak', 'instructor@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', true);
 
 INSERT into instructors(user_id)
 values (4);

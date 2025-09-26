@@ -12,7 +12,7 @@ export default function HallOfFameList() {
   const wrapperRef = useScaleShow(!isLoading);
   const isDesktop = useMediaQuery({ minWidth: 1024 });
 
-  if (isLoading || !hallOfFame || isFiltersLoading || isFiltersError) {
+  if (isLoading || !hallOfFame) {
     return (
       <div className="hall-of-fame-loading-wrapper">
         <Loading />

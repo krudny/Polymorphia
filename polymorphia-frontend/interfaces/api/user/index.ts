@@ -8,3 +8,16 @@ export interface UserDetailsDTO {
   imageUrl: string;
   position: number;
 }
+
+export interface InviteStudentRequestDTO {
+  firstName: string;
+  lastName: string;
+  indexNumber: number;
+  email: string;
+}
+
+export interface RegisterRequestDTO {
+  animalName: string;
+  invitationToken: string;
+  password: string;
+}

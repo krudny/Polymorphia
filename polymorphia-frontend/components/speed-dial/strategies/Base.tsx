@@ -6,6 +6,7 @@ import GroupModal from "@/components/speed-dial/modals/group-info";
 import GroupPickingModal from "@/components/speed-dial/modals/group-pick";
 import ImportCSVModal from "@/components/speed-dial/modals/import-csv";
 import { ImportCSVType, ImportCSVTypes } from "@/interfaces/general";
+import InviteStudentModal from "@/components/speed-dial/modals/invite-student";
 
 export abstract class BaseSpeedDialStrategy {
   abstract getItems(context: SpeedDialContext): SpeedDialItem[];
@@ -96,6 +97,16 @@ export abstract class BaseSpeedDialStrategy {
       modal: (onClose) => (
         <ImportCSVModal onClosedAction={onClose} importType={importType} />
       ),
+    };
+  }
+
+  protected createInviteStudent(): SpeedDialItem {
+    return {
+      id: 5,
+      orderIndex: 7,
+      label: "Zaproś studenta",
+      icon: "person_add",
+      modal: (onClose) => <InviteStudentModal onClosedAction={onClose} />,
     };
   }
 

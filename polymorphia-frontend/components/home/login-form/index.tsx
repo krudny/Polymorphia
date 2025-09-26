@@ -12,7 +12,7 @@ import AuthService from "@/services/AuthService";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import "./index.css";
-import LoginFormProps from "@/components/home/types";
+import LoginFormProps from "@/components/home/login-form/types";
 
 export default function LoginForm({ onBackAction }: LoginFormProps) {
   const router = useRouter();

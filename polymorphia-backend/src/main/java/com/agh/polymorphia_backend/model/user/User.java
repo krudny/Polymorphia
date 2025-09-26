@@ -36,7 +36,7 @@ public abstract class User implements UserDetails {
     private String password;
 
     @NotNull
-    private boolean isPasswordTemporary;
+    private boolean isActive;
 
     @Override
     public String getUsername() {

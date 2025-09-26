@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.config;
 
-import com.agh.polymorphia_backend.service.UserService;
+import com.agh.polymorphia_backend.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -47,6 +47,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers(HttpMethod.GET, "/static/**", "/error").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/user/register").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginProcessingUrl("/login")
