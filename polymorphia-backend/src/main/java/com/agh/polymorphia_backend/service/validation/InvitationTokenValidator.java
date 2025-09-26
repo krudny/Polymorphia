@@ -1,9 +1,8 @@
-package com.agh.polymorphia_backend.service.user;
+package com.agh.polymorphia_backend.service.validation;
 
 import com.agh.polymorphia_backend.model.user.InvitationToken;
 import com.agh.polymorphia_backend.repository.user.InvitationTokenRepository;
 import com.agh.polymorphia_backend.repository.user.StudentRepository;
-import com.agh.polymorphia_backend.repository.user.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -13,23 +12,13 @@ import java.time.LocalDateTime;
 
 @Component
 @AllArgsConstructor
-public class UserValidation {
-    private final UserRepository userRepository;
+public class InvitationTokenValidator {
     private final StudentRepository studentRepository;
     private final InvitationTokenRepository invitationTokenRepository;
+    private final UserValidator userValidator;
 
-    protected void validateUserNotExists(String email) {
-        userRepository.findByEmail(email)
-                .ifPresent(user -> {
-                    throw new ResponseStatusException(HttpStatus.CONFLICT, "User already exists");
-                });
-    }
-
-    protected void validateBeforeInvitation(String email, Integer indexNumber) {
-        studentRepository.findByIndexNumber(indexNumber)
-                .ifPresent(user -> {
-                    throw new ResponseStatusException(HttpStatus.CONFLICT, "User already exists");
-                });
+    public void validateBeforeInvitation(String email, Integer indexNumber) {
+        userValidator.validateUserNotExistsByIndexNumber(indexNumber);
 
         invitationTokenRepository.findByEmail(email)
                 .ifPresent(token -> {
@@ -42,10 +31,10 @@ public class UserValidation {
                     }
                 });
 
-        validateUserNotExists(email);
+        userValidator.validateUserNotExistsByEmail(email);
     }
 
-    protected void validateBeforeRegister(InvitationToken token) {
+    public void validateBeforeRegister(InvitationToken token) {
         if (token.getExpiryDate().isBefore(LocalDateTime.now())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Token was expired");
         }
@@ -54,6 +43,6 @@ public class UserValidation {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Token is used");
         }
 
-        validateUserNotExists(token.getEmail());
+        userValidator.validateUserNotExistsByEmail(token.getEmail());
     }
 }

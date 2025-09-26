@@ -7,6 +7,8 @@ import com.agh.polymorphia_backend.model.user.Student;
 import com.agh.polymorphia_backend.repository.user.InvitationTokenRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.service.EmailService;
+import com.agh.polymorphia_backend.service.invitation_token.InvitationTokenService;
+import com.agh.polymorphia_backend.service.validation.InvitationTokenValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,15 +19,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
-
 @Service
 @AllArgsConstructor
 public class UserService implements UserDetailsService {
     private static final String USER_NOT_FOUND = "User %s does not exist in the database";
     private final UserRepository userRepository;
-    private final UserValidation userValidation;
+    private final InvitationTokenService invitationTokenService;
+    private final InvitationTokenValidator invitationTokenValidator;
     private final InvitationTokenRepository invitationTokenRepository;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
@@ -41,10 +41,10 @@ public class UserService implements UserDetailsService {
         String email = inviteDTO.getEmail();
         Integer indexNumber = inviteDTO.getIndexNumber();
 
-        userValidation.validateBeforeInvitation(email, indexNumber);
+        invitationTokenValidator.validateBeforeInvitation(email, indexNumber);
 
         try {
-            InvitationToken newToken = createInvitationToken(inviteDTO);
+            InvitationToken newToken = invitationTokenService.createInvitationToken(inviteDTO);
             invitationTokenRepository.save(newToken);
             emailService.sendInvitationEmail(email, newToken);
         } catch (Exception e) {
@@ -53,9 +53,10 @@ public class UserService implements UserDetailsService {
     }
 
     public void registerUser(StudentRegisterRequestDTO registerDTO) {
-        InvitationToken token = invitationTokenRepository.findByToken(registerDTO.getInvitationToken()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nieprawidłowy token"));
+        InvitationToken token = invitationTokenRepository.findByToken(registerDTO.getInvitationToken())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Token doesn't exist"));
 
-        userValidation.validateBeforeRegister(token);
+        invitationTokenValidator.validateBeforeRegister(token);
 
         Student student = Student.builder()
                 .email(token.getEmail())
@@ -76,21 +77,5 @@ public class UserService implements UserDetailsService {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create account");
         }
 
-    }
-
-    private InvitationToken createInvitationToken(StudentInvitationRequestDTO inviteDTO) {
-        String tokenValue = UUID.randomUUID().toString();
-        LocalDateTime now = LocalDateTime.now();
-
-        return InvitationToken.builder()
-                .email(inviteDTO.getEmail())
-                .firstName(inviteDTO.getFirstName())
-                .lastName(inviteDTO.getLastName())
-                .indexNumber(inviteDTO.getIndexNumber())
-                .token(tokenValue)
-                .expiryDate(now.plusHours(72))
-                .createdAt(now)
-                .used(false)
-                .build();
     }
 }
