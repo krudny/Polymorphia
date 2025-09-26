@@ -54,7 +54,7 @@ public class StudentInvitationCSVProcessor {
         try {
             return Integer.parseInt(beforeAt);
         } catch (NumberFormatException ex) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email don't contain index number");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email doesn't contain index number");
         }
     }
 }
