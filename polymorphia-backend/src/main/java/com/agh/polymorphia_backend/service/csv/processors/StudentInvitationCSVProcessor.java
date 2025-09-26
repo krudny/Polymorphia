@@ -4,7 +4,8 @@ import com.agh.polymorphia_backend.dto.request.csv.StudentInvitationCSVProcessRe
 import com.agh.polymorphia_backend.dto.request.user.StudentInvitationRequestDTO;
 import com.agh.polymorphia_backend.service.csv.CSVUtil;
 import com.agh.polymorphia_backend.service.user.UserService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,9 +13,12 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class StudentInvitationCSVProcessor {
     private final UserService userService;
+
+    @Value("${invitation.allow-multiple-emails}")
+    private boolean allowMultipleEmails;
 
     public void process(StudentInvitationCSVProcessRequestDto request) {
         List<String> headers = request.getCsvHeaders();
@@ -23,8 +27,8 @@ public class StudentInvitationCSVProcessor {
         int firstNameIdx = CSVUtil.getColumnIndex(headers, "Imię");
         int lastNameIdx = CSVUtil.getColumnIndex(headers, "Nazwisko");
 
-        if (request.getData().size() > 2) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Attempt to send too much emails!");
+        if (!allowMultipleEmails && request.getData().size() > 1) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Attempt to send too many emails!");
         }
 
         for (List<String> row : request.getData()) {
