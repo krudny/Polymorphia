@@ -71,8 +71,6 @@ export default function Profile() {
     filters.getAppliedFilterValues
   );
 
-  console.log(filteredXpDetails);
-
   return (
     <div ref={wrapperRef} className="profile">
       <SpeedDial items={speedDialItems} />

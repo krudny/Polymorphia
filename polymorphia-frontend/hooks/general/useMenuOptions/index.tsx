@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { Roles } from "@/interfaces/api/user";
 import useUserContext from "@/hooks/contexts/useUserContext";
+import { useMenuCourseOptionText } from "@/hooks/general/useMenuCourseOptionText";
 
 export function useBottomMenuItems(): MenuOption[] {
   return [
@@ -43,7 +44,7 @@ export function useBottomDesktopMenuItems(): MenuOption[] {
 
 export function useMainMenuItems(): MenuOption[] {
   const { userRole } = useUserContext();
-  console.log(userRole);
+  const courseOptionText = useMenuCourseOptionText(userRole);
   const isInstructorOrCoordinator =
     userRole === Roles.COORDINATOR || userRole === Roles.INSTRUCTOR;
 
@@ -68,7 +69,7 @@ export function useMainMenuItems(): MenuOption[] {
         { text: "Skrzynki", link: "knowledge-base/chests" },
       ],
     },
-    { icon: GraduationCapIcon, text: getCourseMenuOptionText() }
+    { icon: GraduationCapIcon, text: courseOptionText }
   );
 
   if (userRole === Roles.STUDENT) {
@@ -81,11 +82,4 @@ export function useMainMenuItems(): MenuOption[] {
   );
 
   return items;
-}
-
-export function getCourseMenuOptionText() {
-  const { userRole } = useUserContext();
-  const isInstructorOrCoordinator =
-    userRole === Roles.COORDINATOR || userRole === Roles.INSTRUCTOR;
-  return isInstructorOrCoordinator ? "Ocenianie" : "Kurs";
 }

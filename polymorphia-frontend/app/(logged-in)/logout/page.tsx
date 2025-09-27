@@ -13,7 +13,6 @@ export default function Logout() {
     if (!hasLoggedOut) {
       setHasLoggedOut(true);
       logout();
-      router.push("/");
     }
-  }, [logout, router]);
+  }, [logout, router, hasLoggedOut]);
 }

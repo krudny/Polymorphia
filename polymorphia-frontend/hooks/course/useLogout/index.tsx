@@ -11,7 +11,7 @@ export default function useLogout() {
     mutationFn: () => AuthService.logout(),
     onSuccess: () => {
       queryClient.clear();
-      toast.success("Wylogowałeś się z aplikacji");
+      toast.success("Wylogowałeś się z aplikacji", { id: "logout-success" });
       router.push("/");
     },
     onError: () => {

@@ -12,7 +12,7 @@ export function animateWelcome(
       y: 0,
       duration: 1.2,
       ease: "power2.out",
-      onComplete: () => onComplete(),
+      onComplete,
     }
   );
 }
