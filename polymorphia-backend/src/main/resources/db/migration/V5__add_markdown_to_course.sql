@@ -1,5 +1,5 @@
 ALTER TABLE courses
-    ADD markdown VARCHAR(255);
+    ADD markdown TEXT;
 
 ALTER TABLE courses
     ADD markdown_source_url VARCHAR(128);
