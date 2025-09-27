@@ -1,16 +1,12 @@
-import {
-  mergeSlotProps,
-  SpeedDialAction,
-  SpeedDialActionProps,
-} from "@mui/material";
+import { mergeSlotProps, SpeedDialAction } from "@mui/material";
 import "../index.css";
-import { forwardRef } from "react";
 import { SpeedDialActionWrapperProps } from "./types";
 
-const SpeedDialActionWrapper = forwardRef<
-  HTMLButtonElement,
-  SpeedDialActionWrapperProps & Partial<SpeedDialActionProps>
->(({ item, setActiveModal, ...props }, ref) => {
+export default function SpeedDialActionWrapper({
+  item,
+  setActiveModal,
+  ...props
+}: SpeedDialActionWrapperProps) {
   const { onClick, modal } = item.useAction();
 
   // MUI injects its own slot props via SpeedDial host component, we need to merge those.
@@ -49,7 +45,6 @@ const SpeedDialActionWrapper = forwardRef<
 
   return (
     <SpeedDialAction
-      ref={ref}
       {...props}
       icon={<span className="material-symbols">{item.icon}</span>}
       slotProps={mergedSlotProps.slotProps}
@@ -62,8 +57,4 @@ const SpeedDialActionWrapper = forwardRef<
       }}
     />
   );
-});
-
-SpeedDialActionWrapper.displayName = "SpeedDialActionWrapper";
-
-export default SpeedDialActionWrapper;
+}
