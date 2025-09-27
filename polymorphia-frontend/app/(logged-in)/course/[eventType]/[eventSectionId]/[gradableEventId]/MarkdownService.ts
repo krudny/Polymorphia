@@ -1,23 +1,18 @@
-import {
-  MarkdownRequestDTO,
-  MarkdownResponseDTO,
-  SourceMarkdownResponseDTO,
-} from "@/interfaces/api/markdown";
-import { API_HOST } from "@/services/api";
+import {MarkdownRequestDTO, MarkdownResponseDTO, SourceMarkdownResponseDTO,} from "@/interfaces/api/markdown";
+import {API_HOST} from "@/services/api";
+import {MarkdownType} from "@/interfaces/general";
 
 export const MarkdownService = {
-  getMarkdown: async (
-    gradableEventId: number
-  ): Promise<MarkdownResponseDTO> => {
+  getMarkdown: async (id: number, markdownType: MarkdownType): Promise<MarkdownResponseDTO> => {
     const response = await fetch(
-      `${API_HOST}/markdown?gradableEventId=${gradableEventId}`,
+      `${API_HOST}/markdown?gradableEventId=${id}`,
       { credentials: "include" }
     );
 
     if (!response.ok) {
       throw new Error("Nie udało się pobrać pliku");
     }
-
+    
     return await response.json();
   },
 

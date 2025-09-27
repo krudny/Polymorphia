@@ -1,5 +1,6 @@
-import { ReactNode } from "react";
-import { SourceMarkdownResponseDTO } from "@/interfaces/api/markdown";
+import {ReactNode} from "react";
+import {SourceMarkdownResponseDTO} from "@/interfaces/api/markdown";
+import {MarkdownType} from "@/interfaces/general";
 
 export interface MarkdownContextInterface {
   markdown: string;
@@ -18,4 +19,5 @@ export interface MarkdownContextInterface {
 
 export interface MarkdownProviderProps {
   children: ReactNode;
+  markdownType: MarkdownType;
 }

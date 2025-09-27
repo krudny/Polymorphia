@@ -25,9 +25,6 @@ public class Course {
     @NotEmpty
     private String name;
 
-    @NotEmpty
-    private String infoUrl;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "coordinator_id")
     private Coordinator coordinator;
@@ -36,4 +33,9 @@ public class Course {
     @ToString.Exclude
     @JsonIgnore
     private List<CourseGroup> courseGroups;
+
+    @Column(length =  128)
+    private String markdownSourceUrl;
+
+    private String markdown;
 }

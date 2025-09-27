@@ -1,5 +1,5 @@
-import { KnowledgeBaseResponseDTO } from "@/interfaces/api/knowledge-base";
-import { API_HOST } from "@/services/api";
+import {KnowledgeBaseResponseDTO} from "@/interfaces/api/knowledge-base";
+import {API_HOST} from "@/services/api";
 
 const KnowledgeBaseService = {
   getEvolutionStages: async (

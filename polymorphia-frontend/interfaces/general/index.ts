@@ -30,3 +30,11 @@ export const ImportCSVTypes = {
 
 export type ImportCSVType =
   (typeof ImportCSVTypes)[keyof typeof ImportCSVTypes];
+
+export const MarkdownTypes = {
+  COURSE_RULES: "COURSE_RULES",
+  GRADABLE_EVENT: "GRADABLE_EVENT",
+} as const;
+
+export type MarkdownType = (typeof MarkdownTypes)[keyof typeof MarkdownTypes];
+
