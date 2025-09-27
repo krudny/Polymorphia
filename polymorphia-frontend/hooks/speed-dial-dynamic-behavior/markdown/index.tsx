@@ -1,7 +1,7 @@
-import { SpeedDialItemAction } from "@/components/speed-dial/types";
+import { SpeedDialItemDynamicBehavior } from "@/components/speed-dial/types";
 import useMarkdownContext from "@/hooks/contexts/useMarkdownContext";
 
-export function useSaveMarkdownSpeedDialAction(): SpeedDialItemAction {
+export function useSaveMarkdownSpeedDialDynamicBehavior(): SpeedDialItemDynamicBehavior {
   const { isEditing, saveMarkdown } = useMarkdownContext();
 
   return {
@@ -10,7 +10,7 @@ export function useSaveMarkdownSpeedDialAction(): SpeedDialItemAction {
   };
 }
 
-export function useEditMarkdownSpeedDialAction(): SpeedDialItemAction {
+export function useEditMarkdownSpeedDialDynamicBehavior(): SpeedDialItemDynamicBehavior {
   const { isEditing, setIsEditing } = useMarkdownContext();
 
   return {
@@ -19,7 +19,7 @@ export function useEditMarkdownSpeedDialAction(): SpeedDialItemAction {
   };
 }
 
-export function useRejectMarkdownSpeedDialAction(): SpeedDialItemAction {
+export function useRejectMarkdownSpeedDialDynamicBehavior(): SpeedDialItemDynamicBehavior {
   const { isEditing, rejectMarkdown } = useMarkdownContext();
 
   return {

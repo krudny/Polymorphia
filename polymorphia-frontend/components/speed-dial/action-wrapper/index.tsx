@@ -7,7 +7,7 @@ export default function SpeedDialActionWrapper({
   setActiveModal,
   ...props
 }: SpeedDialActionWrapperProps) {
-  const { onClick, modal, shouldBeRendered = true } = item.useAction();
+  const { onClick, modal, shouldBeRendered = true } = item.useDynamicBehavior();
 
   if (!shouldBeRendered) {
     return null;

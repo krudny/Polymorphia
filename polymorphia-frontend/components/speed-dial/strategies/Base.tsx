@@ -1,24 +1,23 @@
 import { SpeedDialItem } from "@/components/speed-dial/types";
 import GradeModal from "@/components/speed-dial/modals/grade";
 import ProjectVariantModal from "@/components/speed-dial/modals/project-variant";
-import { SpeedDialContext } from "@/components/speed-dial/strategies/types";
 import GroupModal from "@/components/speed-dial/modals/group-info";
 import GroupPickingModal from "@/components/speed-dial/modals/group-pick";
 import ImportCSVModal from "@/components/speed-dial/modals/import-csv";
-import { ImportCSVType, ImportCSVTypes } from "@/interfaces/general";
+import { ImportCSVType, ImportCSVTypes, Role } from "@/interfaces/general";
 import {
-  useEditMarkdownSpeedDialAction,
-  useRejectMarkdownSpeedDialAction,
-  useSaveMarkdownSpeedDialAction,
-} from "@/hooks/speed-dial-actions/markdown";
+  useEditMarkdownSpeedDialDynamicBehavior,
+  useRejectMarkdownSpeedDialDynamicBehavior,
+  useSaveMarkdownSpeedDialDynamicBehavior,
+} from "@/hooks/speed-dial-dynamic-behavior/markdown";
 import {
-  useAppendToPathSpeedDialAction,
-  useGoBackSpeedDialAction,
-  useNavigateToParentUrlSpeedDialAction,
-} from "@/hooks/speed-dial-actions/navigation";
+  useAppendToPathSpeedDialDynamicBehavior,
+  useGoBackSpeedDialDynamicBehavior,
+  useNavigateToParentUrlSpeedDialDynamicBehavior,
+} from "@/hooks/speed-dial-dynamic-behavior/navigation";
 
 export abstract class BaseSpeedDialStrategy {
-  abstract getItems(context: SpeedDialContext): SpeedDialItem[];
+  abstract getItems(role: Role): SpeedDialItem[];
 
   protected createRewards(): SpeedDialItem {
     return {
@@ -26,7 +25,7 @@ export abstract class BaseSpeedDialStrategy {
       orderIndex: 5,
       label: "Nagrody",
       icon: "trophy",
-      useAction: () => ({
+      useDynamicBehavior: () => ({
         modal: (onClose) => <GradeModal onClosedAction={onClose} />,
       }),
     };
@@ -38,7 +37,7 @@ export abstract class BaseSpeedDialStrategy {
       orderIndex: 1,
       label: "Zapisz markdown",
       icon: "save",
-      useAction: useSaveMarkdownSpeedDialAction,
+      useDynamicBehavior: useSaveMarkdownSpeedDialDynamicBehavior,
       color: "#048635",
     };
   }
@@ -49,7 +48,7 @@ export abstract class BaseSpeedDialStrategy {
       orderIndex: 1,
       label: "Edytuj treść",
       icon: "edit",
-      useAction: useEditMarkdownSpeedDialAction,
+      useDynamicBehavior: useEditMarkdownSpeedDialDynamicBehavior,
     };
   }
 
@@ -59,7 +58,7 @@ export abstract class BaseSpeedDialStrategy {
       orderIndex: 0,
       label: "Anuluj edycję",
       icon: "close",
-      useAction: useRejectMarkdownSpeedDialAction,
+      useDynamicBehavior: useRejectMarkdownSpeedDialDynamicBehavior,
       color: "#a30d0d",
     };
   }
@@ -70,7 +69,7 @@ export abstract class BaseSpeedDialStrategy {
       orderIndex: 2,
       label: "Wariant",
       icon: "arrow_split",
-      useAction: () => ({
+      useDynamicBehavior: () => ({
         modal: (onClose) => <ProjectVariantModal onClosedAction={onClose} />,
       }),
     };
@@ -82,7 +81,7 @@ export abstract class BaseSpeedDialStrategy {
       orderIndex: 3,
       label: "Grupa",
       icon: "person",
-      useAction: () => ({
+      useDynamicBehavior: () => ({
         modal: (onClose) => <GroupModal onClosedAction={onClose} />,
       }),
     };
@@ -94,7 +93,7 @@ export abstract class BaseSpeedDialStrategy {
       orderIndex: 4,
       label: "Utwórz grupę",
       icon: "person_add",
-      useAction: () => ({
+      useDynamicBehavior: () => ({
         modal: (onClose) => <GroupPickingModal onClosedAction={onClose} />,
       }),
     };
@@ -111,7 +110,7 @@ export abstract class BaseSpeedDialStrategy {
       orderIndex: 9,
       label: importLabels[importType] ?? "Import CSV",
       icon: "cloud_upload",
-      useAction: () => ({
+      useDynamicBehavior: () => ({
         modal: (onClose) => (
           <ImportCSVModal onClosedAction={onClose} importType={importType} />
         ),
@@ -125,7 +124,7 @@ export abstract class BaseSpeedDialStrategy {
       orderIndex: 50,
       label: "Wróć",
       icon: "undo",
-      useAction: useGoBackSpeedDialAction,
+      useDynamicBehavior: useGoBackSpeedDialDynamicBehavior,
     };
   }
 
@@ -135,7 +134,8 @@ export abstract class BaseSpeedDialStrategy {
       orderIndex: 51,
       label: "Ocenianie",
       icon: "assignment_turned_in",
-      useAction: () => useAppendToPathSpeedDialAction("/grading"),
+      useDynamicBehavior: () =>
+        useAppendToPathSpeedDialDynamicBehavior("/grading"),
     };
   }
 
@@ -145,7 +145,7 @@ export abstract class BaseSpeedDialStrategy {
       orderIndex: 0,
       label: "Zobacz polecenie",
       icon: "task",
-      useAction: useNavigateToParentUrlSpeedDialAction,
+      useDynamicBehavior: useNavigateToParentUrlSpeedDialDynamicBehavior,
     };
   }
 

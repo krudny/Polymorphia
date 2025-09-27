@@ -1,7 +1,7 @@
-import { SpeedDialItemAction } from "@/components/speed-dial/types";
+import { SpeedDialItemDynamicBehavior } from "@/components/speed-dial/types";
 import { usePathname, useRouter } from "next/navigation";
 
-export function useGoBackSpeedDialAction(): SpeedDialItemAction {
+export function useGoBackSpeedDialDynamicBehavior(): SpeedDialItemDynamicBehavior {
   const router = useRouter();
 
   return {
@@ -9,9 +9,9 @@ export function useGoBackSpeedDialAction(): SpeedDialItemAction {
   };
 }
 
-export function useAppendToPathSpeedDialAction(
+export function useAppendToPathSpeedDialDynamicBehavior(
   urlToAppend: string
-): SpeedDialItemAction {
+): SpeedDialItemDynamicBehavior {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -21,7 +21,7 @@ export function useAppendToPathSpeedDialAction(
   };
 }
 
-export function useNavigateToParentUrlSpeedDialAction(): SpeedDialItemAction {
+export function useNavigateToParentUrlSpeedDialDynamicBehavior(): SpeedDialItemDynamicBehavior {
   const router = useRouter();
   const pathname = usePathname();
 
