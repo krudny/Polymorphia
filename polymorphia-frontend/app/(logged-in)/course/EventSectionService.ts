@@ -1,18 +1,22 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import {ProjectVariantResponseDTO} from "@/interfaces/api/course/project";
-import {CriterionResponseDTO, GradeResponseDTO, ShortGradeResponseDTO,} from "@/interfaces/api/grade";
-import {PointsSummaryResponseDTO} from "@/interfaces/api/course/points-summary";
+import { ProjectVariantResponseDTO } from "@/interfaces/api/course/project";
+import {
+  CriterionResponseDTO,
+  GradeResponseDTO,
+  ShortGradeResponseDTO,
+} from "@/interfaces/api/grade";
+import { PointsSummaryResponseDTO } from "@/interfaces/api/course/points-summary";
 import {
   EventSectionResponseDTO,
   InstructorGradableEventResponseDTO,
   StudentGradableEventResponseDTO,
 } from "@/interfaces/api/course";
-import {UserDetailsDTO} from "@/interfaces/api/user";
-import {ProjectGroupResponseDTO} from "@/interfaces/api/temp";
-import {EventTypes} from "@/interfaces/general";
-import {CriteriaDetails} from "@/providers/grading/gradingReducer/types";
+import { UserDetailsDTO } from "@/interfaces/api/user";
+import { ProjectGroupResponseDTO } from "@/interfaces/api/temp";
+import { EventTypes } from "@/interfaces/general";
+import { CriteriaDetails } from "@/providers/grading/gradingReducer/types";
 
 export const studentNames = [
   "Gerard Małoduszny",

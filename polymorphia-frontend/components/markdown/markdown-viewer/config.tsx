@@ -1,7 +1,7 @@
-import {Components} from "react-markdown";
+import { Components } from "react-markdown";
 import "./index.css";
 import Image from "next/image";
-import {MarkdownImageProps} from "./types";
+import { MarkdownImageProps } from "./types";
 
 export const markdownConfig: Components = {
   h1: ({ ...props }) => (
@@ -53,41 +53,41 @@ export const markdownConfig: Components = {
   ),
   img: ({ src, alt, ...props }: MarkdownImageProps) => {
     const { width: propWidth, height: propHeight } = props;
-    const isInline = 'data-inline' in props;
+    const isInline = "data-inline" in props;
 
-      const width = parseInt(String(propWidth), 10) || 900;
-      const height = parseInt(String(propHeight), 10) || 600;
+    const width = parseInt(String(propWidth), 10) || 900;
+    const height = parseInt(String(propHeight), 10) || 600;
 
-      if (isInline) {
-        return (
-          <span className="markdown-inline-image">
-            <Image
-              src={src!}
-              alt={alt || ""}
-              width={width}
-              height={height}
-              className="object-contain"
-              quality={100}
-              priority
-            />
-          </span>
-        );
-      }
-
+    if (isInline) {
       return (
-        <div>
+        <span className="markdown-inline-image">
           <Image
             src={src!}
             alt={alt || ""}
             width={width}
             height={height}
-            className="object-contain rounded-xl my-4"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+            className="object-contain"
             quality={100}
             priority
           />
-        </div>
+        </span>
       );
+    }
+
+    return (
+      <div>
+        <Image
+          src={src!}
+          alt={alt || ""}
+          width={width}
+          height={height}
+          className="object-contain rounded-xl my-4"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+          quality={100}
+          priority
+        />
+      </div>
+    );
   },
 
   code({ node, className, children, ...props }) {
