@@ -8,3 +8,7 @@
 .course-choice-text {
     @apply text-5xl mb-7;
 }
+
+.course-choice-logout-wrapper{
+    @apply mt-12 flex justify-center
+}

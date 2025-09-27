@@ -56,8 +56,7 @@ export function useHallOfFameFilterConfigs(courseId: number) {
           title: "Wyświetlanie",
           options: [
             ...eventSections.map((eventSection) => ({
-              value: String(eventSection.id),
-              label: eventSection.name,
+              value: eventSection.name,
             })),
             { value: "bonuses", label: "Bonusy" },
           ],
@@ -67,7 +66,7 @@ export function useHallOfFameFilterConfigs(courseId: number) {
             ...eventSections
               .slice(0, Math.min(3, Math.max(0, eventSections.length - 1)))
               .map((eventSection) => eventSection.name),
-            "Bonusy",
+            "bonuses",
           ],
         },
       ];

@@ -4,9 +4,9 @@ import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Loading from "@/components/loading/Loading";
 import "./index.css";
-import useUserRole from "../../../hooks/course/useUserRole";
+import useUserRole from "@/hooks/course/useUserRole";
 import { animateWelcome } from "@/animations/Welcome";
-import { redirectToNextStep } from "@/app/(welcome)/Util";
+import { redirectToNextStep } from "@/app/(welcome)/redirectHandler";
 
 export default function Welcome() {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -34,7 +34,7 @@ export default function Welcome() {
 
   return (
     <div ref={wrapperRef} className="welcome-wrapper">
-      Witaj w Polymorphii!
+      <h1>Witaj w Polymorphii!</h1>
     </div>
   );
 }

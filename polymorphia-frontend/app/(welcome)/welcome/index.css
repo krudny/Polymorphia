@@ -2,5 +2,9 @@
 @import "../../../styles/globals.css";
 
 .welcome-wrapper{
-    @apply flex-centered text-5xl absolute top-0 min-h-screen w-screen;
+    @apply flex-centered absolute top-0 min-h-screen w-screen;
+
+    h1{
+        @apply text-5xl
+    }
 }

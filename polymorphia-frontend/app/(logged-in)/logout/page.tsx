@@ -1,17 +1,17 @@
 "use client";
 
 import useLogout from "@/hooks/course/useLogout";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Logout() {
   const { mutate: logout } = useLogout();
   const router = useRouter();
-  const hasLoggedOut = useRef(false);
+  const [hasLoggedOut, setHasLoggedOut] = useState(false);
 
   useEffect(() => {
-    if (!hasLoggedOut.current) {
-      hasLoggedOut.current = true;
+    if (!hasLoggedOut) {
+      setHasLoggedOut(true);
       logout();
       router.push("/");
     }

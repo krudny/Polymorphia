@@ -1,5 +1,5 @@
 import { Role } from "@/interfaces/api/user";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { AppRouterInstance } from "@/interfaces/general";
 
 interface RedirectProps {
   userRole: Role;

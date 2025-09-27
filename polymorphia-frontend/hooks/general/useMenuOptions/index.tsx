@@ -9,6 +9,7 @@ import {
   SettingsIcon,
   TrophyIcon,
   UserIcon,
+  UsersIcon,
 } from "lucide-react";
 import { Roles } from "@/interfaces/api/user";
 import useUserContext from "@/hooks/contexts/useUserContext";
@@ -42,7 +43,21 @@ export function useBottomDesktopMenuItems(): MenuOption[] {
 
 export function useMainMenuItems(): MenuOption[] {
   const { userRole } = useUserContext();
-  const items: MenuOption[] = [
+  console.log(userRole);
+  const isInstructorOrCoordinator =
+    userRole === Roles.COORDINATOR || userRole === Roles.INSTRUCTOR;
+
+  const items: MenuOption[] = [];
+
+  if (isInstructorOrCoordinator) {
+    items.push({ icon: UsersIcon, text: "Grupy", link: "course/groups" });
+  }
+
+  if (userRole === Roles.STUDENT) {
+    items.push({ icon: UserIcon, text: "Profil", link: "profile" });
+  }
+
+  items.push(
     {
       icon: BadgeHelpIcon,
       text: "Baza wiedzy",
@@ -53,24 +68,24 @@ export function useMainMenuItems(): MenuOption[] {
         { text: "Skrzynki", link: "knowledge-base/chests" },
       ],
     },
-    { icon: GraduationCapIcon, text: "Kurs" },
-    { icon: MedalIcon, text: "Hall of Fame", link: "hall-of-fame" },
-    { icon: MilestoneIcon, text: "Roadmapa", link: "roadmap" },
-  ];
+    { icon: GraduationCapIcon, text: getCourseMenuOptionText() }
+  );
 
   if (userRole === Roles.STUDENT) {
-    items.splice(0, 0, {
-      icon: UserIcon,
-      text: "Profil",
-      link: "profile",
-    });
-
-    items.splice(3, 0, {
-      icon: TrophyIcon,
-      text: "Ekwipunek",
-      link: "equipment",
-    });
+    items.push({ icon: TrophyIcon, text: "Ekwipunek", link: "equipment" });
   }
 
+  items.push(
+    { icon: MedalIcon, text: "Hall of Fame", link: "hall-of-fame" },
+    { icon: MilestoneIcon, text: "Roadmapa", link: "roadmap" }
+  );
+
   return items;
+}
+
+export function getCourseMenuOptionText() {
+  const { userRole } = useUserContext();
+  const isInstructorOrCoordinator =
+    userRole === Roles.COORDINATOR || userRole === Roles.INSTRUCTOR;
+  return isInstructorOrCoordinator ? "Ocenianie" : "Kurs";
 }

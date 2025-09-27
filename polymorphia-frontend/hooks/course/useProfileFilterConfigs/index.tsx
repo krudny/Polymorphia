@@ -22,10 +22,10 @@ export function useProfileFilterConfigs(): UseProfileFilterConfigs {
           title: "Wyświetlanie",
           options: [
             ...eventSections.map((eventSection) => ({
-              value: String(eventSection.id),
-              label: eventSection.name,
+              value: eventSection.name,
             })),
             { value: "bonuses", label: "Bonusy" },
+            { value: "total", label: "Suma" },
           ],
           min: Math.min(4, eventSections.length),
           max: Math.min(4, eventSections.length),
@@ -33,8 +33,8 @@ export function useProfileFilterConfigs(): UseProfileFilterConfigs {
             ...eventSections
               .slice(0, Math.min(2, Math.max(0, eventSections.length - 1)))
               .map((eventSection) => eventSection.name),
-            "Bonusy",
-            "Suma",
+            "bonuses",
+            "total",
           ],
         },
       ];

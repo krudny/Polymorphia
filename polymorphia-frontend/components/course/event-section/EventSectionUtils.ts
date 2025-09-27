@@ -3,13 +3,14 @@
 import { MenuOption } from "@/components/navigation/types";
 import { EventSectionResponseDTO } from "@/interfaces/api/course";
 import { RefObject } from "react";
+import { getCourseMenuOptionText } from "@/hooks/general/useMenuOptions";
 
 export function updateMenuItems(
   menuItems: MenuOption[],
   eventSections: EventSectionResponseDTO[]
 ) {
   const courseItem = menuItems.filter(
-    (menuOption) => menuOption.text === "Kurs"
+    (menuOption) => menuOption.text === getCourseMenuOptionText()
   )[0];
 
   courseItem.link = `course/${eventSections[0].type.toLowerCase()}/${eventSections[0].id}`;
