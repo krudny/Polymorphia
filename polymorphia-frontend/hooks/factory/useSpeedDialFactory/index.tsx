@@ -32,6 +32,7 @@ export function useSpeedDialFactory({
       saveMarkdown: markdownContext?.saveMarkdown || (() => {}),
       setIsEditing: markdownContext?.setIsEditing || (() => {}),
       rejectMarkdown: markdownContext?.rejectMarkdown || (() => {}),
+      markdownSource: markdownContext?.markdownSource?.sourceUrl,
       isEditing: markdownContext?.isEditing || false,
     };
 

@@ -7,6 +7,7 @@ export interface SpeedDialContext {
   setIsEditing: (editing: boolean) => void;
   saveMarkdown: () => void;
   rejectMarkdown: () => void;
+  markdownSource: string | null | undefined;
   router: AppRouterInstance;
   currentPath: string;
   role: Role;

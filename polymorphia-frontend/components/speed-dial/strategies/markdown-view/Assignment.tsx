@@ -15,7 +15,10 @@ export class AssignmentStrategy
       case Roles.STUDENT:
         return [this.createRewards(), this.createGoBack(context)];
       case Roles.INSTRUCTOR:
-        return [this.createRedirectToGrading(context)];
+        return [
+          this.createRedirectToGrading(context),
+          ...this.createMarkdownGroup(context),
+        ];
       default:
         return [];
     }

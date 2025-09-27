@@ -1,14 +1,12 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { lab0, lab1, lab2, proj1 } from "@/app/(logged-in)/course/sampleData";
 import { ProjectVariantResponseDTO } from "@/interfaces/api/course/project";
 import {
   CriterionResponseDTO,
   GradeResponseDTO,
   ShortGradeResponseDTO,
 } from "@/interfaces/api/grade";
-import { MarkdownResponseDTO } from "@/interfaces/api/markdown";
 import { PointsSummaryResponseDTO } from "@/interfaces/api/course/points-summary";
 import {
   EventSectionResponseDTO,
@@ -65,15 +63,6 @@ for (let i = 0; i < 250; i++) {
   };
   allData.push(item);
 }
-
-const mockMarkdownStore: Record<number, string> = {
-  15: lab1,
-  16: lab2,
-  30: lab0,
-  33: proj1,
-  34: "# Dlaczego prosty CRUD nie jest prosty? \n < Content >",
-  32: "# Dlaczego refactoring hell to zło? \n < Content >",
-};
 
 const eventSectionData: EventSectionResponseDTO[] = [
   {
@@ -270,7 +259,7 @@ export const EventSectionService = {
           hasReward: true,
         },
         {
-          id: 18,
+          id: 12,
           type: EventTypes.ASSIGNMENT,
           name: "Laboratorium 4",
           topic: "Interfejsy i mapy",
@@ -671,26 +660,6 @@ export const EventSectionService = {
         },
       };
     }
-  },
-
-  getMarkdown: async (
-    gradableEventId: number
-  ): Promise<MarkdownResponseDTO> => {
-    const markdown = mockMarkdownStore[gradableEventId];
-    if (markdown !== undefined) {
-      await new Promise<void>((resolve) => setTimeout(resolve, 300));
-      return { markdown };
-    } else {
-      return { markdown: "" };
-    }
-  },
-
-  saveMarkdown: async (
-    gradableEventId: number,
-    newMarkdown: string
-  ): Promise<void> => {
-    await new Promise<void>((resolve) => setTimeout(resolve, 100));
-    mockMarkdownStore[gradableEventId] = newMarkdown;
   },
 
   getCriteria: async (

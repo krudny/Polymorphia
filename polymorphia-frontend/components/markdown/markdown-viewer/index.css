@@ -11,6 +11,10 @@
     @apply bg-primary-dark text-secondary-light text-sm p-4 rounded overflow-x-auto my-4;
 }
 
+.markdown-inline-image {
+    @apply inline-block align-middle ml-2 mb-[0.2rem];
+}
+
 /* Markdown viewer */
 
 .markdown-viewer {

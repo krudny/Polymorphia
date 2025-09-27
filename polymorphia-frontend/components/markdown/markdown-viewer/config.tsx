@@ -1,8 +1,7 @@
 import { Components } from "react-markdown";
 import "./index.css";
-import { ComponentProps } from "react";
-import { API_STATIC_URL } from "@/services/api";
 import Image from "next/image";
+import { MarkdownImageProps } from "./types";
 
 export const markdownConfig: Components = {
   h1: ({ ...props }) => (
@@ -35,22 +34,6 @@ export const markdownConfig: Components = {
       {children}
     </span>
   ),
-
-  img: (props: ComponentProps<"img">) => {
-    const { src = "", alt = "" } = props;
-    return (
-      <span className="relative flex items-start">
-        <Image
-          src={`${API_STATIC_URL}/images/general/${src}`}
-          alt={alt}
-          width={800}
-          height={600}
-          className="object-contain rounded-xl shadow-md my-4 max-w-xl w-full h-auto"
-          sizes="(max-width: 768px) 100vw, 500px"
-        />
-      </span>
-    );
-  },
   a: ({ children, ...props }) => (
     <a
       {...props}
@@ -68,6 +51,44 @@ export const markdownConfig: Components = {
       {children}
     </a>
   ),
+  img: ({ src, alt, ...props }: MarkdownImageProps) => {
+    const { width: propWidth, height: propHeight } = props;
+    const isInline = "data-inline" in props;
+
+    const width = parseInt(String(propWidth), 10) || 900;
+    const height = parseInt(String(propHeight), 10) || 600;
+
+    if (isInline) {
+      return (
+        <span className="markdown-inline-image">
+          <Image
+            src={src!}
+            alt={alt || ""}
+            width={width}
+            height={height}
+            className="object-contain"
+            quality={100}
+            priority
+          />
+        </span>
+      );
+    }
+
+    return (
+      <div>
+        <Image
+          src={src!}
+          alt={alt || ""}
+          width={width}
+          height={height}
+          className="object-contain rounded-xl my-4"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+          quality={100}
+          priority
+        />
+      </div>
+    );
+  },
 
   code({ node, className, children, ...props }) {
     const isBlock = node?.position?.start.line !== node?.position?.end.line;
