@@ -25,25 +25,30 @@ public class MarkdownController {
         return ResponseEntity.ok(markdownService.getMarkdown(type, resourceId));
     }
 
-    @GetMapping()
-    public ResponseEntity<MarkdownResponseDTO> getMarkdown(@RequestParam Long gradableEventId) {
-        return ResponseEntity.ok(markdownService.getMarkdown(gradableEventId));
+    @GetMapping("/{type}/{resourceId}/source")
+    public ResponseEntity<SourceUrlMarkdownResponseDTO> getMarkdownSourceUrl(
+            @PathVariable MarkdownType type,
+            @PathVariable Long resourceId) {
+
+        return ResponseEntity.ok(markdownService.getMarkdownSourceUrl(type, resourceId));
     }
 
-    @GetMapping("/source")
-    public ResponseEntity<SourceUrlMarkdownResponseDTO> getSourceUrl(@RequestParam Long gradableEventId) {
-        return ResponseEntity.ok(markdownService.getSourceUrl(gradableEventId));
+    @PostMapping("/{type}/{resourceId}")
+    public ResponseEntity<Void> setMarkdown(
+            @PathVariable MarkdownType type,
+            @PathVariable Long resourceId,
+            @RequestBody @Valid MarkdownRequestDTO requestDTO) {
+        
+        markdownService.setMarkdown(type, resourceId, requestDTO.getMarkdown());
+        return ResponseEntity.ok().build();
     }
 
-    @PostMapping
-    public ResponseEntity<Void> setMarkdown(@RequestBody @Valid MarkdownRequestDTO requestDTO) {
-        markdownService.setMarkdown(requestDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
+    @PutMapping("/{type}/{resourceId}")
+    public ResponseEntity<Void> resetMarkdown(
+            @PathVariable MarkdownType type,
+            @PathVariable Long resourceId) {
 
-    @PutMapping
-    public ResponseEntity<Void> resetMarkdown(@RequestParam Long gradableEventId) {
-        markdownService.resetMarkdown(gradableEventId);
+        markdownService.resetMarkdown(type, resourceId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

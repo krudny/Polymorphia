@@ -1,12 +1,20 @@
+import {MarkdownType} from "@/interfaces/general";
+
 export interface MarkdownResponseDTO {
   markdown: string;
 }
 
 export interface MarkdownRequestDTO {
-  gradableEventId: number;
+  resourceId: number;
+  type: MarkdownType;
   markdown: string;
 }
 
 export interface SourceMarkdownResponseDTO {
   sourceUrl: string | null;
+}
+
+export interface MarkdownParamsRequest {
+  resourceId: number;
+  type: MarkdownType;
 }

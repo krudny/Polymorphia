@@ -1,7 +1,6 @@
 package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.response.knowledge_base.KnowledgeBaseResponseDto;
-import com.agh.polymorphia_backend.dto.response.markdown.MarkdownResponseDTO;
 import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.course.KnowledgeBaseService;
 import lombok.AllArgsConstructor;
@@ -37,11 +36,5 @@ public class CourseController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<KnowledgeBaseResponseDto>> getItems(@PathVariable Long courseId) {
         return ResponseEntity.ok(knowledgeBaseService.getItems(courseId));
-    }
-
-    @GetMapping("/{courseId}/rules")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<MarkdownResponseDTO> getRules(@PathVariable Long courseId) {
-        return ResponseEntity.ok(courseService.getCourseRules(courseId));
     }
 }

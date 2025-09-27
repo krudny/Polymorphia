@@ -1,3 +1,6 @@
+import {MarkdownParamsRequest} from "@/interfaces/api/markdown";
+
 export interface UseMarkdownReset {
-  mutate: () => void;
+  mutate: (request: MarkdownParamsRequest) => void;
 }
+

@@ -17,7 +17,7 @@ export default function GradableEventMarkdownView() {
   }
 
   return (
-    <MarkdownProvider markdownType={MarkdownTypes.COURSE}>
+    <MarkdownProvider markdownType={MarkdownTypes.GRADABLE_EVENT}>
       <MarkdownWrapper />
     </MarkdownProvider>
   );

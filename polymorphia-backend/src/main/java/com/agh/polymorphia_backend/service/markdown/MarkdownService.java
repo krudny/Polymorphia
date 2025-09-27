@@ -1,14 +1,15 @@
 package com.agh.polymorphia_backend.service.markdown;
 
 import com.agh.polymorphia_backend.config.FetchClient;
-import com.agh.polymorphia_backend.dto.request.markdown.MarkdownRequestDTO;
 import com.agh.polymorphia_backend.dto.response.markdown.MarkdownResponseDTO;
 import com.agh.polymorphia_backend.dto.response.markdown.SourceUrlMarkdownResponseDTO;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.event_section.EventSectionType;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
+import com.agh.polymorphia_backend.repository.course.CourseRepository;
 import com.agh.polymorphia_backend.repository.course.GradableEventRepository;
 import com.agh.polymorphia_backend.service.course.CourseService;
+import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,21 +20,40 @@ import org.springframework.web.server.ResponseStatusException;
 public class MarkdownService {
     private final FetchClient fetchClient;
     private final CourseService courseService;
+    private final GradableEventService gradableEventService;
     private final GradableEventRepository gradableEventRepository;
+    private final CourseRepository courseRepository;
 
     public MarkdownResponseDTO getMarkdown(MarkdownType type, Long resourceId) {
+        return switch (type) {
+            case GRADABLE_EVENT -> getGradableEventMarkdown(resourceId);
+            case COURSE_RULES -> getCourseRulesMarkdown(resourceId);
+        };
+    }
+
+    public SourceUrlMarkdownResponseDTO getMarkdownSourceUrl(MarkdownType type, Long resourceId) {
+        return switch (type) {
+            case GRADABLE_EVENT -> getGradableEventMarkdownSourceUrl(resourceId);
+            case COURSE_RULES -> getCourseRulesMarkdownSourceUrl(resourceId);
+        };
+    }
+
+    public void setMarkdown(MarkdownType type, Long resourceId, String markdown) {
         switch (type) {
-            case GRADABLE_EVENT:
-                return getGradableEventMarkdown(resourceId);
-            case COURSE_RULES:
-                return getCourseRulesMarkdown(resourceId);
-            default:
-                throw new IllegalArgumentException("Unsupported markdown type: " + type);
+            case GRADABLE_EVENT -> setGradableEventMarkdown(resourceId, markdown);
+            case COURSE_RULES -> setCourseRulesMarkdown(resourceId, markdown);
+        }
+    }
+
+    public void resetMarkdown(MarkdownType type, Long resourceId) {
+        switch (type) {
+            case GRADABLE_EVENT -> resetGradableEventMarkdown(resourceId);
+            case COURSE_RULES -> resetCourseRulesMarkdown(resourceId);
         }
     }
 
     private MarkdownResponseDTO getGradableEventMarkdown(Long gradableEventId) {
-        GradableEvent gradableEvent = findGradableEvent(gradableEventId);
+        GradableEvent gradableEvent = gradableEventService.getGradableEventById(gradableEventId);
 
         if (gradableEvent.getMarkdown() == null || gradableEvent.getMarkdown().isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Markdown is empty");
@@ -46,32 +66,56 @@ public class MarkdownService {
 
     private MarkdownResponseDTO getCourseRulesMarkdown(Long courseId) {
         Course course = courseService.getCourseById(courseId);
-        String markdown = fetchClient.fetchStringFromUrl(course.getInfoUrl()).block();
 
-        return MarkdownResponseDTO.builder().markdown(markdown).build();
+        if (course.getMarkdown() == null || course.getMarkdown().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Markdown is empty");
+        }
+
+        return MarkdownResponseDTO.builder()
+                .markdown(course.getMarkdown())
+                .build();
     }
 
-    public SourceUrlMarkdownResponseDTO getSourceUrl(Long gradableEventId) {
-        GradableEvent gradableEvent = findGradableEvent(gradableEventId);
+    private SourceUrlMarkdownResponseDTO getGradableEventMarkdownSourceUrl(Long gradableEventId) {
+        GradableEvent gradableEvent = gradableEventService.getGradableEventById(gradableEventId);
 
         return SourceUrlMarkdownResponseDTO.builder()
                 .sourceUrl(gradableEvent.getMarkdownSourceUrl())
                 .build();
     }
 
-    public void setMarkdown(MarkdownRequestDTO request) {
-        GradableEvent gradableEvent = findGradableEvent(request.getGradableEventId());
+    private SourceUrlMarkdownResponseDTO getCourseRulesMarkdownSourceUrl(Long courseId) {
+        Course course = courseService.getCourseById(courseId);
+
+        return SourceUrlMarkdownResponseDTO.builder()
+                .sourceUrl(course.getMarkdownSourceUrl())
+                .build();
+    }
+
+    private void setGradableEventMarkdown(Long gradableEventId, String markdown) {
+        GradableEvent gradableEvent = gradableEventService.getGradableEventById(gradableEventId);
 
         try {
-            gradableEvent.setMarkdown(request.getMarkdown());
+            gradableEvent.setMarkdown(markdown);
             gradableEventRepository.save(gradableEvent);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Markdown update failed");
         }
     }
 
-    public void resetMarkdown(Long gradableEventId) {
-        GradableEvent gradableEvent = findGradableEvent(gradableEventId);
+    private void setCourseRulesMarkdown(Long courseId, String markdown) {
+        Course course = courseService.getCourseById(courseId);
+
+        try {
+            course.setMarkdown(markdown);
+            courseRepository.save(course);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Course rules markdown update failed");
+        }
+    }
+
+    private void resetGradableEventMarkdown(Long gradableEventId) {
+        GradableEvent gradableEvent = gradableEventService.getGradableEventById(gradableEventId);
         String sourceUrl = gradableEvent.getMarkdownSourceUrl();
 
         if (sourceUrl == null) {
@@ -83,7 +127,7 @@ public class MarkdownService {
         }
 
         try {
-            String markdown = fetchClient.fetchStringFromUrl(gradableEvent.getMarkdownSourceUrl()).block();
+            String markdown = fetchClient.fetchStringFromUrl(sourceUrl).block();
             gradableEvent.setMarkdown(markdown);
             gradableEventRepository.save(gradableEvent);
         } catch (Exception e) {
@@ -91,9 +135,20 @@ public class MarkdownService {
         }
     }
 
-    private GradableEvent findGradableEvent(Long gradableEventId) {
-        return gradableEventRepository
-                .findById(gradableEventId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid gradable event id"));
+    private void resetCourseRulesMarkdown(Long courseId) {
+        Course course = courseService.getCourseById(courseId);
+        String sourceUrl = course.getMarkdownSourceUrl();
+
+        if (sourceUrl == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Course rules markdown source url is undefined");
+        }
+
+        try {
+            String markdown = fetchClient.fetchStringFromUrl(sourceUrl).block();
+            course.setMarkdown(markdown);
+            courseRepository.save(course);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Course rules markdown reset failed");
+        }
     }
 }

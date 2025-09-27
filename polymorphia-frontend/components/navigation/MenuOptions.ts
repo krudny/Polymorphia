@@ -10,7 +10,7 @@ import {
   UserIcon,
   UsersIcon,
 } from "lucide-react";
-import { MenuOption } from "@/components/navigation/types";
+import {MenuOption} from "@/components/navigation/types";
 
 export const MainMenuItems: MenuOption[] = [
   { icon: UserIcon, text: "Profil", link: "profile" },
@@ -20,6 +20,7 @@ export const MainMenuItems: MenuOption[] = [
     text: "Baza wiedzy",
     link: "knowledge-base/",
     subItems: [
+      { text: "Zasady", link: "knowledge-base/rules" },
       { text: "Postacie", link: "knowledge-base/evolution-stages" },
       { text: "Przedmioty", link: "knowledge-base/items" },
       { text: "Skrzynki", link: "knowledge-base/chests" },
