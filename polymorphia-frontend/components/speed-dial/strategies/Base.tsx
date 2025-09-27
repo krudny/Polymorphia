@@ -6,6 +6,16 @@ import GroupModal from "@/components/speed-dial/modals/group-info";
 import GroupPickingModal from "@/components/speed-dial/modals/group-pick";
 import ImportCSVModal from "@/components/speed-dial/modals/import-csv";
 import { ImportCSVType, ImportCSVTypes } from "@/interfaces/general";
+import {
+  useEditMarkdownSpeedDialAction,
+  useRejectMarkdownSpeedDialAction,
+  useSaveMarkdownSpeedDialAction,
+} from "@/hooks/speed-dial-actions/markdown";
+import {
+  useAppendToPathSpeedDialAction,
+  useGoBackSpeedDialAction,
+  useNavigateToParentUrlSpeedDialAction,
+} from "@/hooks/speed-dial-actions/navigation";
 
 export abstract class BaseSpeedDialStrategy {
   abstract getItems(context: SpeedDialContext): SpeedDialItem[];
@@ -16,38 +26,40 @@ export abstract class BaseSpeedDialStrategy {
       orderIndex: 5,
       label: "Nagrody",
       icon: "trophy",
-      modal: (onClose) => <GradeModal onClosedAction={onClose} />,
+      useAction: () => ({
+        modal: (onClose) => <GradeModal onClosedAction={onClose} />,
+      }),
     };
   }
 
-  protected createSave(context: SpeedDialContext): SpeedDialItem {
+  protected createSave(): SpeedDialItem {
     return {
       id: 5,
       orderIndex: 1,
       label: "Zapisz markdown",
       icon: "save",
-      onClick: () => context.saveMarkdown(),
+      useAction: useSaveMarkdownSpeedDialAction,
       color: "#048635",
     };
   }
 
-  protected createEdit(context: SpeedDialContext): SpeedDialItem {
+  protected createEdit(): SpeedDialItem {
     return {
       id: 6,
       orderIndex: 1,
       label: "Edytuj treść",
       icon: "edit",
-      onClick: () => context.setIsEditing(true),
+      useAction: useEditMarkdownSpeedDialAction,
     };
   }
 
-  protected createReject(context: SpeedDialContext): SpeedDialItem {
+  protected createReject(): SpeedDialItem {
     return {
       id: 7,
       orderIndex: 0,
       label: "Anuluj edycję",
       icon: "close",
-      onClick: () => context.rejectMarkdown(),
+      useAction: useRejectMarkdownSpeedDialAction,
       color: "#a30d0d",
     };
   }
@@ -58,7 +70,9 @@ export abstract class BaseSpeedDialStrategy {
       orderIndex: 2,
       label: "Wariant",
       icon: "arrow_split",
-      modal: (onClose) => <ProjectVariantModal onClosedAction={onClose} />,
+      useAction: () => ({
+        modal: (onClose) => <ProjectVariantModal onClosedAction={onClose} />,
+      }),
     };
   }
 
@@ -68,7 +82,9 @@ export abstract class BaseSpeedDialStrategy {
       orderIndex: 3,
       label: "Grupa",
       icon: "person",
-      modal: (onClose) => <GroupModal onClosedAction={onClose} />,
+      useAction: () => ({
+        modal: (onClose) => <GroupModal onClosedAction={onClose} />,
+      }),
     };
   }
 
@@ -78,7 +94,9 @@ export abstract class BaseSpeedDialStrategy {
       orderIndex: 4,
       label: "Utwórz grupę",
       icon: "person_add",
-      modal: (onClose) => <GroupPickingModal onClosedAction={onClose} />,
+      useAction: () => ({
+        modal: (onClose) => <GroupPickingModal onClosedAction={onClose} />,
+      }),
     };
   }
 
@@ -93,51 +111,48 @@ export abstract class BaseSpeedDialStrategy {
       orderIndex: 9,
       label: importLabels[importType] ?? "Import CSV",
       icon: "cloud_upload",
-      modal: (onClose) => (
-        <ImportCSVModal onClosedAction={onClose} importType={importType} />
-      ),
+      useAction: () => ({
+        modal: (onClose) => (
+          <ImportCSVModal onClosedAction={onClose} importType={importType} />
+        ),
+      }),
     };
   }
 
-  protected createGoBack(context: SpeedDialContext): SpeedDialItem {
+  protected createGoBack(): SpeedDialItem {
     return {
       id: 10,
       orderIndex: 50,
       label: "Wróć",
       icon: "undo",
-      onClick: () => context.router.back(),
+      useAction: useGoBackSpeedDialAction,
     };
   }
 
-  protected createRedirectToGrading(context: SpeedDialContext): SpeedDialItem {
+  protected createRedirectToGrading(): SpeedDialItem {
     return {
       id: 11,
       orderIndex: 51,
       label: "Ocenianie",
       icon: "assignment_turned_in",
-      onClick: () => {
-        const newPath = context.currentPath + "/grading";
-        context.router.push(newPath);
-      },
+      useAction: () => useAppendToPathSpeedDialAction("/grading"),
     };
   }
 
-  protected createRedirectToMarkdown(context: SpeedDialContext): SpeedDialItem {
+  protected createRedirectToMarkdown(): SpeedDialItem {
     return {
       id: 9,
       orderIndex: 0,
       label: "Zobacz polecenie",
       icon: "task",
-      onClick: () => {
-        const newPath = context.currentPath.split("/").slice(0, -1).join("/");
-        context.router.push(newPath);
-      },
+      useAction: useNavigateToParentUrlSpeedDialAction,
     };
   }
 
+  // TODO: how to handle this?
   protected createEditing(context: SpeedDialContext): SpeedDialItem[] {
     return context.isEditing
-      ? [this.createSave(context), this.createReject(context)]
-      : [this.createEdit(context)];
+      ? [this.createSave(), this.createReject()]
+      : [this.createEdit()];
   }
 }

@@ -11,11 +11,12 @@ export class AssignmentStrategy
   implements SpeedDialStrategy
 {
   getItems(context: SpeedDialContext): SpeedDialItem[] {
+    // TODO: how to handle this?
     switch (context.role) {
       case Roles.STUDENT:
-        return [this.createRewards(), this.createGoBack(context)];
+        return [this.createRewards(), this.createGoBack()];
       case Roles.INSTRUCTOR:
-        return [this.createRedirectToGrading(context)];
+        return [this.createRedirectToGrading()];
       default:
         return [];
     }

@@ -1,12 +1,18 @@
 import { ReactNode } from "react";
 
+export type UseSpeedDialItemActionHook = () => SpeedDialItemAction;
+
+export type SpeedDialItemAction = {
+  onClick?: () => void;
+  modal?: (onClose: () => void) => ReactNode;
+};
+
 export interface SpeedDialItem {
   id: number;
   orderIndex: number;
   label: string;
   icon: string;
-  modal?: (onClose: () => void) => ReactNode;
-  onClick?: () => void;
+  useAction: UseSpeedDialItemActionHook;
   color?: string;
 }
 
