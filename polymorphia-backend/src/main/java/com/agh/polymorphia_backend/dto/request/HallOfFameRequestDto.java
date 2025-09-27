@@ -7,10 +7,12 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import lombok.Builder;
 
 import java.util.List;
 
-public record HallOfFameRequestDto (
+@Builder
+public record HallOfFameRequestDto(
         @NotNull Long courseId,
         @NotNull Integer page,
         @NotNull Integer size,

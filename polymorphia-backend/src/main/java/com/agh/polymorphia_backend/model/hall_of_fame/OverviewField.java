@@ -14,7 +14,7 @@ public enum OverviewField {
     STUDENT_NAME(FIELD_STUDENT_NAME),
     ANIMAL_NAME(FIELD_ANIMAL_NAME),
     TOTAL("total", FIELD_TOTAL_XP_SUM),
-    BONUS("Bonusy", FIELD_TOTAL_BONUS_SUM);
+    BONUS("bonuses", FIELD_TOTAL_BONUS_SUM);
 
     private final String key;
     private final String dbField;

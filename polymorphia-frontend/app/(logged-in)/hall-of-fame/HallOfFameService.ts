@@ -8,6 +8,7 @@ const HallOfFameService = {
   getHallOfFame: async (
     page: number,
     size: number,
+    courseId: number,
     searchTerm: string,
     sortBy: string,
     sortOrder: string,
@@ -20,7 +21,7 @@ const HallOfFameService = {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        courseId: 1,
+        courseId: courseId,
         page: page,
         size: size,
         searchTerm: !searchTerm || searchTerm.trim() === "" ? "" : searchTerm,
@@ -35,10 +36,13 @@ const HallOfFameService = {
     }
     return await response.json();
   },
-  getPodium: async (): Promise<HallOfFameRecordDTO[]> => {
-    const response = await fetch(`${API_HOST}/hall-of-fame/podium?courseId=1`, {
-      credentials: "include",
-    });
+  getPodium: async (courseId: number): Promise<HallOfFameRecordDTO[]> => {
+    const response = await fetch(
+      `${API_HOST}/hall-of-fame/podium?courseId=${courseId}`,
+      {
+        credentials: "include",
+      }
+    );
     if (!response.ok) {
       throw new Error("Failed to fetch hall of fame podium!");
     }

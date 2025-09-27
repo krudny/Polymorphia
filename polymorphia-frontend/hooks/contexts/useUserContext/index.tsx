@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { UserContext } from "@/providers/user/UserContext";
-import { UserDetailsDTO } from "@/interfaces/api/user";
+import { BaseUserDetails, UserDetailsDTO } from "@/interfaces/api/user";
 
 export default function useUserContext(): UserDetailsDTO {
   const context = useContext(UserContext);
@@ -10,4 +10,8 @@ export default function useUserContext(): UserDetailsDTO {
   }
 
   return context;
+}
+
+export function useUserDetails(): BaseUserDetails {
+  return useUserContext().userDetails;
 }

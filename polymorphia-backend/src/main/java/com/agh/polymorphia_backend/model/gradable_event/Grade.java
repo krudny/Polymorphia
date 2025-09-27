@@ -40,7 +40,6 @@ public class Grade {
     @NotNull
     private ZonedDateTime modifiedDate;
 
-    @NotNull
     private String comment;
 
     @PrePersist

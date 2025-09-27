@@ -42,6 +42,10 @@ export class SpeedDialStrategyRegistry {
       SpeedDialKeys.COURSE_GROUP_INSTRUCTOR,
       new CourseGroupStrategy()
     );
+    this.strategies.set(
+      SpeedDialKeys.PROFILE_STUDENT,
+      new CourseGroupStrategy()
+    );
   }
 
   getStrategy(speedDialKey: SpeedDialKey): SpeedDialStrategy | null {
