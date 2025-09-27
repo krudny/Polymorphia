@@ -71,17 +71,17 @@ export default function ProjectGroupList() {
                   : student.gainedXp
                     ? "green"
                     : "gray";
-                const { userName, group, imageUrl, evolutionStage } =
+                const { fullName, group, imageUrl, evolutionStage } =
                   student.userDetails;
 
-                if (!userName) {
+                if (!fullName) {
                   throw new Error("No userName defined!");
                 }
 
                 return (
                   <XPCard
                     key={index}
-                    title={userName}
+                    title={fullName}
                     color={color}
                     subtitle={group}
                     size={"xs"}

@@ -13,8 +13,8 @@ import static com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry.*;
 public enum OverviewField {
     STUDENT_NAME(FIELD_STUDENT_NAME),
     ANIMAL_NAME(FIELD_ANIMAL_NAME),
-    TOTAL("Suma", FIELD_TOTAL_XP_SUM),
-    BONUS("Bonusy", FIELD_TOTAL_BONUS_SUM);
+    TOTAL("total", FIELD_TOTAL_XP_SUM),
+    BONUS("bonuses", FIELD_TOTAL_BONUS_SUM);
 
     private final String key;
     private final String dbField;

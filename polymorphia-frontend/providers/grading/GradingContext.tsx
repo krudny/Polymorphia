@@ -43,7 +43,7 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
     isError: isFiltersError,
   } = useGradingFilterConfigs(courseId);
   const filters = useFilters<GradingFilterId>(filterConfigs ?? []);
-  const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["Suma"];
+  const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["total"];
   const sortOrder = filters.getAppliedFilterValues("sortOrder") ?? ["asc"];
   const groups = filters.getAppliedFilterValues("groups") ?? ["all"];
 

@@ -27,7 +27,6 @@ public class AssignedItem extends AssignedReward {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "assigned_chest_id")
-    @NotNull
     @ToString.Exclude
     @JsonIgnore
     private AssignedChest assignedChest;

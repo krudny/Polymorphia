@@ -6,7 +6,7 @@ import { useUserDetails } from "@/hooks/contexts/useUserContext";
 export default function useEvolutionStages(): UseEvolutionStages {
   const { courseId } = useUserDetails();
   const { data, isLoading, error } = useQuery({
-    queryKey: ["evolution_stages", courseId],
+    queryKey: ["evolutionStages", courseId],
     queryFn: () => KnowledgeBaseService.getEvolutionStages(courseId),
     refetchOnWindowFocus: false,
   });

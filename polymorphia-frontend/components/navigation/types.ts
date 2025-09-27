@@ -5,7 +5,6 @@ export interface MenuOption {
   text: string;
   link?: string;
   subItems?: SubMenuOption[];
-  onClick?: () => void;
 }
 
 export interface SubMenuOption {

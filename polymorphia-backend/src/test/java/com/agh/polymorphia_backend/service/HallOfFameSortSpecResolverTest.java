@@ -53,8 +53,8 @@ public class HallOfFameSortSpecResolverTest {
         return Stream.of(
                 Arguments.of("animalName", "animalName"),
                 Arguments.of("studentName", "studentName"),
-                Arguments.of("Suma", "totalXpSum"),
-                Arguments.of("Bonusy", "totalBonusSum")
+                Arguments.of("total", "totalXpSum"),
+                Arguments.of("bonuses", "totalBonusSum")
         );
     }
 

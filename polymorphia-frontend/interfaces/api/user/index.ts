@@ -1,4 +1,3 @@
-//TODO: handle which one is optional
 export const Roles = {
   STUDENT: "STUDENT",
   INSTRUCTOR: "INSTRUCTOR",
@@ -17,6 +16,21 @@ export const RoleTextMap: Record<Role, string> = {
 
 export interface BaseUserDetails {
   id: number;
+  fullName?: string;
+  courseId: number;
+  imageUrl: string;
+}
+
+interface BaseUserDetailsDTOWithType<
+  T extends Role,
+  R extends BaseUserDetails,
+> {
+  userRole: T;
+  userDetails: R;
+}
+
+export interface BaseUserDetails {
+  id: number;
   userName?: string;
   courseId: number;
   imageUrl: string;
@@ -30,28 +44,38 @@ interface BaseUserDetailsDTOWithType<
   userDetails: R;
 }
 
-export interface StudentDetailsDTO extends BaseUserDetails {
+export interface StudentDetailsDTOWithNullableName extends BaseUserDetails {
   animalName: string;
   evolutionStage: string;
   group: string;
   position: number;
 }
 
+export interface BaseUserDetailsDTOWithName extends BaseUserDetails {
+  fullName: string;
+}
+
+export interface StudentDetailsDTOWithName
+  extends StudentDetailsDTOWithNullableName {
+  fullName: string;
+}
+
 export type StudentDetailsDTOWithType = BaseUserDetailsDTOWithType<
   typeof Roles.STUDENT,
-  StudentDetailsDTO
+  StudentDetailsDTOWithName
 >;
+
 export type InstructorDetailsDTOWithType = BaseUserDetailsDTOWithType<
   typeof Roles.INSTRUCTOR,
-  BaseUserDetails
+  BaseUserDetailsDTOWithName
 >;
 export type CoordinatorDetailsDTOWithType = BaseUserDetailsDTOWithType<
   typeof Roles.COORDINATOR,
-  BaseUserDetails
+  BaseUserDetailsDTOWithName
 >;
 export type UndefinedDetailsDTOWithType = BaseUserDetailsDTOWithType<
   typeof Roles.UNDEFINED,
-  BaseUserDetails
+  BaseUserDetailsDTOWithName
 >;
 
 export type UserDetailsDTO =

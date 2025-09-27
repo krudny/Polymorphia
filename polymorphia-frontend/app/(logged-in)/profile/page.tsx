@@ -14,15 +14,14 @@ import useStudentProfile from "@/hooks/course/useStudentProfile";
 import FiltersModal from "@/components/filters-modals/FiltersModal";
 import { useProfileFilterConfigs } from "@/hooks/course/useProfileFilterConfigs";
 import { useFilters } from "@/hooks/course/useFilters";
-import { useQueryClient } from "@tanstack/react-query";
 import { filterXpDetails } from "@/providers/hall-of-fame/utils/filterXpDetails";
 import { ProfileFilterId } from "@/app/(logged-in)/profile/types";
 import ProfileProgressBar from "@/components/progressbar/profile";
 import SpeedDial from "@/components/speed-dial/SpeedDial";
+import { distributeTo100 } from "@/app/(logged-in)/profile/ProfileService";
 
 export default function Profile() {
   const { setTitle } = useTitle();
-  const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isSm = useMediaQuery({ maxWidth: 920 });
   const { data: profile, isLoading } = useStudentProfile();
@@ -57,26 +56,14 @@ export default function Profile() {
 
   //TODO: handle profile for other roles
   if ((userContext && userContext.userRole !== Roles.STUDENT) || !profile) {
-    console.log(
-      "profile",
-      userContext.userRole,
-      userContext && userContext.userRole !== Roles.STUDENT,
-      !profile
-    );
     return null;
   }
 
-  const { imageUrl, userName, animalName, position } = userContext.userDetails;
+  const { imageUrl, fullName, animalName, position } = userContext.userDetails;
 
   const lastEvolutionStageId = profile.evolutionStageThresholds.length - 1;
   const maxPoints =
     profile.evolutionStageThresholds[lastEvolutionStageId].minXp;
-
-  const handleApplyFilters = () => {
-    queryClient.invalidateQueries({
-      queryKey: ["hallOfFame"],
-    });
-  };
 
   const filteredXpDetails = filterXpDetails(
     profile.xpDetails,
@@ -86,9 +73,7 @@ export default function Profile() {
 
   return (
     <div ref={wrapperRef} className="profile">
-      <div className="profile-speed-dial-desktop">
-        <SpeedDial items={speedDialItems} />
-      </div>
+      <SpeedDial items={speedDialItems} />
       <div className="profile-wrapper">
         <div className="profile-content-wrapper">
           <div className="profile-image-wrapper">
@@ -103,7 +88,7 @@ export default function Profile() {
           </div>
           <div className="profile-content">
             <div className="profile-content-text">
-              <h1>{userName}</h1>
+              <h1>{fullName}</h1>
               <h2>{animalName}</h2>
               <h3>
                 Jesteś {position} na {profile.totalStudentsInCourse} zwierzaków!
@@ -136,10 +121,11 @@ export default function Profile() {
             </div>
           </div>
         </div>
-        {/* TODO: maybe merge that */}
         <div className="profile-progress-bar-mobile">
           <ProfileProgressBar
-            profile={profile}
+            totalXp={
+              (profile.totalXp / profile.rightEvolutionStage.minXp) * 100
+            }
             maxPoints={maxPoints}
             evolutionStages={[
               profile.leftEvolutionStage,
@@ -153,13 +139,11 @@ export default function Profile() {
 
         <div className="profile-progress-bar-desktop">
           <ProfileProgressBar
-            profile={profile}
+            totalXp={profile.totalXp}
             maxPoints={maxPoints}
             evolutionStages={profile.evolutionStageThresholds}
             numSquares={profile.evolutionStageThresholds.length}
-            segmentSizes={distributeTo100(
-              profile.evolutionStageThresholds.length
-            )}
+            segmentSizes={distributeTo100(profile.evolutionStageThresholds)}
             size={isSm ? "sm" : "md"}
           />
         </div>
@@ -169,21 +153,8 @@ export default function Profile() {
           setIsModalOpen={setIsModalOpen}
           isFiltersLoading={isFiltersLoading}
           isFiltersError={isFiltersError}
-          onFiltersApplied={() => handleApplyFilters()}
         />
       </div>
     </div>
   );
-}
-
-function distributeTo100(n: number) {
-  const result = new Array(2 * n + 1).fill(0);
-  const base = Math.floor(100 / n);
-  const remainder = 100 % n;
-
-  for (let i = 0; i < n; i++) {
-    result[i * 2 + 1] = base + (i < remainder ? 1 : 0);
-  }
-
-  return result;
 }

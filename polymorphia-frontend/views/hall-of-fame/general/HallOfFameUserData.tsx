@@ -1,7 +1,9 @@
 import "./index.css";
-import { StudentDetailsDTO } from "@/interfaces/api/user";
+import { StudentDetailsDTOWithNullableName } from "@/interfaces/api/user";
 
-export default function HallOfFameUserData(studentDetails: StudentDetailsDTO) {
+export default function HallOfFameUserData(
+  studentDetails: StudentDetailsDTOWithNullableName
+) {
   return (
     <div className="hall-of-fame-user-data">
       <h1>{studentDetails.animalName}</h1>

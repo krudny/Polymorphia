@@ -4,7 +4,7 @@ import ProgressBarTextLabels from "@/components/progressbar/ProgressBarTextLabel
 import UseProfileProgressBarProps from "@/components/progressbar/profile/types";
 
 export default function ProfileProgressBar({
-  profile,
+  totalXp,
   maxPoints,
   evolutionStages,
   size,
@@ -14,7 +14,7 @@ export default function ProfileProgressBar({
   return (
     <ProgressBar
       minXP={0}
-      currentXP={min(profile.totalXp, maxPoints)}
+      currentXP={min(totalXp, maxPoints)}
       maxXP={maxPoints}
       numSquares={numSquares}
       segmentSizes={segmentSizes}

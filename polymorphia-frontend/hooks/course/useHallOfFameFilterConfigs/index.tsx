@@ -32,10 +32,10 @@ export function useHallOfFameFilterConfigs(courseId: number) {
             ...eventSections.map((eventSection: EventSectionResponseDTO) => ({
               value: eventSection.name,
             })),
-            { value: "Bonusy" },
-            { value: "Suma" },
+            { value: "bonuses", label: "Bonusy" },
+            { value: "total", label: "Suma" },
           ],
-          defaultValues: ["Suma"],
+          defaultValues: ["total"],
         },
         {
           id: "groups",
@@ -56,9 +56,10 @@ export function useHallOfFameFilterConfigs(courseId: number) {
           title: "Wyświetlanie",
           options: [
             ...eventSections.map((eventSection) => ({
-              value: eventSection.name,
+              value: String(eventSection.id),
+              label: eventSection.name,
             })),
-            { value: "Bonusy" },
+            { value: "bonuses", label: "Bonusy" },
           ],
           min: Math.min(4, eventSections.length),
           max: Math.min(4, eventSections.length),

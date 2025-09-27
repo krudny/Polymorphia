@@ -62,7 +62,7 @@ for (let i = 0; i < 250; i++) {
     userRole: Roles.STUDENT,
     userDetails: {
       id: i,
-      userName: studentName,
+      fullName: studentName,
       animalName: studentName,
       evolutionStage: "Majestatyczna Bestia",
       imageUrl: `images/evolution-stages/${stage}.jpg`,
@@ -1227,7 +1227,7 @@ export const EventSectionService = {
     if (searchTerm && searchTerm.trim() !== "") {
       const lowerSearch = searchTerm.toLowerCase();
       filteredData = filteredData.filter((item) =>
-        item.userName.toLowerCase().includes(lowerSearch)
+        item.fullName.toLowerCase().includes(lowerSearch)
       );
     }
 

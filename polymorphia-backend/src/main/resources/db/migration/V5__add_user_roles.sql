@@ -27,26 +27,19 @@ ALTER TABLE user_course_roles
 ALTER TABLE user_course_roles
     ADD CONSTRAINT FK_USER_COURSE_ROLES_ON_USER FOREIGN KEY (user_id) REFERENCES users (id);
 
+UPDATE assigned_items
+SET bonus_xp = 0
+WHERE bonus_xp IS NULL;
 ALTER TABLE assigned_items
-    ALTER COLUMN assigned_chest_id SET NOT NULL;
+    ALTER COLUMN bonus_xp TYPE numeric(4, 1) USING (bonus_xp::numeric(4, 1));
 
 ALTER TABLE assigned_items
-    DROP COLUMN bonus_xp;
-
-ALTER TABLE assigned_items
-    ADD bonus_xp numeric(4, 1) DEFAULT 0 NOT NULL;
-
-ALTER TABLE assigned_items
+    ALTER COLUMN bonus_xp SET DEFAULT 0,
     ALTER COLUMN bonus_xp SET NOT NULL;
-
-ALTER TABLE assigned_items
-    ALTER COLUMN bonus_xp SET DEFAULT 0;
 
 ALTER TABLE grades
     ALTER COLUMN comment TYPE VARCHAR(255) USING (comment::VARCHAR(255));
 
-ALTER TABLE grades
-    ALTER COLUMN comment SET NOT NULL;
 
 ALTER TABLE gradable_events
     ALTER COLUMN markdown TYPE VARCHAR(255) USING (markdown::VARCHAR(255));

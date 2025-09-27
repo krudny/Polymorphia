@@ -30,7 +30,7 @@ export default function RankCard({
       <div>
         <HallOfFameImage position={position} imageUrl={imageUrl} />
         <HallOfFameUserData {...userDetails} />
-        <HallOfFamePointsSummary total={xpDetails.Suma} />
+        <HallOfFamePointsSummary total={xpDetails.total} />
       </div>
       <div>
         <UserPoints

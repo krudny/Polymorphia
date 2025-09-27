@@ -6,6 +6,7 @@ import Loading from "@/components/loading/Loading";
 import "./index.css";
 import useUserRole from "../../../hooks/course/useUserRole";
 import { animateWelcome } from "@/animations/Welcome";
+import { redirectToNextStep } from "@/app/(welcome)/Util";
 
 export default function Welcome() {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -13,14 +14,21 @@ export default function Welcome() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!wrapperRef.current) {
+    if (!wrapperRef.current || isLoading || !userRole) {
       return;
     }
 
-    animateWelcome(wrapperRef.current, userRole !== "UNDEFINED", router);
+    const onAnimateComplete = () =>
+      redirectToNextStep({
+        userRole: userRole,
+        defaultRedirect: "/course-choice",
+        router: router,
+      });
+
+    animateWelcome(wrapperRef.current, onAnimateComplete);
   }, [isLoading, userRole, router]);
 
-  if (isLoading) {
+  if (isLoading || !userRole) {
     return <Loading />;
   }
 

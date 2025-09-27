@@ -1,5 +1,4 @@
 import { MenuOption } from "@/components/navigation/types";
-import useLogout from "@/hooks/course/useLogout";
 import {
   BadgeHelpIcon,
   BellIcon,
@@ -15,27 +14,23 @@ import { Roles } from "@/interfaces/api/user";
 import useUserContext from "@/hooks/contexts/useUserContext";
 
 export function useBottomMenuItems(): MenuOption[] {
-  const logoutMutation = useLogout();
-
   return [
     {
       icon: LogOutIcon,
       text: "Wyloguj się",
-      onClick: () => logoutMutation.mutate(),
+      link: "logout/",
     },
     { icon: SettingsIcon, text: "Ustawienia", link: "settings" },
   ];
 }
 
 export function useBottomDesktopMenuItems(): MenuOption[] {
-  const { mutate: logout } = useLogout();
-
   return [
     { icon: BellIcon, text: "Powiadomienia" },
     {
       icon: LogOutIcon,
       text: "Wyloguj się",
-      onClick: () => logout(),
+      link: "logout/",
     },
     {
       icon: SettingsIcon,

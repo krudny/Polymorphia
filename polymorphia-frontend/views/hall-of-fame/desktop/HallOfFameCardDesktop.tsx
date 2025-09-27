@@ -40,7 +40,7 @@ export default function HallOfFameCardDesktop({
           xpDetails={filteredXpDetails}
         />
       </div>
-      <HallOfFamePointsSummary total={xpDetails.Suma} />
+      <HallOfFamePointsSummary total={xpDetails.total} />
     </div>
   );
 }

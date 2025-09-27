@@ -58,16 +58,16 @@ export default function StudentsList() {
             : student.gainedXp
               ? "green"
               : "gray";
-          const { userName, id, group, imageUrl, evolutionStage } =
+          const { fullName, id, group, imageUrl, evolutionStage } =
             student.userDetails;
 
-          if (!userName) {
+          if (!fullName) {
             throw new Error("No username defined!");
           }
 
           return (
             <div
-              key={id || userName}
+              key={id || fullName}
               className="student-record"
               onClick={() =>
                 dispatch({
@@ -77,7 +77,7 @@ export default function StudentsList() {
               }
             >
               <XPCard
-                title={userName}
+                title={fullName}
                 color={color}
                 subtitle={group}
                 size="xs"

@@ -12,6 +12,7 @@ export default function GradableEventsView() {
     case Roles.STUDENT:
       return <StudentGradableEventsView />;
     case Roles.INSTRUCTOR:
+    case Roles.COORDINATOR:
       return <InstructorGradableEventsView />;
     default:
       return null;
