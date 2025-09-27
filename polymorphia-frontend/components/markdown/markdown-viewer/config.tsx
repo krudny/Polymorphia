@@ -1,15 +1,8 @@
 import {Components} from "react-markdown";
 import "./index.css";
 import Image from "next/image";
-
-interface ImageProps {
-  node?: any;
-  src?: string;
-  alt?: string;
-  'data-inline'?: boolean;
-  'data-width'?: string;
-  'data-height'?: string;
-}
+import {MarkdownImageProps} from "./types";
+import clsx from "clsx";
 
 export const markdownConfig: Components = {
   h1: ({ ...props }) => (
@@ -59,41 +52,28 @@ export const markdownConfig: Components = {
       {children}
     </a>
   ),
-  img: ({ node, src, alt, ...props }: ImageProps) => {
-    // Sprawdzamy, czy obrazek ma być inline
+  img: ({ node, src, alt, ...props }: MarkdownImageProps) => {
+    const { width: propWidth, height: propHeight, 'data-inline': dataInline, ...restProps } = props;
     const isInline = 'data-inline' in props;
-
-    // Pobieramy wymiary z data-attributes
-    const dataWidth = props['data-width'];
-    const dataHeight = props['data-height'];
-
-    // Warunek, czy możemy użyć Next/Image (musimy mieć src i wymiary)
-    const canUseNextImage = src && dataWidth && dataHeight;
-
-    // Usuwamy niestandardowe atrybuty, aby nie trafiły do finalnego tagu
-    const { 'data-inline': di, 'data-width': dw, 'data-height': dh, ...restProps } = props;
+    const canUseNextImage = src && propWidth && propHeight;
 
     if (canUseNextImage) {
-      console.log("can")
-      const width = parseInt(dataWidth, 10);
-      const height = parseInt(dataHeight, 10);
+      const width = parseInt(String(propWidth), 10);
+      const height = parseInt(String(propHeight), 10);
 
+      if (isNaN(width) || isNaN(height)) {
+        return <img src={src} alt={alt || ""} {...props} />;
+      }
 
       if (isInline) {
         return (
-          <span style={{
-            display: 'inline-block',
-            verticalAlign: 'middle',
-            marginLeft: '0.5rem',
-            marginBottom: '0.2rem',
-          }}>
+          <span className="markdown-inline-image">
             <Image
               src={src}
               alt={alt || ""}
               width={width}
               height={height}
-              className="object-contain rounded-xl my-4"
-              sizes="(max-width: 768px) 100vw, 500px"
+              className="object-contain"
             />
           </span>
         );
@@ -114,27 +94,25 @@ export const markdownConfig: Components = {
     }
 
     if (src) {
-      if (isInline) {
-        return (
-          <img
-            src={src}
-            alt={alt}
-            style={{ display: 'inline-block', verticalAlign: 'middle', height: '1.2em', marginLeft: '0.5rem' }}
-            {...restProps}
-          />
-        );
-      }
+      const isInline = 'data-inline' in props;
+      const { width: propWidth, height: propHeight, 'data-inline': dataInline, ...restProps } = props;
+
       return (
         <img
           src={src}
-          alt={alt}
-          style={{ display: 'block', margin: '1rem 0', maxWidth: '100%' }}
+          alt={alt || ""}
+          width={propWidth}
+          height={propHeight}
+          className={clsx({
+            'inline-block align-middle h-[1.2em] ml-2': isInline,
+            'block my-4 max-w-full': !isInline,
+          })}
           {...restProps}
         />
       );
     }
 
-    return null; // Nic nie renderuj, jeśli nie ma src
+    return null;
   },
 
   code({ node, className, children, ...props }) {
