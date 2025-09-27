@@ -5,6 +5,7 @@ export type UseSpeedDialItemActionHook = () => SpeedDialItemAction;
 export type SpeedDialItemAction = {
   onClick?: () => void;
   modal?: (onClose: () => void) => ReactNode;
+  shouldBeRendered?: boolean; // defaults to `true`
 };
 
 export interface SpeedDialItem {

@@ -2,7 +2,6 @@ import { SpeedDialItem } from "@/components/speed-dial/types";
 import { Role } from "@/interfaces/general";
 
 export interface SpeedDialContext {
-  isEditing: boolean;
   role: Role;
 }
 

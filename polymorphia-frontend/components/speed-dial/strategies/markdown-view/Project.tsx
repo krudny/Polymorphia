@@ -20,7 +20,7 @@ export class ProjectStrategy
         ];
       case Roles.INSTRUCTOR:
         return [
-          ...this.createEditing(context),
+          ...this.createEditing(),
           this.createRedirectToGrading(),
           this.createProjectGroupPicking(),
         ];

@@ -2,25 +2,28 @@ import { SpeedDialItemAction } from "@/components/speed-dial/types";
 import useMarkdownContext from "@/hooks/contexts/useMarkdownContext";
 
 export function useSaveMarkdownSpeedDialAction(): SpeedDialItemAction {
-  const { saveMarkdown } = useMarkdownContext();
+  const { isEditing, saveMarkdown } = useMarkdownContext();
 
   return {
     onClick: saveMarkdown,
+    shouldBeRendered: isEditing,
   };
 }
 
 export function useEditMarkdownSpeedDialAction(): SpeedDialItemAction {
-  const { setIsEditing } = useMarkdownContext();
+  const { isEditing, setIsEditing } = useMarkdownContext();
 
   return {
     onClick: () => setIsEditing(true),
+    shouldBeRendered: !isEditing,
   };
 }
 
 export function useRejectMarkdownSpeedDialAction(): SpeedDialItemAction {
-  const { rejectMarkdown } = useMarkdownContext();
+  const { isEditing, rejectMarkdown } = useMarkdownContext();
 
   return {
     onClick: rejectMarkdown,
+    shouldBeRendered: isEditing,
   };
 }

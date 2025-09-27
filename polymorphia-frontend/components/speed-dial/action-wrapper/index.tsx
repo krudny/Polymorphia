@@ -7,7 +7,11 @@ export default function SpeedDialActionWrapper({
   setActiveModal,
   ...props
 }: SpeedDialActionWrapperProps) {
-  const { onClick, modal } = item.useAction();
+  const { onClick, modal, shouldBeRendered = true } = item.useAction();
+
+  if (!shouldBeRendered) {
+    return null;
+  }
 
   // MUI injects its own slot props via SpeedDial host component, we need to merge those.
   const mergedSlotProps = mergeSlotProps(

@@ -149,10 +149,7 @@ export abstract class BaseSpeedDialStrategy {
     };
   }
 
-  // TODO: how to handle this?
-  protected createEditing(context: SpeedDialContext): SpeedDialItem[] {
-    return context.isEditing
-      ? [this.createSave(), this.createReject()]
-      : [this.createEdit()];
+  protected createEditing(): SpeedDialItem[] {
+    return [this.createEdit(), this.createSave(), this.createReject()];
   }
 }
