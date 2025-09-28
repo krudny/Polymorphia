@@ -1,7 +1,7 @@
-import { Components } from "react-markdown";
+import {Components} from "react-markdown";
 import "./index.css";
 import Image from "next/image";
-import { MarkdownImageProps } from "./types";
+import {MarkdownImageProps} from "./types";
 
 export const markdownConfig: Components = {
   h1: ({ ...props }) => (
@@ -89,7 +89,52 @@ export const markdownConfig: Components = {
       </div>
     );
   },
-
+  table: ({ ...props }) => (
+    <div className="w-fit mx-auto overflow-x-auto my-6 lg:my-10">
+      <table
+        className="w-full border-collapse border border-gray-300 rounded-lg shadow-sm"
+        {...props}
+      />
+    </div>
+  ),
+  thead: ({ ...props }) => (
+    <thead className="bg-gray-50" {...props} />
+  ),
+  tbody: ({ ...props }) => (
+    <tbody {...props} />
+  ),
+  tr: ({ ...props }) => (
+    <tr className="border-b border-gray-200 hover:bg-gray-50 transition-colors" {...props} />
+  ),
+  th: ({ ...props }) => (
+    <th
+      className="
+        border border-gray-300
+        px-4 py-3
+        lg:px-6 lg:py-4
+        text-left
+        font-semibold
+        text-[1.4rem]
+        lg:text-[1.8rem]
+        bg-gray-100
+      "
+      {...props}
+    />
+  ),
+  td: ({ ...props }) => (
+    <td
+      className="
+        border border-gray-300
+        px-4 py-3
+        lg:px-6 lg:py-4
+        text-[1.3rem]
+        lg:text-[1.6rem]
+        align-top
+        leading-relaxed
+      "
+      {...props}
+    />
+  ),
   code({ node, className, children, ...props }) {
     const isBlock = node?.position?.start.line !== node?.position?.end.line;
 

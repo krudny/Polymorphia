@@ -1,7 +1,6 @@
 package com.agh.polymorphia_backend.service.validation;
 
 
-import com.agh.polymorphia_backend.config.FetchClient;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.repository.course.CourseRepository;
 import com.agh.polymorphia_backend.service.course.CourseService;
@@ -25,15 +24,12 @@ public class CourseServiceTest {
     @Mock
     private CourseRepository courseRepository;
 
-    @Mock
-    private FetchClient fetchClient;
-
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        service = new CourseService(courseRepository,  fetchClient);
+        service = new CourseService(courseRepository);
     }
 
     @Test

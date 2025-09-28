@@ -2,6 +2,7 @@ import useMarkdownContext from "@/hooks/contexts/useMarkdownContext";
 import MarkdownEditor from "./markdown-editor";
 import MarkdownViewer from "@/components/markdown/markdown-viewer";
 import {useFadeInAnimate} from "@/animations/FadeIn";
+import "./index.css"
 
 export default function MarkdownWrapper() {
   const { isEditing } = useMarkdownContext();

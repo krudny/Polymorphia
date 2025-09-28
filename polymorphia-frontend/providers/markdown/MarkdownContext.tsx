@@ -1,7 +1,5 @@
 import {createContext, useEffect, useState} from "react";
 import {MarkdownContextInterface, MarkdownProviderProps,} from "@/providers/markdown/types";
-import {useEventParams} from "@/hooks/general/useEventParams";
-import useMarkdownUpdate from "@/hooks/course/useMarkdownUpdate";
 import toast from "react-hot-toast";
 import useMarkdownReset from "@/hooks/course/useMarkdownReset";
 import useMarkdownSource from "@/hooks/course/useMarkdownSource";
@@ -13,15 +11,15 @@ export const MarkdownContext = createContext<
 
 export const MarkdownProvider = ({ children, markdownType }: MarkdownProviderProps) => {
   const { data, isLoading, isError } = useMarkdown(markdownType);
-  const { gradableEventId } = useEventParams();
+  // const { gradableEventId } = useEventParams();
 
   const [markdown, setMarkdown] = useState("");
   const [newMarkdown, setNewMarkdown] = useState("");
   const [isEditing, setIsEditing] = useState(false);
 
-  const { mutate: updateMarkdown } = useMarkdownUpdate(setIsEditing);
+  // const { mutate: updateMarkdown } = useMarkdownUpdate(setIsEditing);
   const { mutate: resetMarkdown } = useMarkdownReset();
-  const { data: markdownSource } = useMarkdownSource();
+  const { data: markdownSource } = useMarkdownSource(markdownType);
 
   useEffect(() => {
     if (data && data.markdown) {
@@ -31,7 +29,7 @@ export const MarkdownProvider = ({ children, markdownType }: MarkdownProviderPro
   }, [data]);
 
   const saveMarkdown = () => {
-    updateMarkdown({ gradableEventId, markdown: newMarkdown });
+    // updateMarkdown({ gradableEventId, markdown: newMarkdown });
   };
 
   const rejectMarkdown = () => {

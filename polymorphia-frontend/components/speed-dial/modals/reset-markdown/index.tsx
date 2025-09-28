@@ -1,14 +1,14 @@
-import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
+import {SpeedDialModalProps} from "@/components/speed-dial/modals/types";
 import Modal from "@/components/modal/Modal";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import "./index.css";
 import useMarkdownContext from "@/hooks/contexts/useMarkdownContext";
 
 export default function ResetMarkdown({ onClosedAction }: SpeedDialModalProps) {
-  const { resetMarkdown, markdownSource } = useMarkdownContext();
+  const { markdownSource } = useMarkdownContext();
 
   const handleConfirm = () => {
-    resetMarkdown();
+    // resetMarkdown();
     //TODO: close modal after success
   };
 
