@@ -1,24 +1,44 @@
-import {createContext, useEffect, useState} from "react";
-import {MarkdownContextInterface, MarkdownProviderProps,} from "@/providers/markdown/types";
+import { createContext, useEffect, useState } from "react";
+import {
+  MarkdownContextInterface,
+  MarkdownProviderProps,
+} from "@/providers/markdown/types";
 import toast from "react-hot-toast";
 import useMarkdownReset from "@/hooks/course/useMarkdownReset";
 import useMarkdownSource from "@/hooks/course/useMarkdownSource";
-import {useMarkdown} from "@/hooks/course/useMarkdown";
+import { useMarkdown } from "@/hooks/course/useMarkdown";
+import useMarkdownUpdate from "@/hooks/course/useMarkdownUpdate";
+import { MarkdownTypes } from "@/interfaces/general";
+import { useEventParams } from "@/hooks/general/useEventParams";
+
+const COURSE_ID = 1;
 
 export const MarkdownContext = createContext<
   MarkdownContextInterface | undefined
 >(undefined);
 
-export const MarkdownProvider = ({ children, markdownType }: MarkdownProviderProps) => {
+export const MarkdownProvider = ({
+  children,
+  markdownType,
+}: MarkdownProviderProps) => {
   const { data, isLoading, isError } = useMarkdown(markdownType);
-  // const { gradableEventId } = useEventParams();
-
+  const { gradableEventId } = useEventParams();
+  const resourceId =
+    markdownType === MarkdownTypes.GRADABLE_EVENT ? gradableEventId : COURSE_ID;
   const [markdown, setMarkdown] = useState("");
   const [newMarkdown, setNewMarkdown] = useState("");
   const [isEditing, setIsEditing] = useState(false);
 
-  // const { mutate: updateMarkdown } = useMarkdownUpdate(setIsEditing);
-  const { mutate: resetMarkdown } = useMarkdownReset();
+  const { mutate: saveMarkdown } = useMarkdownUpdate({
+    setIsEditing,
+    resourceId,
+    type: markdownType,
+    markdown: newMarkdown,
+  });
+  const { mutate: resetMarkdown } = useMarkdownReset({
+    resourceId,
+    type: markdownType,
+  });
   const { data: markdownSource } = useMarkdownSource(markdownType);
 
   useEffect(() => {
@@ -27,10 +47,6 @@ export const MarkdownProvider = ({ children, markdownType }: MarkdownProviderPro
       setNewMarkdown(data.markdown);
     }
   }, [data]);
-
-  const saveMarkdown = () => {
-    // updateMarkdown({ gradableEventId, markdown: newMarkdown });
-  };
 
   const rejectMarkdown = () => {
     setIsEditing(false);
@@ -53,6 +69,8 @@ export const MarkdownProvider = ({ children, markdownType }: MarkdownProviderPro
         rejectMarkdown,
         resetMarkdown,
         markdownSource,
+        markdownType,
+        resourceId,
       }}
     >
       {children}

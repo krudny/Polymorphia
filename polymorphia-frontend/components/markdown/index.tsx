@@ -1,22 +1,23 @@
 import useMarkdownContext from "@/hooks/contexts/useMarkdownContext";
 import MarkdownEditor from "./markdown-editor";
 import MarkdownViewer from "@/components/markdown/markdown-viewer";
-import {useFadeInAnimate} from "@/animations/FadeIn";
-import "./index.css"
+import { useFadeInAnimate } from "@/animations/FadeIn";
+import "./index.css";
 import SpeedDial from "@/components/speed-dial/SpeedDial";
-import {MarkdownWrapperProps} from "./types";
+import { MarkdownWrapperProps } from "./types";
 
-export default function MarkdownWrapper({ speedDialKey}: MarkdownWrapperProps) {
+export default function MarkdownWrapper({
+  speedDialKey,
+}: MarkdownWrapperProps) {
   const { isEditing } = useMarkdownContext();
   const wrapperRef = useFadeInAnimate();
 
   return (
-      <div className="markdown" ref={wrapperRef}>
-        <SpeedDial speedDialKey={speedDialKey} />
-        <div className="markdown-wrapper">
-          {isEditing ? <MarkdownEditor /> : <MarkdownViewer />}
-        </div>
+    <div className="markdown" ref={wrapperRef}>
+      <SpeedDial speedDialKey={speedDialKey} />
+      <div className="markdown-wrapper">
+        {isEditing ? <MarkdownEditor /> : <MarkdownViewer />}
       </div>
-  )
+    </div>
+  );
 }
-

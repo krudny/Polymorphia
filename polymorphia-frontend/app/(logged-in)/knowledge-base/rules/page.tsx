@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import {useTitle} from "@/components/navigation/TitleContext";
-import {useEffect} from "react";
-import {MarkdownProvider} from "@/providers/markdown/MarkdownContext";
+import { useTitle } from "@/components/navigation/TitleContext";
+import { useEffect } from "react";
+import { MarkdownProvider } from "@/providers/markdown/MarkdownContext";
 import MarkdownWrapper from "@/components/markdown";
-import {MarkdownTypes} from "@/interfaces/general";
-import {SpeedDialKeys} from "@/components/speed-dial/types";
+import { MarkdownTypes } from "@/interfaces/general";
+import { SpeedDialKeys } from "@/components/speed-dial/types";
 
 export default function CourseRules() {
   const { setTitle } = useTitle();

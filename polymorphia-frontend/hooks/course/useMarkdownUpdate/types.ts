@@ -1,5 +1,13 @@
-import { MarkdownRequestDTO } from "@/interfaces/api/markdown";
+import { Dispatch, SetStateAction } from "react";
+import { MarkdownType } from "@/interfaces/general";
 
 export interface UseMarkdownUpdate {
-  mutate: (variables: MarkdownRequestDTO) => void;
+  mutate: () => void;
+}
+
+export interface UseMarkdownUpdateProps {
+  setIsEditing: Dispatch<SetStateAction<boolean>>;
+  resourceId: number;
+  type: MarkdownType;
+  markdown: string;
 }

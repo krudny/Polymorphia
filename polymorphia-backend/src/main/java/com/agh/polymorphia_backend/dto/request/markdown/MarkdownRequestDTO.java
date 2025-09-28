@@ -7,9 +7,6 @@ import lombok.Data;
 @Data
 public class MarkdownRequestDTO {
     @NotNull
-    private Long gradableEventId;
-
-    @NotNull
     @Size(min = 1, max = 50000, message = "Markdown file is to large")
     private String markdown;
 }

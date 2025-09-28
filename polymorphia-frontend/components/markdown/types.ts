@@ -1,4 +1,4 @@
-import {SpeedDialKey} from "@/components/speed-dial/types";
+import { SpeedDialKey } from "@/components/speed-dial/types";
 
 export interface MarkdownWrapperProps {
   speedDialKey: SpeedDialKey;

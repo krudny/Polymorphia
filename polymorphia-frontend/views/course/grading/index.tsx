@@ -1,15 +1,15 @@
-import {GradingProps} from "@/views/course/grading/types";
-import {useGradingFactory} from "@/hooks/factory/useGradingFactory";
-import {Fragment, useEffect, useRef} from "react";
+import { GradingProps } from "@/views/course/grading/types";
+import { useGradingFactory } from "@/hooks/factory/useGradingFactory";
+import { Fragment, useEffect, useRef } from "react";
 import "./index.css";
-import {GradingFilterId} from "@/providers/grading/types";
+import { GradingFilterId } from "@/providers/grading/types";
 import FiltersModal from "@/components/filters-modals/FiltersModal";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
-import {useQueryClient} from "@tanstack/react-query";
-import {useMediaQuery} from "react-responsive";
-import {useTitle} from "@/components/navigation/TitleContext";
-import {ViewTypes} from "@/interfaces/general";
-import {getSpeedDialKey} from "@/components/speed-dial/util";
+import { useQueryClient } from "@tanstack/react-query";
+import { useMediaQuery } from "react-responsive";
+import { useTitle } from "@/components/navigation/TitleContext";
+import { ViewTypes } from "@/interfaces/general";
+import { getSpeedDialKey } from "@/components/speed-dial/util";
 import SpeedDial from "@/components/speed-dial/SpeedDial";
 
 export default function Grading({ eventType, columns }: GradingProps) {
@@ -69,10 +69,7 @@ export default function Grading({ eventType, columns }: GradingProps) {
     });
   };
 
-  const speedDialKey = getSpeedDialKey(
-    eventType,
-    ViewTypes.GRADING,
-  );
+  const speedDialKey = getSpeedDialKey(eventType, ViewTypes.GRADING);
 
   if (!gradingComponents || !speedDialKey) {
     return null;

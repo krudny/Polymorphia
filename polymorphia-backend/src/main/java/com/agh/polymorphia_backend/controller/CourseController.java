@@ -1,7 +1,6 @@
 package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.response.knowledge_base.KnowledgeBaseResponseDto;
-import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.course.KnowledgeBaseService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,6 @@ import java.util.List;
 @RequestMapping("/courses")
 public class CourseController {
     private final KnowledgeBaseService knowledgeBaseService;
-    private final CourseService courseService;
 
     @GetMapping("/{courseId}/evolution-stages")
     @PreAuthorize("isAuthenticated()")

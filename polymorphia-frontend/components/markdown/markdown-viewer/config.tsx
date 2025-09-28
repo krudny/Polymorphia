@@ -1,30 +1,16 @@
-import {Components} from "react-markdown";
+import { Components } from "react-markdown";
 import "./index.css";
 import Image from "next/image";
-import {MarkdownImageProps} from "./types";
+import { MarkdownImageProps } from "./types";
 
 export const markdownConfig: Components = {
-  h1: ({ ...props }) => (
-    <h1 className="h1-markdown" {...props} />
-  ),
-  h2: ({ ...props }) => (
-    <h2 className="h2-markdown" {...props} />
-  ),
-  h3: ({ ...props }) => (
-    <h3 className="h3-markdown" {...props} />
-  ),
-  p: ({ ...props }) => (
-    <p className="p-markdown" {...props} />
-  ),
-  ol: ({ ...props }) => (
-    <ol className="ol-markdown" {...props} />
-  ),
-  ul: ({ ...props }) => (
-    <ul className="ul-markdown" {...props} />
-  ),
-  li: ({ ...props }) => (
-    <li className="li-markdown" {...props} />
-  ),
+  h1: ({ ...props }) => <h1 className="h1-markdown" {...props} />,
+  h2: ({ ...props }) => <h2 className="h2-markdown" {...props} />,
+  h3: ({ ...props }) => <h3 className="h3-markdown" {...props} />,
+  p: ({ ...props }) => <p className="p-markdown" {...props} />,
+  ol: ({ ...props }) => <ol className="ol-markdown" {...props} />,
+  ul: ({ ...props }) => <ul className="ul-markdown" {...props} />,
+  li: ({ ...props }) => <li className="li-markdown" {...props} />,
   strong: ({ children, ...props }) => (
     <span className="strong-markdown" {...props}>
       {children}
@@ -83,21 +69,11 @@ export const markdownConfig: Components = {
       <table className="table-markdown" {...props} />
     </div>
   ),
-  thead: ({ ...props }) => (
-    <thead className="thead-markdown" {...props} />
-  ),
-  tbody: ({ ...props }) => (
-    <tbody {...props} />
-  ),
-  tr: ({ ...props }) => (
-    <tr className="tr-markdown" {...props} />
-  ),
-  th: ({ ...props }) => (
-    <th className="th-markdown" {...props} />
-  ),
-  td: ({ ...props }) => (
-    <td className="td-markdown" {...props} />
-  ),
+  thead: ({ ...props }) => <thead className="thead-markdown" {...props} />,
+  tbody: ({ ...props }) => <tbody {...props} />,
+  tr: ({ ...props }) => <tr className="tr-markdown" {...props} />,
+  th: ({ ...props }) => <th className="th-markdown" {...props} />,
+  td: ({ ...props }) => <td className="td-markdown" {...props} />,
   code({ node, className, children, ...props }) {
     const isBlock = node?.position?.start.line !== node?.position?.end.line;
 

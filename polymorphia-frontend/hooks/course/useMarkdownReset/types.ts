@@ -1,6 +1,10 @@
-import {MarkdownParamsRequest} from "@/interfaces/api/markdown";
+import { MarkdownType } from "@/interfaces/general";
 
 export interface UseMarkdownReset {
-  mutate: (request: MarkdownParamsRequest) => void;
+  mutate: () => void;
 }
 
+export interface UseMarkdownResetProps {
+  resourceId: number;
+  type: MarkdownType;
+}

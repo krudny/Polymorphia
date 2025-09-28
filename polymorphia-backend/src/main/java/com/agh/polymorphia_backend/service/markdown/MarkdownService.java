@@ -105,7 +105,7 @@ public class MarkdownService {
 
     private void setCourseRulesMarkdown(Long courseId, String markdown) {
         Course course = courseService.getCourseById(courseId);
-
+        
         try {
             course.setMarkdown(markdown);
             courseRepository.save(course);

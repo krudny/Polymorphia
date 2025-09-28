@@ -37,4 +37,3 @@ export const MarkdownTypes = {
 } as const;
 
 export type MarkdownType = (typeof MarkdownTypes)[keyof typeof MarkdownTypes];
-
