@@ -1,45 +1,42 @@
-import { AssignmentStrategy } from "@/components/speed-dial/strategies/markdown-view/Assignment";
-import { ProjectStrategy } from "@/components/speed-dial/strategies/markdown-view/Project";
-import { SpeedDialStrategy } from "@/components/speed-dial/strategies/types";
-import { TestGradingStrategy } from "@/components/speed-dial/strategies/instructor/TestGrading";
-import { AssignmentGradingStrategy } from "@/components/speed-dial/strategies/instructor/AssignmentGrading";
-import { SpeedDialKey, SpeedDialKeys } from "../types";
-import { CourseGroupStrategy } from "@/components/speed-dial/strategies/instructor/CourseGroup";
+import {AssignmentStrategy} from "@/components/speed-dial/strategies/markdown-view/Assignment";
+import {ProjectStrategy} from "@/components/speed-dial/strategies/markdown-view/Project";
+import {SpeedDialStrategy} from "@/components/speed-dial/strategies/types";
+import {TestGradingStrategy} from "@/components/speed-dial/strategies/instructor/TestGrading";
+import {AssignmentGradingStrategy} from "@/components/speed-dial/strategies/instructor/AssignmentGrading";
+import {SpeedDialKey, SpeedDialKeys} from "../types";
+import {CourseGroupStrategy} from "@/components/speed-dial/strategies/instructor/CourseGroup";
+import {RulesStrategy} from "@/components/speed-dial/strategies/markdown-view/Rules";
 
 export class SpeedDialStrategyRegistry {
   private strategies = new Map<SpeedDialKey, SpeedDialStrategy>();
 
   constructor() {
     this.strategies.set(
-      SpeedDialKeys.ASSIGNMENT_MARKDOWN_STUDENT,
+      SpeedDialKeys.ASSIGNMENT_MARKDOWN,
       new AssignmentStrategy()
     );
     this.strategies.set(
-      SpeedDialKeys.ASSIGNMENT_MARKDOWN_INSTRUCTOR,
-      new AssignmentStrategy()
-    );
-    this.strategies.set(
-      SpeedDialKeys.PROJECT_MARKDOWN_STUDENT,
+      SpeedDialKeys.PROJECT_MARKDOWN,
       new ProjectStrategy()
     );
     this.strategies.set(
-      SpeedDialKeys.PROJECT_MARKDOWN_INSTRUCTOR,
-      new ProjectStrategy()
+      SpeedDialKeys.RULES_MARKDOWN,
+      new RulesStrategy(),
     );
     this.strategies.set(
-      SpeedDialKeys.TEST_GRADING_INSTRUCTOR,
+      SpeedDialKeys.TEST_GRADING,
       new TestGradingStrategy()
     );
     this.strategies.set(
-      SpeedDialKeys.ASSIGNMENT_GRADING_INSTRUCTOR,
+      SpeedDialKeys.ASSIGNMENT_GRADING,
       new AssignmentGradingStrategy()
     );
     this.strategies.set(
-      SpeedDialKeys.PROJECT_GRADING_INSTRUCTOR,
+      SpeedDialKeys.PROJECT_GRADING,
       new AssignmentGradingStrategy()
     );
     this.strategies.set(
-      SpeedDialKeys.COURSE_GROUP_INSTRUCTOR,
+      SpeedDialKeys.COURSE_GROUP,
       new CourseGroupStrategy()
     );
   }

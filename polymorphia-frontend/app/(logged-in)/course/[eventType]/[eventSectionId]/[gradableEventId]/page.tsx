@@ -2,23 +2,21 @@
 
 import {MarkdownProvider} from "@/providers/markdown/MarkdownContext";
 import MarkdownWrapper from "@/components/markdown";
-import {useEventParams} from "@/hooks/general/useEventParams";
-import useUserRole from "@/hooks/general/useUserRole";
 import {MarkdownTypes, ViewTypes} from "@/interfaces/general";
+import {useEventParams} from "@/hooks/general/useEventParams";
 import {getSpeedDialKey} from "@/components/speed-dial/util";
 
 export default function GradableEventMarkdownView() {
-  const { data: role } = useUserRole();
   const { eventType } = useEventParams();
-  const speedDialKey = getSpeedDialKey(eventType, ViewTypes.MARKDOWN, role);
+  const speedDialKey = getSpeedDialKey(eventType, ViewTypes.MARKDOWN);
 
-  if (!role || !speedDialKey) {
+  if (!speedDialKey) {
     return null;
   }
 
   return (
     <MarkdownProvider markdownType={MarkdownTypes.GRADABLE_EVENT}>
-      <MarkdownWrapper />
+      <MarkdownWrapper speedDialKey={speedDialKey}/>
     </MarkdownProvider>
   );
 }
