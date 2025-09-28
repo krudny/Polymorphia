@@ -1,31 +1,34 @@
 -- Users
 -- Students
 INSERT INTO users (id, first_name, last_name, email, password, is_password_temporary)
-VALUES (2, 'Piotr', 'Budynek', 'student@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', false);
+VALUES (2, 'Piotr', 'Budynek', 'student@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O',
+        false);
 
 INSERT INTO students(index_number, user_id)
 values (123456, 2);
 
 -- Coordinators
 INSERT INTO users (id, first_name, last_name, email, password, is_password_temporary)
-VALUES (3, 'Michał', 'Kowalski', 'coordinator@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', false);
+VALUES (3, 'Michał', 'Kowalski', 'coordinator@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O',
+        false);
 
 INSERT into coordinators(user_id)
 values (3);
 
 -- Instructors
 INSERT INTO users (id, first_name, last_name, email, password, is_password_temporary)
-VALUES (4, 'Sławomir', 'Nowak', 'instructor@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', false);
+VALUES (4, 'Sławomir', 'Nowak', 'instructor@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O',
+        false);
 
 INSERT into instructors(user_id)
 values (4);
 
 -- Courses
-INSERT INTO courses (id, name, info_url, coordinator_id)
-VALUES (1, 'Programowanie Obiektowe', '/url', 3);
+INSERT INTO courses (id, name, coordinator_id, markdown, markdown_source_url)
+VALUES (1, 'Programowanie Obiektowe', 3, null, null);
 
-INSERT INTO courses (id, name, info_url, coordinator_id)
-VALUES (2, 'Programowanie Obiektowe', '/url', 3);
+INSERT INTO courses (id, name, coordinator_id, markdown, markdown_source_url)
+VALUES (2, 'Programowanie Obiektowe', 3, null, null);
 
 -- Course Groups
 INSERT INTO course_groups (id, name, course_id, instructor_id)
@@ -43,10 +46,12 @@ VALUES (1, 'Pisklak', 20, 'description', 2.0, 'imageUrl_pisklak', 1, 1),
        (4, 'Podlot2', 50, 'description2', 3.0, 'imageUrl2', 3, 2);
 
 -- Event sections
-INSERT INTO public.event_sections (id, has_gradable_events_with_topics, is_hidden, is_shown_in_road_map, name, order_index,
+INSERT INTO public.event_sections (id, has_gradable_events_with_topics, is_hidden, is_shown_in_road_map, name,
+                                   order_index,
                                    course_id)
 VALUES (2, true, true, true, 'Lab', 1, 1);
-INSERT INTO public.event_sections (id, has_gradable_events_with_topics, is_hidden, is_shown_in_road_map, name, order_index,
+INSERT INTO public.event_sections (id, has_gradable_events_with_topics, is_hidden, is_shown_in_road_map, name,
+                                   order_index,
                                    course_id)
 VALUES (1, true, true, true, 'Kartkówka', 2, 1);
 
