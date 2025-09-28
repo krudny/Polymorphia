@@ -38,7 +38,7 @@ public class MarkdownController {
             @PathVariable MarkdownType type,
             @PathVariable Long resourceId,
             @RequestBody @Valid MarkdownRequestDTO requestDTO) {
-        
+
         markdownService.setMarkdown(type, resourceId, requestDTO.getMarkdown());
         return ResponseEntity.ok().build();
     }

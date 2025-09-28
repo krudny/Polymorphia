@@ -4,8 +4,8 @@ import lombok.Getter;
 
 @Getter
 public enum MarkdownType {
-    GRADABLE_EVENT("GRADABLE_EVENT"),
-    COURSE_RULES("COURSE_RULES");
+    GRADABLE_EVENT("gradable_event"),
+    COURSE_RULES("course_rules");
 
     private final String value;
 

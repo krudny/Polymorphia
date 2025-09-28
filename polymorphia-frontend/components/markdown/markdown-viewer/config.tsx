@@ -90,9 +90,9 @@ export const markdownConfig: Components = {
     );
   },
   table: ({ ...props }) => (
-    <div className="w-fit mx-auto overflow-x-auto my-6 lg:my-10">
+    <div className="w-fit mx-auto overflow-x-auto my-6">
       <table
-        className="w-full border-collapse border border-gray-300 rounded-lg shadow-sm"
+        className="w-full border-collapse border-2 border-primary-dark rounded-lg shadow-sm"
         {...props}
       />
     </div>
@@ -104,19 +104,18 @@ export const markdownConfig: Components = {
     <tbody {...props} />
   ),
   tr: ({ ...props }) => (
-    <tr className="border-b border-gray-200 hover:bg-gray-50 transition-colors" {...props} />
+    <tr className="border-b-2 border-primary-dark" {...props} />
   ),
   th: ({ ...props }) => (
     <th
       className="
-        border border-gray-300
-        px-4 py-3
-        lg:px-6 lg:py-4
-        text-left
-        font-semibold
+        border-2 border-primary-dark
+        px-6 py-4
+        text-center
+        font-normal
         text-[1.4rem]
         lg:text-[1.8rem]
-        bg-gray-100
+        bg-primary-gray
       "
       {...props}
     />
@@ -124,9 +123,9 @@ export const markdownConfig: Components = {
   td: ({ ...props }) => (
     <td
       className="
-        border border-gray-300
-        px-4 py-3
-        lg:px-6 lg:py-4
+        border-2 border-primary-dark
+        text-center
+        px-6 py-4
         text-[1.3rem]
         lg:text-[1.6rem]
         align-top
