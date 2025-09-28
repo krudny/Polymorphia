@@ -1,15 +1,12 @@
-import { createContext, useEffect, useState } from "react";
-import {
-  MarkdownContextInterface,
-  MarkdownProviderProps,
-} from "@/providers/markdown/types";
+import {createContext, useEffect, useState} from "react";
+import {MarkdownContextInterface, MarkdownProviderProps,} from "@/providers/markdown/types";
 import toast from "react-hot-toast";
 import useMarkdownReset from "@/hooks/course/useMarkdownReset";
-import useMarkdownSource from "@/hooks/course/useMarkdownSource";
-import { useMarkdown } from "@/hooks/course/useMarkdown";
+import {useMarkdown} from "@/hooks/course/useMarkdown";
 import useMarkdownUpdate from "@/hooks/course/useMarkdownUpdate";
-import { MarkdownTypes } from "@/interfaces/general";
-import { useEventParams } from "@/hooks/general/useEventParams";
+import {MarkdownTypes} from "@/interfaces/general";
+import {useEventParams} from "@/hooks/general/useEventParams";
+import useMarkdownSource from "@/hooks/course/useMarkdownSource";
 
 const COURSE_ID = 1;
 
@@ -21,7 +18,8 @@ export const MarkdownProvider = ({
   children,
   markdownType,
 }: MarkdownProviderProps) => {
-  const { data, isLoading, isError } = useMarkdown(markdownType);
+  const { data  } = useMarkdown(markdownType);
+  const { data: markdownSource } = useMarkdownSource(markdownType);
   const { gradableEventId } = useEventParams();
   const resourceId =
     markdownType === MarkdownTypes.GRADABLE_EVENT ? gradableEventId : COURSE_ID;
@@ -35,11 +33,11 @@ export const MarkdownProvider = ({
     type: markdownType,
     markdown: newMarkdown,
   });
+
   const { mutate: resetMarkdown } = useMarkdownReset({
     resourceId,
     type: markdownType,
   });
-  const { data: markdownSource } = useMarkdownSource(markdownType);
 
   useEffect(() => {
     if (data && data.markdown) {
@@ -57,20 +55,16 @@ export const MarkdownProvider = ({
   return (
     <MarkdownContext.Provider
       value={{
-        markdown,
-        setMarkdown,
         newMarkdown,
         setNewMarkdown,
         isEditing,
         setIsEditing,
-        isLoading,
-        isError,
         saveMarkdown,
         rejectMarkdown,
         resetMarkdown,
-        markdownSource,
         markdownType,
         resourceId,
+        markdownSource,
       }}
     >
       {children}

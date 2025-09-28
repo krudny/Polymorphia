@@ -1,4 +1,4 @@
-import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
+import {SpeedDialModalProps} from "@/components/speed-dial/modals/types";
 import Modal from "@/components/modal/Modal";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import "./index.css";
@@ -11,7 +11,7 @@ export default function ResetMarkdown({ onClosedAction }: SpeedDialModalProps) {
     resetMarkdown();
   };
 
-  if (!markdownSource?.sourceUrl) {
+  if (!markdownSource) {
     return null;
   }
 

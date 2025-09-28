@@ -1,4 +1,4 @@
-import { MarkdownType } from "@/interfaces/general";
+import {MarkdownType} from "@/interfaces/general";
 
 export interface MarkdownResponseDTO {
   markdown: string;
@@ -11,7 +11,7 @@ export interface MarkdownRequestDTO {
 }
 
 export interface SourceMarkdownResponseDTO {
-  sourceUrl: string | null;
+  sourceUrl: string | undefined;
 }
 
 export interface MarkdownParamsRequest {

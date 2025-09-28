@@ -4,7 +4,7 @@ import {
   MarkdownResponseDTO,
   SourceMarkdownResponseDTO,
 } from "@/interfaces/api/markdown";
-import { API_HOST } from "@/services/api";
+import {API_HOST} from "@/services/api";
 
 export const MarkdownService = {
   getMarkdown: async (

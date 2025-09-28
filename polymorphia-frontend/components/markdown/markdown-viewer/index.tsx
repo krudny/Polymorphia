@@ -1,17 +1,18 @@
 "use client";
 
 import Markdown from "react-markdown";
-import { markdownConfig } from "@/components/markdown/markdown-viewer/config";
+import {markdownConfig} from "@/components/markdown/markdown-viewer/config";
 import Loading from "@/components/loading/Loading";
-import { useFadeInAnimate } from "@/animations/FadeIn";
+import {useFadeInAnimate} from "@/animations/FadeIn";
 import useMarkdownContext from "@/hooks/contexts/useMarkdownContext";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
+import {useMarkdown} from "@/hooks/course/useMarkdown";
 
 export default function MarkdownViewer() {
-  const { markdown, isLoading, isError } = useMarkdownContext();
-  const shouldAnimate = !isLoading && !!markdown;
-  const wrapperRef = useFadeInAnimate(shouldAnimate);
+  const { markdownType } = useMarkdownContext();
+  const { data, isLoading, isError } = useMarkdown(markdownType);
+  const wrapperRef = useFadeInAnimate(!isLoading);
 
   if (isLoading) {
     return <Loading />;
@@ -21,6 +22,10 @@ export default function MarkdownViewer() {
     return <div>Nie można pobrać markdown</div>;
   }
 
+  if (!data || data.markdown === "") {
+    return <div className="text-4xl m-auto">Do wydarzenia nie została przypisana żadna treść</div>
+  }
+
   return (
     <div className="markdown-viewer" ref={wrapperRef}>
       <Markdown
@@ -28,7 +33,7 @@ export default function MarkdownViewer() {
         rehypePlugins={[rehypeRaw]}
         remarkPlugins={[remarkGfm]}
       >
-        {markdown}
+        {data.markdown}
       </Markdown>
     </div>
   );

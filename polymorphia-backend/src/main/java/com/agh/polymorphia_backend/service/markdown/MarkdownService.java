@@ -56,7 +56,9 @@ public class MarkdownService {
         GradableEvent gradableEvent = gradableEventService.getGradableEventById(gradableEventId);
 
         if (gradableEvent.getMarkdown() == null || gradableEvent.getMarkdown().isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Markdown is empty");
+            return MarkdownResponseDTO.builder()
+                    .markdown("")
+                    .build();
         }
 
         return MarkdownResponseDTO.builder()
@@ -68,7 +70,9 @@ public class MarkdownService {
         Course course = courseService.getCourseById(courseId);
 
         if (course.getMarkdown() == null || course.getMarkdown().isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Markdown is empty");
+            return MarkdownResponseDTO.builder()
+                    .markdown("")
+                    .build();
         }
 
         return MarkdownResponseDTO.builder()
@@ -105,7 +109,7 @@ public class MarkdownService {
 
     private void setCourseRulesMarkdown(Long courseId, String markdown) {
         Course course = courseService.getCourseById(courseId);
-        
+
         try {
             course.setMarkdown(markdown);
             courseRepository.save(course);
