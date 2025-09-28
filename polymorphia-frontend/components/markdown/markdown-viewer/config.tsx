@@ -1,7 +1,8 @@
-import { Components } from "react-markdown";
+import {Components} from "react-markdown";
 import "./index.css";
 import Image from "next/image";
-import { MarkdownImageProps } from "./types";
+import {MarkdownImageProps} from "./types";
+import {isValidUrl} from "../isValidUrl";
 
 export const markdownConfig: Components = {
   h1: ({ ...props }) => <h1 className="h1-markdown" {...props} />,
@@ -32,6 +33,10 @@ export const markdownConfig: Components = {
 
     const width = parseInt(String(propWidth), 10) || 900;
     const height = parseInt(String(propHeight), 10) || 600;
+
+    if (!isValidUrl(src)) {
+      return <span className="markdown-invalid-src">Invalid image url</span>
+    }
 
     if (isInline) {
       return (

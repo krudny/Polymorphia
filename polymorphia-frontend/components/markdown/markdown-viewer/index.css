@@ -87,6 +87,10 @@
     @apply object-contain;
 }
 
+.markdown-invalid-src {
+    @apply inline-block text-primary-error;
+}
+
 /* Markdown viewer */
 
 .markdown-viewer {

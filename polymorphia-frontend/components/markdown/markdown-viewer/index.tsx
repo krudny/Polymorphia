@@ -12,7 +12,7 @@ import {useMarkdown} from "@/hooks/course/useMarkdown";
 export default function MarkdownViewer() {
   const { markdownType } = useMarkdownContext();
   const { data, isLoading, isError } = useMarkdown(markdownType);
-  const wrapperRef = useFadeInAnimate(!isLoading);
+  const wrapperRef = useFadeInAnimate(!isLoading && !!data?.markdown);
 
   if (isLoading) {
     return <Loading />;
