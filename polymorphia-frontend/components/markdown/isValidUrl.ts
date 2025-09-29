@@ -6,6 +6,7 @@ export const isValidUrl = (url: string | undefined): boolean => {
     new URL(url);
     return true;
   } catch (error) {
+    console.error(error);
     return false;
   }
 };
