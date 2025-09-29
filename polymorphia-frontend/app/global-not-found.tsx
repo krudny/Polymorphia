@@ -48,7 +48,7 @@ export default function GlobalNotFound() {
       <div className="hero-right-wrapper">
         <div ref={titleRef} className="hero-error">
           <h1>Ooops!</h1>
-          <h2>Nie znaleźliśmy strony której szukasz</h2>
+          <h2>Nie znaleźliśmy strony, której szukasz.</h2>
             <ButtonWithBorder
               text="Powrót"
               onClick={() => router.back()}
