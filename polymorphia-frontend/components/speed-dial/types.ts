@@ -10,8 +10,12 @@ export interface SpeedDialItem {
   color?: string;
 }
 
-export interface SpeedDialProps {
+export interface SpeedDialEventProps {
   speedDialKey: SpeedDialKey;
+}
+
+export interface SpeedDialProps {
+  items: SpeedDialItem[];
 }
 
 export const SpeedDialKeys = {
@@ -23,6 +27,7 @@ export const SpeedDialKeys = {
   ASSIGNMENT_GRADING_INSTRUCTOR: "ASSIGNMENT_GRADING_INSTRUCTOR",
   PROJECT_GRADING_INSTRUCTOR: "PROJECT_GRADING_INSTRUCTOR",
   COURSE_GROUP_INSTRUCTOR: "COURSE_GROUP_INSTRUCTOR",
+  PROFILE_STUDENT: "PROFILE_STUDENT",
 } as const;
 
 export type SpeedDialKey = (typeof SpeedDialKeys)[keyof typeof SpeedDialKeys];

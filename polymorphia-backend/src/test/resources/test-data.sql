@@ -1,31 +1,76 @@
--- Users
--- Students
-INSERT INTO users (id, first_name, last_name, email, password, is_password_temporary)
-VALUES (2, 'Piotr', 'Budynek', 'student@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', false);
+--Truncate
+TRUNCATE TABLE users cascade;
+TRUNCATE TABLE chests_items cascade;
+TRUNCATE TABLE courses cascade;
+TRUNCATE TABLE coordinators cascade;
+TRUNCATE TABLE students cascade;
+TRUNCATE TABLE instructors cascade;
+TRUNCATE TABLE user_course_roles cascade;
+TRUNCATE TABLE course_groups cascade;
+TRUNCATE TABLE chests cascade;
+TRUNCATE TABLE animals cascade;
+TRUNCATE TABLE evolution_stages cascade;
+TRUNCATE TABLE event_sections cascade;
+TRUNCATE TABLE test_sections cascade;
+TRUNCATE TABLE rewards cascade;
+TRUNCATE TABLE items cascade;
+TRUNCATE TABLE flat_bonus_items cascade;
+TRUNCATE TABLE percentage_bonus_items cascade;
 
-INSERT INTO students(index_number, user_id)
-values (123456, 2);
+-- Users
+INSERT INTO users (id, first_name, last_name, email, password, preferred_course_id, is_password_temporary)
+VALUES (3, 'Michał', 'Kowalski', 'coordinator@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O',null, false);
+
+INSERT INTO users (id, first_name, last_name, email, password, preferred_course_id, is_password_temporary)
+VALUES (2, 'Piotr', 'Budynek', 'student@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null, false);
+
+INSERT INTO users (id, first_name, last_name, email, password, preferred_course_id, is_password_temporary)
+VALUES (4, 'Sławomir', 'Nowak', 'instructor@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O',null, false);
 
 -- Coordinators
-INSERT INTO users (id, first_name, last_name, email, password, is_password_temporary)
-VALUES (3, 'Michał', 'Kowalski', 'coordinator@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', false);
-
 INSERT into coordinators(user_id)
 values (3);
 
--- Instructors
-INSERT INTO users (id, first_name, last_name, email, password, is_password_temporary)
-VALUES (4, 'Sławomir', 'Nowak', 'instructor@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', false);
-
-INSERT into instructors(user_id)
+INSERT into coordinators(user_id)
 values (4);
 
 -- Courses
-INSERT INTO courses (id, name, info_url, coordinator_id)
-VALUES (1, 'Programowanie Obiektowe', '/url', 3);
+INSERT INTO courses (id, name, info_url, coordinator_id, coordinator_image_url, instructor_image_url, image_url)
+VALUES (1, 'Programowanie Obiektowe', '/url', 3, '/coord_url', '/instr_url', 'img_url');
 
-INSERT INTO courses (id, name, info_url, coordinator_id)
-VALUES (2, 'Programowanie Obiektowe', '/url', 3);
+INSERT INTO courses (id, name, info_url, coordinator_id, coordinator_image_url, instructor_image_url, image_url)
+VALUES (2, 'Programowanie Obiektowe', '/url', 3, '/coord_url', '/instr_url', 'img_url');
+
+INSERT INTO courses (id, name, info_url, coordinator_id, coordinator_image_url, instructor_image_url, image_url)
+VALUES (3, 'Programowanie Obiektowe', '/url', 4, '/coord_url', '/instr_url', 'img_url');
+
+-- Students
+INSERT INTO students(index_number, user_id)
+values (123456, 2);
+
+update users
+    set preferred_course_id=1
+where id=2;
+
+-- Instructors
+INSERT into instructors(user_id)
+values (4);
+
+-- UserCourseRoles
+INSERT INTO user_course_roles(user_id, course_id, role)
+values (3, 1, 'COORDINATOR');
+
+INSERT INTO user_course_roles(user_id, course_id, role)
+values (3, 2, 'COORDINATOR');
+
+INSERT INTO user_course_roles(user_id, course_id, role)
+values (4, 1, 'INSTRUCTOR');
+
+INSERT INTO user_course_roles(user_id, course_id, role)
+values (4, 3, 'COORDINATOR');
+
+INSERT INTO user_course_roles(user_id, course_id, role)
+values (2, 1, 'STUDENT');
 
 -- Course Groups
 INSERT INTO course_groups (id, name, course_id, instructor_id)

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-type sizeVariants = "xs" | "sm" | "md" | "lg";
+export type sizeVariants = "xs" | "sm" | "md" | "lg";
 
 export interface ProgressBarProps {
   minXP: number;

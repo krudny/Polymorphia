@@ -3,6 +3,7 @@ import { ReactNode, RefObject } from "react";
 export interface XPCardProps {
   title: string;
   subtitle?: string;
+  details?: string;
   leftComponent?: ReactNode;
   rightComponent?: ReactNode;
   image?: {
@@ -31,4 +32,5 @@ export interface CardGridProps {
   containerRef: RefObject<HTMLDivElement | null>;
   cards: ReactNode[];
   maxColumns?: number;
+  maxRows?: number;
 }
