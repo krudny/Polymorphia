@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
+
 public interface HallOfFameRepository extends JpaRepository<HallOfFameEntry, Long> {
     String WHERE_CLAUSE = """
             hof.courseId = :#{#requestDto.courseId()}
@@ -49,4 +51,17 @@ public interface HallOfFameRepository extends JpaRepository<HallOfFameEntry, Lon
             from HallOfFameEntry hof
             where\s""" + WHERE_CLAUSE)
     Page<HallOfFameEntry> findHofPageFromEventSection(@Param("requestDto") HallOfFameRequestDto requestDto, Pageable pageable);
+
+
+    Optional<HallOfFameEntry> findByAnimalId(
+            Long animalId
+    );
+
+    @Query(value = """
+            SELECT COUNT(DISTINCT hof.animalId)
+            FROM HallOfFameEntry hof
+            WHERE\s""" + WHERE_CLAUSE)
+    long countByCourseIdAndFilters(@Param("requestDto") HallOfFameRequestDto requestDto);
+
 }
+
