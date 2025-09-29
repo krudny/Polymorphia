@@ -4,39 +4,18 @@ import Image from "next/image";
 import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import LoginForm from "@/components/home/LoginForm";
-import { useLayoutEffect, useRef, useState } from "react";
-import {
-  animateInitialMount,
-  animateLoginFormVisibility,
-} from "@/animations/Home";
+import {useLayoutEffect, useRef, useState} from "react";
+import {animateLoginFormVisibility,} from "@/animations/Home";
 import "./index.css";
+import {useHeroAnimation} from "@/hooks/general/useHeroAnimation";
 
 export default function Home() {
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
+  const loginFormRef = useRef<HTMLDivElement>(null);
+  const { backgroundRef, imageRef, titleRef, hasMountedRef } = useHeroAnimation();
 
   const openLoginForm = () => setIsLoginFormVisible(true);
   const closeLoginForm = () => setIsLoginFormVisible(false);
-
-  const loginFormRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLDivElement>(null);
-  const backgroundRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
-  const hasMountedRef = useRef(false);
-
-  useLayoutEffect(() => {
-    if (!backgroundRef.current || !titleRef.current || !imageRef.current) {
-      return;
-    }
-
-    animateInitialMount(
-      backgroundRef.current,
-      titleRef.current,
-      imageRef.current,
-      () => {
-        hasMountedRef.current = true;
-      }
-    );
-  }, []);
 
   useLayoutEffect(() => {
     if (!hasMountedRef.current || !loginFormRef.current || !titleRef.current) {
@@ -77,7 +56,7 @@ export default function Home() {
         </div>
       </div>
       <div className="hero-right-wrapper">
-        <div ref={titleRef}>
+        <div ref={titleRef} className="hero-login-wrapper">
           <h1>Polymorphia</h1>
           <div className="hero-buttons">
             <ButtonWithBorder
