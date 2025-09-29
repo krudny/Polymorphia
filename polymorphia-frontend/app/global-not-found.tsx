@@ -18,7 +18,7 @@ export default function GlobalNotFound() {
   const { backgroundRef, imageRef, titleRef } = useHeroAnimation();
 
   return (
-    <html lang="en">
+    <html lang="pl">
     <body className={`${leagueGothic.className} ${leagueGothic.variable}`}>
     <BackgroundWrapper className="hero-background-wrapper" forceTheme="light">
       <div className="hero-background-image" ref={backgroundRef}>
