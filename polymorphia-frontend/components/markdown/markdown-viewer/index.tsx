@@ -33,7 +33,7 @@ export default function MarkdownViewer() {
         rehypePlugins={[rehypeRaw]}
         remarkPlugins={[remarkGfm]}
       >
-        {data.markdown}
+        {String(data.markdown).replace(/(<br\s*\/?>\s*)+/gi, '<br />')}
       </Markdown>
     </div>
   );

@@ -27,8 +27,12 @@
     @apply text-[2.2rem] my-4 first:mt-0;
 }
 
+.h4-markdown {
+    @apply text-[2rem] underline my-4 first:mt-0;
+}
+
 .p-markdown {
-    @apply text-[1.6rem] leading-8 mt-3 lg:text-3xl lg:mt-5 lg:leading-11 first:mt-0;
+    @apply text-[1.5rem] leading-8 mt-3 lg:text-3xl lg:mt-5 lg:leading-11 first:mt-0;
 }
 
 .ol-markdown {
@@ -72,7 +76,11 @@
 }
 
 .td-markdown {
-    @apply border-2 border-primary-dark text-center px-6 py-4 text-[1.3rem] lg:text-[1.6rem] align-middle leading-relaxed;
+    @apply border-2 border-primary-dark text-center px-5 py-2 text-[1.3rem] lg:text-[1.6rem] align-middle leading-relaxed;
+
+    div {
+        @apply flex-col-centered;
+    }
 }
 
 .code-markdown-inline {
@@ -80,7 +88,7 @@
 }
 
 .img-markdown {
-    @apply object-contain rounded-xl my-4;
+    @apply object-contain rounded-xl;
 }
 
 .img-markdown-inline {

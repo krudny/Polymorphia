@@ -8,6 +8,7 @@ export const markdownConfig: Components = {
   h1: ({ ...props }) => <h1 className="h1-markdown" {...props} />,
   h2: ({ ...props }) => <h2 className="h2-markdown" {...props} />,
   h3: ({ ...props }) => <h3 className="h3-markdown" {...props} />,
+  h4: ({ ...props }) => <h4 className="h4-markdown" {...props} />,
   p: ({ ...props }) => <p className="p-markdown" {...props} />,
   ol: ({ ...props }) => <ol className="ol-markdown" {...props} />,
   ul: ({ ...props }) => <ul className="ul-markdown" {...props} />,
