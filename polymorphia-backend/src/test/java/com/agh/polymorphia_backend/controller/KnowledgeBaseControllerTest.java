@@ -4,16 +4,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.io.IOException;
 
-import static com.agh.polymorphia_backend.controller.ControllerTestUtil.callEndpoint;
+import static com.agh.polymorphia_backend.controller.ControllerTestUtil.getEndpoint;
 import static com.agh.polymorphia_backend.controller.ControllerTestUtil.getExpectedResponse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ActiveProfiles("test")
-class CourseControllerTest extends ControllerTestConfig {
+class KnowledgeBaseControllerTest extends ControllerTestConfig {
     @Value("classpath:responses/knowledge.base/evolution-stages.json")
     private Resource evolutionStagesJson;
 
@@ -25,7 +24,8 @@ class CourseControllerTest extends ControllerTestConfig {
 
     @Test
     void getEvolutionStages_ShouldReturnEvolutionStages() throws IOException {
-        String actualResponse = callEndpoint("/courses/{courseId}/evolution-stages", 1);
+        String actualResponse = getEndpoint("/knowledge-base/evolution-stages?courseId={courseId}",
+                "student@agh.com", "password",200,1);
 
         ObjectMapper mapper = new ObjectMapper();
         assertEquals(mapper.readTree(actualResponse), mapper.readTree(getExpectedResponse(evolutionStagesJson)));
@@ -33,7 +33,8 @@ class CourseControllerTest extends ControllerTestConfig {
 
     @Test
     void getItems_ShouldReturnItems() throws IOException {
-        String actualResponse = callEndpoint("/courses/{courseId}/items", 1);
+        String actualResponse = getEndpoint("/knowledge-base/items?courseId={courseId}",
+                "student@agh.com", "password",200,1);
 
         ObjectMapper mapper = new ObjectMapper();
         assertEquals(mapper.readTree(actualResponse), mapper.readTree(getExpectedResponse(itemsJson)));
@@ -41,7 +42,8 @@ class CourseControllerTest extends ControllerTestConfig {
 
     @Test
     void getChests_ShouldReturnChests() throws IOException {
-        String actualResponse = callEndpoint("/courses/{courseId}/chests", 1);
+        String actualResponse = getEndpoint("/knowledge-base/chests?courseId={courseId}",
+                "student@agh.com", "password",200,1);
 
         ObjectMapper mapper = new ObjectMapper();
         assertEquals(mapper.readTree(actualResponse), mapper.readTree(getExpectedResponse(chestsJson)));

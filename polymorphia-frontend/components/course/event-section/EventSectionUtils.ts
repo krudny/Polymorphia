@@ -3,13 +3,16 @@
 import { MenuOption } from "@/components/navigation/types";
 import { EventSectionResponseDTO } from "@/interfaces/api/course";
 import { RefObject } from "react";
+import { useMenuCourseOptionText } from "@/hooks/general/useMenuCourseOptionText";
+import { Role } from "@/interfaces/api/user";
 
 export function updateMenuItems(
   menuItems: MenuOption[],
-  eventSections: EventSectionResponseDTO[]
+  eventSections: EventSectionResponseDTO[],
+  userRole: Role
 ) {
   const courseItem = menuItems.filter(
-    (menuOption) => menuOption.text === "Kurs"
+    (menuOption) => menuOption.text === useMenuCourseOptionText(userRole)
   )[0];
 
   courseItem.link = `course/${eventSections[0].type.toLowerCase()}/${eventSections[0].id}`;

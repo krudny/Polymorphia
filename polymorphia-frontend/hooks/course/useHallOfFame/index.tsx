@@ -8,6 +8,7 @@ import {
 export default function useHallOfFame({
   page,
   pageSize,
+  courseId,
   debouncedSearch,
   sortOrder,
   sortBy,
@@ -18,6 +19,7 @@ export default function useHallOfFame({
       "hallOfFame",
       page,
       pageSize,
+      courseId,
       debouncedSearch,
       sortOrder,
       sortBy,
@@ -27,6 +29,7 @@ export default function useHallOfFame({
       HallOfFameService.getHallOfFame(
         page,
         pageSize,
+        courseId,
         debouncedSearch,
         sortBy[0],
         sortOrder[0] === "asc" || sortOrder[0] === "desc"

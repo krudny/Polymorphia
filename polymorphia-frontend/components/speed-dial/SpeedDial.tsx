@@ -1,15 +1,13 @@
 "use client";
 
-import {ReactNode, useState} from "react";
+import { ReactNode, useState } from "react";
 import "./index.css";
-import {useSpeedDialFactory} from "@/hooks/factory/useSpeedDialFactory";
 import Loading from "@/components/loading/Loading";
-import {SpeedDial as SpeedDialMui, SpeedDialAction} from "@mui/material";
-import {SpeedDialProps} from "./types";
-import {useMediaQuery} from "react-responsive";
+import { SpeedDial as SpeedDialMui, SpeedDialAction } from "@mui/material";
+import { SpeedDialProps } from "./types";
+import { useMediaQuery } from "react-responsive";
 
-export default function SpeedDial({ speedDialKey }: SpeedDialProps) {
-  const items = useSpeedDialFactory({ speedDialKey });
+export default function SpeedDial({ items }: SpeedDialProps) {
   const [activeModal, setActiveModal] = useState<ReactNode | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const isMd = useMediaQuery({ minWidth: "768px" });

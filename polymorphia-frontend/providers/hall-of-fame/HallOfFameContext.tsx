@@ -9,6 +9,7 @@ import {
 import { useFilters } from "@/hooks/course/useFilters";
 import { useHallOfFameFilterConfigs } from "@/hooks/course/useHallOfFameFilterConfigs";
 import useHallOfFame from "@/hooks/course/useHallOfFame";
+import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export const HallOfFameContext = createContext<
   HallOfFameContextInterface | undefined
@@ -21,12 +22,12 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   const [debouncedSearch] = useDebounce(search, 400);
   const [areFiltersOpen, setAreFiltersOpen] = useState(false);
 
-  const COURSE_ID = 1;
+  const { courseId } = useUserDetails();
   const {
     data: filterConfigs,
     isLoading: isFiltersLoading,
     isError: isFiltersError,
-  } = useHallOfFameFilterConfigs(COURSE_ID);
+  } = useHallOfFameFilterConfigs(courseId);
   const filters = useFilters<HallOfFameFilterId>(filterConfigs ?? []);
 
   const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["total"];
@@ -36,6 +37,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   const { data: hallOfFame, isLoading } = useHallOfFame({
     page,
     pageSize,
+    courseId,
     debouncedSearch,
     sortOrder,
     sortBy,

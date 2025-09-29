@@ -32,7 +32,7 @@ export function useHallOfFameFilterConfigs(courseId: number) {
             ...eventSections.map((eventSection: EventSectionResponseDTO) => ({
               value: eventSection.name,
             })),
-            { value: "Bonusy" },
+            { value: "bonuses", label: "Bonusy" },
             { value: "total", label: "Suma" },
           ],
           defaultValues: ["total"],
@@ -58,7 +58,7 @@ export function useHallOfFameFilterConfigs(courseId: number) {
             ...eventSections.map((eventSection) => ({
               value: eventSection.name,
             })),
-            { value: "Bonusy" },
+            { value: "bonuses", label: "Bonusy" },
           ],
           min: Math.min(4, eventSections.length),
           max: Math.min(4, eventSections.length),
@@ -66,7 +66,7 @@ export function useHallOfFameFilterConfigs(courseId: number) {
             ...eventSections
               .slice(0, Math.min(3, Math.max(0, eventSections.length - 1)))
               .map((eventSection) => eventSection.name),
-            "Bonusy",
+            "bonuses",
           ],
         },
       ];
