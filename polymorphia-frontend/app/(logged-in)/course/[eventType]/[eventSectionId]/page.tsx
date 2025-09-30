@@ -2,16 +2,17 @@
 
 import StudentGradableEventsView from "@/views/course/student";
 import InstructorGradableEventsView from "@/views/course/instructor";
-import useUserRole from "@/hooks/general/useUserRole";
-import { Roles } from "@/interfaces/general";
+import useUserContext from "@/hooks/contexts/useUserContext";
+import { Roles } from "@/interfaces/api/user";
 
 export default function GradableEventsView() {
-  const { data: role } = useUserRole();
+  const { userRole } = useUserContext();
 
-  switch (role) {
+  switch (userRole) {
     case Roles.STUDENT:
       return <StudentGradableEventsView />;
     case Roles.INSTRUCTOR:
+    case Roles.COORDINATOR:
       return <InstructorGradableEventsView />;
     default:
       return null;

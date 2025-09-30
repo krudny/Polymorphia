@@ -10,7 +10,8 @@ import { useMediaQuery } from "react-responsive";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { ViewTypes } from "@/interfaces/general";
 import { getSpeedDialKey } from "@/components/speed-dial/util";
-import SpeedDial from "@/components/speed-dial/SpeedDial";
+import SpeedDial from "@/components/speed-dial/SpeedDialEvent";
+import { Roles } from "@/interfaces/api/user";
 
 export default function Grading({ eventType, columns }: GradingProps) {
   const queryClient = useQueryClient();

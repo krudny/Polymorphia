@@ -8,7 +8,7 @@ export default function useEquipment(): UseEquipment {
     isLoading: isItemsLoading,
     error: itemsError,
   } = useQuery({
-    queryKey: ["equipment-items"],
+    queryKey: ["equipmentItems"],
     queryFn: () => EquipmentService.getItems(),
   });
 
@@ -17,7 +17,7 @@ export default function useEquipment(): UseEquipment {
     isLoading: isChestsLoading,
     error: chestsError,
   } = useQuery({
-    queryKey: ["equipment-chests"],
+    queryKey: ["equipmentChests"],
     queryFn: () => EquipmentService.getChests(),
   });
 

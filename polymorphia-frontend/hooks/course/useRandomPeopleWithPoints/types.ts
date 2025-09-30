@@ -1,7 +1,7 @@
-import { UserDetailsDTO } from "@/interfaces/api/user";
+import { StudentDetailsDTOWithType } from "@/interfaces/api/user";
 
 export interface UseRandomPeopleWithPoints {
-  data: (UserDetailsDTO & { gainedXp?: string })[] | undefined;
+  data: (StudentDetailsDTOWithType & { gainedXp?: string })[] | undefined;
   isLoading: boolean;
   isError: boolean;
 }

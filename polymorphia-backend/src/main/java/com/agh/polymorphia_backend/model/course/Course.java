@@ -25,6 +25,9 @@ public class Course {
     @NotEmpty
     private String name;
 
+    @NotEmpty
+    private String imageUrl;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "coordinator_id")
     private Coordinator coordinator;
@@ -38,4 +41,10 @@ public class Course {
     private String markdownSourceUrl;
 
     private String markdown;
+
+    @NotEmpty
+    private String coordinatorImageUrl;
+
+    @NotEmpty
+    private String instructorImageUrl;
 }

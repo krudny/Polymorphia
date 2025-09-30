@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface AnimalRepository extends JpaRepository<Animal, Long> {
     @Query("select a from Animal  a join a.student s  join a.courseGroup c " +
-            "where s.id=:studentId AND c.course.id=:courseId")
+            "where s.user.id=:studentId AND c.course.id=:courseId")
     Optional<Animal> findByCourseIdAndStudentId(Long courseId, Long studentId);
 }

@@ -27,4 +27,7 @@ module.exports = {
   turbopack: {
     root: path.resolve(__dirname, "./"),
   },
+  experimental: {
+    globalNotFound: true,
+  },
 };

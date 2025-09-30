@@ -3,8 +3,8 @@ import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import Search from "@/components/search";
-import { UserDetailsDTO } from "@/interfaces/api/user";
-import Loading from "@/components/loading/Loading";
+import { StudentDetailsDTOWithType } from "@/interfaces/api/user";
+import Loading from "@/components/loading";
 import GradingComponentWrapper from "@/components/grading-components/grading-wrapper";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import "./index.css";
@@ -63,7 +63,7 @@ export default function ProjectGroupList() {
           >
             {group.members.map(
               (
-                student: UserDetailsDTO & { gainedXp?: string },
+                student: StudentDetailsDTOWithType & { gainedXp?: string },
                 index: number
               ) => {
                 const color = state.selectedTarget?.includes(student)
@@ -71,19 +71,22 @@ export default function ProjectGroupList() {
                   : student.gainedXp
                     ? "green"
                     : "gray";
+                const { fullName, group, imageUrl, evolutionStage } =
+                  student.userDetails;
+
+                if (!fullName) {
+                  throw new Error("No userName defined!");
+                }
 
                 return (
                   <XPCard
                     key={index}
-                    title={student.studentName}
+                    title={fullName}
                     color={color}
-                    subtitle={student.group}
+                    subtitle={group}
                     size={"xs"}
                     leftComponent={
-                      <XPCardImage
-                        imageUrl={student.imageUrl}
-                        alt={student.evolutionStage}
-                      />
+                      <XPCardImage imageUrl={imageUrl} alt={evolutionStage} />
                     }
                     rightComponent={
                       <XPCardPoints

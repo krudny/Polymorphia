@@ -10,8 +10,12 @@ export interface SpeedDialItem {
   color?: string;
 }
 
-export interface SpeedDialProps {
+export interface SpeedDialEventProps {
   speedDialKey: SpeedDialKey;
+}
+
+export interface SpeedDialProps {
+  items: SpeedDialItem[];
 }
 
 export const SpeedDialKeys = {

@@ -3,36 +3,83 @@ import Image from "next/image";
 import { useScaleShow } from "@/animations/ScaleShow";
 import { API_STATIC_URL } from "@/services/api";
 import "./index.css";
-import ProgressBar from "@/components/progressbar/ProgressBar";
 import { useTitle } from "@/components/navigation/TitleContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import UserPoints from "@/components/user-points/UserPoints";
-import ProgressBarTextLabels from "@/components/progressbar/ProgressBarTextLabels";
 import { useMediaQuery } from "react-responsive";
+import Loading from "@/components/loading";
+import { Roles } from "@/interfaces/api/user";
+import useUserContext from "@/hooks/contexts/useUserContext";
+import useStudentProfile from "@/hooks/course/useStudentProfile";
+import FiltersModal from "@/components/filters-modals/FiltersModal";
+import { useProfileFilterConfigs } from "@/hooks/course/useProfileFilterConfigs";
+import { useFilters } from "@/hooks/course/useFilters";
+import { filterXpDetails } from "@/providers/hall-of-fame/utils/filterXpDetails";
+import { ProfileFilterId } from "@/app/(logged-in)/profile/types";
+import ProfileProgressBar from "@/components/progressbar/profile";
+import SpeedDial from "@/components/speed-dial/SpeedDial";
+import { distributeTo100 } from "@/app/(logged-in)/profile/ProfileService";
+import { notFound } from "next/navigation";
 
 export default function Profile() {
-  const wrapperRef = useScaleShow();
   const { setTitle } = useTitle();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const isSm = useMediaQuery({ maxWidth: 920 });
+  const { data: profile, isLoading } = useStudentProfile();
+  const wrapperRef = useScaleShow(!isLoading);
+  const userContext = useUserContext();
+  const {
+    data: filterConfigs,
+    isLoading: isFiltersLoading,
+    isError: isFiltersError,
+  } = useProfileFilterConfigs();
+  const filters = useFilters<ProfileFilterId>(filterConfigs ?? []);
+
+  const speedDialItems = [
+    {
+      id: 1,
+      orderIndex: 1,
+      label: "Filtry",
+      icon: "tune",
+      onClick: () => {
+        setIsModalOpen(true);
+      },
+    },
+  ];
 
   useEffect(() => {
     setTitle("Profil");
   }, [setTitle]);
 
-  const sampleXpDetails = {
-    Laboratoria: "54.32",
-    Kartkówki: "43.33",
-    Projekt: "18.33",
-    Bonusy: "12.98",
-  };
+  if (userContext.userRole !== Roles.STUDENT || !profile) {
+    notFound();
+    return null;
+  }
+
+  if (isLoading || !userContext.userRole) {
+    return <Loading />;
+  }
+
+  const { imageUrl, fullName, animalName, position } = userContext.userDetails;
+
+  const lastEvolutionStageId = profile.evolutionStageThresholds.length - 1;
+  const maxPoints =
+    profile.evolutionStageThresholds[lastEvolutionStageId].minXp;
+
+  const filteredXpDetails = filterXpDetails(
+    profile.xpDetails,
+    filters.configs.find((config) => config.id === "rankingOptions"),
+    filters.getAppliedFilterValues
+  );
 
   return (
     <div ref={wrapperRef} className="profile">
+      <SpeedDial items={speedDialItems} />
       <div className="profile-wrapper">
         <div className="profile-content-wrapper">
           <div className="profile-image-wrapper">
             <Image
-              src={`${API_STATIC_URL}/images/evolution-stages/4.jpg`}
+              src={`${API_STATIC_URL}/${imageUrl}`}
               alt="User profile"
               fill
               className="profile-img"
@@ -42,16 +89,19 @@ export default function Profile() {
           </div>
           <div className="profile-content">
             <div className="profile-content-text">
-              <h1>Kamil Rudny</h1>
-              <h2>Gerard Pocieszny</h2>
-              <h3>Jesteś 36 na 139 zwierzaków!</h3>
+              <h1>{fullName}</h1>
+              <h2>{animalName}</h2>
+              <h3>
+                Jesteś {position} na {profile.totalStudentsInCourse} zwierzaków!
+              </h3>
             </div>
             <div className="profile-user-points-xs">
               <UserPoints
                 separators
                 titleSize="sm"
                 xpSize="md"
-                xpDetails={sampleXpDetails}
+                maxCols={6}
+                xpDetails={filteredXpDetails}
               />
             </div>
             <div className="profile-user-points-md">
@@ -59,7 +109,7 @@ export default function Profile() {
                 separators
                 titleSize="sm"
                 xpSize="md"
-                xpDetails={sampleXpDetails}
+                xpDetails={filteredXpDetails}
               />
             </div>
             <div className="profile-user-points-2xl">
@@ -67,75 +117,44 @@ export default function Profile() {
                 separators
                 titleSize="md"
                 xpSize="lg"
-                xpDetails={sampleXpDetails}
+                xpDetails={filteredXpDetails}
               />
             </div>
           </div>
         </div>
-        {/* TODO: maybe merge that */}
         <div className="profile-progress-bar-mobile">
-          <ProgressBar
-            minXP={60}
-            currentXP={65}
-            maxXP={70}
+          <ProfileProgressBar
+            totalXp={
+              (profile.totalXp / profile.rightEvolutionStage.minXp) * 100
+            }
+            maxPoints={maxPoints}
+            evolutionStages={[
+              profile.leftEvolutionStage,
+              profile.rightEvolutionStage,
+            ]}
             numSquares={2}
             segmentSizes={[0, 100, 0]}
-            upperElement={
-              <ProgressBarTextLabels
-                textLabels={["3.5 (60xp)", "4.0 (70xp)"]}
-                className="!min-h-8"
-                size="sm"
-              />
-            }
-            lowerElement={
-              <ProgressBarTextLabels
-                textLabels={["Nieopierzony Odkrywca", "Samodzielny Zwierzak"]}
-                size="sm"
-              />
-            }
+            size={"sm"}
           />
         </div>
 
         <div className="profile-progress-bar-desktop">
-          <ProgressBar
-            minXP={0}
-            currentXP={65}
-            maxXP={100}
-            numSquares={8}
-            segmentSizes={[0, 25, 0, 25, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0]}
-            upperElement={
-              <ProgressBarTextLabels
-                textLabels={[
-                  "2.0 (0xp)",
-                  "2.0 (25xp)",
-                  "3.0 (50xp)",
-                  "3.5 (60xp)",
-                  "4.0 (70xp)",
-                  "4.5 (80xp)",
-                  "5.0 (90xp)",
-                  "5.0 (100xp)",
-                ]}
-                className="!min-h-8"
-                size={isSm ? "sm" : "md"}
-              />
-            }
-            lowerElement={
-              <ProgressBarTextLabels
-                textLabels={[
-                  "Jajo",
-                  "Pisklak",
-                  "Podlot",
-                  "Żółtodziób",
-                  "Nieopierzony Odkrywca",
-                  "Samodzielny Zwierzak",
-                  "Majestatyczna Bestia",
-                  "Władca Polymorphii",
-                ]}
-                size={isSm ? "sm" : "md"}
-              />
-            }
+          <ProfileProgressBar
+            totalXp={profile.totalXp}
+            maxPoints={maxPoints}
+            evolutionStages={profile.evolutionStageThresholds}
+            numSquares={profile.evolutionStageThresholds.length}
+            segmentSizes={distributeTo100(profile.evolutionStageThresholds)}
+            size={isSm ? "sm" : "md"}
           />
         </div>
+        <FiltersModal<ProfileFilterId>
+          filters={filters}
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          isFiltersLoading={isFiltersLoading}
+          isFiltersError={isFiltersError}
+        />
       </div>
     </div>
   );
