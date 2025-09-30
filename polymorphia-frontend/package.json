@@ -10,15 +10,12 @@
     "eslint:fix": "eslint . --fix",
     "prettier:check": "prettier --check './**/*.{ts,js,tsx,scss,json}'",
     "prettier:fix": "prettier --write './**/*.{ts,js,tsx,scss,json}'",
-    "lint": "npm run eslint:check && npm run prettier:check"
-  },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
+    "lint": "npm run eslint:check && npm run prettier:check",
+    "prepare": "cd .. && husky polymorphia-frontend/.husky"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
-      "prettier --ignore-unknown --ignore-path .gitignore --ignore-path .prettierignore --write",
-      "npx eslint --fix"
+      "prettier --ignore-unknown --ignore-path .gitignore --ignore-path .prettierignore --write"
     ],
     "*.{json,less,md,css,html}": "prettier --ignore-unknown --ignore-path .gitignore --ignore-path .prettierignore --write"
   },

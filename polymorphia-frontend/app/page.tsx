@@ -3,10 +3,10 @@
 import Image from "next/image";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import LoginForm from "@/components/home/LoginForm";
-import {useLayoutEffect, useRef, useState} from "react";
-import {animateLoginFormVisibility} from "@/animations/Home";
+import { useLayoutEffect, useRef, useState } from "react";
+import { animateLoginFormVisibility } from "@/animations/Home";
 import "./index.css";
-import {useHeroAnimation} from "@/hooks/general/useHeroAnimation";
+import { useHeroAnimation } from "@/hooks/general/useHeroAnimation";
 
 export default function Home() {
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
@@ -32,13 +32,14 @@ export default function Home() {
   return (
     <>
       <div className="hero-background-image" ref={backgroundRef}>
-        <Image src="/hero-bg.webp" alt="Hero background" fill className="object-cover"
-               
-
-
-
-               priority
-          fetchPriority="high"  sizes="60vw"
+        <Image
+          src="/hero-bg.webp"
+          alt="Hero background"
+          fill
+          className="object-cover"
+          priority
+          fetchPriority="high"
+          sizes="60vw"
         />
       </div>
       <div className="hero-image-wrapper" ref={imageRef}>
