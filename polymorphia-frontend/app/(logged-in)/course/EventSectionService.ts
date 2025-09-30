@@ -23,6 +23,7 @@ import {
 import { ProjectGroupResponseDTO } from "@/interfaces/api/temp";
 import { EventTypes } from "@/interfaces/general";
 import { CriteriaDetails } from "@/providers/grading/gradingReducer/types";
+import { API_HOST } from "@/services/api";
 
 export const studentNames = [
   "Gerard Małoduszny",
@@ -83,56 +84,28 @@ const mockMarkdownStore: Record<number, string> = {
   32: "# Dlaczego refactoring hell to zło? \n < Content >",
 };
 
-const eventSectionData: EventSectionResponseDTO[] = [
-  {
-    id: 2,
-    name: "Laboratorium",
-    type: EventTypes.ASSIGNMENT,
-    orderIndex: 2,
-  },
-  {
-    id: 3,
-    name: "Projekt 1",
-    type: EventTypes.PROJECT,
-    orderIndex: 4,
-  },
-  {
-    id: 1,
-    name: "Kartkówka",
-    type: EventTypes.TEST,
-    orderIndex: 1,
-  },
-  {
-    id: 4,
-    name: "Git",
-    type: EventTypes.ASSIGNMENT,
-    orderIndex: 0,
-  },
-  {
-    id: 5,
-    name: "Specjalny lab",
-    type: EventTypes.ASSIGNMENT,
-    orderIndex: 3,
-  },
-  {
-    id: 6,
-    name: "Projekt 2",
-    type: EventTypes.PROJECT,
-    orderIndex: 5,
-  },
-];
-
 export const EventSectionService = {
   getEventSections: async (
     courseId: number
   ): Promise<EventSectionResponseDTO[]> => {
-    return eventSectionData.sort((a, b) => a.orderIndex - b.orderIndex);
+    const response = await fetch(
+      `${API_HOST}/event-sections?courseId=${courseId}`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch EventSections!");
+    }
+    return await response.json();
   },
 
   getStudentGradableEvents: async (
     eventSectionId: number
   ): Promise<StudentGradableEventResponseDTO[]> => {
-    if (eventSectionId === 1) {
+    if (eventSectionId === 1 || eventSectionId === 8) {
       const events: StudentGradableEventResponseDTO[] = [
         {
           id: 1,
@@ -246,7 +219,7 @@ export const EventSectionService = {
         },
       ];
       return events.sort((a, b) => a.orderIndex - b.orderIndex);
-    } else if (eventSectionId === 2) {
+    } else if (eventSectionId === 2 || eventSectionId === 6) {
       const events: StudentGradableEventResponseDTO[] = [
         {
           id: 15,
@@ -324,7 +297,7 @@ export const EventSectionService = {
         },
       ];
       return events.sort((a, b) => a.orderIndex - b.orderIndex);
-    } else if (eventSectionId === 4) {
+    } else if (eventSectionId === 4 || eventSectionId === 9) {
       return [
         {
           id: 30,
@@ -336,7 +309,7 @@ export const EventSectionService = {
           hasReward: true,
         },
       ];
-    } else if (eventSectionId === 6) {
+    } else if (eventSectionId === 11 || eventSectionId === 12) {
       return [
         {
           id: 32,
@@ -348,7 +321,7 @@ export const EventSectionService = {
           hasReward: false,
         },
       ];
-    } else if (eventSectionId === 3) {
+    } else if (eventSectionId === 3 || eventSectionId === 7) {
       return [
         {
           id: 33,

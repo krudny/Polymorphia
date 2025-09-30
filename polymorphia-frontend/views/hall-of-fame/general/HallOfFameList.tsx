@@ -22,25 +22,37 @@ export default function HallOfFameList() {
 
   const desktopComponent = (
     <div className="hall-of-fame-desktop-rank-wrapper" ref={wrapperRef}>
-      {hallOfFame.content.map((record: HallOfFameRecordDTO) => (
-        <HallOfFameCardDesktop
-          key={`rank-${record.userDetails.position}`}
-          userDetails={record.userDetails}
-          xpDetails={record.xpDetails}
-        />
-      ))}
+      {hallOfFame.content.length === 0 ? (
+        <div className="hall-of-fame-desktop-no-data-wrapper">
+          <h1>No data found</h1>
+        </div>
+      ) : (
+        hallOfFame.content.map((record: HallOfFameRecordDTO) => (
+          <HallOfFameCardDesktop
+            key={`rank-${record.userDetails.position}`}
+            userDetails={record.userDetails}
+            xpDetails={record.xpDetails}
+          />
+        ))
+      )}
     </div>
   );
 
   const mobileComponent = (
     <div className="hall-of-fame-mobile-rank-wrapper">
-      {hallOfFame.content.map((record: HallOfFameRecordDTO) => (
-        <RankCardMobile
-          key={`rank-${record.userDetails.position}`}
-          userDetails={record.userDetails}
-          xpDetails={record.xpDetails}
-        />
-      ))}
+      {hallOfFame.content.length === 0 ? (
+        <div className="hall-of-fame-mobile-no-data-wrapper">
+          <h1>No data found</h1>
+        </div>
+      ) : (
+        hallOfFame.content.map((record: HallOfFameRecordDTO) => (
+          <RankCardMobile
+            key={`rank-${record.userDetails.position}`}
+            userDetails={record.userDetails}
+            xpDetails={record.xpDetails}
+          />
+        ))
+      )}
     </div>
   );
 

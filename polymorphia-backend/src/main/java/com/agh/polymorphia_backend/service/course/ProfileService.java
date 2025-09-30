@@ -23,6 +23,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.math.BigDecimal;
 import java.util.*;
 
+import static com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService.STUDENT_HOF_NOT_FOUND;
+
 @Service
 @AllArgsConstructor
 public class ProfileService {
@@ -60,6 +62,11 @@ public class ProfileService {
     private Map<String, String> getXpDetails(User user, Long courseId) {
         Animal animal = animalService.getAnimal(user.getId(), courseId);
         Map<String, String> xpDetails = hallOfFameService.groupScoreDetails(List.of(animal.getId())).get(animal.getId());
+
+        if (xpDetails.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_HOF_NOT_FOUND);
+        }
+
         hallOfFameService.updateXpDetails(xpDetails, hallOfFameService.getStudentHallOfFame(user));
 
         return xpDetails;
