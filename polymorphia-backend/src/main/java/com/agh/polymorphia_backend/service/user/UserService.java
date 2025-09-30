@@ -1,7 +1,14 @@
 package com.agh.polymorphia_backend.service.user;
 
+import com.agh.polymorphia_backend.dto.request.user.StudentInvitationRequestDTO;
+import com.agh.polymorphia_backend.dto.request.user.StudentRegisterRequestDTO;
 import com.agh.polymorphia_backend.model.user.*;
+import com.agh.polymorphia_backend.repository.user.InvitationTokenRepository;
+import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
+import com.agh.polymorphia_backend.repository.user.role.CoordinatorRepository;
+import com.agh.polymorphia_backend.repository.user.role.InstructorRepository;
+import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
 import com.agh.polymorphia_backend.service.EmailService;
 import com.agh.polymorphia_backend.service.invitation_token.InvitationTokenService;
 import com.agh.polymorphia_backend.service.validation.InvitationTokenValidator;
@@ -15,9 +22,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Set;
-import java.util.stream.Collectors;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -53,11 +57,6 @@ public class UserService implements UserDetailsService {
         return buildUserWithDefinedRole(userCourseRole.get(), email);
     }
 
-    public AbstractRoleUser getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (AbstractRoleUser) authentication.getPrincipal();
-    }
-
     @Transactional
     public void inviteStudent(StudentInvitationRequestDTO inviteDTO) {
         String email = inviteDTO.getEmail();
@@ -81,21 +80,21 @@ public class UserService implements UserDetailsService {
 
         invitationTokenValidator.validateBeforeRegister(token);
 
-        Student student = Student.builder()
-                .email(token.getEmail())
-                .firstName(token.getFirstName())
-                .lastName(token.getLastName())
-                .password(passwordEncoder.encode(registerDTO.getPassword()))
-                .indexNumber(token.getIndexNumber())
-                .isActive(true)
-                .build();
+//        Student student = Student.builder()
+//                .email(token.getEmail())
+//                .firstName(token.getFirstName())
+//                .lastName(token.getLastName())
+//                .password(passwordEncoder.encode(registerDTO.getPassword()))
+//                .indexNumber(token.getIndexNumber())
+//                .isActive(true)
+//                .build();
 
         token.setUsed(true);
 
         try {
-            userRepository.save(student);
+//            userRepository.save(student);
             invitationTokenRepository.save(token);
-        } catch  (Exception e) {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create account");
         }

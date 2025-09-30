@@ -1,11 +1,11 @@
 "use client";
 
-import { ReactNode } from "react";
-import { NavigationProvider } from "@/providers/navigation/NavigationContext";
-import { UserProvider } from "@/providers/user/UserContext";
-import MainLayout from "@/components/main-layout/MainLayout";
+import {ReactNode} from "react";
+import {NavigationProvider} from "@/providers/navigation/NavigationContext";
+import {UserProvider} from "@/providers/user/UserContext";
 import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
 import Navigation from "@/components/navigation/Navigation";
+import MainLayout from "@/components/main-layout";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (

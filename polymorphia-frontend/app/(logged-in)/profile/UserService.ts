@@ -1,12 +1,14 @@
 import {
+  InviteStudentRequestDTO,
+  RegisterRequestDTO,
   Role,
   Roles,
   StudentDetailsDTOWithType,
   UserDetailsDTO,
 } from "@/interfaces/api/user";
-import { AvailableCoursesDTO } from "@/interfaces/api/user-context";
-import { API_HOST } from "@/services/api";
-import { StudentProfileDTO } from "@/interfaces/api/profile";
+import {AvailableCoursesDTO} from "@/interfaces/api/user-context";
+import {API_HOST} from "@/services/api";
+import {StudentProfileDTO} from "@/interfaces/api/profile";
 
 const UserService = {
   getStudentProfile: async (courseId: number): Promise<StudentProfileDTO> => {

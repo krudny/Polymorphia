@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.service.validation;
 
-import com.agh.polymorphia_backend.repository.user.StudentRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
+import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;

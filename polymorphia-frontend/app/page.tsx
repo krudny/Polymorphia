@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
-import { Suspense, useRef } from "react";
+import {Suspense, useRef} from "react";
 import "./index.css";
 import HomeContent from "@/components/home";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 
 export default function Home() {
   const loginFormRef = useRef<HTMLDivElement>(null);
