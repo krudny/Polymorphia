@@ -1,10 +1,11 @@
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
-import { HallOfFameRecordDTO } from "@/interfaces/api/hall-of-fame";
+import {HallOfFameRecordDTO} from "@/interfaces/api/hall-of-fame";
 import HallOfFameCardDesktop from "@/views/hall-of-fame/desktop/HallOfFameCardDesktop";
 import Loading from "@/components/loading";
-import { useScaleShow } from "@/animations/ScaleShow";
-import { useMediaQuery } from "react-responsive";
+import {useScaleShow} from "@/animations/ScaleShow";
+import {useMediaQuery} from "react-responsive";
 import RankCardMobile from "@/views/hall-of-fame/mobile/HallOfFameCardMobile";
+import HallOfFameError from "@/views/hall-of-fame/general/HallOfFameError";
 
 export default function HallOfFameList() {
   const { hallOfFame, isLoading, isFiltersLoading, isFiltersError } =
@@ -20,12 +21,12 @@ export default function HallOfFameList() {
     );
   }
 
+
+
   const desktopComponent = (
     <div className="hall-of-fame-desktop-rank-wrapper" ref={wrapperRef}>
       {hallOfFame.content.length === 0 ? (
-        <div className="hall-of-fame-no-data-wrapper">
-          <h1>Nie znaleziono danych</h1>
-        </div>
+        <HallOfFameError />
       ) : (
         hallOfFame.content.map((record: HallOfFameRecordDTO) => (
           <HallOfFameCardDesktop
@@ -41,9 +42,7 @@ export default function HallOfFameList() {
   const mobileComponent = (
     <div className="hall-of-fame-mobile-rank-wrapper">
       {hallOfFame.content.length === 0 ? (
-        <div className="hall-of-fame-no-data-wrapper">
-          <h1>Nie znaleziono danych</h1>
-        </div>
+        <HallOfFameError />
       ) : (
         hallOfFame.content.map((record: HallOfFameRecordDTO) => (
           <RankCardMobile

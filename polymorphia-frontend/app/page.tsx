@@ -3,10 +3,10 @@
 import Image from "next/image";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import LoginForm from "@/components/home/LoginForm";
-import { useLayoutEffect, useRef, useState } from "react";
-import { animateLoginFormVisibility } from "@/animations/Home";
+import {useLayoutEffect, useRef, useState} from "react";
+import {animateLoginFormVisibility} from "@/animations/Home";
 import "./index.css";
-import { useHeroAnimation } from "@/hooks/general/useHeroAnimation";
+import {useHeroAnimation} from "@/hooks/general/useHeroAnimation";
 
 export default function Home() {
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);

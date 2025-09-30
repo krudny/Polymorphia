@@ -68,9 +68,10 @@
     }
 }
 
-/* Hall of fame no data found */
+/* Hall of fame error */
+
 .hall-of-fame-no-data-wrapper {
-    @apply flex m-auto;
+    @apply m-auto;
 
     h1{
         @apply text-3xl text-center lg:text-4xl;
