@@ -5,7 +5,7 @@ import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import Search from "@/components/search";
 import GradingComponentWrapper from "@/components/grading-components/grading-wrapper";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import { ReactNode } from "react";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import "./index.css";

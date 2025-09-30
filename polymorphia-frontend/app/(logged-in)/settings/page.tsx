@@ -11,7 +11,7 @@ import CourseChoiceGrid from "@/components/course-choice";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import "./index.css";
 import useUserCourses from "@/hooks/course/useUserCourses";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 
 export default function Settings() {
   const {

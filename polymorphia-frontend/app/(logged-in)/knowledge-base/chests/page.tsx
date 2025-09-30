@@ -1,6 +1,6 @@
 "use client";
 import Slider from "@/components/slider/Slider";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
 import useChests from "@/hooks/course/useChests";

@@ -1,6 +1,6 @@
 import Modal from "@/components/modal/Modal";
 import GradeInfo from "@/components/course/event-section/GradeInfo";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import useGrade from "@/hooks/course/useGrade";
 import { useEventParams } from "@/hooks/general/useEventParams";
