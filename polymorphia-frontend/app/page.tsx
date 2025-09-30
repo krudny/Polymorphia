@@ -11,7 +11,8 @@ import {useHeroAnimation} from "@/hooks/general/useHeroAnimation";
 export default function Home() {
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
   const loginFormRef = useRef<HTMLDivElement>(null);
-  const { backgroundRef, imageRef, titleRef, hasMountedRef } = useHeroAnimation();
+  const { backgroundRef, imageRef, titleRef, hasMountedRef } =
+    useHeroAnimation();
 
   const openLoginForm = () => setIsLoginFormVisible(true);
   const closeLoginForm = () => setIsLoginFormVisible(false);
@@ -31,10 +32,9 @@ export default function Home() {
   return (
     <>
       <div className="hero-background-image" ref={backgroundRef}>
-
-
-            <Image src="/hero-bg.webp" alt="Hero background" fill className="object-cover" priority fetchPriority="high" sizes="60vw"
-            />
+        <Image src="/hero-bg.webp" alt="Hero background" fill className="object-cover" priority
+          fetchPriority="high"  sizes="60vw"
+        />
       </div>
       <div className="hero-image-wrapper" ref={imageRef}>
         <div>
