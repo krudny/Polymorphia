@@ -33,8 +33,6 @@ export default function Home() {
     <>
       <div className="hero-background-image" ref={backgroundRef}>
         <Image src="/hero-bg.webp" alt="Hero background" fill className="object-cover"
-
-               
                
 
 
