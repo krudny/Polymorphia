@@ -11,7 +11,10 @@
     "prettier:check": "prettier --check './**/*.{ts,js,tsx,scss,json}'",
     "prettier:fix": "prettier --write './**/*.{ts,js,tsx,scss,json}'",
     "lint": "npm run eslint:check && npm run prettier:check",
-    "prepare": "husky"
+    "prepare": "husky install"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
