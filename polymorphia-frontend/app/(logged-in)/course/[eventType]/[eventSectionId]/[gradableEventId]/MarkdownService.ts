@@ -45,7 +45,7 @@ export const MarkdownService = {
 
     const response = await fetch(`${API_HOST}/markdown/${type}/${resourceId}`, {
       credentials: "include",
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
