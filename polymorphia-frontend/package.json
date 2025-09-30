@@ -14,7 +14,11 @@
     "prepare": "husky"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,md,html,css}": "prettier --write"
+    "*.{ts,tsx,js,jsx}": [
+      "prettier --ignore-unknown --ignore-path .gitignore --ignore-path .prettierignore --write",
+      "npx eslint --fix"
+    ],
+    "*.{json,less,md,css,html}": "prettier --ignore-unknown --ignore-path .gitignore --ignore-path .prettierignore --write"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
