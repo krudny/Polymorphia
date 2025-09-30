@@ -23,8 +23,8 @@ export default function HallOfFameList() {
   const desktopComponent = (
     <div className="hall-of-fame-desktop-rank-wrapper" ref={wrapperRef}>
       {hallOfFame.content.length === 0 ? (
-        <div className="hall-of-fame-desktop-no-data-wrapper">
-          <h1>No data found</h1>
+        <div className="hall-of-fame-no-data-wrapper">
+          <h1>Nie znaleziono danych</h1>
         </div>
       ) : (
         hallOfFame.content.map((record: HallOfFameRecordDTO) => (
@@ -41,8 +41,8 @@ export default function HallOfFameList() {
   const mobileComponent = (
     <div className="hall-of-fame-mobile-rank-wrapper">
       {hallOfFame.content.length === 0 ? (
-        <div className="hall-of-fame-mobile-no-data-wrapper">
-          <h1>No data found</h1>
+        <div className="hall-of-fame-no-data-wrapper">
+          <h1>Nie znaleziono danych</h1>
         </div>
       ) : (
         hallOfFame.content.map((record: HallOfFameRecordDTO) => (

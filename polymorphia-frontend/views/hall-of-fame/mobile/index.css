@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 .hall-of-fame-mobile {
-    @apply w-full px-4 opacity-0;
+    @apply w-full px-4 opacity-0 flex flex-col flex-1;
 }
 
 .hall-of-fame-mobile-search-wrapper {
@@ -13,16 +13,9 @@
 }
 
 .hall-of-fame-mobile-rank-wrapper {
-    @apply w-full  grid grid-cols-1 gap-3 min-[650px]:grid-cols-2;
+    @apply w-full my-auto grid grid-cols-1 gap-3 min-[650px]:grid-cols-2;
 }
 
-.hall-of-fame-mobile-no-data-wrapper {
-    @apply flex items-center justify-center w-full min-h-[calc(100dvh-15rem)];
-
-    h1{
-        @apply text-4xl text-center;
-    }
-}
 
 .hall-of-fame-mobile-record-wrapper {
     @apply hall-of-fame-record-wrapper min-h-[calc(25%-1rem)] flex flex-col justify-between border-b-6 p-3 gap-y-3;
