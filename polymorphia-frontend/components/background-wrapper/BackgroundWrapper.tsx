@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import clsx from "clsx";
 import "./index.css";
 import { BackgroundWrapperProps } from "@/components/background-wrapper/types";
@@ -12,19 +11,15 @@ export default function BackgroundWrapper({
   forceTheme,
 }: BackgroundWrapperProps) {
   const { resolvedTheme } = useTheme();
-  const theme = forceTheme ?? resolvedTheme;
-  const url = `background${theme === "dark" ? "-dark" : ""}.webp`;
+  const activeTheme = forceTheme ?? resolvedTheme;
 
   return (
-    <div className={clsx("background-wrapper", className)}>
-      <Image
-        src={`/${url ?? "background.webp"}`}
-        alt="Background"
-        fill={true}
-        className="object-cover inset-0 -z-10"
-        priority={true}
-        fetchPriority="high"
-      />
+    <div
+      className={clsx("background-wrapper", className, {
+        "force-dark": activeTheme === "dark",
+        "force-light": activeTheme === "light",
+      })}
+    >
       {children}
     </div>
   );

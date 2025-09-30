@@ -11,6 +11,7 @@ import { TitleProvider } from "@/components/navigation/TitleContext";
 import { ThemeProvider } from "next-themes";
 import { ThemeProvider as ThemeProviderMui } from "@mui/material";
 import { themeConfig } from "@/components/speed-dial/config";
+import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
 
 const leagueGothic = League_Gothic({
   subsets: ["latin"],
@@ -33,11 +34,7 @@ export default function RootLayout({
 }>) {
   const [queryClient] = useState(() => new QueryClient());
   return (
-    <html
-      lang="pl"
-      className="custom-scrollbar bg-neutral-200"
-      suppressHydrationWarning
-    >
+    <html lang="pl" className="custom-scrollbar" suppressHydrationWarning>
       <head>
         <meta name="theme-color" content="#262626" />
         <link rel="icon" type="image/x-icon" href="/favicon.png" />
@@ -55,7 +52,12 @@ export default function RootLayout({
             <TitleProvider>
               <QueryClientProvider client={queryClient}>
                 <Toaster toastOptions={{ style: { fontSize: "1.5rem" } }} />
-                {children}
+                <BackgroundWrapper
+                  className="hero-background-wrapper"
+                  forceTheme="light"
+                >
+                  {children}
+                </BackgroundWrapper>
               </QueryClientProvider>
             </TitleProvider>
           </ThemeProvider>

@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import "./index.css";
 import PointsSummary from "@/components/course/event-section/points-summary/PointsSummary";
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import { useRouter } from "next/navigation";
 import renderCard from "@/views/course/student/RenderCard";
 import { useEventParams } from "@/hooks/general/useEventParams";

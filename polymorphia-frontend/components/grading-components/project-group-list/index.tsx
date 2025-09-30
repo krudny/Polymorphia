@@ -4,7 +4,7 @@ import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import Search from "@/components/search";
 import { StudentDetailsDTOWithType } from "@/interfaces/api/user";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import GradingComponentWrapper from "@/components/grading-components/grading-wrapper";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import "./index.css";

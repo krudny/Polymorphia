@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
-import MainLayout from "@/components/main-layout/MainLayout";
+import MainLayout from "@/components/main-layout";
 import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
 import "./index.css";
 
