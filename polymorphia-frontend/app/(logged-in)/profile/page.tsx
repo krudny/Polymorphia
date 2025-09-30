@@ -7,7 +7,7 @@ import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect, useState } from "react";
 import UserPoints from "@/components/user-points/UserPoints";
 import { useMediaQuery } from "react-responsive";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import { Roles } from "@/interfaces/api/user";
 import useUserContext from "@/hooks/contexts/useUserContext";
 import useStudentProfile from "@/hooks/course/useStudentProfile";
