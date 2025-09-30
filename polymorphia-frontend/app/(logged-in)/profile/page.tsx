@@ -7,7 +7,7 @@ import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect, useState } from "react";
 import UserPoints from "@/components/user-points/UserPoints";
 import { useMediaQuery } from "react-responsive";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import { Roles } from "@/interfaces/api/user";
 import useUserContext from "@/hooks/contexts/useUserContext";
 import useStudentProfile from "@/hooks/course/useStudentProfile";
@@ -19,6 +19,7 @@ import { ProfileFilterId } from "@/app/(logged-in)/profile/types";
 import ProfileProgressBar from "@/components/progressbar/profile";
 import SpeedDial from "@/components/speed-dial/SpeedDial";
 import { distributeTo100 } from "@/app/(logged-in)/profile/ProfileService";
+import { notFound } from "next/navigation";
 
 export default function Profile() {
   const { setTitle } = useTitle();
@@ -50,13 +51,13 @@ export default function Profile() {
     setTitle("Profil");
   }, [setTitle]);
 
-  if (isLoading && !userContext) {
-    return <Loading />;
+  if (userContext.userRole !== Roles.STUDENT || !profile) {
+    notFound();
+    return null;
   }
 
-  //TODO: handle profile for other roles
-  if ((userContext && userContext.userRole !== Roles.STUDENT) || !profile) {
-    return null;
+  if (isLoading || !userContext.userRole) {
+    return <Loading />;
   }
 
   const { imageUrl, fullName, animalName, position } = userContext.userDetails;

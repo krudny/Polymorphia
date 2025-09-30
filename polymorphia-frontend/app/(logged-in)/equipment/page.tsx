@@ -4,7 +4,7 @@ import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
 import ItemModal from "@/components/equipment/modals/ItemModal";
 import ChestModal from "@/components/equipment/modals/ChestModal";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import EquipmentSectionWrapper from "@/components/equipment/EquipmentSectionWrapper";
 import OpeningChestModal from "@/components/equipment/modals/OpeningChestModal";
 import { EquipmentProvider } from "@/providers/equipment/EquipmentContext";

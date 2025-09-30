@@ -1,7 +1,7 @@
 import { PointsSummaryProps } from "@/components/course/event-section/points-summary/types";
 import { useState } from "react";
 import "./index.css";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import BonusInfoModal from "@/components/course/event-section/points-summary/BonusInfoModal";
 import PointsSummaryElement from "@/components/course/event-section/points-summary/PointsSummaryElement";
 import { PointsSummaryDetailsResponseDTO } from "@/interfaces/api/course/points-summary";

@@ -3,7 +3,7 @@ import XPCardGrid from "@/components/xp-card/XPCardGrid";
 import SectionView from "@/components/section-view/SectionView";
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import renderCard from "@/views/course/instructor/RenderCard";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import useInstructorGradableEvents from "@/hooks/course/useInstructorGradableEvents";

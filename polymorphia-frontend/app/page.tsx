@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import LoginForm from "@/components/home/LoginForm";
 import { useLayoutEffect, useRef, useState } from "react";
@@ -28,10 +27,10 @@ export default function Home() {
       titleRef.current,
       isLoginFormVisible
     );
-  }, [isLoginFormVisible]);
+  }, [isLoginFormVisible, titleRef, hasMountedRef]);
 
   return (
-    <BackgroundWrapper className="hero-background-wrapper" forceTheme="light">
+    <>
       <div className="hero-background-image" ref={backgroundRef}>
         <Image
           src="/hero-bg.webp"
@@ -72,6 +71,6 @@ export default function Home() {
           <LoginForm onBackAction={closeLoginForm} />
         </div>
       </div>
-    </BackgroundWrapper>
+    </>
   );
 }
