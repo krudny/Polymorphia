@@ -1,4 +1,4 @@
-import {MarkdownType} from "@/interfaces/general";
+import { MarkdownType } from "@/interfaces/general";
 
 export interface MarkdownResponseDTO {
   markdown: string;

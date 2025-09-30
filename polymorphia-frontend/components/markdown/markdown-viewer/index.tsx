@@ -1,13 +1,13 @@
 "use client";
 
 import Markdown from "react-markdown";
-import {markdownConfig} from "@/components/markdown/markdown-viewer/config";
+import { markdownConfig } from "@/components/markdown/markdown-viewer/config";
 import Loading from "@/components/loading/Loading";
-import {useFadeInAnimate} from "@/animations/FadeIn";
+import { useFadeInAnimate } from "@/animations/FadeIn";
 import useMarkdownContext from "@/hooks/contexts/useMarkdownContext";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
-import {useMarkdown} from "@/hooks/course/useMarkdown";
+import { useMarkdown } from "@/hooks/course/useMarkdown";
 
 export default function MarkdownViewer() {
   const { markdownType } = useMarkdownContext();
@@ -23,7 +23,11 @@ export default function MarkdownViewer() {
   }
 
   if (!data || data.markdown === "") {
-    return <div className="text-4xl m-auto">Do wydarzenia nie została przypisana żadna treść</div>
+    return (
+      <div className="text-4xl m-auto">
+        Do wydarzenia nie została przypisana żadna treść
+      </div>
+    );
   }
 
   return (
@@ -33,7 +37,7 @@ export default function MarkdownViewer() {
         rehypePlugins={[rehypeRaw]}
         remarkPlugins={[remarkGfm]}
       >
-        {String(data.markdown).replace(/(<br\s*\/?>\s*)+/gi, '<br />')}
+        {String(data.markdown).replace(/(<br\s*\/?>\s*)+/gi, "<br />")}
       </Markdown>
     </div>
   );
