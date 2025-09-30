@@ -32,7 +32,8 @@ export default function Home() {
   return (
     <>
       <div className="hero-background-image" ref={backgroundRef}>
-        <Image src="/hero-bg.webp" alt="Hero background" fill className="object-cover" priority
+        <Image src="/hero-bg.webp" alt="Hero background" fill className="object-cover"
+               priority
           fetchPriority="high"  sizes="60vw"
         />
       </div>
