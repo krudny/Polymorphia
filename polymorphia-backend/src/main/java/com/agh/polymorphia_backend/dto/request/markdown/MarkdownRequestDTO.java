@@ -7,6 +7,6 @@ import lombok.Data;
 @Data
 public class MarkdownRequestDTO {
     @NotNull
-    @Size(min = 1, max = 50000, message = "Markdown file is to large")
+    @Size(min = 1, max = 50000, message = "Markdown file is too large")
     private String markdown;
 }
