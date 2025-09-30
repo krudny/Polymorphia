@@ -2,7 +2,7 @@
 
 import Slider from "@/components/slider/Slider";
 import { useSearchParams } from "next/navigation";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
 import useItems from "@/hooks/course/useItems";

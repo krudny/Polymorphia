@@ -6,7 +6,7 @@ import { Fragment, ReactNode, useRef } from "react";
 import ProgressBar from "@/components/progressbar/ProgressBar";
 import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLabels";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import { Accordion } from "@/components/accordion/Accordion";
 import { AccordionRef } from "@/providers/accordion/types";
 import AccordionSection from "@/components/accordion/AccordionSection";

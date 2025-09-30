@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import "./index.css";
 import useUserRole from "@/hooks/course/useUserRole";
 import { animateWelcome } from "@/animations/Welcome";
