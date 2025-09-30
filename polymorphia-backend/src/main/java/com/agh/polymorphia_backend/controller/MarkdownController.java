@@ -33,7 +33,7 @@ public class MarkdownController {
         return ResponseEntity.ok(markdownService.getMarkdownSourceUrl(type, resourceId));
     }
 
-    @PostMapping("/{type}/{resourceId}")
+    @PutMapping("/{type}/{resourceId}")
     public ResponseEntity<Void> setMarkdown(
             @PathVariable MarkdownType type,
             @PathVariable Long resourceId,

@@ -15,6 +15,6 @@ public class GradableEventService {
     public GradableEvent getGradableEventById(Long gradableEventId) {
         return gradableEventRepository
                 .findById(gradableEventId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid gradable event id"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Gradable event not found"));
     }
 }

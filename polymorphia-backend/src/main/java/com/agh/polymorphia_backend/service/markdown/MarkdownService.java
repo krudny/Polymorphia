@@ -5,7 +5,6 @@ import com.agh.polymorphia_backend.dto.response.markdown.SourceUrlMarkdownRespon
 import com.agh.polymorphia_backend.service.markdown.strategy.MarkdownCourseStrategy;
 import com.agh.polymorphia_backend.service.markdown.strategy.MarkdownGradableEventStrategy;
 import com.agh.polymorphia_backend.service.markdown.strategy.MarkdownStrategy;
-import com.agh.polymorphia_backend.service.markdown.strategy.MarkdownStrategyContext;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,11 +23,11 @@ public class MarkdownService {
     }
 
     public void setMarkdown(MarkdownType type, Long resourceId, String markdown) {
-        return getStrategyForType(type).setMarkdown(resourceId, markdown);
+        getStrategyForType(type).setMarkdown(resourceId, markdown);
     }
 
     public void resetMarkdown(MarkdownType type, Long resourceId) {
-        return getStrategyForType(type).resetMarkdown(resourceId);
+        getStrategyForType(type).resetMarkdown(resourceId);
     }
 
     private MarkdownStrategy getStrategyForType(MarkdownType type) {
