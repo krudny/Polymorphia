@@ -34,7 +34,7 @@ public class Course {
     @JsonIgnore
     private List<CourseGroup> courseGroups;
 
-    @Column(length =  128)
+    @Column(length = 128)
     private String markdownSourceUrl;
 
     private String markdown;
