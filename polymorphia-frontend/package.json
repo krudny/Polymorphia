@@ -14,10 +14,7 @@
     "prepare": "husky"
   },
   "lint-staged": {
-    "*.{ts,js,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ]
+    "*.{js,jsx,ts,tsx,md,html,css}": "prettier --write"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

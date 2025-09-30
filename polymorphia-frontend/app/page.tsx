@@ -35,7 +35,10 @@ export default function Home() {
         <Image src="/hero-bg.webp" alt="Hero background" fill className="object-cover"
 
 
+
+
                
+
                priority
           fetchPriority="high"  sizes="60vw"
         />
