@@ -12,32 +12,23 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class MarkdownService {
-    private final MarkdownStrategyContext markdownStrategyContext;
     private final MarkdownCourseStrategy markdownCourseStrategy;
     private final MarkdownGradableEventStrategy markdownGradableEventStrategy;
 
     public MarkdownResponseDTO getMarkdown(MarkdownType type, Long resourceId) {
-        MarkdownStrategy strategy = getStrategyForType(type);
-        markdownStrategyContext.setMarkdownStrategy(strategy);
-        return markdownStrategyContext.getMarkdown(resourceId);
+        return getStrategyForType(type).getMarkdown(resourceId);
     }
 
     public SourceUrlMarkdownResponseDTO getMarkdownSourceUrl(MarkdownType type, Long resourceId) {
-        MarkdownStrategy strategy = getStrategyForType(type);
-        markdownStrategyContext.setMarkdownStrategy(strategy);
-        return markdownStrategyContext.getMarkdownSourceUrl(resourceId);
+        return getStrategyForType(type).getMarkdownSourceUrl(resourceId);
     }
 
     public void setMarkdown(MarkdownType type, Long resourceId, String markdown) {
-        MarkdownStrategy strategy = getStrategyForType(type);
-        markdownStrategyContext.setMarkdownStrategy(strategy);
-        markdownStrategyContext.setMarkdown(resourceId, markdown);
+        return getStrategyForType(type).setMarkdown(resourceId, markdown);
     }
 
     public void resetMarkdown(MarkdownType type, Long resourceId) {
-        MarkdownStrategy strategy = getStrategyForType(type);
-        markdownStrategyContext.setMarkdownStrategy(strategy);
-        markdownStrategyContext.resetMarkdown(resourceId);
+        return getStrategyForType(type).resetMarkdown(resourceId);
     }
 
     private MarkdownStrategy getStrategyForType(MarkdownType type) {
