@@ -1,1 +1,1 @@
-﻿node bin/lint-staged.js
+﻿npx lint-staged

@@ -36,8 +36,9 @@ export default function Home() {
 
 
 
-
                
+
+
 
                priority
           fetchPriority="high"  sizes="60vw"
