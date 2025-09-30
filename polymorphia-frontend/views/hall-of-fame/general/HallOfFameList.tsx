@@ -1,7 +1,7 @@
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
 import { HallOfFameRecordDTO } from "@/interfaces/api/hall-of-fame";
 import HallOfFameCardDesktop from "@/views/hall-of-fame/desktop/HallOfFameCardDesktop";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import { useScaleShow } from "@/animations/ScaleShow";
 import { useMediaQuery } from "react-responsive";
 import RankCardMobile from "@/views/hall-of-fame/mobile/HallOfFameCardMobile";

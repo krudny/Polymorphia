@@ -1,4 +1,4 @@
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import useRandomUsers from "@/hooks/course/useRandomUsers";

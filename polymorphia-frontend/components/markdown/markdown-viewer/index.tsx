@@ -2,7 +2,7 @@
 
 import Markdown from "react-markdown";
 import { markdownConfig } from "@/components/markdown/markdown-viewer/config";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import useMarkdownContext from "@/hooks/contexts/useMarkdownContext";
 
