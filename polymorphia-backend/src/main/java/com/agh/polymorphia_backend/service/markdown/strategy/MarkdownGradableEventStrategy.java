@@ -17,7 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class MarkdownGradableEventStrategy implements MarkdownStrategy {
 
     private static final String MARKDOWN_UPDATE_FAILED = "Markdown update failed";
-    private static final String MARKDOWN_URL_UNDEFINED = "Markdown url is undefined";
+    private static final String MARKDOWN_URL_UNDEFINED = "Markdown URL is undefined";
     private static final String MARKDOWN_TEST_SECTIONS_NOT_SUPPORTED = "Markdown for test event sections is not supported";
     private static final String MARKDOWN_RESET_FAILED = "Markdown reset failed";
 
