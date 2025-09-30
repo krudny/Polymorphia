@@ -1,0 +1,42 @@
+{
+  "xpDetails": {
+    "Lab": "0.0",
+    "Kartkówka": "0.0",
+    "bonuses": "0.0",
+    "total": "0.0"
+  },
+  "evolutionStageThresholds": [
+    {
+      "id": 2,
+      "name": "Jajo",
+      "minXp": 0.0,
+      "grade": 2.0
+    },
+    {
+      "id": 1,
+      "name": "Pisklak",
+      "minXp": 20.0,
+      "grade": 2.0
+    },
+    {
+      "id": 3,
+      "name": "Podlot",
+      "minXp": 50.0,
+      "grade": 3.0
+    }
+  ],
+  "leftEvolutionStage": {
+    "id": 2,
+    "name": "Jajo",
+    "minXp": 0.0,
+    "grade": 2.0
+  },
+  "rightEvolutionStage": {
+    "id": 1,
+    "name": "Pisklak",
+    "minXp": 20.0,
+    "grade": 2.0
+  },
+  "totalStudentsInCourse": 1,
+  "totalXp": 0.0
+}

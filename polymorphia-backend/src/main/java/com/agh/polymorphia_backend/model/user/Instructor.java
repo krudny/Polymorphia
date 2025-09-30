@@ -1,7 +1,6 @@
 package com.agh.polymorphia_backend.model.user;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -16,8 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @Table(name = "instructors")
-@PrimaryKeyJoinColumn(name = "user_id")
-public class Instructor extends User {
+public class Instructor extends AbstractRoleUser {
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(UserType.INSTRUCTOR);

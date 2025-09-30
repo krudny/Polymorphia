@@ -1,3 +1,7 @@
+import { useRouter } from "next/navigation";
+
+export type AppRouterInstance = ReturnType<typeof useRouter>;
+
 export const EventTypes = {
   ASSIGNMENT: "ASSIGNMENT",
   PROJECT: "PROJECT",
@@ -14,14 +18,6 @@ export const ViewTypes = {
 };
 
 export type ViewType = (typeof ViewTypes)[keyof typeof ViewTypes];
-
-export const Roles = {
-  STUDENT: "STUDENT",
-  INSTRUCTOR: "INSTRUCTOR",
-  COORDINATOR: "COORDINATOR",
-} as const;
-
-export type Role = (typeof Roles)[keyof typeof Roles];
 
 export const ImportCSVTypes = {
   GRADE_IMPORT: "GRADE_IMPORT",
