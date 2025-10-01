@@ -43,7 +43,7 @@ public class MarkdownController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/{type}/{resourceId}")
+    @PutMapping("/{type}/{resourceId}/reset")
     public ResponseEntity<Void> resetMarkdown(
             @PathVariable MarkdownType type,
             @PathVariable Long resourceId) {

@@ -60,10 +60,13 @@ export const MarkdownService = {
   resetMarkdown: async (request: MarkdownParamsRequest): Promise<void> => {
     const { resourceId, type } = request;
 
-    const response = await fetch(`${API_HOST}/markdown/${type}/${resourceId}`, {
-      credentials: "include",
-      method: "PUT",
-    });
+    const response = await fetch(
+      `${API_HOST}/markdown/${type}/${resourceId}/reset`,
+      {
+        credentials: "include",
+        method: "PUT",
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Nie udało się zaktualizować pliku");
