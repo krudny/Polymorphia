@@ -44,6 +44,7 @@ function ProfileContent() {
   }, [setTitle]);
 
   if (userContext.userRole !== Roles.STUDENT || !profile) {
+    console.log(userContext.userRole, profile, isLoading);
     // notFound();
     return null;
   }
