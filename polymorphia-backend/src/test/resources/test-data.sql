@@ -12,21 +12,10 @@ TRUNCATE TABLE animals cascade;
 TRUNCATE TABLE evolution_stages cascade;
 TRUNCATE TABLE event_sections cascade;
 TRUNCATE TABLE test_sections cascade;
-truncate table assignment_sections cascade;
-truncate table project_sections cascade;
 TRUNCATE TABLE rewards cascade;
 TRUNCATE TABLE items cascade;
 TRUNCATE TABLE flat_bonus_items cascade;
 TRUNCATE TABLE percentage_bonus_items cascade;
-truncate table assigned_chests cascade;
-truncate table assigned_items cascade;
-truncate table assigned_rewards cascade;
-truncate table grades cascade;
-truncate table criteria_grades cascade;
-truncate table gradable_events cascade;
-truncate table criteria cascade;
-truncate table criteria_rewards cascade;
-truncate table user_course_roles cascade;
 
 -- Users
 INSERT INTO users (id, first_name, last_name, email, password, preferred_course_id, is_password_temporary)

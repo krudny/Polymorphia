@@ -1,15 +1,18 @@
-/* @ts-nocheck */
-/* eslint-disable */
-
 import GradeModal from "@/components/speed-dial/modals/grade";
+import { RoadmapModalsProps } from "./types";
 
-// @ts-ignore
-export default function RoadmapModals({ gradableEvent, setSelectedEvent }) {
-  if (!gradableEvent) return null;
-
-  if (gradableEvent.hasChest) {
+export default function RoadmapModals({
+  selectedGradableEvent,
+  setSelectedGradableEvent,
+}: RoadmapModalsProps) {
+  if (!selectedGradableEvent) {
     return null;
   }
 
-  return <GradeModal onClosedAction={() => setSelectedEvent(null)} />;
+  return (
+    <GradeModal
+      gradableEventIdProp={selectedGradableEvent.id}
+      onClosedAction={() => setSelectedGradableEvent(undefined)}
+    />
+  );
 }

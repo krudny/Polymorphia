@@ -21,8 +21,6 @@ export default function HallOfFameList() {
     );
   }
 
-
-
   const desktopComponent = (
     <div className="hall-of-fame-desktop-rank-wrapper" ref={wrapperRef}>
       {hallOfFame.content.length === 0 ? (

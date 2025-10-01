@@ -5,6 +5,7 @@ import { TestGradingStrategy } from "@/components/speed-dial/strategies/instruct
 import { AssignmentGradingStrategy } from "@/components/speed-dial/strategies/instructor/AssignmentGrading";
 import { SpeedDialKey, SpeedDialKeys } from "../types";
 import { CourseGroupStrategy } from "@/components/speed-dial/strategies/instructor/CourseGroup";
+import { ProfileStrategy } from "./student/Profile";
 
 export class SpeedDialStrategyRegistry {
   private strategies = new Map<SpeedDialKey, SpeedDialStrategy>();
@@ -42,10 +43,7 @@ export class SpeedDialStrategyRegistry {
       SpeedDialKeys.COURSE_GROUP_INSTRUCTOR,
       new CourseGroupStrategy()
     );
-    this.strategies.set(
-      SpeedDialKeys.PROFILE_STUDENT,
-      new CourseGroupStrategy()
-    );
+    this.strategies.set(SpeedDialKeys.PROFILE_STUDENT, new ProfileStrategy());
   }
 
   getStrategy(speedDialKey: SpeedDialKey): SpeedDialStrategy | null {
