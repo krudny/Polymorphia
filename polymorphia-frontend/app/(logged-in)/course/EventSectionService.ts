@@ -58,34 +58,6 @@ export const groups = [
   "BM-03-00",
 ];
 
-export const studentNames = [
-  "Gerard Małoduszny",
-  "Gerard Małosolny",
-  "Gerard Kiszony",
-  "Gerard Solny",
-  "Kamil Rudny",
-  "Anna Nowak",
-  "Jan Kowalski",
-  "Maria Wiśniewska",
-  "Tomasz Zieliński",
-  "Paulina Kaczmarek",
-];
-
-export const groups = [
-  "MI-15-00",
-  "BM-16-00",
-  "BM-17-00",
-  "BM-18-00",
-  "BM-19-00",
-  "BM-20-00",
-  "BM-21-00",
-  "BM-22-00",
-  "BM-23-00",
-  "BM-01-00",
-  "BM-02-00",
-  "BM-03-00",
-];
-
 const allData: UserDetailsDTO[] = [];
 
 for (let i = 0; i < 250; i++) {
