@@ -1,4 +1,4 @@
-import {useScaleShow} from "@/animations/ScaleShow";
+import { useScaleShow } from "@/animations/ScaleShow";
 import "./index.css";
 import "../general/index.css";
 import HallOfFamePodium from "@/views/hall-of-fame/desktop/HallOfFamePodium";

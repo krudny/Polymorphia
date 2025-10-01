@@ -1,14 +1,14 @@
 "use client";
-import {useTitle} from "@/components/navigation/TitleContext";
-import {useEffect} from "react";
-import {HallOfFameProvider} from "@/providers/hall-of-fame/HallOfFameContext";
+import { useTitle } from "@/components/navigation/TitleContext";
+import { useEffect } from "react";
+import { HallOfFameProvider } from "@/providers/hall-of-fame/HallOfFameContext";
 import HallOfFameMobile from "@/views/hall-of-fame/mobile/HallOfFameMobile";
 import FiltersModal from "@/components/filters-modals/FiltersModal";
-import {useQueryClient} from "@tanstack/react-query";
-import {HallOfFameFilterId} from "@/providers/hall-of-fame/types";
+import { useQueryClient } from "@tanstack/react-query";
+import { HallOfFameFilterId } from "@/providers/hall-of-fame/types";
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
 import HallOfFameDesktop from "@/views/hall-of-fame/desktop/HallOfFameDesktop";
-import "./index.css"
+import "./index.css";
 
 function HallOfFameContent() {
   const queryClient = useQueryClient();
