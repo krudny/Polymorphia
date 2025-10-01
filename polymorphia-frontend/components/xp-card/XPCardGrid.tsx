@@ -11,6 +11,7 @@ export default function XPCardGrid({
   containerRef,
   cards,
   maxColumns = 3,
+  maxRows = cards.length,
 }: CardGridProps) {
   const sliderRef = useRef<HTMLDivElement | null>(null);
 
@@ -41,9 +42,9 @@ export default function XPCardGrid({
       setPageCols,
       setPageRows,
       maxColumns,
-      cards.length
+      maxRows
     );
-  }, [containerRef, maxColumns, cards.length]);
+  }, [containerRef, maxColumns, maxRows]);
 
   const pageSize = pageRows * pageCols;
   const pageCount = Math.ceil(cards.length / pageSize);
@@ -65,7 +66,7 @@ export default function XPCardGrid({
 
   return (
     <>
-      {cardsPage.length > 1 ? (
+      {cardsPage.length >= 1 ? (
         <div className="xp-card-grid-center-vertically">
           <div className="xp-card-grid-point-summary-layout">
             <div className="xp-card-fading-edges">

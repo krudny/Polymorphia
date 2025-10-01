@@ -1,6 +1,6 @@
 import Modal from "@/components/modal/Modal";
 import GradeInfo from "@/components/course/event-section/GradeInfo";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import "./index.css";
 import useShortGrade from "@/hooks/course/useShortGrade";

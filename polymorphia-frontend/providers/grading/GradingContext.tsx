@@ -20,12 +20,11 @@ import { GradingReducer, initialState } from "./gradingReducer";
 import useGradingTargets from "@/hooks/course/useGradingTargets";
 import useShortGrade from "@/hooks/course/useShortGrade";
 import { getRequestTargetFromResponseTarget } from "./utils/getRequestTargetFromResponseTarget";
+import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export const GradingContext = createContext<
   GradingContextInterface | undefined
 >(undefined);
-
-const COURSE_ID = 1;
 
 export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const { gradableEventId } = useEventParams();
@@ -35,12 +34,13 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(GradingReducer, initialState);
   const [areFiltersOpen, setAreFiltersOpen] = useState(false);
 
+  const { courseId } = useUserDetails();
+
   const {
     data: filterConfigs,
     isLoading: isFiltersLoading,
     isError: isFiltersError,
-  } = useGradingFilterConfigs(COURSE_ID);
-
+  } = useGradingFilterConfigs(courseId);
   const filters = useFilters<GradingFilterId>(filterConfigs ?? []);
   const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["total"];
   const sortOrder = filters.getAppliedFilterValues("sortOrder") ?? ["asc"];

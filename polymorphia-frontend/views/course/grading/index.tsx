@@ -8,10 +8,11 @@ import useGradingContext from "@/hooks/contexts/useGradingContext";
 import { useQueryClient } from "@tanstack/react-query";
 import { useMediaQuery } from "react-responsive";
 import { useTitle } from "@/components/navigation/TitleContext";
-import { Roles, ViewTypes } from "@/interfaces/general";
+import { ViewTypes } from "@/interfaces/general";
 import { getSpeedDialKey } from "@/components/speed-dial/util";
-import SpeedDial from "@/components/speed-dial/SpeedDial";
 import TargetList from "@/components/grading-components/target-list";
+import SpeedDial from "@/components/speed-dial/SpeedDialEvent";
+import { Roles } from "@/interfaces/api/user";
 
 export default function Grading({ eventType, columns }: GradingProps) {
   const queryClient = useQueryClient();
