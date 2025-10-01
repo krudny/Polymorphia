@@ -3,7 +3,7 @@
 import { ReactNode, useState } from "react";
 import "./index.css";
 import { useSpeedDialFactory } from "@/hooks/factory/useSpeedDialFactory";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import { SpeedDial as SpeedDialMui } from "@mui/material";
 import { SpeedDialProps } from "./types";
 import { useMediaQuery } from "react-responsive";

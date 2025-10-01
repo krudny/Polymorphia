@@ -33,9 +33,11 @@
     @apply flex-col-centered relative z-10 opacity-0;
 }
 
-.hero-right-wrapper > div > h1 {
-    @apply text-7xl mb-8 text-primary-dark;
-    @apply md:text-9xl md:mb-14;
+.hero-login-wrapper {
+    h1 {
+        @apply text-7xl mb-8 text-primary-dark;
+        @apply md:text-9xl md:mb-14;
+    }
 }
 
 .hero-buttons {
@@ -45,3 +47,16 @@
 .hero-login {
     @apply flex-centered absolute top-0 -right-full w-full h-full z-20 opacity-0 text-primary-dark;
 }
+
+.hero-error {
+    @apply flex flex-col gap-y-6;
+
+    h1 {
+        @apply text-8xl;
+    }
+
+    h2 {
+        @apply text-4xl;
+    }
+}
+

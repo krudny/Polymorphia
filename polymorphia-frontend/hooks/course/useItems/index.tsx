@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import KnowledgeBaseService from "@/app/(logged-in)/knowledge-base/KnowledgeBaseService";
 import { UseItems } from "@/hooks/course/useItems/types";
-
-const COURSE_ID = 1;
+import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export default function useItems(): UseItems {
+  const { courseId } = useUserDetails();
   const { data, isLoading, error } = useQuery({
-    queryKey: ["items", COURSE_ID],
-    queryFn: () => KnowledgeBaseService.getItems(COURSE_ID),
+    queryKey: ["items", courseId],
+    queryFn: () => KnowledgeBaseService.getItems(courseId),
     refetchOnWindowFocus: false,
   });
 

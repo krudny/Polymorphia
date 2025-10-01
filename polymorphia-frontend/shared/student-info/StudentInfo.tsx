@@ -1,4 +1,4 @@
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import useRandomUsers from "@/hooks/course/useRandomUsers";
@@ -20,20 +20,26 @@ export default function StudentInfo() {
       )}
       {data && !isLoading && (
         <div className="flex flex-col gap-2 min-w-80">
-          {data?.map((student) => (
-            <XPCard
-              key={student.animalName}
-              title={student.studentName}
-              subtitle={student.evolutionStage}
-              leftComponent={
-                <XPCardImage
-                  imageUrl={student.imageUrl}
-                  alt={student.evolutionStage}
-                />
-              }
-              size="xs"
-            />
-          ))}
+          {data?.map((student) => {
+            const { animalName, fullName, evolutionStage, imageUrl } =
+              student.userDetails;
+
+            if (!fullName) {
+              throw new Error("No userName defined!");
+            }
+
+            return (
+              <XPCard
+                key={animalName}
+                title={fullName}
+                subtitle={evolutionStage}
+                leftComponent={
+                  <XPCardImage imageUrl={imageUrl} alt={evolutionStage} />
+                }
+                size="xs"
+              />
+            );
+          })}
         </div>
       )}
     </>

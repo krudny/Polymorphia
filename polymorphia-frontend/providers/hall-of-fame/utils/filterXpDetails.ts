@@ -1,4 +1,4 @@
-import { FilterConfig } from "@/hooks/course/useFilters/types";
+import { FilterConfig, FilterOption } from "@/hooks/course/useFilters/types";
 
 export const filterXpDetails = <FilterIdType extends string>(
   xpDetails: Record<string, string>,
@@ -9,9 +9,17 @@ export const filterXpDetails = <FilterIdType extends string>(
     return {};
   }
 
-  const selectedKeys = new Set(getAppliedFilterValues(filterConfig.id));
+  const selectedOptions = getAppliedFilterValues(filterConfig.id)
+    .map((key) => filterConfig.options.find((opt) => opt.value === key))
+    .filter((opt): opt is FilterOption => !!opt);
 
-  return Object.fromEntries(
-    Object.entries(xpDetails).filter(([key]) => selectedKeys.has(key))
-  );
+  return selectedOptions
+    .filter((opt) => xpDetails.hasOwnProperty(opt.value))
+    .reduce(
+      (acc, opt) => {
+        acc[opt.label ?? opt.value] = xpDetails[opt.value];
+        return acc;
+      },
+      {} as Record<string, string>
+    );
 };

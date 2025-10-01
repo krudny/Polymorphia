@@ -6,7 +6,7 @@ import ProgressBar from "@/components/progressbar/ProgressBar";
 import XPCard from "@/components/xp-card/XPCard";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import ProgressBarElement from "@/components/progressbar/ProgressBarElement";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import { useMediaQuery } from "react-responsive";
 import RoadmapModals from "@/app/(logged-in)/roadmap/RoadmapModals";
 import "./styles.css";
@@ -103,8 +103,8 @@ export default function Roadmap() {
         />
       </div>
       <RoadmapModals
-        gradableEvent={selectedEvent}
-        setSelectedEvent={setSelectedEvent}
+        selectedGradableEvent={selectedEvent}
+        setSelectedGradableEvent={setSelectedEvent}
       />
     </>
   );

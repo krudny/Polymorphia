@@ -16,8 +16,8 @@ export default function RankCard({
     2: "border-slate-400",
     3: "border-amber-800",
   };
-  const border =
-    borderColors[userDetails.position as 1 | 2 | 3] ?? "border-none";
+  const { position, imageUrl } = userDetails;
+  const border = borderColors[position as 1 | 2 | 3] ?? "border-none";
   const { filters } = useHallOfFameContext();
   const filteredXpDetails = filterXpDetails(
     xpDetails,
@@ -28,10 +28,7 @@ export default function RankCard({
   return (
     <div className={`hall-of-fame-mobile-record-wrapper ${border}`}>
       <div>
-        <HallOfFameImage
-          position={userDetails.position}
-          imageUrl={userDetails.imageUrl}
-        />
+        <HallOfFameImage position={position} imageUrl={imageUrl} />
         <HallOfFameUserData {...userDetails} />
         <HallOfFamePointsSummary total={xpDetails.total} />
       </div>

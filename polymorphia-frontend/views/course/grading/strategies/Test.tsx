@@ -9,9 +9,6 @@ export class TestGradingStrategy
   implements GradingStrategy
 {
   getGradingComponents(): GradingComponents {
-    return {
-      list: this.createStudentsList(),
-      components: [[this.createRewardComponent()]],
-    };
+    return [[this.createRewardComponent()]];
   }
 }

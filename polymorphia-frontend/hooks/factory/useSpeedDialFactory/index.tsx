@@ -1,15 +1,15 @@
 import { SpeedDialItem, SpeedDialProps } from "@/components/speed-dial/types";
 import { useMemo } from "react";
 import { speedDialStrategyRegistry } from "@/components/speed-dial/strategies/Registry";
-import useUserRole from "@/hooks/general/useUserRole";
+import useUserContext from "@/hooks/contexts/useUserContext";
 
 export function useSpeedDialFactory({
   speedDialKey,
 }: SpeedDialProps): SpeedDialItem[] {
-  const { data: role } = useUserRole();
+  const { userRole } = useUserContext();
 
   return useMemo(() => {
-    if (!role) {
+    if (!userRole) {
       return [];
     }
 
@@ -19,7 +19,7 @@ export function useSpeedDialFactory({
       return [];
     }
 
-    const items: SpeedDialItem[] = selectedType.getItems(role);
+    const items: SpeedDialItem[] = selectedType.getItems(userRole);
     return items.sort((a, b) => b.orderIndex - a.orderIndex);
-  }, [speedDialKey, role]);
+  }, [speedDialKey, userRole]);
 }
