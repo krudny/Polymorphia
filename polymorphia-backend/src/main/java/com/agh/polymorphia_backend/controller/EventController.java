@@ -15,7 +15,7 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 @RequestMapping
-public class EventController {
+public class EventSectionController {
 
     private final EventSectionService eventSectionService;
 
