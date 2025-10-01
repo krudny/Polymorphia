@@ -32,7 +32,7 @@ import static com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry.FIE
 @Service
 @AllArgsConstructor
 public class HallOfFameService {
-    private static final String STUDENT_HOF_NOT_FOUND = "Student's Hall of Fame scores not found";
+    public static final String STUDENT_HOF_NOT_FOUND = "Student's Hall of Fame scores not found";
     private final StudentScoreDetailRepository scoreDetailRepository;
     private final HallOfFameRepository hallOfFameRepository;
     private final EventSectionRepository eventSectionRepository;
@@ -92,10 +92,6 @@ public class HallOfFameService {
 
     public Map<Long, Map<String, String>> groupScoreDetails(List<Long> animalIds) {
         List<StudentScoreDetail> detailsList = scoreDetailRepository.findByAnimalIdIn(animalIds);
-
-        if (detailsList.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_HOF_NOT_FOUND);
-        }
 
         sortByEventSectionOrderIndex(detailsList);
         Map<Long, Map<String, String>> result = new HashMap<>();

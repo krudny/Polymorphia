@@ -1,3 +1,4 @@
+import { TargetTypes } from "@/interfaces/api/grade";
 import { GradingReducerState } from "@/providers/grading/gradingReducer/types";
 
 export function getKeyForSelectedTarget(
@@ -5,9 +6,9 @@ export function getKeyForSelectedTarget(
 ): string | undefined {
   if (state.selectedTarget === null) {
     return undefined;
+  } else if (state.selectedTarget.type === TargetTypes.STUDENT) {
+    return `${state.selectedTarget.type}_${state.selectedTarget.id}`;
+  } else {
+    return `${state.selectedTarget.type}_${state.selectedTarget.groupId}`;
   }
-
-  return state.selectedTarget
-    .map(({ userDetails }) => String(userDetails.id))
-    .join("_");
 }

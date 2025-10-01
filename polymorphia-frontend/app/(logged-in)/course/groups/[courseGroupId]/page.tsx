@@ -1,4 +1,4 @@
-import SpeedDial from "@/components/speed-dial/SpeedDialEvent";
+import SpeedDial from "@/components/speed-dial/SpeedDial";
 import { SpeedDialKeys } from "@/components/speed-dial/types";
 
 export default function CourseGroupView() {

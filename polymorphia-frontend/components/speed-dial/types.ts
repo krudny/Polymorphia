@@ -1,21 +1,25 @@
 import { ReactNode } from "react";
 
+export type UseSpeedDialItemDynamicBehaviorHook =
+  () => SpeedDialItemDynamicBehavior;
+
+export type SpeedDialItemDynamicBehavior = {
+  onClick?: () => void;
+  modal?: (onClose: () => void) => ReactNode;
+  shouldBeRendered?: boolean; // defaults to `true`
+};
+
 export interface SpeedDialItem {
   id: number;
   orderIndex: number;
   label: string;
   icon: string;
-  modal?: (onClose: () => void) => ReactNode;
-  onClick?: () => void;
+  useDynamicBehavior: UseSpeedDialItemDynamicBehaviorHook;
   color?: string;
 }
 
-export interface SpeedDialEventProps {
-  speedDialKey: SpeedDialKey;
-}
-
 export interface SpeedDialProps {
-  items: SpeedDialItem[];
+  speedDialKey: SpeedDialKey;
 }
 
 export const SpeedDialKeys = {
