@@ -18,7 +18,6 @@ import { filterXpDetails } from "@/providers/hall-of-fame/utils/filterXpDetails"
 import { ProfileFilterId } from "@/app/(logged-in)/profile/types";
 import ProfileProgressBar from "@/components/progressbar/profile";
 import { distributeTo100 } from "@/app/(logged-in)/profile/ProfileService";
-import { notFound } from "next/navigation";
 
 export default function Profile() {
   const { setTitle } = useTitle();
@@ -39,7 +38,7 @@ export default function Profile() {
   }, [setTitle]);
 
   if (userContext.userRole !== Roles.STUDENT || !profile) {
-    notFound();
+    // notFound();
     return null;
   }
 
