@@ -29,6 +29,14 @@ export const GradingReducer = (
       };
 
     case GradingReducerActions.SET_GRADE:
+      if (!action.payload.grade.isGraded) {
+        return {
+          ...state,
+          comment: "",
+          criteria: {},
+        };
+      }
+
       const criteriaMap = action.payload.grade.criteria.reduce(
         (acc, criterion) => {
           acc[criterion.id] = {
