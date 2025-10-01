@@ -4,7 +4,7 @@ import MarkdownViewer from "@/components/markdown/markdown-viewer";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import "./index.css";
 import { MarkdownWrapperProps } from "./types";
-import SpeedDialEvent from "@/components/speed-dial/SpeedDialEvent";
+import SpeedDial from "@/components/speed-dial/SpeedDial";
 
 export default function MarkdownWrapper({
   speedDialKey,
@@ -14,7 +14,7 @@ export default function MarkdownWrapper({
 
   return (
     <div className="markdown" ref={wrapperRef}>
-      <SpeedDialEvent speedDialKey={speedDialKey} />
+      <SpeedDial speedDialKey={speedDialKey} />
       <div className="markdown-wrapper">
         {isEditing ? <MarkdownEditor /> : <MarkdownViewer />}
       </div>

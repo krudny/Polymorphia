@@ -30,6 +30,7 @@ export const SpeedDialKeys = {
   ASSIGNMENT_GRADING: "ASSIGNMENT_GRADING",
   PROJECT_GRADING: "PROJECT_GRADING",
   COURSE_GROUP: "COURSE_GROUP",
+  PROFILE_STUDENT: "PROFILE_STUDENT",
 } as const;
 
 export type SpeedDialKey = (typeof SpeedDialKeys)[keyof typeof SpeedDialKeys];
