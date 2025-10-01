@@ -1,36 +1,43 @@
 import { RewardResponseDTO } from "../reward";
-import { AssignedRewardResponseDTO } from "../reward/assigned";
+import { StudentDetailsDTOWithName } from "../user";
 
-// TODO: to sie zwraca jak jest ocena
-export interface GradeResponseDTO {
-  details: GradeDetailsResponseDTO;
-  criteria: CriterionGradeResponseDTO[];
-}
-
-export interface ShortGradeResponseDTO {
-  comment: string;
-  criteria: {
-    id: number;
-    gainedXp: number;
-    assignedRewards: {
-      id: number;
-      quantity: number;
-      imageUrl: string;
-    }[];
-  }[];
-}
-
-export interface GradeDetailsResponseDTO {
+// Grade
+export interface ShortAssignedRewardResponseDTO {
   id: number;
+  name: string;
+  imageUrl: string;
+  quantity: number;
+}
+
+export type GradeResponseDTO<AssignedRewardType> =
+  | {
+      isGraded: true;
+      id: number;
+      comment: string;
+      criteria: CriterionGradeResponseDTO<AssignedRewardType>[];
+    }
+  | {
+      isGraded: false;
+    };
+
+export type ShortGradeResponseDTO =
+  GradeResponseDTO<ShortAssignedRewardResponseDTO>;
+
+// export type FullGradeResponseDTO = GradeResponseDTO<AssignedRewardResponseDTO>;
+
+export interface GradeRequestDTO {
+  target: TargetRequestDTO;
+  gradableEventId: number;
+  criteria: Record<number, CriteriaDetailsRequestDTO>;
   comment: string;
 }
 
+// Criteria
 export interface CriterionResponseDTO {
   id: number;
   name: string;
   maxXp: string;
   assignableRewards: CriterionAssignableRewardResponseDTO[];
-  criterionGrade?: CriterionGradeResponseDTO; // TODO: to do usuniecia
 }
 
 export interface CriterionAssignableRewardResponseDTO {
@@ -38,8 +45,52 @@ export interface CriterionAssignableRewardResponseDTO {
   maxAmount: number;
 }
 
-export interface CriterionGradeResponseDTO {
+export interface CriterionGradeResponseDTO<AssignedRewardType> {
   id: number;
-  gainedXp: string;
-  assignedRewards: AssignedRewardResponseDTO[];
+  gainedXp?: string;
+  assignedRewards: AssignedRewardType[];
 }
+
+export type CriteriaDetailsRequestDTO = Omit<
+  CriterionGradeResponseDTO<ShortAssignedRewardResponseDTO>,
+  "id"
+>;
+
+// GradingTarget
+export interface StudentTargetData extends StudentDetailsDTOWithName {
+  gainedXp?: string;
+}
+
+export const TargetTypes = {
+  STUDENT: "STUDENT",
+  STUDENT_GROUP: "STUDENT_GROUP",
+} as const;
+
+export type TargetType = (typeof TargetTypes)[keyof typeof TargetTypes];
+
+export const GroupTargetTypes = {
+  MATCHING: "MATCHING",
+  DIVERGENT: "DIVERGENT",
+} as const;
+
+export type GroupTargetType =
+  (typeof GroupTargetTypes)[keyof typeof GroupTargetTypes];
+
+export interface StudentTargetResponseDTO extends StudentTargetData {
+  type: typeof TargetTypes.STUDENT;
+}
+
+export interface StudentGroupTargetResponseDTO {
+  type: typeof TargetTypes.STUDENT_GROUP;
+  groupType: GroupTargetType;
+  groupId: number;
+  members: StudentTargetData[];
+}
+
+export type TargetResponseDTO =
+  | StudentTargetResponseDTO
+  | StudentGroupTargetResponseDTO;
+
+export type TargetRequestDTO =
+  | { type: typeof TargetTypes.STUDENT; id: number }
+  | { type: typeof TargetTypes.STUDENT_GROUP; groupId: number };

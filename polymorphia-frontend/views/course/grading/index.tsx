@@ -10,6 +10,7 @@ import { useMediaQuery } from "react-responsive";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { ViewTypes } from "@/interfaces/general";
 import { getSpeedDialKey } from "@/components/speed-dial/util";
+import TargetList from "@/components/grading-components/target-list";
 import SpeedDial from "@/components/speed-dial/SpeedDialEvent";
 import { Roles } from "@/interfaces/api/user";
 
@@ -86,29 +87,29 @@ export default function Grading({ eventType, columns }: GradingProps) {
         <SpeedDial speedDialKey={speedDialKey} />
 
         <div className="grading-list" ref={listRef}>
-          {gradingComponents.list}
+          <TargetList />
         </div>
 
         {columns === 1 ? (
           <div ref={columnsRef} className="grading-columns">
-            {gradingComponents.components.flat().map((component, index) => (
+            {gradingComponents.flat().map((component, index) => (
               <Fragment key={index}>{component}</Fragment>
             ))}
           </div>
         ) : (
           <div ref={columnsRef} className="grading-columns-wrapper">
-            {[
-              ...Array(Math.max(columns, gradingComponents.components.length)),
-            ].map((_, i) => {
-              const components = gradingComponents.components[i];
-              return (
-                <div key={i} className="grading-columns">
-                  {components?.map((component, index) => (
-                    <Fragment key={index}>{component}</Fragment>
-                  ))}
-                </div>
-              );
-            })}
+            {[...Array(Math.max(columns, gradingComponents.length))].map(
+              (_, i) => {
+                const components = gradingComponents[i];
+                return (
+                  <div key={i} className="grading-columns">
+                    {components?.map((component, index) => (
+                      <Fragment key={index}>{component}</Fragment>
+                    ))}
+                  </div>
+                );
+              }
+            )}
           </div>
         )}
       </div>

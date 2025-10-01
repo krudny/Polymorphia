@@ -8,8 +8,9 @@ export function useHeroAnimation() {
   const hasMountedRef = useRef(false);
 
   useLayoutEffect(() => {
-    if (!backgroundRef.current || !titleRef.current || !imageRef.current)
+    if (!backgroundRef.current || !titleRef.current || !imageRef.current) {
       return;
+    }
 
     animateInitialMount(
       backgroundRef.current,

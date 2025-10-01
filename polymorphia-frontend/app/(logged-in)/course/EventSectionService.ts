@@ -5,8 +5,15 @@ import { lab0, lab1, lab2, proj1 } from "@/app/(logged-in)/course/sampleData";
 import { ProjectVariantResponseDTO } from "@/interfaces/api/course/project";
 import {
   CriterionResponseDTO,
-  GradeResponseDTO,
+  GradeRequestDTO,
+  GroupTargetTypes,
   ShortGradeResponseDTO,
+  StudentGroupTargetResponseDTO,
+  StudentTargetData,
+  TargetRequestDTO,
+  TargetResponseDTO,
+  TargetType,
+  TargetTypes,
 } from "@/interfaces/api/grade";
 import { MarkdownResponseDTO } from "@/interfaces/api/markdown";
 import { PointsSummaryResponseDTO } from "@/interfaces/api/course/points-summary";
@@ -17,12 +24,11 @@ import {
 } from "@/interfaces/api/course";
 import {
   Roles,
+  StudentDetailsDTOWithName,
   StudentDetailsDTOWithType,
   UserDetailsDTO,
 } from "@/interfaces/api/user";
-import { ProjectGroupResponseDTO } from "@/interfaces/api/temp";
 import { EventTypes } from "@/interfaces/general";
-import { CriteriaDetails } from "@/providers/grading/gradingReducer/types";
 
 export const studentNames = [
   "Gerard Małoduszny",
@@ -772,6 +778,10 @@ export const EventSectionService = {
                 itemBonusType: "PERCENTAGE_BONUS",
                 bonusText: "+5% do kategorii Kartkówka",
                 orderIndex: 1,
+                percentage: 5,
+                limit: 5,
+                isLimitReached: false,
+                eventSectionId: 1,
               },
             },
             maxAmount: 3,
@@ -806,224 +816,15 @@ export const EventSectionService = {
     ];
   },
 
-  //TODO: xd
-  getGrade: async (gradableEventId: number): Promise<GradeResponseDTO> => {
-    if (gradableEventId === 30) {
-      return {
-        details: {
-          id: 1,
-        },
-        criteria: [
-          {
-            id: 1,
-            name: "Wykonanie zadania",
-            maxXp: "4.0",
-            assignableRewards: [
-              {
-                reward: {
-                  rewardType: "CHEST",
-                  reward: {
-                    id: 1,
-                    name: "Srebrna Skrzynia",
-                    imageUrl: "images/chests/s1.webp",
-                    behavior: "ONE_OF_MANY",
-                    behaviorText: "Wybierz jeden przedmiot ze skrzynki",
-                    orderIndex: 0,
-                    chestItems: [
-                      {
-                        id: 1,
-                        itemBonusType: "PERCENTAGE_BONUS",
-                        name: "Pietruszka",
-                        bonusText: "+5% do kategorii Kartkówka",
-                        imageUrl: "images/items/parsley.jpg",
-                        percentage: 5,
-                        orderIndex: 0,
-                        limit: 3,
-                        isLimitReached: false,
-                        eventSectionId: 1,
-                      },
-                    ],
-                  },
-                },
-                maxAmount: 1,
-              },
-            ],
-            criterionGrade: {
-              id: 1,
-              gainedXp: "3.5",
-              assignedRewards: [
-                {
-                  rewardType: "CHEST",
-                  assignedReward: {
-                    base: {
-                      id: 1,
-                      name: "Srebrna Skrzynia",
-                      imageUrl: "images/chests/s1.webp",
-                      behavior: "ONE_OF_MANY",
-                      behaviorText: "Wybierz jeden przedmiot ze skrzynki",
-                      orderIndex: 0,
-                      chestItems: [
-                        {
-                          id: 1,
-                          itemBonusType: "PERCENTAGE_BONUS",
-                          name: "Pietruszka",
-                          bonusText: "+5% do kategorii Kartkówka",
-                          imageUrl: "images/items/parsley.jpg",
-                          percentage: 5,
-                          orderIndex: 0,
-                          limit: 3,
-                          isLimitReached: false,
-                          eventSectionId: 1,
-                        },
-                      ],
-                    },
-                    details: {
-                      id: 3,
-                      receivedDate: "07.06.2025",
-                      usedDate: "08.06.2025",
-                      isUsed: true,
-                    },
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      };
-    }
-
-    if (gradableEventId === 15 || gradableEventId === 1) {
-      return {
-        details: {
-          id: 1,
-        },
-        criteria: [
-          {
-            id: 1,
-            name: "Wykonanie zadania",
-            maxXp: "2.0",
-            assignableRewards: [
-              {
-                reward: {
-                  rewardType: "CHEST",
-                  reward: {
-                    id: 1,
-                    name: "Srebrna Skrzynia",
-                    imageUrl: "images/chests/s1.webp",
-                    behavior: "ONE_OF_MANY",
-                    behaviorText: "Wybierz jeden przedmiot ze skrzynki",
-                    orderIndex: 0,
-                    chestItems: [
-                      {
-                        id: 1,
-                        itemBonusType: "PERCENTAGE_BONUS",
-                        name: "Pietruszka",
-                        bonusText: "+5% do kategorii Kartkówka",
-                        imageUrl: "images/items/parsley.jpg",
-                        percentage: 5,
-                        orderIndex: 0,
-                        limit: 3,
-                        isLimitReached: false,
-                        eventSectionId: 1,
-                      },
-                    ],
-                  },
-                },
-                maxAmount: 1,
-              },
-            ],
-            criterionGrade: {
-              id: 1,
-              gainedXp: "0.7",
-              assignedRewards: [
-                {
-                  rewardType: "CHEST",
-                  assignedReward: {
-                    base: {
-                      id: 1,
-                      name: "Srebrna Skrzynia",
-                      imageUrl: "images/chests/s1.webp",
-                      behavior: "ONE_OF_MANY",
-                      behaviorText: "Wybierz jeden przedmiot ze skrzynki",
-                      orderIndex: 0,
-                      chestItems: [
-                        {
-                          id: 1,
-                          itemBonusType: "PERCENTAGE_BONUS",
-                          name: "Pietruszka",
-                          bonusText: "+5% do kategorii Kartkówka",
-                          imageUrl: "images/items/parsley.jpg",
-                          percentage: 5,
-                          orderIndex: 0,
-                          limit: 3,
-                          isLimitReached: false,
-                          eventSectionId: 1,
-                        },
-                      ],
-                    },
-                    details: {
-                      id: 3,
-                      receivedDate: "07.06.2025",
-                      usedDate: "08.06.2025",
-                      isUsed: true,
-                    },
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      };
-    }
-
-    return {
-      criteria: [
-        {
-          id: 1,
-          name: "Wykonanie zadania",
-          maxXp: "4.0",
-          assignableRewards: [
-            {
-              reward: {
-                rewardType: "CHEST",
-                reward: {
-                  id: 1,
-                  name: "Srebrna Skrzynia",
-                  imageUrl: "images/chests/s1.webp",
-                  behavior: "ONE_OF_MANY",
-                  behaviorText: "Wybierz jeden przedmiot ze skrzynki",
-                  orderIndex: 0,
-                  chestItems: [
-                    {
-                      id: 1,
-                      itemBonusType: "PERCENTAGE_BONUS",
-                      name: "Pietruszka",
-                      bonusText: "+5% do kategorii Kartkówka",
-                      imageUrl: "images/items/parsley.jpg",
-                      percentage: 5,
-                      orderIndex: 0,
-                      limit: 3,
-                      isLimitReached: false,
-                      eventSectionId: 1,
-                    },
-                  ],
-                },
-              },
-              maxAmount: 2,
-            },
-          ],
-        },
-      ],
-    };
-  },
-
-  getGrade3: async (
-    studentId,
-    gradableEventId
+  getShortGrade: async (
+    target: TargetRequestDTO,
+    gradableEventId: number
   ): Promise<ShortGradeResponseDTO> => {
     await new Promise<void>((resolve) => setTimeout(resolve, 300));
 
     return {
+      isGraded: true,
+      id: 123,
       comment:
         "Bardzo dobra praca! Student wykazał się doskonałą znajomością tematu.",
       criteria: [
@@ -1033,11 +834,13 @@ export const EventSectionService = {
           assignedRewards: [
             {
               id: 1,
+              name: "Srebrna Skrzynia",
               imageUrl: "images/chests/s1.webp",
               quantity: 2,
             },
             {
               id: 2,
+              name: "Pietruszka",
               imageUrl: "images/items/parsley.jpg",
               quantity: 1,
             },
@@ -1049,120 +852,9 @@ export const EventSectionService = {
           assignedRewards: [
             {
               id: 3,
+              name: "Marchewka",
               imageUrl: "images/items/carrot.jpg",
               quantity: 1,
-            },
-          ],
-        },
-      ],
-    };
-  },
-
-  // TODO: assume that id is criterion id XD
-  getGrade2: async (
-    studentId: number,
-    gradableEventId: number
-  ): Promise<GradeResponseDTO> => {
-    await new Promise<void>((resolve) => setTimeout(resolve, 150));
-    return {
-      details: {
-        id: 1,
-        comment:
-          "Bardzo dobra praca! Student wykazał się doskonałą znajomością tematu.",
-      },
-      criteria: [
-        {
-          id: 1,
-          gainedXp: "3.5",
-          assignedRewards: [
-            {
-              rewardType: "CHEST",
-              assignedReward: {
-                base: {
-                  id: 1,
-                  name: "Srebrna Skrzynia",
-                  imageUrl: "images/chests/s1.webp",
-                  behavior: "ONE_OF_MANY",
-                  behaviorText: "Wybierz jeden przedmiot ze skrzynki",
-                  orderIndex: 0,
-                  chestItems: [
-                    {
-                      id: 1,
-                      itemBonusType: "PERCENTAGE_BONUS",
-                      name: "Pietruszka",
-                      bonusText: "+5% do kategorii Kartkówka",
-                      imageUrl: "images/items/parsley.jpg",
-                      percentage: 5,
-                      orderIndex: 0,
-                      limit: 3,
-                      isLimitReached: false,
-                      eventSectionId: 1,
-                    },
-                  ],
-                },
-                details: {
-                  id: 3,
-                  receivedDate: "07.06.2025",
-                  usedDate: "08.06.2025",
-                  isUsed: true,
-                },
-              },
-            },
-            {
-              rewardType: "CHEST",
-              assignedReward: {
-                base: {
-                  id: 1,
-                  name: "Srebrna Skrzynia",
-                  imageUrl: "images/chests/s1.webp",
-                  behavior: "ONE_OF_MANY",
-                  behaviorText: "Wybierz jeden przedmiot ze skrzynki",
-                  orderIndex: 0,
-                  chestItems: [
-                    {
-                      id: 1,
-                      itemBonusType: "PERCENTAGE_BONUS",
-                      name: "Pietruszka",
-                      bonusText: "+5% do kategorii Kartkówka",
-                      imageUrl: "images/items/parsley.jpg",
-                      percentage: 5,
-                      orderIndex: 0,
-                      limit: 3,
-                      isLimitReached: false,
-                      eventSectionId: 1,
-                    },
-                  ],
-                },
-                details: {
-                  id: 3,
-                  receivedDate: "07.06.2025",
-                  usedDate: "08.06.2025",
-                  isUsed: true,
-                },
-              },
-            },
-            {
-              rewardType: "ITEM",
-              assignedReward: {
-                base: {
-                  id: 3,
-                  itemBonusType: "PERCENTAGE_BONUS",
-                  name: "Apteczka",
-                  bonusText: "+5% do kategorii Kartkówka",
-                  imageUrl: "images/items/parsley.jpg",
-                  percentage: 5,
-                  orderIndex: 0,
-                  limit: 3,
-                  isLimitReached: false,
-                  eventSectionId: 1,
-                },
-                details: {
-                  id: 3,
-                  receivedDate: "07.06.2025",
-                  usedDate: "08.06.2025",
-                  isUsed: true,
-                },
-              },
             },
           ],
         },
@@ -1197,7 +889,7 @@ export const EventSectionService = {
     if (searchTerm && searchTerm.trim() !== "") {
       const lowerSearch = searchTerm.toLowerCase();
       filteredData = filteredData.filter((item) =>
-        item.studentName.toLowerCase().includes(lowerSearch)
+        item.userDetails.fullName.toLowerCase().includes(lowerSearch)
       );
     }
 
@@ -1209,16 +901,18 @@ export const EventSectionService = {
     sortBy: string[],
     sortOrder: string[],
     groups: string[]
-  ): Promise<(StudentDetailsDTOWithType & { gainedXp?: string })[]> => {
+  ): Promise<StudentTargetData[]> => {
     // await new Promise<void>((resolve) => setTimeout(resolve, 1000));
 
-    let filteredData = allData;
+    let initialData: StudentDetailsDTOWithName[] = (
+      allData as StudentDetailsDTOWithType[]
+    ).map((item) => item.userDetails);
 
     if (groups && !groups.includes("all")) {
-      filteredData = filteredData.filter((item) => groups.includes(item.group));
+      initialData = initialData.filter((item) => groups.includes(item.group));
     }
 
-    filteredData = filteredData.map((item) => {
+    let filteredData: StudentTargetData[] = initialData.map((item) => {
       const xp =
         Math.random() < 0.4 ? undefined : (Math.random() * 2.8).toFixed(2);
       return { ...item, gainedXp: xp };
@@ -1237,8 +931,8 @@ export const EventSectionService = {
         let valueB: any;
 
         if (sortBy[0] === "name") {
-          valueA = a.studentName;
-          valueB = b.studentName;
+          valueA = a.fullName;
+          valueB = b.fullName;
           const comparison = valueA.localeCompare(valueB);
           return sortOrder[0] === "asc" ? comparison : -comparison;
         } else {
@@ -1253,34 +947,61 @@ export const EventSectionService = {
     return filteredData;
   },
 
-  getRandomProjectGroups: async (): Promise<ProjectGroupResponseDTO[]> => {
-    let data = [];
+  getRandomTargets: async (
+    type: TargetType, // for mocking purposes only
+    gradableEventId: number,
+    sortBy: string[],
+    sortOrder: string[],
+    groups: string[]
+  ): Promise<TargetResponseDTO[]> => {
+    const data: TargetResponseDTO[] = [];
 
     for (let i = 0; i < 30; i++) {
       const xp =
         Math.random() < 0.4 ? undefined : (Math.random() * 2.8).toFixed(2);
 
-      const members = allData.slice(i * 2, (i + 1) * 2).map((member) => ({
-        ...member,
-        gainedXp: xp,
-      }));
+      if (type === TargetTypes.STUDENT) {
+        const student = allData[i].userDetails as StudentDetailsDTOWithName;
+        data.push({
+          type: TargetTypes.STUDENT,
+          id: student.id,
+          fullName: student.fullName,
+          animalName: student.animalName,
+          evolutionStage: student.evolutionStage,
+          group: student.group,
+          imageUrl: student.imageUrl,
+          position: student.position,
+          courseId: student.courseId,
+          gainedXp: xp,
+        });
+      } else {
+        const isDivergent = xp !== undefined && Math.random() < 0.5;
 
-      const group = {
-        id: i + 1,
-        members: members,
-      };
-      data.push(group);
+        const members: StudentTargetData[] = allData
+          .slice(i * 2, (i + 1) * 2)
+          .map((member) => ({
+            ...(member as StudentDetailsDTOWithType).userDetails,
+            gainedXp: isDivergent
+              ? (Number(xp) + Math.random() - 0.5).toFixed(2)
+              : xp,
+          }));
+
+        const group: StudentGroupTargetResponseDTO = {
+          type: TargetTypes.STUDENT_GROUP,
+          groupId: i + 1,
+          groupType: isDivergent
+            ? GroupTargetTypes.DIVERGENT
+            : GroupTargetTypes.MATCHING,
+          members: members,
+        };
+        data.push(group);
+      }
     }
 
     return data;
   },
 
-  submitGrade: async (gradeData: {
-    studentId: number;
-    gradableEventId: number;
-    criteria: Record<number, CriteriaDetails>;
-    comment: string;
-  }): Promise<void> => {
+  submitGrade: async (gradeData: GradeRequestDTO): Promise<void> => {
     await new Promise<void>((resolve) => setTimeout(resolve, 200));
   },
 };

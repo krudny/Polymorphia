@@ -1,7 +1,7 @@
-import { StudentDetailsDTOWithType } from "@/interfaces/api/user";
+import { StudentTargetData } from "@/interfaces/api/grade";
 
 export interface UseRandomPeopleWithPoints {
-  data: (StudentDetailsDTOWithType & { gainedXp?: string })[] | undefined;
+  data: StudentTargetData[] | undefined;
   isLoading: boolean;
   isError: boolean;
 }
