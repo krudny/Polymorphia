@@ -1,3 +1,7 @@
+import { useRouter } from "next/navigation";
+
+export type AppRouterInstance = ReturnType<typeof useRouter>;
+
 export const EventTypes = {
   ASSIGNMENT: "ASSIGNMENT",
   PROJECT: "PROJECT",

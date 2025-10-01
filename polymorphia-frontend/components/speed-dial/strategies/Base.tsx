@@ -4,7 +4,7 @@ import ProjectVariantModal from "@/components/speed-dial/modals/project-variant"
 import GroupModal from "@/components/speed-dial/modals/group-info";
 import GroupPickingModal from "@/components/speed-dial/modals/group-pick";
 import ImportCSVModal from "@/components/speed-dial/modals/import-csv";
-import { ImportCSVType, ImportCSVTypes, Role } from "@/interfaces/general";
+import { ImportCSVType, ImportCSVTypes } from "@/interfaces/general";
 import {
   useEditMarkdownSpeedDialDynamicBehavior,
   useRejectMarkdownSpeedDialDynamicBehavior,
@@ -15,6 +15,7 @@ import {
   useGoBackSpeedDialDynamicBehavior,
   useNavigateToParentUrlSpeedDialDynamicBehavior,
 } from "@/hooks/speed-dial-dynamic-behavior/navigation";
+import { Role } from "@/interfaces/api/user";
 
 export abstract class BaseSpeedDialStrategy {
   abstract getItems(role: Role): SpeedDialItem[];

@@ -1,7 +1,7 @@
 import { SpeedDialItem } from "@/components/speed-dial/types";
 import { BaseSpeedDialStrategy } from "@/components/speed-dial/strategies/Base";
 import { SpeedDialStrategy } from "@/components/speed-dial/strategies/types";
-import { Role, Roles } from "@/interfaces/general";
+import { Role, Roles } from "@/interfaces/api/user";
 
 export class AssignmentStrategy
   extends BaseSpeedDialStrategy

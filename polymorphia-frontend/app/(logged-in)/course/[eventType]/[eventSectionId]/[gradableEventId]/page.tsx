@@ -7,7 +7,7 @@ import "./index.css";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import { ViewTypes } from "@/interfaces/general";
 import { getSpeedDialKey } from "@/components/speed-dial/util";
-import SpeedDial from "@/components/speed-dial/SpeedDialEvent";
+import SpeedDial from "@/components/speed-dial/SpeedDial";
 import useUserContext from "@/hooks/contexts/useUserContext";
 
 export default function GradableEventMarkdownView() {

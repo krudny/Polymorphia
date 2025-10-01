@@ -17,7 +17,6 @@ import { useFilters } from "@/hooks/course/useFilters";
 import { filterXpDetails } from "@/providers/hall-of-fame/utils/filterXpDetails";
 import { ProfileFilterId } from "@/app/(logged-in)/profile/types";
 import ProfileProgressBar from "@/components/progressbar/profile";
-import SpeedDial from "@/components/speed-dial/SpeedDial";
 import { distributeTo100 } from "@/app/(logged-in)/profile/ProfileService";
 import { notFound } from "next/navigation";
 
@@ -34,18 +33,6 @@ export default function Profile() {
     isError: isFiltersError,
   } = useProfileFilterConfigs();
   const filters = useFilters<ProfileFilterId>(filterConfigs ?? []);
-
-  const speedDialItems = [
-    {
-      id: 1,
-      orderIndex: 1,
-      label: "Filtry",
-      icon: "tune",
-      onClick: () => {
-        setIsModalOpen(true);
-      },
-    },
-  ];
 
   useEffect(() => {
     setTitle("Profil");
@@ -74,7 +61,6 @@ export default function Profile() {
 
   return (
     <div ref={wrapperRef} className="profile">
-      <SpeedDial items={speedDialItems} />
       <div className="profile-wrapper">
         <div className="profile-content-wrapper">
           <div className="profile-image-wrapper">
