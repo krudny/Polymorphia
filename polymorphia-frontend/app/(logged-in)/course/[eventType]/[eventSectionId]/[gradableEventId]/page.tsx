@@ -15,7 +15,6 @@ export default function GradableEventMarkdownView() {
   const { userRole } = useUserContext();
   const { eventType } = useEventParams();
   const speedDialKey = getSpeedDialKey(eventType, ViewTypes.MARKDOWN, userRole);
-  console.log(speedDialKey, eventType, userRole);
   if (!userRole || !speedDialKey) {
     return null;
   }
