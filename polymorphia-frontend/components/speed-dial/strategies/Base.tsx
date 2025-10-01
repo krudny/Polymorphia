@@ -16,6 +16,7 @@ import {
   useNavigateToParentUrlSpeedDialDynamicBehavior,
 } from "@/hooks/speed-dial-dynamic-behavior/navigation";
 import { Role } from "@/interfaces/api/user";
+import { useProfileFiltersModalSpeedDialDynamicBehavior } from "@/hooks/speed-dial-dynamic-behavior/profile";
 
 export abstract class BaseSpeedDialStrategy {
   abstract getItems(role: Role): SpeedDialItem[];
@@ -152,5 +153,15 @@ export abstract class BaseSpeedDialStrategy {
 
   protected createEditing(): SpeedDialItem[] {
     return [this.createEdit(), this.createSave(), this.createReject()];
+  }
+
+  protected createProfileFilters(): SpeedDialItem {
+    return {
+      id: 12,
+      orderIndex: 1,
+      label: "Filtry",
+      icon: "tune",
+      useDynamicBehavior: useProfileFiltersModalSpeedDialDynamicBehavior,
+    };
   }
 }

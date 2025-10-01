@@ -4,7 +4,7 @@ import { useScaleShow } from "@/animations/ScaleShow";
 import { API_STATIC_URL } from "@/services/api";
 import "./index.css";
 import { useTitle } from "@/components/navigation/TitleContext";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import UserPoints from "@/components/user-points/UserPoints";
 import { useMediaQuery } from "react-responsive";
 import Loading from "@/components/loading";
@@ -18,10 +18,16 @@ import { filterXpDetails } from "@/providers/hall-of-fame/utils/filterXpDetails"
 import { ProfileFilterId } from "@/app/(logged-in)/profile/types";
 import ProfileProgressBar from "@/components/progressbar/profile";
 import { distributeTo100 } from "@/app/(logged-in)/profile/ProfileService";
+import { ProfileProvider } from "@/providers/profile/ProfileContext";
+import SpeedDial from "@/components/speed-dial/SpeedDial";
+import { SpeedDialKeys } from "@/components/speed-dial/types";
+import useProfileContext from "@/hooks/contexts/useProfileContext";
 
-export default function Profile() {
+function ProfileContent() {
   const { setTitle } = useTitle();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // TODO: refactor the rest of the logic to ProfileContext
+  const { areFiltersOpen, setAreFiltersOpen } = useProfileContext();
   const isSm = useMediaQuery({ maxWidth: 920 });
   const { data: profile, isLoading } = useStudentProfile();
   const wrapperRef = useScaleShow(!isLoading);
@@ -60,6 +66,7 @@ export default function Profile() {
 
   return (
     <div ref={wrapperRef} className="profile">
+      <SpeedDial speedDialKey={SpeedDialKeys.PROFILE_STUDENT} />
       <div className="profile-wrapper">
         <div className="profile-content-wrapper">
           <div className="profile-image-wrapper">
@@ -135,12 +142,20 @@ export default function Profile() {
         </div>
         <FiltersModal<ProfileFilterId>
           filters={filters}
-          isModalOpen={isModalOpen}
-          setIsModalOpen={setIsModalOpen}
+          isModalOpen={areFiltersOpen}
+          setIsModalOpen={setAreFiltersOpen}
           isFiltersLoading={isFiltersLoading}
           isFiltersError={isFiltersError}
         />
       </div>
     </div>
+  );
+}
+
+export default function Profile() {
+  return (
+    <ProfileProvider>
+      <ProfileContent />
+    </ProfileProvider>
   );
 }
