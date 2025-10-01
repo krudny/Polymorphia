@@ -1,6 +1,5 @@
 import { EventType, ViewType } from "@/interfaces/general";
 import { SpeedDialKey, SpeedDialKeys } from "./types";
-import { Role } from "@/interfaces/api/user";
 
 export function getSpeedDialKey(
   eventType: EventType,

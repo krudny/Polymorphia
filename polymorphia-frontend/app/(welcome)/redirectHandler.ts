@@ -1,11 +1,4 @@
-import { Role } from "@/interfaces/api/user";
-import { AppRouterInstance } from "@/interfaces/general";
-
-interface RedirectProps {
-  userRole: Role;
-  defaultRedirect: string;
-  router: AppRouterInstance;
-}
+import {RedirectProps} from "@/app/(welcome)/types";
 
 export function redirectToNextStep({
   userRole,

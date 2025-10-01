@@ -1,3 +1,7 @@
+import { useRouter } from "next/navigation";
+
+export type AppRouterInstance = ReturnType<typeof useRouter>;
+
 export const EventTypes = {
   ASSIGNMENT: "ASSIGNMENT",
   PROJECT: "PROJECT",
@@ -24,16 +28,16 @@ export const Roles = {
 export type Role = (typeof Roles)[keyof typeof Roles];
 
 export const ImportCSVTypes = {
-    GRADE_IMPORT: "GRADE_IMPORT",
-    STUDENT_INVITE: "STUDENT_INVITE",
+  GRADE_IMPORT: "GRADE_IMPORT",
+  STUDENT_INVITE: "STUDENT_INVITE",
 } as const;
 
 export type ImportCSVType =
-    (typeof ImportCSVTypes)[keyof typeof ImportCSVTypes];
+  (typeof ImportCSVTypes)[keyof typeof ImportCSVTypes];
 
 export const MarkdownTypes = {
-    COURSE_RULES: "COURSE_RULES",
-    GRADABLE_EVENT: "GRADABLE_EVENT",
+  COURSE_RULES: "COURSE_RULES",
+  GRADABLE_EVENT: "GRADABLE_EVENT",
 } as const;
 
 export type MarkdownType = (typeof MarkdownTypes)[keyof typeof MarkdownTypes];
