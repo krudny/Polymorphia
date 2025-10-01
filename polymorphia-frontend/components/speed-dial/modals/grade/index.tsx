@@ -24,10 +24,11 @@ export default function GradeModal({
     throw new Error("[GradeModal] invalid gradableEventId");
   }
 
-  const { data: gradeData, isLoading: isGradeLoading } = useShortGrade(
-    target,
-    gradableEventIdProp
-  );
+  const {
+    data: gradeData,
+    isLoading: isGradeLoading,
+    isError: isGradeError,
+  } = useShortGrade(target, gradableEventIdProp);
 
   const {
     data: criteriaData,
@@ -36,12 +37,8 @@ export default function GradeModal({
   } = useCriteria(gradableEventIdProp);
 
   return (
-    <Modal
-      isDataPresented={gradeData !== undefined && criteriaData !== undefined}
-      onClosed={onClosedAction}
-      title="Nagrody"
-    >
-      {isCriteriaError && (
+    <Modal isDataPresented={true} onClosed={onClosedAction} title="Nagrody">
+      {(isGradeError || isCriteriaError) && (
         <div className="grade-error">
           Wystąpił błąd przy ładowaniu szczegółów.
         </div>
@@ -51,7 +48,7 @@ export default function GradeModal({
           <Loading />
         </div>
       )}
-      {!isGradeLoading && !isCriteriaLoading && criteriaData && (
+      {!isGradeLoading && !isCriteriaLoading && gradeData && criteriaData && (
         <GradeInfo grade={gradeData} criteria={criteriaData} />
       )}
     </Modal>

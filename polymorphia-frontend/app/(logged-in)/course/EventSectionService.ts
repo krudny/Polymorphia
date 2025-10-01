@@ -823,6 +823,7 @@ export const EventSectionService = {
     await new Promise<void>((resolve) => setTimeout(resolve, 300));
 
     return {
+      isGraded: true,
       id: 123,
       comment:
         "Bardzo dobra praca! Student wykazał się doskonałą znajomością tematu.",

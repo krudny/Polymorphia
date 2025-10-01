@@ -14,13 +14,13 @@ export default function GradeInfo({
   grade,
   criteria,
 }: {
-  grade?: ShortGradeResponseDTO;
+  grade: ShortGradeResponseDTO;
   criteria: CriterionResponseDTO[];
 }) {
   return (
     <section className="gradable-event-section">
       {/* TODO: handle scroll/folding, gaps between criteria, show criteria even if there is no grade */}
-      {grade !== undefined ? (
+      {grade.isGraded ? (
         <>
           {grade.criteria.map((gradeCriterion) => {
             const criterion = criteria.find(

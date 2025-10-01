@@ -9,11 +9,16 @@ export interface ShortAssignedRewardResponseDTO {
   quantity: number;
 }
 
-export interface GradeResponseDTO<AssignedRewardType> {
-  id: number;
-  comment: string;
-  criteria: CriterionGradeResponseDTO<AssignedRewardType>[];
-}
+export type GradeResponseDTO<AssignedRewardType> =
+  | {
+      isGraded: true;
+      id: number;
+      comment: string;
+      criteria: CriterionGradeResponseDTO<AssignedRewardType>[];
+    }
+  | {
+      isGraded: false;
+    };
 
 export type ShortGradeResponseDTO =
   GradeResponseDTO<ShortAssignedRewardResponseDTO>;
