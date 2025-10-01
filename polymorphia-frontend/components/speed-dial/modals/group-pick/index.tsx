@@ -10,7 +10,6 @@ import useRandomUsers from "@/hooks/course/useRandomUsers";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import useModalContext from "@/hooks/contexts/useModalContext";
 import useUserContext from "@/hooks/contexts/useUserContext";
-import "./index.css";
 
 function GroupPickingModalContent() {
   const { closeModal } = useModalContext();

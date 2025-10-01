@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 .hall-of-fame-mobile {
-    @apply w-full px-4 opacity-0;
+    @apply w-full px-4 opacity-0 flex flex-col flex-1;
 }
 
 .hall-of-fame-mobile-search-wrapper {
@@ -13,7 +13,7 @@
 }
 
 .hall-of-fame-mobile-rank-wrapper {
-    @apply w-full min-h-[calc(100dvh-15rem)]  grid grid-cols-1 gap-3 min-[650px]:grid-cols-2;
+    @apply w-full my-auto grid grid-cols-1 gap-3 min-[650px]:grid-cols-2;
 }
 
 .hall-of-fame-mobile-record-wrapper {

@@ -22,6 +22,7 @@ import { ProfileProvider } from "@/providers/profile/ProfileContext";
 import SpeedDial from "@/components/speed-dial/SpeedDial";
 import { SpeedDialKeys } from "@/components/speed-dial/types";
 import useProfileContext from "@/hooks/contexts/useProfileContext";
+import { notFound } from "next/navigation";
 
 function ProfileContent() {
   const { setTitle } = useTitle();
@@ -43,12 +44,11 @@ function ProfileContent() {
     setTitle("Profil");
   }, [setTitle]);
 
-  if (userContext.userRole !== Roles.STUDENT || !profile) {
-    // notFound();
-    return null;
+  if (userContext.userRole !== Roles.STUDENT || (!profile && !isLoading)) {
+    notFound();
   }
 
-  if (isLoading || !userContext.userRole) {
+  if (isLoading || !userContext.userRole || !profile) {
     return <Loading />;
   }
 
