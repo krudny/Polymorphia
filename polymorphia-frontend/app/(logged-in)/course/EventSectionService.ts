@@ -24,6 +24,7 @@ import {
 } from "@/interfaces/api/course";
 import {
   Roles,
+  StudentDetailsDTOWithName,
   StudentDetailsDTOWithType,
   UserDetailsDTO,
 } from "@/interfaces/api/user";
@@ -887,7 +888,7 @@ export const EventSectionService = {
     if (searchTerm && searchTerm.trim() !== "") {
       const lowerSearch = searchTerm.toLowerCase();
       filteredData = filteredData.filter((item) =>
-        item.studentName.toLowerCase().includes(lowerSearch)
+        item.userDetails.fullName.toLowerCase().includes(lowerSearch)
       );
     }
 
@@ -899,16 +900,18 @@ export const EventSectionService = {
     sortBy: string[],
     sortOrder: string[],
     groups: string[]
-  ): Promise<(StudentDetailsDTOWithType & { gainedXp?: string })[]> => {
+  ): Promise<StudentTargetData[]> => {
     // await new Promise<void>((resolve) => setTimeout(resolve, 1000));
 
-    let filteredData = allData;
+    let initialData: StudentDetailsDTOWithName[] = (
+      allData as StudentDetailsDTOWithType[]
+    ).map((item) => item.userDetails);
 
     if (groups && !groups.includes("all")) {
-      filteredData = filteredData.filter((item) => groups.includes(item.group));
+      initialData = initialData.filter((item) => groups.includes(item.group));
     }
 
-    filteredData = filteredData.map((item) => {
+    let filteredData: StudentTargetData[] = initialData.map((item) => {
       const xp =
         Math.random() < 0.4 ? undefined : (Math.random() * 2.8).toFixed(2);
       return { ...item, gainedXp: xp };
@@ -927,8 +930,8 @@ export const EventSectionService = {
         let valueB: any;
 
         if (sortBy[0] === "name") {
-          valueA = a.studentName;
-          valueB = b.studentName;
+          valueA = a.fullName;
+          valueB = b.fullName;
           const comparison = valueA.localeCompare(valueB);
           return sortOrder[0] === "asc" ? comparison : -comparison;
         } else {
@@ -950,22 +953,24 @@ export const EventSectionService = {
     sortOrder: string[],
     groups: string[]
   ): Promise<TargetResponseDTO[]> => {
-    const data = [];
+    const data: TargetResponseDTO[] = [];
 
     for (let i = 0; i < 30; i++) {
       const xp =
         Math.random() < 0.4 ? undefined : (Math.random() * 2.8).toFixed(2);
 
       if (type === TargetTypes.STUDENT) {
-        const student = allData[i];
+        const student = allData[i].userDetails as StudentDetailsDTOWithName;
         data.push({
           type: TargetTypes.STUDENT,
           id: student.id,
-          studentName: student.studentName,
+          fullName: student.fullName,
           animalName: student.animalName,
           evolutionStage: student.evolutionStage,
           group: student.group,
           imageUrl: student.imageUrl,
+          position: student.position,
+          courseId: student.courseId,
           gainedXp: xp,
         });
       } else {
@@ -974,7 +979,7 @@ export const EventSectionService = {
         const members: StudentTargetData[] = allData
           .slice(i * 2, (i + 1) * 2)
           .map((member) => ({
-            ...member,
+            ...(member as StudentDetailsDTOWithType).userDetails,
             gainedXp: isDivergent
               ? (Number(xp) + Math.random() - 0.5).toFixed(2)
               : xp,

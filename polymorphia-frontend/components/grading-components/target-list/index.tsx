@@ -82,7 +82,7 @@ export default function TargetList() {
               return (
                 <XPCard
                   key={index}
-                  title={student.studentName}
+                  title={student.fullName}
                   color={color}
                   subtitle={student.group}
                   size={"xs"}

@@ -1,4 +1,5 @@
 import { RewardResponseDTO } from "../reward";
+import { StudentDetailsDTOWithName } from "../user";
 
 // Grade
 export interface ShortAssignedRewardResponseDTO {
@@ -51,13 +52,7 @@ export type CriteriaDetailsRequestDTO = Omit<
 >;
 
 // GradingTarget
-export interface StudentTargetData {
-  id: number;
-  studentName: string;
-  animalName: string;
-  evolutionStage: string;
-  group: string;
-  imageUrl: string;
+export interface StudentTargetData extends StudentDetailsDTOWithName {
   gainedXp?: string;
 }
 
