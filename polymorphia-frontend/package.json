@@ -14,7 +14,7 @@
     "prepare": "cd .. && husky polymorphia-frontend/.husky"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx,json,less,md,css,html}": "prettier --ignore-unknown --ignore-path .gitignore --ignore-path .prettierignore --write"
+    "*.{ts,tsx,js,jsx,json,less,md,css,html}": "npx prettier --ignore-unknown --ignore-path .gitignore --ignore-path .prettierignore --write"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
