@@ -3,7 +3,6 @@ import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import Search from "@/components/search";
-import Loading from "@/components/loading/Loading";
 import GradingComponentWrapper from "@/components/grading-components/grading-wrapper";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import "./index.css";
@@ -11,6 +10,7 @@ import { Fragment } from "react";
 import { useMediaQuery } from "react-responsive";
 import { GradingReducerActions } from "@/providers/grading/gradingReducer/types";
 import { StudentTargetData, TargetTypes } from "@/interfaces/api/grade";
+import Loading from "@/components/loading";
 
 export default function TargetList() {
   const isMd = useMediaQuery({ minWidth: "786px" });

@@ -5,7 +5,7 @@ import { useEventParams } from "@/hooks/general/useEventParams";
 import "./index.css";
 import useShortGrade from "@/hooks/course/useShortGrade";
 import { TargetTypes } from "@/interfaces/api/grade";
-import useUserContext from "@/hooks/contexts/useUserContext";
+import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import useCriteria from "@/hooks/course/useCriteria";
 import { GradeModalProps } from "./types";
 
@@ -14,7 +14,7 @@ export default function GradeModal({
   gradableEventIdProp,
 }: GradeModalProps) {
   const { gradableEventId } = useEventParams();
-  const { id } = useUserContext();
+  const { id } = useUserDetails();
   const target = {
     type: TargetTypes.STUDENT,
     id,
