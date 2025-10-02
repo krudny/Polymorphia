@@ -12,7 +12,7 @@ public class BaseUserDetailsResponseDto {
     private Long id;
 
     @NotEmpty
-    private String userName;
+    private String fullName;
 
     @NotNull
     private Long courseId;

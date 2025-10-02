@@ -1,12 +1,16 @@
 import { createContext, ReactNode } from "react";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import { UserDetailsDTO } from "@/interfaces/api/user";
-import useCurrentUser from "../../hooks/general/useCurrentUser";
+import { useQuery } from "@tanstack/react-query";
+import UserService from "@/app/(logged-in)/profile/UserService";
 
 export const UserContext = createContext<UserDetailsDTO | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const { data: userData, isLoading } = useCurrentUser();
+  const { data: userData, isLoading } = useQuery({
+    queryKey: ["currentUser"],
+    queryFn: () => UserService.getCurrentUser(),
+  });
 
   if (isLoading || !userData) {
     return <Loading />;

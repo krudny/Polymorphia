@@ -34,8 +34,8 @@ export default function RankCard({
       </div>
       <div>
         <UserPoints
-          titleSize={"xs"}
-          xpSize={"sm"}
+          titleSize="xs"
+          xpSize="sm"
           separators={false}
           xpDetails={filteredXpDetails}
         />

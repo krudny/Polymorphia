@@ -6,10 +6,11 @@ import {
   UsePreferredCourseUpdate,
   UsePreferredCourseUpdateProps,
 } from "@/hooks/course/usePreferredCourseUpdate/types";
-import { Roles, UserDetailsDTO } from "@/interfaces/api/user";
+import { UserDetailsDTO } from "@/interfaces/api/user";
+import { redirectToNextStep } from "@/app/(welcome)/redirectHandler";
 
 export default function usePreferredCourseUpdate({
-  redirectPage,
+  shouldRedirectToMainPage,
 }: UsePreferredCourseUpdateProps): UsePreferredCourseUpdate {
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -18,18 +19,20 @@ export default function usePreferredCourseUpdate({
       userService.setUserPreferredCourse(courseId),
     onSuccess: async () => {
       toast.success("Aktywny kurs został zmieniony!");
+      await queryClient.invalidateQueries({ queryKey: ["currentUser"] });
+      await queryClient.invalidateQueries({ queryKey: ["userRole"] });
 
-      const currentUser = await queryClient.fetchQuery<UserDetailsDTO>({
+      const { userRole } = await queryClient.fetchQuery<UserDetailsDTO>({
         queryKey: ["currentUser"],
         queryFn: () => userService.getCurrentUser(),
       });
 
-      if (redirectPage) {
-        if (currentUser?.userRole === Roles.STUDENT) {
-          router.push("/profile");
-        } else {
-          router.push("/course/groups");
-        }
+      if (shouldRedirectToMainPage) {
+        redirectToNextStep({
+          userRole: userRole,
+          defaultRedirect: "/",
+          router: router,
+        });
       }
     },
     onError: () => {

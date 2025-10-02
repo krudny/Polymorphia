@@ -67,3 +67,13 @@
         @apply text-xl lg:text-2xl;
     }
 }
+
+/* Hall of fame error */
+
+.hall-of-fame-no-data-wrapper {
+    @apply m-auto;
+
+    h1{
+        @apply text-3xl text-center lg:text-4xl;
+    }
+}

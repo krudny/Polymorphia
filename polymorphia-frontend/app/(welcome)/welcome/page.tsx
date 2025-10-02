@@ -2,10 +2,11 @@
 
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import "./index.css";
-import useUserRole from "../../../hooks/course/useUserRole";
+import useUserRole from "@/hooks/course/useUserRole";
 import { animateWelcome } from "@/animations/Welcome";
+import { redirectToNextStep } from "@/app/(welcome)/redirectHandler";
 
 export default function Welcome() {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -13,20 +14,27 @@ export default function Welcome() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!wrapperRef.current) {
+    if (!wrapperRef.current || isLoading || !userRole) {
       return;
     }
 
-    animateWelcome(wrapperRef.current, userRole !== "UNDEFINED", router);
+    const onAnimateComplete = () =>
+      redirectToNextStep({
+        userRole: userRole,
+        defaultRedirect: "/course-choice",
+        router: router,
+      });
+
+    animateWelcome(wrapperRef.current, onAnimateComplete);
   }, [isLoading, userRole, router]);
 
-  if (isLoading) {
+  if (isLoading || !userRole) {
     return <Loading />;
   }
 
   return (
     <div ref={wrapperRef} className="welcome-wrapper">
-      Witaj w Polymorphii!
+      <h1>Witaj w Polymorphii!</h1>
     </div>
   );
 }

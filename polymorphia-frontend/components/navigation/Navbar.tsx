@@ -12,12 +12,14 @@ import {
   useBottomMenuItems,
   useMainMenuItems,
 } from "@/hooks/general/useMenuOptions";
+import useUserContext from "@/hooks/contexts/useUserContext";
 
 export default function Navbar() {
   const { isNavbarExpanded, setIsNavbarExpanded } = useNavigationContext();
   const drawerRef = useRef<HTMLDivElement | null>(null);
   const { data: eventSections } = useEventSections();
   const { title } = useTitle();
+  const { userRole } = useUserContext();
 
   useEffect(() => {
     const drawer = drawerRef.current;
@@ -41,7 +43,7 @@ export default function Navbar() {
   const menuItems = useMainMenuItems();
 
   if (eventSections) {
-    updateMenuItems(menuItems, eventSections);
+    updateMenuItems(menuItems, eventSections, userRole);
   }
 
   return (

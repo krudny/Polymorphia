@@ -47,7 +47,7 @@ public class UserContextMapper {
 
         return BaseUserDetailsResponseDto.builder()
                 .id(user.getId())
-                .userName(userService.getUserName(user))
+                .fullName(userService.getFullName(user))
                 .courseId(course.getId())
                 .imageUrl(getNonStudentImageUrl(userType, course))
                 .build();
@@ -72,7 +72,7 @@ public class UserContextMapper {
                 .group(hallOfFame.getGroupName())
                 .courseId(hallOfFame.getCourseId())
                 .imageUrl(hallOfFame.getImageUrl())
-                .userName(hallOfFame.getStudentName())
+                .fullName(hallOfFame.getStudentName())
                 .build();
     }
 }

@@ -1,20 +1,11 @@
-import {
-  SpeedDialEventProps,
-  SpeedDialItem,
-} from "@/components/speed-dial/types";
+import { SpeedDialItem, SpeedDialProps } from "@/components/speed-dial/types";
 import { useMemo } from "react";
 import { speedDialStrategyRegistry } from "@/components/speed-dial/strategies/Registry";
-import { useOptionalMarkdownContext } from "@/hooks/contexts/useMarkdownContext";
-import { usePathname, useRouter } from "next/navigation";
-import { SpeedDialContext } from "@/components/speed-dial/strategies/types";
 import useUserContext from "@/hooks/contexts/useUserContext";
 
 export function useSpeedDialFactory({
   speedDialKey,
-}: SpeedDialEventProps): SpeedDialItem[] {
-  const markdownContext = useOptionalMarkdownContext();
-  const router = useRouter();
-  const pathname = usePathname();
+}: SpeedDialProps): SpeedDialItem[] {
   const { userRole } = useUserContext();
 
   return useMemo(() => {
@@ -28,17 +19,7 @@ export function useSpeedDialFactory({
       return [];
     }
 
-    const combinedContext: SpeedDialContext = {
-      router: router,
-      role: userRole,
-      currentPath: pathname,
-      saveMarkdown: markdownContext?.saveMarkdown || (() => {}),
-      setIsEditing: markdownContext?.setIsEditing || (() => {}),
-      rejectMarkdown: markdownContext?.rejectMarkdown || (() => {}),
-      isEditing: markdownContext?.isEditing || false,
-    };
-
-    const items: SpeedDialItem[] = selectedType.getItems(combinedContext);
+    const items: SpeedDialItem[] = selectedType.getItems(userRole);
     return items.sort((a, b) => b.orderIndex - a.orderIndex);
-  }, [speedDialKey, userRole, markdownContext, router, pathname]);
+  }, [speedDialKey, userRole]);
 }

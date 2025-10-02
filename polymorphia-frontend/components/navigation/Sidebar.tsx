@@ -14,6 +14,7 @@ import {
   useBottomDesktopMenuItems,
   useMainMenuItems,
 } from "@/hooks/general/useMenuOptions";
+import useUserContext from "@/hooks/contexts/useUserContext";
 
 export default function Sidebar() {
   const {
@@ -24,6 +25,7 @@ export default function Sidebar() {
   } = useNavigationContext();
   const sidebarRef = useRef<HTMLDivElement | null>(null);
   const { data: eventSections } = useEventSections();
+  const { userRole } = useUserContext();
 
   useEffect(() => {
     const sidebar = sidebarRef.current;
@@ -37,7 +39,7 @@ export default function Sidebar() {
   const menuItems = useMainMenuItems();
 
   if (eventSections) {
-    updateMenuItems(menuItems, eventSections);
+    updateMenuItems(menuItems, eventSections, userRole);
   }
 
   return (

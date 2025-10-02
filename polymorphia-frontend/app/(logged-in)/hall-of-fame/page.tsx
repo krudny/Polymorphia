@@ -4,10 +4,11 @@ import { useEffect } from "react";
 import { HallOfFameProvider } from "@/providers/hall-of-fame/HallOfFameContext";
 import HallOfFameMobile from "@/views/hall-of-fame/mobile/HallOfFameMobile";
 import FiltersModal from "@/components/filters-modals/FiltersModal";
-import HallOfFameDesktop from "@/views/hall-of-fame/desktop/HallOfFameDesktop";
 import { useQueryClient } from "@tanstack/react-query";
 import { HallOfFameFilterId } from "@/providers/hall-of-fame/types";
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
+import HallOfFameDesktop from "@/views/hall-of-fame/desktop/HallOfFameDesktop";
+import "./index.css";
 
 function HallOfFameContent() {
   const queryClient = useQueryClient();
@@ -29,10 +30,10 @@ function HallOfFameContent() {
 
   return (
     <>
-      <div className="w-full lg:hidden">
+      <div className="mobile-hall-of-fame">
         <HallOfFameMobile />
       </div>
-      <div className="w-full hidden lg:flex flex-col-centered flex-1">
+      <div className="desktop-hall-of-fame">
         <HallOfFameDesktop />
       </div>
       <FiltersModal<HallOfFameFilterId>

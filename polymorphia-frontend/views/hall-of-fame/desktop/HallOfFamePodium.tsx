@@ -1,6 +1,6 @@
 import XPCard from "@/components/xp-card/XPCard";
 import "./index.css";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import { useScaleShow } from "@/animations/ScaleShow";
 import useHallOfFamePodium from "@/hooks/course/useHallOfFamePodium";

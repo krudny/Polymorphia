@@ -10,4 +10,6 @@ public interface EventSectionRepository extends JpaRepository<EventSection, Long
     List<EventSection> findByIdIn(Set<Long> ids);
 
     boolean existsByCourseIdAndName(Long courseId, String name);
+
+    List<EventSection> findByCourseId(Long courseId);
 }

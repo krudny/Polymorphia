@@ -58,7 +58,8 @@ public class UserService implements UserDetailsService {
         return roles.iterator().next();
     }
 
-    public String getUserName(User user) {
+
+    public String getFullName(User user) {
         return String.join(" ", user.getFirstName(), user.getLastName());
     }
 

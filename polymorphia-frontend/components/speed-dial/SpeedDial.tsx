@@ -2,12 +2,15 @@
 
 import { ReactNode, useState } from "react";
 import "./index.css";
-import Loading from "@/components/loading/Loading";
-import { SpeedDial as SpeedDialMui, SpeedDialAction } from "@mui/material";
+import { useSpeedDialFactory } from "@/hooks/factory/useSpeedDialFactory";
+import Loading from "@/components/loading";
+import { SpeedDial as SpeedDialMui } from "@mui/material";
 import { SpeedDialProps } from "./types";
 import { useMediaQuery } from "react-responsive";
+import SpeedDialActionWrapper from "./action-wrapper";
 
-export default function SpeedDial({ items }: SpeedDialProps) {
+export default function SpeedDial({ speedDialKey }: SpeedDialProps) {
+  const items = useSpeedDialFactory({ speedDialKey });
   const [activeModal, setActiveModal] = useState<ReactNode | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const isMd = useMediaQuery({ minWidth: "768px" });
@@ -45,46 +48,10 @@ export default function SpeedDial({ items }: SpeedDialProps) {
         onClose={() => setIsOpen(false)}
       >
         {items.map((item) => (
-          <SpeedDialAction
+          <SpeedDialActionWrapper
+            item={item}
+            setActiveModal={setActiveModal}
             key={item.id}
-            icon={<span className="material-symbols">{item.icon}</span>}
-            slotProps={{
-              tooltip: {
-                title: item.label,
-                slotProps: {
-                  transition: { timeout: 150 },
-                  popper: {
-                    modifiers: [
-                      {
-                        name: "computeStyles",
-                        options: {
-                          roundOffsets: false,
-                          gpuAcceleration: false,
-                        },
-                      },
-                      { name: "offset", options: { offset: [0, 3] } },
-                    ],
-                  },
-                },
-              },
-              fab: {
-                style: {
-                  backgroundColor: item.color ?? "#262626",
-                  color: "#d4d4d4",
-                  borderRadius: 8,
-                  width: 56,
-                  height: 56,
-                  fontSize: 28,
-                },
-              },
-            }}
-            onClick={() => {
-              if (item.modal) {
-                setActiveModal(item.modal(() => setActiveModal(null)));
-              } else if (item.onClick) {
-                item.onClick();
-              }
-            }}
           />
         ))}
       </SpeedDialMui>

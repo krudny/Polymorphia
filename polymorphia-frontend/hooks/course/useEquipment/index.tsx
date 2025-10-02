@@ -1,17 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import EquipmentService from "@/app/(logged-in)/equipment/EquipmentService";
 import { UseEquipment } from "@/hooks/course/useEquipment/types";
-import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export default function useEquipment(): UseEquipment {
-  const { courseId } = useUserDetails();
   const {
     data: items,
     isLoading: isItemsLoading,
     error: itemsError,
   } = useQuery({
-    queryKey: ["equipment-items"],
-    queryFn: () => EquipmentService.getItems(courseId),
+    queryKey: ["equipmentItems"],
+    queryFn: () => EquipmentService.getItems(),
   });
 
   const {
@@ -19,8 +17,8 @@ export default function useEquipment(): UseEquipment {
     isLoading: isChestsLoading,
     error: chestsError,
   } = useQuery({
-    queryKey: ["equipment-chests"],
-    queryFn: () => EquipmentService.getChests(courseId),
+    queryKey: ["equipmentChests"],
+    queryFn: () => EquipmentService.getChests(),
   });
 
   return {

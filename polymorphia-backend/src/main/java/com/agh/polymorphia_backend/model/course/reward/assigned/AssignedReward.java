@@ -1,6 +1,5 @@
 package com.agh.polymorphia_backend.model.course.reward.assigned;
 
-import com.agh.polymorphia_backend.dto.response.reward.RewardType;
 import com.agh.polymorphia_backend.model.course.reward.Reward;
 import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -47,6 +46,4 @@ public abstract class AssignedReward {
 
     @NotNull
     private Boolean isUsed;
-
-    public abstract RewardType getRewardType();
 }

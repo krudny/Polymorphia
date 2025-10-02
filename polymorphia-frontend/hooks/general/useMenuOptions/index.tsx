@@ -1,5 +1,4 @@
 import { MenuOption } from "@/components/navigation/types";
-import useLogout from "@/hooks/course/useLogout";
 import {
   BadgeHelpIcon,
   BellIcon,
@@ -10,32 +9,30 @@ import {
   SettingsIcon,
   TrophyIcon,
   UserIcon,
+  UsersIcon,
 } from "lucide-react";
 import { Roles } from "@/interfaces/api/user";
 import useUserContext from "@/hooks/contexts/useUserContext";
+import { useMenuCourseOptionText } from "@/hooks/general/useMenuCourseOptionText";
 
 export function useBottomMenuItems(): MenuOption[] {
-  const logoutMutation = useLogout();
-
   return [
     {
       icon: LogOutIcon,
       text: "Wyloguj się",
-      onClick: () => logoutMutation.mutate(),
+      link: "logout/",
     },
     { icon: SettingsIcon, text: "Ustawienia", link: "settings" },
   ];
 }
 
 export function useBottomDesktopMenuItems(): MenuOption[] {
-  const { mutate: logout } = useLogout();
-
   return [
     { icon: BellIcon, text: "Powiadomienia" },
     {
       icon: LogOutIcon,
       text: "Wyloguj się",
-      onClick: () => logout(),
+      link: "logout/",
     },
     {
       icon: SettingsIcon,
@@ -47,7 +44,21 @@ export function useBottomDesktopMenuItems(): MenuOption[] {
 
 export function useMainMenuItems(): MenuOption[] {
   const { userRole } = useUserContext();
-  const items: MenuOption[] = [
+  const courseOptionText = useMenuCourseOptionText(userRole);
+  const isInstructorOrCoordinator =
+    userRole === Roles.COORDINATOR || userRole === Roles.INSTRUCTOR;
+
+  const items: MenuOption[] = [];
+
+  if (isInstructorOrCoordinator) {
+    items.push({ icon: UsersIcon, text: "Grupy", link: "course/groups" });
+  }
+
+  if (userRole === Roles.STUDENT) {
+    items.push({ icon: UserIcon, text: "Profil", link: "profile" });
+  }
+
+  items.push(
     {
       icon: BadgeHelpIcon,
       text: "Baza wiedzy",
@@ -58,24 +69,17 @@ export function useMainMenuItems(): MenuOption[] {
         { text: "Skrzynki", link: "knowledge-base/chests" },
       ],
     },
-    { icon: GraduationCapIcon, text: "Kurs" },
-    { icon: MedalIcon, text: "Hall of Fame", link: "hall-of-fame" },
-    { icon: MilestoneIcon, text: "Roadmapa", link: "roadmap" },
-  ];
+    { icon: GraduationCapIcon, text: courseOptionText }
+  );
 
   if (userRole === Roles.STUDENT) {
-    items.splice(0, 0, {
-      icon: UserIcon,
-      text: "Profil",
-      link: "profile",
-    });
-
-    items.splice(3, 0, {
-      icon: TrophyIcon,
-      text: "Ekwipunek",
-      link: "equipment",
-    });
+    items.push({ icon: TrophyIcon, text: "Ekwipunek", link: "equipment" });
   }
+
+  items.push(
+    { icon: MedalIcon, text: "Hall of Fame", link: "hall-of-fame" },
+    { icon: MilestoneIcon, text: "Roadmapa", link: "roadmap" }
+  );
 
   return items;
 }

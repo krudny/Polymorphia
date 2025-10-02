@@ -34,8 +34,8 @@ export default function HallOfFameCardDesktop({
       </div>
       <div className="hall-of-fame-desktop-record-user-points-wrapper">
         <UserPoints
-          titleSize={"sm"}
-          xpSize={"md"}
+          titleSize="sm"
+          xpSize="md"
           separators={false}
           xpDetails={filteredXpDetails}
         />

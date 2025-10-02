@@ -1,34 +1,40 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { FilterConfig } from "../useFilters/types";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { UseProfileFilterConfigs } from "@/hooks/course/useProfileFilterConfigs/types";
 import { ProfileFilterId } from "@/app/(logged-in)/profile/types";
-import UserService from "@/app/(logged-in)/profile/UserService";
+import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 
 export function useProfileFilterConfigs(): UseProfileFilterConfigs {
   const { courseId } = useUserDetails();
+  const queryClient = useQueryClient();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["profileFilters", courseId],
     queryFn: async (): Promise<FilterConfig<ProfileFilterId>[]> => {
-      const { xpDetails } = await UserService.getStudentProfile(courseId);
-      const labels = Object.keys(xpDetails);
+      const eventSections = await queryClient.fetchQuery({
+        queryKey: ["eventSections", courseId],
+        queryFn: () => EventSectionService.getEventSections(courseId),
+      });
       return [
         {
           id: "rankingOptions",
           title: "Wyświetlanie",
           options: [
-            ...labels.map((label) => ({
-              value: label,
+            ...eventSections.map((eventSection) => ({
+              value: eventSection.name,
             })),
+            { value: "bonuses", label: "Bonusy" },
+            { value: "total", label: "Suma" },
           ],
-          min: Math.min(4, labels.length),
-          max: Math.min(4, labels.length),
+          min: Math.min(4, eventSections.length),
+          max: Math.min(4, eventSections.length),
           defaultValues: [
-            ...labels
-              .slice(0, Math.min(3, Math.max(0, labels.length - 1)))
-              .map((label) => label),
-            "Suma",
+            ...eventSections
+              .slice(0, Math.min(2, Math.max(0, eventSections.length - 1)))
+              .map((eventSection) => eventSection.name),
+            "bonuses",
+            "total",
           ],
         },
       ];

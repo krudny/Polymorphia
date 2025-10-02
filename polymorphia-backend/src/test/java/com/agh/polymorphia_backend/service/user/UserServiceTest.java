@@ -119,10 +119,10 @@ class UserServiceTest {
     }
 
     @Test
-    void getUserName_shouldConcatenateFirstAndLastName() {
+    void getFullName_shouldConcatenateFirstAndLastName() {
         User user = User.builder().firstName("Jane").lastName("Doe").build();
 
-        var result = userService.getUserName(user);
+        var result = userService.getFullName(user);
 
         assertEquals("Jane Doe", result);
     }

@@ -24,12 +24,14 @@ public class UserController {
     @GetMapping("/context")
     @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<UserDetailsResponseDto> getUserContext() {
+        userContextService.setPreferredCourseIfOneAvailable();
         return ResponseEntity.ok(userContextService.getUserContext());
     }
 
     @GetMapping("/role")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<UserType> getUserRole() {
+        userContextService.setPreferredCourseIfOneAvailable();
         return ResponseEntity.ok(userContextService.getUserRole());
     }
 }

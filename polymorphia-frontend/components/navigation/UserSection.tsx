@@ -11,7 +11,7 @@ export default function UserSection() {
   const title =
     userContext.userRole === Roles.STUDENT
       ? userContext.userDetails.animalName
-      : userContext.userDetails.userName;
+      : userContext.userDetails.fullName;
 
   const subtitle =
     userContext.userRole === Roles.STUDENT

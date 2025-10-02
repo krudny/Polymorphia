@@ -5,6 +5,7 @@ import com.agh.polymorphia_backend.dto.response.user_context.UserDetailsResponse
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.User;
+import com.agh.polymorphia_backend.model.user.UserCourseRole;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
@@ -38,6 +39,17 @@ public class UserContextService {
     public UserType getUserRole() {
         AbstractRoleUser user = userService.getCurrentUser();
         return userService.getUserRole(user);
+    }
+
+    public void setPreferredCourseIfOneAvailable() {
+        AbstractRoleUser user = userService.getCurrentUser();
+
+        if (userService.getUserRole(user) == UserType.UNDEFINED) {
+            List<UserCourseRole> courses = userCourseRoleRepository.findAllByUserId(user.getUser().getId());
+            if (courses.size() == 1) {
+                setPreferredCourseId(courses.getFirst().getCourse().getId());
+            }
+        }
     }
 
     public void setPreferredCourseId(Long courseId) {

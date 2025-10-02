@@ -1,5 +1,5 @@
 "use client";
-import { Roles, StudentDetailsDTO } from "@/interfaces/api/user";
+import { Roles, StudentDetailsDTOWithName } from "@/interfaces/api/user";
 import Modal from "@/components/modal/Modal";
 import { ChangeEvent, useEffect, useState } from "react";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
@@ -16,12 +16,9 @@ function GroupPickingModalContent() {
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 300);
   // TODO: temporary logic
-  const [group, setGroup] = useState<StudentDetailsDTO[]>([]);
+  const [group, setGroup] = useState<StudentDetailsDTOWithName[]>([]);
   const currentUser = useUserContext();
   const { data: allUsers, isError } = useRandomUsers();
-  if (currentUser.userRole !== Roles.STUDENT) {
-    throw new Error("User is not a student");
-  }
 
   useEffect(() => {
     if (currentUser && currentUser.userRole === Roles.STUDENT) {
@@ -34,7 +31,7 @@ function GroupPickingModalContent() {
     setSearch(event.target.value);
   };
 
-  const handleClick = (user: StudentDetailsDTO) => {
+  const handleClick = (user: StudentDetailsDTOWithName) => {
     if (currentUser && group.length < 2) {
       setGroup((prev) => [...prev, user]);
     }
@@ -66,15 +63,12 @@ function GroupPickingModalContent() {
           <div className="group-pick-search">
             {allUsers && allUsers.length > 0 ? (
               allUsers?.map((user, index) => {
-                const { userName, evolutionStage, group, imageUrl } =
+                const { fullName, evolutionStage, group, imageUrl } =
                   user.userDetails;
-                if (!userName) {
-                  throw new Error("No userName defined!");
-                }
                 return (
                   <div key={index} className="group-pick-card">
                     <XPCard
-                      title={userName}
+                      title={fullName}
                       subtitle={group + " | " + evolutionStage}
                       leftComponent={
                         <XPCardImage imageUrl={imageUrl} alt={evolutionStage} />
@@ -96,16 +90,16 @@ function GroupPickingModalContent() {
       <h3 className="group-pick-text">Twoja grupa</h3>
       <div className="group-pick-group">
         {group?.map((user, index) => {
-          const { userName, evolutionStage, group, imageUrl } = user;
+          const { fullName, evolutionStage, group, imageUrl } = user;
 
-          if (!userName) {
+          if (!fullName) {
             throw new Error("No userName defined!");
           }
 
           return (
             <div key={index} className="group-pick-card">
               <XPCard
-                title={userName}
+                title={fullName}
                 subtitle={group + " | " + evolutionStage}
                 leftComponent={
                   <XPCardImage imageUrl={imageUrl} alt={evolutionStage} />

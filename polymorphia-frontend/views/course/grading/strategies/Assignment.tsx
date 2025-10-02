@@ -9,12 +9,9 @@ export class AssignmentGradingStrategy
   implements GradingStrategy
 {
   getGradingComponents(): GradingComponents {
-    return {
-      list: this.createStudentsList(),
-      components: [
-        [this.createRewardComponent()],
-        [this.createPullRequestComponent()],
-      ],
-    };
+    return [
+      [this.createRewardComponent()],
+      [this.createPullRequestComponent()],
+    ];
   }
 }

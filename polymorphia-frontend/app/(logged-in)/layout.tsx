@@ -3,7 +3,7 @@
 import { ReactNode } from "react";
 import { NavigationProvider } from "@/providers/navigation/NavigationContext";
 import { UserProvider } from "@/providers/user/UserContext";
-import MainLayout from "@/components/main-layout/MainLayout";
+import MainLayout from "@/components/main-layout";
 import Navigation from "@/components/navigation/Navigation";
 import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
 

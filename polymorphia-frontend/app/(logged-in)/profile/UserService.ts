@@ -74,7 +74,7 @@ const UserService = {
         userRole: Roles.STUDENT,
         userDetails: {
           id: 1,
-          userName: "Kamil Rudny",
+          fullName: "Kamil Rudny",
           animalName: "Gerard Pocieszny",
           evolutionStage: "Majestatyczna bestia",
           group: "BM-20-00",
@@ -87,7 +87,7 @@ const UserService = {
         userRole: Roles.STUDENT,
         userDetails: {
           id: 2,
-          userName: "Kamil Śmieszny",
+          fullName: "Kamil Śmieszny",
           animalName: "Gerard Wesoły",
           evolutionStage: "Majestatyczna bestia",
           group: "BM-20-00",

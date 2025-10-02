@@ -2,8 +2,8 @@
   "xpDetails": {
     "Lab": "0.0",
     "Kartkówka": "0.0",
-    "Bonusy": "0.0",
-    "Suma": "0.0"
+    "bonuses": "0.0",
+    "total": "0.0"
   },
   "evolutionStageThresholds": [
     {
