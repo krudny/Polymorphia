@@ -9,7 +9,7 @@ export interface MarkdownContextInterface {
   setIsEditing: (isEditing: boolean) => void;
   saveMarkdown: () => void;
   rejectMarkdown: () => void;
-  resetMarkdown: () => void;
+  resetMarkdown: (onSuccess?: () => void) => void;
   markdownType: MarkdownType;
   resourceId: number;
   markdownSource: SourceMarkdownResponseDTO | undefined;

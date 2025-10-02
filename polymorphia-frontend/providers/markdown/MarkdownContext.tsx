@@ -64,7 +64,10 @@ export const MarkdownProvider = ({
         setIsEditing,
         saveMarkdown,
         rejectMarkdown,
-        resetMarkdown,
+        resetMarkdown: (onSuccess?: () => void) =>
+          resetMarkdown(undefined, {
+            onSuccess,
+          }),
         markdownType,
         resourceId,
         markdownSource,
