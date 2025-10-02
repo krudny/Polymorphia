@@ -1,32 +1,35 @@
 import { ReactNode } from "react";
 
+export type UseSpeedDialItemDynamicBehaviorHook =
+  () => SpeedDialItemDynamicBehavior;
+
+export type SpeedDialItemDynamicBehavior = {
+  onClick?: () => void;
+  modal?: (onClose: () => void) => ReactNode;
+  shouldBeRendered?: boolean; // defaults to `true`
+};
+
 export interface SpeedDialItem {
   id: number;
   orderIndex: number;
   label: string;
   icon: string;
-  modal?: (onClose: () => void) => ReactNode;
-  onClick?: () => void;
+  useDynamicBehavior: UseSpeedDialItemDynamicBehaviorHook;
   color?: string;
 }
 
-export interface SpeedDialEventProps {
+export interface SpeedDialProps {
   speedDialKey: SpeedDialKey;
 }
 
-export interface SpeedDialProps {
-  items: SpeedDialItem[];
-}
-
 export const SpeedDialKeys = {
-  ASSIGNMENT_MARKDOWN_STUDENT: "ASSIGNMENT_MARKDOWN_STUDENT",
-  ASSIGNMENT_MARKDOWN_INSTRUCTOR: "ASSIGNMENT_MARKDOWN_INSTRUCTOR",
-  PROJECT_MARKDOWN_STUDENT: "PROJECT_MARKDOWN_STUDENT",
-  PROJECT_MARKDOWN_INSTRUCTOR: "PROJECT_MARKDOWN_INSTRUCTOR",
-  TEST_GRADING_INSTRUCTOR: "TEST_GRADING_INSTRUCTOR",
-  ASSIGNMENT_GRADING_INSTRUCTOR: "ASSIGNMENT_GRADING_INSTRUCTOR",
-  PROJECT_GRADING_INSTRUCTOR: "PROJECT_GRADING_INSTRUCTOR",
-  COURSE_GROUP_INSTRUCTOR: "COURSE_GROUP_INSTRUCTOR",
+  ASSIGNMENT_MARKDOWN: "ASSIGNMENT_MARKDOWN",
+  PROJECT_MARKDOWN: "PROJECT_MARKDOWN",
+  RULES_MARKDOWN: "RULES_MARKDOWN",
+  TEST_GRADING: "TEST_GRADING",
+  ASSIGNMENT_GRADING: "ASSIGNMENT_GRADING",
+  PROJECT_GRADING: "PROJECT_GRADING",
+  COURSE_GROUP: "COURSE_GROUP",
   PROFILE_STUDENT: "PROFILE_STUDENT",
 } as const;
 

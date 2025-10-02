@@ -28,10 +28,10 @@ public class GradableEvent {
     private EventSection eventSection;
 
     @NotNull
-    @Column(length =  64)
+    @Column(length = 64)
     private String name;
 
-    @Column(length =  64)
+    @Column(length = 64)
     private String topic;
 
     @NotNull
@@ -39,7 +39,7 @@ public class GradableEvent {
 
     private Integer roadMapOrderIndex;
 
-    @Column(length =  128)
+    @Column(length = 128)
     private String markdownSourceUrl;
 
     private String markdown;

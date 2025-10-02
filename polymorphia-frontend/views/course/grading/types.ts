@@ -11,7 +11,4 @@ export interface GradingStrategy {
   getGradingComponents: () => GradingComponents;
 }
 
-export interface GradingComponents {
-  list: ReactNode;
-  components: ReactNode[][];
-}
+export type GradingComponents = ReactNode[][];

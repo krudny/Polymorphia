@@ -1,43 +1,56 @@
 import Modal from "@/components/modal/Modal";
 import GradeInfo from "@/components/course/event-section/GradeInfo";
 import Loading from "@/components/loading";
-import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
-import useGrade from "@/hooks/course/useGrade";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import "./index.css";
+import useShortGrade from "@/hooks/course/useShortGrade";
+import { TargetTypes } from "@/interfaces/api/grade";
+import { useUserDetails } from "@/hooks/contexts/useUserContext";
+import useCriteria from "@/hooks/course/useCriteria";
+import { GradeModalProps } from "./types";
 
 export default function GradeModal({
   onClosedAction,
   gradableEventIdProp,
-}: SpeedDialModalProps & {
-  gradableEventIdProp?: number;
-}) {
+}: GradeModalProps) {
   const { gradableEventId } = useEventParams();
-  const id = isNaN(gradableEventId) ? gradableEventIdProp : gradableEventId;
+  const { id } = useUserDetails();
+  const target = {
+    type: TargetTypes.STUDENT,
+    id,
+  };
 
-  if (id === undefined) {
+  if (!gradableEventIdProp && !gradableEventId) {
     throw new Error("[GradeModal] invalid gradableEventId");
   }
 
-  const { data, isLoading, isError } = useGrade(id);
+  const {
+    data: gradeData,
+    isLoading: isGradeLoading,
+    isError: isGradeError,
+  } = useShortGrade(target, gradableEventIdProp);
+
+  const {
+    data: criteriaData,
+    isLoading: isCriteriaLoading,
+    isError: isCriteriaError,
+  } = useCriteria(gradableEventIdProp);
 
   return (
-    <Modal
-      isDataPresented={data !== undefined}
-      onClosed={onClosedAction}
-      title="Nagrody"
-    >
-      {isError && (
+    <Modal isDataPresented={true} onClosed={onClosedAction} title="Nagrody">
+      {(isGradeError || isCriteriaError) && (
         <div className="grade-error">
           Wystąpił błąd przy ładowaniu szczegółów.
         </div>
       )}
-      {isLoading && (
+      {(isGradeLoading || isCriteriaLoading) && (
         <div className="grade-loading">
           <Loading />
         </div>
       )}
-      {!isLoading && data && <GradeInfo grade={data} />}
+      {!isGradeLoading && !isCriteriaLoading && gradeData && criteriaData && (
+        <GradeInfo grade={gradeData} criteria={criteriaData} />
+      )}
     </Modal>
   );
 }

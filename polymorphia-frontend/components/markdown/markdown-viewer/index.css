@@ -4,27 +4,115 @@
 /* Config */
 
 .markdown-config-code-inline {
-    @apply bg-[#c3c3c3] text-primary-dark  rounded px-1 text-[1.6rem] lg:px-2 lg:text-3xl;
+  @apply bg-[#c3c3c3] text-primary-dark rounded px-1 text-[1.6rem] lg:px-2 lg:text-3xl;
 }
 
 .markdown-config-code-block {
-    @apply bg-primary-dark text-secondary-light text-sm p-4 rounded overflow-x-auto my-4;
+  @apply bg-primary-dark text-secondary-light text-sm p-4 rounded overflow-x-auto my-4;
+}
+
+.markdown-inline-image {
+  @apply inline-block align-middle;
+}
+
+.h1-markdown {
+  @apply text-4xl my-5 lg:text-5xl lg:my-10 first:mt-0;
+}
+
+.h2-markdown {
+  @apply text-[2rem] my-4 lg:text-[2.5rem] lg:my-7 first:mt-0;
+}
+
+.h3-markdown {
+  @apply text-[2.2rem] my-4 first:mt-0;
+}
+
+.h4-markdown {
+  @apply text-[2rem] underline my-4 first:mt-0;
+}
+
+.p-markdown {
+  @apply text-[1.5rem] leading-8 mt-3 lg:text-3xl lg:mt-5 lg:leading-11 first:mt-0;
+}
+
+.ol-markdown {
+  @apply pl-8 list-decimal lg:pl-16;
+}
+
+.ul-markdown {
+  @apply pl-8 list-disc lg:pl-16;
+}
+
+.li-markdown {
+  @apply text-[1.6rem] my-1 lg:text-3xl lg:my-2;
+}
+
+.strong-markdown {
+  @apply font-normal;
+}
+
+.a-markdown {
+  @apply hover:opacity-70 hover:cursor-pointer transition-opacity duration-200;
+}
+
+.table-markdown-wrapper {
+  @apply w-fit mx-auto overflow-x-auto my-6;
+}
+
+.table-markdown {
+  @apply w-full border-collapse border-2 border-primary-dark rounded-lg shadow-sm;
+}
+
+.thead-markdown {
+  @apply bg-gray-50;
+}
+
+.tr-markdown {
+  @apply border-b-2 border-primary-dark;
+}
+
+.th-markdown {
+  @apply border-2 border-primary-dark px-6 py-4 text-center font-normal text-[1.4rem] lg:text-[1.8rem] bg-secondary-gray;
+}
+
+.td-markdown {
+  @apply border-2 border-primary-dark text-center px-5 py-2 text-[1.3rem] lg:text-[1.6rem] align-middle leading-relaxed;
+
+  div {
+    @apply flex-col-centered;
+  }
+}
+
+.code-markdown-inline {
+  @apply bg-[#c3c3c3] text-primary-dark rounded px-1 text-[1.6rem] lg:px-2 lg:text-3xl;
+}
+
+.img-markdown {
+  @apply object-contain rounded-xl;
+}
+
+.img-markdown-inline {
+  @apply object-contain;
+}
+
+.markdown-invalid-src {
+  @apply inline-block text-primary-error;
 }
 
 /* Markdown viewer */
 
 .markdown-viewer {
-    @apply w-full opacity-0 custom-scrollbar;
+  @apply w-full opacity-0 custom-scrollbar;
 
-    h1 code {
-        @apply text-4xl lg:text-5xl;
-    }
+  h1 code {
+    @apply text-4xl lg:text-5xl;
+  }
 
-    h2 code {
-        @apply text-[2rem] lg:text-[2.5rem];
-    }
+  h2 code {
+    @apply text-[2rem] lg:text-[2.5rem];
+  }
 
-    h3 code {
-        @apply text-[1.6rem] lg:text-[2.2rem];
-    }
+  h3 code {
+    @apply text-[1.6rem] lg:text-[2.2rem];
+  }
 }

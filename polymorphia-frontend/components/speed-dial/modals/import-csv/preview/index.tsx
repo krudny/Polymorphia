@@ -1,5 +1,6 @@
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import useImportCSVContext from "@/hooks/contexts/useImportCSVContext";
+import useModalContext from "@/hooks/contexts/useModalContext";
 import "./index.css";
 import "../index.css";
 
@@ -11,8 +12,10 @@ export default function PreviewCSV() {
     csvProcessMutation,
     goBackToUpload,
   } = useImportCSVContext();
+  const { closeModal } = useModalContext();
 
   if (!csvPreviewMutation.data || !selectedFile) {
+    closeModal();
     return;
   }
 
@@ -22,6 +25,7 @@ export default function PreviewCSV() {
       csvHeaders: csvPreviewMutation.data.csvHeaders,
       data: csvPreviewMutation.data.data,
     });
+    closeModal();
   };
 
   const { csvHeaders, data } = csvPreviewMutation.data;

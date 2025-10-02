@@ -1,20 +1,17 @@
 "use client";
 
-import React, {FormEvent} from "react";
-import {useForm} from "@tanstack/react-form";
+import React, { FormEvent } from "react";
+import { useForm } from "@tanstack/react-form";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import NavigationArrow from "@/components/slider/NavigationArrow";
-import {LoginDto} from "@/interfaces/api/login";
-import {FieldInfo} from "@/components/form/FieldInfo";
-import {loginSchema} from "@/components/form/schema";
+import { LoginDto } from "@/interfaces/api/login";
+import { FieldInfo } from "@/components/form/FieldInfo";
+import { loginSchema } from "@/components/form/schema";
 import "./index.css";
 import useLogin from "@/hooks/course/useLogin";
-import {useRouter} from "next/navigation";
 import LoginFormProps from "@/components/home/login-form/types";
 
 export default function LoginForm({ onBackAction }: LoginFormProps) {
-  const router = useRouter();
-
   const form = useForm({
     defaultValues: {
       email: "",

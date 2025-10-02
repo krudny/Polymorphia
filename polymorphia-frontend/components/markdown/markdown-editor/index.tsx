@@ -10,8 +10,8 @@ export default function MarkdownEditor() {
   const wrapperRef = useFadeInAnimate(!!newMarkdown);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setNewMarkdown(e.target.value);
+  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setNewMarkdown(event.target.value);
   };
 
   useEffect(() => {

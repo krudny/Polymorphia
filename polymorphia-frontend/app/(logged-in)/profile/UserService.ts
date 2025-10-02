@@ -6,9 +6,9 @@ import {
   StudentDetailsDTOWithType,
   UserDetailsDTO,
 } from "@/interfaces/api/user";
-import {AvailableCoursesDTO} from "@/interfaces/api/user-context";
-import {API_HOST} from "@/services/api";
-import {StudentProfileDTO} from "@/interfaces/api/profile";
+import { API_HOST } from "@/services/api";
+import { AvailableCoursesDTO } from "@/interfaces/api/user-context";
+import { StudentProfileDTO } from "@/interfaces/api/profile";
 
 const UserService = {
   getStudentProfile: async (courseId: number): Promise<StudentProfileDTO> => {
@@ -100,7 +100,6 @@ const UserService = {
       },
     ];
   },
-
   register: async (request: RegisterRequestDTO): Promise<void> => {
     const response = await fetch(`${API_HOST}/user/register`, {
       method: "POST",

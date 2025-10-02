@@ -5,6 +5,7 @@ import Loading from "@/components/loading";
 import { useScaleShow } from "@/animations/ScaleShow";
 import { useMediaQuery } from "react-responsive";
 import RankCardMobile from "@/views/hall-of-fame/mobile/HallOfFameCardMobile";
+import HallOfFameError from "@/views/hall-of-fame/general/HallOfFameError";
 
 export default function HallOfFameList() {
   const { hallOfFame, isLoading, isFiltersLoading, isFiltersError } =
@@ -22,25 +23,33 @@ export default function HallOfFameList() {
 
   const desktopComponent = (
     <div className="hall-of-fame-desktop-rank-wrapper" ref={wrapperRef}>
-      {hallOfFame.content.map((record: HallOfFameRecordDTO) => (
-        <HallOfFameCardDesktop
-          key={`rank-${record.userDetails.position}`}
-          userDetails={record.userDetails}
-          xpDetails={record.xpDetails}
-        />
-      ))}
+      {hallOfFame.content.length === 0 ? (
+        <HallOfFameError />
+      ) : (
+        hallOfFame.content.map((record: HallOfFameRecordDTO) => (
+          <HallOfFameCardDesktop
+            key={`rank-${record.userDetails.position}`}
+            userDetails={record.userDetails}
+            xpDetails={record.xpDetails}
+          />
+        ))
+      )}
     </div>
   );
 
   const mobileComponent = (
     <div className="hall-of-fame-mobile-rank-wrapper">
-      {hallOfFame.content.map((record: HallOfFameRecordDTO) => (
-        <RankCardMobile
-          key={`rank-${record.userDetails.position}`}
-          userDetails={record.userDetails}
-          xpDetails={record.xpDetails}
-        />
-      ))}
+      {hallOfFame.content.length === 0 ? (
+        <HallOfFameError />
+      ) : (
+        hallOfFame.content.map((record: HallOfFameRecordDTO) => (
+          <RankCardMobile
+            key={`rank-${record.userDetails.position}`}
+            userDetails={record.userDetails}
+            xpDetails={record.xpDetails}
+          />
+        ))
+      )}
     </div>
   );
 

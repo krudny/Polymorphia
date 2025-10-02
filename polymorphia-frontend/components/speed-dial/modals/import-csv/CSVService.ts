@@ -67,6 +67,7 @@ const CSVService = {
     gradableEventId?: number
   ): Promise<void> => {
     const body = JSON.stringify({
+      type: ImportCSVTypes.GRADE_IMPORT,
       csvHeaders: csvHeaders,
       data: data,
       ...(gradableEventId && { gradableEventId }),
@@ -89,11 +90,12 @@ const CSVService = {
     data: string[][]
   ): Promise<void> => {
     const body = JSON.stringify({
+      type: ImportCSVTypes.STUDENT_INVITE,
       csvHeaders: csvHeaders,
       data: data,
     });
 
-    const response = await fetch(`${API_HOST}/user/invite/csv`, {
+    const response = await fetch(`${API_HOST}/csv/process/student-invite`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: body,

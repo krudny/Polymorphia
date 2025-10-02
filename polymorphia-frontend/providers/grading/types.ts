@@ -1,11 +1,10 @@
-import { StudentDetailsDTOWithType } from "@/interfaces/api/user";
-import { ProjectGroupResponseDTO } from "@/interfaces/api/temp";
 import { Dispatch, SetStateAction } from "react";
 import { useFilters } from "@/hooks/course/useFilters";
 import {
   GradingReducerActionType,
   GradingReducerState,
 } from "@/providers/grading/gradingReducer/types";
+import { TargetResponseDTO } from "@/interfaces/api/grade";
 
 export type GradingContextInterface = {
   areFiltersOpen: boolean;
@@ -16,10 +15,8 @@ export type GradingContextInterface = {
   filters: ReturnType<typeof useFilters<GradingFilterId>>;
   search: string;
   setSearch: (search: string) => void;
-  students: (StudentDetailsDTOWithType & { gainedXp?: string })[] | undefined;
-  isStudentsLoading: boolean;
-  projectGroups: ProjectGroupResponseDTO[] | undefined;
-  isProjectGroupsLoading: boolean;
+  targets: TargetResponseDTO[] | undefined;
+  isTargetsLoading: boolean;
   isGradeLoading: boolean;
   state: GradingReducerState;
   dispatch: Dispatch<GradingReducerActionType>;

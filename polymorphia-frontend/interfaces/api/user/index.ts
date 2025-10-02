@@ -29,21 +29,6 @@ interface BaseUserDetailsDTOWithType<
   userDetails: R;
 }
 
-export interface BaseUserDetails {
-  id: number;
-  userName?: string;
-  courseId: number;
-  imageUrl: string;
-}
-
-interface BaseUserDetailsDTOWithType<
-  T extends Role,
-  R extends BaseUserDetails,
-> {
-  userRole: T;
-  userDetails: R;
-}
-
 export interface StudentDetailsDTOWithNullableName extends BaseUserDetails {
   animalName: string;
   evolutionStage: string;
