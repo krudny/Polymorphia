@@ -78,50 +78,22 @@ for (let i = 0; i < 250; i++) {
   allData.push(item);
 }
 
-const eventSectionData: EventSectionResponseDTO[] = [
-  {
-    id: 2,
-    name: "Laboratorium",
-    type: EventTypes.ASSIGNMENT,
-    orderIndex: 2,
-  },
-  {
-    id: 3,
-    name: "Projekt 1",
-    type: EventTypes.PROJECT,
-    orderIndex: 4,
-  },
-  {
-    id: 1,
-    name: "Kartkówka",
-    type: EventTypes.TEST,
-    orderIndex: 1,
-  },
-  {
-    id: 4,
-    name: "Git",
-    type: EventTypes.ASSIGNMENT,
-    orderIndex: 0,
-  },
-  {
-    id: 5,
-    name: "Specjalny lab",
-    type: EventTypes.ASSIGNMENT,
-    orderIndex: 3,
-  },
-  {
-    id: 6,
-    name: "Projekt 2",
-    type: EventTypes.PROJECT,
-    orderIndex: 5,
-  },
-];
-
 export const EventSectionService = {
   getEventSections: async (
     courseId: number
   ): Promise<EventSectionResponseDTO[]> => {
-    return eventSectionData.sort((a, b) => a.orderIndex - b.orderIndex);
+    const response = await fetch(
+      `${API_HOST}/event-sections?courseId=${courseId}`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch EventSections!");
+    }
+    return await response.json();
   },
 
   getStudentGradableEvents: async (
