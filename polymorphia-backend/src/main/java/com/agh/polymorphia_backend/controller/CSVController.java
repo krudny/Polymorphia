@@ -41,7 +41,7 @@ public class CSVController {
     public void processTestGradeCSV(@RequestBody TestGradingProcessRequestDto request) {
         testGradingProcessor.process(request);
     }
-    
+
     // TODO: should be moved to dedicated controller
     @PostMapping("/process/student-invite")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")

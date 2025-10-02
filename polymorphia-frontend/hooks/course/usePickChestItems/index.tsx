@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import EquipmentService from "@/app/(logged-in)/equipment/EquipmentService";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { EquipmentChestOpenRequestDTO } from "@/interfaces/api/equipment";
@@ -14,8 +14,8 @@ export default function usePickChestItems() {
     onSuccess: () => {
       toast.success("Pomyślnie otwarto skrzynkę!");
 
-      queryClient.invalidateQueries({ queryKey: ["equipment-items"] });
-      queryClient.invalidateQueries({ queryKey: ["equipment-chests"] });
+      queryClient.invalidateQueries({ queryKey: ["equipmentItems"] });
+      queryClient.invalidateQueries({ queryKey: ["equipmentChests"] });
       queryClient.invalidateQueries({ queryKey: ["currentUser"] });
     },
     onError: () => toast.error("Nie udało się zapisać wyboru"),

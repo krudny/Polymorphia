@@ -12,7 +12,37 @@
         "id": 5,
         "name": "Złota",
         "imageUrl": "url",
-        "orderIndex": 1
+        "orderIndex": 1,
+        "behaviorText": "Otrzymujesz pełną zawartość skrzynki",
+        "behavior": "ALL",
+        "chestItems": [
+          {
+            "id": 3,
+            "name": "Marchewka",
+            "imageUrl": "url",
+            "orderIndex": 0,
+            "itemBonusType": "PERCENTAGE_BONUS",
+            "percentage": 10
+          },
+          {
+            "id": 1,
+            "name": "Apteczka",
+            "imageUrl": "url",
+            "orderIndex": 1,
+            "itemBonusType": "FLAT_BONUS",
+            "xp": 2.0,
+            "behavior": "ONE_EVENT"
+          },
+          {
+            "id": 2,
+            "name": "Apteczka2",
+            "imageUrl": "url",
+            "orderIndex": 2,
+            "itemBonusType": "FLAT_BONUS",
+            "xp": 3.0,
+            "behavior": "MULTIPLE_EVENTS"
+          }
+        ]
       }
     ]
   },
@@ -29,13 +59,65 @@
         "id": 4,
         "name": "Srebrna",
         "imageUrl": "url",
-        "orderIndex": 0
+        "orderIndex": 0,
+        "behaviorText": "Wybierz jeden przedmiot ze skrzynki",
+        "behavior": "ONE_OF_MANY",
+        "chestItems": [
+          {
+            "id": 1,
+            "name": "Apteczka",
+            "imageUrl": "url",
+            "orderIndex": 1,
+            "itemBonusType": "FLAT_BONUS",
+            "xp": 2.0,
+            "behavior": "ONE_EVENT"
+          },
+          {
+            "id": 2,
+            "name": "Apteczka2",
+            "imageUrl": "url",
+            "orderIndex": 2,
+            "itemBonusType": "FLAT_BONUS",
+            "xp": 3.0,
+            "behavior": "MULTIPLE_EVENTS"
+          }
+        ]
       },
       {
         "id": 5,
         "name": "Złota",
         "imageUrl": "url",
-        "orderIndex": 1
+        "orderIndex": 1,
+        "behaviorText": "Otrzymujesz pełną zawartość skrzynki",
+        "behavior": "ALL",
+        "chestItems": [
+          {
+            "id": 3,
+            "name": "Marchewka",
+            "imageUrl": "url",
+            "orderIndex": 0,
+            "itemBonusType": "PERCENTAGE_BONUS",
+            "percentage": 10
+          },
+          {
+            "id": 1,
+            "name": "Apteczka",
+            "imageUrl": "url",
+            "orderIndex": 1,
+            "itemBonusType": "FLAT_BONUS",
+            "xp": 2.0,
+            "behavior": "ONE_EVENT"
+          },
+          {
+            "id": 2,
+            "name": "Apteczka2",
+            "imageUrl": "url",
+            "orderIndex": 2,
+            "itemBonusType": "FLAT_BONUS",
+            "xp": 3.0,
+            "behavior": "MULTIPLE_EVENTS"
+          }
+        ]
       }
     ]
   },
@@ -52,13 +134,65 @@
         "id": 4,
         "name": "Srebrna",
         "imageUrl": "url",
-        "orderIndex": 0
+        "orderIndex": 0,
+        "behaviorText": "Wybierz jeden przedmiot ze skrzynki",
+        "behavior": "ONE_OF_MANY",
+        "chestItems": [
+          {
+            "id": 1,
+            "name": "Apteczka",
+            "imageUrl": "url",
+            "orderIndex": 1,
+            "itemBonusType": "FLAT_BONUS",
+            "xp": 2.0,
+            "behavior": "ONE_EVENT"
+          },
+          {
+            "id": 2,
+            "name": "Apteczka2",
+            "imageUrl": "url",
+            "orderIndex": 2,
+            "itemBonusType": "FLAT_BONUS",
+            "xp": 3.0,
+            "behavior": "MULTIPLE_EVENTS"
+          }
+        ]
       },
       {
         "id": 5,
         "name": "Złota",
         "imageUrl": "url",
-        "orderIndex": 1
+        "orderIndex": 1,
+        "behaviorText": "Otrzymujesz pełną zawartość skrzynki",
+        "behavior": "ALL",
+        "chestItems": [
+          {
+            "id": 3,
+            "name": "Marchewka",
+            "imageUrl": "url",
+            "orderIndex": 0,
+            "itemBonusType": "PERCENTAGE_BONUS",
+            "percentage": 10
+          },
+          {
+            "id": 1,
+            "name": "Apteczka",
+            "imageUrl": "url",
+            "orderIndex": 1,
+            "itemBonusType": "FLAT_BONUS",
+            "xp": 2.0,
+            "behavior": "ONE_EVENT"
+          },
+          {
+            "id": 2,
+            "name": "Apteczka2",
+            "imageUrl": "url",
+            "orderIndex": 2,
+            "itemBonusType": "FLAT_BONUS",
+            "xp": 3.0,
+            "behavior": "MULTIPLE_EVENTS"
+          }
+        ]
       }
     ]
   }

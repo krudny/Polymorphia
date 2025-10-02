@@ -17,12 +17,12 @@ public class HallOfFameSortSpecResolver {
         String sortBy = requestDto.sortBy();
 
         Optional<String> overviewDbField = OverviewField.getDbFieldFromKey(sortBy);
-        if (overviewDbField.isPresent()){
+        if (overviewDbField.isPresent()) {
             return new OverviewFieldSort(overviewDbField.get());
         }
 
         boolean eventSectionExists = eventSectionRepository.existsByCourseIdAndName(requestDto.courseId(), sortBy);
-        if (eventSectionExists){
+        if (eventSectionExists) {
             return new EventSectionSort();
         }
 

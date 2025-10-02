@@ -8,7 +8,6 @@ import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
 import { useEffect } from "react";
 import { EquipmentChestOpenRequestDTO } from "@/interfaces/api/equipment";
 import usePickChestItems from "@/hooks/course/usePickChestItems";
-import toast from "react-hot-toast";
 
 export default function OpeningChestModalContent() {
   const { closeModal } = useModalContext();
@@ -25,14 +24,6 @@ export default function OpeningChestModalContent() {
   };
 
   const handleModalSubmit = () => {
-    if (
-      pickedItemsIds.length != 1 &&
-      openingChest?.base.behavior === "ONE_OF_MANY"
-    ) {
-      toast.error("Wybierz jeden przedmiot!");
-      return;
-    }
-
     const requestBody = {
       assignedChestId: currentOpeningChestModalData?.details.id,
       itemId:

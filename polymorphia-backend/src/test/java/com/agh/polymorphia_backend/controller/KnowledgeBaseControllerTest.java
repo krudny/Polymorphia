@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
-import org.springframework.test.annotation.DirtiesContext;
 
 import java.io.IOException;
 
@@ -25,7 +24,7 @@ class KnowledgeBaseControllerTest extends ControllerTestConfig {
     @Test
     void getEvolutionStages_ShouldReturnEvolutionStages() throws IOException {
         String actualResponse = getEndpoint("/knowledge-base/evolution-stages?courseId={courseId}",
-                "student@agh.com", "password",200,1);
+                "student@agh.com", "password", 200, 1);
 
         ObjectMapper mapper = new ObjectMapper();
         assertEquals(mapper.readTree(actualResponse), mapper.readTree(getExpectedResponse(evolutionStagesJson)));
@@ -34,7 +33,7 @@ class KnowledgeBaseControllerTest extends ControllerTestConfig {
     @Test
     void getItems_ShouldReturnItems() throws IOException {
         String actualResponse = getEndpoint("/knowledge-base/items?courseId={courseId}",
-                "student@agh.com", "password",200,1);
+                "student@agh.com", "password", 200, 1);
 
         ObjectMapper mapper = new ObjectMapper();
         assertEquals(mapper.readTree(actualResponse), mapper.readTree(getExpectedResponse(itemsJson)));
@@ -43,7 +42,7 @@ class KnowledgeBaseControllerTest extends ControllerTestConfig {
     @Test
     void getChests_ShouldReturnChests() throws IOException {
         String actualResponse = getEndpoint("/knowledge-base/chests?courseId={courseId}",
-                "student@agh.com", "password",200,1);
+                "student@agh.com", "password", 200, 1);
 
         ObjectMapper mapper = new ObjectMapper();
         assertEquals(mapper.readTree(actualResponse), mapper.readTree(getExpectedResponse(chestsJson)));

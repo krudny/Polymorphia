@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class KnowledgeBaseMapper {
-    private static final String EVOLUTION_STAGES_GRADING_SUBTITLE = "%.1f xp odblokowuje ocenę %.1f";
     public static final String FLAT_BONUS_ITEM_SUBTITLE = "+%.1f xp do eventów z kategorii %s";
     public static final String PERCENTAGE_BONUS_ITEM_SUBTITLE = "+%d%% do eventów z kategorii %s";
+    private static final String EVOLUTION_STAGES_GRADING_SUBTITLE = "%.1f xp odblokowuje ocenę %.1f";
     private RewardMapper rewardMapper;
 
     private static KnowledgeBaseResponseDto.KnowledgeBaseResponseDtoBuilder getDtoBuilderForReward(Reward reward) {
@@ -23,18 +23,6 @@ public class KnowledgeBaseMapper {
                 .name(reward.getName())
                 .description(reward.getDescription())
                 .imageUrl(reward.getImageUrl());
-    }
-
-    public KnowledgeBaseResponseDto evolutionStageToResponseDto(EvolutionStage evolutionStage) {
-        return KnowledgeBaseResponseDto.builder()
-                .type(KnowledgeBaseType.EVOLUTION_STAGE)
-                .id(evolutionStage.getId())
-                .orderIndex(evolutionStage.getOrderIndex())
-                .name(evolutionStage.getName())
-                .subtitle(String.format(EVOLUTION_STAGES_GRADING_SUBTITLE, evolutionStage.getMinXp(), evolutionStage.getGrade()))
-                .description(evolutionStage.getDescription())
-                .imageUrl(evolutionStage.getImageUrl())
-                .build();
     }
 
     private static String getItemSubtitle(Item item) {
@@ -50,6 +38,18 @@ public class KnowledgeBaseMapper {
                     item.getEventSection().getName()
             );
         };
+    }
+
+    public KnowledgeBaseResponseDto evolutionStageToResponseDto(EvolutionStage evolutionStage) {
+        return KnowledgeBaseResponseDto.builder()
+                .type(KnowledgeBaseType.EVOLUTION_STAGE)
+                .id(evolutionStage.getId())
+                .orderIndex(evolutionStage.getOrderIndex())
+                .name(evolutionStage.getName())
+                .subtitle(String.format(EVOLUTION_STAGES_GRADING_SUBTITLE, evolutionStage.getMinXp(), evolutionStage.getGrade()))
+                .description(evolutionStage.getDescription())
+                .imageUrl(evolutionStage.getImageUrl())
+                .build();
     }
 
     public KnowledgeBaseResponseDto chestToResponseDto(Chest chest) {

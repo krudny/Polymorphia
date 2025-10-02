@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor
 @SuperBuilder
-@Table(name="rewards")
+@Table(name = "rewards")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public abstract class Reward {
     @Id

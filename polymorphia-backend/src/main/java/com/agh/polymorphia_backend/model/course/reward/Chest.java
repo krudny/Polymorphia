@@ -17,7 +17,7 @@ import java.util.List;
 @PrimaryKeyJoinColumn(name = "reward_id")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @ToString(exclude = {"items"})
-public final class Chest extends Reward {
+public class Chest extends Reward {
     @ManyToMany(mappedBy = "chests", fetch = FetchType.LAZY)
     private List<Item> items;
     @NotNull

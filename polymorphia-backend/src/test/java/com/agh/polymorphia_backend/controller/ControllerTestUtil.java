@@ -26,7 +26,7 @@ public class ControllerTestUtil {
                 .asString();
     }
 
-    public static String postEndpoint(String endpoint,String username, String password, Integer statusCode,Object... args) {
+    public static String postEndpoint(String endpoint, String username, String password, Integer statusCode, Object... args) {
         return given()
                 .cookie("JSESSIONID", getStudentSessionId(username, password))
                 .contentType(ContentType.JSON)

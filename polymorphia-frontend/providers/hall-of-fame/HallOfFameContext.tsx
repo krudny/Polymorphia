@@ -30,7 +30,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   } = useHallOfFameFilterConfigs(courseId);
   const filters = useFilters<HallOfFameFilterId>(filterConfigs ?? []);
 
-  const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["Suma"];
+  const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["total"];
   const sortOrder = filters.getAppliedFilterValues("sortOrder") ?? ["desc"];
   const groups = filters.getAppliedFilterValues("groups") ?? ["all"];
 

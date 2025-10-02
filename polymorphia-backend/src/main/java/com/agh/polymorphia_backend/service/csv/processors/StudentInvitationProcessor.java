@@ -4,7 +4,7 @@ import com.agh.polymorphia_backend.dto.request.csv.StudentInvitationProcessReque
 import org.springframework.stereotype.Component;
 
 @Component
-public class StudentInvitationProcessor  {
+public class StudentInvitationProcessor {
     public void process(StudentInvitationProcessRequestDto request) {
         // TODO: logic
     }
