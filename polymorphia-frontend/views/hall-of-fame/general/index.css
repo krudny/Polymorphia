@@ -8,7 +8,7 @@
 }
 
 @utility hall-of-fame-pagination-wrapper {
-  @apply w-full min-h-14 flex-centered text-2xl py-2;
+  @apply w-full min-h-14 flex-centered text-2xl py-2 lg:px-3;
 }
 
 @utility hall-of-fame-record-wrapper {
@@ -57,7 +57,7 @@
 .hall-of-fame-summary-points {
   @apply w-24 h-full flex flex-col-reverse items-end justify-center;
   @apply lg:items-center lg:flex-col;
-  @apply lg:bg-[#d4d4d4] lg:dark:bg-secondary-dark 2xl:rounded-tr-xl 2xl:rounded-br-xl;
+  @apply lg:bg-[#d4d4d4] lg:dark:bg-secondary-dark lg:rounded-tr-xl lg:rounded-br-xl;
 
   h1 {
     @apply text-3xl lg:text-4xl;

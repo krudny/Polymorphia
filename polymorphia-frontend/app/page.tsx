@@ -7,6 +7,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { animateLoginFormVisibility } from "@/animations/Home";
 import "./index.css";
 import { useHeroAnimation } from "@/hooks/general/useHeroAnimation";
+import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
 
 export default function Home() {
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
@@ -30,7 +31,7 @@ export default function Home() {
   }, [isLoginFormVisible, titleRef, hasMountedRef]);
 
   return (
-    <>
+    <BackgroundWrapper className="hero-background-wrapper" forceTheme="light">
       <div className="hero-background-image" ref={backgroundRef}>
         <Image
           src="/hero-bg.webp"
@@ -71,6 +72,6 @@ export default function Home() {
           <LoginForm onBackAction={closeLoginForm} />
         </div>
       </div>
-    </>
+    </BackgroundWrapper>
   );
 }

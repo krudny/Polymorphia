@@ -38,7 +38,7 @@
 }
 
 .hall-of-fame-desktop-rank-wrapper {
-  @apply hall-of-fame-rank-wrapper flex flex-col flex-1 gap-y-2 2xl:gap-y-4 custom-scrollbar;
+  @apply hall-of-fame-rank-wrapper flex flex-col flex-1 gap-y-2 2xl:gap-y-4 custom-scrollbar overflow-y-hidden 2xl:overflow-y-scroll;
 }
 
 /* Hall of fame card desktop */

@@ -4,7 +4,9 @@ import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import "./index.css";
 import useMarkdownContext from "@/hooks/contexts/useMarkdownContext";
 
-export default function ResetMarkdown({ onClosedAction }: SpeedDialModalProps) {
+export default function ResetMarkdownModal({
+  onClosedAction,
+}: SpeedDialModalProps) {
   const { markdownSource, resetMarkdown } = useMarkdownContext();
 
   const handleConfirm = () => {

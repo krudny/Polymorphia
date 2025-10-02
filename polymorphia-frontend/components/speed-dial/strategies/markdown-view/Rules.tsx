@@ -13,7 +13,7 @@ export class RulesStrategy
       case Roles.STUDENT:
         return [this.createRewards(), this.createGoBack()];
       case Roles.INSTRUCTOR:
-        return [this.createRedirectToGrading(), ...this.createEditing()];
+        return [...this.createEditing()];
       default:
         return [];
     }
