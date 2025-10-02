@@ -5,12 +5,14 @@ import {
   SourceMarkdownResponseDTO,
 } from "@/interfaces/api/markdown";
 import { API_HOST } from "@/services/api";
+import { kebabCase } from "case-anything";
 
 export const MarkdownService = {
   getMarkdown: async (
     request: MarkdownParamsRequest
   ): Promise<MarkdownResponseDTO> => {
-    const { resourceId, type } = request;
+    const resourceId = request.resourceId;
+    const type = kebabCase(request.type.toLowerCase());
 
     const response = await fetch(`${API_HOST}/markdown/${type}/${resourceId}`, {
       credentials: "include",
@@ -26,7 +28,8 @@ export const MarkdownService = {
   getSourceUrl: async (
     request: MarkdownParamsRequest
   ): Promise<SourceMarkdownResponseDTO> => {
-    const { resourceId, type } = request;
+    const resourceId = request.resourceId;
+    const type = kebabCase(request.type.toLowerCase());
 
     const response = await fetch(
       `${API_HOST}/markdown/${type}/${resourceId}/source`,
@@ -41,7 +44,8 @@ export const MarkdownService = {
   },
 
   saveMarkdown: async (request: MarkdownRequestDTO): Promise<void> => {
-    const { resourceId, type, markdown } = request;
+    const type = kebabCase(request.type.toLowerCase());
+    const { markdown, resourceId } = request;
 
     const response = await fetch(`${API_HOST}/markdown/${type}/${resourceId}`, {
       credentials: "include",
@@ -58,7 +62,8 @@ export const MarkdownService = {
   },
 
   resetMarkdown: async (request: MarkdownParamsRequest): Promise<void> => {
-    const { resourceId, type } = request;
+    const resourceId = request.resourceId;
+    const type = kebabCase(request.type.toLowerCase());
 
     const response = await fetch(
       `${API_HOST}/markdown/${type}/${resourceId}/reset`,

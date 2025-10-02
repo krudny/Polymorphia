@@ -10,8 +10,7 @@ import useMarkdownUpdate from "@/hooks/course/useMarkdownUpdate";
 import { MarkdownTypes } from "@/interfaces/general";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import useMarkdownSource from "@/hooks/course/useMarkdownSource";
-
-const COURSE_ID = 1;
+import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export const MarkdownContext = createContext<
   MarkdownContextInterface | undefined
@@ -24,8 +23,9 @@ export const MarkdownProvider = ({
   const { data } = useMarkdown(markdownType);
   const { data: markdownSource } = useMarkdownSource(markdownType);
   const { gradableEventId } = useEventParams();
+  const { courseId } = useUserDetails();
   const resourceId =
-    markdownType === MarkdownTypes.GRADABLE_EVENT ? gradableEventId : COURSE_ID;
+    markdownType === MarkdownTypes.GRADABLE_EVENT ? gradableEventId : courseId;
   const [markdown, setMarkdown] = useState("");
   const [newMarkdown, setNewMarkdown] = useState("");
   const [isEditing, setIsEditing] = useState(false);

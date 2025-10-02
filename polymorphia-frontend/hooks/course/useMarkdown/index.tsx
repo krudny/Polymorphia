@@ -3,13 +3,13 @@ import { useEventParams } from "@/hooks/general/useEventParams";
 import { MarkdownService } from "@/app/(logged-in)/course/[eventType]/[eventSectionId]/[gradableEventId]/MarkdownService";
 import { MarkdownType } from "@/interfaces/general";
 import { UseMarkdown } from "@/hooks/course/useMarkdown/types";
-
-const COURSE_ID = 1;
+import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export function useMarkdown(type: MarkdownType): UseMarkdown {
   const { gradableEventId } = useEventParams();
+  const { courseId } = useUserDetails();
 
-  const resourceId = gradableEventId || COURSE_ID;
+  const resourceId = gradableEventId || courseId;
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["markdown", resourceId],
