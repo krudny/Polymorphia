@@ -1,4 +1,4 @@
-import {RedirectProps} from "@/app/(welcome)/types";
+import { RedirectProps } from "@/app/(welcome)/types";
 
 export function redirectToNextStep({
   userRole,
