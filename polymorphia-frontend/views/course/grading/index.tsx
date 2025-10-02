@@ -71,11 +71,7 @@ export default function Grading({ eventType, columns }: GradingProps) {
     });
   };
 
-  const speedDialKey = getSpeedDialKey(
-    eventType,
-    ViewTypes.GRADING,
-    Roles.INSTRUCTOR
-  );
+  const speedDialKey = getSpeedDialKey(eventType, ViewTypes.GRADING);
 
   if (!gradingComponents || !speedDialKey) {
     return null;

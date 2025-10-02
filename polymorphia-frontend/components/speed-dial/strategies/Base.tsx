@@ -17,6 +17,7 @@ import {
 } from "@/hooks/speed-dial-dynamic-behavior/navigation";
 import { Role } from "@/interfaces/api/user";
 import { useProfileFiltersModalSpeedDialDynamicBehavior } from "@/hooks/speed-dial-dynamic-behavior/profile";
+import ResetMarkdownModal from "@/components/speed-dial/modals/reset-markdown";
 
 export abstract class BaseSpeedDialStrategy {
   abstract getItems(role: Role): SpeedDialItem[];
@@ -148,6 +149,18 @@ export abstract class BaseSpeedDialStrategy {
       label: "Zobacz polecenie",
       icon: "task",
       useDynamicBehavior: useNavigateToParentUrlSpeedDialDynamicBehavior,
+    };
+  }
+
+  protected createMarkdownReset(): SpeedDialItem {
+    return {
+      id: 9,
+      orderIndex: 0,
+      label: "Zresetuj polecenie",
+      icon: "history",
+      useDynamicBehavior: () => ({
+        modal: (onClose) => <ResetMarkdownModal onClosedAction={onClose} />,
+      }),
     };
   }
 
