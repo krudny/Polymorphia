@@ -5,8 +5,6 @@ import GroupModal from "@/components/speed-dial/modals/group-info";
 import GroupPickingModal from "@/components/speed-dial/modals/group-pick";
 import ImportCSVModal from "@/components/speed-dial/modals/import-csv";
 import { ImportCSVType, ImportCSVTypes } from "@/interfaces/general";
-import InviteStudentModal from "@/components/speed-dial/modals/invite-student";
-import { ImportCSVType, ImportCSVTypes } from "@/interfaces/general";
 import {
   useEditMarkdownSpeedDialDynamicBehavior,
   useRejectMarkdownSpeedDialDynamicBehavior,
@@ -129,7 +127,15 @@ export abstract class BaseSpeedDialStrategy {
       orderIndex: 7,
       label: "Zaproś studenta",
       icon: "person_add",
-      modal: (onClose) => <InviteStudentModal onClosedAction={onClose} />,
+      useDynamicBehavior: () => ({
+        modal: (onClose) => (
+          // TODO: import type
+          <ImportCSVModal
+            onClosedAction={onClose}
+            importType={ImportCSVTypes.GRADE_IMPORT}
+          />
+        ),
+      }),
     };
   }
 

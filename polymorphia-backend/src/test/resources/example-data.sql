@@ -29,22 +29,22 @@ truncate table criteria_rewards cascade;
 truncate table user_course_roles cascade;
 
 
-INSERT INTO users (id, first_name, last_name, email, password, is_password_temporary, preferred_course_id)
+INSERT INTO users (id, first_name, last_name, email, password, is_active, preferred_course_id)
 VALUES (1, 'Jan', 'Kowalski', 'jk@gmail.com', '$2a$10$cEcxQ77CzxCh.tNVQH.1r.PXgag9XZj2/glpX2DrnSVdNR3eeZ0yC', false,
         NULL);
-INSERT INTO users (id, first_name, last_name, email, password, is_password_temporary, preferred_course_id)
+INSERT INTO users (id, first_name, last_name, email, password, is_active, preferred_course_id)
 VALUES (4, 'Gall', 'Anonim', 'thismail@doesnot.exist', '$2a$10$1XxOuzwCaQjasNLI.uvCKu6FkNtKYBtnOGzLq73RjBKNpezUil3tK',
         false, NULL);
-INSERT INTO users (id, first_name, last_name, email, password, is_password_temporary, preferred_course_id)
+INSERT INTO users (id, first_name, last_name, email, password, is_active, preferred_course_id)
 VALUES (5, 'Michał', 'Idzik', 'michal.idzik@test.com', '$2a$10$ARcCwjJnygHJw/3hDe2BZO/FHvPXBI.CSs.sjjRW16zkc6oH3TzrC',
         false, NULL);
-INSERT INTO users (id, first_name, last_name, email, password, is_password_temporary, preferred_course_id)
+INSERT INTO users (id, first_name, last_name, email, password, is_active, preferred_course_id)
 VALUES (2, 'admin', 'admin', 'admin@admin.com', '$2a$10$8RfsPIB.mYhx2Qc4HhJKseGDlRJlfgyFktkKWWxCrU6xh5bIvf0Ji', false,
         NULL);
-INSERT INTO users (id, first_name, last_name, email, password, is_password_temporary, preferred_course_id)
+INSERT INTO users (id, first_name, last_name, email, password, is_active, preferred_course_id)
 VALUES (3, 'Kamil', 'Ślimak', 'kamil@snail.com', '$2a$10$V01hVaU8SX30lb083e1UYeH79PkKJg1HC71/WUM1YsUmFHVOKh85e', false,
         NULL);
-INSERT INTO users (id, first_name, last_name, email, password, is_password_temporary, preferred_course_id)
+INSERT INTO users (id, first_name, last_name, email, password, is_active, preferred_course_id)
 VALUES (7, 'Sample', 'User', 'sampleuser@test.com', '$2y$10$PnLQWAxCL4VYV6PCkYADeO6EF448OySkzLriI4/SDRShZZBXrvZTm',
         false, NULL);
 
@@ -52,7 +52,7 @@ INSERT INTO instructors (user_id)
 VALUES (4);
 
 
-INSERT INTO users (id, first_name, last_name, email, password, is_password_temporary, preferred_course_id)
+INSERT INTO users (id, first_name, last_name, email, password, is_active, preferred_course_id)
 VALUES (8, 'Jan', 'Kowalski', 'jan.kowalski1@example.com',
         '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', false, NULL),
        (9, 'Anna', 'Nowak', 'anna.nowak2@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy',
