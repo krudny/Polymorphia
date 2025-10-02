@@ -6,6 +6,7 @@ import { AssignmentGradingStrategy } from "@/components/speed-dial/strategies/in
 import { SpeedDialKey, SpeedDialKeys } from "../types";
 import { CourseGroupStrategy } from "@/components/speed-dial/strategies/instructor/CourseGroup";
 import { RulesStrategy } from "@/components/speed-dial/strategies/markdown-view/Rules";
+import { ProfileStrategy } from "@/components/speed-dial/strategies/student/Profile";
 
 export class SpeedDialStrategyRegistry {
   private strategies = new Map<SpeedDialKey, SpeedDialStrategy>();
@@ -18,6 +19,7 @@ export class SpeedDialStrategyRegistry {
     this.strategies.set(SpeedDialKeys.PROJECT_MARKDOWN, new ProjectStrategy());
     this.strategies.set(SpeedDialKeys.RULES_MARKDOWN, new RulesStrategy());
     this.strategies.set(SpeedDialKeys.TEST_GRADING, new TestGradingStrategy());
+    this.strategies.set(SpeedDialKeys.PROFILE_STUDENT, new ProfileStrategy());
     this.strategies.set(
       SpeedDialKeys.ASSIGNMENT_GRADING,
       new AssignmentGradingStrategy()

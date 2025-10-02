@@ -27,6 +27,7 @@ import {
   UserDetailsDTO,
 } from "@/interfaces/api/user";
 import { EventTypes } from "@/interfaces/general";
+import { API_HOST } from "@/services/api";
 
 export const studentNames = [
   "Gerard Małoduszny",
@@ -91,8 +92,9 @@ export const EventSectionService = {
     );
 
     if (!response.ok) {
-      throw new Error("Failed to fetch EventSections!");
+      throw new Error("Nie udało się pobrać wydarzeń!");
     }
+
     return await response.json();
   },
 
