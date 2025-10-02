@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
-import {Suspense, useRef} from "react";
+import { Suspense, useRef } from "react";
 import "./index.css";
 import HomeContent from "@/components/home";
 import Loading from "@/components/loading";
