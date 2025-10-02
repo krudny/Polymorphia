@@ -35,14 +35,14 @@ INSERT into coordinators(user_id)
 values (4);
 
 -- Courses
-INSERT INTO courses (id, name, info_url, coordinator_id, coordinator_image_url, instructor_image_url, image_url)
-VALUES (1, 'Programowanie Obiektowe', '/url', 3, '/coord_url', '/instr_url', 'img_url');
+INSERT INTO courses (id, name, coordinator_id, coordinator_image_url, instructor_image_url, image_url, markdown, markdown_source_url)
+VALUES (1, 'Programowanie Obiektowe', 3, '/coord_url', '/instr_url', 'img_url', '', '');
 
-INSERT INTO courses (id, name, info_url, coordinator_id, coordinator_image_url, instructor_image_url, image_url)
-VALUES (2, 'Programowanie Obiektowe', '/url', 3, '/coord_url', '/instr_url', 'img_url');
+INSERT INTO courses (id, name, coordinator_id, coordinator_image_url, instructor_image_url, image_url, markdown, markdown_source_url)
+VALUES (2, 'Programowanie Obiektowe', 3, '/coord_url', '/instr_url', 'img_url', '', '');
 
-INSERT INTO courses (id, name, info_url, coordinator_id, coordinator_image_url, instructor_image_url, image_url)
-VALUES (3, 'Programowanie Obiektowe', '/url', 4, '/coord_url', '/instr_url', 'img_url');
+INSERT INTO courses (id, name, coordinator_id, coordinator_image_url, instructor_image_url, image_url, markdown, markdown_source_url)
+VALUES (3, 'Programowanie Obiektowe', 4, '/coord_url', '/instr_url', 'img_url', '', '');
 
 -- Students
 INSERT INTO students(index_number, user_id)
