@@ -10,7 +10,10 @@ function ResetMarkdownModalContent() {
   const { closeModal } = useModalContext();
 
   const handleConfirm = () => {
-    resetMarkdown(closeModal);
+    // resetMarkdown doesn't need any arguments - that's why we pass undefined here.
+    resetMarkdown(undefined, {
+      onSuccess: closeModal,
+    });
   };
 
   if (!markdownSource) {
