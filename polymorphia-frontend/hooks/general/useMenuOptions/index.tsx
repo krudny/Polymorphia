@@ -64,6 +64,7 @@ export function useMainMenuItems(): MenuOption[] {
       text: "Baza wiedzy",
       link: "knowledge-base/",
       subItems: [
+        { text: "Zasady", link: "knowledge-base/rules" },
         { text: "Postacie", link: "knowledge-base/evolution-stages" },
         { text: "Przedmioty", link: "knowledge-base/items" },
         { text: "Skrzynki", link: "knowledge-base/chests" },

@@ -8,6 +8,7 @@ import { ImportCSVType, ImportCSVTypes } from "@/interfaces/general";
 import {
   useEditMarkdownSpeedDialDynamicBehavior,
   useRejectMarkdownSpeedDialDynamicBehavior,
+  useResetMakrdownSpeedDialDynamicBehavior,
   useSaveMarkdownSpeedDialDynamicBehavior,
 } from "@/hooks/speed-dial-dynamic-behavior/markdown";
 import {
@@ -17,7 +18,6 @@ import {
 } from "@/hooks/speed-dial-dynamic-behavior/navigation";
 import { Role } from "@/interfaces/api/user";
 import { useProfileFiltersModalSpeedDialDynamicBehavior } from "@/hooks/speed-dial-dynamic-behavior/profile";
-import ResetMarkdownModal from "@/components/speed-dial/modals/reset-markdown";
 
 export abstract class BaseSpeedDialStrategy {
   abstract getItems(role: Role): SpeedDialItem[];
@@ -158,9 +158,7 @@ export abstract class BaseSpeedDialStrategy {
       orderIndex: 0,
       label: "Zresetuj polecenie",
       icon: "history",
-      useDynamicBehavior: () => ({
-        modal: (onClose) => <ResetMarkdownModal onClosedAction={onClose} />,
-      }),
+      useDynamicBehavior: useResetMakrdownSpeedDialDynamicBehavior,
     };
   }
 

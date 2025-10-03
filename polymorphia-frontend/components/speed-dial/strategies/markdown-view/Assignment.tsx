@@ -12,7 +12,7 @@ export class AssignmentStrategy
       case Roles.STUDENT:
         return [this.createRewards(), this.createGoBack()];
       case Roles.INSTRUCTOR:
-        return [this.createRedirectToGrading(), ...this.createEditing()];
+        return [this.createRedirectToGrading()];
       case Roles.COORDINATOR:
         return [
           this.createRedirectToGrading(),

@@ -1,3 +1,4 @@
+import ResetMarkdownModal from "@/components/speed-dial/modals/reset-markdown";
 import { SpeedDialItemDynamicBehavior } from "@/components/speed-dial/types";
 import useMarkdownContext from "@/hooks/contexts/useMarkdownContext";
 
@@ -25,5 +26,14 @@ export function useRejectMarkdownSpeedDialDynamicBehavior(): SpeedDialItemDynami
   return {
     onClick: rejectMarkdown,
     shouldBeRendered: isEditing,
+  };
+}
+
+export function useResetMakrdownSpeedDialDynamicBehavior(): SpeedDialItemDynamicBehavior {
+  const { isEditing } = useMarkdownContext();
+
+  return {
+    modal: (onClose) => <ResetMarkdownModal onClosedAction={onClose} />,
+    shouldBeRendered: !isEditing,
   };
 }

@@ -12,7 +12,6 @@ import { ViewTypes } from "@/interfaces/general";
 import { getSpeedDialKey } from "@/components/speed-dial/util";
 import TargetList from "@/components/grading-components/target-list";
 import SpeedDial from "@/components/speed-dial/SpeedDial";
-import { Roles } from "@/interfaces/api/user";
 
 export default function Grading({ eventType, columns }: GradingProps) {
   const queryClient = useQueryClient();
