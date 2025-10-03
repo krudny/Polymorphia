@@ -25,7 +25,7 @@ public class DbInit {
                     .lastName(initialUserProperties.lastName())
                     .email(initialUserProperties.email())
                     .password(passwordEncoder.encode(initialUserProperties.password()))
-                    .isPasswordTemporary(false)
+                    .isActive(true)
                     .build();
 
             Coordinator coordinator = Coordinator.builder()

@@ -1,58 +1,54 @@
-"use client";
-
 import React, { FormEvent } from "react";
-import { useForm } from "@tanstack/react-form";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import NavigationArrow from "@/components/slider/NavigationArrow";
-import { LoginDto } from "@/interfaces/api/login";
 import { FieldInfo } from "@/components/form/FieldInfo";
-import { loginSchema } from "@/components/form/schema";
+import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import { useForm } from "@tanstack/react-form";
+import { registerSchema } from "@/components/form/schema";
 import "./index.css";
-import LoginFormProps from "@/components/home/types";
-import useLogin from "@/hooks/course/useLogin";
+import { RegisterFormProps } from "@/components/home/register-form/types";
+import useRegister from "@/hooks/general/useRegister";
 
-export default function LoginForm({ onBackAction }: LoginFormProps) {
+export default function RegisterForm({ invitationToken }: RegisterFormProps) {
+  const { mutation } = useRegister();
   const form = useForm({
     defaultValues: {
-      email: "",
+      animalName: "",
       password: "",
-    } as LoginDto,
+    },
     validators: {
-      onBlur: loginSchema,
+      onBlur: registerSchema,
     },
     onSubmit: async ({ value }) => {
-      login(value);
+      mutation.mutate({
+        invitationToken,
+        animalName: value.animalName,
+        password: value.password,
+      });
     },
   });
-  const { mutate: login } = useLogin({ form });
 
   return (
-    <div className="login-wrapper">
-      <NavigationArrow
-        direction="left"
-        onClick={onBackAction}
-        className="cursor-pointer left-0"
-      />
+    <div className="register-wrapper">
       <div>
         <form
-          className="login-form"
+          className="register-form"
           onSubmit={(event: FormEvent) => {
             event.preventDefault();
             form.handleSubmit();
           }}
+          autoComplete="off"
         >
-          <form.Field name="email">
+          <form.Field name="animalName">
             {(field) => (
               <div>
                 <input
-                  type="email"
+                  type="text"
                   id={field.name}
-                  placeholder="Twój email"
+                  placeholder="Nazwij zwierzaka"
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(event) => field.handleChange(event.target.value)}
                   required
-                  autoComplete="off"
+                  autoComplete="new-animal"
                 />
                 <FieldInfo field={field} />
               </div>
@@ -65,11 +61,12 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
                 <input
                   type="password"
                   id={field.name}
-                  placeholder="Twoje hasło"
+                  placeholder="Ustaw hasło"
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(event) => field.handleChange(event.target.value)}
                   required
+                  autoComplete="new-password"
                 />
                 <FieldInfo field={field} />
               </div>
@@ -82,7 +79,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
             {([canSubmit, isPristine]) => (
               <>
                 <ButtonWithBorder
-                  text="Zaloguj się"
+                  text="Utwórz konto"
                   className="mt-12"
                   isActive={isPristine || !canSubmit}
                   forceDark
@@ -91,9 +88,6 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
             )}
           </form.Subscribe>
         </form>
-        <div className="forgot-password">
-          <p>Zapomniałeś hasła?</p>
-        </div>
       </div>
     </div>
   );

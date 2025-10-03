@@ -1,34 +1,18 @@
 "use client";
 
 import Image from "next/image";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import LoginForm from "@/components/home/LoginForm";
-import { useLayoutEffect, useRef, useState } from "react";
-import { animateLoginFormVisibility } from "@/animations/Home";
-import "./index.css";
-import { useHeroAnimation } from "@/hooks/general/useHeroAnimation";
 import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
+import { Suspense, useRef } from "react";
+import "./index.css";
+import HomeContent from "@/components/home";
+import Loading from "@/components/loading";
 
 export default function Home() {
-  const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
   const loginFormRef = useRef<HTMLDivElement>(null);
-  const { backgroundRef, imageRef, titleRef, hasMountedRef } =
-    useHeroAnimation();
-
-  const openLoginForm = () => setIsLoginFormVisible(true);
-  const closeLoginForm = () => setIsLoginFormVisible(false);
-
-  useLayoutEffect(() => {
-    if (!hasMountedRef.current || !loginFormRef.current || !titleRef.current) {
-      return;
-    }
-
-    animateLoginFormVisibility(
-      loginFormRef.current,
-      titleRef.current,
-      isLoginFormVisible
-    );
-  }, [isLoginFormVisible, titleRef, hasMountedRef]);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const backgroundRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const hasMountedRef = useRef(false);
 
   return (
     <BackgroundWrapper className="hero-background-wrapper" forceTheme="light">
@@ -56,22 +40,16 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className="hero-right-wrapper">
-        <div ref={titleRef} className="hero-login-wrapper">
-          <h1>Polymorphia</h1>
-          <div className="hero-buttons">
-            <ButtonWithBorder
-              text="Zaloguj się"
-              onClick={openLoginForm}
-              forceDark
-            />
-          </div>
-        </div>
 
-        <div className={`hero-login`} ref={loginFormRef}>
-          <LoginForm onBackAction={closeLoginForm} />
-        </div>
-      </div>
+      <Suspense fallback={<Loading />}>
+        <HomeContent
+          titleRef={titleRef}
+          loginFormRef={loginFormRef}
+          hasMountedRef={hasMountedRef}
+          backgroundRef={backgroundRef}
+          imageRef={imageRef}
+        />
+      </Suspense>
     </BackgroundWrapper>
   );
 }

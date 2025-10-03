@@ -121,6 +121,24 @@ export abstract class BaseSpeedDialStrategy {
     };
   }
 
+  protected createInviteStudent(): SpeedDialItem {
+    return {
+      id: 5,
+      orderIndex: 7,
+      label: "Zaproś studenta",
+      icon: "person_add",
+      useDynamicBehavior: () => ({
+        modal: (onClose) => (
+          // TODO: import type
+          <ImportCSVModal
+            onClosedAction={onClose}
+            importType={ImportCSVTypes.GRADE_IMPORT}
+          />
+        ),
+      }),
+    };
+  }
+
   protected createGoBack(): SpeedDialItem {
     return {
       id: 10,

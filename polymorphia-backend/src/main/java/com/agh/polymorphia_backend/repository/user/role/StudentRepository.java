@@ -17,4 +17,6 @@ public interface StudentRepository extends JpaRepository<Student, Long>, UserDet
     )
     @Override
     Optional<Student> findByUserIdAndCourseId(Long userId, Long courseId);
+
+    Optional<Student> findByIndexNumber(Integer indexNumber);
 }

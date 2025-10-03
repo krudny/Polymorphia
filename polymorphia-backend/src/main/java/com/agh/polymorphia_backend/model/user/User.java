@@ -35,7 +35,7 @@ public class User {
     private String password;
 
     @NotNull
-    private boolean isPasswordTemporary;
+    private boolean isActive;
 
     @ManyToOne()
     @JoinColumn(name = "preferred_course_id")

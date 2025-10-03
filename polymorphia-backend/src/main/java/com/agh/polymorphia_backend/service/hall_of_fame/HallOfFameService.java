@@ -93,6 +93,10 @@ public class HallOfFameService {
     public Map<Long, Map<String, String>> groupScoreDetails(List<Long> animalIds) {
         List<StudentScoreDetail> detailsList = scoreDetailRepository.findByAnimalIdIn(animalIds);
 
+        if (detailsList.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_HOF_NOT_FOUND);
+        }
+
         sortByEventSectionOrderIndex(detailsList);
         Map<Long, Map<String, String>> result = new HashMap<>();
 

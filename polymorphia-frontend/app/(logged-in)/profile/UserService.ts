@@ -1,11 +1,13 @@
 import {
+  InviteStudentRequestDTO,
+  RegisterRequestDTO,
   Role,
   Roles,
   StudentDetailsDTOWithType,
   UserDetailsDTO,
 } from "@/interfaces/api/user";
-import { AvailableCoursesDTO } from "@/interfaces/api/user-context";
 import { API_HOST } from "@/services/api";
+import { AvailableCoursesDTO } from "@/interfaces/api/user-context";
 import { StudentProfileDTO } from "@/interfaces/api/profile";
 
 const UserService = {
@@ -97,6 +99,35 @@ const UserService = {
         },
       },
     ];
+  },
+  register: async (request: RegisterRequestDTO): Promise<void> => {
+    const response = await fetch(`${API_HOST}/user/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(request),
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error("Nie udało się utworzyć konta!");
+    }
+  },
+
+  inviteStudent: async (request: InviteStudentRequestDTO): Promise<void> => {
+    const response = await fetch(`${API_HOST}/user/invite`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(request),
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error("Nie udało się zaprosić studenta!");
+    }
   },
 };
 
