@@ -12,8 +12,8 @@ export class RulesStrategy
     switch (role) {
       case Roles.STUDENT:
         return [this.createRewards(), this.createGoBack()];
-      case Roles.INSTRUCTOR:
-        return [...this.createEditing()];
+      case Roles.COORDINATOR:
+        return [...this.createEditing(), this.createMarkdownReset()];
       default:
         return [];
     }
