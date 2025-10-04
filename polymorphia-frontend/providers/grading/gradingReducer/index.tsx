@@ -19,6 +19,8 @@ export const GradingReducer = (
     case GradingReducerActions.SET_TARGET:
       return {
         ...state,
+        criteria: {},
+        comment: "",
         selectedTarget: action.payload,
       };
 
