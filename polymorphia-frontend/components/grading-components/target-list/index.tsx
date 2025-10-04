@@ -53,21 +53,15 @@ export default function TargetList() {
     <div className="group-list">
       {targets.map((target, index: number) => (
         <Fragment key={index}>
-          <div
-            className="group-record"
-            onClick={() =>
-              dispatch({
-                type: GradingReducerActions.SET_TARGET,
-                payload: target,
-              })
-            }
-          >
+          <div className="group-record">
             {(target.type === TargetTypes.STUDENT
               ? [target]
               : target.members
             ).map((student: StudentTargetData, index: number) => {
-              const isSelected = areTargetsEqual(state.selectedTarget, target);
-
+              const isSelected =
+                areTargetsEqual(state.selectedTarget, target) ||
+                (state.selectedTarget?.type === TargetTypes.STUDENT &&
+                  state.selectedTarget.id === student.id);
               const color = isSelected
                 ? "sky"
                 : student.gainedXp
@@ -94,6 +88,15 @@ export default function TargetList() {
                       isSumLabelVisible={true}
                       isXPLabelVisible={!!student.gainedXp}
                     />
+                  }
+                  onClick={() =>
+                    dispatch({
+                      type: GradingReducerActions.HANDLE_STUDENT_SELECTION,
+                      payload: {
+                        target,
+                        member: student,
+                      },
+                    })
                   }
                 />
               );

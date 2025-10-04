@@ -1,6 +1,7 @@
 import {
   CriteriaDetailsRequestDTO,
   ShortGradeResponseDTO,
+  StudentTargetData,
   TargetResponseDTO,
 } from "@/interfaces/api/grade";
 
@@ -12,6 +13,7 @@ export interface GradingReducerState {
 
 export const GradingReducerActions = {
   SET_TARGET: "set_target",
+  HANDLE_STUDENT_SELECTION: "handle_student_selection",
   SET_GRADE: "set_grade",
   UPDATE_COMMENT: "update_comment",
   UPDATE_GRADE: "update_grade",
@@ -23,6 +25,13 @@ export type GradingReducerActionType =
   | {
       type: typeof GradingReducerActions.SET_TARGET;
       payload: TargetResponseDTO | null;
+    }
+  | {
+      type: typeof GradingReducerActions.HANDLE_STUDENT_SELECTION;
+      payload: {
+        target: TargetResponseDTO;
+        member: StudentTargetData;
+      };
     }
   | {
       type: typeof GradingReducerActions.SET_GRADE;
