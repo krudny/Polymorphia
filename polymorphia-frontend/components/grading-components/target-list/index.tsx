@@ -11,6 +11,7 @@ import { useMediaQuery } from "react-responsive";
 import { GradingReducerActions } from "@/providers/grading/gradingReducer/types";
 import { StudentTargetData, TargetTypes } from "@/interfaces/api/grade";
 import Loading from "@/components/loading";
+import areTargetsEqual from "@/providers/grading/utils/areTargetsEqual";
 
 export default function TargetList() {
   const isMd = useMediaQuery({ minWidth: "786px" });
@@ -65,13 +66,7 @@ export default function TargetList() {
               ? [target]
               : target.members
             ).map((student: StudentTargetData, index: number) => {
-              const isSelected =
-                !!state.selectedTarget &&
-                ((state.selectedTarget.type === TargetTypes.STUDENT &&
-                  state.selectedTarget.id === student.id) ||
-                  (state.selectedTarget.type === TargetTypes.STUDENT_GROUP &&
-                    target.type === TargetTypes.STUDENT_GROUP &&
-                    state.selectedTarget.groupId === target.groupId));
+              const isSelected = areTargetsEqual(state.selectedTarget, target);
 
               const color = isSelected
                 ? "sky"
