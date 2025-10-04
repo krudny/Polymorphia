@@ -19,6 +19,14 @@ export const ViewTypes = {
 
 export type ViewType = (typeof ViewTypes)[keyof typeof ViewTypes];
 
+export const Roles = {
+  STUDENT: "STUDENT",
+  INSTRUCTOR: "INSTRUCTOR",
+  COORDINATOR: "COORDINATOR",
+} as const;
+
+export type Role = (typeof Roles)[keyof typeof Roles];
+
 export const ImportCSVTypes = {
   GRADE_IMPORT: "GRADE_IMPORT",
   STUDENT_INVITE: "STUDENT_INVITE",
@@ -26,3 +34,10 @@ export const ImportCSVTypes = {
 
 export type ImportCSVType =
   (typeof ImportCSVTypes)[keyof typeof ImportCSVTypes];
+
+export const MarkdownTypes = {
+  COURSE_RULES: "COURSE_RULES",
+  GRADABLE_EVENT: "GRADABLE_EVENT",
+} as const;
+
+export type MarkdownType = (typeof MarkdownTypes)[keyof typeof MarkdownTypes];

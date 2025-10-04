@@ -1,7 +1,6 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { lab0, lab1, lab2, proj1 } from "@/app/(logged-in)/course/sampleData";
 import { ProjectVariantResponseDTO } from "@/interfaces/api/course/project";
 import {
   CriterionResponseDTO,
@@ -15,7 +14,6 @@ import {
   TargetType,
   TargetTypes,
 } from "@/interfaces/api/grade";
-import { MarkdownResponseDTO } from "@/interfaces/api/markdown";
 import { PointsSummaryResponseDTO } from "@/interfaces/api/course/points-summary";
 import {
   EventSectionResponseDTO,
@@ -29,6 +27,7 @@ import {
   UserDetailsDTO,
 } from "@/interfaces/api/user";
 import { EventTypes } from "@/interfaces/general";
+import { API_HOST } from "@/services/api";
 
 export const studentNames = [
   "Gerard Małoduszny",
@@ -80,59 +79,23 @@ for (let i = 0; i < 250; i++) {
   allData.push(item);
 }
 
-const mockMarkdownStore: Record<number, string> = {
-  15: lab1,
-  16: lab2,
-  30: lab0,
-  33: proj1,
-  34: "# Dlaczego prosty CRUD nie jest prosty? \n < Content >",
-  32: "# Dlaczego refactoring hell to zło? \n < Content >",
-};
-
-const eventSectionData: EventSectionResponseDTO[] = [
-  {
-    id: 2,
-    name: "Laboratorium",
-    type: EventTypes.ASSIGNMENT,
-    orderIndex: 2,
-  },
-  {
-    id: 3,
-    name: "Projekt 1",
-    type: EventTypes.PROJECT,
-    orderIndex: 4,
-  },
-  {
-    id: 1,
-    name: "Kartkówka",
-    type: EventTypes.TEST,
-    orderIndex: 1,
-  },
-  {
-    id: 4,
-    name: "Git",
-    type: EventTypes.ASSIGNMENT,
-    orderIndex: 0,
-  },
-  {
-    id: 5,
-    name: "Specjalny lab",
-    type: EventTypes.ASSIGNMENT,
-    orderIndex: 3,
-  },
-  {
-    id: 6,
-    name: "Projekt 2",
-    type: EventTypes.PROJECT,
-    orderIndex: 5,
-  },
-];
-
 export const EventSectionService = {
   getEventSections: async (
     courseId: number
   ): Promise<EventSectionResponseDTO[]> => {
-    return eventSectionData.sort((a, b) => a.orderIndex - b.orderIndex);
+    const response = await fetch(
+      `${API_HOST}/event-sections?courseId=${courseId}`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Nie udało się pobrać wydarzeń!");
+    }
+
+    return await response.json();
   },
 
   getStudentGradableEvents: async (
@@ -284,7 +247,7 @@ export const EventSectionService = {
           hasReward: true,
         },
         {
-          id: 18,
+          id: 12,
           type: EventTypes.ASSIGNMENT,
           name: "Laboratorium 4",
           topic: "Interfejsy i mapy",
@@ -685,26 +648,6 @@ export const EventSectionService = {
         },
       };
     }
-  },
-
-  getMarkdown: async (
-    gradableEventId: number
-  ): Promise<MarkdownResponseDTO> => {
-    const markdown = mockMarkdownStore[gradableEventId];
-    if (markdown !== undefined) {
-      await new Promise<void>((resolve) => setTimeout(resolve, 300));
-      return { markdown };
-    } else {
-      return { markdown: "" };
-    }
-  },
-
-  saveMarkdown: async (
-    gradableEventId: number,
-    newMarkdown: string
-  ): Promise<void> => {
-    await new Promise<void>((resolve) => setTimeout(resolve, 100));
-    mockMarkdownStore[gradableEventId] = newMarkdown;
   },
 
   getCriteria: async (

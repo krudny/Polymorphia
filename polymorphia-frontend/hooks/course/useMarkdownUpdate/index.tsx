@@ -1,28 +1,27 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import toast from "react-hot-toast";
-import { UseMarkdownUpdate } from "@/hooks/course/useMarkdownUpdate/types";
+import {
+  UseMarkdownUpdate,
+  UseMarkdownUpdateProps,
+} from "@/hooks/course/useMarkdownUpdate/types";
+import { MarkdownService } from "@/app/(logged-in)/course/[eventType]/[eventSectionId]/[gradableEventId]/MarkdownService";
 
-export default function useMarkdownUpdate(): UseMarkdownUpdate {
+export default function useMarkdownUpdate(
+  request: UseMarkdownUpdateProps
+): UseMarkdownUpdate {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({
-      gradableEventId,
-      newMarkdown,
-    }: {
-      gradableEventId: number;
-      newMarkdown: string;
-    }) => EventSectionService.saveMarkdown(gradableEventId, newMarkdown),
-    onSuccess: (_, { gradableEventId }) => {
+    mutationFn: () => MarkdownService.saveMarkdown(request),
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["markdown", gradableEventId],
+        queryKey: ["markdown", request.resourceId],
       });
-      toast.error("Aktualizacja markdown (celowo) nie działa!");
+      toast.success("Zapisano zmiany!");
+      request.setIsEditing(false);
     },
     onError: (error) => {
-      console.error("Błąd zapisu markdown:", error);
-      alert("Nie udało się zapisać zmian.");
+      toast.error(error.message);
     },
   });
 }

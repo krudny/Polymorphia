@@ -17,9 +17,15 @@ export class ProjectStrategy
         ];
       case Roles.INSTRUCTOR:
         return [
+          this.createRedirectToGrading(),
+          this.createProjectGroupPicking(),
+        ];
+      case Roles.COORDINATOR:
+        return [
           ...this.createEditing(),
           this.createRedirectToGrading(),
           this.createProjectGroupPicking(),
+          this.createMarkdownReset(),
         ];
       default:
         return [];

@@ -12,8 +12,8 @@ export default function Layout({ children }: { children: ReactNode }) {
     <UserProvider>
       <NavigationProvider>
         <div className="w-full min-h-[100dvh] relative flex flex-col lg:flex-row bg-black">
-          <Navigation />
           <BackgroundWrapper />
+          <Navigation />
           <MainLayout>{children}</MainLayout>
         </div>
       </NavigationProvider>
