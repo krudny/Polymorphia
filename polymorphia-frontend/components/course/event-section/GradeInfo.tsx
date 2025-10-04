@@ -3,11 +3,9 @@ import { API_STATIC_URL } from "@/services/api";
 import Image from "next/image";
 import "./index.css";
 import { Fragment } from "react";
-import {
-  CriterionResponseDTO,
-  ShortGradeResponseDTO,
-} from "@/interfaces/api/grade";
+import { ShortGradeResponseDTO } from "@/interfaces/api/grade/grade";
 import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLabels";
+import { CriterionResponseDTO } from "@/interfaces/api/grade/criteria";
 
 // TODO: refactor
 export default function GradeInfo({

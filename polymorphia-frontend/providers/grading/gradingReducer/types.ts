@@ -1,9 +1,9 @@
 import {
-  CriteriaDetailsRequestDTO,
-  ShortGradeResponseDTO,
   StudentTargetData,
   TargetResponseDTO,
-} from "@/interfaces/api/grade";
+} from "@/interfaces/api/grade/target";
+import { ShortGradeResponseDTO } from "@/interfaces/api/grade/grade";
+import { CriteriaDetailsRequestDTO } from "@/interfaces/api/grade/criteria";
 
 export interface GradingReducerState {
   selectedTarget: TargetResponseDTO | null;

@@ -2,7 +2,7 @@ import {
   TargetRequestDTO,
   TargetResponseDTO,
   TargetTypes,
-} from "@/interfaces/api/grade";
+} from "@/interfaces/api/grade/target";
 
 export function getRequestTargetFromResponseTarget(
   response: TargetResponseDTO

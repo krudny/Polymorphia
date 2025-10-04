@@ -4,7 +4,7 @@ import Loading from "@/components/loading";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import "./index.css";
 import useShortGrade from "@/hooks/course/useShortGrade";
-import { TargetTypes } from "@/interfaces/api/grade";
+import { TargetTypes } from "@/interfaces/api/grade/target";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import useCriteria from "@/hooks/course/useCriteria";
 import { GradeModalProps } from "./types";

@@ -1,4 +1,4 @@
-import { CriterionResponseDTO } from "@/interfaces/api/grade";
+import { CriterionResponseDTO } from "@/interfaces/api/grade/criteria";
 
 export interface UseCriteria {
   data: CriterionResponseDTO[] | undefined;
