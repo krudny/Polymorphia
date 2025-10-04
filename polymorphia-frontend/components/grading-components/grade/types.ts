@@ -1,7 +1,7 @@
 import {
-  CriteriaDetailsRequestDTO,
   CriterionResponseDTO,
-} from "@/interfaces/api/grade";
+  CriteriaDetailsRequestDTO,
+} from "@/interfaces/api/grade/criteria";
 
 export interface RewardProps {
   criterion: CriterionResponseDTO;

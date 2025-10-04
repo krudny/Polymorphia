@@ -4,7 +4,7 @@ import {
   GradingReducerActionType,
   GradingReducerState,
 } from "@/providers/grading/gradingReducer/types";
-import { TargetResponseDTO } from "@/interfaces/api/grade";
+import { TargetResponseDTO } from "@/interfaces/api/grade/target";
 
 export type GradingContextInterface = {
   areFiltersOpen: boolean;

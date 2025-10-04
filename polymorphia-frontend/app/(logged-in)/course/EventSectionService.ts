@@ -3,17 +3,18 @@
 
 import { ProjectVariantResponseDTO } from "@/interfaces/api/course/project";
 import {
-  CriterionResponseDTO,
-  GradeRequestDTO,
   GroupTargetTypes,
-  ShortGradeResponseDTO,
   StudentGroupTargetResponseDTO,
   StudentTargetData,
   TargetRequestDTO,
   TargetResponseDTO,
   TargetType,
   TargetTypes,
-} from "@/interfaces/api/grade";
+} from "@/interfaces/api/grade/target";
+import {
+  GradeRequestDTO,
+  ShortGradeResponseDTO,
+} from "@/interfaces/api/grade/grade";
 import { PointsSummaryResponseDTO } from "@/interfaces/api/course/points-summary";
 import {
   EventSectionResponseDTO,
@@ -28,6 +29,7 @@ import {
 } from "@/interfaces/api/user";
 import { EventTypes } from "@/interfaces/general";
 import { API_HOST } from "@/services/api";
+import { CriterionResponseDTO } from "@/interfaces/api/grade/criteria";
 
 export const studentNames = [
   "Gerard Małoduszny",

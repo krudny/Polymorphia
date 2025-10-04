@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { ChangeEventHandler, useEffect, useRef } from "react";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import "./index.css";
 import { GradingReducerActions } from "@/providers/grading/gradingReducer/types";
@@ -16,6 +16,15 @@ export default function Comment() {
     }
   };
 
+  const handleChange: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
+    dispatch({
+      type: GradingReducerActions.UPDATE_COMMENT,
+      payload: {
+        comment: event.target.value,
+      },
+    });
+  };
+
   useEffect(() => {
     adjustTextareaHeight();
   }, [state.comment]);
@@ -25,8 +34,9 @@ export default function Comment() {
       ref={textareaRef}
       className="comment"
       placeholder="Dodaj komentarz..."
-      defaultValue={state.comment}
+      value={state.comment}
       onInput={adjustTextareaHeight}
+      onChange={handleChange}
       onBlur={(event) => {
         dispatch({
           type: GradingReducerActions.UPDATE_COMMENT,
