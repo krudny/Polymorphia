@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.model.course.reward;
 
+import com.agh.polymorphia_backend.dto.response.reward.RewardType;
 import com.agh.polymorphia_backend.model.course.Course;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -14,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor
 @SuperBuilder
-@Table(name="rewards")
+@Table(name = "rewards")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public abstract class Reward {
     @Id
@@ -41,4 +42,6 @@ public abstract class Reward {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     private Course course;
+
+    public abstract RewardType getRewardType();
 }

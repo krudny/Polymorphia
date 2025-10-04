@@ -76,24 +76,35 @@ export function EquipmentSection({ type, data }: EquipmentSectionProps) {
                     priority
                     sizes="(min-width: 1024px) 25vw, 50vw"
                   />
+                  {chestData.details.id ? null : (
+                    <div className="equipment-locked-item">
+                      <span>
+                        <p>lock</p>
+                      </span>
+                    </div>
+                  )}
                 </div>
-                {chestData.details.isUsed ? (
-                  <div className="equipment-chest-btn-wrapper">
-                    <ButtonWithBorder
-                      text={`Otwarta ${chestData.details.usedDate}`}
-                      onClick={() => setCurrentChestModalData(chestData)}
-                      className="equipment-chest-btn"
-                    />
-                  </div>
-                ) : (
-                  <div className="equipment-chest-btn-wrapper">
-                    <ButtonWithBorder
-                      text="Otwórz skrzynię"
-                      onClick={() => setCurrentOpeningChestModalData(chestData)}
-                      className="equipment-chest-btn"
-                    />
-                  </div>
-                )}
+                {chestData.details.id ? (
+                  chestData.details.isUsed ? (
+                    <div className="equipment-chest-btn-wrapper">
+                      <ButtonWithBorder
+                        text={`Otwarta ${chestData.details.usedDate}`}
+                        onClick={() => setCurrentChestModalData(chestData)}
+                        className="equipment-chest-btn"
+                      />
+                    </div>
+                  ) : (
+                    <div className="equipment-chest-btn-wrapper">
+                      <ButtonWithBorder
+                        text="Otwórz skrzynię"
+                        onClick={() =>
+                          setCurrentOpeningChestModalData(chestData)
+                        }
+                        className="equipment-chest-btn"
+                      />
+                    </div>
+                  )
+                ) : null}
               </div>
             );
           }

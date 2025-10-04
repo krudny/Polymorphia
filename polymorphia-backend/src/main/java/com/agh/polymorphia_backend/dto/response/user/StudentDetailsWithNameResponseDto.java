@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.dto.response.user;
 
-public record StudentDetailsWithNameResponseDto (
+public record StudentDetailsWithNameResponseDto(
         String studentName,
         String animalName,
         String evolutionStage,

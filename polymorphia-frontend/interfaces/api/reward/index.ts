@@ -28,6 +28,7 @@ export interface BaseItem extends BaseReward {
   limit: number;
   isLimitReached: boolean;
   eventSectionId: number;
+  potentialXp?: number;
 }
 
 export type FlatBonusItemBehavior =

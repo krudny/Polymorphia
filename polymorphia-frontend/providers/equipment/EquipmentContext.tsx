@@ -16,7 +16,7 @@ export const EquipmentProvider = ({ children }: { children: ReactNode }) => {
     useState<EquipmentChestResponseDTO | null>(null);
   const [currentOpeningChestModalData, setCurrentOpeningChestModalData] =
     useState<EquipmentChestResponseDTO | null>(null);
-  const [pickedItemsIds, setPickedItemsIds] = useState<number[]>([]);
+  const [pickedItemId, setPickedItemId] = useState<number>();
 
   return (
     <EquipmentContext.Provider
@@ -27,8 +27,8 @@ export const EquipmentProvider = ({ children }: { children: ReactNode }) => {
         setCurrentChestModalData,
         currentOpeningChestModalData,
         setCurrentOpeningChestModalData,
-        pickedItemsIds,
-        setPickedItemsIds,
+        pickedItemId,
+        setPickedItemId,
       }}
     >
       {children}

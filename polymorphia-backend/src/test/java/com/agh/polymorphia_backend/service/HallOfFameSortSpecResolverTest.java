@@ -34,6 +34,15 @@ public class HallOfFameSortSpecResolverTest {
     @InjectMocks
     private HallOfFameSortSpecResolver hallOfFameSortSpecResolver;
 
+    public static Stream<Arguments> overviewKeyToDbField() {
+        return Stream.of(
+                Arguments.of("animalName", "animalName"),
+                Arguments.of("studentName", "studentName"),
+                Arguments.of("total", "totalXpSum"),
+                Arguments.of("bonuses", "totalBonusSum")
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("overviewKeyToDbField")
     void resolve_shouldReturnOverviewFieldSort(String sortBy, String expectedDbField) {
@@ -47,15 +56,6 @@ public class HallOfFameSortSpecResolverTest {
         assertThat(result).isInstanceOf(OverviewFieldSort.class);
         assertThat(((OverviewFieldSort) result).field()).isEqualTo(expectedDbField);
         verifyNoInteractions(eventSectionRepository);
-    }
-
-    public static Stream<Arguments> overviewKeyToDbField() {
-        return Stream.of(
-                Arguments.of("animalName", "animalName"),
-                Arguments.of("studentName", "studentName"),
-                Arguments.of("total", "totalXpSum"),
-                Arguments.of("bonuses", "totalBonusSum")
-        );
     }
 
     @Test

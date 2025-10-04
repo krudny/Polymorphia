@@ -761,9 +761,9 @@ INSERT INTO items (reward_id, "limit", event_section_id)
 VALUES (5, 5, 7);
 
 INSERT INTO flat_bonus_items (item_id, xp_bonus, behavior)
-VALUES (2, 20.0, 'MULTIPLE_EVENTS');
+VALUES (2, 5.0, 'MULTIPLE_EVENTS');
 INSERT INTO flat_bonus_items (item_id, xp_bonus, behavior)
-VALUES (3, 10.0, 'MULTIPLE_EVENTS');
+VALUES (3, 4.0, 'MULTIPLE_EVENTS');
 INSERT INTO flat_bonus_items (item_id, xp_bonus, behavior)
 VALUES (4, 5.0, 'ONE_EVENT');
 
@@ -921,9 +921,9 @@ VALUES (7, 7, 1, 0.0);
 INSERT INTO criteria_grades (id, grade_id, criterion_id, xp)
 VALUES (8, 8, 2, 1.5);
 INSERT INTO criteria_grades (id, grade_id, criterion_id, xp)
-VALUES (9, 9, 2, 4.0);
+VALUES (9, 9, 2, 2.0);
 INSERT INTO criteria_grades (id, grade_id, criterion_id, xp)
-VALUES (10, 10, 8, 4.0);
+VALUES (10, 10, 8, 2.0);
 insert into criteria_grades(id, grade_id, criterion_id, xp)
 values (11, 11, 1, 1.4),
        (12, 12, 9, 1.0),
@@ -986,5 +986,31 @@ INSERT INTO assigned_items (assigned_reward_id, assigned_chest_id, bonus_xp)
 VALUES (3, 2, 0.0);
 INSERT INTO assigned_items (assigned_reward_id, assigned_chest_id, bonus_xp)
 VALUES (4, 2, 0.0);
+
+INSERT INTO assigned_rewards(id, criterion_grade_id, reward_id, received_date, used_date, is_used)
+values (9, 7, 101, NOW(), null, false),
+       (10, 8, 102, NOW(), null, false),
+       (11, 8, 1, NOW(), null, false),
+       (12, 8, 2, NOW(), null, false),
+       (13, 8, 3, NOW(), null, false),
+       (14, 7, 1, NOW(), null, false),
+       (15, 7, 2, NOW(), null, false);
+
+insert into assigned_chests(assigned_reward_id)
+values (9),(10);
+
+
+SELECT setval('animals_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM animals;
+SELECT setval('assigned_rewards_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM assigned_rewards;
+SELECT setval('course_groups_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM course_groups;
+SELECT setval('courses_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM courses;
+SELECT setval('criteria_grades_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM criteria_grades;
+SELECT setval('criteria_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM criteria;
+SELECT setval('event_sections_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM event_sections;
+SELECT setval('evolution_stages_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM evolution_stages;
+SELECT setval('gradable_events_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM gradable_events;
+SELECT setval('grades_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM grades;
+SELECT setval('rewards_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM rewards;
+SELECT setval('users_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM users;
 
 commit;

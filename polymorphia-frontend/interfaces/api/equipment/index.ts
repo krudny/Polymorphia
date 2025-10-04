@@ -13,3 +13,8 @@ export interface EquipmentChestResponseDTO {
   base: ChestResponseDTO;
   details: ChestAssignmentDetailsResponseDTO;
 }
+
+export interface EquipmentChestOpenRequestDTO {
+  assignedChestId: number;
+  itemId: number;
+}

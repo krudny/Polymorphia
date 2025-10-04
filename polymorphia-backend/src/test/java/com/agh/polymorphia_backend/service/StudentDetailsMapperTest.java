@@ -20,9 +20,8 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class StudentDetailsMapperTest {
-    private static final String STUDENT_NAME = "Anna Nowak";
     public static final List<UserType> ROLES = List.of(UserType.COORDINATOR, UserType.INSTRUCTOR);
-
+    private static final String STUDENT_NAME = "Anna Nowak";
     @Mock
     private AccessAuthorizer accessAuthorizer;
     @InjectMocks
