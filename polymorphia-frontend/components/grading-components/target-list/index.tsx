@@ -62,11 +62,12 @@ export default function TargetList() {
                 areTargetsEqual(state.selectedTarget, target) ||
                 (state.selectedTarget?.type === TargetTypes.STUDENT &&
                   state.selectedTarget.id === student.id);
+
               const color = isSelected
-                ? "sky"
-                : student.gainedXp
+                ? student.gainedXp
                   ? "green"
-                  : "gray";
+                  : "sky"
+                : "gray";
 
               return (
                 <XPCard
