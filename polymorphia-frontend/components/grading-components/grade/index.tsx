@@ -16,7 +16,6 @@ import Comment from "@/components/grading-components/grade/comment";
 import Input from "@/components/grading-components/grade/input";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import { useMediaQuery } from "react-responsive";
-import { getKeyForSelectedTarget } from "@/providers/grading/utils/getKeyForSelectedTarget";
 import useCriteria from "@/hooks/course/useCriteria";
 
 export default function Grade() {
@@ -27,13 +26,15 @@ export default function Grade() {
 
   const topComponent = <h1>Ocena</h1>;
 
+  const loadingComponent = (
+    <div className="h-80">
+      <Loading />
+    </div>
+  );
+
   const mainComponent = (): ReactNode => {
-    if (isGradeLoading || !criteria || !state.selectedTarget) {
-      return (
-        <div className="h-80">
-          <Loading />
-        </div>
-      );
+    if (!criteria || !state.selectedTarget) {
+      return loadingComponent;
     }
 
     const accordionSections = [
@@ -42,7 +43,7 @@ export default function Grade() {
     ];
 
     return (
-      <Fragment key={getKeyForSelectedTarget(state)}>
+      <Fragment>
         <Accordion
           ref={accordionRef}
           className="grade-accordion-override"
@@ -55,24 +56,19 @@ export default function Grade() {
           maxOpen={1}
           shouldAnimateInitialOpen={false}
         >
-          {Object.entries(state.criteria).map(
-            ([criterionId, criterionGrade]) => {
-              const criterion = criteria?.find(
-                (criterion) => criterion.id === Number(criterionId)
-              );
-              if (!criterion) {
-                return null;
-              }
+          {criteria.map((criterion) => {
+            const criterionGrade = state.criteria[criterion.id];
 
-              const gainedXp = criterionGrade.gainedXp ?? "0";
-              return (
-                <AccordionSection
-                  key={criterionId}
-                  id={criterionId}
-                  title={criterion.name}
-                  headerClassName="grading-accordion-header"
-                >
-                  <div key={criterionId} className="grade-criterion">
+            const gainedXp = criterionGrade?.gainedXp ?? "0";
+            return (
+              <AccordionSection
+                key={criterion.id}
+                id={String(criterion.id)}
+                title={criterion.name}
+                headerClassName="grading-accordion-header"
+              >
+                {criterionGrade && !isGradeLoading ? (
+                  <div key={criterion.id} className="grade-criterion">
                     <div className="grade-criterion-progress-bar">
                       <ProgressBar
                         minXP={0}
@@ -97,19 +93,25 @@ export default function Grade() {
                       criterionGrade={criterionGrade}
                     />
                   </div>
-                </AccordionSection>
-              );
-            }
-          )}
+                ) : (
+                  loadingComponent
+                )}
+              </AccordionSection>
+            );
+          })}
           <AccordionSection
             key={criteria.length + 1}
             id="Komentarz"
             title="Komentarz"
             headerClassName="grading-accordion-header"
           >
-            <div className="grade-comment-wrapper">
-              <Comment />
-            </div>
+            {!isGradeLoading ? (
+              <div className="grade-comment-wrapper">
+                <Comment />
+              </div>
+            ) : (
+              loadingComponent
+            )}
           </AccordionSection>
         </Accordion>
         <div className="w-full mt-3">
