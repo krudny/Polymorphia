@@ -62,9 +62,11 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
 
-    if (
-      !targets.find((target) => areTargetsEqual(target, state.selectedTarget))
-    ) {
+    const isSelectedTargetInNewTargets = targets.find((target) =>
+      areTargetsEqual(target, state.selectedTarget)
+    );
+
+    if (!isSelectedTargetInNewTargets) {
       dispatch({
         type: GradingReducerActions.SET_TARGET,
         payload: targets[0],
