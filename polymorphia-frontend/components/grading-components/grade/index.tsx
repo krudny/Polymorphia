@@ -27,7 +27,7 @@ export default function Grade() {
   const topComponent = <h1>Ocena</h1>;
 
   const loadingComponent = (
-    <div className="h-80">
+    <div className="h-[306px] relative">
       <Loading />
     </div>
   );
