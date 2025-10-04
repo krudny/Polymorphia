@@ -9,7 +9,7 @@ import "./index.css";
 import { Fragment } from "react";
 import { useMediaQuery } from "react-responsive";
 import { GradingReducerActions } from "@/providers/grading/gradingReducer/types";
-import { TargetTypes } from "@/interfaces/api/grade";
+import { TargetTypes } from "@/interfaces/api/grade/target";
 import Loading from "@/components/loading";
 import areTargetsEqual from "@/providers/grading/utils/areTargetsEqual";
 

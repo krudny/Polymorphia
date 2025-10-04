@@ -1,8 +1,5 @@
-import {
-  CriteriaDetailsRequestDTO,
-  GroupTargetTypes,
-  TargetTypes,
-} from "@/interfaces/api/grade";
+import { CriteriaDetailsRequestDTO } from "@/interfaces/api/grade/criteria";
+import { GroupTargetTypes, TargetTypes } from "@/interfaces/api/grade/target";
 import {
   GradingReducerActions,
   GradingReducerActionType,
@@ -64,7 +61,9 @@ export const GradingReducer = (
           return current.groupId === clickedTarget.groupId;
         }
         if (current.type === TargetTypes.STUDENT) {
-          return !!clickedTarget.members?.some((m) => m.id === current.id);
+          return !!clickedTarget.members.some(
+            (member) => member.id === current.id
+          );
         }
         return false;
       })();

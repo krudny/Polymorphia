@@ -1,4 +1,4 @@
-import { ShortGradeResponseDTO } from "@/interfaces/api/grade";
+import { ShortGradeResponseDTO } from "@/interfaces/api/grade/grade";
 
 export interface UseShortGrade {
   data: ShortGradeResponseDTO | undefined;
