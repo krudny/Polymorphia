@@ -37,8 +37,8 @@ export const GradingReducer = (
 
       // clicked on a group with single member
       const isSingleMemberGroup =
-        clickedTarget.members?.length === 1 &&
-        clickedTarget.members[0]?.id === clickedMember.id;
+        clickedTarget.members.length === 1 &&
+        clickedTarget.members[0].id === clickedMember.id;
 
       if (isSingleMemberGroup) {
         return {
