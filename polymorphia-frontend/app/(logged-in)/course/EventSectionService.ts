@@ -589,7 +589,7 @@ export const EventSectionService = {
               details: {
                 id: 1,
                 receivedDate: "07.06.2025",
-                gainedXp: "0.2",
+                xp: "0.2",
                 isUsed: false,
               },
             },

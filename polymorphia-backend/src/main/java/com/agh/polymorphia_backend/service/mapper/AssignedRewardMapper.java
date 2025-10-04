@@ -38,7 +38,6 @@ public class AssignedRewardMapper {
     public List<EquipmentChestResponseDto> assignedChestsToResponseDto(List<AssignedChest> assignedChests) {
         return assignedChests.stream()
                 .map(this::chestToResponseDto)
-                .sorted(Comparator.comparing(response -> response.getBase().getOrderIndex()))
                 .toList();
     }
 

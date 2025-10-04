@@ -8,12 +8,16 @@ import com.agh.polymorphia_backend.model.course.reward.Chest;
 import com.agh.polymorphia_backend.model.course.reward.Item;
 import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedChest;
 import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedItem;
+import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedReward;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
+import com.agh.polymorphia_backend.repository.course.reward.ChestRepository;
+import com.agh.polymorphia_backend.repository.course.reward.ItemRepository;
 import com.agh.polymorphia_backend.service.course.AnimalService;
 import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.course.reward.AssignedRewardService;
 import com.agh.polymorphia_backend.service.course.reward.BonusXpCalculator;
 import com.agh.polymorphia_backend.service.mapper.AssignedRewardMapper;
+import com.agh.polymorphia_backend.service.mapper.RewardMapper;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import lombok.AllArgsConstructor;
@@ -24,7 +28,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
@@ -37,19 +44,36 @@ public class EquipmentService {
     private final AssignedRewardService assignedRewardService;
     private final AssignedRewardMapper assignedRewardMapper;
     private final BonusXpCalculator bonusXpCalculator;
+    private final ChestRepository chestRepository;
+    private final RewardMapper rewardMapper;
+    private final ItemRepository itemRepository;
 
     public List<EquipmentItemResponseDto> getEquipmentItems(Long courseId) {
         Long animalId = validateAndGetAnimalId(courseId);
         List<AssignedItem> assignedItems = assignedRewardService.getAnimalAssignedItems(animalId);
+        List<Long> assignedItemIds = getAssignedRewardsIds(new ArrayList<>(assignedItems));
+        List<Item> remainingCourseItems = itemRepository.findAllByCourseIdAndIdNotIn(courseId, assignedItemIds);
 
-        return assignedRewardMapper.assignedItemsToResponseDto(assignedItems);
+        return Stream.concat(
+                        assignedRewardMapper.assignedItemsToResponseDto(assignedItems).stream(),
+                        rewardMapper.itemsToEquipmentResponseDto(remainingCourseItems).stream()
+                )
+                .sorted(Comparator.comparing(response -> response.getBase().getOrderIndex()))
+                .toList();
     }
 
     public List<EquipmentChestResponseDto> getEquipmentChests(Long courseId) {
         Long animalId = validateAndGetAnimalId(courseId);
         List<AssignedChest> assignedChests = assignedRewardService.getAnimalAssignedChests(animalId);
+        List<Long> assignedChestIds = getAssignedRewardsIds(new ArrayList<>(assignedChests));
+        List<Chest> remainingCourseChests = chestRepository.findAllByCourseIdAndIdNotIn(courseId, assignedChestIds);
 
-        return assignedRewardMapper.assignedChestsToResponseDto(assignedChests);
+        return Stream.concat(
+                        assignedRewardMapper.assignedChestsToResponseDto(assignedChests).stream(),
+                        rewardMapper.chestsToEquipmentResponseDto(remainingCourseChests).stream()
+                )
+                .sorted(Comparator.comparing(response -> response.getBase().getOrderIndex()))
+                .toList();
     }
 
     @Transactional
@@ -76,6 +100,12 @@ public class EquipmentService {
         assignedRewardService.saveAssignedItems(assignedItems);
         bonusXpCalculator.countFlatBonusXp(animalId);
 
+    }
+
+    private List<Long> getAssignedRewardsIds(List<AssignedReward> assignedRewards) {
+        return assignedRewards.stream()
+                .map(assignedChest -> assignedChest.getReward().getId())
+                .toList();
     }
 
     private List<AssignedItem> createAssignedItemsFromRequest(EquipmentChestOpenRequestDto requestDto, AssignedChest assignedChest, ZonedDateTime openDate) {

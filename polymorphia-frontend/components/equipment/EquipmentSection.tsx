@@ -22,72 +22,70 @@ export function EquipmentSection({ type, data }: EquipmentSectionProps) {
       <h1 className="equipment-header">
         {type === "item" ? "Przedmioty" : "Skrzynki"}
       </h1>
-      {data.length === 0 ? (
-        <div className="equipment-no-data-placeholder">
-          <div className="equipment-no-data-placeholder-content">
-            <h1 className="text-2xl text-center">
-              Na razie nie zdobyłeś żadnych{" "}
-              {type === "item" ? "przedmiotów" : "skrzynek"}
-            </h1>
-          </div>
-        </div>
-      ) : (
-        <div className="equipment-grid">
-          {data.map((item) => {
-            if (type === "item") {
-              const itemData = item as EquipmentItemResponseDTO;
-              return (
+      <div className="equipment-grid">
+        {data.map((item) => {
+          if (type === "item") {
+            const itemData = item as EquipmentItemResponseDTO;
+            return (
+              <div
+                key={itemData.base.id}
+                onClick={
+                  itemData.details.length > 0
+                    ? () => setCurrentItemModalData(itemData)
+                    : undefined
+                }
+              >
                 <div
-                  key={itemData.base.id}
-                  onClick={
-                    itemData.details.length > 0
-                      ? () => setCurrentItemModalData(itemData)
-                      : undefined
-                  }
+                  className={`equipment-grid-item ${itemData.details.length > 0 ? "hover:cursor-pointer" : ""}`}
                 >
-                  <div
-                    className={`equipment-grid-item ${itemData.details.length > 0 ? "hover:cursor-pointer" : ""}`}
-                  >
-                    <Image
-                      src={`${API_STATIC_URL}/${itemData.base.imageUrl}`}
-                      alt={itemData.base.name}
-                      fill
-                      className="equipment-image"
-                      priority
-                      fetchPriority="high"
-                      sizes="(min-width: 1024px) 25vw, 50vw"
+                  <Image
+                    src={`${API_STATIC_URL}/${itemData.base.imageUrl}`}
+                    alt={itemData.base.name}
+                    fill
+                    className="equipment-image"
+                    priority
+                    fetchPriority="high"
+                    sizes="(min-width: 1024px) 25vw, 50vw"
+                  />
+                  {itemData.details.length > 0 ? (
+                    <ImageBadge
+                      text={itemData.details.length.toString()}
+                      className="equipment-image-badge"
                     />
-                    {itemData.details.length > 0 ? (
-                      <ImageBadge
-                        text={itemData.details.length.toString()}
-                        className="equipment-image-badge"
-                      />
-                    ) : (
-                      <div className="equipment-locked-item">
-                        <span>
-                          <p>lock</p>
-                        </span>
-                      </div>
-                    )}
-                  </div>
+                  ) : (
+                    <div className="equipment-locked-item">
+                      <span>
+                        <p>lock</p>
+                      </span>
+                    </div>
+                  )}
                 </div>
-              );
-            } else {
-              const chestData = item as EquipmentChestResponseDTO;
+              </div>
+            );
+          } else {
+            const chestData = item as EquipmentChestResponseDTO;
 
-              return (
-                <div key={chestData.details.id}>
-                  <div className="equipment-grid-item">
-                    <Image
-                      src={`${API_STATIC_URL}/${chestData.base.imageUrl}`}
-                      alt={chestData.base.name}
-                      fill
-                      className="equipment-image"
-                      priority
-                      sizes="(min-width: 1024px) 25vw, 50vw"
-                    />
-                  </div>
-                  {chestData.details.isUsed ? (
+            return (
+              <div key={chestData.base.id}>
+                <div className="equipment-grid-item">
+                  <Image
+                    src={`${API_STATIC_URL}/${chestData.base.imageUrl}`}
+                    alt={chestData.base.name}
+                    fill
+                    className="equipment-image"
+                    priority
+                    sizes="(min-width: 1024px) 25vw, 50vw"
+                  />
+                  {chestData.details.id ? null : (
+                    <div className="equipment-locked-item">
+                      <span>
+                        <p>lock</p>
+                      </span>
+                    </div>
+                  )}
+                </div>
+                {chestData.details.id ? (
+                  chestData.details.isUsed ? (
                     <div className="equipment-chest-btn-wrapper">
                       <ButtonWithBorder
                         text={`Otwarta ${chestData.details.usedDate}`}
@@ -105,13 +103,13 @@ export function EquipmentSection({ type, data }: EquipmentSectionProps) {
                         className="equipment-chest-btn"
                       />
                     </div>
-                  )}
-                </div>
-              );
-            }
-          })}
-        </div>
-      )}
+                  )
+                ) : null}
+              </div>
+            );
+          }
+        })}
+      </div>
     </section>
   );
 }
