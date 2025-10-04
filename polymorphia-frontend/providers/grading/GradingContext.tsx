@@ -21,6 +21,7 @@ import useGradingTargets from "@/hooks/course/useGradingTargets";
 import useShortGrade from "@/hooks/course/useShortGrade";
 import { getRequestTargetFromResponseTarget } from "./utils/getRequestTargetFromResponseTarget";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
+import areTargetsEqual from "./utils/areTargetsEqual";
 
 export const GradingContext = createContext<
   GradingContextInterface | undefined
@@ -61,11 +62,17 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
     if (!targets || targets.length < 1) {
       return;
     }
-    dispatch({
-      type: GradingReducerActions.SET_TARGET,
-      payload: targets[0],
-    });
-  }, [targets, dispatch]);
+
+    if (
+      !targets.find((target) => areTargetsEqual(target, state.selectedTarget))
+    ) {
+      dispatch({
+        type: GradingReducerActions.SET_TARGET,
+        payload: targets[0],
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- We want this effect to run ONLY when targets list changes.
+  }, [targets]);
 
   useEffect(() => {
     if (!grade) {
