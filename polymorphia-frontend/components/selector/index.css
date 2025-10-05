@@ -33,7 +33,7 @@
 }
 
 .selector-dropdown {
-  @apply absolute z-50 w-full mt-1 border-2 border-primary-dark rounded-sm;
+  @apply absolute z-50 w-full mt-2 border-2 border-primary-dark rounded-sm;
   @apply shadow-lg max-h-60 overflow-y-auto custom-scrollbar;
   @apply dark:border-secondary-gray selector-background;
 }
