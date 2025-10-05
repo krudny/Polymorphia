@@ -1,14 +1,19 @@
 @import "tailwindcss";
 @import "../../styles/globals.css";
+@tailwind utilities;
+
+@utility selector-background {
+  @apply brightness-95 backdrop-blur-xl bg-cover bg-center bg-fixed;
+}
 
 .selector-container {
   @apply relative w-full;
 }
 
 .selector {
-  @apply w-full border-2 text-center rounded-sm;
+  @apply w-full border-2 text-center rounded-sm selector-background;
   @apply cursor-pointer flex items-center justify-between transition-all duration-200 focus:outline-none;
-  @apply border-primary-dark   bg-secondary-gray dark:bg-primary-dark dark:text-secondary-gray dark:border-secondary-gray;
+  @apply border-primary-dark   dark:text-secondary-gray dark:border-secondary-gray;
 }
 
 .selector-disabled {
@@ -30,7 +35,7 @@
 .selector-dropdown {
   @apply absolute z-50 w-full mt-1 border-2 border-primary-dark rounded-sm;
   @apply shadow-lg max-h-60 overflow-y-auto custom-scrollbar;
-  @apply bg-secondary-gray dark:bg-primary-dark dark:border-secondary-gray;
+  @apply dark:border-secondary-gray selector-background;
 }
 
 .selector-option {

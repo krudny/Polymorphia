@@ -5,6 +5,7 @@ import { selectorVariants } from "@/components/selector/variants";
 import "./index.css";
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
+import { useTheme } from "next-themes";
 
 export default function Selector({
   options,
@@ -16,6 +17,12 @@ export default function Selector({
   size = "md",
   padding = "md",
 }: SelectorProps) {
+  const { resolvedTheme } = useTheme();
+  const background =
+    resolvedTheme === "dark"
+      ? "bg-[url(/background-dark.webp)]"
+      : "bg-[url(/background.webp)]";
+
   const [isOpen, setIsOpen] = useState(false);
   const selectorRef = useRef<HTMLDivElement>(null);
 
@@ -56,11 +63,11 @@ export default function Selector({
         type="button"
         onClick={toggleDropdown}
         disabled={disabled}
-        className={clsx(
+        className={`${clsx(
           styles.button(),
           disabled && "selector-disabled",
           isOpen && "selector-open"
-        )}
+        )} ${background}`}
       >
         <span className={styles.value()}>
           {selectedOption ? selectedOption.label : placeholder}
@@ -81,7 +88,7 @@ export default function Selector({
       </button>
 
       {isOpen && !disabled && (
-        <div className={styles.dropdown()}>
+        <div className={`${styles.dropdown()} ${background}`}>
           {options.map((option) => (
             <div
               key={option.value}
