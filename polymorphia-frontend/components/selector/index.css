@@ -1,0 +1,43 @@
+@import "tailwindcss";
+@import "../../styles/globals.css";
+
+.selector-container {
+  @apply relative w-full;
+}
+
+.selector {
+  @apply w-full border-2 border-primary-dark text-center rounded-sm;
+  @apply cursor-pointer flex items-center justify-between transition-all duration-200;
+  @apply focus:outline-none  bg-secondary-gray dark:bg-primary-dark dark:text-secondary-light;
+}
+
+.selector-disabled {
+  @apply cursor-not-allowed opacity-60;
+}
+
+.selector-value {
+  @apply text-primary-dark;
+}
+
+.selector-arrow {
+  @apply w-5 h-5 transition-transform duration-200 flex-shrink-0 ml-2 stroke-primary-dark dark:stroke-secondary-light;
+}
+
+.selector-arrow-open {
+  @apply rotate-180;
+}
+
+.selector-dropdown {
+  @apply absolute z-50 w-full mt-1 border-2 border-primary-dark rounded-sm;
+  @apply shadow-lg max-h-60 overflow-y-auto custom-scrollbar;
+  @apply bg-secondary-gray dark:bg-primary-dark;
+}
+
+.selector-option {
+  @apply cursor-pointer transition-colors text-primary-dark dark:text-secondary-light;
+  @apply hover:bg-primary-gray hover:dark:bg-secondary-dark border-b-2 border-primary-dark last:border-b-0;
+}
+
+.selector-option-selected {
+  @apply bg-primary-gray dark:bg-secondary-dark;
+}
