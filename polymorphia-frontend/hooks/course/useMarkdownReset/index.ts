@@ -11,7 +11,7 @@ export default function useMarkdownReset(
 ): UseMarkdownReset {
   const queryClient = useQueryClient();
 
-  return useMutation<void, Error, void>({
+  return useMutation({
     mutationFn: () => MarkdownService.resetMarkdown(request),
     onSuccess: () => {
       queryClient.invalidateQueries({

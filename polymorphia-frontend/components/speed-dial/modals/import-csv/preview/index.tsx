@@ -20,12 +20,16 @@ export default function PreviewCSV() {
   }
 
   const handleConfirm = () => {
-    csvProcessMutation.mutate({
-      type: importType,
-      csvHeaders: csvPreviewMutation.data.csvHeaders,
-      data: csvPreviewMutation.data.data,
-    });
-    closeModal();
+    csvProcessMutation.mutate(
+      {
+        type: importType,
+        csvHeaders: csvPreviewMutation.data.csvHeaders,
+        data: csvPreviewMutation.data.data,
+      },
+      {
+        onSuccess: closeModal,
+      }
+    );
   };
 
   const { csvHeaders, data } = csvPreviewMutation.data;
