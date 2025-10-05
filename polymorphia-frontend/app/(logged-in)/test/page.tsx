@@ -4,7 +4,7 @@ import { useState } from "react";
 import { SelectorOption } from "@/components/selector/types";
 import Selector from "@/components/selector";
 
-export default function test() {
+export default function Test() {
   const [selectedValue, setSelectedValue] = useState<string>("");
 
   const options: SelectorOption[] = [
