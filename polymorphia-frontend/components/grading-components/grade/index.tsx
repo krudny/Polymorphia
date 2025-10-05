@@ -1,136 +1,32 @@
 "use client";
 
 import "../../../views/course/grading/index.css";
-import "./index.css";
-import { Fragment, ReactNode, useRef } from "react";
-import ProgressBar from "@/components/progressbar/ProgressBar";
-import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLabels";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import Loading from "@/components/loading";
-import { Accordion } from "@/components/accordion/Accordion";
-import { AccordionRef } from "@/providers/accordion/types";
-import AccordionSection from "@/components/accordion/AccordionSection";
 import GradingComponentWrapper from "@/components/grading-components/grading-wrapper";
-import AssignReward from "@/components/grading-components/grade/reward-assignment";
-import Comment from "@/components/grading-components/grade/comment";
-import Input from "@/components/grading-components/grade/input";
+import Loading from "@/components/loading";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
-import { useMediaQuery } from "react-responsive";
 import useCriteria from "@/hooks/course/useCriteria";
+import GradeCriteria from "./criteria";
 
 export default function Grade() {
-  const { state, isGradeLoading, submitGrade } = useGradingContext();
+  const { state } = useGradingContext();
   const { data: criteria } = useCriteria();
-  const accordionRef = useRef<AccordionRef>(null);
-  const isMd = useMediaQuery({ minWidth: "768px" });
 
   const topComponent = <h1>Ocena</h1>;
-
   const loadingComponent = (
     <div className="h-[306px] relative">
       <Loading />
     </div>
   );
 
-  const mainComponent = (): ReactNode => {
-    if (!criteria || !state.selectedTarget) {
-      return loadingComponent;
-    }
-
-    const accordionSections = [
-      ...criteria.map(({ id }) => String(id)),
-      "Komentarz",
-    ];
-
-    return (
-      <Fragment>
-        <Accordion
-          ref={accordionRef}
-          className="grade-accordion-override"
-          sectionIds={new Set(accordionSections)}
-          initiallyOpenedSectionIds={
-            new Set(
-              accordionSections.length > 0 && isMd ? [accordionSections[0]] : []
-            )
-          }
-          maxOpen={1}
-          shouldAnimateInitialOpen={false}
-        >
-          {criteria.map((criterion) => {
-            const criterionGrade = state.criteria[criterion.id];
-
-            const gainedXp = criterionGrade?.gainedXp ?? "0";
-            return (
-              <AccordionSection
-                key={criterion.id}
-                id={String(criterion.id)}
-                title={criterion.name}
-                headerClassName="grading-accordion-header"
-              >
-                {criterionGrade && !isGradeLoading ? (
-                  <div key={criterion.id} className="grade-criterion">
-                    <div className="grade-criterion-progress-bar">
-                      <ProgressBar
-                        minXP={0}
-                        currentXP={Number(gainedXp)}
-                        maxXP={Number(criterion.maxXp)}
-                        numSquares={3}
-                        segmentSizes={[0, 50, 0, 50, 0]}
-                        lowerElement={
-                          <ProgressBarRangeLabels
-                            minXP={0}
-                            maxXP={Number(criterion.maxXp)}
-                          />
-                        }
-                      />
-                    </div>
-                    <div className="grade-input-wrapper">
-                      <Input criterion={criterion} gainedXp={gainedXp} />
-                    </div>
-                    <h2>Nagrody</h2>
-                    <AssignReward
-                      criterion={criterion}
-                      criterionGrade={criterionGrade}
-                    />
-                  </div>
-                ) : (
-                  loadingComponent
-                )}
-              </AccordionSection>
-            );
-          })}
-          <AccordionSection
-            key={criteria.length + 1}
-            id="Komentarz"
-            title="Komentarz"
-            headerClassName="grading-accordion-header"
-          >
-            {!isGradeLoading ? (
-              <div className="grade-comment-wrapper">
-                <Comment />
-              </div>
-            ) : (
-              loadingComponent
-            )}
-          </AccordionSection>
-        </Accordion>
-        <div className="w-full mt-3">
-          <ButtonWithBorder
-            text="Zapisz"
-            className="w-full !border-3 !rounded-xl"
-            onClick={submitGrade}
-          />
-        </div>
-      </Fragment>
-    );
-  };
+  const mainComponent =
+    !criteria || !state.selectedTarget
+      ? () => loadingComponent
+      : () => <GradeCriteria criteria={criteria} />;
 
   return (
-    <>
-      <GradingComponentWrapper
-        topComponent={topComponent}
-        mainComponent={mainComponent}
-      />
-    </>
+    <GradingComponentWrapper
+      topComponent={topComponent}
+      mainComponent={mainComponent}
+    />
   );
 }
