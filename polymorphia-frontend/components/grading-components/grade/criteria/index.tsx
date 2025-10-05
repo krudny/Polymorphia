@@ -2,18 +2,15 @@ import { useFadeInAnimate } from "@/animations/FadeIn";
 import AccordionSection from "@/components/accordion/AccordionSection";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import Loading from "@/components/loading";
-import ProgressBar from "@/components/progressbar/ProgressBar";
-import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLabels";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import { AccordionRef } from "@/providers/accordion/types";
 import { useRef, Fragment } from "react";
 import { useMediaQuery } from "react-responsive";
-import AssignReward from "../reward-assignment";
 import { Accordion } from "@/components/accordion/Accordion";
-import Input from "../input";
-import Comment from "../comment";
 import "./index.css";
 import { GradeCriteriaProps } from "./types";
+import Criterion from "./criterion";
+import CommentWrapper from "./comment-wrapper";
 
 export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
   const { state, isGradeLoading, submitGrade } = useGradingContext();
@@ -34,7 +31,7 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
 
   return (
     <Fragment>
-      <div ref={wrapperRef}>
+      <div ref={wrapperRef} className="opacity-0">
         <Accordion
           ref={accordionRef}
           className="grade-accordion-override"
@@ -49,7 +46,7 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
         >
           {criteria.map((criterion) => {
             const criterionGrade = state.criteria[criterion.id];
-            const gainedXp = criterionGrade?.gainedXp ?? "0";
+            console.log("condition", criterionGrade && !isGradeLoading);
 
             return (
               <AccordionSection
@@ -59,31 +56,10 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
                 headerClassName="grading-accordion-header"
               >
                 {criterionGrade && !isGradeLoading ? (
-                  <div key={criterion.id} className="grade-criterion">
-                    <div className="grade-criterion-progress-bar">
-                      <ProgressBar
-                        minXP={0}
-                        currentXP={Number(gainedXp)}
-                        maxXP={Number(criterion.maxXp)}
-                        numSquares={3}
-                        segmentSizes={[0, 50, 0, 50, 0]}
-                        lowerElement={
-                          <ProgressBarRangeLabels
-                            minXP={0}
-                            maxXP={Number(criterion.maxXp)}
-                          />
-                        }
-                      />
-                    </div>
-                    <div className="grade-input-wrapper">
-                      <Input criterion={criterion} gainedXp={gainedXp} />
-                    </div>
-                    <h2>Nagrody</h2>
-                    <AssignReward
-                      criterion={criterion}
-                      criterionGrade={criterionGrade}
-                    />
-                  </div>
+                  <Criterion
+                    criterion={criterion}
+                    criterionGrade={criterionGrade}
+                  />
                 ) : (
                   loadingComponent
                 )}
@@ -97,13 +73,7 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
             title="Komentarz"
             headerClassName="grading-accordion-header"
           >
-            {!isGradeLoading ? (
-              <div className="grade-comment-wrapper">
-                <Comment />
-              </div>
-            ) : (
-              loadingComponent
-            )}
+            {!isGradeLoading ? <CommentWrapper /> : loadingComponent}
           </AccordionSection>
         </Accordion>
       </div>
