@@ -10,8 +10,7 @@ export default function Criterion({
   criterion,
   criterionGrade,
 }: CriterionProps) {
-  console.log(criterion, criterionGrade);
-  const wrapperRef = useFadeInAnimate(true);
+  const wrapperRef = useFadeInAnimate();
   const gainedXp = criterionGrade?.gainedXp ?? "0";
 
   return (

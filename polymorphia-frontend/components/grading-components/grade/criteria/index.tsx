@@ -46,7 +46,6 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
         >
           {criteria.map((criterion) => {
             const criterionGrade = state.criteria[criterion.id];
-            console.log("condition", criterionGrade && !isGradeLoading);
 
             return (
               <AccordionSection
