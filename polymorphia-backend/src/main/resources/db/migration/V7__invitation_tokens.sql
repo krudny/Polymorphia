@@ -19,3 +19,6 @@ CREATE INDEX idx_invitation_tokens_expiry_date ON invitation_tokens(expiry_date)
 ALTER TABLE users ADD COLUMN is_active BOOLEAN NOT NULL DEFAULT FALSE;
 
 ALTER TABLE users DROP COLUMN is_password_temporary;
+
+ALTER TABLE users
+ALTER COLUMN password DROP NOT NULL;

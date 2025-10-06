@@ -6,6 +6,7 @@ import com.agh.polymorphia_backend.model.user.Student;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.invitation.InvitationTokenRepository;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
+import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.repository.user.role.CoordinatorRepository;
 import com.agh.polymorphia_backend.repository.user.role.InstructorRepository;
 import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
@@ -28,6 +29,7 @@ public class InvitationService {
     private final InvitationTokenRepository invitationTokenRepository;
     private final EmailService emailService;
     public static final String UNSUPPORTED_ROLE = "Unsupported role";
+    private final UserRepository userRepository;
     private final StudentRepository studentRepository;
     private final CoordinatorRepository coordinatorRepository;
     private final InstructorRepository instructorRepository;
@@ -50,14 +52,24 @@ public class InvitationService {
         String email = inviteDTO.getEmail();
         Integer indexNumber = inviteDTO.getIndexNumber();
 
+        System.out.println("przed walidacją");
+
         invitationTokenValidator.validateBeforeInvitation(email, indexNumber);
+
+        System.out.println("po walidacji");
 
         try {
             Student student = userFactory.createStudent(inviteDTO);
+
+            System.out.println(student);
+
+            userRepository.save(student.getUser());
             studentRepository.save(student);
 
-            InvitationToken newToken = invitationTokenService.createInvitationToken(inviteDTO);
-            invitationTokenRepository.save(newToken);
+            System.out.println(student);
+
+//            InvitationToken newToken = invitationTokenService.createInvitationToken(inviteDTO);
+//            invitationTokenRepository.save(newToken);
 
 //            emailService.sendInvitationEmail(email, newToken);
         } catch (Exception e) {

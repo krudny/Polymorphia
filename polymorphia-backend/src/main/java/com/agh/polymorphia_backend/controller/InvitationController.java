@@ -14,14 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/invitation")
 @AllArgsConstructor
 public class InvitationController {
     private final InvitationService invitationService;
 
-    @PostMapping("/invite")
+    @PostMapping("/invite-user")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<Void> inviteUser(@Valid @RequestBody InvitationRequestDTO inviteDTO) {
+        System.out.println(inviteDTO.getIndexNumber());
         invitationService.inviteUser(inviteDTO);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

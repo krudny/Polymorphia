@@ -31,7 +31,6 @@ public class User {
     @Column(unique = true)
     private String email;
 
-    @NotEmpty
     private String password;
 
     @NotNull
