@@ -6,11 +6,17 @@ import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { FieldInfo } from "@/components/form/FieldInfo";
 import { useForm } from "@tanstack/react-form";
 import { inviteStudentSchema } from "@/components/form/schema";
-import { InviteStudentRequestDTO } from "@/interfaces/api/user";
+import {
+  InviteStudentRequestDTO,
+  Roles,
+  RoleTextMap,
+} from "@/interfaces/api/user";
 import useInviteStudent from "@/hooks/course/useInviteStudent";
+import Selector from "@/components/selector";
 
 function InviteModalContent() {
   const { mutation } = useInviteStudent();
+  const [selectedRole, setSelectedRole] = useState<string | null>(null);
 
   const form = useForm({
     defaultValues: {
@@ -30,18 +36,22 @@ function InviteModalContent() {
     },
   });
 
+  const rolesOptions = Object.entries(RoleTextMap)
+    .filter(([key]) => key !== Roles.UNDEFINED)
+    .map(([value, label]) => ({ label, value }));
+
   return (
-    <div className="invite-student-wrapper">
+    <div className="invite-wrapper">
       <form
         onSubmit={(event: FormEvent) => {
           event.preventDefault();
           form.handleSubmit();
         }}
       >
-        <div className="invite-student-columns">
+        <div className="invite-columns">
           <form.Field name="firstName">
             {(field) => (
-              <div>
+              <div className="invite-input-wrapper">
                 <input
                   type="text"
                   id={field.name}
@@ -59,7 +69,7 @@ function InviteModalContent() {
 
           <form.Field name="lastName">
             {(field) => (
-              <div>
+              <div className="invite-input-wrapper">
                 <input
                   type="text"
                   id={field.name}
@@ -76,44 +86,60 @@ function InviteModalContent() {
           </form.Field>
         </div>
 
-        <form.Field name="indexNumber">
-          {(field) => (
-            <div>
-              <input
-                type="number"
-                id={field.name}
-                placeholder="Numer indeksu"
-                value={field.state.value === 0 ? "" : field.state.value}
-                onBlur={field.handleBlur}
-                onChange={(event) => {
-                  const value = event.target.value;
-                  field.handleChange(value === "" ? 0 : parseInt(value, 10));
-                }}
-                required
-                autoComplete="off"
-              />
-              <FieldInfo field={field} />
-            </div>
-          )}
-        </form.Field>
+        <div className="invite-columns">
+          <form.Field name="email">
+            {(field) => (
+              <div className="invite-input-wrapper">
+                <input
+                  type="email"
+                  id={field.name}
+                  placeholder="Email"
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(event) => field.handleChange(event.target.value)}
+                  required
+                  autoComplete="off"
+                />
+                <FieldInfo field={field} />
+              </div>
+            )}
+          </form.Field>
 
-        <form.Field name="email">
-          {(field) => (
-            <div>
-              <input
-                type="email"
-                id={field.name}
-                placeholder="Email studenta"
-                value={field.state.value}
-                onBlur={field.handleBlur}
-                onChange={(event) => field.handleChange(event.target.value)}
-                required
-                autoComplete="off"
-              />
-              <FieldInfo field={field} />
-            </div>
-          )}
-        </form.Field>
+          <div className="invite-selector">
+            <Selector
+              options={rolesOptions}
+              value={selectedRole || ""}
+              onChange={setSelectedRole}
+              placeholder="Wybierz rolę"
+              size="xl"
+              padding="lg"
+              className="!border-b-2 !border-t-0 !border-x-0 !rounded-none"
+            />
+          </div>
+        </div>
+
+        {selectedRole === Roles.STUDENT && (
+          <form.Field name="indexNumber">
+            {(field) => (
+              <div className="invite-input-wrapper">
+                <input
+                  type="number"
+                  id={field.name}
+                  placeholder="Numer indeksu"
+                  value={field.state.value === 0 ? "" : field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(event) => {
+                    const value = event.target.value;
+                    field.handleChange(value === "" ? 0 : parseInt(value, 10));
+                  }}
+                  required
+                  autoComplete="off"
+                />
+                <FieldInfo field={field} />
+              </div>
+            )}
+          </form.Field>
+        )}
 
         <form.Subscribe
           selector={(state) => [state.canSubmit, state.isPristine]}

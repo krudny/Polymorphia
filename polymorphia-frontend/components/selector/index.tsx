@@ -58,12 +58,13 @@ export default function Selector({
   };
 
   return (
-    <div ref={selectorRef} className={clsx(styles.container(), className)}>
+    <div ref={selectorRef} className={styles.container()}>
       <button
         type="button"
         onClick={toggleDropdown}
         disabled={disabled}
         className={`${clsx(
+          className,
           styles.button(),
           disabled && "selector-disabled",
           isOpen && "selector-open"
