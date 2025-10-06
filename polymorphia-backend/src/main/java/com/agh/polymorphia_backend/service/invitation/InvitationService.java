@@ -52,26 +52,18 @@ public class InvitationService {
         String email = inviteDTO.getEmail();
         Integer indexNumber = inviteDTO.getIndexNumber();
 
-        System.out.println("przed walidacją");
-
         invitationTokenValidator.validateBeforeInvitation(email, indexNumber);
-
-        System.out.println("po walidacji");
 
         try {
             Student student = userFactory.createStudent(inviteDTO);
 
-            System.out.println(student);
-
             userRepository.save(student.getUser());
             studentRepository.save(student);
 
-            System.out.println(student);
+            InvitationToken newToken = invitationTokenService.createInvitationToken(inviteDTO);
+            invitationTokenRepository.save(newToken);
 
-//            InvitationToken newToken = invitationTokenService.createInvitationToken(inviteDTO);
-//            invitationTokenRepository.save(newToken);
-
-//            emailService.sendInvitationEmail(email, newToken);
+            emailService.sendInvitationEmail(email, newToken);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to send invitation");
         }

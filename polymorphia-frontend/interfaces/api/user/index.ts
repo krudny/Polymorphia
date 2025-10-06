@@ -69,11 +69,12 @@ export type UserDetailsDTO =
   | CoordinatorDetailsDTOWithType
   | UndefinedDetailsDTOWithType;
 
-export interface InviteStudentRequestDTO {
+export interface InviteRequestDTO {
   firstName: string;
   lastName: string;
-  indexNumber: number;
+  indexNumber?: number;
   email: string;
+  role: Role;
 }
 
 export interface RegisterRequestDTO {

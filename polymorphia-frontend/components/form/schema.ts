@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { Roles } from "@/interfaces/api/user";
 
 export const emailField = z.string().email("Nieprawidłowy email");
 
@@ -12,9 +13,9 @@ export const registerSchema = z.object({
   password: z.string(),
 });
 
-export const inviteStudentSchema = z.object({
+export const inviteSchema = z.object({
   firstName: z.string().nonempty(),
   lastName: z.string().nonempty(),
+  role: z.nativeEnum(Roles),
   email: emailField,
-  indexNumber: z.number(),
 });

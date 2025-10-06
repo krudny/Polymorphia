@@ -1,5 +1,5 @@
 import {
-  InviteStudentRequestDTO,
+  InviteRequestDTO,
   RegisterRequestDTO,
   Role,
   Roles,
@@ -115,8 +115,10 @@ const UserService = {
     }
   },
 
-  inviteStudent: async (request: InviteStudentRequestDTO): Promise<void> => {
-    const response = await fetch(`${API_HOST}/user/invite`, {
+  inviteUser: async (request: InviteRequestDTO): Promise<void> => {
+    console.log(request);
+
+    const response = await fetch(`${API_HOST}/invitation/invite-user`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -5,36 +5,40 @@ import React, { FormEvent, useState } from "react";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { FieldInfo } from "@/components/form/FieldInfo";
 import { useForm } from "@tanstack/react-form";
-import { inviteStudentSchema } from "@/components/form/schema";
+import { inviteSchema } from "@/components/form/schema";
 import {
-  InviteStudentRequestDTO,
+  InviteRequestDTO,
+  Role,
   Roles,
   RoleTextMap,
 } from "@/interfaces/api/user";
-import useInviteStudent from "@/hooks/course/useInviteStudent";
+import useInviteUser from "@/hooks/course/useInviteStudent";
 import Selector from "@/components/selector";
 
 function InviteModalContent() {
-  const { mutation } = useInviteStudent();
+  const { mutation } = useInviteUser();
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
 
   const form = useForm({
     defaultValues: {
       firstName: "",
       lastName: "",
-      indexNumber: 0,
+      indexNumber: undefined,
       email: "",
-    } as InviteStudentRequestDTO,
+      role: Roles.UNDEFINED,
+    } as InviteRequestDTO,
     validators: {
-      onSubmit: inviteStudentSchema,
+      onSubmit: inviteSchema,
     },
     onSubmit: async ({ value }) => {
-      const submitData: InviteStudentRequestDTO = {
-        ...value,
-      };
-      mutation.mutate(submitData);
+      mutation.mutate({ ...value });
     },
   });
+
+  const handleRoleChange = (value: string) => {
+    setSelectedRole(value);
+    form.setFieldValue("role", value as Role);
+  };
 
   const rolesOptions = Object.entries(RoleTextMap)
     .filter(([key]) => key !== Roles.UNDEFINED)
@@ -109,7 +113,7 @@ function InviteModalContent() {
             <Selector
               options={rolesOptions}
               value={selectedRole || ""}
-              onChange={setSelectedRole}
+              onChange={handleRoleChange}
               placeholder="Wybierz rolę"
               size="xl"
               padding="lg"

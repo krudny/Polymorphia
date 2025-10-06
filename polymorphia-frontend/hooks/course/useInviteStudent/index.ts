@@ -1,14 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { UseInviteStudent } from "./types";
+import { UseInviteUser } from "./types";
 import UserService from "@/app/(logged-in)/profile/UserService";
-import { InviteStudentRequestDTO } from "@/interfaces/api/user";
+import { InviteRequestDTO } from "@/interfaces/api/user";
 import useModalContext from "@/hooks/contexts/useModalContext";
 
-export default function useInviteStudent(): UseInviteStudent {
+export default function useInviteUser(): UseInviteUser {
   const { closeModal } = useModalContext();
-  const mutation = useMutation<void, Error, InviteStudentRequestDTO>({
-    mutationFn: (request) => UserService.inviteStudent(request),
+  const mutation = useMutation<void, Error, InviteRequestDTO>({
+    mutationFn: (request) => UserService.inviteUser(request),
     onSuccess: () => {
       toast.success("Wysłano zaproszenie na maila!");
       closeModal();
