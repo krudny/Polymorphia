@@ -9,15 +9,20 @@ export default function usePickChestItems() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (chestItems: EquipmentChestOpenRequestDTO) =>
-      EquipmentService.pickChestItems(courseId, chestItems),
-    onSuccess: () => {
-      toast.success("Pomyślnie otwarto skrzynkę!");
+    mutationFn: async (chestItems: EquipmentChestOpenRequestDTO) => {
+      const result = await EquipmentService.pickChestItems(
+        courseId,
+        chestItems
+      );
 
-      queryClient.invalidateQueries({ queryKey: ["equipmentItems"] });
-      queryClient.invalidateQueries({ queryKey: ["equipmentChests"] });
-      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
+      await queryClient.invalidateQueries({ queryKey: ["equipmentItems"] });
+      await queryClient.invalidateQueries({ queryKey: ["equipmentChests"] });
+      await queryClient.invalidateQueries({ queryKey: ["currentUser"] });
+
+      return result;
     },
-    onError: () => toast.error("Nie udało się zapisać wyboru"),
+    onError: (error: Error) => {
+      toast.error(error.message);
+    },
   });
 }

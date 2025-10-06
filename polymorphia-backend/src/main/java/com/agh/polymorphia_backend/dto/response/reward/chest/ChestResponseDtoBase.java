@@ -5,12 +5,14 @@ import com.agh.polymorphia_backend.model.course.reward.chest.ChestBehavior;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
 @SuperBuilder
 @Getter
+@Setter
 public class ChestResponseDtoBase extends BaseRewardResponseDto {
     @NotEmpty
     private String behaviorText;

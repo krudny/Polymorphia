@@ -13,7 +13,7 @@ const EquipmentService = {
     );
 
     if (!response.ok) {
-      throw new Error("Failed to fetch equipment items!");
+      throw new Error("Nie udało się pobrać przedmiotów!");
     }
 
     return await response.json();
@@ -26,7 +26,7 @@ const EquipmentService = {
     );
 
     if (!response.ok) {
-      throw new Error("Failed to fetch equipment items!");
+      throw new Error("Nie udało się pobrać skrzynek!");
     }
 
     return await response.json();
@@ -47,7 +47,7 @@ const EquipmentService = {
     );
 
     if (!response.ok) {
-      throw new Error("Failed to open the chest!");
+      throw new Error("Nie udało się otworzyć skrzynki!");
     }
   },
 };

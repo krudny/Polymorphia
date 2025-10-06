@@ -48,6 +48,12 @@ public class HallOfFameService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_HOF_NOT_FOUND));
     }
 
+    public StudentScoreDetail getStudentEventSectionScoreDetails(User user, Long eventSectionId) {
+        Animal animal = animalService.getAnimal(user.getId(), user.getPreferredCourse().getId());
+        return scoreDetailRepository.findByAnimalIdAndEventSectionId(animal.getId(), eventSectionId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_HOF_NOT_FOUND));
+    }
+
     public Page<HallOfFameResponseDto> getHallOfFame(HallOfFameRequestDto requestDto) {
         Course course = courseService.getCourseById(requestDto.courseId());
         accessAuthorizer.authorizeCourseAccess(course);

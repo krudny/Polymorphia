@@ -34,7 +34,7 @@ export default function OpeningChestModalContent() {
     console.log(pickedItemId);
   };
 
-  const handleModalSubmit = () => {
+  const handleModalSubmit = async () => {
     if (
       !pickedItemId &&
       currentOpeningChestModalData?.base.behavior !== "ALL"
@@ -42,6 +42,7 @@ export default function OpeningChestModalContent() {
       toast.error("Wybierz jeden przedmiot!");
       return;
     }
+
     const requestBody = {
       assignedChestId: currentOpeningChestModalData?.details.id,
       itemId:
@@ -49,23 +50,23 @@ export default function OpeningChestModalContent() {
           ? null
           : pickedItemId,
     } as EquipmentChestOpenRequestDTO;
-    toast.success("Otwieranie skrzynki...");
 
-    pickChestItemsMutation.mutate(requestBody, {
-      onSuccess: async () => {
-        await queryClient.refetchQueries({ queryKey: ["equipmentChests"] });
-        const updatedChest =
-          queryClient
-            .getQueryData<EquipmentChestResponseDTO[]>(["equipmentChests"])
-            ?.find(
-              (chest) =>
-                chest.details.id === currentOpeningChestModalData?.details.id
-            ) ?? null;
-
-        setCurrentChestModalData(updatedChest);
-        closeModal();
-      },
+    await toast.promise(pickChestItemsMutation.mutateAsync(requestBody), {
+      loading: "Otwieranie skrzynki...",
+      success: "Skrzynka otwarta pomyślnie!",
+      error: (err: Error) => err.message,
     });
+
+    const updatedChest =
+      queryClient
+        .getQueryData<EquipmentChestResponseDTO[]>(["equipmentChests"])
+        ?.find(
+          (chest) =>
+            chest.details.id === currentOpeningChestModalData?.details.id
+        ) ?? null;
+
+    setCurrentChestModalData(updatedChest);
+    closeModal();
   };
 
   return (

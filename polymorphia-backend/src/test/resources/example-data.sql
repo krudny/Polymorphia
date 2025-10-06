@@ -367,10 +367,12 @@ VALUES (2);
 INSERT INTO coordinators (user_id)
 VALUES (5);
 
-INSERT INTO courses (id, name, info_url, coordinator_id, coordinator_image_url, image_url, instructor_image_url)
+INSERT INTO courses (id, name, markdown_source_url, coordinator_id, coordinator_image_url, image_url,
+                     instructor_image_url)
 VALUES (2, 'Programowanie Obiektowe 2023/24', 'https://github.com/Soamid/obiektowe-lab', 5,
         'images/evolution-stages/4.webp', 'images/evolution-stages/3.webp', 'images/evolution-stages/1.webp');
-INSERT INTO courses (id, name, info_url, coordinator_id, coordinator_image_url, image_url, instructor_image_url)
+INSERT INTO courses (id, name, markdown_source_url, coordinator_id, coordinator_image_url, image_url,
+                     instructor_image_url)
 VALUES (1, 'Programowanie obiektowe 2024/25', 'google.com', 5, 'images/evolution-stages/7.webp',
         'images/evolution-stages/1.webp', 'images/evolution-stages/7.webp');
 
@@ -793,7 +795,7 @@ VALUES (102, 2);
 INSERT INTO chests_items (chest_id, item_id)
 VALUES (102, 3);
 INSERT INTO chests_items (chest_id, item_id)
-VALUES (103, 4);
+VALUES (103, 3);
 INSERT INTO chests_items (chest_id, item_id)
 VALUES (104, 4);
 INSERT INTO chests_items (chest_id, item_id)

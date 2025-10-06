@@ -1,12 +1,18 @@
 package com.agh.polymorphia_backend.dto.response.reward.item;
 
 import com.agh.polymorphia_backend.dto.response.reward.BaseRewardResponseDto;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
-@SuperBuilder
+import java.math.BigDecimal;
+
+@SuperBuilder(toBuilder = true)
 @Getter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ItemResponseDtoBase extends BaseRewardResponseDto {
 
     @NotNull
@@ -20,4 +26,8 @@ public class ItemResponseDtoBase extends BaseRewardResponseDto {
 
     @NotNull
     private Long eventSectionId;
+
+    @Digits(integer = 3, fraction = 1)
+    @PositiveOrZero
+    private BigDecimal potentialXp;
 }

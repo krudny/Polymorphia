@@ -13,7 +13,7 @@
         "name": "Złota",
         "imageUrl": "url",
         "orderIndex": 1,
-        "behaviorText": "Otrzymujesz pełną zawartość skrzynki",
+        "behaviorText": "Otrzymasz pełną zawartość skrzynki",
         "behavior": "ALL",
         "chestItems": [
           {
@@ -108,7 +108,7 @@
         "name": "Złota",
         "imageUrl": "url",
         "orderIndex": 1,
-        "behaviorText": "Otrzymujesz pełną zawartość skrzynki",
+        "behaviorText": "Otrzymasz pełną zawartość skrzynki",
         "behavior": "ALL",
         "chestItems": [
           {
@@ -203,7 +203,7 @@
         "name": "Złota",
         "imageUrl": "url",
         "orderIndex": 1,
-        "behaviorText": "Otrzymujesz pełną zawartość skrzynki",
+        "behaviorText": "Otrzymasz pełną zawartość skrzynki",
         "behavior": "ALL",
         "chestItems": [
           {

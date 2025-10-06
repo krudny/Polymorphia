@@ -3,23 +3,18 @@ package com.agh.polymorphia_backend.service;
 import com.agh.polymorphia_backend.dto.request.equipment.EquipmentChestOpenRequestDto;
 import com.agh.polymorphia_backend.dto.response.equipment.EquipmentChestResponseDto;
 import com.agh.polymorphia_backend.dto.response.equipment.EquipmentItemResponseDto;
-import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.course.reward.Chest;
 import com.agh.polymorphia_backend.model.course.reward.Item;
 import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedChest;
 import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedItem;
 import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedReward;
-import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.repository.course.reward.ChestRepository;
 import com.agh.polymorphia_backend.repository.course.reward.ItemRepository;
 import com.agh.polymorphia_backend.service.course.AnimalService;
-import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.course.reward.AssignedRewardService;
 import com.agh.polymorphia_backend.service.course.reward.BonusXpCalculator;
 import com.agh.polymorphia_backend.service.mapper.AssignedRewardMapper;
 import com.agh.polymorphia_backend.service.mapper.RewardMapper;
-import com.agh.polymorphia_backend.service.user.UserService;
-import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import lombok.AllArgsConstructor;
 import org.hibernate.Hibernate;
 import org.springframework.http.HttpStatus;
@@ -37,10 +32,7 @@ import java.util.stream.Stream;
 @AllArgsConstructor
 public class EquipmentService {
     private static final String INVALID_ITEM = "Item not found in the chest";
-    private final AccessAuthorizer accessAuthorizer;
-    private final CourseService courseService;
     private final AnimalService animalService;
-    private final UserService userService;
     private final AssignedRewardService assignedRewardService;
     private final AssignedRewardMapper assignedRewardMapper;
     private final BonusXpCalculator bonusXpCalculator;
@@ -49,7 +41,7 @@ public class EquipmentService {
     private final ItemRepository itemRepository;
 
     public List<EquipmentItemResponseDto> getEquipmentItems(Long courseId) {
-        Long animalId = validateAndGetAnimalId(courseId);
+        Long animalId = animalService.validateAndGetAnimalId(courseId);
         List<AssignedItem> assignedItems = assignedRewardService.getAnimalAssignedItems(animalId);
         List<Long> assignedItemIds = getAssignedRewardsIds(new ArrayList<>(assignedItems));
         List<Item> remainingCourseItems = itemRepository.findAllByCourseIdAndIdNotIn(courseId, assignedItemIds);
@@ -63,13 +55,13 @@ public class EquipmentService {
     }
 
     public List<EquipmentChestResponseDto> getEquipmentChests(Long courseId) {
-        Long animalId = validateAndGetAnimalId(courseId);
+        Long animalId = animalService.validateAndGetAnimalId(courseId);
         List<AssignedChest> assignedChests = assignedRewardService.getAnimalAssignedChests(animalId);
         List<Long> assignedChestIds = getAssignedRewardsIds(new ArrayList<>(assignedChests));
         List<Chest> remainingCourseChests = chestRepository.findAllByCourseIdAndIdNotIn(courseId, assignedChestIds);
 
         return Stream.concat(
-                        assignedRewardMapper.assignedChestsToResponseDto(assignedChests).stream(),
+                        assignedRewardMapper.assignedChestsToResponseDto(courseId, animalId, assignedChests).stream(),
                         rewardMapper.chestsToEquipmentResponseDto(remainingCourseChests).stream()
                 )
                 .sorted(Comparator.comparing(response -> response.getBase().getOrderIndex()))
@@ -78,7 +70,7 @@ public class EquipmentService {
 
     @Transactional
     public void openChest(Long courseId, EquipmentChestOpenRequestDto requestDto) {
-        Long animalId = validateAndGetAnimalId(courseId);
+        Long animalId = animalService.validateAndGetAnimalId(courseId);
         AssignedChest assignedChest = assignedRewardService.getAssignedChestByIdAndAnimalId(
                 requestDto.getAssignedChestId(),
                 animalId
@@ -98,9 +90,10 @@ public class EquipmentService {
 
         assignedRewardService.saveAssignedChest(assignedChest);
         assignedRewardService.saveAssignedItems(assignedItems);
-        bonusXpCalculator.countFlatBonusXp(animalId);
+        bonusXpCalculator.updateAnimalFlatBonusXp(animalId);
 
     }
+
 
     private List<Long> getAssignedRewardsIds(List<AssignedReward> assignedRewards) {
         return assignedRewards.stream()
@@ -131,13 +124,4 @@ public class EquipmentService {
                 .map(item -> assignedRewardService.createAssignedItem(assignedChest, item, openDate))
                 .toList();
     }
-
-    private Long validateAndGetAnimalId(Long courseId) {
-        Course course = courseService.getCourseById(courseId);
-        accessAuthorizer.authorizeCourseAccess(course);
-        AbstractRoleUser student = userService.getCurrentUser();
-
-        return animalService.getAnimal(student.getUserId(), courseId).getId();
-    }
-
 }

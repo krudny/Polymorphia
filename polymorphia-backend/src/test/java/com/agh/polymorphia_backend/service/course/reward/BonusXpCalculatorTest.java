@@ -3,8 +3,11 @@ package com.agh.polymorphia_backend.service.course.reward;
 import com.agh.polymorphia_backend.model.course.reward.FlatBonusItem;
 import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedItem;
 import com.agh.polymorphia_backend.model.course.reward.item.FlatBonusItemBehavior;
-import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
-import com.agh.polymorphia_backend.service.gradable_event.CriterionGradeService;
+import com.agh.polymorphia_backend.model.gradable_event.Grade;
+import com.agh.polymorphia_backend.service.gradable_event.GradeService;
+import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
+import com.agh.polymorphia_backend.service.user.UserService;
+import com.google.ortools.Loader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -29,7 +32,16 @@ class BonusXpCalculatorTest {
     private AssignedRewardService assignedRewardService;
 
     @Mock
-    private CriterionGradeService criterionGradeService;
+    private RewardService rewardService;
+
+    @Mock
+    private UserService userService;
+
+    @Mock
+    private HallOfFameService hallOfFameService;
+
+    @Mock
+    private GradeService gradeService;
 
     private BonusXpCalculator bonusXpCalculator;
 
@@ -37,13 +49,14 @@ class BonusXpCalculatorTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        HungarianMethodService hungarianMethodService = new HungarianMethodService();
-        bonusXpCalculator = new BonusXpCalculator(assignedRewardService, criterionGradeService, hungarianMethodService);
+        Loader.loadNativeLibraries();
+        OptimalGradeItemMatchingFinder optimalGradeItemMatchingFinder = new OptimalGradeItemMatchingFinder();
+        bonusXpCalculator = new BonusXpCalculator(assignedRewardService, gradeService, optimalGradeItemMatchingFinder,hallOfFameService,userService,rewardService);
     }
 
-    private void mockServiceCalls(Long animalId, List<AssignedItem> items, List<CriterionGrade> grades) {
+    private void mockServiceCalls(Long animalId, List<AssignedItem> items, List<Grade> grades) {
         when(assignedRewardService.getAnimalAssignedItems(animalId)).thenReturn(items);
-        when(criterionGradeService.getAnimalCriteriaGrades(animalId)).thenReturn(grades);
+        when(gradeService.getAnimalGrades(animalId)).thenReturn(grades);
     }
 
     @Nested
@@ -55,7 +68,7 @@ class BonusXpCalculatorTest {
         @DisplayName("Should find optimal matching for multiple cases")
         void shouldFindOptimalMatchingCases(
                 List<AssignedItem> items,
-                List<CriterionGrade> grades,
+                List<Grade> grades,
                 List<BigDecimal> expectedBonuses
         ) {
             // Given
@@ -63,7 +76,7 @@ class BonusXpCalculatorTest {
             mockServiceCalls(animalId, items, grades);
 
             // When
-            bonusXpCalculator.countFlatBonusXp(animalId);
+            bonusXpCalculator.updateAnimalFlatBonusXp(animalId);
 
             // Then
             for (int i = 0; i < expectedBonuses.size(); i++) {
@@ -78,15 +91,15 @@ class BonusXpCalculatorTest {
             // Given
             Long animalId = 1L;
             List<AssignedItem> items = List.of(createAssignedItem(BigDecimal.valueOf(5.0), FlatBonusItemBehavior.ONE_EVENT, DEFAULT_DATE));
-            List<CriterionGrade> grades = new ArrayList<>();
+            List<Grade> grades = new ArrayList<>();
 
             when(assignedRewardService.getAnimalAssignedItems(animalId))
                     .thenReturn(items);
-            when(criterionGradeService.getAnimalCriteriaGrades(animalId))
+            when(gradeService.getAnimalGrades(animalId))
                     .thenReturn(grades);
 
             // When & Then
-            assertDoesNotThrow(() -> bonusXpCalculator.countFlatBonusXp(animalId));
+            assertDoesNotThrow(() -> bonusXpCalculator.updateAnimalFlatBonusXp(animalId));
             verify(assignedRewardService, never()).saveAssignedItems(any());
         }
     }
@@ -105,15 +118,15 @@ class BonusXpCalculatorTest {
                     createAssignedItemWithBehavior(BigDecimal.valueOf(3.0), FlatBonusItemBehavior.MULTIPLE_EVENTS, DEFAULT_DATE),
                     createAssignedItemWithBehavior(BigDecimal.valueOf(4.0), FlatBonusItemBehavior.ONE_EVENT, DEFAULT_DATE)
             );
-            List<CriterionGrade> grades = List.of(
-                    createCriterionGrade(BigDecimal.valueOf(2.0), BigDecimal.valueOf(10.0), 1L)
+            List<Grade> grades = List.of(
+                    createGrade(BigDecimal.valueOf(2.0), BigDecimal.valueOf(10.0), 1L)
             );
 
             when(assignedRewardService.getAnimalAssignedItems(animalId)).thenReturn(allItems);
-            when(criterionGradeService.getAnimalCriteriaGrades(animalId)).thenReturn(grades);
+            when(gradeService.getAnimalGrades(animalId)).thenReturn(grades);
 
             // When
-            bonusXpCalculator.countFlatBonusXp(animalId);
+            bonusXpCalculator.updateAnimalFlatBonusXp(animalId);
 
             // Then
             verify(assignedRewardService).saveAssignedItems(argThat(items ->
