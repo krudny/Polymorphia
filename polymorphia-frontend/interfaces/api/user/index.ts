@@ -75,6 +75,7 @@ export interface InviteRequestDTO {
   indexNumber?: number;
   email: string;
   role: Role;
+  courseId: number;
 }
 
 export interface RegisterRequestDTO {

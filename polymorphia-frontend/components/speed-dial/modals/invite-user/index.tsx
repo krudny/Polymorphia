@@ -14,9 +14,11 @@ import {
 } from "@/interfaces/api/user";
 import useInviteUser from "@/hooks/course/useInviteStudent";
 import Selector from "@/components/selector";
+import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
-function InviteModalContent() {
+function InviteUserModalContent() {
   const { mutation } = useInviteUser();
+  const { courseId } = useUserDetails();
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
 
   const form = useForm({
@@ -26,6 +28,7 @@ function InviteModalContent() {
       indexNumber: undefined,
       email: "",
       role: Roles.UNDEFINED,
+      courseId: courseId,
     } as InviteRequestDTO,
     validators: {
       onSubmit: inviteSchema,
@@ -161,7 +164,9 @@ function InviteModalContent() {
   );
 }
 
-export default function InviteModal({ onClosedAction }: SpeedDialModalProps) {
+export default function InviteUserModal({
+  onClosedAction,
+}: SpeedDialModalProps) {
   return (
     <Modal
       isDataPresented={true}
@@ -169,7 +174,7 @@ export default function InviteModal({ onClosedAction }: SpeedDialModalProps) {
       title="Zaproś studenta"
       subtitle="Uzupełnij wszystkie dane:"
     >
-      <InviteModalContent />
+      <InviteUserModalContent />
     </Modal>
   );
 }

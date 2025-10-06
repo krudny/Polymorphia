@@ -31,4 +31,7 @@ public class InvitationRequestDTO {
     private UserType role;
 
     private Integer indexNumber;
+
+    @NotNull
+    private Long courseId;
 }

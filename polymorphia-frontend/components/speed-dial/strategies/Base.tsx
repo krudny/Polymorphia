@@ -18,7 +18,7 @@ import {
 } from "@/hooks/speed-dial-dynamic-behavior/navigation";
 import { Role } from "@/interfaces/api/user";
 import { useProfileFiltersModalSpeedDialDynamicBehavior } from "@/hooks/speed-dial-dynamic-behavior/profile";
-import InviteModal from "@/components/speed-dial/modals/invite";
+import InviteUserModal from "../modals/invite-user";
 
 export abstract class BaseSpeedDialStrategy {
   abstract getItems(role: Role): SpeedDialItem[];
@@ -129,7 +129,7 @@ export abstract class BaseSpeedDialStrategy {
       label: "Zaproś studenta",
       icon: "person_add",
       useDynamicBehavior: () => ({
-        modal: (onClose) => <InviteModal onClosedAction={onClose} />,
+        modal: (onClose) => <InviteUserModal onClosedAction={onClose} />,
       }),
     };
   }

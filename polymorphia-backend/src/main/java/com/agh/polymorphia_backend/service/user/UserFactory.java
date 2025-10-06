@@ -1,6 +1,8 @@
 package com.agh.polymorphia_backend.service.user;
 
 import com.agh.polymorphia_backend.dto.request.user.InvitationRequestDTO;
+import com.agh.polymorphia_backend.model.user.Coordinator;
+import com.agh.polymorphia_backend.model.user.Instructor;
 import com.agh.polymorphia_backend.model.user.Student;
 import com.agh.polymorphia_backend.model.user.User;
 import lombok.AllArgsConstructor;
@@ -21,14 +23,6 @@ public class UserFactory {
                 .lastName(inviteDTO.getLastName())
                 .isActive(false)
                 .build();
-
-
-//        switch(inviteDTO.getRole()) {
-//            case STUDENT -> createStudent(user, inviteDTO);
-//            case INSTRUCTOR -> createInstructor(user, inviteDTO);
-//            case COORDINATOR -> createCoordinator(user, inviteDTO);
-//            default -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, UNSUPPORTED_ROLE);
-//        }
     }
 
     public Student createStudent(InvitationRequestDTO inviteDTO) {
@@ -40,11 +34,19 @@ public class UserFactory {
                 .build();
     }
 
-    public void createInstructor(User user, InvitationRequestDTO inviteDTO) {
+    public Instructor createInstructor(InvitationRequestDTO inviteDTO) {
+        User user = createUser(inviteDTO);
 
+        return Instructor.builder()
+                .user(user)
+                .build();
     }
 
-    public void createCoordinator(User user, InvitationRequestDTO inviteDTO) {
+    public Coordinator createCoordinator(InvitationRequestDTO inviteDTO) {
+        User user = createUser(inviteDTO);
 
+        return Coordinator.builder()
+                .user(user)
+                .build();
     }
 }
