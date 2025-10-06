@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.service;
 
-import com.agh.polymorphia_backend.model.user.InvitationToken;
+import com.agh.polymorphia_backend.model.invitation.InvitationToken;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,9 +1,9 @@
 package com.agh.polymorphia_backend.service.user;
 
-import com.agh.polymorphia_backend.dto.request.user.StudentInvitationRequestDTO;
+import com.agh.polymorphia_backend.dto.request.user.InvitationRequestDTO;
 import com.agh.polymorphia_backend.dto.request.user.StudentRegisterRequestDTO;
+import com.agh.polymorphia_backend.model.invitation.InvitationToken;
 import com.agh.polymorphia_backend.model.user.*;
-import com.agh.polymorphia_backend.repository.user.InvitationTokenRepository;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.repository.user.role.CoordinatorRepository;
@@ -22,8 +22,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 import java.util.Set;
@@ -37,7 +35,6 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final InvitationTokenService invitationTokenService;
     private final InvitationTokenValidator invitationTokenValidator;
-    private final InvitationTokenRepository invitationTokenRepository;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
 
@@ -57,28 +54,30 @@ public class UserService implements UserDetailsService {
         return buildUserWithDefinedRole(userCourseRole.get(), email);
     }
 
-    @Transactional
-    public void inviteStudent(StudentInvitationRequestDTO inviteDTO) {
-        String email = inviteDTO.getEmail();
-        Integer indexNumber = inviteDTO.getIndexNumber();
 
-        invitationTokenValidator.validateBeforeInvitation(email, indexNumber);
 
-        try {
-            InvitationToken newToken = invitationTokenService.createInvitationToken(inviteDTO);
-            invitationTokenRepository.save(newToken);
-            emailService.sendInvitationEmail(email, newToken);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to send invitation");
-        }
-    }
+//    @Transactional
+//    public void inviteStudent(InvitationRequestDTO inviteDTO) {
+//        String email = inviteDTO.getEmail();
+//        Integer indexNumber = inviteDTO.getIndexNumber();
+//
+//        invitationTokenValidator.validateBeforeInvitation(email, indexNumber);
+//
+//        try {
+//            InvitationToken newToken = invitationTokenService.createInvitationToken(inviteDTO);
+//            invitationTokenRepository.save(newToken);
+//            emailService.sendInvitationEmail(email, newToken);
+//        } catch (Exception e) {
+//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to send invitation");
+//        }
+//    }
 
-    @Transactional
-    public void registerStudent(StudentRegisterRequestDTO registerDTO) {
-        InvitationToken token = invitationTokenRepository.findByToken(registerDTO.getInvitationToken())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Token doesn't exist"));
-
-        invitationTokenValidator.validateBeforeRegister(token);
+//    @Transactional
+//    public void registerStudent(StudentRegisterRequestDTO registerDTO) {
+//        InvitationToken token = invitationTokenRepository.findByToken(registerDTO.getInvitationToken())
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Token doesn't exist"));
+//
+//        invitationTokenValidator.validateBeforeRegister(token);
 
 //        Student student = Student.builder()
 //                .email(token.getEmail())
@@ -89,17 +88,17 @@ public class UserService implements UserDetailsService {
 //                .isActive(true)
 //                .build();
 
-        token.setUsed(true);
-
-        try {
+//        token.setUsed(true);
+//
+//        try {
 //            userRepository.save(student);
-            invitationTokenRepository.save(token);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create account");
-        }
-
-    }
+//            invitationTokenRepository.save(token);
+//        } catch (Exception e) {
+//            System.err.println(e.getMessage());
+//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create account");
+//        }
+//
+//    }
 
     public AbstractRoleUser getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -143,6 +142,7 @@ public class UserService implements UserDetailsService {
                 .build();
     }
 
+    // TODO: ??
     private AbstractRoleUser buildUserWithDefinedRole(UserCourseRole userCourseRole, String email) {
         Long userId = userCourseRole.getUser().getId();
         return (switch (userCourseRole.getRole()) {
@@ -150,8 +150,6 @@ public class UserService implements UserDetailsService {
             case INSTRUCTOR -> instructorRepository.findById(userId);
             case COORDINATOR -> coordinatorRepository.findById(userId);
             default -> throw new UsernameNotFoundException(String.format(USER_NOT_FOUND, email));
-        })
-                .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND, email)));
+        }).orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND, email)));
     }
-
 }

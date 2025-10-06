@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.service.csv.processors;
 
 import com.agh.polymorphia_backend.dto.request.csv.StudentInvitationCSVProcessRequestDto;
-import com.agh.polymorphia_backend.dto.request.user.StudentInvitationRequestDTO;
+import com.agh.polymorphia_backend.dto.request.user.InvitationRequestDTO;
 import com.agh.polymorphia_backend.service.csv.CSVUtil;
 import com.agh.polymorphia_backend.service.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -37,14 +37,14 @@ public class StudentInvitationCSVProcessor {
             String lastName = row.get(lastNameIdx);
             Integer indexNumber = extractIndexNumberFromEmail(email);
 
-            StudentInvitationRequestDTO inviteDto = StudentInvitationRequestDTO.builder()
+            InvitationRequestDTO inviteDto = InvitationRequestDTO.builder()
                     .email(email)
                     .firstName(firstName)
                     .lastName(lastName)
                     .indexNumber(indexNumber)
                     .build();
 
-            userService.inviteStudent(inviteDto);
+//            userService.inviteStudent(inviteDto);
         }
     }
 

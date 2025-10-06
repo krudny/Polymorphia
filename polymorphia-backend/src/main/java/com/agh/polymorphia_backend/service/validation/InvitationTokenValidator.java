@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.service.validation;
 
-import com.agh.polymorphia_backend.model.user.InvitationToken;
-import com.agh.polymorphia_backend.repository.user.InvitationTokenRepository;
+import com.agh.polymorphia_backend.model.invitation.InvitationToken;
+import com.agh.polymorphia_backend.repository.invitation.InvitationTokenRepository;
 import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

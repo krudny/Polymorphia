@@ -1,0 +1,17 @@
+@import "tailwindcss";
+@import "../../../../styles/globals.css";
+
+.invite-student-wrapper {
+  @apply min-w-80;
+}
+
+.invite-student-wrapper form {
+  @apply w-full flex flex-col gap-y-4;
+}
+.invite-student-columns {
+  @apply flex gap-x-4;
+}
+
+.invite-student-wrapper input {
+  @apply w-full text-center text-3xl pb-2 border-b-2 border-b-primary-dark focus:outline-none text-primary-dark;
+}
