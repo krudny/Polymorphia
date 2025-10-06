@@ -903,7 +903,8 @@ values (11, 1, 58, NOW(), NOW(), null),
        (37, 6, 23, NOW(), NOW(), null),
        (38, 7, 23, NOW(), NOW(), null),
        (39, 8, 23, NOW(), NOW(), null),
-       (40, 33, 23, NOW(), NOW(), null);
+       (40, 33, 23, NOW(), NOW(), null),
+       (41, 10, 2, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done');
 
 
 INSERT INTO criteria_grades (id, grade_id, criterion_id, xp)
@@ -956,7 +957,8 @@ values (11, 11, 1, 1.4),
        (37, 37, 6, 2.0),
        (38, 38, 7, 2.0),
        (39, 39, 8, 2.0),
-       (40, 40, 33, 10.0);
+       (40, 40, 33, 10.0),
+       (41, 41, 10, 2.0);;
 
 INSERT INTO assigned_rewards (id, criterion_grade_id, reward_id, received_date, used_date, is_used)
 VALUES (1, 1, 101, '2025-09-20 17:23:03', NULL, false);

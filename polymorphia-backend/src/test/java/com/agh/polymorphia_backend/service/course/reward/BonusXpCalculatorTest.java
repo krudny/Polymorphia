@@ -6,7 +6,6 @@ import com.agh.polymorphia_backend.model.course.reward.item.FlatBonusItemBehavio
 import com.agh.polymorphia_backend.model.gradable_event.Grade;
 import com.agh.polymorphia_backend.service.gradable_event.GradeService;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
-import com.agh.polymorphia_backend.service.user.UserService;
 import com.google.ortools.Loader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -35,9 +34,6 @@ class BonusXpCalculatorTest {
     private RewardService rewardService;
 
     @Mock
-    private UserService userService;
-
-    @Mock
     private HallOfFameService hallOfFameService;
 
     @Mock
@@ -51,7 +47,7 @@ class BonusXpCalculatorTest {
         MockitoAnnotations.openMocks(this);
         Loader.loadNativeLibraries();
         OptimalGradeItemMatchingFinder optimalGradeItemMatchingFinder = new OptimalGradeItemMatchingFinder();
-        bonusXpCalculator = new BonusXpCalculator(assignedRewardService, gradeService, optimalGradeItemMatchingFinder,hallOfFameService,userService,rewardService);
+        bonusXpCalculator = new BonusXpCalculator(assignedRewardService, gradeService, optimalGradeItemMatchingFinder, hallOfFameService, rewardService);
     }
 
     private void mockServiceCalls(Long animalId, List<AssignedItem> items, List<Grade> grades) {
@@ -90,7 +86,7 @@ class BonusXpCalculatorTest {
         void shouldHandleEmptyGradesList() {
             // Given
             Long animalId = 1L;
-            List<AssignedItem> items = List.of(createAssignedItem(BigDecimal.valueOf(5.0), FlatBonusItemBehavior.ONE_EVENT, DEFAULT_DATE));
+            List<AssignedItem> items = List.of(createAssignedItem(BigDecimal.valueOf(5.0), FlatBonusItemBehavior.ONE_EVENT, DEFAULT_DATE, 1L));
             List<Grade> grades = new ArrayList<>();
 
             when(assignedRewardService.getAnimalAssignedItems(animalId))
@@ -114,12 +110,12 @@ class BonusXpCalculatorTest {
             // Given
             Long animalId = 1L;
             List<AssignedItem> allItems = List.of(
-                    createAssignedItemWithBehavior(BigDecimal.valueOf(5.0), FlatBonusItemBehavior.ONE_EVENT, DEFAULT_DATE),
-                    createAssignedItemWithBehavior(BigDecimal.valueOf(3.0), FlatBonusItemBehavior.MULTIPLE_EVENTS, DEFAULT_DATE),
-                    createAssignedItemWithBehavior(BigDecimal.valueOf(4.0), FlatBonusItemBehavior.ONE_EVENT, DEFAULT_DATE)
+                    createAssignedItemWithBehavior(BigDecimal.valueOf(5.0), FlatBonusItemBehavior.ONE_EVENT, DEFAULT_DATE, 1L),
+                    createAssignedItemWithBehavior(BigDecimal.valueOf(3.0), FlatBonusItemBehavior.MULTIPLE_EVENTS, DEFAULT_DATE, 1L),
+                    createAssignedItemWithBehavior(BigDecimal.valueOf(4.0), FlatBonusItemBehavior.ONE_EVENT, DEFAULT_DATE, 1L)
             );
             List<Grade> grades = List.of(
-                    createGrade(BigDecimal.valueOf(2.0), BigDecimal.valueOf(10.0), 1L)
+                    createGrade(BigDecimal.valueOf(2.0), BigDecimal.valueOf(10.0), 1L, 1L)
             );
 
             when(assignedRewardService.getAnimalAssignedItems(animalId)).thenReturn(allItems);

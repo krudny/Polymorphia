@@ -8,10 +8,8 @@ import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedReward;
 import com.agh.polymorphia_backend.model.course.reward.item.FlatBonusItemBehavior;
 import com.agh.polymorphia_backend.model.course.reward.item.ItemType;
 import com.agh.polymorphia_backend.model.gradable_event.Grade;
-import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.service.gradable_event.GradeService;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
-import com.agh.polymorphia_backend.service.user.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Hibernate;
@@ -33,7 +31,6 @@ public class BonusXpCalculator {
     private final GradeService gradeService;
     private final OptimalGradeItemMatchingFinder optimalGradeItemMatchingFinder;
     private final HallOfFameService hallOfFameService;
-    private final UserService userService;
     private final RewardService rewardService;
 
 
@@ -63,7 +60,8 @@ public class BonusXpCalculator {
                         Item::getId,
                         item -> switch (item.getItemType()) {
                             case FLAT_BONUS -> getPotentialFlatBonusXp(animalId, (FlatBonusItem) item);
-                            case PERCENTAGE_BONUS -> getPotentialPercentageBonusXp((PercentageBonusItem) item);
+                            case PERCENTAGE_BONUS ->
+                                    getPotentialPercentageBonusXp(animalId, (PercentageBonusItem) item);
                         }
                 ));
     }
@@ -73,9 +71,8 @@ public class BonusXpCalculator {
         countMultipleEventsItemsBonus(oneEventItems, multipleEventsItems, grades);
     }
 
-    private BigDecimal getPotentialPercentageBonusXp(PercentageBonusItem item) {
-        User user = userService.getCurrentUser().getUser();
-        BigDecimal totalXpSum = hallOfFameService.getStudentEventSectionScoreDetails(user, item.getEventSection().getId()).getFlatBonus();
+    private BigDecimal getPotentialPercentageBonusXp(Long animalId, PercentageBonusItem item) {
+        BigDecimal totalXpSum = hallOfFameService.getStudentEventSectionScoreDetails(animalId, item.getEventSection().getId()).getRawXp();
         BigDecimal percentageBonus = BigDecimal.valueOf(item.getPercentageBonus());
         return totalXpSum.multiply(percentageBonus).divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP);
     }
@@ -129,24 +126,45 @@ public class BonusXpCalculator {
 
         clearAssignedItemsBonusXp(multipleEventsItems);
 
-        BigDecimal totalOneEventCompensation = oneEventItems.stream()
-                .map(AssignedItem::getBonusXp)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        Map<Long, BigDecimal> remainingLossByEventSection = getRemainingLossByEventSection(oneEventItems, grades);
 
-        BigDecimal totalLoss = grades.stream()
-                .map(this::calculateMissingXpForGrade)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        for (AssignedItem item : multipleEventsItems) {
+            FlatBonusItem reward = (FlatBonusItem) Hibernate.unproxy(item.getReward());
+            Long itemSectionId = reward.getEventSection().getId();
 
-        BigDecimal remainingLoss = totalLoss.subtract(totalOneEventCompensation);
+            BigDecimal remainingLossForSection = remainingLossByEventSection.getOrDefault(itemSectionId, BigDecimal.ZERO);
 
-        int i = 0;
-        while (remainingLoss.compareTo(BigDecimal.ZERO) > 0 && i < multipleEventsItems.size()) {
-            BigDecimal rewardBonusXp = ((FlatBonusItem) Hibernate.unproxy(multipleEventsItems.get(i).getReward())).getXpBonus();
-            BigDecimal assignedItemBonusXp = remainingLoss.min(rewardBonusXp);
-            multipleEventsItems.get(i).setBonusXp(assignedItemBonusXp);
-            remainingLoss = remainingLoss.subtract(assignedItemBonusXp);
-            i++;
+            if (remainingLossForSection.compareTo(BigDecimal.ZERO) > 0) {
+                BigDecimal rewardBonusXp = reward.getXpBonus();
+                BigDecimal assignedItemBonusXp = remainingLossForSection.min(rewardBonusXp);
+                item.setBonusXp(assignedItemBonusXp);
+
+                remainingLossByEventSection.put(itemSectionId, remainingLossForSection.subtract(assignedItemBonusXp));
+            }
         }
+    }
+
+    private Map<Long, BigDecimal> getRemainingLossByEventSection(List<AssignedItem> oneEventItems, List<Grade> grades) {
+        Map<Long, BigDecimal> remainingLossByEventSection = grades.stream()
+                .collect(Collectors.groupingBy(
+                        g -> g.getGradableEvent().getEventSection().getId(),
+                        Collectors.reducing(
+                                BigDecimal.ZERO,
+                                this::calculateMissingXpForGrade,
+                                BigDecimal::add
+                        )
+                ));
+
+        for (AssignedItem item : oneEventItems) {
+            FlatBonusItem reward = (FlatBonusItem) Hibernate.unproxy(item.getReward());
+            Long itemSectionId = reward.getEventSection().getId();
+
+            BigDecimal bonusXp = item.getBonusXp();
+            BigDecimal currentRemaining = remainingLossByEventSection.getOrDefault(itemSectionId, BigDecimal.ZERO);
+            BigDecimal newRemaining = currentRemaining.subtract(bonusXp).max(BigDecimal.ZERO);
+            remainingLossByEventSection.put(itemSectionId, newRemaining);
+        }
+        return remainingLossByEventSection;
     }
 
     private void countOneEventItemsBonus(List<AssignedItem> oneEventItems, List<Grade> grades) {

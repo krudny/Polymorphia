@@ -35,7 +35,7 @@ public class OptimalGradeItemMatchingFinder {
 
         CpModel model = new CpModel();
 
-        BoolVar[][] y = getY(numItems, numGrades, model);
+        BoolVar[][] y = getY(flatBonusItems, grades, model);
 
         IntVar[] recoveredXp = new IntVar[numGrades];
         int[] maxRecoveredBound = new int[numGrades];
@@ -119,11 +119,23 @@ public class OptimalGradeItemMatchingFinder {
         }
     }
 
-    private BoolVar[][] getY(int numItems, int numGrades, CpModel model) {
+    private BoolVar[][] getY(List<AssignedItem> flatBonusItems, List<Grade> grades, CpModel model) {
+        int numItems = flatBonusItems.size();
+        int numGrades = grades.size();
         BoolVar[][] y = new BoolVar[numItems][numGrades];
         for (int j = 0; j < numItems; j++) {
+            AssignedItem item = flatBonusItems.get(j);
+            Long itemSectionId = ((FlatBonusItem) Hibernate.unproxy(item.getReward()))
+                    .getEventSection().getId();
+
             for (int i = 0; i < numGrades; i++) {
+                Long gradeSectionId = grades.get(i).getGradableEvent()
+                        .getEventSection().getId();
                 y[j][i] = model.newBoolVar("y_" + j + "_" + i);
+
+                if (!itemSectionId.equals(gradeSectionId)) {
+                    model.addEquality(y[j][i], 0);
+                }
             }
         }
         return y;
