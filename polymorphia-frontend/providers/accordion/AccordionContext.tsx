@@ -1,6 +1,9 @@
 import { createContext, useCallback, useEffect, useState } from "react";
-import { AccordionContextInterface, useAccordionStateProps } from "./types";
-import { getInitialOpenSections } from "./utils/getInitialOpenSections";
+import {
+  AccordionContextInterface,
+  useAccordionStateProps,
+} from "@/providers/accordion/types";
+import { getInitialOpenSections } from "@/providers/accordion/utils/getInitialOpenSections";
 
 export const AccordionContext = createContext<
   AccordionContextInterface | undefined

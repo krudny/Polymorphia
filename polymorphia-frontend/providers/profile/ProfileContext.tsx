@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useState } from "react";
-import { ProfileContextInterface } from "./types";
+import { ProfileContextInterface } from "@/providers/profile/types";
 
 export const ProfileContext = createContext<
   ProfileContextInterface | undefined

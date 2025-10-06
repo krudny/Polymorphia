@@ -8,9 +8,9 @@ import { useRef, Fragment } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Accordion } from "@/components/accordion/Accordion";
 import "./index.css";
-import { GradeCriteriaProps } from "./types";
-import Criterion from "./criterion";
-import CommentWrapper from "./comment-wrapper";
+import { GradeCriteriaProps } from "@/components/grading-components/grade/criteria/types";
+import Criterion from "@/components/grading-components/grade/criteria/criterion";
+import CommentWrapper from "@/components/grading-components/grade/criteria/comment-wrapper";
 import { getKeyForSelectedTarget } from "@/providers/grading/utils/getKeyForSelectedTarget";
 import { SwapAnimationWrapper } from "@/animations/SwapAnimationWrapper";
 

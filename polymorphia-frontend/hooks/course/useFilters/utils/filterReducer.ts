@@ -5,7 +5,7 @@ import {
   FilterState,
   SpecialBehaviors,
 } from "@/hooks/course/useFilters/types";
-import { getInitialState } from "./getInitialState";
+import { getInitialState } from "@/hooks/course/useFilters/utils/getInitialState";
 
 export function filterReducer<FilterIdType extends string>(
   state: FilterState<FilterIdType>,

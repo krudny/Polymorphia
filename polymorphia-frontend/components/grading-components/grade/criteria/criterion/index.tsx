@@ -2,7 +2,7 @@ import ProgressBar from "@/components/progressbar/ProgressBar";
 import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLabels";
 import AssignReward from "@/components/grading-components/grade/reward-assignment";
 import Input from "@/components/grading-components/grade/input";
-import { CriterionProps } from "./types";
+import { CriterionProps } from "@/components/grading-components/grade/criteria/criterion/types";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import "./index.css";
 

@@ -5,9 +5,9 @@ import "./index.css";
 import { useSpeedDialFactory } from "@/hooks/factory/useSpeedDialFactory";
 import Loading from "@/components/loading";
 import { SpeedDial as SpeedDialMui } from "@mui/material";
-import { SpeedDialProps } from "./types";
+import { SpeedDialProps } from "@/components/speed-dial/types";
 import { useMediaQuery } from "react-responsive";
-import SpeedDialActionWrapper from "./action-wrapper";
+import SpeedDialActionWrapper from "@/components/speed-dial/action-wrapper";
 
 export default function SpeedDial({ speedDialKey }: SpeedDialProps) {
   const items = useSpeedDialFactory({ speedDialKey });

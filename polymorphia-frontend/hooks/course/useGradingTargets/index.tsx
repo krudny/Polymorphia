@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { useEventParams } from "@/hooks/general/useEventParams";
-import { UseGradingTargets } from "./types";
+import { UseGradingTargets } from "@/hooks/course/useGradingTargets/types";
 import { EventTypes } from "@/interfaces/general";
 import { TargetTypes } from "@/interfaces/api/grade/target";
 

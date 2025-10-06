@@ -16,12 +16,15 @@ import {
 import { useFilters } from "@/hooks/course/useFilters";
 import { useGradingFilterConfigs } from "@/hooks/course/useGradingFilterConfigs";
 import { GradingReducerActions } from "@/providers/grading/gradingReducer/types";
-import { GradingReducer, initialState } from "./gradingReducer";
+import {
+  GradingReducer,
+  initialState,
+} from "@/providers/grading/gradingReducer";
 import useGradingTargets from "@/hooks/course/useGradingTargets";
 import useShortGrade from "@/hooks/course/useShortGrade";
-import { getRequestTargetFromResponseTarget } from "./utils/getRequestTargetFromResponseTarget";
+import { getRequestTargetFromResponseTarget } from "@/providers/grading/utils/getRequestTargetFromResponseTarget";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
-import areTargetsEqual from "./utils/areTargetsEqual";
+import areTargetsEqual from "@/providers/grading/utils/areTargetsEqual";
 
 export const GradingContext = createContext<
   GradingContextInterface | undefined

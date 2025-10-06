@@ -5,7 +5,7 @@ import {
 } from "@/providers/accordion/AccordionContext";
 import { AccordionRef } from "@/providers/accordion/types";
 import "./index.css";
-import { AccordionProps } from "./types";
+import { AccordionProps } from "@/components/accordion/types";
 import clsx from "clsx";
 
 export const AccordionComponent = forwardRef<AccordionRef, AccordionProps>(

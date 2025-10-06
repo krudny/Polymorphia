@@ -5,7 +5,7 @@ import GradingComponentWrapper from "@/components/grading-components/grading-wra
 import Loading from "@/components/loading";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import useCriteria from "@/hooks/course/useCriteria";
-import GradeCriteria from "./criteria";
+import GradeCriteria from "@/components/grading-components/grade/criteria";
 
 export default function Grade() {
   const { state } = useGradingContext();

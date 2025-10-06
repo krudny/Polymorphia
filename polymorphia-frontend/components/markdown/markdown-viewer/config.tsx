@@ -1,7 +1,7 @@
 import { Components } from "react-markdown";
 import "./index.css";
 import Image from "next/image";
-import { MarkdownImageProps } from "./types";
+import { MarkdownImageProps } from "@/components/markdown/markdown-viewer/types";
 import { isValidUrl } from "@/components/markdown/isValidUrl";
 
 export const markdownConfig: Components = {
