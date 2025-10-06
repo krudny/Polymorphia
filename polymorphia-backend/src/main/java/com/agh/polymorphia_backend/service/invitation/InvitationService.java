@@ -43,16 +43,18 @@ public class InvitationService {
         try {
             Course course = courseService.getCourseById(inviteDTO.getCourseId());
 
+            System.out.println("przed walidacją");
             validateInvitation(inviteDTO);
-
+            System.out.println("przed role user");
             AbstractRoleUser roleUser = createAndSaveRoleUser(inviteDTO);
-
+            System.out.println("przed token");
             InvitationToken token = createAndSaveInvitationToken(inviteDTO);
-
+            System.out.println("przed zapisaniem");
             createAndSaveUserCourseRole(roleUser.getUser(), course, inviteDTO.getRole());
-
-            sendInvitationEmail(inviteDTO.getEmail(), token);
+            System.out.println("przed email");
+            sendInvitationEmail(inviteDTO, token);
         } catch (Exception e) {
+            System.out.println(e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to send invitation");
         }
     }
@@ -98,15 +100,19 @@ public class InvitationService {
     }
 
     private void createAndSaveUserCourseRole(User user, Course course, UserType role) {
+        UserCourseRoleId id = new UserCourseRoleId(user.getId(), course.getId());
+
         UserCourseRole userCourseRole = UserCourseRole.builder()
+                .id(id)
                 .role(role)
                 .user(user)
                 .course(course)
                 .build();
+
         userCourseRoleRepository.save(userCourseRole);
     }
 
-    private void sendInvitationEmail(String email, InvitationToken token) {
-        emailService.sendInvitationEmail(email, token);
+    private void sendInvitationEmail(InvitationRequestDTO inviteDTO, InvitationToken token) {
+        emailService.sendInvitationEmail(inviteDTO, token);
     }
 }

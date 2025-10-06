@@ -18,4 +18,5 @@ export const inviteSchema = z.object({
   lastName: z.string().nonempty(),
   role: z.nativeEnum(Roles),
   email: emailField,
+  courseId: z.number(),
 });

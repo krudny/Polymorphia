@@ -126,7 +126,7 @@ export abstract class BaseSpeedDialStrategy {
     return {
       id: 5,
       orderIndex: 7,
-      label: "Zaproś studenta",
+      label: "Zaproś użytkownika",
       icon: "person_add",
       useDynamicBehavior: () => ({
         modal: (onClose) => <InviteUserModal onClosedAction={onClose} />,

@@ -154,7 +154,7 @@ function InviteUserModalContent() {
           {([canSubmit, isPristine]) => (
             <ButtonWithBorder
               text={mutation.isPending ? "Wysyłanie..." : "Wyślij zaproszenie"}
-              className="!mx-0 !py-1 !w-full !mt-4"
+              className="!mx-0 !py-1 !w-full"
               isActive={isPristine || !canSubmit || mutation.isPending}
             />
           )}
@@ -171,7 +171,7 @@ export default function InviteUserModal({
     <Modal
       isDataPresented={true}
       onClosed={onClosedAction}
-      title="Zaproś studenta"
+      title="Zaproś użytkownika"
       subtitle="Uzupełnij wszystkie dane:"
     >
       <InviteUserModalContent />
