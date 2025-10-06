@@ -1,5 +1,6 @@
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import Comment from "../../comment";
+import "./index.css";
 
 export default function CommentWrapper() {
   const wrapperRef = useFadeInAnimate();

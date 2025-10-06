@@ -2,7 +2,7 @@
 @import "../../../../../styles/globals.css";
 
 .grade-criterion {
-  @apply flex flex-col mt-2 opacity-0;
+  @apply flex flex-col mt-2 opacity-0 min-h-[320px];
 
   h2 {
     @apply text-3xl my-3;

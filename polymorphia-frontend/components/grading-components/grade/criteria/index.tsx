@@ -11,6 +11,8 @@ import "./index.css";
 import { GradeCriteriaProps } from "./types";
 import Criterion from "./criterion";
 import CommentWrapper from "./comment-wrapper";
+import { getKeyForSelectedTarget } from "@/providers/grading/utils/getKeyForSelectedTarget";
+import { SwapAnimationWrapper } from "@/animations/SwapAnimationWrapper";
 
 export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
   const { state, isGradeLoading, submitGrade } = useGradingContext();
@@ -18,8 +20,14 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
   const wrapperRef = useFadeInAnimate(!!criteria);
   const isMd = useMediaQuery({ minWidth: "768px" });
 
-  const loadingComponent = (
-    <div className="h-[306px] relative">
+  const criterionSectionLoadingComponent = (
+    <div className="h-[320px] mt-2 relative">
+      <Loading />
+    </div>
+  );
+
+  const commentSectionLoadingComponent = (
+    <div className="h-[100px] mt-2 relative">
       <Loading />
     </div>
   );
@@ -54,14 +62,29 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
                 title={criterion.name}
                 headerClassName="grading-accordion-header"
               >
-                {criterionGrade && !isGradeLoading ? (
-                  <Criterion
-                    criterion={criterion}
-                    criterionGrade={criterionGrade}
-                  />
-                ) : (
-                  loadingComponent
-                )}
+                <SwapAnimationWrapper
+                  fromVars={{ autoAlpha: 0 }}
+                  toVars={{
+                    autoAlpha: 1,
+                    ease: "power1.inOut",
+                  }}
+                  duration={0.3}
+                  keyProp={
+                    criterionGrade && !isGradeLoading
+                      ? "loading" + getKeyForSelectedTarget(state)
+                      : getKeyForSelectedTarget(state)
+                  }
+                >
+                  {criterionGrade && !isGradeLoading ? (
+                    <Criterion
+                      key={getKeyForSelectedTarget(state)}
+                      criterion={criterion}
+                      criterionGrade={criterionGrade}
+                    />
+                  ) : (
+                    criterionSectionLoadingComponent
+                  )}
+                </SwapAnimationWrapper>
               </AccordionSection>
             );
           })}
@@ -72,7 +95,25 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
             title="Komentarz"
             headerClassName="grading-accordion-header"
           >
-            {!isGradeLoading ? <CommentWrapper /> : loadingComponent}
+            <SwapAnimationWrapper
+              fromVars={{ autoAlpha: 0 }}
+              toVars={{
+                autoAlpha: 1,
+                ease: "power1.inOut",
+              }}
+              duration={0.3}
+              keyProp={
+                !isGradeLoading
+                  ? "loading" + getKeyForSelectedTarget(state)
+                  : getKeyForSelectedTarget(state)
+              }
+            >
+              {!isGradeLoading ? (
+                <CommentWrapper />
+              ) : (
+                commentSectionLoadingComponent
+              )}
+            </SwapAnimationWrapper>
           </AccordionSection>
         </Accordion>
       </div>

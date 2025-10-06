@@ -14,7 +14,7 @@ export default function Criterion({
   const gainedXp = criterionGrade?.gainedXp ?? "0";
 
   return (
-    <div key={criterion.id} className="grade-criterion" ref={wrapperRef}>
+    <div className="grade-criterion" ref={wrapperRef}>
       <div className="grade-criterion-progress-bar">
         <ProgressBar
           minXP={0}
