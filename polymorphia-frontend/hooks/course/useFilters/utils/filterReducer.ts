@@ -4,7 +4,7 @@ import {
   FilterConfig,
   FilterState,
   SpecialBehaviors,
-} from "../types";
+} from "@/hooks/course/useFilters/types";
 import { getInitialState } from "./getInitialState";
 
 export function filterReducer<FilterIdType extends string>(

@@ -1,5 +1,5 @@
-import { RewardResponseDTO } from "../../reward";
-import { ShortAssignedRewardResponseDTO } from "../grade";
+import { RewardResponseDTO } from "@/interfaces/api/reward";
+import { ShortAssignedRewardResponseDTO } from "@/interfaces/api/grade/grade";
 
 export interface CriterionResponseDTO {
   id: number;

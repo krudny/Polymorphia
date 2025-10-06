@@ -1,4 +1,4 @@
-import { FilterConfig, FilterState } from "../types";
+import { FilterConfig, FilterState } from "@/hooks/course/useFilters/types";
 
 export function getInitialState<FilterIdType extends string>(
   configs: FilterConfig<FilterIdType>[]

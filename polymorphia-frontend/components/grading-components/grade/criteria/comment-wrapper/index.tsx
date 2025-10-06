@@ -1,5 +1,5 @@
 import { useFadeInAnimate } from "@/animations/FadeIn";
-import Comment from "../../comment";
+import Comment from "@/components/grading-components/grade/comment";
 import "./index.css";
 
 export default function CommentWrapper() {

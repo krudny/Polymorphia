@@ -1,4 +1,4 @@
-import { ItemResponseDTO, ChestResponseDTO } from "../reward";
+import { ItemResponseDTO, ChestResponseDTO } from "@/interfaces/api/reward";
 import {
   ItemAssignmentDetailsResponseDTO,
   ChestAssignmentDetailsResponseDTO,

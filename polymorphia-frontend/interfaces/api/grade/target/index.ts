@@ -1,4 +1,4 @@
-import { StudentDetailsDTOWithName } from "../../user";
+import { StudentDetailsDTOWithName } from "@/interfaces/api/user";
 
 export interface StudentTargetData extends StudentDetailsDTOWithName {
   gainedXp?: string;

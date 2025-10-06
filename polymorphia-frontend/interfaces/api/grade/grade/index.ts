@@ -1,8 +1,8 @@
 import {
   CriterionGradeResponseDTO,
   CriteriaDetailsRequestDTO,
-} from "../criteria";
-import { TargetRequestDTO } from "../target";
+} from "@/interfaces/api/grade/criteria";
+import { TargetRequestDTO } from "@/interfaces/api/grade/target";
 
 export interface ShortAssignedRewardResponseDTO {
   id: number;

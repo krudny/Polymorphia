@@ -3,7 +3,7 @@ import { ProjectStrategy } from "@/components/speed-dial/strategies/markdown-vie
 import { SpeedDialStrategy } from "@/components/speed-dial/strategies/types";
 import { TestGradingStrategy } from "@/components/speed-dial/strategies/instructor/TestGrading";
 import { AssignmentGradingStrategy } from "@/components/speed-dial/strategies/instructor/AssignmentGrading";
-import { SpeedDialKey, SpeedDialKeys } from "../types";
+import { SpeedDialKey, SpeedDialKeys } from "@/components/speed-dial/types";
 import { CourseGroupStrategy } from "@/components/speed-dial/strategies/instructor/CourseGroup";
 import { RulesStrategy } from "@/components/speed-dial/strategies/markdown-view/Rules";
 import { ProfileStrategy } from "@/components/speed-dial/strategies/student/Profile";
