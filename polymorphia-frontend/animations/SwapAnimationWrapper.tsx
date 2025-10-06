@@ -1,13 +1,6 @@
-import { ReactNode, useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
-
-interface SwapAnimationWrapperProps {
-  children: ReactNode;
-  fromVars: Omit<gsap.TweenVars, "duration" | "onComplete">;
-  toVars: Omit<gsap.TweenVars, "duration" | "onComplete">;
-  duration: gsap.TweenValue;
-  keyProp: string | number | undefined;
-}
+import { SwapAnimationWrapperProps } from "@/animations/types";
 
 export function SwapAnimationWrapper({
   children,
