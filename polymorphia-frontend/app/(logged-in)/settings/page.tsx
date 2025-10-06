@@ -101,7 +101,7 @@ export default function Settings() {
               value: course.id.toString(),
               label: course.name,
             }))}
-            value={currentCourse.name || ""}
+            value={currentCourse.id.toString() || ""}
             onChange={(value) => setPreferredCourse(Number(value))}
             placeholder={currentCourse.name || "Wybierz kurs"}
             size="3xl"
