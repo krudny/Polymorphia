@@ -41,9 +41,9 @@
 .selector-option {
   @apply cursor-pointer transition-colors;
   @apply border-b-2 last:border-b-0;
-  @apply text-primary-dark border-primary-dark hover:bg-primary-gray;
-  @apply dark:text-secondary-gray dark:border-secondary-gray hover:dark:text-primary-dark hover:dark:bg-secondary-gray;
+  @apply text-primary-dark border-primary-dark hover:backdrop-brightness-90 hover:dark:backdrop-brightness-150;
+  @apply dark:text-secondary-gray dark:border-secondary-gray;
 }
 .selector-option-selected {
-  @apply bg-primary-gray dark:bg-secondary-gray dark:text-primary-dark;
+  @apply bg-primary-dark text-secondary-gray dark:bg-secondary-gray dark:text-primary-dark hover:bg-primary-dark hover:dark:bg-secondary-gray;
 }
