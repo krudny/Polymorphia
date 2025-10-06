@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.model.user;
+package com.agh.polymorphia_backend.model.invitation;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -25,15 +25,6 @@ public class InvitationToken {
 
     @NotNull
     private String email;
-
-    @NotNull
-    private String firstName;
-
-    @NotNull
-    private String lastName;
-
-    @NotNull
-    private Integer indexNumber;
 
     @NotNull
     private ZonedDateTime expiryDate;

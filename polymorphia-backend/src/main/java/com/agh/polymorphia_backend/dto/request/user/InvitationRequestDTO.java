@@ -1,5 +1,8 @@
 package com.agh.polymorphia_backend.dto.request.user;
 
+import com.agh.polymorphia_backend.model.user.UserType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -12,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudentInvitationRequestDTO {
+public class InvitationRequestDTO {
     @Email
     @NotBlank
     private String email;
@@ -24,5 +27,8 @@ public class StudentInvitationRequestDTO {
     private String lastName;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
+    private UserType role;
+
     private Integer indexNumber;
 }
