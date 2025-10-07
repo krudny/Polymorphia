@@ -2,6 +2,7 @@ import Loading from "@/components/loading";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import useRandomUsers from "@/hooks/course/useRandomUsers";
+import "./index.css";
 
 export default function StudentInfo() {
   const { data, isLoading, isError } = useRandomUsers();
@@ -9,12 +10,12 @@ export default function StudentInfo() {
   return (
     <>
       {isError && (
-        <div className="text-xl 2xl:text-2xl">
+        <div className="gradable-event-section text-xl 2xl:text-2xl">
           Wystąpił błąd przy ładowaniu szczegółów.
         </div>
       )}
       {isLoading && (
-        <div className="h-50">
+        <div className="gradable-event-section h-50">
           <Loading />
         </div>
       )}
