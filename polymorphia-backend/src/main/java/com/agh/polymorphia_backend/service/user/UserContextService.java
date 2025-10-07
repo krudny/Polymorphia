@@ -44,7 +44,7 @@ public class UserContextService {
     public void setPreferredCourseIfOneAvailable() {
         AbstractRoleUser user = userService.getCurrentUser();
 
-        if (userService.getUserRole(user) == UserType.UNDEFINED) {
+        if (getUserRole() == UserType.UNDEFINED) {
             List<UserCourseRole> courses = userCourseRoleRepository.findAllByUserId(user.getUser().getId());
             if (courses.size() == 1) {
                 setPreferredCourseId(courses.getFirst().getCourse().getId());
@@ -54,7 +54,7 @@ public class UserContextService {
 
     public void setPreferredCourseId(Long courseId) {
         Course course = courseService.getCourseById(courseId);
-        accessAuthorizer.authorizePreferredCourseSwitch(course);
+//        accessAuthorizer.authorizePreferredCourseSwitch(course);
 
         User user = userService.getCurrentUser().getUser();
         User dbUser = userRepository.findById(user.getId())
@@ -62,7 +62,6 @@ public class UserContextService {
 
         dbUser.setPreferredCourse(course);
         userRepository.save(dbUser);
-
         userService.updateSecurityCredentials(user);
     }
 

@@ -79,7 +79,6 @@ export interface InviteRequestDTO {
 }
 
 export interface RegisterRequestDTO {
-  animalName: string;
   invitationToken: string;
   password: string;
 }

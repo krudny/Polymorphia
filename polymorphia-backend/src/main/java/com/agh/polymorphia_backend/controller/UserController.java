@@ -1,12 +1,10 @@
 package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.request.csv.StudentInvitationCSVProcessRequestDto;
-import com.agh.polymorphia_backend.dto.request.user.StudentRegisterRequestDTO;
 import com.agh.polymorphia_backend.dto.response.user_context.UserDetailsResponseDto;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.service.csv.processors.StudentInvitationCSVProcessor;
 import com.agh.polymorphia_backend.service.user.UserContextService;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,10 +47,4 @@ public class UserController {
         studentInvitationCSVProcessor.process(requestDTO);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-
-//    @PostMapping("/register")
-//    public ResponseEntity<Void> registerStudent(@Valid @RequestBody StudentRegisterRequestDTO registerDTO) {
-//        userService.registerStudent(registerDTO);
-//        return ResponseEntity.status(HttpStatus.CREATED).build();
-//    }
 }

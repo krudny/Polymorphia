@@ -11,7 +11,6 @@ export default function RegisterForm({ invitationToken }: RegisterFormProps) {
   const { mutation } = useRegister();
   const form = useForm({
     defaultValues: {
-      animalName: "",
       password: "",
     },
     validators: {
@@ -20,7 +19,6 @@ export default function RegisterForm({ invitationToken }: RegisterFormProps) {
     onSubmit: async ({ value }) => {
       mutation.mutate({
         invitationToken,
-        animalName: value.animalName,
         password: value.password,
       });
     },
@@ -37,24 +35,6 @@ export default function RegisterForm({ invitationToken }: RegisterFormProps) {
           }}
           autoComplete="off"
         >
-          <form.Field name="animalName">
-            {(field) => (
-              <div>
-                <input
-                  type="text"
-                  id={field.name}
-                  placeholder="Nazwij zwierzaka"
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(event) => field.handleChange(event.target.value)}
-                  required
-                  autoComplete="new-animal"
-                />
-                <FieldInfo field={field} />
-              </div>
-            )}
-          </form.Field>
-
           <form.Field name="password">
             {(field) => (
               <div>

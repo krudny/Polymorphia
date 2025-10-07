@@ -10,10 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudentRegisterRequestDTO {
-    @NotBlank
-    private String animalName;
-
+public class RegisterRequestDTO {
     @NotBlank
     private String invitationToken;
 

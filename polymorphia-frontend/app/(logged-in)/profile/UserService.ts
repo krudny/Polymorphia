@@ -100,20 +100,6 @@ const UserService = {
       },
     ];
   },
-  register: async (request: RegisterRequestDTO): Promise<void> => {
-    const response = await fetch(`${API_HOST}/user/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(request),
-      credentials: "include",
-    });
-
-    if (!response.ok) {
-      throw new Error("Nie udało się utworzyć konta!");
-    }
-  },
 
   inviteUser: async (request: InviteRequestDTO): Promise<void> => {
     console.log(request);
@@ -129,6 +115,21 @@ const UserService = {
 
     if (!response.ok) {
       throw new Error("Nie udało się zaprosić studenta!");
+    }
+  },
+
+  register: async (request: RegisterRequestDTO): Promise<void> => {
+    const response = await fetch(`${API_HOST}/invitation/register-user`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(request),
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error("Nie udało się utworzyć konta!");
     }
   },
 };

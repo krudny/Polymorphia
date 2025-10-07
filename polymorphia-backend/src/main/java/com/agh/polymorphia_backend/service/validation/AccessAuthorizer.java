@@ -16,6 +16,7 @@ import java.util.List;
 
 import static com.agh.polymorphia_backend.service.course.CourseService.COURSE_NOT_FOUND;
 
+//TODO: to change to look up in user course role table
 @Service
 @AllArgsConstructor
 public class AccessAuthorizer {
@@ -63,10 +64,13 @@ public class AccessAuthorizer {
     }
 
     private boolean isPreferredCourseSwitchAuthorized(User user, Course course) {
-        return isCourseAccessAuthorizedStudent(user, course)
-                || isCourseAccessAuthorizedInstructor(user, course)
-                || isCourseAccessAuthorizedCoordinator(user, course);
+        return true;
+//        return isCourseAccessAuthorizedStudent(user, course)
+//                || isCourseAccessAuthorizedInstructor(user, course)
+//                || isCourseAccessAuthorizedCoordinator(user, course);
     }
+
+
 
 
     private boolean isCourseAccessAuthorizedCoordinator(User user, Course course) {

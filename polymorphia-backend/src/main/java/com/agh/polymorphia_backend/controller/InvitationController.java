@@ -1,8 +1,8 @@
 package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.request.user.InvitationRequestDTO;
+import com.agh.polymorphia_backend.dto.request.user.RegisterRequestDTO;
 import com.agh.polymorphia_backend.service.invitation.InvitationService;
-import com.agh.polymorphia_backend.service.user.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,9 +22,14 @@ public class InvitationController {
     @PostMapping("/invite-user")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<Void> inviteUser(@Valid @RequestBody InvitationRequestDTO inviteDTO) {
-        System.out.println(inviteDTO.getIndexNumber());
         invitationService.inviteUser(inviteDTO);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PostMapping("/register-user")
+    public ResponseEntity<Void> registerStudent(@Valid @RequestBody RegisterRequestDTO registerDTO) {
+        invitationService.registerUser(registerDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 }

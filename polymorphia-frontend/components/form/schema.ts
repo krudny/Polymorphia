@@ -9,7 +9,6 @@ export const loginSchema = z.object({
 });
 
 export const registerSchema = z.object({
-  animalName: z.string(),
   password: z.string(),
 });
 

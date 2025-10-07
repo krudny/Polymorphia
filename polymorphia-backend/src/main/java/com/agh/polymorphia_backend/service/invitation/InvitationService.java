@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.service.invitation;
 
 import com.agh.polymorphia_backend.dto.request.user.InvitationRequestDTO;
+import com.agh.polymorphia_backend.dto.request.user.RegisterRequestDTO;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.invitation.InvitationToken;
 import com.agh.polymorphia_backend.model.user.*;
@@ -15,58 +16,84 @@ import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.invitation_token.InvitationTokenService;
 import com.agh.polymorphia_backend.service.user.UserFactory;
 import com.agh.polymorphia_backend.service.validation.InvitationTokenValidator;
+import com.agh.polymorphia_backend.service.validation.UserValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import static com.agh.polymorphia_backend.model.user.UserType.STUDENT;
-
 @Service
 @AllArgsConstructor
 public class InvitationService {
+    public static final String UNSUPPORTED_ROLE = "Unsupported role";
+    public static final String FAILED_TO_INVITE = "Failed to send invitation";
+    public static final String FAILED_TO_REGISTER = "Failed to create account";
+    public static final String USER_NOT_EXIST = "User doesn't exist";
+    public static final String TOKEN_NOT_EXIST = "Token doesn't exist";
+
     private final UserFactory userFactory;
+    private final PasswordEncoder passwordEncoder;
     private final InvitationTokenValidator invitationTokenValidator;
     private final InvitationTokenService invitationTokenService;
     private final InvitationTokenRepository invitationTokenRepository;
     private final EmailService emailService;
-    public static final String UNSUPPORTED_ROLE = "Unsupported role";
     private final UserCourseRoleRepository userCourseRoleRepository;
+    private final UserRepository userRepository;
     private final StudentRepository studentRepository;
     private final CoordinatorRepository coordinatorRepository;
     private final InstructorRepository instructorRepository;
     private final CourseService courseService;
+    private final UserValidator userValidator;
 
     @Transactional
     public void inviteUser(InvitationRequestDTO inviteDTO) {
         try {
             Course course = courseService.getCourseById(inviteDTO.getCourseId());
 
-            System.out.println("przed walidacją");
             validateInvitation(inviteDTO);
-            System.out.println("przed role user");
             AbstractRoleUser roleUser = createAndSaveRoleUser(inviteDTO);
-            System.out.println("przed token");
             InvitationToken token = createAndSaveInvitationToken(inviteDTO);
-            System.out.println("przed zapisaniem");
-            createAndSaveUserCourseRole(roleUser.getUser(), course, inviteDTO.getRole());
-            System.out.println("przed email");
+//            createAndSaveUserCourseRole(roleUser.getUser(), course, inviteDTO.getRole());
             sendInvitationEmail(inviteDTO, token);
         } catch (Exception e) {
-            System.out.println(e);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to send invitation");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FAILED_TO_INVITE);
         }
     }
 
+    @Transactional
+    public void registerUser(RegisterRequestDTO registerDTO) {
+        InvitationToken token = invitationTokenRepository.findByToken(registerDTO.getInvitationToken())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, TOKEN_NOT_EXIST));
+
+        User user = userRepository.findByEmail(token.getEmail())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, USER_NOT_EXIST));
+
+        invitationTokenValidator.validateTokenBeforeRegister(token);
+        userValidator.validateUserRegistered(user);
+
+
+        user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
+        user.setActive(true);
+        token.setUsed(true);
+
+        try {
+            userRepository.save(user);
+            invitationTokenRepository.save(token);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FAILED_TO_REGISTER);
+        }
+
+    }
+
     private void validateInvitation(InvitationRequestDTO inviteDTO) {
+        String email = inviteDTO.getEmail();
+        invitationTokenValidator.validateTokenBeforeInvitation(email);
+        userValidator.validateUserNotExistsByEmail(email);
+
         if (inviteDTO.getRole() == UserType.STUDENT) {
-            invitationTokenValidator.validateBeforeInvitation(
-                    inviteDTO.getEmail(),
-                    inviteDTO.getIndexNumber()
-            );
-        } else {
-            invitationTokenValidator.validateBeforeInvitation(inviteDTO.getEmail(), null);
+            userValidator.validateUserNotExistsByIndexNumber(inviteDTO.getIndexNumber());
         }
     }
 
