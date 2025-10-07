@@ -1,6 +1,9 @@
 import { Accordion } from "@/components/accordion/Accordion";
 import "./index.css";
-import { GradeInfoProps } from "@/components/course/event-section/types";
+import {
+  GradeInfoProps,
+  RewardWithImage,
+} from "@/components/course/event-section/types";
 import { useMediaQuery } from "react-responsive";
 import AccordionSection from "@/components/accordion/AccordionSection";
 import ProgressBar from "@/components/progressbar/ProgressBar";
@@ -74,11 +77,7 @@ export default function GradeInfo({ grade, criteria }: GradeInfoProps) {
               )
             : undefined;
 
-          const rewards: {
-            name: string;
-            imageUrl: string;
-            quantity: number;
-          }[] = criterionGrade
+          const rewards: RewardWithImage[] = criterionGrade
             ? criterionGrade.assignedRewards
             : criterion.assignableRewards.map((reward) => ({
                 name: reward.assignableReward.reward.name,

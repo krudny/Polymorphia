@@ -5,3 +5,9 @@ export interface GradeInfoProps {
   grade: ShortGradeResponseDTO;
   criteria: CriterionResponseDTO[];
 }
+
+export interface RewardWithImage {
+  name: string;
+  imageUrl: string;
+  quantity: number;
+}
