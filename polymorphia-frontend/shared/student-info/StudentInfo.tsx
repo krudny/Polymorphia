@@ -9,12 +9,12 @@ export default function StudentInfo() {
   return (
     <>
       {isError && (
-        <div className="gradable-event-section text-xl 2xl:text-2xl">
+        <div className="text-xl 2xl:text-2xl">
           Wystąpił błąd przy ładowaniu szczegółów.
         </div>
       )}
       {isLoading && (
-        <div className="gradable-event-section h-50">
+        <div className="h-50">
           <Loading />
         </div>
       )}

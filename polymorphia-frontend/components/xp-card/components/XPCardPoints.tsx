@@ -9,6 +9,7 @@ export default function XPCardPoints({
   isXPLabelVisible = true,
   hasChest = false,
   color,
+  chestSize = "md",
 }: XPCardPointsProps) {
   return (
     <div
@@ -23,7 +24,14 @@ export default function XPCardPoints({
       </h1>
       {isSumLabelVisible && <h2>Suma</h2>}
       {hasChest && (
-        <div className="absolute bottom-0 right-0 mr-2 mb-2 text-xl">
+        <div
+          className={clsx(
+            "xp-card-points-has-chest",
+            chestSize === "md"
+              ? "xp-card-points-has-chest-md"
+              : "xp-card-points-has-chest-sm"
+          )}
+        >
           <span className="material-symbols">featured_seasonal_and_gifts</span>
         </div>
       )}

@@ -7,6 +7,18 @@
   @apply w-full flex-1 flex-col-centered shrink-0 aspect-square transition-all;
 }
 
+.xp-card-points-has-chest {
+  @apply absolute bottom-0 right-0;
+}
+
+.xp-card-points-has-chest-md {
+  @apply mr-2 mb-2 text-xl;
+}
+
+.xp-card-points-has-chest-sm {
+  @apply mr-1.5 min-[400px]:mr-[10px] min-[400px]:mb-[2px] min-[400px]:text-xl;
+}
+
 /* XPCardProjectVariant */
 
 .xp-card-project-variant {
