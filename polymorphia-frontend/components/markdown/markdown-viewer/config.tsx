@@ -1,8 +1,8 @@
 import { Components } from "react-markdown";
 import "./index.css";
 import Image from "next/image";
-import { MarkdownImageProps } from "./types";
-import { isValidUrl } from "../isValidUrl";
+import { MarkdownImageProps } from "@/components/markdown/markdown-viewer/types";
+import { isValidUrl } from "@/components/markdown/isValidUrl";
 
 export const markdownConfig: Components = {
   h1: ({ ...props }) => <h1 className="h1-markdown" {...props} />,

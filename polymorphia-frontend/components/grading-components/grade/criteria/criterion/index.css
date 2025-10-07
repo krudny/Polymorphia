@@ -1,0 +1,18 @@
+@import "tailwindcss";
+@import "../../../../../styles/globals.css";
+
+.grade-criterion {
+  @apply flex flex-col mt-2 opacity-0 min-h-[320px];
+
+  h2 {
+    @apply text-3xl my-3;
+  }
+}
+
+.grade-criterion-progress-bar {
+  @apply w-full px-6 pt-6;
+}
+
+.grade-input-wrapper {
+  @apply w-20 mx-auto flex items-center -mt-6 z-[20];
+}

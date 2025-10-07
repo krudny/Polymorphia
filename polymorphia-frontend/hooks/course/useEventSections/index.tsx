@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
-import { UseEventSections } from "./types";
+import { UseEventSections } from "@/hooks/course/useEventSections/types";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export default function useEventSections(): UseEventSections {

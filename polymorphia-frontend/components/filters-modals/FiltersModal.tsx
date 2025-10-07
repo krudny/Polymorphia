@@ -8,7 +8,7 @@ import { FilterActions, FilterOption } from "@/hooks/course/useFilters/types";
 import { useRef } from "react";
 import toast from "react-hot-toast";
 import "./index.css";
-import { FiltersModalProps } from "./types";
+import { FiltersModalProps } from "@/components/filters-modals/types";
 
 export default function FiltersModal<FilterIdType extends string>({
   filters,

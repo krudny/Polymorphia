@@ -1,8 +1,8 @@
-import { ItemResponseDTO, ChestResponseDTO } from "../reward";
+import { ItemResponseDTO, ChestResponseDTO } from "@/interfaces/api/reward";
 import {
   ItemAssignmentDetailsResponseDTO,
   ChestAssignmentDetailsResponseDTO,
-} from "../reward/assigned";
+} from "@/interfaces/api/reward/assigned";
 
 export interface EquipmentItemResponseDTO {
   base: ItemResponseDTO;

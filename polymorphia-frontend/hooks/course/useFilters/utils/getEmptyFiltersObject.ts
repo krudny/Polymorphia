@@ -1,4 +1,4 @@
-import { FilterState } from "../types";
+import { FilterState } from "@/hooks/course/useFilters/types";
 
 export function getEmptyFiltersObject<FilterIdType extends string>() {
   return {

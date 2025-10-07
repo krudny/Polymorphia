@@ -1,4 +1,4 @@
-import { TargetTypes } from "@/interfaces/api/grade";
+import { TargetTypes } from "@/interfaces/api/grade/target";
 import { GradingReducerState } from "@/providers/grading/gradingReducer/types";
 
 export function getKeyForSelectedTarget(

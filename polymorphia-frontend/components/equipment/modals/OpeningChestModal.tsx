@@ -1,5 +1,5 @@
 import Modal from "@/components/modal/Modal";
-import OpeningChestModalContent from "./OpeningChestModalContent";
+import OpeningChestModalContent from "@/components/equipment/modals/OpeningChestModalContent";
 import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
 
 export default function OpeningChestModal() {
