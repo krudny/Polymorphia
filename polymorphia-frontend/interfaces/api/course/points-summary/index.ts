@@ -1,4 +1,4 @@
-import { AssignedItemResponseDTO } from "../../reward/assigned";
+import { AssignedItemResponseDTO } from "@/interfaces/api/reward/assigned";
 
 export interface PointsSummaryResponseDTO {
   gained: PointsSummaryDetailsResponseDTO;

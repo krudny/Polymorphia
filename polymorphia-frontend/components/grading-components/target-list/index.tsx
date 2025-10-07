@@ -9,8 +9,9 @@ import "./index.css";
 import { Fragment } from "react";
 import { useMediaQuery } from "react-responsive";
 import { GradingReducerActions } from "@/providers/grading/gradingReducer/types";
-import { StudentTargetData, TargetTypes } from "@/interfaces/api/grade";
+import { TargetTypes } from "@/interfaces/api/grade/target";
 import Loading from "@/components/loading";
+import areTargetsEqual from "@/providers/grading/utils/areTargetsEqual";
 
 export default function TargetList() {
   const isMd = useMediaQuery({ minWidth: "786px" });
@@ -23,6 +24,7 @@ export default function TargetList() {
     isTargetsLoading,
     setAreFiltersOpen,
   } = useGradingContext();
+  const { selectedTarget } = state;
 
   if (isTargetsLoading || !targets) {
     return (
@@ -50,34 +52,42 @@ export default function TargetList() {
 
   const mainComponent = () => (
     <div className="group-list">
-      {targets.map((target, index: number) => (
+      {targets.map((target, index) => (
         <Fragment key={index}>
-          <div
-            className="group-record"
-            onClick={() =>
-              dispatch({
-                type: GradingReducerActions.SET_TARGET,
-                payload: target,
-              })
-            }
-          >
+          <div className="group-record">
             {(target.type === TargetTypes.STUDENT
               ? [target]
               : target.members
-            ).map((student: StudentTargetData, index: number) => {
+            ).map((student, index) => {
+              // Handles entire group selection or student selection when targets are TargetType.STUDENT.
+              const isTargetMatchingSelectedTarget = areTargetsEqual(
+                selectedTarget,
+                target
+              );
+
+              // Handles selection of one student in the group
+              const isStudentSelectedFromGroup =
+                selectedTarget?.type === TargetTypes.STUDENT &&
+                selectedTarget.id === student.id;
+
               const isSelected =
-                !!state.selectedTarget &&
-                ((state.selectedTarget.type === TargetTypes.STUDENT &&
-                  state.selectedTarget.id === student.id) ||
-                  (state.selectedTarget.type === TargetTypes.STUDENT_GROUP &&
-                    target.type === TargetTypes.STUDENT_GROUP &&
-                    state.selectedTarget.groupId === target.groupId));
+                isTargetMatchingSelectedTarget || isStudentSelectedFromGroup;
 
               const color = isSelected
-                ? "sky"
-                : student.gainedXp
+                ? student.gainedXp
                   ? "green"
-                  : "gray";
+                  : "sky"
+                : "gray";
+
+              const handleSelection = () => {
+                dispatch({
+                  type: GradingReducerActions.HANDLE_STUDENT_SELECTION,
+                  payload: {
+                    target,
+                    member: student,
+                  },
+                });
+              };
 
               return (
                 <XPCard
@@ -100,6 +110,7 @@ export default function TargetList() {
                       isXPLabelVisible={!!student.gainedXp}
                     />
                   }
+                  onClick={handleSelection}
                 />
               );
             })}

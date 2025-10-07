@@ -3,11 +3,11 @@
 import { RewardProps } from "@/components/grading-components/grade/types";
 import AssignRewardModal from "@/views/course/grading/modals/assign-reward";
 import { useState } from "react";
-import { CriterionAssignableRewardResponseDTO } from "@/interfaces/api/grade";
 import "./index.css";
 import { API_STATIC_URL } from "@/services/api";
 import ImageBadge from "@/components/image-badge/ImageBadge";
 import Image from "next/image";
+import { CriterionAssignableRewardResponseDTO } from "@/interfaces/api/grade/criteria";
 
 export default function AssignReward({
   criterion,

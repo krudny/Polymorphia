@@ -1,5 +1,5 @@
 import GradeModal from "@/components/speed-dial/modals/grade";
-import { RoadmapModalsProps } from "./types";
+import { RoadmapModalsProps } from "@/app/(logged-in)/roadmap/types";
 
 export default function RoadmapModals({
   selectedGradableEvent,

@@ -5,9 +5,9 @@ import {
   FilterAction,
   FilterActions,
 } from "./types";
-import { filterReducer } from "./utils/filterReducer";
-import { getInitialState } from "./utils/getInitialState";
-import { validateFilters } from "./utils/validateFilters";
+import { filterReducer } from "@/hooks/course/useFilters/utils/filterReducer";
+import { getInitialState } from "@/hooks/course/useFilters/utils/getInitialState";
+import { validateFilters } from "@/hooks/course/useFilters/utils/validateFilters";
 
 export function useFilters<FilterIdType extends string>(
   configs: FilterConfig<FilterIdType>[]
