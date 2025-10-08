@@ -2,8 +2,12 @@ package com.agh.polymorphia_backend.exception.validation;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 
+@Data
 @Builder
 @AllArgsConstructor
-public record ValidationError(String field, String message) {
+public class ValidationError {
+    private final String field;
+    private final String message;
 }

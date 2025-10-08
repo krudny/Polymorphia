@@ -44,7 +44,7 @@ public class EmailService {
 
             helper.setText(htmlContent, true);
 
-            ClassPathResource imageResource = new ClassPathResource("templates/email-header.png");
+            ClassPathResource imageResource = new ClassPathResource("templates/email-header.webp");
             helper.addInline("headerImage", imageResource);
 
             mailSender.send(message);
