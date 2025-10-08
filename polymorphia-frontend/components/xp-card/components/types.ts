@@ -6,7 +6,6 @@ export interface XPCardPointsProps {
   isXPLabelVisible?: boolean;
   hasChest?: boolean;
   color?: XPCardColors;
-  chestSize?: "sm" | "md";
 }
 
 export interface XPCardTextProps {

@@ -11,62 +11,27 @@ import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLab
 import Image from "next/image";
 import { API_STATIC_URL } from "@/services/api";
 import ImageBadge from "@/components/image-badge/ImageBadge";
-import XPCard from "@/components/xp-card/XPCard";
-import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 
 export default function GradeInfo({ grade, criteria }: GradeInfoProps) {
   const isMd = useMediaQuery({ minWidth: "768px" });
-  const isXs = useMediaQuery({ maxWidth: "26rem" });
 
   const accordionSections = [
     ...criteria.map(({ id }) => String(id)),
     ...(grade.isGraded ? ["Komentarz"] : []),
   ];
 
-  const totalXp = grade.isGraded
-    ? grade.criteria
-        .reduce((acc, criterion) => {
-          return acc + (Number(criterion.gainedXp) ?? 0);
-        }, 0)
-        .toFixed(1)
-    : "-";
-
-  const hasChest = grade.isGraded
-    ? grade.criteria.some((criterion) => criterion.assignedRewards.length > 0)
-    : false;
+  const initallyOpenedAccordionSections = new Set(
+    accordionSections.length > 0 && isMd && grade.isGraded
+      ? [accordionSections[0]]
+      : []
+  );
 
   return (
     <section className="grade-info-section">
-      <div className="mb-5">
-        <XPCard
-          title="Ocena"
-          subtitle={
-            grade.isGraded
-              ? "Praca została oceniona!"
-              : "Praca nie została jeszcze oceniona!"
-          }
-          size={isXs ? "xs" : "sm"}
-          color={grade.isGraded ? "green" : "gray"}
-          rightComponent={
-            <XPCardPoints
-              points={totalXp}
-              color={"gray"}
-              hasChest={hasChest}
-              chestSize="sm"
-            />
-          }
-        />
-      </div>
       <Accordion
         className="grade-info-accordion-override"
         sectionIds={new Set(accordionSections)}
-        initiallyOpenedSectionIds={
-          new Set(
-            accordionSections.length > 0 && isMd && grade.isGraded
-              ? [accordionSections[0]]
-              : []
-          )
-        }
+        initiallyOpenedSectionIds={initallyOpenedAccordionSections}
         maxOpen={1}
         shouldAnimateInitialOpen={true}
       >
