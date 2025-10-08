@@ -6,7 +6,6 @@ import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { FieldInfo } from "@/components/form/FieldInfo";
 import { useForm } from "@tanstack/react-form";
 import { createAnimalSchema } from "@/components/form/schema";
-import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { CreateAnimalRequestDTO } from "@/interfaces/api/student";
 import useCreateAnimal from "@/hooks/course/useCreateAnimal";
 

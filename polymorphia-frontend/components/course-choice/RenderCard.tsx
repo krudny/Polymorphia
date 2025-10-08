@@ -4,9 +4,8 @@ import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import { RenderCardProps } from "@/components/course-choice/types";
 import { ReactNode } from "react";
 import useIsAnimalValid from "@/hooks/course/useAnimal";
-import CreateAnimalModal from "@/components/course-choice/modal/createAnimal";
 
-export default function renderCard({
+export default function RenderCard({
   availableCourse,
   currentCourseId,
   handleCourseSelection,

@@ -3,7 +3,7 @@ import XPCardText from "@/components/xp-card/components/XPCardText";
 import { ReactNode } from "react";
 import { InstructorGradableEventResponseDTO } from "@/interfaces/api/course";
 
-export default function renderCard(
+export default function RenderCard(
   gradableEvent: InstructorGradableEventResponseDTO,
   isMobile: boolean,
   handleClick: (id: number) => void
