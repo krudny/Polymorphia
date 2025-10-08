@@ -79,26 +79,23 @@ WITH scored AS (SELECT scg.id                                        AS animal_i
                                animal_name,
                                animal_id
                            ) AS position
-    FROM summed
-),
-    evolution_mapping AS (SELECT DISTINCT ON (r.animal_id
-) r.animal_id,
-    r.animal_name,
-    r.student_id,
-    r.student_name,
-    r.group_name,
-    r.course_id,
-    r.flat_bonus_sum + r.percentage_bonus_sum AS total_bonus_sum,
-    r.total_xp_sum,
-    r.position,
-    es.name AS evolution_stage,
-    es.image_url
-    FROM ranked r
-    LEFT JOIN evolution_stages es
-    ON es.course_id = r.course_id
-    AND es.min_xp <= r.total_xp_sum
-    ORDER BY r.animal_id, es.min_xp DESC
-)
+                FROM summed),
+     evolution_mapping AS (SELECT DISTINCT ON (r.animal_id) r.animal_id,
+                                                            r.animal_name,
+                                                            r.student_id,
+                                                            r.student_name,
+                                                            r.group_name,
+                                                            r.course_id,
+                                                            r.flat_bonus_sum + r.percentage_bonus_sum AS total_bonus_sum,
+                                                            r.total_xp_sum,
+                                                            r.position,
+                                                            es.name                                   AS evolution_stage,
+                                                            es.image_url
+                           FROM ranked r
+                                    LEFT JOIN evolution_stages es
+                                              ON es.course_id = r.course_id
+                                                  AND es.min_xp <= r.total_xp_sum
+                           ORDER BY r.animal_id, es.min_xp DESC)
 SELECT *
 FROM evolution_mapping;
 
