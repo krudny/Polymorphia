@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@import "../../../../styles/globals.css";
+
+/* TODO: repetition with invite form */
+
+.create-animal-wrapper {
+  @apply min-w-80;
+}
+
+.create-animal-wrapper form {
+  @apply w-full flex flex-col gap-y-4;
+}
+
+.create-animal-input-wrapper {
+  @apply w-full h-[54px];
+}
+
+.create-animal-wrapper input {
+  @apply w-full text-center h-full text-3xl pb-1 border-b-2 border-b-primary-dark focus:outline-none text-primary-dark;
+}

@@ -8,6 +8,7 @@ import { useFadeInAnimate } from "@/animations/FadeIn";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import React from "react";
 import useLogout from "@/hooks/course/useLogout";
+import CreateAnimalModal from "@/components/course-choice/modal/createAnimal";
 
 export default function CourseChoice() {
   const { data: courses, isLoading } = useUserCourses();

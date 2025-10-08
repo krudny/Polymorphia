@@ -182,19 +182,15 @@ class AccessAuthorizerTest {
     }
 
 
-    private static class AccessAuthorizationScenario {
-        final AbstractRoleUser user;
-        final Long id;
-        final UserType role;
+    private record AccessAuthorizationScenario(Long id, UserType role, AbstractRoleUser user) {
+            private AccessAuthorizationScenario(Long id, UserType role, Class<? extends AbstractRoleUser> user) {
+                this.id = id;
+                this.role = role;
+                this.user = mock(user);
+                User mainUser = mock(User.class);
+                doReturn(id).when(mainUser).getId();
+                doReturn(mainUser).when(this.user).getUser();
 
-        AccessAuthorizationScenario(Long id, UserType role, Class<? extends AbstractRoleUser> clazz) {
-            this.id = id;
-            this.role = role;
-            this.user = mock(clazz);
-            User mainUser = mock(User.class);
-            doReturn(id).when(mainUser).getId();
-            doReturn(mainUser).when(user).getUser();
-
+            }
         }
-    }
 }

@@ -544,13 +544,22 @@ values (11, 'Projekt 2', true, false, 1, 5, false),
        (12, 'Projekt 2', true, false, 2, 5, false);
 
 INSERT INTO test_sections (id)
-VALUES (1),(8);
+VALUES (1),
+       (8);
 
 INSERT INTO project_sections (id)
-VALUES (3),(7),(10),(5),(11),(12);
+VALUES (3),
+       (7),
+       (10),
+       (5),
+       (11),
+       (12);
 
 INSERT INTO assignment_sections (id)
-VALUES (2),(4),(6),(9);
+VALUES (2),
+       (4),
+       (6),
+       (9);
 
 INSERT INTO evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id)
 VALUES (6, 'Nieopierzony Odkrywca',

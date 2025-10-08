@@ -1,6 +1,5 @@
 package com.agh.polymorphia_backend.service.validation;
 
-import com.agh.polymorphia_backend.model.invitation.InvitationToken;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
@@ -9,13 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.ZonedDateTime;
-
 @Component
 @AllArgsConstructor
 public class UserValidator {
-    public static final String USER_ALREADY_REGISTERED  = "User has already been registered";
-    public static final String USER_ALREADY_EXISTS  = "User already exists";
+    public static final String USER_ALREADY_REGISTERED = "User has already been registered";
+    public static final String USER_ALREADY_EXISTS = "User already exists";
 
     private final UserRepository userRepository;
     private final StudentRepository studentRepository;

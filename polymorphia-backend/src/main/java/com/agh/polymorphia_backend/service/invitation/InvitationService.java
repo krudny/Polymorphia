@@ -55,7 +55,7 @@ public class InvitationService {
             validateInvitation(inviteDTO);
             AbstractRoleUser roleUser = createAndSaveRoleUser(inviteDTO);
             InvitationToken token = createAndSaveInvitationToken(inviteDTO);
-//            createAndSaveUserCourseRole(roleUser.getUser(), course, inviteDTO.getRole());
+            createAndSaveUserCourseRole(roleUser.getUser(), course, inviteDTO.getRole());
             sendInvitationEmail(inviteDTO, token);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FAILED_TO_INVITE);

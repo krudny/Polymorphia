@@ -3,13 +3,17 @@ import { RoleTextMap } from "@/interfaces/api/user";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import { RenderCardProps } from "@/components/course-choice/types";
 import { ReactNode } from "react";
+import useIsAnimalValid from "@/hooks/course/useAnimal";
+import CreateAnimalModal from "@/components/course-choice/modal/createAnimal";
 
 export default function renderCard({
   availableCourse,
   currentCourseId,
   handleCourseSelection,
+  setClickedCourseId,
 }: RenderCardProps): ReactNode {
   const { id, name, coordinatorName, imageUrl, userRole } = availableCourse;
+  const { data: animal } = useIsAnimalValid(id);
 
   return (
     <XPCard
@@ -22,7 +26,13 @@ export default function renderCard({
       }
       size="sm"
       leftComponent={<XPCardImage imageUrl={imageUrl} alt={name} />}
-      onClick={() => handleCourseSelection(id)}
+      onClick={() => {
+        if (!animal) {
+          setClickedCourseId(id);
+        } else {
+          handleCourseSelection(id);
+        }
+      }}
     />
   );
 }

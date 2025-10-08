@@ -19,13 +19,16 @@ TRUNCATE TABLE percentage_bonus_items cascade;
 
 -- Users
 INSERT INTO users (id, first_name, last_name, email, password, preferred_course_id, is_active)
-VALUES (3, 'Michał', 'Kowalski', 'coordinator@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O',null, false);
+VALUES (3, 'Michał', 'Kowalski', 'coordinator@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O',
+        null, false);
 
 INSERT INTO users (id, first_name, last_name, email, password, preferred_course_id, is_active)
-VALUES (2, 'Piotr', 'Budynek', 'student@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null, false);
+VALUES (2, 'Piotr', 'Budynek', 'student@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null,
+        false);
 
 INSERT INTO users (id, first_name, last_name, email, password, preferred_course_id, is_active)
-VALUES (4, 'Sławomir', 'Nowak', 'instructor@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O',null, false);
+VALUES (4, 'Sławomir', 'Nowak', 'instructor@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O',
+        null, false);
 
 -- Coordinators
 INSERT into coordinators(user_id)
@@ -35,13 +38,16 @@ INSERT into coordinators(user_id)
 values (4);
 
 -- Courses
-INSERT INTO courses (id, name, coordinator_id, coordinator_image_url, instructor_image_url, image_url, markdown, markdown_source_url)
+INSERT INTO courses (id, name, coordinator_id, coordinator_image_url, instructor_image_url, image_url, markdown,
+                     markdown_source_url)
 VALUES (1, 'Programowanie Obiektowe', 3, '/coord_url', '/instr_url', 'img_url', '', '');
 
-INSERT INTO courses (id, name, coordinator_id, coordinator_image_url, instructor_image_url, image_url, markdown, markdown_source_url)
+INSERT INTO courses (id, name, coordinator_id, coordinator_image_url, instructor_image_url, image_url, markdown,
+                     markdown_source_url)
 VALUES (2, 'Programowanie Obiektowe', 3, '/coord_url', '/instr_url', 'img_url', '', '');
 
-INSERT INTO courses (id, name, coordinator_id, coordinator_image_url, instructor_image_url, image_url, markdown, markdown_source_url)
+INSERT INTO courses (id, name, coordinator_id, coordinator_image_url, instructor_image_url, image_url, markdown,
+                     markdown_source_url)
 VALUES (3, 'Programowanie Obiektowe', 4, '/coord_url', '/instr_url', 'img_url', '', '');
 
 -- Students
@@ -49,8 +55,8 @@ INSERT INTO students(index_number, user_id)
 values (123456, 2);
 
 update users
-    set preferred_course_id=1
-where id=2;
+set preferred_course_id=1
+where id = 2;
 
 -- Instructors
 INSERT into instructors(user_id)
@@ -88,10 +94,12 @@ VALUES (1, 'Pisklak', 20, 'description', 2.0, 'imageUrl_pisklak', 1, 1),
        (4, 'Podlot2', 50, 'description2', 3.0, 'imageUrl2', 3, 2);
 
 -- Event sections
-INSERT INTO public.event_sections (id, has_gradable_events_with_topics, is_hidden, is_shown_in_road_map, name, order_index,
+INSERT INTO public.event_sections (id, has_gradable_events_with_topics, is_hidden, is_shown_in_road_map, name,
+                                   order_index,
                                    course_id)
 VALUES (2, true, true, true, 'Lab', 1, 1);
-INSERT INTO public.event_sections (id, has_gradable_events_with_topics, is_hidden, is_shown_in_road_map, name, order_index,
+INSERT INTO public.event_sections (id, has_gradable_events_with_topics, is_hidden, is_shown_in_road_map, name,
+                                   order_index,
                                    course_id)
 VALUES (1, true, true, true, 'Kartkówka', 2, 1);
 

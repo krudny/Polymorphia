@@ -19,3 +19,7 @@ export const inviteSchema = z.object({
   email: emailField,
   courseId: z.number(),
 });
+
+export const createAnimalSchema = z.object({
+  animalName: z.string().nonempty(),
+});

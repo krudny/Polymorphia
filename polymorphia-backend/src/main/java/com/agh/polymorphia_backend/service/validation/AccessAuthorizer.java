@@ -1,9 +1,13 @@
 package com.agh.polymorphia_backend.service.validation;
 
+import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.User;
+import com.agh.polymorphia_backend.model.user.UserCourseRole;
 import com.agh.polymorphia_backend.model.user.UserType;
+import com.agh.polymorphia_backend.repository.course.AnimalRepository;
+import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.role.InstructorRepository;
 import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
 import com.agh.polymorphia_backend.service.user.UserService;
@@ -20,9 +24,13 @@ import static com.agh.polymorphia_backend.service.course.CourseService.COURSE_NO
 @Service
 @AllArgsConstructor
 public class AccessAuthorizer {
+    private final static String USER_COURSE_ROLE_NOT_FOUND = "User course role not found";
+    private final static String STUDENT_NOT_ASSIGNED_TO_GROUP = "Student is not assigned to any course group";
     private final UserService userService;
+    private final UserCourseRoleRepository userCourseRoleRepository;
     private final InstructorRepository instructorRepository;
     private final StudentRepository studentRepository;
+    private final AnimalRepository animalRepository;
 
     public void authorizeCourseAccess(Course course) {
         AbstractRoleUser user = userService.getCurrentUser();
@@ -35,15 +43,22 @@ public class AccessAuthorizer {
         }
     }
 
-    public void authorizePreferredCourseSwitch(Course course) {
+    public boolean authorizePreferredCourseSwitch(Course course) {
         User user = userService.getCurrentUser().getUser();
 
-        if (!isPreferredCourseSwitchAuthorized(user, course)) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    COURSE_NOT_FOUND
-            );
+        UserCourseRole userCourseRole = userCourseRoleRepository
+                .findByUserIdAndCourseId(user.getId(), course.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, USER_COURSE_ROLE_NOT_FOUND));
+
+        if (userCourseRole.getRole() == UserType.STUDENT) {
+
+            Animal animal = animalRepository.findByCourseIdAndStudentId(course.getId(), user.getId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_ASSIGNED_TO_GROUP));
+
+            return animal.getName() != null;
         }
+
+        return true;
     }
 
     public boolean hasAnyRole(List<UserType> roles) {
@@ -69,8 +84,6 @@ public class AccessAuthorizer {
 //                || isCourseAccessAuthorizedInstructor(user, course)
 //                || isCourseAccessAuthorizedCoordinator(user, course);
     }
-
-
 
 
     private boolean isCourseAccessAuthorizedCoordinator(User user, Course course) {
