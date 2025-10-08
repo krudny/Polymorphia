@@ -67,11 +67,13 @@ export function useAnimatedModalState(
     if (isOpen && modalState === "closed") {
       setModalState("opening");
       tl.play();
+      document.body.style.overflow = "hidden";
     }
 
     if (!isOpen && modalState === "opened") {
       setModalState("closing");
       tl.reverse();
+      document.body.style.overflow = "auto";
     }
   }, [isOpen, modalState]);
 
