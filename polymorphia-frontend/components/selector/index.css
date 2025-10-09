@@ -11,7 +11,7 @@
 }
 
 .selector {
-  @apply w-full border-2 text-center rounded-sm selector-background;
+  @apply w-full border-2 text-center rounded-sm;
   @apply cursor-pointer flex items-center justify-between transition-all duration-200 focus:outline-none;
   @apply border-primary-dark   dark:text-secondary-gray dark:border-secondary-gray;
 }
@@ -22,6 +22,10 @@
 
 .selector-value {
   @apply text-primary-dark;
+}
+
+.selector-placeholder {
+  @apply text-[#898989];
 }
 
 .selector-arrow {

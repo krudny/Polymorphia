@@ -4,7 +4,8 @@ export const selectorVariants = tv({
   slots: {
     container: "selector-container",
     button: "selector",
-    value: "",
+    value: "selector-value",
+    placeholder: "selector-placeholder",
     arrow: "selector-arrow",
     dropdown: "selector-dropdown",
     option: "selector-option",
@@ -13,35 +14,43 @@ export const selectorVariants = tv({
     size: {
       xs: {
         value: "text-xs",
+        placeholder: "text-xs",
         option: "text-xs",
       },
       sm: {
         value: "text-sm",
-        option: "text-sm",
+        placeholder: "text-sm",
+        option: "text-xs",
       },
       md: {
         value: "text-base",
-        option: "text-base",
+        placeholder: "text-base",
+        option: "text-sm",
       },
       lg: {
         value: "text-lg",
-        option: "text-lg",
+        placeholder: "text-lg",
+        option: "text-base",
       },
       xl: {
         value: "text-xl",
-        option: "text-xl",
+        placeholder: "text-xl",
+        option: "text-lg",
       },
       "2xl": {
         value: "text-2xl",
-        option: "text-2xl",
+        placeholder: "text-2xl",
+        option: "text-xl",
       },
       "3xl": {
         value: "text-3xl",
-        option: "text-3xl",
+        placeholder: "text-3xl",
+        option: "text-2xl",
       },
       "4xl": {
         value: "text-4xl",
-        option: "text-4xl",
+        placeholder: "text-4xl",
+        option: "text-3xl",
       },
     },
     padding: {
@@ -56,6 +65,10 @@ export const selectorVariants = tv({
       sm: {
         button: "px-3 py-1.5",
         option: "px-3 py-2",
+      },
+      base: {
+        button: "px-4 py-2",
+        option: "px-4 py-2",
       },
       md: {
         button: "px-4 py-2.5",

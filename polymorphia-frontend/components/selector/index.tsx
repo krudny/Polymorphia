@@ -68,9 +68,11 @@ export default function Selector({
           styles.button(),
           disabled && "selector-disabled",
           isOpen && "selector-open"
-        )} ${background}`}
+        )}`}
       >
-        <span className={styles.value()}>
+        <span
+          className={selectedOption ? styles.value() : styles.placeholder()}
+        >
           {selectedOption ? selectedOption.label : placeholder}
         </span>
         <svg

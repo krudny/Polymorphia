@@ -23,12 +23,8 @@ export default function InviteUserModal({
     setActiveModal("CSV");
   };
 
-  const handleCloseNestedModal = () => {
-    setActiveModal(null);
-  };
-
   if (activeModal === "MANUAL" && inviteType === InviteTypes.COURSE) {
-    return <InviteUserToCourseModal onClosedAction={handleCloseNestedModal} />;
+    return <InviteUserToCourseModal onClosedAction={onClosedAction} />;
   }
 
   if (activeModal === "MANUAL" && inviteType === InviteTypes.GROUP) {
@@ -38,7 +34,7 @@ export default function InviteUserModal({
   if (activeModal === "CSV" && inviteType === InviteTypes.COURSE) {
     return (
       <ImportCSVModal
-        onClosedAction={handleCloseNestedModal}
+        onClosedAction={onClosedAction}
         importType={ImportCSVTypes.STUDENT_INVITE}
       />
     );
