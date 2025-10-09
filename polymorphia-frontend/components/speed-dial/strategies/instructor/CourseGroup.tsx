@@ -10,7 +10,7 @@ export class CourseGroupStrategy
   getItems(): SpeedDialItem[] {
     return [
       this.createImportCSV(ImportCSVTypes.STUDENT_INVITE),
-      this.createInviteStudent(),
+      this.createInviteUserToCourse(),
     ];
   }
 }

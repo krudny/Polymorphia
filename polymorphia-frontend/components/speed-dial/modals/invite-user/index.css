@@ -1,26 +1,6 @@
 @import "tailwindcss";
 @import "../../../../styles/globals.css";
 
-.invite-wrapper {
-  @apply min-w-80;
-}
-
-.invite-wrapper form {
-  @apply w-full flex flex-col gap-y-4;
-}
-
-.invite-columns {
-  @apply flex justify-between gap-x-4;
-}
-
-.invite-input-wrapper {
-  @apply w-full h-[54px];
-}
-
-.invite-input-wrapper input {
-  @apply w-full text-center h-full text-3xl pb-1 border-b-2 border-b-primary-dark focus:outline-none text-primary-dark;
-}
-
-.invite-selector {
-  @apply w-52 text-nowrap;
+.invite-user-wrapper {
+  @apply min-w-72 flex flex-col gap-y-2;
 }

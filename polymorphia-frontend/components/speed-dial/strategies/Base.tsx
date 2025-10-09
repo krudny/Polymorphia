@@ -4,7 +4,11 @@ import ProjectVariantModal from "@/components/speed-dial/modals/project-variant"
 import GroupModal from "@/components/speed-dial/modals/group-info";
 import GroupPickingModal from "@/components/speed-dial/modals/group-pick";
 import ImportCSVModal from "@/components/speed-dial/modals/import-csv";
-import { ImportCSVType, ImportCSVTypes } from "@/interfaces/general";
+import {
+  ImportCSVType,
+  ImportCSVTypes,
+  InviteTypes,
+} from "@/interfaces/general";
 import {
   useEditMarkdownSpeedDialDynamicBehavior,
   useRejectMarkdownSpeedDialDynamicBehavior,
@@ -18,7 +22,8 @@ import {
 } from "@/hooks/speed-dial-dynamic-behavior/navigation";
 import { Role } from "@/interfaces/api/user";
 import { useProfileFiltersModalSpeedDialDynamicBehavior } from "@/hooks/speed-dial-dynamic-behavior/profile";
-import InviteUserModal from "../modals/invite-user";
+import InviteUserToCourseModal from "../modals/invite-user/invite-to-course";
+import InviteUserModal from "@/components/speed-dial/modals/invite-user";
 
 export abstract class BaseSpeedDialStrategy {
   abstract getItems(role: Role): SpeedDialItem[];
@@ -122,14 +127,36 @@ export abstract class BaseSpeedDialStrategy {
     };
   }
 
-  protected createInviteStudent(): SpeedDialItem {
+  protected createInviteUserToCourse(): SpeedDialItem {
     return {
       id: 5,
       orderIndex: 7,
-      label: "Zaproś użytkownika",
+      label: "Zaproś użytkownika do kursu",
       icon: "person_add",
       useDynamicBehavior: () => ({
-        modal: (onClose) => <InviteUserModal onClosedAction={onClose} />,
+        modal: (onClose) => (
+          <InviteUserModal
+            onClosedAction={onClose}
+            inviteType={InviteTypes.COURSE}
+          />
+        ),
+      }),
+    };
+  }
+
+  protected createInviteUserToGroup(): SpeedDialItem {
+    return {
+      id: 6,
+      orderIndex: 8,
+      label: "Zaproś użytkownika do grupy",
+      icon: "group_add",
+      useDynamicBehavior: () => ({
+        modal: (onClose) => (
+          <InviteUserModal
+            onClosedAction={onClose}
+            inviteType={InviteTypes.GROUP}
+          />
+        ),
       }),
     };
   }

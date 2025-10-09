@@ -7,7 +7,8 @@ export function useAnimatedModalState(
   isOpen: boolean,
   modalRef: RefObject<HTMLDivElement | null>,
   backdropRef: RefObject<HTMLDivElement | null>,
-  onClosed: () => void
+  onClosed: () => void,
+  animateBackdrop: boolean
 ) {
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
 
@@ -26,15 +27,21 @@ export function useAnimatedModalState(
       },
     });
 
+    if (animateBackdrop) {
+      tl.fromTo(
+        backdropRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.15, ease: "power1.inOut" }
+      );
+    } else {
+      gsap.set(backdropRef.current, { opacity: 1 });
+    }
+
     tl.fromTo(
-      backdropRef.current,
-      { opacity: 0 },
-      { opacity: 1, duration: 0.15, ease: "power1.inOut" }
-    ).fromTo(
       modalRef.current,
       { opacity: 0, scale: 0.95 },
       { opacity: 1, scale: 1, duration: 0.2, ease: "power1.inOut" },
-      "<"
+      animateBackdrop ? "<" : 0
     );
 
     timelineRef.current = tl;
