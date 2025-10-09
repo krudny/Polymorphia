@@ -10,9 +10,8 @@ export default function Home() {
     useHeroAnimation();
 
   return (
-    <>
-      <OwlImage owlBackgroundRef={owlBackgroundRef} owlRef={owlRef} />
+    <OwlImage owlBackgroundRef={owlBackgroundRef} owlRef={owlRef}>
       <HomeContent titleRef={titleRef} hasMountedRef={hasMountedRef} />
-    </>
+    </OwlImage>
   );
 }

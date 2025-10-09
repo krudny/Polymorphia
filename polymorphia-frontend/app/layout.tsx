@@ -5,7 +5,7 @@ import localFont from "next/font/local";
 import { League_Gothic } from "next/font/google";
 import { QueryClient } from "@tanstack/query-core";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { ReactNode, useState } from "react";
+import { ReactNode, Suspense, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { TitleProvider } from "@/components/navigation/TitleContext";
 import { ThemeProvider } from "next-themes";
@@ -33,6 +33,7 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   const [queryClient] = useState(() => new QueryClient());
+
   return (
     <html lang="pl" className="custom-scrollbar" suppressHydrationWarning>
       <head>
@@ -56,7 +57,7 @@ export default function RootLayout({
                   className="hero-background-wrapper"
                   forceTheme="light"
                 >
-                  {children}
+                  <Suspense fallback={null}>{children}</Suspense>
                 </BackgroundWrapper>
               </QueryClientProvider>
             </TitleProvider>

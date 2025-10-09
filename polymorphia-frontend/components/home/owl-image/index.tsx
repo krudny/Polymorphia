@@ -1,9 +1,12 @@
 import Image from "next/image";
 import "./index.css";
-import { useHeroAnimation } from "@/hooks/general/useHeroAnimation";
 import { OwlImageProps } from "@/components/home/owl-image/types";
 
-export default function OwlImage({ owlBackgroundRef, owlRef }: OwlImageProps) {
+export default function OwlImage({
+  owlBackgroundRef,
+  owlRef,
+  children,
+}: OwlImageProps) {
   return (
     <>
       <div className="hero-background-image" ref={owlBackgroundRef}>
@@ -30,6 +33,7 @@ export default function OwlImage({ owlBackgroundRef, owlRef }: OwlImageProps) {
           />
         </div>
       </div>
+      {children}
     </>
   );
 }

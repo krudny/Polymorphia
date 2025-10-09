@@ -2,16 +2,12 @@
 
 import { useLayoutEffect, useRef, useState } from "react";
 import { useInvitationToken } from "@/hooks/general/useInvitationToken";
-import {
-  animateInitialMount,
-  animateLoginFormVisibility,
-} from "@/animations/Home";
+import { animateLoginFormVisibility } from "@/animations/Home";
 import { HomeContentProps } from "./types";
 import RegisterForm from "@/components/home/register-form";
 import LoginForm from "@/components/home/login-form";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import "./index.css";
-import { useHeroAnimation } from "@/hooks/general/useHeroAnimation";
 
 export default function HomeContent({
   titleRef,

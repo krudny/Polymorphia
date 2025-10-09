@@ -8,9 +8,8 @@ export default function NotFound() {
   const { owlBackgroundRef, owlRef, titleRef } = useHeroAnimation();
 
   return (
-    <>
-      <OwlImage owlBackgroundRef={owlBackgroundRef} owlRef={owlRef} />
+    <OwlImage owlBackgroundRef={owlBackgroundRef} owlRef={owlRef}>
       <NotFoundContent titleRef={titleRef} />
-    </>
+    </OwlImage>
   );
 }
