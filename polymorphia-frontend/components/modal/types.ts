@@ -9,5 +9,4 @@ export interface ModalProps {
   subtitle?: string;
   children?: ReactNode;
   shouldUnmountWhenClosed?: boolean;
-  animateBackdrop?: boolean;
 }

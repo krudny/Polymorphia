@@ -22,7 +22,6 @@ import {
 } from "@/hooks/speed-dial-dynamic-behavior/navigation";
 import { Role } from "@/interfaces/api/user";
 import { useProfileFiltersModalSpeedDialDynamicBehavior } from "@/hooks/speed-dial-dynamic-behavior/profile";
-import InviteUserToCourseModal from "../modals/invite-user/invite-to-course";
 import InviteUserModal from "@/components/speed-dial/modals/invite-user";
 
 export abstract class BaseSpeedDialStrategy {

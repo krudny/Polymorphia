@@ -9,7 +9,6 @@ import { useEffect, useRef, useState } from "react";
 import { ModalProvider } from "@/providers/modal/ModalContext";
 import { ModalProps } from "@/components/modal/types";
 import { useTheme } from "next-themes";
-import { animateAccordion } from "@/animations/Accordion";
 
 export default function Modal(props: ModalProps) {
   const {
@@ -19,7 +18,6 @@ export default function Modal(props: ModalProps) {
     subtitle,
     children,
     shouldUnmountWhenClosed = false,
-    animateBackdrop = true,
     ...rest
   } = props;
 
@@ -44,8 +42,7 @@ export default function Modal(props: ModalProps) {
     modalVisible,
     modalRef,
     backdropRef,
-    onClosed,
-    animateBackdrop
+    onClosed
   );
 
   return (

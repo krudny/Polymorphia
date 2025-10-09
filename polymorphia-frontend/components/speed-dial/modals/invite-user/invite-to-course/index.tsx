@@ -175,7 +175,6 @@ export default function InviteUserToCourseModal({
       onClosed={onClosedAction}
       title="Zaproś użytkownika do kursu"
       subtitle="Uzupełnij wszystkie dane:"
-      animateBackdrop={false}
     >
       <InviteUserToCourseModalContent />
     </Modal>

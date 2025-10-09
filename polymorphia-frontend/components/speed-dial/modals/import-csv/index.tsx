@@ -43,7 +43,6 @@ const ImportCSVModalContent = ({ onClosedAction }: SpeedDialModalProps) => {
       onClosed={onClosedAction}
       title="Import CSV"
       subtitle={subtitle}
-      animateBackdrop={false}
     >
       {content}
     </Modal>
