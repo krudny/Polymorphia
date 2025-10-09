@@ -133,7 +133,9 @@ function InviteUserModalContent() {
                   type="number"
                   id={field.name}
                   placeholder="Numer indeksu"
-                  value={field.state.value === 0 ? "" : field.state.value}
+                  value={
+                    field.state.value === undefined ? "" : field.state.value
+                  }
                   onBlur={field.handleBlur}
                   onChange={(event) => {
                     const value = event.target.value;
