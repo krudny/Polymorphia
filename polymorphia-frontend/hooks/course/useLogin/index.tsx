@@ -11,7 +11,7 @@ export default function useLogin({ form }: UseLoginProps) {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  return useMutation({
+  const mutation = useMutation({
     mutationFn: (data: LoginDTO) => {
       return toast.promise(AuthService.login(data), {
         loading: "Logowanie...",
@@ -42,4 +42,6 @@ export default function useLogin({ form }: UseLoginProps) {
       form.reset();
     },
   });
+
+  return { mutation };
 }

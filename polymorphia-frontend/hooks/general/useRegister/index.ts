@@ -6,12 +6,12 @@ import { RegisterRequestDTO } from "@/interfaces/api/user";
 
 export default function useRegister(): UseRegister {
   const mutation = useMutation<void, Error, RegisterRequestDTO>({
-    mutationFn: (request) => UserService.register(request),
-    onSuccess: () => {
-      toast.success("Utworzono konto!");
-    },
-    onError: ({ message }: Error) => {
-      toast.error(message);
+    mutationFn: (request: RegisterRequestDTO) => {
+      return toast.promise(UserService.register(request), {
+        loading: "Rejestracja...",
+        success: "Utworzono konto!",
+        error: (error) => error.message,
+      });
     },
   });
 

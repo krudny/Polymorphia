@@ -21,11 +21,11 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
       onBlur: loginSchema,
     },
     onSubmit: async ({ value }) => {
-      login(value);
+      login.mutate(value);
     },
   });
 
-  const { mutate: login, isPending } = useLogin({ form });
+  const { mutation: login } = useLogin({ form });
 
   return (
     <div className="login-wrapper">
@@ -54,7 +54,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
                   onChange={(event) => field.handleChange(event.target.value)}
                   required
                   autoComplete="off"
-                  disabled={isPending}
+                  disabled={login.isPending}
                 />
                 <FieldInfo field={field} />
               </div>
@@ -72,7 +72,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
                   onBlur={field.handleBlur}
                   onChange={(event) => field.handleChange(event.target.value)}
                   required
-                  disabled={isPending}
+                  disabled={login.isPending}
                 />
                 <FieldInfo field={field} />
               </div>
@@ -87,7 +87,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
                 <ButtonWithBorder
                   text="Zaloguj się"
                   className="mt-12"
-                  isActive={isPristine || !canSubmit || isPending}
+                  isActive={isPristine || !canSubmit || login.isPending}
                   forceDark
                 />
               </>

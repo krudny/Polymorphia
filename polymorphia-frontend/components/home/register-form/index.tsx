@@ -8,7 +8,7 @@ import { RegisterFormProps } from "@/components/home/register-form/types";
 import useRegister from "@/hooks/general/useRegister";
 
 export default function RegisterForm({ invitationToken }: RegisterFormProps) {
-  const { mutation } = useRegister();
+  const { mutation: register } = useRegister();
   const form = useForm({
     defaultValues: {
       password: "",
@@ -17,7 +17,7 @@ export default function RegisterForm({ invitationToken }: RegisterFormProps) {
       onBlur: registerSchema,
     },
     onSubmit: async ({ value }) => {
-      mutation.mutate({
+      register.mutate({
         invitationToken,
         password: value.password,
       });
@@ -47,6 +47,7 @@ export default function RegisterForm({ invitationToken }: RegisterFormProps) {
                   onChange={(event) => field.handleChange(event.target.value)}
                   required
                   autoComplete="new-password"
+                  disabled={register.isPending}
                 />
                 <FieldInfo field={field} />
               </div>
@@ -61,7 +62,7 @@ export default function RegisterForm({ invitationToken }: RegisterFormProps) {
                 <ButtonWithBorder
                   text="Utwórz konto"
                   className="mt-12"
-                  isActive={isPristine || !canSubmit}
+                  isActive={isPristine || !canSubmit || !register.isPending}
                   forceDark
                 />
               </>
