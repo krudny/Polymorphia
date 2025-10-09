@@ -13,7 +13,6 @@ import com.agh.polymorphia_backend.repository.user.role.InstructorRepository;
 import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
 import com.agh.polymorphia_backend.service.EmailService;
 import com.agh.polymorphia_backend.service.course.CourseService;
-import com.agh.polymorphia_backend.service.invitation_token.InvitationTokenService;
 import com.agh.polymorphia_backend.service.user.UserFactory;
 import com.agh.polymorphia_backend.service.validation.InvitationTokenValidator;
 import com.agh.polymorphia_backend.service.validation.UserValidator;

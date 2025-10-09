@@ -9,11 +9,19 @@ import java.util.List;
 import java.util.Objects;
 
 public class CSVUtil {
+    private static final String COLUMN_NOT_FOUND = "Kolumna nie została znaleziona";
+
     public static int getColumnIndex(List<String> headers, String columnName) {
-        return headers.stream()
+        int index = headers.stream()
                 .map(String::toLowerCase)
                 .toList()
                 .indexOf(columnName.toLowerCase());
+
+        if (index == -1) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, COLUMN_NOT_FOUND);
+        }
+
+        return index;
     }
 
     public static boolean isValidEncoding(List<String[]> data) {

@@ -2,7 +2,11 @@ package com.agh.polymorphia_backend.service.csv.processors;
 
 import com.agh.polymorphia_backend.dto.request.csv.StudentInvitationCSVProcessRequestDto;
 import com.agh.polymorphia_backend.dto.request.user.InvitationRequestDTO;
+import com.agh.polymorphia_backend.model.user.UserType;
+import com.agh.polymorphia_backend.service.csv.CSVHeaders;
+import com.agh.polymorphia_backend.service.csv.CSVType;
 import com.agh.polymorphia_backend.service.csv.CSVUtil;
+import com.agh.polymorphia_backend.service.invitation.InvitationService;
 import com.agh.polymorphia_backend.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +19,9 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class StudentInvitationCSVProcessor {
-    private final UserService userService;
+    private final static String EMAIL_WITHOUT_INDEX_NUMBER = "Email doesn't contain index number";
+    private final static String TOO_MANY_EMAILS = "Attempt to send too many emails!";
+    private final InvitationService invitationService;
 
     @Value("${invitation.allow-multiple-emails}")
     private boolean allowMultipleEmails;
@@ -23,12 +29,12 @@ public class StudentInvitationCSVProcessor {
     public void process(StudentInvitationCSVProcessRequestDto request) {
         List<String> headers = request.getCsvHeaders();
 
-        int emailIdx = CSVUtil.getColumnIndex(headers, "Email");
-        int firstNameIdx = CSVUtil.getColumnIndex(headers, "Imię");
-        int lastNameIdx = CSVUtil.getColumnIndex(headers, "Nazwisko");
+        int emailIdx = CSVUtil.getColumnIndex(headers, CSVHeaders.EMAIL);
+        int firstNameIdx = CSVUtil.getColumnIndex(headers, CSVHeaders.LAST_NAME);
+        int lastNameIdx = CSVUtil.getColumnIndex(headers, CSVHeaders.FIRST_NAME);
 
         if (!allowMultipleEmails && request.getData().size() > 1) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Attempt to send too many emails!");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, TOO_MANY_EMAILS);
         }
 
         for (List<String> row : request.getData()) {
@@ -42,9 +48,11 @@ public class StudentInvitationCSVProcessor {
                     .firstName(firstName)
                     .lastName(lastName)
                     .indexNumber(indexNumber)
+                    .courseId(request.getCourseId())
+                    .role(UserType.STUDENT)
                     .build();
 
-//            userService.inviteStudent(inviteDto);
+            invitationService.inviteUser(inviteDto);
         }
     }
 
@@ -54,7 +62,7 @@ public class StudentInvitationCSVProcessor {
         try {
             return Integer.parseInt(beforeAt);
         } catch (NumberFormatException ex) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email doesn't contain index number");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, EMAIL_WITHOUT_INDEX_NUMBER);
         }
     }
 }

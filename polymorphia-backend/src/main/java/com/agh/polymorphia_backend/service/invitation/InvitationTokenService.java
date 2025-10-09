@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.service.invitation_token;
+package com.agh.polymorphia_backend.service.invitation;
 
 import com.agh.polymorphia_backend.dto.request.user.InvitationRequestDTO;
 import com.agh.polymorphia_backend.model.invitation.InvitationToken;

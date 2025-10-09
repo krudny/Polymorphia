@@ -12,4 +12,7 @@ public class StudentInvitationCSVProcessRequestDto {
 
     @NotNull
     private List<List<String>> data;
+
+    @NotNull
+    private Long courseId;
 }

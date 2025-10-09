@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class UserController {
     private final UserContextService userContextService;
-    private final StudentInvitationCSVProcessor studentInvitationCSVProcessor;
-
 
     @PostMapping("/preferred-course")
     @PreAuthorize("isAuthenticated()")
@@ -39,12 +37,5 @@ public class UserController {
     public ResponseEntity<UserType> getUserRole() {
         userContextService.setPreferredCourseIfOneAvailable();
         return ResponseEntity.ok(userContextService.getUserRole());
-    }
-
-    @PostMapping("/invite/csv")
-    @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
-    public ResponseEntity<Void> processStudentInviteCSV(@RequestBody StudentInvitationCSVProcessRequestDto requestDTO) {
-        studentInvitationCSVProcessor.process(requestDTO);
-        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
