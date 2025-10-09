@@ -11,35 +11,19 @@ import RegisterForm from "@/components/home/register-form";
 import LoginForm from "@/components/home/login-form";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import "./index.css";
+import { useHeroAnimation } from "@/hooks/general/useHeroAnimation";
 
 export default function HomeContent({
-  backgroundRef,
-  imageRef,
+  titleRef,
+  hasMountedRef,
 }: HomeContentProps) {
   const loginFormRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLDivElement>(null);
-  const hasMountedRef = useRef(false);
 
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
   const invitationToken = useInvitationToken();
 
   const openLoginForm = () => setIsLoginFormVisible(true);
   const closeLoginForm = () => setIsLoginFormVisible(false);
-
-  useLayoutEffect(() => {
-    if (!backgroundRef?.current || !titleRef.current || !imageRef?.current) {
-      return;
-    }
-
-    animateInitialMount(
-      backgroundRef.current,
-      titleRef.current,
-      imageRef.current,
-      () => {
-        hasMountedRef.current = true;
-      }
-    );
-  }, [backgroundRef, titleRef, imageRef, hasMountedRef]);
 
   useLayoutEffect(() => {
     if (!hasMountedRef.current || !loginFormRef.current || !titleRef.current) {
