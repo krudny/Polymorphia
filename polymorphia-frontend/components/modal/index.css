@@ -2,39 +2,39 @@
 @import "../../styles/globals.css";
 
 .modal-backdrop {
-    @apply fixed top-0 left-0 flex-centered w-screen h-screen z-[51] bg-primary-dark/50 dark:bg-primary-dark/60 backdrop-blur-xs will-change-auto;
+  @apply fixed top-0 left-0 flex-centered w-screen h-screen z-[51] bg-primary-dark/50 dark:bg-primary-dark/60  will-change-auto;
 }
 
 .modal-visible {
-    @apply opacity-100;
+  @apply opacity-100;
 }
 
 .modal-not-visible {
-    @apply opacity-0 pointer-events-none;
+  @apply opacity-0 pointer-events-none;
 }
 
 .modal {
-    @apply m-3 w-fit max-h-[calc(100vh-var(--spacing)*5)] p-5 z-[999] bg-repeat-y bg-[length:100%_auto];
-    @apply bg-top border-[1px] overflow-visible border-primary-dark rounded-xl will-change-transform;
-    @apply dark:border-secondary-gray;
+  @apply m-3 w-fit max-h-[calc(100vh-var(--spacing)*5)] p-5 z-[999];
+  @apply bg-top border-[1px] overflow-visible border-primary-dark rounded-xl will-change-transform;
+  @apply dark:border-secondary-gray;
 }
 
 .modal-header-wrapper {
-    @apply flex flex-col mb-5;
+  @apply flex flex-col mb-5;
 
-    h2 {
-        @apply text-2xl;
-    }
+  h2 {
+    @apply text-2xl;
+  }
 }
 
 .modal-header {
-    @apply flex justify-between items-center;
+  @apply flex justify-between items-center;
 
-    h1 {
-        @apply text-5xl;
-    }
+  h1 {
+    @apply text-5xl;
+  }
 }
 
 .modal-header-exit-button {
-    @apply cursor-pointer hover:drop-shadow-lg;
+  @apply cursor-pointer hover:drop-shadow-lg;
 }

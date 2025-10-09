@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { ModalProvider } from "@/providers/modal/ModalContext";
 import { ModalProps } from "@/components/modal/types";
 import { useTheme } from "next-themes";
+import usePosition from "@/hooks/general/usePosition";
 
 export default function Modal(props: ModalProps) {
   const {
@@ -28,7 +29,9 @@ export default function Modal(props: ModalProps) {
   const background =
     resolvedTheme === "dark"
       ? "bg-[url(/background-modal-dark.webp)]"
-      : "bg-[url(/background-modal.webp)]";
+      : "bg-[url(/background.png)]";
+
+  const { left, top } = usePosition(modalRef);
 
   useEffect(() => {
     setModalVisible(isDataPresented);
@@ -59,6 +62,11 @@ export default function Modal(props: ModalProps) {
           <div
             ref={modalRef}
             className={`modal ${background}`}
+            style={{
+              backgroundSize: "100vw 100vh",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: `-${left}px -${top}px`,
+            }}
             onClick={(event) => {
               event.stopPropagation();
             }}

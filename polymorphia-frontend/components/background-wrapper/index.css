@@ -2,12 +2,8 @@
 @import "../../styles/globals.css";
 
 .background-wrapper {
-  @apply fixed inset-0;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  /*@apply fixed inset-0 top-0 left-0;*/
   background-image: url("/background.webp");
-  background-attachment: fixed;
 }
 
 .dark .background-wrapper,
@@ -16,5 +12,5 @@
 }
 
 .background-wrapper.force-light {
-  background-image: url("/background.webp");
+  background-image: url("/background.png");
 }
