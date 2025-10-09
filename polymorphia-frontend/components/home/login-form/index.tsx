@@ -4,7 +4,7 @@ import React, { FormEvent } from "react";
 import { useForm } from "@tanstack/react-form";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import NavigationArrow from "@/components/slider/NavigationArrow";
-import { LoginDto } from "@/interfaces/api/login";
+import { LoginDTO } from "@/interfaces/api/login";
 import { FieldInfo } from "@/components/form/FieldInfo";
 import { loginSchema } from "@/components/form/schema";
 import "./index.css";
@@ -16,7 +16,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
     defaultValues: {
       email: "",
       password: "",
-    } as LoginDto,
+    } as LoginDTO,
     validators: {
       onBlur: loginSchema,
     },
@@ -24,7 +24,8 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
       login(value);
     },
   });
-  const { mutate: login } = useLogin({ form });
+
+  const { mutate: login, isPending } = useLogin({ form });
 
   return (
     <div className="login-wrapper">
@@ -53,6 +54,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
                   onChange={(event) => field.handleChange(event.target.value)}
                   required
                   autoComplete="off"
+                  disabled={isPending}
                 />
                 <FieldInfo field={field} />
               </div>
@@ -70,6 +72,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
                   onBlur={field.handleBlur}
                   onChange={(event) => field.handleChange(event.target.value)}
                   required
+                  disabled={isPending}
                 />
                 <FieldInfo field={field} />
               </div>
@@ -84,7 +87,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
                 <ButtonWithBorder
                   text="Zaloguj się"
                   className="mt-12"
-                  isActive={isPristine || !canSubmit}
+                  isActive={isPristine || !canSubmit || isPending}
                   forceDark
                 />
               </>
