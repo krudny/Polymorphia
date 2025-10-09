@@ -1,21 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
 import { Suspense, useRef } from "react";
 import "./index.css";
 import HomeContent from "@/components/home";
 import Loading from "@/components/loading";
 
 export default function Home() {
-  const loginFormRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLDivElement>(null);
   const backgroundRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
-  const hasMountedRef = useRef(false);
 
   return (
-    <BackgroundWrapper className="hero-background-wrapper" forceTheme="light">
+    <>
       <div className="hero-background-image" ref={backgroundRef}>
         <Image
           src="/hero-bg.webp"
@@ -42,14 +38,8 @@ export default function Home() {
       </div>
 
       <Suspense fallback={<Loading />}>
-        <HomeContent
-          titleRef={titleRef}
-          loginFormRef={loginFormRef}
-          hasMountedRef={hasMountedRef}
-          backgroundRef={backgroundRef}
-          imageRef={imageRef}
-        />
+        <HomeContent backgroundRef={backgroundRef} imageRef={imageRef} />
       </Suspense>
-    </BackgroundWrapper>
+    </>
   );
 }
