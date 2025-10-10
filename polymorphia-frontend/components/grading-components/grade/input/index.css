@@ -2,14 +2,14 @@
 @import "../../../../styles/globals.css";
 
 .input {
-    @apply text-3xl w-full text-center border-b-3;
-    @apply focus:outline-none transition-colors duration-400 ease-[cubic-bezier(0.34,1,0.2,1)];
+  @apply text-3xl w-full text-center border-b-3;
+  @apply focus:outline-none transition-colors custom-ease-with-duration;
 }
 
 .valid {
-    @apply default-colors;
+  @apply default-colors;
 }
 
 .error {
-    @apply border-primary-error text-primary-error;
+  @apply border-primary-error text-primary-error;
 }

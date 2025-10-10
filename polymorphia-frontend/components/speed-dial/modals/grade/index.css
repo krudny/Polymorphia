@@ -2,9 +2,9 @@
 @import "../../../../styles/globals.css";
 
 .grade-error {
-    @apply flex flex-col gap-2 min-w-72 text-xl 2xl:text-2xl;
+  @apply flex flex-col gap-2 min-[26rem]:w-96 text-xl 2xl:text-2xl;
 }
 
 .grade-loading {
-    @apply flex flex-col gap-2 min-w-72 h-50;
+  @apply flex flex-col gap-2 min-[26rem]:w-96 h-50;
 }
