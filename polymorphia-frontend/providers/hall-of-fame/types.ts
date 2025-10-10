@@ -21,5 +21,7 @@ export interface HallOfFameContextInterface {
   setSearch: Dispatch<SetStateAction<string>>;
   isLoading: boolean;
   setShouldScrollToMe: Dispatch<SetStateAction<boolean>>;
+  areAnimalNamesVisible: boolean;
+  toggleAnimalNamesVisibility: () => void;
   recordRefs: RefObject<Record<number, HTMLElement | null>>;
 }

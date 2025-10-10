@@ -7,8 +7,14 @@ import { useMediaQuery } from "react-responsive";
 
 export default function HallOfFameTopBar() {
   const isDesktop = useMediaQuery({ minWidth: 1024 });
-  const { setAreFiltersOpen, search, setSearch, setShouldScrollToMe } =
-    useHallOfFameContext();
+  const {
+    setAreFiltersOpen,
+    search,
+    setSearch,
+    setShouldScrollToMe,
+    areAnimalNamesVisible,
+    toggleAnimalNamesVisibility,
+  } = useHallOfFameContext();
   const { userRole } = useUserContext();
 
   return (
@@ -19,12 +25,19 @@ export default function HallOfFameTopBar() {
         placeholder="Znajdź zwierzaka..."
       />
       <div className="hall-of-fame-search-buttons">
-        {userRole === Roles.STUDENT && (
+        {userRole === Roles.STUDENT ? (
           <ButtonWithBorder
             text="Znajdź mnie"
             className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none"
             size={isDesktop ? "md" : "sm"}
             onClick={() => setShouldScrollToMe(true)}
+          />
+        ) : (
+          <ButtonWithBorder
+            text={areAnimalNamesVisible ? "Studenci" : "Zwierzaki"}
+            className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none"
+            size={isDesktop ? "md" : "sm"}
+            onClick={toggleAnimalNamesVisibility}
           />
         )}
         <ButtonWithBorder

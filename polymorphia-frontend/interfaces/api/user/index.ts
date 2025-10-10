@@ -68,3 +68,7 @@ export type UserDetailsDTO =
   | InstructorDetailsDTOWithType
   | CoordinatorDetailsDTOWithType
   | UndefinedDetailsDTOWithType;
+
+export type HallOfFameUserDTO =
+  | StudentDetailsDTOWithNullableName
+  | StudentDetailsDTOWithName;

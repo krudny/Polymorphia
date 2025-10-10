@@ -1,4 +1,4 @@
-import { StudentDetailsDTOWithNullableName } from "@/interfaces/api/user";
+import { HallOfFameUserDTO } from "@/interfaces/api/user";
 
 export interface HallOfFameResponseDTO {
   content: HallOfFameRecordDTO[];
@@ -12,6 +12,6 @@ export interface HallOfFameResponseDTO {
 }
 
 export interface HallOfFameRecordDTO {
-  userDetails: StudentDetailsDTOWithNullableName;
+  userDetails: HallOfFameUserDTO;
   xpDetails: Record<string, string>;
 }
