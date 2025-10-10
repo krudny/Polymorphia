@@ -117,7 +117,7 @@ function InviteUserToCourseModalContent() {
               options={rolesOptions}
               value={selectedRole || ""}
               onChange={handleRoleChange}
-              placeholder="Rola"
+              placeholder="Wybierz rolę"
               size="3xl"
               padding="base"
               className="!border-b-2 !border-t-0 !border-x-0 !rounded-none"

@@ -16,10 +16,6 @@
   @apply border-primary-dark   dark:text-secondary-gray dark:border-secondary-gray;
 }
 
-.selector span {
-  @apply w-full text-center;
-}
-
 .selector-disabled {
   @apply cursor-not-allowed opacity-60;
 }
@@ -43,9 +39,7 @@
 .selector-dropdown {
   @apply absolute z-50 w-full mt-1 border-2 border-primary-dark rounded-sm;
   @apply shadow-lg max-h-60 overflow-y-auto custom-scrollbar;
-  @apply dark:border-secondary-gray;
-
-  background-image: url("/background.png");
+  @apply dark:border-secondary-gray selector-background;
 }
 
 .selector-option {

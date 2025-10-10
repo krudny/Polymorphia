@@ -6,7 +6,6 @@ import "./index.css";
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { useTheme } from "next-themes";
-import usePosition from "@/hooks/general/usePosition";
 
 export default function Selector({
   options,
@@ -58,10 +57,6 @@ export default function Selector({
     }
   };
 
-  const dropdownRef = useRef<HTMLDivElement | null>(null);
-
-  const { left, top } = usePosition(dropdownRef, isOpen);
-
   return (
     <div ref={selectorRef} className={styles.container()}>
       <button
@@ -96,15 +91,7 @@ export default function Selector({
       </button>
 
       {isOpen && !disabled && (
-        <div
-          className={`${styles.dropdown()}`}
-          ref={dropdownRef}
-          style={{
-            backgroundSize: "100vw 100vh",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: `-${left}px -${top}px`,
-          }}
-        >
+        <div className={`${styles.dropdown()} ${background}`}>
           {options.map((option) => (
             <div
               key={option.value}
