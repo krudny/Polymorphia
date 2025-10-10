@@ -7,9 +7,13 @@ import Search from "@/components/search";
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
 import HallOfFameList from "@/views/hall-of-fame/general/HallOfFameList";
 import HallOfFamePagination from "@/views/hall-of-fame/general/HallOfFamePagination";
+import useUserContext from "@/hooks/contexts/useUserContext";
+import { Roles } from "@/interfaces/api/user";
 
 export default function HallOfFameDesktop() {
-  const { search, setSearch, setIsModalOpen } = useHallOfFameContext();
+  const { search, setSearch, setAreFiltersOpen, findMe } =
+    useHallOfFameContext();
+  const { userRole } = useUserContext();
   const wrapperRef = useScaleShow();
 
   return (
@@ -28,10 +32,17 @@ export default function HallOfFameDesktop() {
               setSearch={setSearch}
               placeholder="Znajdź zwierzaka..."
             />
+            {userRole === Roles.STUDENT && (
+              <ButtonWithBorder
+                text="Znajdź mnie"
+                className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none"
+                onClick={() => findMe()}
+              />
+            )}
             <ButtonWithBorder
               text="Filtry"
               className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none"
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => setAreFiltersOpen(true)}
             />
           </div>
           <HallOfFameList />

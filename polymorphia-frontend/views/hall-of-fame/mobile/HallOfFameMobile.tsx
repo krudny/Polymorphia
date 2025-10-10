@@ -10,7 +10,7 @@ import HallOfFameList from "@/views/hall-of-fame/general/HallOfFameList";
 
 export default function HallOfFameMobile() {
   const wrapperRef = useScaleShow();
-  const { setIsModalOpen, search, setSearch } = useHallOfFameContext();
+  const { setAreFiltersOpen, search, setSearch } = useHallOfFameContext();
 
   return (
     <div ref={wrapperRef} className="hall-of-fame-mobile">
@@ -24,7 +24,7 @@ export default function HallOfFameMobile() {
           text="Filtry"
           className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none"
           size="sm"
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => setAreFiltersOpen(true)}
         />
       </div>
       <HallOfFameList />

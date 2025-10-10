@@ -14,8 +14,8 @@ function HallOfFameContent() {
   const queryClient = useQueryClient();
   const {
     filters,
-    isModalOpen,
-    setIsModalOpen,
+    areFiltersOpen,
+    setAreFiltersOpen,
     setPage,
     isFiltersLoading,
     isFiltersError,
@@ -38,8 +38,8 @@ function HallOfFameContent() {
       </div>
       <FiltersModal<HallOfFameFilterId>
         filters={filters}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
+        isModalOpen={areFiltersOpen}
+        setIsModalOpen={setAreFiltersOpen}
         isFiltersLoading={isFiltersLoading}
         isFiltersError={isFiltersError}
         onFiltersApplied={() => handleApplyFilters()}

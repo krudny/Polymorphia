@@ -6,12 +6,25 @@ import { useScaleShow } from "@/animations/ScaleShow";
 import { useMediaQuery } from "react-responsive";
 import RankCardMobile from "@/views/hall-of-fame/mobile/HallOfFameCardMobile";
 import HallOfFameError from "@/views/hall-of-fame/general/HallOfFameError";
+import { useEffect, useLayoutEffect, useRef } from "react";
 
 export default function HallOfFameList() {
-  const { hallOfFame, isLoading, isFiltersLoading, isFiltersError } =
-    useHallOfFameContext();
+  const {
+    page,
+    hallOfFame,
+    isLoading,
+    isFiltersLoading,
+    isFiltersError,
+    recordRefs,
+  } = useHallOfFameContext();
   const wrapperRef = useScaleShow(!isLoading);
   const isDesktop = useMediaQuery({ minWidth: 1024 });
+
+  useLayoutEffect(() => {
+    if (wrapperRef.current) {
+      wrapperRef.current.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [page]);
 
   if (isLoading || !hallOfFame || isFiltersLoading || isFiltersError) {
     return (
@@ -28,6 +41,11 @@ export default function HallOfFameList() {
       ) : (
         hallOfFame.content.map((record: HallOfFameRecordDTO) => (
           <HallOfFameCardDesktop
+            ref={(el) => {
+              if (el) {
+                recordRefs.current[record.userDetails.position] = el;
+              }
+            }}
             key={`rank-${record.userDetails.position}`}
             userDetails={record.userDetails}
             xpDetails={record.xpDetails}
