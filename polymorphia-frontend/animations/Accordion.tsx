@@ -2,13 +2,29 @@ import { gsap } from "gsap";
 
 let previousHeight = 0;
 
-export const openAccordion = (element: HTMLElement, isInstant: boolean) => {
+const getHeight = (
+  element: HTMLElement,
+  shouldUseScrollHeight: boolean
+): number => {
   // Account for some rounding issues that make accordion jump during animation
-  let height = element.scrollHeight;
+  let height;
+  if (shouldUseScrollHeight) {
+    height = element.scrollHeight;
+  } else {
+    height = element.clientHeight;
+  }
+
   if (Math.abs(previousHeight - height) <= 1) {
     height = Math.max(height, previousHeight);
   }
+
   previousHeight = height;
+
+  return height;
+};
+
+export const openAccordion = (element: HTMLElement, isInstant: boolean) => {
+  const height = getHeight(element, true);
 
   gsap.fromTo(
     element,
@@ -31,13 +47,8 @@ export const openAccordion = (element: HTMLElement, isInstant: boolean) => {
 };
 
 export const closeAccordion = (element: HTMLElement, isInstant: boolean) => {
-  // Account for some rounding issues that make accordion jump during animation
-  let height = element.clientHeight;
+  const height = getHeight(element, false);
   const marginTop = element.style.marginTop;
-  if (Math.abs(previousHeight - height) <= 1) {
-    height = Math.max(height, previousHeight);
-  }
-  previousHeight = height;
 
   gsap.fromTo(
     element,
