@@ -8,6 +8,10 @@
   @apply w-full px-4 opacity-0 flex flex-col flex-1;
 }
 
+.hall-of-fame-mobile-content-wrapper {
+  @apply bg-red-400;
+}
+
 .hall-of-fame-mobile-search-wrapper {
   @apply hall-of-fame-search-wrapper h-12;
 }

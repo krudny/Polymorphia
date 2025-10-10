@@ -77,3 +77,9 @@
     @apply text-3xl text-center lg:text-4xl;
   }
 }
+
+/* Hall of fame search bar buttons */
+
+.hall-of-fame-search-buttons {
+  @apply flex gap-x-4;
+}

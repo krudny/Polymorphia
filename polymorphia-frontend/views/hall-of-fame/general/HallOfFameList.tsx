@@ -4,9 +4,9 @@ import HallOfFameCardDesktop from "@/views/hall-of-fame/desktop/HallOfFameCardDe
 import Loading from "@/components/loading";
 import { useScaleShow } from "@/animations/ScaleShow";
 import { useMediaQuery } from "react-responsive";
-import RankCardMobile from "@/views/hall-of-fame/mobile/HallOfFameCardMobile";
 import HallOfFameError from "@/views/hall-of-fame/general/HallOfFameError";
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useLayoutEffect } from "react";
+import HallOfFameCardMobile from "@/views/hall-of-fame/mobile/HallOfFameCardMobile";
 
 export default function HallOfFameList() {
   const {
@@ -26,6 +26,14 @@ export default function HallOfFameList() {
     }
   }, [page]);
 
+  const setRecordRef =
+    (position: number) =>
+    (record: HTMLElement | null): void => {
+      if (record) {
+        recordRefs.current[position] = record;
+      }
+    };
+
   if (isLoading || !hallOfFame || isFiltersLoading || isFiltersError) {
     return (
       <div className="hall-of-fame-loading-wrapper">
@@ -41,11 +49,7 @@ export default function HallOfFameList() {
       ) : (
         hallOfFame.content.map((record: HallOfFameRecordDTO) => (
           <HallOfFameCardDesktop
-            ref={(el) => {
-              if (el) {
-                recordRefs.current[record.userDetails.position] = el;
-              }
-            }}
+            ref={setRecordRef(record.userDetails.position - 15)}
             key={`rank-${record.userDetails.position}`}
             userDetails={record.userDetails}
             xpDetails={record.xpDetails}
@@ -56,12 +60,13 @@ export default function HallOfFameList() {
   );
 
   const mobileComponent = (
-    <div className="hall-of-fame-mobile-rank-wrapper">
+    <div className="hall-of-fame-mobile-rank-wrapper" ref={wrapperRef}>
       {hallOfFame.content.length === 0 ? (
         <HallOfFameError />
       ) : (
         hallOfFame.content.map((record: HallOfFameRecordDTO) => (
-          <RankCardMobile
+          <HallOfFameCardMobile
+            ref={setRecordRef(record.userDetails.position)}
             key={`rank-${record.userDetails.position}`}
             userDetails={record.userDetails}
             xpDetails={record.xpDetails}

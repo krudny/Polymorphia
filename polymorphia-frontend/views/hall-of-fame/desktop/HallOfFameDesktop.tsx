@@ -32,18 +32,20 @@ export default function HallOfFameDesktop() {
               setSearch={setSearch}
               placeholder="Znajdź zwierzaka..."
             />
-            {userRole === Roles.STUDENT && (
+            <div className="hall-of-fame-search-buttons">
+              {userRole === Roles.STUDENT && (
+                <ButtonWithBorder
+                  text="Znajdź mnie"
+                  className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none"
+                  onClick={() => setShouldScrollToMe(true)}
+                />
+              )}
               <ButtonWithBorder
-                text="Znajdź mnie"
+                text="Filtry"
                 className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none"
-                onClick={() => setShouldScrollToMe(true)}
+                onClick={() => setAreFiltersOpen(true)}
               />
-            )}
-            <ButtonWithBorder
-              text="Filtry"
-              className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none"
-              onClick={() => setAreFiltersOpen(true)}
-            />
+            </div>
           </div>
           <HallOfFameList />
         </div>
