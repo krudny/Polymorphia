@@ -11,9 +11,9 @@ import java.util.Optional;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long>, UserDetailsRepository {
     @Query(
-            "select s from Animal a " +
-                    "join  a.student s " +
-                    "where s.user.id=:userId and a.courseGroup.id=:courseId"
+            "select s from StudentCourseGroupAssignment scga " +
+                    "join  scga.student s " +
+                    "where s.user.id=:userId and scga.courseGroup.id=:courseId"
     )
     @Override
     Optional<Student> findByUserIdAndCourseId(Long userId, Long courseId);
