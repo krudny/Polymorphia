@@ -1,40 +1,57 @@
 @import "tailwindcss";
 @import "../../../styles/globals.css";
 
-/* Rewards info */
-
-.gradable-event-section {
-    @apply flex flex-col gap-2 min-w-72;
-
-    h1 {
-        @apply text-5xl;
-    }
-
-    h2 {
-        @apply text-3xl;
-    }
+.grade-info-section {
+  @apply min-[26rem]:w-[calc(97*var(--spacing))] overflow-y-auto custom-scrollbar pr-1 mr-[calc(-4*var(--spacing))];
+  scrollbar-gutter: stable;
 }
 
-.gradable-event-section-xp {
-    @apply flex flex-col;
+.grade-info-accordion-override {
+  @apply gap-y-5;
 }
 
-.gradable-event-section-progress-bar {
-    @apply pt-9 w-full px-6;
+.grade-info-accordion-header {
+  h1 {
+    @apply !text-4xl !mr-5;
+  }
+
+  h2 {
+    @apply !text-3xl;
+  }
 }
 
-.gradable-event-section-reward {
-    @apply flex flex-col;
+.grade-info-criterion {
+  @apply flex flex-col mt-2 mb-5;
+
+  h2 {
+    @apply text-3xl my-3;
+  }
 }
 
-.gradable-event-section-reward-inner {
-    @apply flex flex-row gap-5 pt-3;
+.grade-info-criterion-progress-bar {
+  @apply w-full px-6 pt-6;
 }
 
-.gradable-event-section-reward-image-wrapper {
-    @apply rounded-xl shadow-lg w-30 h-30 relative;
+.grade-info-xp {
+  @apply flex-centered text-4xl -mt-7 z-[20];
 }
 
-.gradable-event-section-reward-image-wrapper img {
-    @apply rounded-xl;
+.grade-info-reward {
+  @apply grid grid-cols-3 gap-4 w-full;
+}
+
+.grade-info-reward-wrapper {
+  @apply relative w-full aspect-square rounded-xl shadow-sm  drop-shadow-xl overflow-hidden;
+}
+
+.grade-info-reward-image-wrapper {
+  @apply w-full h-full rounded-xl overflow-hidden;
+}
+
+.grade-info-reward-image-badge {
+  @apply text-xl w-7 rounded-tl-lg rounded-br-lg;
+}
+
+.grade-info-comment {
+  @apply w-full p-4 text-xl border-3 focus:outline-none rounded-xl default-colors resize-none custom-scrollbar overflow-y-auto max-h-72;
 }
