@@ -50,10 +50,6 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
     groups,
   });
 
-  useEffect(() => {
-    console.log(recordRefs);
-  }, [recordRefs]);
-
   useFindMeScroll({
     recordRefs,
     page,

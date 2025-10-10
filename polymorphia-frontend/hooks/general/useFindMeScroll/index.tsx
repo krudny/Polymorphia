@@ -23,7 +23,7 @@ export const useFindMeScroll = ({
     const targetPage = hallOfFame.currentUser.page;
 
     if (targetPage === -1) {
-      toast.error("Nie można znaleźć użytkownika!");
+      toast.error("Zwierzak nie jest w wynikach!");
       setShouldScrollToMe(false);
       return;
     }
@@ -51,17 +51,10 @@ export const useFindMeScroll = ({
       return;
     }
 
-    console.log("wchodze w layout");
-
     const position = userDetails.position;
     const element = recordRefs.current?.[position];
 
-    console.log("position", position);
-
-    console.log(recordRefs);
-
     if (element) {
-      console.log("animuje");
       element.scrollIntoView({
         behavior: "smooth",
         block: "center",
