@@ -2,23 +2,23 @@
 @import "../../../../../styles/globals.css";
 
 .import-csv-upload-wrapper {
-    @apply w-full min-h-44 border-2 border-primary-dark border-dashed flex-col-centered gap-y-2;
-    @apply rounded hover:border-solid hover:bg-primary-dark hover:text-secondary-gray;
-    @apply transition-colors duration-400 ease-[cubic-bezier(0.34,1,0.2,1)] hover:cursor-pointer;
+  @apply w-full min-h-44 border-2 border-primary-dark border-dashed flex-col-centered gap-y-2;
+  @apply rounded hover:border-solid hover:bg-primary-dark hover:text-secondary-gray;
+  @apply transition-colors custom-ease-with-duration hover:cursor-pointer;
 }
 
 .drag-active {
-    @apply bg-primary-dark text-secondary-gray transition-colors duration-400 ease-[cubic-bezier(0.34,1,0.2,1)];
+  @apply bg-primary-dark text-secondary-gray transition-colors custom-ease-with-duration;
 }
 
 .import-csv-loading {
-    @apply relative;
+  @apply relative;
 }
 
 .import-csv-upload-icon {
-    @apply text-7xl material-symbols;
+  @apply text-7xl material-symbols;
 }
 
 .import-csv-text {
-    @apply w-88 text-3xl break-words text-center;
+  @apply w-88 text-3xl break-words text-center;
 }

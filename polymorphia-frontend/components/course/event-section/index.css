@@ -52,15 +52,6 @@
   @apply text-xl w-7 rounded-tl-lg rounded-br-lg;
 }
 
-.grade-info-reward-edit {
-  @apply aspect-square border-3 border-primary-dark rounded-xl flex-col-centered;
-  @apply hover:bg-primary-dark hover:text-secondary-gray transition-colors duration-400 ease-[cubic-bezier(0.34,1,0.2,1)] hover:cursor-pointer;
-
-  span {
-    @apply material-symbols text-4xl;
-  }
-}
-
 .grade-info-comment {
   @apply w-full p-4 text-xl border-3 focus:outline-none rounded-xl default-colors resize-none custom-scrollbar overflow-y-auto max-h-72;
 }
