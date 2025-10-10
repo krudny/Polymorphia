@@ -9,8 +9,10 @@ import { HallOfFameFilterId } from "@/providers/hall-of-fame/types";
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
 import HallOfFameDesktop from "@/views/hall-of-fame/desktop/HallOfFameDesktop";
 import "./index.css";
+import { useMediaQuery } from "react-responsive";
 
 function HallOfFameContent() {
+  const isDesktop = useMediaQuery({ minWidth: 1024 });
   const queryClient = useQueryClient();
   const {
     filters,
@@ -30,12 +32,15 @@ function HallOfFameContent() {
 
   return (
     <>
-      <div className="mobile-hall-of-fame">
-        <HallOfFameMobile />
-      </div>
-      <div className="desktop-hall-of-fame">
-        <HallOfFameDesktop />
-      </div>
+      {isDesktop ? (
+        <div className="desktop-hall-of-fame">
+          <HallOfFameDesktop />
+        </div>
+      ) : (
+        <div className="mobile-hall-of-fame">
+          <HallOfFameMobile />
+        </div>
+      )}
       <FiltersModal<HallOfFameFilterId>
         filters={filters}
         isModalOpen={areFiltersOpen}

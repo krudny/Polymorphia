@@ -81,5 +81,5 @@
 /* Hall of fame search bar buttons */
 
 .hall-of-fame-search-buttons {
-  @apply flex gap-x-4;
+  @apply flex gap-x-2 lg:gap-x-4;
 }
