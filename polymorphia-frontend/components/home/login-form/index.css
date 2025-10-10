@@ -2,18 +2,22 @@
 @import "../../../styles/globals.css";
 
 .login-wrapper {
-    @apply relative flex-centered w-full max-w-xl px-16 text-primary-dark;
-    @apply md:px-0;
+  @apply relative flex-centered w-full max-w-xl px-16;
+  @apply md:px-0;
 }
 
 .login-wrapper > div {
-    @apply w-full max-w-xs text-center mt-20;
+  @apply w-full max-w-xs text-center mt-20;
 }
 
 .login-form {
-    @apply space-y-4;
+  @apply space-y-4;
+}
+
+.login-form div input {
+  @apply text-primary-dark dark:text-secondary-gray border-primary-dark dark:border-secondary-light;
 }
 
 .forgot-password {
-    @apply mt-4 text-center text-xl hover:cursor-pointer;
+  @apply mt-4 text-center text-xl hover:cursor-pointer;
 }

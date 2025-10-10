@@ -44,11 +44,7 @@ export default function HomeContent({
           <div ref={titleRef}>
             <h1>Polymorphia</h1>
             <div className="hero-buttons">
-              <ButtonWithBorder
-                text="Zaloguj się"
-                onClick={openLoginForm}
-                forceDark
-              />
+              <ButtonWithBorder text="Zaloguj się" onClick={openLoginForm} />
             </div>
           </div>
 

@@ -21,7 +21,7 @@
 }
 
 .selector-value {
-  @apply text-primary-dark;
+  @apply text-primary-dark dark:text-secondary-gray;
 }
 
 .selector-placeholder {

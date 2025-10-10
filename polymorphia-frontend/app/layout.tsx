@@ -53,12 +53,11 @@ export default function RootLayout({
             <TitleProvider>
               <QueryClientProvider client={queryClient}>
                 <Toaster toastOptions={{ style: { fontSize: "1.5rem" } }} />
-                <BackgroundWrapper
-                  className="hero-background-wrapper"
-                  forceTheme="light"
-                >
-                  <Suspense fallback={null}>{children}</Suspense>
-                </BackgroundWrapper>
+                <Suspense fallback={null}>
+                  <BackgroundWrapper className="hero-background-wrapper">
+                    {children}
+                  </BackgroundWrapper>
+                </Suspense>
               </QueryClientProvider>
             </TitleProvider>
           </ThemeProvider>

@@ -2,32 +2,31 @@
 @import "../../styles/globals.css";
 
 .hero-right-wrapper {
-    @apply w-full h-full flex-centered relative pt-20 overflow-hidden;
-    @apply md:w-1/2 md:pt-0;
+  @apply w-full h-full flex-centered relative pt-20 overflow-hidden;
+  @apply md:w-1/2 md:pt-0;
 }
 
 .hero-right-wrapper > div:first-child {
-    @apply flex-col-centered relative z-10 opacity-0;
+  @apply flex-col-centered relative z-10 opacity-0;
 }
 
 .hero-right-wrapper input {
-    @apply w-full text-center text-4xl  py-3 border-b-2 border-b-primary-dark focus:outline-none text-primary-dark;
+  @apply w-full text-center text-4xl  py-3 border-b-2 border-b-primary-dark focus:outline-none;
 }
 
 .hero-right-wrapper > div > h1 {
-    @apply text-7xl mb-8 text-primary-dark;
-    @apply md:text-9xl;
+  @apply text-7xl mb-8;
+  @apply md:text-9xl;
 }
 
 .hero-buttons {
-    @apply flex-col-centered gap-4 mt-4;
+  @apply flex-col-centered gap-4 mt-4;
 }
 
 .hero-login {
-    @apply flex-centered absolute top-0 -right-full w-full h-full z-20 opacity-0 text-primary-dark;
+  @apply flex-centered absolute top-0 -right-full w-full h-full z-20 opacity-0;
 }
 
 .hero-register {
-    @apply flex-centered w-full h-full z-20 text-primary-dark;
+  @apply flex-centered w-full h-full z-20;
 }
-

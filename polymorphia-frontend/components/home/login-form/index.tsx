@@ -88,7 +88,6 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
                   text={login.isPending ? "Logowanie..." : "Zaloguj się"}
                   className="mt-12"
                   isActive={isPristine || !canSubmit || login.isPending}
-                  forceDark
                 />
               </>
             )}
