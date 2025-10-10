@@ -2,7 +2,8 @@
 @import "../../../styles/globals.css";
 
 .grade-info-section {
-  @apply min-[26rem]:w-96 overflow-y-auto custom-scrollbar;
+  @apply min-[26rem]:w-[calc(97*var(--spacing))] overflow-y-auto custom-scrollbar pr-1 mr-[calc(-4*var(--spacing))];
+  scrollbar-gutter: stable;
 }
 
 .grade-info-accordion-override {
