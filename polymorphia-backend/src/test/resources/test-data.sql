@@ -9,6 +9,7 @@ TRUNCATE TABLE user_course_roles cascade;
 TRUNCATE TABLE course_groups cascade;
 TRUNCATE TABLE chests cascade;
 TRUNCATE TABLE animals cascade;
+TRUNCATE TABLE students_course_groups cascade;
 TRUNCATE TABLE evolution_stages cascade;
 TRUNCATE TABLE event_sections cascade;
 TRUNCATE TABLE test_sections cascade;
@@ -77,8 +78,12 @@ INSERT INTO course_groups (id, name, course_id, instructor_id)
 VALUES (1, 'mi-sr12', 1, 4);
 
 -- Animals
-INSERT INTO animals (id, name, course_group_id, student_id)
-VALUES (1, 'sowa', 1, 2);
+INSERT INTO animals (id, name)
+VALUES (1, 'sowa');
+
+-- Student Course Group Assignments
+INSERT INTO students_course_groups (animal_id, student_id, course_group_id)
+VALUES (1, 2, 1);
 
 -- Evolution Stages
 INSERT INTO evolution_stages (id, name, min_xp, description, grade, image_url, order_index, course_id)
