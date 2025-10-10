@@ -3,6 +3,7 @@ import { UseFindMeScrollParams } from "./types";
 import { Roles } from "@/interfaces/api/user";
 import useUserContext from "@/hooks/contexts/useUserContext";
 import toast from "react-hot-toast";
+import shakeInOut from "@/animations/ShakeInOut";
 
 export const useFindMeScroll = ({
   recordRefs,
@@ -55,10 +56,16 @@ export const useFindMeScroll = ({
     const element = recordRefs.current?.[position];
 
     if (element) {
+      const scrollContainer = element.parentElement || document;
+      scrollContainer.addEventListener("scrollend", () => shakeInOut(element), {
+        once: true,
+      });
+
       element.scrollIntoView({
         behavior: "smooth",
         block: "center",
       });
+
       setShouldScrollToMe(false);
     }
   }, [
@@ -68,5 +75,6 @@ export const useFindMeScroll = ({
     userRole,
     recordRefs,
     setShouldScrollToMe,
+    userDetails,
   ]);
 };
