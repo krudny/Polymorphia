@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useEffect, useRef, useState } from "react";
 import { useDebounce } from "use-debounce";
 import {
   HallOfFameContextInterface,
@@ -9,20 +9,26 @@ import {
 import { useFilters } from "@/hooks/course/useFilters";
 import { useHallOfFameFilterConfigs } from "@/hooks/course/useHallOfFameFilterConfigs";
 import useHallOfFame from "@/hooks/course/useHallOfFame";
-import { useUserDetails } from "@/hooks/contexts/useUserContext";
+import useUserContext, {
+  useUserDetails,
+} from "@/hooks/contexts/useUserContext";
+import { useFindMeScroll } from "@/hooks/general/useFindMeScroll";
 
 export const HallOfFameContext = createContext<
   HallOfFameContextInterface | undefined
 >(undefined);
 
 export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
+  const { courseId } = useUserDetails();
+
   const pageSize = 50;
   const [page, setPage] = useState(0);
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 400);
+  const recordRefs = useRef<Record<number, HTMLElement | null>>({});
   const [areFiltersOpen, setAreFiltersOpen] = useState(false);
+  const [shouldScrollToMe, setShouldScrollToMe] = useState(false);
 
-  const { courseId } = useUserDetails();
   const {
     data: filterConfigs,
     isLoading: isFiltersLoading,
@@ -44,6 +50,20 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
     groups,
   });
 
+  useFindMeScroll({
+    recordRefs,
+    page,
+    setPage,
+    shouldScrollToMe,
+    setShouldScrollToMe,
+    isLoading,
+    hallOfFame,
+  });
+
+  useEffect(() => {
+    recordRefs.current = {};
+  }, [page, debouncedSearch, sortBy, sortOrder, groups]);
+
   return (
     <HallOfFameContext.Provider
       value={{
@@ -52,12 +72,14 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
         setPage,
         search,
         setSearch,
-        isModalOpen: areFiltersOpen,
-        setIsModalOpen: setAreFiltersOpen,
+        areFiltersOpen,
+        setAreFiltersOpen,
         isLoading,
         filters,
         isFiltersLoading,
         isFiltersError,
+        setShouldScrollToMe,
+        recordRefs,
       }}
     >
       {children}
