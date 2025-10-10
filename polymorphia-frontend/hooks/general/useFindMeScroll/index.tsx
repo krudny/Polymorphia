@@ -15,6 +15,32 @@ export const useFindMeScroll = ({
 }: UseFindMeScrollParams): void => {
   const { userRole, userDetails } = useUserContext();
 
+  useEffect(() => {
+    if (!shouldScrollToMe || userRole !== Roles.STUDENT || !hallOfFame) {
+      return;
+    }
+
+    const targetPage = hallOfFame.currentUser.page;
+
+    if (targetPage === -1) {
+      toast.error("Nie można znaleźć użytkownika!");
+      setShouldScrollToMe(false);
+      return;
+    }
+
+    if (targetPage !== page) {
+      setPage(targetPage);
+    }
+  }, [
+    shouldScrollToMe,
+    hallOfFame,
+    userRole,
+    page,
+    setPage,
+    setShouldScrollToMe,
+    userDetails,
+  ]);
+
   useLayoutEffect(() => {
     if (
       !shouldScrollToMe ||
@@ -25,15 +51,17 @@ export const useFindMeScroll = ({
       return;
     }
 
-    if (targetPage == -1) {
-      toast.error("Nie można znaleźć użytkownika!");
-      return;
-    }
+    console.log("wchodze w layout");
 
     const position = userDetails.position;
     const element = recordRefs.current?.[position];
 
+    console.log("position", position);
+
+    console.log(recordRefs);
+
     if (element) {
+      console.log("animuje");
       element.scrollIntoView({
         behavior: "smooth",
         block: "center",
@@ -48,14 +76,4 @@ export const useFindMeScroll = ({
     recordRefs,
     setShouldScrollToMe,
   ]);
-
-  if (userRole !== Roles.STUDENT || !hallOfFame || !shouldScrollToMe) {
-    return;
-  }
-
-  const targetPage = hallOfFame.currentUser.page;
-
-  if (targetPage !== page && targetPage !== -1) {
-    setPage(targetPage);
-  }
 };

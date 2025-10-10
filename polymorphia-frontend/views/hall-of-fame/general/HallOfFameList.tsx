@@ -49,7 +49,7 @@ export default function HallOfFameList() {
       ) : (
         hallOfFame.content.map((record: HallOfFameRecordDTO) => (
           <HallOfFameCardDesktop
-            ref={setRecordRef(record.userDetails.position - 15)}
+            ref={setRecordRef(record.userDetails.position)}
             key={`rank-${record.userDetails.position}`}
             userDetails={record.userDetails}
             xpDetails={record.xpDetails}
