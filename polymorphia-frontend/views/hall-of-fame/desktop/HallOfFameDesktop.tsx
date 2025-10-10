@@ -11,7 +11,7 @@ import useUserContext from "@/hooks/contexts/useUserContext";
 import { Roles } from "@/interfaces/api/user";
 
 export default function HallOfFameDesktop() {
-  const { search, setSearch, setAreFiltersOpen, findMe } =
+  const { search, setSearch, setAreFiltersOpen, setShouldScrollToMe } =
     useHallOfFameContext();
   const { userRole } = useUserContext();
   const wrapperRef = useScaleShow();
@@ -36,7 +36,7 @@ export default function HallOfFameDesktop() {
               <ButtonWithBorder
                 text="Znajdź mnie"
                 className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none"
-                onClick={() => findMe()}
+                onClick={() => setShouldScrollToMe(true)}
               />
             )}
             <ButtonWithBorder

@@ -1,19 +1,10 @@
 "use client";
 
-import {
-  createContext,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { createContext, ReactNode, useEffect, useRef, useState } from "react";
 import { useDebounce } from "use-debounce";
 import {
   HallOfFameContextInterface,
   HallOfFameFilterId,
-  recordRefType,
 } from "@/providers/hall-of-fame/types";
 import { useFilters } from "@/hooks/course/useFilters";
 import { useHallOfFameFilterConfigs } from "@/hooks/course/useHallOfFameFilterConfigs";
@@ -21,7 +12,7 @@ import useHallOfFame from "@/hooks/course/useHallOfFame";
 import useUserContext, {
   useUserDetails,
 } from "@/hooks/contexts/useUserContext";
-import { Roles } from "@/interfaces/api/user";
+import { useFindMeScroll } from "@/hooks/general/useFindMeScroll";
 
 export const HallOfFameContext = createContext<
   HallOfFameContextInterface | undefined
@@ -29,14 +20,14 @@ export const HallOfFameContext = createContext<
 
 export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   const { courseId } = useUserDetails();
-  const userContext = useUserContext();
 
   const pageSize = 50;
   const [page, setPage] = useState(0);
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 400);
-  const recordRefs = useRef<recordRefType>({});
+  const recordRefs = useRef<Record<number, HTMLElement | null>>({});
   const [areFiltersOpen, setAreFiltersOpen] = useState(false);
+  const [shouldScrollToMe, setShouldScrollToMe] = useState(false);
 
   const {
     data: filterConfigs,
@@ -59,51 +50,19 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
     groups,
   });
 
-  useEffect(() => {
-    console.log(recordRefs);
-  }, [page, debouncedSearch, sortBy, sortOrder, groups]);
+  useFindMeScroll({
+    recordRefs,
+    page,
+    setPage,
+    shouldScrollToMe,
+    setShouldScrollToMe,
+    isLoading,
+    hallOfFame,
+  });
 
   useEffect(() => {
     recordRefs.current = {};
   }, [page, debouncedSearch, sortBy, sortOrder, groups]);
-
-  const [shouldScrollToMe, setShouldScrollToMe] = useState(false);
-
-  const findMe = () => {
-    if (userContext.userRole !== Roles.STUDENT) {
-      return;
-    }
-
-    const position = userContext.userDetails.position;
-    const targetPage = Math.floor(position / pageSize);
-
-    setShouldScrollToMe(true);
-
-    if (targetPage !== page) {
-      setPage(targetPage);
-    }
-  };
-
-  useLayoutEffect(() => {
-    if (
-      !shouldScrollToMe ||
-      isLoading ||
-      userContext.userRole !== Roles.STUDENT
-    ) {
-      return;
-    }
-
-    const position = userContext.userDetails.position;
-    const element = recordRefs.current[position];
-
-    if (element) {
-      element.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-      });
-      setShouldScrollToMe(false);
-    }
-  }, [hallOfFame, shouldScrollToMe, isLoading]);
 
   return (
     <HallOfFameContext.Provider
@@ -119,7 +78,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
         filters,
         isFiltersLoading,
         isFiltersError,
-        findMe,
+        setShouldScrollToMe,
         recordRefs,
       }}
     >

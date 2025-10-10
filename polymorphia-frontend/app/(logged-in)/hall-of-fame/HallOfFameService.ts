@@ -31,10 +31,20 @@ const HallOfFameService = {
         groups: groups && !groups?.includes("all") ? groups : [],
       }),
     });
+
     if (!response.ok) {
       throw new Error("Failed to fetch hall of fame!");
     }
-    return await response.json();
+
+    const data = await response.json();
+
+    // Should return page: -1 when user is not in results
+    return {
+      ...data,
+      currentUser: {
+        page: 0,
+      },
+    };
   },
   getPodium: async (courseId: number): Promise<HallOfFameRecordDTO[]> => {
     const response = await fetch(

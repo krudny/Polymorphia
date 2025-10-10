@@ -20,10 +20,6 @@ export interface HallOfFameContextInterface {
   search: string;
   setSearch: Dispatch<SetStateAction<string>>;
   isLoading: boolean;
-  findMe: () => void;
-  recordRefs: RefObject<recordRefType>;
+  setShouldScrollToMe: Dispatch<SetStateAction<boolean>>;
+  recordRefs: RefObject<Record<number, HTMLElement | null>>;
 }
-
-export type recordRefType = {
-  [key: number]: HTMLDivElement | null;
-};
