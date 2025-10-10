@@ -1,5 +1,7 @@
 package com.agh.polymorphia_backend.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import org.springframework.core.io.Resource;
@@ -12,10 +14,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 import static io.restassured.RestAssured.given;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Service
 @ActiveProfiles("test")
 public class ControllerTestUtil {
+    private static final ObjectMapper mapper = new ObjectMapper();
+
     public static String getEndpoint(String endpoint, String username, String password, Integer statusCode, Object... args) {
         return given()
                 .cookie("JSESSIONID", getStudentSessionId(username, password))
@@ -44,7 +49,13 @@ public class ControllerTestUtil {
                 .asString();
     }
 
-    public static String getExpectedResponse(Resource resource) throws IOException {
+    public static void assertJsonEquals(Resource expectedJson, String actualJson) throws IOException {
+        JsonNode actualResponse = mapper.readTree(actualJson);
+        JsonNode expectedResponse = mapper.readTree(getExpectedResponse(expectedJson));
+        assertEquals(actualResponse, expectedResponse);
+    }
+
+    private static String getExpectedResponse(Resource resource) throws IOException {
         byte[] bdata = FileCopyUtils.copyToByteArray(resource.getInputStream());
         return new String(bdata, StandardCharsets.UTF_8);
     }

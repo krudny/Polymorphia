@@ -3,7 +3,6 @@ package com.agh.polymorphia_backend.controller;
 import com.agh.polymorphia_backend.dto.request.HallOfFameRequestDto;
 import com.agh.polymorphia_backend.model.hall_of_fame.SearchBy;
 import com.agh.polymorphia_backend.model.hall_of_fame.SortOrder;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -17,7 +16,6 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import static com.agh.polymorphia_backend.controller.ControllerTestUtil.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HallOfFameControllerTest extends ControllerTestConfig {
     private static final HallOfFameRequestDto.HallOfFameRequestDtoBuilder hofBuilder = HallOfFameRequestDto.builder()
@@ -78,9 +76,8 @@ class HallOfFameControllerTest extends ControllerTestConfig {
         String actualResponse = getEndpoint("/hall-of-fame/podium?courseId={courseId}",
                 "student@agh.com", "password", 200, 1);
 
-        ObjectMapper mapper = new ObjectMapper();
         Resource resource = new ClassPathResource("responses/hall_of_fame/podium.json");
-        assertEquals(mapper.readTree(actualResponse), mapper.readTree(getExpectedResponse(resource)));
+        assertJsonEquals(resource, actualResponse);
     }
 
     @ParameterizedTest(name = "{2}")
@@ -89,8 +86,7 @@ class HallOfFameControllerTest extends ControllerTestConfig {
         String actualResponse = postEndpoint("/hall-of-fame", "student@agh.com",
                 "password", 200, Optional.of(requestDto));
 
-        ObjectMapper mapper = new ObjectMapper();
-        assertEquals(mapper.readTree(actualResponse), mapper.readTree(getExpectedResponse(resource)));
+        assertJsonEquals(resource, actualResponse);
     }
 
     @Test
