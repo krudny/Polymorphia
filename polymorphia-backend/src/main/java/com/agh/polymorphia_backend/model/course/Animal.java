@@ -26,15 +26,8 @@ public class Animal {
     @NotEmpty
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_id")
+    @OneToOne(mappedBy = "animal")
     @ToString.Exclude
     @JsonIgnore
-    private Student student;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_group_id")
-    @ToString.Exclude
-    @JsonIgnore
-    private CourseGroup courseGroup;
+    private StudentCourseGroupAssignment courseGroupAssignment;
 }
