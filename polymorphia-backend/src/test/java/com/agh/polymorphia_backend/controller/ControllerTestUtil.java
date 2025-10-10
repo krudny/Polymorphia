@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.controller;
 
 import io.restassured.http.ContentType;
+import io.restassured.specification.RequestSpecification;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.test.context.ActiveProfiles;
@@ -8,6 +9,7 @@ import org.springframework.util.FileCopyUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 import static io.restassured.RestAssured.given;
 
@@ -26,10 +28,14 @@ public class ControllerTestUtil {
                 .asString();
     }
 
-    public static String postEndpoint(String endpoint,String username, String password, Integer statusCode,Object... args) {
-        return given()
+    public static String postEndpoint(String endpoint, String username, String password, Integer statusCode, Optional<?> body, Object... args) {
+        RequestSpecification requestSpecification = given()
                 .cookie("JSESSIONID", getStudentSessionId(username, password))
-                .contentType(ContentType.JSON)
+                .contentType(ContentType.JSON);
+
+        body.ifPresent(requestSpecification::body);
+
+        return requestSpecification
                 .when()
                 .post(endpoint, args)
                 .then()
@@ -37,7 +43,6 @@ public class ControllerTestUtil {
                 .extract()
                 .asString();
     }
-
 
     public static String getExpectedResponse(Resource resource) throws IOException {
         byte[] bdata = FileCopyUtils.copyToByteArray(resource.getInputStream());
