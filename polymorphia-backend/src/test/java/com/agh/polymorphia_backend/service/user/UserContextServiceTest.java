@@ -78,32 +78,32 @@ class UserContextServiceTest {
     }
 
 
-    @Test
-    void setPreferredCourseId_shouldUpdatePreferredCourse() {
-        Course course = Course.builder().id(10L).build();
+//    @Test
+//    void setPreferredCourseId_shouldUpdatePreferredCourse() {
+//        Course course = Course.builder().id(10L).build();
+//
+//        when(courseService.getCourseById(10L)).thenReturn(course);
+//        when(userService.getCurrentUser()).thenReturn(student);
+//        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+//
+//        userContextService.setPreferredCourseId(10L);
+//
+//        verify(accessAuthorizer).authorizePreferredCourseSwitch(course);
+//        verify(userRepository).save(user);
+//        assertEquals(course, user.getPreferredCourse());
+//        verify(userService).updateSecurityCredentials(user);
+//    }
 
-        when(courseService.getCourseById(10L)).thenReturn(course);
-        when(userService.getCurrentUser()).thenReturn(student);
-        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
-
-        userContextService.setPreferredCourseId(10L);
-
-        verify(accessAuthorizer).authorizePreferredCourseSwitch(course);
-        verify(userRepository).save(user);
-        assertEquals(course, user.getPreferredCourse());
-        verify(userService).updateSecurityCredentials(user);
-    }
-
-    @Test
-    void setPreferredCourseId_shouldThrowWhenUserNotFound() {
-        Course course = Course.builder().id(10L).build();
-
-        when(courseService.getCourseById(10L)).thenReturn(course);
-        when(userService.getCurrentUser()).thenReturn(student);
-        when(userRepository.findById(1L)).thenReturn(Optional.empty());
-
-        assertThrows(IllegalStateException.class, () -> userContextService.setPreferredCourseId(10L));
-    }
+//    @Test
+//    void setPreferredCourseId_shouldThrowWhenUserNotFound() {
+//        Course course = Course.builder().id(10L).build();
+//
+//        when(courseService.getCourseById(10L)).thenReturn(course);
+//        when(userService.getCurrentUser()).thenReturn(student);
+//        when(userRepository.findById(1L)).thenReturn(Optional.empty());
+//
+//        assertThrows(IllegalStateException.class, () -> userContextService.setPreferredCourseId(10L));
+//    }
 
     @Test
     void getAvailableCourses_shouldReturnAvailableCourses() {

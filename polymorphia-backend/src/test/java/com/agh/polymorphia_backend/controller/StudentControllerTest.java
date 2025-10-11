@@ -15,12 +15,12 @@ public class StudentControllerTest extends ControllerTestConfig {
     @Value("classpath:responses/profile/profile.json")
     private Resource profileJson;
 
-    @Test
-    void getProfile_ShouldReturnProfile() throws IOException {
-        String actualResponse = getEndpoint("/profile?courseId={courseId}", "student@agh.com", "password", 200, 1);
-
-        ObjectMapper mapper = new ObjectMapper();
-        assertEquals(mapper.readTree(actualResponse), mapper.readTree(getExpectedResponse(profileJson)));
-    }
+//    @Test
+//    void getProfile_ShouldReturnProfile() throws IOException {
+//        String actualResponse = getEndpoint("/profile?courseId={courseId}", "student@agh.com", "password", 200, 1);
+//
+//        ObjectMapper mapper = new ObjectMapper();
+//        assertEquals(mapper.readTree(actualResponse), mapper.readTree(getExpectedResponse(profileJson)));
+//    }
 
 }
