@@ -173,6 +173,7 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+					<layout>ZIP</layout>
 				</configuration>
 			</plugin>
 		</plugins>
