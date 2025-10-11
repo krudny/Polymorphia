@@ -9,13 +9,16 @@ import com.agh.polymorphia_backend.dto.response.reward.assignment_details.ChestA
 import com.agh.polymorphia_backend.dto.response.reward.assignment_details.ItemAssignmentDetailsResponseDto;
 import com.agh.polymorphia_backend.dto.response.reward.chest.ChestResponseDtoBase;
 import com.agh.polymorphia_backend.dto.response.reward.item.ItemResponseDtoBase;
+import com.agh.polymorphia_backend.model.course.reward.Chest;
 import com.agh.polymorphia_backend.model.course.reward.Reward;
 import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedChest;
 import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedItem;
 import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedReward;
+import com.agh.polymorphia_backend.model.course.reward.chest.ChestBehavior;
 import com.agh.polymorphia_backend.service.course.reward.BonusXpCalculator;
 import com.agh.polymorphia_backend.util.NumberFormatter;
 import lombok.AllArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -46,14 +49,48 @@ public class AssignedRewardMapper {
         List<EquipmentChestResponseDto> response = assignedChests.stream()
                 .map(this::chestToResponseDto)
                 .toList();
-        Map<Long, BigDecimal> potentialXpByItem = bonusXpCalculator.getPotentialBonusXpForCourseItems(courseId, animalId);
 
-        response.forEach(chest -> setPotentialXpForNotOpenedChests(potentialXpByItem, chest));
+        addPotentialXpToResponse(courseId, animalId, assignedChests, response);
 
         return response;
     }
 
-    private void setPotentialXpForNotOpenedChests(Map<Long, BigDecimal> potentialXpByItem, EquipmentChestResponseDto chestDto) {
+    private void addPotentialXpToResponse(Long courseId, Long animalId, List<AssignedChest> assignedChests, List<EquipmentChestResponseDto> response) {
+        Map<Long, List<BigDecimal>> potentialXpByItem = getCourseItemsPotentialXp(courseId, animalId);
+        Map<Long, Map<Long, List<BigDecimal>>> allChestPotentialXp = getALLChestPotentialXp(animalId, assignedChests);
+
+        for (EquipmentChestResponseDto chest : response) {
+            ChestResponseDtoBase base = (ChestResponseDtoBase) chest.getBase();
+
+            switch (base.getBehavior()) {
+                case ONE_OF_MANY -> setPotentialXpForNotOpenedChests(potentialXpByItem, chest);
+                case ALL -> {
+                    Map<Long, List<BigDecimal>> potentialBonusALLChest = allChestPotentialXp.get(base.getId());
+                    setPotentialXpForNotOpenedChests(potentialBonusALLChest, chest);
+                }
+            }
+        }
+    }
+
+    private Map<Long, List<BigDecimal>> getCourseItemsPotentialXp(Long courseId, Long animalId) {
+        return bonusXpCalculator.getPotentialBonusXpForCourseItems(courseId, animalId)
+                .entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, entry -> new ArrayList<>(List.of(entry.getValue()))));
+    }
+
+    private Map<Long, Map<Long, List<BigDecimal>>> getALLChestPotentialXp(Long animalId, List<AssignedChest> assignedChests) {
+        return assignedChests.stream()
+                .map(AssignedChest::getReward)
+                .filter(reward -> ((Chest) Hibernate.unproxy(reward)).getBehavior() == ChestBehavior.ALL)
+                .distinct()
+                .collect(Collectors.toMap(
+                        Reward::getId,
+                        reward -> bonusXpCalculator.getPotentialBonusXpForALLChest(animalId, reward.getId())
+                ));
+    }
+
+
+    private void setPotentialXpForNotOpenedChests(Map<Long, List<BigDecimal>> potentialXpByItem, EquipmentChestResponseDto chestDto) {
         if (chestDto.getDetails().getIsUsed()) {
             return;
         }
@@ -65,7 +102,7 @@ public class AssignedRewardMapper {
                         item.toBuilder()
                                 .potentialXp(
                                         NumberFormatter.formatToBigDecimal(
-                                                potentialXpByItem.get(item.getId())
+                                                potentialXpByItem.get(item.getId()).removeFirst()
                                         ))
                                 .build()
                 )

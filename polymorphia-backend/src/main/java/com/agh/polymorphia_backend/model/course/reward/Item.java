@@ -21,7 +21,7 @@ import java.util.List;
 @ToString(exclude = {"chests"})
 @Inheritance(strategy = InheritanceType.JOINED)
 @PrimaryKeyJoinColumn(name = "reward_id")
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 public abstract class Item extends Reward {
     @NotNull
     @Column(name = "\"limit\"")

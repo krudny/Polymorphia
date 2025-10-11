@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 @Table(name = "chests")
 @PrimaryKeyJoinColumn(name = "reward_id")
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @ToString(exclude = {"items"})
 public class Chest extends Reward {
     @ManyToMany(mappedBy = "chests", fetch = FetchType.LAZY)

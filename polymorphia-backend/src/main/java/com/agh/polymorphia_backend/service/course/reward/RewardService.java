@@ -15,4 +15,12 @@ public class RewardService {
     public List<Item> getCourseItems(Long courseId) {
         return itemRepository.findAllByCourseId(courseId);
     }
+
+    public List<Item> getChestItems(Long chestId) {
+        List<Long> itemIds = itemRepository.findAllItemIdsByChestId(chestId);
+        return itemIds.stream()
+                .map(itemRepository::findById)
+                .map(item -> item.orElseThrow(() -> new RuntimeException("Item not found")))
+                .toList();
+    }
 }

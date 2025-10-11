@@ -48,9 +48,8 @@ public class HallOfFameService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_HOF_NOT_FOUND));
     }
 
-    public StudentScoreDetail getStudentEventSectionScoreDetails(Long animalId, Long eventSectionId) {
-        return scoreDetailRepository.findByAnimalIdAndEventSectionId(animalId, eventSectionId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_HOF_NOT_FOUND));
+    public List<StudentScoreDetail> getStudentScoreDetails(Long animalId) {
+        return scoreDetailRepository.findByAnimalId(animalId);
     }
 
     public Page<HallOfFameResponseDto> getHallOfFame(HallOfFameRequestDto requestDto) {

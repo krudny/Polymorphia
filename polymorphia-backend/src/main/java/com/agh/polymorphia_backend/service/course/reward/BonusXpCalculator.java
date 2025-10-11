@@ -8,6 +8,7 @@ import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedReward;
 import com.agh.polymorphia_backend.model.course.reward.item.FlatBonusItemBehavior;
 import com.agh.polymorphia_backend.model.course.reward.item.ItemType;
 import com.agh.polymorphia_backend.model.gradable_event.Grade;
+import com.agh.polymorphia_backend.model.hall_of_fame.StudentScoreDetail;
 import com.agh.polymorphia_backend.service.gradable_event.GradeService;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
 import lombok.AllArgsConstructor;
@@ -17,10 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -55,13 +53,88 @@ public class BonusXpCalculator {
 
     public Map<Long, BigDecimal> getPotentialBonusXpForCourseItems(Long courseId, Long animalId) {
         List<Item> courseItems = rewardService.getCourseItems(courseId);
+        Map<Long, BigDecimal> totalXpWithFlatBonusByEventSection = hallOfFameService.getStudentScoreDetails(animalId).stream()
+                .collect(Collectors.toMap(StudentScoreDetail::getEventSectionId,
+                        studentScoreDetail ->
+                                studentScoreDetail.getFlatBonus().add(studentScoreDetail.getRawXp())));
+
         return courseItems.stream()
                 .collect(Collectors.toMap(
                         Item::getId,
                         item -> switch (item.getItemType()) {
-                            case FLAT_BONUS -> getPotentialFlatBonusXp(animalId, (FlatBonusItem) item);
+                            case FLAT_BONUS -> getPotentialFlatBonusXp(animalId, List.of((FlatBonusItem) item));
                             case PERCENTAGE_BONUS ->
-                                    getPotentialPercentageBonusXp(animalId, (PercentageBonusItem) item);
+                                    getPotentialPercentageBonusXp(totalXpWithFlatBonusByEventSection, (PercentageBonusItem) item);
+                        }
+                ));
+    }
+
+    public Map<Long, List<BigDecimal>> getPotentialBonusXpForALLChest(Long animalId, Long chestId) {
+        List<Item> items = rewardService.getChestItems(chestId);
+
+        Map<Long, List<BigDecimal>> result = new HashMap<>();
+
+        calculateALLChestFlatBonusXp(items, animalId, result);
+        calculateALLChestPercentageBonusXp(items, animalId, result);
+
+        return result;
+    }
+
+    private void calculateALLChestFlatBonusXp(List<Item> items, Long animalId, Map<Long, List<BigDecimal>> result) {
+        List<FlatBonusItem> flatBonusItems = items.stream()
+                .filter(item -> item.getItemType().equals(ItemType.FLAT_BONUS))
+                .map(item -> (FlatBonusItem) item)
+                .toList();
+
+        if (flatBonusItems.isEmpty()) {
+            return;
+        }
+
+        BigDecimal cumulativeXp = getPotentialFlatBonusXp(animalId, Collections.emptyList());
+        List<FlatBonusItem> itemsSoFar = new ArrayList<>();
+
+        for (FlatBonusItem item : flatBonusItems) {
+            itemsSoFar.add(item);
+
+            BigDecimal newXp = getPotentialFlatBonusXp(animalId, new ArrayList<>(itemsSoFar));
+            BigDecimal marginalGain = newXp.subtract(cumulativeXp);
+
+            result.computeIfAbsent(item.getId(), k -> new ArrayList<>())
+                    .add(marginalGain);
+            cumulativeXp = newXp;
+        }
+    }
+
+    private void calculateALLChestPercentageBonusXp(List<Item> items, Long animalId,
+                                                    Map<Long, List<BigDecimal>> result) {
+
+        List<PercentageBonusItem> percentageBonusItems = items.stream()
+                .filter(item -> item.getItemType().equals(ItemType.PERCENTAGE_BONUS))
+                .map(item -> (PercentageBonusItem) item)
+                .toList();
+
+        Map<Long, BigDecimal> totalXpWithFlatBonusByEventSection = getTotalXpWithFlatBonusByEventSection(animalId, result);
+
+        for (PercentageBonusItem item : percentageBonusItems) {
+            BigDecimal bonus = getPotentialPercentageBonusXp(totalXpWithFlatBonusByEventSection, item);
+            result.computeIfAbsent(item.getId(), k -> new ArrayList<>())
+                    .add(bonus);
+        }
+    }
+
+    private Map<Long, BigDecimal> getTotalXpWithFlatBonusByEventSection(Long animalId, Map<Long, List<BigDecimal>> result) {
+        return hallOfFameService.getStudentScoreDetails(animalId).stream()
+                .collect(Collectors.toMap(
+                        StudentScoreDetail::getEventSectionId,
+                        studentScoreDetail -> {
+                            List<BigDecimal> bonuses = result.get(studentScoreDetail.getEventSectionId());
+
+                            BigDecimal totalBonus = (bonuses == null)
+                                    ? BigDecimal.ZERO
+                                    : bonuses.stream()
+                                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+                            return totalBonus.add(studentScoreDetail.getRawXp());
                         }
                 ));
     }
@@ -71,49 +144,54 @@ public class BonusXpCalculator {
         countMultipleEventsItemsBonus(oneEventItems, multipleEventsItems, grades);
     }
 
-    private BigDecimal getPotentialPercentageBonusXp(Long animalId, PercentageBonusItem item) {
-        BigDecimal totalXpSum = hallOfFameService.getStudentEventSectionScoreDetails(animalId, item.getEventSection().getId()).getRawXp();
-        BigDecimal percentageBonus = BigDecimal.valueOf(item.getPercentageBonus());
-        return totalXpSum.multiply(percentageBonus).divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP);
+    private BigDecimal getPotentialPercentageBonusXp(Map<Long, BigDecimal> totalXpWithFLatBonusByEventSection, PercentageBonusItem item) {
+        BigDecimal bonus = BigDecimal.valueOf(item.getPercentageBonus());
+
+        return totalXpWithFLatBonusByEventSection.get(item.getEventSection().getId())
+                .multiply(bonus)
+                .divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP);
+
     }
 
-    private BigDecimal getPotentialFlatBonusXp(Long animalId, FlatBonusItem item) {
-        List<Grade> grades = gradeService.getAnimalGrades(animalId);
-        List<AssignedItem> oneEventItems = getAnimalItemsByBehavior(animalId, FlatBonusItemBehavior.ONE_EVENT);
-        AssignedItem newItem = AssignedItem.builder().reward(item).build();
 
+    private BigDecimal getPotentialFlatBonusXp(Long animalId, List<FlatBonusItem> items) {
+        List<Grade> grades = gradeService.getAnimalGrades(animalId);
         if (grades.isEmpty()) {
             return BigDecimal.ZERO;
         }
 
-        List<AssignedItem> oldAssignedItems;
-        List<AssignedItem> newAssignedItems;
+        List<AssignedItem> oneEventItems = getAnimalItemsByBehavior(animalId, FlatBonusItemBehavior.ONE_EVENT);
+        List<AssignedItem> multipleEventsItems = getAnimalItemsByBehavior(animalId, FlatBonusItemBehavior.MULTIPLE_EVENTS)
+                .stream()
+                .sorted(Comparator.comparing(AssignedReward::getReceivedDate))
+                .toList();
 
-        switch (item.getBehavior()) {
-            case ONE_EVENT -> {
-                oldAssignedItems = oneEventItems;
-                newAssignedItems = new ArrayList<>(oneEventItems);
-                newAssignedItems.add(newItem);
-                countOneEventItemsBonus(newAssignedItems, grades);
+        List<AssignedItem> newOneEventAssignedItems = new ArrayList<>(oneEventItems);
+        List<AssignedItem> newMultipleEventsItems = new ArrayList<>(multipleEventsItems);
+
+
+        for (FlatBonusItem item : items) {
+            switch (item.getBehavior()) {
+                case ONE_EVENT: {
+                    newOneEventAssignedItems.add(AssignedItem.builder().reward(item).build());
+                    break;
+                }
+                case MULTIPLE_EVENTS: {
+                    newMultipleEventsItems.add(AssignedItem.builder().reward(item).build());
+                }
             }
-            case MULTIPLE_EVENTS -> {
-                List<AssignedItem> multipleEventsItems = getAnimalItemsByBehavior(animalId, FlatBonusItemBehavior.MULTIPLE_EVENTS)
-                        .stream()
-                        .sorted(Comparator.comparing(AssignedReward::getReceivedDate))
-                        .toList();
-                oldAssignedItems = multipleEventsItems;
-                newAssignedItems = new ArrayList<>(multipleEventsItems);
-                newAssignedItems.add(newItem);
-                countMultipleEventsItemsBonus(oneEventItems, newAssignedItems, grades);
-            }
-            default -> throw new IllegalArgumentException("Unknown behavior: " + item.getBehavior());
         }
 
-        return (getTotalBenefitFromNewFlatBonusItem(newAssignedItems))
-                .subtract(getTotalBenefitFromNewFlatBonusItem(oldAssignedItems));
+        countOneEventItemsBonus(newOneEventAssignedItems, grades);
+        countMultipleEventsItemsBonus(newOneEventAssignedItems, newMultipleEventsItems, grades);
+
+        return getTotalBenefitFromFlatBonus(newOneEventAssignedItems)
+                .add(getTotalBenefitFromFlatBonus(newMultipleEventsItems))
+                .subtract(getTotalBenefitFromFlatBonus(oneEventItems))
+                .subtract(getTotalBenefitFromFlatBonus(multipleEventsItems));
     }
 
-    private BigDecimal getTotalBenefitFromNewFlatBonusItem(List<AssignedItem> assignedItems) {
+    private BigDecimal getTotalBenefitFromFlatBonus(List<AssignedItem> assignedItems) {
         return assignedItems.stream()
                 .map(AssignedItem::getBonusXp)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -145,15 +223,7 @@ public class BonusXpCalculator {
     }
 
     private Map<Long, BigDecimal> getRemainingLossByEventSection(List<AssignedItem> oneEventItems, List<Grade> grades) {
-        Map<Long, BigDecimal> remainingLossByEventSection = grades.stream()
-                .collect(Collectors.groupingBy(
-                        g -> g.getGradableEvent().getEventSection().getId(),
-                        Collectors.reducing(
-                                BigDecimal.ZERO,
-                                this::calculateMissingXpForGrade,
-                                BigDecimal::add
-                        )
-                ));
+        Map<Long, BigDecimal> remainingLossByEventSection = getRemainingLossByEventSection(grades);
 
         for (AssignedItem item : oneEventItems) {
             FlatBonusItem reward = (FlatBonusItem) Hibernate.unproxy(item.getReward());
@@ -165,6 +235,18 @@ public class BonusXpCalculator {
             remainingLossByEventSection.put(itemSectionId, newRemaining);
         }
         return remainingLossByEventSection;
+    }
+
+    private Map<Long, BigDecimal> getRemainingLossByEventSection(List<Grade> grades) {
+        return grades.stream()
+                .collect(Collectors.groupingBy(
+                        g -> g.getGradableEvent().getEventSection().getId(),
+                        Collectors.reducing(
+                                BigDecimal.ZERO,
+                                this::calculateMissingXpForGrade,
+                                BigDecimal::add
+                        )
+                ));
     }
 
     private void countOneEventItemsBonus(List<AssignedItem> oneEventItems, List<Grade> grades) {
