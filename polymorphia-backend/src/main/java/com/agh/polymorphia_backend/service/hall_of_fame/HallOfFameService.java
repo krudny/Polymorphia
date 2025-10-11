@@ -48,6 +48,10 @@ public class HallOfFameService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_HOF_NOT_FOUND));
     }
 
+    public List<StudentScoreDetail> getStudentScoreDetails(Long animalId) {
+        return scoreDetailRepository.findByAnimalId(animalId);
+    }
+
     public Page<HallOfFameResponseDto> getHallOfFame(HallOfFameRequestDto requestDto) {
         Course course = courseService.getCourseById(requestDto.courseId());
         accessAuthorizer.authorizeCourseAccess(course);

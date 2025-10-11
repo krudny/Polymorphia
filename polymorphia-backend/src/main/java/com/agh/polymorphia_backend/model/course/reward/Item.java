@@ -1,8 +1,7 @@
-package com.agh.polymorphia_backend.model.course.reward.item;
+package com.agh.polymorphia_backend.model.course.reward;
 
 
-import com.agh.polymorphia_backend.model.course.reward.Reward;
-import com.agh.polymorphia_backend.model.course.reward.chest.Chest;
+import com.agh.polymorphia_backend.model.course.reward.item.ItemType;
 import com.agh.polymorphia_backend.model.event_section.EventSection;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -22,7 +21,7 @@ import java.util.List;
 @ToString(exclude = {"chests"})
 @Inheritance(strategy = InheritanceType.JOINED)
 @PrimaryKeyJoinColumn(name = "reward_id")
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 public abstract class Item extends Reward {
     @NotNull
     @Column(name = "\"limit\"")
@@ -42,4 +41,8 @@ public abstract class Item extends Reward {
 
     public abstract ItemType getItemType();
 
+    @Override
+    public RewardType getRewardType() {
+        return RewardType.ITEM;
+    }
 }

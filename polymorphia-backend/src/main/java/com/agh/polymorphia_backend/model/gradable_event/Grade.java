@@ -1,12 +1,14 @@
 package com.agh.polymorphia_backend.model.gradable_event;
 
 import com.agh.polymorphia_backend.model.course.Animal;
+import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "grades")
@@ -41,6 +43,12 @@ public class Grade {
     private ZonedDateTime modifiedDate;
 
     private String comment;
+
+    @NotNull
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "grade")
+    @ToString.Exclude
+    @JsonIgnore
+    private List<CriterionGrade> criteriaGrades;
 
     @PrePersist
     void onCreate() {

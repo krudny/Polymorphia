@@ -101,9 +101,9 @@ class HallOfFameServiceTest {
                 .rawXp(BigDecimal.valueOf(2))
                 .build();
 
-        List<Long> animalIds=List.of(5L, 6L);
+        List<Long> animalIds = List.of(5L, 6L);
         List<StudentScoreDetail> details = Arrays.asList(detail1, detail2, detail3, detail4);
-        Map<Long, Map<String, String>> expectedResult=Map.of(
+        Map<Long, Map<String, String>> expectedResult = Map.of(
                 5L, Map.of("Kartkówka", "1.8", "Laboratorium", "2.0"),
                 6L, Map.of("Kartkówka", "2.0")
         );

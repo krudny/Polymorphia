@@ -19,7 +19,7 @@ public enum OverviewField {
     private final String key;
     private final String dbField;
 
-    OverviewField(String key){
+    OverviewField(String key) {
         this.key = key;
         this.dbField = key;
     }

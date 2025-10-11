@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface StudentScoreDetailRepository extends JpaRepository<StudentScoreDetail, Long> {
     List<StudentScoreDetail> findByAnimalIdIn(List<Long> animalIds);
+
+    List<StudentScoreDetail> findByAnimalId(Long animalId);
 }

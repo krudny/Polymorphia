@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor
 @SuperBuilder
-@Table(name="rewards")
+@Table(name = "rewards")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public abstract class Reward {
     @Id
@@ -41,4 +41,6 @@ public abstract class Reward {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     private Course course;
+
+    public abstract RewardType getRewardType();
 }

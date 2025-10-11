@@ -1,6 +1,8 @@
-package com.agh.polymorphia_backend.model.course.reward.item;
+package com.agh.polymorphia_backend.model.course.reward;
 
 
+import com.agh.polymorphia_backend.model.course.reward.item.FlatBonusItemBehavior;
+import com.agh.polymorphia_backend.model.course.reward.item.ItemType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
