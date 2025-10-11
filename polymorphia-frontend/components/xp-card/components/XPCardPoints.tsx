@@ -23,7 +23,7 @@ export default function XPCardPoints({
       </h1>
       {isSumLabelVisible && <h2>Suma</h2>}
       {hasChest && (
-        <div className="absolute bottom-0 right-0 mr-2 mb-2 text-xl">
+        <div className="xp-card-points-has-chest">
           <span className="material-symbols">featured_seasonal_and_gifts</span>
         </div>
       )}

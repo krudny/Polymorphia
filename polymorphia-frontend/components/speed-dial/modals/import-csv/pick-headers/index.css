@@ -2,25 +2,25 @@
 @import "../../../../../styles/globals.css";
 
 .csv-header-mapping {
-    @apply w-full flex justify-between my-2 gap-x-4;
+  @apply w-full flex justify-between my-2 gap-x-4;
 
-    h3 {
-        @apply text-3xl;
-    }
+  h3 {
+    @apply text-3xl;
+  }
 }
 
 .csv-header-select {
-    @apply text-center text-xl border-b-[1px] border-primary-dark p-2  text-primary-dark ;
+  @apply text-center text-xl border-b-[1px] border-primary-dark p-2  text-primary-dark;
 }
 
 .csv-header-select option {
-    @apply text-primary-dark border-none outline-none text-base text-left;
+  @apply text-primary-dark border-none outline-none text-base text-left;
 }
 
 .csv-header-select option::selection {
-    @apply border-none outline-none;
+  @apply border-none outline-none;
 }
 
 .csv-header-select option:hover {
-    @apply bg-primary-dark text-secondary-light transition-colors duration-400 ease-[cubic-bezier(0.34,1,0.2,1)];
+  @apply bg-primary-dark text-secondary-light transition-colors custom-ease-with-duration;
 }

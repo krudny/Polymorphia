@@ -2,9 +2,9 @@
 @import "../../../styles/globals.css";
 
 .mobile-hall-of-fame {
-  @apply w-full flex-col-centered flex-1 lg:hidden;
+  @apply w-full flex-col-centered h-[calc(100dvh-5rem)] overflow-y-hidden;
 }
 
 .desktop-hall-of-fame {
-  @apply w-full hidden flex-col-centered flex-1 lg:flex;
+  @apply w-full flex-col-centered flex-1 flex;
 }
