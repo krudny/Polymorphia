@@ -1,0 +1,55 @@
+package com.agh.polymorphia_backend.service;
+
+import com.agh.polymorphia_backend.dto.request.user.InvitationRequestDTO;
+import com.agh.polymorphia_backend.model.invitation.InvitationToken;
+import jakarta.mail.internet.MimeMessage;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+
+@Service
+@RequiredArgsConstructor
+public class EmailService {
+    private final JavaMailSender mailSender;
+    private final TemplateEngine templateEngine;
+
+    @Value("${spring.mail.username}")
+    private String fromEmail;
+
+    @Value("${app.from-name:Polymorphia}")
+    private String fromName;
+
+    public void sendInvitationEmail(InvitationRequestDTO inviteDTO, InvitationToken invitationToken) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setFrom(fromEmail, fromName);
+            helper.setTo(inviteDTO.getEmail());
+            helper.setSubject("Zaproszenie do aplikacji Polymorphia");
+
+            Context context = new Context();
+            String registrationLink = "https://polymorphia-self.vercel.app?invitationToken="
+                    + invitationToken.getToken();
+
+            context.setVariable("registrationLink", registrationLink);
+            context.setVariable("userRole", inviteDTO.getRole().getAuthority());
+
+            String htmlContent = templateEngine.process("invitation", context);
+
+            helper.setText(htmlContent, true);
+
+            ClassPathResource imageResource = new ClassPathResource("templates/email-header.png");
+            helper.addInline("headerImage", imageResource);
+
+            mailSender.send(message);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to send invitation email");
+        }
+    }
+}

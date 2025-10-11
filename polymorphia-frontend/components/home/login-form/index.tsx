@@ -4,27 +4,28 @@ import React, { FormEvent } from "react";
 import { useForm } from "@tanstack/react-form";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import NavigationArrow from "@/components/slider/NavigationArrow";
-import { LoginDto } from "@/interfaces/api/login";
+import { LoginDTO } from "@/interfaces/api/login";
 import { FieldInfo } from "@/components/form/FieldInfo";
 import { loginSchema } from "@/components/form/schema";
 import "./index.css";
-import LoginFormProps from "@/components/home/types";
 import useLogin from "@/hooks/course/useLogin";
+import LoginFormProps from "@/components/home/login-form/types";
 
 export default function LoginForm({ onBackAction }: LoginFormProps) {
   const form = useForm({
     defaultValues: {
       email: "",
       password: "",
-    } as LoginDto,
+    } as LoginDTO,
     validators: {
       onBlur: loginSchema,
     },
     onSubmit: async ({ value }) => {
-      login(value);
+      login.mutate(value);
     },
   });
-  const { mutate: login } = useLogin({ form });
+
+  const { mutation: login } = useLogin({ form });
 
   return (
     <div className="login-wrapper">
@@ -53,6 +54,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
                   onChange={(event) => field.handleChange(event.target.value)}
                   required
                   autoComplete="off"
+                  disabled={login.isPending}
                 />
                 <FieldInfo field={field} />
               </div>
@@ -70,6 +72,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
                   onBlur={field.handleBlur}
                   onChange={(event) => field.handleChange(event.target.value)}
                   required
+                  disabled={login.isPending}
                 />
                 <FieldInfo field={field} />
               </div>
@@ -82,10 +85,9 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
             {([canSubmit, isPristine]) => (
               <>
                 <ButtonWithBorder
-                  text="Zaloguj się"
+                  text={login.isPending ? "Logowanie..." : "Zaloguj się"}
                   className="mt-12"
-                  isActive={isPristine || !canSubmit}
-                  forceDark
+                  isActive={isPristine || !canSubmit || login.isPending}
                 />
               </>
             )}

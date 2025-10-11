@@ -1,8 +1,8 @@
-import { LoginDto } from "@/interfaces/api/login";
+import { LoginDTO } from "@/interfaces/api/login";
 import { API_HOST } from "@/services/api";
 
 const AuthService = {
-  login: async ({ email, password }: LoginDto) => {
+  login: async ({ email, password }: LoginDTO) => {
     const params = new URLSearchParams();
     params.append("username", email);
     params.append("password", password);

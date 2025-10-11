@@ -9,7 +9,7 @@ import XPCardGrid from "@/components/xp-card/XPCardGrid";
 import SectionView from "@/components/section-view/SectionView";
 import "./index.css";
 import { useScaleShow } from "@/animations/ScaleShow";
-import renderCard from "@/app/(logged-in)/course/groups/RenderCard";
+import RenderCard from "@/app/(logged-in)/course/groups/RenderCard";
 import { useRouter } from "next/navigation";
 
 const courseId = 1;
@@ -40,7 +40,7 @@ export default function CourseGroupsPage() {
   };
 
   const cards = courseGroups.map((courseGroup) =>
-    renderCard(courseGroup, handleClick)
+    RenderCard(courseGroup, handleClick)
   );
 
   return (

@@ -5,12 +5,13 @@ import localFont from "next/font/local";
 import { League_Gothic } from "next/font/google";
 import { QueryClient } from "@tanstack/query-core";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { ReactNode, useState } from "react";
+import { ReactNode, Suspense, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { TitleProvider } from "@/components/navigation/TitleContext";
 import { ThemeProvider } from "next-themes";
 import { ThemeProvider as ThemeProviderMui } from "@mui/material";
 import { themeConfig } from "@/components/speed-dial/config";
+import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
 
 const leagueGothic = League_Gothic({
   subsets: ["latin"],
@@ -32,6 +33,7 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   const [queryClient] = useState(() => new QueryClient());
+
   return (
     <html lang="pl" className="custom-scrollbar" suppressHydrationWarning>
       <head>
@@ -51,7 +53,11 @@ export default function RootLayout({
             <TitleProvider>
               <QueryClientProvider client={queryClient}>
                 <Toaster toastOptions={{ style: { fontSize: "1.5rem" } }} />
-                {children}
+                <Suspense fallback={null}>
+                  <BackgroundWrapper className="hero-background-wrapper">
+                    {children}
+                  </BackgroundWrapper>
+                </Suspense>
               </QueryClientProvider>
             </TitleProvider>
           </ThemeProvider>

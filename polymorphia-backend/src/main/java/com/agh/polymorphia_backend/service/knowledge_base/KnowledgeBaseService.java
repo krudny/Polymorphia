@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.service.course;
+package com.agh.polymorphia_backend.service.knowledge_base;
 
 
 import com.agh.polymorphia_backend.dto.response.knowledge_base.KnowledgeBaseResponseDto;
@@ -6,6 +6,7 @@ import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.repository.course.EvolutionStagesRepository;
 import com.agh.polymorphia_backend.repository.course.reward.ChestRepository;
 import com.agh.polymorphia_backend.repository.course.reward.ItemRepository;
+import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.mapper.KnowledgeBaseMapper;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import lombok.AllArgsConstructor;

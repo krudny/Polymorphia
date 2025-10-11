@@ -16,7 +16,7 @@ import java.util.Collection;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @MappedSuperclass
 public abstract class AbstractRoleUser implements UserDetails {
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @MapsId
     @JoinColumn(name = "user_id")
     @EqualsAndHashCode.Include

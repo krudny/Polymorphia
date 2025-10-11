@@ -33,3 +33,10 @@ export const MarkdownTypes = {
 } as const;
 
 export type MarkdownType = (typeof MarkdownTypes)[keyof typeof MarkdownTypes];
+
+export const InviteTypes = {
+  COURSE: "COURSE",
+  GROUP: "GROUP",
+} as const;
+
+export type InviteType = (typeof InviteTypes)[keyof typeof InviteTypes];

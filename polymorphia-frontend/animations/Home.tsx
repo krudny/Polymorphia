@@ -36,7 +36,7 @@ export const animateInitialMount = (
   onComplete: () => void
 ) => {
   gsap
-    .timeline()
+    .timeline({ delay: 0.3 })
     .fromTo(
       backgroundElement,
       { x: "-100%", autoAlpha: 0 },

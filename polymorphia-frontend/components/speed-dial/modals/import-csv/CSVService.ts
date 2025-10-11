@@ -52,12 +52,13 @@ const CSVService = {
     type: ImportCSVType,
     csvHeaders: string[],
     data: string[][],
+    courseId: number,
     gradableEventId?: number
   ): Promise<void> => {
     if (type === ImportCSVTypes.GRADE_IMPORT) {
       await CSVService.processGradeImport(csvHeaders, data, gradableEventId);
     } else {
-      await CSVService.processStudentInvite(csvHeaders, data);
+      await CSVService.processStudentInvite(csvHeaders, data, courseId);
     }
   },
 
@@ -87,15 +88,17 @@ const CSVService = {
 
   processStudentInvite: async (
     csvHeaders: string[],
-    data: string[][]
+    data: string[][],
+    courseId: number
   ): Promise<void> => {
     const body = JSON.stringify({
       type: ImportCSVTypes.STUDENT_INVITE,
-      csvHeaders: csvHeaders,
-      data: data,
+      csvHeaders,
+      data,
+      courseId,
     });
 
-    const response = await fetch(`${API_HOST}/csv/process/student-invite`, {
+    const response = await fetch(`${API_HOST}/invitation/csv`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: body,

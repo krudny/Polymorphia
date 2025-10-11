@@ -31,11 +31,10 @@ public class User {
     @Column(unique = true)
     private String email;
 
-    @NotEmpty
     private String password;
 
     @NotNull
-    private boolean isPasswordTemporary;
+    private boolean isActive;
 
     @ManyToOne()
     @JoinColumn(name = "preferred_course_id")

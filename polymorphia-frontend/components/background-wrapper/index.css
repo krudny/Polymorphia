@@ -10,11 +10,6 @@
   background-attachment: fixed;
 }
 
-.dark .background-wrapper,
-.background-wrapper.force-dark {
+.dark .background-wrapper {
   background-image: url("/background-dark.webp");
-}
-
-.background-wrapper.force-light {
-  background-image: url("/background.webp");
 }

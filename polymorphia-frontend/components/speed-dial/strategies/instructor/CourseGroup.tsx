@@ -8,6 +8,9 @@ export class CourseGroupStrategy
   implements SpeedDialStrategy
 {
   getItems(): SpeedDialItem[] {
-    return [this.createImportCSV(ImportCSVTypes.STUDENT_INVITE)];
+    return [
+      this.createImportCSV(ImportCSVTypes.STUDENT_INVITE),
+      this.createInviteUserToCourse(),
+    ];
   }
 }

@@ -19,7 +19,7 @@ public enum SearchBy {
 
     @JsonCreator
     public static SearchBy fromString(String value) {
-        return switch (value){
+        return switch (value) {
             case FIELD_ANIMAL_NAME -> ANIMAL_NAME;
             case FIELD_STUDENT_NAME -> STUDENT_NAME;
             default -> throw new IllegalArgumentException("Invalid searchBy: " + value);

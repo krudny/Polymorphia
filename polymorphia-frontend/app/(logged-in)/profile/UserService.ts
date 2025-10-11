@@ -1,24 +1,62 @@
 import {
+  InviteRequestDTO,
+  RegisterRequestDTO,
   Role,
   Roles,
   StudentDetailsDTOWithType,
   UserDetailsDTO,
 } from "@/interfaces/api/user";
-import { AvailableCoursesDTO } from "@/interfaces/api/user-context";
 import { API_HOST } from "@/services/api";
-import { StudentProfileDTO } from "@/interfaces/api/profile";
+import { AvailableCoursesDTO } from "@/interfaces/api/user-context";
+import {
+  CreateAnimalRequestDTO,
+  StudentProfileResponseDTO,
+} from "@/interfaces/api/student";
 
 const UserService = {
-  getStudentProfile: async (courseId: number): Promise<StudentProfileDTO> => {
-    const response = await fetch(`${API_HOST}/profile?courseId=${courseId}`, {
+  getStudentProfile: async (
+    courseId: number
+  ): Promise<StudentProfileResponseDTO> => {
+    const response = await fetch(
+      `${API_HOST}/students/profile?courseId=${courseId}`,
+      {
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch student's profile");
+    }
+
+    return await response.json();
+  },
+  isAnimalValid: async (courseId: number): Promise<boolean> => {
+    const response = await fetch(
+      `${API_HOST}/students/animal?courseId=${courseId}`,
+      {
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to check animal validity");
+    }
+
+    return await response.json();
+  },
+  createAnimal: async (request: CreateAnimalRequestDTO): Promise<void> => {
+    const response = await fetch(`${API_HOST}/students/animal`, {
+      body: JSON.stringify(request),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       credentials: "include",
     });
 
     if (!response.ok) {
-      throw new Error("Failed to fetch student's profile!");
+      throw new Error("F!");
     }
-
-    return await response.json();
   },
   getUserRole: async (): Promise<Role> => {
     const response = await fetch(`${API_HOST}/users/role`, {
@@ -97,6 +135,36 @@ const UserService = {
         },
       },
     ];
+  },
+
+  inviteUser: async (request: InviteRequestDTO): Promise<void> => {
+    const response = await fetch(`${API_HOST}/invitation/invite-user`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(request),
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error("Nie udało się zaprosić studenta!");
+    }
+  },
+
+  register: async (request: RegisterRequestDTO): Promise<void> => {
+    const response = await fetch(`${API_HOST}/invitation/register-user`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(request),
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error("Nie udało się utworzyć konta!");
+    }
   },
 };
 

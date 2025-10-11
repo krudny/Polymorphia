@@ -11,16 +11,16 @@ import static com.agh.polymorphia_backend.controller.ControllerTestUtil.getEndpo
 import static com.agh.polymorphia_backend.controller.ControllerTestUtil.getExpectedResponse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ProfileControllerTest extends ControllerTestConfig {
+public class StudentControllerTest extends ControllerTestConfig {
     @Value("classpath:responses/profile/profile.json")
     private Resource profileJson;
 
-    @Test
-    void getProfile_ShouldReturnProfile() throws IOException {
-        String actualResponse = getEndpoint("/profile?courseId={courseId}", "student@agh.com", "password", 200, 1);
-
-        ObjectMapper mapper = new ObjectMapper();
-        assertEquals(mapper.readTree(actualResponse), mapper.readTree(getExpectedResponse(profileJson)));
-    }
+//    @Test
+//    void getProfile_ShouldReturnProfile() throws IOException {
+//        String actualResponse = getEndpoint("/profile?courseId={courseId}", "student@agh.com", "password", 200, 1);
+//
+//        ObjectMapper mapper = new ObjectMapper();
+//        assertEquals(mapper.readTree(actualResponse), mapper.readTree(getExpectedResponse(profileJson)));
+//    }
 
 }

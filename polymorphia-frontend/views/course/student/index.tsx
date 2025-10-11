@@ -8,7 +8,7 @@ import PointsSummary from "@/components/course/event-section/points-summary/Poin
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
 import Loading from "@/components/loading";
 import { useRouter } from "next/navigation";
-import renderCard from "@/views/course/student/RenderCard";
+import RenderCard from "@/views/course/student/RenderCard";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import GradeModal from "@/components/speed-dial/modals/grade";
 import useStudentsGradableEvents from "@/hooks/course/useStudentsGradableEvents";
@@ -60,7 +60,7 @@ export default function StudentView() {
   };
 
   const cards = gradableEvents.map((gradableEvent) =>
-    renderCard(gradableEvent, false, handleClick)
+    RenderCard(gradableEvent, false, handleClick)
   );
 
   return (

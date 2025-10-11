@@ -6,7 +6,7 @@ import {
   UsePreferredCourseUpdate,
   UsePreferredCourseUpdateProps,
 } from "@/hooks/course/usePreferredCourseUpdate/types";
-import { UserDetailsDTO } from "@/interfaces/api/user";
+import { Roles, UserDetailsDTO } from "@/interfaces/api/user";
 import { redirectToNextStep } from "@/app/(welcome)/redirectHandler";
 
 export default function usePreferredCourseUpdate({

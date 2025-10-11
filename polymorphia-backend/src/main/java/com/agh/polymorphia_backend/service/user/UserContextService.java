@@ -44,7 +44,9 @@ public class UserContextService {
     public void setPreferredCourseIfOneAvailable() {
         AbstractRoleUser user = userService.getCurrentUser();
 
-        if (userService.getUserRole(user) == UserType.UNDEFINED) {
+        // TODO: w tym miejscu jezeli user ma prefered course a nie ma animala to dostanie redirect
+
+        if (getUserRole() == UserType.UNDEFINED) {
             List<UserCourseRole> courses = userCourseRoleRepository.findAllByUserId(user.getUser().getId());
             if (courses.size() == 1) {
                 setPreferredCourseId(courses.getFirst().getCourse().getId());
@@ -54,7 +56,11 @@ public class UserContextService {
 
     public void setPreferredCourseId(Long courseId) {
         Course course = courseService.getCourseById(courseId);
-        accessAuthorizer.authorizePreferredCourseSwitch(course);
+
+        if (!accessAuthorizer.authorizePreferredCourseSwitch(course)) {
+            return;
+        }
+
 
         User user = userService.getCurrentUser().getUser();
         User dbUser = userRepository.findById(user.getId())
@@ -62,7 +68,6 @@ public class UserContextService {
 
         dbUser.setPreferredCourse(course);
         userRepository.save(dbUser);
-
         userService.updateSecurityCredentials(user);
     }
 

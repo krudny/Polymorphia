@@ -9,4 +9,5 @@ import java.util.Map;
 public record HallOfFameResponseDto(
         StudentDetailsResponseDto userDetails,
         Map<String, String> xpDetails
-){}
+) {
+}

@@ -15,6 +15,7 @@ import {
   useMainMenuItems,
 } from "@/hooks/general/useMenuOptions";
 import useUserContext from "@/hooks/contexts/useUserContext";
+import Loading from "@/components/loading";
 
 export default function Sidebar() {
   const {
@@ -37,6 +38,11 @@ export default function Sidebar() {
   }, [isSidebarExpanded]);
 
   const menuItems = useMainMenuItems();
+  const bottomMenuItems = useBottomDesktopMenuItems();
+
+  if (!eventSections) {
+    return <Loading />;
+  }
 
   if (eventSections) {
     updateMenuItems(menuItems, eventSections, userRole);
@@ -71,7 +77,7 @@ export default function Sidebar() {
       </div>
       <div>
         <Line />
-        <MenuSection options={useBottomDesktopMenuItems()} />
+        <MenuSection options={bottomMenuItems} />
       </div>
     </div>
   );

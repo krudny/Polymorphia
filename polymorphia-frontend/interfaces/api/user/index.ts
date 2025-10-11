@@ -68,3 +68,17 @@ export type UserDetailsDTO =
   | InstructorDetailsDTOWithType
   | CoordinatorDetailsDTOWithType
   | UndefinedDetailsDTOWithType;
+
+export interface InviteRequestDTO {
+  firstName: string;
+  lastName: string;
+  indexNumber?: number;
+  email: string;
+  role: Role;
+  courseId: number;
+}
+
+export interface RegisterRequestDTO {
+  invitationToken: string;
+  password: string;
+}
