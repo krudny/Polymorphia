@@ -13,6 +13,7 @@ import useUserContext, {
   useUserDetails,
 } from "@/hooks/contexts/useUserContext";
 import { useFindMeScroll } from "@/hooks/general/useFindMeScroll";
+import { Roles } from "@/interfaces/api/user";
 
 export const HallOfFameContext = createContext<
   HallOfFameContextInterface | undefined
@@ -20,6 +21,7 @@ export const HallOfFameContext = createContext<
 
 export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   const { courseId } = useUserDetails();
+  const { userRole } = useUserContext();
 
   const pageSize = 50;
   const [page, setPage] = useState(0);
@@ -28,6 +30,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   const recordRefs = useRef<Record<number, HTMLElement | null>>({});
   const [areFiltersOpen, setAreFiltersOpen] = useState(false);
   const [shouldScrollToMe, setShouldScrollToMe] = useState(false);
+  const [areAnimalNamesVisible, setAreAnimalNamesVisible] = useState(true);
 
   const {
     data: filterConfigs,
@@ -64,6 +67,12 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
     recordRefs.current = {};
   }, [page, debouncedSearch, sortBy, sortOrder, groups]);
 
+  const toggleAnimalNamesVisibility = () => {
+    if (userRole !== Roles.STUDENT) {
+      setAreAnimalNamesVisible((prev) => !prev);
+    }
+  };
+
   return (
     <HallOfFameContext.Provider
       value={{
@@ -79,6 +88,8 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
         isFiltersLoading,
         isFiltersError,
         setShouldScrollToMe,
+        areAnimalNamesVisible,
+        toggleAnimalNamesVisibility,
         recordRefs,
       }}
     >

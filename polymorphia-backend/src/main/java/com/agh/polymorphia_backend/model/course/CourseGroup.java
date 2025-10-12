@@ -40,8 +40,9 @@ public class CourseGroup {
     @JsonIgnore
     private Instructor instructor;
 
+    @NotNull
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "courseGroup")
     @ToString.Exclude
     @JsonIgnore
-    private List<Animal> animals;
+    private List<StudentCourseGroupAssignment> studentCourseGroupAssignments;
 }

@@ -82,3 +82,7 @@ export interface RegisterRequestDTO {
   invitationToken: string;
   password: string;
 }
+
+export type HallOfFameUserDTO =
+  | StudentDetailsDTOWithNullableName
+  | StudentDetailsDTOWithName;
