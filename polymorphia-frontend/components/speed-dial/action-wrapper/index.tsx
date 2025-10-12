@@ -1,6 +1,6 @@
 import { mergeSlotProps, SpeedDialAction } from "@mui/material";
 import "../index.css";
-import { SpeedDialActionWrapperProps } from "./types";
+import { SpeedDialActionWrapperProps } from "@/components/speed-dial/action-wrapper/types";
 
 export default function SpeedDialActionWrapper({
   item,

@@ -38,6 +38,7 @@ function ProfileContent() {
     isLoading: isFiltersLoading,
     isError: isFiltersError,
   } = useProfileFilterConfigs();
+
   const filters = useFilters<ProfileFilterId>(filterConfigs ?? []);
 
   useEffect(() => {

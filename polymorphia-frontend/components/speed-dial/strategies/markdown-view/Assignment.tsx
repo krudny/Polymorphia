@@ -13,6 +13,12 @@ export class AssignmentStrategy
         return [this.createRewards(), this.createGoBack()];
       case Roles.INSTRUCTOR:
         return [this.createRedirectToGrading()];
+      case Roles.COORDINATOR:
+        return [
+          this.createRedirectToGrading(),
+          ...this.createEditing(),
+          this.createMarkdownReset(),
+        ];
       default:
         return [];
     }

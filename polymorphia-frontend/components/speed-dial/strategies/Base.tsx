@@ -8,6 +8,7 @@ import { ImportCSVType, ImportCSVTypes } from "@/interfaces/general";
 import {
   useEditMarkdownSpeedDialDynamicBehavior,
   useRejectMarkdownSpeedDialDynamicBehavior,
+  useResetMakrdownSpeedDialDynamicBehavior,
   useSaveMarkdownSpeedDialDynamicBehavior,
 } from "@/hooks/speed-dial-dynamic-behavior/markdown";
 import {
@@ -148,6 +149,16 @@ export abstract class BaseSpeedDialStrategy {
       label: "Zobacz polecenie",
       icon: "task",
       useDynamicBehavior: useNavigateToParentUrlSpeedDialDynamicBehavior,
+    };
+  }
+
+  protected createMarkdownReset(): SpeedDialItem {
+    return {
+      id: 9,
+      orderIndex: 0,
+      label: "Zresetuj polecenie",
+      icon: "history",
+      useDynamicBehavior: useResetMakrdownSpeedDialDynamicBehavior,
     };
   }
 

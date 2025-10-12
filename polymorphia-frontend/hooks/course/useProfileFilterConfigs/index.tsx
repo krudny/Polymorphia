@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { FilterConfig } from "../useFilters/types";
+import { FilterConfig } from "@/hooks/course/useFilters/types";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { UseProfileFilterConfigs } from "@/hooks/course/useProfileFilterConfigs/types";
 import { ProfileFilterId } from "@/app/(logged-in)/profile/types";

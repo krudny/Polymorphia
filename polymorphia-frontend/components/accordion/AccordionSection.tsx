@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { useEffect, useRef } from "react";
 import "./index.css";
-import { AccordionSectionProps } from "./types";
+import { AccordionSectionProps } from "@/components/accordion/types";
 import { useAccordionContext } from "@/hooks/contexts/useAccordionContext";
 
 export default function AccordionSection({

@@ -7,11 +7,12 @@ import { useTitle } from "@/components/navigation/TitleContext";
 import toast from "react-hot-toast";
 import { useTheme } from "next-themes";
 import useNavigationContext from "@/hooks/contexts/useNavigationContext";
-import CourseChoiceGrid from "@/components/course-choice";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import "./index.css";
 import useUserCourses from "@/hooks/course/useUserCourses";
 import Loading from "@/components/loading";
+import usePreferredCourseUpdate from "@/hooks/course/usePreferredCourseUpdate";
+import Selector from "@/components/selector";
 
 export default function Settings() {
   const {
@@ -26,6 +27,10 @@ export default function Settings() {
   const { courseId } = useUserDetails();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { data: courses, isLoading } = useUserCourses();
+  const currentCourse = courses?.find((course) => course.id === courseId);
+  const setPreferredCourse = usePreferredCourseUpdate({
+    shouldRedirectToMainPage: false,
+  });
 
   const toggleSidebarLockOpened = () => {
     if (isSidebarLockedClosed) {
@@ -47,7 +52,7 @@ export default function Settings() {
     setTitle("Ustawienia");
   }, [setTitle]);
 
-  if (isLoading || !courses) {
+  if (isLoading || !courses || !currentCourse) {
     return <Loading />;
   }
 
@@ -60,7 +65,7 @@ export default function Settings() {
           text={isSidebarLockedOpened ? "Odblokuj" : "Zablokuj"}
           onClick={toggleSidebarLockOpened}
           size="md"
-          className="!mx-0 !ml-6"
+          className="!mx-0"
         />
       </div>
 
@@ -70,7 +75,7 @@ export default function Settings() {
           text={isSidebarLockedClosed ? "Odblokuj" : "Zablokuj"}
           onClick={toggleSidebarLockClosed}
           size="md"
-          className="!mx-0 !ml-6"
+          className="!mx-0"
         />
       </div>
 
@@ -84,17 +89,25 @@ export default function Settings() {
               : () => setTheme("dark")
           }
           size="md"
-          className="!mx-0 !ml-6"
+          className="!mx-0"
         />
       </div>
-      <div ref={containerRef} className="settings-grid-wrapper">
-        <h3 className="text-4xl mb-6">Aktywny kurs</h3>
-        <CourseChoiceGrid
-          courses={courses}
-          currentCourseId={courseId}
-          containerRef={containerRef}
-          fastForward={false}
-        />
+      <div ref={containerRef} className="settings-option-wrapper">
+        <h3>Aktywny kurs</h3>
+
+        <div className="settings-selector-wrapper">
+          <Selector
+            options={courses.map((course) => ({
+              value: course.id.toString(),
+              label: course.name,
+            }))}
+            value={currentCourse.id.toString() || ""}
+            onChange={(value) => setPreferredCourse(Number(value))}
+            placeholder={currentCourse.name || "Wybierz kurs"}
+            size="3xl"
+            padding="md"
+          />
+        </div>
       </div>
     </div>
   );

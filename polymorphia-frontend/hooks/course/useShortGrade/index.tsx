@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 import { UseShortGrade } from "@/hooks/course/useShortGrade/types";
-import { TargetRequestDTO, TargetTypes } from "@/interfaces/api/grade";
+import { TargetRequestDTO, TargetTypes } from "@/interfaces/api/grade/target";
 import { useEventParams } from "@/hooks/general/useEventParams";
 
 export default function useShortGrade(

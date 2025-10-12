@@ -2,18 +2,19 @@
 @import "../../styles/globals.css";
 
 .background-wrapper {
-    @apply fixed inset-0 ;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-image: url('/background.webp');
+  @apply fixed inset-0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url("/background.webp");
+  background-attachment: fixed;
 }
 
 .dark .background-wrapper,
 .background-wrapper.force-dark {
-    background-image: url('/background-dark.webp');
+  background-image: url("/background-dark.webp");
 }
 
 .background-wrapper.force-light {
-    background-image: url('/background.webp');
+  background-image: url("/background.webp");
 }

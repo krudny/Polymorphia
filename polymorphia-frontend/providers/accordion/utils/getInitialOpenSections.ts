@@ -1,4 +1,4 @@
-import { useAccordionStateProps } from "../types";
+import { useAccordionStateProps } from "@/providers/accordion/types";
 
 export function getInitialOpenSections(
   sectionIds: useAccordionStateProps["sectionIds"],

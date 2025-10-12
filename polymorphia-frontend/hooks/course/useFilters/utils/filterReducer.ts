@@ -4,8 +4,8 @@ import {
   FilterConfig,
   FilterState,
   SpecialBehaviors,
-} from "../types";
-import { getInitialState } from "./getInitialState";
+} from "@/hooks/course/useFilters/types";
+import { getInitialState } from "@/hooks/course/useFilters/utils/getInitialState";
 
 export function filterReducer<FilterIdType extends string>(
   state: FilterState<FilterIdType>,

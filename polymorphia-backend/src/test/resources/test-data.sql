@@ -9,6 +9,7 @@ TRUNCATE TABLE user_course_roles cascade;
 TRUNCATE TABLE course_groups cascade;
 TRUNCATE TABLE chests cascade;
 TRUNCATE TABLE animals cascade;
+TRUNCATE TABLE students_course_groups cascade;
 TRUNCATE TABLE evolution_stages cascade;
 TRUNCATE TABLE event_sections cascade;
 TRUNCATE TABLE test_sections cascade;
@@ -42,14 +43,14 @@ INSERT into coordinators(user_id)
 values (4);
 
 -- Courses
-INSERT INTO courses (id, name, info_url, coordinator_id, coordinator_image_url, instructor_image_url, image_url)
-VALUES (1, 'Programowanie Obiektowe', '/url', 3, '/coord_url', '/instr_url', 'img_url');
+INSERT INTO courses (id, name, coordinator_id, coordinator_image_url, instructor_image_url, image_url, markdown, markdown_source_url)
+VALUES (1, 'Programowanie Obiektowe', 3, '/coord_url', '/instr_url', 'img_url', '', '');
 
-INSERT INTO courses (id, name, info_url, coordinator_id, coordinator_image_url, instructor_image_url, image_url)
-VALUES (2, 'Programowanie Obiektowe', '/url', 3, '/coord_url', '/instr_url', 'img_url');
+INSERT INTO courses (id, name, coordinator_id, coordinator_image_url, instructor_image_url, image_url, markdown, markdown_source_url)
+VALUES (2, 'Programowanie Obiektowe', 3, '/coord_url', '/instr_url', 'img_url', '', '');
 
-INSERT INTO courses (id, name, info_url, coordinator_id, coordinator_image_url, instructor_image_url, image_url)
-VALUES (3, 'Programowanie Obiektowe', '/url', 4, '/coord_url', '/instr_url', 'img_url');
+INSERT INTO courses (id, name, coordinator_id, coordinator_image_url, instructor_image_url, image_url, markdown, markdown_source_url)
+VALUES (3, 'Programowanie Obiektowe', 4, '/coord_url', '/instr_url', 'img_url', '', '');
 
 -- Students
 INSERT INTO students(index_number, user_id)
@@ -92,8 +93,12 @@ VALUES (1, 'mi-sr12', 1, 4),
        (2, 'mi-sr15', 1, 4);
 
 -- Animals
-INSERT INTO animals (id, name, course_group_id, student_id)
-VALUES (1, 'sowa', 1, 2);
+INSERT INTO animals (id, name)
+VALUES (1, 'sowa');
+
+-- Student Course Group Assignments
+INSERT INTO students_course_groups (animal_id, student_id, course_group_id)
+VALUES (1, 2, 1);
 
 INSERT INTO animals (id, name, student_id, course_group_id)
 VALUES (2, 'hof_1', 5, 1),

@@ -2,7 +2,7 @@ import { API_STATIC_URL } from "@/services/api";
 import "./index.css";
 import Image from "next/image";
 import ImageBadge from "@/components/image-badge/ImageBadge";
-import ButtonWithBorder from "../button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { EquipmentSectionProps } from "@/components/equipment/types";
 import {
   EquipmentChestResponseDTO,
