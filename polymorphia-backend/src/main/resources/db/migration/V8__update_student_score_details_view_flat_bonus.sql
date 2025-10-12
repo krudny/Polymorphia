@@ -1,11 +1,12 @@
 CREATE OR REPLACE VIEW student_score_detail_view AS
-WITH base AS (SELECT a.id         AS animal_id,
-                     a.student_id AS student_id,
-                     es.id        AS event_section_id,
-                     es.name      AS event_section_name
-              FROM animals a
-                       JOIN course_groups cg ON cg.id = a.course_group_id
-                       JOIN event_sections es ON es.course_id = cg.course_id),
+WITH base AS (SELECT scg.animal_id  AS animal_id,
+                     scg.student_id AS student_id,
+                     es.id          AS event_section_id,
+                     es.name        AS event_section_name
+              FROM students_course_groups scg
+                       JOIN course_groups cg ON cg.id = scg.course_group_id
+                       JOIN event_sections es ON es.course_id = cg.course_id
+              WHERE scg.animal_id IS NOT NULL),
      points AS (SELECT g.animal_id,
                        ge.event_section_id,
                        SUM(cg.xp) AS raw_xp
