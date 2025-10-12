@@ -68,3 +68,8 @@ export type UserDetailsDTO =
   | InstructorDetailsDTOWithType
   | CoordinatorDetailsDTOWithType
   | UndefinedDetailsDTOWithType;
+
+export interface ChangePasswordDTO {
+  oldPassword: string;
+  newPassword: string;
+}

@@ -110,16 +110,15 @@ export default function Settings() {
             padding="md"
           />
         </div>
-
-        <div className="settings-option-wrapper">
-          <h3>Hasło</h3>
-          <ButtonWithBorder
-            text="Zmień hasło"
-            onClick={() => setChangePasswordModalVisible(true)}
-            size="md"
-            className="!mx-0"
-          />
-        </div>
+      </div>
+      <div className="settings-option-wrapper">
+        <h3>Hasło</h3>
+        <ButtonWithBorder
+          text="Zmień hasło"
+          onClick={() => setChangePasswordModalVisible(true)}
+          size="md"
+          className="!mx-0"
+        />
       </div>
       {changePasswordModalVisible && (
         <ChangePasswordModal
