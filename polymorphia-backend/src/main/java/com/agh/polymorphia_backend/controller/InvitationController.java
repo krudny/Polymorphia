@@ -1,8 +1,8 @@
 package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.request.csv.StudentInvitationCSVProcessRequestDto;
-import com.agh.polymorphia_backend.dto.request.user.InvitationRequestDTO;
-import com.agh.polymorphia_backend.dto.request.user.RegisterRequestDTO;
+import com.agh.polymorphia_backend.dto.request.user.InvitationRequestDto;
+import com.agh.polymorphia_backend.dto.request.user.RegisterRequestDto;
 import com.agh.polymorphia_backend.service.csv.processors.StudentInvitationCSVProcessor;
 import com.agh.polymorphia_backend.service.invitation.InvitationService;
 import jakarta.validation.Valid;
@@ -24,13 +24,13 @@ public class InvitationController {
 
     @PostMapping("/invite-user")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
-    public ResponseEntity<Void> inviteUser(@Valid @RequestBody InvitationRequestDTO inviteDTO) {
+    public ResponseEntity<Void> inviteUser(@Valid @RequestBody InvitationRequestDto inviteDTO) {
         invitationService.inviteUser(inviteDTO);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PostMapping("/register-user")
-    public ResponseEntity<Void> registerStudent(@Valid @RequestBody RegisterRequestDTO registerDTO) {
+    public ResponseEntity<Void> registerStudent(@Valid @RequestBody RegisterRequestDto registerDTO) {
         invitationService.registerUser(registerDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

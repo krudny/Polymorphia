@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class SourceUrlMarkdownResponseDTO {
+public class SourceUrlMarkdownResponseDto {
     @Nullable
     private String sourceUrl;
 }

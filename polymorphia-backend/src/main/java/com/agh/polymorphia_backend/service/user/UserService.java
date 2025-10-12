@@ -29,11 +29,6 @@ public class UserService implements UserDetailsService {
     public static final String USER_HAS_NO_VALID_ROLES = "User should have exactly one role";
     private static final String USER_NOT_FOUND = "User %s does not exist in the database";
     private final UserRepository userRepository;
-    private final InvitationTokenService invitationTokenService;
-    private final InvitationTokenValidator invitationTokenValidator;
-    private final EmailService emailService;
-    private final PasswordEncoder passwordEncoder;
-
     private final StudentRepository studentRepository;
     private final CoordinatorRepository coordinatorRepository;
     private final InstructorRepository instructorRepository;

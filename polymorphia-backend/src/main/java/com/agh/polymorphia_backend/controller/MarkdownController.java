@@ -1,8 +1,8 @@
 package com.agh.polymorphia_backend.controller;
 
-import com.agh.polymorphia_backend.dto.request.markdown.MarkdownRequestDTO;
-import com.agh.polymorphia_backend.dto.response.markdown.MarkdownResponseDTO;
-import com.agh.polymorphia_backend.dto.response.markdown.SourceUrlMarkdownResponseDTO;
+import com.agh.polymorphia_backend.dto.request.markdown.MarkdownRequestDto;
+import com.agh.polymorphia_backend.dto.response.markdown.MarkdownResponseDto;
+import com.agh.polymorphia_backend.dto.response.markdown.SourceUrlMarkdownResponseDto;
 import com.agh.polymorphia_backend.service.markdown.MarkdownService;
 import com.agh.polymorphia_backend.service.markdown.MarkdownType;
 import jakarta.validation.Valid;
@@ -18,7 +18,7 @@ public class MarkdownController {
     private final MarkdownService markdownService;
 
     @GetMapping("/{type}/{resourceId}")
-    public ResponseEntity<MarkdownResponseDTO> getMarkdown(
+    public ResponseEntity<MarkdownResponseDto> getMarkdown(
             @PathVariable MarkdownType type,
             @PathVariable Long resourceId) {
 
@@ -26,7 +26,7 @@ public class MarkdownController {
     }
 
     @GetMapping("/{type}/{resourceId}/source")
-    public ResponseEntity<SourceUrlMarkdownResponseDTO> getMarkdownSourceUrl(
+    public ResponseEntity<SourceUrlMarkdownResponseDto> getMarkdownSourceUrl(
             @PathVariable MarkdownType type,
             @PathVariable Long resourceId) {
 
@@ -37,7 +37,7 @@ public class MarkdownController {
     public ResponseEntity<Void> setMarkdown(
             @PathVariable MarkdownType type,
             @PathVariable Long resourceId,
-            @RequestBody @Valid MarkdownRequestDTO requestDTO) {
+            @RequestBody @Valid MarkdownRequestDto requestDTO) {
 
         markdownService.setMarkdown(type, resourceId, requestDTO.getMarkdown());
         return ResponseEntity.ok().build();

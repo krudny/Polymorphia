@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class MarkdownRequestDTO {
+public class MarkdownRequestDto {
     @NotNull
     @Size(min = 1, max = 50000, message = "Markdown file is too large")
     private String markdown;

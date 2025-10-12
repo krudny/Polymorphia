@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.controller;
 
-import com.agh.polymorphia_backend.dto.request.student.CreateAnimalRequestDTO;
+import com.agh.polymorphia_backend.dto.request.student.CreateAnimalRequestDto;
 import com.agh.polymorphia_backend.dto.response.profile.ProfileResponseDto;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.service.student.AnimalService;
@@ -33,7 +33,7 @@ public class StudentController {
     }
 
     @PostMapping("/animal")
-    public ResponseEntity<Void> createAnimal(@RequestBody @Valid CreateAnimalRequestDTO requestDTO) {
+    public ResponseEntity<Void> createAnimal(@RequestBody @Valid CreateAnimalRequestDto requestDTO) {
         animalService.createAnimal(requestDTO);
         return ResponseEntity.ok().build();
     }

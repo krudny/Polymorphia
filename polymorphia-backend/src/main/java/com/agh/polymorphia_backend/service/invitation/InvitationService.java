@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.service.invitation;
 
-import com.agh.polymorphia_backend.dto.request.user.InvitationRequestDTO;
-import com.agh.polymorphia_backend.dto.request.user.RegisterRequestDTO;
+import com.agh.polymorphia_backend.dto.request.user.InvitationRequestDto;
+import com.agh.polymorphia_backend.dto.request.user.RegisterRequestDto;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.invitation.InvitationToken;
 import com.agh.polymorphia_backend.model.user.*;
@@ -47,7 +47,7 @@ public class InvitationService {
     private final UserValidator userValidator;
 
     @Transactional
-    public void inviteUser(InvitationRequestDTO inviteDTO) {
+    public void inviteUser(InvitationRequestDto inviteDTO) {
         try {
             Course course = courseService.getCourseById(inviteDTO.getCourseId());
 
@@ -62,7 +62,7 @@ public class InvitationService {
     }
 
     @Transactional
-    public void registerUser(RegisterRequestDTO registerDTO) {
+    public void registerUser(RegisterRequestDto registerDTO) {
         InvitationToken token = invitationTokenRepository.findByToken(registerDTO.getInvitationToken())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, TOKEN_NOT_EXIST));
 
@@ -86,7 +86,7 @@ public class InvitationService {
 
     }
 
-    private void validateInvitation(InvitationRequestDTO inviteDTO) {
+    private void validateInvitation(InvitationRequestDto inviteDTO) {
         String email = inviteDTO.getEmail();
         invitationTokenValidator.validateTokenBeforeInvitation(email);
         userValidator.validateUserNotExistsByEmail(email);
@@ -96,7 +96,7 @@ public class InvitationService {
         }
     }
 
-    private AbstractRoleUser createAndSaveRoleUser(InvitationRequestDTO inviteDTO) {
+    private AbstractRoleUser createAndSaveRoleUser(InvitationRequestDto inviteDTO) {
         return switch (inviteDTO.getRole()) {
             case STUDENT -> createAndSaveStudent(inviteDTO);
             case INSTRUCTOR -> createAndSaveInstructor(inviteDTO);
@@ -105,22 +105,22 @@ public class InvitationService {
         };
     }
 
-    private Student createAndSaveStudent(InvitationRequestDTO inviteDTO) {
+    private Student createAndSaveStudent(InvitationRequestDto inviteDTO) {
         Student student = userFactory.createStudent(inviteDTO);
         return studentRepository.save(student);
     }
 
-    private Instructor createAndSaveInstructor(InvitationRequestDTO inviteDTO) {
+    private Instructor createAndSaveInstructor(InvitationRequestDto inviteDTO) {
         Instructor instructor = userFactory.createInstructor(inviteDTO);
         return instructorRepository.save(instructor);
     }
 
-    private Coordinator createAndSaveCoordinator(InvitationRequestDTO inviteDTO) {
+    private Coordinator createAndSaveCoordinator(InvitationRequestDto inviteDTO) {
         Coordinator coordinator = userFactory.createCoordinator(inviteDTO);
         return coordinatorRepository.save(coordinator);
     }
 
-    private InvitationToken createAndSaveInvitationToken(InvitationRequestDTO inviteDTO) {
+    private InvitationToken createAndSaveInvitationToken(InvitationRequestDto inviteDTO) {
         InvitationToken token = invitationTokenService.createInvitationToken(inviteDTO);
         return invitationTokenRepository.save(token);
     }
@@ -138,7 +138,7 @@ public class InvitationService {
         userCourseRoleRepository.save(userCourseRole);
     }
 
-    private void sendInvitationEmail(InvitationRequestDTO inviteDTO, InvitationToken token) {
+    private void sendInvitationEmail(InvitationRequestDto inviteDTO, InvitationToken token) {
         emailService.sendInvitationEmail(inviteDTO, token);
     }
 }

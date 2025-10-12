@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class MarkdownResponseDTO {
+public class MarkdownResponseDto {
     @NotNull
     private String markdown;
 }

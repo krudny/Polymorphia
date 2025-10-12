@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.service.student;
 
-import com.agh.polymorphia_backend.dto.request.student.CreateAnimalRequestDTO;
+import com.agh.polymorphia_backend.dto.request.student.CreateAnimalRequestDto;
 import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.repository.course.AnimalRepository;
@@ -30,7 +30,7 @@ public class AnimalService {
         return animal.isPresent() && animal.get().getName() != null;
     }
 
-    public void createAnimal(CreateAnimalRequestDTO requestDTO) {
+    public void createAnimal(CreateAnimalRequestDto requestDTO) {
         User user = userService.getCurrentUser().getUser();
         Animal animal = getAnimal(user.getId(), requestDTO.getCourseId());
 

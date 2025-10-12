@@ -30,6 +30,6 @@ export interface InstructorGradableEventResponseDTO
 export interface CourseGroupsResponseDTO {
   id: number;
   name: string;
-  subtitle: string;
+  details: string;
   studentCount: number;
 }

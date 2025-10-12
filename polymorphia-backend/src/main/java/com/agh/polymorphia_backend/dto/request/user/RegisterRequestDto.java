@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterRequestDTO {
+public class RegisterRequestDto {
     @NotBlank
     private String invitationToken;
 

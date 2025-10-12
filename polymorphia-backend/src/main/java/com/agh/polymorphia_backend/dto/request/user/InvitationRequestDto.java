@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class InvitationRequestDTO {
+public class InvitationRequestDto {
     @Email
     @NotBlank
     private String email;

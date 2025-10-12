@@ -1,13 +1,11 @@
 package com.agh.polymorphia_backend.service.csv.processors;
 
 import com.agh.polymorphia_backend.dto.request.csv.StudentInvitationCSVProcessRequestDto;
-import com.agh.polymorphia_backend.dto.request.user.InvitationRequestDTO;
+import com.agh.polymorphia_backend.dto.request.user.InvitationRequestDto;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.service.csv.CSVHeaders;
-import com.agh.polymorphia_backend.service.csv.CSVType;
 import com.agh.polymorphia_backend.service.csv.CSVUtil;
 import com.agh.polymorphia_backend.service.invitation.InvitationService;
-import com.agh.polymorphia_backend.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -43,7 +41,7 @@ public class StudentInvitationCSVProcessor {
             String lastName = row.get(lastNameIdx);
             Integer indexNumber = extractIndexNumberFromEmail(email);
 
-            InvitationRequestDTO inviteDto = InvitationRequestDTO.builder()
+            InvitationRequestDto inviteDto = InvitationRequestDto.builder()
                     .email(email)
                     .firstName(firstName)
                     .lastName(lastName)

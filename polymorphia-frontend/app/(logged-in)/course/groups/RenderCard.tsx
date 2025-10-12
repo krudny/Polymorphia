@@ -9,8 +9,8 @@ export default function RenderCard(
 ): ReactNode {
   return (
     <XPCard
-      title={courseGroup.name}
-      subtitle={courseGroup.subtitle ?? ""}
+      title={courseGroup.name.toUpperCase()}
+      subtitle={courseGroup.details ?? ""}
       color="sky"
       rightComponent={
         <XPCardText

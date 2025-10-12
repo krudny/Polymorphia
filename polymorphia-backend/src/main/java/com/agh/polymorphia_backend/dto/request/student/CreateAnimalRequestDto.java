@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class CreateAnimalRequestDTO {
+public class CreateAnimalRequestDto {
     @NotNull
     private String animalName;
 
