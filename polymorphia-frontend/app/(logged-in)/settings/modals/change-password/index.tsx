@@ -7,6 +7,7 @@ import { useForm } from "@tanstack/react-form";
 import { changePasswordSchema } from "@/components/form/schema";
 import { ChangePasswordDTO } from "@/interfaces/api/user";
 import useChangePassword from "@/hooks/course/useChangePassword";
+import "./index.css";
 
 export default function ChangePasswordModal({
   onClosedAction,
@@ -78,7 +79,7 @@ export default function ChangePasswordModal({
             <>
               <ButtonWithBorder
                 text="Zmień hasło"
-                className="mt-4"
+                className="!w-full !mt-7"
                 isActive={isPristine || !canSubmit}
               />
             </>
