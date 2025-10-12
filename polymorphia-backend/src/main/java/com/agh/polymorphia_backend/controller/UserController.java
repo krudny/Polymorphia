@@ -32,7 +32,7 @@ public class UserController {
     @GetMapping("/role")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<UserType> getUserRole() {
-//        userContextService.setPreferredCourseIfOneAvailable();
+        userContextService.setPreferredCourseIfOneAvailable();
         return ResponseEntity.ok(userContextService.getUserRole());
     }
 }

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.agh.polymorphia_backend.service.course.CourseService.COURSE_NOT_FOUND;
 
@@ -51,11 +52,8 @@ public class AccessAuthorizer {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, USER_COURSE_ROLE_NOT_FOUND));
 
         if (userCourseRole.getRole() == UserType.STUDENT) {
-
-            Animal animal = animalRepository.findByCourseIdAndStudentId(course.getId(), user.getId())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_ASSIGNED_TO_GROUP));
-
-            return animal.getName() != null;
+            Optional<Animal> animal = animalRepository.findByCourseIdAndStudentId(course.getId(), user.getId());
+            return animal.isPresent();
         }
 
         return true;
@@ -77,14 +75,6 @@ public class AccessAuthorizer {
             case UNDEFINED -> false;
         };
     }
-
-    private boolean isPreferredCourseSwitchAuthorized(User user, Course course) {
-        return true;
-//        return isCourseAccessAuthorizedStudent(user, course)
-//                || isCourseAccessAuthorizedInstructor(user, course)
-//                || isCourseAccessAuthorizedCoordinator(user, course);
-    }
-
 
     private boolean isCourseAccessAuthorizedCoordinator(User user, Course course) {
         return course.getCoordinator().getUser().equals(user);

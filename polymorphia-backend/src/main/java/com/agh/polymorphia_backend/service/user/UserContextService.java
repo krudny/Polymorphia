@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.agh.polymorphia_backend.service.user.UserService.USER_NOT_FOUND;
+
 @Service
 @AllArgsConstructor
 public class UserContextService {
@@ -64,7 +66,7 @@ public class UserContextService {
 
         User user = userService.getCurrentUser().getUser();
         User dbUser = userRepository.findById(user.getId())
-                .orElseThrow(() -> new IllegalStateException("User not found"));
+                .orElseThrow(() -> new IllegalStateException(USER_NOT_FOUND));
 
         dbUser.setPreferredCourse(course);
         userRepository.save(dbUser);

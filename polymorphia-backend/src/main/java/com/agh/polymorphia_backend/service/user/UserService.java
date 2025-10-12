@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class UserService implements UserDetailsService {
     public static final String USER_HAS_NO_VALID_ROLES = "User should have exactly one role";
-    private static final String USER_NOT_FOUND = "User %s does not exist in the database";
+    public static final String USER_NOT_FOUND = "User does not exist in the database";
     private final UserRepository userRepository;
     private final StudentRepository studentRepository;
     private final CoordinatorRepository coordinatorRepository;

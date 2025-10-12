@@ -39,7 +39,7 @@ export default function useLogin({ form }: UseLoginProps) {
         router: router,
       });
 
-      form.reset();
+      setTimeout(() => form.reset(), 1000);
     },
   });
 

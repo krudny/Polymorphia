@@ -15,6 +15,7 @@ import org.thymeleaf.context.Context;
 @Service
 @RequiredArgsConstructor
 public class EmailService {
+    private final static String FAILED_TO_SEND_EMAIL = "Failed to send invitation email";
     private final JavaMailSender mailSender;
     private final TemplateEngine templateEngine;
 
@@ -44,12 +45,12 @@ public class EmailService {
 
             helper.setText(htmlContent, true);
 
-            ClassPathResource imageResource = new ClassPathResource("templates/email-header.png");
+            ClassPathResource imageResource = new ClassPathResource("templates/email-header.jpg");
             helper.addInline("headerImage", imageResource);
 
             mailSender.send(message);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to send invitation email");
+            throw new RuntimeException(FAILED_TO_SEND_EMAIL);
         }
     }
 }
