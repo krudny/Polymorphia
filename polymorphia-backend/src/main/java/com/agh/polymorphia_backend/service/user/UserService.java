@@ -30,6 +30,7 @@ public class UserService implements UserDetailsService {
     private static final String USER_NOT_FOUND = "User %s does not exist in the database";
     private static final String INVALID_OLD_PASSWORD = "Invalid old password";
     private static final String FAILED_TO_CHANGE_PASSWORD = "Failed to change password";
+    private static final String INVALID_NEW_PASSWORD = "New password is not matching";
     private final UserRepository userRepository;
     private final StudentRepository studentRepository;
     private final CoordinatorRepository coordinatorRepository;
@@ -72,6 +73,10 @@ public class UserService implements UserDetailsService {
 
     public void changePassword(ChangePasswordRequestDTO requestDTO) {
         User user = getCurrentUser().getUser();
+
+        if (!requestDTO.getNewPassword().equals(requestDTO.getConfirmNewPassword())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INVALID_NEW_PASSWORD);
+        }
 
         if (!passwordEncoder.matches(requestDTO.getOldPassword(), user.getPassword())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INVALID_OLD_PASSWORD);

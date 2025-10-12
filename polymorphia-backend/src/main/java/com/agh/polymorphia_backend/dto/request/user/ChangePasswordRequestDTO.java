@@ -12,4 +12,8 @@ public class ChangePasswordRequestDTO {
     @NotNull
     @Size(min = 7, max = 16)
     private String newPassword;
+
+    @NotNull
+    @Size(min = 7, max = 16)
+    private String confirmNewPassword;
 }

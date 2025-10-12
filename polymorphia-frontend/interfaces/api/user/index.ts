@@ -72,4 +72,5 @@ export type UserDetailsDTO =
 export interface ChangePasswordDTO {
   oldPassword: string;
   newPassword: string;
+  confirmNewPassword: string;
 }
