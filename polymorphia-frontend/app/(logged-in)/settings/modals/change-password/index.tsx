@@ -1,7 +1,7 @@
 import Modal from "@/components/modal/Modal";
 import { ChangePasswordModalProps } from "@/app/(logged-in)/settings/modals/change-password/types";
 import React, { FormEvent } from "react";
-import { FieldInfo } from "@/components/form/FieldInfo";
+import { FieldErrorMessage } from "@/components/form/FieldErrorMessage";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { changePasswordSchema } from "@/components/form/schema";
 import { ChangePasswordDTO } from "@/interfaces/api/user";
@@ -52,7 +52,7 @@ function ChangePasswordModalContent() {
               required
               autoComplete="off"
             />
-            <FieldInfo field={field} />
+            <FieldErrorMessage field={field} />
           </div>
         )}
       </form.Field>
@@ -70,7 +70,7 @@ function ChangePasswordModalContent() {
               required
               autoComplete="off"
             />
-            <FieldInfo field={field} />
+            <FieldErrorMessage field={field} />
           </div>
         )}
       </form.Field>
@@ -88,7 +88,7 @@ function ChangePasswordModalContent() {
               required
               autoComplete="off"
             />
-            <FieldInfo field={field} />
+            <FieldErrorMessage field={field} />
           </div>
         )}
       </form.Field>
