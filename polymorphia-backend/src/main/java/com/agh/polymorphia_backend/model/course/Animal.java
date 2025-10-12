@@ -1,6 +1,5 @@
 package com.agh.polymorphia_backend.model.course;
 
-import com.agh.polymorphia_backend.model.user.Student;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -29,5 +28,5 @@ public class Animal {
     @OneToOne(mappedBy = "animal")
     @ToString.Exclude
     @JsonIgnore
-    private StudentCourseGroupAssignment courseGroupAssignment;
+    private StudentCourseGroupAssignment studentCourseGroupAssignment;
 }

@@ -1,6 +1,5 @@
 package com.agh.polymorphia_backend.model.course;
 
-import com.agh.polymorphia_backend.model.course.reward.StudentCourseGroupAssignmentId;
 import com.agh.polymorphia_backend.model.user.Student;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
