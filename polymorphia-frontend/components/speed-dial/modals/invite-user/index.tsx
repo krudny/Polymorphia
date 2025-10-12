@@ -41,12 +41,12 @@ export default function InviteUserModal({
   }
 
   if (activeModal === "CSV" && inviteType === InviteTypes.GROUP) {
-    // return (
-    //   <ImportCSVModal
-    //     onClosedAction={handleCloseNestedModal}
-    //     importType={ImportCSVTypes.GROUP_INVITE}
-    //   />
-    // );
+    return (
+      <ImportCSVModal
+        onClosedAction={onClosedAction}
+        importType={ImportCSVTypes.GROUP_INVITE}
+      />
+    );
   }
 
   return (

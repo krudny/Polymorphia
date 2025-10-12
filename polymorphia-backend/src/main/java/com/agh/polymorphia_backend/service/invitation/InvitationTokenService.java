@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.service.invitation;
 
-import com.agh.polymorphia_backend.dto.request.user.InvitationRequestDto;
+import com.agh.polymorphia_backend.dto.request.user.CourseInvitationRequestDto;
 import com.agh.polymorphia_backend.model.invitation.InvitationToken;
 import org.springframework.stereotype.Service;
 
@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Service
 public class InvitationTokenService {
-    public InvitationToken createInvitationToken(InvitationRequestDto inviteDTO) {
+    public InvitationToken createInvitationToken(CourseInvitationRequestDto inviteDTO) {
         String tokenValue = UUID.randomUUID().toString();
 
         return InvitationToken.builder()

@@ -7,7 +7,4 @@ import lombok.Data;
 public class CreateAnimalRequestDto {
     @NotNull
     private String animalName;
-
-    @NotNull
-    private Long courseId;
 }

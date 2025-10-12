@@ -22,6 +22,7 @@ export type ViewType = (typeof ViewTypes)[keyof typeof ViewTypes];
 export const ImportCSVTypes = {
   GRADE_IMPORT: "GRADE_IMPORT",
   STUDENT_INVITE: "STUDENT_INVITE",
+  GROUP_INVITE: "GROUP_INVITE",
 } as const;
 
 export type ImportCSVType =

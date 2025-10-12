@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.service.csv.processors;
 
-import com.agh.polymorphia_backend.dto.request.csv.StudentInvitationCSVProcessRequestDto;
-import com.agh.polymorphia_backend.dto.request.user.InvitationRequestDto;
+import com.agh.polymorphia_backend.dto.request.csv.process.StudentCourseInvitationRequestDto;
+import com.agh.polymorphia_backend.dto.request.user.CourseInvitationRequestDto;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.service.csv.CSVHeaders;
 import com.agh.polymorphia_backend.service.csv.CSVUtil;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class StudentInvitationCSVProcessor {
+public class StudentCourseInvitationCSVProcessor {
     private final static String EMAIL_WITHOUT_INDEX_NUMBER = "Email doesn't contain index number";
     private final static String TOO_MANY_EMAILS = "Attempt to send too many emails!";
     private final InvitationService invitationService;
@@ -24,7 +24,7 @@ public class StudentInvitationCSVProcessor {
     @Value("${invitation.allow-multiple-emails}")
     private boolean allowMultipleEmails;
 
-    public void process(StudentInvitationCSVProcessRequestDto request) {
+    public void process(StudentCourseInvitationRequestDto request) {
         List<String> headers = request.getCsvHeaders();
 
         int emailIdx = CSVUtil.getColumnIndex(headers, CSVHeaders.EMAIL);
@@ -41,7 +41,7 @@ public class StudentInvitationCSVProcessor {
             String lastName = row.get(lastNameIdx);
             Integer indexNumber = extractIndexNumberFromEmail(email);
 
-            InvitationRequestDto inviteDto = InvitationRequestDto.builder()
+            CourseInvitationRequestDto inviteDto = CourseInvitationRequestDto.builder()
                     .email(email)
                     .firstName(firstName)
                     .lastName(lastName)
@@ -50,7 +50,7 @@ public class StudentInvitationCSVProcessor {
                     .role(UserType.STUDENT)
                     .build();
 
-            invitationService.inviteUser(inviteDto);
+            invitationService.inviteUserToCourse(inviteDto);
         }
     }
 

@@ -1,9 +1,11 @@
 package com.agh.polymorphia_backend.controller;
 
-import com.agh.polymorphia_backend.dto.request.csv.StudentInvitationCSVProcessRequestDto;
-import com.agh.polymorphia_backend.dto.request.user.InvitationRequestDto;
+import com.agh.polymorphia_backend.dto.request.csv.process.StudentCourseInvitationRequestDto;
+import com.agh.polymorphia_backend.dto.request.csv.process.StudentGroupInvitationRequestDto;
+import com.agh.polymorphia_backend.dto.request.user.CourseInvitationRequestDto;
 import com.agh.polymorphia_backend.dto.request.user.RegisterRequestDto;
-import com.agh.polymorphia_backend.service.csv.processors.StudentInvitationCSVProcessor;
+import com.agh.polymorphia_backend.service.csv.processors.StudentCourseInvitationCSVProcessor;
+import com.agh.polymorphia_backend.service.csv.processors.StudentGroupInvitationCSVProcessor;
 import com.agh.polymorphia_backend.service.invitation.InvitationService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -20,12 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class InvitationController {
     private final InvitationService invitationService;
-    private final StudentInvitationCSVProcessor studentInvitationCSVProcessor;
+    private final StudentCourseInvitationCSVProcessor studentCourseInvitationCSVProcessor;
+    private final StudentGroupInvitationCSVProcessor studentGroupInvitationCSVProcessor;
 
     @PostMapping("/invite-user")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
-    public ResponseEntity<Void> inviteUser(@Valid @RequestBody InvitationRequestDto inviteDTO) {
-        invitationService.inviteUser(inviteDTO);
+    public ResponseEntity<Void> inviteUser(@Valid @RequestBody CourseInvitationRequestDto inviteDTO) {
+        invitationService.inviteUserToCourse(inviteDTO);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -35,10 +38,18 @@ public class InvitationController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping("/csv")
+    @PostMapping("/course/csv")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
-    public ResponseEntity<Void> processStudentInviteCSV(@RequestBody StudentInvitationCSVProcessRequestDto requestDTO) {
-        studentInvitationCSVProcessor.process(requestDTO);
+    public ResponseEntity<Void> processStudentCourseInviteCSV(@RequestBody StudentCourseInvitationRequestDto requestDTO) {
+        studentCourseInvitationCSVProcessor.process(requestDTO);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PostMapping("/group/csv")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
+    public ResponseEntity<Void> processStudentGroupInviteCSV(@RequestBody StudentGroupInvitationRequestDto requestDTO) {
+        System.out.println("doszedl");
+        studentGroupInvitationCSVProcessor.process(requestDTO);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

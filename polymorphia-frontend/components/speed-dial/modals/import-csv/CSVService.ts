@@ -48,20 +48,6 @@ const CSVService = {
     return await response.json();
   },
 
-  processCSV: async (
-    type: ImportCSVType,
-    csvHeaders: string[],
-    data: string[][],
-    courseId: number,
-    gradableEventId?: number
-  ): Promise<void> => {
-    if (type === ImportCSVTypes.GRADE_IMPORT) {
-      await CSVService.processGradeImport(csvHeaders, data, gradableEventId);
-    } else {
-      await CSVService.processStudentInvite(csvHeaders, data, courseId);
-    }
-  },
-
   processGradeImport: async (
     csvHeaders: string[],
     data: string[][],
@@ -86,7 +72,7 @@ const CSVService = {
     }
   },
 
-  processStudentInvite: async (
+  processStudentCourseInvite: async (
     csvHeaders: string[],
     data: string[][],
     courseId: number
@@ -98,7 +84,31 @@ const CSVService = {
       courseId,
     });
 
-    const response = await fetch(`${API_HOST}/invitation/csv`, {
+    const response = await fetch(`${API_HOST}/invitation/course/csv`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: body,
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error("Nie udało się zaprosić studentów!");
+    }
+  },
+
+  processStudentGroupInvite: async (
+    csvHeaders: string[],
+    data: string[][],
+    courseGroupId: number
+  ): Promise<void> => {
+    const body = JSON.stringify({
+      type: ImportCSVTypes.GROUP_INVITE,
+      csvHeaders,
+      data,
+      courseGroupId,
+    });
+
+    const response = await fetch(`${API_HOST}/invitation/group/csv`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: body,

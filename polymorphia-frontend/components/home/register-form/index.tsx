@@ -62,8 +62,7 @@ export default function RegisterForm({ invitationToken }: RegisterFormProps) {
                 <ButtonWithBorder
                   text={register.isPending ? "Rejestracja..." : "Utwórz konto"}
                   className="mt-12"
-                  isActive={isPristine || !canSubmit || !register.isPending}
-                  forceDark
+                  isActive={!isPristine && canSubmit && !register.isPending}
                 />
               </>
             )}

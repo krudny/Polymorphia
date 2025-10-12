@@ -41,7 +41,7 @@ function CreateAnimalModalContent({ courseId }: { courseId: number }) {
               <input
                 type="text"
                 id={field.name}
-                placeholder="Nazwa zwierzęcia"
+                placeholder="Nazwa zwierzaka"
                 value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(event) => field.handleChange(event.target.value)}
@@ -59,7 +59,7 @@ function CreateAnimalModalContent({ courseId }: { courseId: number }) {
             <ButtonWithBorder
               text={mutation.isPending ? "Tworzenie..." : "Potwierdź"}
               className="!mx-0 !py-1 !w-full"
-              isActive={isPristine || !canSubmit || mutation.isPending}
+              isActive={!isPristine && canSubmit && !mutation.isPending}
             />
           )}
         </form.Subscribe>
@@ -76,7 +76,7 @@ export default function CreateAnimalModal({
     <Modal
       isDataPresented={true}
       onClosed={onClosedAction}
-      title="Nazwij swojego zwierzaka"
+      title="Stwórz zwierzaka"
     >
       <CreateAnimalModalContent courseId={courseId} />
     </Modal>

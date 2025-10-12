@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.service.user;
 
-import com.agh.polymorphia_backend.dto.request.user.InvitationRequestDto;
+import com.agh.polymorphia_backend.dto.request.user.CourseInvitationRequestDto;
 import com.agh.polymorphia_backend.model.user.Coordinator;
 import com.agh.polymorphia_backend.model.user.Instructor;
 import com.agh.polymorphia_backend.model.user.Student;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UserFactory {
 
-    public User createUser(InvitationRequestDto inviteDTO) {
+    public User createUser(CourseInvitationRequestDto inviteDTO) {
         return User.builder()
                 .email(inviteDTO.getEmail())
                 .firstName(inviteDTO.getFirstName())
@@ -21,7 +21,7 @@ public class UserFactory {
                 .build();
     }
 
-    public Student createStudent(InvitationRequestDto inviteDTO) {
+    public Student createStudent(CourseInvitationRequestDto inviteDTO) {
         User user = createUser(inviteDTO);
 
         return Student.builder()
@@ -30,7 +30,7 @@ public class UserFactory {
                 .build();
     }
 
-    public Instructor createInstructor(InvitationRequestDto inviteDTO) {
+    public Instructor createInstructor(CourseInvitationRequestDto inviteDTO) {
         User user = createUser(inviteDTO);
 
         return Instructor.builder()
@@ -38,7 +38,7 @@ public class UserFactory {
                 .build();
     }
 
-    public Coordinator createCoordinator(InvitationRequestDto inviteDTO) {
+    public Coordinator createCoordinator(CourseInvitationRequestDto inviteDTO) {
         User user = createUser(inviteDTO);
 
         return Coordinator.builder()

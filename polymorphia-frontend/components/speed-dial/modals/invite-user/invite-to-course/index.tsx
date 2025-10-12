@@ -157,7 +157,7 @@ function InviteUserToCourseModalContent() {
             <ButtonWithBorder
               text={mutation.isPending ? "Wysyłanie..." : "Wyślij zaproszenie"}
               className="!mx-0 !py-1 !w-full"
-              isActive={isPristine || !canSubmit || mutation.isPending}
+              isActive={!isPristine && canSubmit && !mutation.isPending}
             />
           )}
         </form.Subscribe>

@@ -2,14 +2,14 @@
 @import "../../../styles/globals.css";
 
 .register-wrapper {
-    @apply relative flex-centered w-full max-w-xl px-16 text-primary-dark;
-    @apply md:px-0;
+  @apply relative flex-centered w-full max-w-xl px-16 text-primary-dark z-50;
+  @apply md:px-0;
 }
 
 .register-wrapper > div {
-    @apply w-full max-w-xs text-center;
+  @apply w-full max-w-xs text-center;
 }
 
 form {
-    @apply space-y-4;
+  @apply space-y-4;
 }

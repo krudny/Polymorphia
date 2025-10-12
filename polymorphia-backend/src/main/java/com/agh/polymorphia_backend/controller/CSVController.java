@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.request.csv.CSVPreviewRequestDto;
-import com.agh.polymorphia_backend.dto.request.csv.TestGradingCSVProcessRequestDto;
+import com.agh.polymorphia_backend.dto.request.csv.process.TestGradingRequestDto;
 import com.agh.polymorphia_backend.dto.response.csv.CSVHeadersResponseDto;
 import com.agh.polymorphia_backend.dto.response.csv.CSVResponseDto;
 import com.agh.polymorphia_backend.service.csv.CSVService;
@@ -36,7 +36,7 @@ public class CSVController {
     // TODO: should be moved to dedicated controller
     @PostMapping("/process/test-grade")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
-    public ResponseEntity<Void> processTestGradeCSV(@RequestBody TestGradingCSVProcessRequestDto request) {
+    public ResponseEntity<Void> processTestGradeCSV(@RequestBody TestGradingRequestDto request) {
         testGradingCSVProcessor.process(request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

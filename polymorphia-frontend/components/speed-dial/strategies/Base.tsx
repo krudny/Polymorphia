@@ -109,8 +109,9 @@ export abstract class BaseSpeedDialStrategy {
 
   protected createImportCSV(importType: ImportCSVType): SpeedDialItem {
     const importLabels = {
-      [ImportCSVTypes.STUDENT_INVITE]: "Zaproś studentów z CSV",
+      [ImportCSVTypes.STUDENT_INVITE]: "Zaproś studentów do kursu z CSV",
       [ImportCSVTypes.GRADE_IMPORT]: "Wczytaj oceny z CSV",
+      [ImportCSVTypes.GROUP_INVITE]: "Zaproś studentów do grupy z CSV",
     } as const;
 
     return {

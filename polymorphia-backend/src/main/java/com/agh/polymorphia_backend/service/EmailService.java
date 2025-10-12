@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.service;
 
-import com.agh.polymorphia_backend.dto.request.user.InvitationRequestDto;
+import com.agh.polymorphia_backend.dto.request.user.CourseInvitationRequestDto;
 import com.agh.polymorphia_backend.model.invitation.InvitationToken;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class EmailService {
     @Value("${app.from-name:Polymorphia}")
     private String fromName;
 
-    public void sendInvitationEmail(InvitationRequestDto inviteDTO, InvitationToken invitationToken) {
+    public void sendInvitationEmail(CourseInvitationRequestDto inviteDTO, InvitationToken invitationToken) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");

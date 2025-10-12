@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.dto.request.csv;
+package com.agh.polymorphia_backend.dto.request.csv.process;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class TestGradingCSVProcessRequestDto {
+public class StudentCourseInvitationRequestDto {
     @NotNull
     private List<String> csvHeaders;
 
@@ -14,5 +14,5 @@ public class TestGradingCSVProcessRequestDto {
     private List<List<String>> data;
 
     @NotNull
-    private Integer gradableEventId;
+    private Long courseId;
 }

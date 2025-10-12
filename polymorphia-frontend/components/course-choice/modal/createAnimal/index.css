@@ -8,11 +8,11 @@
 }
 
 .create-animal-wrapper form {
-  @apply w-full flex flex-col gap-y-4;
+  @apply w-full flex flex-col gap-y-3;
 }
 
 .create-animal-input-wrapper {
-  @apply w-full h-[54px];
+  @apply w-full;
 }
 
 .create-animal-wrapper input {
