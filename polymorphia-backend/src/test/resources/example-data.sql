@@ -391,15 +391,6 @@ INSERT INTO user_course_roles (role, user_id, course_id)
 VALUES ('COORDINATOR', 5, 1);
 INSERT INTO user_course_roles (role, user_id, course_id)
 VALUES ('STUDENT', 7, 2);
--- INSERT INTO user_course_roles (role, user_id, course_id)
--- SELECT 'STUDENT'  AS role,
---        student_id AS user_id,
---        CASE
---            WHEN course_group_id IN (1, 3, 4) THEN 1
---            WHEN course_group_id = 2 THEN 2
---            END    AS course_id
--- FROM animals
--- where id > 4;
 
 INSERT INTO animals (id, name)
 VALUES
