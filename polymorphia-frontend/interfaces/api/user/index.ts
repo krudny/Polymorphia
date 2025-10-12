@@ -74,3 +74,7 @@ export interface ChangePasswordDTO {
   newPassword: string;
   confirmNewPassword: string;
 }
+
+export type HallOfFameUserDTO =
+  | StudentDetailsDTOWithNullableName
+  | StudentDetailsDTOWithName;
