@@ -17,7 +17,7 @@ public class StudentControllerTest extends ControllerTestConfig {
 
     @Test
     void getProfile_ShouldReturnProfile() throws IOException {
-        String actualResponse = getEndpoint("/profile?courseId={courseId}", "student@agh.com", "password", 200, 1);
+        String actualResponse = getEndpoint("students/profile?courseId={courseId}", "student@agh.com", "password", 200, 1);
 
         ObjectMapper mapper = new ObjectMapper();
         assertEquals(mapper.readTree(actualResponse), mapper.readTree(getExpectedResponse(profileJson)));
