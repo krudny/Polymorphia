@@ -10,4 +10,5 @@
 }
 
 .csv-header-selector-wrapper {
+  @apply w-32;
 }

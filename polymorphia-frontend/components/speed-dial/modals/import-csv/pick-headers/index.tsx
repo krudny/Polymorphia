@@ -57,10 +57,10 @@ export default function PickCSVHeaders() {
                       [csvHeader]: value,
                     }));
                   }}
-                  placeholder="Wybierz kolumnę"
+                  placeholder="Kolumna"
                   size="2xl"
                   padding="xs"
-                  className="!border-b-2 !border-t-0 !border-x-0 !rounded-none"
+                  className="!border-b-2 !border-t-0 !border-x-0 !rounded-none !w-full"
                 />
               </div>
             </div>

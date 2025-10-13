@@ -39,7 +39,7 @@ public class EmailService {
                     + invitationToken.getToken();
 
             context.setVariable("registrationLink", registrationLink);
-            context.setVariable("userRole", inviteDTO.getRole().getAuthority());
+            context.setVariable("userRole", inviteDTO.getRole().getDisplayName().toUpperCase());
 
             String htmlContent = templateEngine.process("invitation", context);
 
