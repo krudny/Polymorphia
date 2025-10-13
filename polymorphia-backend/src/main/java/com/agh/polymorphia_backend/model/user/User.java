@@ -33,9 +33,6 @@ public class User {
 
     private String password;
 
-    @NotNull
-    private boolean isActive;
-
     @ManyToOne()
     @JoinColumn(name = "preferred_course_id")
     private Course preferredCourse;

@@ -113,7 +113,6 @@ public class InvitationService {
 
 
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
-        user.setActive(true);
         token.setUsed(true);
 
         try {

@@ -60,7 +60,7 @@ const CSVService = {
       ...(gradableEventId && { gradableEventId }),
     });
 
-    const response = await fetch(`${API_HOST}/csv/process/test-grade`, {
+    const response = await fetch(`${API_HOST}/grading/csv/test`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: body,

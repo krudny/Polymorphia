@@ -17,7 +17,6 @@ public class UserFactory {
                 .email(inviteDTO.getEmail())
                 .firstName(inviteDTO.getFirstName())
                 .lastName(inviteDTO.getLastName())
-                .isActive(false)
                 .build();
     }
 

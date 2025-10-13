@@ -21,12 +21,11 @@ import java.util.Optional;
 
 import static com.agh.polymorphia_backend.service.course.CourseService.COURSE_NOT_FOUND;
 
-//TODO: to change to look up in user course role table
+// TODO: to change to look up in user course role table
 @Service
 @AllArgsConstructor
 public class AccessAuthorizer {
     private final static String USER_COURSE_ROLE_NOT_FOUND = "User course role not found";
-    private final static String STUDENT_NOT_ASSIGNED_TO_GROUP = "Student is not assigned to any course group";
     private final UserService userService;
     private final UserCourseRoleRepository userCourseRoleRepository;
     private final InstructorRepository instructorRepository;

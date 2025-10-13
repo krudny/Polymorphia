@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 public class CSVController {
     private final CSVService csvService;
-    private final TestGradingCSVProcessor testGradingCSVProcessor;
 
     @PostMapping("/headers")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
@@ -31,13 +30,5 @@ public class CSVController {
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<CSVResponseDto> getCSVPreview(@ModelAttribute CSVPreviewRequestDto request) {
         return ResponseEntity.ok(csvService.getCSVPreview(request));
-    }
-
-    // TODO: should be moved to dedicated controller
-    @PostMapping("/process/test-grade")
-    @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
-    public ResponseEntity<Void> processTestGradeCSV(@RequestBody TestGradingRequestDto request) {
-        testGradingCSVProcessor.process(request);
-        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

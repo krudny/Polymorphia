@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @import "../../../../styles/globals.css";
 
-/* TODO: repetition with invite form */
-
 .create-animal-wrapper {
   @apply min-w-80;
 }
