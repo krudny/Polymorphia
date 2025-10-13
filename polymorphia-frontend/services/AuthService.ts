@@ -17,7 +17,7 @@ const AuthService = {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to login");
+      throw new Error("Wystąpił błąd przy zalogowaniu");
     }
   },
   logout: async () => {
@@ -27,7 +27,7 @@ const AuthService = {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to logout");
+      throw new Error("Wystąpił błąd przy wylogowaniu");
     }
   },
 };

@@ -2,5 +2,5 @@
 @import "../styles/globals.css";
 
 .hero-background-wrapper {
-  @apply flex flex-col-reverse md:flex-row overflow-hidden bg-black;
+  @apply flex flex-col-reverse md:flex-row bg-black;
 }

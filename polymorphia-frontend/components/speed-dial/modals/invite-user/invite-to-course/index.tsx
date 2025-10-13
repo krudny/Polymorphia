@@ -38,9 +38,23 @@ function InviteUserToCourseModalContent() {
     },
   });
 
+  const extractIndexNumberFromEmail = (email: string): number | null => {
+    const match = email.match(/^(\d+)@/);
+    return match ? parseInt(match[1], 10) : null;
+  };
+
   const handleRoleChange = (value: string) => {
     setSelectedRole(value);
     form.setFieldValue("role", value as Role);
+
+    if (selectedRole === Roles.STUDENT) {
+      const indexNumber = extractIndexNumberFromEmail(
+        form.getFieldValue("email")
+      );
+      if (indexNumber !== null) {
+        form.setFieldValue("indexNumber", indexNumber);
+      }
+    }
   };
 
   const rolesOptions = Object.entries(RoleTextMap)
