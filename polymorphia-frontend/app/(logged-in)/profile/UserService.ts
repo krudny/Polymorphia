@@ -10,6 +10,7 @@ import { API_HOST } from "@/services/api";
 import { AvailableCoursesDTO } from "@/interfaces/api/user-context";
 import {
   CreateAnimalRequestDTO,
+  StudentCourseGroupAssignmentIdResponseDTO,
   StudentProfileResponseDTO,
 } from "@/interfaces/api/student";
 
@@ -25,21 +26,39 @@ const UserService = {
     );
 
     if (!response.ok) {
-      throw new Error("Failed to fetch student's profile");
+      throw new Error("Nie udało się pobrać profilu studenta");
     }
 
     return await response.json();
   },
-  isAnimalValid: async (courseId: number): Promise<boolean> => {
+  hasAnimalInGroup: async (courseId: number): Promise<boolean> => {
     const response = await fetch(
-      `${API_HOST}/students/animal?courseId=${courseId}`,
+      `${API_HOST}/students/animal/is-valid?courseId=${courseId}`,
       {
         credentials: "include",
       }
     );
 
     if (!response.ok) {
-      throw new Error("Failed to check animal validity");
+      throw new Error("Nie udało się sprawdzić czy istnieje zwierzak");
+    }
+
+    return await response.json();
+  },
+  getCourseGroup: async (
+    courseId: number
+  ): Promise<StudentCourseGroupAssignmentIdResponseDTO> => {
+    const response = await fetch(
+      `${API_HOST}/students/course-group?courseId=${courseId}`,
+      {
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        "Nie udało się sprawdzić czy student jest przypisany do grupy"
+      );
     }
 
     return await response.json();
@@ -55,7 +74,7 @@ const UserService = {
     });
 
     if (!response.ok) {
-      throw new Error("F!");
+      throw new Error("Nie udało się utworzyć zwierzęcia");
     }
   },
   getUserRole: async (): Promise<Role> => {
@@ -64,7 +83,7 @@ const UserService = {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to check for user preferences!");
+      throw new Error("Nie udało się sprawdzić preferencji użytkownika");
     }
 
     return await response.json();
@@ -75,7 +94,7 @@ const UserService = {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to fetch courses!");
+      throw new Error("Nie udało się pobrać kursów");
     }
 
     return await response.json();
@@ -86,7 +105,7 @@ const UserService = {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to fetch user context!");
+      throw new Error("Nie udało się pobrać kontekstu użytkownika");
     }
 
     return await response.json();
@@ -103,7 +122,7 @@ const UserService = {
       }
     );
     if (!response.ok) {
-      throw new Error("Failed to set user preferences!");
+      throw new Error("Nie udało się ustawić preferencji użytkownika");
     }
   },
   getRandomUsers: async (): Promise<StudentDetailsDTOWithType[]> => {
@@ -148,7 +167,7 @@ const UserService = {
     });
 
     if (!response.ok) {
-      throw new Error("Nie udało się zaprosić studenta!");
+      throw new Error("Nie udało się zaprosić studenta");
     }
   },
 
@@ -163,7 +182,7 @@ const UserService = {
     });
 
     if (!response.ok) {
-      throw new Error("Nie udało się utworzyć konta!");
+      throw new Error("Nie udało się utworzyć konta");
     }
   },
 };

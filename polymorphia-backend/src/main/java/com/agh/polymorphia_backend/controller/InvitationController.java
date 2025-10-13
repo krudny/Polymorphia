@@ -7,6 +7,7 @@ import com.agh.polymorphia_backend.dto.request.user.RegisterRequestDto;
 import com.agh.polymorphia_backend.service.csv.processors.StudentCourseInvitationCSVProcessor;
 import com.agh.polymorphia_backend.service.csv.processors.StudentGroupInvitationCSVProcessor;
 import com.agh.polymorphia_backend.service.invitation.InvitationService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,8 +34,8 @@ public class InvitationController {
     }
 
     @PostMapping("/register-user")
-    public ResponseEntity<Void> registerStudent(@Valid @RequestBody RegisterRequestDto registerDTO) {
-        invitationService.registerUser(registerDTO);
+    public ResponseEntity<Void> registerStudent(@Valid @RequestBody RegisterRequestDto registerDTO, HttpServletRequest request) {
+        invitationService.registerUser(registerDTO, request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -48,7 +49,6 @@ public class InvitationController {
     @PostMapping("/group/csv")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<Void> processStudentGroupInviteCSV(@RequestBody StudentGroupInvitationRequestDto requestDTO) {
-        System.out.println("doszedl");
         studentGroupInvitationCSVProcessor.process(requestDTO);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

@@ -10,6 +10,10 @@
   @apply w-full max-w-xs text-center;
 }
 
-form {
+.register-form {
   @apply space-y-4;
+}
+
+.register-form div input {
+  @apply text-primary-dark dark:text-secondary-gray border-primary-dark dark:border-secondary-light;
 }

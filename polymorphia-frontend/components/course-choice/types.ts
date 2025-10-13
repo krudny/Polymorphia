@@ -13,5 +13,12 @@ export interface RenderCardProps {
   availableCourse: AvailableCoursesDTO;
   currentCourseId?: number;
   handleCourseSelection: UsePreferredCourseUpdate;
-  setClickedCourseId: Dispatch<SetStateAction<number | null>>;
+  setClickedDetails: Dispatch<
+    SetStateAction<CourseChoiceClickedDetails | null>
+  >;
+}
+
+export interface CourseChoiceClickedDetails {
+  courseId: number;
+  courseGroupId: number;
 }

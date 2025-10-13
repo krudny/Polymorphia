@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,6 +19,7 @@ public class MarkdownController {
     private final MarkdownService markdownService;
 
     @GetMapping("/{type}/{resourceId}")
+    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<MarkdownResponseDto> getMarkdown(
             @PathVariable MarkdownType type,
             @PathVariable Long resourceId) {
@@ -26,6 +28,7 @@ public class MarkdownController {
     }
 
     @GetMapping("/{type}/{resourceId}/source")
+    @PreAuthorize("hasAnyAuthority('COORDINATOR')")
     public ResponseEntity<SourceUrlMarkdownResponseDto> getMarkdownSourceUrl(
             @PathVariable MarkdownType type,
             @PathVariable Long resourceId) {
@@ -34,6 +37,7 @@ public class MarkdownController {
     }
 
     @PutMapping("/{type}/{resourceId}")
+    @PreAuthorize("hasAnyAuthority('COORDINATOR')")
     public ResponseEntity<Void> setMarkdown(
             @PathVariable MarkdownType type,
             @PathVariable Long resourceId,
@@ -44,6 +48,7 @@ public class MarkdownController {
     }
 
     @PutMapping("/{type}/{resourceId}/reset")
+    @PreAuthorize("hasAnyAuthority('COORDINATOR')")
     public ResponseEntity<Void> resetMarkdown(
             @PathVariable MarkdownType type,
             @PathVariable Long resourceId) {

@@ -6,9 +6,6 @@ import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.repository.user.role.CoordinatorRepository;
 import com.agh.polymorphia_backend.repository.user.role.InstructorRepository;
 import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
-import com.agh.polymorphia_backend.service.EmailService;
-import com.agh.polymorphia_backend.service.invitation.InvitationTokenService;
-import com.agh.polymorphia_backend.service.validation.InvitationTokenValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,7 +13,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -87,7 +83,7 @@ public class UserService implements UserDetailsService {
                 .build();
     }
 
-    // TODO: ??
+    // TODO: ??, it doesn't build anything, double error
     private AbstractRoleUser buildUserWithDefinedRole(UserCourseRole userCourseRole, String email) {
         Long userId = userCourseRole.getUser().getId();
         return (switch (userCourseRole.getRole()) {

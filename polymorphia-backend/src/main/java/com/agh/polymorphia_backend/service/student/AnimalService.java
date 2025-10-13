@@ -35,9 +35,9 @@ public class AnimalService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, ANIMAL_NOT_FOUND));
     }
 
-    public boolean isAnimalValid(Long userId, Long courseId) {
-        Optional<Animal> animal = animalRepository.findByCourseIdAndStudentId(courseId, userId);
-        return animal.isPresent() && animal.get().getName() != null;
+    public boolean hasAnimalInGroup(Long courseId) {
+        User user = userService.getCurrentUser().getUser();
+        return animalRepository.findByCourseIdAndStudentId(courseId, user.getId()).isPresent();
     }
 
     @Transactional
@@ -56,7 +56,7 @@ public class AnimalService {
 
             StudentCourseGroupAssignmentId assignmentId = StudentCourseGroupAssignmentId.builder()
                     .studentId(student.getUserId())
-                    .courseGroupId(1L)
+                    .courseGroupId(requestDTO.getCourseGroupId())
                     .build();
 
             StudentCourseGroupAssignment assignment = studentCourseGroupRepository.findById(assignmentId)

@@ -1,7 +1,10 @@
 "use client";
 
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
-import { CourseChoiceProps } from "@/components/course-choice/types";
+import {
+  CourseChoiceClickedDetails,
+  CourseChoiceProps,
+} from "@/components/course-choice/types";
 import usePreferredCourseUpdate from "@/hooks/course/usePreferredCourseUpdate";
 import RenderCard from "@/components/course-choice/RenderCard";
 import CreateAnimalModal from "./modal/createAnimal";
@@ -13,7 +16,8 @@ export default function CourseChoiceGrid({
   containerRef,
   fastForward,
 }: CourseChoiceProps) {
-  const [clickedCourseId, setClickedCourseId] = useState<number | null>(null);
+  const [clickedDetails, setClickedDetails] =
+    useState<CourseChoiceClickedDetails | null>(null);
 
   const handleCourseSelection = usePreferredCourseUpdate({
     shouldRedirectToMainPage: fastForward,
@@ -24,7 +28,7 @@ export default function CourseChoiceGrid({
       availableCourse,
       currentCourseId,
       handleCourseSelection,
-      setClickedCourseId,
+      setClickedDetails,
     })
   );
 
@@ -37,10 +41,10 @@ export default function CourseChoiceGrid({
         cards={cards}
         maxColumns={colNumber}
       />
-      {clickedCourseId && (
+      {clickedDetails && (
         <CreateAnimalModal
-          courseId={clickedCourseId}
-          onClosedAction={() => setClickedCourseId(null)}
+          clickedDetails={clickedDetails}
+          onClosedAction={() => setClickedDetails(null)}
         />
       )}
     </>

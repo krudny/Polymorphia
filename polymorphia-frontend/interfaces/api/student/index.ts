@@ -19,7 +19,13 @@ export interface EvolutionStagesThresholdResponseDTO {
   grade: number;
 }
 
+export interface StudentCourseGroupAssignmentIdResponseDTO {
+  studentId: number;
+  courseGroupId: number;
+}
+
 export interface CreateAnimalRequestDTO {
   animalName: string;
   courseId: number;
+  courseGroupId: number;
 }

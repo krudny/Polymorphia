@@ -6,10 +6,10 @@ import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { FieldInfo } from "@/components/form/FieldInfo";
 import { useForm } from "@tanstack/react-form";
 import { createAnimalSchema } from "@/components/form/schema";
-import { CreateAnimalRequestDTO } from "@/interfaces/api/student";
 import useCreateAnimal from "@/hooks/course/useCreateAnimal";
+import { CreateAnimalModalProps } from "./types";
 
-function CreateAnimalModalContent({ courseId }: { courseId: number }) {
+function CreateAnimalModalContent({ clickedDetails }: CreateAnimalModalProps) {
   const { mutation } = useCreateAnimal();
 
   const form = useForm({
@@ -22,8 +22,8 @@ function CreateAnimalModalContent({ courseId }: { courseId: number }) {
     onSubmit: async ({ value }) => {
       mutation.mutate({
         ...value,
-        courseId: courseId,
-      } as CreateAnimalRequestDTO);
+        ...clickedDetails,
+      });
     },
   });
 
@@ -70,15 +70,15 @@ function CreateAnimalModalContent({ courseId }: { courseId: number }) {
 
 export default function CreateAnimalModal({
   onClosedAction,
-  courseId,
-}: SpeedDialModalProps & { courseId: number }) {
+  clickedDetails,
+}: SpeedDialModalProps & CreateAnimalModalProps) {
   return (
     <Modal
       isDataPresented={true}
       onClosed={onClosedAction}
       title="Stwórz zwierzaka"
     >
-      <CreateAnimalModalContent courseId={courseId} />
+      <CreateAnimalModalContent clickedDetails={clickedDetails} />
     </Modal>
   );
 }

@@ -1,11 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import UserService from "@/app/(logged-in)/profile/UserService";
-import { UseIsAnimalValid } from "@/hooks/course/useAnimal/types";
+import { UseHasAnimalInGroup } from "@/hooks/course/useAnimal/types";
 
-export default function useIsAnimalValid(courseId: number): UseIsAnimalValid {
+export default function useHasAnimalInGroup(
+  courseId: number
+): UseHasAnimalInGroup {
   const { data, isLoading, error } = useQuery({
-    queryKey: ["isAnimalValid", courseId],
-    queryFn: () => UserService.isAnimalValid(courseId),
+    queryKey: ["hasAnimalInGroup", courseId],
+    queryFn: () => UserService.hasAnimalInGroup(courseId),
   });
 
   return { data, isLoading, error };

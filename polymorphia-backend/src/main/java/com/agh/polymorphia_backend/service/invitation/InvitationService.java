@@ -22,6 +22,7 @@ import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.user.UserFactory;
 import com.agh.polymorphia_backend.service.validation.InvitationTokenValidator;
 import com.agh.polymorphia_backend.service.validation.UserValidator;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,7 +44,7 @@ public class InvitationService {
     public static final String INSTRUCTOR_NOT_EXIST = "Instructor doesn't exist";
     public static final String GROUP_HAS_INSTRUCTOR = "Group already has an assigned instructor";
 
-
+    private final RegisterUtil registerUtil;
     private final UserFactory userFactory;
     private final PasswordEncoder passwordEncoder;
     private final InvitationTokenValidator invitationTokenValidator;
@@ -100,7 +101,7 @@ public class InvitationService {
     }
 
     @Transactional
-    public void registerUser(RegisterRequestDto registerDTO) {
+    public void registerUser(RegisterRequestDto registerDTO, HttpServletRequest request) {
         InvitationToken token = invitationTokenRepository.findByToken(registerDTO.getInvitationToken())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, TOKEN_NOT_EXIST));
 
@@ -118,6 +119,7 @@ public class InvitationService {
         try {
             userRepository.save(user);
             invitationTokenRepository.save(token);
+            registerUtil.authenticateUserAndCreateSession(user.getEmail(), registerDTO.getPassword(), request);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FAILED_TO_REGISTER);
         }
