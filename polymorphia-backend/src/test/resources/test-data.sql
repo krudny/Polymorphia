@@ -19,17 +19,16 @@ TRUNCATE TABLE flat_bonus_items cascade;
 TRUNCATE TABLE percentage_bonus_items cascade;
 
 -- Users
-INSERT INTO users (id, first_name, last_name, email, password, preferred_course_id, is_active)
+INSERT INTO users (id, first_name, last_name, email, password, preferred_course_id)
 VALUES (3, 'Michał', 'Kowalski', 'coordinator@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O',
-        null, false);
+        null);
 
-INSERT INTO users (id, first_name, last_name, email, password, preferred_course_id, is_active)
-VALUES (2, 'Piotr', 'Budynek', 'student@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null,
-        false);
+INSERT INTO users (id, first_name, last_name, email, password, preferred_course_id)
+VALUES (2, 'Piotr', 'Budynek', 'student@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null);
 
-INSERT INTO users (id, first_name, last_name, email, password, preferred_course_id, is_active)
+INSERT INTO users (id, first_name, last_name, email, password, preferred_course_id)
 VALUES (4, 'Sławomir', 'Nowak', 'instructor@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O',
-        null, false);
+        null);
 
 -- Coordinators
 INSERT into coordinators(user_id)
