@@ -8,6 +8,7 @@ import InviteUserToCourseModal from "./invite-to-course";
 import { ImportCSVTypes, InviteTypes } from "@/interfaces/general";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import "./index.css";
+import InviteUserToGroupModal from "@/components/speed-dial/modals/invite-user/invite-to-group";
 
 export default function InviteUserModal({
   onClosedAction,
@@ -28,7 +29,7 @@ export default function InviteUserModal({
   }
 
   if (activeModal === "MANUAL" && inviteType === InviteTypes.GROUP) {
-    // return <InviteUserToGroupModal onClosedAction={handleCloseNestedModal} />;
+    return <InviteUserToGroupModal onClosedAction={onClosedAction} />;
   }
 
   if (activeModal === "CSV" && inviteType === InviteTypes.COURSE) {
