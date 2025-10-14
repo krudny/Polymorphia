@@ -31,7 +31,7 @@ public class StudentCourseInvitationCSVProcessor {
         int firstNameIdx = CSVUtil.getColumnIndex(headers, CSVHeaders.LAST_NAME);
         int lastNameIdx = CSVUtil.getColumnIndex(headers, CSVHeaders.FIRST_NAME);
 
-        if (!allowMultipleEmails && request.getData().size() > 1) {
+        if (!allowMultipleEmails && request.getData().size() > 2) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, TOO_MANY_EMAILS);
         }
 

@@ -20,5 +20,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
         WHERE u.password IS NULL 
         OR u.email IN :expiredTokenEmails
     """)
-    int deleteUsersWithoutPasswordOrExpiredTokens(@Param("expiredTokenEmails") List<String> expiredTokenEmails);
+    Integer deleteUsersWithoutPasswordOrExpiredTokens(@Param("expiredTokenEmails") List<String> expiredTokenEmails);
 }

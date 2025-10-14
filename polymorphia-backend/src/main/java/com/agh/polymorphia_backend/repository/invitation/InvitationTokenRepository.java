@@ -21,9 +21,9 @@ public interface InvitationTokenRepository extends JpaRepository<InvitationToken
 
     @Modifying
     @Query("DELETE FROM InvitationToken t WHERE t.expiryDate < :date")
-    int deleteByExpiryDateBefore(@Param("date") ZonedDateTime date);
+    Integer deleteByExpiryDateBefore(@Param("date") ZonedDateTime date);
 
     @Modifying
     @Query("DELETE FROM InvitationToken t WHERE t.used = true")
-    int deleteByUsedTrue();
+    Integer deleteByUsedTrue();
 }

@@ -25,7 +25,7 @@ public class UserCleanupService {
     @Autowired
     private InvitationTokenRepository invitationTokenRepository;
 
-    @Scheduled(fixedDelay = 100000)
+    @Scheduled(cron = "0 0 */6 * * ?")
     public void cleanupInactiveUsers() {
         log.info(START_CLEANUP);
 
@@ -37,16 +37,12 @@ public class UserCleanupService {
                 .map(InvitationToken::getEmail)
                 .toList();
 
-        for(String expiredTokenEmail : expiredTokenEmails) {
-            log.info("Deleting user with expired token: {}", expiredTokenEmail);
-        }
-
-        int deletedUserCount = userRepository.deleteUsersWithoutPasswordOrExpiredTokens(
+        Integer deletedUserCount = userRepository.deleteUsersWithoutPasswordOrExpiredTokens(
                 expiredTokenEmails
         );
 
-        int deletedExpiredTokens = invitationTokenRepository.deleteByExpiryDateBefore(now);
-        int deletedUsedTokens = invitationTokenRepository.deleteByUsedTrue();
+        Integer deletedExpiredTokens = invitationTokenRepository.deleteByExpiryDateBefore(now);
+        Integer deletedUsedTokens = invitationTokenRepository.deleteByUsedTrue();
 
         log.info(END_CLEANUP, deletedExpiredTokens, deletedUsedTokens, deletedUserCount);
     }
