@@ -17,7 +17,7 @@ export default function usePreferredCourseUpdate({
   const setPreferredCourseMutation = useMutation({
     mutationFn: (courseId: number) =>
       userService.setUserPreferredCourse(courseId),
-    onSuccess: async (data, courseId: number) => {
+    onSuccess: async () => {
       toast.success("Aktywny kurs został zmieniony!");
       await queryClient.invalidateQueries({ queryKey: ["currentUser"] });
       await queryClient.invalidateQueries({ queryKey: ["userRole"] });

@@ -38,8 +38,6 @@ export default function useLogin({ form }: UseLoginProps) {
         defaultRedirect: "/welcome",
         router: router,
       });
-
-      setTimeout(() => form.reset(), 1000);
     },
   });
 
