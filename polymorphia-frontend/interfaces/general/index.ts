@@ -40,4 +40,14 @@ export const InviteTypes = {
   GROUP: "GROUP",
 } as const;
 
+export const InviteSpecificTypes = {
+  COURSE_MANUAL: "COURSE_MANUAL",
+  COURSE_CSV: "COURSE_CSV",
+  GROUP_MANUAL: "GROUP_MANUAL",
+  GROUP_CSV: "GROUP_CSV",
+};
+
 export type InviteType = (typeof InviteTypes)[keyof typeof InviteTypes];
+
+export type InviteSpecificType =
+  (typeof InviteSpecificTypes)[keyof typeof InviteSpecificTypes];

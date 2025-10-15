@@ -15,11 +15,12 @@ import {
 import useInviteUser from "@/hooks/course/useInviteStudent";
 import Selector from "@/components/selector";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
+import { isValidRole } from "@/shared/is-valid-role";
 
 function InviteUserToCourseModalContent() {
   const { mutation } = useInviteUser();
   const { courseId } = useUserDetails();
-  const [selectedRole, setSelectedRole] = useState<string | null>(null);
+  const [selectedRole, setSelectedRole] = useState<Role | null>(null);
 
   const form = useForm({
     defaultValues: {
@@ -44,8 +45,9 @@ function InviteUserToCourseModalContent() {
   };
 
   const handleRoleChange = (value: string) => {
-    setSelectedRole(value);
-    form.setFieldValue("role", value as Role);
+    const validatedRole = isValidRole(value) ? value : Roles.UNDEFINED;
+    setSelectedRole(validatedRole);
+    form.setFieldValue("role", validatedRole);
 
     if (selectedRole === Roles.STUDENT) {
       const indexNumber = extractIndexNumberFromEmail(
