@@ -25,6 +25,9 @@ public class EmailService {
     @Value("${app.from-name:Polymorphia}")
     private String fromName;
 
+    @Value("${spring.mail.registerUrl}")
+    private String registerUrl;
+
     public void sendInvitationEmail(CourseInvitationRequestDto inviteDTO, InvitationToken invitationToken) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
@@ -35,10 +38,9 @@ public class EmailService {
             helper.setSubject("Zaproszenie do aplikacji Polymorphia");
 
             Context context = new Context();
-            String registrationLink = "https://polymorphia-self.vercel.app?invitationToken="
-                    + invitationToken.getToken();
+            String fullRegisterUrl = registerUrl + "?invitationToken=" + invitationToken.getToken();
 
-            context.setVariable("registrationLink", registrationLink);
+            context.setVariable("registrationLink", fullRegisterUrl);
             context.setVariable("userRole", inviteDTO.getRole().getDisplayName().toUpperCase());
 
             String htmlContent = templateEngine.process("invitation", context);
