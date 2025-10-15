@@ -65,7 +65,7 @@ export default function InviteUserModal({
       return (
         <ImportCSVModal
           onClosedAction={onClosedAction}
-          importType={ImportCSVTypes.STUDENT_INVITE}
+          importType={ImportCSVTypes.GROUP_INVITE}
         />
       );
 
