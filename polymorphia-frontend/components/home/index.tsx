@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { useInvitationToken } from "@/hooks/general/useInvitationToken";
 import { animateLoginFormVisibility } from "@/animations/Home";
 import { HomeContentProps } from "./types";
@@ -8,14 +8,18 @@ import RegisterForm from "@/components/home/register-form";
 import LoginForm from "@/components/home/login-form";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import "./index.css";
+import { useLoginFormAnimation } from "@/hooks/general/useLoginFormAnimation";
 
 export default function HomeContent({
   titleRef,
   hasMountedRef,
 }: HomeContentProps) {
-  const loginFormRef = useRef<HTMLDivElement>(null);
-
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
+  const { loginFormRef } = useLoginFormAnimation({
+    isLoginFormVisible,
+    titleRef,
+    hasMountedRef,
+  });
   const invitationToken = useInvitationToken();
 
   const openLoginForm = () => setIsLoginFormVisible(true);

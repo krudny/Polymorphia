@@ -1,17 +1,16 @@
 import { createContext, ReactNode } from "react";
 import Loading from "@/components/loading";
 import { UserDetailsDTO } from "@/interfaces/api/user";
-import { useQuery } from "@tanstack/react-query";
-import UserService from "@/app/(logged-in)/profile/UserService";
+import useCurrentUser from "@/hooks/course/useCurrentUser";
 
 export const UserContext = createContext<UserDetailsDTO | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-  // TODO: hook
-  const { data: userData, isLoading } = useQuery({
-    queryKey: ["currentUser"],
-    queryFn: () => UserService.getCurrentUser(),
-  });
+  const { data: userData, isLoading, isError } = useCurrentUser();
+
+  if (isError) {
+    return <div>Nie udało się pobrać użytkownika</div>;
+  }
 
   if (isLoading || !userData) {
     return <Loading />;
