@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.dto.response.user;
 
 public record StudentDetailsWithNameResponseDto (
-        String studentName,
+        String fullName,
         String animalName,
         String evolutionStage,
         String group,
@@ -9,9 +9,9 @@ public record StudentDetailsWithNameResponseDto (
         int position
 ) implements StudentDetailsResponseDto {
 
-    public StudentDetailsWithNameResponseDto(String studentName, StudentDetailsWithoutNameResponseDto studentDetails) {
+    public StudentDetailsWithNameResponseDto(String fullName, StudentDetailsWithoutNameResponseDto studentDetails) {
         this(
-                studentName,
+                fullName,
                 studentDetails.animalName(),
                 studentDetails.evolutionStage(),
                 studentDetails.group(),
