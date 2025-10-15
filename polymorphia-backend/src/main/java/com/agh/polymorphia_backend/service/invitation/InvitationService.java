@@ -20,6 +20,7 @@ import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
 import com.agh.polymorphia_backend.service.EmailService;
 import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.user.UserFactory;
+import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import com.agh.polymorphia_backend.service.validation.InvitationTokenValidator;
 import com.agh.polymorphia_backend.service.validation.UserValidator;
 import jakarta.servlet.http.HttpServletRequest;
@@ -60,11 +61,14 @@ public class InvitationService {
     private final CourseGroupRepository courseGroupRepository;
     private final CourseService courseService;
     private final UserValidator userValidator;
+    private final AccessAuthorizer accessAuthorizer;
 
     @Transactional
     public void inviteUserToCourse(CourseInvitationRequestDto inviteDTO) {
         try {
             Course course = courseService.getCourseById(inviteDTO.getCourseId());
+
+            accessAuthorizer.authorizeCourseAccess(course);
 
             validateInvitation(inviteDTO);
             AbstractRoleUser roleUser = createAndSaveRoleUser(inviteDTO);
@@ -83,6 +87,9 @@ public class InvitationService {
 
         CourseGroup courseGroup = courseGroupRepository.findById(inviteDTO.getCourseGroupId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, COURSE_GROUP_NOT_EXIST));
+
+        Course course = courseGroup.getCourse();
+        accessAuthorizer.authorizeCourseAccess(course);
 
         try {
             switch (inviteDTO.getRole()) {
@@ -110,8 +117,7 @@ public class InvitationService {
 
         invitationTokenValidator.validateTokenBeforeRegister(token);
         userValidator.validateUserRegistered(user);
-
-
+        
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
         token.setUsed(true);
 

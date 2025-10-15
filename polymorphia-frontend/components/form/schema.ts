@@ -1,6 +1,18 @@
 import { z } from "zod";
 import { Roles } from "@/interfaces/api/user";
 
+const passwordValidation = z
+  .string()
+  .min(8, "Hasło musi mieć co najmniej 8 znaków")
+  .max(256, "Hasło może mieć maksymalnie 256 znaków")
+  .regex(/[A-Z]/, "Hasło musi zawierać co najmniej jedną wielką literę")
+  .regex(/[a-z]/, "Hasło musi zawierać co najmniej jedną małą literę")
+  .regex(/[0-9]/, "Hasło musi zawierać co najmniej jedną cyfrę")
+  .regex(
+    /[^A-Za-z0-9]/,
+    "Hasło musi zawierać co najmniej jeden znak specjalny"
+  );
+
 export const emailField = z.string().email("Nieprawidłowy email");
 
 export const loginSchema = z.object({
@@ -9,7 +21,7 @@ export const loginSchema = z.object({
 });
 
 export const registerSchema = z.object({
-  password: z.string(),
+  password: passwordValidation,
 });
 
 export const inviteSchema = z.object({
