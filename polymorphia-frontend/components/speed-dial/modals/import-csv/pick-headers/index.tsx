@@ -60,6 +60,8 @@ export default function PickCSVHeaders() {
                   placeholder="Kolumna"
                   size="2xl"
                   padding="xs"
+                  centeredPlaceholder={true}
+                  centeredOptions={true}
                   className="!border-b-2 !border-t-0 !border-x-0 !rounded-none !w-full"
                 />
               </div>

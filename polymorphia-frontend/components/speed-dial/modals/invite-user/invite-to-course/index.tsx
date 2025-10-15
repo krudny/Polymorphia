@@ -134,7 +134,9 @@ function InviteUserToCourseModalContent() {
               placeholder="Rola"
               size="3xl"
               padding="base"
-              className="!border-b-2 !border-t-0 !border-x-0 !rounded-none"
+              centeredPlaceholder={true}
+              centeredOptions={true}
+              className="!border-b-2 !border-t-0 !border-x-0 !rounded-none !w-40"
             />
           </div>
         </div>

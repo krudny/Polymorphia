@@ -87,6 +87,17 @@ export const selectorVariants = tv({
         option: "px-8 py-5",
       },
     },
+    centeredPlaceholder: {
+      true: {
+        placeholder: "mx-auto",
+        value: "mx-auto",
+      },
+    },
+    centeredOptions: {
+      true: {
+        option: "text-center",
+      },
+    },
   },
   defaultVariants: {
     size: "md",
