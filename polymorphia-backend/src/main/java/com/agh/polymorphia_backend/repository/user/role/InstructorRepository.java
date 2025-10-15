@@ -13,7 +13,7 @@ public interface InstructorRepository extends JpaRepository<Instructor, Long>, U
     @Query(
             "select i from CourseGroup cg " +
                     "join  cg.instructor i " +
-                    "where i.user.id=:userId and cg.id=:courseId"
+                    "where i.user.id=:userId and cg.course.id=:courseId"
     )
     @Override
     Optional<Instructor> findByUserIdAndCourseId(Long userId, Long courseId);
