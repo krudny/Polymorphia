@@ -15,11 +15,10 @@ export default function useChangePassword({
       return toast.promise(UserService.changePassword(request), {
         loading: "Zmienianie hasła...",
         success: "Hasło zmieniono pomyślnie!",
-        error: (error) => `Wystąpił błąd przy zmianie hasła!`,
+        error: () => `Wystąpił błąd przy zmianie hasła!`,
       });
     },
     onSuccess: async () => {
-      // TODO: close modal
       form.reset();
     },
   });

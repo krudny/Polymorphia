@@ -1,15 +1,15 @@
-import { AnyFieldApi } from "@tanstack/react-form";
+import { FieldErrorMessageProps } from "./types";
 
-export function FieldErrorMessage({ field }: { field: AnyFieldApi }) {
+export function FieldErrorMessage({ field }: FieldErrorMessageProps) {
   return (
     <div className="mx-auto text-center">
-      {field.state.meta.isBlurred && !field.state.meta.isValid ? (
-        <>
-          {field.state.meta.errors
-            .map((err) => (typeof err === "string" ? err : err.message))
-            .join(", ")}
-        </>
-      ) : null}
+      {field.state.meta.isBlurred && !field.state.meta.isValid
+        ? field.state.meta.errors.map((error, index) => (
+            <div key={index}>
+              {typeof error === "string" ? error : error.message}
+            </div>
+          ))
+        : null}
     </div>
   );
 }

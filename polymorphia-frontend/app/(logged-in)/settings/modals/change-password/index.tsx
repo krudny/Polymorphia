@@ -34,6 +34,7 @@ function ChangePasswordModalContent() {
   return (
     <form
       className="change-password-form"
+      autoComplete="off"
       onSubmit={(event: FormEvent) => {
         event.preventDefault();
         form.handleSubmit();
@@ -43,8 +44,9 @@ function ChangePasswordModalContent() {
         {(field) => (
           <div>
             <input
-              type="text"
+              type="password"
               id={field.name}
+              name={field.name}
               placeholder="Stare hasło"
               value={field.state.value}
               onBlur={field.handleBlur}
@@ -61,8 +63,9 @@ function ChangePasswordModalContent() {
         {(field) => (
           <div>
             <input
-              type="text"
+              type="password"
               id={field.name}
+              name={field.name}
               placeholder="Nowe hasło"
               value={field.state.value}
               onBlur={field.handleBlur}
@@ -79,8 +82,9 @@ function ChangePasswordModalContent() {
         {(field) => (
           <div>
             <input
-              type="text"
+              type="password"
               id={field.name}
+              name={field.name}
               placeholder="Potwierdź hasło"
               value={field.state.value}
               onBlur={field.handleBlur}
@@ -95,13 +99,11 @@ function ChangePasswordModalContent() {
 
       <form.Subscribe selector={(state) => [state.canSubmit, state.isPristine]}>
         {([canSubmit, isPristine]) => (
-          <>
-            <ButtonWithBorder
-              text="Zmień hasło"
-              className="!w-full !mt-4"
-              isActive={isPristine || !canSubmit}
-            />
-          </>
+          <ButtonWithBorder
+            text="Zmień hasło"
+            className="!w-full !mt-4"
+            isActive={isPristine || !canSubmit}
+          />
         )}
       </form.Subscribe>
     </form>
