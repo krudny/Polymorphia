@@ -6,7 +6,7 @@ import {
   CourseChoiceProps,
 } from "@/components/course-choice/types";
 import usePreferredCourseUpdate from "@/hooks/course/usePreferredCourseUpdate";
-import RenderCard from "@/components/course-choice/RenderCard";
+import CourseChoiceCard from "@/components/course-choice/CourseChoiceCard";
 import CreateAnimalModal from "./modal/createAnimal";
 import React, { useState } from "react";
 
@@ -24,7 +24,7 @@ export default function CourseChoiceGrid({
   });
 
   const cards = courses.map((availableCourse) =>
-    RenderCard({
+    CourseChoiceCard({
       availableCourse,
       currentCourseId,
       handleCourseSelection,

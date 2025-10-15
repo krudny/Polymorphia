@@ -7,7 +7,7 @@ import useHasAnimalInGroup from "@/hooks/course/useAnimal";
 import useCourseGroup from "@/hooks/course/useCourseGroup";
 import toast from "react-hot-toast";
 
-export default function RenderCard({
+export default function CourseChoiceCard({
   availableCourse,
   currentCourseId,
   handleCourseSelection,

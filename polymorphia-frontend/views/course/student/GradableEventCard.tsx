@@ -4,7 +4,7 @@ import { StudentGradableEventResponseDTO } from "@/interfaces/api/course";
 import XPCardChest from "@/components/xp-card/components/XPCardChest";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 
-export default function RenderCard(
+export default function GradableEventCard(
   gradableEvent: StudentGradableEventResponseDTO,
   isMobile: boolean,
   handleGradableEventClick: (id: number, isLocked: boolean) => void

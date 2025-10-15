@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardText from "@/components/xp-card/components/XPCardText";
 
-export default function RenderCard(
+export default function CourseGroupCard(
   courseGroup: CourseGroupsResponseDTO,
   handleClick: (id: number) => void
 ): ReactNode {

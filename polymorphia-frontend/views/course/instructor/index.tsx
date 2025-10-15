@@ -4,7 +4,7 @@ import SectionView from "@/components/section-view/SectionView";
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Loading from "@/components/loading";
-import RenderCard from "@/views/course/instructor/RenderCard";
+import GradableEventCard from "@/views/course/instructor/GradableEventCard";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import useInstructorGradableEvents from "@/hooks/course/useInstructorGradableEvents";
 import "./index.css";
@@ -49,7 +49,7 @@ export default function InstructorView() {
 
   // TODO: is mobile mocked
   const cards = gradableEvents.map((gradableEvent) =>
-    RenderCard(gradableEvent, false, handleClick)
+    GradableEventCard(gradableEvent, false, handleClick)
   );
 
   return (
