@@ -26,8 +26,8 @@ public class InvitationController {
     private final StudentCourseInvitationCSVProcessor studentCourseInvitationCSVProcessor;
     private final StudentGroupInvitationCSVProcessor studentGroupInvitationCSVProcessor;
 
-    @PostMapping("/invite-user")
-    @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
+    @PostMapping("/course")
+    @PreAuthorize("hasAnyAuthority('COORDINATOR')")
     public ResponseEntity<Void> inviteUser(@Valid @RequestBody CourseInvitationRequestDto inviteDTO) {
         invitationService.inviteUserToCourse(inviteDTO);
         return ResponseEntity.status(HttpStatus.OK).build();
@@ -40,7 +40,7 @@ public class InvitationController {
     }
 
     @PostMapping("/course/csv")
-    @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
+    @PreAuthorize("hasAnyAuthority('COORDINATOR')")
     public ResponseEntity<Void> processStudentCourseInviteCSV(@RequestBody StudentCourseInvitationRequestDto requestDTO) {
         studentCourseInvitationCSVProcessor.process(requestDTO);
         return ResponseEntity.status(HttpStatus.OK).build();

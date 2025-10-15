@@ -11,13 +11,13 @@ import "./index.css";
 import { useScaleShow } from "@/animations/ScaleShow";
 import RenderCard from "@/app/(logged-in)/course/groups/RenderCard";
 import { useRouter } from "next/navigation";
-
-const courseId = 1;
+import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export default function CourseGroupsPage() {
   const { setTitle } = useTitle();
   const router = useRouter();
   const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const { courseId } = useUserDetails();
 
   useEffect(() => {
     setTitle("Grupy zajęciowe");

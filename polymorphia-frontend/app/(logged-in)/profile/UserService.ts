@@ -157,7 +157,7 @@ const UserService = {
   },
 
   inviteUser: async (request: InviteRequestDTO): Promise<void> => {
-    const response = await fetch(`${API_HOST}/invitation/invite-user`, {
+    const response = await fetch(`${API_HOST}/invitation/course`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,6 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { CourseService } from "@/app/(logged-in)/course/CourseService";
-import { UseCourseGroups } from "@/hooks/course/useCourseGroups/types";
 import { UseCourseGroup } from "./types";
 import UserService from "@/app/(logged-in)/profile/UserService";
 

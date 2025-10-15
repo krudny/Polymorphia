@@ -6,9 +6,8 @@ import {
   UsePreferredCourseUpdate,
   UsePreferredCourseUpdateProps,
 } from "@/hooks/course/usePreferredCourseUpdate/types";
-import { Roles, UserDetailsDTO } from "@/interfaces/api/user";
+import { UserDetailsDTO } from "@/interfaces/api/user";
 import { redirectToNextStep } from "@/app/(welcome)/redirectHandler";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
 
 export default function usePreferredCourseUpdate({
   shouldRedirectToMainPage,
