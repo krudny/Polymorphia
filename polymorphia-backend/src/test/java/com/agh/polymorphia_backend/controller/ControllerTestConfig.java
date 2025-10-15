@@ -56,6 +56,7 @@ public abstract class ControllerTestConfig {
         registry.add("spring.mail.properties.mail.smtp.connectiontimeout", () -> "1000");
         registry.add("spring.mail.properties.mail.smtp.timeout", () -> "1000");
         registry.add("invitation.allow-multiple-emails", () -> "false");
+        registry.add("spring.mail.registerUrl", () -> "https://sampleurl.com/registerUrl");
     }
 
     @BeforeEach

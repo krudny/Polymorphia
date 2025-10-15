@@ -52,6 +52,9 @@ public class EmailService {
 
             helper.setText(htmlContent, true);
 
+            ClassPathResource imageResource = new ClassPathResource("templates/email-header.jpg");
+            helper.addInline("headerImage", imageResource);
+
             mailSender.send(message);
         } catch (Exception e) {
             throw new RuntimeException(FAILED_TO_SEND_EMAIL);
