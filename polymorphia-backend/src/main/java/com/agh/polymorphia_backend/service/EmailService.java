@@ -2,6 +2,9 @@ package com.agh.polymorphia_backend.service;
 
 import com.agh.polymorphia_backend.dto.request.user.CourseInvitationRequestDto;
 import com.agh.polymorphia_backend.model.invitation.InvitationToken;
+import jakarta.activation.DataHandler;
+import jakarta.activation.FileDataSource;
+import jakarta.mail.internet.MimeBodyPart;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +14,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+
+import javax.sql.DataSource;
 
 @Service
 @RequiredArgsConstructor
@@ -46,9 +51,6 @@ public class EmailService {
             String htmlContent = templateEngine.process("invitation", context);
 
             helper.setText(htmlContent, true);
-
-            ClassPathResource imageResource = new ClassPathResource("templates/email-header.jpg");
-            helper.addInline("headerImage", imageResource);
 
             mailSender.send(message);
         } catch (Exception e) {
