@@ -33,7 +33,6 @@ export const markdownConfig: Components = {
       {children}
     </a>
   ),
-  // @ts-expect-error: react-markdown components type compatibility
   img: ({ src, alt, ...props }: MarkdownImageProps) => {
     const { width: propWidth, height: propHeight } = props;
     const isInline = "data-inline" in props;

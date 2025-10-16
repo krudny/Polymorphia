@@ -1,11 +1,11 @@
 import React, { FormEvent } from "react";
-import { FieldInfo } from "@/components/form/FieldInfo";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { useForm } from "@tanstack/react-form";
 import { registerSchema } from "@/components/form/schema";
 import "./index.css";
 import { RegisterFormProps } from "@/components/home/register-form/types";
 import useRegister from "@/hooks/general/useRegister";
+import { FieldErrorMessage } from "@/components/form/FieldErrorMessage";
 
 export default function RegisterForm({ invitationToken }: RegisterFormProps) {
   const { mutation: register } = useRegister();
@@ -49,7 +49,7 @@ export default function RegisterForm({ invitationToken }: RegisterFormProps) {
                   autoComplete="new-password"
                   disabled={register.isPending}
                 />
-                <FieldInfo field={field} />
+                <FieldErrorMessage field={field} />
               </div>
             )}
           </form.Field>

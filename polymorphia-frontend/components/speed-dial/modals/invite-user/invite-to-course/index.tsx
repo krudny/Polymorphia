@@ -3,7 +3,6 @@ import Modal from "@/components/modal/Modal";
 import "./index.css";
 import React, { FormEvent, useState } from "react";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import { FieldInfo } from "@/components/form/FieldInfo";
 import { useForm } from "@tanstack/react-form";
 import { inviteSchema } from "@/components/form/schema";
 import {
@@ -16,6 +15,7 @@ import useInviteUser from "@/hooks/course/useInviteStudent";
 import Selector from "@/components/selector";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { isValidRole } from "@/shared/is-valid-role";
+import { FieldErrorMessage } from "@/components/form/FieldErrorMessage";
 
 function InviteUserToCourseModalContent() {
   const { mutation } = useInviteUser();
@@ -85,7 +85,7 @@ function InviteUserToCourseModalContent() {
                   required
                   autoComplete="off"
                 />
-                <FieldInfo field={field} />
+                <FieldErrorMessage field={field} />
               </div>
             )}
           </form.Field>
@@ -103,7 +103,7 @@ function InviteUserToCourseModalContent() {
                   required
                   autoComplete="off"
                 />
-                <FieldInfo field={field} />
+                <FieldErrorMessage field={field} />
               </div>
             )}
           </form.Field>
@@ -123,7 +123,7 @@ function InviteUserToCourseModalContent() {
                   required
                   autoComplete="off"
                 />
-                <FieldInfo field={field} />
+                <FieldErrorMessage field={field} />
               </div>
             )}
           </form.Field>
@@ -162,7 +162,7 @@ function InviteUserToCourseModalContent() {
                   required
                   autoComplete="off"
                 />
-                <FieldInfo field={field} />
+                <FieldErrorMessage field={field} />
               </div>
             )}
           </form.Field>

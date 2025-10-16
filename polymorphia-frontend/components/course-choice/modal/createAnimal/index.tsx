@@ -3,11 +3,11 @@ import Modal from "@/components/modal/Modal";
 import "./index.css";
 import React, { FormEvent } from "react";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import { FieldInfo } from "@/components/form/FieldInfo";
 import { useForm } from "@tanstack/react-form";
 import { createAnimalSchema } from "@/components/form/schema";
 import useCreateAnimal from "@/hooks/course/useCreateAnimal";
 import { CreateAnimalModalProps } from "./types";
+import { FieldErrorMessage } from "@/components/form/FieldErrorMessage";
 
 function CreateAnimalModalContent({ clickedDetails }: CreateAnimalModalProps) {
   const { mutation } = useCreateAnimal();
@@ -48,7 +48,7 @@ function CreateAnimalModalContent({ clickedDetails }: CreateAnimalModalProps) {
                 required
                 autoComplete="off"
               />
-              <FieldInfo field={field} />
+              <FieldErrorMessage field={field} />
             </div>
           )}
         </form.Field>
