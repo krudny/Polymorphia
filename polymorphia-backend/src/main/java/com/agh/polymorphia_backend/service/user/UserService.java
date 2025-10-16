@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
     public static final String USER_HAS_NO_VALID_ROLES = "User should have exactly one role";
     public static final String USER_NOT_FOUND = "User does not exist in the database";
-    private static final String USER_NOT_FOUND = "User %s does not exist in the database";
     private static final String INVALID_OLD_PASSWORD = "Invalid old password";
     private static final String FAILED_TO_CHANGE_PASSWORD = "Failed to change password";
     private static final String INVALID_NEW_PASSWORD = "New password is not matching";
