@@ -12,7 +12,7 @@ import {
 import {
   useEditMarkdownSpeedDialDynamicBehavior,
   useRejectMarkdownSpeedDialDynamicBehavior,
-  useResetMakrdownSpeedDialDynamicBehavior,
+  useResetMarkdownSpeedDialDynamicBehavior,
   useSaveMarkdownSpeedDialDynamicBehavior,
 } from "@/hooks/speed-dial-dynamic-behavior/markdown";
 import {
@@ -198,7 +198,7 @@ export abstract class BaseSpeedDialStrategy {
       orderIndex: 0,
       label: "Zresetuj polecenie",
       icon: "history",
-      useDynamicBehavior: useResetMakrdownSpeedDialDynamicBehavior,
+      useDynamicBehavior: useResetMarkdownSpeedDialDynamicBehavior,
     };
   }
 
