@@ -3,7 +3,7 @@ import { FilterConfig } from "@/hooks/course/useFilters/types";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { UseProfileFilterConfigs } from "@/hooks/course/useProfileFilterConfigs/types";
 import { ProfileFilterId } from "@/app/(logged-in)/profile/types";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
+import { EventSectionService } from "@/services/event-section";
 
 export function useProfileFilterConfigs(): UseProfileFilterConfigs {
   const { courseId } = useUserDetails();

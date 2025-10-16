@@ -4,7 +4,7 @@ import {
   UseMarkdownUpdate,
   UseMarkdownUpdateProps,
 } from "@/hooks/course/useMarkdownUpdate/types";
-import { MarkdownService } from "@/app/(logged-in)/course/[eventType]/[eventSectionId]/[gradableEventId]/MarkdownService";
+import { MarkdownService } from "@/services/markdown";
 
 export default function useMarkdownUpdate(
   request: UseMarkdownUpdateProps

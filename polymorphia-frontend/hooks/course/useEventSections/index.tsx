@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
+import { EventSectionService } from "@/services/event-section";
 import { UseEventSections } from "@/hooks/course/useEventSections/types";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
