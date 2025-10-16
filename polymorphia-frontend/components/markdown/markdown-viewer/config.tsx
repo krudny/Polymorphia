@@ -4,6 +4,7 @@ import Image from "next/image";
 import { MarkdownImageProps } from "@/components/markdown/markdown-viewer/types";
 import { isValidUrl } from "@/components/markdown/isValidUrl";
 
+// @ts-ignore
 export const markdownConfig: Components = {
   h1: ({ ...props }) => <h1 className="h1-markdown" {...props} />,
   h2: ({ ...props }) => <h2 className="h2-markdown" {...props} />,
@@ -33,6 +34,7 @@ export const markdownConfig: Components = {
       {children}
     </a>
   ),
+  // @ts-expect-error: react-markdown components type compatibility
   img: ({ src, alt, ...props }: MarkdownImageProps) => {
     const { width: propWidth, height: propHeight } = props;
     const isInline = "data-inline" in props;
