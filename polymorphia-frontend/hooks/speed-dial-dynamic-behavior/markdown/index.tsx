@@ -29,11 +29,11 @@ export function useRejectMarkdownSpeedDialDynamicBehavior(): SpeedDialItemDynami
   };
 }
 
-export function useResetMakrdownSpeedDialDynamicBehavior(): SpeedDialItemDynamicBehavior {
-  const { isEditing } = useMarkdownContext();
+export function useResetMarkdownSpeedDialDynamicBehavior(): SpeedDialItemDynamicBehavior {
+  const { isEditing, markdownSource } = useMarkdownContext();
 
   return {
     modal: (onClose) => <ResetMarkdownModal onClosedAction={onClose} />,
-    shouldBeRendered: !isEditing,
+    shouldBeRendered: !isEditing && !!markdownSource?.sourceUrl,
   };
 }
