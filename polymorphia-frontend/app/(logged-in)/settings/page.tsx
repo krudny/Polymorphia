@@ -1,7 +1,7 @@
 "use client";
 
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useScaleShow } from "@/animations/ScaleShow";
 import { useTitle } from "@/components/navigation/TitleContext";
 import toast from "react-hot-toast";
@@ -13,6 +13,7 @@ import useUserCourses from "@/hooks/course/useUserCourses";
 import Loading from "@/components/loading";
 import usePreferredCourseUpdate from "@/hooks/course/usePreferredCourseUpdate";
 import Selector from "@/components/selector";
+import ChangePasswordModal from "@/app/(logged-in)/settings/modals/change-password";
 
 export default function Settings() {
   const {
@@ -28,6 +29,8 @@ export default function Settings() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { data: courses, isLoading } = useUserCourses();
   const currentCourse = courses?.find((course) => course.id === courseId);
+  const [changePasswordModalVisible, setChangePasswordModalVisible] =
+    useState(false);
   const setPreferredCourse = usePreferredCourseUpdate({
     shouldRedirectToMainPage: false,
   });
@@ -94,7 +97,6 @@ export default function Settings() {
       </div>
       <div ref={containerRef} className="settings-option-wrapper">
         <h3>Aktywny kurs</h3>
-
         <div className="settings-selector-wrapper">
           <Selector
             options={courses.map((course) => ({
@@ -109,6 +111,20 @@ export default function Settings() {
           />
         </div>
       </div>
+      <div className="settings-option-wrapper">
+        <h3>Hasło</h3>
+        <ButtonWithBorder
+          text="Zmień hasło"
+          onClick={() => setChangePasswordModalVisible(true)}
+          size="md"
+          className="!mx-0"
+        />
+      </div>
+      {changePasswordModalVisible && (
+        <ChangePasswordModal
+          onClosedAction={() => setChangePasswordModalVisible(false)}
+        />
+      )}
     </div>
   );
 }

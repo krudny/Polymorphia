@@ -20,6 +20,17 @@ export const loginSchema = z.object({
   password: z.string(),
 });
 
+export const changePasswordSchema = z
+  .object({
+    oldPassword: z.string().min(1, "Stare hasło jest wymagane"),
+    newPassword: passwordValidation,
+    confirmNewPassword: z.string(),
+  })
+  .refine((data) => data.newPassword === data.confirmNewPassword, {
+    message: "Hasła nie są zgodne",
+    path: ["confirmNewPassword"],
+  });
+
 export const registerSchema = z.object({
   password: passwordValidation,
 });

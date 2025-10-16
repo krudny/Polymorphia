@@ -5,7 +5,7 @@ import { useForm } from "@tanstack/react-form";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import NavigationArrow from "@/components/slider/NavigationArrow";
 import { LoginDTO } from "@/interfaces/api/login";
-import { FieldInfo } from "@/components/form/FieldInfo";
+import { FieldErrorMessage } from "@/components/form/FieldErrorMessage";
 import { loginSchema } from "@/components/form/schema";
 import "./index.css";
 import useLogin from "@/hooks/course/useLogin";
@@ -56,7 +56,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
                   autoComplete="off"
                   disabled={login.isPending}
                 />
-                <FieldInfo field={field} />
+                <FieldErrorMessage field={field} />
               </div>
             )}
           </form.Field>
@@ -74,7 +74,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
                   required
                   disabled={login.isPending}
                 />
-                <FieldInfo field={field} />
+                <FieldErrorMessage field={field} />
               </div>
             )}
           </form.Field>
