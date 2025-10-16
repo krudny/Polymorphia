@@ -16,23 +16,23 @@
 }
 
 .h1-markdown {
-  @apply text-4xl my-5 lg:text-5xl lg:my-10 first:mt-0;
+  @apply text-4xl  lg:text-5xl lg:my-10 first:mt-0;
 }
 
 .h2-markdown {
-  @apply text-[2rem] my-4 lg:text-[2.5rem] lg:my-7 first:mt-0;
+  @apply text-[2rem] lg:text-[2.5rem] lg:my-7 first:mt-0;
 }
 
 .h3-markdown {
-  @apply text-[2.2rem] my-4 first:mt-0;
+  @apply text-[2.2rem]  first:mt-0;
 }
 
 .h4-markdown {
-  @apply text-[2rem] underline my-4 first:mt-0;
+  @apply text-[2rem] underline my-3 first:mt-0;
 }
 
 .p-markdown {
-  @apply text-[1.5rem] leading-8 mt-3 lg:text-3xl lg:mt-5 lg:leading-11 first:mt-0;
+  @apply text-[1.5rem] leading-8 my-3 lg:text-3xl lg:leading-11 first:mt-0;
 }
 
 .ol-markdown {
@@ -47,7 +47,8 @@
   @apply text-[1.6rem] my-1 lg:text-3xl lg:my-2;
 }
 
-.strong-markdown {
+.strong-markdown,
+.em {
   @apply font-normal;
 }
 

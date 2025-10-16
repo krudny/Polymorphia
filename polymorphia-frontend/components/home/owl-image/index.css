@@ -17,5 +17,5 @@
 
 .hero-image-wrapper > div > img {
   @apply object-contain transform scale-90 origin-bottom;
-  @apply md:scale-120 md:origin-top-left md:-mt-10;
+  @apply md:scale-120 md:origin-top-left md:-mt-24;
 }

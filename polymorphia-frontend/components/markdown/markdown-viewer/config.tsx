@@ -18,6 +18,11 @@ export const markdownConfig: Components = {
       {children}
     </span>
   ),
+  em: ({ children, ...props }) => (
+    <span className="em" {...props}>
+      {children}
+    </span>
+  ),
   a: ({ children, ...props }) => (
     <a
       {...props}
