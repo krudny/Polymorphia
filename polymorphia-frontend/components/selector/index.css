@@ -43,7 +43,7 @@
 }
 
 .selector-option {
-  @apply cursor-pointer transition-colors text-center;
+  @apply cursor-pointer transition-colors;
   @apply border-b-2 last:border-b-0;
   @apply text-primary-dark border-primary-dark hover:backdrop-brightness-90 hover:dark:backdrop-brightness-150;
   @apply dark:text-secondary-gray dark:border-secondary-gray;
