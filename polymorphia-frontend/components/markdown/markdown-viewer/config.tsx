@@ -3,6 +3,7 @@ import "./index.css";
 import Image from "next/image";
 import { MarkdownImageProps } from "@/components/markdown/markdown-viewer/types";
 import { isValidUrl } from "@/components/markdown/isValidUrl";
+import { useEffect } from "react";
 
 export const markdownConfig: Components = {
   h1: ({ ...props }) => <h1 className="h1-markdown" {...props} />,
@@ -36,6 +37,8 @@ export const markdownConfig: Components = {
   img: ({ src, alt, ...props }: MarkdownImageProps) => {
     const { width: propWidth, height: propHeight } = props;
     const isInline = "data-inline" in props;
+
+    console.log(props);
 
     const width = parseInt(String(propWidth), 10) || 900;
     const height = parseInt(String(propHeight), 10) || 600;

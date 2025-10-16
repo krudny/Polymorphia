@@ -16,15 +16,15 @@
 }
 
 .h1-markdown {
-  @apply text-4xl  lg:text-5xl lg:my-10 first:mt-0;
+  @apply text-4xl lg:text-5xl  first:mt-0;
 }
 
 .h2-markdown {
-  @apply text-[2rem] lg:text-[2.5rem] lg:my-7 first:mt-0;
+  @apply text-[2rem] lg:text-[2.5rem]  first:mt-0;
 }
 
 .h3-markdown {
-  @apply text-[2.2rem]  first:mt-0;
+  @apply text-[2.2rem] first:mt-0;
 }
 
 .h4-markdown {
@@ -32,7 +32,7 @@
 }
 
 .p-markdown {
-  @apply text-[1.5rem] leading-8 my-3 lg:text-3xl lg:leading-11 first:mt-0;
+  @apply text-[1.5rem] leading-8 my-3 lg:my-6 lg:text-3xl lg:leading-11 first:mt-0;
 }
 
 .ol-markdown {
@@ -44,7 +44,7 @@
 }
 
 .li-markdown {
-  @apply text-[1.6rem] my-1 lg:text-3xl lg:my-2;
+  @apply text-[1.6rem] lg:text-3xl my-2 last:mb-3 last:lg:mb-6;
 }
 
 .strong-markdown,
@@ -89,7 +89,7 @@
 }
 
 .img-markdown {
-  @apply object-contain rounded-xl;
+  @apply object-contain rounded-xl mx-auto;
 }
 
 .img-markdown-inline {
