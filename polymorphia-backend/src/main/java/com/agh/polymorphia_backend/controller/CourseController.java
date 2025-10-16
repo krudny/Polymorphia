@@ -27,8 +27,9 @@ public class CourseController {
         return ResponseEntity.ok(userContextService.getAvailableCourses());
     }
 
+    // TODO: permissions
     @GetMapping("/groups")
-    @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
+    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<List<CourseGroupsResponseDto>> getCourseGroups(@RequestParam Long courseId) {
         return ResponseEntity.ok(courseService.getCourseGroups(courseId));
     }
