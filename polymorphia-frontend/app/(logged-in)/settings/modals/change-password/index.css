@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@import "../../../../../styles/globals.css";
+
+.change-password-form {
+  @apply space-y-4 min-w-80;
+}
+
+.change-password-form > div > input {
+  @apply w-full text-center text-3xl pb-3 border-b-2 border-b-primary-dark focus:outline-none text-primary-dark;
+}

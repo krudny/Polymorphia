@@ -69,6 +69,18 @@ export type UserDetailsDTO =
   | CoordinatorDetailsDTOWithType
   | UndefinedDetailsDTOWithType;
 
+export interface ChangePasswordDTO {
+  oldPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
+}
+
 export type HallOfFameUserDTO =
   | StudentDetailsDTOWithNullableName
   | StudentDetailsDTOWithName;
+
+export interface ChangePasswordDTO {
+  oldPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
+}
