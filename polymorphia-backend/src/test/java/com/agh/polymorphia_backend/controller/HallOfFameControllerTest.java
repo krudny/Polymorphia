@@ -54,11 +54,27 @@ class HallOfFameControllerTest extends ControllerTestConfig {
                 ),
                 Arguments.of(
                         hofBuilder
+                                .sortBy("total")
+                                .sortOrder(SortOrder.ASC)
+                                .build(),
+                        new ClassPathResource("responses/hall_of_fame/sortByTotalAsc.json"),
+                        "sort by total asc"
+                ),
+                Arguments.of(
+                        hofBuilder
                                 .sortBy("Lab")
                                 .sortOrder(SortOrder.DESC)
                                 .build(),
                         new ClassPathResource("responses/hall_of_fame/sortByFirstEventSectionDesc.json"),
                         "sort by \"Lab\" desc"
+                ),
+                Arguments.of(
+                        hofBuilder
+                                .sortBy("Lab")
+                                .sortOrder(SortOrder.ASC)
+                                .build(),
+                        new ClassPathResource("responses/hall_of_fame/sortByFirstEventSectionAsc.json"),
+                        "sort by \"Lab\" asc"
                 ),
                 Arguments.of(
                         hofBuilder
