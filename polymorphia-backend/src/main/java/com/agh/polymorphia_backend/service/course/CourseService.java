@@ -48,8 +48,8 @@ public class CourseService {
                 .findAllByUserId(userId)
                 .stream()
                 .collect(Collectors.toMap(
-                        ucr -> ucr.getCourse().getId(),
-                        ucr -> ucr
+                        userCourseRole -> userCourseRole.getCourse().getId(),
+                        userCourseRole -> userCourseRole
                 ));
 
         return courses.stream()

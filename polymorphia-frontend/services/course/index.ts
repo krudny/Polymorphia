@@ -11,8 +11,6 @@ export const CourseService = {
       throw new Error("Nie udało się pobrać kursów");
     }
 
-    const data = await response.json();
-    console.log(data);
-    return data;
+    return await response.json();
   },
 };
