@@ -74,20 +74,4 @@ public class UserContextService {
         userRepository.save(dbUser);
         userService.updateSecurityCredentials(user);
     }
-
-    public List<AvailableCoursesResponseDto> getAvailableCourses() {
-        User user = userService.getCurrentUser().getUser();
-        Set<Long> assignedCourseIds = studentCourseGroupRepository.findAllCourseIdsByUserId(user.getId());
-
-        return userCourseRoleRepository.findAllByUserId(user.getId()).stream()
-                .filter(userCourseRole -> assignedCourseIds.contains(userCourseRole.getCourse().getId()))
-                .map(userCourseRole ->
-                        userContextMapper.toAvailableCoursesResponseDto(
-                                userCourseRole.getCourse(),
-                                userCourseRole.getRole()
-                        )
-                )
-                .sorted(Comparator.comparing(AvailableCoursesResponseDto::getId).reversed())
-                .toList();
-    }
 }

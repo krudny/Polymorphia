@@ -128,21 +128,21 @@ class UserContextServiceTest {
     }
 
 
-    @Test
-    void getAvailableCourses_shouldReturnAvailableCourses() {
-        AvailableCoursesResponseDto dto = AvailableCoursesResponseDto.builder()
-                .name("name")
-                .imageUrl("url")
-                .build();
-
-        when(userService.getCurrentUser()).thenReturn(student);
-        when(studentCourseGroupRepository.findAllCourseIdsByUserId(1L)).thenReturn(Set.of(10L));
-        when(userCourseRoleRepository.findAllByUserId(1L)).thenReturn(List.of(userCourseRole));
-        when(userContextMapper.toAvailableCoursesResponseDto(course, UserType.STUDENT)).thenReturn(dto);
-
-        var result = userContextService.getAvailableCourses();
-
-        assertEquals(1, result.size());
-        assertEquals(dto, result.getFirst());
-    }
+//    @Test
+//    void getAvailableCourses_shouldReturnAvailableCourses() {
+//        AvailableCoursesResponseDto dto = AvailableCoursesResponseDto.builder()
+//                .name("name")
+//                .imageUrl("url")
+//                .build();
+//
+//        when(userService.getCurrentUser()).thenReturn(student);
+//        when(studentCourseGroupRepository.findAllCourseIdsByUserId(1L)).thenReturn(Set.of(10L));
+//        when(userCourseRoleRepository.findAllByUserId(1L)).thenReturn(List.of(userCourseRole));
+//        when(userContextMapper.toAvailableCoursesResponseDto(course, UserType.STUDENT)).thenReturn(dto);
+//
+//        var result = userContextService.getAvailableCourses();
+//
+//        assertEquals(1, result.size());
+//        assertEquals(dto, result.getFirst());
+//    }
 }
