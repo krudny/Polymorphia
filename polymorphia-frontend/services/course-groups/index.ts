@@ -1,32 +1,19 @@
 import { API_HOST } from "@/services/api";
 import {
-  CourseGroupsResponseDTO,
-  CourseGroupsShortResponseDTO,
-} from "@/interfaces/api/course-groups";
+  CourseGroupResponse,
+  CourseGroupType,
+  CourseGroupTypes,
+} from "@/services/course-groups/types";
 
 const CourseGroupsService = {
-  getAllCourseGroups: async (
+  getCourseGroups: async <T extends CourseGroupType>(
     courseId: number,
-    includeDetails: boolean
-  ): Promise<CourseGroupsResponseDTO[] | CourseGroupsShortResponseDTO[]> => {
+    options: { isIndividual: boolean; type: T }
+  ): Promise<CourseGroupResponse<T>> => {
+    const shortPath = options.type === CourseGroupTypes.SHORT ? "short" : "";
+    const mode = options.isIndividual ? "individual" : "all";
     const response = await fetch(
-      `${API_HOST}/course-groups/all/${includeDetails ? "short" : ""}?courseId=${courseId}`,
-      { credentials: "include" }
-    );
-
-    if (!response.ok) {
-      throw new Error("Nie udało się pobrać grup zajęciowych!");
-    }
-
-    return await response.json();
-  },
-
-  getIndividualCourseGroups: async (
-    courseId: number,
-    includeDetails: boolean
-  ): Promise<CourseGroupsResponseDTO[] | CourseGroupsShortResponseDTO[]> => {
-    const response = await fetch(
-      `${API_HOST}/course-groups/individual/${includeDetails ? "short" : ""}?courseId=${courseId}`,
+      `${API_HOST}/course-groups/${mode}/${shortPath}?courseId=${courseId}`,
       { credentials: "include" }
     );
 

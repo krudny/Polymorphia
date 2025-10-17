@@ -1,4 +1,3 @@
-import { CourseService } from "@/services/course";
 import { EventSectionService } from "@/services/event-section";
 import { HallOfFameFilterId } from "@/providers/hall-of-fame/types";
 import { EventSectionResponseDTO } from "@/interfaces/api/course";
@@ -7,6 +6,8 @@ import {
   FilterConfig,
   SpecialBehaviors,
 } from "@/hooks/course/useFilters/types";
+import CourseGroupsService from "@/services/course-groups";
+import { CourseGroupTypes } from "@/services/course-groups/types";
 
 export function useHallOfFameFilterConfigs(courseId: number) {
   return useQuery({
@@ -14,10 +15,13 @@ export function useHallOfFameFilterConfigs(courseId: number) {
     queryFn: async (): Promise<FilterConfig<HallOfFameFilterId>[]> => {
       const [eventSections, courseGroups] = await Promise.all([
         EventSectionService.getEventSections(courseId),
-        CourseService.getCourseGroups(courseId),
+        CourseGroupsService.getCourseGroups(courseId, {
+          isIndividual: false,
+          type: CourseGroupTypes.SHORT,
+        }),
       ]);
 
-      const configs: FilterConfig<HallOfFameFilterId>[] = [
+      return [
         {
           id: "sortOrder",
           title: "Sortowanie",
@@ -73,8 +77,6 @@ export function useHallOfFameFilterConfigs(courseId: number) {
           ],
         },
       ];
-
-      return configs;
     },
   });
 }

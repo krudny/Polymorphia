@@ -1,7 +1,7 @@
-import { CourseGroupsResponseDTO } from "@/interfaces/api/course";
 import { ReactNode } from "react";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardText from "@/components/xp-card/components/XPCardText";
+import { CourseGroupsResponseDTO } from "@/interfaces/api/course-groups";
 
 export default function CourseGroupCard(
   courseGroup: CourseGroupsResponseDTO,

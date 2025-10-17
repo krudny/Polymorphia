@@ -12,6 +12,7 @@ import { useScaleShow } from "@/animations/ScaleShow";
 import CourseGroupCard from "@/app/(logged-in)/course/groups/CourseGroupCard";
 import { useRouter } from "next/navigation";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
+import { CourseGroupTypes } from "@/services/course-groups/types";
 
 export default function CourseGroupsPage() {
   const { setTitle } = useTitle();
@@ -23,7 +24,15 @@ export default function CourseGroupsPage() {
     setTitle("Grupy zajęciowe");
   }, [setTitle]);
 
-  const { data: courseGroups, isLoading, isError } = useCourseGroups(courseId);
+  const {
+    data: courseGroups,
+    isLoading,
+    isError,
+  } = useCourseGroups({
+    courseId,
+    isIndividual: true,
+    type: CourseGroupTypes.FULL,
+  });
 
   const containerRef = useScaleShow(!isLoading);
 
