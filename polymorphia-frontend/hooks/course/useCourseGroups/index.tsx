@@ -8,16 +8,11 @@ import { CourseGroupType } from "@/services/course-groups/types";
 
 export default function useCourseGroups<T extends CourseGroupType>({
   courseId,
-  isIndividual,
   type,
 }: UseCourseGroupsProps<T>): UseCourseGroups<T> {
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["courseGroups", courseId, isIndividual, type],
-    queryFn: () =>
-      CourseGroupsService.getCourseGroups(courseId, {
-        isIndividual,
-        type,
-      }),
+    queryKey: ["courseGroups", courseId, type],
+    queryFn: () => CourseGroupsService.getCourseGroups(courseId, type),
   });
 
   return { data, isLoading, isError };

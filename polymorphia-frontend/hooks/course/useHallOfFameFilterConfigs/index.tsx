@@ -15,10 +15,10 @@ export function useHallOfFameFilterConfigs(courseId: number) {
     queryFn: async (): Promise<FilterConfig<HallOfFameFilterId>[]> => {
       const [eventSections, courseGroups] = await Promise.all([
         EventSectionService.getEventSections(courseId),
-        CourseGroupsService.getCourseGroups(courseId, {
-          isIndividual: false,
-          type: CourseGroupTypes.SHORT,
-        }),
+        CourseGroupsService.getCourseGroups(
+          courseId,
+          CourseGroupTypes.ALL_SHORT
+        ),
       ]);
 
       return [

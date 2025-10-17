@@ -11,10 +11,10 @@ export function useGradingFilterConfigs(courseId: number) {
   return useQuery({
     queryKey: ["gradingFilters", courseId],
     queryFn: async () => {
-      const courseGroups = await CourseGroupsService.getCourseGroups(courseId, {
-        isIndividual: true,
-        type: CourseGroupTypes.SHORT,
-      });
+      const courseGroups = await CourseGroupsService.getCourseGroups(
+        courseId,
+        CourseGroupTypes.INDIVIDUAL_SHORT
+      );
 
       const configs: FilterConfig<GradingFilterId>[] = [
         {

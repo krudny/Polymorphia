@@ -28,11 +28,7 @@ export default function CourseGroupsPage() {
     data: courseGroups,
     isLoading,
     isError,
-  } = useCourseGroups({
-    courseId,
-    isIndividual: true,
-    type: CourseGroupTypes.FULL,
-  });
+  } = useCourseGroups({ courseId, type: CourseGroupTypes.INDIVIDUAL_FULL });
 
   const containerRef = useScaleShow(!isLoading);
 

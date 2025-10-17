@@ -11,6 +11,5 @@ export interface UseCourseGroups<T extends CourseGroupType> {
 
 export interface UseCourseGroupsProps<T extends CourseGroupType> {
   courseId: number;
-  isIndividual: boolean;
   type: T;
 }

@@ -8,10 +8,18 @@ import {
 const CourseGroupsService = {
   getCourseGroups: async <T extends CourseGroupType>(
     courseId: number,
-    options: { isIndividual: boolean; type: T }
+    type: T
   ): Promise<CourseGroupResponse<T>> => {
-    const shortPath = options.type === CourseGroupTypes.SHORT ? "/short" : "";
-    const mode = options.isIndividual ? "/individual" : "/all";
+    const isShort =
+      type === CourseGroupTypes.INDIVIDUAL_SHORT ||
+      type === CourseGroupTypes.ALL_SHORT;
+    const isIndividual =
+      type === CourseGroupTypes.INDIVIDUAL_SHORT ||
+      type === CourseGroupTypes.INDIVIDUAL_FULL;
+
+    const shortPath = isShort ? "/short" : "";
+    const mode = isIndividual ? "/individual" : "/all";
+
     const response = await fetch(
       `${API_HOST}/course-groups${mode}${shortPath}?courseId=${courseId}`,
       { credentials: "include" }
