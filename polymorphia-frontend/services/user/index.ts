@@ -89,17 +89,6 @@ const UserService = {
 
     return await response.json();
   },
-  getUserCourses: async (): Promise<AvailableCoursesDTO[]> => {
-    const response = await fetch(`${API_HOST}/courses`, {
-      credentials: "include",
-    });
-
-    if (!response.ok) {
-      throw new Error("Nie udało się pobrać kursów");
-    }
-
-    return await response.json();
-  },
   getCurrentUser: async (): Promise<UserDetailsDTO> => {
     const response = await fetch(`${API_HOST}/users/context`, {
       credentials: "include",

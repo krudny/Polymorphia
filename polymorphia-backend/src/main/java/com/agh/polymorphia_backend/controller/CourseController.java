@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.response.user_context.AvailableCoursesResponseDto;
+import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.user.UserContextService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +16,11 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/courses")
 public class CourseController {
-    private final UserContextService userContextService;
+    private final CourseService courseService;
 
     @GetMapping()
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<AvailableCoursesResponseDto>> getAvailableCourses() {
-        return ResponseEntity.ok(userContextService.getAvailableCourses());
+        return ResponseEntity.ok(courseService.getAvailableCourses());
     }
 }

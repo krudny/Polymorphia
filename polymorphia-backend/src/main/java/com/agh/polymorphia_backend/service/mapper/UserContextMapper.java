@@ -1,12 +1,10 @@
 package com.agh.polymorphia_backend.service.mapper;
 
-import com.agh.polymorphia_backend.dto.response.user_context.AvailableCoursesResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.BaseUserDetailsResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.StudentDetailsResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
-import com.agh.polymorphia_backend.model.user.Coordinator;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
@@ -22,18 +20,6 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserContextMapper {
     private final UserService userService;
     private final HallOfFameService hallOfFameService;
-
-    public AvailableCoursesResponseDto toAvailableCoursesResponseDto(Course course, UserType role) {
-        Coordinator coordinator = course.getCoordinator();
-        User user = coordinator.getUser();
-        return AvailableCoursesResponseDto.builder()
-                .id(course.getId())
-                .coordinatorName(String.join(" ", user.getFirstName(), user.getLastName()))
-                .name(course.getName())
-                .imageUrl(course.getImageUrl())
-                .userRole(role)
-                .build();
-    }
 
     public BaseUserDetailsResponseDto toBaseUserDetailsResponseDto(AbstractRoleUser roleUser) {
         UserType userType = userService.getUserRole(roleUser);

@@ -15,10 +15,11 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+import static com.agh.polymorphia_backend.service.user.UserService.INVALID_ROLE;
+
 @Service
 @AllArgsConstructor
 public class CourseGroupsService {
-    private final static String INVALID_ROLE = "Invalid user role";
     private final CourseGroupRepository courseGroupRepository;
     private final UserService userService;
     private final CourseGroupsMapper courseGroupsMapper;

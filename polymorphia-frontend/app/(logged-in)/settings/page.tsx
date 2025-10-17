@@ -9,7 +9,7 @@ import { useTheme } from "next-themes";
 import useNavigationContext from "@/hooks/contexts/useNavigationContext";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import "./index.css";
-import useUserCourses from "@/hooks/course/useUserCourses";
+import useAvailableCourses from "../../../hooks/course/useAvailableCourses";
 import Loading from "@/components/loading";
 import usePreferredCourseUpdate from "@/hooks/course/usePreferredCourseUpdate";
 import Selector from "@/components/selector";
@@ -27,7 +27,7 @@ export default function Settings() {
   const { resolvedTheme, setTheme } = useTheme();
   const { courseId } = useUserDetails();
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const { data: courses, isLoading } = useUserCourses();
+  const { data: courses, isLoading } = useAvailableCourses();
   const currentCourse = courses?.find((course) => course.id === courseId);
   const [changePasswordModalVisible, setChangePasswordModalVisible] =
     useState(false);

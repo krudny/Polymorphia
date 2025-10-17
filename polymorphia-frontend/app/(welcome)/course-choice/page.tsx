@@ -2,7 +2,7 @@
 
 import CourseChoiceGrid from "@/components/course-choice";
 import "./index.css";
-import useUserCourses from "@/hooks/course/useUserCourses";
+import useAvailableCourses from "../../../hooks/course/useAvailableCourses";
 import Loading from "@/components/loading";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
@@ -10,7 +10,7 @@ import React from "react";
 import useLogout from "@/hooks/course/useLogout";
 
 export default function CourseChoice() {
-  const { data: courses, isLoading } = useUserCourses();
+  const { data: courses, isLoading } = useAvailableCourses();
   const { mutate: logout } = useLogout();
   const wrapperRef = useFadeInAnimate(!isLoading);
 
