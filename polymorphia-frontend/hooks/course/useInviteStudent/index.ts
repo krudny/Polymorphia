@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { UseInviteUser } from "./types";
-import UserService from "@/app/(logged-in)/profile/UserService";
 import { InviteRequestDTO, Roles } from "@/interfaces/api/user";
 import useModalContext from "@/hooks/contexts/useModalContext";
+import UserService from "@/services/user";
 
 export default function useInviteUser(): UseInviteUser {
   const { closeModal } = useModalContext();

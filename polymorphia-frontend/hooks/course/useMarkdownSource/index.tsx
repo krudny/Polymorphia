@@ -1,6 +1,6 @@
 import { useEventParams } from "@/hooks/general/useEventParams";
 import { useQuery } from "@tanstack/react-query";
-import { MarkdownService } from "@/app/(logged-in)/course/[eventType]/[eventSectionId]/[gradableEventId]/MarkdownService";
+import { MarkdownService } from "@/services/markdown";
 import { UseMarkdownSource } from "@/hooks/course/useMarkdownSource/types";
 import { MarkdownType } from "@/interfaces/general";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import UserService from "@/app/(logged-in)/profile/UserService";
+import UserService from "@/services/user";
 import { UseHasAnimalInGroup } from "@/hooks/course/useAnimal/types";
 
 export default function useHasAnimalInGroup(

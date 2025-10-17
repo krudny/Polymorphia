@@ -1,6 +1,6 @@
 import useModalContext from "@/hooks/contexts/useModalContext";
 import { useMutation } from "@tanstack/react-query";
-import UserService from "@/app/(logged-in)/profile/UserService";
+import UserService from "@/services/user";
 import toast from "react-hot-toast";
 import { CreateAnimalRequestDTO } from "@/interfaces/api/student";
 import { UseCreateAnimal } from "@/hooks/course/useCreateAnimal/types";

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import UserService from "@/app/(logged-in)/profile/UserService";
+import UserService from "@/services/user";
 import { UseCurrentUser } from "@/hooks/course/useCurrentUser/types";
 
 export default function useCurrentUser(): UseCurrentUser {
