@@ -7,6 +7,7 @@ import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.course.CourseGroupRepository;
 import com.agh.polymorphia_backend.service.mapper.CourseGroupsMapper;
 import com.agh.polymorphia_backend.service.user.UserService;
+import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,8 +22,10 @@ public class CourseGroupsService {
     private final CourseGroupRepository courseGroupRepository;
     private final UserService userService;
     private final CourseGroupsMapper courseGroupsMapper;
+    private final AccessAuthorizer accessAuthorizer;
 
     public List<CourseGroup> findAllCourseGroups(Long courseId) {
+        accessAuthorizer.authorizeCourseAccess(courseId);
         return courseGroupRepository.findByCourseId(courseId);
     }
 
@@ -53,6 +56,7 @@ public class CourseGroupsService {
     }
 
     private List<CourseGroup> getCourseGroups(Long courseId) {
+        accessAuthorizer.authorizeCourseAccess(courseId);
         Long userId = userService.getCurrentUser().getUser().getId();
         UserType userRole = userService.getCurrentUserRole();
 
