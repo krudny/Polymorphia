@@ -7,6 +7,7 @@ import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserCourseRole;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.course.AnimalRepository;
+import com.agh.polymorphia_backend.repository.course.CourseRepository;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.role.InstructorRepository;
 import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
@@ -31,6 +32,14 @@ public class AccessAuthorizer {
     private final InstructorRepository instructorRepository;
     private final StudentRepository studentRepository;
     private final AnimalRepository animalRepository;
+    private final CourseRepository courseRepository;
+
+    public void authorizeCourseAccess(Long courseId) {
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, COURSE_NOT_FOUND));
+
+        authorizeCourseAccess(course);
+    }
 
     public void authorizeCourseAccess(Course course) {
         AbstractRoleUser user = userService.getCurrentUser();

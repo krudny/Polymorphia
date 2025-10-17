@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.service;
+package com.agh.polymorphia_backend.service.image_storage;
 
 import com.agh.polymorphia_backend.config.StaticFileServerProperties;
 import lombok.AllArgsConstructor;

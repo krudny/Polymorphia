@@ -26,10 +26,3 @@ export interface InstructorGradableEventResponseDTO
   extends BaseGradableEventResponseDTO {
   ungradedStudents: number;
 }
-
-export interface CourseGroupsResponseDTO {
-  id: number;
-  name: string;
-  details: string;
-  studentCount: number;
-}
