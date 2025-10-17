@@ -11,7 +11,6 @@ export type GradingContextInterface = {
   setAreFiltersOpen: Dispatch<SetStateAction<boolean>>;
   isFiltersLoading: boolean;
   isFiltersError: boolean;
-  // TODO: typing
   filters: ReturnType<typeof useFilters<GradingFilterId>>;
   search: string;
   setSearch: (search: string) => void;

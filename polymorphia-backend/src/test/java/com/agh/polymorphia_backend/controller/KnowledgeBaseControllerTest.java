@@ -21,7 +21,7 @@ class KnowledgeBaseControllerTest extends ControllerTestConfig {
     @Test
     void getEvolutionStages_ShouldReturnEvolutionStages() throws IOException {
         String actualResponse = getEndpoint("/knowledge-base/evolution-stages?courseId={courseId}",
-                "student@agh.com", "password",200,1);
+                "student@agh.com", "password", 200, 1);
 
         assertJsonEquals(evolutionStagesJson, actualResponse);
     }
@@ -29,7 +29,7 @@ class KnowledgeBaseControllerTest extends ControllerTestConfig {
     @Test
     void getItems_ShouldReturnItems() throws IOException {
         String actualResponse = getEndpoint("/knowledge-base/items?courseId={courseId}",
-                "student@agh.com", "password",200,1);
+                "student@agh.com", "password", 200, 1);
 
         assertJsonEquals(itemsJson, actualResponse);
     }
@@ -37,7 +37,7 @@ class KnowledgeBaseControllerTest extends ControllerTestConfig {
     @Test
     void getChests_ShouldReturnChests() throws IOException {
         String actualResponse = getEndpoint("/knowledge-base/chests?courseId={courseId}",
-                "student@agh.com", "password",200,1);
+                "student@agh.com", "password", 200, 1);
 
         assertJsonEquals(chestsJson, actualResponse);
     }

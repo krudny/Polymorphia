@@ -18,4 +18,5 @@ public record HallOfFameRequestDto(
         @NotBlank String sortBy,
         @NotNull SortOrder sortOrder,
         @NotNull List<String> groups
-){ }
+) {
+}

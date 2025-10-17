@@ -4,11 +4,15 @@ import ProjectVariantModal from "@/components/speed-dial/modals/project-variant"
 import GroupModal from "@/components/speed-dial/modals/group-info";
 import GroupPickingModal from "@/components/speed-dial/modals/group-pick";
 import ImportCSVModal from "@/components/speed-dial/modals/import-csv";
-import { ImportCSVType, ImportCSVTypes } from "@/interfaces/general";
+import {
+  ImportCSVType,
+  ImportCSVTypes,
+  InviteTypes,
+} from "@/interfaces/general";
 import {
   useEditMarkdownSpeedDialDynamicBehavior,
   useRejectMarkdownSpeedDialDynamicBehavior,
-  useResetMakrdownSpeedDialDynamicBehavior,
+  useResetMarkdownSpeedDialDynamicBehavior,
   useSaveMarkdownSpeedDialDynamicBehavior,
 } from "@/hooks/speed-dial-dynamic-behavior/markdown";
 import {
@@ -18,6 +22,7 @@ import {
 } from "@/hooks/speed-dial-dynamic-behavior/navigation";
 import { Role } from "@/interfaces/api/user";
 import { useProfileFiltersModalSpeedDialDynamicBehavior } from "@/hooks/speed-dial-dynamic-behavior/profile";
+import InviteUserModal from "@/components/speed-dial/modals/invite-user";
 
 export abstract class BaseSpeedDialStrategy {
   abstract getItems(role: Role): SpeedDialItem[];
@@ -104,8 +109,9 @@ export abstract class BaseSpeedDialStrategy {
 
   protected createImportCSV(importType: ImportCSVType): SpeedDialItem {
     const importLabels = {
-      [ImportCSVTypes.STUDENT_INVITE]: "Zaproś studentów z CSV",
+      [ImportCSVTypes.STUDENT_INVITE]: "Zaproś studentów do kursu z CSV",
       [ImportCSVTypes.GRADE_IMPORT]: "Wczytaj oceny z CSV",
+      [ImportCSVTypes.GROUP_INVITE]: "Zaproś studentów do grupy z CSV",
     } as const;
 
     return {
@@ -116,6 +122,40 @@ export abstract class BaseSpeedDialStrategy {
       useDynamicBehavior: () => ({
         modal: (onClose) => (
           <ImportCSVModal onClosedAction={onClose} importType={importType} />
+        ),
+      }),
+    };
+  }
+
+  protected createInviteUserToCourse(): SpeedDialItem {
+    return {
+      id: 5,
+      orderIndex: 7,
+      label: "Zaproś użytkownika do kursu",
+      icon: "person_add",
+      useDynamicBehavior: () => ({
+        modal: (onClose) => (
+          <InviteUserModal
+            onClosedAction={onClose}
+            inviteType={InviteTypes.COURSE}
+          />
+        ),
+      }),
+    };
+  }
+
+  protected createInviteUserToGroup(): SpeedDialItem {
+    return {
+      id: 6,
+      orderIndex: 8,
+      label: "Zaproś użytkownika do grupy",
+      icon: "group_add",
+      useDynamicBehavior: () => ({
+        modal: (onClose) => (
+          <InviteUserModal
+            onClosedAction={onClose}
+            inviteType={InviteTypes.GROUP}
+          />
         ),
       }),
     };
@@ -158,7 +198,7 @@ export abstract class BaseSpeedDialStrategy {
       orderIndex: 0,
       label: "Zresetuj polecenie",
       icon: "history",
-      useDynamicBehavior: useResetMakrdownSpeedDialDynamicBehavior,
+      useDynamicBehavior: useResetMarkdownSpeedDialDynamicBehavior,
     };
   }
 

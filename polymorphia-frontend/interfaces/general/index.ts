@@ -22,6 +22,7 @@ export type ViewType = (typeof ViewTypes)[keyof typeof ViewTypes];
 export const ImportCSVTypes = {
   GRADE_IMPORT: "GRADE_IMPORT",
   STUDENT_INVITE: "STUDENT_INVITE",
+  GROUP_INVITE: "GROUP_INVITE",
 } as const;
 
 export type ImportCSVType =
@@ -33,3 +34,20 @@ export const MarkdownTypes = {
 } as const;
 
 export type MarkdownType = (typeof MarkdownTypes)[keyof typeof MarkdownTypes];
+
+export const InviteTypes = {
+  COURSE: "COURSE",
+  GROUP: "GROUP",
+} as const;
+
+export const InviteSpecificTypes = {
+  COURSE_MANUAL: "COURSE_MANUAL",
+  COURSE_CSV: "COURSE_CSV",
+  GROUP_MANUAL: "GROUP_MANUAL",
+  GROUP_CSV: "GROUP_CSV",
+};
+
+export type InviteType = (typeof InviteTypes)[keyof typeof InviteTypes];
+
+export type InviteSpecificType =
+  (typeof InviteSpecificTypes)[keyof typeof InviteSpecificTypes];

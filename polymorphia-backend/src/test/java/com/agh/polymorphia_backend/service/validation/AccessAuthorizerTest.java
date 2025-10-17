@@ -1,7 +1,10 @@
 package com.agh.polymorphia_backend.service.validation;
 
+import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.user.*;
+import com.agh.polymorphia_backend.repository.course.AnimalRepository;
+import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.role.InstructorRepository;
 import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
 import com.agh.polymorphia_backend.service.user.UserService;
@@ -12,6 +15,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,7 +32,7 @@ import static org.mockito.Mockito.*;
 
 @ActiveProfiles("test")
 class AccessAuthorizerTest {
-
+    private static final String USER_COURSE_ROLE_NOT_FOUND = "User course role not found";
 
     @Mock
     private UserService userService;
@@ -38,6 +42,12 @@ class AccessAuthorizerTest {
 
     @Mock
     private InstructorRepository instructorRepository;
+
+    @Mock
+    private UserCourseRoleRepository userCourseRoleRepository;
+
+    @Mock
+    private AnimalRepository animalRepository;
 
     @Mock
     private SecurityContext securityContext;
@@ -50,6 +60,9 @@ class AccessAuthorizerTest {
 
     @Mock
     private Course course;
+
+    private Student student;
+    private User user;
 
     private static Stream<AccessAuthorizationScenario> scenariosProvider() {
         return Stream.of(
@@ -64,24 +77,26 @@ class AccessAuthorizerTest {
         MockitoAnnotations.openMocks(this);
         SecurityContextHolder.setContext(securityContext);
 
-        doReturn(1L).when(course).getId();
+        user = User.builder().id(1L).build();
+        student = Student.builder().user(user).build();
 
+        doReturn(10L).when(course).getId();
         doReturn(authentication).when(securityContext).getAuthentication();
     }
 
     @ParameterizedTest
     @MethodSource("scenariosProvider")
-    void authorizeCourseAccess_unauthorizedUser_throwsFrobidden(AccessAuthorizationScenario scenario) {
+    void authorizeCourseAccess_unauthorizedUser_throwsForbidden(AccessAuthorizationScenario scenario) {
         doReturn(scenario.user).when(userService).getCurrentUser();
         doReturn(scenario.role).when(userService).getUserRole(scenario.user);
 
         switch (scenario.role) {
             case STUDENT -> doReturn(Optional.empty())
                     .when(studentRepository)
-                    .findByUserIdAndCourseId(scenario.id, 1L);
+                    .findByUserIdAndCourseId(scenario.id, 10L);
             case INSTRUCTOR -> doReturn(Optional.empty())
                     .when(instructorRepository)
-                    .findByUserIdAndCourseId(scenario.id, 1L);
+                    .findByUserIdAndCourseId(scenario.id, 10L);
             case COORDINATOR -> doReturn(Coordinator.builder().user(new User()).build())
                     .when(course).getCoordinator();
         }
@@ -102,13 +117,12 @@ class AccessAuthorizerTest {
         switch (scenario.role) {
             case STUDENT -> doReturn(Optional.of(new Student()))
                     .when(studentRepository)
-                    .findByUserIdAndCourseId(scenario.id, 1L);
+                    .findByUserIdAndCourseId(scenario.id, 10L);
             case INSTRUCTOR -> doReturn(Optional.of(new Instructor()))
                     .when(instructorRepository)
-                    .findByUserIdAndCourseId(scenario.id, 1L);
+                    .findByUserIdAndCourseId(scenario.id, 10L);
             case COORDINATOR -> doReturn(scenario.user)
                     .when(course).getCoordinator();
-
         }
 
         assertDoesNotThrow(() -> accessAuthorizer.authorizeCourseAccess(course));
@@ -120,15 +134,16 @@ class AccessAuthorizerTest {
         when(userService.getCurrentUser()).thenReturn(scenario.user);
         doReturn(scenario.role).when(userService).getUserRole(scenario.user);
 
-        switch (scenario.role) {
-            case STUDENT -> doReturn(Optional.of(new Student()))
-                    .when(studentRepository)
-                    .findByUserIdAndCourseId(scenario.id, 1L);
-            case INSTRUCTOR -> doReturn(Optional.of(new Instructor()))
-                    .when(instructorRepository)
-                    .findByUserIdAndCourseId(scenario.id, 1L);
-            case COORDINATOR -> doReturn(scenario.user)
-                    .when(course).getCoordinator();
+        UserCourseRole userCourseRole = UserCourseRole.builder()
+                .role(scenario.role)
+                .build();
+
+        when(userCourseRoleRepository.findByUserIdAndCourseId(scenario.id, 10L))
+                .thenReturn(Optional.of(userCourseRole));
+
+        if (scenario.role == UserType.STUDENT) {
+            when(animalRepository.findByCourseIdAndStudentId(10L, scenario.id))
+                    .thenReturn(Optional.of(mock(Animal.class)));
         }
 
         assertDoesNotThrow(() -> accessAuthorizer.authorizePreferredCourseSwitch(course));
@@ -140,24 +155,20 @@ class AccessAuthorizerTest {
         when(userService.getCurrentUser()).thenReturn(scenario.user);
         doReturn(scenario.role).when(userService).getUserRole(scenario.user);
 
-        doReturn(Coordinator.builder().user(new User()).build())
-                .when(course).getCoordinator();
+        UserCourseRole userCourseRole = UserCourseRole.builder()
+                .role(scenario.role)
+                .build();
 
-        doReturn(Optional.empty())
-                .when(studentRepository)
-                .findByUserIdAndCourseId(scenario.id, 1L);
+        when(userCourseRoleRepository.findByUserIdAndCourseId(scenario.id, 10L))
+                .thenReturn(Optional.of(userCourseRole));
 
-        doReturn(Optional.empty())
-                .when(instructorRepository)
-                .findByUserIdAndCourseId(scenario.id, 1L);
+        if (scenario.role == UserType.STUDENT) {
+            when(animalRepository.findByCourseIdAndStudentId(10L, scenario.id))
+                    .thenReturn(Optional.empty());
 
-        ResponseStatusException ex = assertThrows(ResponseStatusException.class, () ->
-                accessAuthorizer.authorizePreferredCourseSwitch(course));
-
-        assertEquals(404, ex.getStatusCode().value());
-        assertEquals(COURSE_NOT_FOUND, ex.getReason());
+            assertFalse(accessAuthorizer.authorizePreferredCourseSwitch(course));
+        }
     }
-
 
     @Test
     void hasAnyRole_returnsTrue_whenUserHasRole() {
@@ -176,25 +187,37 @@ class AccessAuthorizerTest {
         when(userService.getCurrentUser()).thenReturn(user);
         doReturn(UserType.STUDENT).when(userService).getUserRole(user);
 
-        boolean result = accessAuthorizer.hasAnyRole(java.util.List.of(UserType.INSTRUCTOR));
+        boolean result = accessAuthorizer.hasAnyRole(List.of(UserType.INSTRUCTOR));
 
         assertFalse(result);
     }
 
+    @Test
+    void authorizePreferredCourseSwitch_shouldThrowWhenUserCourseRoleNotFound() {
+        when(userService.getCurrentUser()).thenReturn(student);
+        when(userCourseRoleRepository.findByUserIdAndCourseId(1L, 10L))
+                .thenReturn(Optional.empty());
 
-    private static class AccessAuthorizationScenario {
-        final AbstractRoleUser user;
-        final Long id;
-        final UserType role;
+        ResponseStatusException exception = assertThrows(
+                ResponseStatusException.class,
+                () -> accessAuthorizer.authorizePreferredCourseSwitch(course)
+        );
 
-        AccessAuthorizationScenario(Long id, UserType role, Class<? extends AbstractRoleUser> clazz) {
-            this.id = id;
-            this.role = role;
-            this.user = mock(clazz);
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
+        assertEquals(USER_COURSE_ROLE_NOT_FOUND, exception.getReason());
+    }
+
+    private record AccessAuthorizationScenario(Long id, UserType role, AbstractRoleUser user) {
+        private AccessAuthorizationScenario(Long id, UserType role, Class<? extends AbstractRoleUser> userClass) {
+            this(id, role, createMockedUser(id, userClass));
+        }
+
+        private static AbstractRoleUser createMockedUser(Long id, Class<? extends AbstractRoleUser> userClass) {
+            AbstractRoleUser user = mock(userClass);
             User mainUser = mock(User.class);
             doReturn(id).when(mainUser).getId();
             doReturn(mainUser).when(user).getUser();
-
+            return user;
         }
     }
 }

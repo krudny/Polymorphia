@@ -37,6 +37,7 @@ export default function Sidebar() {
   }, [isSidebarExpanded]);
 
   const menuItems = useMainMenuItems();
+  const bottomMenuItems = useBottomDesktopMenuItems();
 
   if (eventSections) {
     updateMenuItems(menuItems, eventSections, userRole);
@@ -71,7 +72,7 @@ export default function Sidebar() {
       </div>
       <div>
         <Line />
-        <MenuSection options={useBottomDesktopMenuItems()} />
+        <MenuSection options={bottomMenuItems} />
       </div>
     </div>
   );

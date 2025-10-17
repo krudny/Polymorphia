@@ -1,12 +1,15 @@
 "use client";
 
-import { redirect } from "next/navigation";
-import { useEffect } from "react";
+import { useHeroAnimation } from "@/hooks/general/useHeroAnimation";
+import OwlImage from "@/components/home/owl-image";
+import NotFoundContent from "@/components/home/not-found-content";
 
 export default function NotFound() {
-  useEffect(() => {
-    redirect("/error");
-  }, []);
+  const { owlBackgroundRef, owlRef, titleRef } = useHeroAnimation();
 
-  return <></>;
+  return (
+    <OwlImage owlBackgroundRef={owlBackgroundRef} owlRef={owlRef}>
+      <NotFoundContent titleRef={titleRef} />
+    </OwlImage>
+  );
 }

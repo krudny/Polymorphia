@@ -220,7 +220,7 @@ export const EventSectionService = {
     } else if (eventSectionId === 2) {
       const events: StudentGradableEventResponseDTO[] = [
         {
-          id: 15,
+          id: 9,
           type: EventTypes.ASSIGNMENT,
           name: "Laboratorium 1",
           topic: "Instrukcje sterujące w Javie",
@@ -230,7 +230,7 @@ export const EventSectionService = {
           hasReward: false,
         },
         {
-          id: 16,
+          id: 10,
           type: EventTypes.ASSIGNMENT,
           name: "Laboratorium 2",
           topic: "Model obiektowy",
@@ -240,7 +240,7 @@ export const EventSectionService = {
           hasReward: false,
         },
         {
-          id: 17,
+          id: 11,
           type: EventTypes.ASSIGNMENT,
           name: "Laboratorium 3",
           topic: "Interakcje między obiektami",
@@ -258,7 +258,7 @@ export const EventSectionService = {
           hasReward: false,
         },
         {
-          id: 19,
+          id: 13,
           type: EventTypes.ASSIGNMENT,
           name: "Laboratorium 5",
           topic: "Dziedziczenie",
@@ -267,7 +267,7 @@ export const EventSectionService = {
           hasReward: false,
         },
         {
-          id: 20,
+          id: 14,
           type: EventTypes.ASSIGNMENT,
           name: "Laboratorium 6",
           topic: "Refactoring kodu",
@@ -276,7 +276,7 @@ export const EventSectionService = {
           hasReward: false,
         },
         {
-          id: 21,
+          id: 15,
           type: EventTypes.ASSIGNMENT,
           name: "Laboratorium 7",
           topic: "Wielowątkowość",
@@ -285,7 +285,7 @@ export const EventSectionService = {
           hasReward: false,
         },
         {
-          id: 22,
+          id: 16,
           type: EventTypes.ASSIGNMENT,
           name: "Laboratorium 8",
           topic: "Interfejs graficzny",
@@ -298,7 +298,7 @@ export const EventSectionService = {
     } else if (eventSectionId === 4) {
       return [
         {
-          id: 30,
+          id: 33,
           type: EventTypes.ASSIGNMENT,
           name: "Laboratorium 0",
           topic: "Git jest cool",
@@ -307,37 +307,37 @@ export const EventSectionService = {
           hasReward: true,
         },
       ];
-    } else if (eventSectionId === 6) {
+    } else if (eventSectionId === 3 || eventSectionId === 7) {
       return [
         {
-          id: 32,
+          id: 34,
           type: EventTypes.PROJECT,
-          name: "Projekt 2",
-          topic: "Refactoring hell",
-          orderIndex: 1,
-          isLocked: false,
-          hasReward: false,
-        },
-      ];
-    } else if (eventSectionId === 3) {
-      return [
-        {
-          id: 33,
-          type: EventTypes.PROJECT,
-          name: "Projekt 1a",
+          name: "Projekt",
           topic: "Darwin World",
           orderIndex: 1,
           isLocked: false,
           hasReward: false,
         },
+      ];
+    } else if (eventSectionId === 10 || eventSectionId === 11) {
+      return [
         {
-          id: 34,
-          type: EventTypes.PROJECT,
-          name: "Projekt 1b",
-          topic: "Polymorphia",
-          orderIndex: 2,
+          id: 36,
+          type: EventTypes.ASSIGNMENT,
+          name: "Bonus Lab 1",
+          topic: "Funkcyjna Java",
+          orderIndex: 1,
           isLocked: false,
-          hasReward: true,
+          hasReward: false,
+        },
+        {
+          id: 37,
+          type: EventTypes.ASSIGNMENT,
+          name: "Bonus Lab 2",
+          topic: "Kotlin",
+          orderIndex: 1,
+          isLocked: false,
+          hasReward: false,
         },
       ];
     } else {
@@ -452,7 +452,7 @@ export const EventSectionService = {
       const events = [
         {
           type: EventTypes.ASSIGNMENT,
-          id: 15,
+          id: 9,
           name: "Laboratorium 1",
           topic: "Instrukcje sterujące w Javie",
           orderIndex: 1,
@@ -460,7 +460,7 @@ export const EventSectionService = {
         },
         {
           type: EventTypes.ASSIGNMENT,
-          id: 16,
+          id: 10,
           name: "Laboratorium 2",
           topic: "Model obiektowy",
           orderIndex: 2,
@@ -468,7 +468,7 @@ export const EventSectionService = {
         },
         {
           type: EventTypes.ASSIGNMENT,
-          id: 17,
+          id: 11,
           name: "Laboratorium 3",
           topic: "Interakcje między obiektami",
           orderIndex: 3,
@@ -476,7 +476,7 @@ export const EventSectionService = {
         },
         {
           type: EventTypes.ASSIGNMENT,
-          id: 18,
+          id: 12,
           name: "Laboratorium 4",
           topic: "Interfejsy i mapy",
           orderIndex: 4,
@@ -484,7 +484,7 @@ export const EventSectionService = {
         },
         {
           type: EventTypes.ASSIGNMENT,
-          id: 19,
+          id: 13,
           name: "Laboratorium 5",
           topic: "Dziedziczenie",
           orderIndex: 5,
@@ -492,7 +492,7 @@ export const EventSectionService = {
         },
         {
           type: EventTypes.ASSIGNMENT,
-          id: 20,
+          id: 14,
           name: "Laboratorium 6",
           topic: "Refactoring kodu",
           orderIndex: 6,
@@ -500,7 +500,7 @@ export const EventSectionService = {
         },
         {
           type: EventTypes.ASSIGNMENT,
-          id: 21,
+          id: 15,
           name: "Laboratorium 7",
           topic: "Wielowątkowość",
           orderIndex: 7,
@@ -508,7 +508,7 @@ export const EventSectionService = {
         },
         {
           type: EventTypes.ASSIGNMENT,
-          id: 22,
+          id: 16,
           name: "Laboratorium 8",
           topic: "Interfejs graficzny",
           orderIndex: 8,
@@ -520,41 +520,41 @@ export const EventSectionService = {
       return [
         {
           type: EventTypes.ASSIGNMENT,
-          id: 30,
+          id: 33,
           name: "Laboratorium 0",
           topic: "Git jest cool",
           orderIndex: 1,
           ungradedStudents: 5,
         },
       ];
-    } else if (eventSectionId === 6) {
+    } else if (eventSectionId === 3 || eventSectionId === 7) {
       return [
         {
           type: EventTypes.PROJECT,
-          id: 32,
-          name: "Projekt 2",
-          topic: "Refactoring hell",
-          orderIndex: 1,
-          ungradedStudents: 19,
-        },
-      ];
-    } else if (eventSectionId === 3) {
-      return [
-        {
-          type: EventTypes.PROJECT,
-          id: 33,
-          name: "Projekt 1a",
+          id: 34,
+          name: "Projekt",
           topic: "Darwin World",
           orderIndex: 1,
           ungradedStudents: 7,
         },
+      ];
+    } else if (eventSectionId === 10 || eventSectionId === 11) {
+      return [
         {
-          type: EventTypes.PROJECT,
-          id: 34,
-          name: "Projekt 1b",
-          topic: "Polymorphia",
-          orderIndex: 2,
+          type: EventTypes.ASSIGNMENT,
+          id: 36,
+          name: "Bonus Lab 1",
+          topic: "Funkcyjna Java",
+          orderIndex: 1,
           ungradedStudents: 3,
+        },
+        {
+          type: EventTypes.ASSIGNMENT,
+          id: 37,
+          name: "Bonus Lab 2",
+          topic: "Kotlin",
+          orderIndex: 2,
+          ungradedStudents: 5,
         },
       ];
     } else {

@@ -7,6 +7,8 @@ import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserCourseRole;
 import com.agh.polymorphia_backend.model.user.UserType;
+import com.agh.polymorphia_backend.repository.course.AnimalRepository;
+import com.agh.polymorphia_backend.repository.course.StudentCourseGroupRepository;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.service.course.CourseService;
@@ -17,6 +19,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+
+import static com.agh.polymorphia_backend.service.user.UserService.USER_NOT_FOUND;
 
 @Service
 @AllArgsConstructor
@@ -27,6 +32,7 @@ public class UserContextService {
     private final UserService userService;
     private final UserContextMapper userContextMapper;
     private final UserCourseRoleRepository userCourseRoleRepository;
+    private final StudentCourseGroupRepository studentCourseGroupRepository;
 
     public UserDetailsResponseDto getUserContext() {
         AbstractRoleUser user = userService.getCurrentUser();
@@ -44,7 +50,7 @@ public class UserContextService {
     public void setPreferredCourseIfOneAvailable() {
         AbstractRoleUser user = userService.getCurrentUser();
 
-        if (userService.getUserRole(user) == UserType.UNDEFINED) {
+        if (getUserRole() == UserType.UNDEFINED) {
             List<UserCourseRole> courses = userCourseRoleRepository.findAllByUserId(user.getUser().getId());
             if (courses.size() == 1) {
                 setPreferredCourseId(courses.getFirst().getCourse().getId());
@@ -54,24 +60,30 @@ public class UserContextService {
 
     public void setPreferredCourseId(Long courseId) {
         Course course = courseService.getCourseById(courseId);
-        accessAuthorizer.authorizePreferredCourseSwitch(course);
+
+        if (!accessAuthorizer.authorizePreferredCourseSwitch(course)) {
+            return;
+        }
+
 
         User user = userService.getCurrentUser().getUser();
         User dbUser = userRepository.findById(user.getId())
-                .orElseThrow(() -> new IllegalStateException("User not found"));
+                .orElseThrow(() -> new IllegalStateException(USER_NOT_FOUND));
 
         dbUser.setPreferredCourse(course);
         userRepository.save(dbUser);
-
         userService.updateSecurityCredentials(user);
     }
 
     public List<AvailableCoursesResponseDto> getAvailableCourses() {
         User user = userService.getCurrentUser().getUser();
+        Set<Long> assignedCourseIds = studentCourseGroupRepository.findAllCourseIdsByUserId(user.getId());
+
         return userCourseRoleRepository.findAllByUserId(user.getId()).stream()
+                .filter(userCourseRole -> assignedCourseIds.contains(userCourseRole.getCourse().getId()))
                 .map(userCourseRole ->
                         userContextMapper.toAvailableCoursesResponseDto(
-                                courseService.getCourseById(userCourseRole.getCourse().getId()),
+                                userCourseRole.getCourse(),
                                 userCourseRole.getRole()
                         )
                 )

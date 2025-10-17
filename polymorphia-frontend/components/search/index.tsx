@@ -19,7 +19,7 @@ export default function Search({
     <form
       className="search"
       autoComplete="off"
-      onSubmit={(e) => e.preventDefault()}
+      onSubmit={(event) => event.preventDefault()}
     >
       <div className="search-wrapper">
         <span>search</span>

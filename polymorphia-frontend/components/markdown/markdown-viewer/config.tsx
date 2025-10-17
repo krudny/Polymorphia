@@ -1,7 +1,6 @@
 import { Components } from "react-markdown";
 import "./index.css";
 import Image from "next/image";
-import { MarkdownImageProps } from "@/components/markdown/markdown-viewer/types";
 import { isValidUrl } from "@/components/markdown/isValidUrl";
 
 export const markdownConfig: Components = {
@@ -18,6 +17,11 @@ export const markdownConfig: Components = {
       {children}
     </span>
   ),
+  em: ({ children, ...props }) => (
+    <span className="em" {...props}>
+      {children}
+    </span>
+  ),
   a: ({ children, ...props }) => (
     <a
       {...props}
@@ -28,15 +32,14 @@ export const markdownConfig: Components = {
       {children}
     </a>
   ),
-  // @ts-expect-error: react-markdown components type compatibility
-  img: ({ src, alt, ...props }: MarkdownImageProps) => {
+  img: ({ src, alt, ...props }) => {
     const { width: propWidth, height: propHeight } = props;
     const isInline = "data-inline" in props;
 
     const width = parseInt(String(propWidth), 10) || 900;
     const height = parseInt(String(propHeight), 10) || 600;
 
-    if (!isValidUrl(src)) {
+    if (typeof src !== "string" || !isValidUrl(src)) {
       return <span className="markdown-invalid-src">Invalid image url</span>;
     }
 

@@ -3,6 +3,8 @@ import useImportCSVContext from "@/hooks/contexts/useImportCSVContext";
 import toast from "react-hot-toast";
 import "./index.css";
 import "../index.css";
+import Selector from "@/components/selector";
+import React from "react";
 
 export default function PickCSVHeaders() {
   const {
@@ -36,30 +38,33 @@ export default function PickCSVHeaders() {
     <div className="import-csv">
       <div className="headers-mapping">
         {csvHeadersMutation.data?.requiredCSVHeaders.map((csvHeader) => {
+          const columnOptions =
+            csvHeadersMutation.data?.fileCSVHeaders.map((fileCSVHeader) => ({
+              label: fileCSVHeader,
+              value: fileCSVHeader,
+            })) || [];
+
           return (
             <div className="csv-header-mapping" key={csvHeader}>
               <h3>{csvHeader}</h3>
-              <select
-                className="csv-header-select"
-                value={headerMapping[csvHeader] || ""}
-                onChange={(event) => {
-                  setHeaderMapping((prev) => ({
-                    ...prev,
-                    [csvHeader]: event.target.value,
-                  }));
-                }}
-              >
-                <option value="" disabled>
-                  Wybierz kolumnę
-                </option>
-                {csvHeadersMutation.data?.fileCSVHeaders.map(
-                  (fileCSVHeader) => (
-                    <option key={fileCSVHeader} value={fileCSVHeader}>
-                      {fileCSVHeader}
-                    </option>
-                  )
-                )}
-              </select>
+              <div className="csv-header-selector-wrapper">
+                <Selector
+                  options={columnOptions}
+                  value={headerMapping[csvHeader] || ""}
+                  onChange={(value) => {
+                    setHeaderMapping((prev) => ({
+                      ...prev,
+                      [csvHeader]: value,
+                    }));
+                  }}
+                  placeholder="Kolumna"
+                  size="2xl"
+                  padding="xs"
+                  centeredPlaceholder={true}
+                  centeredOptions={true}
+                  className="!border-b-2 !border-t-0 !border-x-0 !rounded-none !w-full"
+                />
+              </div>
             </div>
           );
         })}

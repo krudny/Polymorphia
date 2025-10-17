@@ -1,14 +1,15 @@
 package com.agh.polymorphia_backend.controller;
 
-import com.agh.polymorphia_backend.dto.request.markdown.MarkdownRequestDTO;
-import com.agh.polymorphia_backend.dto.response.markdown.MarkdownResponseDTO;
-import com.agh.polymorphia_backend.dto.response.markdown.SourceUrlMarkdownResponseDTO;
+import com.agh.polymorphia_backend.dto.request.markdown.MarkdownRequestDto;
+import com.agh.polymorphia_backend.dto.response.markdown.MarkdownResponseDto;
+import com.agh.polymorphia_backend.dto.response.markdown.SourceUrlMarkdownResponseDto;
 import com.agh.polymorphia_backend.service.markdown.MarkdownService;
 import com.agh.polymorphia_backend.service.markdown.MarkdownType;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,7 +19,8 @@ public class MarkdownController {
     private final MarkdownService markdownService;
 
     @GetMapping("/{type}/{resourceId}")
-    public ResponseEntity<MarkdownResponseDTO> getMarkdown(
+    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
+    public ResponseEntity<MarkdownResponseDto> getMarkdown(
             @PathVariable MarkdownType type,
             @PathVariable Long resourceId) {
 
@@ -26,7 +28,8 @@ public class MarkdownController {
     }
 
     @GetMapping("/{type}/{resourceId}/source")
-    public ResponseEntity<SourceUrlMarkdownResponseDTO> getMarkdownSourceUrl(
+    @PreAuthorize("hasAnyAuthority('COORDINATOR')")
+    public ResponseEntity<SourceUrlMarkdownResponseDto> getMarkdownSourceUrl(
             @PathVariable MarkdownType type,
             @PathVariable Long resourceId) {
 
@@ -34,16 +37,18 @@ public class MarkdownController {
     }
 
     @PutMapping("/{type}/{resourceId}")
+    @PreAuthorize("hasAnyAuthority('COORDINATOR')")
     public ResponseEntity<Void> setMarkdown(
             @PathVariable MarkdownType type,
             @PathVariable Long resourceId,
-            @RequestBody @Valid MarkdownRequestDTO requestDTO) {
+            @RequestBody @Valid MarkdownRequestDto requestDTO) {
 
         markdownService.setMarkdown(type, resourceId, requestDTO.getMarkdown());
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{type}/{resourceId}/reset")
+    @PreAuthorize("hasAnyAuthority('COORDINATOR')")
     public ResponseEntity<Void> resetMarkdown(
             @PathVariable MarkdownType type,
             @PathVariable Long resourceId) {

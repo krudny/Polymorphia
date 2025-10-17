@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.service.markdown;
 
-import com.agh.polymorphia_backend.dto.response.markdown.MarkdownResponseDTO;
-import com.agh.polymorphia_backend.dto.response.markdown.SourceUrlMarkdownResponseDTO;
+import com.agh.polymorphia_backend.dto.response.markdown.MarkdownResponseDto;
+import com.agh.polymorphia_backend.dto.response.markdown.SourceUrlMarkdownResponseDto;
 import com.agh.polymorphia_backend.service.markdown.strategy.MarkdownCourseStrategy;
 import com.agh.polymorphia_backend.service.markdown.strategy.MarkdownGradableEventStrategy;
 import com.agh.polymorphia_backend.service.markdown.strategy.MarkdownStrategy;
@@ -14,11 +14,11 @@ public class MarkdownService {
     private final MarkdownCourseStrategy markdownCourseStrategy;
     private final MarkdownGradableEventStrategy markdownGradableEventStrategy;
 
-    public MarkdownResponseDTO getMarkdown(MarkdownType type, Long resourceId) {
+    public MarkdownResponseDto getMarkdown(MarkdownType type, Long resourceId) {
         return getStrategyForType(type).getMarkdown(resourceId);
     }
 
-    public SourceUrlMarkdownResponseDTO getMarkdownSourceUrl(MarkdownType type, Long resourceId) {
+    public SourceUrlMarkdownResponseDto getMarkdownSourceUrl(MarkdownType type, Long resourceId) {
         return getStrategyForType(type).getMarkdownSourceUrl(resourceId);
     }
 
