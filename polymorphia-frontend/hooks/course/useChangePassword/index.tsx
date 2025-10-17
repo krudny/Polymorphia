@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import UserService from "@/app/(logged-in)/profile/UserService";
+import UserService from "@/services/user";
 import { ChangePasswordDTO } from "@/interfaces/api/user";
 import {
   UseChangePassword,

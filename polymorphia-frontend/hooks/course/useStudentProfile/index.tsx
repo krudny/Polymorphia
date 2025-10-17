@@ -1,6 +1,6 @@
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { useQuery } from "@tanstack/react-query";
-import UserService from "@/app/(logged-in)/profile/UserService";
+import UserService from "@/services/user";
 import { UseStudentProfile } from "@/hooks/course/useStudentProfile/types";
 
 export default function useStudentProfile(): UseStudentProfile {

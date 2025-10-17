@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
+import { EventSectionService } from "@/services/event-section";
 import toast from "react-hot-toast";
 import { UseGradeUpdate } from "@/hooks/course/useGradeUpdate/types";
 

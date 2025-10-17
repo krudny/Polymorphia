@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import HallOfFameService from "@/app/(logged-in)/hall-of-fame/HallOfFameService";
+import HallOfFameService from "@/services/hall-of-fame";
 import {
   UseHallOfFame,
   useHallOfFameProps,

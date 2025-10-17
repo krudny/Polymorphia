@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import AuthService from "@/services/AuthService";
+import AuthService from "@/services/auth";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
