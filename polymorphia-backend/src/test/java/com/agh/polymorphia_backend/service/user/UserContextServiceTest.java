@@ -39,11 +39,6 @@ class UserContextServiceTest {
     @Mock
     private UserContextMapper userContextMapper;
     @Mock
-    private UserCourseRoleRepository userCourseRoleRepository;
-    @Mock
-    private StudentCourseGroupRepository studentCourseGroupRepository;
-    @Mock
-    private AnimalRepository animalRepository;
 
     @InjectMocks
     private UserContextService userContextService;
@@ -51,8 +46,6 @@ class UserContextServiceTest {
     private User user;
     private Student student;
     private Course course;
-    private UserCourseRole userCourseRole;
-    private Animal animal;
 
     @BeforeEach
     void setUp() {
@@ -64,15 +57,6 @@ class UserContextServiceTest {
         UserCourseRoleId roleId = new UserCourseRoleId();
         roleId.setUserId(1L);
         roleId.setCourseId(10L);
-
-        userCourseRole = UserCourseRole.builder()
-                .id(roleId)
-                .role(UserType.STUDENT)
-                .course(course)
-                .user(user)
-                .build();
-
-        animal = Animal.builder().id(1L).build();
     }
 
     @Test
@@ -126,23 +110,4 @@ class UserContextServiceTest {
         assertThrows(IllegalStateException.class,
                 () -> userContextService.setPreferredCourseId(10L));
     }
-
-
-//    @Test
-//    void getAvailableCourses_shouldReturnAvailableCourses() {
-//        AvailableCoursesResponseDto dto = AvailableCoursesResponseDto.builder()
-//                .name("name")
-//                .imageUrl("url")
-//                .build();
-//
-//        when(userService.getCurrentUser()).thenReturn(student);
-//        when(studentCourseGroupRepository.findAllCourseIdsByUserId(1L)).thenReturn(Set.of(10L));
-//        when(userCourseRoleRepository.findAllByUserId(1L)).thenReturn(List.of(userCourseRole));
-//        when(userContextMapper.toAvailableCoursesResponseDto(course, UserType.STUDENT)).thenReturn(dto);
-//
-//        var result = userContextService.getAvailableCourses();
-//
-//        assertEquals(1, result.size());
-//        assertEquals(dto, result.getFirst());
-//    }
 }
