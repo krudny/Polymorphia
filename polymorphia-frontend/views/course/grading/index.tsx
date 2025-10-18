@@ -7,7 +7,6 @@ import FiltersModal from "@/components/filters-modals/FiltersModal";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import { useQueryClient } from "@tanstack/react-query";
 import { useMediaQuery } from "react-responsive";
-import { useTitle } from "@/components/navigation/TitleContext";
 import { ViewTypes } from "@/interfaces/general";
 import { getSpeedDialKey } from "@/components/speed-dial/util";
 import TargetList from "@/components/grading-components/target-list";
@@ -17,7 +16,6 @@ export default function Grading({ eventType, columns }: GradingProps) {
   const queryClient = useQueryClient();
   const isMd = useMediaQuery({ minWidth: "768px" });
   const isXL = useMediaQuery({ minWidth: "1200px" });
-  const { setTitle } = useTitle();
   const gradingRef = useRef<HTMLDivElement>(null);
   const columnsRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
@@ -29,10 +27,6 @@ export default function Grading({ eventType, columns }: GradingProps) {
     isFiltersLoading,
     isFiltersError,
   } = useGradingContext();
-
-  useEffect(() => {
-    setTitle("Ocenianie");
-  }, [setTitle]);
 
   useEffect(() => {
     if (!gradingRef.current || !columnsRef.current || !listRef.current) {
