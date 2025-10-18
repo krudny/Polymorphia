@@ -9,6 +9,7 @@ import com.agh.polymorphia_backend.dto.response.reward.item.FlatBonusItemRespons
 import com.agh.polymorphia_backend.dto.response.reward.item.ItemResponseDtoBase;
 import com.agh.polymorphia_backend.dto.response.reward.item.PercentageBonusItemResponseDtoBase;
 import com.agh.polymorphia_backend.model.course.reward.*;
+import com.agh.polymorphia_backend.service.course.reward.AssignedRewardService;
 import lombok.AllArgsConstructor;
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,9 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class RewardMapper {
+    private final AssignedRewardService assignedRewardService;
+
+
     public BaseRewardResponseDto rewardToRewardResponseDto(Reward reward) {
         return switch (reward.getRewardType()) {
             case ITEM -> itemToRewardResponseDto((Item) Hibernate.unproxy(reward));
@@ -61,11 +65,12 @@ public class RewardMapper {
                 builder
                         .limit(item.getLimit())
                         .eventSectionId(item.getEventSection().getId())
-                        .isLimitReached(true)
+                        .isLimitReached(assignedRewardService.isLimitReached(item))
                 , item
 
         );
     }
+
 
     public <T extends Reward> List<BaseRewardResponseDto> relatedRewardsToResponseDto(List<T> rewards) {
         return rewards.stream()
@@ -82,11 +87,11 @@ public class RewardMapper {
 
     public List<EquipmentChestResponseDto> chestsToEquipmentResponseDto(List<Chest> chests) {
         return chests.stream()
-                .map(this::chestsToEquipmentResponseDto)
+                .map(this::chestToEquipmentResponseDto)
                 .toList();
     }
 
-    private EquipmentChestResponseDto chestsToEquipmentResponseDto(Chest chest) {
+    private EquipmentChestResponseDto chestToEquipmentResponseDto(Chest chest) {
         return EquipmentChestResponseDto.builder()
                 .base(rewardToRewardResponseDto(chest))
                 .details(ChestAssignmentDetailsResponseDto.builder().build())

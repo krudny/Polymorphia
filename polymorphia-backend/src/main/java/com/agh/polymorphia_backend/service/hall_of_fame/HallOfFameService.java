@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.service.hall_of_fame;
 
-import com.agh.polymorphia_backend.dto.request.HallOfFameRequestDto;
+import com.agh.polymorphia_backend.dto.request.hall_of_fame.HallOfFameRequestDto;
 import com.agh.polymorphia_backend.dto.response.hall_of_fame.HallOfFameResponseDto;
 import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
@@ -50,6 +50,11 @@ public class HallOfFameService {
 
     public List<StudentScoreDetail> getStudentScoreDetails(Long animalId) {
         return scoreDetailRepository.findByAnimalId(animalId);
+    }
+
+    public StudentScoreDetail getStudentEventSectionScoreDetails(Long animalId, Long eventSectionId) {
+        return scoreDetailRepository.findByAnimalIdAndEventSectionId(animalId, eventSectionId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_HOF_NOT_FOUND));
     }
 
     public Page<HallOfFameResponseDto> getHallOfFame(HallOfFameRequestDto requestDto) {

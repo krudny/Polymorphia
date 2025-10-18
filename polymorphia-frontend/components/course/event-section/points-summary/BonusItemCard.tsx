@@ -1,4 +1,3 @@
-import { API_STATIC_URL } from "@/services/api";
 import "./index.css";
 import { BonusItemCardProps } from "@/components/course/event-section/points-summary/types";
 import XPCard from "../../../xp-card/XPCard";
@@ -12,7 +11,7 @@ export default function BonusItemCard({ assignedItem }: BonusItemCardProps) {
       subtitle={`Zdobyto: ${assignedItem.details.receivedDate}`}
       leftComponent={
         <XPCardImage
-          imageUrl={`${API_STATIC_URL}/${assignedItem.base.imageUrl}`}
+          imageUrl={`${assignedItem.base.imageUrl}`}
           alt={assignedItem.base.name}
         />
       }

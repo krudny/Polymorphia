@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @SuperBuilder
@@ -20,8 +19,6 @@ public class ChestResponseDtoBase extends BaseRewardResponseDto {
 
     @NotNull
     private ChestBehavior behavior;
-
-    private BigDecimal potentialXp;
 
     @NotNull
     private List<BaseRewardResponseDto> chestItems;

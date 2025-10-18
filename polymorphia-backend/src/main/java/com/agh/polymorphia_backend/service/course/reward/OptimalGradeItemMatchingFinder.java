@@ -19,7 +19,7 @@ import java.util.Map;
 @Slf4j
 @Service
 public class OptimalGradeItemMatchingFinder {
-    private static final int SCALE = 100;
+    private static final int SCALE = 10;
 
     public OptimizationResult findOptimalMatching(
             List<AssignedItem> flatBonusItems,
@@ -27,7 +27,7 @@ public class OptimalGradeItemMatchingFinder {
 
         if (flatBonusItems == null || grades == null ||
                 flatBonusItems.isEmpty() || grades.isEmpty()) {
-            return new OptimizationResult(new HashMap<>(), BigDecimal.ZERO);
+            return new OptimizationResult(new HashMap<>(), BigDecimal.valueOf(0.0));
         }
 
         int numItems = flatBonusItems.size();
@@ -42,7 +42,7 @@ public class OptimalGradeItemMatchingFinder {
         for (int i = 0; i < numGrades; i++) {
             BigDecimal missingXp = grades.get(i).getCriteriaGrades().stream()
                     .map(cg -> cg.getCriterion().getMaxXp().subtract(cg.getXp()))
-                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+                    .reduce(BigDecimal.valueOf(0.0), BigDecimal::add);
             int missingScaled = Math.max(0, scale(missingXp));
             maxRecoveredBound[i] = missingScaled;
             recoveredXp[i] = model.newIntVar(0, missingScaled, "r_" + i);
@@ -63,7 +63,7 @@ public class OptimalGradeItemMatchingFinder {
 
         if (status != CpSolverStatus.OPTIMAL && status != CpSolverStatus.FEASIBLE) {
             log.warn("No feasible solution found. Status: {}", status);
-            return new OptimizationResult(new HashMap<>(), BigDecimal.ZERO);
+            return new OptimizationResult(new HashMap<>(), BigDecimal.valueOf(0.0));
         }
 
         Map<Grade, List<AssignedItem>> matching = getMatching(flatBonusItems, grades, solver, y);

@@ -27,6 +27,10 @@
   h1 {
     @apply text-2xl text-center;
   }
+
+  h2 {
+    @apply text-xl text-center;
+  }
 }
 
 .equipment-image {
@@ -67,8 +71,13 @@
   }
 }
 
+.opening-chest-modal-footer-text {
+  @apply whitespace-normal break-words max-w-[550px] mx-auto pl-4 leading-tight;
+  @apply -indent-[0.7rem] text-xl;
+}
+
 .opening-chest-modal-image-wrapper {
-  @apply relative w-full cursor-pointer;
+  @apply relative w-full;
 }
 
 .opening-chest-modal-image-selected {

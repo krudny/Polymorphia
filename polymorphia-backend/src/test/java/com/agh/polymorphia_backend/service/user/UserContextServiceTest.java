@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.service.user;
 
+import com.agh.polymorphia_backend.BaseTest;
 import com.agh.polymorphia_backend.dto.response.user_context.AvailableCoursesResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.BaseUserDetailsResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
@@ -23,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-class UserContextServiceTest {
+class UserContextServiceTest extends BaseTest {
 
     @Mock
     private CourseService courseService;

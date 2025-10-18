@@ -84,15 +84,15 @@ public class BonusXpCalculatorTestUtil {
                 Arguments.of(
                         List.of(
                                 createAssignedItem(BigDecimal.valueOf(0.1), FlatBonusItemBehavior.ONE_EVENT, DEFAULT_DATE, 1L),
-                                createAssignedItem(BigDecimal.valueOf(0.05), FlatBonusItemBehavior.ONE_EVENT, DEFAULT_DATE, 2L)
+                                createAssignedItem(BigDecimal.valueOf(0.2), FlatBonusItemBehavior.ONE_EVENT, DEFAULT_DATE, 2L)
                         ),
                         List.of(
                                 createGrade(BigDecimal.valueOf(4.9), BigDecimal.valueOf(5.0), 1L, 1L),
-                                createGrade(BigDecimal.valueOf(2.95), BigDecimal.valueOf(3.0), 2L, 2L)
+                                createGrade(BigDecimal.valueOf(2.8), BigDecimal.valueOf(3.0), 2L, 2L)
                         ),
                         List.of(
                                 BigDecimal.valueOf(0.1),
-                                BigDecimal.valueOf(0.05)
+                                BigDecimal.valueOf(0.2)
                         )
                 ),
                 //Big rewards
@@ -130,7 +130,7 @@ public class BonusXpCalculatorTestUtil {
                                 BigDecimal.valueOf(1.5)
                         )
                 ),
-                // More oneEventItems than criteriaGrades
+                // More oneEventItems than grades
                 Arguments.of(
                         List.of(
                                 createAssignedItem(BigDecimal.valueOf(5.0), FlatBonusItemBehavior.ONE_EVENT, DEFAULT_DATE, 1L),
@@ -147,7 +147,7 @@ public class BonusXpCalculatorTestUtil {
                                 BigDecimal.valueOf(1.0)
                         )
                 ),
-                // More rewards than criteriaGrades - two same grades
+                // More rewards than criteriaGrades - two same items
                 Arguments.of(
                         List.of(
                                 createAssignedItem(BigDecimal.valueOf(5.0), FlatBonusItemBehavior.ONE_EVENT, DEFAULT_DATE, 1L),
@@ -164,22 +164,20 @@ public class BonusXpCalculatorTestUtil {
                                 BigDecimal.valueOf(2.0)
                         )
                 ),
-                // More criteriaGrades than rewards
+                // More grades than rewards
                 Arguments.of(
                         List.of(
                                 createAssignedItem(BigDecimal.valueOf(4.0), FlatBonusItemBehavior.ONE_EVENT, DEFAULT_DATE, 1L),
-                                createAssignedItem(BigDecimal.valueOf(2.0), FlatBonusItemBehavior.ONE_EVENT, DEFAULT_DATE, 2L),
-
-                                createAssignedItem(BigDecimal.valueOf(2.0), FlatBonusItemBehavior.MULTIPLE_EVENTS, DEFAULT_DATE, 3L)
+                                createAssignedItem(BigDecimal.valueOf(2.0), FlatBonusItemBehavior.ONE_EVENT, DEFAULT_DATE, 2L)
                         ),
                         List.of(
                                 createGrade(BigDecimal.valueOf(1.0), BigDecimal.valueOf(5.0), 1L, 1L),
                                 createGrade(BigDecimal.valueOf(3.0), BigDecimal.valueOf(6.0), 2L, 2L),
-                                createGrade(BigDecimal.valueOf(4.0), BigDecimal.valueOf(7.0), 3L, 3L)
+                                createGrade(BigDecimal.valueOf(4.0), BigDecimal.valueOf(7.0), 3L, 3L),
+                                createGrade(BigDecimal.valueOf(2.0), BigDecimal.valueOf(5.0), 4L, 4L)
                         ),
                         List.of(
                                 BigDecimal.valueOf(4.0),
-                                BigDecimal.valueOf(2.0),
                                 BigDecimal.valueOf(2.0)
                         )
                 ),
@@ -217,9 +215,9 @@ public class BonusXpCalculatorTestUtil {
                                 createGrade(BigDecimal.valueOf(2.0), BigDecimal.valueOf(5.0), 1L, 1L)
                         ),
                         List.of(
-                                BigDecimal.valueOf(0.0),
+                                BigDecimal.valueOf(2.0),
                                 BigDecimal.valueOf(1.0),
-                                BigDecimal.valueOf(2.0)
+                                BigDecimal.valueOf(0.0)
                         )
                 ),
 
@@ -238,7 +236,7 @@ public class BonusXpCalculatorTestUtil {
                                 BigDecimal.valueOf(3.0)
                         )
                 ),
-                //Multiple criteria with same loss
+                //Multiple grades with same loss
                 Arguments.of(
                         List.of(
                                 createAssignedItem(BigDecimal.valueOf(2.0), FlatBonusItemBehavior.ONE_EVENT, DEFAULT_DATE, 1L),

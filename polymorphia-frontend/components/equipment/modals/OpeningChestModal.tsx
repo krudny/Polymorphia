@@ -7,12 +7,14 @@ export default function OpeningChestModal() {
     currentOpeningChestModalData,
     setCurrentOpeningChestModalData,
     setPickedItemId,
+    setPickedItemKey,
   } = useEquipmentContext();
   const openingChest = currentOpeningChestModalData;
 
   const onClosed = () => {
     setCurrentOpeningChestModalData(null);
     setPickedItemId(undefined);
+    setPickedItemKey(undefined);
   };
 
   return (

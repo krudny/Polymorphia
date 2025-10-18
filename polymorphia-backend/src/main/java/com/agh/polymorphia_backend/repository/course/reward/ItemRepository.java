@@ -13,11 +13,8 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query("""
                 SELECT i FROM Item i
                 WHERE i.course.id = :courseId
-                  AND (:ids is null OR i.id NOT IN :ids)
+                  AND (:excludedItemIds is null OR i.id NOT IN :excludedItemIds)
             """)
-    List<Item> findAllByCourseIdAndIdNotIn(Long courseId, List<Long> ids);
+    List<Item> findAllByCourseIdAndItemIdNotIn(Long courseId, List<Long> excludedItemIds);
 
-    @Query(value = "SELECT item_id FROM chests_items WHERE chest_id = :chestId",
-            nativeQuery = true)
-    List<Long> findAllItemIdsByChestId(Long chestId);
 }

@@ -1,19 +1,31 @@
 package com.agh.polymorphia_backend.service.course.reward;
 
+import com.agh.polymorphia_backend.model.course.Animal;
+import com.agh.polymorphia_backend.model.course.reward.FlatBonusItem;
 import com.agh.polymorphia_backend.model.course.reward.Item;
+import com.agh.polymorphia_backend.model.course.reward.Reward;
 import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedChest;
 import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedItem;
 import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedReward;
+import com.agh.polymorphia_backend.model.course.reward.item.FlatBonusItemBehavior;
+import com.agh.polymorphia_backend.model.course.reward.item.ItemType;
 import com.agh.polymorphia_backend.repository.course.reward.assigned.AssignedChestRepository;
 import com.agh.polymorphia_backend.repository.course.reward.assigned.AssignedItemRepository;
+import com.agh.polymorphia_backend.service.course.AnimalService;
+import com.agh.polymorphia_backend.service.user.UserService;
 import lombok.AllArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -21,19 +33,44 @@ public class AssignedRewardService {
     private static final String NO_ASSIGNED_CHEST_FOUND = "No assigned chest found";
     private final AssignedChestRepository assignedChestRepository;
     private final AssignedItemRepository assignedItemRepository;
+    private final AnimalService animalService;
+    private final UserService userService;
 
     public List<AssignedChest> getAnimalAssignedChests(Long animalId) {
         return assignedChestRepository.findAnimalAssignedChests(animalId);
     }
 
     public List<AssignedItem> getAnimalAssignedItems(Long animalId) {
-        List<AssignedChest> openedChests = getAnimalAssignedChests(animalId).stream()
-                .filter(AssignedReward::getIsUsed)
-                .toList();
+        return assignedItemRepository.findAnimalAssignedItems(animalId);
+    }
 
-        return openedChests.stream()
-                .flatMap(chest -> chest.getAssignedItems().stream())
+    public List<AssignedItem> filterFlatBonusItemsByBehavior(List<AssignedItem> assignedItems, FlatBonusItemBehavior behavior) {
+        return assignedItems.stream()
+                .filter(assignedItem -> ((FlatBonusItem) Hibernate.unproxy(assignedItem.getReward())).getBehavior().equals(behavior))
+                .sorted(Comparator.comparing(AssignedReward::getReceivedDate))
+                .collect(Collectors.toList());
+    }
+
+    public List<AssignedItem> getAnimalAssignedItemsByType(Long animalId, ItemType itemType) {
+        return getAnimalAssignedItems(animalId)
+                .stream()
+                .filter(item -> ((Item) Hibernate.unproxy(item.getReward())).getItemType().equals(itemType))
                 .toList();
+    }
+
+    public Map<Long, BigDecimal> getTotalBonusByEventSection(List<AssignedItem> assignedItems) {
+        Map<Long, BigDecimal> totalBonusByEventSection = new HashMap<>();
+        for (AssignedItem assignedItem : assignedItems) {
+            Long eventSectionId = ((Item) Hibernate.unproxy(assignedItem.getReward()))
+                    .getEventSection()
+                    .getId();
+
+            BigDecimal bonusXp = assignedItem.getBonusXp();
+
+            totalBonusByEventSection.merge(eventSectionId, bonusXp, BigDecimal::add);
+        }
+
+        return totalBonusByEventSection;
     }
 
     public AssignedChest getAssignedChestByIdAndAnimalId(Long assignedChestId, Long animalId) {
@@ -54,10 +91,32 @@ public class AssignedRewardService {
                 .reward(item)
                 .criterionGrade(assignedChest.getCriterionGrade())
                 .isUsed(false)
-                .bonusXp(BigDecimal.ZERO)
+                .bonusXp(BigDecimal.valueOf(0.0))
                 .receivedDate(openDate)
                 .build();
     }
+
+
+    public boolean isLimitReached(Item item) {
+        Long userId = userService.getCurrentUser().getUserId();
+        Animal animal = animalService.getAnimal(userId, item.getCourse().getId());
+        List<AssignedItem> animalAssignedItems = getAnimalAssignedItems(animal.getId());
+
+        Map<Reward, Long> currentItemsByReward = countAssignedItemsByReward(animalAssignedItems);
+
+        return currentItemsByReward.getOrDefault(item, 0L) >= item.getLimit();
+    }
+
+    public Map<Reward, List<AssignedItem>> groupAssignedItemsByReward(List<AssignedItem> assignedItems) {
+        return assignedItems.stream()
+                .collect(Collectors.groupingBy(AssignedItem::getReward));
+    }
+
+    public Map<Reward, Long> countAssignedItemsByReward(List<AssignedItem> assignedItems) {
+        return assignedItems.stream()
+                .collect(Collectors.groupingBy(AssignedItem::getReward, Collectors.counting()));
+    }
+
 
     public void saveAssignedChest(AssignedChest chest) {
         assignedChestRepository.save(chest);

@@ -12,7 +12,7 @@ public interface ChestRepository extends JpaRepository<Chest, Long> {
     @Query("""
                 SELECT c FROM Chest c
                 WHERE c.course.id = :courseId
-                  AND (:ids is null OR c.id NOT IN :ids)
+                  AND (:excludedChestIds is null OR c.id NOT IN :excludedChestIds)
             """)
-    List<Chest> findAllByCourseIdAndIdNotIn(Long courseId, List<Long> ids);
+    List<Chest> findAllByCourseIdAndChestIdNotIn(Long courseId, List<Long> excludedChestIds);
 }

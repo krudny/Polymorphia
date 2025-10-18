@@ -1,8 +1,10 @@
 package com.agh.polymorphia_backend.service.course.reward;
 
+import com.agh.polymorphia_backend.BaseTest;
 import com.agh.polymorphia_backend.model.course.reward.FlatBonusItem;
 import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedItem;
 import com.agh.polymorphia_backend.model.course.reward.item.FlatBonusItemBehavior;
+import com.agh.polymorphia_backend.model.course.reward.item.ItemType;
 import com.agh.polymorphia_backend.model.gradable_event.Grade;
 import com.agh.polymorphia_backend.service.gradable_event.GradeService;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
@@ -25,13 +27,10 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-class BonusXpCalculatorTest {
+class BonusXpCalculatorTest extends BaseTest {
 
     @Mock
     private AssignedRewardService assignedRewardService;
-
-    @Mock
-    private RewardService rewardService;
 
     @Mock
     private HallOfFameService hallOfFameService;
@@ -47,11 +46,21 @@ class BonusXpCalculatorTest {
         MockitoAnnotations.openMocks(this);
         Loader.loadNativeLibraries();
         OptimalGradeItemMatchingFinder optimalGradeItemMatchingFinder = new OptimalGradeItemMatchingFinder();
-        bonusXpCalculator = new BonusXpCalculator(assignedRewardService, gradeService, optimalGradeItemMatchingFinder, hallOfFameService, rewardService);
+        bonusXpCalculator = new BonusXpCalculator(assignedRewardService, gradeService, optimalGradeItemMatchingFinder, hallOfFameService);
     }
 
     private void mockServiceCalls(Long animalId, List<AssignedItem> items, List<Grade> grades) {
-        when(assignedRewardService.getAnimalAssignedItems(animalId)).thenReturn(items);
+        when(assignedRewardService.getAnimalAssignedItemsByType(animalId, ItemType.FLAT_BONUS)).thenReturn(items);
+        when(assignedRewardService.filterFlatBonusItemsByBehavior(items, FlatBonusItemBehavior.ONE_EVENT))
+                .thenReturn(items.stream()
+                        .filter(item -> ((FlatBonusItem) (item.getReward()))
+                                .getBehavior().equals(FlatBonusItemBehavior.ONE_EVENT))
+                        .toList());
+        when(assignedRewardService.filterFlatBonusItemsByBehavior(items, FlatBonusItemBehavior.MULTIPLE_EVENTS))
+                .thenReturn(items.stream()
+                        .filter(item -> ((FlatBonusItem) (item.getReward()))
+                                .getBehavior().equals(FlatBonusItemBehavior.MULTIPLE_EVENTS))
+                        .toList());
         when(gradeService.getAnimalGrades(animalId)).thenReturn(grades);
     }
 
@@ -118,8 +127,7 @@ class BonusXpCalculatorTest {
                     createGrade(BigDecimal.valueOf(2.0), BigDecimal.valueOf(10.0), 1L, 1L)
             );
 
-            when(assignedRewardService.getAnimalAssignedItems(animalId)).thenReturn(allItems);
-            when(gradeService.getAnimalGrades(animalId)).thenReturn(grades);
+            mockServiceCalls(animalId, allItems, grades);
 
             // When
             bonusXpCalculator.updateAnimalFlatBonusXp(animalId);

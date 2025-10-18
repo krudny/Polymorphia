@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.service;
 
+import com.agh.polymorphia_backend.BaseTest;
 import com.agh.polymorphia_backend.dto.response.user.StudentDetailsResponseDto;
 import com.agh.polymorphia_backend.dto.response.user.StudentDetailsWithNameResponseDto;
 import com.agh.polymorphia_backend.dto.response.user.StudentDetailsWithoutNameResponseDto;
@@ -19,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class StudentDetailsMapperTest {
+public class StudentDetailsMapperTest extends BaseTest {
     public static final List<UserType> ROLES = List.of(UserType.COORDINATOR, UserType.INSTRUCTOR);
     private static final String STUDENT_NAME = "Anna Nowak";
     @Mock

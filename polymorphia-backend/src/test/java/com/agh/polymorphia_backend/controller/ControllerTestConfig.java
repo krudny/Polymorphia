@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.controller;
 
+import com.agh.polymorphia_backend.BaseTest;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +19,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS,
         scripts = "/test-data.sql"
 )
-public abstract class ControllerTestConfig {
+public abstract class ControllerTestConfig extends BaseTest {
     protected static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15-alpine")
             .withDatabaseName("testdb")
             .withUsername("test")

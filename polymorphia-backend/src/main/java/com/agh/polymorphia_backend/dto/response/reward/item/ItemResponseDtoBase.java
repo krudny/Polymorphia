@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
@@ -22,6 +23,7 @@ public class ItemResponseDtoBase extends BaseRewardResponseDto {
     private Integer limit;
 
     @NotNull
+    @Setter
     private Boolean isLimitReached;
 
     @NotNull

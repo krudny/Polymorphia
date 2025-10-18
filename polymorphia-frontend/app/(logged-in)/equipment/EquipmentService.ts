@@ -1,4 +1,5 @@
 import {
+  ChestPotentialXpResponseDTOWithType,
   EquipmentChestOpenRequestDTO,
   EquipmentChestResponseDTO,
   EquipmentItemResponseDTO,
@@ -49,6 +50,24 @@ const EquipmentService = {
     if (!response.ok) {
       throw new Error("Nie udało się otworzyć skrzynki!");
     }
+  },
+
+  getPotentialXp: async (
+    courseId: number,
+    assignedChestId: number
+  ): Promise<ChestPotentialXpResponseDTOWithType> => {
+    const response = await fetch(
+      `${API_HOST}/equipment/chests/potential-xp?courseId=${courseId}&assignedChestId=${assignedChestId}`,
+      {
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Nie udało się pobrać szacowanej wartości bonusów!");
+    }
+
+    return await response.json();
   },
 };
 

@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.service;
 
-import com.agh.polymorphia_backend.dto.request.HallOfFameRequestDto;
+import com.agh.polymorphia_backend.BaseTest;
+import com.agh.polymorphia_backend.dto.request.hall_of_fame.HallOfFameRequestDto;
 import com.agh.polymorphia_backend.model.hall_of_fame.SearchBy;
 import com.agh.polymorphia_backend.model.hall_of_fame.SortOrder;
 import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
@@ -26,7 +27,7 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class HallOfFameSortSpecResolverTest {
+public class HallOfFameSortSpecResolverTest extends BaseTest {
     private static final Long COURSE_ID = 1L;
     private static final String EVENT_SECTION_NAME = "event section name";
     @Mock

@@ -17,4 +17,6 @@ export interface EquipmentContextInterface {
   ) => void;
   pickedItemId: number | undefined;
   setPickedItemId: Dispatch<SetStateAction<number | undefined>>;
+  pickedItemKey: string | undefined;
+  setPickedItemKey: Dispatch<SetStateAction<string | undefined>>;
 }
