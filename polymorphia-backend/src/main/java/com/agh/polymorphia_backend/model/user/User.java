@@ -38,6 +38,7 @@ public class User {
     private boolean isPasswordTemporary;
 
     @ManyToOne()
+    @ToString.Exclude
     @JoinColumn(name = "preferred_course_id")
     private Course preferredCourse;
 }

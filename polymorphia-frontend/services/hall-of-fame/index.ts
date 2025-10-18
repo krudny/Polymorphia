@@ -10,6 +10,7 @@ const HallOfFameService = {
     size: number,
     courseId: number,
     searchTerm: string,
+    searchBy: string,
     sortBy: string,
     sortOrder: string,
     groups?: string[]
@@ -25,7 +26,7 @@ const HallOfFameService = {
         page: page,
         size: size,
         searchTerm: !searchTerm || searchTerm.trim() === "" ? "" : searchTerm,
-        searchBy: "animalName",
+        searchBy: searchBy,
         sortBy: sortBy,
         sortOrder: sortOrder,
         groups: groups && !groups?.includes("all") ? groups : [],

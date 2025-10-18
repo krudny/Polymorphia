@@ -2,17 +2,32 @@
   "content": [
     {
       "userDetails": {
-        "animalName": "hof_3",
+        "animalName": "hof_5",
         "evolutionStage": "Jajo",
         "group": "BM-SR13",
         "imageUrl": "imageUrl_jajo",
-        "position": 1
+        "position": 5
       },
       "xpDetails": {
-        "Lab": "2.0",
-        "Kartkówka": "8.0",
-        "bonuses": "5.0",
-        "total": "15.0"
+        "Lab": "0.0",
+        "Kartkówka": "2.0",
+        "bonuses": "0.0",
+        "total": "2.0"
+      }
+    },
+    {
+      "userDetails": {
+        "animalName": "hof_4",
+        "evolutionStage": "Jajo",
+        "group": "BM-SR13",
+        "imageUrl": "imageUrl_jajo",
+        "position": 4
+      },
+      "xpDetails": {
+        "Lab": "0.0",
+        "Kartkówka": "2.0",
+        "bonuses": "0.0",
+        "total": "2.0"
       }
     },
     {
@@ -47,32 +62,17 @@
     },
     {
       "userDetails": {
-        "animalName": "hof_4",
+        "animalName": "hof_3",
         "evolutionStage": "Jajo",
         "group": "BM-SR13",
         "imageUrl": "imageUrl_jajo",
-        "position": 4
+        "position": 1
       },
       "xpDetails": {
-        "Lab": "0.0",
-        "Kartkówka": "2.0",
-        "bonuses": "0.0",
-        "total": "2.0"
-      }
-    },
-    {
-      "userDetails": {
-        "animalName": "hof_5",
-        "evolutionStage": "Jajo",
-        "group": "BM-SR13",
-        "imageUrl": "imageUrl_jajo",
-        "position": 5
-      },
-      "xpDetails": {
-        "Lab": "0.0",
-        "Kartkówka": "2.0",
-        "bonuses": "0.0",
-        "total": "2.0"
+        "Lab": "2.0",
+        "Kartkówka": "8.0",
+        "bonuses": "5.0",
+        "total": "15.0"
       }
     }
   ],

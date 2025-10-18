@@ -31,6 +31,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   const [areFiltersOpen, setAreFiltersOpen] = useState(false);
   const [shouldScrollToMe, setShouldScrollToMe] = useState(false);
   const [areAnimalNamesVisible, setAreAnimalNamesVisible] = useState(true);
+  const searchBy = areAnimalNamesVisible ? "animalName" : "studentName";
 
   const {
     data: filterConfigs,
@@ -39,7 +40,12 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   } = useHallOfFameFilterConfigs(courseId);
   const filters = useFilters<HallOfFameFilterId>(filterConfigs ?? []);
 
-  const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["total"];
+  const sortByFilterValues = filters.getAppliedFilterValues("sortBy") ?? [
+    "total",
+  ];
+  const sortBy = sortByFilterValues.map((value) =>
+    value === "name" ? searchBy : value
+  );
   const sortOrder = filters.getAppliedFilterValues("sortOrder") ?? ["desc"];
   const groups = filters.getAppliedFilterValues("groups") ?? ["all"];
 
@@ -48,6 +54,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
     pageSize,
     courseId,
     debouncedSearch,
+    searchBy,
     sortOrder,
     sortBy,
     groups,
@@ -65,7 +72,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     recordRefs.current = {};
-  }, [page, debouncedSearch, sortBy, sortOrder, groups]);
+  }, [page, debouncedSearch, searchBy, sortBy, sortOrder, groups]);
 
   const toggleAnimalNamesVisibility = () => {
     if (userRole !== Roles.STUDENT) {

@@ -4,7 +4,7 @@
       "userDetails": {
         "animalName": "hof_3",
         "evolutionStage": "Jajo",
-        "group": "mi-sr12",
+        "group": "BM-SR13",
         "imageUrl": "imageUrl_jajo",
         "position": 1
       },
@@ -19,7 +19,7 @@
       "userDetails": {
         "animalName": "hof_2",
         "evolutionStage": "Jajo",
-        "group": "mi-sr12",
+        "group": "BM-SR13",
         "imageUrl": "imageUrl_jajo",
         "position": 2
       },
@@ -34,7 +34,7 @@
       "userDetails": {
         "animalName": "hof_4",
         "evolutionStage": "Jajo",
-        "group": "mi-sr12",
+        "group": "BM-SR13",
         "imageUrl": "imageUrl_jajo",
         "position": 4
       },
@@ -47,9 +47,24 @@
     },
     {
       "userDetails": {
+        "animalName": "hof_5",
+        "evolutionStage": "Jajo",
+        "group": "BM-SR13",
+        "imageUrl": "imageUrl_jajo",
+        "position": 5
+      },
+      "xpDetails": {
+        "Lab": "0.0",
+        "Kartkówka": "2.0",
+        "bonuses": "0.0",
+        "total": "2.0"
+      }
+    },
+    {
+      "userDetails": {
         "animalName": "hof_1",
         "evolutionStage": "Jajo",
-        "group": "mi-sr12",
+        "group": "BM-SR13",
         "imageUrl": "imageUrl_jajo",
         "position": 3
       },
@@ -64,7 +79,7 @@
   "page": {
     "size": 10,
     "number": 0,
-    "totalElements": 4,
+    "totalElements": 5,
     "totalPages": 1
   }
 }

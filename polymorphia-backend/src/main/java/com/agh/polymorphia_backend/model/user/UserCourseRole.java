@@ -26,11 +26,13 @@ public class UserCourseRole {
 
     @MapsId("userId")
     @ManyToOne
+    @ToString.Exclude
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @MapsId("courseId")
     @ManyToOne
+    @ToString.Exclude
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 }

@@ -5,6 +5,7 @@ export interface useHallOfFameProps {
   pageSize: number;
   courseId: number;
   debouncedSearch: string;
+  searchBy: string;
   sortOrder: string[];
   sortBy: string[];
   groups: string[];
