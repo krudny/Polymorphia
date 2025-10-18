@@ -1,7 +1,32 @@
+"use client";
+
+import { useTitle } from "@/components/navigation/TitleContext";
 import SpeedDial from "@/components/speed-dial/SpeedDial";
 import { SpeedDialKeys } from "@/components/speed-dial/types";
+import { useUserDetails } from "@/hooks/contexts/useUserContext";
+import useCourseGroups from "@/hooks/course/useCourseGroups";
+import { useParams } from "next/navigation";
+import { useEffect } from "react";
 
 export default function CourseGroupView() {
+  const { setTitle } = useTitle();
+  const { courseId } = useUserDetails();
+  // TODO: use event params instead after #154 is merged
+  const { courseGroupId } = useParams();
+  const { data: courseGroups, isError } = useCourseGroups(courseId);
+
+  useEffect(() => {
+    if (courseGroups) {
+      setTitle(
+        courseGroups
+          .find((courseGroup) => courseGroup.id === Number(courseGroupId))
+          ?.name.toUpperCase() ?? ""
+      );
+    } else if (isError) {
+      setTitle("");
+    }
+  }, [courseGroupId, courseGroups, isError, setTitle]);
+
   return (
     <div>
       <SpeedDial speedDialKey={SpeedDialKeys.COURSE_GROUP} />
