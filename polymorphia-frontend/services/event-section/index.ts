@@ -897,9 +897,20 @@ export const EventSectionService = {
     gradableEventId: number,
     sortBy: string[],
     sortOrder: string[],
-    groups: string[]
+    groups: string[],
+    gradeStatus: string[]
   ): Promise<TargetResponseDTO[]> => {
     const data: TargetResponseDTO[] = [];
+
+    // Filters are skipped in this mock.
+
+    // [!!! IMPORTANT !!!] In real implementation on the backend,
+    // we need to pay attention to gradeStatus when targets are student groups.
+    // If one person has a grade and other students don't, I think that we should
+    // show the entire group. (We could theoretically use only students without the grade,
+    // but then should we represent them as a student group or single students?
+    // If as a group, we need to always set divergent. Either way, I think that returning
+    // the entire group is the way to go).
 
     for (let i = 0; i < 30; i++) {
       const xp =
