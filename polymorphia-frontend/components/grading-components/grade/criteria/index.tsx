@@ -71,8 +71,8 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
                   duration={0.3}
                   keyProp={
                     criterionGrade && !isGradeLoading
-                      ? "loading" + getKeyForSelectedTarget(state)
-                      : getKeyForSelectedTarget(state)
+                      ? getKeyForSelectedTarget(state)
+                      : "loading" + getKeyForSelectedTarget(state)
                   }
                 >
                   {criterionGrade && !isGradeLoading ? (
@@ -104,8 +104,8 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
               duration={0.3}
               keyProp={
                 !isGradeLoading
-                  ? "loading" + getKeyForSelectedTarget(state)
-                  : getKeyForSelectedTarget(state)
+                  ? getKeyForSelectedTarget(state)
+                  : "loading" + getKeyForSelectedTarget(state)
               }
             >
               {!isGradeLoading ? (
