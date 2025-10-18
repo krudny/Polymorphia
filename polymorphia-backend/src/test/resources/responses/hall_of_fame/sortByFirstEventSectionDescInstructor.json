@@ -2,36 +2,7 @@
   "content": [
     {
       "userDetails": {
-        "animalName": "hof_3",
-        "evolutionStage": "Jajo",
-        "group": "BM-SR13",
-        "imageUrl": "imageUrl_jajo",
-        "position": 1
-      },
-      "xpDetails": {
-        "Lab": "2.0",
-        "Kartkówka": "8.0",
-        "bonuses": "5.0",
-        "total": "15.0"
-      }
-    },
-    {
-      "userDetails": {
-        "animalName": "hof_1",
-        "evolutionStage": "Jajo",
-        "group": "BM-SR13",
-        "imageUrl": "imageUrl_jajo",
-        "position": 3
-      },
-      "xpDetails": {
-        "Lab": "1.0",
-        "Kartkówka": "1.0",
-        "bonuses": "0.2",
-        "total": "2.2"
-      }
-    },
-    {
-      "userDetails": {
+        "fullName": "Aleksander Wielki",
         "animalName": "hof_2",
         "evolutionStage": "Jajo",
         "group": "BM-SR13",
@@ -47,6 +18,39 @@
     },
     {
       "userDetails": {
+        "fullName": "Tomek Wtorek",
+        "animalName": "hof_3",
+        "evolutionStage": "Jajo",
+        "group": "BM-SR13",
+        "imageUrl": "imageUrl_jajo",
+        "position": 1
+      },
+      "xpDetails": {
+        "Lab": "2.0",
+        "Kartkówka": "8.0",
+        "bonuses": "5.0",
+        "total": "15.0"
+      }
+    },
+    {
+      "userDetails": {
+        "fullName": "Alicja Nowak",
+        "animalName": "hof_1",
+        "evolutionStage": "Jajo",
+        "group": "BM-SR13",
+        "imageUrl": "imageUrl_jajo",
+        "position": 3
+      },
+      "xpDetails": {
+        "Lab": "1.0",
+        "Kartkówka": "1.0",
+        "bonuses": "0.2",
+        "total": "2.2"
+      }
+    },
+    {
+      "userDetails": {
+        "fullName": "Andrzej Bednarek",
         "animalName": "hof_4",
         "evolutionStage": "Jajo",
         "group": "BM-SR13",
@@ -62,6 +66,7 @@
     },
     {
       "userDetails": {
+        "fullName": "Andrzej Bednarek",
         "animalName": "hof_5",
         "evolutionStage": "Jajo",
         "group": "BM-SR13",

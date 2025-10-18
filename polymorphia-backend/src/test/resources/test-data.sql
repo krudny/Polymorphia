@@ -28,7 +28,8 @@ VALUES (3, 'Michał', 'Kowalski', 'coordinator@agh.com', '$2a$10$k/sZH/gK6qzlLpH
        (7, 'Tomek', 'Wtorek', 'twtorek@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null, false),
        (8, 'Andrzej', 'Bednarek', 'abednarek@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null, false),
        (9, 'Karol', 'Wójcik', 'kwojcik@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null, false),
-       (10, 'Andrzej', 'Bednarek', 'abednarek2@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null, false);
+       (10, 'Andrzej', 'Bednarek', 'abednarek2@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null, false),
+       (11, 'Wojciech', 'Kot', 'instructor2@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O',null, false);
 
 -- Coordinators
 INSERT INTO coordinators(user_id)
@@ -54,11 +55,12 @@ VALUES (2, 123456),
 
 UPDATE users
 SET preferred_course_id=1
-WHERE id in (2, 4, 5);
+WHERE id in (2, 5, 11);
 
 -- Instructors
 INSERT INTO instructors(user_id)
-VALUES (4);
+VALUES (4),
+       (11);
 
 -- UserCourseRoles
 INSERT INTO user_course_roles(user_id, course_id, role)
@@ -73,13 +75,15 @@ VALUES (3, 1, 'COORDINATOR'),
        (7, 1, 'STUDENT'),
        (8, 1, 'STUDENT'),
        (9, 1, 'STUDENT'),
-       (10, 1, 'STUDENT');
+       (10, 1, 'STUDENT'),
+       (11, 1, 'INSTRUCTOR');
 
 -- Course Groups
 INSERT INTO course_groups (id, name, course_id, instructor_id)
-VALUES (1, 'mi-sr12', 1, 4),
+VALUES (1, 'MI-SR12', 1, 4),
 
-       (2, 'mi-sr15', 1, 4);
+       (2, 'BM-SR13', 1, 11),
+       (3, 'BM-SR15', 1, 11);
 
 -- Animals
 INSERT INTO animals (id, name)
@@ -96,12 +100,12 @@ VALUES (1, 'sowa'),
 INSERT INTO students_course_groups (animal_id, student_id, course_group_id)
 VALUES (1, 2, 1),
 
-       (2, 5, 1),
-       (3, 6, 1),
-       (4, 7, 1),
-       (5, 8, 1),
-       (6, 9, 2),
-       (7, 10, 1);
+       (2, 5, 2),
+       (3, 6, 2),
+       (4, 7, 2),
+       (5, 8, 2),
+       (6, 9, 3),
+       (7, 10, 2);
 
 
 -- Evolution Stages

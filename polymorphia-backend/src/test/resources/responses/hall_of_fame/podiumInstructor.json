@@ -1,6 +1,7 @@
 [
   {
     "userDetails": {
+      "fullName": "Tomek Wtorek",
       "animalName": "hof_3",
       "evolutionStage": "Jajo",
       "group": "BM-SR13",
@@ -16,6 +17,7 @@
   },
   {
     "userDetails": {
+      "fullName": "Aleksander Wielki",
       "animalName": "hof_2",
       "evolutionStage": "Jajo",
       "group": "BM-SR13",
@@ -31,6 +33,7 @@
   },
   {
     "userDetails": {
+      "fullName": "Alicja Nowak",
       "animalName": "hof_1",
       "evolutionStage": "Jajo",
       "group": "BM-SR13",
