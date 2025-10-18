@@ -1,6 +1,9 @@
-// Added for readability
 type SubmissionRequirementId = number;
-type SubmissionUrl = string;
+
+export interface SubmissionDetails {
+  url: string;
+  isLocked: boolean;
+}
 
 export interface SubmissionRequirementResponseDTO {
   id: SubmissionRequirementId;
@@ -9,7 +12,7 @@ export interface SubmissionRequirementResponseDTO {
   orderIndex: number;
 }
 
-export type SubmissionDataResponseDTO = Record<
+export type SubmissionDetailsResponseDTO = Record<
   SubmissionRequirementId,
-  SubmissionUrl
+  SubmissionDetails
 >;
