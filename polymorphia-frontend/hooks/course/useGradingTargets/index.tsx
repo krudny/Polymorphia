@@ -9,7 +9,8 @@ export default function useGradingTargets(
   debouncedSearch: string,
   sortBy: string[],
   sortOrder: string[],
-  groups: string[]
+  groups: string[],
+  gradeStatus: string[]
 ): UseGradingTargets {
   const { eventType, gradableEventId } = useEventParams();
 
@@ -23,7 +24,8 @@ export default function useGradingTargets(
         gradableEventId,
         sortBy,
         sortOrder,
-        groups
+        groups,
+        gradeStatus
       ),
   });
 
