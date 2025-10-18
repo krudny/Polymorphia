@@ -980,4 +980,61 @@ export const EventSectionService = {
   submitGrade: async (gradeData: GradeRequestDTO): Promise<void> => {
     await new Promise<void>((resolve) => setTimeout(resolve, 200));
   },
+
+  getSubmissionRequirements: async (
+    courseId: number,
+    eventSectionId: number,
+    gradableEventId: number
+  ): Promise<SubmissionRequirementResponseDTO[]> => {
+    if (eventSectionId === 1) {
+      throw new Error("Test events do not have submission requirements");
+    }
+
+    // assignment sections
+    if (eventSectionId === 2 || eventSectionId === 4) {
+      const baseRequirements: SubmissionRequirementResponseDTO[] = [
+        {
+          id: 1,
+          name: "Wykonanie zadania",
+          isMandatory: true,
+          orderIndex: 1,
+        },
+      ];
+
+      // add extra assignment for lab 4, 5, or 8
+      const labsWithExtra = [18, 19, 22];
+      if (labsWithExtra.includes(gradableEventId)) {
+        baseRequirements.push({
+          id: 2,
+          name: "Zadanie dodatkowe",
+          isMandatory: false,
+          orderIndex: 2,
+        });
+      }
+
+      return baseRequirements;
+    }
+
+    // Project sections
+    if (eventSectionId === 3 || eventSectionId === 6) {
+      return [
+        {
+          id: 3,
+          name: "Repozytorium projektu",
+          isMandatory: true,
+          orderIndex: 1,
+        },
+      ];
+    }
+
+    // default fallback
+    return [
+      {
+        id: 1,
+        name: "Wykonanie zadania",
+        isMandatory: true,
+        orderIndex: 1,
+      },
+    ];
+  },
 };
