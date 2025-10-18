@@ -1,6 +1,13 @@
 "use client";
 
-import { createContext, ReactNode, useEffect, useRef, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useDebounce } from "use-debounce";
 import {
   HallOfFameContextInterface,
@@ -39,9 +46,18 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   } = useHallOfFameFilterConfigs(courseId);
   const filters = useFilters<HallOfFameFilterId>(filterConfigs ?? []);
 
-  const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["total"];
-  const sortOrder = filters.getAppliedFilterValues("sortOrder") ?? ["desc"];
-  const groups = filters.getAppliedFilterValues("groups") ?? ["all"];
+  const sortBy = useMemo(
+    () => filters.getAppliedFilterValues("sortBy") ?? ["total"],
+    [filters]
+  );
+  const sortOrder = useMemo(
+    () => filters.getAppliedFilterValues("sortOrder") ?? ["desc"],
+    [filters]
+  );
+  const groups = useMemo(
+    () => filters.getAppliedFilterValues("groups") ?? ["all"],
+    [filters]
+  );
 
   const { data: hallOfFame, isLoading } = useHallOfFame({
     page,

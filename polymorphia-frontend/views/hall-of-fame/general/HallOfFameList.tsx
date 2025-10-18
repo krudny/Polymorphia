@@ -24,7 +24,7 @@ export default function HallOfFameList() {
     if (wrapperRef.current) {
       wrapperRef.current.scrollTo({ top: 0, behavior: "smooth" });
     }
-  }, [page]);
+  }, [page, wrapperRef]);
 
   const setRecordRef =
     (position: number) =>
