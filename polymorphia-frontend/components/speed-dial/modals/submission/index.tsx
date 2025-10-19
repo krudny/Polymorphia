@@ -38,9 +38,11 @@ function SubmissionsModalContent({
   const [currentDetails, setCurrentDetails] = useState(details);
   const [detailsModified, setDetailsModified] = useState(false);
 
-  const isSubmissionValid = requirements
-    .filter((requirement) => requirement.isMandatory)
-    .every((requirement) => currentDetails[requirement.id].url.length > 0);
+  const isSubmissionValid =
+    !detailsModified ||
+    requirements
+      .filter((requirement) => requirement.isMandatory)
+      .every((requirement) => currentDetails[requirement.id].url.length > 0);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const requirement = requirements.find(
@@ -125,7 +127,7 @@ function SubmissionsModalContent({
         })}
       </Accordion>
       <div className="submissions-modal-submit-section">
-        {!isSubmissionValid && detailsModified && (
+        {!isSubmissionValid && (
           <h3>Należy uzupełnić wszystkie obowiązkowe wymagania.</h3>
         )}
         {/* Fix isActive after PR mirroring it. */}
