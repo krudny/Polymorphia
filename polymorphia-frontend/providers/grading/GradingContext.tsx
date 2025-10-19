@@ -58,6 +58,7 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
     groups,
     gradeStatus
   );
+
   const { data: grade, isLoading: isGradeLoading } = useShortGrade(
     state.selectedTarget
   );

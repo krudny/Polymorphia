@@ -904,7 +904,7 @@ export const EventSectionService = {
 
     // Filters are skipped in this mock.
 
-    // [!!! IMPORTANT !!!] In real implementation on the backend,
+    // TODO: [!!! IMPORTANT !!!] In real implementation on the backend,
     // we need to pay attention to gradeStatus when targets are student groups.
     // If one person has a grade and other students don't, I think that we should
     // show the entire group. (We could theoretically use only students without the grade,
