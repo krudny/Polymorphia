@@ -857,7 +857,7 @@ INSERT INTO items (reward_id, "limit", event_section_id)
 VALUES (5, 5, 7);
 
 INSERT INTO flat_bonus_items (item_id, xp_bonus, behavior)
-VALUES (2, 5.0, 'MULTIPLE_EVENTS');
+VALUES (2, 5.0, 'ONE_EVENT');
 INSERT INTO flat_bonus_items (item_id, xp_bonus, behavior)
 VALUES (3, 4.0, 'MULTIPLE_EVENTS');
 INSERT INTO flat_bonus_items (item_id, xp_bonus, behavior)
