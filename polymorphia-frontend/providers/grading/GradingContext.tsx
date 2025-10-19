@@ -24,7 +24,7 @@ import useGradingTargets from "@/hooks/course/useGradingTargets";
 import useShortGrade from "@/hooks/course/useShortGrade";
 import { getRequestTargetFromResponseTarget } from "@/providers/grading/utils/getRequestTargetFromResponseTarget";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
-import isSelectedTargetStillAvailable from "./utils/isSelectedTargetStillAvailable";
+import isSelectedTargetStillAvailable from "@/providers/grading/utils/isSelectedTargetStillAvailable";
 import { TargetTypes } from "@/interfaces/api/grade/target";
 
 export const GradingContext = createContext<
