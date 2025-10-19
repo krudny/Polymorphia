@@ -19,12 +19,19 @@ export default function useSubmissionsUpdate({
 
   return useMutation({
     mutationFn: (submissionDetails: SubmissionDetailsResponseDTO) =>
-      EventSectionService.submitSubmissions(
-        target,
-        courseId,
-        eventSectionId,
-        gradableEventId,
-        submissionDetails
+      toast.promise(
+        EventSectionService.submitSubmissions(
+          target,
+          courseId,
+          eventSectionId,
+          gradableEventId,
+          submissionDetails
+        ),
+        {
+          loading: "Zapisywanie zmian...",
+          success: "Pomyślnie zapisano oddane zadania!",
+          error: () => "Wystąpił błąd przy zapisie oddanych zadań!",
+        }
       ),
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -34,10 +41,6 @@ export default function useSubmissionsUpdate({
           target.type === TargetTypes.STUDENT ? target.id : target.groupId,
         ],
       });
-      toast.success("Pomyślnie oddano zadanie!");
-    },
-    onError: (error) => {
-      toast.error(error.message);
     },
   });
 }
