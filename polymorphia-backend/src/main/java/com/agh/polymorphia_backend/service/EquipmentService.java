@@ -29,9 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.ZonedDateTime;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -163,51 +161,49 @@ public class EquipmentService {
                 .collect(Collectors.toList());
 
         List<AssignedItem> currentAssignedItems = assignedRewardService.getAnimalAssignedItems(animalId);
-
-        assignedRewardService.handleReachedLimitItems(currentAssignedItems, newAssignedItems,
-                excessItems ->
-                        newAssignedItems.removeIf(item ->
-                                excessItems.stream().anyMatch(excess -> excess == item)
-                        )
+        Map<Long, Long> currentCountById = assignedRewardService.countAssignedItemsByReward(currentAssignedItems)
+                .entrySet().stream()
+                .collect(Collectors.toMap(entry -> entry.getKey().getId(), Map.Entry::getValue));
+        Set<AssignedItem> itemsToRemove = Collections.newSetFromMap(new IdentityHashMap<>());
+        assignedRewardService.handleReachedLimitItems(
+                newAssignedItems,
+                currentCountById,
+                item -> item.getReward().getId(),
+                item -> ((Item) item.getReward()).getLimit(),
+                (item, isOverLimit) -> {
+                    if (isOverLimit) {
+                        itemsToRemove.add(item);
+                    }
+                }
         );
+
+        newAssignedItems.removeIf(itemsToRemove::contains);
 
         return newAssignedItems;
     }
 
-    private void setIsLimitReachedForALLChests(List<EquipmentChestResponseDto> assignedChestsResponse, Long animalId) {
-        assignedChestsResponse.forEach(assignedChest ->
-                {
-                    ChestResponseDtoBase chest = (ChestResponseDtoBase) assignedChest.getBase();
-                    if (chest.getBehavior().equals(ChestBehavior.ALL)) {
-                        setIsLimitReached(chest.getChestItems(), animalId);
-                    }
-                }
-        );
-    }
 
-    private void setIsLimitReached(List<BaseRewardResponseDto> items, Long animalId) {
-        Map<Long, Long> itemCountById = countItemsById(items);
+    private void setIsLimitReachedForALLChests(List<EquipmentChestResponseDto> assignedChestsResponse, Long animalId) {
         List<AssignedItem> animalAssignedItems = assignedRewardService.getAnimalAssignedItems(animalId);
-        Map<Long, Long> assignedItemCountById = assignedRewardService.countAssignedItemsByReward(animalAssignedItems)
+
+        Map<Long, Long> currentCountById = assignedRewardService.countAssignedItemsByReward(animalAssignedItems)
                 .entrySet().stream()
                 .collect(Collectors.toMap(entry -> entry.getKey().getId(), Map.Entry::getValue));
 
-        for (int i = items.size() - 1; i >= 0; i--) {
-            ItemResponseDtoBase item = (ItemResponseDtoBase) items.get(i);
-            Integer limit = item.getLimit();
-            long itemCount = itemCountById.getOrDefault(item.getId(), 0L)
-                    + assignedItemCountById.getOrDefault(item.getId(), 0L);
+        assignedChestsResponse.forEach(assignedChest -> {
+            ChestResponseDtoBase chest = (ChestResponseDtoBase) assignedChest.getBase();
+            if (chest.getBehavior().equals(ChestBehavior.ALL)) {
+                assignedRewardService.handleReachedLimitItems(
+                        chest.getChestItems(),
+                        currentCountById,
+                        BaseRewardResponseDto::getId,
+                        item -> ((ItemResponseDtoBase) item).getLimit(),
+                        (item, isOverLimit) ->
+                                ((ItemResponseDtoBase) item).setIsLimitReached(isOverLimit)
 
-            if (itemCount > limit) {
-                item.setIsLimitReached(true);
-                itemCountById.put(item.getId(), itemCount - 1);
+                );
             }
-        }
-    }
-
-    private Map<Long, Long> countItemsById(List<BaseRewardResponseDto> items) {
-        return items.stream()
-                .collect(Collectors.groupingBy(BaseRewardResponseDto::getId, Collectors.counting()));
+        });
     }
 }
 

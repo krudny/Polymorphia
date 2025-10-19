@@ -21,8 +21,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
-import java.util.*;
-import java.util.function.Consumer;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -115,40 +119,30 @@ public class AssignedRewardService {
                 .collect(Collectors.groupingBy(AssignedItem::getReward, Collectors.counting()));
     }
 
-    public void handleReachedLimitItems(
-            List<AssignedItem> currentAssignedItems,
-            List<AssignedItem> newAssignedItems,
-            Consumer<List<AssignedItem>> onExcessItemsAction
+    public <T> void handleReachedLimitItems(
+            List<T> items,
+            Map<Long, Long> currentCountById,
+            Function<T, Long> idExtractor,
+            Function<T, Integer> limitExtractor,
+            BiConsumer<T, Boolean> isLimitReachedSetter
     ) {
-        Map<Reward, List<AssignedItem>> currentGrouped = groupAssignedItemsByReward(currentAssignedItems);
-        Map<Reward, List<AssignedItem>> newGrouped = groupAssignedItemsByReward(newAssignedItems);
+        Map<Long, Long> itemCountById = items.stream()
+                .collect(Collectors.groupingBy(idExtractor, Collectors.counting()));
 
-        for (Map.Entry<Reward, List<AssignedItem>> entry : newGrouped.entrySet()) {
-            Item reward = (Item) (entry.getKey());
-            List<AssignedItem> newItemsForReward = entry.getValue();
+        for (int i = items.size() - 1; i >= 0; i--) {
+            T item = items.get(i);
+            Long itemId = idExtractor.apply(item);
+            Integer limit = limitExtractor.apply(item);
+            long itemCount = itemCountById.getOrDefault(itemId, 0L)
+                    + currentCountById.getOrDefault(itemId, 0L);
 
-            List<AssignedItem> currentItemsForReward = currentGrouped.getOrDefault(reward, Collections.emptyList());
-            int limit = reward.getLimit();
-            int totalSize = currentItemsForReward.size() + newItemsForReward.size();
-
-            if (totalSize > limit) {
-                int excess = totalSize - limit;
-
-                newItemsForReward.sort(Comparator.comparing(AssignedItem::getBonusXp));
-
-                Set<AssignedItem> excessSet = Collections.newSetFromMap(new IdentityHashMap<>());
-                for (int i = 0; i < Math.min(excess, newItemsForReward.size()); i++) {
-                    excessSet.add(newItemsForReward.get(i));
-                }
-
-                List<AssignedItem> excessItems = newAssignedItems.stream()
-                        .filter(excessSet::contains)
-                        .collect(Collectors.toList());
-
-                onExcessItemsAction.accept(excessItems);
+            if (itemCount > limit) {
+                isLimitReachedSetter.accept(item, true);
+                itemCountById.put(itemId, Math.max(itemCountById.getOrDefault(itemId, 0L) - 1, 0L));
             }
         }
     }
+
 
     public void saveAssignedChest(AssignedChest chest) {
         assignedChestRepository.save(chest);

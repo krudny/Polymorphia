@@ -185,11 +185,20 @@ public class PotentialBonusXpCalculator {
         bonusXpCalculator.countOneEventItemsBonus(oneEventItems, grades);
         bonusXpCalculator.countMultipleEventsItemsBonus(oneEventItems, multipleEventsItems, grades);
 
+        Map<Long, Long> currentCountById = assignedRewardService.countAssignedItemsByReward(assignedItems)
+                .entrySet().stream()
+                .collect(Collectors.toMap(entry -> entry.getKey().getId(), Map.Entry::getValue));
+
         assignedRewardService.handleReachedLimitItems(
-                assignedItems,
                 newAssignedItems,
-                excessItems ->
-                        excessItems.forEach(item -> item.setBonusXp(BigDecimal.valueOf(0.0)))
+                currentCountById,
+                item -> item.getReward().getId(),
+                item -> ((Item) item.getReward()).getLimit(),
+                (item, isOverLimit) -> {
+                    if (isOverLimit) {
+                        item.setBonusXp(BigDecimal.ZERO);
+                    }
+                }
         );
     }
 
