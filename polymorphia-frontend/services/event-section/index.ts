@@ -17,6 +17,7 @@ import {
 } from "@/interfaces/api/grade/grade";
 import { PointsSummaryResponseDTO } from "@/interfaces/api/course/points-summary";
 import {
+  BaseGradableEventResponseDTO,
   EventSectionResponseDTO,
   InstructorGradableEventResponseDTO,
   StudentGradableEventResponseDTO,
@@ -560,6 +561,25 @@ export const EventSectionService = {
     } else {
       return [];
     }
+  },
+
+  getGradableEvent: async (
+    eventSectionId: number,
+    gradableEventId: number
+  ): Promise<BaseGradableEventResponseDTO> => {
+    return EventSectionService.getStudentGradableEvents(eventSectionId).then(
+      (data) => {
+        const gradableEvent = data.find(
+          (gradableEvent) => gradableEvent.id === gradableEventId
+        );
+
+        if (!gradableEvent) {
+          throw new Error("Gradable event not found.");
+        }
+
+        return gradableEvent;
+      }
+    );
   },
 
   getPointsSummary: async (
