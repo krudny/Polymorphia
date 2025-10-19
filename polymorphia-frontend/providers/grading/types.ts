@@ -5,6 +5,7 @@ import {
   GradingReducerState,
 } from "@/providers/grading/gradingReducer/types";
 import { TargetResponseDTO } from "@/interfaces/api/grade/target";
+import { SubmissionDetailsResponseDTO } from "@/interfaces/api/grade/submission";
 
 export type GradingContextInterface = {
   areFiltersOpen: boolean;
@@ -17,9 +18,11 @@ export type GradingContextInterface = {
   targets: TargetResponseDTO[] | undefined;
   isTargetsLoading: boolean;
   isGradeLoading: boolean;
+  isSubmissionDetailsLoading: boolean;
   state: GradingReducerState;
   dispatch: Dispatch<GradingReducerActionType>;
   submitGrade: () => void;
+  submitSubmissions: (submissionDetails: SubmissionDetailsResponseDTO) => void;
 };
 
 export type GradingFilterId = "sortOrder" | "sortBy" | "groups" | "gradeStatus";

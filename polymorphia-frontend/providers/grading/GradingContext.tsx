@@ -26,6 +26,9 @@ import { getRequestTargetFromResponseTarget } from "@/providers/grading/utils/ge
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import isSelectedTargetStillAvailable from "@/providers/grading/utils/isSelectedTargetStillAvailable";
 import { TargetTypes } from "@/interfaces/api/grade/target";
+import useSubmissionDetails from "@/hooks/course/useSubmissionDetails";
+import { SubmissionDetailsResponseDTO } from "@/interfaces/api/grade/submission";
+import useSubmissionsUpdate from "@/hooks/course/useSubmissionsUpdate";
 
 export const GradingContext = createContext<
   GradingContextInterface | undefined
@@ -62,7 +65,14 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const { data: grade, isLoading: isGradeLoading } = useShortGrade(
     state.selectedTarget
   );
-  const { mutate } = useGradeUpdate();
+  const { mutate: mutateGrade } = useGradeUpdate();
+
+  const { data: submissionDetails, isLoading: isSubmissionDetailsLoading } =
+    useSubmissionDetails(state.selectedTarget);
+
+  const { mutate: mutateSubmissions } = useSubmissionsUpdate({
+    target: state.selectedTarget,
+  });
 
   useEffect(() => {
     if (!targets || targets.length < 1) {
@@ -103,17 +113,40 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
     });
   }, [grade]);
 
+  useEffect(() => {
+    if (!submissionDetails) {
+      return;
+    }
+
+    dispatch({
+      type: GradingReducerActions.SET_SUBMISSION_DETAILS,
+      payload: {
+        submissionDetails,
+      },
+    });
+  }, [submissionDetails]);
+
   const submitGrade = () => {
     if (!state.selectedTarget) {
       return;
     }
 
-    mutate({
+    mutateGrade({
       target: getRequestTargetFromResponseTarget(state.selectedTarget),
       gradableEventId,
       criteria: state.criteria,
       comment: state.comment,
     });
+  };
+
+  const submitSubmissions = (
+    submissionDetails: SubmissionDetailsResponseDTO
+  ) => {
+    if (!state.selectedTarget) {
+      return;
+    }
+
+    mutateSubmissions(submissionDetails);
   };
 
   return (
@@ -131,7 +164,9 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
         targets,
         isTargetsLoading,
         isGradeLoading,
+        isSubmissionDetailsLoading,
         submitGrade,
+        submitSubmissions,
       }}
     >
       {children}

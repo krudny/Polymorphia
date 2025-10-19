@@ -36,12 +36,12 @@
 }
 
 .submissions-modal-url {
-  @apply flex justify-between;
+  @apply flex justify-between p-4;
   @apply text-xl border-3 rounded-xl;
 }
 
 .submissions-modal-url-input {
-  @apply w-full p-4 focus:outline-none default-colors placeholder:text-neutral-400;
+  @apply w-full focus:outline-none default-colors placeholder:text-neutral-400;
 }
 
 .submissions-modal-url-symbol {
