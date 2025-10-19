@@ -49,13 +49,16 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["total"];
   const sortOrder = filters.getAppliedFilterValues("sortOrder") ?? ["asc"];
   const groups = filters.getAppliedFilterValues("groups") ?? ["all"];
+  const gradeStatus = filters.getAppliedFilterValues("gradeStatus") ?? ["all"];
 
   const { data: targets, isLoading: isTargetsLoading } = useGradingTargets(
     debouncedSearch,
     sortBy,
     sortOrder,
-    groups
+    groups,
+    gradeStatus
   );
+
   const { data: grade, isLoading: isGradeLoading } = useShortGrade(
     state.selectedTarget
   );
