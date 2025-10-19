@@ -7,7 +7,7 @@ export interface SubmissionDetails {
 
 export interface SubmissionRequirementResponseDTO {
   id: SubmissionRequirementId;
-  name: number;
+  name: string;
   isMandatory: boolean;
   orderIndex: number;
 }

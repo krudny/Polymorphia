@@ -31,6 +31,10 @@ import {
 import { EventTypes } from "@/interfaces/general";
 import { API_HOST } from "@/services/api";
 import { CriterionResponseDTO } from "@/interfaces/api/grade/criteria";
+import {
+  SubmissionDetailsResponseDTO,
+  SubmissionRequirementResponseDTO,
+} from "@/interfaces/api/grade/submission";
 
 export const studentNames = [
   "Gerard Małoduszny",
@@ -1036,5 +1040,79 @@ export const EventSectionService = {
         orderIndex: 1,
       },
     ];
+  },
+
+  getSubmissionDetails: async (
+    target: TargetRequestDTO,
+    courseId: number,
+    eventSectionId: number,
+    gradableEventId: number
+  ): Promise<SubmissionDetailsResponseDTO> => {
+    if (eventSectionId === 1) {
+      throw new Error("Test events do not have submission details");
+    }
+
+    // Always returns data for all requirements.
+    // If there is no submission, url is set to ""
+    // to simplify handling on the frontend.
+
+    // assignment
+    if (eventSectionId === 2 || eventSectionId === 4) {
+      const result: SubmissionDetailsResponseDTO = {
+        1: {
+          url:
+            Math.random() < 0.8
+              ? `https://example.com/submissions/${gradableEventId}/1`
+              : "",
+          isLocked: Math.random() < 0.5,
+        },
+      };
+
+      const labsWithExtra = [18, 19, 22];
+      if (labsWithExtra.includes(gradableEventId)) {
+        result[2] = {
+          url:
+            Math.random() < 0.3
+              ? `https://example.com/submissions/${gradableEventId}/2/extra`
+              : "",
+          isLocked: Math.random() < 0.3,
+        };
+      }
+
+      return result;
+    }
+
+    // project
+    if (eventSectionId === 3 || eventSectionId === 6) {
+      return {
+        3: {
+          url:
+            Math.random() < 0.8
+              ? `https://example.com/submissions/${gradableEventId}/repo`
+              : "",
+          isLocked: Math.random() < 0.1,
+        },
+      };
+    }
+
+    return {
+      1: {
+        url:
+          Math.random() < 0.8
+            ? `https://example.com/submissions/${gradableEventId}/1`
+            : "",
+        isLocked: Math.random() < 0.5,
+      },
+    };
+  },
+
+  submitSubmissions: async (
+    target: TargetRequestDTO,
+    courseId: number,
+    eventSectionId: number,
+    gradableEventId: number,
+    submissionDetails: SubmissionDetailsResponseDTO
+  ): Promise<void> => {
+    await new Promise<void>((resolve) => setTimeout(resolve, 200));
   },
 };
