@@ -20,6 +20,9 @@ public class ItemResponseDtoBase extends BaseRewardResponseDto {
     private String bonusText;
 
     @NotNull
+    private String shortBonusText;
+
+    @NotNull
     private Integer limit;
 
     @NotNull

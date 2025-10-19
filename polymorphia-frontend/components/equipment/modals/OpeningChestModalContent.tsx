@@ -30,6 +30,14 @@ export default function OpeningChestModalContent() {
   const { data: chestPotentialXp, isLoading } = usePotentialXp(
     currentOpeningChestModalData?.details.id
   );
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => setIsMobile(window.innerWidth < 640);
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
   useEffect(() => {
     if (!chestPotentialXp) {
@@ -150,12 +158,14 @@ export default function OpeningChestModalContent() {
                 }
               >
                 <XPCard
-                  key={item.id}
+                  key={itemKey}
                   title={item.name}
                   subtitle={
                     item.isLimitReached
-                      ? "Maksymalny limit przedmiotów osiągnięty"
-                      : item.bonusText
+                      ? "Limit osiągnięty"
+                      : isMobile
+                        ? item.shortBonusText
+                        : item.bonusText
                   }
                   size="xs"
                   leftComponent={
@@ -179,7 +189,7 @@ export default function OpeningChestModalContent() {
         <h2 className={"opening-chest-modal-footer-text"}>
           * Bonusy są liczone względem obecnej punktacji. Optymalizacja może
           powodować osłabienie działania innych nagród - całkowite xp jednak
-          zawsze się zwiększy{" "}
+          nigdy się nie zmniejszy
         </h2>
       </div>
       <div className="opening-chest-modal-button-wrapper">

@@ -846,11 +846,11 @@ VALUES (104, 'Złota Skrzynia',
 
 
 INSERT INTO items (reward_id, "limit", event_section_id)
-VALUES (3, 5, 3);
+VALUES (3, 2, 3);
 INSERT INTO items (reward_id, "limit", event_section_id)
-VALUES (2, 5, 2);
+VALUES (2, 1, 2);
 INSERT INTO items (reward_id, "limit", event_section_id)
-VALUES (1, 5, 1);
+VALUES (1, 1, 1);
 INSERT INTO items (reward_id, "limit", event_section_id)
 VALUES (4, 5, 8);
 INSERT INTO items (reward_id, "limit", event_section_id)
@@ -880,6 +880,8 @@ VALUES (104, 'ALL');
 
 INSERT INTO chests_items (chest_id, item_id)
 VALUES (101, 1);
+INSERT INTO chests_items (chest_id, item_id)
+VALUES (101, 2);
 INSERT INTO chests_items (chest_id, item_id)
 VALUES (101, 2);
 INSERT INTO chests_items (chest_id, item_id)

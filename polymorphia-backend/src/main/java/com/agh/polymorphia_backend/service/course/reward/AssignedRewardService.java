@@ -21,10 +21,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Service
@@ -117,6 +115,40 @@ public class AssignedRewardService {
                 .collect(Collectors.groupingBy(AssignedItem::getReward, Collectors.counting()));
     }
 
+    public void handleReachedLimitItems(
+            List<AssignedItem> currentAssignedItems,
+            List<AssignedItem> newAssignedItems,
+            Consumer<List<AssignedItem>> onExcessItemsAction
+    ) {
+        Map<Reward, List<AssignedItem>> currentGrouped = groupAssignedItemsByReward(currentAssignedItems);
+        Map<Reward, List<AssignedItem>> newGrouped = groupAssignedItemsByReward(newAssignedItems);
+
+        for (Map.Entry<Reward, List<AssignedItem>> entry : newGrouped.entrySet()) {
+            Item reward = (Item) (entry.getKey());
+            List<AssignedItem> newItemsForReward = entry.getValue();
+
+            List<AssignedItem> currentItemsForReward = currentGrouped.getOrDefault(reward, Collections.emptyList());
+            int limit = reward.getLimit();
+            int totalSize = currentItemsForReward.size() + newItemsForReward.size();
+
+            if (totalSize > limit) {
+                int excess = totalSize - limit;
+
+                newItemsForReward.sort(Comparator.comparing(AssignedItem::getBonusXp));
+
+                Set<AssignedItem> excessSet = Collections.newSetFromMap(new IdentityHashMap<>());
+                for (int i = 0; i < Math.min(excess, newItemsForReward.size()); i++) {
+                    excessSet.add(newItemsForReward.get(i));
+                }
+
+                List<AssignedItem> excessItems = newAssignedItems.stream()
+                        .filter(excessSet::contains)
+                        .collect(Collectors.toList());
+
+                onExcessItemsAction.accept(excessItems);
+            }
+        }
+    }
 
     public void saveAssignedChest(AssignedChest chest) {
         assignedChestRepository.save(chest);

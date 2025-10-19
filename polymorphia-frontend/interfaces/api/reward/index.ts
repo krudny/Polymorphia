@@ -25,6 +25,7 @@ export type ItemBonusType = "FLAT_BONUS" | "PERCENTAGE_BONUS";
 export interface BaseItem extends BaseReward {
   itemBonusType: ItemBonusType;
   bonusText: string;
+  shortBonusText: string;
   limit: number;
   isLimitReached: boolean;
   eventSectionId: number;

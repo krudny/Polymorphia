@@ -109,7 +109,7 @@ public class EquipmentService {
 
         List<AssignedItem> assignedItems = switch (chest.getBehavior()) {
             case ONE_OF_MANY -> createAssignedItemsFromRequest(requestDto, assignedChest, openDate);
-            case ALL -> createAssignedItemsFromAssignedChest(chest, assignedChest, openDate);
+            case ALL -> createAssignedItemsFromAssignedChest(animalId, chest, assignedChest, openDate);
         };
 
         assignedChest.setIsUsed(true);
@@ -149,13 +149,29 @@ public class EquipmentService {
         );
     }
 
-    private List<AssignedItem> createAssignedItemsFromAssignedChest(Chest chest, AssignedChest assignedChest, ZonedDateTime openDate) {
-        return chest
+    private List<AssignedItem> createAssignedItemsFromAssignedChest(
+            Long animalId,
+            Chest chest,
+            AssignedChest assignedChest,
+            ZonedDateTime openDate
+    ) {
+        List<AssignedItem> newAssignedItems = chest
                 .getItems().stream()
                 .map(i -> (Item) Hibernate.unproxy(i))
                 .filter(i -> !assignedRewardService.isLimitReached(i))
                 .map(item -> assignedRewardService.createAssignedItem(assignedChest, item, openDate))
-                .toList();
+                .collect(Collectors.toList());
+
+        List<AssignedItem> currentAssignedItems = assignedRewardService.getAnimalAssignedItems(animalId);
+
+        assignedRewardService.handleReachedLimitItems(currentAssignedItems, newAssignedItems,
+                excessItems ->
+                        newAssignedItems.removeIf(item ->
+                                excessItems.stream().anyMatch(excess -> excess == item)
+                        )
+        );
+
+        return newAssignedItems;
     }
 
     private void setIsLimitReachedForALLChests(List<EquipmentChestResponseDto> assignedChestsResponse, Long animalId) {

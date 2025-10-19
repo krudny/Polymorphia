@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import EquipmentService from "@/app/(logged-in)/equipment/EquipmentService";
+import EquipmentService from "@/services/equipment/index";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { EquipmentChestOpenRequestDTO } from "@/interfaces/api/equipment";
 import toast from "react-hot-toast";

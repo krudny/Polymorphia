@@ -3,7 +3,10 @@ package com.agh.polymorphia_backend.service.course.reward;
 import com.agh.polymorphia_backend.dto.response.equipment.potential_xp.ChestPotentialXpResponseDto;
 import com.agh.polymorphia_backend.dto.response.equipment.potential_xp.ChestPotentialXpResponseDtoWithType;
 import com.agh.polymorphia_backend.dto.response.equipment.potential_xp.PotentialBonusXpResponseDto;
-import com.agh.polymorphia_backend.model.course.reward.*;
+import com.agh.polymorphia_backend.model.course.reward.Chest;
+import com.agh.polymorphia_backend.model.course.reward.FlatBonusItem;
+import com.agh.polymorphia_backend.model.course.reward.Item;
+import com.agh.polymorphia_backend.model.course.reward.PercentageBonusItem;
 import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedItem;
 import com.agh.polymorphia_backend.model.course.reward.chest.ChestBehavior;
 import com.agh.polymorphia_backend.model.course.reward.item.FlatBonusItemBehavior;
@@ -34,9 +37,16 @@ public class PotentialBonusXpCalculator {
 
     public ChestPotentialXpResponseDtoWithType getPotentialBonusXpForALLChest(Long animalId, Chest chest) {
         List<Item> items = chest.getItems();
-        Map<Long, BigDecimal> flatBonusByEventSection = new HashMap<>();
+        List<AssignedItem> currentAssignedItems = assignedRewardService.getAnimalAssignedItemsByType(
+                animalId,
+                ItemType.FLAT_BONUS
+        );
 
-        ChestPotentialXpResponseDto flatBonus = getPotentialFlatBonusXp(items, animalId, false, flatBonusByEventSection);
+        ChestPotentialXpResponseDto flatBonus = getPotentialFlatBonusXp(items, animalId, false, currentAssignedItems);
+
+        Map<Long, BigDecimal> flatBonusByEventSection = new HashMap<>(
+                assignedRewardService.getTotalBonusByEventSection(currentAssignedItems)
+        );
         ChestPotentialXpResponseDto percentageBonus = getPotentialPercentageBonusXp(items, animalId, false, flatBonusByEventSection);
 
         PotentialBonusXpResponseDto combinedSummary = potentialXpMapper.combineSummaries(
@@ -91,7 +101,7 @@ public class PotentialBonusXpCalculator {
             List<Item> items,
             Long animalId,
             boolean shouldAddLoss,
-            Map<Long, BigDecimal> flatBonusByEventSection
+            List<AssignedItem> currentAssignedItems
     ) {
         List<FlatBonusItem> flatBonusItems = items.stream()
                 .filter(item -> item.getItemType().equals(ItemType.FLAT_BONUS))
@@ -102,7 +112,7 @@ public class PotentialBonusXpCalculator {
             return potentialXpMapper.toEmptyChestPotentialXpResponseDto();
         }
 
-        return calculatePotentialFlatBonusXp(animalId, flatBonusItems, shouldAddLoss, flatBonusByEventSection);
+        return calculatePotentialFlatBonusXp(animalId, flatBonusItems, shouldAddLoss, currentAssignedItems);
     }
 
     private ChestPotentialXpResponseDto getPotentialPercentageBonusXp(List<Item> items, Long animalId,
@@ -132,7 +142,7 @@ public class PotentialBonusXpCalculator {
             Long animalId,
             List<FlatBonusItem> items,
             boolean shouldAddLoss,
-            Map<Long, BigDecimal> flatBonusByEventSection
+            List<AssignedItem> currentAssignedItems
     ) {
         List<Grade> grades = gradeService.getAnimalGrades(animalId);
 
@@ -140,13 +150,11 @@ public class PotentialBonusXpCalculator {
             return potentialXpMapper.toEmptyChestPotentialXpResponseDto();
         }
 
-        List<AssignedItem> currentAssignedItems = assignedRewardService.getAnimalAssignedItemsByType(animalId, ItemType.FLAT_BONUS);
         List<AssignedItem> newAssignedItems = itemsToAssignedItems(new ArrayList<>(items));
 
         BigDecimal currentItemsBonusXp = getTotalBenefitFromBonusItems(currentAssignedItems);
 
         countFlatBonus(currentAssignedItems, newAssignedItems, grades);
-        flatBonusByEventSection.putAll(assignedRewardService.getTotalBonusByEventSection(currentAssignedItems));
 
         PotentialBonusXpResponseDto summary = getPotentialFlatBonusSummary(currentAssignedItems, newAssignedItems, currentItemsBonusXp);
         Optional<BigDecimal> lossForItem = shouldAddLoss ? Optional.of(summary.getLossXp()) : Optional.empty();
@@ -176,7 +184,13 @@ public class PotentialBonusXpCalculator {
 
         bonusXpCalculator.countOneEventItemsBonus(oneEventItems, grades);
         bonusXpCalculator.countMultipleEventsItemsBonus(oneEventItems, multipleEventsItems, grades);
-        resetReachedLimitItems(assignedItems, newAssignedItems);
+
+        assignedRewardService.handleReachedLimitItems(
+                assignedItems,
+                newAssignedItems,
+                excessItems ->
+                        excessItems.forEach(item -> item.setBonusXp(BigDecimal.valueOf(0.0)))
+        );
     }
 
     private PotentialBonusXpResponseDto getPotentialFlatBonusSummary(List<AssignedItem> currentFlatBonusItemsMerged, List<AssignedItem> newAssignedItems, BigDecimal currentItemsBonusXp) {
@@ -187,29 +201,7 @@ public class PotentialBonusXpCalculator {
         return potentialXpMapper.toChestPotentialXpResponseDto(bonusXp, Optional.of(lossXp));
     }
 
-    private void resetReachedLimitItems(List<AssignedItem> currentAssignedItems, List<AssignedItem> newAssignedItems) {
-        Map<Reward, List<AssignedItem>> currentGrouped = assignedRewardService.groupAssignedItemsByReward(currentAssignedItems);
-        Map<Reward, List<AssignedItem>> newGrouped = assignedRewardService.groupAssignedItemsByReward(newAssignedItems);
 
-        for (Map.Entry<Reward, List<AssignedItem>> entry : newGrouped.entrySet()) {
-            Item reward = (Item) (entry.getKey());
-            List<AssignedItem> newItemsForReward = entry.getValue();
-
-            List<AssignedItem> currentItemsForReward = currentGrouped.getOrDefault(reward, Collections.emptyList());
-            int limit = reward.getLimit();
-            int totalSize = currentItemsForReward.size() + newItemsForReward.size();
-
-            if (totalSize > limit) {
-                int excess = totalSize - limit;
-
-                newItemsForReward.sort(Comparator.comparing(AssignedItem::getBonusXp));
-
-                for (int i = 0; i < excess && i < newItemsForReward.size(); i++) {
-                    newItemsForReward.get(i).setBonusXp(BigDecimal.valueOf(0.0));
-                }
-            }
-        }
-    }
 
     private void calculatePotentialPercentageBonusXp(Long animalId, Map<Long, BigDecimal> flatBonusByEventSection, AssignedItem assignedItem) {
         PercentageBonusItem item = (PercentageBonusItem) assignedItem.getReward();
@@ -241,7 +233,7 @@ public class PotentialBonusXpCalculator {
                     List.of(item),
                     animalId,
                     true,
-                    new HashMap<>()
+                    new ArrayList<>()
             ).getItemDetails();
 
             case PERCENTAGE_BONUS -> getPotentialPercentageBonusXp(

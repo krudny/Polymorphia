@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class KnowledgeBaseMapper {
     public static final String FLAT_BONUS_ITEM_SUBTITLE = "+%.1f xp do eventów z kategorii %s";
+    public static final String FLAT_BONUS_ITEM_SHORT_SUBTITLE = "+%.1f xp %s";
     public static final String PERCENTAGE_BONUS_ITEM_SUBTITLE = "+%d%% do eventów z kategorii %s";
+    public static final String PERCENTAGE_BONUS_ITEM_SHORT_SUBTITLE = "+%d%% %s";
     private static final String EVOLUTION_STAGES_GRADING_SUBTITLE = "%.1f xp odblokowuje ocenę %.1f";
     private RewardMapper rewardMapper;
 

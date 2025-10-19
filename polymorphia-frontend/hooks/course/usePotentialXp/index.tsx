@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { UsePotentialXp } from "@/hooks/course/usePotentialXp/types";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
-import EquipmentService from "@/app/(logged-in)/equipment/EquipmentService";
+import EquipmentService from "@/services/equipment/index";
 
 export default function usePotentialXp(
   assignedChestId: number | undefined

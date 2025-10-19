@@ -50,6 +50,7 @@ public class RewardMapper {
                 BigDecimal xpBonus = ((FlatBonusItem) item).getXpBonus();
                 yield FlatBonusItemResponseDtoBase.builder()
                         .bonusText(String.format(KnowledgeBaseMapper.FLAT_BONUS_ITEM_SUBTITLE, xpBonus, eventSectionName))
+                        .shortBonusText(String.format(KnowledgeBaseMapper.FLAT_BONUS_ITEM_SHORT_SUBTITLE, xpBonus, eventSectionName))
                         .xp(xpBonus)
                         .behavior(((FlatBonusItem) item).getBehavior());
             }
@@ -57,6 +58,7 @@ public class RewardMapper {
                 Integer percentageBonus = ((PercentageBonusItem) item).getPercentageBonus();
                 yield PercentageBonusItemResponseDtoBase.builder()
                         .bonusText(String.format(KnowledgeBaseMapper.PERCENTAGE_BONUS_ITEM_SUBTITLE, percentageBonus, eventSectionName))
+                        .shortBonusText(String.format(KnowledgeBaseMapper.PERCENTAGE_BONUS_ITEM_SHORT_SUBTITLE, percentageBonus, eventSectionName))
                         .percentage(percentageBonus);
             }
         };
