@@ -1,5 +1,5 @@
 import { EventType, ViewType } from "@/interfaces/general";
-import { SpeedDialKey, SpeedDialKeys } from "./types";
+import { SpeedDialKey, SpeedDialKeys } from "@/components/speed-dial/types";
 
 export function getSpeedDialKey(
   eventType: EventType,

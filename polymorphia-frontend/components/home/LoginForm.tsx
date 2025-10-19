@@ -5,7 +5,7 @@ import { useForm } from "@tanstack/react-form";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import NavigationArrow from "@/components/slider/NavigationArrow";
 import { LoginDto } from "@/interfaces/api/login";
-import { FieldInfo } from "@/components/form/FieldInfo";
+import { FieldErrorMessage } from "@/components/form/FieldErrorMessage";
 import { loginSchema } from "@/components/form/schema";
 import "./index.css";
 import LoginFormProps from "@/components/home/types";
@@ -54,7 +54,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
                   required
                   autoComplete="off"
                 />
-                <FieldInfo field={field} />
+                <FieldErrorMessage field={field} />
               </div>
             )}
           </form.Field>
@@ -71,7 +71,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
                   onChange={(event) => field.handleChange(event.target.value)}
                   required
                 />
-                <FieldInfo field={field} />
+                <FieldErrorMessage field={field} />
               </div>
             )}
           </form.Field>

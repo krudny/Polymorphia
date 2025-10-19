@@ -14,9 +14,9 @@
 }
 
 .modal {
-  @apply fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-h-[calc(100vh-var(--spacing)*5)] p-5 z-[999] bg-repeat-y bg-[length:100%_auto];
-  @apply w-[95%] sm:w-[80%] max-w-lg max-h-[90vh];
-  @apply bg-top border-[1px] overflow-visible border-primary-dark rounded-xl will-change-transform;
+  @apply flex flex-col overflow-hidden;
+  @apply m-3 w-fit max-h-[calc(100vh-var(--spacing)*5)] p-5 z-[999] bg-repeat-y bg-[length:100%_auto];
+  @apply bg-top border-[1px] border-primary-dark rounded-xl will-change-transform;
   @apply dark:border-secondary-gray;
 }
 

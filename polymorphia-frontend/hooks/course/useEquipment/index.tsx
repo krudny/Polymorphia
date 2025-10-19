@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import EquipmentService from "@/app/(logged-in)/equipment/EquipmentService";
+import EquipmentService from "@/services/equipment";
 import { UseEquipment } from "@/hooks/course/useEquipment/types";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 

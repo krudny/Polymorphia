@@ -4,10 +4,10 @@ import Loading from "@/components/loading";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import "./index.css";
 import useShortGrade from "@/hooks/course/useShortGrade";
-import { TargetTypes } from "@/interfaces/api/grade";
+import { TargetTypes } from "@/interfaces/api/grade/target";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import useCriteria from "@/hooks/course/useCriteria";
-import { GradeModalProps } from "./types";
+import { GradeModalProps } from "@/components/speed-dial/modals/grade/types";
 
 export default function GradeModal({
   onClosedAction,
@@ -37,7 +37,16 @@ export default function GradeModal({
   } = useCriteria(gradableEventIdProp);
 
   return (
-    <Modal isDataPresented={true} onClosed={onClosedAction} title="Nagrody">
+    <Modal
+      isDataPresented={true}
+      onClosed={onClosedAction}
+      title="Nagrody"
+      subtitle={
+        gradeData?.isGraded === false
+          ? "To wydarzenie nie zostało jeszcze ocenione!"
+          : undefined
+      }
+    >
       {(isGradeError || isCriteriaError) && (
         <div className="grade-error">
           Wystąpił błąd przy ładowaniu szczegółów.

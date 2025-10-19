@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import KnowledgeBaseService from "@/app/(logged-in)/knowledge-base/KnowledgeBaseService";
-import { UseChests } from "./types";
+import KnowledgeBaseService from "@/services/knowledge-base";
+import { UseChests } from "@/hooks/course/useChests/types";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export default function useChests(): UseChests {

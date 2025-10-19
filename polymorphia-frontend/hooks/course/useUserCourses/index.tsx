@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { AvailableCoursesDTO } from "@/interfaces/api/user-context";
-import UserService from "@/app/(logged-in)/profile/UserService";
+import UserService from "@/services/user";
 
 export default function useUserCourses() {
   const { data, isLoading, isError } = useQuery<AvailableCoursesDTO[]>({

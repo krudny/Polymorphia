@@ -4,7 +4,11 @@
 /* XPCardPoints */
 
 .xp-card-points {
-  @apply w-full flex-1 flex-col-centered shrink-0 aspect-square;
+  @apply w-full flex-1 flex-col-centered shrink-0 aspect-square transition-all;
+}
+
+.xp-card-points-has-chest {
+  @apply absolute bottom-0 right-0 mr-2 mb-2 text-xl;
 }
 
 /* XPCardProjectVariant */

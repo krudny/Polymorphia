@@ -3,7 +3,7 @@ import MarkdownEditor from "./markdown-editor";
 import MarkdownViewer from "@/components/markdown/markdown-viewer";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import "./index.css";
-import { MarkdownWrapperProps } from "./types";
+import { MarkdownWrapperProps } from "@/components/markdown/types";
 import SpeedDial from "@/components/speed-dial/SpeedDial";
 
 export default function MarkdownWrapper({

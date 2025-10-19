@@ -2,7 +2,7 @@
 
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect, useRef } from "react";
-import useCourseGroups from "../../../../hooks/course/useCourseGroups";
+import useCourseGroups from "@/hooks/course/useCourseGroups";
 import Loading from "@/components/loading";
 import toast from "react-hot-toast";
 import XPCardGrid from "@/components/xp-card/XPCardGrid";

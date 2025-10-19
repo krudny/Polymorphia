@@ -40,7 +40,7 @@ public class StudentDetailsMapperTest extends BaseTest {
 
         // Then
         assertThat(result).isInstanceOf(StudentDetailsWithNameResponseDto.class);
-        assertThat(((StudentDetailsWithNameResponseDto) result).studentName()).isEqualTo(STUDENT_NAME);
+        assertThat(((StudentDetailsWithNameResponseDto) result).fullName()).isEqualTo(STUDENT_NAME);
     }
 
     @Test

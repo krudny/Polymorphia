@@ -1,15 +1,12 @@
 package com.agh.polymorphia_backend.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 
 import java.io.IOException;
 
-import static com.agh.polymorphia_backend.controller.ControllerTestUtil.getEndpoint;
-import static com.agh.polymorphia_backend.controller.ControllerTestUtil.getExpectedResponse;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static com.agh.polymorphia_backend.controller.ControllerTestUtil.*;
 
 class KnowledgeBaseControllerTest extends ControllerTestConfig {
     @Value("classpath:responses/knowledge.base/evolution-stages.json")
@@ -26,8 +23,7 @@ class KnowledgeBaseControllerTest extends ControllerTestConfig {
         String actualResponse = getEndpoint("/knowledge-base/evolution-stages?courseId={courseId}",
                 "student@agh.com", "password", 200, 1);
 
-        ObjectMapper mapper = new ObjectMapper();
-        assertEquals(mapper.readTree(actualResponse), mapper.readTree(getExpectedResponse(evolutionStagesJson)));
+        assertJsonEquals(evolutionStagesJson, actualResponse);
     }
 
     @Test
@@ -35,8 +31,7 @@ class KnowledgeBaseControllerTest extends ControllerTestConfig {
         String actualResponse = getEndpoint("/knowledge-base/items?courseId={courseId}",
                 "student@agh.com", "password", 200, 1);
 
-        ObjectMapper mapper = new ObjectMapper();
-        assertEquals(mapper.readTree(actualResponse), mapper.readTree(getExpectedResponse(itemsJson)));
+        assertJsonEquals(itemsJson, actualResponse);
     }
 
     @Test
@@ -44,8 +39,7 @@ class KnowledgeBaseControllerTest extends ControllerTestConfig {
         String actualResponse = getEndpoint("/knowledge-base/chests?courseId={courseId}",
                 "student@agh.com", "password", 200, 1);
 
-        ObjectMapper mapper = new ObjectMapper();
-        assertEquals(mapper.readTree(actualResponse), mapper.readTree(getExpectedResponse(chestsJson)));
+        assertJsonEquals(chestsJson, actualResponse);
     }
 
 }

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import KnowledgeBaseService from "@/app/(logged-in)/knowledge-base/KnowledgeBaseService";
+import KnowledgeBaseService from "@/services/knowledge-base";
 import { UseItems } from "@/hooks/course/useItems/types";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { MarkdownService } from "@/app/(logged-in)/course/[eventType]/[eventSectionId]/[gradableEventId]/MarkdownService";
+import { MarkdownService } from "@/services/markdown";
 import toast from "react-hot-toast";
 import {
   UseMarkdownReset,

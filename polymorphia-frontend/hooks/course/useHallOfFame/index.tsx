@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import HallOfFameService from "@/app/(logged-in)/hall-of-fame/HallOfFameService";
+import HallOfFameService from "@/services/hall-of-fame";
 import {
   UseHallOfFame,
   useHallOfFameProps,
@@ -31,7 +31,7 @@ export default function useHallOfFame({
         pageSize,
         courseId,
         debouncedSearch,
-        sortBy[0],
+        sortBy[0].length > 0 ? sortBy[0] : "total",
         sortOrder[0] === "asc" || sortOrder[0] === "desc"
           ? sortOrder[0]
           : "desc",

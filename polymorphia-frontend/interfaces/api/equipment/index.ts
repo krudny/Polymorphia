@@ -4,7 +4,7 @@ import {
   ChestResponseDTO,
   ItemResponseDTO,
   RewardType,
-} from "../reward";
+} from "@/interfaces/api/reward";
 import {
   ChestAssignmentDetailsResponseDTO,
   ItemAssignmentDetailsResponseDTO,

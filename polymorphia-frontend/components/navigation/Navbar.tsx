@@ -5,7 +5,7 @@ import Line from "@/components/navigation/Line";
 import { animateNavbar } from "@/animations/Navigation";
 import "./index.css";
 import { updateMenuItems } from "@/components/course/event-section/EventSectionUtils";
-import { useTitle } from "./TitleContext";
+import { useTitle } from "@/components/navigation/TitleContext";
 import useEventSections from "@/hooks/course/useEventSections";
 import useNavigationContext from "@/hooks/contexts/useNavigationContext";
 import {

@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
+import { EventSectionService } from "@/services/event-section";
 import { useEventParams } from "@/hooks/general/useEventParams";
-import { UseGradingTargets } from "./types";
+import { UseGradingTargets } from "@/hooks/course/useGradingTargets/types";
 import { EventTypes } from "@/interfaces/general";
-import { TargetTypes } from "@/interfaces/api/grade";
+import { TargetTypes } from "@/interfaces/api/grade/target";
 
 export default function useGradingTargets(
   debouncedSearch: string,

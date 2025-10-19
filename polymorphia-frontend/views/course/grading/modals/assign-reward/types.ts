@@ -1,4 +1,4 @@
-import { CriterionAssignableRewardResponseDTO } from "@/interfaces/api/grade";
+import { CriterionAssignableRewardResponseDTO } from "@/interfaces/api/grade/criteria";
 
 export interface AssignRewardModalProps {
   criterionId: number;

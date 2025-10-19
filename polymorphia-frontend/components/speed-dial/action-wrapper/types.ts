@@ -1,5 +1,5 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
-import { SpeedDialItem } from "../types";
+import { SpeedDialItem } from "@/components/speed-dial/types";
 import { SpeedDialActionProps } from "@mui/material";
 
 interface BaseSpeedDialActionWrapperProps {
