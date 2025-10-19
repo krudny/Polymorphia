@@ -17,11 +17,12 @@ export default function CourseGroupView() {
 
   useEffect(() => {
     if (courseGroups) {
-      setTitle(
+      const title =
         courseGroups
           .find((courseGroup) => courseGroup.id === Number(courseGroupId))
-          ?.name.toUpperCase() ?? ""
-      );
+          ?.name.toUpperCase() ?? "";
+
+      setTitle(title);
     } else if (isError) {
       setTitle("");
     }

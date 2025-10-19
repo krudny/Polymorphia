@@ -17,10 +17,11 @@ export default function GradableEventsView() {
 
   useEffect(() => {
     if (eventSections) {
-      setTitle(
+      const title =
         eventSections.find((eventSection) => eventSection.id === eventSectionId)
-          ?.name ?? ""
-      );
+          ?.name ?? "";
+
+      setTitle(title);
     } else if (error) {
       setTitle("");
     }
