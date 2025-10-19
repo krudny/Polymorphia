@@ -1,4 +1,8 @@
-import { TargetResponseDTO } from "@/interfaces/api/grade/target";
+import {
+  GroupTargetTypes,
+  TargetResponseDTO,
+  TargetTypes,
+} from "@/interfaces/api/grade/target";
 import areTargetsEqual from "./areTargetsEqual";
 
 export default function isSelectedTargetStillAvailable(
@@ -10,11 +14,11 @@ export default function isSelectedTargetStillAvailable(
   }
 
   return targets.some((target) => {
-    if (target.type === "STUDENT") {
+    if (target.type === TargetTypes.STUDENT) {
       return areTargetsEqual(target, selectedTarget);
     } else {
       const isGroupTargetMatch =
-        target.groupType === "MATCHING" &&
+        target.groupType === GroupTargetTypes.MATCHING &&
         areTargetsEqual(target, selectedTarget);
 
       if (isGroupTargetMatch) {
@@ -23,7 +27,7 @@ export default function isSelectedTargetStillAvailable(
 
       const isGroupMemberMatch = target.members.some((targetMember) => {
         return areTargetsEqual(
-          { ...targetMember, type: "STUDENT" },
+          { ...targetMember, type: TargetTypes.STUDENT },
           selectedTarget
         );
       });
