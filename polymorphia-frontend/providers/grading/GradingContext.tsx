@@ -24,7 +24,8 @@ import useGradingTargets from "@/hooks/course/useGradingTargets";
 import useShortGrade from "@/hooks/course/useShortGrade";
 import { getRequestTargetFromResponseTarget } from "@/providers/grading/utils/getRequestTargetFromResponseTarget";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
-import areTargetsEqual from "@/providers/grading/utils/areTargetsEqual";
+import isSelectedTargetStillAvailable from "@/providers/grading/utils/isSelectedTargetStillAvailable";
+import { TargetTypes } from "@/interfaces/api/grade/target";
 
 export const GradingContext = createContext<
   GradingContextInterface | undefined
@@ -65,14 +66,22 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
 
-    const isSelectedTargetInNewTargets = targets.find((target) =>
-      areTargetsEqual(target, state.selectedTarget)
+    const isSelectedTargetInNewTargets = isSelectedTargetStillAvailable(
+      targets,
+      state.selectedTarget
     );
 
     if (!isSelectedTargetInNewTargets) {
+      // Dispatch HANDLE_STUDENT_SELECTION to reuse target selection logic
       dispatch({
-        type: GradingReducerActions.SET_TARGET,
-        payload: targets[0],
+        type: GradingReducerActions.HANDLE_STUDENT_SELECTION,
+        payload: {
+          target: targets[0],
+          member:
+            targets[0].type === TargetTypes.STUDENT
+              ? targets[0]
+              : targets[0].members[0],
+        },
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- We want this effect to run ONLY when targets list changes.
