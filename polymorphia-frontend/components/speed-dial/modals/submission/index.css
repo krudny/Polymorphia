@@ -41,7 +41,7 @@
 }
 
 .submissions-modal-url-input {
-  @apply w-full p-4 focus:outline-none default-colors disabled:text-neutral-400 placeholder:text-neutral-400;
+  @apply w-full p-4 focus:outline-none default-colors placeholder:text-neutral-400;
 }
 
 .submissions-modal-url-symbol {
