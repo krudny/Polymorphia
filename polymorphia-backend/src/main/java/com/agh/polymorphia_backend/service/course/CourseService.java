@@ -57,8 +57,8 @@ public class CourseService {
                 ));
 
         return courses.stream()
-                .filter(course -> accessAuthorizer.isCourseAccessAuthorized(abstractRoleUser, course))
                 .filter(course -> courseRoleMap.containsKey(course.getId()))
+                .filter(course -> accessAuthorizer.isCourseAccessAuthorized(abstractRoleUser, course))
                 .map(course -> courseMapper.toAvailableCoursesResponseDto(
                         course,
                         courseRoleMap.get(course.getId()).getRole()
