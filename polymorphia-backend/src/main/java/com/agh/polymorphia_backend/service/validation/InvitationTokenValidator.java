@@ -5,11 +5,12 @@ import com.agh.polymorphia_backend.repository.invitation.InvitationTokenReposito
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.ZonedDateTime;
 
-@Component
+@Service
 @AllArgsConstructor
 public class InvitationTokenValidator {
     public static final String TOKEN_NOT_EXPIRED = "Active invitation token already exists for this email";
@@ -36,9 +37,13 @@ public class InvitationTokenValidator {
             throw new ResponseStatusException(HttpStatus.GONE, TOKEN_EXPIRED);
         }
 
-        if (token.isUsed()) {
+        if (isTokenUsed(token)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, TOKEN_ALREADY_USED);
         }
+    }
+
+    public boolean isTokenUsed(InvitationToken token) {
+        return token.isUsed();
     }
 }
 
