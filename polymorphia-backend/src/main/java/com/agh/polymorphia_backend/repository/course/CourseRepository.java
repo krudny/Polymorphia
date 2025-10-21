@@ -10,19 +10,4 @@ import java.util.List;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Long> {
-
-    @Query("SELECT DISTINCT c FROM Course c " +
-            "JOIN c.courseGroups cg " +
-            "JOIN cg.studentCourseGroupAssignments scga " +
-            "WHERE scga.student.user.id = :userId")
-    List<Course> findCoursesByStudentUserId(@Param("userId") Long userId);
-
-    @Query("SELECT DISTINCT c FROM Course c " +
-            "JOIN c.courseGroups cg " +
-            "WHERE cg.instructor.user.id = :userId")
-    List<Course> findCoursesByInstructorUserId(@Param("userId") Long userId);
-
-    @Query("SELECT DISTINCT c FROM Course c " +
-            "WHERE c.coordinator.user.id = :userId")
-    List<Course> findCoursesByCoordinatorUserId(@Param("userId") Long userId);
 }
