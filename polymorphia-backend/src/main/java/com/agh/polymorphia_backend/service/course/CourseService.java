@@ -1,17 +1,25 @@
 package com.agh.polymorphia_backend.service.course;
 
 import com.agh.polymorphia_backend.dto.response.course.CourseGroupsResponseDto;
+import com.agh.polymorphia_backend.dto.response.user_context.AvailableCoursesResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.course.CourseGroup;
+import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
+import com.agh.polymorphia_backend.model.user.UserCourseRole;
 import com.agh.polymorphia_backend.repository.course.CourseGroupRepository;
 import com.agh.polymorphia_backend.repository.course.CourseRepository;
 import com.agh.polymorphia_backend.repository.course.StudentCourseGroupRepository;
+import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
+import com.agh.polymorphia_backend.service.mapper.CourseMapper;
+import com.agh.polymorphia_backend.service.user.UserService;
+import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,22 +37,6 @@ public class CourseService {
     public Course getCourseById(Long courseId) {
         return courseRepository.findById(courseId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, COURSE_NOT_FOUND));
-    }
-
-    public List<CourseGroupsResponseDto> getCourseGroups(Long courseId) {
-        List<CourseGroup> courseGroups = courseGroupRepository.findByCourseId(courseId);
-
-        return courseGroups.stream()
-                .map(group -> {
-                    Integer studentCount = studentCourseGroupRepository.countByCourseGroupId(group.getId());
-                    return CourseGroupsResponseDto.builder()
-                            .id(group.getId())
-                            .name(group.getName())
-                            .details("Details")
-                            .studentCount(studentCount)
-                            .build();
-                })
-                .collect(Collectors.toList());
     }
 
     public List<Course> getAllCourses() {
