@@ -11,7 +11,7 @@ export default function useInviteUser(): UseInviteUser {
     mutationFn: async (request) => {
       if (request.role === Roles.COORDINATOR) {
         toast.error("Zapraszanie koordynatorów nie jest obsługiwane");
-        throw new Error("Zapraszanie koordynatorów nie jest obsługiwane");
+        return;
       }
 
       return UserService.inviteUser(request);

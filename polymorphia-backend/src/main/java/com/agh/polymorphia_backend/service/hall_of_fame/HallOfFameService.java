@@ -32,7 +32,8 @@ import static com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry.FIE
 @Service
 @AllArgsConstructor
 public class HallOfFameService {
-    public static final String HOF_EMPTY = "Hall of Fame scores are empty";
+    public static final String STUDENT_HOF_NOT_FOUND = "Student's Hall of Fame scores not found";
+    private static final String HOF_EMPTY = "Hall of Fame scores are empty";
     private final StudentScoreDetailRepository scoreDetailRepository;
     private final HallOfFameRepository hallOfFameRepository;
     private final EventSectionRepository eventSectionRepository;
