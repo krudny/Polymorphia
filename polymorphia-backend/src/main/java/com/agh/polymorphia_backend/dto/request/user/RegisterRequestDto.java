@@ -9,18 +9,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import static com.agh.polymorphia_backend.dto.request.user.ChangePasswordRequestDTO.*;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class RegisterRequestDto {
-    // TODO: import those messages after [OG-114] is merged
-    private static final String PASSWORD_SIZE_MESSAGE = "Password must be between 8 and 256 characters";
-    private static final String PASSWORD_UPPERCASE_MESSAGE = "Password must contain at least one uppercase letter";
-    private static final String PASSWORD_LOWERCASE_MESSAGE = "Password must contain at least one lowercase letter";
-    private static final String PASSWORD_DIGIT_MESSAGE = "Password must contain at least one digit";
-    private static final String PASSWORD_SPECIAL_CHAR_MESSAGE = "Password must contain at least one special character";
-
     @NotBlank
     private String invitationToken;
 

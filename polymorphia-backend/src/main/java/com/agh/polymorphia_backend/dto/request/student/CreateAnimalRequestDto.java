@@ -9,7 +9,7 @@ public class CreateAnimalRequestDto {
     private String animalName;
 
     @NotNull
-    private String courseId;
+    private Long courseId;
 
     @NotNull
     private Long courseGroupId;

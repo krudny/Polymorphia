@@ -3,7 +3,7 @@ import { Roles, RoleTextMap } from "@/interfaces/api/user";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import { RenderCardProps } from "@/components/course-choice/types";
 import { ReactNode } from "react";
-import useHasAnimalInGroup from "@/hooks/course/useAnimal";
+import useHasValidAnimalInCourse from "@/hooks/course/useHasValidAnimalInCourse";
 import useCourseGroup from "@/hooks/course/useCourseGroup";
 import toast from "react-hot-toast";
 
@@ -14,7 +14,7 @@ export default function CourseChoiceCard({
   setClickedDetails,
 }: RenderCardProps): ReactNode {
   const { id, name, coordinatorName, imageUrl, userRole } = availableCourse;
-  const { data: animal } = useHasAnimalInGroup(id);
+  const { data: animal } = useHasValidAnimalInCourse(id);
   const { data: courseGroup } = useCourseGroup(id);
 
   const handleClick = () => {

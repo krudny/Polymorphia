@@ -7,11 +7,11 @@ import lombok.Data;
 
 @Data
 public class ChangePasswordRequestDTO {
-    private static final String PASSWORD_SIZE_MESSAGE = "Password must be between 8 and 256 characters";
-    private static final String PASSWORD_UPPERCASE_MESSAGE = "Password must contain at least one uppercase letter";
-    private static final String PASSWORD_LOWERCASE_MESSAGE = "Password must contain at least one lowercase letter";
-    private static final String PASSWORD_DIGIT_MESSAGE = "Password must contain at least one digit";
-    private static final String PASSWORD_SPECIAL_CHAR_MESSAGE = "Password must contain at least one special character";
+    public static final String PASSWORD_SIZE_MESSAGE = "Password must be between 8 and 256 characters";
+    public static final String PASSWORD_UPPERCASE_MESSAGE = "Password must contain at least one uppercase letter";
+    public static final String PASSWORD_LOWERCASE_MESSAGE = "Password must contain at least one lowercase letter";
+    public static final String PASSWORD_DIGIT_MESSAGE = "Password must contain at least one digit";
+    public static final String PASSWORD_SPECIAL_CHAR_MESSAGE = "Password must contain at least one special character";
 
     @NotNull
     private String oldPassword;

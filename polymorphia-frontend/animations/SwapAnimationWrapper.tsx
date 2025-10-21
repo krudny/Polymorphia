@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { SwapAnimationWrapperProps } from "@/animations/types";
 
@@ -10,35 +10,66 @@ export function SwapAnimationWrapper({
   keyProp,
 }: SwapAnimationWrapperProps) {
   const [displayed, setDisplayed] = useState(children);
-  const ref = useRef<HTMLDivElement | null>(null);
+  const displayedRef = useRef(children);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const latestChildrenRef = useRef(children);
+  const keyPropRef = useRef(keyProp);
+  const isAnimatingRef = useRef(false);
+  const timelineRef = useRef<gsap.core.Timeline | null>(null);
 
-  useLayoutEffect(() => {
-    if (!ref.current) {
+  displayedRef.current = displayed;
+  latestChildrenRef.current = children;
+
+  const animateToLatest = useCallback(() => {
+    if (!containerRef.current) {
       return;
     }
 
-    gsap.to(ref.current, {
-      ...fromVars,
-      duration,
-      onComplete: () => {
-        setDisplayed(children);
+    const nextKey = keyProp;
+    const nextChildren = latestChildrenRef.current;
 
-        gsap.fromTo(ref.current, fromVars, {
-          ...toVars,
-          duration,
-        });
+    // skip animation if key hasn't changed
+    if (keyPropRef.current === nextKey) {
+      if (!isAnimatingRef.current && displayedRef.current !== nextChildren) {
+        setDisplayed(nextChildren);
+      }
+      return;
+    }
+
+    // update for new animation
+    keyPropRef.current = nextKey;
+    isAnimatingRef.current = true;
+
+    if (timelineRef.current) {
+      timelineRef.current.kill();
+    }
+
+    timelineRef.current = gsap.timeline({
+      onComplete: () => {
+        isAnimatingRef.current = false;
+        // If children changed during animation, animate again
+        if (latestChildrenRef.current !== displayedRef.current) {
+          animateToLatest();
+        }
       },
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- We want this effect to run ONLY when key changes.
-  }, [keyProp]);
 
-  useLayoutEffect(() => {
-    if (!ref.current) {
-      return;
-    }
-    gsap.fromTo(ref.current, fromVars, toVars);
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- We want this effect to run ONLY on first mount.
-  }, []);
+    // fade out current content
+    timelineRef.current.to(containerRef.current, { ...fromVars, duration });
 
-  return <div ref={ref}>{displayed}</div>;
+    // swap content after fade-out
+    timelineRef.current.add(() => {
+      setDisplayed(latestChildrenRef.current);
+    });
+
+    // fade in new content
+    timelineRef.current.to(containerRef.current, { ...toVars, duration });
+  }, [duration, fromVars, keyProp, toVars]);
+
+  // trigger animation when children or keyProp changes
+  useEffect(() => {
+    animateToLatest();
+  }, [animateToLatest, children, keyProp]);
+
+  return <div ref={containerRef}>{displayed}</div>;
 }

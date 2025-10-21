@@ -22,4 +22,4 @@ export type GradingContextInterface = {
   submitGrade: () => void;
 };
 
-export type GradingFilterId = "sortOrder" | "sortBy" | "groups";
+export type GradingFilterId = "sortOrder" | "sortBy" | "groups" | "gradeStatus";
