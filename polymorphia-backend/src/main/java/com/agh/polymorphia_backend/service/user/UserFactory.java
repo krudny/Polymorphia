@@ -5,12 +5,16 @@ import com.agh.polymorphia_backend.model.user.Coordinator;
 import com.agh.polymorphia_backend.model.user.Instructor;
 import com.agh.polymorphia_backend.model.user.Student;
 import com.agh.polymorphia_backend.model.user.User;
+import com.agh.polymorphia_backend.repository.user.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @AllArgsConstructor
 public class UserFactory {
+    private static final String NULL_INDEX_NUMBER = "Index number cannot be null";
 
     public User createUser(CourseInvitationRequestDto inviteDTO) {
         return User.builder()
@@ -22,6 +26,10 @@ public class UserFactory {
 
     public Student createStudent(CourseInvitationRequestDto inviteDTO) {
         User user = createUser(inviteDTO);
+
+        if (inviteDTO.getIndexNumber() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, NULL_INDEX_NUMBER);
+        }
 
         return Student.builder()
                 .user(user)

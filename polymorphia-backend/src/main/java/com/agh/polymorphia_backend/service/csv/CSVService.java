@@ -65,7 +65,7 @@ public class CSVService {
     }
 
     public CSVHeadersResponseDto getCSVHeaders(MultipartFile file, CSVType type) {
-        List<String> requiredHeaders = new ArrayList<>(type.getRequiredCSVHeaders());
+        List<CSVHeaders> requiredHeaders = new ArrayList<>(type.getRequiredCSVHeaders());
         List<String> fileHeaders = readCSV(file, CSVReadMode.HEADERS_ONLY).csvHeaders();
 
         return CSVHeadersResponseDto

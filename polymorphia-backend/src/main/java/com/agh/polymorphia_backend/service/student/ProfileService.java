@@ -29,7 +29,6 @@ import static com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService
 @Service
 @AllArgsConstructor
 public class ProfileService {
-
     private static final String PROFILE_INFO_INCOMPLETE = "Profile info incomplete: %s";
     private static final String LACKING_EVOLUTION_STAGES = "Evolution stages not defined";
     private final AccessAuthorizer accessAuthorizer;

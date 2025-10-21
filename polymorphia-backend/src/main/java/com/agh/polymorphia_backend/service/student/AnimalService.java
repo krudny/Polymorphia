@@ -35,7 +35,7 @@ public class AnimalService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, ANIMAL_NOT_FOUND));
     }
 
-    public boolean hasAnimalInGroup(Long courseId) {
+    public boolean hasAnimalInCourse(Long courseId) {
         User user = userService.getCurrentUser().getUser();
         return animalRepository.findByCourseIdAndStudentId(courseId, user.getId()).isPresent();
     }
@@ -62,9 +62,10 @@ public class AnimalService {
             StudentCourseGroupAssignment assignment = studentCourseGroupRepository.findById(assignmentId)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, STUDENT_NOT_INVITED));
 
-            assignment.setAnimal(savedAnimal);
-            studentCourseGroupRepository.save(assignment);
+            Animal savedAnimal = animalRepository.save(animal);
 
+            studentCourseGroupRepository.save(assignment);
+            assignment.setAnimal(savedAnimal);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FAILED_TO_CREATE_ANIMAL);
         }

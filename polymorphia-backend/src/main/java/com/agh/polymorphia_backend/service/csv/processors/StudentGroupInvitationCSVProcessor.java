@@ -19,7 +19,7 @@ public class StudentGroupInvitationCSVProcessor {
     public void process(StudentGroupInvitationRequestDto request) {
         List<String> headers = request.getCsvHeaders();
 
-        int emailIdx = CSVUtil.getColumnIndex(headers, CSVHeaders.EMAIL);
+        int emailIdx = CSVUtil.getColumnIndex(headers, CSVHeaders.EMAIL.getValue());
 
         for (List<String> row : request.getData()) {
             String email = row.get(emailIdx);

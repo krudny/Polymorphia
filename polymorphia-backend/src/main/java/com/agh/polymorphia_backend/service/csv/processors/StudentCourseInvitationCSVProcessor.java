@@ -27,9 +27,9 @@ public class StudentCourseInvitationCSVProcessor {
     public void process(StudentCourseInvitationRequestDto request) {
         List<String> headers = request.getCsvHeaders();
 
-        int emailIdx = CSVUtil.getColumnIndex(headers, CSVHeaders.EMAIL);
-        int firstNameIdx = CSVUtil.getColumnIndex(headers, CSVHeaders.FIRST_NAME);
-        int lastNameIdx = CSVUtil.getColumnIndex(headers, CSVHeaders.LAST_NAME);
+        int emailIdx = CSVUtil.getColumnIndex(headers, CSVHeaders.EMAIL.getValue());
+        int firstNameIdx = CSVUtil.getColumnIndex(headers, CSVHeaders.FIRST_NAME.getValue());
+        int lastNameIdx = CSVUtil.getColumnIndex(headers, CSVHeaders.LAST_NAME.getValue());
 
         if (!allowMultipleEmails && request.getData().size() > 2) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, TOO_MANY_EMAILS);

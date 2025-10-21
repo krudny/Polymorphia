@@ -32,9 +32,9 @@ const UserService = {
 
     return await response.json();
   },
-  hasAnimalInGroup: async (courseId: number): Promise<boolean> => {
+  hasValidAnimalInCourse: async (courseId: number): Promise<boolean> => {
     const response = await fetch(
-      `${API_HOST}/students/animal/is-valid?courseId=${courseId}`,
+      `${API_HOST}/students/animals/is-valid?courseId=${courseId}`,
       {
         credentials: "include",
       }
@@ -65,7 +65,7 @@ const UserService = {
     return await response.json();
   },
   createAnimal: async (request: CreateAnimalRequestDTO): Promise<void> => {
-    const response = await fetch(`${API_HOST}/students/animal`, {
+    const response = await fetch(`${API_HOST}/students/animals`, {
       body: JSON.stringify(request),
       method: "POST",
       headers: {
