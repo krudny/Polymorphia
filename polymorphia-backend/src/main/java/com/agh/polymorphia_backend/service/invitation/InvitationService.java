@@ -17,7 +17,7 @@ import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.repository.user.role.CoordinatorRepository;
 import com.agh.polymorphia_backend.repository.user.role.InstructorRepository;
 import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
-import com.agh.polymorphia_backend.service.EmailService;
+import com.agh.polymorphia_backend.service.email.EmailService;
 import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.user.UserFactory;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;

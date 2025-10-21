@@ -1,8 +1,9 @@
-package com.agh.polymorphia_backend.service.course;
+package com.agh.polymorphia_backend.service.event_section;
 
 import com.agh.polymorphia_backend.dto.response.event.EventSectionResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
+import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.mapper.EventSectionMapper;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import lombok.AllArgsConstructor;

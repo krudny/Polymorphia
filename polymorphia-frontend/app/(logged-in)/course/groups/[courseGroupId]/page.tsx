@@ -7,13 +7,16 @@ import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import useCourseGroups from "@/hooks/course/useCourseGroups";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
+import { CourseGroupTypes } from "@/services/course-groups/types";
 
 export default function CourseGroupView() {
   const { setTitle } = useTitle();
   const { courseId } = useUserDetails();
-  // TODO: use event params instead after #154 is merged
   const { courseGroupId } = useParams();
-  const { data: courseGroups, isError } = useCourseGroups(courseId);
+  const { data: courseGroups, isError } = useCourseGroups({
+    courseId,
+    type: CourseGroupTypes.INDIVIDUAL_FULL,
+  });
 
   useEffect(() => {
     if (courseGroups) {
