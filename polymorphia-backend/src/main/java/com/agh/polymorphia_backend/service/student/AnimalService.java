@@ -52,8 +52,6 @@ public class AnimalService {
                 .build();
 
         try {
-            Animal savedAnimal = animalRepository.save(animal);
-
             StudentCourseGroupAssignmentId assignmentId = StudentCourseGroupAssignmentId.builder()
                     .studentId(student.getUserId())
                     .courseGroupId(requestDTO.getCourseGroupId())
