@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class UserService implements UserDetailsService {
     public static final String USER_HAS_NO_VALID_ROLES = "User should have exactly one role";
-    private static final String USER_NOT_FOUND = "User %s does not exist in the database";
+    public static final String USER_NOT_FOUND = "User does not exist in the database";
     private static final String INVALID_OLD_PASSWORD = "Invalid old password";
     private static final String FAILED_TO_CHANGE_PASSWORD = "Failed to change password";
     private static final String INVALID_NEW_PASSWORD = "New password is not matching";
@@ -111,6 +111,7 @@ public class UserService implements UserDetailsService {
                 .build();
     }
 
+    // TODO: ??, it doesn't build anything, double error
     private AbstractRoleUser buildUserWithDefinedRole(UserCourseRole userCourseRole, String email) {
         Long userId = userCourseRole.getUser().getId();
         return (switch (userCourseRole.getRole()) {
@@ -118,8 +119,6 @@ public class UserService implements UserDetailsService {
             case INSTRUCTOR -> instructorRepository.findById(userId);
             case COORDINATOR -> coordinatorRepository.findById(userId);
             default -> throw new UsernameNotFoundException(String.format(USER_NOT_FOUND, email));
-        })
-                .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND, email)));
+        }).orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND, email)));
     }
-
 }

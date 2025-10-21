@@ -19,7 +19,7 @@
 }
 
 .profile-image-wrapper {
-  @apply flex-centered relative w-full mt-14 max-w-72 aspect-square md:mt-0 lg:w-2/5 lg:max-w-[25rem];
+  @apply flex-centered relative w-full mt-14 max-w-72 aspect-square lg:w-2/5 lg:max-w-[25rem];
 }
 
 .profile-img {

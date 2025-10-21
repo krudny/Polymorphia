@@ -18,7 +18,6 @@ export function updateMenuItems(
   courseItem.link = `course/${eventSections[0].type.toLowerCase()}/${eventSections[0].id}`;
 
   courseItem.subItems = eventSections.map((eventSection) => {
-    // TODO: use correct courseID
     return {
       text: eventSection.name,
       link: `course/${eventSection.type.toLowerCase()}/${eventSection.id}`,

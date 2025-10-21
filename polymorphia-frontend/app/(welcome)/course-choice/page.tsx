@@ -33,13 +33,7 @@ export default function CourseChoice() {
         fastForward={true}
       />
       <div className="course-choice-logout-wrapper">
-        <ButtonWithBorder
-          text="Wyloguj"
-          className="mt-12"
-          isActive={false}
-          onClick={logout}
-          forceDark
-        />
+        <ButtonWithBorder text="Wyloguj" className="mt-12" onClick={logout} />
       </div>
     </div>
   );

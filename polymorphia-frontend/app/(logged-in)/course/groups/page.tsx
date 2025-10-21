@@ -9,15 +9,15 @@ import XPCardGrid from "@/components/xp-card/XPCardGrid";
 import SectionView from "@/components/section-view/SectionView";
 import "./index.css";
 import { useScaleShow } from "@/animations/ScaleShow";
-import renderCard from "@/app/(logged-in)/course/groups/RenderCard";
+import CourseGroupCard from "@/app/(logged-in)/course/groups/CourseGroupCard";
 import { useRouter } from "next/navigation";
-
-const courseId = 1;
+import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export default function CourseGroupsPage() {
   const { setTitle } = useTitle();
   const router = useRouter();
   const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const { courseId } = useUserDetails();
 
   useEffect(() => {
     setTitle("Grupy zajęciowe");
@@ -40,7 +40,7 @@ export default function CourseGroupsPage() {
   };
 
   const cards = courseGroups.map((courseGroup) =>
-    renderCard(courseGroup, handleClick)
+    CourseGroupCard(courseGroup, handleClick)
   );
 
   return (

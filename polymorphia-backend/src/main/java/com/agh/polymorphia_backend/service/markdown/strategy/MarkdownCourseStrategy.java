@@ -1,8 +1,8 @@
 package com.agh.polymorphia_backend.service.markdown.strategy;
 
 import com.agh.polymorphia_backend.config.FetchClient;
-import com.agh.polymorphia_backend.dto.response.markdown.MarkdownResponseDTO;
-import com.agh.polymorphia_backend.dto.response.markdown.SourceUrlMarkdownResponseDTO;
+import com.agh.polymorphia_backend.dto.response.markdown.MarkdownResponseDto;
+import com.agh.polymorphia_backend.dto.response.markdown.SourceUrlMarkdownResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.repository.course.CourseRepository;
 import com.agh.polymorphia_backend.service.course.CourseService;
@@ -24,25 +24,25 @@ public class MarkdownCourseStrategy implements MarkdownStrategy {
     private final FetchClient fetchClient;
 
     @Override
-    public MarkdownResponseDTO getMarkdown(Long resourceId) {
+    public MarkdownResponseDto getMarkdown(Long resourceId) {
         Course course = courseService.getCourseById(resourceId);
 
         if (course.getMarkdown() == null || course.getMarkdown().isEmpty()) {
-            return MarkdownResponseDTO.builder()
+            return MarkdownResponseDto.builder()
                     .markdown("")
                     .build();
         }
 
-        return MarkdownResponseDTO.builder()
+        return MarkdownResponseDto.builder()
                 .markdown(course.getMarkdown())
                 .build();
     }
 
     @Override
-    public SourceUrlMarkdownResponseDTO getMarkdownSourceUrl(Long resourceId) {
+    public SourceUrlMarkdownResponseDto getMarkdownSourceUrl(Long resourceId) {
         Course course = courseService.getCourseById(resourceId);
 
-        return SourceUrlMarkdownResponseDTO.builder()
+        return SourceUrlMarkdownResponseDto.builder()
                 .sourceUrl(course.getMarkdownSourceUrl())
                 .build();
     }

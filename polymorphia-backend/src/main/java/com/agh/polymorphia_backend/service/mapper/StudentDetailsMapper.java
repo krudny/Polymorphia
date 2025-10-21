@@ -17,7 +17,7 @@ public class StudentDetailsMapper {
     private final AccessAuthorizer accessAuthorizer;
 
     public StudentDetailsResponseDto hallOfFameToStudentDetailsResponseDto(HallOfFameEntry hallOfFameEntry) {
-        StudentDetailsWithoutNameResponseDto studentDetailsWithoutName =  new StudentDetailsWithoutNameResponseDto(
+        StudentDetailsWithoutNameResponseDto studentDetailsWithoutName = new StudentDetailsWithoutNameResponseDto(
                 hallOfFameEntry.getAnimalName(),
                 hallOfFameEntry.getEvolutionStage(),
                 hallOfFameEntry.getGroupName(),

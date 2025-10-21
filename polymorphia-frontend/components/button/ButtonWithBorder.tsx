@@ -13,7 +13,8 @@ const buttonWithBorder = tv({
       lg: "text-4xl px-10 py-3",
     },
     isActive: {
-      true: "pointer-events-none",
+      false: "pointer-events-none",
+      true: "",
     },
     forceDark: {
       true: "button-with-border-dark",
@@ -31,7 +32,7 @@ export default function ButtonWithBorder({
   onClick,
   className,
   size = "md",
-  isActive,
+  isActive = true,
   forceDark,
   icon,
 }: ButtonWithBorderProps & VariantProps) {

@@ -16,6 +16,8 @@ export default function Selector({
   disabled = false,
   size = "md",
   padding = "md",
+  centeredPlaceholder = false,
+  centeredOptions = false,
 }: SelectorProps) {
   const { resolvedTheme } = useTheme();
   const background =
@@ -26,7 +28,12 @@ export default function Selector({
   const [isOpen, setIsOpen] = useState(false);
   const selectorRef = useRef<HTMLDivElement>(null);
 
-  const styles = selectorVariants({ size, padding });
+  const styles = selectorVariants({
+    size,
+    padding,
+    centeredPlaceholder,
+    centeredOptions,
+  });
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -58,18 +65,21 @@ export default function Selector({
   };
 
   return (
-    <div ref={selectorRef} className={clsx(styles.container(), className)}>
+    <div ref={selectorRef} className={styles.container()}>
       <button
         type="button"
         onClick={toggleDropdown}
         disabled={disabled}
         className={`${clsx(
+          className,
           styles.button(),
           disabled && "selector-disabled",
           isOpen && "selector-open"
-        )} ${background}`}
+        )}`}
       >
-        <span className={styles.value()}>
+        <span
+          className={selectedOption ? styles.value() : styles.placeholder()}
+        >
           {selectedOption ? selectedOption.label : placeholder}
         </span>
         <svg
