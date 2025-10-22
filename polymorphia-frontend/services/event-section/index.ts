@@ -990,7 +990,7 @@ export const EventSectionService = {
     eventSectionId: number,
     gradableEventId: number
   ): Promise<SubmissionRequirementResponseDTO[]> => {
-    await new Promise<void>((resolve) => setTimeout(resolve, 2000));
+    await new Promise<void>((resolve) => setTimeout(resolve, 200));
 
     if (eventSectionId === 1) {
       throw new Error("Test events do not have submission requirements");
