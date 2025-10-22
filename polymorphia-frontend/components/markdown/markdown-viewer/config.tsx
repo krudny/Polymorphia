@@ -1,9 +1,33 @@
 import { Components } from "react-markdown";
 import "./index.css";
 import Image from "next/image";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { tomorrow } from "react-syntax-highlighter/dist/esm/styles/prism";
+import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/light";
 import { isValidUrl } from "@/components/markdown/isValidUrl";
+
+import javascript from "react-syntax-highlighter/dist/esm/languages/hljs/javascript";
+import typescript from "react-syntax-highlighter/dist/esm/languages/hljs/typescript";
+import python from "react-syntax-highlighter/dist/esm/languages/hljs/python";
+import java from "react-syntax-highlighter/dist/esm/languages/hljs/java";
+import css from "react-syntax-highlighter/dist/esm/languages/hljs/css";
+import bash from "react-syntax-highlighter/dist/esm/languages/hljs/bash";
+import json from "react-syntax-highlighter/dist/esm/languages/hljs/json";
+import sql from "react-syntax-highlighter/dist/esm/languages/hljs/sql";
+import c from "react-syntax-highlighter/dist/esm/languages/hljs/c";
+import { customTheme } from "@/components/markdown/markdown-viewer/customTheme";
+
+SyntaxHighlighter.registerLanguage("javascript", javascript);
+SyntaxHighlighter.registerLanguage("js", javascript);
+SyntaxHighlighter.registerLanguage("typescript", typescript);
+SyntaxHighlighter.registerLanguage("ts", typescript);
+SyntaxHighlighter.registerLanguage("jsx", javascript);
+SyntaxHighlighter.registerLanguage("tsx", typescript);
+SyntaxHighlighter.registerLanguage("python", python);
+SyntaxHighlighter.registerLanguage("java", java);
+SyntaxHighlighter.registerLanguage("css", css);
+SyntaxHighlighter.registerLanguage("bash", bash);
+SyntaxHighlighter.registerLanguage("json", json);
+SyntaxHighlighter.registerLanguage("sql", sql);
+SyntaxHighlighter.registerLanguage("c", c);
 
 export const markdownConfig: Components = {
   h1: ({ ...props }) => <h1 className="h1-markdown" {...props} />,
@@ -90,6 +114,8 @@ export const markdownConfig: Components = {
     const isBlock = node?.position?.start.line !== node?.position?.end.line;
     const match = /language-(\w+)/.exec(className || "");
 
+    console.log(match);
+
     if (!isBlock) {
       return (
         <code
@@ -106,7 +132,7 @@ export const markdownConfig: Components = {
       <SyntaxHighlighter
         PreTag="div"
         language={match[1]}
-        style={tomorrow}
+        style={customTheme}
         className="markdown-config-code-block"
       >
         {String(children).replace(/\n$/, "")}
