@@ -40,6 +40,6 @@
   @apply flex-centered min-h-full aspect-square text-3xl select-none;
 }
 
-.submissions-requirement-url-symbol-copy {
+.submissions-requirement-url-symbol-clickable {
   @apply hover:cursor-pointer hover:opacity-70 transition-opacity;
 }

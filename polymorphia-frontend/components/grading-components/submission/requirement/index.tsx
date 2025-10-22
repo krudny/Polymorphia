@@ -8,7 +8,6 @@ import { useFadeInAnimate } from "@/animations/FadeIn";
 import Loading from "@/components/loading";
 import { SwapAnimationWrapper } from "@/animations/SwapAnimationWrapper";
 import { getKeyForSelectedTarget } from "@/providers/grading/utils/getKeyForSelectedTarget";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 
 export default function SubmissionRequirement({
   requirements,
@@ -96,29 +95,26 @@ export default function SubmissionRequirement({
                         disabled
                       />
                       <div className="submissions-requirement-url-symbols">
-                        {detail.isLocked && (
-                          <div className="submissions-requirement-url-symbol">
-                            <span className="material-symbols">lock</span>
-                          </div>
-                        )}
+                        <div className="submissions-requirement-url-symbol">
+                          <span
+                            className="material-symbols submissions-requirement-url-symbol-clickable"
+                            onClick={() => handleChange(requirement.id)}
+                          >
+                            {detail.isLocked ? "lock" : "lock_open_right"}
+                          </span>
+                        </div>
                         {detail.url.length > 0 && (
-                          <button className="submissions-requirement-url-symbol">
+                          <div className="submissions-requirement-url-symbol">
                             <span
-                              className="material-symbols submissions-requirement-url-symbol-copy"
+                              className="material-symbols submissions-requirement-url-symbol-clickable"
                               onClick={() => handleCopy(detail.url)}
                             >
                               content_copy
                             </span>
-                          </button>
+                          </div>
                         )}
                       </div>
                     </div>
-                    <ButtonWithBorder
-                      text={detail.isLocked ? "Odblokuj" : "Zablokuj"}
-                      icon={detail.isLocked ? "lock_open_right" : "lock"}
-                      className="w-full !border-3 !rounded-xl"
-                      onClick={() => handleChange(requirement.id)}
-                    />
                   </div>
                 ) : (
                   requirementLoadingComponent
