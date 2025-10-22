@@ -6,7 +6,10 @@ import AccordionSection from "@/components/accordion/AccordionSection";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import Loading from "@/components/loading";
-import { SwapAnimationWrapper } from "@/animations/SwapAnimationWrapper";
+import {
+  baseSwapAnimationWrapperProps,
+  SwapAnimationWrapper,
+} from "@/animations/SwapAnimationWrapper";
 import { getKeyForSelectedTarget } from "@/providers/grading/utils/getKeyForSelectedTarget";
 
 export default function SubmissionRequirement({
@@ -72,12 +75,7 @@ export default function SubmissionRequirement({
               headerClassName="submissions-requirement-accordion-header"
             >
               <SwapAnimationWrapper
-                fromVars={{ autoAlpha: 0 }}
-                toVars={{
-                  autoAlpha: 1,
-                  ease: "power1.inOut",
-                }}
-                duration={0.3}
+                {...baseSwapAnimationWrapperProps}
                 keyProp={
                   detail && !isSpecificDataLoading
                     ? getKeyForSelectedTarget(state)
