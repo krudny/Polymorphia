@@ -27,7 +27,7 @@ function SubmissionsModalContent({
 }: SubmissionsModalContentProps) {
   const isMd = useMediaQuery({ minWidth: "768px" });
   const accordionSections = [...requirements.map(({ id }) => String(id))];
-  const initallyOpenedAccordionSections = new Set(
+  const initiallyOpenedAccordionSections = new Set(
     accordionSections.length > 0 && isMd ? [accordionSections[0]] : []
   );
 
@@ -93,7 +93,7 @@ function SubmissionsModalContent({
       <Accordion
         className="submissions-modal-accordion-override"
         sectionIds={new Set(accordionSections)}
-        initiallyOpenedSectionIds={initallyOpenedAccordionSections}
+        initiallyOpenedSectionIds={initiallyOpenedAccordionSections}
         maxOpen={1}
         shouldAnimateInitialOpen={true}
       >

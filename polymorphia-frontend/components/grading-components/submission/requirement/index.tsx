@@ -18,7 +18,7 @@ export default function SubmissionRequirement({
   const wrapperRef = useFadeInAnimate(!!requirements);
   const isXL = useMediaQuery({ minWidth: "1400px" });
   const accordionSections = [...requirements.map(({ id }) => String(id))];
-  const initallyOpenedAccordionSections = new Set(
+  const initiallyOpenedAccordionSections = new Set(
     accordionSections.length > 0 && isXL ? [accordionSections[0]] : []
   );
 
@@ -55,7 +55,7 @@ export default function SubmissionRequirement({
       <Accordion
         className="submissions-requirement-accordion-override"
         sectionIds={new Set(accordionSections)}
-        initiallyOpenedSectionIds={initallyOpenedAccordionSections}
+        initiallyOpenedSectionIds={initiallyOpenedAccordionSections}
         maxOpen={2}
         shouldAnimateInitialOpen={false}
       >
