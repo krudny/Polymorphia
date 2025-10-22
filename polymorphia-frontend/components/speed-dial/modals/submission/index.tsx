@@ -141,10 +141,9 @@ function SubmissionsModalContent({
             Należy wpisać poprawny URL do wszystkich obowiązkowych wymagań.
           </h3>
         )}
-        {/* Fix isActive after PR mirroring it. */}
         <ButtonWithBorder
           text="Oddaj zadanie"
-          isActive={!isSubmissionValid}
+          isActive={isSubmissionValid}
           onClick={handleSubmit}
           className="w-full !border-3 !rounded-xl"
         />
