@@ -29,6 +29,8 @@ import { TargetTypes } from "@/interfaces/api/grade/target";
 import useSubmissionDetails from "@/hooks/course/useSubmissionDetails";
 import { SubmissionDetailsResponseDTO } from "@/interfaces/api/grade/submission";
 import useSubmissionsUpdate from "@/hooks/course/useSubmissionsUpdate";
+import useSubmissionRequirements from "@/hooks/course/useSubmissionRequirements";
+import useCriteria from "@/hooks/course/useCriteria";
 
 export const GradingContext = createContext<
   GradingContextInterface | undefined
@@ -62,14 +64,18 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
     gradeStatus
   );
 
+  const { data: criteria, isLoading: isCriteriaLoading } = useCriteria();
   const { data: grade, isLoading: isGradeLoading } = useShortGrade(
     state.selectedTarget
   );
   const { mutate: mutateGrade } = useGradeUpdate();
 
+  const {
+    data: submissionRequirements,
+    isLoading: isSubmissionRequirementsLoading,
+  } = useSubmissionRequirements();
   const { data: submissionDetails, isLoading: isSubmissionDetailsLoading } =
     useSubmissionDetails(state.selectedTarget);
-
   const { mutate: mutateSubmissions } = useSubmissionsUpdate({
     target: state.selectedTarget,
   });
@@ -162,9 +168,13 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
         search,
         setSearch,
         targets,
-        isTargetsLoading,
-        isGradeLoading,
-        isSubmissionDetailsLoading,
+        criteria,
+        submissionRequirements,
+        isGeneralDataLoading:
+          isTargetsLoading ||
+          isCriteriaLoading ||
+          isSubmissionRequirementsLoading,
+        isSpecificDataLoading: isGradeLoading || isSubmissionDetailsLoading,
         submitGrade,
         submitSubmissions,
       }}

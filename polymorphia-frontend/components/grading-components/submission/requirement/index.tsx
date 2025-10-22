@@ -13,7 +13,7 @@ import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 export default function SubmissionRequirement({
   requirements,
 }: SubmissionsRequirementProps) {
-  const { state, isSubmissionDetailsLoading, submitSubmissions } =
+  const { state, isSpecificDataLoading, submitSubmissions } =
     useGradingContext();
   const wrapperRef = useFadeInAnimate(!!requirements);
   const isXL = useMediaQuery({ minWidth: "1400px" });
@@ -80,12 +80,12 @@ export default function SubmissionRequirement({
                 }}
                 duration={0.3}
                 keyProp={
-                  detail && !isSubmissionDetailsLoading
+                  detail && !isSpecificDataLoading
                     ? getKeyForSelectedTarget(state)
                     : "loading" + getKeyForSelectedTarget(state)
                 }
               >
-                {detail && !isSubmissionDetailsLoading ? (
+                {detail && !isSpecificDataLoading ? (
                   <div className="submissions-requirement">
                     <div className="submissions-requirement-url">
                       <input
