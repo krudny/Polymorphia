@@ -180,7 +180,7 @@ export default function SubmissionsModal({
       isDataPresented={true}
       onClosed={onClosedAction}
       title="Oddawanie zadania"
-      subtitle="Uzupełnij linki do oddawanych wymagań."
+      subtitle="Uzupełnij wymagane linki."
     >
       {(isDetailsError || isRequirementsError) && (
         <div className="submission-error">
