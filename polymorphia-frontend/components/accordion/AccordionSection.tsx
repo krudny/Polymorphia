@@ -2,38 +2,34 @@ import { animateAccordion } from "@/animations/Accordion";
 import clsx from "clsx";
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { useEffect, useRef } from "react";
-import { useAccordion } from "../providers/accordion/AccordionContext";
 import "./index.css";
-import { AccordionSectionProps } from "./types";
+import { AccordionSectionProps } from "@/components/accordion/types";
+import { useAccordionContext } from "@/hooks/contexts/useAccordionContext";
 
 export default function AccordionSection({
   id,
   title,
   children,
-  isInitiallyOpened,
   headerClassName,
 }: AccordionSectionProps) {
-  const { register, unregister, isOpen, toggle, open } = useAccordion();
+  const { isOpen, toggle, shouldAnimateInitialOpen } = useAccordionContext();
   const contentRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    register(id);
-    if (isInitiallyOpened) {
-      open(id);
-    }
-    return () => unregister(id);
-  }, [id, isInitiallyOpened, open, register, unregister]);
-
+  const isFirstRender = useRef(true);
   const isOpened = isOpen(id);
   useEffect(() => {
     if (contentRef.current) {
-      animateAccordion(contentRef.current, isOpened);
+      animateAccordion(
+        contentRef.current,
+        isOpened,
+        isFirstRender.current && !shouldAnimateInitialOpen
+      );
+      isFirstRender.current = false;
     }
-  }, [isOpened]);
+  }, [isOpened, shouldAnimateInitialOpen]);
 
   return (
     <div className="accordion-section">
-      <div className={clsx("accordion-section-header", headerClassName)}>
+      <div className={clsx(headerClassName, "accordion-section-header")}>
         <h1>{title}</h1>
         <div className="accordion-toggle-button" onClick={() => toggle(id)}>
           {isOpened ? (

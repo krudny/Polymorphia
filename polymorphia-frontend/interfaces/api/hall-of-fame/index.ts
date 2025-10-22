@@ -1,14 +1,17 @@
-import { UserDetailsDTO } from "../user";
+import { HallOfFameUserDTO } from "@/interfaces/api/user";
 
 export interface HallOfFameResponseDTO {
   content: HallOfFameRecordDTO[];
+  currentUser: {
+    page: number;
+  };
   page: {
-    pageNumber: number;
+    number: number;
     totalPages: number;
   };
 }
 
 export interface HallOfFameRecordDTO {
-  userDetails: UserDetailsDTO;
+  userDetails: HallOfFameUserDTO;
   xpDetails: Record<string, string>;
 }

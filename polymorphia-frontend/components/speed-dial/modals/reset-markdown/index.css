@@ -1,0 +1,22 @@
+@import "tailwindcss";
+@import "../../../../styles/globals.css";
+
+.update-markdown-wrapper {
+  @apply w-full md:w-lg flex flex-col gap-y-4;
+
+  h1 {
+    @apply text-3xl;
+  }
+}
+
+.update-markdown-link {
+  @apply w-full;
+
+  a {
+    @apply w-full block text-2xl mt-2 transition-opacity duration-200 hover:cursor-pointer hover:opacity-70;
+  }
+}
+
+.update-markdown-buttons {
+  @apply w-full flex gap-x-4;
+}

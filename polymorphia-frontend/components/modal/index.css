@@ -14,7 +14,10 @@
 }
 
 .modal {
-  @apply m-3 w-fit max-h-[calc(100vh-var(--spacing)*5)] p-5 z-[52] bg-repeat-y bg-[length:100%_auto] bg-top border-2 overflow-visible border-primary-dark rounded-xl will-change-transform;
+  @apply flex flex-col overflow-visible;
+  @apply m-3 w-fit max-h-[calc(100vh-var(--spacing)*5)] p-5 z-[999] bg-repeat-y bg-[length:100%_auto];
+  @apply bg-top border-[1px] border-primary-dark rounded-xl will-change-transform;
+  @apply dark:border-secondary-gray;
 }
 
 .modal-header-wrapper {

@@ -12,7 +12,9 @@ export function useScaleShow(shouldAnimate: boolean = true) {
 
     gsap.set(ref.current, { scale: 0.9, autoAlpha: 0 });
 
-    if (!shouldAnimate) return;
+    if (!shouldAnimate) {
+      return;
+    }
 
     gsap.fromTo(
       ref.current,

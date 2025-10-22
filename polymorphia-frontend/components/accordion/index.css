@@ -6,14 +6,14 @@
 }
 
 .accordion-section {
-  @apply flex flex-col my-2;
+  @apply flex flex-col;
 }
 
 .accordion-section-header {
   @apply flex justify-between items-center;
 
   h1 {
-    @apply text-3xl;
+    @apply text-3xl truncate;
   }
 }
 

@@ -5,7 +5,7 @@
 
 .navigation {
   @apply select-none z-50 max-lg:fixed max-lg:w-full;
-  @apply bg-primary-dark text-primary-light dark:text-secondary-light;
+  @apply bg-primary-dark text-primary-light dark:text-secondary-gray;
 }
 
 .navbar-wrapper {

@@ -1,81 +1,131 @@
-import ProgressBar from "@/components/progressbar/ProgressBar";
-import { API_STATIC_URL } from "@/services/api";
-import Image from "next/image";
+import { Accordion } from "@/components/accordion/Accordion";
 import "./index.css";
-import { Fragment } from "react";
-import { GradeResponseDTO } from "@/interfaces/api/grade";
+import {
+  GradeInfoProps,
+  RewardWithImage,
+} from "@/components/course/event-section/types";
+import { useMediaQuery } from "react-responsive";
+import AccordionSection from "@/components/accordion/AccordionSection";
+import ProgressBar from "@/components/progressbar/ProgressBar";
 import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLabels";
+import Image from "next/image";
+import { API_STATIC_URL } from "@/services/api";
+import ImageBadge from "@/components/image-badge/ImageBadge";
 
-export default function GradeInfo({ grade }: { grade: GradeResponseDTO }) {
+export default function GradeInfo({ grade, criteria }: GradeInfoProps) {
+  const isMd = useMediaQuery({ minWidth: "768px" });
+
+  const accordionSections = [
+    ...criteria.map(({ id }) => String(id)),
+    ...(grade.isGraded ? ["Komentarz"] : []),
+  ];
+
+  const initallyOpenedAccordionSections = new Set(
+    accordionSections.length > 0 && isMd && grade.isGraded
+      ? [accordionSections[0]]
+      : []
+  );
+
   return (
-    <section className="gradable-event-section">
-      {/* TODO: handle scroll/folding, gaps between criteria, show criteria even if there is no grade */}
-      {grade.details !== undefined ? (
-        <>
-          {grade.criteria.map((criterion) => (
-            <Fragment key={criterion.id}>
-              <h1>{criterion.name}</h1>
-              <div className="gradable-event-section-xp">
-                <h2>Punkty doświadczenia</h2>
-                <div className="gradable-event-section-progress-bar">
+    <section className="grade-info-section">
+      <Accordion
+        className="grade-info-accordion-override"
+        sectionIds={new Set(accordionSections)}
+        initiallyOpenedSectionIds={initallyOpenedAccordionSections}
+        maxOpen={1}
+        shouldAnimateInitialOpen={true}
+      >
+        {criteria.map((criterion) => {
+          const criterionGrade = grade.isGraded
+            ? grade.criteria.find(
+                (gradeCriterion) => gradeCriterion.id === criterion.id
+              )
+            : undefined;
+
+          const rewards: RewardWithImage[] = criterionGrade
+            ? criterionGrade.assignedRewards
+            : criterion.assignableRewards.map((reward) => ({
+                name: reward.assignableReward.reward.name,
+                imageUrl: reward.assignableReward.reward.imageUrl,
+                quantity: reward.maxAmount,
+              }));
+
+          return (
+            <AccordionSection
+              key={criterion.id}
+              id={String(criterion.id)}
+              title={criterion.name}
+              headerClassName="grade-info-accordion-header"
+            >
+              <div className="grade-info-criterion">
+                <div className="grade-info-criterion-progress-bar">
                   <ProgressBar
                     minXP={0}
-                    currentXP={Number(criterion.criterionGrade?.gainedXp)}
+                    currentXP={
+                      criterionGrade ? Number(criterionGrade.gainedXp) : 0
+                    }
                     maxXP={Number(criterion.maxXp)}
-                    numSquares={2}
-                    segmentSizes={[0, 100, 0]}
+                    numSquares={3}
+                    segmentSizes={[0, 50, 0, 50, 0]}
                     lowerElement={
                       <ProgressBarRangeLabels
                         minXP={0}
-                        currentXP={Number(criterion.criterionGrade?.gainedXp)}
                         maxXP={Number(criterion.maxXp)}
                       />
                     }
                   />
+
+                  <div className="grade-info-xp">
+                    {criterionGrade?.gainedXp ?? "-"} xp
+                  </div>
+                </div>
+                <h2>{criterionGrade ? "Nagrody" : "Nagrody do zdobycia"}</h2>
+                <div className="grade-info-reward">
+                  {rewards.map((reward, index) => {
+                    if (reward.quantity === 0) {
+                      return;
+                    }
+
+                    return (
+                      <div key={index} className="grade-info-reward-wrapper">
+                        <div className="grade-info-reward-image-wrapper">
+                          <Image
+                            src={`${API_STATIC_URL}/${reward.imageUrl}`}
+                            alt={reward.name}
+                            fill
+                            priority
+                            className="object-cover"
+                            sizes="(min-width: 1024px) 25vw, 50vw"
+                          />
+                          <ImageBadge
+                            text={reward.quantity.toString()}
+                            className="grade-info-reward-image-badge"
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
-              <div className="gradable-event-section-reward">
-                <h2>Nagrody</h2>
-                {criterion.criterionGrade?.assignedRewards?.length ? (
-                  <div className="gradable-event-section-reward-inner ">
-                    {criterion.criterionGrade?.assignedRewards.map(
-                      (assignedReward) => {
-                        const {
-                          assignedReward: {
-                            base: { name, imageUrl },
-                            details: { id },
-                          },
-                        } = assignedReward;
+            </AccordionSection>
+          );
+        })}
 
-                        return (
-                          <div
-                            className="gradable-event-section-reward-image-wrapper"
-                            key={id}
-                          >
-                            <Image
-                              src={`${API_STATIC_URL}/${imageUrl}`}
-                              alt={name}
-                              fill
-                            />
-                          </div>
-                        );
-                      }
-                    )}
-                  </div>
-                ) : (
-                  <div className="text-xl 2xl:text-2xl">
-                    Nie przydzielono żadnej nagrody.
-                  </div>
-                )}
-              </div>
-            </Fragment>
-          ))}
-        </>
-      ) : (
-        <div className="text-xl 2xl:text-2xl">
-          To wydarzenie nie zostało jeszcze ocenione.
-        </div>
-      )}
+        {grade.isGraded && (
+          <AccordionSection
+            key={criteria.length + 1}
+            id="Komentarz"
+            title="Komentarz"
+            headerClassName="grade-info-accordion-header"
+          >
+            {grade.comment ? (
+              <div className="grade-info-comment">{grade.comment}</div>
+            ) : (
+              <div className="text-xl">Brak komentarza.</div>
+            )}
+          </AccordionSection>
+        )}
+      </Accordion>
     </section>
   );
 }

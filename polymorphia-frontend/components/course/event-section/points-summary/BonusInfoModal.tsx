@@ -1,5 +1,5 @@
 import { BonusInfoModalProps } from "@/components/course/event-section/points-summary/types";
-import BonusItemCard from "./BonusItemCard";
+import BonusItemCard from "@/components/course/event-section/points-summary/BonusItemCard";
 import "./index.css";
 import Modal from "@/components/modal/Modal";
 

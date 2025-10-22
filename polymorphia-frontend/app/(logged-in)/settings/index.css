@@ -1,0 +1,22 @@
+@import "tailwindcss";
+@import "../../../styles/globals.css";
+
+.settings-outer-wrapper {
+  @apply py-6 px-10 lg:px-32;
+
+  h1 {
+    @apply text-7xl mb-10;
+  }
+}
+
+.settings-option-wrapper {
+  @apply flex justify-start items-center mt-10 gap-x-4;
+
+  h3 {
+    @apply text-4xl;
+  }
+}
+
+.settings-selector-wrapper {
+  @apply min-w-40;
+}

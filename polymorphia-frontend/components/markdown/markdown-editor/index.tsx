@@ -1,17 +1,17 @@
 "use client";
 
-import { ChangeEvent, useContext, useEffect, useRef } from "react";
-import { MarkdownContext } from "@/components/providers/markdown/MarkdownContext";
+import { ChangeEvent, useEffect, useRef } from "react";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import "./index.css";
+import useMarkdownContext from "@/hooks/contexts/useMarkdownContext";
 
 export default function MarkdownEditor() {
-  const { newMarkdown, setNewMarkdown } = useContext(MarkdownContext);
+  const { newMarkdown, setNewMarkdown } = useMarkdownContext();
   const wrapperRef = useFadeInAnimate(!!newMarkdown);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setNewMarkdown(e.target.value);
+  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setNewMarkdown(event.target.value);
   };
 
   useEffect(() => {

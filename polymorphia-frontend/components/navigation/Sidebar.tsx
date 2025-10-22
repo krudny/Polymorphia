@@ -2,19 +2,19 @@
 import UserSection from "@/components/navigation/UserSection";
 import Line from "@/components/navigation/Line";
 import MenuSection from "@/components/navigation/MenuSection";
-import {
-  BottomDesktopMenuItems,
-  MainMenuItems,
-} from "@/components/navigation/MenuOptions";
-import { useContext, useEffect, useRef } from "react";
-import { NavigationContext } from "@/components/providers/navigation/NavigationContext";
+import { useEffect, useRef } from "react";
 import "./index.css";
 
 import clsx from "clsx";
 import { animateSidebar } from "@/animations/Navigation";
-import { useQuery } from "@tanstack/react-query";
 import { updateMenuItems } from "@/components/course/event-section/EventSectionUtils";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
+import useEventSections from "@/hooks/course/useEventSections";
+import useNavigationContext from "@/hooks/contexts/useNavigationContext";
+import {
+  useBottomDesktopMenuItems,
+  useMainMenuItems,
+} from "@/hooks/general/useMenuOptions";
+import useUserContext from "@/hooks/contexts/useUserContext";
 
 export default function Sidebar() {
   const {
@@ -22,26 +22,25 @@ export default function Sidebar() {
     setIsSidebarExpanded,
     isSidebarLockedOpened,
     isSidebarLockedClosed,
-  } = useContext(NavigationContext);
+  } = useNavigationContext();
   const sidebarRef = useRef<HTMLDivElement | null>(null);
+  const { data: eventSections } = useEventSections();
+  const { userRole } = useUserContext();
 
   useEffect(() => {
     const sidebar = sidebarRef.current;
     if (!sidebar) {
       return;
     }
+
     animateSidebar(sidebar, isSidebarExpanded);
   }, [isSidebarExpanded]);
 
-  const { data: eventSections, isSuccess } = useQuery({
-    queryKey: ["eventSections"],
-    // TODO: use real courseId
-    queryFn: () => EventSectionService.getEventSections(1),
-  });
+  const menuItems = useMainMenuItems();
+  const bottomMenuItems = useBottomDesktopMenuItems();
 
-  const menuItems = [...MainMenuItems];
-  if (isSuccess) {
-    updateMenuItems(menuItems, eventSections);
+  if (eventSections) {
+    updateMenuItems(menuItems, eventSections, userRole);
   }
 
   return (
@@ -50,12 +49,14 @@ export default function Sidebar() {
       id={isSidebarLockedOpened ? "sidebar-locked" : "sidebar-animated"}
       className="sidebar"
       onMouseEnter={() => {
-        if (!isSidebarLockedOpened && !isSidebarLockedClosed)
+        if (!isSidebarLockedOpened && !isSidebarLockedClosed) {
           setIsSidebarExpanded(true);
+        }
       }}
       onMouseLeave={() => {
-        if (!isSidebarLockedOpened && !isSidebarLockedClosed)
+        if (!isSidebarLockedOpened && !isSidebarLockedClosed) {
           setIsSidebarExpanded(false);
+        }
       }}
     >
       <UserSection />
@@ -71,7 +72,7 @@ export default function Sidebar() {
       </div>
       <div>
         <Line />
-        <MenuSection options={BottomDesktopMenuItems} />
+        <MenuSection options={bottomMenuItems} />
       </div>
     </div>
   );

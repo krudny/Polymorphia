@@ -33,15 +33,15 @@ public class CourseGroup {
     @JsonIgnore
     private Course course;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "instructor_id")
     @ToString.Exclude
     @JsonIgnore
     private Instructor instructor;
 
+    @NotNull
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "courseGroup")
     @ToString.Exclude
     @JsonIgnore
-    private List<Animal> animals;
+    private List<StudentCourseGroupAssignment> studentCourseGroupAssignments;
 }

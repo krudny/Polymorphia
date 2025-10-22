@@ -1,10 +1,11 @@
-import { EventType } from "@/interfaces/api/course";
 import { ReactNode, RefObject } from "react";
 
 export interface XPCardProps {
   title: string;
   subtitle?: string;
-  component?: ReactNode;
+  details?: string;
+  leftComponent?: ReactNode;
+  rightComponent?: ReactNode;
   image?: {
     url: string;
     alt: string;
@@ -12,15 +13,24 @@ export interface XPCardProps {
   onClick?: () => void;
 }
 
+export type XPCardColors =
+  | "gold"
+  | "silver"
+  | "bronze"
+  | "green"
+  | "sky"
+  | "gray";
+
 export type XPCardVariantProps = {
-  size?: "xs" | "sm" | "md" | "lg" | "hofDesktop";
-  color?: "gold" | "silver" | "bronze" | "green";
+  size?: "xs" | "sm" | "md" | "lg" | "hofDesktop" | "projectGroup";
+  color?: XPCardColors;
   forceWidth?: boolean;
   isLocked?: boolean;
 };
 
-export interface XPCardGridProps {
-  eventSectionId: number;
-  eventSectionType: EventType;
+export interface CardGridProps {
   containerRef: RefObject<HTMLDivElement | null>;
+  cards: ReactNode[];
+  maxColumns?: number;
+  maxRows?: number;
 }

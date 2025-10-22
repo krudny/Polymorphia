@@ -1,4 +1,4 @@
-export type EventType = "ASSIGNMENT" | "PROJECT" | "TEST";
+import { EventType } from "@/interfaces/general";
 
 export interface EventSectionResponseDTO {
   id: number;
@@ -25,4 +25,11 @@ export interface StudentGradableEventResponseDTO
 export interface InstructorGradableEventResponseDTO
   extends BaseGradableEventResponseDTO {
   ungradedStudents: number;
+}
+
+export interface CourseGroupsResponseDTO {
+  id: number;
+  name: string;
+  details: string;
+  studentCount: number;
 }

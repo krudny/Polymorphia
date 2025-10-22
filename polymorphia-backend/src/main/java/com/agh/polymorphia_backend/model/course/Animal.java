@@ -1,6 +1,5 @@
 package com.agh.polymorphia_backend.model.course;
 
-import com.agh.polymorphia_backend.model.user.Student;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -26,16 +25,8 @@ public class Animal {
     @NotEmpty
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_id")
+    @OneToOne(mappedBy = "animal")
     @ToString.Exclude
     @JsonIgnore
-    private Student student;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_group_id")
-    @ToString.Exclude
-    @JsonIgnore
-    private CourseGroup courseGroup;
-
+    private StudentCourseGroupAssignment studentCourseGroupAssignment;
 }

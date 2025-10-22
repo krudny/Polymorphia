@@ -1,0 +1,70 @@
+@import "tailwindcss";
+@import "../../../styles/globals.css";
+@import "../general/index.css";
+
+@tailwind utilities;
+
+/* Hall of fame desktop */
+
+.hall-of-fame-desktop {
+  @apply w-full h-full mx-auto flex flex-col flex-1 opacity-0 overflow-x-hidden;
+  @apply lg:px-8 lg:max-w-[1250px];
+  @apply 2xl:py-4 2xl:max-w-[1600px] 2xl:px-10 2xl:max-h-[calc(100dvh-5rem)] 3xl:min-h-[54rem] 3xl:max-h-[54rem];
+}
+
+.hall-of-fame-desktop-wrapper {
+  @apply flex flex-col flex-1 h-full min-h-0 px-4 2xl:flex-row;
+}
+
+.hall-of-fame-desktop-podium-wrapper {
+  @apply w-full flex flex-col;
+  @apply 2xl:w-[30%] 2xl:min-h-full;
+}
+
+.hall-of-fame-desktop-podium-text {
+  @apply w-full h-14 flex-centered mb-3 hidden 2xl:flex;
+
+  h2 {
+    @apply text-3xl;
+  }
+}
+
+.hall-of-fame-podium {
+  @apply w-full h-full max-h-36 pb-2 rounded-xl 2xl:max-h-52 2xl:h-[calc(33.333%-1rem)];
+}
+
+.hall-of-fame-desktop-content-wrapper {
+  @apply w-full flex-col-centered flex-1 2xl:w-[70%] min-h-full;
+}
+
+.hall-of-fame-desktop-rank-wrapper {
+  @apply hall-of-fame-rank-wrapper flex flex-col flex-1 gap-y-2 2xl:gap-y-4 custom-scrollbar overflow-y-hidden 2xl:overflow-y-scroll;
+}
+
+/* Hall of fame card desktop */
+
+.hall-of-fame-desktop-record-wrapper {
+  @apply hall-of-fame-record-wrapper h-28 flex justify-between items-center;
+  @apply min-[1400px]:h-36 2xl:min-h-[calc(25%-0.75rem)];
+}
+
+.hall-of-fame-desktop-record-user-data-wrapper {
+  @apply flex h-full truncate w-2/5 2xl:w-fit;
+}
+
+.hall-of-fame-desktop-record-user-points-wrapper {
+  @apply w-full min-w-[350px] lg:max-w-[450px] 2xl:max-w-[380px];
+}
+
+/* Hall of fame podium */
+
+.hall-of-fame-desktop-podium {
+  @apply w-full h-fit py-3 grid grid-cols-3 gap-x-3;
+  @apply 2xl:flex 2xl:flex-col 2xl:justify-between 2xl:flex-1 2xl:px-5 2xl:py-0;
+}
+
+.hall-of-fame-desktop-search-wrapper {
+  @apply hall-of-fame-search-wrapper h-14 mt-0 custom-scrollbar;
+  scrollbar-gutter: stable;
+  overflow: hidden;
+}

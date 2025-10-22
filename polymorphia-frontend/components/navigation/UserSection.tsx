@@ -1,26 +1,38 @@
 import Image from "next/image";
 import "./index.css";
 import { API_STATIC_URL } from "@/services/api";
-import { useContext } from "react";
-import { UserContext } from "@/components/providers/user/UserContext";
+import useUserContext from "@/hooks/contexts/useUserContext";
+import { Roles, RoleTextMap } from "@/interfaces/api/user";
 
 export default function UserSection() {
-  const { animalName, evolutionStage, imageUrl } = useContext(UserContext);
+  const userContext = useUserContext();
+  const { userDetails } = userContext;
+
+  const title =
+    userContext.userRole === Roles.STUDENT
+      ? userContext.userDetails.animalName
+      : userContext.userDetails.fullName;
+
+  const subtitle =
+    userContext.userRole === Roles.STUDENT
+      ? userContext.userDetails.evolutionStage
+      : RoleTextMap[userContext.userRole];
 
   return (
     <div className="user-section">
       <div className="user-section-image-wrapper">
         <Image
-          src={`${API_STATIC_URL}/${imageUrl}`}
+          src={`${API_STATIC_URL}/${userDetails.imageUrl}`}
           alt="Zwierzak użytkownika"
           fill
           priority
+          fetchPriority="high"
           className="object-cover rounded-lg"
         />
       </div>
       <div className="profile-block user-section-content">
-        <h1>{animalName}</h1>
-        <h3>{evolutionStage}</h3>
+        <h1>{title}</h1>
+        <h3>{subtitle}</h3>
       </div>
     </div>
   );

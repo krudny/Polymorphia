@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "../../../styles/globals.css";
 
+.profile-speed-dial {
+  @apply w-full relative flex flex-col-centered flex-1 mx-auto z-20;
+}
+
 .profile {
   @apply flex-1 w-full opacity-0 flex-col-centered extra-large-center my-auto max-h-[50rem] h-[calc(100dvh-6rem)] 3xl:flex-none;
 }
@@ -14,7 +18,7 @@
 }
 
 .profile-image-wrapper {
-  @apply flex-centered relative w-full mt-14 max-w-72 aspect-square md:mt-0 lg:w-2/5 lg:max-w-[25rem];
+  @apply flex-centered relative w-full mt-14 max-w-72 aspect-square lg:w-2/5 lg:max-w-[25rem];
 }
 
 .profile-img {
@@ -38,6 +42,10 @@
 
   h3 {
     @apply text-3xl 2xl:text-5xl;
+  }
+
+  h4 {
+    @apply text-2xl 2xl:text-4xl;
   }
 }
 

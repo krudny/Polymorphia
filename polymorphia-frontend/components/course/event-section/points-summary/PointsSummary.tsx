@@ -1,35 +1,23 @@
 import { PointsSummaryProps } from "@/components/course/event-section/points-summary/types";
 import { useState } from "react";
 import "./index.css";
-import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/app/(logged-in)/course/EventSectionService";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import BonusInfoModal from "@/components/course/event-section/points-summary/BonusInfoModal";
 import PointsSummaryElement from "@/components/course/event-section/points-summary/PointsSummaryElement";
 import { PointsSummaryDetailsResponseDTO } from "@/interfaces/api/course/points-summary";
+import usePointsSummary from "@/hooks/course/usePointsSummary";
 
-export default function PointsSummary({
-  eventSectionId,
-  ref,
-}: PointsSummaryProps) {
+export default function PointsSummary({ ref }: PointsSummaryProps) {
+  const { data: pointsSummary, isLoading, isError } = usePointsSummary();
   const [currentBonusInfoModal, setCurrentBonusInfoModal] =
     useState<PointsSummaryDetailsResponseDTO | null>(null);
-
-  const {
-    data: pointsSummary,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["pointsSummary", eventSectionId],
-    queryFn: () => EventSectionService.getPointsSummary(eventSectionId),
-  });
 
   if (isLoading) {
     return <Loading />;
   }
 
-  if (error) {
-    return <div>Error loading points summary {error.message}</div>;
+  if (isError) {
+    return <div>Error loading points summary</div>;
   }
 
   if (!pointsSummary) {

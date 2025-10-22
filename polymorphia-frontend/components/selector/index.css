@@ -1,0 +1,54 @@
+@import "tailwindcss";
+@import "../../styles/globals.css";
+@tailwind utilities;
+
+@utility selector-background {
+  @apply brightness-95 backdrop-blur-xl bg-cover bg-center bg-fixed;
+}
+
+.selector-container {
+  @apply relative w-full;
+}
+
+.selector {
+  @apply w-full border-2 text-center rounded-sm;
+  @apply cursor-pointer flex items-center justify-between transition-all duration-200 focus:outline-none;
+  @apply border-primary-dark   dark:text-secondary-gray dark:border-secondary-gray;
+}
+
+.selector-disabled {
+  @apply cursor-not-allowed opacity-60;
+}
+
+.selector-value {
+  @apply text-primary-dark dark:text-secondary-gray;
+}
+
+.selector-placeholder {
+  @apply text-[#898989];
+}
+
+.selector-arrow {
+  @apply w-5 h-5 transition-transform duration-200 flex-shrink-0 ml-2 stroke-primary-dark dark:stroke-secondary-gray;
+}
+
+.selector-arrow-open {
+  @apply rotate-180;
+}
+
+.selector-dropdown {
+  @apply absolute z-50 w-full mt-1 border-2 border-primary-dark rounded-sm;
+  @apply shadow-lg max-h-60 overflow-y-auto custom-scrollbar;
+  @apply dark:border-secondary-gray selector-background;
+}
+
+.selector-option {
+  @apply cursor-pointer transition-colors;
+  @apply border-b-2 last:border-b-0;
+  @apply text-primary-dark border-primary-dark hover:backdrop-brightness-90 hover:dark:backdrop-brightness-150;
+  @apply dark:text-secondary-gray dark:border-secondary-gray;
+}
+
+.selector-option-selected {
+  @apply bg-primary-dark text-secondary-gray dark:bg-secondary-gray dark:text-primary-dark hover:bg-primary-dark hover:dark:bg-secondary-gray;
+}

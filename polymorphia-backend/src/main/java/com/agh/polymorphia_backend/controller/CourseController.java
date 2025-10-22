@@ -1,13 +1,15 @@
 package com.agh.polymorphia_backend.controller;
 
-import com.agh.polymorphia_backend.dto.response.knowledge_base.KnowledgeBaseResponseDto;
-import com.agh.polymorphia_backend.service.course.KnowledgeBaseService;
+import com.agh.polymorphia_backend.dto.response.course.CourseGroupsResponseDto;
+import com.agh.polymorphia_backend.dto.response.user_context.AvailableCoursesResponseDto;
+import com.agh.polymorphia_backend.service.course.CourseService;
+import com.agh.polymorphia_backend.service.user.UserContextService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -16,24 +18,19 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/courses")
 public class CourseController {
-    private final KnowledgeBaseService knowledgeBaseService;
+    private final CourseService courseService;
+    private final UserContextService userContextService;
 
-    @GetMapping("/{courseId}/evolution-stages")
+    @GetMapping()
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<List<KnowledgeBaseResponseDto>> getEvolutionStages(@PathVariable Long courseId) {
-        return ResponseEntity.ok(knowledgeBaseService.getEvolutionStages(courseId));
+    public ResponseEntity<List<AvailableCoursesResponseDto>> getAvailableCourses() {
+        return ResponseEntity.ok(userContextService.getAvailableCourses());
     }
 
-    @GetMapping("/{courseId}/chests")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<List<KnowledgeBaseResponseDto>> getChests(@PathVariable Long courseId) {
-        return ResponseEntity.ok(knowledgeBaseService.getChests(courseId));
+    // TODO: permissions
+    @GetMapping("/groups")
+    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
+    public ResponseEntity<List<CourseGroupsResponseDto>> getCourseGroups(@RequestParam Long courseId) {
+        return ResponseEntity.ok(courseService.getCourseGroups(courseId));
     }
-
-    @GetMapping("/{courseId}/items")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<List<KnowledgeBaseResponseDto>> getItems(@PathVariable Long courseId) {
-        return ResponseEntity.ok(knowledgeBaseService.getItems(courseId));
-    }
-
 }

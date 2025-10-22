@@ -1,16 +1,15 @@
 @import "tailwindcss";
+
 @tailwind utilities;
 
-:root {
-  --font-family-symbols: "Material Symbols Rounded";
-}
 @custom-variant dark (&:where(.dark, .dark *));
 
-:global(.next-image-blur-placeholder) {
+.next-image-blur-placeholder {
   opacity: 0 !important;
 }
 
 @theme {
+  --font-family-symbols: "Material Symbols Rounded";
   --shadow-3xl: 0px 0px 12px 0px rgba(66, 68, 90, 0.5);
   --breakpoint-3xl: 132rem;
   --color-primary-light: #fafafa;
@@ -19,6 +18,12 @@
   --color-secondary-dark: #212121;
   --color-primary-gray: #a1a1a1;
   --color-secondary-gray: #d4d4d4;
+
+  --color-primary-success: #a0bd7f;
+  --color-secondary-success: #c4d7af;
+  --color-primary-sky: #b7c5d7;
+  --color-secondary-sky: #d9e4f2;
+  --color-primary-error: #e35a5a;
 }
 
 @utility flex-centered {
@@ -50,14 +55,43 @@
   line-height: 1;
 }
 
-@utility extra-large-center {
-    @apply 3xl:max-h-[56rem] 3xl:max-w-[1750px] 3xl:m-auto;
+@utility default-colors {
+  @apply border-primary-dark dark:border-secondary-light text-primary-dark dark:text-secondary-light placeholder-primary-dark dark:placeholder-secondary-light;
 }
 
-@source inline('grid-rows-1');
-@source inline('grid-rows-2');
-@source inline('grid-rows-3');
-@source inline('grid-rows-4');
-@source inline('grid-cols-1');
-@source inline('grid-cols-2');
-@source inline('grid-cols-3');
+@utility extra-large-center {
+  @apply 3xl:max-h-[56rem] 3xl:max-w-[1750px] 3xl:m-auto;
+}
+
+@utility custom-ease-with-duration {
+  @apply duration-400 ease-[cubic-bezier(0.34,1,0.2,1)];
+}
+
+@source inline('grid-rows-1 grid-rows-2 grid-rows-3 grid-rows-4 grid-cols-1 grid-cols-2 grid-cols-3');
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #262626;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.dark input:-webkit-autofill,
+.dark input:-webkit-autofill:hover,
+.dark input:-webkit-autofill:focus,
+.dark input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #d4d4d4;
+  transition: background-color 5000s ease-in-out 0s;
+}

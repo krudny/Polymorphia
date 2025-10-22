@@ -2,15 +2,17 @@
 
 import Markdown from "react-markdown";
 import { markdownConfig } from "@/components/markdown/markdown-viewer/config";
-import { MarkdownContext } from "@/components/providers/markdown/MarkdownContext";
-import { useContext } from "react";
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/loading";
 import { useFadeInAnimate } from "@/animations/FadeIn";
+import useMarkdownContext from "@/hooks/contexts/useMarkdownContext";
+import rehypeRaw from "rehype-raw";
+import remarkGfm from "remark-gfm";
+import { useMarkdown } from "@/hooks/course/useMarkdown";
 
 export default function MarkdownViewer() {
-  const { markdown, isLoading, isError } = useContext(MarkdownContext);
-  const shouldAnimate = !isLoading && !!markdown;
-  const wrapperRef = useFadeInAnimate(shouldAnimate);
+  const { markdownType } = useMarkdownContext();
+  const { data, isLoading, isError } = useMarkdown(markdownType);
+  const wrapperRef = useFadeInAnimate(!isLoading && !!data?.markdown);
 
   if (isLoading) {
     return <Loading />;
@@ -20,9 +22,23 @@ export default function MarkdownViewer() {
     return <div>Nie można pobrać markdown</div>;
   }
 
+  if (!data || data.markdown === "") {
+    return (
+      <div className="text-4xl m-auto">
+        Do wydarzenia nie została przypisana żadna treść
+      </div>
+    );
+  }
+
   return (
     <div className="markdown-viewer" ref={wrapperRef}>
-      <Markdown components={markdownConfig}>{markdown}</Markdown>
+      <Markdown
+        components={markdownConfig}
+        rehypePlugins={[rehypeRaw]}
+        remarkPlugins={[remarkGfm]}
+      >
+        {String(data.markdown).replace(/(<br\s*\/?>\s*)+/gi, "<br />")}
+      </Markdown>
     </div>
   );
 }

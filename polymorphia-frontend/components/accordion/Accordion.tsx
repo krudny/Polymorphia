@@ -2,20 +2,21 @@ import { forwardRef, useImperativeHandle } from "react";
 import {
   AccordionContext,
   useAccordionState,
-} from "../providers/accordion/AccordionContext";
-import { AccordionRef } from "../providers/accordion/types";
+} from "@/providers/accordion/AccordionContext";
+import { AccordionRef } from "@/providers/accordion/types";
 import "./index.css";
-import { AccordionProps } from "./types";
+import { AccordionProps } from "@/components/accordion/types";
 import clsx from "clsx";
 
 export const AccordionComponent = forwardRef<AccordionRef, AccordionProps>(
-  ({ children, className, maxOpen }, ref) => {
-    const accordionContext = useAccordionState(maxOpen);
+  ({ children, className, ...rest }, ref) => {
+    const accordionContext = useAccordionState(rest);
 
     useImperativeHandle(ref, () => ({
       open: accordionContext.open,
       close: accordionContext.close,
       closeAll: accordionContext.closeAll,
+      resetToInitial: accordionContext.resetToInitial,
       toggle: accordionContext.toggle,
     }));
 

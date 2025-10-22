@@ -2,12 +2,15 @@ package com.agh.polymorphia_backend.service.validation;
 
 
 import com.agh.polymorphia_backend.model.course.Course;
+import com.agh.polymorphia_backend.repository.course.CourseGroupRepository;
 import com.agh.polymorphia_backend.repository.course.CourseRepository;
+import com.agh.polymorphia_backend.repository.course.StudentCourseGroupRepository;
 import com.agh.polymorphia_backend.service.course.CourseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
@@ -16,18 +19,24 @@ import static com.agh.polymorphia_backend.service.course.CourseService.COURSE_NO
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
+@ActiveProfiles("test")
 public class CourseServiceTest {
     private static final Long COURSE_ID = 99L;
     private static CourseService service;
     @Mock
     private CourseRepository courseRepository;
 
+    @Mock
+    private CourseGroupRepository courseGroupRepository;
+
+    @Mock
+    private StudentCourseGroupRepository studentCourseGroupRepository;
+
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-
-        service = new CourseService(courseRepository);
+        service = new CourseService(courseRepository, courseGroupRepository, studentCourseGroupRepository);
     }
 
     @Test

@@ -1,0 +1,118 @@
+"use client";
+
+import { SelectorProps } from "@/components/selector/types";
+import { selectorVariants } from "@/components/selector/variants";
+import "./index.css";
+import { useEffect, useRef, useState } from "react";
+import clsx from "clsx";
+import { useTheme } from "next-themes";
+
+export default function Selector({
+  options,
+  value,
+  onChange,
+  placeholder = "Wybierz opcję",
+  className = "",
+  disabled = false,
+  size = "md",
+  padding = "md",
+  centeredPlaceholder = false,
+  centeredOptions = false,
+}: SelectorProps) {
+  const { resolvedTheme } = useTheme();
+  const background =
+    resolvedTheme === "dark"
+      ? "bg-[url(/background-dark.webp)]"
+      : "bg-[url(/background.webp)]";
+
+  const [isOpen, setIsOpen] = useState(false);
+  const selectorRef = useRef<HTMLDivElement>(null);
+
+  const styles = selectorVariants({
+    size,
+    padding,
+    centeredPlaceholder,
+    centeredOptions,
+  });
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        selectorRef.current &&
+        !selectorRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const selectedOption = options.find((opt) => opt.value === value);
+
+  const handleSelect = (optionValue: string) => {
+    if (!disabled) {
+      onChange(optionValue);
+      setIsOpen(false);
+    }
+  };
+
+  const toggleDropdown = () => {
+    if (!disabled) {
+      setIsOpen(!isOpen);
+    }
+  };
+
+  return (
+    <div ref={selectorRef} className={styles.container()}>
+      <button
+        type="button"
+        onClick={toggleDropdown}
+        disabled={disabled}
+        className={`${clsx(
+          className,
+          styles.button(),
+          disabled && "selector-disabled",
+          isOpen && "selector-open"
+        )}`}
+      >
+        <span
+          className={selectedOption ? styles.value() : styles.placeholder()}
+        >
+          {selectedOption ? selectedOption.label : placeholder}
+        </span>
+        <svg
+          className={clsx(styles.arrow(), isOpen && "selector-arrow-open")}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </button>
+
+      {isOpen && !disabled && (
+        <div className={`${styles.dropdown()} ${background}`}>
+          {options.map((option) => (
+            <div
+              key={option.value}
+              onClick={() => handleSelect(option.value)}
+              className={clsx(
+                styles.option(),
+                option.value === value && "selector-option-selected"
+              )}
+            >
+              {option.label}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
