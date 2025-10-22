@@ -18,6 +18,9 @@ import { ChangeEventHandler, useState } from "react";
 import useSubmissionsUpdate from "@/hooks/course/useSubmissionsUpdate";
 import useModalContext from "@/hooks/contexts/useModalContext";
 
+const urlRegex =
+  /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/;
+
 function SubmissionsModalContent({
   requirements,
   details,
@@ -38,11 +41,17 @@ function SubmissionsModalContent({
   const [currentDetails, setCurrentDetails] = useState(details);
   const [detailsModified, setDetailsModified] = useState(false);
 
+  const mandatoryUrlsNotEmpty = requirements
+    .filter((requirement) => requirement.isMandatory)
+    .every((requirement) => currentDetails[requirement.id].url.length > 0);
+
+  const validUrls = requirements.every((requirement) => {
+    const url = currentDetails[requirement.id].url;
+    return url.length === 0 || urlRegex.test(url);
+  });
+
   const isSubmissionValid =
-    !detailsModified ||
-    requirements
-      .filter((requirement) => requirement.isMandatory)
-      .every((requirement) => currentDetails[requirement.id].url.length > 0);
+    !detailsModified || (mandatoryUrlsNotEmpty && validUrls);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const requirement = requirements.find(
@@ -128,7 +137,9 @@ function SubmissionsModalContent({
       </Accordion>
       <div className="submissions-modal-submit-section">
         {!isSubmissionValid && (
-          <h3>Należy uzupełnić wszystkie obowiązkowe wymagania.</h3>
+          <h3>
+            Należy wpisać poprawny URL do wszystkich obowiązkowych wymagań.
+          </h3>
         )}
         {/* Fix isActive after PR mirroring it. */}
         <ButtonWithBorder
