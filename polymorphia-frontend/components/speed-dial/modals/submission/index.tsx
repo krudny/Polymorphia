@@ -53,6 +53,10 @@ function SubmissionsModalContent({
   const isSubmissionValid =
     !detailsModified || (mandatoryUrlsNotEmpty && validUrls);
 
+  const areAllSubmissionsLocked = requirements.every(
+    (requirement) => currentDetails[requirement.id].isLocked
+  );
+
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const requirement = requirements.find(
       (requirement) => requirement.id === Number(event.target.id)
@@ -77,7 +81,7 @@ function SubmissionsModalContent({
   };
 
   const handleSubmit = () => {
-    if (!isSubmissionValid) {
+    if (!isSubmissionValid || areAllSubmissionsLocked) {
       return;
     }
 
@@ -142,8 +146,8 @@ function SubmissionsModalContent({
           </h3>
         )}
         <ButtonWithBorder
-          text="Oddaj zadanie"
-          isActive={isSubmissionValid}
+          text={!areAllSubmissionsLocked ? "Oddaj zadanie" : "Oddane"}
+          isActive={isSubmissionValid && !areAllSubmissionsLocked}
           onClick={handleSubmit}
           className="w-full !border-3 !rounded-xl"
         />
@@ -179,7 +183,7 @@ export default function SubmissionsModal({
       isDataPresented={true}
       onClosed={onClosedAction}
       title="Oddawanie zadania"
-      subtitle="Uzupełnij wymagane linki."
+      subtitle="Uzupełnij wymagane linki"
     >
       {(isDetailsError || isRequirementsError) && (
         <div className="submission-error">
