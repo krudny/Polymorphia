@@ -997,7 +997,12 @@ export const EventSectionService = {
     }
 
     // assignment sections
-    if (eventSectionId === 2 || eventSectionId === 4) {
+    if (
+      eventSectionId === 2 ||
+      eventSectionId === 4 ||
+      eventSectionId === 10 ||
+      eventSectionId === 11
+    ) {
       const baseRequirements: SubmissionRequirementResponseDTO[] = [
         {
           id: 1,
@@ -1008,7 +1013,7 @@ export const EventSectionService = {
       ];
 
       // add extra assignment for lab 4, 5, or 8
-      const labsWithExtra = [18, 19, 22];
+      const labsWithExtra = [12, 13, 16];
       if (labsWithExtra.includes(gradableEventId)) {
         baseRequirements.push({
           id: 2,
@@ -1022,7 +1027,7 @@ export const EventSectionService = {
     }
 
     // Project sections
-    if (eventSectionId === 3 || eventSectionId === 6) {
+    if (eventSectionId === 3 || eventSectionId === 7) {
       return [
         {
           id: 3,
@@ -1061,7 +1066,12 @@ export const EventSectionService = {
     // to simplify handling on the frontend.
 
     // assignment
-    if (eventSectionId === 2 || eventSectionId === 4) {
+    if (
+      eventSectionId === 2 ||
+      eventSectionId === 4 ||
+      eventSectionId === 10 ||
+      eventSectionId === 11
+    ) {
       const result: SubmissionDetailsResponseDTO = {
         1: {
           url:
@@ -1072,7 +1082,7 @@ export const EventSectionService = {
         },
       };
 
-      const labsWithExtra = [18, 19, 22];
+      const labsWithExtra = [12, 13, 16];
       if (labsWithExtra.includes(gradableEventId)) {
         result[2] = {
           url:
@@ -1087,7 +1097,7 @@ export const EventSectionService = {
     }
 
     // project
-    if (eventSectionId === 3 || eventSectionId === 6) {
+    if (eventSectionId === 3 || eventSectionId === 7) {
       return {
         3: {
           url:
