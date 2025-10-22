@@ -23,7 +23,7 @@ import {
 import { Role } from "@/interfaces/api/user";
 import { useProfileFiltersModalSpeedDialDynamicBehavior } from "@/hooks/speed-dial-dynamic-behavior/profile";
 import InviteUserModal from "@/components/speed-dial/modals/invite-user";
-import SubmissionsModal from "../modals/submission";
+import SubmissionsModal from "@/components/speed-dial/modals/submission";
 
 export abstract class BaseSpeedDialStrategy {
   abstract getItems(role: Role): SpeedDialItem[];

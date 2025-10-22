@@ -28,7 +28,7 @@ export default function AccordionSection({
   }, [isOpened, shouldAnimateInitialOpen]);
 
   return (
-    <div className="accordion-section">
+    <div className="accordion-flex-col">
       <div className={clsx(headerClassName, "accordion-section-header")}>
         <h1>{title}</h1>
         <div className="accordion-toggle-button" onClick={() => toggle(id)}>

@@ -1,11 +1,7 @@
 @import "tailwindcss";
 @import "../../styles/globals.css";
 
-.accordion {
-  @apply flex flex-col;
-}
-
-.accordion-section {
+.accordion-flex-col {
   @apply flex flex-col;
 }
 
