@@ -143,9 +143,10 @@ function SubmissionsModalContent({
         )}
         {/* Fix isActive after PR mirroring it. */}
         <ButtonWithBorder
-          text="Zapisz"
+          text="Oddaj zadanie"
           isActive={!isSubmissionValid}
           onClick={handleSubmit}
+          className="w-full !border-3 !rounded-xl"
         />
       </div>
     </section>
