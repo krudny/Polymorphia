@@ -46,6 +46,18 @@ public abstract class ControllerTestConfig extends BaseTest {
         registry.add("spring.flyway.enabled", () -> "true");
         registry.add("spring.flyway.locations", () -> "classpath:db/migration");
         registry.add("spring.jpa.hibernate.ddl-auto", () -> "validate");
+
+        registry.add("spring.mail.host", () -> "localhost");
+        registry.add("spring.mail.port", () -> "9999");
+        registry.add("spring.mail.username", () -> "test@example.com");
+        registry.add("spring.mail.password", () -> "test-password");
+        registry.add("spring.mail.properties.mail.smtp.auth", () -> "false");
+        registry.add("spring.mail.properties.mail.smtp.starttls.enable", () -> "false");
+        registry.add("spring.mail.properties.mail.smtp.starttls.required", () -> "false");
+        registry.add("spring.mail.properties.mail.smtp.connectiontimeout", () -> "1000");
+        registry.add("spring.mail.properties.mail.smtp.timeout", () -> "1000");
+        registry.add("invitation.allow-multiple-emails", () -> "false");
+        registry.add("spring.mail.registerUrl", () -> "https://sampleurl.com/registerUrl");
     }
 
     @BeforeEach

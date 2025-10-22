@@ -59,8 +59,8 @@ export default function Modal(props: ModalProps) {
           <div
             ref={modalRef}
             className={`modal ${background}`}
-            onClick={(e) => {
-              e.stopPropagation();
+            onClick={(event) => {
+              event.stopPropagation();
             }}
             {...rest}
           >

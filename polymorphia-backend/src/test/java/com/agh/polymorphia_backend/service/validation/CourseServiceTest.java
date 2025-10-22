@@ -2,7 +2,9 @@ package com.agh.polymorphia_backend.service.validation;
 
 
 import com.agh.polymorphia_backend.model.course.Course;
+import com.agh.polymorphia_backend.repository.course.CourseGroupRepository;
 import com.agh.polymorphia_backend.repository.course.CourseRepository;
+import com.agh.polymorphia_backend.repository.course.StudentCourseGroupRepository;
 import com.agh.polymorphia_backend.service.course.CourseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,12 +26,17 @@ public class CourseServiceTest {
     @Mock
     private CourseRepository courseRepository;
 
+    @Mock
+    private CourseGroupRepository courseGroupRepository;
+
+    @Mock
+    private StudentCourseGroupRepository studentCourseGroupRepository;
+
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-
-        service = new CourseService(courseRepository);
+        service = new CourseService(courseRepository, courseGroupRepository, studentCourseGroupRepository);
     }
 
     @Test

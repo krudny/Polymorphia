@@ -11,7 +11,7 @@ import com.agh.polymorphia_backend.model.course.reward.item.FlatBonusItemBehavio
 import com.agh.polymorphia_backend.model.course.reward.item.ItemType;
 import com.agh.polymorphia_backend.repository.course.reward.assigned.AssignedChestRepository;
 import com.agh.polymorphia_backend.repository.course.reward.assigned.AssignedItemRepository;
-import com.agh.polymorphia_backend.service.course.AnimalService;
+import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.user.UserService;
 import lombok.AllArgsConstructor;
 import org.hibernate.Hibernate;

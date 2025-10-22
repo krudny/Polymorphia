@@ -11,7 +11,6 @@ export type GradingContextInterface = {
   setAreFiltersOpen: Dispatch<SetStateAction<boolean>>;
   isFiltersLoading: boolean;
   isFiltersError: boolean;
-  // TODO: typing
   filters: ReturnType<typeof useFilters<GradingFilterId>>;
   search: string;
   setSearch: (search: string) => void;
@@ -23,4 +22,4 @@ export type GradingContextInterface = {
   submitGrade: () => void;
 };
 
-export type GradingFilterId = "sortOrder" | "sortBy" | "groups";
+export type GradingFilterId = "sortOrder" | "sortBy" | "groups" | "gradeStatus";

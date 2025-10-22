@@ -15,7 +15,7 @@ import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedReward;
 import com.agh.polymorphia_backend.model.course.reward.chest.ChestBehavior;
 import com.agh.polymorphia_backend.repository.course.reward.ChestRepository;
 import com.agh.polymorphia_backend.repository.course.reward.ItemRepository;
-import com.agh.polymorphia_backend.service.course.AnimalService;
+import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.course.reward.AssignedRewardService;
 import com.agh.polymorphia_backend.service.course.reward.BonusXpCalculator;
 import com.agh.polymorphia_backend.service.course.reward.PotentialBonusXpCalculator;

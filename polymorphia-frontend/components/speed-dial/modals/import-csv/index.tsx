@@ -8,12 +8,15 @@ import UploadCSV from "@/components/speed-dial/modals/import-csv/upload";
 import useImportCSVContext from "@/hooks/contexts/useImportCSVContext";
 import PickCSVHeaders from "@/components/speed-dial/modals/import-csv/pick-headers";
 import PreviewCSV from "@/components/speed-dial/modals/import-csv/preview";
-import { ImportCSVModalProps } from "@/components/speed-dial/modals/import-csv/types";
+import {
+  ImportCSVModalProps,
+  ImportCSVModalResult,
+} from "@/components/speed-dial/modals/import-csv/types";
 
 const ImportCSVModalContent = ({ onClosedAction }: SpeedDialModalProps) => {
   const { csvHeadersMutation, csvPreviewMutation } = useImportCSVContext();
 
-  const renderData = (): { content: ReactNode; subtitle?: string } => {
+  const renderData = (): ImportCSVModalResult => {
     if (csvPreviewMutation.isSuccess && csvPreviewMutation.data) {
       return {
         content: <PreviewCSV />,

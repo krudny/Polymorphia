@@ -10,15 +10,19 @@ import useRandomUsers from "@/hooks/course/useRandomUsers";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import useModalContext from "@/hooks/contexts/useModalContext";
 import useUserContext from "@/hooks/contexts/useUserContext";
+import "./index.css";
 
 function GroupPickingModalContent() {
   const { closeModal } = useModalContext();
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 300);
-  // TODO: temporary logic
+  // TODO: temporary logic, nothing works here xD
   const [group, setGroup] = useState<StudentDetailsDTOWithName[]>([]);
   const currentUser = useUserContext();
   const { data: allUsers, isError } = useRandomUsers();
+  // if (currentUser.userRole !== Roles.STUDENT) {
+  //   throw new Error("User is not a student");
+  // }
 
   useEffect(() => {
     if (currentUser && currentUser.userRole === Roles.STUDENT) {

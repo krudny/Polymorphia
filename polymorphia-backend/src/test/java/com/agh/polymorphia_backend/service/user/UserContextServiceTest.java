@@ -3,8 +3,11 @@ package com.agh.polymorphia_backend.service.user;
 import com.agh.polymorphia_backend.BaseTest;
 import com.agh.polymorphia_backend.dto.response.user_context.AvailableCoursesResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.BaseUserDetailsResponseDto;
+import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.user.*;
+import com.agh.polymorphia_backend.repository.course.AnimalRepository;
+import com.agh.polymorphia_backend.repository.course.StudentCourseGroupRepository;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.service.course.CourseService;
@@ -18,11 +21,11 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class UserContextServiceTest extends BaseTest {
 
@@ -38,18 +41,39 @@ class UserContextServiceTest extends BaseTest {
     private UserContextMapper userContextMapper;
     @Mock
     private UserCourseRoleRepository userCourseRoleRepository;
+    @Mock
+    private StudentCourseGroupRepository studentCourseGroupRepository;
+    @Mock
+    private AnimalRepository animalRepository;
 
     @InjectMocks
     private UserContextService userContextService;
 
     private User user;
     private Student student;
+    private Course course;
+    private UserCourseRole userCourseRole;
+    private Animal animal;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
         user = User.builder().id(1L).email("test@example.com").firstName("John").lastName("Doe").build();
         student = Student.builder().user(user).build();
+        course = Course.builder().id(10L).build();
+
+        UserCourseRoleId roleId = new UserCourseRoleId();
+        roleId.setUserId(1L);
+        roleId.setCourseId(10L);
+
+        userCourseRole = UserCourseRole.builder()
+                .id(roleId)
+                .role(UserType.STUDENT)
+                .course(course)
+                .user(user)
+                .build();
+
+        animal = Animal.builder().id(1L).build();
     }
 
     @Test
@@ -81,15 +105,13 @@ class UserContextServiceTest extends BaseTest {
 
     @Test
     void setPreferredCourseId_shouldUpdatePreferredCourse() {
-        Course course = Course.builder().id(10L).build();
-
         when(courseService.getCourseById(10L)).thenReturn(course);
+        when(accessAuthorizer.authorizePreferredCourseSwitch(course)).thenReturn(true);
         when(userService.getCurrentUser()).thenReturn(student);
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
         userContextService.setPreferredCourseId(10L);
 
-        verify(accessAuthorizer).authorizePreferredCourseSwitch(course);
         verify(userRepository).save(user);
         assertEquals(course, user.getPreferredCourse());
         verify(userService).updateSecurityCredentials(user);
@@ -97,35 +119,26 @@ class UserContextServiceTest extends BaseTest {
 
     @Test
     void setPreferredCourseId_shouldThrowWhenUserNotFound() {
-        Course course = Course.builder().id(10L).build();
-
         when(courseService.getCourseById(10L)).thenReturn(course);
         when(userService.getCurrentUser()).thenReturn(student);
+        when(accessAuthorizer.authorizePreferredCourseSwitch(course)).thenReturn(true);
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(IllegalStateException.class, () -> userContextService.setPreferredCourseId(10L));
+        assertThrows(IllegalStateException.class,
+                () -> userContextService.setPreferredCourseId(10L));
     }
+
 
     @Test
     void getAvailableCourses_shouldReturnAvailableCourses() {
-        Course course = Course.builder().id(10L).build();
-        UserCourseRoleId roleId = new UserCourseRoleId();
-        roleId.setUserId(user.getId());
-        roleId.setCourseId(course.getId());
-        UserCourseRole role = UserCourseRole.builder()
-                .id(roleId)
-                .role(UserType.STUDENT)
-                .course(course)
-                .user(user)
-                .build();
         AvailableCoursesResponseDto dto = AvailableCoursesResponseDto.builder()
                 .name("name")
                 .imageUrl("url")
                 .build();
 
         when(userService.getCurrentUser()).thenReturn(student);
-        when(userCourseRoleRepository.findAllByUserId(1L)).thenReturn(List.of(role));
-        when(courseService.getCourseById(10L)).thenReturn(course);
+        when(studentCourseGroupRepository.findAllCourseIdsByUserId(1L)).thenReturn(Set.of(10L));
+        when(userCourseRoleRepository.findAllByUserId(1L)).thenReturn(List.of(userCourseRole));
         when(userContextMapper.toAvailableCoursesResponseDto(course, UserType.STUDENT)).thenReturn(dto);
 
         var result = userContextService.getAvailableCourses();

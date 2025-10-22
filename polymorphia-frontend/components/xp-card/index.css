@@ -2,231 +2,229 @@
 @import "../../styles/globals.css";
 
 .xp-card-grid-animate {
-    opacity: 0;
-    transform: translateY(50px);
+  opacity: 0;
+  transform: translateY(50px);
 }
 
 .xp-card-grid-center-vertically {
-    @apply flex flex-col justify-between w-fit max-h-full;
+  @apply flex flex-col justify-between w-fit max-h-full;
 }
 
 .xp-card-grid-point-summary-layout {
-    @apply flex flex-col items-start gap-5 p-2;
-    @apply lg:gap-10;
+  @apply flex flex-col items-start gap-5 p-2;
+  @apply lg:gap-10;
 }
 
 .xp-card-grid {
-    @apply grid gap-5 w-fit justify-items-start items-start;
+  @apply grid gap-5 w-fit justify-items-start items-start;
 }
 
 .xp-card-no-grid {
-    @apply w-full flex justify-center text-3xl;
+  @apply w-full flex justify-center text-3xl;
 }
 
 .xp-card {
-    @apply box-content w-full rounded-xl drop-shadow-lg transition-all overflow-hidden flex flex-row bg-neutral-50 dark:bg-primary-dark;
+  @apply box-content w-full rounded-xl drop-shadow-lg transition-all overflow-hidden flex flex-row bg-neutral-50 dark:bg-primary-dark;
 }
 
 .xp-card-hover {
-    @apply cursor-pointer hover:drop-shadow-xl;
+  @apply cursor-pointer hover:drop-shadow-xl;
 }
 
 .xp-card-lock {
-    @apply hidden;
+  @apply hidden;
 }
 
 .xp-card-fading-edges {
-    @apply w-full px-3;
-    mask-image: linear-gradient(
-            to right,
-            transparent,
-            black 1%,
-            black 99%,
-            transparent
-    );
-    mask-size: 100% 100%;
-    mask-repeat: no-repeat;
+  @apply w-full px-3;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 1%,
+    black 99%,
+    transparent
+  );
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
 }
 
 .xp-card-left-component {
-    @apply shrink-0;
+  @apply shrink-0;
 }
 
 .xp-card-right-component {
-    @apply shrink-0;
+  @apply shrink-0;
 }
 
 .xp-card-middle {
-    @apply flex flex-col justify-center h-full px-7 min-w-0 flex-1;
+  @apply flex flex-col justify-center h-full px-7 min-w-0 flex-1;
 
-    h1,
-    h2 {
-        @apply truncate;
-    }
+  h1,
+  h2 {
+    @apply truncate;
+  }
 }
 
 .xp-card-component {
-    @apply flex-col-centered;
+  @apply flex-col-centered;
 }
 
 .xp-card-xs {
-    @apply h-20 min-[400px]:h-24 drop-shadow-sm rounded-lg;
+  @apply h-20 min-[400px]:h-24 drop-shadow-sm rounded-lg;
 
-    .xp-card-component {
-        @apply w-20 h-20 min-[400px]:w-24 min-[400px]:h-24 min-w-0;
+  .xp-card-component {
+    @apply w-20 h-20 min-[400px]:w-24 min-[400px]:h-24 min-w-0;
+  }
+
+  .xp-card-middle {
+    @apply max-w-xl px-4 py-2 gap-0;
+  }
+
+  .xp-card-middle,
+  .xp-card-component {
+    h1 {
+      @apply text-2xl min-[400px]:text-[2rem];
     }
 
-    .xp-card-middle {
-        @apply  max-w-xl px-4 py-2 gap-0;
+    h2 {
+      @apply text-lg min-[400px]:text-[1.3rem];
     }
-
-    .xp-card-middle,
-    .xp-card-component {
-        h1 {
-            @apply text-2xl min-[400px]:text-[2rem];
-        }
-
-        h2 {
-            @apply text-lg min-[400px]:text-[1.3rem];
-        }
-    }
+  }
 }
 
 .xp-card-xs.xp-card-force-width .xp-card-middle {
-    @apply w-[9rem];
+  @apply w-[9rem];
 }
 
 .xp-card-sm {
-    @apply h-30;
+  @apply h-30;
 
-    .xp-card-component {
-        @apply w-30 h-30;
+  .xp-card-component {
+    @apply w-30 h-30;
+  }
+
+  .xp-card-middle,
+  .xp-card-component {
+    h1 {
+      @apply text-4xl;
     }
 
-    .xp-card-middle,
-    .xp-card-component {
-        h1 {
-            @apply text-4xl;
-        }
-
-        h2 {
-            @apply text-lg;
-        }
+    h2 {
+      @apply text-lg;
     }
+  }
 }
 
 .xp-card-sm.xp-card-force-width .xp-card-middle {
-    @apply w-[12rem];
+  @apply w-[12rem];
 }
 
 .xp-card-md {
-    @apply h-40 lg:max-w-[26rem];
+  @apply h-40 lg:max-w-[26rem];
 
-    .xp-card-component {
-        @apply w-40 h-40;
+  .xp-card-component {
+    @apply w-40 h-40;
+  }
+
+  .xp-card-middle,
+  .xp-card-component {
+    h1 {
+      @apply text-[2.5rem];
     }
 
-    .xp-card-middle,
-    .xp-card-component {
-        h1 {
-            @apply text-[2.5rem];
-        }
-
-        h2 {
-            @apply text-[1.5rem];
-        }
+    h2 {
+      @apply text-[1.5rem];
     }
+  }
 }
 
 .xp-card-md.xp-card-force-width .xp-card-middle {
-    @apply w-[30rem];
+  @apply w-[30rem];
 }
 
 .xp-card-lg {
-    @apply h-50 lg:max-w-[35rem];
+  @apply h-50 lg:max-w-[35rem];
 
-    .xp-card-component {
-        @apply w-50 h-50;
+  .xp-card-component {
+    @apply w-50 h-50;
+  }
+
+  .xp-card-middle,
+  .xp-card-component {
+    h1 {
+      @apply text-6xl;
     }
 
-    .xp-card-middle,
-    .xp-card-component {
-        h1 {
-            @apply text-6xl;
-        }
-
-        h2 {
-            @apply text-2xl;
-        }
+    h2 {
+      @apply text-2xl;
     }
+  }
 }
 
 .xp-card-lg.xp-card-force-width .xp-card-middle {
-    @apply w-[22.5rem];
+  @apply w-[22.5rem];
 }
 
 .xp-card-hall-of-fame-desktop {
-    @apply w-full h-full;
+  @apply w-full h-full;
 
-    .xp-card-component {
-        @apply w-32 h-full;
+  .xp-card-component {
+    @apply w-32 h-full;
+  }
+
+  .xp-card-middle {
+    @apply bg-primary-light dark:bg-primary-dark max-w-full;
+  }
+
+  .xp-card-middle,
+  .xp-card-component {
+    @apply gap-0 2xl:gap-1;
+
+    h1 {
+      @apply text-[1.9rem] lg:text-4xl 2xl:text-[2.5rem];
     }
 
-    .xp-card-middle {
-        @apply bg-primary-light dark:bg-primary-dark max-w-full;
+    h2 {
+      @apply text-2xl 2xl:text-[1.6rem] mt-0;
     }
-
-    .xp-card-middle,
-    .xp-card-component {
-        @apply gap-0 2xl:gap-1;
-
-        h1 {
-            @apply text-[1.9rem] lg:text-4xl 2xl:text-[2.5rem];
-        }
-
-        h2 {
-            @apply text-2xl 2xl:text-[1.6rem] mt-0;
-        }
-    }
+  }
 }
 
 .xp-card-locked {
-    @apply absolute w-full h-full bg-secondary-gray/70 dark:bg-primary-dark/80 flex-col-centered cursor-default hover:drop-shadow-none;
+  @apply absolute w-full h-full bg-secondary-gray/70 dark:bg-primary-dark/80 flex-col-centered cursor-default hover:drop-shadow-none;
 
-    span {
-        @apply text-5xl md:text-6xl text-primary-dark;
-    }
+  span {
+    @apply text-5xl md:text-6xl text-primary-dark;
+  }
 }
 
 .xp-card-project-group {
-    @apply w-full h-40;
+  @apply w-full h-40;
 
-    .xp-card-middle,
-    .xp-card-component {
-        h1 {
-            @apply text-[2.2rem];
-        }
-
-        h2 {
-            @apply text-[1.2rem];
-        }
+  .xp-card-middle,
+  .xp-card-component {
+    h1 {
+      @apply text-[2.2rem];
     }
 
-    .xp-card-left-component {
-        @apply w-40 h-40 bg-green-300;
+    h2 {
+      @apply text-[1.2rem];
     }
+  }
 
-    .xp-card-right-component {
-        @apply w-24 h-40;
-    }
+  .xp-card-left-component {
+    @apply w-40 h-40 bg-green-300;
+  }
+
+  .xp-card-right-component {
+    @apply w-24 h-40;
+  }
 }
 
-
 .card-grid-wrapper {
-    @apply w-full h-full flex flex-col justify-center;
+  @apply w-full h-full flex flex-col justify-center;
 }
 
 .card-grid {
-    @apply w-full  flex flex-wrap 2xl:justify-start items-start content-start gap-4 px-1;
+  @apply w-full  flex flex-wrap 2xl:justify-start items-start content-start gap-4 px-1;
 }
-

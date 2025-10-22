@@ -6,14 +6,14 @@ import lombok.RequiredArgsConstructor;
 import java.util.Set;
 
 @Getter
-@RequiredArgsConstructor
 public enum CSVType {
-    STUDENT_INVITE("Email", "Imię", "Nazwisko"),
-    GRADE_IMPORT("Numer indeksu", "Zdobyte XP");
+    STUDENT_INVITE(CSVHeaders.EMAIL, CSVHeaders.FIRST_NAME, CSVHeaders.LAST_NAME),
+    GRADE_IMPORT(CSVHeaders.INDEX_NUMBER, CSVHeaders.XP),
+    GROUP_INVITE(CSVHeaders.EMAIL);
 
-    private final Set<String> requiredCSVHeaders;
+    private final Set<CSVHeaders> requiredCSVHeaders;
 
-    CSVType(String... csvHeaders) {
-        this.requiredCSVHeaders = Set.of(csvHeaders);
+    CSVType(CSVHeaders... headers) {
+        this.requiredCSVHeaders = Set.of(headers);
     }
 }
