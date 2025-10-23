@@ -41,6 +41,7 @@ export default function ButtonWithBorder({
       onClick={onClick}
       className={clsx(
         buttonWithBorder({ size, isActive, forceDark }),
+        icon && "button-use-flex",
         className
       )}
     >

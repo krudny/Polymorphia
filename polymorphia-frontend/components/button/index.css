@@ -13,3 +13,7 @@
 .button-with-border-light {
   @apply dark:text-secondary-gray dark:border-secondary-gray hover:dark:bg-secondary-gray hover:dark:text-primary-dark;
 }
+
+.button-use-flex {
+  @apply flex-centered gap-1;
+}
