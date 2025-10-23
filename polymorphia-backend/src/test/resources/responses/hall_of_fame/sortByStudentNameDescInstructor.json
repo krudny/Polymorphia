@@ -2,6 +2,7 @@
   "content": [
     {
       "userDetails": {
+        "fullName": "Tomek Wtorek",
         "animalName": "hof_3",
         "evolutionStage": "Jajo",
         "group": "BM-SR13",
@@ -17,36 +18,23 @@
     },
     {
       "userDetails": {
-        "animalName": "hof_1",
+        "fullName": "Andrzej Bednarek",
+        "animalName": "hof_5",
         "evolutionStage": "Jajo",
         "group": "BM-SR13",
         "imageUrl": "imageUrl_jajo",
-        "position": 3
+        "position": 5
       },
       "xpDetails": {
-        "Lab": "1.0",
-        "Kartkówka": "1.0",
-        "bonuses": "0.2",
-        "total": "2.2"
-      }
-    },
-    {
-      "userDetails": {
-        "animalName": "hof_2",
-        "evolutionStage": "Jajo",
-        "group": "BM-SR13",
-        "imageUrl": "imageUrl_jajo",
-        "position": 2
-      },
-      "xpDetails": {
-        "Lab": "8.0",
-        "Kartkówka": "4.0",
+        "Lab": "0.0",
+        "Kartkówka": "2.0",
         "bonuses": "0.0",
-        "total": "12.0"
+        "total": "2.0"
       }
     },
     {
       "userDetails": {
+        "fullName": "Andrzej Bednarek",
         "animalName": "hof_4",
         "evolutionStage": "Jajo",
         "group": "BM-SR13",
@@ -62,17 +50,34 @@
     },
     {
       "userDetails": {
-        "animalName": "hof_5",
+        "fullName": "Alicja Nowak",
+        "animalName": "hof_1",
         "evolutionStage": "Jajo",
         "group": "BM-SR13",
         "imageUrl": "imageUrl_jajo",
-        "position": 5
+        "position": 3
       },
       "xpDetails": {
-        "Lab": "0.0",
-        "Kartkówka": "2.0",
+        "Lab": "1.0",
+        "Kartkówka": "1.0",
+        "bonuses": "0.2",
+        "total": "2.2"
+      }
+    },
+    {
+      "userDetails": {
+        "fullName": "Aleksander Wielki",
+        "animalName": "hof_2",
+        "evolutionStage": "Jajo",
+        "group": "BM-SR13",
+        "imageUrl": "imageUrl_jajo",
+        "position": 2
+      },
+      "xpDetails": {
+        "Lab": "8.0",
+        "Kartkówka": "4.0",
         "bonuses": "0.0",
-        "total": "2.0"
+        "total": "12.0"
       }
     }
   ],

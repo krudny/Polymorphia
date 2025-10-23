@@ -34,6 +34,7 @@ public class User {
     private String password;
 
     @ManyToOne()
+    @ToString.Exclude
     @JoinColumn(name = "preferred_course_id")
     private Course preferredCourse;
 }
