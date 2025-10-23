@@ -10,6 +10,7 @@ export const initialState: GradingReducerState = {
   selectedTarget: null,
   criteria: {},
   comment: "",
+  submissionDetails: {},
 };
 
 export const GradingReducer = (
@@ -146,6 +147,12 @@ export const GradingReducer = (
         ...state,
         comment: action.payload.grade.comment,
         criteria: criteriaMap,
+      };
+
+    case GradingReducerActions.SET_SUBMISSION_DETAILS:
+      return {
+        ...state,
+        submissionDetails: action.payload.submissionDetails,
       };
 
     case GradingReducerActions.UPDATE_GRADE:

@@ -11,6 +11,7 @@ export class ProjectStrategy
     switch (role) {
       case Roles.STUDENT:
         return [
+          this.createSubmissions(),
           this.createRewards(),
           this.createProjectVariant(),
           this.createProjectGroup(),
