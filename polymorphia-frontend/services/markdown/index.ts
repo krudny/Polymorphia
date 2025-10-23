@@ -12,7 +12,7 @@ export const MarkdownService = {
     request: MarkdownParamsRequest
   ): Promise<MarkdownResponseDTO> => {
     const resourceId = request.resourceId;
-    const type = kebabCase(request.type.toLowerCase());
+    const type = kebabCase(request.markdownType.toLowerCase());
 
     const response = await fetch(`${API_HOST}/markdown/${type}/${resourceId}`, {
       credentials: "include",
@@ -29,7 +29,7 @@ export const MarkdownService = {
     request: MarkdownParamsRequest
   ): Promise<SourceMarkdownResponseDTO> => {
     const resourceId = request.resourceId;
-    const type = kebabCase(request.type.toLowerCase());
+    const type = kebabCase(request.markdownType.toLowerCase());
 
     const response = await fetch(
       `${API_HOST}/markdown/${type}/${resourceId}/source`,
@@ -44,7 +44,7 @@ export const MarkdownService = {
   },
 
   saveMarkdown: async (request: MarkdownRequestDTO): Promise<void> => {
-    const type = kebabCase(request.type.toLowerCase());
+    const type = kebabCase(request.markdownType.toLowerCase());
     const { markdown, resourceId } = request;
 
     const response = await fetch(`${API_HOST}/markdown/${type}/${resourceId}`, {
@@ -63,7 +63,7 @@ export const MarkdownService = {
 
   resetMarkdown: async (request: MarkdownParamsRequest): Promise<void> => {
     const resourceId = request.resourceId;
-    const type = kebabCase(request.type.toLowerCase());
+    const type = kebabCase(request.markdownType.toLowerCase());
 
     const response = await fetch(
       `${API_HOST}/markdown/${type}/${resourceId}/reset`,
