@@ -4,6 +4,7 @@ import com.agh.polymorphia_backend.dto.request.student.CreateAnimalRequestDto;
 import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.StudentCourseGroupAssignment;
 import com.agh.polymorphia_backend.model.course.StudentCourseGroupAssignmentId;
+import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.Student;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.repository.course.AnimalRepository;
@@ -15,8 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -33,6 +32,11 @@ public class AnimalService {
     public Animal getAnimal(Long userId, Long courseId) {
         return animalRepository.findByCourseIdAndStudentId(courseId, userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, ANIMAL_NOT_FOUND));
+    }
+
+    public Long getAnimalForCurrentUser(Long courseId) {
+        AbstractRoleUser student = userService.getCurrentUser();
+        return getAnimal(student.getUserId(), courseId).getId();
     }
 
     public boolean hasAnimalInCourse(Long courseId) {
