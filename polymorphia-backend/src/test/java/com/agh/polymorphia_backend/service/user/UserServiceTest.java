@@ -79,7 +79,7 @@ class UserServiceTest {
                 .user(user)
                 .course(new Course())
                 .role(UserType.STUDENT)
-                        .build();
+                .build();
 
         when(userCourseRoleRepository.findUserCourseRoleByEmail(email)).thenReturn(Optional.of(userCourseRole));
         when(studentRepository.findById(1L)).thenReturn(Optional.of(student));

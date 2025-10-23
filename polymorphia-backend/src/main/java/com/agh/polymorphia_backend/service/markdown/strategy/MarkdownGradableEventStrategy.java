@@ -1,8 +1,8 @@
 package com.agh.polymorphia_backend.service.markdown.strategy;
 
 import com.agh.polymorphia_backend.config.FetchClient;
-import com.agh.polymorphia_backend.dto.response.markdown.MarkdownResponseDTO;
-import com.agh.polymorphia_backend.dto.response.markdown.SourceUrlMarkdownResponseDTO;
+import com.agh.polymorphia_backend.dto.response.markdown.MarkdownResponseDto;
+import com.agh.polymorphia_backend.dto.response.markdown.SourceUrlMarkdownResponseDto;
 import com.agh.polymorphia_backend.model.event_section.EventSectionType;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.repository.course.GradableEventRepository;
@@ -26,25 +26,25 @@ public class MarkdownGradableEventStrategy implements MarkdownStrategy {
     private final FetchClient fetchClient;
 
     @Override
-    public MarkdownResponseDTO getMarkdown(Long resourceId) {
+    public MarkdownResponseDto getMarkdown(Long resourceId) {
         GradableEvent gradableEvent = gradableEventService.getGradableEventById(resourceId);
 
         if (gradableEvent.getMarkdown() == null || gradableEvent.getMarkdown().isEmpty()) {
-            return MarkdownResponseDTO.builder()
+            return MarkdownResponseDto.builder()
                     .markdown("")
                     .build();
         }
 
-        return MarkdownResponseDTO.builder()
+        return MarkdownResponseDto.builder()
                 .markdown(gradableEvent.getMarkdown())
                 .build();
     }
 
     @Override
-    public SourceUrlMarkdownResponseDTO getMarkdownSourceUrl(Long resourceId) {
+    public SourceUrlMarkdownResponseDto getMarkdownSourceUrl(Long resourceId) {
         GradableEvent gradableEvent = gradableEventService.getGradableEventById(resourceId);
 
-        return SourceUrlMarkdownResponseDTO.builder()
+        return SourceUrlMarkdownResponseDto.builder()
                 .sourceUrl(gradableEvent.getMarkdownSourceUrl())
                 .build();
     }

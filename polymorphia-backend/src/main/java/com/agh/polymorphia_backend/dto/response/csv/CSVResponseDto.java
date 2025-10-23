@@ -5,5 +5,6 @@ import lombok.Builder;
 import java.util.List;
 
 @Builder
-public record CSVResponseDto(List<String> csvHeaders, List<List<String>> data) {}
+public record CSVResponseDto(List<String> csvHeaders, List<List<String>> data) {
+}
 

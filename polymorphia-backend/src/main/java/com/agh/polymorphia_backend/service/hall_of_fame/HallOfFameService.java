@@ -10,9 +10,9 @@ import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.StudentScoreDetailRepository;
-import com.agh.polymorphia_backend.service.course.AnimalService;
 import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.mapper.HallOfFameMapper;
+import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import com.agh.polymorphia_backend.util.NumberFormatter;
 import lombok.AllArgsConstructor;
@@ -34,6 +34,7 @@ import static com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry.*;
 @AllArgsConstructor
 public class HallOfFameService {
     public static final String STUDENT_HOF_NOT_FOUND = "Student's Hall of Fame scores not found";
+    private static final String HOF_EMPTY = "Hall of Fame scores are empty";
     private static final Set<String> INVERT_POSITION_FOR = Set.of(
             FIELD_TOTAL_XP_SUM,
             FIELD_TOTAL_BONUS_SUM
@@ -108,6 +109,10 @@ public class HallOfFameService {
 
     public Map<Long, Map<String, String>> groupScoreDetails(List<Long> animalIds) {
         List<StudentScoreDetail> detailsList = scoreDetailRepository.findByAnimalIdIn(animalIds);
+
+        if (detailsList.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, HOF_EMPTY);
+        }
 
         sortByEventSectionOrderIndex(detailsList);
         Map<Long, Map<String, String>> result = new HashMap<>();

@@ -2,9 +2,9 @@
 @import "../../../styles/globals.css";
 
 .student-view {
-    @apply flex flex-col gap-x-10 overflow-hidden lg:flex-row 2xl:px-10;
+  @apply flex flex-col gap-x-10 overflow-hidden lg:flex-row 2xl:px-10;
 }
 
 .student-view-cards {
-    @apply w-full min-h-full flex-col-centered;
+  @apply w-full min-h-full flex-col-centered;
 }

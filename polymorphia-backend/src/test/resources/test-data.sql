@@ -1,35 +1,35 @@
 --Truncate
-TRUNCATE TABLE users cascade;
-TRUNCATE TABLE chests_items cascade;
-TRUNCATE TABLE courses cascade;
-TRUNCATE TABLE coordinators cascade;
-TRUNCATE TABLE students cascade;
-TRUNCATE TABLE instructors cascade;
-TRUNCATE TABLE user_course_roles cascade;
-TRUNCATE TABLE course_groups cascade;
-TRUNCATE TABLE chests cascade;
-TRUNCATE TABLE animals cascade;
-TRUNCATE TABLE students_course_groups cascade;
-TRUNCATE TABLE evolution_stages cascade;
-TRUNCATE TABLE event_sections cascade;
-TRUNCATE TABLE test_sections cascade;
-TRUNCATE TABLE rewards cascade;
-TRUNCATE TABLE items cascade;
-TRUNCATE TABLE flat_bonus_items cascade;
-TRUNCATE TABLE percentage_bonus_items cascade;
+-- TRUNCATE TABLE users cascade;
+-- TRUNCATE TABLE chests_items cascade;
+-- TRUNCATE TABLE courses cascade;
+-- TRUNCATE TABLE coordinators cascade;
+-- TRUNCATE TABLE students cascade;
+-- TRUNCATE TABLE instructors cascade;
+-- TRUNCATE TABLE user_course_roles cascade;
+-- TRUNCATE TABLE course_groups cascade;
+-- TRUNCATE TABLE chests cascade;
+-- TRUNCATE TABLE animals cascade;
+-- TRUNCATE TABLE students_course_groups cascade;
+-- TRUNCATE TABLE evolution_stages cascade;
+-- TRUNCATE TABLE event_sections cascade;
+-- TRUNCATE TABLE test_sections cascade;
+-- TRUNCATE TABLE rewards cascade;
+-- TRUNCATE TABLE items cascade;
+-- TRUNCATE TABLE flat_bonus_items cascade;
+-- TRUNCATE TABLE percentage_bonus_items cascade;
 
 -- Users
-INSERT INTO users (id, first_name, last_name, email, password, preferred_course_id, is_password_temporary)
-VALUES (3, 'Michał', 'Kowalski', 'coordinator@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O',null, false),
-       (2, 'Piotr', 'Budynek', 'student@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null, false),
-       (4, 'Sławomir', 'Nowak', 'instructor@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O',null, false),
-       (5, 'Alicja', 'Nowak', 'anowak@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null, false),
-       (6, 'Aleksander', 'Wielki', 'awielki@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null, false),
-       (7, 'Tomek', 'Wtorek', 'twtorek@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null, false),
-       (8, 'Andrzej', 'Bednarek', 'abednarek@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null, false),
-       (9, 'Karol', 'Wójcik', 'kwojcik@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null, false),
-       (10, 'Andrzej', 'Bednarek', 'abednarek2@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null, false),
-       (11, 'Wojciech', 'Kot', 'instructor2@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O',null, false);
+INSERT INTO users (id, first_name, last_name, email, password, preferred_course_id)
+VALUES (3, 'Michał', 'Kowalski', 'coordinator@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O',null),
+       (2, 'Piotr', 'Budynek', 'student@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null),
+       (4, 'Sławomir', 'Nowak', 'instructor@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O',null),
+       (5, 'Alicja', 'Nowak', 'anowak@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null),
+       (6, 'Aleksander', 'Wielki', 'awielki@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null),
+       (7, 'Tomek', 'Wtorek', 'twtorek@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null),
+       (8, 'Andrzej', 'Bednarek', 'abednarek@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null),
+       (9, 'Karol', 'Wójcik', 'kwojcik@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null),
+       (10, 'Andrzej', 'Bednarek', 'abednarek2@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null),
+       (11, 'Wojciech', 'Kot', 'instructor2@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O',null);
 
 -- Coordinators
 INSERT INTO coordinators(user_id)
@@ -45,7 +45,6 @@ VALUES (1, 'Programowanie Obiektowe', 3, '/coord_url', '/instr_url', 'img_url', 
 -- Students
 INSERT INTO students(user_id, index_number)
 VALUES (2, 123456),
-
        (5, 121212),
        (6, 131313),
        (7, 141414),

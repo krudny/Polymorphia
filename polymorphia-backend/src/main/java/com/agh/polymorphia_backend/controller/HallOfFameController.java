@@ -26,7 +26,7 @@ public class HallOfFameController {
 
     @GetMapping("/podium")
     @PreAuthorize("isAuthenticated()")
-    public List<HallOfFameResponseDto> getPodium(@RequestParam Long courseId){
+    public List<HallOfFameResponseDto> getPodium(@RequestParam Long courseId) {
         return hallOfFameService.getPodium(courseId);
     }
 }

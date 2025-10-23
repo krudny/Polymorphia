@@ -20,6 +20,6 @@ public class HallOfFameMapper {
                 .userDetails(userDetails)
                 .xpDetails(xpDetails)
                 .build();
-        }
+    }
 
 }

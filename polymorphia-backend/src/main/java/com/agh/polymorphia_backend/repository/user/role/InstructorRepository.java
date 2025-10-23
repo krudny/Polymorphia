@@ -17,4 +17,6 @@ public interface InstructorRepository extends JpaRepository<Instructor, Long>, U
     )
     @Override
     Optional<Instructor> findByUserIdAndCourseId(Long userId, Long courseId);
+
+    Optional<Instructor> findByUserId(Long userId);
 }

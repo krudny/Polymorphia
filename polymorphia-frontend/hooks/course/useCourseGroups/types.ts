@@ -1,7 +1,15 @@
-import { CourseGroupsResponseDTO } from "@/interfaces/api/course";
+import {
+  CourseGroupResponse,
+  CourseGroupType,
+} from "@/services/course-groups/types";
 
-export interface UseCourseGroups {
-  data: CourseGroupsResponseDTO[] | undefined;
+export interface UseCourseGroups<T extends CourseGroupType> {
+  data: CourseGroupResponse<T> | undefined;
   isLoading: boolean;
   isError: boolean;
+}
+
+export interface UseCourseGroupsProps<T extends CourseGroupType> {
+  courseId: number;
+  type: T;
 }

@@ -1,3 +1,6 @@
-export default interface LoginFormProps {
-  onBackAction: () => void;
+import { RefObject } from "react";
+
+export interface HomeContentProps {
+  titleRef: RefObject<HTMLDivElement | null>;
+  hasMountedRef: RefObject<boolean>;
 }

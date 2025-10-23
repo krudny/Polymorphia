@@ -48,19 +48,6 @@ const CSVService = {
     return await response.json();
   },
 
-  processCSV: async (
-    type: ImportCSVType,
-    csvHeaders: string[],
-    data: string[][],
-    gradableEventId?: number
-  ): Promise<void> => {
-    if (type === ImportCSVTypes.GRADE_IMPORT) {
-      await CSVService.processGradeImport(csvHeaders, data, gradableEventId);
-    } else {
-      await CSVService.processStudentInvite(csvHeaders, data);
-    }
-  },
-
   processGradeImport: async (
     csvHeaders: string[],
     data: string[][],
@@ -73,7 +60,7 @@ const CSVService = {
       ...(gradableEventId && { gradableEventId }),
     });
 
-    const response = await fetch(`${API_HOST}/csv/process/test-grade`, {
+    const response = await fetch(`${API_HOST}/grading/csv/test`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: body,
@@ -85,17 +72,43 @@ const CSVService = {
     }
   },
 
-  processStudentInvite: async (
+  processStudentCourseInvite: async (
     csvHeaders: string[],
-    data: string[][]
+    data: string[][],
+    courseId: number
   ): Promise<void> => {
     const body = JSON.stringify({
       type: ImportCSVTypes.STUDENT_INVITE,
-      csvHeaders: csvHeaders,
-      data: data,
+      csvHeaders,
+      data,
+      courseId,
     });
 
-    const response = await fetch(`${API_HOST}/csv/process/student-invite`, {
+    const response = await fetch(`${API_HOST}/invitation/course/csv`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: body,
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error("Nie udało się zaprosić studentów!");
+    }
+  },
+
+  processStudentGroupInvite: async (
+    csvHeaders: string[],
+    data: string[][],
+    courseGroupId: number
+  ): Promise<void> => {
+    const body = JSON.stringify({
+      type: ImportCSVTypes.GROUP_INVITE,
+      csvHeaders,
+      data,
+      courseGroupId,
+    });
+
+    const response = await fetch(`${API_HOST}/invitation/group/csv`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: body,

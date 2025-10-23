@@ -1,26 +1,36 @@
 import { useLayoutEffect, useRef } from "react";
 import { animateInitialMount } from "@/animations/Home";
+import { UseHeroAnimation } from "./types";
 
-export function useHeroAnimation() {
-  const backgroundRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
+export function useHeroAnimation(): UseHeroAnimation {
+  const owlBackgroundRef = useRef<HTMLDivElement>(null);
+  const owlRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const hasMountedRef = useRef(false);
 
   useLayoutEffect(() => {
-    if (!backgroundRef.current || !titleRef.current || !imageRef.current) {
+    if (!owlBackgroundRef.current || !titleRef.current || !owlRef.current) {
       return;
     }
 
-    animateInitialMount(
-      backgroundRef.current,
-      titleRef.current,
-      imageRef.current,
-      () => {
-        hasMountedRef.current = true;
-      }
-    );
+    const startAnimation = () => {
+      animateInitialMount(
+        owlBackgroundRef.current!,
+        titleRef.current!,
+        owlRef.current!,
+        () => {
+          hasMountedRef.current = true;
+        }
+      );
+    };
+
+    if (document.readyState === "complete") {
+      startAnimation();
+    } else {
+      window.addEventListener("load", startAnimation);
+      return () => window.removeEventListener("load", startAnimation);
+    }
   }, []);
 
-  return { backgroundRef, imageRef, titleRef, hasMountedRef };
+  return { owlBackgroundRef, owlRef, titleRef, hasMountedRef };
 }

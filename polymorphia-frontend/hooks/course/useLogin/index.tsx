@@ -5,16 +5,21 @@ import { useRouter } from "next/navigation";
 import { UseLoginProps } from "@/hooks/course/useLogin/types";
 import UserService from "@/services/user";
 import { redirectToNextStep } from "@/app/(welcome)/redirectHandler";
+import { LoginDTO } from "@/interfaces/api/login";
 
 export default function useLogin({ form }: UseLoginProps) {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: AuthService.login,
+  const mutation = useMutation({
+    mutationFn: (data: LoginDTO) => {
+      return toast.promise(AuthService.login(data), {
+        loading: "Logowanie...",
+        success: "Zalogowano pomyślnie!",
+        error: () => `Wystąpił błąd przy zalogowaniu!`,
+      });
+    },
     onSuccess: async () => {
-      toast.success("Zalogowano pomyślnie!");
-
       await queryClient.invalidateQueries({
         queryKey: ["userRole"],
       });
@@ -33,11 +38,8 @@ export default function useLogin({ form }: UseLoginProps) {
         defaultRedirect: "/welcome",
         router: router,
       });
-
-      form.reset();
-    },
-    onError: (error: Error) => {
-      toast.error(`Wystąpił błąd! ${error.message}`);
     },
   });
+
+  return { mutation };
 }

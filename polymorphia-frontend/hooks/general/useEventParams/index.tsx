@@ -8,9 +8,11 @@ export function useEventParams(): UseEventParams {
   const params = useParams();
   const gradableEventId = Number(params.gradableEventId);
   const eventSectionId = Number(params.eventSectionId);
+  const courseGroupId = Number(params.courseGroupId);
   const eventType = String(params.eventType).toUpperCase() as EventType;
 
   return {
+    courseGroupId,
     gradableEventId,
     eventSectionId,
     eventType,

@@ -1,11 +1,5 @@
 import { z } from "zod";
-
-export const emailField = z.string().email("Nieprawidłowy email");
-
-export const loginSchema = z.object({
-  email: emailField,
-  password: z.string(),
-});
+import { Roles } from "@/interfaces/api/user";
 
 const passwordValidation = z
   .string()
@@ -19,6 +13,13 @@ const passwordValidation = z
     "Hasło musi zawierać co najmniej jeden znak specjalny"
   );
 
+export const emailField = z.string().email("Nieprawidłowy email");
+
+export const loginSchema = z.object({
+  email: emailField,
+  password: z.string(),
+});
+
 export const changePasswordSchema = z
   .object({
     oldPassword: z.string().min(1, "Stare hasło jest wymagane"),
@@ -29,3 +30,19 @@ export const changePasswordSchema = z
     message: "Hasła nie są zgodne",
     path: ["confirmNewPassword"],
   });
+
+export const registerSchema = z.object({
+  password: passwordValidation,
+});
+
+export const inviteSchema = z.object({
+  firstName: z.string().nonempty(),
+  lastName: z.string().nonempty(),
+  role: z.nativeEnum(Roles),
+  email: emailField,
+  courseId: z.number(),
+});
+
+export const createAnimalSchema = z.object({
+  animalName: z.string().nonempty(),
+});

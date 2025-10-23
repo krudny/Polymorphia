@@ -6,4 +6,5 @@ public record StudentDetailsWithoutNameResponseDto(
         String group,
         String imageUrl,
         int position
-) implements StudentDetailsResponseDto{ }
+) implements StudentDetailsResponseDto {
+}

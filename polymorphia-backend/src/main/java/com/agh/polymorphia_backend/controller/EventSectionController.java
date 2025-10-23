@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.response.event.EventSectionResponseDto;
-import com.agh.polymorphia_backend.service.course.EventSectionService;
+import com.agh.polymorphia_backend.service.event_section.EventSectionService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
