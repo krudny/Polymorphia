@@ -1,22 +1,22 @@
---Truncate
--- TRUNCATE TABLE users cascade;
--- TRUNCATE TABLE chests_items cascade;
--- TRUNCATE TABLE courses cascade;
--- TRUNCATE TABLE coordinators cascade;
--- TRUNCATE TABLE students cascade;
--- TRUNCATE TABLE instructors cascade;
--- TRUNCATE TABLE user_course_roles cascade;
--- TRUNCATE TABLE course_groups cascade;
--- TRUNCATE TABLE chests cascade;
--- TRUNCATE TABLE animals cascade;
--- TRUNCATE TABLE students_course_groups cascade;
--- TRUNCATE TABLE evolution_stages cascade;
--- TRUNCATE TABLE event_sections cascade;
--- TRUNCATE TABLE test_sections cascade;
--- TRUNCATE TABLE rewards cascade;
--- TRUNCATE TABLE items cascade;
--- TRUNCATE TABLE flat_bonus_items cascade;
--- TRUNCATE TABLE percentage_bonus_items cascade;
+-- Truncate
+TRUNCATE TABLE users cascade;
+TRUNCATE TABLE chests_items cascade;
+TRUNCATE TABLE courses cascade;
+TRUNCATE TABLE coordinators cascade;
+TRUNCATE TABLE students cascade;
+TRUNCATE TABLE instructors cascade;
+TRUNCATE TABLE user_course_roles cascade;
+TRUNCATE TABLE course_groups cascade;
+TRUNCATE TABLE chests cascade;
+TRUNCATE TABLE animals cascade;
+TRUNCATE TABLE students_course_groups cascade;
+TRUNCATE TABLE evolution_stages cascade;
+TRUNCATE TABLE event_sections cascade;
+TRUNCATE TABLE test_sections cascade;
+TRUNCATE TABLE rewards cascade;
+TRUNCATE TABLE items cascade;
+TRUNCATE TABLE flat_bonus_items cascade;
+TRUNCATE TABLE percentage_bonus_items cascade;
 
 -- Users
 INSERT INTO users (id, first_name, last_name, email, password, preferred_course_id)
