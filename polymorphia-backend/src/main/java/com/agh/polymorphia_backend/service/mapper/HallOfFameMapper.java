@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.service.mapper;
 
-import com.agh.polymorphia_backend.dto.response.hall_of_fame.HallOfFameResponseDto;
+import com.agh.polymorphia_backend.dto.response.hall_of_fame.HallOfFameRecordDto;
 import com.agh.polymorphia_backend.dto.response.user.StudentDetailsResponseDto;
 import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry;
 import lombok.AllArgsConstructor;
@@ -13,10 +13,10 @@ import java.util.Map;
 public class HallOfFameMapper {
     private final StudentDetailsMapper studentDetailsMapper;
 
-    public HallOfFameResponseDto hallOfFameToRecordDto(HallOfFameEntry hallOfFameEntry, Map<String, String> xpDetails) {
+    public HallOfFameRecordDto hallOfFameToRecordDto(HallOfFameEntry hallOfFameEntry, Map<String, String> xpDetails) {
         StudentDetailsResponseDto userDetails = studentDetailsMapper.hallOfFameToStudentDetailsResponseDto(hallOfFameEntry);
 
-        return HallOfFameResponseDto.builder()
+        return HallOfFameRecordDto.builder()
                 .userDetails(userDetails)
                 .xpDetails(xpDetails)
                 .build();
