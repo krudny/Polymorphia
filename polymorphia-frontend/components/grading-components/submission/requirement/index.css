@@ -2,7 +2,7 @@
 @import "../../../../styles/globals.css";
 
 .submissions-requirement-accordion-override {
-  @apply gap-y-5 md:w-[406px];
+  @apply gap-y-5;
 }
 
 .submissions-requirement-accordion-header {

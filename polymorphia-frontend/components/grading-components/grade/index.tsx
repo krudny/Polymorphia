@@ -1,12 +1,9 @@
 "use client";
 
-import "../../../views/course/grading/index.css";
-import GradingComponentWrapper from "@/components/grading-components/grading-wrapper";
 import Loading from "@/components/loading";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import GradeCriteria from "@/components/grading-components/grade/criteria";
 import ColumnComponent from "@/components/column-schema/column-component";
-import { main } from "@popperjs/core";
 
 export default function Grade() {
   const { state, criteria, isGeneralDataLoading } = useGradingContext();
@@ -24,10 +21,6 @@ export default function Grade() {
       : () => <GradeCriteria criteria={criteria} />;
 
   return (
-    // <GradingComponentWrapper
-    //   topComponent={topComponent}
-    //   mainComponent={mainComponent}
-    // />
     <ColumnComponent
       topComponent={topComponent}
       mainComponent={mainComponent}

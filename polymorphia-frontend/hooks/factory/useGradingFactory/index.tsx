@@ -1,7 +1,7 @@
 import { GradingComponents } from "@/views/course/grading/types";
 import { useMemo } from "react";
 import toast from "react-hot-toast";
-import { gradingStrategyRegistry } from "@/views/course/grading/strategies/Registry";
+import { gradingStrategyRegistry } from "@/components/column-schema/strategies/grading-strategy/registry";
 
 import { EventType } from "@/interfaces/general";
 

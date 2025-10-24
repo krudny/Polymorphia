@@ -2,30 +2,30 @@ import { ReactNode } from "react";
 import Grade from "@/components/grading-components/grade";
 import Submissions from "@/components/grading-components/submission";
 import { ProjectVariant } from "@/components/grading-components/project-variant";
-import { GradingComponent } from "@/views/course/grading/types";
+import { ColumnComponent } from "@/views/course/grading/types";
 import TargetList from "@/components/grading-components/target-list";
 
 export abstract class BaseGradingStrategy {
-  protected createTargetListComponent(): GradingComponent {
+  protected createTargetListComponent(): ColumnComponent {
     return {
       component: <TargetList />,
       forceFullHeight: true,
     };
   }
 
-  protected createRewardComponent(): GradingComponent {
+  protected createRewardComponent(): ColumnComponent {
     return {
       component: <Grade />,
     };
   }
 
-  protected createSubmissionsComponent(): GradingComponent {
+  protected createSubmissionsComponent(): ColumnComponent {
     return {
       component: <Submissions />,
     };
   }
 
-  protected createProjectVariantComponent(): GradingComponent {
+  protected createProjectVariantComponent(): ColumnComponent {
     return {
       component: <ProjectVariant />,
     };

@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@import "../../styles/globals.css";
+
+.column-schema {
+  @apply w-full h-fit md:h-[calc(100dvh-5rem)] flex justify-center gap-x-4 p-4 opacity-0;
+}
+
+.column-schema-column {
+  @apply w-full flex flex-col gap-y-4 custom-scrollbar max-w-md md:max-h-[calc(100dvh-5rem)];
+}

@@ -1,15 +1,12 @@
-import { BaseGradingStrategy } from "@/views/course/grading/strategies/Base";
-import {
-  GradingComponent,
-  GradingStrategy,
-} from "@/views/course/grading/types";
+import { BaseGradingStrategy } from "@/components/column-schema/strategies/grading-strategy/base";
+import { ColumnComponent, GradingStrategy } from "@/views/course/grading/types";
 import { ReactNode } from "react";
 
 export class AssignmentGradingStrategy
   extends BaseGradingStrategy
   implements GradingStrategy
 {
-  getGradingComponents(): GradingComponent[][] {
+  getGradingComponents(): ColumnComponent[][] {
     return [
       [this.createTargetListComponent()],
       [this.createRewardComponent()],

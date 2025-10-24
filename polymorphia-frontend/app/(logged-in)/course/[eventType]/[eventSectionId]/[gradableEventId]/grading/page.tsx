@@ -7,12 +7,13 @@ import { GradingProvider } from "@/providers/grading/GradingContext";
 import Grading from "@/views/course/grading";
 import { useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
+import ColumnSchema from "@/components/column-schema";
+import { useGradingFactory } from "@/hooks/factory/useGradingFactory";
+import { EventTypes } from "@/interfaces/general";
 
 export default function GradingView() {
-  const { eventType } = useEventParams();
-  const { setTitle } = useTitle();
   const { data: gradableEvent, isError } = useGradableEvent();
-  const isXL = useMediaQuery({ minWidth: "1400px" });
+  const { setTitle } = useTitle();
 
   useEffect(() => {
     if (gradableEvent) {
@@ -24,7 +25,7 @@ export default function GradingView() {
 
   return (
     <GradingProvider>
-      <Grading eventType={eventType} columns={isXL ? 2 : 1} />
+      <Grading />
     </GradingProvider>
   );
 }

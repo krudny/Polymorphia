@@ -24,7 +24,7 @@ export default function InstructorView() {
   useEffect(() => {
     if (!isLoading && gradableEvents && gradableEvents.length === 1) {
       router.replace(
-        `/course/${eventType.toLowerCase()}/${eventSectionId}/${gradableEvents[0].id}`
+        `/course/${eventType.toLowerCase()}/${eventSectionId}/${gradableEvents[0].id}/grading`
       );
     }
   }, [isLoading, gradableEvents, eventType, eventSectionId, router]);

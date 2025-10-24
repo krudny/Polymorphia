@@ -11,15 +11,15 @@ import { ViewTypes } from "@/interfaces/general";
 import { getSpeedDialKey } from "@/components/speed-dial/util";
 import TargetList from "@/components/grading-components/target-list";
 import SpeedDial from "@/components/speed-dial/SpeedDial";
+import { useEventParams } from "@/hooks/general/useEventParams";
+import ColumnSchema from "@/components/column-schema";
 
-export default function Grading({ eventType, columns }: GradingProps) {
+export default function Grading() {
   const queryClient = useQueryClient();
+  const { eventType } = useEventParams();
+  const isXL = useMediaQuery({ minWidth: "1280px" });
   const isMd = useMediaQuery({ minWidth: "768px" });
-  const isXL = useMediaQuery({ minWidth: "1200px" });
-  const gradingRef = useRef<HTMLDivElement>(null);
-  const columnsRef = useRef<HTMLDivElement>(null);
-  const listRef = useRef<HTMLDivElement>(null);
-  const gradingComponents = useGradingFactory(eventType);
+  const components = useGradingFactory(eventType);
   const {
     filters,
     areFiltersOpen,
@@ -27,36 +27,6 @@ export default function Grading({ eventType, columns }: GradingProps) {
     isFiltersLoading,
     isFiltersError,
   } = useGradingContext();
-
-  useEffect(() => {
-    if (!gradingRef.current || !columnsRef.current || !listRef.current) {
-      return;
-    }
-
-    const updateHeight = () => {
-      const columnsHeight = columnsRef.current!.offsetHeight;
-
-      if (isXL) {
-        gradingRef.current!.style.height = `max(${columnsHeight + 16}px, calc(100dvh - 5rem))`;
-        listRef.current!.style.maxHeight = `max(${columnsHeight}px, calc(100dvh - 5rem))`;
-      } else if (isMd) {
-        gradingRef.current!.style.height = `${columnsHeight + 28}px`;
-        listRef.current!.style.maxHeight = `${columnsHeight}px`;
-      } else {
-        gradingRef.current!.style.height = `100%`;
-        listRef.current!.style.maxHeight = `500px`;
-      }
-    };
-
-    updateHeight();
-
-    const resizeObserver = new ResizeObserver(updateHeight);
-    resizeObserver.observe(columnsRef.current);
-
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, [columns, isMd, isXL]);
 
   const handleApplyFilters = () => {
     queryClient.invalidateQueries({
@@ -66,42 +36,14 @@ export default function Grading({ eventType, columns }: GradingProps) {
 
   const speedDialKey = getSpeedDialKey(eventType, ViewTypes.GRADING);
 
-  if (!gradingComponents || !speedDialKey) {
+  if (!components || !speedDialKey) {
     return null;
   }
 
   return (
     <>
-      <div ref={gradingRef} className="grading">
-        <SpeedDial speedDialKey={speedDialKey} />
-
-        <div className="grading-list" ref={listRef}>
-          <TargetList />
-        </div>
-
-        {columns === 1 ? (
-          <div ref={columnsRef} className="grading-columns">
-            {gradingComponents.flat().map((component, index) => (
-              <Fragment key={index}>{component}</Fragment>
-            ))}
-          </div>
-        ) : (
-          <div ref={columnsRef} className="grading-columns-wrapper">
-            {[...Array(Math.max(columns, gradingComponents.length))].map(
-              (_, i) => {
-                const components = gradingComponents[i];
-                return (
-                  <div key={i} className="grading-columns">
-                    {components?.map((component, index) => (
-                      <Fragment key={index}>{component}</Fragment>
-                    ))}
-                  </div>
-                );
-              }
-            )}
-          </div>
-        )}
-      </div>
+      <SpeedDial speedDialKey={speedDialKey} />
+      <ColumnSchema columns={isXL ? 3 : isMd ? 2 : 1} components={components} />
       <FiltersModal<GradingFilterId>
         filters={filters}
         isModalOpen={areFiltersOpen}
