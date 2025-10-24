@@ -4,7 +4,7 @@ import SectionView from "@/components/section-view/SectionView";
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Loading from "@/components/loading";
-import GradableEventCard from "@/views/course/instructor/GradableEventCard";
+import GradableEventCard from "@/views/gradable-events/instructor/GradableEventCard";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import useInstructorGradableEvents from "@/hooks/course/useInstructorGradableEvents";
 import "./index.css";

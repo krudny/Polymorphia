@@ -3,7 +3,7 @@
 import { useTitle } from "@/components/navigation/TitleContext";
 import useGradableEvent from "@/hooks/course/useGradableEvent";
 import { GradingProvider } from "@/providers/grading";
-import Grading from "@/views/course/grading";
+import Grading from "@/views/grading";
 import { useEffect } from "react";
 
 export default function GradingView() {

@@ -1,7 +1,7 @@
 "use client";
 
 import { RewardProps } from "@/components/grading-components/grade/types";
-import AssignRewardModal from "@/views/course/grading/modals/assign-reward";
+import AssignRewardModal from "@/views/grading/modals/assign-reward";
 import { useState } from "react";
 import "./index.css";
 import { API_STATIC_URL } from "@/services/api";

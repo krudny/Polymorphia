@@ -1,13 +1,13 @@
 "use client";
 
 import { useTitle } from "@/components/navigation/TitleContext";
-import SpeedDial from "@/components/speed-dial/SpeedDial";
-import { SpeedDialKeys } from "@/components/speed-dial/types";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import useCourseGroups from "@/hooks/course/useCourseGroups";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { CourseGroupTypes } from "@/services/course-groups/types";
+import { CourseGroupsProvider } from "@/providers/course-groups";
+import CourseGroups from "@/views/course-groups";
 
 export default function CourseGroupView() {
   const { setTitle } = useTitle();
@@ -32,11 +32,8 @@ export default function CourseGroupView() {
   }, [courseGroupId, courseGroups, isError, setTitle]);
 
   return (
-    <div>
-      <SpeedDial speedDialKey={SpeedDialKeys.COURSE_GROUP} />
-      <div className="m-auto w-[600px] flex-col-centered text-xl">
-        Widok grupy
-      </div>
-    </div>
+    <CourseGroupsProvider>
+      <CourseGroups />
+    </CourseGroupsProvider>
   );
 }

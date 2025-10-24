@@ -5,7 +5,7 @@ import XPCardAssign from "@/components/xp-card/components/XPCardAssign";
 import {
   AssignRewardModalContentProps,
   AssignRewardModalProps,
-} from "@/views/course/grading/modals/assign-reward/types";
+} from "@/views/grading/modals/assign-reward/types";
 import { ChestResponseDTO, ItemResponseDTO } from "@/interfaces/api/reward";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import "./index.css";

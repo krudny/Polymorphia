@@ -1,5 +1,4 @@
-import { useGradingFactory } from "@/hooks/factory/useGradingFactory";
-import "./index.css";
+import { useGradingStrategy } from "@/hooks/strategy/useGradingStrategy";
 import { GradingFilterId } from "@/providers/grading/types";
 import FiltersModal from "@/components/filters-modals/FiltersModal";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
@@ -16,7 +15,7 @@ export default function Grading() {
   const { eventType } = useEventParams();
   const isXL = useMediaQuery({ minWidth: "1280px" });
   const isMd = useMediaQuery({ minWidth: "768px" });
-  const components = useGradingFactory(eventType);
+  const components = useGradingStrategy(eventType);
   const {
     filters,
     areFiltersOpen,

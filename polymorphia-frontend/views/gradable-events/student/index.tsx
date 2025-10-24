@@ -8,7 +8,7 @@ import PointsSummary from "@/components/course/event-section/points-summary/Poin
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
 import Loading from "@/components/loading";
 import { useRouter } from "next/navigation";
-import GradableEventCard from "@/views/course/student/GradableEventCard";
+import GradableEventCard from "@/views/gradable-events/student/GradableEventCard";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import GradeModal from "@/components/speed-dial/modals/grade";
 import useStudentsGradableEvents from "@/hooks/course/useStudentsGradableEvents";

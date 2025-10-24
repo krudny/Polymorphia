@@ -1,5 +1,4 @@
-@import "tailwindcss";
-@import "../../../../../styles/globals.css";
+@import "../../../../styles/globals.css";
 
 .assign-reward {
   @apply w-full flex flex-col gap-y-2;
