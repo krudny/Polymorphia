@@ -11,7 +11,7 @@ import {
 } from "@/interfaces/api/grade/submission";
 import { CriterionResponseDTO } from "@/interfaces/api/grade/criteria";
 
-export type GradingContextInterface = {
+export interface GradingContextInterface {
   areFiltersOpen: boolean;
   setAreFiltersOpen: Dispatch<SetStateAction<boolean>>;
   isFiltersLoading: boolean;
@@ -28,6 +28,6 @@ export type GradingContextInterface = {
   dispatch: Dispatch<GradingReducerActionType>;
   submitGrade: () => void;
   submitSubmissions: (submissionDetails: SubmissionDetailsResponseDTO) => void;
-};
+}
 
 export type GradingFilterId = "sortOrder" | "sortBy" | "groups" | "gradeStatus";

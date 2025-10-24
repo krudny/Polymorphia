@@ -1,6 +1,6 @@
-import { GradingContextInterface } from "@/providers/grading/types";
 import { useContext } from "react";
-import { GradingContext } from "@/providers/grading";
+import { CourseGroupsContextInterface } from "@/providers/course-groups/types";
+import { CourseGroupsContext } from "@/providers/course-groups";
 
 export default function useCourseGroupsContext(): CourseGroupsContextInterface {
   const context = useContext(CourseGroupsContext);
