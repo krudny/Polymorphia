@@ -1,9 +1,8 @@
-import { ReactNode } from "react";
 import Grade from "@/components/grading-components/grade";
 import Submissions from "@/components/grading-components/submission";
 import { ProjectVariant } from "@/components/grading-components/project-variant";
-import { ColumnComponent } from "@/views/course/grading/types";
 import TargetList from "@/components/grading-components/target-list";
+import { ColumnComponent } from "@/components/column-schema/types";
 
 export abstract class BaseGradingStrategy {
   protected createTargetListComponent(): ColumnComponent {

@@ -1,9 +1,9 @@
-import { GradingStrategy } from "@/views/course/grading/types";
 import { AssignmentGradingStrategy } from "@/components/column-schema/strategies/grading-strategy/assignment";
 import { ProjectGradingStrategy } from "@/components/column-schema/strategies/grading-strategy/project";
 import { TestGradingStrategy } from "@/components/column-schema/strategies/grading-strategy/test";
 
 import { EventTypes } from "@/interfaces/general";
+import { GradingStrategy } from "@/components/column-schema/strategies/grading-strategy/types";
 
 class GradingStrategyRegistry {
   private strategies = new Map<string, GradingStrategy>();

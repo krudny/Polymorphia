@@ -30,7 +30,7 @@ export default function ColumnSchema({
                 ? columns === 1
                   ? "h-80"
                   : "h-full"
-                : "overflow-y-auto";
+                : "";
 
               return (
                 <div

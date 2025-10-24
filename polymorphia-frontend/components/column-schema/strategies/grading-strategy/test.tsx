@@ -1,6 +1,6 @@
 import { BaseGradingStrategy } from "@/components/column-schema/strategies/grading-strategy/base";
-import { ColumnComponent, GradingStrategy } from "@/views/course/grading/types";
-import { ReactNode } from "react";
+import { ColumnComponent } from "@/components/column-schema/types";
+import { GradingStrategy } from "@/components/column-schema/strategies/grading-strategy/types";
 
 export class TestGradingStrategy
   extends BaseGradingStrategy
