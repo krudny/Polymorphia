@@ -11,8 +11,8 @@ export class ProjectGradingStrategy
 {
   getGradingComponents(): GradingComponent[][] {
     return [
-      [this.createTargetListComponent()],
       [this.createRewardComponent()],
+      [this.createTargetListComponent()],
       [this.createSubmissionsComponent(), this.createProjectVariantComponent()],
     ];
   }

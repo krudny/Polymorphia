@@ -75,7 +75,7 @@ export default function ColumnSchema({
               // Na większych ekranach dostaje h-full
               const heightClass = gradingComponent.forceFullHeight
                 ? columns === 1
-                  ? "h-96"
+                  ? "h-80"
                   : "h-full"
                 : "";
 
