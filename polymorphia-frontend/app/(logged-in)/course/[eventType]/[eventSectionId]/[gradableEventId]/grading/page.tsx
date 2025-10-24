@@ -2,7 +2,7 @@
 
 import { useTitle } from "@/components/navigation/TitleContext";
 import useGradableEvent from "@/hooks/course/useGradableEvent";
-import { GradingProvider } from "@/providers/grading/GradingContext";
+import { GradingProvider } from "@/providers/grading";
 import Grading from "@/views/course/grading";
 import { useEffect } from "react";
 

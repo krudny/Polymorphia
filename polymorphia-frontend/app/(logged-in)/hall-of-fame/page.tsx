@@ -1,7 +1,7 @@
 "use client";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
-import { HallOfFameProvider } from "@/providers/hall-of-fame/HallOfFameContext";
+import { HallOfFameProvider } from "@/providers/hall-of-fame";
 import HallOfFameMobile from "@/views/hall-of-fame/mobile/HallOfFameMobile";
 import FiltersModal from "@/components/filters-modals/FiltersModal";
 import { useQueryClient } from "@tanstack/react-query";
