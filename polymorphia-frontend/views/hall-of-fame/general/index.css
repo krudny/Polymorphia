@@ -78,7 +78,11 @@
   }
 }
 
-/* Hall of fame search bar buttons */
+/* Hall of fame top bar */
+
+.hall-of-fame-top-bar {
+  @apply flex w-full gap-x-2 justify-between overflow-x-hidden;
+}
 
 .hall-of-fame-search-buttons {
   @apply flex gap-x-2 lg:gap-x-4;

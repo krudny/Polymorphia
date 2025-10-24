@@ -11,7 +11,7 @@ export class AssignmentGradingStrategy
   getGradingComponents(): GradingComponents {
     return [
       [this.createRewardComponent()],
-      [this.createPullRequestComponent()],
+      [this.createSubmissionsComponent()],
     ];
   }
 }

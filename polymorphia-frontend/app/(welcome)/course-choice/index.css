@@ -2,13 +2,13 @@
 @import "../../../styles/globals.css";
 
 .course-choice-wrapper {
-    @apply flex-col-centered m-auto w-full sm:w-4/5 md:w-xl xl:w-5xl;
+  @apply flex-col-centered m-auto w-full sm:w-4/5 md:w-xl xl:w-5xl;
 }
 
 .course-choice-text {
-    @apply text-5xl mb-7;
+  @apply text-5xl mb-7;
 }
 
-.course-choice-logout-wrapper{
-    @apply mt-12 flex justify-center
+.course-choice-logout-wrapper {
+  @apply mt-12 flex justify-center;
 }

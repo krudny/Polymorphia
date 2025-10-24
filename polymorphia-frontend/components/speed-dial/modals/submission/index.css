@@ -1,0 +1,53 @@
+@import "tailwindcss";
+@import "../../../../styles/globals.css";
+
+.submission-error {
+  @apply flex flex-col gap-2 min-[26rem]:w-96 text-xl 2xl:text-2xl;
+}
+
+.submission-loading {
+  @apply flex flex-col gap-2 min-[26rem]:w-96 h-[115px] relative;
+}
+
+.submissions-modal-section {
+  @apply min-[26rem]:w-96 overflow-y-auto custom-scrollbar;
+}
+
+.submissions-modal-accordion-override {
+  @apply gap-y-5;
+}
+
+.submissions-modal-accordion-header {
+  h1 {
+    @apply !text-4xl !mr-5;
+  }
+
+  h2 {
+    @apply !text-3xl;
+  }
+}
+
+.submissions-modal-requirement {
+  @apply flex flex-col mt-2;
+
+  h2 {
+    @apply text-3xl my-3;
+  }
+}
+
+.submissions-modal-url {
+  @apply flex justify-between p-4;
+  @apply text-xl border-3 rounded-xl;
+}
+
+.submissions-modal-url-input {
+  @apply w-full focus:outline-none default-colors placeholder:text-neutral-400;
+}
+
+.submissions-modal-url-symbol {
+  @apply flex-centered min-h-full aspect-square text-3xl select-none;
+}
+
+.submissions-modal-submit-section {
+  @apply flex flex-col items-center gap-5 text-xl pt-5;
+}

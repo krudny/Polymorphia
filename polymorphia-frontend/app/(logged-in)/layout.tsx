@@ -10,7 +10,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <UserProvider>
       <NavigationProvider>
-        <div className="w-full min-h-[100dvh] relative flex flex-col lg:flex-row">
+        <div className="w-full h-[100dvh] relative flex flex-col lg:flex-row">
           <Navigation />
           <MainLayout>{children}</MainLayout>
         </div>

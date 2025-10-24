@@ -56,8 +56,21 @@ export const useFindMeScroll = ({
     const element = recordRefs.current?.[position];
 
     if (element) {
-      const scrollContainer = element.parentElement || document;
-      scrollContainer.addEventListener("scrollend", () => shakeInOut(element), {
+      const scrollContainer = element.parentElement || document.documentElement;
+
+      let scrollHappened = false;
+
+      const handleScroll = () => {
+        scrollHappened = true;
+      };
+
+      const handleScrollEnd = () => {
+        scrollContainer.removeEventListener("scroll", handleScroll);
+        shakeInOut(element);
+      };
+
+      scrollContainer.addEventListener("scroll", handleScroll, { once: true });
+      scrollContainer.addEventListener("scrollend", handleScrollEnd, {
         once: true,
       });
 
@@ -65,6 +78,13 @@ export const useFindMeScroll = ({
         behavior: "smooth",
         block: "center",
       });
+
+      setTimeout(() => {
+        if (!scrollHappened) {
+          scrollContainer.removeEventListener("scrollend", handleScrollEnd);
+          shakeInOut(element);
+        }
+      }, 300);
 
       setShouldScrollToMe(false);
     }

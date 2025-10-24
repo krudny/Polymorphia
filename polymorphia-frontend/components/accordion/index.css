@@ -1,38 +1,34 @@
 @import "tailwindcss";
 @import "../../styles/globals.css";
 
-.accordion {
-    @apply flex flex-col;
-}
-
-.accordion-section {
-    @apply flex flex-col;
+.accordion-flex-col {
+  @apply flex flex-col;
 }
 
 .accordion-section-header {
-    @apply flex justify-between items-center;
+  @apply flex justify-between items-center;
 
-    h1 {
-        @apply text-3xl truncate;
-    }
+  h1 {
+    @apply text-3xl truncate;
+  }
 }
 
 .accordion-toggle-button {
-    @apply flex-centered cursor-pointer hover:opacity-70 transition-opacity;
+  @apply flex-centered cursor-pointer hover:opacity-70 transition-opacity;
 }
 
 .accordion-toggle {
-    @apply flex-centered gap-x-1;
+  @apply flex-centered gap-x-1 min-w-[86px];
 
-    h2 {
-        @apply text-2xl;
-    }
+  h2 {
+    @apply text-2xl;
+  }
 }
 
 .accordion-toggle-arrow {
-    @apply w-5 h-5 transition-transform duration-300;
+  @apply w-5 h-5 transition-transform duration-300;
 }
 
 .accordion-section-content {
-    @apply overflow-hidden h-0;
+  @apply overflow-hidden h-0;
 }

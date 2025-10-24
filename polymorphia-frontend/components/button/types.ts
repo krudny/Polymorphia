@@ -6,7 +6,7 @@ export interface ButtonWithBorderProps {
 }
 
 export type VariantProps = {
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "base" | "md" | "lg";
   isActive?: boolean;
   forceDark?: boolean;
 };

@@ -9,7 +9,6 @@ import { useMarkdown } from "@/hooks/course/useMarkdown";
 import useMarkdownUpdate from "@/hooks/course/useMarkdownUpdate";
 import { MarkdownTypes } from "@/interfaces/general";
 import { useEventParams } from "@/hooks/general/useEventParams";
-import useMarkdownSource from "@/hooks/course/useMarkdownSource";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export const MarkdownContext = createContext<
@@ -21,7 +20,6 @@ export const MarkdownProvider = ({
   markdownType,
 }: MarkdownProviderProps) => {
   const { data } = useMarkdown(markdownType);
-  const { data: markdownSource } = useMarkdownSource(markdownType);
   const { gradableEventId } = useEventParams();
   const { courseId } = useUserDetails();
   const resourceId =
@@ -33,13 +31,13 @@ export const MarkdownProvider = ({
   const { mutate: saveMarkdown } = useMarkdownUpdate({
     setIsEditing,
     resourceId,
-    type: markdownType,
+    markdownType: markdownType,
     markdown: newMarkdown,
   });
 
   const { mutate: resetMarkdown } = useMarkdownReset({
     resourceId,
-    type: markdownType,
+    markdownType: markdownType,
   });
 
   useEffect(() => {
@@ -67,7 +65,6 @@ export const MarkdownProvider = ({
         resetMarkdown,
         markdownType,
         resourceId,
-        markdownSource,
       }}
     >
       {children}
