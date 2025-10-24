@@ -4,9 +4,11 @@ import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import "./index.css";
 import useMarkdownContext from "@/hooks/contexts/useMarkdownContext";
 import useModalContext from "@/hooks/contexts/useModalContext";
+import useMarkdownSource from "@/hooks/course/useMarkdownSource";
 
 function ResetMarkdownModalContent() {
-  const { markdownSource, resetMarkdown } = useMarkdownContext();
+  const { resetMarkdown, markdownType } = useMarkdownContext();
+  const { data: markdownSource } = useMarkdownSource(markdownType);
   const { closeModal } = useModalContext();
 
   const handleConfirm = () => {

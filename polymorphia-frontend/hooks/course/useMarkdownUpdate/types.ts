@@ -8,6 +8,6 @@ export interface UseMarkdownUpdate {
 export interface UseMarkdownUpdateProps {
   setIsEditing: Dispatch<SetStateAction<boolean>>;
   resourceId: number;
-  type: MarkdownType;
+  markdownType: MarkdownType;
   markdown: string;
 }
