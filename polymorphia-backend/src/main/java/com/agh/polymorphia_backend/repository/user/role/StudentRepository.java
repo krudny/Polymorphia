@@ -15,8 +15,7 @@ public interface StudentRepository extends JpaRepository<Student, Long>, UserDet
                     "join  scga.student s " +
                     "where s.user.id=:userId and scga.courseGroup.course.id=:courseId"
     )
-    @Override
-    Optional<Student> findByUserIdAndCourseId(Long userId, Long courseId);
+    Optional<Student> findByUserIdAndCourseIdAndAssignedToCourseGroup(Long userId, Long courseId);
 
     Optional<Student> findByIndexNumber(Integer indexNumber);
 

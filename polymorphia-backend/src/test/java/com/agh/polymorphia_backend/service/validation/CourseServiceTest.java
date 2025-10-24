@@ -5,7 +5,10 @@ import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.repository.course.CourseGroupRepository;
 import com.agh.polymorphia_backend.repository.course.CourseRepository;
 import com.agh.polymorphia_backend.repository.course.StudentCourseGroupRepository;
+import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.service.course.CourseService;
+import com.agh.polymorphia_backend.service.mapper.CourseMapper;
+import com.agh.polymorphia_backend.service.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -27,16 +30,27 @@ public class CourseServiceTest {
     private CourseRepository courseRepository;
 
     @Mock
-    private CourseGroupRepository courseGroupRepository;
+    private UserService userService;
 
     @Mock
-    private StudentCourseGroupRepository studentCourseGroupRepository;
+    private CourseMapper courseMapper;
 
+    @Mock
+    private UserCourseRoleRepository userCourseRoleRepository;
+
+    @Mock
+    private AccessAuthorizer accessAuthorizer;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        service = new CourseService(courseRepository, courseGroupRepository, studentCourseGroupRepository);
+        service = new CourseService(
+                courseRepository,
+                userService,
+                courseMapper,
+                userCourseRoleRepository,
+                accessAuthorizer
+        );
     }
 
     @Test

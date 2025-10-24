@@ -93,7 +93,7 @@ public class AccessAuthorizer {
     }
 
     private boolean isCourseAccessAuthorizedStudent(User user, Course course) {
-        return studentRepository.findByUserIdAndCourseId(user.getId(), course.getId()).isPresent();
+        return studentRepository.findByUserIdAndCourseIdAndAssignedToCourseGroup(user.getId(), course.getId()).isPresent();
     }
 
     private boolean isCourseAccessAuthorizedUndefined(User user, Course course) {

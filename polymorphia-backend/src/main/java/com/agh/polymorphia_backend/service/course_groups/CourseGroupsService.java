@@ -62,7 +62,7 @@ public class CourseGroupsService {
         UserType userRole = userService.getCurrentUserRole();
 
         return switch (userRole) {
-            case STUDENT -> courseGroupRepository.findByStudentIdAndCourseIdWhereAnimalExists(userId, courseId);
+            case STUDENT -> courseGroupRepository.findByStudentIdAndCourseIdAndIsAssignedToCourseGroup(userId, courseId);
             case INSTRUCTOR -> courseGroupRepository.findByInstructorIdAndCourseId(userId, courseId);
             case COORDINATOR -> findAllCourseGroups(courseId);
             case UNDEFINED -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INVALID_ROLE);

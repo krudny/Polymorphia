@@ -27,8 +27,6 @@ import java.util.stream.Collectors;
 public class CourseService {
     public static final String COURSE_NOT_FOUND = "Course does not exist or you're not authorized to access it";
     private final CourseRepository courseRepository;
-    private final CourseGroupRepository courseGroupRepository;
-    private final StudentCourseGroupRepository studentCourseGroupRepository;
     private final UserService userService;
     private final CourseMapper courseMapper;
     private final UserCourseRoleRepository userCourseRoleRepository;
