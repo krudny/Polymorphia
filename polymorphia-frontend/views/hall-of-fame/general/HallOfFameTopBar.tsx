@@ -6,7 +6,10 @@ import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { useMediaQuery } from "react-responsive";
 
 export default function HallOfFameTopBar() {
-  const isDesktop = useMediaQuery({ minWidth: 1024 });
+  const isMd = useMediaQuery({ minWidth: 768 });
+  const isLg = useMediaQuery({ minWidth: 1024 });
+  const buttonVariant = isLg ? "md" : isMd ? "base" : "sm";
+
   const {
     setAreFiltersOpen,
     search,
@@ -18,7 +21,7 @@ export default function HallOfFameTopBar() {
   const { userRole } = useUserContext();
 
   return (
-    <>
+    <div className="hall-of-fame-top-bar">
       <Search
         search={search}
         setSearch={setSearch}
@@ -28,25 +31,25 @@ export default function HallOfFameTopBar() {
         {userRole === Roles.STUDENT ? (
           <ButtonWithBorder
             text="Znajdź mnie"
-            className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none"
-            size={isDesktop ? "md" : "sm"}
+            className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none !text-nowrap"
+            size={buttonVariant}
             onClick={() => setShouldScrollToMe(true)}
           />
         ) : (
           <ButtonWithBorder
             text={areAnimalNamesVisible ? "Studenci" : "Zwierzaki"}
             className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none"
-            size={isDesktop ? "md" : "sm"}
+            size={buttonVariant}
             onClick={toggleAnimalNamesVisibility}
           />
         )}
         <ButtonWithBorder
           text="Filtry"
           className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none"
-          size={isDesktop ? "md" : "sm"}
+          size={buttonVariant}
           onClick={() => setAreFiltersOpen(true)}
         />
       </div>
-    </>
+    </div>
   );
 }
