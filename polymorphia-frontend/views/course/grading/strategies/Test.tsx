@@ -1,14 +1,12 @@
 import { BaseGradingStrategy } from "@/views/course/grading/strategies/Base";
-import {
-  GradingComponents,
-  GradingStrategy,
-} from "@/views/course/grading/types";
+import { GradingStrategy } from "@/views/course/grading/types";
+import { ReactNode } from "react";
 
 export class TestGradingStrategy
   extends BaseGradingStrategy
   implements GradingStrategy
 {
-  getGradingComponents(): GradingComponents {
-    return [[this.createRewardComponent()]];
+  getGradingComponents(): ReactNode[][] {
+    return [[this.createTargetListComponent()], [this.createRewardComponent()]];
   }
 }

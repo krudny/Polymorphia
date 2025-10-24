@@ -8,7 +8,5 @@ export interface GradingProps {
 }
 
 export interface GradingStrategy {
-  getGradingComponents: () => GradingComponents;
+  getGradingComponents: () => ReactNode[][];
 }
-
-export type GradingComponents = ReactNode[][];

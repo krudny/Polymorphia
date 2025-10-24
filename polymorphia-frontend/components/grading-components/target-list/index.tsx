@@ -12,6 +12,7 @@ import { GradingReducerActions } from "@/providers/grading/gradingReducer/types"
 import { TargetTypes } from "@/interfaces/api/grade/target";
 import Loading from "@/components/loading";
 import areTargetsEqual from "@/providers/grading/utils/areTargetsEqual";
+import ColumnComponent from "@/components/column-schema/column-component";
 
 export default function TargetList() {
   const isMd = useMediaQuery({ minWidth: "786px" });
@@ -26,7 +27,7 @@ export default function TargetList() {
   } = useGradingContext();
   const { selectedTarget } = state;
 
-  const topComponent = (
+  const topComponent = () => (
     <div className="grading-search-wrapper">
       <Search
         search={search}
@@ -124,7 +125,12 @@ export default function TargetList() {
         );
 
   return (
-    <GradingComponentWrapper
+    // <GradingComponentWrapper
+    //   topComponent={topComponent}
+    //   mainComponent={mainComponent}
+    // />
+
+    <ColumnComponent
       topComponent={topComponent}
       mainComponent={mainComponent}
     />
