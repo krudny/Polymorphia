@@ -13,7 +13,6 @@ export interface MarkdownContextInterface {
   resetMarkdown: UseMutateFunction<void, Error, void | undefined, unknown>;
   markdownType: MarkdownType;
   resourceId: number;
-  markdownSource: SourceMarkdownResponseDTO | undefined;
 }
 
 export interface MarkdownProviderProps {
