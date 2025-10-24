@@ -10,9 +10,9 @@ export default function Comment() {
   // TODO: remove that when firefox starts supporting field sizeing
   const adjustTextareaHeight = () => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = "0px";
       textareaRef.current.style.height =
-        textareaRef.current.scrollHeight + "px";
+        textareaRef.current.scrollHeight + 8 + "px";
     }
   };
 
