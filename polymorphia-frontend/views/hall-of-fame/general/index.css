@@ -16,7 +16,7 @@
 }
 
 @utility hall-of-fame-search-wrapper {
-  @apply w-full flex justify-between my-3;
+  @apply w-full flex justify-between mb-3;
 }
 
 .hall-of-fame-loading-wrapper {

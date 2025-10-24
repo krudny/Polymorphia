@@ -6,7 +6,7 @@
 }
 
 .column-schema-top-component {
-  @apply w-full flex flex-shrink-0 justify-between mx-auto min-h-12 min-w-0 custom-scrollbar text-5xl overflow-hidden md:px-3;
+  @apply w-full flex flex-shrink-0 justify-between mx-auto min-h-10 md:min-h-12 min-w-0 custom-scrollbar text-5xl overflow-hidden md:px-3;
 }
 
 .column-schema-main-component {

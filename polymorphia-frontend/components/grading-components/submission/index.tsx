@@ -1,4 +1,3 @@
-import "../../../views/course/grading/index.css";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import Loading from "@/components/loading";
 import SubmissionRequirement from "@/components/grading-components/submission/requirement";

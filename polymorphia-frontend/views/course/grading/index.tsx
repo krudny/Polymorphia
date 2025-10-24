@@ -1,5 +1,4 @@
 import { useGradingFactory } from "@/hooks/factory/useGradingFactory";
-import { Fragment } from "react";
 import "./index.css";
 import { GradingFilterId } from "@/providers/grading/types";
 import FiltersModal from "@/components/filters-modals/FiltersModal";
@@ -39,7 +38,7 @@ export default function Grading() {
   }
 
   return (
-    <>
+    <div className="pb-20 md:pb-0">
       <SpeedDial speedDialKey={speedDialKey} />
       <ColumnSchema columns={isXL ? 3 : isMd ? 2 : 1} components={components} />
       <FiltersModal<GradingFilterId>
@@ -50,6 +49,6 @@ export default function Grading() {
         isFiltersError={isFiltersError}
         onFiltersApplied={() => handleApplyFilters()}
       />
-    </>
+    </div>
   );
 }

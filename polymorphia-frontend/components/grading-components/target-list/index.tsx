@@ -124,11 +124,6 @@ export default function TargetList() {
         );
 
   return (
-    // <GradingComponentWrapper
-    //   topComponent={topComponent}
-    //   mainComponent={mainComponent}
-    // />
-
     <ColumnComponent
       topComponent={topComponent}
       mainComponent={mainComponent}
