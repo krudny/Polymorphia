@@ -8,5 +8,10 @@ export interface GradingProps {
 }
 
 export interface GradingStrategy {
-  getGradingComponents: () => ReactNode[][];
+  getGradingComponents: () => GradingComponent[][];
+}
+
+export interface GradingComponent {
+  component: ReactNode;
+  forceFullHeight?: boolean;
 }
