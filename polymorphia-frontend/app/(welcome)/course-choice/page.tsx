@@ -2,7 +2,7 @@
 
 import CourseChoiceGrid from "@/components/course-choice";
 import "./index.css";
-import useAvailableCourses from "../../../hooks/course/useAvailableCourses";
+import useAvailableCourses from "@/hooks/course/useAvailableCourses";
 import Loading from "@/components/loading";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
