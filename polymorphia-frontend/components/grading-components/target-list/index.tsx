@@ -3,7 +3,6 @@ import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import Search from "@/components/search";
-import GradingComponentWrapper from "@/components/grading-components/grading-wrapper";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import "./index.css";
 import { Fragment } from "react";
@@ -12,6 +11,7 @@ import { GradingReducerActions } from "@/providers/grading/gradingReducer/types"
 import { TargetTypes } from "@/interfaces/api/grade/target";
 import Loading from "@/components/loading";
 import areTargetsEqual from "@/providers/grading/utils/areTargetsEqual";
+import ColumnComponent from "@/components/column-schema/column-component";
 
 export default function TargetList() {
   const isMd = useMediaQuery({ minWidth: "786px" });
@@ -26,7 +26,7 @@ export default function TargetList() {
   } = useGradingContext();
   const { selectedTarget } = state;
 
-  const topComponent = (
+  const topComponent = () => (
     <div className="grading-search-wrapper">
       <Search
         search={search}
@@ -124,7 +124,7 @@ export default function TargetList() {
         );
 
   return (
-    <GradingComponentWrapper
+    <ColumnComponent
       topComponent={topComponent}
       mainComponent={mainComponent}
     />

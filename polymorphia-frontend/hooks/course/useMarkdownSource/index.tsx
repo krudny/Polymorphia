@@ -7,7 +7,6 @@ import useUserContext, {
   useUserDetails,
 } from "@/hooks/contexts/useUserContext";
 import { Roles } from "@/interfaces/api/user";
-import useMarkdownContext from "@/hooks/contexts/useMarkdownContext";
 
 export default function useMarkdownSource(
   markdownType: MarkdownType

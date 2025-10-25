@@ -5,8 +5,6 @@ import {
   UseMarkdownReset,
   UseMarkdownResetProps,
 } from "@/hooks/course/useMarkdownReset/types";
-import { LoginDTO } from "@/interfaces/api/login";
-import AuthService from "@/services/auth";
 
 export default function useMarkdownReset(
   request: UseMarkdownResetProps

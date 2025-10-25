@@ -1,11 +1,11 @@
-import { GradingComponents } from "@/views/course/grading/types";
 import { useMemo } from "react";
 import toast from "react-hot-toast";
-import { gradingStrategyRegistry } from "@/views/course/grading/strategies/Registry";
+import { gradingStrategyRegistry } from "@/components/column-schema/strategies/grading-strategy/registry";
 
 import { EventType } from "@/interfaces/general";
+import { ColumnComponent } from "@/components/column-schema/types";
 
-export function useGradingFactory(type: EventType): GradingComponents | null {
+export function useGradingFactory(type: EventType): ColumnComponent[][] | null {
   return useMemo(() => {
     const selectedStrategy = gradingStrategyRegistry.getStrategy(type);
 
