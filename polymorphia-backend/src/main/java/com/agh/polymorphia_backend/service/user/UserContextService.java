@@ -1,14 +1,11 @@
 package com.agh.polymorphia_backend.service.user;
 
-import com.agh.polymorphia_backend.dto.response.user_context.AvailableCoursesResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.UserDetailsResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserCourseRole;
 import com.agh.polymorphia_backend.model.user.UserType;
-import com.agh.polymorphia_backend.repository.course.AnimalRepository;
-import com.agh.polymorphia_backend.repository.course.StudentCourseGroupRepository;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.service.course.CourseService;
@@ -17,9 +14,7 @@ import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 import static com.agh.polymorphia_backend.service.user.UserService.USER_NOT_FOUND;
 
@@ -32,7 +27,6 @@ public class UserContextService {
     private final UserService userService;
     private final UserContextMapper userContextMapper;
     private final UserCourseRoleRepository userCourseRoleRepository;
-    private final StudentCourseGroupRepository studentCourseGroupRepository;
 
     public UserDetailsResponseDto getUserContext() {
         AbstractRoleUser user = userService.getCurrentUser();
@@ -73,21 +67,5 @@ public class UserContextService {
         dbUser.setPreferredCourse(course);
         userRepository.save(dbUser);
         userService.updateSecurityCredentials(user);
-    }
-
-    public List<AvailableCoursesResponseDto> getAvailableCourses() {
-        User user = userService.getCurrentUser().getUser();
-        Set<Long> assignedCourseIds = studentCourseGroupRepository.findAllCourseIdsByUserId(user.getId());
-
-        return userCourseRoleRepository.findAllByUserId(user.getId()).stream()
-                .filter(userCourseRole -> assignedCourseIds.contains(userCourseRole.getCourse().getId()))
-                .map(userCourseRole ->
-                        userContextMapper.toAvailableCoursesResponseDto(
-                                userCourseRole.getCourse(),
-                                userCourseRole.getRole()
-                        )
-                )
-                .sorted(Comparator.comparing(AvailableCoursesResponseDto::getId).reversed())
-                .toList();
     }
 }

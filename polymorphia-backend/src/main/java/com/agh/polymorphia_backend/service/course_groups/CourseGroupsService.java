@@ -15,10 +15,11 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+import static com.agh.polymorphia_backend.service.user.UserService.INVALID_ROLE;
+
 @Service
 @AllArgsConstructor
 public class CourseGroupsService {
-    private final static String INVALID_ROLE = "Invalid user role";
     private final CourseGroupRepository courseGroupRepository;
     private final UserService userService;
     private final CourseGroupsMapper courseGroupsMapper;
@@ -61,7 +62,7 @@ public class CourseGroupsService {
         UserType userRole = userService.getCurrentUserRole();
 
         return switch (userRole) {
-            case STUDENT -> courseGroupRepository.findByStudentIdAndCourseIdWhereAnimalExists(userId, courseId);
+            case STUDENT -> courseGroupRepository.findByStudentIdAndCourseIdAndIsAssignedToCourseGroup(userId, courseId);
             case INSTRUCTOR -> courseGroupRepository.findByInstructorIdAndCourseId(userId, courseId);
             case COORDINATOR -> findAllCourseGroups(courseId);
             case UNDEFINED -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INVALID_ROLE);
