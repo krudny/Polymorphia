@@ -75,7 +75,7 @@ public class HallOfFameService {
 
         UserType currentUserRole = userService.getCurrentUserRole();
         if (UserType.STUDENT.equals(currentUserRole)) {
-            Long animalId = animalService.getAnimalForCurrentUser(requestDto.courseId());
+            Long animalId = animalService.getAnimalIdForCurrentUser(requestDto.courseId());
 
             if (hallOfFameEntryPage.stream().anyMatch(entry -> entry.getAnimalId().equals(animalId))) {
                 return new HallOfFameResponseDto(hallOfFameRecordDtoPage, hallOfFameRecordDtoPage.getNumber());

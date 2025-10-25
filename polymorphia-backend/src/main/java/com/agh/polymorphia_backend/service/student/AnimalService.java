@@ -34,7 +34,7 @@ public class AnimalService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, ANIMAL_NOT_FOUND));
     }
 
-    public Long getAnimalForCurrentUser(Long courseId) {
+    public Long getAnimalIdForCurrentUser(Long courseId) {
         AbstractRoleUser student = userService.getCurrentUser();
         return getAnimal(student.getUserId(), courseId).getId();
     }
