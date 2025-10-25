@@ -184,10 +184,7 @@ public class PotentialBonusXpCalculator {
                 .orElse(new ArrayList<>());
 
         addNewItemsToRespectiveFlatBonusMap(newAssignedItems, oneEventItems, multipleEventsItems);
-
-        bonusXpCalculator.countOneEventItemsBonus(oneEventItems, grades);
-        bonusXpCalculator.countMultipleEventsItemsBonus(oneEventItems, multipleEventsItems, grades);
-
+        Set<AssignedItem> overLimitItems = new HashSet<>();
         Map<Long, Long> currentCountById = assignedRewardService.countAssignedItemsByReward(assignedItems)
                 .entrySet().stream()
                 .collect(Collectors.toMap(entry -> entry.getKey().getId(), Map.Entry::getValue));
@@ -199,10 +196,24 @@ public class PotentialBonusXpCalculator {
                 item -> ((Item) item.getReward()).getLimit(),
                 (item, isOverLimit) -> {
                     if (isOverLimit) {
-                        item.setBonusXp(BigDecimal.valueOf(0.0));
+                        overLimitItems.add(item);
                     }
                 }
         );
+
+        oneEventItems.removeIf(item -> overLimitItems.stream().anyMatch(overItem -> overItem == item));
+        multipleEventsItems.removeIf(item -> overLimitItems.stream().anyMatch(overItem -> overItem == item));
+
+        bonusXpCalculator.countOneEventItemsBonus(oneEventItems, grades);
+        bonusXpCalculator.countMultipleEventsItemsBonus(oneEventItems, multipleEventsItems, grades);
+
+
+        oneEventItems.addAll(overLimitItems.stream()
+                .filter(item -> ((FlatBonusItem) item.getReward()).getBehavior() == FlatBonusItemBehavior.ONE_EVENT)
+                .toList());
+        multipleEventsItems.addAll(overLimitItems.stream()
+                .filter(item -> ((FlatBonusItem) item.getReward()).getBehavior() == FlatBonusItemBehavior.MULTIPLE_EVENTS)
+                .toList());
     }
 
     private PotentialBonusXpResponseDto getPotentialFlatBonusSummary(List<AssignedItem> currentFlatBonusItemsMerged, List<AssignedItem> newAssignedItems, BigDecimal currentItemsBonusXp) {

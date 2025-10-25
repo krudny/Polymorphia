@@ -73,8 +73,8 @@ public class EquipmentService {
 
         return Stream.concat(
                         assignedChestsResponse.stream()
-                                .sorted(Comparator.comparing(response -> response.getDetails().getReceivedDate()))
-                                .sorted(Comparator.comparing(response -> response.getBase().getOrderIndex())),
+                                .sorted(Comparator.comparing((EquipmentChestResponseDto response) -> response.getDetails().getReceivedDate())
+                                        .thenComparing(response -> response.getBase().getOrderIndex())),
                         rewardMapper.chestsToEquipmentResponseDto(remainingCourseChests).stream()
                                 .sorted(Comparator.comparing(response -> response.getBase().getOrderIndex()))
                 )
@@ -131,11 +131,18 @@ public class EquipmentService {
     }
 
     private List<AssignedItem> createAssignedItemsFromRequest(EquipmentChestOpenRequestDto requestDto, AssignedChest assignedChest, ZonedDateTime openDate) {
+       Chest chest=(Chest) Hibernate.unproxy(assignedChest.getReward());
         if (requestDto.getItemId() == null) {
+            List<AssignedItem> assignedItems = createNewAssignedItemsFromChest(chest, assignedChest, openDate);
+
+            if(!assignedItems.isEmpty()){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            }
+
             return new ArrayList<>();
         }
 
-        Item item = ((Chest) Hibernate.unproxy(assignedChest.getReward())).getItems().stream()
+        Item item = chest.getItems().stream()
                 .map(i -> (Item) Hibernate.unproxy(i))
                 .filter(i -> i.getId().equals(requestDto.getItemId()))
                 .findFirst()
@@ -156,12 +163,7 @@ public class EquipmentService {
             AssignedChest assignedChest,
             ZonedDateTime openDate
     ) {
-        List<AssignedItem> newAssignedItems = chest
-                .getItems().stream()
-                .map(i -> (Item) Hibernate.unproxy(i))
-                .filter(i -> !assignedRewardService.isLimitReached(i))
-                .map(item -> assignedRewardService.createAssignedItem(assignedChest, item, openDate))
-                .collect(Collectors.toList());
+        List<AssignedItem> newAssignedItems = createNewAssignedItemsFromChest(chest, assignedChest, openDate);
 
         List<AssignedItem> currentAssignedItems = assignedRewardService.getAnimalAssignedItems(animalId);
         Map<Long, Long> currentCountById = assignedRewardService.countAssignedItemsByReward(currentAssignedItems)
@@ -183,6 +185,15 @@ public class EquipmentService {
         newAssignedItems.removeIf(itemsToRemove::contains);
 
         return newAssignedItems;
+    }
+
+    private List<AssignedItem> createNewAssignedItemsFromChest(Chest chest, AssignedChest assignedChest, ZonedDateTime openDate) {
+        return chest
+                .getItems().stream()
+                .map(i -> (Item) Hibernate.unproxy(i))
+                .filter(i -> !assignedRewardService.isLimitReached(i))
+                .map(item -> assignedRewardService.createAssignedItem(assignedChest, item, openDate))
+                .collect(Collectors.toList());
     }
 
 

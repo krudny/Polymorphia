@@ -4,6 +4,7 @@ import com.agh.polymorphia_backend.model.course.reward.chest.ChestBehavior;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 @Table(name = "chests")
 @PrimaryKeyJoinColumn(name = "reward_id")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
