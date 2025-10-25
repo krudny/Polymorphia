@@ -24,13 +24,8 @@ export interface XPCardImageProps {
   alt: string;
 }
 
-export interface XPCardDoubleImageProps {
-  images: singleImage[];
-}
-
-interface singleImage {
-  imageUrl: string;
-  alt: string;
+export interface XPCardImageWithLockProps extends XPCardImageProps {
+  isLocked: boolean;
 }
 
 export interface XPCardAssignProps {

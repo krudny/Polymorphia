@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.service.hall_of_fame;
 
+import com.agh.polymorphia_backend.BaseTest;
 import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.event_section.AssignmentSection;
@@ -24,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
-class HallOfFameServiceTest {
+class HallOfFameServiceTest extends BaseTest {
 
     @Mock
     private HallOfFameRepository hallOfFameRepository;

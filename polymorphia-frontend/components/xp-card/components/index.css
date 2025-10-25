@@ -60,3 +60,15 @@
     @apply material-symbols text-2xl;
   }
 }
+
+.xp-card-locked-item {
+  @apply absolute bg-secondary-gray/70 dark:bg-primary-dark/80 flex-centered w-full h-full;
+
+  span {
+    @apply material-symbols;
+
+    p {
+      @apply text-4xl;
+    }
+  }
+}

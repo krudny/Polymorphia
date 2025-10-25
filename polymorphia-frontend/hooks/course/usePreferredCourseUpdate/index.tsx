@@ -19,8 +19,7 @@ export default function usePreferredCourseUpdate({
       userService.setUserPreferredCourse(courseId),
     onSuccess: async () => {
       toast.success("Aktywny kurs został zmieniony!");
-      await queryClient.invalidateQueries({ queryKey: ["currentUser"] });
-      await queryClient.invalidateQueries({ queryKey: ["userRole"] });
+      await queryClient.invalidateQueries();
 
       const { userRole } = await queryClient.fetchQuery<UserDetailsDTO>({
         queryKey: ["currentUser"],

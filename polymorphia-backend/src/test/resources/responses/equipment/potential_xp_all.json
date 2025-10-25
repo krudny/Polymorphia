@@ -1,0 +1,24 @@
+{
+  "behavior": "ALL",
+  "potentialXp": {
+    "summary": {
+      "bonusXp": "6.0",
+      "lossXp": "4.7",
+      "totalBonusXp": "1.3"
+    },
+    "itemDetails": {
+      "9_0": {
+        "bonusXp": "0.0"
+      },
+      "11_0": {
+        "bonusXp": "0.0"
+      },
+      "10_1": {
+        "bonusXp": "3.0"
+      },
+      "10_0": {
+        "bonusXp": "3.0"
+      }
+    }
+  }
+}

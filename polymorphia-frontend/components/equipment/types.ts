@@ -14,3 +14,7 @@ export interface EquipmentSectionProps {
   type: EquipmentSectionType;
   data: EquipmentItemResponseDTO[] | EquipmentChestResponseDTO[];
 }
+
+export interface OpenedChestButtonsProps {
+  chestData: EquipmentChestResponseDTO;
+}

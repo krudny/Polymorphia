@@ -29,7 +29,8 @@ VALUES (3, 'Michał', 'Kowalski', 'coordinator@agh.com', '$2a$10$k/sZH/gK6qzlLpH
        (8, 'Andrzej', 'Bednarek', 'abednarek@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null),
        (9, 'Karol', 'Wójcik', 'kwojcik@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null),
        (10, 'Andrzej', 'Bednarek', 'abednarek2@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null),
-       (11, 'Wojciech', 'Kot', 'instructor2@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O',null);
+       (11, 'Wojciech', 'Kot', 'instructor2@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O',
+        null);
 
 -- Coordinators
 INSERT INTO coordinators(user_id)
@@ -40,8 +41,13 @@ VALUES (3),
 INSERT INTO courses (id, name, coordinator_id, coordinator_image_url, instructor_image_url, image_url, markdown, markdown_source_url)
 VALUES (1, 'Programowanie Obiektowe', 3, '/coord_url', '/instr_url', 'img_url', '', ''),
        (2, 'Programowanie Obiektowe', 3, '/coord_url', '/instr_url', 'img_url', '', ''),
-       (3, 'Programowanie Obiektowe', 4, '/coord_url', '/instr_url', 'img_url', '', '');
+       (3, 'Programowanie Obiektowe', 4, '/coord_url', '/instr_url', 'img_url', '', ''),
+       (4, 'Programowanie Obiektowe', 4, '/coord_url', '/instr_url', 'img_url', '', '');
 
+
+insert into users(id, first_name, last_name, email, password, preferred_course_id)
+values (12, 'Sample', 'User', 'sampleuser@test.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O',
+        4);
 -- Students
 INSERT INTO students(user_id, index_number)
 VALUES (2, 123456),
@@ -50,7 +56,8 @@ VALUES (2, 123456),
        (7, 141414),
        (8, 151515),
        (9, 161616),
-       (10, 171717);
+       (10, 171717),
+       (12, 120000);
 
 UPDATE users
 SET preferred_course_id=1
@@ -75,14 +82,17 @@ VALUES (3, 1, 'COORDINATOR'),
        (8, 1, 'STUDENT'),
        (9, 1, 'STUDENT'),
        (10, 1, 'STUDENT'),
-       (11, 1, 'INSTRUCTOR');
+       (11, 1, 'INSTRUCTOR'),
+       (12, 4, 'STUDENT'),
+       (4, 4, 'INSTRUCTOR');
 
 -- Course Groups
 INSERT INTO course_groups (id, name, course_id, instructor_id)
 VALUES (1, 'MI-SR12', 1, 4),
 
        (2, 'BM-SR13', 1, 11),
-       (3, 'BM-SR15', 1, 11);
+       (3, 'BM-SR15', 1, 11),
+       (4, 'BM-SR15', 4, 4);
 
 -- Animals
 INSERT INTO animals (id, name)
@@ -93,7 +103,8 @@ VALUES (1, 'sowa'),
        (4, 'hof_3'),
        (5, 'hof_4'),
        (6, 'hof_6'),
-       (7, 'hof_5');
+       (7, 'hof_5'),
+       (8, 'fenek');
 
 -- Student Course Group Assignments
 INSERT INTO students_course_groups (animal_id, student_id, course_group_id)
@@ -104,7 +115,8 @@ VALUES (1, 2, 1),
        (4, 7, 2),
        (5, 8, 2),
        (6, 9, 3),
-       (7, 10, 2);
+       (7, 10, 2),
+       (8, 12, 4);
 
 
 -- Evolution Stages
@@ -117,15 +129,19 @@ VALUES (1, 'Pisklak', 20, 'description', 2.0, 'imageUrl_pisklak', 1, 1),
 -- Event sections
 INSERT INTO public.event_sections (id, has_gradable_events_with_topics, is_hidden, is_shown_in_road_map, name, order_index,course_id)
 VALUES (1, true, true, true, 'Kartkówka', 2, 1),
-       (2, true, true, true, 'Lab', 1, 1);
+       (2, true, true, true, 'Lab', 1, 1),
+       (3, true, true, true, 'Kartkówka', 2, 4),
+       (4, true, true, true, 'Laboratorium', 1, 4);
 
 -- Test sections
 INSERT INTO public.test_sections (id)
-VALUES (1);
+VALUES (1),
+       (3);
 
 -- Assignment sections
-INSERT INTO public.test_sections (id)
-VALUES (2);
+INSERT INTO public.assignment_sections (id)
+VALUES (2),
+       (4);
 
 -- Rewards
 INSERT INTO public.rewards (id, description, image_url, name, order_index, course_id)
@@ -133,27 +149,45 @@ VALUES (1, 'desc', 'url', 'Apteczka', 1, 1),
        (2, 'desc', 'url', 'Apteczka2', 2, 1),
        (3, 'desc', 'url', 'Marchewka', 0, 1),
        (4, 'desc', 'url', 'Srebrna', 0, 1),
-       (5, 'desc', 'url', 'Złota', 1, 1);
+       (5, 'desc', 'url', 'Złota', 1, 1),
+       (6, 'desc', 'url', 'ALL', 3, 4),
+       (7, 'desc', 'url', 'ONE_OF_MANY', 2, 4),
+       (8, 'desc', 'percentageBonus_url', 'PercentageBonusItem', 0, 4),
+       (9, 'desc', 'url', 'limit reached', 1, 4),
+       (10, 'desc', 'url', 'flatbonus ONE', 2, 4),
+       (11, 'desc', 'url', 'flatbonus multiple', 3, 4),
+       (12, 'desc', 'url', 'ONE_OF_MANY reached limit', 4, 4);
 
 -- Items
 INSERT INTO public.items ("limit", reward_id, event_section_id)
 VALUES (2, 1, 1),
        (2, 2, 1),
-       (2, 3, 1);
+       (2, 3, 1),
+       (2, 8, 4),
+       (1, 9, 3),
+       (4, 10, 3),
+       (2, 11, 3);
 
 -- Flat bonus items
 INSERT INTO public.flat_bonus_items (xp_bonus, item_id, behavior)
 VALUES (2.0, 1, 'ONE_EVENT'),
-       (3.0, 2, 'MULTIPLE_EVENTS');
+       (3.0, 2, 'MULTIPLE_EVENTS'),
+       (2.0, 9, 'ONE_EVENT'),
+       (3.0, 10, 'ONE_EVENT'),
+       (3.0, 11, 'MULTIPLE_EVENTS');
 
 -- Percentage bonus items
 INSERT INTO public.percentage_bonus_items (percentage_bonus, item_id)
-VALUES (10, 3);
+VALUES (10, 3),
+       (5, 8);
 
 -- Chests
 INSERT INTO public.chests (behavior, reward_id)
 VALUES ('ONE_OF_MANY', 4),
-       ('ALL', 5);
+       ('ALL', 5),
+       ('ONE_OF_MANY', 7),
+       ('ALL', 6),
+       ('ONE_OF_MANY', 12);
 
 -- Chests_items
 INSERT INTO public.chests_items (item_id, chest_id)
@@ -161,18 +195,33 @@ VALUES (1, 4),
        (2, 4),
        (1, 5),
        (2, 5),
-       (3, 5);
+       (3, 5),
+       (9, 6),
+       (10, 6),
+       (11, 6),
+       (8, 7),
+       (9, 7),
+       (10, 6),
+       (9, 12),
+       (9, 12);
 
 -- Gradable events
 INSERT INTO public.gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url, markdown, is_hidden, is_locked)
 VALUES (1, 1, 'kartkówka 1', null, 1, 1, '/url', 'markdown', false, false),
-       (2, 2, 'lab 1', null, 1, 1, '/url', 'markdown', false, false);
+       (2, 2, 'lab 1', null, 1, 1, '/url', 'markdown', false, false),
+       (3, 3, 'kartkówka 2', null, 1, 1, '/url', 'markdown', false, false),
+       (4, 4, 'lab 2', null, 1, 1, '/url', 'markdown', false, false);
 
 
 -- Criteria
 INSERT INTO public.criteria (id, gradable_event_id, name, max_xp)
 VALUES (1, 1, 'uzyskane punkty', 20.0),
-       (2, 1, 'jakość kodu', 20.0);
+       (2, 1, 'jakość kodu', 20.0),
+       (3, 4, 'uzyskane punkty', 4.0),
+       (4, 3, 'kryterium2', 5.0),
+       (5, 3, 'uzyskane punkty', 5.0),
+       (6, 3, 'uzyskane punkty2', 4.0),
+       (7, 3, 'uzyskane punkty2', 5.0);
 
 -- Grades
 INSERT INTO public.grades (id, gradable_event_id, animal_id, created_date, modified_date, comment)
@@ -185,7 +234,9 @@ VALUES (1, 1, 2, NOW(), NOW(), null),
        (6, 2, 3, NOW(), NOW(), null),
        (7, 2, 4, NOW(), NOW(), null),
 
-       (8, 1, 7, NOW(), NOW(), null);
+       (8, 1, 7, NOW(), NOW(), null),
+       (9, 3, 8, NOW(), NOW(), null),
+       (10, 4, 8, NOW(), NOW(), null);
 
 -- Criteria grades
 INSERT INTO public.criteria_grades (id, grade_id, criterion_id, xp)
@@ -198,7 +249,11 @@ VALUES (1, 1, 1, 1.0),
        (6, 6, 2, 8.0),
        (7, 7, 2, 2.0),
 
-       (8, 8, 1, 2.0);
+       (8, 8, 1, 2.0),
+       (9, 10, 3, 4.0),
+       (10, 9, 4, 3.0),
+       (11, 9, 5, 3.0),
+       (12, 9, 6, 2.0);
 
 
 -- Assigned rewards
@@ -207,15 +262,54 @@ VALUES (1, 3, 1, NOW(), null, false),
        (2, 3, 2, NOW(), null, false),
        (3, 1, 3, NOW(), null, false),
        (4, 1, 3, NOW(), null, false),
-       (5, 2, 4, NOW(), null, false);
+       (5, 2, 4, NOW(), null, false),
+       (6, 9, 6, '2025-09-20 17:23:03.000000', null, false),
+       (7, 10, 7, '2025-08-20 17:23:03.000000', null, false),
+       (8, 9, 9, '2025-09-20 17:23:03.000000', null, true),
+       (9, 9, 10, '2025-09-21 17:23:03.000000', null, true),
+       (10, 9, 10, '2025-09-20 17:23:03.000000', null, true),
+       (11, 9, 11, '2025-09-20 17:23:03.000000', null, true);
+
 
 -- Assigned chests
-INSERT INTO public.assigned_chests (assigned_reward_id) VALUES (5);
+INSERT INTO public.assigned_chests (assigned_reward_id)
+VALUES (5),
+       (6),
+       (7);
 
 -- Assigned items
 INSERT INTO public.assigned_items (assigned_reward_id, assigned_chest_id, bonus_xp)
 VALUES (1, null, 2.0),
        (2, null, 3.0),
        (3, null, 0.0),
-       (4, null, 0.0);
+       (4, null, 0.0),
+       (8, null, 0.5),
+       (9, null, 1.0),
+       (10, null, 1.0),
+       (11, null, 2.2);
+
+SELECT setval('animals_id_seq', COALESCE(MAX(id), 0) + 1, false)
+FROM animals;
+SELECT setval('assigned_rewards_id_seq', COALESCE(MAX(id), 0) + 1, false)
+FROM assigned_rewards;
+SELECT setval('course_groups_id_seq', COALESCE(MAX(id), 0) + 1, false)
+FROM course_groups;
+SELECT setval('courses_id_seq', COALESCE(MAX(id), 0) + 1, false)
+FROM courses;
+SELECT setval('criteria_grades_id_seq', COALESCE(MAX(id), 0) + 1, false)
+FROM criteria_grades;
+SELECT setval('criteria_id_seq', COALESCE(MAX(id), 0) + 1, false)
+FROM criteria;
+SELECT setval('event_sections_id_seq', COALESCE(MAX(id), 0) + 1, false)
+FROM event_sections;
+SELECT setval('evolution_stages_id_seq', COALESCE(MAX(id), 0) + 1, false)
+FROM evolution_stages;
+SELECT setval('gradable_events_id_seq', COALESCE(MAX(id), 0) + 1, false)
+FROM gradable_events;
+SELECT setval('grades_id_seq', COALESCE(MAX(id), 0) + 1, false)
+FROM grades;
+SELECT setval('rewards_id_seq', COALESCE(MAX(id), 0) + 1, false)
+FROM rewards;
+SELECT setval('users_id_seq', COALESCE(MAX(id), 0) + 1, false)
+FROM users;
 

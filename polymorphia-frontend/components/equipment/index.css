@@ -4,65 +4,41 @@
 /* EquipmentSection */
 
 .equipment-header {
-    @apply text-6xl mb-6 lg:mb-10;
+  @apply text-6xl mb-6 lg:mb-10;
 }
 
 .equipment-grid {
-    @apply grid grid-cols-2 sm:grid-cols-4 gap-4;
+  @apply grid grid-cols-2 sm:grid-cols-4 gap-4;
 }
 
 .equipment-grid-item {
-    @apply relative w-full aspect-square;
+  @apply relative w-full aspect-square;
 }
 
 .equipment-image {
-    @apply object-cover rounded-2xl shadow-lg;
+  @apply object-cover rounded-2xl shadow-lg;
 }
 
 .equipment-image-badge {
-    @apply text-3xl w-10 rounded-tl-2xl rounded-br-2xl;
+  @apply text-3xl w-10 rounded-tl-2xl rounded-br-2xl;
 }
 
 .equipment-chest-btn-wrapper {
-    @apply w-full flex-centered mt-4;
+  @apply w-full flex-centered mt-4;
 }
 
 .equipment-chest-btn {
-    @apply w-full py-0 text-base md:text-lg lg:text-2xl rounded-xl;
+  @apply w-full py-0 text-base md:text-lg lg:text-2xl rounded-xl;
 }
 
 .equipment-locked-item {
-    @apply absolute bg-secondary-gray/70 dark:bg-primary-dark/80 flex-centered w-full h-full;
+  @apply absolute bg-secondary-gray/70 dark:bg-primary-dark/80 flex-centered w-full h-full;
 
-    span {
-        @apply material-symbols;
+  span {
+    @apply material-symbols;
 
-        p {
-            @apply text-8xl;
-        }
+    p {
+      @apply text-8xl;
     }
-}
-
-/* OpeningChestModalContent */
-
-.opening-chest-modal {
-    @apply w-80 grid grid-cols-2 gap-3;
-}
-
-.opening-chest-modal-image-wrapper {
-    @apply relative w-full aspect-square cursor-pointer;
-}
-
-.opening-chest-modal-image-selected {
-    @apply outline-4 outline-amber-400;
-}
-
-.opening-chest-modal-button-wrapper {
-    @apply w-full mt-5;
-}
-
-/* Chest modal */
-
-.bonus-info-modal {
-    @apply flex flex-col gap-2;
+  }
 }

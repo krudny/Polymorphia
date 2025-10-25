@@ -2,26 +2,20 @@ package com.agh.polymorphia_backend.service.mapper;
 
 import com.agh.polymorphia_backend.dto.response.knowledge_base.KnowledgeBaseResponseDto;
 import com.agh.polymorphia_backend.dto.response.knowledge_base.KnowledgeBaseType;
-import com.agh.polymorphia_backend.dto.response.reward.BaseRewardResponseDto;
 import com.agh.polymorphia_backend.model.course.EvolutionStage;
-import com.agh.polymorphia_backend.model.course.reward.Reward;
-import com.agh.polymorphia_backend.model.course.reward.chest.Chest;
-import com.agh.polymorphia_backend.model.course.reward.item.FlatBonusItem;
-import com.agh.polymorphia_backend.model.course.reward.item.Item;
+import com.agh.polymorphia_backend.model.course.reward.*;
 import com.agh.polymorphia_backend.model.course.reward.item.ItemType;
-import com.agh.polymorphia_backend.model.course.reward.item.PercentageBonusItem;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Comparator;
-import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class KnowledgeBaseMapper {
+    public static final String FLAT_BONUS_ITEM_SUBTITLE = "+%.1f xp do eventów z kategorii %s";
+    public static final String FLAT_BONUS_ITEM_SHORT_SUBTITLE = "+%.1f xp %s";
+    public static final String PERCENTAGE_BONUS_ITEM_SUBTITLE = "+%d%% do eventów z kategorii %s";
+    public static final String PERCENTAGE_BONUS_ITEM_SHORT_SUBTITLE = "+%d%% %s";
     private static final String EVOLUTION_STAGES_GRADING_SUBTITLE = "%.1f xp odblokowuje ocenę %.1f";
-    private static final String FLAT_BONUS_ITEM_SUBTITLE = "+%.1f xp do eventów z kategorii %s";
-    private static final String PERCENTAGE_BONUS_ITEM_SUBTITLE = "+%d%% do eventów z kategorii %s";
     private RewardMapper rewardMapper;
 
     private static KnowledgeBaseResponseDto.KnowledgeBaseResponseDtoBuilder getDtoBuilderForReward(Reward reward) {
@@ -31,6 +25,21 @@ public class KnowledgeBaseMapper {
                 .name(reward.getName())
                 .description(reward.getDescription())
                 .imageUrl(reward.getImageUrl());
+    }
+
+    private static String getItemSubtitle(Item item) {
+        return switch (item.getItemType()) {
+            case ItemType.FLAT_BONUS -> String.format(
+                    FLAT_BONUS_ITEM_SUBTITLE,
+                    ((FlatBonusItem) item).getXpBonus(),
+                    item.getEventSection().getName()
+            );
+            case ItemType.PERCENTAGE_BONUS -> String.format(
+                    PERCENTAGE_BONUS_ITEM_SUBTITLE,
+                    ((PercentageBonusItem) item).getPercentageBonus(),
+                    item.getEventSection().getName()
+            );
+        };
     }
 
     public KnowledgeBaseResponseDto evolutionStageToResponseDto(EvolutionStage evolutionStage) {
@@ -49,30 +58,8 @@ public class KnowledgeBaseMapper {
         return getDtoBuilderForReward(chest)
                 .type(KnowledgeBaseType.CHEST)
                 .subtitle(chest.getBehavior().getTextValue())
-                .relatedRewards(relatedRewardsToResponseDto(chest.getItems()))
+                .relatedRewards(rewardMapper.relatedRewardsToResponseDto(chest.getItems()))
                 .build();
-    }
-
-    private static String getItemSubtitle(Item item) {
-        return switch (item.getItemType()) {
-            case ItemType.FLAT_BONUS -> String.format(
-                    FLAT_BONUS_ITEM_SUBTITLE,
-                    ((FlatBonusItem) item).getXpBonus(),
-                    item.getEventSection().getName()
-            );
-            case ItemType.PERCENTAGE_BONUS -> String.format(
-                    PERCENTAGE_BONUS_ITEM_SUBTITLE,
-                    ((PercentageBonusItem) item).getPercentageBonus(),
-                    item.getEventSection().getName()
-            );
-        };
-    }
-
-    private <T extends Reward> List<BaseRewardResponseDto> relatedRewardsToResponseDto(List<T> rewards) {
-        return rewards.stream()
-                .map(rewardMapper::rewardToRewardResponseDto)
-                .sorted(Comparator.comparing(BaseRewardResponseDto::getOrderIndex))
-                .toList();
     }
 
     public KnowledgeBaseResponseDto itemToResponseDto(Item item) {
@@ -81,7 +68,7 @@ public class KnowledgeBaseMapper {
         return getDtoBuilderForReward(item)
                 .type(KnowledgeBaseType.ITEM)
                 .subtitle(subtitle)
-                .relatedRewards(relatedRewardsToResponseDto(item.getChests()))
+                .relatedRewards(rewardMapper.relatedRewardsToResponseDto(item.getChests()))
                 .build();
     }
 }

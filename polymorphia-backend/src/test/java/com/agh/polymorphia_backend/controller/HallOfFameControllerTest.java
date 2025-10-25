@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.controller;
 
-import com.agh.polymorphia_backend.dto.request.HallOfFameRequestDto;
+import com.agh.polymorphia_backend.dto.request.hall_of_fame.HallOfFameRequestDto;
 import com.agh.polymorphia_backend.model.hall_of_fame.SearchBy;
 import com.agh.polymorphia_backend.model.hall_of_fame.SortOrder;
 import org.junit.jupiter.api.Test;

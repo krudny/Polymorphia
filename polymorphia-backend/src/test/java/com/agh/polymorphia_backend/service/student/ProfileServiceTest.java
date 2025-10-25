@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.service.student;
 
+import com.agh.polymorphia_backend.BaseTest;
 import com.agh.polymorphia_backend.dto.response.profile.EvolutionStageThresholdResponseDto;
 import com.agh.polymorphia_backend.dto.response.profile.ProfileResponseDto;
 import com.agh.polymorphia_backend.model.course.Animal;
@@ -28,7 +29,7 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-class ProfileServiceTest {
+class ProfileServiceTest extends BaseTest {
 
     @Mock
     private AccessAuthorizer accessAuthorizer;

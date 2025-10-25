@@ -1,5 +1,6 @@
-package com.agh.polymorphia_backend.model.course.reward.item;
+package com.agh.polymorphia_backend.model.course.reward;
 
+import com.agh.polymorphia_backend.model.course.reward.item.ItemType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
