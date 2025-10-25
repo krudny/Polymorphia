@@ -8,7 +8,7 @@ import {
   EquipmentItemResponseDTO,
 } from "@/interfaces/api/equipment";
 import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
-import { OpenedChest } from "@/components/equipment/OpenedChest";
+import { OpenedChestButtons } from "@/components/equipment/OpenedChest";
 
 export function EquipmentSection({ type, data }: EquipmentSectionProps) {
   const { setCurrentItemModalData } = useEquipmentContext();
@@ -72,7 +72,7 @@ export function EquipmentSection({ type, data }: EquipmentSectionProps) {
                     priority
                     sizes="(min-width: 1024px) 25vw, 50vw"
                   />
-                  {chestData.details.id && (
+                  {!chestData.details.id && (
                     <div className="equipment-locked-item">
                       <span>
                         <p>lock</p>
@@ -80,7 +80,9 @@ export function EquipmentSection({ type, data }: EquipmentSectionProps) {
                     </div>
                   )}
                 </div>
-                {chestData.details.id && <OpenedChest chestData={chestData} />}
+                {chestData.details.id && (
+                  <OpenedChestButtons chestData={chestData} />
+                )}
               </div>
             );
           }

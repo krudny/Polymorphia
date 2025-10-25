@@ -57,13 +57,13 @@ interface BaseChestPotentialXpResponseDTOWithType<
 
 type AllPotentialXpResponseDTOWithType =
   BaseChestPotentialXpResponseDTOWithType<
-    ChestBehavior.ALL,
+    "ALL",
     AllChestPotentialXpResponseDTO
   >;
 
 type OnePotentialXpResponseDTOWithType =
   BaseChestPotentialXpResponseDTOWithType<
-    ChestBehavior.ONE_OF_MANY,
+    "ONE_OF_MANY",
     OneChestPotentialXpResponseDTO
   >;
 

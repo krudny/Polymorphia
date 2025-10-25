@@ -35,7 +35,7 @@ import {
   SubmissionDetailsResponseDTO,
   SubmissionRequirementResponseDTO,
 } from "@/interfaces/api/grade/submission";
-import { ChestBehavior } from "@/interfaces/api/reward";
+import { ChestBehaviors } from "@/interfaces/api/reward";
 
 export const studentNames = [
   "Gerard Małoduszny",
@@ -693,7 +693,7 @@ export const EventSectionService = {
                 id: 1,
                 name: "Srebrna Skrzynia",
                 imageUrl: "images/chests/s1.webp",
-                behavior: ChestBehavior.ONE_OF_MANY,
+                behavior: ChestBehaviors.ONE_OF_MANY,
                 behaviorText: "Wybierz jeden przedmiot ze skrzynki",
                 orderIndex: 0,
                 chestItems: [

@@ -1,6 +1,6 @@
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import "../index.css";
-import { BaseItem, ChestBehavior } from "@/interfaces/api/reward";
+import "./index.css";
+import { BaseItem, ChestBehaviors } from "@/interfaces/api/reward";
 import useModalContext from "@/hooks/contexts/useModalContext";
 import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
 import { EquipmentChestResponseDTO } from "@/interfaces/api/equipment";
@@ -30,13 +30,15 @@ export default function OpeningChestModalContent({
   } = useEquipmentContext();
   const queryClient = useQueryClient();
   const pickChestItemsMutation = usePickChestItems();
-  const [xpGain, setXpGain] = useState("0.0 xp");
-  const [xpLoss, setXpLoss] = useState("0.0 xp");
-  const [xpSum, setXpSum] = useState("0.0 xp");
+  const [xp, setXp] = useState({
+    gain: "0.0 xp",
+    loss: "0.0 xp",
+    sum: "0.0 xp",
+  });
   const { data: chestPotentialXp, isLoading } = usePotentialXp(
     currentOpeningChestModalData.details.id
   );
-  const isSm = useMediaQuery({ maxWidth: 920 });
+  const isSm = useMediaQuery({ maxWidth: 768 });
   const areAllItemsOverLimit =
     currentOpeningChestModalData.base.chestItems?.every(
       (item) => item.isLimitReached
@@ -47,12 +49,14 @@ export default function OpeningChestModalContent({
       return;
     }
 
-    if (chestPotentialXp?.behavior === ChestBehavior.ALL) {
+    if (chestPotentialXp?.behavior === ChestBehaviors.ALL) {
       const { bonusXp, lossXp, totalBonusXp } =
         chestPotentialXp.potentialXp.summary;
-      setXpGain(`${bonusXp} xp`);
-      setXpLoss(`${lossXp} xp`);
-      setXpSum(`${totalBonusXp} xp`);
+      setXp({
+        gain: `${bonusXp} xp`,
+        loss: `${lossXp} xp`,
+        sum: `${totalBonusXp} xp`,
+      });
     }
   }, [chestPotentialXp]);
 
@@ -73,7 +77,7 @@ export default function OpeningChestModalContent({
     itemKey: string,
     isLimitReached: boolean
   ) => {
-    if (chestPotentialXp.behavior === ChestBehavior.ALL) {
+    if (chestPotentialXp.behavior === ChestBehaviors.ALL) {
       return;
     }
 
@@ -84,9 +88,11 @@ export default function OpeningChestModalContent({
       return;
     }
 
-    setXpGain(`${bonusXp} xp`);
-    setXpLoss(`${lossXp} xp`);
-    setXpSum(`${totalBonusXp} xp`);
+    setXp({
+      gain: `${bonusXp} xp`,
+      loss: `${lossXp} xp`,
+      sum: `${totalBonusXp} xp`,
+    });
 
     setPickedItemId(itemId);
     setPickedItemKey(itemKey);
@@ -96,7 +102,7 @@ export default function OpeningChestModalContent({
     const requestBody = {
       assignedChestId: currentOpeningChestModalData.details.id,
       itemId:
-        currentOpeningChestModalData.base.behavior === ChestBehavior.ALL
+        currentOpeningChestModalData.base.behavior === ChestBehaviors.ALL
           ? null
           : pickedItemId,
     };
@@ -133,11 +139,11 @@ export default function OpeningChestModalContent({
   return (
     <>
       <div className="opening-chest-modal-summary">
-        <XPCard title={xpGain} subtitle="ZYSK" size="xs" color="sky" />
+        <XPCard title={xp.gain} subtitle="ZYSK" size="xs" color="sky" />
         <span>−</span>
-        <XPCard title={xpLoss} subtitle="STRATA" size="xs" color="sky" />
+        <XPCard title={xp.loss} subtitle="STRATA" size="xs" color="sky" />
         <span>=</span>
-        <XPCard title={xpSum} subtitle="SUMA" size="xs" color="green" />
+        <XPCard title={xp.sum} subtitle="SUMA" size="xs" color="green" />
       </div>
       <div className="opening-chest-modal">
         {currentOpeningChestModalData.base.chestItems.map(
@@ -162,7 +168,7 @@ export default function OpeningChestModalContent({
                     pickedItemKey === itemKey,
                   "cursor-pointer":
                     currentOpeningChestModalData.base.behavior ===
-                      ChestBehavior.ONE_OF_MANY && !item.isLimitReached,
+                      ChestBehaviors.ONE_OF_MANY && !item.isLimitReached,
                 })}
                 onClick={() =>
                   handlePickItem(item.id, itemKey, item.isLimitReached)
@@ -205,7 +211,7 @@ export default function OpeningChestModalContent({
           isActive={
             pickedItemId !== null ||
             areAllItemsOverLimit ||
-            currentOpeningChestModalData.base.behavior == ChestBehavior.ALL
+            currentOpeningChestModalData.base.behavior == ChestBehaviors.ALL
           }
         />
       </div>

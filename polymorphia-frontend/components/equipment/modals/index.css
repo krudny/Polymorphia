@@ -1,0 +1,53 @@
+@import "tailwindcss";
+@import "../../../styles/globals.css";
+
+.opening-chest-modal {
+  @apply w-full flex flex-col gap-3 max-h-[60vh] overflow-y-auto p-1;
+}
+
+.opening-chest-modal-loading {
+  @apply relative flex-centered min-h-[100px];
+}
+
+.opening-chest-modal-summary {
+  @apply w-full flex-centered flex-row gap-2 flex-shrink-0 px-1 pb-2;
+
+  h1 {
+    @apply text-2xl;
+  }
+
+  span {
+    @apply text-2xl font-bold flex-centered;
+  }
+
+  .xp-card-middle {
+    @apply justify-center text-center;
+
+    h1,
+    h2 {
+      @apply text-center;
+    }
+  }
+}
+
+.opening-chest-modal-footer-text {
+  @apply whitespace-normal break-words max-w-[450px] mx-auto leading-tight text-2xl sm:text-lg;
+}
+
+.opening-chest-modal-image-wrapper {
+  @apply relative w-full;
+}
+
+.opening-chest-modal-image-selected {
+  @apply outline-4 outline-amber-400 rounded-lg;
+}
+
+.opening-chest-modal-button-wrapper {
+  @apply w-full mt-5;
+}
+
+/* Chest modal */
+
+.bonus-info-modal {
+  @apply flex flex-col gap-2;
+}

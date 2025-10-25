@@ -5,12 +5,13 @@ import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export default function useEquipment(): UseEquipment {
   const { courseId } = useUserDetails();
+  const { id } = useUserDetails();
   const {
     data: items,
     isLoading: isItemsLoading,
     error: itemsError,
   } = useQuery({
-    queryKey: ["equipmentItems"],
+    queryKey: ["equipmentItems", courseId, id],
     queryFn: () => EquipmentService.getItems(courseId),
   });
 
@@ -19,7 +20,7 @@ export default function useEquipment(): UseEquipment {
     isLoading: isChestsLoading,
     error: chestsError,
   } = useQuery({
-    queryKey: ["equipmentChests"],
+    queryKey: ["equipmentChests", courseId, id],
     queryFn: () => EquipmentService.getChests(courseId),
   });
 

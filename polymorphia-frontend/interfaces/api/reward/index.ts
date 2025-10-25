@@ -54,10 +54,13 @@ type ItemResponseDTOWithType = BaseRewardResponseDTOWithType<
 >;
 
 // Chests
-export enum ChestBehavior {
-  ALL = "ALL",
-  ONE_OF_MANY = "ONE_OF_MANY",
-}
+export const ChestBehaviors = {
+  ALL: "ALL",
+  ONE_OF_MANY: "ONE_OF_MANY",
+} as const;
+
+export type ChestBehavior =
+  (typeof ChestBehaviors)[keyof typeof ChestBehaviors];
 
 export interface BaseChest extends BaseReward {
   behaviorText: string;

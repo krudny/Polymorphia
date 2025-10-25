@@ -15,6 +15,6 @@ export interface EquipmentSectionProps {
   data: EquipmentItemResponseDTO[] | EquipmentChestResponseDTO[];
 }
 
-export interface OpenedChestProps {
+export interface OpenedChestButtonsProps {
   chestData: EquipmentChestResponseDTO;
 }
