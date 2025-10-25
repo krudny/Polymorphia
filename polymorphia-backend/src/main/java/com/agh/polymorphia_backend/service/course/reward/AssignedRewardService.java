@@ -46,11 +46,13 @@ public class AssignedRewardService {
         return assignedItemRepository.findAnimalAssignedItems(animalId);
     }
 
-    public List<AssignedItem> filterFlatBonusItemsByBehavior(List<AssignedItem> assignedItems, FlatBonusItemBehavior behavior) {
+    public Map<FlatBonusItemBehavior, List<AssignedItem>> groupFlatBonusItemsByBehavior(List<AssignedItem> assignedItems) {
         return assignedItems.stream()
-                .filter(assignedItem -> ((FlatBonusItem) Hibernate.unproxy(assignedItem.getReward())).getBehavior().equals(behavior))
                 .sorted(Comparator.comparing(AssignedReward::getReceivedDate))
-                .collect(Collectors.toList());
+                .collect(Collectors.groupingBy(
+                        assignedItem -> ((FlatBonusItem) Hibernate.unproxy(assignedItem.getReward())).getBehavior(),
+                        Collectors.toList()
+                ));
     }
 
     public List<AssignedItem> getAnimalAssignedItemsByType(Long animalId, ItemType itemType) {

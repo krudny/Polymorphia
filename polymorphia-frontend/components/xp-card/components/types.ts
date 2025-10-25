@@ -28,15 +28,6 @@ export interface XPCardImageWithLockProps extends XPCardImageProps {
   isLocked: boolean;
 }
 
-export interface XPCardDoubleImageProps {
-  images: singleImage[];
-}
-
-interface singleImage {
-  imageUrl: string;
-  alt: string;
-}
-
 export interface XPCardAssignProps {
   currentAssigned: number;
   maxAssigned: number;

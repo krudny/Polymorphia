@@ -9,10 +9,12 @@ import EquipmentSectionWrapper from "@/components/equipment/EquipmentSectionWrap
 import OpeningChestModal from "@/components/equipment/modals/OpeningChestModal";
 import { EquipmentProvider } from "@/providers/equipment/EquipmentContext";
 import useEquipment from "@/hooks/course/useEquipment";
+import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
 
-export default function Equipment() {
+function EquipmentContent() {
   const { setTitle } = useTitle();
   const { items, chests, isLoading } = useEquipment();
+  const { currentOpeningChestModalData } = useEquipmentContext();
 
   useEffect(() => {
     setTitle("Ekwipunek");
@@ -27,14 +29,23 @@ export default function Equipment() {
   }
 
   return (
-    <EquipmentProvider>
-      <div className="equipment">
-        <EquipmentSectionWrapper items={items} chests={chests} />
+    <div className="equipment">
+      <EquipmentSectionWrapper items={items} chests={chests} />
+      <ItemModal />
+      <ChestModal />
+      {currentOpeningChestModalData !== null && (
+        <OpeningChestModal
+          currentOpeningChestModalData={currentOpeningChestModalData}
+        />
+      )}
+    </div>
+  );
+}
 
-        <ItemModal />
-        <ChestModal />
-        <OpeningChestModal />
-      </div>
+export default function Equipment() {
+  return (
+    <EquipmentProvider>
+      <EquipmentContent />
     </EquipmentProvider>
   );
 }

@@ -27,8 +27,8 @@ public class PotentialXpMapper {
     ) {
         BigDecimal totalBonus = summary1.getBonusXp().add(summary2.getBonusXp());
 
-        BigDecimal totalLoss = Optional.ofNullable(summary1.getLossXp()).orElse(BigDecimal.ZERO)
-                .add(Optional.ofNullable(summary2.getLossXp()).orElse(BigDecimal.ZERO));
+        BigDecimal totalLoss = Optional.ofNullable(summary1.getLossXp()).orElse(BigDecimal.valueOf(0.0))
+                .add(Optional.ofNullable(summary2.getLossXp()).orElse(BigDecimal.valueOf(0.0)));
 
         return toChestPotentialXpResponseDto(totalBonus, Optional.of(totalLoss));
     }

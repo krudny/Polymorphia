@@ -2,20 +2,16 @@ import { API_STATIC_URL } from "@/services/api";
 import "./index.css";
 import Image from "next/image";
 import ImageBadge from "@/components/image-badge/ImageBadge";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { EquipmentSectionProps } from "@/components/equipment/types";
 import {
   EquipmentChestResponseDTO,
   EquipmentItemResponseDTO,
 } from "@/interfaces/api/equipment";
 import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
+import { OpenedChest } from "@/components/equipment/OpenedChest";
 
 export function EquipmentSection({ type, data }: EquipmentSectionProps) {
-  const {
-    setCurrentItemModalData,
-    setCurrentChestModalData,
-    setCurrentOpeningChestModalData,
-  } = useEquipmentContext();
+  const { setCurrentItemModalData } = useEquipmentContext();
 
   return (
     <section className="mb-5">
@@ -85,25 +81,7 @@ export function EquipmentSection({ type, data }: EquipmentSectionProps) {
                   )}
                 </div>
                 {chestData.details.id ? (
-                  chestData.details.isUsed ? (
-                    <div className="equipment-chest-btn-wrapper">
-                      <ButtonWithBorder
-                        text={`Otwarta ${chestData.details.usedDate}`}
-                        onClick={() => setCurrentChestModalData(chestData)}
-                        className="equipment-chest-btn"
-                      />
-                    </div>
-                  ) : (
-                    <div className="equipment-chest-btn-wrapper">
-                      <ButtonWithBorder
-                        text="Otwórz skrzynię"
-                        onClick={() =>
-                          setCurrentOpeningChestModalData(chestData)
-                        }
-                        className="equipment-chest-btn"
-                      />
-                    </div>
-                  )
+                  <OpenedChest chestData={chestData} />
                 ) : null}
               </div>
             );

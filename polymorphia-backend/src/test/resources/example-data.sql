@@ -1078,11 +1078,7 @@ values (11, 11, 1, 1.4),
 INSERT INTO assigned_rewards (id, criterion_grade_id, reward_id, received_date, used_date, is_used)
 VALUES (1, 1, 101, '2025-09-20 17:23:03', NULL, false);
 INSERT INTO assigned_rewards (id, criterion_grade_id, reward_id, received_date, used_date, is_used)
-VALUES (2, 1, 102, '2025-09-20 17:23:03', '2025-09-20 17:23:03', true);
-INSERT INTO assigned_rewards (id, criterion_grade_id, reward_id, received_date, used_date, is_used)
-VALUES (3, 1, 1, '2025-09-20 17:23:03', '2025-09-20 17:23:03', true);
-INSERT INTO assigned_rewards (id, criterion_grade_id, reward_id, received_date, used_date, is_used)
-VALUES (4, 1, 2, '2025-09-20 17:23:03', '2025-09-20 17:23:03', true);
+VALUES (2, 1, 102, '2025-09-20 17:23:03', '2025-09-20 17:23:03', false);
 insert into assigned_rewards(id, criterion_grade_id, reward_id, received_date, used_date, is_used)
 values (5, 11, 101, NOW(), NOW(), true),
        (6, 11, 1, NOW(), NOW(), true),
@@ -1101,10 +1097,6 @@ values (5),
 insert into assigned_items(assigned_reward_id, assigned_chest_id, bonus_xp)
 values (6, 5, 0.0),
        (8, 7, 2.5);
-INSERT INTO assigned_items (assigned_reward_id, assigned_chest_id, bonus_xp)
-VALUES (3, 2, 0.0);
-INSERT INTO assigned_items (assigned_reward_id, assigned_chest_id, bonus_xp)
-VALUES (4, 2, 0.0);
 
 INSERT INTO assigned_rewards(id, criterion_grade_id, reward_id, received_date, used_date, is_used)
 values (9, 7, 101, NOW(), null, false),

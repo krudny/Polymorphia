@@ -215,9 +215,9 @@ public class BonusXpCalculatorTestUtil {
                                 createGrade(BigDecimal.valueOf(2.0), BigDecimal.valueOf(5.0), 1L, 1L)
                         ),
                         List.of(
-                                BigDecimal.valueOf(2.0),
+                                BigDecimal.valueOf(0.0),
                                 BigDecimal.valueOf(1.0),
-                                BigDecimal.valueOf(0.0)
+                                BigDecimal.valueOf(2.0)
                         )
                 ),
 

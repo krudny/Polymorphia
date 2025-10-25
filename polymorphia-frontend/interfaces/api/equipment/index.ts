@@ -1,14 +1,12 @@
 import {
-  BaseReward,
   ChestBehavior,
   ChestResponseDTO,
   ItemResponseDTO,
-  RewardType,
 } from "@/interfaces/api/reward";
 import {
   ChestAssignmentDetailsResponseDTO,
   ItemAssignmentDetailsResponseDTO,
-} from "../reward/assigned";
+} from "@/interfaces/api/reward/assigned";
 
 export interface EquipmentItemResponseDTO {
   base: ItemResponseDTO;
@@ -22,7 +20,7 @@ export interface EquipmentChestResponseDTO {
 
 export interface EquipmentChestOpenRequestDTO {
   assignedChestId: number;
-  itemId?: number;
+  itemId: number | null;
 }
 
 export interface BasePotentialXpResponseDTO {
@@ -59,13 +57,13 @@ interface BaseChestPotentialXpResponseDTOWithType<
 
 type AllPotentialXpResponseDTOWithType =
   BaseChestPotentialXpResponseDTOWithType<
-    "ALL",
+    ChestBehavior.ALL,
     AllChestPotentialXpResponseDTO
   >;
 
 type OnePotentialXpResponseDTOWithType =
   BaseChestPotentialXpResponseDTOWithType<
-    "ONE_OF_MANY",
+    ChestBehavior.ONE_OF_MANY,
     OneChestPotentialXpResponseDTO
   >;
 

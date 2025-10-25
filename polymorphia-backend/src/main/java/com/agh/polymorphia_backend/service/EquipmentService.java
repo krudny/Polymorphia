@@ -15,12 +15,12 @@ import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedReward;
 import com.agh.polymorphia_backend.model.course.reward.chest.ChestBehavior;
 import com.agh.polymorphia_backend.repository.course.reward.ChestRepository;
 import com.agh.polymorphia_backend.repository.course.reward.ItemRepository;
-import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.course.reward.AssignedRewardService;
 import com.agh.polymorphia_backend.service.course.reward.BonusXpCalculator;
 import com.agh.polymorphia_backend.service.course.reward.PotentialBonusXpCalculator;
 import com.agh.polymorphia_backend.service.mapper.AssignedRewardMapper;
 import com.agh.polymorphia_backend.service.mapper.RewardMapper;
+import com.agh.polymorphia_backend.service.student.AnimalService;
 import lombok.AllArgsConstructor;
 import org.hibernate.Hibernate;
 import org.springframework.http.HttpStatus;
@@ -55,10 +55,11 @@ public class EquipmentService {
 
 
         return Stream.concat(
-                        assignedRewardMapper.assignedItemsToResponseDto(assignedItems).stream(),
+                        assignedRewardMapper.assignedItemsToResponseDto(assignedItems).stream()
+                                .sorted(Comparator.comparing(response -> response.getBase().getOrderIndex())),
                         rewardMapper.itemsToEquipmentResponseDto(remainingCourseItems).stream()
+                                .sorted(Comparator.comparing(response -> response.getBase().getOrderIndex()))
                 )
-                .sorted(Comparator.comparing(response -> response.getBase().getOrderIndex()))
                 .toList();
     }
 
@@ -71,10 +72,12 @@ public class EquipmentService {
         setIsLimitReachedForALLChests(assignedChestsResponse, animalId);
 
         return Stream.concat(
-                        assignedChestsResponse.stream(),
+                        assignedChestsResponse.stream()
+                                .sorted(Comparator.comparing(response -> response.getDetails().getReceivedDate()))
+                                .sorted(Comparator.comparing(response -> response.getBase().getOrderIndex())),
                         rewardMapper.chestsToEquipmentResponseDto(remainingCourseChests).stream()
+                                .sorted(Comparator.comparing(response -> response.getBase().getOrderIndex()))
                 )
-                .sorted(Comparator.comparing(response -> response.getBase().getOrderIndex()))
                 .toList();
     }
 
@@ -129,7 +132,7 @@ public class EquipmentService {
 
     private List<AssignedItem> createAssignedItemsFromRequest(EquipmentChestOpenRequestDto requestDto, AssignedChest assignedChest, ZonedDateTime openDate) {
         if (requestDto.getItemId() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            return new ArrayList<>();
         }
 
         Item item = ((Chest) Hibernate.unproxy(assignedChest.getReward())).getItems().stream()

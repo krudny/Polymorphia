@@ -128,7 +128,7 @@ public class PotentialBonusXpCalculator {
 
         BigDecimal totalBonus = newAssignedItems.stream()
                 .map(AssignedItem::getBonusXp)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+                .reduce(BigDecimal.valueOf(0.0), BigDecimal::add);
 
         PotentialBonusXpResponseDto summary = potentialXpMapper.toChestPotentialXpResponseDto(totalBonus, lossXp);
 
@@ -177,8 +177,11 @@ public class PotentialBonusXpCalculator {
     }
 
     private void countFlatBonus(List<AssignedItem> assignedItems, List<AssignedItem> newAssignedItems, List<Grade> grades) {
-        List<AssignedItem> oneEventItems = assignedRewardService.filterFlatBonusItemsByBehavior(assignedItems, FlatBonusItemBehavior.ONE_EVENT);
-        List<AssignedItem> multipleEventsItems = assignedRewardService.filterFlatBonusItemsByBehavior(assignedItems, FlatBonusItemBehavior.MULTIPLE_EVENTS);
+        Map<FlatBonusItemBehavior, List<AssignedItem>> assignedItemsByBehavior = assignedRewardService.groupFlatBonusItemsByBehavior(assignedItems);
+        List<AssignedItem> oneEventItems = Optional.ofNullable(assignedItemsByBehavior.get(FlatBonusItemBehavior.ONE_EVENT))
+                .orElse(new ArrayList<>());
+        List<AssignedItem> multipleEventsItems = Optional.ofNullable(assignedItemsByBehavior.get(FlatBonusItemBehavior.MULTIPLE_EVENTS))
+                .orElse(new ArrayList<>());
 
         addNewItemsToRespectiveFlatBonusMap(newAssignedItems, oneEventItems, multipleEventsItems);
 
@@ -196,7 +199,7 @@ public class PotentialBonusXpCalculator {
                 item -> ((Item) item.getReward()).getLimit(),
                 (item, isOverLimit) -> {
                     if (isOverLimit) {
-                        item.setBonusXp(BigDecimal.ZERO);
+                        item.setBonusXp(BigDecimal.valueOf(0.0));
                     }
                 }
         );

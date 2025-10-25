@@ -15,7 +15,6 @@ import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -38,7 +37,7 @@ public class RewardMapper {
                 ChestResponseDtoBase.builder()
                         .behaviorText(chest.getBehavior().getTextValue())
                         .behavior(chest.getBehavior())
-                        .chestItems(relatedRewardsToResponseDto(new ArrayList<>(chest.getItems())));
+                        .chestItems(relatedRewardsToResponseDto(chest.getItems()));
 
         return baseRewardToBaseRewardResponseDto(builder, chest);
     }

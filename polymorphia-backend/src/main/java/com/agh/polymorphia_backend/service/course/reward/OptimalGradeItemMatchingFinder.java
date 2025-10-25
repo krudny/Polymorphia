@@ -90,7 +90,7 @@ public class OptimalGradeItemMatchingFinder {
             for (int j = 0; j < numItems; j++) {
                 FlatBonusItem bonusItem = (FlatBonusItem) Hibernate.unproxy(flatBonusItems.get(j).getReward());
 
-                int bonusScaled = Math.max(0, scale(bonusItem.getXpBonus()));
+                int bonusScaled = scale(bonusItem.getXpBonus());
                 int effective = Math.min(bonusScaled, missingScaled);
                 if (effective > 0) {
                     sumAssigned.addTerm(y[j][i], effective);

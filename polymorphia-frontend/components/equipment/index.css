@@ -15,24 +15,6 @@
   @apply relative w-full aspect-square;
 }
 
-.equipment-no-data-placeholder {
-  @apply w-full sm:col-span-4 relative flex justify-center items-center rounded-2xl bg-secondary-gray/50 dark:bg-primary-dark/20;
-  height: 0;
-  padding-bottom: 25%;
-}
-
-.equipment-no-data-placeholder-content {
-  @apply absolute inset-0 flex justify-center items-center p-6;
-
-  h1 {
-    @apply text-2xl text-center;
-  }
-
-  h2 {
-    @apply text-xl text-center;
-  }
-}
-
 .equipment-image {
   @apply object-cover rounded-2xl shadow-lg;
 }
@@ -64,16 +46,40 @@
 /* OpeningChestModalContent */
 
 .opening-chest-modal {
-  @apply w-full flex flex-col gap-3;
+  @apply w-full flex flex-col gap-3 max-h-[60vh] overflow-y-auto p-1;
 
   h1 {
     @apply text-2xl;
   }
 }
 
+.opening-chest-modal-loading {
+  @apply relative flex items-center justify-center min-h-[100px];
+}
+
+.opening-chest-modal-summary {
+  @apply max-w-90 flex flex-row gap-2 justify-start items-center flex-shrink-0 px-1 pb-2;
+
+  h1 {
+    @apply text-2xl;
+  }
+
+  span {
+    @apply text-2xl font-bold flex items-center justify-center translate-y-[10%];
+  }
+
+  .xp-card-middle {
+    @apply justify-center text-center;
+
+    h1,
+    h2 {
+      @apply text-center;
+    }
+  }
+}
+
 .opening-chest-modal-footer-text {
-  @apply whitespace-normal break-words max-w-[550px] mx-auto pl-4 leading-tight;
-  @apply -indent-[0.7rem] text-xl;
+  @apply whitespace-normal break-words max-w-[450px] mx-auto leading-tight text-2xl;
 }
 
 .opening-chest-modal-image-wrapper {

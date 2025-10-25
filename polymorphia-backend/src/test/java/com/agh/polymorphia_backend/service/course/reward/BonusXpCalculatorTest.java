@@ -3,12 +3,14 @@ package com.agh.polymorphia_backend.service.course.reward;
 import com.agh.polymorphia_backend.BaseTest;
 import com.agh.polymorphia_backend.model.course.reward.FlatBonusItem;
 import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedItem;
+import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedReward;
 import com.agh.polymorphia_backend.model.course.reward.item.FlatBonusItemBehavior;
 import com.agh.polymorphia_backend.model.course.reward.item.ItemType;
 import com.agh.polymorphia_backend.model.gradable_event.Grade;
 import com.agh.polymorphia_backend.service.gradable_event.GradeService;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
 import com.google.ortools.Loader;
+import org.hibernate.Hibernate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -20,7 +22,9 @@ import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.agh.polymorphia_backend.service.course.reward.BonusXpCalculatorTestUtil.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -51,16 +55,13 @@ class BonusXpCalculatorTest extends BaseTest {
 
     private void mockServiceCalls(Long animalId, List<AssignedItem> items, List<Grade> grades) {
         when(assignedRewardService.getAnimalAssignedItemsByType(animalId, ItemType.FLAT_BONUS)).thenReturn(items);
-        when(assignedRewardService.filterFlatBonusItemsByBehavior(items, FlatBonusItemBehavior.ONE_EVENT))
+        when(assignedRewardService.groupFlatBonusItemsByBehavior(items))
                 .thenReturn(items.stream()
-                        .filter(item -> ((FlatBonusItem) (item.getReward()))
-                                .getBehavior().equals(FlatBonusItemBehavior.ONE_EVENT))
-                        .toList());
-        when(assignedRewardService.filterFlatBonusItemsByBehavior(items, FlatBonusItemBehavior.MULTIPLE_EVENTS))
-                .thenReturn(items.stream()
-                        .filter(item -> ((FlatBonusItem) (item.getReward()))
-                                .getBehavior().equals(FlatBonusItemBehavior.MULTIPLE_EVENTS))
-                        .toList());
+                        .sorted(Comparator.comparing(AssignedReward::getReceivedDate))
+                        .collect(Collectors.groupingBy(
+                                assignedItem -> ((FlatBonusItem) Hibernate.unproxy(assignedItem.getReward())).getBehavior(),
+                                Collectors.toList()
+                        )));
         when(gradeService.getAnimalGrades(animalId)).thenReturn(grades);
     }
 

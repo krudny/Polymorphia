@@ -16,8 +16,10 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -37,8 +39,11 @@ public class BonusXpCalculator {
         }
 
         List<AssignedItem> assignedItems = assignedRewardService.getAnimalAssignedItemsByType(animalId, ItemType.FLAT_BONUS);
-        List<AssignedItem> oneEventItems = assignedRewardService.filterFlatBonusItemsByBehavior(assignedItems, FlatBonusItemBehavior.ONE_EVENT);
-        List<AssignedItem> multipleEventsItems = assignedRewardService.filterFlatBonusItemsByBehavior(assignedItems, FlatBonusItemBehavior.MULTIPLE_EVENTS);
+        Map<FlatBonusItemBehavior, List<AssignedItem>> assignedItemsByBehavior = assignedRewardService.groupFlatBonusItemsByBehavior(assignedItems);
+        List<AssignedItem> oneEventItems = Optional.ofNullable(assignedItemsByBehavior.get(FlatBonusItemBehavior.ONE_EVENT))
+                .orElse(new ArrayList<>());
+        List<AssignedItem> multipleEventsItems = Optional.ofNullable(assignedItemsByBehavior.get(FlatBonusItemBehavior.MULTIPLE_EVENTS))
+                .orElse(new ArrayList<>());
 
         calculateFlatBonusXp(grades, oneEventItems, multipleEventsItems);
         assignedRewardService.saveAssignedItems(oneEventItems);

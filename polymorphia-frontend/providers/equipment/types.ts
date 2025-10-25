@@ -15,8 +15,8 @@ export interface EquipmentContextInterface {
   setCurrentOpeningChestModalData: (
     modalData: EquipmentChestResponseDTO | null
   ) => void;
-  pickedItemId: number | undefined;
-  setPickedItemId: Dispatch<SetStateAction<number | undefined>>;
-  pickedItemKey: string | undefined;
-  setPickedItemKey: Dispatch<SetStateAction<string | undefined>>;
+  pickedItemId: number | null;
+  setPickedItemId: Dispatch<SetStateAction<number | null>>;
+  pickedItemKey: string | null;
+  setPickedItemKey: Dispatch<SetStateAction<string | null>>;
 }
