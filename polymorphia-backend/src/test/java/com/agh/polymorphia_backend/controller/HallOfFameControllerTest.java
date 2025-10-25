@@ -15,7 +15,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import static io.restassured.path.json.JsonPath.from;
 import static com.agh.polymorphia_backend.controller.ControllerTestUtil.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HallOfFameControllerTest extends ControllerTestConfig {
     private static final String RESOURCE_BASE_PATH = "responses/hall_of_fame/";
@@ -53,6 +55,18 @@ class HallOfFameControllerTest extends ControllerTestConfig {
         );
     }
 
+    private static Stream<Arguments> hallOfFameSource_currentPage() {
+        return Stream.of(
+                Arguments.of("animalName", SortOrder.ASC, 0, "sort by animalName asc"),
+                Arguments.of("animalName", SortOrder.DESC, 2, "sort by animalName desc"),
+                Arguments.of("total", SortOrder.DESC, 1, "sort by total desc"),
+                Arguments.of("bonuses", SortOrder.DESC, 0, "sort by bonus desc"),
+                Arguments.of("Lab", SortOrder.DESC, 1, "sort by \"Lab\" desc"),
+                Arguments.of("Kartkówka", SortOrder.DESC, 2, "sort by \"Kartkówka\" desc"),
+                Arguments.of("Kartkówka", SortOrder.ASC, 0, "sort by \"Kartkówka\" desc")
+        );
+    }
+
     @Test
     void getPodium_shouldReturnPodium_ForStudent() throws IOException {
         String actualResponse = getEndpoint("/hall-of-fame/podium?courseId={courseId}",
@@ -69,17 +83,17 @@ class HallOfFameControllerTest extends ControllerTestConfig {
         assertJsonEquals(getResource("podiumInstructor"), actualResponse);
     }
 
-    @ParameterizedTest(name = "{2}")
+    @ParameterizedTest(name = "{3}")
     @MethodSource("hallOfFameSource")
     void getHallOfFame_shouldReturnHalOfFame_forStudent(String sortBy, SortOrder sortOrder, String fileName, String testName) throws IOException {
         HallOfFameRequestDto requestDto = baseRequestBuilder().sortBy(sortBy).sortOrder(sortOrder).build();
-        String actualResponse = postEndpoint("/hall-of-fame", "student@agh.com",
+        String actualResponse = postEndpoint("/hall-of-fame", "anowak@agh.com",
                 "password", 200, Optional.of(requestDto));
 
         assertJsonEquals(getResource(fileName), actualResponse);
     }
 
-    @ParameterizedTest(name = "{2}")
+    @ParameterizedTest(name = "{3}")
     @MethodSource({"hallOfFameSource", "hallOfFameSource_ForInstructor"})
     void getHallOfFame_shouldReturnHalOfFame_ForInstructor(String sortBy, SortOrder sortOrder, String fileName, String testName) throws IOException {
         HallOfFameRequestDto requestDto = baseRequestBuilder().sortBy(sortBy).sortOrder(sortOrder).build();
@@ -101,6 +115,21 @@ class HallOfFameControllerTest extends ControllerTestConfig {
                 "password", 200, Optional.of(requestDto));
 
         assertJsonEquals(getResource("searchByStudentName"), actualResponse);
+    }
+
+    @ParameterizedTest(name = "{3}")
+    @MethodSource("hallOfFameSource_currentPage")
+    void getHallOfFame_shouldReturnValidCurrentPage(String sortBy, SortOrder sortOrder, int expectedUserPage, String testName) {
+        HallOfFameRequestDto requestDto = baseRequestBuilder()
+                .sortBy(sortBy)
+                .sortOrder(sortOrder)
+                .size(2)
+                .build();
+        String actualResponse = postEndpoint("/hall-of-fame", "anowak@agh.com",
+                "password", 200, Optional.of(requestDto));
+        int actualUserPage = from(actualResponse).getInt("currentUserPage");
+
+        assertEquals(expectedUserPage, actualUserPage);
     }
 
     @Test

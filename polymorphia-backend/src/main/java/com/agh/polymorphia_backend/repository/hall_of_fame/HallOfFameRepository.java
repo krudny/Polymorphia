@@ -4,10 +4,12 @@ import com.agh.polymorphia_backend.dto.request.HallOfFameRequestDto;
 import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface HallOfFameRepository extends JpaRepository<HallOfFameEntry, Long> {
@@ -35,6 +37,12 @@ public interface HallOfFameRepository extends JpaRepository<HallOfFameEntry, Lon
             where\s""" + WHERE_CLAUSE)
     Page<HallOfFameEntry> findHofPageFromOverviewField(@Param("requestDto") HallOfFameRequestDto requestDto, Pageable pageable);
 
+    @Query("""
+            select hof.animalId
+            from HallOfFameEntry hof
+            where\s""" + WHERE_CLAUSE)
+    List<Long> findAllAnimalIdsForOverviewField(@Param("requestDto") HallOfFameRequestDto requestDto, Sort sort);
+
     @Query(value = """
             select hof
             from HallOfFameEntry hof
@@ -48,6 +56,15 @@ public interface HallOfFameRepository extends JpaRepository<HallOfFameEntry, Lon
             where\s""" + WHERE_CLAUSE)
     Page<HallOfFameEntry> findHofPageFromEventSection(@Param("requestDto") HallOfFameRequestDto requestDto, Pageable pageable);
 
+    @Query("""
+            select hof.animalId
+            from HallOfFameEntry hof
+            join StudentScoreDetail ssd
+                 on ssd.animalId = hof.animalId
+            where\s""" + WHERE_CLAUSE + """
+                and ssd.eventSectionName = :#{#requestDto.sortBy()}
+            """)
+    List<Long> findAllAnimalIdsForEventSection(@Param("requestDto") HallOfFameRequestDto requestDto, Sort sort);
 
     Optional<HallOfFameEntry> findByAnimalId(
             Long animalId
@@ -58,6 +75,5 @@ public interface HallOfFameRepository extends JpaRepository<HallOfFameEntry, Lon
             FROM HallOfFameEntry hof
             WHERE\s""" + WHERE_CLAUSE)
     long countByCourseIdAndFilters(@Param("requestDto") HallOfFameRequestDto requestDto);
-
 }
 
