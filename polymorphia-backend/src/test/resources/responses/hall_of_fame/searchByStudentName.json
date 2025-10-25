@@ -49,10 +49,9 @@
       }
     }
   ],
+  "currentUserPage": -1,
   "page": {
-    "size": 10,
     "number": 0,
-    "totalElements": 3,
     "totalPages": 1
   }
 }

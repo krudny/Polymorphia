@@ -93,7 +93,7 @@ class AccessAuthorizerTest {
         switch (scenario.role) {
             case STUDENT -> doReturn(Optional.empty())
                     .when(studentRepository)
-                    .findByUserIdAndCourseId(scenario.id, 10L);
+                    .findByUserIdAndCourseIdAndAssignedToCourseGroup(scenario.id, 10L);
             case INSTRUCTOR -> doReturn(Optional.empty())
                     .when(instructorRepository)
                     .findByUserIdAndCourseId(scenario.id, 10L);
@@ -117,7 +117,7 @@ class AccessAuthorizerTest {
         switch (scenario.role) {
             case STUDENT -> doReturn(Optional.of(new Student()))
                     .when(studentRepository)
-                    .findByUserIdAndCourseId(scenario.id, 10L);
+                    .findByUserIdAndCourseIdAndAssignedToCourseGroup(scenario.id, 10L);
             case INSTRUCTOR -> doReturn(Optional.of(new Instructor()))
                     .when(instructorRepository)
                     .findByUserIdAndCourseId(scenario.id, 10L);

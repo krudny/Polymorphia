@@ -21,7 +21,7 @@ export const useFindMeScroll = ({
       return;
     }
 
-    const targetPage = hallOfFame.currentUser.page;
+    const targetPage = hallOfFame.currentUserPage;
 
     if (targetPage === -1) {
       toast.error("Zwierzak nie jest w wynikach!");
