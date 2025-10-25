@@ -1,5 +1,5 @@
 import { Accordion } from "@/components/accordion/Accordion";
-import SubmissionsRequirementProps from "@/components/column-schema/column-component/grading-components/submission/requirement/types";
+import SubmissionsRequirementProps from "@/components/column-schema/column-component/grading/submission/requirement/types";
 import { useMediaQuery } from "react-responsive";
 import "./index.css";
 import AccordionSection from "@/components/accordion/AccordionSection";

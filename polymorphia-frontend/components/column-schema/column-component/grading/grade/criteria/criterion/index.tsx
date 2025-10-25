@@ -1,8 +1,8 @@
 import ProgressBar from "@/components/progressbar/ProgressBar";
 import ProgressBarRangeLabels from "@/components/progressbar/ProgressBarRangeLabels";
-import AssignReward from "@/components/column-schema/column-component/grading-components/grade/reward-assignment";
-import Input from "@/components/column-schema/column-component/grading-components/grade/input";
-import { CriterionProps } from "@/components/column-schema/column-component/grading-components/grade/criteria/criterion/types";
+import AssignReward from "@/components/column-schema/column-component/grading/grade/reward-assignment";
+import Input from "@/components/column-schema/column-component/grading/grade/input";
+import { CriterionProps } from "@/components/column-schema/column-component/grading/grade/criteria/criterion/types";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import "./index.css";
 
