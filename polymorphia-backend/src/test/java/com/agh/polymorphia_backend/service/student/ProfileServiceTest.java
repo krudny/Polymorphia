@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.service.course;
+package com.agh.polymorphia_backend.service.student;
 
 import com.agh.polymorphia_backend.BaseTest;
 import com.agh.polymorphia_backend.dto.response.profile.EvolutionStageThresholdResponseDto;
@@ -11,10 +11,9 @@ import com.agh.polymorphia_backend.model.user.Student;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.repository.course.EvolutionStagesRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
+import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
 import com.agh.polymorphia_backend.service.mapper.ProfileMapper;
-import com.agh.polymorphia_backend.service.student.AnimalService;
-import com.agh.polymorphia_backend.service.student.ProfileService;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import org.junit.jupiter.api.BeforeEach;

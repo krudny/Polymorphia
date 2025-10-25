@@ -33,7 +33,7 @@ function EquipmentContent() {
       <EquipmentSectionWrapper items={items} chests={chests} />
       <ItemModal />
       <ChestModal />
-      {currentOpeningChestModalData !== null && (
+      {currentOpeningChestModalData && (
         <OpeningChestModal
           currentOpeningChestModalData={currentOpeningChestModalData}
         />

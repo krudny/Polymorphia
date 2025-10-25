@@ -1,6 +1,7 @@
 import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { OpenedChestProps } from "@/components/equipment/types";
+import "./index.css";
 
 export function OpenedChest({ chestData }: OpenedChestProps) {
   const { setCurrentChestModalData, setCurrentOpeningChestModalData } =

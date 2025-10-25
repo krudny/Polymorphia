@@ -3,6 +3,7 @@ package com.agh.polymorphia_backend.service.validation;
 import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
+import com.agh.polymorphia_backend.model.user.Student;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserCourseRole;
 import com.agh.polymorphia_backend.model.user.UserType;
@@ -22,7 +23,6 @@ import java.util.Optional;
 
 import static com.agh.polymorphia_backend.service.course.CourseService.COURSE_NOT_FOUND;
 
-// TODO: to change to look up in user course role table
 @Service
 @AllArgsConstructor
 public class AccessAuthorizer {
@@ -72,7 +72,7 @@ public class AccessAuthorizer {
         return roles.contains(userService.getUserRole(user));
     }
 
-    private boolean isCourseAccessAuthorized(AbstractRoleUser roleUser, Course course) {
+    public boolean isCourseAccessAuthorized(AbstractRoleUser roleUser, Course course) {
         UserType role = userService.getUserRole(roleUser);
         User user = roleUser.getUser();
 
@@ -80,7 +80,7 @@ public class AccessAuthorizer {
             case STUDENT -> isCourseAccessAuthorizedStudent(user, course);
             case INSTRUCTOR -> isCourseAccessAuthorizedInstructor(user, course);
             case COORDINATOR -> isCourseAccessAuthorizedCoordinator(user, course);
-            case UNDEFINED -> false;
+            case UNDEFINED -> isCourseAccessAuthorizedUndefined(user, course);
         };
     }
 
@@ -93,6 +93,12 @@ public class AccessAuthorizer {
     }
 
     private boolean isCourseAccessAuthorizedStudent(User user, Course course) {
-        return studentRepository.findByUserIdAndCourseId(user.getId(), course.getId()).isPresent();
+        return studentRepository.findByUserIdAndCourseIdAndAssignedToCourseGroup(user.getId(), course.getId()).isPresent();
+    }
+
+    private boolean isCourseAccessAuthorizedUndefined(User user, Course course) {
+        return isCourseAccessAuthorizedStudent(user, course)
+                || isCourseAccessAuthorizedInstructor(user, course)
+                || isCourseAccessAuthorizedCoordinator(user, course);
     }
 }

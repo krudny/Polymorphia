@@ -1,10 +1,10 @@
 import ProjectVariantInfo from "@/shared/project-variant-info";
-import GradingComponentWrapper from "@/components/grading-components/grading-wrapper";
+import ColumnComponent from "@/components/column-schema/column-component";
 
 export function ProjectVariant() {
   return (
-    <GradingComponentWrapper
-      topComponent={<h1>Warianty</h1>}
+    <ColumnComponent
+      topComponent={() => <h1>Warianty</h1>}
       mainComponent={() => <ProjectVariantInfo size="xs" color="gray" />}
     />
   );

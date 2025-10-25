@@ -1,14 +1,13 @@
-import GradingComponentWrapper from "@/components/grading-components/grading-wrapper";
-import "../../../views/course/grading/index.css";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import Loading from "@/components/loading";
 import SubmissionRequirement from "@/components/grading-components/submission/requirement";
+import ColumnComponent from "@/components/column-schema/column-component";
 
 export default function Submissions() {
   const { state, submissionRequirements, isGeneralDataLoading } =
     useGradingContext();
 
-  const topComponent = <h1>Oddane zadania</h1>;
+  const topComponent = () => <h1>Oddane zadania</h1>;
   const loadingComponent = (
     <div className="h-[300px] relative">
       <Loading />
@@ -21,7 +20,7 @@ export default function Submissions() {
       : () => <SubmissionRequirement requirements={submissionRequirements} />;
 
   return (
-    <GradingComponentWrapper
+    <ColumnComponent
       topComponent={topComponent}
       mainComponent={mainComponent}
     />

@@ -2,5 +2,5 @@
 @import "../../../../../styles/globals.css";
 
 .grade-comment-wrapper {
-  @apply w-full mt-2 min-h-[100px];
+  @apply w-full mt-2;
 }

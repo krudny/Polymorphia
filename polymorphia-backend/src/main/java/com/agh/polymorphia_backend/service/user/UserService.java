@@ -31,6 +31,7 @@ public class UserService implements UserDetailsService {
     private static final String INVALID_OLD_PASSWORD = "Invalid old password";
     private static final String FAILED_TO_CHANGE_PASSWORD = "Failed to change password";
     private static final String INVALID_NEW_PASSWORD = "New password is not matching";
+    public final static String INVALID_ROLE = "Invalid user role";
     private final UserRepository userRepository;
     private final StudentRepository studentRepository;
     private final CoordinatorRepository coordinatorRepository;

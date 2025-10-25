@@ -16,7 +16,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Testcontainers
 @ActiveProfiles("test")
 @Sql(
-        executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS,
+        executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD,
         scripts = "/test-data.sql"
 )
 public abstract class ControllerTestConfig extends BaseTest {

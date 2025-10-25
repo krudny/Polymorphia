@@ -76,10 +76,9 @@
       }
     }
   ],
+  "currentUserPage": 0,
   "page": {
-    "size": 10,
     "number": 0,
-    "totalElements": 5,
     "totalPages": 1
   }
 }

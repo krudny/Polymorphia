@@ -72,7 +72,7 @@ export function EquipmentSection({ type, data }: EquipmentSectionProps) {
                     priority
                     sizes="(min-width: 1024px) 25vw, 50vw"
                   />
-                  {chestData.details.id ? null : (
+                  {chestData.details.id && (
                     <div className="equipment-locked-item">
                       <span>
                         <p>lock</p>
@@ -80,9 +80,7 @@ export function EquipmentSection({ type, data }: EquipmentSectionProps) {
                     </div>
                   )}
                 </div>
-                {chestData.details.id ? (
-                  <OpenedChest chestData={chestData} />
-                ) : null}
+                {chestData.details.id && <OpenedChest chestData={chestData} />}
               </div>
             );
           }
