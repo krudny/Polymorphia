@@ -35,13 +35,13 @@ export default function RootLayout({
   const [queryClient] = useState(() => new QueryClient());
 
   return (
-    <html lang="pl" className="custom-scrollbar" suppressHydrationWarning>
+    <html lang="pl" className="overflow-hidden" suppressHydrationWarning>
       <head>
         <meta name="theme-color" content="#262626" />
         <link rel="icon" type="image/x-icon" href="/favicon.png" />
       </head>
       <body
-        className={`${leagueGothic.className} ${leagueGothic.variable} ${materialSymbols.variable} text-primary-dark dark:text-secondary-gray`}
+        className={`${leagueGothic.className} ${leagueGothic.variable} ${materialSymbols.variable} text-primary-dark dark:text-secondary-gray overflow-hidden`}
       >
         <ThemeProviderMui theme={themeConfig}>
           <ThemeProvider

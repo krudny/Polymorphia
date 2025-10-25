@@ -42,10 +42,6 @@ public interface HallOfFameRepository extends JpaRepository<HallOfFameEntry, Lon
                  on ssd.animalId = hof.animalId
             where\s""" + WHERE_CLAUSE + """
                 and ssd.eventSectionName = :#{#requestDto.sortBy()}
-              order by
-                case when :#{#requestDto.sortOrder().name()} = 'ASC' then ssd.rawXp end asc,
-                case when :#{#requestDto.sortOrder().name()} = 'DESC' then ssd.rawXp end desc,
-                hof.position asc
             """, countQuery = """
             select count(distinct hof.animalId)
             from HallOfFameEntry hof

@@ -3,6 +3,7 @@
 
 .main-layout {
   @apply w-full h-full flex flex-col min-h-[calc(100dvh)] relative overflow-x-hidden custom-scrollbar;
+  scrollbar-gutter: stable both;
 }
 
 .main-layout-title {

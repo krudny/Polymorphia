@@ -9,6 +9,7 @@ const buttonWithBorder = tv({
   variants: {
     size: {
       sm: "text-xl px-6 py-1",
+      base: "text-2xl px-7 py-1",
       md: "text-3xl px-8 py-2",
       lg: "text-4xl px-10 py-3",
     },
@@ -41,6 +42,7 @@ export default function ButtonWithBorder({
       onClick={onClick}
       className={clsx(
         buttonWithBorder({ size, isActive, forceDark }),
+        icon && "button-use-flex",
         className
       )}
     >

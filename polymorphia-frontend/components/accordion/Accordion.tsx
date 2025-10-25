@@ -22,7 +22,7 @@ export const AccordionComponent = forwardRef<AccordionRef, AccordionProps>(
 
     return (
       <AccordionContext.Provider value={accordionContext}>
-        <div className={clsx("accordion", className)}>{children}</div>
+        <div className={clsx("accordion-flex-col", className)}>{children}</div>
       </AccordionContext.Provider>
     );
   }

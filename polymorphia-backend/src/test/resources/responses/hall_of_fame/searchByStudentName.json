@@ -1,0 +1,58 @@
+{
+  "content": [
+    {
+      "userDetails": {
+        "fullName": "Andrzej Bednarek",
+        "animalName": "hof_5",
+        "evolutionStage": "Jajo",
+        "group": "BM-SR13",
+        "imageUrl": "imageUrl_jajo",
+        "position": 5
+      },
+      "xpDetails": {
+        "Lab": "0.0",
+        "Kartkówka": "2.0",
+        "bonuses": "0.0",
+        "total": "2.0"
+      }
+    },
+    {
+      "userDetails": {
+        "fullName": "Andrzej Bednarek",
+        "animalName": "hof_4",
+        "evolutionStage": "Jajo",
+        "group": "BM-SR13",
+        "imageUrl": "imageUrl_jajo",
+        "position": 4
+      },
+      "xpDetails": {
+        "Lab": "0.0",
+        "Kartkówka": "2.0",
+        "bonuses": "0.0",
+        "total": "2.0"
+      }
+    },
+    {
+      "userDetails": {
+        "fullName": "Aleksander Wielki",
+        "animalName": "hof_2",
+        "evolutionStage": "Jajo",
+        "group": "BM-SR13",
+        "imageUrl": "imageUrl_jajo",
+        "position": 2
+      },
+      "xpDetails": {
+        "Lab": "8.0",
+        "Kartkówka": "4.0",
+        "bonuses": "0.0",
+        "total": "12.0"
+      }
+    }
+  ],
+  "page": {
+    "size": 10,
+    "number": 0,
+    "totalElements": 3,
+    "totalPages": 1
+  }
+}

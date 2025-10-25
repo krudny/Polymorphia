@@ -12,10 +12,13 @@ import { GradeCriteriaProps } from "@/components/grading-components/grade/criter
 import Criterion from "@/components/grading-components/grade/criteria/criterion";
 import CommentWrapper from "@/components/grading-components/grade/criteria/comment-wrapper";
 import { getKeyForSelectedTarget } from "@/providers/grading/utils/getKeyForSelectedTarget";
-import { SwapAnimationWrapper } from "@/animations/SwapAnimationWrapper";
+import {
+  baseSwapAnimationWrapperProps,
+  SwapAnimationWrapper,
+} from "@/animations/SwapAnimationWrapper";
 
 export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
-  const { state, isGradeLoading, submitGrade } = useGradingContext();
+  const { state, isSpecificDataLoading, submitGrade } = useGradingContext();
   const accordionRef = useRef<AccordionRef>(null);
   const wrapperRef = useFadeInAnimate(!!criteria);
   const isMd = useMediaQuery({ minWidth: "768px" });
@@ -63,19 +66,14 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
                 headerClassName="grading-accordion-header"
               >
                 <SwapAnimationWrapper
-                  fromVars={{ autoAlpha: 0 }}
-                  toVars={{
-                    autoAlpha: 1,
-                    ease: "power1.inOut",
-                  }}
-                  duration={0.3}
+                  {...baseSwapAnimationWrapperProps}
                   keyProp={
-                    criterionGrade && !isGradeLoading
+                    criterionGrade && !isSpecificDataLoading
                       ? getKeyForSelectedTarget(state)
                       : "loading" + getKeyForSelectedTarget(state)
                   }
                 >
-                  {criterionGrade && !isGradeLoading ? (
+                  {criterionGrade && !isSpecificDataLoading ? (
                     <Criterion
                       key={getKeyForSelectedTarget(state)}
                       criterion={criterion}
@@ -96,19 +94,14 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
             headerClassName="grading-accordion-header"
           >
             <SwapAnimationWrapper
-              fromVars={{ autoAlpha: 0 }}
-              toVars={{
-                autoAlpha: 1,
-                ease: "power1.inOut",
-              }}
-              duration={0.3}
+              {...baseSwapAnimationWrapperProps}
               keyProp={
-                !isGradeLoading
+                !isSpecificDataLoading
                   ? getKeyForSelectedTarget(state)
                   : "loading" + getKeyForSelectedTarget(state)
               }
             >
-              {!isGradeLoading ? (
+              {!isSpecificDataLoading ? (
                 <CommentWrapper />
               ) : (
                 commentSectionLoadingComponent

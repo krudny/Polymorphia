@@ -1,4 +1,4 @@
---Truncate
+-- Truncate
 TRUNCATE TABLE users cascade;
 TRUNCATE TABLE chests_items cascade;
 TRUNCATE TABLE courses cascade;
@@ -27,7 +27,9 @@ VALUES (3, 'Michał', 'Kowalski', 'coordinator@agh.com', '$2a$10$k/sZH/gK6qzlLpH
        (6, 'Aleksander', 'Wielki', 'awielki@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null),
        (7, 'Tomek', 'Wtorek', 'twtorek@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null),
        (8, 'Andrzej', 'Bednarek', 'abednarek@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null),
-       (9, 'Karol', 'Wójcik', 'kwojcik@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null);
+       (9, 'Karol', 'Wójcik', 'kwojcik@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null),
+       (10, 'Andrzej', 'Bednarek', 'abednarek2@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', null),
+       (11, 'Wojciech', 'Kot', 'instructor2@agh.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O',null);
 
 -- Coordinators
 INSERT INTO coordinators(user_id)
@@ -47,15 +49,17 @@ VALUES (2, 123456),
        (6, 131313),
        (7, 141414),
        (8, 151515),
-       (9, 161616);
+       (9, 161616),
+       (10, 171717);
 
 UPDATE users
 SET preferred_course_id=1
-WHERE id in (2, 5);
+WHERE id in (2, 5, 11);
 
 -- Instructors
 INSERT INTO instructors(user_id)
-VALUES (4);
+VALUES (4),
+       (11);
 
 -- UserCourseRoles
 INSERT INTO user_course_roles(user_id, course_id, role)
@@ -69,13 +73,16 @@ VALUES (3, 1, 'COORDINATOR'),
        (6, 1, 'STUDENT'),
        (7, 1, 'STUDENT'),
        (8, 1, 'STUDENT'),
-       (9, 1, 'STUDENT');
+       (9, 1, 'STUDENT'),
+       (10, 1, 'STUDENT'),
+       (11, 1, 'INSTRUCTOR');
 
 -- Course Groups
 INSERT INTO course_groups (id, name, course_id, instructor_id)
-VALUES (1, 'mi-sr12', 1, 4),
+VALUES (1, 'MI-SR12', 1, 4),
 
-       (2, 'mi-sr15', 1, 4);
+       (2, 'BM-SR13', 1, 11),
+       (3, 'BM-SR15', 1, 11);
 
 -- Animals
 INSERT INTO animals (id, name)
@@ -85,17 +92,19 @@ VALUES (1, 'sowa'),
        (3, 'hof_2'),
        (4, 'hof_3'),
        (5, 'hof_4'),
-       (6, 'hof_5');
+       (6, 'hof_6'),
+       (7, 'hof_5');
 
 -- Student Course Group Assignments
 INSERT INTO students_course_groups (animal_id, student_id, course_group_id)
 VALUES (1, 2, 1),
 
-       (2, 5, 1),
-       (3, 6, 1),
-       (4, 7, 1),
-       (5, 8, 1),
-       (6, 9, 2);
+       (2, 5, 2),
+       (3, 6, 2),
+       (4, 7, 2),
+       (5, 8, 2),
+       (6, 9, 3),
+       (7, 10, 2);
 
 
 -- Evolution Stages
@@ -174,7 +183,9 @@ VALUES (1, 1, 2, NOW(), NOW(), null),
 
        (5, 2, 2, NOW(), NOW(), null),
        (6, 2, 3, NOW(), NOW(), null),
-       (7, 2, 4, NOW(), NOW(), null);
+       (7, 2, 4, NOW(), NOW(), null),
+
+       (8, 1, 7, NOW(), NOW(), null);
 
 -- Criteria grades
 INSERT INTO public.criteria_grades (id, grade_id, criterion_id, xp)
@@ -185,7 +196,9 @@ VALUES (1, 1, 1, 1.0),
 
        (5, 5, 2, 1),
        (6, 6, 2, 8.0),
-       (7, 7, 2, 2.0);
+       (7, 7, 2, 2.0),
+
+       (8, 8, 1, 2.0);
 
 
 -- Assigned rewards

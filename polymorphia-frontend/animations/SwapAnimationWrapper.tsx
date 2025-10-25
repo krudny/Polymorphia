@@ -2,6 +2,18 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { SwapAnimationWrapperProps } from "@/animations/types";
 
+export const baseSwapAnimationWrapperProps: Omit<
+  SwapAnimationWrapperProps,
+  "children" | "keyProp"
+> = {
+  fromVars: { autoAlpha: 0 },
+  toVars: {
+    autoAlpha: 1,
+    ease: "power1.inOut",
+  },
+  duration: 0.3,
+};
+
 export function SwapAnimationWrapper({
   children,
   fromVars,

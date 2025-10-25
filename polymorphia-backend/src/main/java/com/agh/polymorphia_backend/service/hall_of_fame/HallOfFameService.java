@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -27,13 +28,17 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry.FIELD_POSITION;
+import static com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry.*;
 
 @Service
 @AllArgsConstructor
 public class HallOfFameService {
     public static final String STUDENT_HOF_NOT_FOUND = "Student's Hall of Fame scores not found";
     private static final String HOF_EMPTY = "Hall of Fame scores are empty";
+    private static final Set<String> INVERT_POSITION_FOR = Set.of(
+            FIELD_TOTAL_XP_SUM,
+            FIELD_TOTAL_BONUS_SUM
+    );
     private final StudentScoreDetailRepository scoreDetailRepository;
     private final HallOfFameRepository hallOfFameRepository;
     private final EventSectionRepository eventSectionRepository;
@@ -42,6 +47,10 @@ public class HallOfFameService {
     private final CourseService courseService;
     private final AnimalService animalService;
     private final HallOfFameSortSpecResolver sortSpecResolver;
+
+    private static Sort.Direction opposite(Sort.Direction direction) {
+        return direction.isAscending() ? Sort.Direction.DESC : Sort.Direction.ASC;
+    }
 
     public HallOfFameEntry getStudentHallOfFame(User user) {
         Animal animal = animalService.getAnimal(user.getId(), user.getPreferredCourse().getId());
@@ -71,17 +80,24 @@ public class HallOfFameService {
     }
 
     public Page<HallOfFameResponseDto> getSortedByOverviewFields(HallOfFameRequestDto requestDto, String sortBy) {
+        Sort.Direction sortByDirection = requestDto.sortOrder().getDirection();
+        Sort.Direction positionDirection = INVERT_POSITION_FOR.contains(sortBy) ? opposite(sortByDirection) : sortByDirection;
         Pageable pageable = PageRequest.of(
                 requestDto.page(),
                 requestDto.size(),
-                Sort.by(requestDto.sortOrder().getDirection(), sortBy).and(Sort.by(FIELD_POSITION).ascending())
+                Sort.by(sortByDirection, sortBy).and(Sort.by(positionDirection, FIELD_POSITION))
         );
         Page<HallOfFameEntry> pageResult = hallOfFameRepository.findHofPageFromOverviewField(requestDto, pageable);
         return hallOfFamePageToResponseDto(pageResult);
     }
 
     public Page<HallOfFameResponseDto> getSortedByEventSection(HallOfFameRequestDto requestDto) {
-        Pageable pageable = PageRequest.of(requestDto.page(), requestDto.size());
+        Sort.Direction direction = requestDto.sortOrder().getDirection();
+        Pageable pageable = PageRequest.of(
+                requestDto.page(),
+                requestDto.size(),
+                JpaSort.unsafe(direction, "ssd.rawXp").and(Sort.by(opposite(direction), FIELD_POSITION))
+        );
         Page<HallOfFameEntry> pageResult = hallOfFameRepository.findHofPageFromEventSection(requestDto, pageable);
         return hallOfFamePageToResponseDto(pageResult);
     }

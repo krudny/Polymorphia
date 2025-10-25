@@ -10,5 +10,5 @@ export type UseMarkdownReset = UseMutationResult<
 
 export interface UseMarkdownResetProps {
   resourceId: number;
-  type: MarkdownType;
+  markdownType: MarkdownType;
 }
