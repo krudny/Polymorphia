@@ -13,10 +13,9 @@ public interface CourseGroupRepository extends JpaRepository<CourseGroup, Long> 
             "select cg from CourseGroup cg " +
                     "join cg.studentCourseGroupAssignments scga " +
                     "where scga.student.user.id = :userId " +
-                    "and scga.animal is not null " +
                     "and cg.course.id = :courseId"
     )
-    List<CourseGroup> findByStudentIdAndCourseIdWhereAnimalExists(Long userId, Long courseId);
+    List<CourseGroup> findByStudentIdAndCourseIdAndIsAssignedToCourseGroup(Long userId, Long courseId);
 
     @Query(
             "select cg from CourseGroup cg " +
