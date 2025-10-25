@@ -5,7 +5,7 @@ import { MarkdownType } from "@/interfaces/general";
 import { UseMarkdown } from "@/hooks/course/useMarkdown/types";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
-export function useMarkdown(type: MarkdownType): UseMarkdown {
+export function useMarkdown(markdownType: MarkdownType): UseMarkdown {
   const { gradableEventId } = useEventParams();
   const { courseId } = useUserDetails();
 
@@ -13,7 +13,7 @@ export function useMarkdown(type: MarkdownType): UseMarkdown {
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["markdown", resourceId],
-    queryFn: () => MarkdownService.getMarkdown({ type, resourceId }),
+    queryFn: () => MarkdownService.getMarkdown({ markdownType, resourceId }),
     enabled: !!resourceId,
     staleTime: 1000 * 60,
   });
