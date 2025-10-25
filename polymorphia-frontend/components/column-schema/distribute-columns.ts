@@ -41,6 +41,7 @@ export const getDistributedColumns = ({
 
       if (currentColumn < columns) {
         columnData[currentColumn].push(component);
+        currentColumn = (currentColumn + 1) % columns;
       }
     }
   }

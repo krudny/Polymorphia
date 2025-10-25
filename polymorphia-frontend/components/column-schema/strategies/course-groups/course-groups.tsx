@@ -12,7 +12,7 @@ export class CourseGroupsStrategy
     return [
       [],
       [this.createProjectVariantComponent()],
-      [this.createProjectVariantComponent()],
+      [this.createEquipmentSummaryComponent()],
     ];
   }
 }

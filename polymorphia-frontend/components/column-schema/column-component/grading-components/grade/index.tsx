@@ -2,7 +2,7 @@
 
 import Loading from "@/components/loading";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
-import GradeCriteria from "@/components/grading-components/grade/criteria";
+import GradeCriteria from "@/components/column-schema/column-component/grading-components/grade/criteria";
 import ColumnComponent from "@/components/column-schema/column-component";
 
 export default function Grade() {

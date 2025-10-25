@@ -1,8 +1,9 @@
-import Grade from "@/components/grading-components/grade";
-import Submissions from "@/components/grading-components/submission";
-import { ProjectVariant } from "@/components/grading-components/project-variant";
-import TargetList from "@/components/grading-components/target-list";
+import Grade from "@/components/column-schema/column-component/grading-components/grade";
+import Submissions from "@/components/column-schema/column-component/grading-components/submission";
+import { ProjectVariant } from "@/components/column-schema/column-component/grading-components/project-variant";
+import TargetList from "@/components/column-schema/column-component/grading-components/target-list";
 import { ColumnComponent } from "@/components/column-schema/types";
+import EquipmentSummary from "@/components/column-schema/column-component/course-groups-components/equipment-summary";
 
 export abstract class BaseGradingStrategy {
   protected createTargetListComponent(): ColumnComponent {
@@ -27,6 +28,12 @@ export abstract class BaseGradingStrategy {
   protected createProjectVariantComponent(): ColumnComponent {
     return {
       component: <ProjectVariant />,
+    };
+  }
+
+  protected createEquipmentSummaryComponent(): ColumnComponent {
+    return {
+      component: <EquipmentSummary />,
     };
   }
 }

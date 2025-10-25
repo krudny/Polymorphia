@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "../../../../../styles/globals.css";
+@import "../../../../../../../styles/globals.css";
 
 .grade-criterion {
   @apply flex flex-col mt-2 opacity-0 min-h-[320px];

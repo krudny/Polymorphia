@@ -1,6 +1,6 @@
 "use client";
 
-import { RewardProps } from "@/components/grading-components/grade/types";
+import { RewardProps } from "@/components/column-schema/column-component/grading-components/grade/types";
 import AssignRewardModal from "@/views/grading/modals/assign-reward";
 import { useState } from "react";
 import "./index.css";

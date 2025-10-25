@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react";
-import { GradingInputProps } from "@/components/grading-components/grade/types";
+import { GradingInputProps } from "@/components/column-schema/column-component/grading-components/grade/types";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import "./index.css";
 import { GradingReducerActions } from "@/providers/grading/gradingReducer/types";

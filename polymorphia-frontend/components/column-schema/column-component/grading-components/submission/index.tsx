@@ -1,6 +1,6 @@
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import Loading from "@/components/loading";
-import SubmissionRequirement from "@/components/grading-components/submission/requirement";
+import SubmissionRequirement from "@/components/column-schema/column-component/grading-components/submission/requirement";
 import ColumnComponent from "@/components/column-schema/column-component";
 
 export default function Submissions() {
