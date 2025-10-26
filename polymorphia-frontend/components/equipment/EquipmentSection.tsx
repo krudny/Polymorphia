@@ -15,6 +15,13 @@ const gridColsMap: Record<number, string> = {
   4: "grid-cols-2 sm:grid-cols-4",
 };
 
+const maxWidthMap: Record<number, string> = {
+  1: "max-w-[20rem]",
+  2: "max-w-[40rem]",
+  3: "max-w-[60rem]",
+  4: "max-w-[80rem]",
+};
+
 export function EquipmentSection({
   type,
   data,
@@ -29,7 +36,7 @@ export function EquipmentSection({
   };
 
   return (
-    <section className="mb-5">
+    <section className={`${maxWidthMap[columns]} mb-5 mx-auto`}>
       <h1 className="equipment-header">
         {type === "item" ? "Przedmioty" : "Skrzynki"}
       </h1>

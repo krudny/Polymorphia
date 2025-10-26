@@ -14,11 +14,11 @@
 }
 
 .equipment-image {
-  @apply object-cover rounded-2xl shadow-lg;
+  @apply object-cover rounded-2xl shadow-lg w-full h-full;
 }
 
 .equipment-locked-item {
-  @apply absolute bg-secondary-gray/70 dark:bg-primary-dark/80 flex-centered w-full h-full;
+  @apply absolute bg-secondary-gray/70 dark:bg-primary-dark/80 flex-centered w-full h-full rounded-2xl;
 
   span {
     @apply material-symbols;
