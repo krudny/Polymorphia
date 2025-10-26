@@ -10,9 +10,9 @@ export class CourseGroupsStrategy
 {
   getComponents(): ColumnComponent[][] {
     return [
-      [],
-      [this.createProjectVariantComponent()],
-      [this.createEquipmentSummary()],
+      [this.createTargetListCourseGroupsComponent()],
+      [this.createLastActivityComponent()],
+      [this.createStudentSummaryComponent()],
     ];
   }
 }

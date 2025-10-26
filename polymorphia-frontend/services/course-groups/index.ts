@@ -4,6 +4,10 @@ import {
   CourseGroupType,
   CourseGroupTypes,
 } from "@/services/course-groups/types";
+import {
+  StudentGradableEventDetailsDTO,
+  StudentLastGradableEventsDTO,
+} from "@/interfaces/api/course-groups";
 
 const CourseGroupsService = {
   getCourseGroups: async <T extends CourseGroupType>(
@@ -30,6 +34,64 @@ const CourseGroupsService = {
     }
 
     return await response.json();
+  },
+
+  // should be sorted by grade date
+  getStudentLastGradableEvents: (
+    userId: number
+  ): StudentLastGradableEventsDTO[] => {
+    return [
+      {
+        id: 1,
+        gradableEventName: "Kartkówka 4",
+      },
+      {
+        id: 2,
+        gradableEventName: "Laboratorium 3",
+      },
+      {
+        id: 3,
+        gradableEventName: "Kartkówka 3",
+      },
+      {
+        id: 4,
+        gradableEventName: "Laboratorium 2",
+      },
+      {
+        id: 5,
+        gradableEventName: "Kartkówka 2",
+      },
+      {
+        id: 6,
+        gradableEventName: "Laboratorium 1",
+      },
+      {
+        id: 7,
+        gradableEventName: "Kartkówka 1",
+      },
+    ];
+  },
+
+  getStudentGradableEventDetails: (
+    userId: number,
+    gradableEventId: number
+  ): StudentGradableEventDetailsDTO[] => {
+    return [
+      {
+        id: 1,
+        criteriaName: "Wykonanie zadania",
+        gainedXp: 4.0,
+        hasReward: false,
+        gradeDate: "22.10.2025",
+      },
+      {
+        id: 2,
+        criteriaName: "Zadanie dodatkowe",
+        gainedXp: 2.7,
+        hasReward: true,
+        gradeDate: "23.10.2025",
+      },
+    ];
   },
 };
 

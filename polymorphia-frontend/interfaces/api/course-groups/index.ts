@@ -9,3 +9,16 @@ export interface CourseGroupsShortResponseDTO {
   id: number;
   name: string;
 }
+
+export interface StudentLastGradableEventsDTO {
+  id: number;
+  gradableEventName: string;
+}
+
+export interface StudentGradableEventDetailsDTO {
+  id: number;
+  criteriaName: string;
+  gainedXp: number;
+  hasReward: boolean;
+  gradeDate: string;
+}
