@@ -93,7 +93,6 @@ export default function StudentSummary() {
           >
             <div className="w-full grid grid-cols-3 gap-3">
               {[1, 2, 3, 4].map((i) => {
-                const quantity = Math.floor(Math.random() * 3);
                 return (
                   <div className="relative w-full aspect-square" key={i}>
                     <Image
@@ -105,9 +104,9 @@ export default function StudentSummary() {
                       fetchPriority="high"
                       sizes="(min-width: 1024px) 25vw, 50vw"
                     />
-                    {quantity > 0 ? (
+                    {i > 0 ? (
                       <ImageBadge
-                        text={quantity.toString()}
+                        text={i.toString()}
                         className="text-2xl w-8 rounded-tl-2xl rounded-br-2xl"
                       />
                     ) : (
