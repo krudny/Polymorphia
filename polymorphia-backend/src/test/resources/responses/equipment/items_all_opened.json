@@ -1,0 +1,121 @@
+[
+  {
+    "base": {
+      "id": 9,
+      "name": "limit reached",
+      "imageUrl": "url",
+      "orderIndex": 1,
+      "bonusText": "+2.5 xp do eventów z kategorii Kartkówka",
+      "shortBonusText": "+2.5 xp Kartkówka",
+      "limit": 1,
+      "isLimitReached": false,
+      "eventSectionId": 3,
+      "itemBonusType": "FLAT_BONUS",
+      "xp": 2.5,
+      "behavior": "ONE_EVENT"
+    },
+    "details": [
+      {
+        "id": 8,
+        "receivedDate": "20.09.2025",
+        "usedDate": null,
+        "isUsed": true,
+        "gainedXp": "2.0"
+      }
+    ]
+  },
+  {
+    "base": {
+      "id": 10,
+      "name": "flatbonus ONE",
+      "imageUrl": "url",
+      "orderIndex": 2,
+      "bonusText": "+1.5 xp do eventów z kategorii Kartkówka",
+      "shortBonusText": "+1.5 xp Kartkówka",
+      "limit": 4,
+      "isLimitReached": false,
+      "eventSectionId": 3,
+      "itemBonusType": "FLAT_BONUS",
+      "xp": 1.5,
+      "behavior": "ONE_EVENT"
+    },
+    "details": [
+      {
+        "id": 10,
+        "receivedDate": "20.09.2025",
+        "usedDate": null,
+        "isUsed": true,
+        "gainedXp": "1.5"
+      },
+      {
+        "id": 9,
+        "receivedDate": "21.09.2025",
+        "usedDate": null,
+        "isUsed": true,
+        "gainedXp": "1.5"
+      },
+      {
+        "id": 12,
+        "receivedDate": "26.10.2025",
+        "usedDate": null,
+        "isUsed": false,
+        "gainedXp": "1.5"
+      },
+      {
+        "id": 14,
+        "receivedDate": "26.10.2025",
+        "usedDate": null,
+        "isUsed": false,
+        "gainedXp": "1.5"
+      }
+    ]
+  },
+  {
+    "base": {
+      "id": 11,
+      "name": "flatbonus multiple",
+      "imageUrl": "url",
+      "orderIndex": 3,
+      "bonusText": "+4.0 xp do eventów z kategorii Kartkówka",
+      "shortBonusText": "+4.0 xp Kartkówka",
+      "limit": 2,
+      "isLimitReached": false,
+      "eventSectionId": 3,
+      "itemBonusType": "FLAT_BONUS",
+      "xp": 4.0,
+      "behavior": "MULTIPLE_EVENTS"
+    },
+    "details": [
+      {
+        "id": 11,
+        "receivedDate": "20.09.2025",
+        "usedDate": null,
+        "isUsed": true,
+        "gainedXp": "0.2"
+      },
+      {
+        "id": 13,
+        "receivedDate": "26.10.2025",
+        "usedDate": null,
+        "isUsed": false,
+        "gainedXp": "0.0"
+      }
+    ]
+  },
+  {
+    "base": {
+      "id": 8,
+      "name": "PercentageBonusItem",
+      "imageUrl": "percentageBonus_url",
+      "orderIndex": 0,
+      "bonusText": "+5% do eventów z kategorii Laboratorium",
+      "shortBonusText": "+5% Laboratorium",
+      "limit": 2,
+      "isLimitReached": false,
+      "eventSectionId": 4,
+      "itemBonusType": "PERCENTAGE_BONUS",
+      "percentage": 5
+    },
+    "details": []
+  }
+]

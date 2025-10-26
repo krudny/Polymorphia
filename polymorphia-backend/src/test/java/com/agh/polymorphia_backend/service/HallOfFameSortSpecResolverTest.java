@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.service;
 
-import com.agh.polymorphia_backend.dto.request.HallOfFameRequestDto;
+import com.agh.polymorphia_backend.BaseTest;
+import com.agh.polymorphia_backend.dto.request.hall_of_fame.HallOfFameRequestDto;
 import com.agh.polymorphia_backend.model.hall_of_fame.SearchBy;
 import com.agh.polymorphia_backend.model.hall_of_fame.SortOrder;
 import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
@@ -26,13 +27,22 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class HallOfFameSortSpecResolverTest {
+public class HallOfFameSortSpecResolverTest extends BaseTest {
     private static final Long COURSE_ID = 1L;
     private static final String EVENT_SECTION_NAME = "event section name";
     @Mock
     private EventSectionRepository eventSectionRepository;
     @InjectMocks
     private HallOfFameSortSpecResolver hallOfFameSortSpecResolver;
+
+    public static Stream<Arguments> overviewKeyToDbField() {
+        return Stream.of(
+                Arguments.of("animalName", "animalName"),
+                Arguments.of("studentName", "studentName"),
+                Arguments.of("total", "totalXpSum"),
+                Arguments.of("bonuses", "totalBonusSum")
+        );
+    }
 
     @ParameterizedTest
     @MethodSource("overviewKeyToDbField")
@@ -47,15 +57,6 @@ public class HallOfFameSortSpecResolverTest {
         assertThat(result).isInstanceOf(OverviewFieldSort.class);
         assertThat(((OverviewFieldSort) result).field()).isEqualTo(expectedDbField);
         verifyNoInteractions(eventSectionRepository);
-    }
-
-    public static Stream<Arguments> overviewKeyToDbField() {
-        return Stream.of(
-                Arguments.of("animalName", "animalName"),
-                Arguments.of("studentName", "studentName"),
-                Arguments.of("total", "totalXpSum"),
-                Arguments.of("bonuses", "totalBonusSum")
-        );
     }
 
     @Test

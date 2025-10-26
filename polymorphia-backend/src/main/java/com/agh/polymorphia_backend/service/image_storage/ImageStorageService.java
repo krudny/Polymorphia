@@ -21,16 +21,6 @@ public class ImageStorageService {
     private final StaticFileServerProperties properties;
     private final Logger logger = LoggerFactory.getLogger(ImageStorageService.class);
 
-    @Getter
-    @AllArgsConstructor
-    public enum ImageType {
-        CHEST("chest", "chests/"),
-        ITEM("item", "items/");
-
-        private final String name;
-        private final String path;
-    }
-
     public String saveImage(MultipartFile file, ImageType imageType) throws IOException {
         String uuid = UUID.randomUUID().toString();
         String extension = StringUtils.getFilenameExtension(file.getOriginalFilename());
@@ -57,5 +47,15 @@ public class ImageStorageService {
         } catch (IOException ignored) {
             logger.warn("Attempted to delete image resource {} but it does not exist.", fullPath);
         }
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public enum ImageType {
+        CHEST("chest", "chests/"),
+        ITEM("item", "items/");
+
+        private final String name;
+        private final String path;
     }
 }
