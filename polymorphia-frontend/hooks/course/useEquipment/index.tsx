@@ -4,8 +4,7 @@ import { UseEquipment } from "@/hooks/course/useEquipment/types";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export default function useEquipment(): UseEquipment {
-  const { courseId } = useUserDetails();
-  const { id } = useUserDetails();
+  const { courseId, id } = useUserDetails();
   const {
     data: items,
     isLoading: isItemsLoading,

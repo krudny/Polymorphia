@@ -16,6 +16,7 @@ import XPCardImageWithLock from "@/components/xp-card/components/XPCardImageLock
 import { useMediaQuery } from "react-responsive";
 import clsx from "clsx";
 import { UseOpeningChestModal } from "@/components/equipment/modals/types";
+import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export default function OpeningChestModalContent({
   currentOpeningChestModalData,
@@ -30,6 +31,7 @@ export default function OpeningChestModalContent({
   } = useEquipmentContext();
   const queryClient = useQueryClient();
   const pickChestItemsMutation = usePickChestItems();
+  const { courseId, id: userId } = useUserDetails();
   const [xp, setXp] = useState({
     gain: "0.0 xp",
     loss: "0.0 xp",
@@ -111,7 +113,9 @@ export default function OpeningChestModalContent({
 
     const updatedChest =
       queryClient
-        .getQueryData<EquipmentChestResponseDTO[]>(["equipmentChests"])
+        .getQueryData<
+          EquipmentChestResponseDTO[]
+        >(["equipmentChests", courseId, userId])
         ?.find(
           (chest) =>
             chest.details.id === currentOpeningChestModalData.details.id
