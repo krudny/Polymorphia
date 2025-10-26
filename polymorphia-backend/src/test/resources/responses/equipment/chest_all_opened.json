@@ -26,13 +26,13 @@
           "name": "limit reached",
           "imageUrl": "url",
           "orderIndex": 1,
-          "bonusText": "+2.0 xp do eventów z kategorii Kartkówka",
-          "shortBonusText": "+2.0 xp Kartkówka",
+          "bonusText": "+2.5 xp do eventów z kategorii Kartkówka",
+          "shortBonusText": "+2.5 xp Kartkówka",
           "limit": 1,
           "isLimitReached": true,
           "eventSectionId": 3,
           "itemBonusType": "FLAT_BONUS",
-          "xp": 2.0,
+          "xp": 2.5,
           "behavior": "ONE_EVENT"
         }
       ]
@@ -58,13 +58,13 @@
           "name": "limit reached",
           "imageUrl": "url",
           "orderIndex": 1,
-          "bonusText": "+2.0 xp do eventów z kategorii Kartkówka",
-          "shortBonusText": "+2.0 xp Kartkówka",
+          "bonusText": "+2.5 xp do eventów z kategorii Kartkówka",
+          "shortBonusText": "+2.5 xp Kartkówka",
           "limit": 1,
           "isLimitReached": true,
           "eventSectionId": 3,
           "itemBonusType": "FLAT_BONUS",
-          "xp": 2.0,
+          "xp": 2.5,
           "behavior": "ONE_EVENT"
         },
         {
@@ -72,13 +72,13 @@
           "name": "flatbonus ONE",
           "imageUrl": "url",
           "orderIndex": 2,
-          "bonusText": "+3.0 xp do eventów z kategorii Kartkówka",
-          "shortBonusText": "+3.0 xp Kartkówka",
+          "bonusText": "+1.5 xp do eventów z kategorii Kartkówka",
+          "shortBonusText": "+1.5 xp Kartkówka",
           "limit": 4,
           "isLimitReached": true,
           "eventSectionId": 3,
           "itemBonusType": "FLAT_BONUS",
-          "xp": 3.0,
+          "xp": 1.5,
           "behavior": "ONE_EVENT"
         },
         {
@@ -86,13 +86,13 @@
           "name": "flatbonus ONE",
           "imageUrl": "url",
           "orderIndex": 2,
-          "bonusText": "+3.0 xp do eventów z kategorii Kartkówka",
-          "shortBonusText": "+3.0 xp Kartkówka",
+          "bonusText": "+1.5 xp do eventów z kategorii Kartkówka",
+          "shortBonusText": "+1.5 xp Kartkówka",
           "limit": 4,
           "isLimitReached": true,
           "eventSectionId": 3,
           "itemBonusType": "FLAT_BONUS",
-          "xp": 3.0,
+          "xp": 1.5,
           "behavior": "ONE_EVENT"
         },
         {
@@ -100,13 +100,13 @@
           "name": "flatbonus multiple",
           "imageUrl": "url",
           "orderIndex": 3,
-          "bonusText": "+3.0 xp do eventów z kategorii Kartkówka",
-          "shortBonusText": "+3.0 xp Kartkówka",
+          "bonusText": "+4.0 xp do eventów z kategorii Kartkówka",
+          "shortBonusText": "+4.0 xp Kartkówka",
           "limit": 2,
           "isLimitReached": true,
           "eventSectionId": 3,
           "itemBonusType": "FLAT_BONUS",
-          "xp": 3.0,
+          "xp": 4.0,
           "behavior": "MULTIPLE_EVENTS"
         }
       ]
@@ -114,7 +114,7 @@
     "details": {
       "id": 6,
       "receivedDate": "20.09.2025",
-      "usedDate": "25.10.2025",
+      "usedDate": "26.10.2025",
       "isUsed": true,
       "receivedItems": [
         {
@@ -123,21 +123,21 @@
             "name": "flatbonus ONE",
             "imageUrl": "url",
             "orderIndex": 2,
-            "bonusText": "+3.0 xp do eventów z kategorii Kartkówka",
-            "shortBonusText": "+3.0 xp Kartkówka",
+            "bonusText": "+1.5 xp do eventów z kategorii Kartkówka",
+            "shortBonusText": "+1.5 xp Kartkówka",
             "limit": 4,
             "isLimitReached": false,
             "eventSectionId": 3,
             "itemBonusType": "FLAT_BONUS",
-            "xp": 3.0,
+            "xp": 1.5,
             "behavior": "ONE_EVENT"
           },
           "details": {
             "id": 12,
-            "receivedDate": "25.10.2025",
+            "receivedDate": "26.10.2025",
             "usedDate": null,
             "isUsed": false,
-            "gainedXp": "3.0"
+            "gainedXp": "1.5"
           }
         },
         {
@@ -146,21 +146,21 @@
             "name": "flatbonus ONE",
             "imageUrl": "url",
             "orderIndex": 2,
-            "bonusText": "+3.0 xp do eventów z kategorii Kartkówka",
-            "shortBonusText": "+3.0 xp Kartkówka",
+            "bonusText": "+1.5 xp do eventów z kategorii Kartkówka",
+            "shortBonusText": "+1.5 xp Kartkówka",
             "limit": 4,
             "isLimitReached": false,
             "eventSectionId": 3,
             "itemBonusType": "FLAT_BONUS",
-            "xp": 3.0,
+            "xp": 1.5,
             "behavior": "ONE_EVENT"
           },
           "details": {
             "id": 14,
-            "receivedDate": "25.10.2025",
+            "receivedDate": "26.10.2025",
             "usedDate": null,
             "isUsed": false,
-            "gainedXp": "3.0"
+            "gainedXp": "1.5"
           }
         },
         {
@@ -169,18 +169,18 @@
             "name": "flatbonus multiple",
             "imageUrl": "url",
             "orderIndex": 3,
-            "bonusText": "+3.0 xp do eventów z kategorii Kartkówka",
-            "shortBonusText": "+3.0 xp Kartkówka",
+            "bonusText": "+4.0 xp do eventów z kategorii Kartkówka",
+            "shortBonusText": "+4.0 xp Kartkówka",
             "limit": 2,
             "isLimitReached": false,
             "eventSectionId": 3,
             "itemBonusType": "FLAT_BONUS",
-            "xp": 3.0,
+            "xp": 4.0,
             "behavior": "MULTIPLE_EVENTS"
           },
           "details": {
             "id": 13,
-            "receivedDate": "25.10.2025",
+            "receivedDate": "26.10.2025",
             "usedDate": null,
             "isUsed": false,
             "gainedXp": "0.0"
@@ -203,13 +203,13 @@
           "name": "limit reached",
           "imageUrl": "url",
           "orderIndex": 1,
-          "bonusText": "+2.0 xp do eventów z kategorii Kartkówka",
-          "shortBonusText": "+2.0 xp Kartkówka",
+          "bonusText": "+2.5 xp do eventów z kategorii Kartkówka",
+          "shortBonusText": "+2.5 xp Kartkówka",
           "limit": 1,
           "isLimitReached": true,
           "eventSectionId": 3,
           "itemBonusType": "FLAT_BONUS",
-          "xp": 2.0,
+          "xp": 2.5,
           "behavior": "ONE_EVENT"
         },
         {
@@ -217,13 +217,13 @@
           "name": "limit reached",
           "imageUrl": "url",
           "orderIndex": 1,
-          "bonusText": "+2.0 xp do eventów z kategorii Kartkówka",
-          "shortBonusText": "+2.0 xp Kartkówka",
+          "bonusText": "+2.5 xp do eventów z kategorii Kartkówka",
+          "shortBonusText": "+2.5 xp Kartkówka",
           "limit": 1,
           "isLimitReached": true,
           "eventSectionId": 3,
           "itemBonusType": "FLAT_BONUS",
-          "xp": 2.0,
+          "xp": 2.5,
           "behavior": "ONE_EVENT"
         }
       ]

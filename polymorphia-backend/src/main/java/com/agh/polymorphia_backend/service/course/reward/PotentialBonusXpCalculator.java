@@ -16,6 +16,7 @@ import com.agh.polymorphia_backend.service.gradable_event.GradeService;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
 import com.agh.polymorphia_backend.service.mapper.PotentialXpMapper;
 import lombok.AllArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -193,7 +194,7 @@ public class PotentialBonusXpCalculator {
                 newAssignedItems,
                 currentCountById,
                 item -> item.getReward().getId(),
-                item -> ((Item) item.getReward()).getLimit(),
+                item -> ((Item) Hibernate.unproxy(item.getReward())).getLimit(),
                 (item, isOverLimit) -> {
                     if (isOverLimit) {
                         overLimitItems.add(item);
@@ -256,7 +257,7 @@ public class PotentialBonusXpCalculator {
                     List.of(item),
                     animalId,
                     true,
-                    new ArrayList<>()
+                    assignedRewardService.getAnimalAssignedItems(animalId)
             ).getItemDetails();
 
             case PERCENTAGE_BONUS -> getPotentialPercentageBonusXp(

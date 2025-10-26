@@ -172,9 +172,9 @@ VALUES (2, 1, 1),
 INSERT INTO public.flat_bonus_items (xp_bonus, item_id, behavior)
 VALUES (2.0, 1, 'ONE_EVENT'),
        (3.0, 2, 'MULTIPLE_EVENTS'),
-       (2.0, 9, 'ONE_EVENT'),
-       (3.0, 10, 'ONE_EVENT'),
-       (3.0, 11, 'MULTIPLE_EVENTS');
+       (2.5, 9, 'ONE_EVENT'),
+       (1.5, 10, 'ONE_EVENT'),
+       (4.0, 11, 'MULTIPLE_EVENTS');
 
 -- Percentage bonus items
 INSERT INTO public.percentage_bonus_items (percentage_bonus, item_id)
@@ -210,7 +210,9 @@ INSERT INTO public.gradable_events (id, event_section_id, name, topic, order_ind
 VALUES (1, 1, 'kartkówka 1', null, 1, 1, '/url', 'markdown', false, false),
        (2, 2, 'lab 1', null, 1, 1, '/url', 'markdown', false, false),
        (3, 3, 'kartkówka 2', null, 1, 1, '/url', 'markdown', false, false),
-       (4, 4, 'lab 2', null, 1, 1, '/url', 'markdown', false, false);
+       (4, 4, 'lab 2', null, 1, 1, '/url', 'markdown', false, false),
+       (5, 3, 'kartkówka 3', null, 1, 1, '/url', 'markdown', false, false),
+       (6, 3, 'kartkówka 4', null, 1, 1, '/url', 'markdown', false, false);
 
 
 -- Criteria
@@ -218,10 +220,9 @@ INSERT INTO public.criteria (id, gradable_event_id, name, max_xp)
 VALUES (1, 1, 'uzyskane punkty', 20.0),
        (2, 1, 'jakość kodu', 20.0),
        (3, 4, 'uzyskane punkty', 4.0),
-       (4, 3, 'kryterium2', 5.0),
-       (5, 3, 'uzyskane punkty', 5.0),
-       (6, 3, 'uzyskane punkty2', 4.0),
-       (7, 3, 'uzyskane punkty2', 5.0);
+       (4, 3, 'kryterium2', 10.0),
+       (5, 3, 'uzyskane punkty', 8.0),
+       (6, 3, 'uzyskane punkty2', 6.0);
 
 -- Grades
 INSERT INTO public.grades (id, gradable_event_id, animal_id, created_date, modified_date, comment)
@@ -236,7 +237,9 @@ VALUES (1, 1, 2, NOW(), NOW(), null),
 
        (8, 1, 7, NOW(), NOW(), null),
        (9, 3, 8, NOW(), NOW(), null),
-       (10, 4, 8, NOW(), NOW(), null);
+       (10, 4, 8, NOW(), NOW(), null),
+       (11, 5, 8, NOW(), NOW(), null),
+       (12, 6, 8, NOW(), NOW(), null);
 
 -- Criteria grades
 INSERT INTO public.criteria_grades (id, grade_id, criterion_id, xp)
@@ -251,9 +254,9 @@ VALUES (1, 1, 1, 1.0),
 
        (8, 8, 1, 2.0),
        (9, 10, 3, 4.0),
-       (10, 9, 4, 3.0),
-       (11, 9, 5, 3.0),
-       (12, 9, 6, 2.0);
+       (10, 9, 4, 6.8),
+       (11, 11, 5, 5.0),
+       (12, 12, 6, 4.0);
 
 
 -- Assigned rewards
@@ -266,9 +269,9 @@ VALUES (1, 3, 1, NOW(), null, false),
        (6, 9, 6, '2025-09-20 17:23:03.000000', null, false),
        (7, 10, 7, '2025-08-20 17:23:03.000000', null, false),
        (8, 9, 9, '2025-09-20 17:23:03.000000', null, true),
-       (9, 9, 10, '2025-09-21 17:23:03.000000', null, true),
-       (10, 9, 10, '2025-09-20 17:23:03.000000', null, true),
-       (11, 9, 11, '2025-09-20 17:23:03.000000', null, true);
+       (9, 10, 10, '2025-09-21 17:23:03.000000', null, true),
+       (10, 11, 10, '2025-09-20 17:23:03.000000', null, true),
+       (11, 12, 11, '2025-09-20 17:23:03.000000', null, true);
 
 
 -- Assigned chests
@@ -283,10 +286,10 @@ VALUES (1, null, 2.0),
        (2, null, 3.0),
        (3, null, 0.0),
        (4, null, 0.0),
-       (8, null, 0.5),
-       (9, null, 1.0),
-       (10, null, 1.0),
-       (11, null, 2.2);
+       (8, null, 2.5),
+       (9, null, 1.5),
+       (10, null, 1.5),
+       (11, null, 2.7);
 
 SELECT setval('animals_id_seq', COALESCE(MAX(id), 0) + 1, false)
 FROM animals;

@@ -1,6 +1,9 @@
 package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.request.equipment.EquipmentChestOpenRequestDto;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.ortools.Loader;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +14,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 import static com.agh.polymorphia_backend.controller.ControllerTestUtil.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class EquipmentControllerTest extends ControllerTestConfig {
     static {
@@ -52,48 +56,26 @@ public class EquipmentControllerTest extends ControllerTestConfig {
         assertJsonEquals(chestsJson, actualResponse);
     }
 
-    @Test
-    @Rollback
-    void openChestALL_ShouldOpenChestAndRecalculateBonuses() throws IOException {
-        EquipmentChestOpenRequestDto requestDto = EquipmentChestOpenRequestDto.builder()
-                .assignedChestId(6L)
-                .build();
+    private static void assertJsonEqualsIgnoringDates(Resource expected, String actual) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode expectedNode = mapper.readTree(expected.getInputStream());
+        JsonNode actualNode = mapper.readTree(actual);
 
-        postEndpoint("/equipment/chests/open?courseId={courseId}",
-                "sampleuser@test.com", "password", 200, Optional.of(requestDto), 4);
+        removeDateFields(expectedNode);
+        removeDateFields(actualNode);
 
-        String chests = getEndpoint("/equipment/chests?courseId={courseId}",
-                "sampleuser@test.com", "password", 200, 4);
-
-        assertJsonEquals(chestALLOpenedJson, chests);
-
-        String items = getEndpoint("/equipment/items?courseId={courseId}",
-                "sampleuser@test.com", "password", 200, 4);
-
-        assertJsonEquals(itemsALLOpenedJson, items);
+        assertEquals(expectedNode, actualNode);
     }
 
-
-    @Test
-    @Rollback
-    void openChestONEPercentageBonus_ShouldOpenChestAndRecalculateBonuses() throws IOException {
-        EquipmentChestOpenRequestDto requestDto = EquipmentChestOpenRequestDto.builder()
-                .assignedChestId(7L)
-                .itemId(8L)
-                .build();
-
-        postEndpoint("/equipment/chests/open?courseId={courseId}",
-                "sampleuser@test.com", "password", 200, Optional.of(requestDto), 4);
-
-        String chests = getEndpoint("/equipment/chests?courseId={courseId}",
-                "sampleuser@test.com", "password", 200, 4);
-
-        assertJsonEquals(chestONEPercentageOpenedJson, chests);
-
-        String items = getEndpoint("/equipment/items?courseId={courseId}",
-                "sampleuser@test.com", "password", 200, 4);
-
-        assertJsonEquals(itemsONEPercentageOpenedJson, items);
+    private static void removeDateFields(JsonNode node) {
+        if (node.isArray()) {
+            node.forEach(EquipmentControllerTest::removeDateFields);
+        } else if (node.isObject()) {
+            ObjectNode objectNode = (ObjectNode) node;
+            objectNode.remove("receivedDate");
+            objectNode.remove("usedDate");
+            objectNode.elements().forEachRemaining(EquipmentControllerTest::removeDateFields);
+        }
     }
 
     @Test
@@ -111,23 +93,23 @@ public class EquipmentControllerTest extends ControllerTestConfig {
 
     @Test
     @Rollback
-    void openChestONEFlatBonusLimitReached_ShouldLetOpen() throws IOException {
+    void openChestALL_ShouldOpenChestAndRecalculateBonuses() throws IOException {
         EquipmentChestOpenRequestDto requestDto = EquipmentChestOpenRequestDto.builder()
-                .assignedChestId(12L)
+                .assignedChestId(6L)
                 .build();
 
         postEndpoint("/equipment/chests/open?courseId={courseId}",
-                "sampleuser@test.com", "password", 400, Optional.of(requestDto), 4);
+                "sampleuser@test.com", "password", 200, Optional.of(requestDto), 4);
 
         String chests = getEndpoint("/equipment/chests?courseId={courseId}",
                 "sampleuser@test.com", "password", 200, 4);
 
-        assertJsonEquals(chestsJson, chests);
+        assertJsonEqualsIgnoringDates(chestALLOpenedJson, chests);
 
         String items = getEndpoint("/equipment/items?courseId={courseId}",
                 "sampleuser@test.com", "password", 200, 4);
 
-        assertJsonEquals(itemsJson, items);
+        assertJsonEqualsIgnoringDates(itemsALLOpenedJson, items);
     }
 
     @Test
@@ -139,6 +121,49 @@ public class EquipmentControllerTest extends ControllerTestConfig {
 
         postEndpoint("/equipment/chests/open?courseId={courseId}",
                 "sampleuser@test.com", "password", 400, Optional.of(requestDto), 4);
+    }
+
+    @Test
+    @Rollback
+    void openChestONEPercentageBonus_ShouldOpenChestAndRecalculateBonuses() throws IOException {
+        EquipmentChestOpenRequestDto requestDto = EquipmentChestOpenRequestDto.builder()
+                .assignedChestId(7L)
+                .itemId(8L)
+                .build();
+
+        postEndpoint("/equipment/chests/open?courseId={courseId}",
+                "sampleuser@test.com", "password", 200, Optional.of(requestDto), 4);
+
+        String chests = getEndpoint("/equipment/chests?courseId={courseId}",
+                "sampleuser@test.com", "password", 200, 4);
+
+        assertJsonEqualsIgnoringDates(chestONEPercentageOpenedJson, chests);
+
+        String items = getEndpoint("/equipment/items?courseId={courseId}",
+                "sampleuser@test.com", "password", 200, 4);
+
+        assertJsonEqualsIgnoringDates(itemsONEPercentageOpenedJson, items);
+    }
+
+    @Test
+    @Rollback
+    void openChestONEFlatBonusLimitReached_ShouldLetOpen() throws IOException {
+        EquipmentChestOpenRequestDto requestDto = EquipmentChestOpenRequestDto.builder()
+                .assignedChestId(12L)
+                .build();
+
+        postEndpoint("/equipment/chests/open?courseId={courseId}",
+                "sampleuser@test.com", "password", 400, Optional.of(requestDto), 4);
+
+        String chests = getEndpoint("/equipment/chests?courseId={courseId}",
+                "sampleuser@test.com", "password", 200, 4);
+
+        assertJsonEqualsIgnoringDates(chestsJson, chests);
+
+        String items = getEndpoint("/equipment/items?courseId={courseId}",
+                "sampleuser@test.com", "password", 200, 4);
+
+        assertJsonEqualsIgnoringDates(itemsJson, items);
     }
 
     @Test

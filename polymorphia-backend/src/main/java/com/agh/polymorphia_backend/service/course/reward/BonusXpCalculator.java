@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.service.course.reward;
 
 import com.agh.polymorphia_backend.model.course.reward.FlatBonusItem;
+import com.agh.polymorphia_backend.model.course.reward.Item;
 import com.agh.polymorphia_backend.model.course.reward.PercentageBonusItem;
 import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedItem;
 import com.agh.polymorphia_backend.model.course.reward.item.FlatBonusItemBehavior;
@@ -162,9 +163,7 @@ public class BonusXpCalculator {
     }
 
     private void setPercentageBonusItemBonusXp(AssignedItem item, Map<Long, BigDecimal> totalPointsPerEventSection) {
-        Long eventSectionId = item.getCriterionGrade()
-                .getCriterion()
-                .getGradableEvent()
+        Long eventSectionId = ((Item) (item.getReward()))
                 .getEventSection()
                 .getId();
 

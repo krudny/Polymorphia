@@ -26,13 +26,13 @@
           "name": "limit reached",
           "imageUrl": "url",
           "orderIndex": 1,
-          "bonusText": "+2.0 xp do eventów z kategorii Kartkówka",
-          "shortBonusText": "+2.0 xp Kartkówka",
+          "bonusText": "+2.5 xp do eventów z kategorii Kartkówka",
+          "shortBonusText": "+2.5 xp Kartkówka",
           "limit": 1,
           "isLimitReached": true,
           "eventSectionId": 3,
           "itemBonusType": "FLAT_BONUS",
-          "xp": 2.0,
+          "xp": 2.5,
           "behavior": "ONE_EVENT"
         }
       ]
@@ -58,13 +58,13 @@
           "name": "limit reached",
           "imageUrl": "url",
           "orderIndex": 1,
-          "bonusText": "+2.0 xp do eventów z kategorii Kartkówka",
-          "shortBonusText": "+2.0 xp Kartkówka",
+          "bonusText": "+2.5 xp do eventów z kategorii Kartkówka",
+          "shortBonusText": "+2.5 xp Kartkówka",
           "limit": 1,
           "isLimitReached": true,
           "eventSectionId": 3,
           "itemBonusType": "FLAT_BONUS",
-          "xp": 2.0,
+          "xp": 2.5,
           "behavior": "ONE_EVENT"
         },
         {
@@ -72,13 +72,13 @@
           "name": "flatbonus ONE",
           "imageUrl": "url",
           "orderIndex": 2,
-          "bonusText": "+3.0 xp do eventów z kategorii Kartkówka",
-          "shortBonusText": "+3.0 xp Kartkówka",
+          "bonusText": "+1.5 xp do eventów z kategorii Kartkówka",
+          "shortBonusText": "+1.5 xp Kartkówka",
           "limit": 4,
           "isLimitReached": false,
           "eventSectionId": 3,
           "itemBonusType": "FLAT_BONUS",
-          "xp": 3.0,
+          "xp": 1.5,
           "behavior": "ONE_EVENT"
         },
         {
@@ -86,13 +86,13 @@
           "name": "flatbonus ONE",
           "imageUrl": "url",
           "orderIndex": 2,
-          "bonusText": "+3.0 xp do eventów z kategorii Kartkówka",
-          "shortBonusText": "+3.0 xp Kartkówka",
+          "bonusText": "+1.5 xp do eventów z kategorii Kartkówka",
+          "shortBonusText": "+1.5 xp Kartkówka",
           "limit": 4,
           "isLimitReached": false,
           "eventSectionId": 3,
           "itemBonusType": "FLAT_BONUS",
-          "xp": 3.0,
+          "xp": 1.5,
           "behavior": "ONE_EVENT"
         },
         {
@@ -100,13 +100,13 @@
           "name": "flatbonus multiple",
           "imageUrl": "url",
           "orderIndex": 3,
-          "bonusText": "+3.0 xp do eventów z kategorii Kartkówka",
-          "shortBonusText": "+3.0 xp Kartkówka",
+          "bonusText": "+4.0 xp do eventów z kategorii Kartkówka",
+          "shortBonusText": "+4.0 xp Kartkówka",
           "limit": 2,
           "isLimitReached": false,
           "eventSectionId": 3,
           "itemBonusType": "FLAT_BONUS",
-          "xp": 3.0,
+          "xp": 4.0,
           "behavior": "MULTIPLE_EVENTS"
         }
       ]
@@ -132,13 +132,13 @@
           "name": "limit reached",
           "imageUrl": "url",
           "orderIndex": 1,
-          "bonusText": "+2.0 xp do eventów z kategorii Kartkówka",
-          "shortBonusText": "+2.0 xp Kartkówka",
+          "bonusText": "+2.5 xp do eventów z kategorii Kartkówka",
+          "shortBonusText": "+2.5 xp Kartkówka",
           "limit": 1,
           "isLimitReached": true,
           "eventSectionId": 3,
           "itemBonusType": "FLAT_BONUS",
-          "xp": 2.0,
+          "xp": 2.5,
           "behavior": "ONE_EVENT"
         },
         {
@@ -146,13 +146,13 @@
           "name": "limit reached",
           "imageUrl": "url",
           "orderIndex": 1,
-          "bonusText": "+2.0 xp do eventów z kategorii Kartkówka",
-          "shortBonusText": "+2.0 xp Kartkówka",
+          "bonusText": "+2.5 xp do eventów z kategorii Kartkówka",
+          "shortBonusText": "+2.5 xp Kartkówka",
           "limit": 1,
           "isLimitReached": true,
           "eventSectionId": 3,
           "itemBonusType": "FLAT_BONUS",
-          "xp": 2.0,
+          "xp": 2.5,
           "behavior": "ONE_EVENT"
         }
       ]

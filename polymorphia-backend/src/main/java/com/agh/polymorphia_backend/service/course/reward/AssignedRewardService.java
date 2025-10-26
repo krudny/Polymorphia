@@ -47,7 +47,7 @@ public class AssignedRewardService {
     }
 
     public Map<FlatBonusItemBehavior, List<AssignedItem>> groupFlatBonusItemsByBehavior(List<AssignedItem> assignedItems) {
-        return assignedItems.stream()
+        return filterAssignedItemsByType(assignedItems, ItemType.FLAT_BONUS).stream()
                 .sorted(Comparator.comparing(AssignedReward::getReceivedDate))
                 .collect(Collectors.groupingBy(
                         assignedItem -> ((FlatBonusItem) Hibernate.unproxy(assignedItem.getReward())).getBehavior(),
@@ -56,11 +56,10 @@ public class AssignedRewardService {
     }
 
     public List<AssignedItem> getAnimalAssignedItemsByType(Long animalId, ItemType itemType) {
-        return getAnimalAssignedItems(animalId)
-                .stream()
-                .filter(item -> ((Item) Hibernate.unproxy(item.getReward())).getItemType().equals(itemType))
-                .toList();
+        return filterAssignedItemsByType(getAnimalAssignedItems(animalId), itemType);
+
     }
+
 
     public Map<Long, BigDecimal> getTotalBonusByEventSection(List<AssignedItem> assignedItems) {
         Map<Long, BigDecimal> totalBonusByEventSection = new HashMap<>();
@@ -154,4 +153,9 @@ public class AssignedRewardService {
         assignedItemRepository.saveAll(items);
     }
 
+    private List<AssignedItem> filterAssignedItemsByType(List<AssignedItem> assignedItems, ItemType itemType) {
+        return assignedItems.stream()
+                .filter(item -> ((Item) Hibernate.unproxy(item.getReward())).getItemType().equals(itemType))
+                .toList();
+    }
 }
