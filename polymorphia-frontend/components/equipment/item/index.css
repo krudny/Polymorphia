@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@import "../../../styles/globals.css";
+
+.equipment-image-badge {
+  @apply text-3xl w-10 rounded-tl-2xl rounded-br-2xl;
+}

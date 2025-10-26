@@ -1,14 +1,12 @@
 @import "tailwindcss";
 @import "../../styles/globals.css";
 
-/* EquipmentSection */
-
 .equipment-header {
   @apply text-6xl mb-6 lg:mb-10;
 }
 
 .equipment-grid {
-  @apply grid grid-cols-2 sm:grid-cols-4 gap-4;
+  @apply grid gap-4;
 }
 
 .equipment-grid-item {
@@ -17,18 +15,6 @@
 
 .equipment-image {
   @apply object-cover rounded-2xl shadow-lg;
-}
-
-.equipment-image-badge {
-  @apply text-3xl w-10 rounded-tl-2xl rounded-br-2xl;
-}
-
-.equipment-chest-btn-wrapper {
-  @apply w-full flex-centered mt-4;
-}
-
-.equipment-chest-btn {
-  @apply w-full py-0 text-base md:text-lg lg:text-2xl rounded-xl;
 }
 
 .equipment-locked-item {

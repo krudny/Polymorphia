@@ -1,88 +1,57 @@
-import { API_STATIC_URL } from "@/services/api";
 import "./index.css";
-import Image from "next/image";
-import ImageBadge from "@/components/image-badge/ImageBadge";
 import { EquipmentSectionProps } from "@/components/equipment/types";
 import {
   EquipmentChestResponseDTO,
   EquipmentItemResponseDTO,
 } from "@/interfaces/api/equipment";
 import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
-import { OpenedChestButtons } from "@/components/equipment/OpenedChest";
+import EquipmentItem from "@/components/equipment/item";
+import EquipmentChest from "@/components/equipment/chest";
 
-export function EquipmentSection({ type, data }: EquipmentSectionProps) {
+const gridColsMap: Record<number, string> = {
+  1: "grid-cols-1 sm:grid-cols-1",
+  2: "grid-cols-2 sm:grid-cols-2",
+  3: "grid-cols-2 sm:grid-cols-3",
+  4: "grid-cols-2 sm:grid-cols-4",
+};
+
+export function EquipmentSection({
+  type,
+  data,
+  columns,
+}: EquipmentSectionProps) {
   const { setCurrentItemModalData } = useEquipmentContext();
+
+  const handleClickItem = (item: EquipmentItemResponseDTO): void => {
+    if (item.details.length > 0) {
+      setCurrentItemModalData(item);
+    }
+  };
 
   return (
     <section className="mb-5">
       <h1 className="equipment-header">
         {type === "item" ? "Przedmioty" : "Skrzynki"}
       </h1>
-      <div className="equipment-grid">
-        {data.map((item) => {
+      <div className={`equipment-grid ${gridColsMap[columns]}`}>
+        {data.map((reward) => {
           if (type === "item") {
-            const itemData = item as EquipmentItemResponseDTO;
+            const itemData = reward as EquipmentItemResponseDTO;
+
             return (
               <div
                 key={itemData.base.id}
-                onClick={
-                  itemData.details.length > 0
-                    ? () => setCurrentItemModalData(itemData)
-                    : undefined
-                }
+                onClick={() => handleClickItem(itemData)}
               >
-                <div
-                  className={`equipment-grid-item ${itemData.details.length > 0 ? "hover:cursor-pointer" : ""}`}
-                >
-                  <Image
-                    src={`${API_STATIC_URL}/${itemData.base.imageUrl}`}
-                    alt={itemData.base.name}
-                    fill
-                    className="equipment-image"
-                    priority
-                    fetchPriority="high"
-                    sizes="(min-width: 1024px) 25vw, 50vw"
-                  />
-                  {itemData.details.length > 0 ? (
-                    <ImageBadge
-                      text={itemData.details.length.toString()}
-                      className="equipment-image-badge"
-                    />
-                  ) : (
-                    <div className="equipment-locked-item">
-                      <span>
-                        <p>lock</p>
-                      </span>
-                    </div>
-                  )}
-                </div>
+                <EquipmentItem itemData={itemData} />
               </div>
             );
           } else {
-            const chestData = item as EquipmentChestResponseDTO;
+            const chestData = reward as EquipmentChestResponseDTO;
 
             return (
               <div key={chestData.base.id}>
-                <div className="equipment-grid-item">
-                  <Image
-                    src={`${API_STATIC_URL}/${chestData.base.imageUrl}`}
-                    alt={chestData.base.name}
-                    fill
-                    className="equipment-image"
-                    priority
-                    sizes="(min-width: 1024px) 25vw, 50vw"
-                  />
-                  {!chestData.details.id && (
-                    <div className="equipment-locked-item">
-                      <span>
-                        <p>lock</p>
-                      </span>
-                    </div>
-                  )}
-                </div>
-                {chestData.details.id && (
-                  <OpenedChestButtons chestData={chestData} />
-                )}
+                <EquipmentChest chestData={chestData} />
               </div>
             );
           }

@@ -1,9 +1,9 @@
 import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import { OpenedChestButtonsProps } from "@/components/equipment/types";
 import "./index.css";
+import { OpenedChestButtonsProps } from "@/components/equipment/chest-buttons/types";
 
-export function OpenedChestButtons({ chestData }: OpenedChestButtonsProps) {
+export function ChestButtons({ chestData }: OpenedChestButtonsProps) {
   const { setCurrentChestModalData, setCurrentOpeningChestModalData } =
     useEquipmentContext();
 
