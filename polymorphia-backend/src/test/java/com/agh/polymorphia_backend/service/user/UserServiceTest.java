@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.service.user;
 
+import com.agh.polymorphia_backend.BaseTest;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.user.*;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
@@ -22,7 +23,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class UserServiceTest {
+class UserServiceTest extends BaseTest {
 
     @Mock
     private UserRepository userRepository;

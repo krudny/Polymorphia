@@ -855,20 +855,20 @@ VALUES (104, 'Złota Skrzynia',
 
 
 INSERT INTO items (reward_id, "limit", event_section_id)
-VALUES (3, 5, 3);
+VALUES (3, 2, 3);
 INSERT INTO items (reward_id, "limit", event_section_id)
-VALUES (2, 5, 2);
+VALUES (2, 1, 2);
 INSERT INTO items (reward_id, "limit", event_section_id)
-VALUES (1, 5, 1);
+VALUES (1, 1, 1);
 INSERT INTO items (reward_id, "limit", event_section_id)
 VALUES (4, 5, 8);
 INSERT INTO items (reward_id, "limit", event_section_id)
 VALUES (5, 5, 7);
 
 INSERT INTO flat_bonus_items (item_id, xp_bonus, behavior)
-VALUES (2, 20.0, 'MULTIPLE_EVENTS');
+VALUES (2, 5.0, 'ONE_EVENT');
 INSERT INTO flat_bonus_items (item_id, xp_bonus, behavior)
-VALUES (3, 10.0, 'MULTIPLE_EVENTS');
+VALUES (3, 4.0, 'MULTIPLE_EVENTS');
 INSERT INTO flat_bonus_items (item_id, xp_bonus, behavior)
 VALUES (4, 5.0, 'ONE_EVENT');
 
@@ -892,13 +892,15 @@ VALUES (101, 1);
 INSERT INTO chests_items (chest_id, item_id)
 VALUES (101, 2);
 INSERT INTO chests_items (chest_id, item_id)
+VALUES (101, 2);
+INSERT INTO chests_items (chest_id, item_id)
 VALUES (102, 1);
 INSERT INTO chests_items (chest_id, item_id)
 VALUES (102, 2);
 INSERT INTO chests_items (chest_id, item_id)
 VALUES (102, 3);
 INSERT INTO chests_items (chest_id, item_id)
-VALUES (103, 4);
+VALUES (103, 3);
 INSERT INTO chests_items (chest_id, item_id)
 VALUES (104, 4);
 INSERT INTO chests_items (chest_id, item_id)
@@ -1006,7 +1008,13 @@ values (11, 1, 58, NOW(), NOW(), null),
        (37, 6, 23, NOW(), NOW(), null),
        (38, 7, 23, NOW(), NOW(), null),
        (39, 8, 23, NOW(), NOW(), null),
-       (40, 33, 23, NOW(), NOW(), null);
+       (40, 33, 23, NOW(), NOW(), null),
+       (41, 10, 2, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done'),
+       (42, 4, 2, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done'),
+       (43, 5, 2, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done'),
+       (44, 6, 2, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done'),
+       (45, 7, 2, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done'),
+       (46, 9, 2, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done');
 
 
 INSERT INTO criteria_grades (id, grade_id, criterion_id, xp)
@@ -1026,9 +1034,9 @@ VALUES (7, 7, 1, 0.0);
 INSERT INTO criteria_grades (id, grade_id, criterion_id, xp)
 VALUES (8, 8, 2, 1.5);
 INSERT INTO criteria_grades (id, grade_id, criterion_id, xp)
-VALUES (9, 9, 2, 4.0);
+VALUES (9, 9, 2, 2.0);
 INSERT INTO criteria_grades (id, grade_id, criterion_id, xp)
-VALUES (10, 10, 8, 4.0);
+VALUES (10, 10, 8, 2.0);
 insert into criteria_grades(id, grade_id, criterion_id, xp)
 values (11, 11, 1, 1.4),
        (12, 12, 9, 1.0),
@@ -1059,16 +1067,18 @@ values (11, 11, 1, 1.4),
        (37, 37, 6, 2.0),
        (38, 38, 7, 2.0),
        (39, 39, 8, 2.0),
-       (40, 40, 33, 10.0);
+       (40, 40, 33, 10.0),
+       (41, 41, 10, 2.0),
+       (42, 42, 4, 1.0),
+       (43, 43, 5, 1.0),
+       (44, 44, 6, 1.0),
+       (45, 45, 7, 1.2),
+       (46, 46, 9, 1.3);
 
 INSERT INTO assigned_rewards (id, criterion_grade_id, reward_id, received_date, used_date, is_used)
 VALUES (1, 1, 101, '2025-09-20 17:23:03', NULL, false);
 INSERT INTO assigned_rewards (id, criterion_grade_id, reward_id, received_date, used_date, is_used)
-VALUES (2, 1, 102, '2025-09-20 17:23:03', '2025-09-20 17:23:03', true);
-INSERT INTO assigned_rewards (id, criterion_grade_id, reward_id, received_date, used_date, is_used)
-VALUES (3, 1, 1, '2025-09-20 17:23:03', '2025-09-20 17:23:03', true);
-INSERT INTO assigned_rewards (id, criterion_grade_id, reward_id, received_date, used_date, is_used)
-VALUES (4, 1, 2, '2025-09-20 17:23:03', '2025-09-20 17:23:03', true);
+VALUES (2, 1, 102, '2025-09-20 17:23:03', '2025-09-20 17:23:03', false);
 insert into assigned_rewards(id, criterion_grade_id, reward_id, received_date, used_date, is_used)
 values (5, 11, 101, NOW(), NOW(), true),
        (6, 11, 1, NOW(), NOW(), true),
@@ -1087,9 +1097,31 @@ values (5),
 insert into assigned_items(assigned_reward_id, assigned_chest_id, bonus_xp)
 values (6, 5, 0.0),
        (8, 7, 2.5);
-INSERT INTO assigned_items (assigned_reward_id, assigned_chest_id, bonus_xp)
-VALUES (3, 2, 0.0);
-INSERT INTO assigned_items (assigned_reward_id, assigned_chest_id, bonus_xp)
-VALUES (4, 2, 0.0);
+
+INSERT INTO assigned_rewards(id, criterion_grade_id, reward_id, received_date, used_date, is_used)
+values (9, 7, 101, NOW(), null, false),
+       (10, 8, 102, NOW(), null, false),
+       (11, 8, 1, NOW(), null, false),
+       (12, 8, 2, NOW(), null, false),
+       (13, 8, 3, NOW(), null, false),
+       (14, 7, 1, NOW(), null, false),
+       (15, 7, 2, NOW(), null, false);
+
+insert into assigned_chests(assigned_reward_id)
+values (9),(10);
+
+
+SELECT setval('animals_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM animals;
+SELECT setval('assigned_rewards_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM assigned_rewards;
+SELECT setval('course_groups_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM course_groups;
+SELECT setval('courses_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM courses;
+SELECT setval('criteria_grades_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM criteria_grades;
+SELECT setval('criteria_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM criteria;
+SELECT setval('event_sections_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM event_sections;
+SELECT setval('evolution_stages_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM evolution_stages;
+SELECT setval('gradable_events_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM gradable_events;
+SELECT setval('grades_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM grades;
+SELECT setval('rewards_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM rewards;
+SELECT setval('users_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM users;
 
 commit;
