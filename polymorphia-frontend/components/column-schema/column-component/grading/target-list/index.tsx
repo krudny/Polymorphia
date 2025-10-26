@@ -1,20 +1,17 @@
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
-import Search from "@/components/search";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import "./index.css";
 import { Fragment } from "react";
-import { useMediaQuery } from "react-responsive";
 import { GradingReducerActions } from "@/providers/grading/gradingReducer/types";
 import { TargetTypes } from "@/interfaces/api/grade/target";
 import Loading from "@/components/loading";
 import areTargetsEqual from "@/providers/grading/utils/areTargetsEqual";
 import ColumnComponent from "@/components/column-schema/column-component";
+import TargetListTopBar from "@/components/column-schema/column-component/shared/target-list/top-bar";
 
 export default function TargetList() {
-  const isMd = useMediaQuery({ minWidth: "786px" });
   const {
     state,
     dispatch,
@@ -27,19 +24,11 @@ export default function TargetList() {
   const { selectedTarget } = state;
 
   const topComponent = () => (
-    <div className="grading-search-wrapper">
-      <Search
-        search={search}
-        setSearch={setSearch}
-        placeholder="Szukaj studenta..."
-      />
-      <ButtonWithBorder
-        text="Filtry"
-        size={isMd ? "md" : "sm"}
-        className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none"
-        onClick={() => setAreFiltersOpen(true)}
-      />
-    </div>
+    <TargetListTopBar
+      search={search}
+      setSearch={setSearch}
+      setAreFiltersOpen={setAreFiltersOpen}
+    />
   );
 
   const mainComponent =

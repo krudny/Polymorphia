@@ -12,7 +12,3 @@
 .divider {
   @apply w-full border-2 border-secondary-dark dark:border-secondary-gray first:hidden;
 }
-
-.grading-search-wrapper {
-  @apply w-full flex justify-between;
-}

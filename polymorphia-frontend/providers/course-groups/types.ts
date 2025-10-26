@@ -1,1 +1,12 @@
-export interface CourseGroupsContextInterface {}
+import { Dispatch, SetStateAction } from "react";
+import { useFilters } from "@/hooks/course/useFilters";
+
+export interface CourseGroupsContextInterface {
+  search: string;
+  setSearch: Dispatch<SetStateAction<string>>;
+  areFiltersOpen: boolean;
+  setAreFiltersOpen: Dispatch<SetStateAction<boolean>>;
+  filters: ReturnType<typeof useFilters<CourseGroupsFilterId>>;
+}
+
+export type CourseGroupsFilterId = "sortOrder" | "sortBy";

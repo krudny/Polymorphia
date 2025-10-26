@@ -18,7 +18,7 @@ export interface GradingContextInterface {
   isFiltersError: boolean;
   filters: ReturnType<typeof useFilters<GradingFilterId>>;
   search: string;
-  setSearch: (search: string) => void;
+  setSearch: Dispatch<SetStateAction<string>>;
   targets: TargetResponseDTO[] | undefined;
   criteria: CriterionResponseDTO[] | undefined;
   submissionRequirements: SubmissionRequirementResponseDTO[] | undefined;

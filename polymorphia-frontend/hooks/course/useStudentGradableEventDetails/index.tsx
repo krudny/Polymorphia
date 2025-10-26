@@ -9,7 +9,6 @@ export default function useStudentGradableEventDetails({
   userId,
   gradableEventId,
 }: useStudentGradableEventDetailsProps): UseStudentGradableEventDetails {
-  console.log("called");
   const { data, isLoading, isError } = useQuery({
     queryKey: ["studentGradableEventId", userId, gradableEventId],
     queryFn: () =>
