@@ -2,16 +2,29 @@ import Image from "next/image";
 import { API_STATIC_URL } from "@/services/api";
 import ImageBadge from "@/components/image-badge/ImageBadge";
 import "./index.css";
-import "../index.css";
-import { EquipmentItemProps } from "@/components/equipment/item/types";
+import "../../index.css";
+import { EquipmentItemProps } from "@/components/equipment/components/item/types";
+import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
+import { EquipmentActions } from "@/providers/equipment/reducer/types";
 
 export default function EquipmentItem({ itemData }: EquipmentItemProps) {
+  const { dispatch } = useEquipmentContext();
   const { imageUrl, name } = itemData.base;
   const quantity = itemData.details.length;
 
+  const handleClick = () => {
+    if (quantity > 0) {
+      dispatch({
+        type: EquipmentActions.SHOW_ITEM_MODAL,
+        payload: itemData,
+      });
+    }
+  };
+
   return (
     <div
-      className={`equipment-grid-item ${quantity > 0 ? "hover:cursor-pointer" : ""}`}
+      className={`equipment-grid-item ${quantity > 0 ? "hover:cursor-pointer hover:shadow-lg" : ""}`}
+      onClick={handleClick}
     >
       <Image
         src={`${API_STATIC_URL}/${imageUrl}`}

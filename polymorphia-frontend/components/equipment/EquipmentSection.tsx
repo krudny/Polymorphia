@@ -4,10 +4,9 @@ import {
   EquipmentChestResponseDTO,
   EquipmentItemResponseDTO,
 } from "@/interfaces/api/equipment";
-import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
-import EquipmentItem from "@/components/equipment/item";
-import EquipmentChest from "@/components/equipment/chest";
-import { ChestButtons } from "@/components/equipment/chest-buttons";
+import EquipmentItem from "@/components/equipment/components/item";
+import EquipmentChest from "@/components/equipment/components/chest";
+import { ChestButtons } from "@/components/equipment/components/chest-buttons";
 
 const gridColsMap: Record<number, string> = {
   1: "grid-cols-1 sm:grid-cols-1",
@@ -28,14 +27,6 @@ export function EquipmentSection({
   data,
   columns,
 }: EquipmentSectionProps) {
-  const { setCurrentItemModalData } = useEquipmentContext();
-
-  const handleClickItem = (item: EquipmentItemResponseDTO): void => {
-    if (item.details.length > 0) {
-      setCurrentItemModalData(item);
-    }
-  };
-
   return (
     <section className={`${maxWidthMap[columns]} mb-5 mx-auto`}>
       <h1 className="equipment-header">
@@ -47,10 +38,7 @@ export function EquipmentSection({
             const itemData = reward as EquipmentItemResponseDTO;
 
             return (
-              <div
-                key={itemData.base.id}
-                onClick={() => handleClickItem(itemData)}
-              >
+              <div key={itemData.base.id}>
                 <EquipmentItem itemData={itemData} />
               </div>
             );

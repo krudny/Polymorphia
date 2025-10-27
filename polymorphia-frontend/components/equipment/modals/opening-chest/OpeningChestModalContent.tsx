@@ -17,18 +17,13 @@ import { useMediaQuery } from "react-responsive";
 import clsx from "clsx";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { OpeningChestModalProps } from "@/components/equipment/modals/opening-chest/types";
+import { EquipmentActions } from "@/providers/equipment/reducer/types";
 
 export default function OpeningChestModalContent({
-  currentOpeningChestModalData,
-}: OpeningChestModalProps) {
+  equipment,
+}: Omit<OpeningChestModalProps, "onClose">) {
   const { closeModal } = useModalContext();
-  const {
-    pickedItemId,
-    setPickedItemId,
-    pickedItemKey,
-    setPickedItemKey,
-    setCurrentChestModalData,
-  } = useEquipmentContext();
+  const { state, dispatch } = useEquipmentContext();
   const queryClient = useQueryClient();
   const pickChestItemsMutation = usePickChestItems();
   const { courseId, id: userId } = useUserDetails();
@@ -38,13 +33,11 @@ export default function OpeningChestModalContent({
     sum: "0.0 xp",
   });
   const { data: chestPotentialXp, isLoading } = usePotentialXp(
-    currentOpeningChestModalData.details.id
+    equipment.details.id
   );
   const isSm = useMediaQuery({ maxWidth: 768 });
   const areAllItemsOverLimit =
-    currentOpeningChestModalData.base.chestItems?.every(
-      (item) => item.isLimitReached
-    ) ?? false;
+    equipment.base.chestItems?.every((item) => item.isLimitReached) ?? false;
 
   useEffect(() => {
     if (!chestPotentialXp) {
@@ -96,17 +89,19 @@ export default function OpeningChestModalContent({
       sum: `${totalBonusXp} xp`,
     });
 
-    setPickedItemId(itemId);
-    setPickedItemKey(itemKey);
+    dispatch({
+      type: EquipmentActions.SET_PICKED_ITEM,
+      payload: { id: itemId, key: itemKey },
+    });
   };
 
   const handleModalSubmit = async () => {
     const requestBody = {
-      assignedChestId: currentOpeningChestModalData.details.id,
+      assignedChestId: equipment.details.id,
       itemId:
-        currentOpeningChestModalData.base.behavior === ChestBehaviors.ALL
+        equipment.base.behavior === ChestBehaviors.ALL
           ? null
-          : pickedItemId,
+          : state.pickedItemId,
     };
 
     await pickChestItemsMutation.mutateAsync(requestBody);
@@ -116,24 +111,25 @@ export default function OpeningChestModalContent({
         .getQueryData<
           EquipmentChestResponseDTO[]
         >(["equipmentChests", courseId, userId])
-        ?.find(
-          (chest) =>
-            chest.details.id === currentOpeningChestModalData.details.id
-        ) ?? null;
+        ?.find((chest) => chest.details.id === equipment.details.id) ?? null;
 
     if (!updatedChest) {
       toast.error("Nie udało się pobrać danych o nowo otwartej skrzynce");
       return;
     }
 
-    setCurrentChestModalData(updatedChest);
+    dispatch({
+      type: EquipmentActions.SHOW_CHEST_MODAL,
+      payload: updatedChest,
+    });
+    dispatch({ type: EquipmentActions.CLOSE_OPENING_CHEST_MODAL });
     closeModal();
   };
 
   const getItemKey = (index: number, item: BaseItem) => {
     let indexInGroup = 0;
     for (let i = 0; i < index; i++) {
-      if (currentOpeningChestModalData.base.chestItems[i].id === item.id) {
+      if (equipment.base.chestItems[i].id === item.id) {
         indexInGroup++;
       }
     }
@@ -150,57 +146,54 @@ export default function OpeningChestModalContent({
         <XPCard title={xp.sum} subtitle="SUMA" size="xs" color="green" />
       </div>
       <div className="opening-chest-modal">
-        {currentOpeningChestModalData.base.chestItems.map(
-          (item: BaseItem, index: number) => {
-            const itemKey = getItemKey(index, item);
-            const itemDetails =
-              chestPotentialXp.potentialXp.itemDetails[itemKey];
+        {equipment.base.chestItems.map((item: BaseItem, index: number) => {
+          const itemKey = getItemKey(index, item);
+          const itemDetails = chestPotentialXp.potentialXp.itemDetails[itemKey];
 
-            const subtitleLimitReachedText = isSm
-              ? item.shortBonusText
-              : item.bonusText;
+          const subtitleLimitReachedText = isSm
+            ? item.shortBonusText
+            : item.bonusText;
 
-            const subtitleText = item.isLimitReached
-              ? "Limit osiągnięty"
-              : subtitleLimitReachedText;
+          const subtitleText = item.isLimitReached
+            ? "Limit osiągnięty"
+            : subtitleLimitReachedText;
 
-            return (
-              <div
+          return (
+            <div
+              key={itemKey}
+              className={clsx("opening-chest-modal-image-wrapper", {
+                "opening-chest-modal-image-selected":
+                  state.pickedItemKey === itemKey,
+                "cursor-pointer":
+                  equipment.base.behavior === ChestBehaviors.ONE_OF_MANY &&
+                  !item.isLimitReached,
+              })}
+              onClick={() =>
+                handlePickItem(item.id, itemKey, item.isLimitReached)
+              }
+            >
+              <XPCard
                 key={itemKey}
-                className={clsx("opening-chest-modal-image-wrapper", {
-                  "opening-chest-modal-image-selected":
-                    pickedItemKey === itemKey,
-                  "cursor-pointer":
-                    currentOpeningChestModalData.base.behavior ===
-                      ChestBehaviors.ONE_OF_MANY && !item.isLimitReached,
-                })}
-                onClick={() =>
-                  handlePickItem(item.id, itemKey, item.isLimitReached)
+                title={item.name}
+                subtitle={subtitleText}
+                size="xs"
+                leftComponent={
+                  <XPCardImageWithLock
+                    imageUrl={item.imageUrl}
+                    alt={item.name}
+                    isLocked={item.isLimitReached}
+                  />
                 }
-              >
-                <XPCard
-                  key={itemKey}
-                  title={item.name}
-                  subtitle={subtitleText}
-                  size="xs"
-                  leftComponent={
-                    <XPCardImageWithLock
-                      imageUrl={item.imageUrl}
-                      alt={item.name}
-                      isLocked={item.isLimitReached}
-                    />
-                  }
-                  rightComponent={
-                    <XPCardPoints
-                      points={`+${itemDetails.bonusXp}`}
-                      color="gray"
-                    />
-                  }
-                />
-              </div>
-            );
-          }
-        )}
+                rightComponent={
+                  <XPCardPoints
+                    points={`+${itemDetails.bonusXp}`}
+                    color="gray"
+                  />
+                }
+              />
+            </div>
+          );
+        })}
         <h1 className="opening-chest-modal-footer-text">
           Bonusy są liczone względem obecnej punktacji. Otrzymanie nowej nagrody
           może osłabić działanie wcześniej zdobytych nagród. Całkowite XP jednak
@@ -213,9 +206,9 @@ export default function OpeningChestModalContent({
           className="w-full rounded-xl"
           onClick={handleModalSubmit}
           isActive={
-            pickedItemId !== null ||
+            state.pickedItemId !== null ||
             areAllItemsOverLimit ||
-            currentOpeningChestModalData.base.behavior == ChestBehaviors.ALL
+            equipment.base.behavior == ChestBehaviors.ALL
           }
         />
       </div>

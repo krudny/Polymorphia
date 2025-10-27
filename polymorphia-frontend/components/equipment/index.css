@@ -10,7 +10,7 @@
 }
 
 .equipment-grid-item {
-  @apply relative w-full aspect-square;
+  @apply relative w-full aspect-square rounded-2xl custom-ease-with-duration;
 }
 
 .equipment-image {

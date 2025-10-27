@@ -6,30 +6,27 @@ import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import { ItemModalProps } from "@/components/equipment/modals/item/types";
 
-export default function ItemModal({
-  currentItemModalData,
-  setCurrentItemModalData,
-}: ItemModalProps) {
+export default function ItemModal({ equipment, onClose }: ItemModalProps) {
   return (
     <Modal
-      isDataPresented={currentItemModalData !== null}
-      onClosed={() => setCurrentItemModalData(null)}
-      title={currentItemModalData.base.name ?? ""}
-      subtitle={currentItemModalData.base.bonusText ?? ""}
+      isDataPresented={equipment !== null}
+      onClosed={onClose}
+      title={equipment.base.name ?? ""}
+      subtitle={equipment.base.bonusText ?? ""}
     >
       <div className="bonus-info-modal">
-        {currentItemModalData.details.map(
+        {equipment.details.map(
           (itemAssignmentDetails: ItemAssignmentDetailsResponseDTO) => (
             <XPCard
               key={itemAssignmentDetails.id}
-              title={currentItemModalData.base.name}
+              title={equipment.base.name}
               subtitle={`Zdobyto ${itemAssignmentDetails.receivedDate}`}
               size="xs"
               // TODO: handle undefined xp
               leftComponent={
                 <XPCardImage
-                  imageUrl={currentItemModalData.base.imageUrl}
-                  alt={currentItemModalData.base.name}
+                  imageUrl={equipment.base.imageUrl}
+                  alt={equipment.base.name}
                 />
               }
               rightComponent={

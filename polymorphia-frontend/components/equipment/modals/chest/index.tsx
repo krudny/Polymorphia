@@ -6,19 +6,16 @@ import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import { ChestModalProps } from "@/components/equipment/modals/chest/types";
 
-export default function ChestModal({
-  currentChestModalData,
-  setCurrentChestModalData,
-}: ChestModalProps) {
+export default function ChestModal({ equipment, onClose }: ChestModalProps) {
   return (
     <Modal
-      isDataPresented={currentChestModalData !== null}
-      onClosed={() => setCurrentChestModalData(null)}
-      title={currentChestModalData.base.name ?? ""}
+      isDataPresented={equipment !== null}
+      onClosed={onClose}
+      title={equipment.base.name ?? ""}
       subtitle="Zdobyte nagrody"
     >
       <div className="bonus-info-modal">
-        {currentChestModalData.details.receivedItems!.map(
+        {equipment.details.receivedItems!.map(
           (assignedItem: AssignedItemResponseDTO) => (
             <XPCard
               key={assignedItem.details.id}

@@ -2,30 +2,27 @@ import Modal from "@/components/modal/Modal";
 import OpeningChestModalContent from "@/components/equipment/modals/opening-chest/OpeningChestModalContent";
 import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
 import { OpeningChestModalProps } from "@/components/equipment/modals/opening-chest/types";
+import { EquipmentActions } from "@/providers/equipment/reducer/types";
 
 export default function OpeningChestModal({
-  currentOpeningChestModalData,
+  equipment,
+  onClose,
 }: OpeningChestModalProps) {
-  const { setCurrentOpeningChestModalData, setPickedItemId, setPickedItemKey } =
-    useEquipmentContext();
-  const openingChest = currentOpeningChestModalData;
+  const { dispatch } = useEquipmentContext();
 
-  const onClosed = () => {
-    setCurrentOpeningChestModalData(null);
-    setPickedItemId(null);
-    setPickedItemKey(null);
+  const handleClose = () => {
+    dispatch({ type: EquipmentActions.CLEAR_PICKED_ITEM });
+    onClose();
   };
 
   return (
     <Modal
-      isDataPresented={currentOpeningChestModalData !== null}
-      onClosed={onClosed}
-      title={openingChest.base.name ?? ""}
-      subtitle={openingChest.base.behaviorText ?? ""}
+      isDataPresented={true}
+      onClosed={handleClose}
+      title={equipment.base.name ?? ""}
+      subtitle={equipment.base.behaviorText ?? ""}
     >
-      <OpeningChestModalContent
-        currentOpeningChestModalData={currentOpeningChestModalData}
-      />
+      <OpeningChestModalContent equipment={equipment} />
     </Modal>
   );
 }

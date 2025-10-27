@@ -1,7 +1,7 @@
 import useStudentItems from "@/hooks/course/useStudentItems";
 import Loading from "@/components/loading";
-import EquipmentItem from "@/components/equipment/item";
-import { Fragment, JSX } from "react";
+import EquipmentItem from "@/components/equipment/components/item";
+import { JSX } from "react";
 
 const USER_ID = 1;
 
@@ -15,9 +15,9 @@ export default function ItemsSummary(): JSX.Element {
   return (
     <div className="w-full grid grid-cols-3 gap-3">
       {items.map((item) => (
-        <Fragment key={item.base.id}>
+        <div key={item.base.id}>
           <EquipmentItem itemData={item} />
-        </Fragment>
+        </div>
       ))}
     </div>
   );

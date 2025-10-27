@@ -8,8 +8,10 @@ import { useEffect } from "react";
 import { CourseGroupTypes } from "@/services/course-groups/types";
 import { CourseGroupsProvider } from "@/providers/course-groups";
 import CourseGroups from "@/views/course-groups";
+import { EquipmentProvider } from "@/providers/equipment";
+import EquipmentModals from "@/components/equipment/modals";
 
-export default function CourseGroupView() {
+function CourseGroupViewContent() {
   const { setTitle } = useTitle();
   const { courseId } = useUserDetails();
   const { courseGroupId } = useParams();
@@ -32,8 +34,19 @@ export default function CourseGroupView() {
   }, [courseGroupId, courseGroups, isError, setTitle]);
 
   return (
-    <CourseGroupsProvider>
+    <>
       <CourseGroups />
-    </CourseGroupsProvider>
+      <EquipmentModals />
+    </>
+  );
+}
+
+export default function CourseGroupView() {
+  return (
+    <EquipmentProvider>
+      <CourseGroupsProvider>
+        <CourseGroupViewContent />
+      </CourseGroupsProvider>
+    </EquipmentProvider>
   );
 }

@@ -1,7 +1,7 @@
 import { Fragment, JSX } from "react";
 import Loading from "@/components/loading";
 import useStudentChests from "@/hooks/course/useStudentChests";
-import EquipmentChest from "@/components/equipment/chest";
+import EquipmentChest from "@/components/equipment/components/chest";
 
 const USER_ID = 1;
 
