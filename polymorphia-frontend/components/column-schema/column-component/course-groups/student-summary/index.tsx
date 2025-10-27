@@ -12,7 +12,8 @@ import {
   SwapAnimationWrapper,
 } from "@/animations/SwapAnimationWrapper";
 import { AccordionRef } from "@/providers/accordion/types";
-import ImageBadge from "@/components/image-badge/ImageBadge";
+import ItemsSummary from "@/components/column-schema/column-component/course-groups/student-summary/items-summary";
+import ChestSummary from "@/components/column-schema/column-component/course-groups/student-summary/chest-summary";
 
 export default function StudentSummary() {
   const accordionRef = useRef<AccordionRef>(null);
@@ -91,35 +92,7 @@ export default function StudentSummary() {
             {...baseSwapAnimationWrapperProps}
             keyProp="items"
           >
-            <div className="w-full grid grid-cols-3 gap-3">
-              {[1, 2, 3, 4].map((i) => {
-                return (
-                  <div className="relative w-full aspect-square" key={i}>
-                    <Image
-                      src={`${API_STATIC_URL}/images/items/carrot.webp`}
-                      alt="obrazek"
-                      fill
-                      className="object-cover rounded-2xl shadow-lg"
-                      priority
-                      fetchPriority="high"
-                      sizes="(min-width: 1024px) 25vw, 50vw"
-                    />
-                    {i > 0 ? (
-                      <ImageBadge
-                        text={i.toString()}
-                        className="text-2xl w-8 rounded-tl-2xl rounded-br-2xl"
-                      />
-                    ) : (
-                      <div className="equipment-locked-item">
-                        <span>
-                          <p>lock</p>
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+            <ItemsSummary />
           </SwapAnimationWrapper>
         </AccordionSection>
 
@@ -133,20 +106,7 @@ export default function StudentSummary() {
             {...baseSwapAnimationWrapperProps}
             keyProp="chests"
           >
-            <div className="w-full grid grid-cols-3 gap-3">
-              {[1, 2, 3, 4].map((i) => (
-                <div className="relative w-full aspect-square" key={i}>
-                  <Image
-                    src={`${API_STATIC_URL}/images/chests/s1.webp`}
-                    alt="name"
-                    fill
-                    className="object-cover rounded-2xl shadow-lg"
-                    priority
-                    sizes="(min-width: 1024px) 25vw, 50vw"
-                  />
-                </div>
-              ))}
-            </div>
+            <ChestSummary />
           </SwapAnimationWrapper>
         </AccordionSection>
       </Accordion>

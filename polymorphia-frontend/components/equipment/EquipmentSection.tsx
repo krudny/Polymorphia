@@ -7,6 +7,7 @@ import {
 import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
 import EquipmentItem from "@/components/equipment/item";
 import EquipmentChest from "@/components/equipment/chest";
+import { ChestButtons } from "@/components/equipment/chest-buttons";
 
 const gridColsMap: Record<number, string> = {
   1: "grid-cols-1 sm:grid-cols-1",
@@ -16,10 +17,10 @@ const gridColsMap: Record<number, string> = {
 };
 
 const maxWidthMap: Record<number, string> = {
-  1: "max-w-[20rem]",
-  2: "max-w-[40rem]",
-  3: "max-w-[60rem]",
-  4: "max-w-[80rem]",
+  1: "max-w-[15rem]",
+  2: "max-w-[30rem]",
+  3: "max-w-[45rem]",
+  4: "max-w-[60rem]",
 };
 
 export function EquipmentSection({
@@ -59,6 +60,7 @@ export function EquipmentSection({
             return (
               <div key={chestData.base.id}>
                 <EquipmentChest chestData={chestData} />
+                {chestData.details.id && <ChestButtons chestData={chestData} />}
               </div>
             );
           }

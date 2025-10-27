@@ -24,7 +24,7 @@
     @apply material-symbols;
 
     p {
-      @apply text-8xl;
+      @apply text-7xl;
     }
   }
 }
