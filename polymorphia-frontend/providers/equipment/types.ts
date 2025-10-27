@@ -6,15 +6,17 @@ import { Dispatch, SetStateAction } from "react";
 
 export interface EquipmentContextInterface {
   currentItemModalData: EquipmentItemResponseDTO | null;
-  setCurrentItemModalData: (modalData: EquipmentItemResponseDTO | null) => void;
+  setCurrentItemModalData: Dispatch<
+    SetStateAction<EquipmentItemResponseDTO | null>
+  >;
   currentChestModalData: EquipmentChestResponseDTO | null;
-  setCurrentChestModalData: (
-    modalData: EquipmentChestResponseDTO | null
-  ) => void;
+  setCurrentChestModalData: Dispatch<
+    SetStateAction<EquipmentChestResponseDTO | null>
+  >;
   currentOpeningChestModalData: EquipmentChestResponseDTO | null;
-  setCurrentOpeningChestModalData: (
-    modalData: EquipmentChestResponseDTO | null
-  ) => void;
+  setCurrentOpeningChestModalData: Dispatch<
+    SetStateAction<EquipmentChestResponseDTO | null>
+  >;
   pickedItemId: number | null;
   setPickedItemId: Dispatch<SetStateAction<number | null>>;
   pickedItemKey: string | null;

@@ -4,33 +4,32 @@ import Modal from "@/components/modal/Modal";
 import { ItemAssignmentDetailsResponseDTO } from "@/interfaces/api/reward/assigned";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
-import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
+import { ItemModalProps } from "@/components/equipment/modals/item/types";
 
-export default function ItemModal() {
-  const { currentItemModalData, setCurrentItemModalData } =
-    useEquipmentContext();
-  const equipmentItem = currentItemModalData;
-
+export default function ItemModal({
+  currentItemModalData,
+  setCurrentItemModalData,
+}: ItemModalProps) {
   return (
     <Modal
-      isDataPresented={equipmentItem !== null}
+      isDataPresented={currentItemModalData !== null}
       onClosed={() => setCurrentItemModalData(null)}
-      title={equipmentItem?.base.name ?? ""}
-      subtitle={equipmentItem?.base.bonusText ?? ""}
+      title={currentItemModalData.base.name ?? ""}
+      subtitle={currentItemModalData.base.bonusText ?? ""}
     >
       <div className="bonus-info-modal">
-        {equipmentItem?.details.map(
+        {currentItemModalData.details.map(
           (itemAssignmentDetails: ItemAssignmentDetailsResponseDTO) => (
             <XPCard
               key={itemAssignmentDetails.id}
-              title={equipmentItem.base.name}
+              title={currentItemModalData.base.name}
               subtitle={`Zdobyto ${itemAssignmentDetails.receivedDate}`}
               size="xs"
               // TODO: handle undefined xp
               leftComponent={
                 <XPCardImage
-                  imageUrl={equipmentItem.base.imageUrl}
-                  alt={equipmentItem.base.name}
+                  imageUrl={currentItemModalData.base.imageUrl}
+                  alt={currentItemModalData.base.name}
                 />
               }
               rightComponent={

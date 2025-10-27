@@ -15,12 +15,12 @@ import { useEffect, useState } from "react";
 import XPCardImageWithLock from "@/components/xp-card/components/XPCardImageLocked";
 import { useMediaQuery } from "react-responsive";
 import clsx from "clsx";
-import { UseOpeningChestModal } from "@/components/equipment/modals/types";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
+import { OpeningChestModalProps } from "@/components/equipment/modals/opening-chest/types";
 
 export default function OpeningChestModalContent({
   currentOpeningChestModalData,
-}: UseOpeningChestModal) {
+}: OpeningChestModalProps) {
   const { closeModal } = useModalContext();
   const {
     pickedItemId,
@@ -201,7 +201,7 @@ export default function OpeningChestModalContent({
             );
           }
         )}
-        <h1 className={"opening-chest-modal-footer-text"}>
+        <h1 className="opening-chest-modal-footer-text">
           Bonusy są liczone względem obecnej punktacji. Otrzymanie nowej nagrody
           może osłabić działanie wcześniej zdobytych nagród. Całkowite XP jednak
           nigdy się nie zmniejszy.

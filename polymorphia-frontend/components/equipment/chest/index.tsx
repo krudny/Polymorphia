@@ -20,7 +20,7 @@ export default function EquipmentChest({
           priority
           sizes="(min-width: 1024px) 25vw, 50vw"
         />
-        {showBadge && (
+        {showBadge && chestData.details.id && (
           <ImageBadge
             icon={chestData.details.isUsed ? "trophy" : "key"}
             className="equipment-image-badge"

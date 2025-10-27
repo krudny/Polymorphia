@@ -2,11 +2,11 @@
 import "./index.css";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
-import ItemModal from "@/components/equipment/modals/ItemModal";
-import ChestModal from "@/components/equipment/modals/ChestModal";
+import ItemModal from "@/components/equipment/modals/item";
+import ChestModal from "@/components/equipment/modals/chest";
 import Loading from "@/components/loading";
 import EquipmentSectionWrapper from "@/components/equipment/EquipmentSectionWrapper";
-import OpeningChestModal from "@/components/equipment/modals/OpeningChestModal";
+import OpeningChestModal from "@/components/equipment/modals/opening-chest";
 import { EquipmentProvider } from "@/providers/equipment/EquipmentContext";
 import useEquipment from "@/hooks/course/useEquipment";
 import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
@@ -14,7 +14,13 @@ import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
 function EquipmentContent() {
   const { setTitle } = useTitle();
   const { items, chests, isLoading } = useEquipment();
-  const { currentOpeningChestModalData } = useEquipmentContext();
+  const {
+    currentOpeningChestModalData,
+    currentItemModalData,
+    setCurrentItemModalData,
+    currentChestModalData,
+    setCurrentChestModalData,
+  } = useEquipmentContext();
 
   useEffect(() => {
     setTitle("Ekwipunek");
@@ -31,8 +37,18 @@ function EquipmentContent() {
   return (
     <div className="equipment">
       <EquipmentSectionWrapper items={items} chests={chests} />
-      <ItemModal />
-      <ChestModal />
+      {currentItemModalData && (
+        <ItemModal
+          currentItemModalData={currentItemModalData}
+          setCurrentItemModalData={setCurrentItemModalData}
+        />
+      )}
+      {currentChestModalData && (
+        <ChestModal
+          currentChestModalData={currentChestModalData}
+          setCurrentChestModalData={setCurrentChestModalData}
+        />
+      )}
       {currentOpeningChestModalData && (
         <OpeningChestModal
           currentOpeningChestModalData={currentOpeningChestModalData}

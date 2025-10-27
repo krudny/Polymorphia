@@ -4,22 +4,21 @@ import "../index.css";
 import { AssignedItemResponseDTO } from "@/interfaces/api/reward/assigned";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
-import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
+import { ChestModalProps } from "@/components/equipment/modals/chest/types";
 
-export default function ChestModal() {
-  const { currentChestModalData, setCurrentChestModalData } =
-    useEquipmentContext();
-  const equipmentChest = currentChestModalData;
-
+export default function ChestModal({
+  currentChestModalData,
+  setCurrentChestModalData,
+}: ChestModalProps) {
   return (
     <Modal
-      isDataPresented={equipmentChest !== null}
+      isDataPresented={currentChestModalData !== null}
       onClosed={() => setCurrentChestModalData(null)}
-      title={equipmentChest?.base.name ?? ""}
+      title={currentChestModalData.base.name ?? ""}
       subtitle="Zdobyte nagrody"
     >
       <div className="bonus-info-modal">
-        {equipmentChest?.details.receivedItems!.map(
+        {currentChestModalData.details.receivedItems!.map(
           (assignedItem: AssignedItemResponseDTO) => (
             <XPCard
               key={assignedItem.details.id}
