@@ -11,24 +11,23 @@ import {
 import { AccordionRef } from "@/providers/accordion/types";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import "./index.css";
-import useStudentLastGradableEvents from "@/hooks/course/useStudentLastGradableEvents";
+import useStudentLastActivity from "@/hooks/course/useStudentLastActivity";
 import Loading from "@/components/loading";
-import StudentGradableEventDetails from "@/components/column-schema/column-component/course-groups/last-activity/last-activity";
+import LastActivityDetails from "@/components/column-schema/column-component/course-groups/last-activity/details";
 
 const USER_ID = 1;
 
 export default function LastActivity() {
   const accordionRef = useRef<AccordionRef>(null);
-  const { data: studentLastGradableEvents, isLoading } =
-    useStudentLastGradableEvents(USER_ID);
+  const { data: lastActivity, isLoading } = useStudentLastActivity(USER_ID);
   const wrapperRef = useFadeInAnimate(!isLoading);
 
-  if (isLoading || !studentLastGradableEvents) {
+  if (isLoading || !lastActivity) {
     return <Loading />;
   }
 
-  const accordionSections = studentLastGradableEvents.map(
-    (studentLastGradableEvent) => studentLastGradableEvent.id.toString()
+  const accordionSections = lastActivity.map((studentLastGradableEvent) =>
+    studentLastGradableEvent.id.toString()
   );
 
   const topComponent = () => <h1>Aktywność</h1>;
@@ -43,7 +42,7 @@ export default function LastActivity() {
           maxOpen={1}
           shouldAnimateInitialOpen={false}
         >
-          {studentLastGradableEvents.map((studentLastGradableEvent) => (
+          {lastActivity.map((studentLastGradableEvent) => (
             <AccordionSection
               key={studentLastGradableEvent.id}
               id={studentLastGradableEvent.id.toString()}
@@ -54,7 +53,7 @@ export default function LastActivity() {
                 {...baseSwapAnimationWrapperProps}
                 keyProp={studentLastGradableEvent.id}
               >
-                <StudentGradableEventDetails
+                <LastActivityDetails
                   userId={USER_ID}
                   gradableEventId={studentLastGradableEvent.id}
                 />

@@ -10,12 +10,12 @@ export interface CourseGroupsShortResponseDTO {
   name: string;
 }
 
-export interface StudentLastGradableEventsDTO {
+export interface StudentLastActivityDTO {
   id: number;
   gradableEventName: string;
 }
 
-export interface StudentGradableEventDetailsDTO {
+export interface StudentLastActivityDetailsDTO {
   id: number;
   criteriaName: string;
   gainedXp: number;

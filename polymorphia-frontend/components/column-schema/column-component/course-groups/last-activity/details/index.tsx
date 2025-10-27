@@ -1,6 +1,6 @@
-import useStudentGradableEventDetails from "@/hooks/course/useStudentGradableEventDetails";
+import useStudentLastActivityDetails from "@/hooks/course/useStudentLastActivityDetails";
 import Loading from "@/components/loading";
-import { StudentGradableEventDetailsProps } from "@/components/column-schema/column-component/course-groups/last-activity/last-activity/types";
+import { StudentGradableEventDetailsProps } from "@/components/column-schema/column-component/course-groups/last-activity/details/types";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardPointsWithRewards from "@/components/xp-card/components/XPCardPointsWithRewards";
 
@@ -9,10 +9,10 @@ export default function StudentGradableEventDetails({
   gradableEventId,
 }: StudentGradableEventDetailsProps) {
   const {
-    data: studentGradableEventDetails,
+    data: lastActivityDetails,
     isLoading,
     isError,
-  } = useStudentGradableEventDetails({
+  } = useStudentLastActivityDetails({
     userId,
     gradableEventId,
   });
@@ -21,13 +21,13 @@ export default function StudentGradableEventDetails({
     return <Loading />;
   }
 
-  if (isError || !studentGradableEventDetails) {
+  if (isError || !lastActivityDetails) {
     return <div>Błąd podczas ładowania szczegółów</div>;
   }
 
   return (
     <div className="">
-      {studentGradableEventDetails.map((detail) => (
+      {lastActivityDetails.map((detail) => (
         <div className="my-2" key={detail.id}>
           <XPCard
             title={detail.criteriaName}

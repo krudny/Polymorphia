@@ -5,8 +5,8 @@ import {
   CourseGroupTypes,
 } from "@/services/course-groups/types";
 import {
-  StudentGradableEventDetailsDTO,
-  StudentLastGradableEventsDTO,
+  StudentLastActivityDetailsDTO,
+  StudentLastActivityDTO,
 } from "@/interfaces/api/course-groups";
 import {
   EquipmentChestResponseDTO,
@@ -41,9 +41,7 @@ const CourseGroupsService = {
   },
 
   // should be sorted by grade date
-  getStudentLastGradableEvents: (
-    userId: number
-  ): StudentLastGradableEventsDTO[] => {
+  getStudentLastActivity: (userId: number): StudentLastActivityDTO[] => {
     return [
       {
         id: 1,
@@ -76,10 +74,10 @@ const CourseGroupsService = {
     ];
   },
 
-  getStudentGradableEventDetails: (
+  getStudentLastActivityDetails: (
     userId: number,
     gradableEventId: number
-  ): StudentGradableEventDetailsDTO[] => {
+  ): StudentLastActivityDetailsDTO[] => {
     return [
       {
         id: 1,
