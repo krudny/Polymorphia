@@ -3,6 +3,7 @@ import Loading from "@/components/loading";
 import { StudentGradableEventDetailsProps } from "@/components/column-schema/column-component/course-groups/last-activity/details/types";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardPointsWithRewards from "@/components/xp-card/components/XPCardPointsWithRewards";
+import useCourseGroupsContext from "@/hooks/contexts/useCourseGroupsContext";
 
 export default function StudentGradableEventDetails({
   userId,
@@ -17,6 +18,8 @@ export default function StudentGradableEventDetails({
     gradableEventId,
   });
 
+  const { setGradableEventId } = useCourseGroupsContext();
+
   if (isLoading) {
     return <Loading />;
   }
@@ -28,7 +31,11 @@ export default function StudentGradableEventDetails({
   return (
     <div className="">
       {lastActivityDetails.map((detail) => (
-        <div className="my-2" key={detail.id}>
+        <div
+          className="my-2"
+          key={detail.id}
+          onClick={() => setGradableEventId(gradableEventId)}
+        >
           <XPCard
             title={detail.criteriaName}
             subtitle={detail.gradeDate}

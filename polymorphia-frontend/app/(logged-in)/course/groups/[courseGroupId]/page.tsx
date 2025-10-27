@@ -10,6 +10,8 @@ import { CourseGroupsProvider } from "@/providers/course-groups";
 import CourseGroups from "@/views/course-groups";
 import { EquipmentProvider } from "@/providers/equipment";
 import EquipmentModals from "@/components/equipment/modals";
+import GradeModal from "@/components/speed-dial/modals/grade";
+import useCourseGroupsContext from "@/hooks/contexts/useCourseGroupsContext";
 
 function CourseGroupViewContent() {
   const { setTitle } = useTitle();
@@ -19,6 +21,7 @@ function CourseGroupViewContent() {
     courseId,
     type: CourseGroupTypes.INDIVIDUAL_FULL,
   });
+  const { gradableEventId, setGradableEventId } = useCourseGroupsContext();
 
   useEffect(() => {
     if (courseGroups) {
@@ -37,6 +40,12 @@ function CourseGroupViewContent() {
     <>
       <CourseGroups />
       <EquipmentModals />
+      {gradableEventId && (
+        <GradeModal
+          gradableEventIdProp={gradableEventId}
+          onClosedAction={() => setGradableEventId(null)}
+        />
+      )}
     </>
   );
 }

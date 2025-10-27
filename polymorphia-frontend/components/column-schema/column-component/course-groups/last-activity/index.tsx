@@ -19,15 +19,15 @@ const USER_ID = 1;
 
 export default function LastActivity() {
   const accordionRef = useRef<AccordionRef>(null);
-  const { data: lastActivity, isLoading } = useStudentLastActivity(USER_ID);
+  const { data: lastActivities, isLoading } = useStudentLastActivity(USER_ID);
   const wrapperRef = useFadeInAnimate(!isLoading);
 
-  if (isLoading || !lastActivity) {
+  if (isLoading || !lastActivities) {
     return <Loading />;
   }
 
-  const accordionSections = lastActivity.map((studentLastGradableEvent) =>
-    studentLastGradableEvent.id.toString()
+  const accordionSections = lastActivities.map((lastActivity) =>
+    lastActivity.id.toString()
   );
 
   const topComponent = () => <h1>Aktywność</h1>;
@@ -42,20 +42,20 @@ export default function LastActivity() {
           maxOpen={1}
           shouldAnimateInitialOpen={false}
         >
-          {lastActivity.map((studentLastGradableEvent) => (
+          {lastActivities.map((lastActivity) => (
             <AccordionSection
-              key={studentLastGradableEvent.id}
-              id={studentLastGradableEvent.id.toString()}
-              title={studentLastGradableEvent.gradableEventName}
+              key={lastActivity.id}
+              id={lastActivity.id.toString()}
+              title={lastActivity.gradableEventName}
               headerClassName="equipment-accordion-header"
             >
               <SwapAnimationWrapper
                 {...baseSwapAnimationWrapperProps}
-                keyProp={studentLastGradableEvent.id}
+                keyProp={lastActivity.id}
               >
                 <LastActivityDetails
                   userId={USER_ID}
-                  gradableEventId={studentLastGradableEvent.id}
+                  gradableEventId={lastActivity.id}
                 />
               </SwapAnimationWrapper>
             </AccordionSection>

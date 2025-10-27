@@ -14,6 +14,7 @@ export const CourseGroupsContext = createContext<
 
 export const CourseGroupsProvider = ({ children }: { children: ReactNode }) => {
   const [search, setSearch] = useState("");
+  const [gradableEventId, setGradableEventId] = useState<number | null>(null);
   const [debouncedSearch] = useDebounce(search, 400);
   const [areFiltersOpen, setAreFiltersOpen] = useState(false);
 
@@ -30,6 +31,8 @@ export const CourseGroupsProvider = ({ children }: { children: ReactNode }) => {
         areFiltersOpen,
         setAreFiltersOpen,
         filters,
+        gradableEventId,
+        setGradableEventId,
       }}
     >
       {children}
