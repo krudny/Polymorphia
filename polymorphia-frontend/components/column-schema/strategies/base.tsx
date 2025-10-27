@@ -36,6 +36,7 @@ export abstract class BaseGradingStrategy {
   protected createLastActivityComponent(): ColumnComponent {
     return {
       component: <LastActivity />,
+      forceFullHeight: true,
     };
   }
 

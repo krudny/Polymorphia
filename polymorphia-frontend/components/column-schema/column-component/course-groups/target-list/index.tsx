@@ -48,9 +48,9 @@ export default function TargetListCourseGroups() {
                       <XPCard
                         key={index}
                         title={student.fullName}
-                        color="green"
+                        color="gray"
                         subtitle={student.group}
-                        size={"xs"}
+                        size="xs"
                         leftComponent={
                           <XPCardImage
                             imageUrl={student.imageUrl}
@@ -60,7 +60,7 @@ export default function TargetListCourseGroups() {
                         rightComponent={
                           <XPCardPoints
                             points={student.gainedXp}
-                            color="green"
+                            color="gray"
                             isSumLabelVisible={true}
                             isXPLabelVisible={!!student.gainedXp}
                           />

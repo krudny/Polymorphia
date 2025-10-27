@@ -5,7 +5,7 @@ import XPCard from "@/components/xp-card/XPCard";
 import XPCardPointsWithRewards from "@/components/xp-card/components/XPCardPointsWithRewards";
 import useCourseGroupsContext from "@/hooks/contexts/useCourseGroupsContext";
 
-export default function StudentGradableEventDetails({
+export default function LastActivityDetails({
   userId,
   gradableEventId,
 }: StudentGradableEventDetailsProps) {
@@ -32,7 +32,7 @@ export default function StudentGradableEventDetails({
     <div className="">
       {lastActivityDetails.map((detail) => (
         <div
-          className="my-2"
+          className="my-4 first:mt-0"
           key={detail.id}
           onClick={() => setGradableEventId(gradableEventId)}
         >
@@ -46,7 +46,7 @@ export default function StudentGradableEventDetails({
                 points={detail.gainedXp.toFixed(1)}
                 isSumLabelVisible={true}
                 hasChest={detail.hasReward}
-                color="gray"
+                color="green"
               />
             }
           />

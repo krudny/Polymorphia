@@ -2,12 +2,6 @@
 
 import ColumnComponent from "@/components/column-schema/column-component";
 import { Fragment, useRef } from "react";
-import { Accordion } from "@/components/accordion/Accordion";
-import AccordionSection from "@/components/accordion/AccordionSection";
-import {
-  baseSwapAnimationWrapperProps,
-  SwapAnimationWrapper,
-} from "@/animations/SwapAnimationWrapper";
 import { AccordionRef } from "@/providers/accordion/types";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import "./index.css";
@@ -34,33 +28,12 @@ export default function LastActivity() {
   const mainComponent = () => (
     <Fragment>
       <div ref={wrapperRef} className="opacity-0">
-        <Accordion
-          ref={accordionRef}
-          className="grade-accordion-override"
-          sectionIds={new Set(accordionSections)}
-          initiallyOpenedSectionIds={new Set(accordionSections[0])}
-          maxOpen={1}
-          shouldAnimateInitialOpen={false}
-        >
-          {lastActivities.map((lastActivity) => (
-            <AccordionSection
-              key={lastActivity.id}
-              id={lastActivity.id.toString()}
-              title={lastActivity.gradableEventName}
-              headerClassName="equipment-accordion-header"
-            >
-              <SwapAnimationWrapper
-                {...baseSwapAnimationWrapperProps}
-                keyProp={lastActivity.id}
-              >
-                <LastActivityDetails
-                  userId={USER_ID}
-                  gradableEventId={lastActivity.id}
-                />
-              </SwapAnimationWrapper>
-            </AccordionSection>
-          ))}
-        </Accordion>
+        {lastActivities.map((lastActivity) => (
+          <LastActivityDetails
+            userId={USER_ID}
+            gradableEventId={lastActivity.id}
+          />
+        ))}
       </div>
     </Fragment>
   );

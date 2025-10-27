@@ -81,17 +81,31 @@ const CourseGroupsService = {
     return [
       {
         id: 1,
-        criteriaName: "Wykonanie zadania",
+        criteriaName: "Kartkówka 4",
         gainedXp: 4.0,
         hasReward: false,
-        gradeDate: "22.10.2025",
+        gradeDate: "Instrukcje sterujące",
       },
       {
         id: 2,
-        criteriaName: "Zadanie dodatkowe",
+        criteriaName: "Laboratorium 3",
         gainedXp: 2.7,
         hasReward: true,
-        gradeDate: "23.10.2025",
+        gradeDate: "Wątki w Kotlinie",
+      },
+      {
+        id: 3,
+        criteriaName: "Kartkówka 3",
+        gainedXp: 1.0,
+        hasReward: false,
+        gradeDate: "Wątki w Kotlinie",
+      },
+      {
+        id: 4,
+        criteriaName: "Laboratorium 2",
+        gainedXp: 2.0,
+        hasReward: false,
+        gradeDate: "Instrukcje warunkowe",
       },
     ];
   },
