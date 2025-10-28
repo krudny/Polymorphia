@@ -29,7 +29,7 @@ export default function LastActivityDetails({
   }
 
   return (
-    <div className="">
+    <div key={gradableEventId}>
       {lastActivityDetails.map((detail) => (
         <div
           className="my-4 first:mt-0"
@@ -39,14 +39,14 @@ export default function LastActivityDetails({
           <XPCard
             title={detail.criteriaName}
             subtitle={detail.gradeDate}
-            color="green"
+            color="gray"
             size="xs"
             rightComponent={
               <XPCardPointsWithRewards
                 points={detail.gainedXp.toFixed(1)}
                 isSumLabelVisible={true}
                 hasChest={detail.hasReward}
-                color="green"
+                color="gray"
               />
             }
           />

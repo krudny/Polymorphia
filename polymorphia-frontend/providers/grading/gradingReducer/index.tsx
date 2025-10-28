@@ -62,7 +62,7 @@ export const GradingReducer = (
           return current.groupId === clickedTarget.groupId;
         }
         if (current.type === TargetTypes.STUDENT) {
-          return !!clickedTarget.members.some(
+          return clickedTarget.members.some(
             (member) => member.id === current.id
           );
         }
