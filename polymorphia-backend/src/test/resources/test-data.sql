@@ -224,6 +224,14 @@ VALUES (1, 1, 'uzyskane punkty', 20.0),
        (5, 3, 'uzyskane punkty', 8.0),
        (6, 3, 'uzyskane punkty2', 6.0);
 
+-- Submission Requirements
+INSERT INTO public.submission_requirements (id, gradable_event_id, name, is_mandatory, order_index)
+VALUES (1, 2, 'Wykonanie zadania', true, 1),
+       (2, 4, 'Wykonanie zadania 1', true, 1),
+       (3, 4, 'Wykonanie zadania 2', true, 2),
+       (4, 4, 'Zadanie dodatkowe 1', false, 3),
+       (5, 4, 'Zadanie dodatkowe 2', false, 4);
+
 -- Grades
 INSERT INTO public.grades (id, gradable_event_id, animal_id, created_date, modified_date, comment)
 VALUES (1, 1, 2, NOW(), NOW(), null),
@@ -315,4 +323,7 @@ SELECT setval('rewards_id_seq', COALESCE(MAX(id), 0) + 1, false)
 FROM rewards;
 SELECT setval('users_id_seq', COALESCE(MAX(id), 0) + 1, false)
 FROM users;
-
+SELECT setval('submission_requirements_id_seq', COALESCE(MAX(id), 0) + 1, false)
+FROM submission_requirements;
+SELECT setval('submissions_id_seq', COALESCE(MAX(id), 0) + 1, false)
+FROM submissions;
