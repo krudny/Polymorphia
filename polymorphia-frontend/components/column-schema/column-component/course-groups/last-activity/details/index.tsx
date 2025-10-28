@@ -32,7 +32,7 @@ export default function LastActivityDetails({
     <div key={gradableEventId}>
       {lastActivityDetails.map((detail) => (
         <div
-          className="my-4 first:mt-0"
+          className="my-4 first:mt-0 last:mb-0"
           key={detail.id}
           onClick={() => setGradableEventId(gradableEventId)}
         >
