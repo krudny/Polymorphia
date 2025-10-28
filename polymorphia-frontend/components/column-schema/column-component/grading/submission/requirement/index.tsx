@@ -11,12 +11,16 @@ import {
   SwapAnimationWrapper,
 } from "@/animations/SwapAnimationWrapper";
 import { getKeyForSelectedTarget } from "@/providers/grading/utils/getKeyForSelectedTarget";
+import useTargetContext from "@/hooks/contexts/useTargetContext";
 
 export default function SubmissionRequirement({
   requirements,
 }: SubmissionsRequirementProps) {
   const { state, isSpecificDataLoading, submitSubmissions } =
     useGradingContext();
+  const {
+    state: { selectedTarget },
+  } = useTargetContext();
   const wrapperRef = useFadeInAnimate(!!requirements);
   const isXL = useMediaQuery({ minWidth: "1400px" });
   const accordionSections = [...requirements.map(({ id }) => String(id))];
@@ -78,8 +82,8 @@ export default function SubmissionRequirement({
                 {...baseSwapAnimationWrapperProps}
                 keyProp={
                   detail && !isSpecificDataLoading
-                    ? getKeyForSelectedTarget(state)
-                    : "loading" + getKeyForSelectedTarget(state)
+                    ? getKeyForSelectedTarget(selectedTarget)
+                    : "loading" + getKeyForSelectedTarget(selectedTarget)
                 }
               >
                 {detail && !isSpecificDataLoading ? (

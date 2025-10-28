@@ -1,30 +1,26 @@
-import { CriteriaDetailsRequestDTO } from "@/interfaces/api/grade/criteria";
-import { GroupTargetTypes, TargetTypes } from "@/interfaces/api/grade/target";
 import {
-  GradingReducerActions,
-  GradingReducerActionType,
-  GradingReducerState,
-} from "@/providers/grading/gradingReducer/types";
+  TargetReducerActions,
+  TargetReducerActionType,
+  TargetReducerState,
+} from "@/providers/target/reducer/types";
+import { GroupTargetTypes, TargetTypes } from "@/interfaces/api/target";
 
-export const initialState: GradingReducerState = {
+export const initialState: TargetReducerState = {
   selectedTarget: null,
-  criteria: {},
-  comment: "",
-  submissionDetails: {},
 };
 
-export const GradingReducer = (
-  state: GradingReducerState,
-  action: GradingReducerActionType
-): GradingReducerState => {
+export const TargetReducer = (
+  state: TargetReducerState,
+  action: TargetReducerActionType
+): TargetReducerState => {
   switch (action.type) {
-    case GradingReducerActions.SET_TARGET:
+    case TargetReducerActions.SET_TARGET:
       return {
         ...state,
         selectedTarget: action.payload,
       };
 
-    case GradingReducerActions.HANDLE_STUDENT_SELECTION: {
+    case TargetReducerActions.HANDLE_STUDENT_SELECTION: {
       const { target: clickedTarget, member: clickedMember } = action.payload;
       const current = state.selectedTarget;
 
@@ -56,7 +52,7 @@ export const GradingReducer = (
         };
       }
 
-      // determine if the current selection belongs to the clicked group.
+      // determine if the current selection belongs to the clicked group
       const currentBelongsToClickedGroup = (() => {
         if (current.type === TargetTypes.STUDENT_GROUP) {
           return current.groupId === clickedTarget.groupId;
@@ -116,69 +112,6 @@ export const GradingReducer = (
 
       return state;
     }
-
-    case GradingReducerActions.UPDATE_COMMENT:
-      return {
-        ...state,
-        comment: action.payload.comment,
-      };
-
-    case GradingReducerActions.SET_GRADE:
-      if (!action.payload.grade.isGraded) {
-        return {
-          ...state,
-          comment: "",
-          criteria: {},
-        };
-      }
-
-      const criteriaMap = action.payload.grade.criteria.reduce(
-        (acc, criterion) => {
-          acc[criterion.id] = {
-            gainedXp: criterion.gainedXp,
-            assignedRewards: criterion.assignedRewards,
-          };
-          return acc;
-        },
-        {} as Record<number, CriteriaDetailsRequestDTO>
-      );
-
-      return {
-        ...state,
-        comment: action.payload.grade.comment,
-        criteria: criteriaMap,
-      };
-
-    case GradingReducerActions.SET_SUBMISSION_DETAILS:
-      return {
-        ...state,
-        submissionDetails: action.payload.submissionDetails,
-      };
-
-    case GradingReducerActions.UPDATE_GRADE:
-      return {
-        ...state,
-        criteria: action.payload.criteria,
-        comment: action.payload.comment,
-      };
-
-    case GradingReducerActions.ADD_XP_TO_CRITERION:
-      return {
-        ...state,
-        criteria: {
-          ...state.criteria,
-          [action.payload.criterionId]: {
-            ...state.criteria[action.payload.criterionId],
-            gainedXp: action.payload.xp.toString(),
-          },
-        },
-      };
-    case GradingReducerActions.RESET_GRADE:
-      return {
-        ...state,
-        comment: "",
-        criteria: {},
-      };
 
     default:
       return state;

@@ -16,9 +16,13 @@ import {
   baseSwapAnimationWrapperProps,
   SwapAnimationWrapper,
 } from "@/animations/SwapAnimationWrapper";
+import useTargetContext from "@/hooks/contexts/useTargetContext";
 
 export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
   const { state, isSpecificDataLoading, submitGrade } = useGradingContext();
+  const {
+    state: { selectedTarget },
+  } = useTargetContext();
   const accordionRef = useRef<AccordionRef>(null);
   const wrapperRef = useFadeInAnimate(!!criteria);
   const isMd = useMediaQuery({ minWidth: "768px" });
@@ -69,13 +73,13 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
                   {...baseSwapAnimationWrapperProps}
                   keyProp={
                     criterionGrade && !isSpecificDataLoading
-                      ? getKeyForSelectedTarget(state)
-                      : "loading" + getKeyForSelectedTarget(state)
+                      ? getKeyForSelectedTarget(selectedTarget)
+                      : "loading" + getKeyForSelectedTarget(selectedTarget)
                   }
                 >
                   {criterionGrade && !isSpecificDataLoading ? (
                     <Criterion
-                      key={getKeyForSelectedTarget(state)}
+                      key={getKeyForSelectedTarget(selectedTarget)}
                       criterion={criterion}
                       criterionGrade={criterionGrade}
                     />
@@ -97,8 +101,8 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
               {...baseSwapAnimationWrapperProps}
               keyProp={
                 !isSpecificDataLoading
-                  ? getKeyForSelectedTarget(state)
-                  : "loading" + getKeyForSelectedTarget(state)
+                  ? getKeyForSelectedTarget(selectedTarget)
+                  : "loading" + getKeyForSelectedTarget(selectedTarget)
               }
             >
               {!isSpecificDataLoading ? (

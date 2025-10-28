@@ -1,21 +1,23 @@
+import { useEventParams } from "@/hooks/general/useEventParams";
+import { UseTargets, UseTargetsParams } from "@/hooks/course/useTargets/types";
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/services/event-section";
-import { useEventParams } from "@/hooks/general/useEventParams";
-import { UseGradingTargets } from "@/hooks/course/useGradingTargets/types";
 import { EventTypes } from "@/interfaces/general";
 import { TargetTypes } from "@/interfaces/api/target";
 
-export default function useGradingTargets(
-  debouncedSearch: string,
-  sortBy: string[],
-  sortOrder: string[],
-  groups: string[],
-  gradeStatus: string[]
-): UseGradingTargets {
+export default function useTargets(params: UseTargetsParams = {}): UseTargets {
   const { eventType, gradableEventId } = useEventParams();
+  const {
+    search = "",
+    sortBy = [],
+    sortOrder = [],
+    groups = [],
+    gradeStatus = [],
+  } = params;
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["gradingTargets", debouncedSearch],
+    queryKey: ["targets", search, sortBy, sortOrder, groups, gradeStatus],
+    // TODO: really poor logic, but works
     queryFn: () =>
       EventSectionService.getRandomTargets(
         eventType === EventTypes.PROJECT

@@ -1,16 +1,16 @@
 import Grade from "@/components/column-schema/column-component/grading/grade";
 import Submissions from "@/components/column-schema/column-component/grading/submission";
 import { ProjectVariant } from "@/components/column-schema/column-component/grading/project-variant";
-import TargetList from "@/components/column-schema/column-component/grading/target-list";
+import TargetListGradingWrapper from "@/components/column-schema/column-component/grading/target-list";
 import { ColumnComponent } from "@/components/column-schema/types";
 import StudentSummary from "@/components/column-schema/column-component/course-groups/student-summary";
 import LastActivity from "@/components/column-schema/column-component/course-groups/last-activity";
-import TargetListCourseGroups from "@/components/column-schema/column-component/course-groups/target-list";
+import TargetListCourseGroupsWrapper from "@/components/column-schema/column-component/course-groups/target-list";
 
 export abstract class BaseGradingStrategy {
   protected createTargetListComponent(): ColumnComponent {
     return {
-      component: <TargetList />,
+      component: <TargetListGradingWrapper />,
       forceFullHeight: true,
     };
   }
@@ -48,7 +48,7 @@ export abstract class BaseGradingStrategy {
 
   protected createTargetListCourseGroupsComponent(): ColumnComponent {
     return {
-      component: <TargetListCourseGroups />,
+      component: <TargetListCourseGroupsWrapper />,
       forceFullHeight: true,
     };
   }

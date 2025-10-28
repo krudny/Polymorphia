@@ -9,6 +9,7 @@ import { getSpeedDialKey } from "@/components/speed-dial/util";
 import SpeedDial from "@/components/speed-dial/SpeedDial";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import ColumnSchema from "@/components/column-schema";
+import useTargetContext from "@/hooks/contexts/useTargetContext";
 
 export default function Grading() {
   const queryClient = useQueryClient();
@@ -16,13 +17,9 @@ export default function Grading() {
   const isXL = useMediaQuery({ minWidth: "1280px" });
   const isMd = useMediaQuery({ minWidth: "768px" });
   const components = useGradingStrategy(eventType);
-  const {
-    filters,
-    areFiltersOpen,
-    setAreFiltersOpen,
-    isFiltersLoading,
-    isFiltersError,
-  } = useGradingContext();
+  const { filters, isFiltersLoading, isFiltersError } = useGradingContext();
+
+  const { areFiltersOpen, setAreFiltersOpen } = useTargetContext();
 
   const handleApplyFilters = () => {
     queryClient.invalidateQueries({

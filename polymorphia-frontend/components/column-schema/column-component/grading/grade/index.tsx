@@ -4,9 +4,11 @@ import Loading from "@/components/loading";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import GradeCriteria from "@/components/column-schema/column-component/grading/grade/criteria";
 import ColumnComponent from "@/components/column-schema/column-component";
+import useTargetContext from "@/hooks/contexts/useTargetContext";
 
 export default function Grade() {
-  const { state, criteria, isGeneralDataLoading } = useGradingContext();
+  const { criteria, isGeneralDataLoading } = useGradingContext();
+  const { state: targetState } = useTargetContext();
 
   const topComponent = () => <h1>Ocena</h1>;
   const loadingComponent = (
@@ -16,7 +18,7 @@ export default function Grade() {
   );
 
   const mainComponent =
-    !criteria || isGeneralDataLoading || !state.selectedTarget
+    !criteria || isGeneralDataLoading || !targetState.selectedTarget
       ? () => loadingComponent
       : () => <GradeCriteria criteria={criteria} />;
 

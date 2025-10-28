@@ -22,9 +22,9 @@ export default function LastActivity() {
   const mainComponent = () => (
     <Fragment>
       <div ref={wrapperRef} className="opacity-0">
-        {lastActivities.map((lastActivity) => (
+        {lastActivities.map((lastActivity, index) => (
           <LastActivityDetails
-            userId={USER_ID}
+            userId={USER_ID + index}
             gradableEventId={lastActivity.id}
           />
         ))}

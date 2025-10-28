@@ -1,10 +1,9 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch } from "react";
 import { useFilters } from "@/hooks/course/useFilters";
 import {
   GradingReducerActionType,
   GradingReducerState,
-} from "@/providers/grading/gradingReducer/types";
-import { TargetResponseDTO } from "@/interfaces/api/grade/target";
+} from "@/providers/grading/reducer/types";
 import {
   SubmissionDetailsResponseDTO,
   SubmissionRequirementResponseDTO,
@@ -12,14 +11,9 @@ import {
 import { CriterionResponseDTO } from "@/interfaces/api/grade/criteria";
 
 export interface GradingContextInterface {
-  areFiltersOpen: boolean;
-  setAreFiltersOpen: Dispatch<SetStateAction<boolean>>;
   isFiltersLoading: boolean;
   isFiltersError: boolean;
   filters: ReturnType<typeof useFilters<GradingFilterId>>;
-  search: string;
-  setSearch: Dispatch<SetStateAction<string>>;
-  targets: TargetResponseDTO[] | undefined;
   criteria: CriterionResponseDTO[] | undefined;
   submissionRequirements: SubmissionRequirementResponseDTO[] | undefined;
   isGeneralDataLoading: boolean;

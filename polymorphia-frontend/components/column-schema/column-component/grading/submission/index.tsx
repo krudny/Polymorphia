@@ -2,10 +2,11 @@ import useGradingContext from "@/hooks/contexts/useGradingContext";
 import Loading from "@/components/loading";
 import SubmissionRequirement from "@/components/column-schema/column-component/grading/submission/requirement";
 import ColumnComponent from "@/components/column-schema/column-component";
+import useTargetContext from "@/hooks/contexts/useTargetContext";
 
 export default function Submissions() {
-  const { state, submissionRequirements, isGeneralDataLoading } =
-    useGradingContext();
+  const { submissionRequirements, isGeneralDataLoading } = useGradingContext();
+  const { state: targetState } = useTargetContext();
 
   const topComponent = () => <h1>Oddane zadania</h1>;
   const loadingComponent = (
@@ -15,7 +16,9 @@ export default function Submissions() {
   );
 
   const mainComponent =
-    !submissionRequirements || isGeneralDataLoading || !state.selectedTarget
+    !submissionRequirements ||
+    isGeneralDataLoading ||
+    !targetState.selectedTarget
       ? () => loadingComponent
       : () => <SubmissionRequirement requirements={submissionRequirements} />;
 

@@ -2,7 +2,7 @@ import { ChangeEvent } from "react";
 import { GradingInputProps } from "@/components/column-schema/column-component/grading/grade/types";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import "./index.css";
-import { GradingReducerActions } from "@/providers/grading/gradingReducer/types";
+import { GradingReducerActions } from "@/providers/grading/reducer/types";
 
 export default function GradingInput({ criterion }: GradingInputProps) {
   const { state, dispatch } = useGradingContext();

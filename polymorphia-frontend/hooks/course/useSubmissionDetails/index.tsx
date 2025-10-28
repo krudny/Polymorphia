@@ -1,4 +1,4 @@
-import { TargetRequestDTO, TargetTypes } from "@/interfaces/api/grade/target";
+import { TargetRequestDTO, TargetTypes } from "@/interfaces/api/target";
 import UseSubmissionDetails from "@/hooks/course/useSubmissionDetails/types";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import { useQuery } from "@tanstack/react-query";

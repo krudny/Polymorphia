@@ -12,6 +12,7 @@ import { EquipmentProvider } from "@/providers/equipment";
 import EquipmentModals from "@/components/equipment/modals";
 import GradeModal from "@/components/speed-dial/modals/grade";
 import useCourseGroupsContext from "@/hooks/contexts/useCourseGroupsContext";
+import { TargetProvider } from "@/providers/target";
 
 function CourseGroupViewContent() {
   const { setTitle } = useTitle();
@@ -52,10 +53,12 @@ function CourseGroupViewContent() {
 
 export default function CourseGroupView() {
   return (
-    <EquipmentProvider>
-      <CourseGroupsProvider>
-        <CourseGroupViewContent />
-      </CourseGroupsProvider>
-    </EquipmentProvider>
+    <TargetProvider>
+      <EquipmentProvider>
+        <CourseGroupsProvider>
+          <CourseGroupViewContent />
+        </CourseGroupsProvider>
+      </EquipmentProvider>
+    </TargetProvider>
   );
 }

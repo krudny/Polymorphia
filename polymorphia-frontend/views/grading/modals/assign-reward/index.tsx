@@ -14,7 +14,7 @@ import { useState } from "react";
 import {
   GradingReducerActions,
   GradingReducerState,
-} from "@/providers/grading/gradingReducer/types";
+} from "@/providers/grading/reducer/types";
 import useModalContext from "@/hooks/contexts/useModalContext";
 
 function AssignRewardModalContent({

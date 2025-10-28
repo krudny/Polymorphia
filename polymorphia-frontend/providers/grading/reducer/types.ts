@@ -1,21 +1,14 @@
-import {
-  StudentTargetData,
-  TargetResponseDTO,
-} from "@/interfaces/api/grade/target";
-import { ShortGradeResponseDTO } from "@/interfaces/api/grade/grade";
 import { CriteriaDetailsRequestDTO } from "@/interfaces/api/grade/criteria";
 import { SubmissionDetailsResponseDTO } from "@/interfaces/api/grade/submission";
+import { ShortGradeResponseDTO } from "@/interfaces/api/grade/grade";
 
 export interface GradingReducerState {
-  selectedTarget: TargetResponseDTO | null;
   criteria: Record<number, CriteriaDetailsRequestDTO>;
   comment: string;
   submissionDetails: SubmissionDetailsResponseDTO;
 }
 
 export const GradingReducerActions = {
-  SET_TARGET: "set_target",
-  HANDLE_STUDENT_SELECTION: "handle_student_selection",
   SET_GRADE: "set_grade",
   SET_SUBMISSION_DETAILS: "set_submission_details",
   UPDATE_COMMENT: "update_comment",
@@ -25,17 +18,6 @@ export const GradingReducerActions = {
 } as const;
 
 export type GradingReducerActionType =
-  | {
-      type: typeof GradingReducerActions.SET_TARGET;
-      payload: TargetResponseDTO | null;
-    }
-  | {
-      type: typeof GradingReducerActions.HANDLE_STUDENT_SELECTION;
-      payload: {
-        target: TargetResponseDTO;
-        member: StudentTargetData;
-      };
-    }
   | {
       type: typeof GradingReducerActions.SET_GRADE;
       payload: { grade: ShortGradeResponseDTO };
