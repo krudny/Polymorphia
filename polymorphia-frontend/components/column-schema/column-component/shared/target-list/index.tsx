@@ -4,63 +4,16 @@ import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import "./index.css";
 import { Fragment } from "react";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
-import {
-  StudentTargetData,
-  TargetResponseDTO,
-  TargetTypes,
-} from "@/interfaces/api/target";
-import areTargetsEqual from "@/providers/target/utils/are-targets-equal";
+import { TargetTypes } from "@/interfaces/api/target";
 import TargetListTopBar from "@/components/column-schema/column-component/shared/target-list/top-bar";
 import Loading from "@/components/loading";
 import ColumnComponent from "@/components/column-schema/column-component";
+import { isTargetSelected } from "@/providers/target/utils/is-selected";
 
 export default function TargetList() {
-  const {
-    state,
-    search,
-    setSearch,
-    setAreFiltersOpen,
-    targets,
-    isTargetsLoading,
-    onTargetSelect,
-  } = useTargetContext();
+  const { targets, isTargetsLoading, onTargetSelect } = useTargetContext();
 
-  const { selectedTarget } = state;
-
-  const isTargetSelected = (
-    target: TargetResponseDTO,
-    student: StudentTargetData
-  ): boolean => {
-    if (!selectedTarget) {
-      return false;
-    }
-
-    const isTargetMatchingSelectedTarget = areTargetsEqual(
-      selectedTarget,
-      target
-    );
-
-    const isStudentSelectedFromGroup =
-      selectedTarget?.type === TargetTypes.STUDENT &&
-      selectedTarget.id === student.id;
-
-    return isTargetMatchingSelectedTarget || isStudentSelectedFromGroup;
-  };
-
-  const getCardColor = (
-    isSelected: boolean,
-    gainedXp?: string
-  ): "green" | "sky" | "gray" => {
-    return isSelected ? (gainedXp ? "green" : "sky") : "gray";
-  };
-
-  const topComponent = () => (
-    <TargetListTopBar
-      search={search}
-      setSearch={setSearch}
-      setAreFiltersOpen={setAreFiltersOpen}
-    />
-  );
+  const topComponent = () => <TargetListTopBar />;
 
   const mainComponent =
     isTargetsLoading || !targets
@@ -79,7 +32,11 @@ export default function TargetList() {
                     : target.members
                   ).map((student, studentIndex) => {
                     const isSelected = isTargetSelected(target, student);
-                    const color = getCardColor(isSelected, student.gainedXp);
+                    const color = isSelected
+                      ? student.gainedXp
+                        ? "green"
+                        : "sky"
+                      : "gray";
 
                     const handleSelection = () => {
                       onTargetSelect(target, student);

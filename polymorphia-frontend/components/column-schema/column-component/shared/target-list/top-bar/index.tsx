@@ -2,15 +2,12 @@ import { ReactNode } from "react";
 import Search from "@/components/search";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { useMediaQuery } from "react-responsive";
-import { TargetListTopBarProps } from "@/components/column-schema/column-component/shared/target-list/top-bar/types";
 import "./index.css";
+import useTargetContext from "@/hooks/contexts/useTargetContext";
 
-export default function TargetListTopBar({
-  search,
-  setSearch,
-  setAreFiltersOpen,
-}: TargetListTopBarProps): ReactNode {
+export default function TargetListTopBar(): ReactNode {
   const isMd = useMediaQuery({ minWidth: "786px" });
+  const { search, setSearch, setAreFiltersOpen } = useTargetContext();
 
   return (
     <div className="target-list-search-wrapper">

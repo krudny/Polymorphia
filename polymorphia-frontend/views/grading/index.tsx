@@ -18,7 +18,6 @@ export default function Grading() {
   const isMd = useMediaQuery({ minWidth: "768px" });
   const components = useGradingStrategy(eventType);
   const { filters, isFiltersLoading, isFiltersError } = useGradingContext();
-
   const { areFiltersOpen, setAreFiltersOpen } = useTargetContext();
 
   const handleApplyFilters = () => {

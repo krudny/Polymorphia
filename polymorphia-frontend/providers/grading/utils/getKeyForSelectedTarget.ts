@@ -3,8 +3,6 @@ import { TargetResponseDTO, TargetTypes } from "@/interfaces/api/target";
 export function getKeyForSelectedTarget(
   selectedTarget: TargetResponseDTO | null
 ): string | undefined {
-  console.log(selectedTarget + "tutaj");
-
   if (selectedTarget === null) {
     return undefined;
   } else if (selectedTarget.type === TargetTypes.STUDENT) {
