@@ -5,12 +5,14 @@ import com.agh.polymorphia_backend.service.submission.SubmissionService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -21,9 +23,14 @@ public class SubmissionController {
 
     @GetMapping("/requirements")
     @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
-    public ResponseEntity<List<SubmissionRequirementResponseDto>> getSubmissionRequirements(
-            @RequestParam Long gradableEventId) {
+    public ResponseEntity<List<SubmissionRequirementResponseDto>> getSubmissionRequirements(@RequestParam Long gradableEventId) {
         return ResponseEntity.ok(submissionService.getSubmissionRequirements(gradableEventId));
+    }
+
+    @GetMapping("")
+    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
+    public ResponseEntity<> getSubmissions(@RequestParam Long gradableEventId, @RequestParam Optional<Long> studentId) {
+
     }
 
 }
