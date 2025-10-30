@@ -54,6 +54,7 @@ public class SubmissionService {
         // if student, target must be the student themselves or group they belong to
         // if instructor, target must belong to their course group
         // if coordinator, course access is enough
+        return null;
     }
 
     private boolean authorizeTargetAccess(TargetRequestDto target) {
