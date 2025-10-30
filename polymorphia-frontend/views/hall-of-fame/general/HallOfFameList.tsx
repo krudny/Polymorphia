@@ -21,10 +21,10 @@ export default function HallOfFameList() {
   const isDesktop = useMediaQuery({ minWidth: 1024 });
 
   useLayoutEffect(() => {
-    if (wrapperRef.current) {
+    if (wrapperRef.current && !isLoading) {
       wrapperRef.current.scrollTo({ top: 0, behavior: "smooth" });
     }
-  }, [page, wrapperRef]);
+  }, [page, wrapperRef, isLoading]);
 
   const setRecordRef =
     (position: number) =>
