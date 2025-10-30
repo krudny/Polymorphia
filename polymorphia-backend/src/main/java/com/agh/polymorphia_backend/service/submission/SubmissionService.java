@@ -7,11 +7,12 @@ import com.agh.polymorphia_backend.dto.response.submission.SubmissionDetailsDto;
 import com.agh.polymorphia_backend.dto.response.submission.SubmissionRequirementResponseDto;
 import com.agh.polymorphia_backend.model.event_section.EventSectionType;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
+import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.submission.SubmissionRequirement;
-import com.agh.polymorphia_backend.model.user.Student;
 import com.agh.polymorphia_backend.repository.submission.SubmissionRequirementRepository;
 import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
 import com.agh.polymorphia_backend.service.mapper.SubmissionMapper;
+import com.agh.polymorphia_backend.service.project.ProjectGroupService;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import lombok.AllArgsConstructor;
@@ -34,6 +35,7 @@ public class SubmissionService {
     private final SubmissionRequirementRepository submissionRequirementRepository;
     private final SubmissionMapper submissionMapper;
     private final UserService userService;
+    private final ProjectGroupService projectGroupService;
 
     public List<SubmissionRequirementResponseDto> getSubmissionRequirements(Long gradableEventId) {
         GradableEvent gradableEvent = getGradableEventIfNotTest(gradableEventId);
@@ -51,18 +53,39 @@ public class SubmissionService {
         GradableEvent gradableEvent = getGradableEventIfNotTest(gradableEventId);
         accessAuthorizer.authorizeCourseAccess(gradableEvent.getEventSection().getCourse().getId());
 
-        // if student, target must be the student themselves or group they belong to
-        // if instructor, target must belong to their course group
-        // if coordinator, course access is enough
+
+        // request by student
+            // target is student
+                // gradable event is assignment     -> studentId must match, get submissions for student
+                // gradable event is project        -> studentId must match, get submissions for student
+            // target is group
+                // gradable event is assignment     -> error
+                // gradable event is project        -> student must be in the project group related to this gradable event, get submissions for student
+
+        // request by instructor
+            // target is student
+                // gradable event is assignment     -> student must be in instructor's course group, get submissions for student
+                // gradable event is project        -> student must be in project group that belongs to instructor related to this gradable event, get submissions for student
+            // target is group
+                // gradable event is assignment     -> error
+                // gradable event is project        -> project group must belong to instructor, get submissions for random student in the group
+
+        // request by coordinator
+            // target is student
+                // gradable event is assignment     -> get submissions for student
+                // gradable event is project        -> get submissions for student
+            // target is group
+                // gradable event is assignment     -> error
+                // gradable event is project        -> set submissions for student
+
         return null;
     }
 
     private boolean authorizeTargetAccess(TargetRequestDto target) {
         return switch (userService.getCurrentUserRole()) {
             case STUDENT -> authorizeTargetAccessForStudent(target);
-            // TODO
-            case INSTRUCTOR -> false;
-            case COORDINATOR -> false;
+            case INSTRUCTOR -> authorizeTargetAccessForInstructor(target);
+            case COORDINATOR -> true;
             case UNDEFINED -> false;
         };
     }
@@ -73,14 +96,30 @@ public class SubmissionService {
                 if (studentTargetRequestDto.id().longValue() != userService.getCurrentUser().getUserId().longValue()) {
                     throw new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND);
                 }
+
+                return true;
             }
             case StudentGroupTargetRequestDto studentGroupTargetRequestDto -> {
-                // TODO
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+                return projectGroupService.getProjectGroupByIdAndStudentId(
+                                studentGroupTargetRequestDto.groupId(),
+                                userService.getCurrentUser().getUserId()
+                        ) != null;
             }
         }
+    }
 
-        return true;
+    private boolean authorizeTargetAccessForInstructor(TargetRequestDto target) {
+        switch (target) {
+            case StudentTargetRequestDto studentTargetRequestDto -> {
+
+            }
+            case StudentGroupTargetRequestDto studentGroupTargetRequestDto -> {
+                return projectGroupService.getProjectGroupByIdAndInstructorId(
+                        studentGroupTargetRequestDto.groupId(),
+                        userService.getCurrentUser().getUserId()
+                ) != null;
+            }
+        }
     }
 
     private GradableEvent getGradableEventIfNotTest(Long gradableEventId) {
