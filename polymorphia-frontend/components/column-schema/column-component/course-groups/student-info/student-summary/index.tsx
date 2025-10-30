@@ -2,6 +2,7 @@ import Image from "next/image";
 import { API_STATIC_URL } from "@/services/api";
 import ProfileProgressBar from "@/components/progressbar/profile";
 import useCourseGroupsContext from "@/hooks/contexts/useCourseGroupsContext";
+import "./index.css";
 
 export default function StudentSummary() {
   const { studentSummary } = useCourseGroupsContext();
@@ -36,9 +37,9 @@ export default function StudentSummary() {
         <div className="course-group-student-summary-details">
           <h3>{studentName}</h3>
           <h4>{animalName}</h4>
-          <h3>
+          <h5>
             {position} na {totalStudentsInCourse} osoby w kursie
-          </h3>
+          </h5>
         </div>
       </div>
       <div className="course-group-student-summary-progress-bar">

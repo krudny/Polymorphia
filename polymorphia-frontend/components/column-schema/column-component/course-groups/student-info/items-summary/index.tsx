@@ -17,7 +17,7 @@ export default function ItemsSummary(): JSX.Element {
     <div className="course-group-student-info-grid">
       {items.map((item) => (
         <div key={item.base.id}>
-          <EquipmentItem itemData={item} />
+          <EquipmentItem itemData={item} size="md" />
         </div>
       ))}
     </div>

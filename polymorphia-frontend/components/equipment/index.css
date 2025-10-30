@@ -17,14 +17,14 @@
   @apply object-cover rounded-2xl shadow-lg w-full h-full;
 }
 
+.equipment-image-badge {
+  @apply rounded-tl-2xl rounded-br-2xl;
+}
+
 .equipment-locked-item {
   @apply absolute bg-secondary-gray/70 dark:bg-primary-dark/80 flex-centered w-full h-full rounded-2xl;
 
   span {
     @apply material-symbols;
-
-    p {
-      @apply text-7xl;
-    }
   }
 }

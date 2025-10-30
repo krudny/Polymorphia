@@ -14,7 +14,7 @@
 }
 
 .course-group-student-summary-details {
-  @apply flex-col-centered gap-y-2 mx-auto;
+  @apply flex-col-centered gap-y-2 mx-auto text-center;
 
   h3 {
     @apply text-5xl;

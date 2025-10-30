@@ -17,7 +17,7 @@ export default function ChestSummary(): JSX.Element {
     <div className="course-group-student-info-grid">
       {chests.map((chest) => (
         <Fragment key={chest.base.id}>
-          <EquipmentChest chestData={chest} showBadge={true} />
+          <EquipmentChest chestData={chest} showBadge={true} size="md" />
         </Fragment>
       ))}
     </div>

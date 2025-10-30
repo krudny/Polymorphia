@@ -1,16 +1,18 @@
 import Image from "next/image";
 import { API_STATIC_URL } from "@/services/api";
 import ImageBadge from "@/components/image-badge/ImageBadge";
-import "./index.css";
 import "../../index.css";
 import { EquipmentItemProps } from "@/components/equipment/components/item/types";
 import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
 import { EquipmentActions } from "@/providers/equipment/reducer/types";
+import { equipmentVariants } from "@/components/equipment/variants";
 
-export default function EquipmentItem({ itemData }: EquipmentItemProps) {
+export default function EquipmentItem({ itemData, size }: EquipmentItemProps) {
   const { dispatch } = useEquipmentContext();
   const { imageUrl, name } = itemData.base;
   const quantity = itemData.details.length;
+
+  const { lockedText, badgeContainer } = equipmentVariants({ size });
 
   const handleClick = () => {
     if (quantity > 0) {
@@ -38,12 +40,12 @@ export default function EquipmentItem({ itemData }: EquipmentItemProps) {
       {quantity > 0 ? (
         <ImageBadge
           text={quantity.toString()}
-          className="equipment-image-badge"
+          className={`equipment-image-badge ${badgeContainer()}`}
         />
       ) : (
         <div className="equipment-locked-item">
           <span>
-            <p>lock</p>
+            <p className={lockedText()}>lock</p>
           </span>
         </div>
       )}

@@ -6,12 +6,15 @@ import { EquipmentChestProps } from "@/components/equipment/components/chest/typ
 import ImageBadge from "@/components/image-badge/ImageBadge";
 import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
 import { EquipmentActions } from "@/providers/equipment/reducer/types";
+import { equipmentVariants } from "@/components/equipment/variants";
 
 export default function EquipmentChest({
   chestData,
   showBadge = false,
+  size = "lg",
 }: EquipmentChestProps): ReactNode {
   const { dispatch } = useEquipmentContext();
+  const { lockedText, badgeContainer } = equipmentVariants({ size });
 
   const handleClick = () => {
     if (chestData.details.isUsed) {
@@ -40,13 +43,13 @@ export default function EquipmentChest({
       {showBadge && chestData.details.id && (
         <ImageBadge
           icon={chestData.details.isUsed ? "trophy" : "key"}
-          className="equipment-image-badge"
+          className={`equipment-image-badge ${badgeContainer()}`}
         />
       )}
       {!chestData.details.id && (
         <div className="equipment-locked-item">
           <span>
-            <p>lock</p>
+            <p className={lockedText()}>lock</p>
           </span>
         </div>
       )}

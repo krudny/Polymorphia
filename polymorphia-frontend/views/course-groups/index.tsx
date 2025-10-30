@@ -6,6 +6,7 @@ import { useCourseGroupsStrategy } from "@/hooks/strategy/useCourseGroupsStrateg
 import FiltersModal from "@/components/filters-modals/FiltersModal";
 import useCourseGroupsContext from "@/hooks/contexts/useCourseGroupsContext";
 import { CourseGroupsFilterId } from "@/providers/course-groups/types";
+import "./index.css";
 
 export default function CourseGroups() {
   const isXL = useMediaQuery({ minWidth: "1280px" });
@@ -21,7 +22,7 @@ export default function CourseGroups() {
   const handleApplyFilters = () => {};
 
   return (
-    <>
+    <div className="course-groups">
       <SpeedDial speedDialKey={SpeedDialKeys.COURSE_GROUP} />
       <ColumnSchema columns={isXL ? 3 : isMd ? 2 : 1} components={components} />
       <FiltersModal<CourseGroupsFilterId>
@@ -30,6 +31,6 @@ export default function CourseGroups() {
         setIsModalOpen={setAreFiltersOpen}
         onFiltersApplied={() => handleApplyFilters()}
       />
-    </>
+    </div>
   );
 }
