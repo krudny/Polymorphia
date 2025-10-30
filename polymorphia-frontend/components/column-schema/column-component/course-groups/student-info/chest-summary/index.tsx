@@ -2,6 +2,7 @@ import { Fragment, JSX } from "react";
 import Loading from "@/components/loading";
 import useStudentChests from "@/hooks/course/useStudentChests";
 import EquipmentChest from "@/components/equipment/components/chest";
+import "../index.css";
 
 const USER_ID = 1;
 
@@ -13,7 +14,7 @@ export default function ChestSummary(): JSX.Element {
   }
 
   return (
-    <div className="w-full grid grid-cols-3 gap-3">
+    <div className="course-group-student-info-grid">
       {chests.map((chest) => (
         <Fragment key={chest.base.id}>
           <EquipmentChest chestData={chest} showBadge={true} />

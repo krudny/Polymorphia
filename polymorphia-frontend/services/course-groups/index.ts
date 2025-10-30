@@ -4,14 +4,12 @@ import {
   CourseGroupType,
   CourseGroupTypes,
 } from "@/services/course-groups/types";
-import {
-  StudentLastActivityDetailsDTO,
-  StudentLastActivityDTO,
-} from "@/interfaces/api/course-groups";
+import { StudentLastActivityDTO } from "@/interfaces/api/course-groups";
 import {
   EquipmentChestResponseDTO,
   EquipmentItemResponseDTO,
 } from "@/interfaces/api/equipment";
+import { StudentSummaryResponseDTO } from "@/interfaces/api/student";
 
 const CourseGroupsService = {
   getCourseGroups: async <T extends CourseGroupType>(
@@ -46,66 +44,51 @@ const CourseGroupsService = {
       {
         id: 1,
         gradableEventName: "Kartkówka 4",
+        gainedXp: 2.3,
+        hasReward: true,
+        gradeDate: "24.10.2024",
       },
       {
         id: 2,
         gradableEventName: "Laboratorium 3",
+        gainedXp: 2.3,
+        hasReward: false,
+        gradeDate: "24.10.2024",
       },
       {
         id: 3,
         gradableEventName: "Kartkówka 3",
+        gainedXp: 2.3,
+        hasReward: false,
+        gradeDate: "24.10.2024",
       },
       {
         id: 4,
         gradableEventName: "Laboratorium 2",
+        gainedXp: 2.3,
+        hasReward: false,
+        gradeDate: "24.10.2024",
       },
       {
         id: 5,
         gradableEventName: "Kartkówka 2",
+        gainedXp: 2.3,
+        hasReward: false,
+        gradeDate: "24.10.2024",
       },
       {
         id: 6,
         gradableEventName: "Laboratorium 1",
+        gainedXp: 2.3,
+        hasReward: false,
+        gradeDate: "24.10.2024",
       },
       {
         id: 7,
         gradableEventName: "Kartkówka 1",
-      },
-    ];
-  },
-
-  getStudentLastActivityDetails: (
-    userId: number,
-    gradableEventId: number
-  ): StudentLastActivityDetailsDTO[] => {
-    return [
-      {
-        id: 1,
-        criteriaName: "Kartkówka 4",
-        gainedXp: 4.0,
+        gainedXp: 2.3,
         hasReward: false,
-        gradeDate: "Instrukcje sterujące",
-      },
-      {
-        id: 2,
-        criteriaName: "Laboratorium 3",
-        gainedXp: 2.7,
-        hasReward: true,
-        gradeDate: "Wątki w Kotlinie",
-      },
-      {
-        id: 3,
-        criteriaName: "Kartkówka 3",
-        gainedXp: 1.0,
-        hasReward: false,
-        gradeDate: "Wątki w Kotlinie",
-      },
-      {
-        id: 4,
-        criteriaName: "Laboratorium 2",
-        gainedXp: 2.0,
-        hasReward: false,
-        gradeDate: "Instrukcje warunkowe",
+        gradeDate: "24.10.2024",
       },
     ];
   },
@@ -365,6 +348,28 @@ const CourseGroupsService = {
         },
       },
     ];
+  },
+
+  getStudentSummary: (userId: number): StudentSummaryResponseDTO => {
+    return {
+      studentName: "Krzysztof Ligarski",
+      animalName: "Gerard Waleczny",
+      imageUrl: "images/evolution-stages/1.webp",
+      leftEvolutionStage: {
+        id: 1,
+        name: "Samodzielny Zwierzak",
+        minXp: 70,
+        grade: 4.5,
+      },
+      rightEvolutionStage: {
+        id: 1,
+        name: "Majestatyczna Bestia",
+        minXp: 80,
+        grade: 5.0,
+      },
+      totalStudentsInCourse: 237,
+      position: 4,
+    };
   },
 };
 

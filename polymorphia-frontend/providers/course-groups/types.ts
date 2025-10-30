@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { useFilters } from "@/hooks/course/useFilters";
+import { StudentSummaryResponseDTO } from "@/interfaces/api/student";
 
 export interface CourseGroupsContextInterface {
   search: string;
@@ -9,6 +10,8 @@ export interface CourseGroupsContextInterface {
   filters: ReturnType<typeof useFilters<CourseGroupsFilterId>>;
   gradableEventId: number | null;
   setGradableEventId: Dispatch<SetStateAction<number | null>>;
+  studentSummary: StudentSummaryResponseDTO | undefined;
+  isSpecificDataLoading: boolean;
 }
 
 export type CourseGroupsFilterId = "sortOrder" | "sortBy";

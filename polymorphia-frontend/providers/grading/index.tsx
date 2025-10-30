@@ -36,13 +36,11 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
     isError: isFiltersError,
   } = useGradingFilterConfigs(courseId);
   const filters = useFilters<GradingFilterId>(filterConfigs ?? []);
-
   const { data: criteria, isLoading: isCriteriaLoading } = useCriteria();
   const { data: grade, isLoading: isGradeLoading } = useShortGrade(
     targetState.selectedTarget
   );
   const { mutate: mutateGrade } = useGradeUpdate();
-
   const {
     data: submissionRequirements,
     isLoading: isSubmissionRequirementsLoading,

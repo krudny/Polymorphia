@@ -7,6 +7,9 @@ import {
 } from "@/providers/course-groups/types";
 import { useFilters } from "@/hooks/course/useFilters";
 import useCourseGroupsFilterConfigs from "@/hooks/course/useCourseGroupsFilterConfigs";
+import useStudentSummary from "@/hooks/course/useStudentSummary";
+import useTargetContext from "@/hooks/contexts/useTargetContext";
+import { TargetTypes } from "@/interfaces/api/target";
 
 export const CourseGroupsContext = createContext<
   CourseGroupsContextInterface | undefined
@@ -17,11 +20,18 @@ export const CourseGroupsProvider = ({ children }: { children: ReactNode }) => {
   const [gradableEventId, setGradableEventId] = useState<number | null>(null);
   const [debouncedSearch] = useDebounce(search, 400);
   const [areFiltersOpen, setAreFiltersOpen] = useState(false);
-
   const filterConfigs = useCourseGroupsFilterConfigs();
   const filters = useFilters<CourseGroupsFilterId>(filterConfigs ?? []);
-  const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["total"];
-  const sortOrder = filters.getAppliedFilterValues("sortOrder") ?? ["asc"];
+
+  const { state: targetState } = useTargetContext();
+
+  const targetId =
+    targetState.selectedTarget?.type === TargetTypes.STUDENT
+      ? targetState.selectedTarget.id
+      : null;
+
+  const { data: studentSummary, isLoading: isStudentSummaryLoading } =
+    useStudentSummary(targetId!);
 
   return (
     <CourseGroupsContext.Provider
@@ -33,6 +43,8 @@ export const CourseGroupsProvider = ({ children }: { children: ReactNode }) => {
         filters,
         gradableEventId,
         setGradableEventId,
+        studentSummary,
+        isSpecificDataLoading: isStudentSummaryLoading,
       }}
     >
       {children}

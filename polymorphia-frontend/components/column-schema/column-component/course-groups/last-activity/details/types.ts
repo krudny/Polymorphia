@@ -1,4 +1,5 @@
+import { StudentLastActivityDTO } from "@/interfaces/api/course-groups";
+
 export interface StudentGradableEventDetailsProps {
-  userId: number;
-  gradableEventId: number;
+  lastActivity: StudentLastActivityDTO;
 }

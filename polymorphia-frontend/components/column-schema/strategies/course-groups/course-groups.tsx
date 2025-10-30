@@ -10,7 +10,7 @@ export class CourseGroupsStrategy
 {
   getComponents(): ColumnComponent[][] {
     return [
-      [this.createTargetListCourseGroupsComponent()],
+      [this.createTargetListComponent()],
       [this.createLastActivityComponent()],
       [this.createStudentSummaryComponent()],
     ];

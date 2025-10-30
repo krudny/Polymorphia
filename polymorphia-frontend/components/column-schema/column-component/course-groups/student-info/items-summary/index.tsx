@@ -2,6 +2,7 @@ import useStudentItems from "@/hooks/course/useStudentItems";
 import Loading from "@/components/loading";
 import EquipmentItem from "@/components/equipment/components/item";
 import { JSX } from "react";
+import "../index.css";
 
 const USER_ID = 1;
 
@@ -13,7 +14,7 @@ export default function ItemsSummary(): JSX.Element {
   }
 
   return (
-    <div className="w-full grid grid-cols-3 gap-3">
+    <div className="course-group-student-info-grid">
       {items.map((item) => (
         <div key={item.base.id}>
           <EquipmentItem itemData={item} />

@@ -12,3 +12,11 @@
     @apply !text-3xl;
   }
 }
+
+.last-activity {
+  @apply flex flex-col gap-y-4;
+
+  div {
+    @apply hover:cursor-pointer;
+  }
+}
