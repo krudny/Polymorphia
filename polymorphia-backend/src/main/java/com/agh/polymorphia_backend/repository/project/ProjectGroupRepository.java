@@ -15,9 +15,9 @@ public interface ProjectGroupRepository extends JpaRepository<ProjectGroup, Long
              SELECT pg FROM ProjectGroup pg
                  JOIN pg.animals a
                  JOIN StudentCourseGroupAssignment scga on a.studentCourseGroupAssignment = scga
-                 WHERE scga.student.userId = :studentId AND pg.id = :id
+                 WHERE scga.student.userId = :studentId AND pg.id = :id AND pg.project.id = :projectId
             """)
-    Optional<ProjectGroup> getProjectGroupByIdAndStudentId(@Param("id") Long id, @Param("studentId") Long studentId);
+    Optional<ProjectGroup> getProjectGroupByIdAndStudentIdAndProjectId(@Param("id") Long id, @Param("studentId") Long studentId, @Param("projectId") Long projectId);
 
     @Query("""
              SELECT pg FROM ProjectGroup pg

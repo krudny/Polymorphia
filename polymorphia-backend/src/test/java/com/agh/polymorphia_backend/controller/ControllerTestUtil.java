@@ -33,6 +33,19 @@ public class ControllerTestUtil {
                 .asString();
     }
 
+    public static String getEndpointWithBody(String endpoint, String username, String password, Integer statusCode, Object body, Object... args) {
+        return given()
+                .cookie("JSESSIONID", getStudentSessionId(username, password))
+                .contentType(ContentType.JSON)
+                .body(body)
+                .when()
+                .get(endpoint, args)
+                .then()
+                .statusCode(statusCode)
+                .extract()
+                .asString();
+    }
+
     public static String postEndpoint(String endpoint, String username, String password, Integer statusCode, Optional<?> body, Object... args) {
         RequestSpecification requestSpecification = given()
                 .cookie("JSESSIONID", getStudentSessionId(username, password))

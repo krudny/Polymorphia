@@ -1,7 +1,9 @@
 package com.agh.polymorphia_backend.dto.request.target;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 
+@Builder
 public record StudentTargetRequestDto(Long id) implements TargetRequestDto {
     @Override
     @JsonProperty("type")

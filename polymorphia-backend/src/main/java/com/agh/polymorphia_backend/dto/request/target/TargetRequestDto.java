@@ -2,6 +2,7 @@ package com.agh.polymorphia_backend.dto.request.target;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import lombok.Builder;
 
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
