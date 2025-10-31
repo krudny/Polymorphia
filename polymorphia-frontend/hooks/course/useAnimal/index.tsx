@@ -7,7 +7,7 @@ export default function useHasAnimalInGroup(
 ): UseHasAnimalInGroup {
   const { data, isLoading, error } = useQuery({
     queryKey: ["hasAnimalInGroup", courseId],
-    queryFn: () => UserService.hasAnimalInGroup(courseId),
+    queryFn: () => UserService.hasValidAnimalInCourse(courseId),
   });
 
   return { data, isLoading, error };

@@ -1,10 +1,9 @@
 package com.agh.polymorphia_backend.service.validation;
 
-import com.agh.polymorphia_backend.model.invitation.InvitationToken;
+import com.agh.polymorphia_backend.model.invitation.Token;
 import com.agh.polymorphia_backend.repository.invitation.InvitationTokenRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -32,7 +31,7 @@ public class InvitationTokenValidator {
                 });
     }
 
-    public void validateTokenBeforeRegister(InvitationToken token) {
+    public void validateTokenBeforeRegister(Token token) {
         if (token.getExpiryDate().isBefore(ZonedDateTime.now())) {
             throw new ResponseStatusException(HttpStatus.GONE, TOKEN_EXPIRED);
         }
@@ -42,7 +41,7 @@ public class InvitationTokenValidator {
         }
     }
 
-    public boolean isTokenUsed(InvitationToken token) {
+    public boolean isTokenUsed(Token token) {
         return token.isUsed();
     }
 }

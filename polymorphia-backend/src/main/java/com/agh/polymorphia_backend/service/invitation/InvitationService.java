@@ -7,7 +7,7 @@ import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.course.CourseGroup;
 import com.agh.polymorphia_backend.model.course.StudentCourseGroupAssignment;
 import com.agh.polymorphia_backend.model.course.StudentCourseGroupAssignmentId;
-import com.agh.polymorphia_backend.model.invitation.InvitationToken;
+import com.agh.polymorphia_backend.model.invitation.Token;
 import com.agh.polymorphia_backend.model.user.*;
 import com.agh.polymorphia_backend.repository.course.CourseGroupRepository;
 import com.agh.polymorphia_backend.repository.course.StudentCourseGroupRepository;
@@ -72,7 +72,7 @@ public class InvitationService {
 
             validateInvitation(inviteDTO);
             AbstractRoleUser roleUser = createAndSaveRoleUser(inviteDTO);
-            InvitationToken token = createAndSaveInvitationToken(inviteDTO);
+            Token token = createAndSaveInvitationToken(inviteDTO);
             createAndSaveUserCourseRole(roleUser.getUser(), course, inviteDTO.getRole());
             sendInvitationEmail(inviteDTO, token);
         } catch (Exception e) {
@@ -109,7 +109,7 @@ public class InvitationService {
 
     @Transactional
     public void registerUser(RegisterRequestDto registerDTO, HttpServletRequest request) {
-        InvitationToken token = invitationTokenRepository.findByToken(registerDTO.getInvitationToken())
+        Token token = invitationTokenRepository.findByToken(registerDTO.getInvitationToken())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, TOKEN_NOT_EXIST));
 
         User user = userRepository.findByEmail(token.getEmail())
@@ -165,8 +165,8 @@ public class InvitationService {
         return coordinatorRepository.save(coordinator);
     }
 
-    private InvitationToken createAndSaveInvitationToken(CourseInvitationRequestDto inviteDTO) {
-        InvitationToken token = invitationTokenService.createInvitationToken(inviteDTO);
+    private Token createAndSaveInvitationToken(CourseInvitationRequestDto inviteDTO) {
+        Token token = invitationTokenService.createInvitationToken(inviteDTO);
         return invitationTokenRepository.save(token);
     }
 
@@ -183,7 +183,7 @@ public class InvitationService {
         userCourseRoleRepository.save(userCourseRole);
     }
 
-    private void sendInvitationEmail(CourseInvitationRequestDto inviteDTO, InvitationToken token) {
+    private void sendInvitationEmail(CourseInvitationRequestDto inviteDTO, Token token) {
         emailService.sendInvitationEmail(inviteDTO, token);
     }
 

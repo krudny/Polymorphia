@@ -2,7 +2,7 @@ package com.agh.polymorphia_backend.service.email;
 
 import com.agh.polymorphia_backend.dto.request.user.CourseInvitationRequestDto;
 import com.agh.polymorphia_backend.dto.request.user.ForgotPasswordRequestDto;
-import com.agh.polymorphia_backend.model.invitation.InvitationToken;
+import com.agh.polymorphia_backend.model.invitation.Token;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +31,7 @@ public class EmailService {
     @Value("${spring.mail.registerUrl}")
     private String registerUrl;
 
-    public void sendInvitationEmail(CourseInvitationRequestDto inviteDTO, InvitationToken invitationToken) {
+    public void sendInvitationEmail(CourseInvitationRequestDto inviteDTO, Token token) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -41,7 +41,7 @@ public class EmailService {
             helper.setSubject(INVITATION_TITLE);
 
             Context context = new Context();
-            String fullRegisterUrl = registerUrl + "?invitationToken=" + invitationToken.getToken();
+            String fullRegisterUrl = registerUrl + "?invitationToken=" + token.getToken();
 
             context.setVariable("registrationLink", fullRegisterUrl);
             context.setVariable("userRole", inviteDTO.getRole().getDisplayName().toUpperCase());

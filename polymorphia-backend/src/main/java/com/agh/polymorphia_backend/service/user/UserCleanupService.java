@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.service.user;
 
-import com.agh.polymorphia_backend.model.invitation.InvitationToken;
+import com.agh.polymorphia_backend.model.invitation.Token;
 import com.agh.polymorphia_backend.repository.invitation.InvitationTokenRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import lombok.AllArgsConstructor;
@@ -32,7 +32,7 @@ public class UserCleanupService {
         List<String> expiredTokenEmails = invitationTokenRepository
                 .findByExpiryDateBeforeAndUsedFalse(now)
                 .stream()
-                .map(InvitationToken::getEmail)
+                .map(Token::getEmail)
                 .toList();
 
         Integer deletedUserCount = userRepository.deleteUsersWithoutPasswordOrWithExpiredTokens(

@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.repository.invitation;
 
-import com.agh.polymorphia_backend.model.invitation.InvitationToken;
+import com.agh.polymorphia_backend.model.invitation.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,18 +12,18 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface InvitationTokenRepository extends JpaRepository<InvitationToken, Long> {
-    Optional<InvitationToken> findByEmail(String email);
+public interface InvitationTokenRepository extends JpaRepository<Token, Long> {
+    Optional<Token> findByEmail(String email);
 
-    Optional<InvitationToken> findByToken(String token);
+    Optional<Token> findByToken(String token);
 
-    List<InvitationToken> findByExpiryDateBeforeAndUsedFalse(ZonedDateTime date);
+    List<Token> findByExpiryDateBeforeAndUsedFalse(ZonedDateTime date);
 
     @Modifying
-    @Query("DELETE FROM InvitationToken t WHERE t.expiryDate < :date")
+    @Query("DELETE FROM Token t WHERE t.expiryDate < :date")
     Integer deleteByExpiryDateBefore(@Param("date") ZonedDateTime date);
 
     @Modifying
-    @Query("DELETE FROM InvitationToken t WHERE t.used = true")
+    @Query("DELETE FROM Token t WHERE t.used = true")
     Integer deleteByUsedTrue();
 }

@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.service.user;
 
-import com.agh.polymorphia_backend.dto.request.user.ChangePasswordRequestDTO;
+import com.agh.polymorphia_backend.dto.request.user.ChangePasswordRequestDto;
 import com.agh.polymorphia_backend.model.user.*;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
@@ -75,26 +75,6 @@ public class UserService implements UserDetailsService {
 
     public String getFullName(User user) {
         return String.join(" ", user.getFirstName(), user.getLastName());
-    }
-
-    public void changePassword(ChangePasswordRequestDTO requestDTO) {
-        User user = getCurrentUser().getUser();
-
-        if (!requestDTO.getNewPassword().equals(requestDTO.getConfirmNewPassword())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INVALID_NEW_PASSWORD);
-        }
-
-        if (!passwordEncoder.matches(requestDTO.getOldPassword(), user.getPassword())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INVALID_OLD_PASSWORD);
-        }
-
-        try {
-            user.setPassword(passwordEncoder.encode(requestDTO.getNewPassword()));
-            userRepository.save(user);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FAILED_TO_CHANGE_PASSWORD);
-        }
-
     }
 
     public void updateSecurityCredentials(User user) {

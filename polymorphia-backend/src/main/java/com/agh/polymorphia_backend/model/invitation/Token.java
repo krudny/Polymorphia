@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 import java.time.ZonedDateTime;
 
 @Entity
-@Table(name = "invitation_tokens")
+@Table(name = "tokens")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class InvitationToken {
+public class Token {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
