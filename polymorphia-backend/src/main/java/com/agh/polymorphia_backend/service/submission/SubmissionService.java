@@ -114,11 +114,12 @@ public class SubmissionService {
                     .forEach((studentId, studentSubmissions) ->
                             submissions.add(studentSubmissions.get(submissionRequirementId)));
 
+            boolean isEmpty = !newDetails.isLocked() && newDetails.url().isEmpty();
+
             Optional.ofNullable(submissions.getFirst()).ifPresentOrElse(currentSubmission -> {
                 boolean isLockChanged = currentSubmission.isLocked() != newDetails.isLocked();
                 boolean isUrlChanged = !Objects.equals(currentSubmission.getUrl(), newDetails.url());
                 boolean isChanged =  isLockChanged || isUrlChanged;
-                boolean isEmpty = !newDetails.isLocked() && newDetails.url().isEmpty();
 
                 if (userService.getCurrentUserRole() == UserType.STUDENT &&
                         isEmpty &&
@@ -152,6 +153,10 @@ public class SubmissionService {
             }, () -> {
                 if (userService.getCurrentUserRole() == UserType.STUDENT && newDetails.isLocked()) {
                     throw new ResponseStatusException(HttpStatus.FORBIDDEN, FORBIDDEN_LOCK_CHANGE);
+                }
+
+                if (isEmpty) {
+                    return;
                 }
 
                 submissionSources.forEach(student -> {
