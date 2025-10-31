@@ -13,6 +13,7 @@ export default function useSubmissionDetails(
     queryKey: target
       ? [
           "submissionDetails",
+          gradableEventId,
           target.type,
           target.type === TargetTypes.STUDENT ? target.id : target.groupId,
         ]

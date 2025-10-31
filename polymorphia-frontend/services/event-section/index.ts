@@ -1006,7 +1006,6 @@ export const EventSectionService = {
     gradableEventId: number,
     target: TargetRequestDTO
   ): Promise<SubmissionDetailsResponseDTO> => {
-    console.log(gradableEventId, target, "sadf");
     const response = await fetch(
       `${API_HOST}/submissions/details?gradableEventId=${gradableEventId}`,
       {

@@ -38,6 +38,7 @@ export default function useSubmissionsUpdate({
         queryClient.invalidateQueries({
           queryKey: [
             "submissionDetails",
+            gradableEventId,
             target.type,
             target.type === TargetTypes.STUDENT ? target.id : target.groupId,
           ],
