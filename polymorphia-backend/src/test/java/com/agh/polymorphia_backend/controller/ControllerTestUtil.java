@@ -62,6 +62,22 @@ public class ControllerTestUtil {
                 .asString();
     }
 
+    public static String putEndpoint(String endpoint, String username, String password, Integer statusCode, Optional<?> body, Object... args) {
+        RequestSpecification requestSpecification = given()
+                .cookie("JSESSIONID", getStudentSessionId(username, password))
+                .contentType(ContentType.JSON);
+
+        body.ifPresent(requestSpecification::body);
+
+        return requestSpecification
+                .when()
+                .put(endpoint, args)
+                .then()
+                .statusCode(statusCode)
+                .extract()
+                .asString();
+    }
+
     public static void assertJsonEquals(Resource expectedJson, String actualJson) throws IOException {
         JsonNode actualResponse = mapper.readTree(actualJson);
         JsonNode expectedResponse = mapper.readTree(getExpectedResponse(expectedJson));
