@@ -1,8 +1,15 @@
 "use client";
 
-import { createContext, useEffect, useReducer, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 import { useDebounce } from "use-debounce";
 import {
+  AppliedFiltersAdapter,
   TargetContextInterface,
   TargetProviderProps,
 } from "@/providers/target/types";
@@ -15,24 +22,38 @@ import {
   TargetResponseDTO,
   TargetTypes,
 } from "@/interfaces/api/target";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const TargetContext = createContext<TargetContextInterface | undefined>(
   undefined
 );
 
-export const TargetProvider = ({
-  children,
-  targetsParams = {},
-}: TargetProviderProps) => {
+export const TargetProvider = ({ children }: TargetProviderProps) => {
+  const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 400);
   const [state, dispatch] = useReducer(TargetReducer, initialState);
   const [areFiltersOpen, setAreFiltersOpen] = useState(false);
+  const [appliedFilters, setAppliedFilters] = useState<AppliedFiltersAdapter>(
+    {}
+  );
+  const { selectedTarget } = state;
+
+  const applyFiltersCallback = useCallback((filters: AppliedFiltersAdapter) => {
+    setAppliedFilters(filters);
+    return filters;
+  }, []);
 
   const { data: targets, isLoading: isTargetsLoading } = useTargets({
-    ...targetsParams,
+    ...appliedFilters,
     search: debouncedSearch,
   });
+
+  const handleApplyFilters = () => {
+    queryClient.invalidateQueries({
+      queryKey: ["targets"],
+    });
+  };
 
   useEffect(() => {
     if (!targets || targets.length < 1) {
@@ -77,6 +98,7 @@ export const TargetProvider = ({
       value={{
         state,
         dispatch,
+        selectedTarget,
         search,
         setSearch,
         areFiltersOpen,
@@ -84,6 +106,8 @@ export const TargetProvider = ({
         targets,
         isTargetsLoading,
         onTargetSelect,
+        handleApplyFilters,
+        applyFiltersCallback,
       }}
     >
       {children}

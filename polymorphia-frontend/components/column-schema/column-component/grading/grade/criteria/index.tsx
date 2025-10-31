@@ -20,9 +20,7 @@ import useTargetContext from "@/hooks/contexts/useTargetContext";
 
 export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
   const { state, isSpecificDataLoading, submitGrade } = useGradingContext();
-  const {
-    state: { selectedTarget },
-  } = useTargetContext();
+  const { selectedTarget } = useTargetContext();
   const accordionRef = useRef<AccordionRef>(null);
   const wrapperRef = useFadeInAnimate(!!criteria);
   const isMd = useMediaQuery({ minWidth: "768px" });

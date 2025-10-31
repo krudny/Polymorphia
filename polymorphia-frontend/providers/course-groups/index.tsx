@@ -1,6 +1,5 @@
 "use client";
-import { createContext, ReactNode, useState } from "react";
-import { useDebounce } from "use-debounce";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import {
   CourseGroupsContextInterface,
   CourseGroupsFilterId,
@@ -17,14 +16,20 @@ export const CourseGroupsContext = createContext<
 >(undefined);
 
 export const CourseGroupsProvider = ({ children }: { children: ReactNode }) => {
-  const [search, setSearch] = useState("");
+  const { state: targetState, applyFiltersCallback } = useTargetContext();
   const [gradableEventId, setGradableEventId] = useState<number | null>(null);
-  const [debouncedSearch] = useDebounce(search, 400);
   const [areFiltersOpen, setAreFiltersOpen] = useState(false);
   const filterConfigs = useCourseGroupsFilterConfigs();
   const filters = useFilters<CourseGroupsFilterId>(filterConfigs ?? []);
+  const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["total"];
+  const sortOrder = filters.getAppliedFilterValues("sortOrder") ?? ["asc"];
 
-  const { state: targetState } = useTargetContext();
+  useEffect(() => {
+    applyFiltersCallback({
+      sortBy,
+      sortOrder,
+    });
+  }, [sortBy, sortOrder]);
 
   const targetId =
     targetState.selectedTarget?.type === TargetTypes.STUDENT
@@ -39,8 +44,6 @@ export const CourseGroupsProvider = ({ children }: { children: ReactNode }) => {
   return (
     <CourseGroupsContext.Provider
       value={{
-        search,
-        setSearch,
         areFiltersOpen,
         setAreFiltersOpen,
         filters,

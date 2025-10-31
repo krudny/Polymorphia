@@ -1,7 +1,6 @@
 "use client";
 
 import ColumnComponent from "@/components/column-schema/column-component";
-import { Fragment } from "react";
 import "./index.css";
 import Loading from "@/components/loading";
 import LastActivityDetails from "@/components/column-schema/column-component/course-groups/last-activity/details";
@@ -15,9 +14,7 @@ import { getKeyForSelectedTarget } from "@/providers/grading/utils/getKeyForSele
 
 export default function LastActivity() {
   const { isSpecificDataLoading, lastActivities } = useCourseGroupsContext();
-  const {
-    state: { selectedTarget },
-  } = useTargetContext();
+  const { selectedTarget } = useTargetContext();
 
   const topComponent = () => <h1>Aktywność</h1>;
   const mainComponent = () => (

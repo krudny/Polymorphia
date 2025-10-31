@@ -1,4 +1,3 @@
-import { UseTargetsParams } from "@/hooks/course/useTargets/types";
 import { StudentTargetData, TargetResponseDTO } from "@/interfaces/api/target";
 import { Dispatch, ReactNode, SetStateAction } from "react";
 import {
@@ -9,6 +8,7 @@ import {
 export interface TargetContextInterface {
   state: TargetReducerState;
   dispatch: Dispatch<TargetReducerActionType>;
+  selectedTarget: TargetResponseDTO | null;
   search: string;
   setSearch: Dispatch<SetStateAction<string>>;
   areFiltersOpen: boolean;
@@ -19,9 +19,16 @@ export interface TargetContextInterface {
     target: TargetResponseDTO,
     member: StudentTargetData
   ) => void;
+  handleApplyFilters: () => void;
+  applyFiltersCallback: (
+    filters: AppliedFiltersAdapter
+  ) => Record<string, string[] | string>;
 }
 
 export interface TargetProviderProps {
   children: ReactNode;
-  targetsParams?: UseTargetsParams;
+}
+
+export interface AppliedFiltersAdapter {
+  [key: string]: string[] | string;
 }

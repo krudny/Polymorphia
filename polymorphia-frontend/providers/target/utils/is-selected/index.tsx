@@ -10,9 +10,7 @@ export const isTargetSelected = (
   target: TargetResponseDTO,
   student: StudentTargetData
 ): boolean => {
-  const {
-    state: { selectedTarget },
-  } = useTargetContext();
+  const { selectedTarget } = useTargetContext();
   if (!selectedTarget) {
     return false;
   }

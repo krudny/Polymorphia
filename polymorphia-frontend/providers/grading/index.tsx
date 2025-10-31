@@ -25,17 +25,31 @@ export const GradingContext = createContext<
 >(undefined);
 
 export const GradingProvider = ({ children }: { children: ReactNode }) => {
+  const { state: targetState, applyFiltersCallback } = useTargetContext();
   const { gradableEventId } = useEventParams();
   const [state, dispatch] = useReducer(GradingReducer, initialState);
   const { courseId } = useUserDetails();
-  const { state: targetState } = useTargetContext();
-
   const {
     data: filterConfigs,
     isLoading: isFiltersLoading,
     isError: isFiltersError,
   } = useGradingFilterConfigs(courseId);
+
   const filters = useFilters<GradingFilterId>(filterConfigs ?? []);
+  const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["total"];
+  const sortOrder = filters.getAppliedFilterValues("sortOrder") ?? ["asc"];
+  const groups = filters.getAppliedFilterValues("groups") ?? ["all"];
+  const gradeStatus = filters.getAppliedFilterValues("gradeStatus") ?? ["all"];
+
+  useEffect(() => {
+    applyFiltersCallback({
+      sortBy,
+      sortOrder,
+      groups,
+      gradeStatus,
+    });
+  }, [sortBy, sortOrder, groups, gradeStatus]);
+
   const { data: criteria, isLoading: isCriteriaLoading } = useCriteria();
   const { data: grade, isLoading: isGradeLoading } = useShortGrade(
     targetState.selectedTarget

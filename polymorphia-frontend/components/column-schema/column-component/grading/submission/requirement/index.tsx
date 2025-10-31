@@ -18,9 +18,7 @@ export default function SubmissionRequirement({
 }: SubmissionsRequirementProps) {
   const { state, isSpecificDataLoading, submitSubmissions } =
     useGradingContext();
-  const {
-    state: { selectedTarget },
-  } = useTargetContext();
+  const { selectedTarget } = useTargetContext();
   const wrapperRef = useFadeInAnimate(!!requirements);
   const isXL = useMediaQuery({ minWidth: "1400px" });
   const accordionSections = [...requirements.map(({ id }) => String(id))];

@@ -17,20 +17,21 @@ import useTargetContext from "@/hooks/contexts/useTargetContext";
 import { getKeyForSelectedTarget } from "@/providers/grading/utils/getKeyForSelectedTarget";
 import Loading from "@/components/loading";
 
+const SECTION_IDS = new Set(["student-summary", "items", "chests"]);
+const INITIALLY_OPENED = new Set(["student-summary"]);
+
 export default function StudentInfo() {
   const accordionRef = useRef<AccordionRef>(null);
   const { isSpecificDataLoading, studentSummary } = useCourseGroupsContext();
-  const {
-    state: { selectedTarget },
-  } = useTargetContext();
+  const { selectedTarget } = useTargetContext();
 
   const topComponent = () => <h1>Student</h1>;
   const mainComponent = () => (
     <Fragment>
       <Accordion
         ref={accordionRef}
-        sectionIds={new Set(["student-summary", "items", "chests"])}
-        initiallyOpenedSectionIds={new Set(["student-summary"])}
+        sectionIds={SECTION_IDS}
+        initiallyOpenedSectionIds={INITIALLY_OPENED}
         className="gap-y-5"
         maxOpen={1}
         shouldAnimateInitialOpen={false}

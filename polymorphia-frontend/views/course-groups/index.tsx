@@ -3,23 +3,23 @@ import SpeedDial from "@/components/speed-dial/SpeedDial";
 import ColumnSchema from "@/components/column-schema";
 import { SpeedDialKeys } from "@/components/speed-dial/types";
 import { useCourseGroupsStrategy } from "@/hooks/strategy/useCourseGroupsStrategy";
-import FiltersModal from "@/components/filters-modals/FiltersModal";
-import useCourseGroupsContext from "@/hooks/contexts/useCourseGroupsContext";
-import { CourseGroupsFilterId } from "@/providers/course-groups/types";
 import "./index.css";
+import { CourseGroupsFilterId } from "@/providers/course-groups/types";
+import FiltersModal from "@/components/filters-modals/FiltersModal";
+import useTargetContext from "@/hooks/contexts/useTargetContext";
+import useCourseGroupsContext from "@/hooks/contexts/useCourseGroupsContext";
 
 export default function CourseGroups() {
   const isXL = useMediaQuery({ minWidth: "1280px" });
   const isMd = useMediaQuery({ minWidth: "768px" });
   const components = useCourseGroupsStrategy();
-  const { areFiltersOpen, setAreFiltersOpen, filters } =
-    useCourseGroupsContext();
+  const { filters } = useCourseGroupsContext();
+  const { areFiltersOpen, setAreFiltersOpen, handleApplyFilters } =
+    useTargetContext();
 
   if (!components) {
     return null;
   }
-
-  const handleApplyFilters = () => {};
 
   return (
     <div className="course-groups">

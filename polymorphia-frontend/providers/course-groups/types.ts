@@ -4,8 +4,6 @@ import { StudentSummaryResponseDTO } from "@/interfaces/api/student";
 import { StudentLastActivityDTO } from "@/interfaces/api/course-groups";
 
 export interface CourseGroupsContextInterface {
-  search: string;
-  setSearch: Dispatch<SetStateAction<string>>;
   areFiltersOpen: boolean;
   setAreFiltersOpen: Dispatch<SetStateAction<boolean>>;
   filters: ReturnType<typeof useFilters<CourseGroupsFilterId>>;
