@@ -23,6 +23,7 @@ import java.util.Optional;
 
 import static com.agh.polymorphia_backend.service.course.CourseService.COURSE_NOT_FOUND;
 
+// TODO: to change to look up in user course role table
 @Service
 @AllArgsConstructor
 public class AccessAuthorizer {

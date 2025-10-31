@@ -7,7 +7,7 @@ import { RegisterFormProps } from "@/components/home/register-form/types";
 import useRegister from "@/hooks/general/useRegister";
 import { FieldErrorMessage } from "@/components/form/FieldErrorMessage";
 
-export default function RegisterForm({ invitationToken }: RegisterFormProps) {
+export default function RegisterForm({ token }: RegisterFormProps) {
   const { mutation: register } = useRegister();
   const form = useForm({
     defaultValues: {
@@ -18,7 +18,7 @@ export default function RegisterForm({ invitationToken }: RegisterFormProps) {
     },
     onSubmit: async ({ value }) => {
       register.mutate({
-        invitationToken,
+        invitationToken: token,
         password: value.password,
       });
     },

@@ -5,14 +5,10 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-@Data
-public class ChangePasswordRequestDTO {
-    public static final String PASSWORD_SIZE_MESSAGE = "Password must be between 8 and 256 characters";
-    public static final String PASSWORD_UPPERCASE_MESSAGE = "Password must contain at least one uppercase letter";
-    public static final String PASSWORD_LOWERCASE_MESSAGE = "Password must contain at least one lowercase letter";
-    public static final String PASSWORD_DIGIT_MESSAGE = "Password must contain at least one digit";
-    public static final String PASSWORD_SPECIAL_CHAR_MESSAGE = "Password must contain at least one special character";
+import static com.agh.polymorphia_backend.service.user.PasswordService.*;
 
+@Data
+public class ChangePasswordRequestDto {
     @NotNull
     private String oldPassword;
 
