@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.controller;
 
+import com.agh.polymorphia_backend.dto.request.SubmissionDetailsRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.TargetRequestDto;
 import com.agh.polymorphia_backend.dto.response.submission.SubmissionDetailsDto;
 import com.agh.polymorphia_backend.dto.response.submission.SubmissionRequirementResponseDto;
@@ -28,5 +29,12 @@ public class SubmissionController {
     @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<Map<Long, SubmissionDetailsDto>> getSubmissionDetails(@RequestParam Long gradableEventId, @RequestBody TargetRequestDto target) {
         return ResponseEntity.ok(submissionService.getSubmissionDetails(gradableEventId, target));
+    }
+
+    @PutMapping("/details")
+    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
+    public ResponseEntity<Void> putSubmissionDetails(@RequestParam Long gradableEventId, @RequestBody SubmissionDetailsRequestDto requestDto) {
+        submissionService.putSubmissionDetails(gradableEventId, requestDto);
+        return ResponseEntity.ok().build();
     }
 }

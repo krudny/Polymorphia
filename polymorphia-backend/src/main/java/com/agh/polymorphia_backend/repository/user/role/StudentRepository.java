@@ -17,7 +17,7 @@ public interface StudentRepository
     @Query(
         "select s from StudentCourseGroupAssignment scga " +
             "join  scga.student s " +
-            "where s.user.id=:userId and scga.courseGroup.course.id=:courseId"
+            "where s.userId=:userId and scga.courseGroup.course.id=:courseId"
     )
     Optional<Student> findByUserIdAndCourseIdAndAssignedToCourseGroup(
         Long userId,
@@ -26,8 +26,8 @@ public interface StudentRepository
 
     @Query(
         "select s from Student s " +
-            "join UserCourseRole ucr on ucr.user.id = s.user.id " +
-            "where s.user.id = :userId and ucr.course.id = :courseId"
+            "join UserCourseRole ucr on ucr.user.id = s.userId " +
+            "where s.userId = :userId and ucr.course.id = :courseId"
     )
     @Override
     Optional<Student> findByUserIdAndCourseId(Long userId, Long courseId);
@@ -38,12 +38,12 @@ public interface StudentRepository
 
     @Query(
         """
-            SELECT s FROM Student s
-                JOIN StudentCourseGroupAssignment scga on scga.student.userId = s.userId
-                JOIN CourseGroup cg on scga.courseGroup.id = cg.id
-                JOIN Course c on cg.course.id = c.id
-                JOIN EventSection es on c.id = es.course.id
-                JOIN GradableEvent ge on es.id = ge.eventSection.id
+            SELECT s FROM GradableEvent ge
+                JOIN ge.eventSection es
+                JOIN es.course c
+                JOIN c.courseGroups cg
+                JOIN cg.studentCourseGroupAssignments scga
+                JOIN scga.student s
                 WHERE s.userId = :userId AND ge.id = :gradableEventId AND cg.instructor.userId = :instructorId
         """
     )
@@ -55,75 +55,17 @@ public interface StudentRepository
 
     @Query(
         """
-            SELECT s FROM ProjectGroup pg
-                JOIN pg.animals a
-                JOIN a.studentCourseGroupAssignment scga
+            SELECT s FROM GradableEvent ge
+                JOIN ge.eventSection es
+                JOIN es.course c
+                JOIN c.courseGroups cg
+                JOIN cg.studentCourseGroupAssignments scga
                 JOIN scga.student s
-                WHERE s.userId = :userId AND pg.project.id = :projectId AND pg.instructor.userId = :instructorId
-        """
-    )
-    Optional<Student> findByUserIdAndProjectIdAndProjectGroupInstructorId(
-        @Param("userId") Long userId,
-        @Param("projectId") Long projectId,
-        @Param("instructorId") Long instructorId
-    );
-
-    @Query(
-        """
-            SELECT s FROM ProjectGroup pg
-                JOIN pg.animals a
-                JOIN a.studentCourseGroupAssignment scga
-                JOIN scga.student s
-                WHERE pg.project.id = :projectId AND pg.id = :projectGroupId AND pg.instructor.userId = :instructorId
-        """
-    )
-    List<Student> findByProjectIdAndProjectGroupIdAndInstructorId(
-        @Param("projectId") Long projectId,
-        @Param("projectGroupId") Long projectGroupId,
-        @Param("instructorId") Long instructorId
-    );
-
-    @Query(
-        """
-            SELECT s FROM Student s
-                JOIN StudentCourseGroupAssignment scga on scga.student.userId = s.userId
-                JOIN CourseGroup cg on scga.courseGroup.id = cg.id
-                JOIN Course c on cg.course.id = c.id
-                JOIN EventSection es on c.id = es.course.id
-                JOIN GradableEvent ge on es.id = ge.eventSection.id
                 WHERE s.userId = :userId AND ge.id = :gradableEventId
         """
     )
     Optional<Student> findByUserIdAndGradableEventId(
         @Param("userId") Long userId,
         @Param("gradableEventId") Long gradableEventId
-    );
-
-    @Query(
-        """
-            SELECT s FROM ProjectGroup pg
-                JOIN pg.animals a
-                JOIN a.studentCourseGroupAssignment scga
-                JOIN scga.student s
-                WHERE s.userId = :userId AND pg.project.id = :projectId
-        """
-    )
-    Optional<Student> findByUserIdAndProjectId(
-        @Param("userId") Long userId,
-        @Param("projectId") Long projectId
-    );
-
-    @Query(
-        """
-            SELECT s FROM ProjectGroup pg
-                JOIN pg.animals a
-                JOIN a.studentCourseGroupAssignment scga
-                JOIN scga.student s
-                WHERE pg.project.id = :projectId AND pg.id = :projectGroupId
-        """
-    )
-    List<Student> findByProjectIdAndProjectGroupId(
-        @Param("projectId") Long projectId,
-        @Param("projectGroupId") Long projectGroupId
     );
 }
