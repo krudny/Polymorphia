@@ -90,7 +90,7 @@ public class SubmissionService {
         Set<Long> submissionRequirementsIds = submissionRequirements.keySet();
         Set<Long> receivedSubmissionRequirementsIds = requestDto.details().keySet();
 
-        if (submissionRequirementsIds != receivedSubmissionRequirementsIds) {
+        if (submissionRequirementsIds.size() != receivedSubmissionRequirementsIds.size()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INCOMPLETE_DETAILS);
         }
 
