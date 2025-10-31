@@ -29,7 +29,7 @@ public class EmailService {
     private String fromName;
 
     @Value("${spring.mail.registerUrl}")
-    private String registerUrl;
+    private String baseUrl;
 
     public void sendInvitationEmail(CourseInvitationRequestDto inviteDTO, Token token) {
         try {
@@ -41,7 +41,7 @@ public class EmailService {
             helper.setSubject(INVITATION_TITLE);
 
             Context context = new Context();
-            String fullRegisterUrl = registerUrl + "?invitationToken=" + token.getToken();
+            String fullRegisterUrl = baseUrl + "?invitationToken=" + token.getToken();
 
             context.setVariable("registrationLink", fullRegisterUrl);
             context.setVariable("userRole", inviteDTO.getRole().getDisplayName().toUpperCase());
@@ -59,7 +59,7 @@ public class EmailService {
         }
     }
 
-    public void sendForgotPasswordEmail(ForgotPasswordRequestDto requestDTO) {
+    public void sendForgotPasswordEmail(ForgotPasswordRequestDto requestDTO, Token token) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -69,7 +69,7 @@ public class EmailService {
             helper.setSubject(RESET_PASSWORD);
 
             Context context = new Context();
-            String fullRegisterUrl = registerUrl + "forgot_password";
+            String fullRegisterUrl = baseUrl + "?forgotPasswordToken=" + token.getToken();
 
             context.setVariable("registrationLink", fullRegisterUrl);
 

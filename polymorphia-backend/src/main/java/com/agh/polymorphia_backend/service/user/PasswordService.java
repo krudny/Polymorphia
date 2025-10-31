@@ -3,14 +3,20 @@ package com.agh.polymorphia_backend.service.user;
 import com.agh.polymorphia_backend.dto.request.user.ChangePasswordRequestDto;
 import com.agh.polymorphia_backend.dto.request.user.ForgotPasswordRequestDto;
 import com.agh.polymorphia_backend.dto.request.user.NewPasswordRequestDto;
+import com.agh.polymorphia_backend.model.invitation.Token;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.service.email.EmailService;
+import com.agh.polymorphia_backend.service.token.TokenService;
+import com.agh.polymorphia_backend.service.validation.TokenValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import static com.agh.polymorphia_backend.service.invitation.InvitationService.USER_NOT_EXIST;
 
 @Service
 @AllArgsConstructor
@@ -27,6 +33,8 @@ public class PasswordService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
+    private final TokenService tokenService;
+    private final TokenValidator tokenValidator;
 
     public void changePassword(ChangePasswordRequestDto requestDTO) {
         User user = userService.getCurrentUser().getUser();
@@ -48,7 +56,17 @@ public class PasswordService {
     }
 
     public void forgotPassword(ForgotPasswordRequestDto requestDTO) {
+        String email = requestDTO.getEmail();
 
+        try {
+            userService.getUserByEmail(email);
+        } catch (UsernameNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, USER_NOT_EXIST);
+        }
+
+        tokenValidator.isTokenAssigned(email);
+        Token token = tokenService.createAndSaveToken(email);
+        emailService.sendForgotPasswordEmail(requestDTO, token);
     }
 
     public void newPassword(NewPasswordRequestDto requestDTO) {

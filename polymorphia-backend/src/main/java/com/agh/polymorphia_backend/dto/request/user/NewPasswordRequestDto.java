@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.dto.request.user;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -20,6 +21,9 @@ public class NewPasswordRequestDto {
     @NotNull
     @Size(min = 8, max = 256, message = PASSWORD_SIZE_MESSAGE)
     private String confirmNewPassword;
+
+    @NotBlank
+    private String token;
 }
 
 

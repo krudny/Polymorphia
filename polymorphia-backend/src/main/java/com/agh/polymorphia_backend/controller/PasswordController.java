@@ -26,14 +26,12 @@ public class PasswordController {
     }
 
     @PostMapping("/forgot-password")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Void> forgotPassword(@RequestBody ForgotPasswordRequestDto requestDTO) {
         passwordService.forgotPassword(requestDTO);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/new-password")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Void> newPassword(@RequestBody NewPasswordRequestDto requestDTO) {
         passwordService.newPassword(requestDTO);
         return ResponseEntity.ok().build();
