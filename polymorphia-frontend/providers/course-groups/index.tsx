@@ -10,6 +10,7 @@ import useCourseGroupsFilterConfigs from "@/hooks/course/useCourseGroupsFilterCo
 import useStudentSummary from "@/hooks/course/useStudentSummary";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
 import { TargetTypes } from "@/interfaces/api/target";
+import useStudentLastActivity from "@/hooks/course/useStudentLastActivity";
 
 export const CourseGroupsContext = createContext<
   CourseGroupsContextInterface | undefined
@@ -32,6 +33,8 @@ export const CourseGroupsProvider = ({ children }: { children: ReactNode }) => {
 
   const { data: studentSummary, isLoading: isStudentSummaryLoading } =
     useStudentSummary(targetId!);
+  const { data: lastActivities, isLoading: isLastActivitiesLoading } =
+    useStudentLastActivity(targetId!);
 
   return (
     <CourseGroupsContext.Provider
@@ -44,7 +47,9 @@ export const CourseGroupsProvider = ({ children }: { children: ReactNode }) => {
         gradableEventId,
         setGradableEventId,
         studentSummary,
-        isSpecificDataLoading: isStudentSummaryLoading,
+        lastActivities,
+        isSpecificDataLoading:
+          isStudentSummaryLoading || isLastActivitiesLoading,
       }}
     >
       {children}

@@ -3,31 +3,49 @@
 import ColumnComponent from "@/components/column-schema/column-component";
 import { Fragment } from "react";
 import "./index.css";
-import useStudentLastActivity from "@/hooks/course/useStudentLastActivity";
 import Loading from "@/components/loading";
 import LastActivityDetails from "@/components/column-schema/column-component/course-groups/last-activity/details";
-
-const USER_ID = 1;
+import useTargetContext from "@/hooks/contexts/useTargetContext";
+import useCourseGroupsContext from "@/hooks/contexts/useCourseGroupsContext";
+import {
+  baseSwapAnimationWrapperProps,
+  SwapAnimationWrapper,
+} from "@/animations/SwapAnimationWrapper";
+import { getKeyForSelectedTarget } from "@/providers/grading/utils/getKeyForSelectedTarget";
 
 export default function LastActivity() {
-  const { data: lastActivities, isLoading } = useStudentLastActivity(USER_ID);
-
-  if (isLoading || !lastActivities) {
-    return <Loading />;
-  }
+  const { isSpecificDataLoading, lastActivities } = useCourseGroupsContext();
+  const {
+    state: { selectedTarget },
+  } = useTargetContext();
 
   const topComponent = () => <h1>Aktywność</h1>;
   const mainComponent = () => (
-    <Fragment>
+    <SwapAnimationWrapper
+      {...baseSwapAnimationWrapperProps}
+      keyProp={
+        lastActivities && !isSpecificDataLoading
+          ? getKeyForSelectedTarget(selectedTarget)
+          : "loading" + getKeyForSelectedTarget(selectedTarget)
+      }
+    >
       <div className="last-activity">
-        {lastActivities.map((lastActivity) => (
-          <LastActivityDetails
-            key={lastActivity.id}
-            lastActivity={lastActivity}
-          />
-        ))}
+        {lastActivities && !isSpecificDataLoading ? (
+          <>
+            {lastActivities.map((lastActivity) => (
+              <LastActivityDetails
+                key={lastActivity.id}
+                lastActivity={lastActivity}
+              />
+            ))}
+          </>
+        ) : (
+          <div className="h-full relative">
+            <Loading />
+          </div>
+        )}
       </div>
-    </Fragment>
+    </SwapAnimationWrapper>
   );
 
   return (
