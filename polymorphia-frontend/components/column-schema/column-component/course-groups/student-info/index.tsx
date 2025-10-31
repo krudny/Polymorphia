@@ -13,10 +13,16 @@ import ItemsSummary from "@/components/column-schema/column-component/course-gro
 import ChestSummary from "@/components/column-schema/column-component/course-groups/student-info/chest-summary";
 import StudentSummary from "@/components/column-schema/column-component/course-groups/student-info/student-summary";
 import useCourseGroupsContext from "@/hooks/contexts/useCourseGroupsContext";
+import useTargetContext from "@/hooks/contexts/useTargetContext";
+import { getKeyForSelectedTarget } from "@/providers/grading/utils/getKeyForSelectedTarget";
+import Loading from "@/components/loading";
 
 export default function StudentInfo() {
   const accordionRef = useRef<AccordionRef>(null);
-  const { isSpecificDataLoading } = useCourseGroupsContext();
+  const { isSpecificDataLoading, studentSummary } = useCourseGroupsContext();
+  const {
+    state: { selectedTarget },
+  } = useTargetContext();
 
   const topComponent = () => <h1>Student</h1>;
   const mainComponent = () => (
@@ -37,12 +43,18 @@ export default function StudentInfo() {
           <SwapAnimationWrapper
             {...baseSwapAnimationWrapperProps}
             keyProp={
-              isSpecificDataLoading
-                ? "loading-student-summary"
-                : "student-summary"
+              studentSummary && !isSpecificDataLoading
+                ? getKeyForSelectedTarget(selectedTarget)
+                : "loading" + getKeyForSelectedTarget(selectedTarget)
             }
           >
-            <StudentSummary />
+            {studentSummary && !isSpecificDataLoading ? (
+              <StudentSummary studentSummary={studentSummary} />
+            ) : (
+              <div className="h-[100px] mt-2 relative">
+                <Loading />
+              </div>
+            )}
           </SwapAnimationWrapper>
         </AccordionSection>
         <AccordionSection
@@ -53,7 +65,11 @@ export default function StudentInfo() {
         >
           <SwapAnimationWrapper
             {...baseSwapAnimationWrapperProps}
-            keyProp="items"
+            keyProp={
+              !isSpecificDataLoading
+                ? getKeyForSelectedTarget(selectedTarget)
+                : "loading" + getKeyForSelectedTarget(selectedTarget)
+            }
           >
             <ItemsSummary />
           </SwapAnimationWrapper>
@@ -67,7 +83,11 @@ export default function StudentInfo() {
         >
           <SwapAnimationWrapper
             {...baseSwapAnimationWrapperProps}
-            keyProp="chests"
+            keyProp={
+              !isSpecificDataLoading
+                ? getKeyForSelectedTarget(selectedTarget)
+                : "loading" + getKeyForSelectedTarget(selectedTarget)
+            }
           >
             <ChestSummary />
           </SwapAnimationWrapper>

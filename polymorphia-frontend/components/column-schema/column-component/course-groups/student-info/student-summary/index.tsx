@@ -1,16 +1,12 @@
 import Image from "next/image";
 import { API_STATIC_URL } from "@/services/api";
 import ProfileProgressBar from "@/components/progressbar/profile";
-import useCourseGroupsContext from "@/hooks/contexts/useCourseGroupsContext";
 import "./index.css";
+import StudentSummaryProps from "@/components/column-schema/column-component/course-groups/student-info/student-summary/types";
 
-export default function StudentSummary() {
-  const { studentSummary } = useCourseGroupsContext();
-
-  if (!studentSummary) {
-    return;
-  }
-
+export default function StudentSummary({
+  studentSummary,
+}: StudentSummaryProps) {
   const {
     studentName,
     animalName,

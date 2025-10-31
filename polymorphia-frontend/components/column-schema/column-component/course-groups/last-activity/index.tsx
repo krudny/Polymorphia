@@ -21,7 +21,10 @@ export default function LastActivity() {
     <Fragment>
       <div className="last-activity">
         {lastActivities.map((lastActivity) => (
-          <LastActivityDetails lastActivity={lastActivity} />
+          <LastActivityDetails
+            key={lastActivity.id}
+            lastActivity={lastActivity}
+          />
         ))}
       </div>
     </Fragment>
