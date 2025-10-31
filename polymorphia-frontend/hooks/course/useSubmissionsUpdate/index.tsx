@@ -1,4 +1,3 @@
-import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import { SubmissionDetailsResponseDTO } from "@/interfaces/api/grade/submission";
 import { EventSectionService } from "@/services/event-section";
@@ -14,8 +13,7 @@ export default function useSubmissionsUpdate({
   target,
 }: UseSubmissionsUpdateProps): UseSubmissionsUpdate {
   const queryClient = useQueryClient();
-  const { courseId } = useUserDetails();
-  const { eventSectionId, gradableEventId } = useEventParams();
+  const { gradableEventId } = useEventParams();
 
   return useMutation({
     mutationFn: (submissionDetails: SubmissionDetailsResponseDTO) => {
@@ -24,13 +22,10 @@ export default function useSubmissionsUpdate({
       }
 
       return toast.promise(
-        EventSectionService.submitSubmissions(
+        EventSectionService.submitSubmissions(gradableEventId, {
           target,
-          courseId,
-          eventSectionId,
-          gradableEventId,
-          submissionDetails
-        ),
+          details: submissionDetails,
+        }),
         {
           loading: "Zapisywanie zmian...",
           success: "Pomyślnie zapisano oddane zadania!",

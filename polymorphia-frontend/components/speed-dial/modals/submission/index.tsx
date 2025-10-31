@@ -178,6 +178,13 @@ export default function SubmissionsModal({
     userRole === Roles.STUDENT ? { type: TargetTypes.STUDENT, id } : null
   );
 
+  console.log(
+    details,
+    isDetailsLoading,
+    isDetailsError,
+    userRole === Roles.STUDENT ? { type: TargetTypes.STUDENT, id } : null
+  );
+
   return (
     <Modal
       isDataPresented={true}

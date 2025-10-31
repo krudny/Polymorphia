@@ -42,12 +42,12 @@ public class SubmissionControllerTest extends ControllerTestConfig {
 
     @Test
     void getSubmissionDetails_ShouldReturnDetailsForStudent() throws IOException {
-        String actualResponse = getEndpointWithBody(
+        String actualResponse = postEndpoint(
                 "submissions/details?gradableEventId={gradableEventId}",
                 "sampleuser@test.com",
                 "password",
                 200,
-                StudentTargetRequestDto.builder().id(12L).build(),
+                Optional.of(StudentTargetRequestDto.builder().id(12L).build()),
                 7
         );
 
@@ -56,12 +56,12 @@ public class SubmissionControllerTest extends ControllerTestConfig {
 
     @Test
     void getSubmissionDetails_ShouldReturnDetailsForInstructor() throws IOException {
-        String actualResponse = getEndpointWithBody(
+        String actualResponse = postEndpoint(
                 "submissions/details?gradableEventId={gradableEventId}",
                 "sampleinstructor@test.com",
                 "password",
                 200,
-                StudentTargetRequestDto.builder().id(12L).build(),
+                Optional.of(StudentTargetRequestDto.builder().id(12L).build()),
                 7
         );
 
@@ -93,12 +93,12 @@ public class SubmissionControllerTest extends ControllerTestConfig {
                 7
         );
 
-        String actualResponse = getEndpointWithBody(
+        String actualResponse = postEndpoint(
                 "submissions/details?gradableEventId={gradableEventId}",
                 "sampleuser@test.com",
                 "password",
                 200,
-                StudentTargetRequestDto.builder().id(12L).build(),
+                Optional.of(StudentTargetRequestDto.builder().id(12L).build()),
                 7
         );
 

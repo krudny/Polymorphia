@@ -32,6 +32,7 @@ import { EventTypes } from "@/interfaces/general";
 import { API_HOST } from "@/services/api";
 import { CriterionResponseDTO } from "@/interfaces/api/grade/criteria";
 import {
+  SubmissionDetailsRequestDTO,
   SubmissionDetailsResponseDTO,
   SubmissionRequirementResponseDTO,
 } from "@/interfaces/api/grade/submission";
@@ -987,147 +988,58 @@ export const EventSectionService = {
   },
 
   getSubmissionRequirements: async (
-    courseId: number,
-    eventSectionId: number,
     gradableEventId: number
   ): Promise<SubmissionRequirementResponseDTO[]> => {
-    await new Promise<void>((resolve) => setTimeout(resolve, 200));
+    const response = await fetch(
+      `${API_HOST}/submissions/requirements?gradableEventId=${gradableEventId}`,
+      { credentials: "include" }
+    );
 
-    if (eventSectionId === 1) {
-      throw new Error("Test events do not have submission requirements");
+    if (!response.ok) {
+      throw new Error("Nie udało się pobrać wymagań!");
     }
 
-    // assignment sections
-    if (
-      eventSectionId === 2 ||
-      eventSectionId === 4 ||
-      eventSectionId === 10 ||
-      eventSectionId === 11
-    ) {
-      const baseRequirements: SubmissionRequirementResponseDTO[] = [
-        {
-          id: 1,
-          name: "Wykonanie zadania",
-          isMandatory: true,
-          orderIndex: 1,
-        },
-      ];
-
-      // add extra assignment for lab 4, 5, or 8
-      const labsWithExtra = [12, 13, 16];
-      if (labsWithExtra.includes(gradableEventId)) {
-        baseRequirements.push({
-          id: 2,
-          name: "Zadanie dodatkowe",
-          isMandatory: false,
-          orderIndex: 2,
-        });
-      }
-
-      return baseRequirements;
-    }
-
-    // Project sections
-    if (eventSectionId === 3 || eventSectionId === 7) {
-      return [
-        {
-          id: 3,
-          name: "Repozytorium projektu",
-          isMandatory: true,
-          orderIndex: 1,
-        },
-      ];
-    }
-
-    // default fallback
-    return [
-      {
-        id: 1,
-        name: "Wykonanie zadania",
-        isMandatory: true,
-        orderIndex: 1,
-      },
-    ];
+    return await response.json();
   },
 
   getSubmissionDetails: async (
-    target: TargetRequestDTO,
-    courseId: number,
-    eventSectionId: number,
-    gradableEventId: number
+    gradableEventId: number,
+    target: TargetRequestDTO
   ): Promise<SubmissionDetailsResponseDTO> => {
-    await new Promise<void>((resolve) => setTimeout(resolve, 200));
-
-    if (eventSectionId === 1) {
-      throw new Error("Test events do not have submission details");
-    }
-
-    // Always returns data for all requirements.
-    // If there is no submission, url is set to ""
-    // to simplify handling on the frontend.
-
-    // assignment
-    if (
-      eventSectionId === 2 ||
-      eventSectionId === 4 ||
-      eventSectionId === 10 ||
-      eventSectionId === 11
-    ) {
-      const result: SubmissionDetailsResponseDTO = {
-        1: {
-          url:
-            Math.random() < 0.8
-              ? `https://example.com/submissions/${gradableEventId}/1`
-              : "",
-          isLocked: Math.random() < 0.5,
-        },
-      };
-
-      const labsWithExtra = [12, 13, 16];
-      if (labsWithExtra.includes(gradableEventId)) {
-        result[2] = {
-          url:
-            Math.random() < 0.3
-              ? `https://example.com/submissions/${gradableEventId}/2/extra`
-              : "",
-          isLocked: Math.random() < 0.3,
-        };
+    console.log(gradableEventId, target, "sadf");
+    const response = await fetch(
+      `${API_HOST}/submissions/details?gradableEventId=${gradableEventId}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(target),
       }
+    );
 
-      return result;
+    if (!response.ok) {
+      throw new Error("Nie udało się pobrać oddanego zadania!");
     }
 
-    // project
-    if (eventSectionId === 3 || eventSectionId === 7) {
-      return {
-        3: {
-          url:
-            Math.random() < 0.8
-              ? `https://example.com/submissions/${gradableEventId}/repo`
-              : "",
-          isLocked: Math.random() < 0.1,
-        },
-      };
-    }
-
-    return {
-      1: {
-        url:
-          Math.random() < 0.8
-            ? `https://example.com/submissions/${gradableEventId}/1`
-            : "",
-        isLocked: Math.random() < 0.5,
-      },
-    };
+    return await response.json();
   },
 
   submitSubmissions: async (
-    target: TargetRequestDTO,
-    courseId: number,
-    eventSectionId: number,
     gradableEventId: number,
-    submissionDetails: SubmissionDetailsResponseDTO
+    submissionDetails: SubmissionDetailsRequestDTO
   ): Promise<void> => {
-    await new Promise<void>((resolve) => setTimeout(resolve, 200));
+    const response = await fetch(
+      `${API_HOST}/submissions/details?gradableEventId=${gradableEventId}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(submissionDetails),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Nie udało się zapisać oddanego zadania!");
+    }
   },
 };

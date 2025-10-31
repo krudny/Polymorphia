@@ -1,3 +1,5 @@
+import { TargetRequestDTO } from "../target";
+
 type SubmissionRequirementId = number;
 
 export interface SubmissionDetails {
@@ -16,3 +18,8 @@ export type SubmissionDetailsResponseDTO = Record<
   SubmissionRequirementId,
   SubmissionDetails
 >;
+
+export interface SubmissionDetailsRequestDTO {
+  target: TargetRequestDTO;
+  details: SubmissionDetailsResponseDTO;
+}
