@@ -102,10 +102,4 @@ public class AccessAuthorizer {
                 || isCourseAccessAuthorizedInstructor(user, course)
                 || isCourseAccessAuthorizedCoordinator(user, course);
     }
-
-    private boolean isCourseAccessAuthorizedUndefined(User user, Course course) {
-        return isCourseAccessAuthorizedStudent(user, course)
-                || isCourseAccessAuthorizedInstructor(user, course)
-                || isCourseAccessAuthorizedCoordinator(user, course);
-    }
 }

@@ -70,7 +70,7 @@ public class CourseGroupsService {
     }
 
     private List<CourseGroup> getStudentCourseGroups(Long userId, Long courseId) {
-        return courseGroupRepository.findByStudentIdAndCourseIdWhereAnimalExists(userId, courseId);
+        return courseGroupRepository.findByStudentIdAndCourseIdAndIsAssignedToCourseGroup(userId, courseId);
 
     }
 
