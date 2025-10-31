@@ -32,7 +32,6 @@ TRUNCATE TABLE project_groups cascade;
 TRUNCATE TABLE project_groups_animals cascade;
 TRUNCATE TABLE submission_requirements cascade;
 TRUNCATE TABLE submissions cascade;
-
 INSERT INTO
   users (id, first_name, last_name, email, password, preferred_course_id)
 VALUES
@@ -324,6 +323,11 @@ INSERT INTO
   user_course_roles (role, user_id, course_id)
 VALUES
   ('STUDENT', 7, 2);
+INSERT INTO
+  user_course_roles (role, user_id, course_id)
+VALUES
+  ('INSTRUCTOR', 4, 1),
+  ('INSTRUCTOR', 4, 2);
 INSERT INTO
   animals (id, name)
 VALUES
