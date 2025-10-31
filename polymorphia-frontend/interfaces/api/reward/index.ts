@@ -25,6 +25,7 @@ export type ItemBonusType = "FLAT_BONUS" | "PERCENTAGE_BONUS";
 export interface BaseItem extends BaseReward {
   itemBonusType: ItemBonusType;
   bonusText: string;
+  shortBonusText: string;
   limit: number;
   isLimitReached: boolean;
   eventSectionId: number;
@@ -53,7 +54,13 @@ type ItemResponseDTOWithType = BaseRewardResponseDTOWithType<
 >;
 
 // Chests
-export type ChestBehavior = "ALL" | "ONE_OF_MANY";
+export const ChestBehaviors = {
+  ALL: "ALL",
+  ONE_OF_MANY: "ONE_OF_MANY",
+} as const;
+
+export type ChestBehavior =
+  (typeof ChestBehaviors)[keyof typeof ChestBehaviors];
 
 export interface BaseChest extends BaseReward {
   behaviorText: string;

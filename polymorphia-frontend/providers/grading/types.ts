@@ -5,6 +5,11 @@ import {
   GradingReducerState,
 } from "@/providers/grading/gradingReducer/types";
 import { TargetResponseDTO } from "@/interfaces/api/grade/target";
+import {
+  SubmissionDetailsResponseDTO,
+  SubmissionRequirementResponseDTO,
+} from "@/interfaces/api/grade/submission";
+import { CriterionResponseDTO } from "@/interfaces/api/grade/criteria";
 
 export type GradingContextInterface = {
   areFiltersOpen: boolean;
@@ -15,11 +20,14 @@ export type GradingContextInterface = {
   search: string;
   setSearch: (search: string) => void;
   targets: TargetResponseDTO[] | undefined;
-  isTargetsLoading: boolean;
-  isGradeLoading: boolean;
+  criteria: CriterionResponseDTO[] | undefined;
+  submissionRequirements: SubmissionRequirementResponseDTO[] | undefined;
+  isGeneralDataLoading: boolean;
+  isSpecificDataLoading: boolean;
   state: GradingReducerState;
   dispatch: Dispatch<GradingReducerActionType>;
   submitGrade: () => void;
+  submitSubmissions: (submissionDetails: SubmissionDetailsResponseDTO) => void;
 };
 
-export type GradingFilterId = "sortOrder" | "sortBy" | "groups";
+export type GradingFilterId = "sortOrder" | "sortBy" | "groups" | "gradeStatus";

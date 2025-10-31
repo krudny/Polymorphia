@@ -35,7 +35,7 @@ export function useHallOfFameFilterConfigs(courseId: number) {
           id: "sortBy",
           title: "Sortowanie po kategorii",
           options: [
-            { value: "animalName", label: "Nazwa" },
+            { value: "name", label: "Nazwa" },
             ...eventSections.map((eventSection: EventSectionResponseDTO) => ({
               value: eventSection.name,
             })),
@@ -67,11 +67,11 @@ export function useHallOfFameFilterConfigs(courseId: number) {
             })),
             { value: "bonuses", label: "Bonusy" },
           ],
-          min: Math.min(4, eventSections.length),
-          max: Math.min(4, eventSections.length),
+          min: Math.min(4, eventSections.length + 1),
+          max: Math.min(4, eventSections.length + 1),
           defaultValues: [
             ...eventSections
-              .slice(0, Math.min(3, Math.max(0, eventSections.length - 1)))
+              .slice(0, Math.min(3, eventSections.length))
               .map((eventSection) => eventSection.name),
             "bonuses",
           ],

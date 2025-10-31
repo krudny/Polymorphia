@@ -1,10 +1,14 @@
 package com.agh.polymorphia_backend.service.course;
 
+import com.agh.polymorphia_backend.dto.response.course.CourseGroupsResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.AvailableCoursesResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
+import com.agh.polymorphia_backend.model.course.CourseGroup;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.UserCourseRole;
+import com.agh.polymorphia_backend.repository.course.CourseGroupRepository;
 import com.agh.polymorphia_backend.repository.course.CourseRepository;
+import com.agh.polymorphia_backend.repository.course.StudentCourseGroupRepository;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.service.mapper.CourseMapper;
 import com.agh.polymorphia_backend.service.user.UserService;
@@ -14,11 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 
 @Service
 @AllArgsConstructor
@@ -53,8 +55,8 @@ public class CourseService {
                 ));
 
         return courses.stream()
-                .filter(course -> accessAuthorizer.isCourseAccessAuthorized(abstractRoleUser, course))
                 .filter(course -> courseRoleMap.containsKey(course.getId()))
+                .filter(course -> accessAuthorizer.isCourseAccessAuthorized(abstractRoleUser, course))
                 .map(course -> courseMapper.toAvailableCoursesResponseDto(
                         course,
                         courseRoleMap.get(course.getId()).getRole()

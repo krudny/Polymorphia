@@ -20,7 +20,7 @@ export default function GradeInfo({ grade, criteria }: GradeInfoProps) {
     ...(grade.isGraded ? ["Komentarz"] : []),
   ];
 
-  const initallyOpenedAccordionSections = new Set(
+  const initiallyOpenedAccordionSections = new Set(
     accordionSections.length > 0 && isMd && grade.isGraded
       ? [accordionSections[0]]
       : []
@@ -31,7 +31,7 @@ export default function GradeInfo({ grade, criteria }: GradeInfoProps) {
       <Accordion
         className="grade-info-accordion-override"
         sectionIds={new Set(accordionSections)}
-        initiallyOpenedSectionIds={initallyOpenedAccordionSections}
+        initiallyOpenedSectionIds={initiallyOpenedAccordionSections}
         maxOpen={1}
         shouldAnimateInitialOpen={true}
       >

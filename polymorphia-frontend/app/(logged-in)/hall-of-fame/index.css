@@ -6,5 +6,5 @@
 }
 
 .desktop-hall-of-fame {
-  @apply w-full flex-col-centered flex-1 flex;
+  @apply w-full flex-col-centered h-[calc(100dvh-5rem)] overflow-y-hidden flex;
 }

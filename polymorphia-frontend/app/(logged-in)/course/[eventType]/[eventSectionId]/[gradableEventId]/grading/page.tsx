@@ -1,17 +1,26 @@
 "use client";
 
-import { useEventParams } from "@/hooks/general/useEventParams";
+import { useTitle } from "@/components/navigation/TitleContext";
+import useGradableEvent from "@/hooks/course/useGradableEvent";
 import { GradingProvider } from "@/providers/grading/GradingContext";
 import Grading from "@/views/course/grading";
-import { useMediaQuery } from "react-responsive";
+import { useEffect } from "react";
 
 export default function GradingView() {
-  const { eventType } = useEventParams();
-  const isXL = useMediaQuery({ minWidth: "1400px" });
+  const { data: gradableEvent, isError } = useGradableEvent();
+  const { setTitle } = useTitle();
+
+  useEffect(() => {
+    if (gradableEvent) {
+      setTitle(gradableEvent.name);
+    } else if (isError) {
+      setTitle("");
+    }
+  }, [setTitle, gradableEvent, isError]);
 
   return (
     <GradingProvider>
-      <Grading eventType={eventType} columns={isXL ? 2 : 1} />
+      <Grading />
     </GradingProvider>
   );
 }

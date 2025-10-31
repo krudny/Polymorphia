@@ -3,6 +3,7 @@ package com.agh.polymorphia_backend.service.validation;
 import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
+import com.agh.polymorphia_backend.model.user.Student;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserCourseRole;
 import com.agh.polymorphia_backend.model.user.UserType;
@@ -93,7 +94,13 @@ public class AccessAuthorizer {
     }
 
     private boolean isCourseAccessAuthorizedStudent(User user, Course course) {
-        return studentRepository.findByUserIdAndCourseId(user.getId(), course.getId()).isPresent();
+        return studentRepository.findByUserIdAndCourseIdAndAssignedToCourseGroup(user.getId(), course.getId()).isPresent();
+    }
+
+    private boolean isCourseAccessAuthorizedUndefined(User user, Course course) {
+        return isCourseAccessAuthorizedStudent(user, course)
+                || isCourseAccessAuthorizedInstructor(user, course)
+                || isCourseAccessAuthorizedCoordinator(user, course);
     }
 
     private boolean isCourseAccessAuthorizedUndefined(User user, Course course) {

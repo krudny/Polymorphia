@@ -10,7 +10,7 @@ export class RulesStrategy
   getItems(role: Role): SpeedDialItem[] {
     switch (role) {
       case Roles.STUDENT:
-        return [this.createRewards(), this.createGoBack()];
+        return [this.createGoBack()];
       case Roles.COORDINATOR:
         return [...this.createEditing(), this.createMarkdownReset()];
       default:

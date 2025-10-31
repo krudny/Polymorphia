@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.repository.user.role;
 
+import com.agh.polymorphia_backend.model.user.Instructor;
 import com.agh.polymorphia_backend.model.user.Student;
 import com.agh.polymorphia_backend.repository.user.UserDetailsRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,6 +15,13 @@ public interface StudentRepository extends JpaRepository<Student, Long>, UserDet
             "select s from StudentCourseGroupAssignment scga " +
                     "join  scga.student s " +
                     "where s.user.id=:userId and scga.courseGroup.course.id=:courseId"
+    )
+    Optional<Student> findByUserIdAndCourseIdAndAssignedToCourseGroup(Long userId, Long courseId);
+
+    @Query(
+            "select s from Student s " +
+                    "join UserCourseRole ucr on ucr.user.id = s.user.id " +
+                    "where s.user.id = :userId and ucr.course.id = :courseId"
     )
     @Override
     Optional<Student> findByUserIdAndCourseId(Long userId, Long courseId);

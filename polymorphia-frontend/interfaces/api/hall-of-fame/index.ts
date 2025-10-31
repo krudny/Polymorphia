@@ -2,9 +2,7 @@ import { HallOfFameUserDTO } from "@/interfaces/api/user";
 
 export interface HallOfFameResponseDTO {
   content: HallOfFameRecordDTO[];
-  currentUser: {
-    page: number;
-  };
+  currentUserPage: number;
   page: {
     number: number;
     totalPages: number;

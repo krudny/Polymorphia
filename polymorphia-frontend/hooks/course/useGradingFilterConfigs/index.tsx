@@ -49,6 +49,16 @@ export function useGradingFilterConfigs(courseId: number) {
           defaultValues: ["all"],
           max: courseGroups.length,
         },
+        {
+          id: "gradeStatus",
+          title: "Status oceny",
+          options: [
+            { value: "all", label: "Wszystkie" },
+            { value: "ungraded", label: "Nieocenione" },
+            { value: "graded", label: "Ocenione" },
+          ],
+          defaultValues: ["all"],
+        },
       ];
 
       return configs;

@@ -100,6 +100,10 @@
   @apply inline-block text-primary-error;
 }
 
+.markdown-config-code-block {
+  @apply bg-primary-dark text-base p-4 rounded overflow-x-auto my-4;
+}
+
 /* Markdown viewer */
 
 .markdown-viewer {

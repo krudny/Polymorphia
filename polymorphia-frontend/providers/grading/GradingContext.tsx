@@ -24,7 +24,13 @@ import useGradingTargets from "@/hooks/course/useGradingTargets";
 import useShortGrade from "@/hooks/course/useShortGrade";
 import { getRequestTargetFromResponseTarget } from "@/providers/grading/utils/getRequestTargetFromResponseTarget";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
-import areTargetsEqual from "@/providers/grading/utils/areTargetsEqual";
+import isSelectedTargetStillAvailable from "@/providers/grading/utils/isSelectedTargetStillAvailable";
+import { TargetTypes } from "@/interfaces/api/grade/target";
+import useSubmissionDetails from "@/hooks/course/useSubmissionDetails";
+import { SubmissionDetailsResponseDTO } from "@/interfaces/api/grade/submission";
+import useSubmissionsUpdate from "@/hooks/course/useSubmissionsUpdate";
+import useSubmissionRequirements from "@/hooks/course/useSubmissionRequirements";
+import useCriteria from "@/hooks/course/useCriteria";
 
 export const GradingContext = createContext<
   GradingContextInterface | undefined
@@ -48,31 +54,53 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["total"];
   const sortOrder = filters.getAppliedFilterValues("sortOrder") ?? ["asc"];
   const groups = filters.getAppliedFilterValues("groups") ?? ["all"];
+  const gradeStatus = filters.getAppliedFilterValues("gradeStatus") ?? ["all"];
 
   const { data: targets, isLoading: isTargetsLoading } = useGradingTargets(
     debouncedSearch,
     sortBy,
     sortOrder,
-    groups
+    groups,
+    gradeStatus
   );
+
+  const { data: criteria, isLoading: isCriteriaLoading } = useCriteria();
   const { data: grade, isLoading: isGradeLoading } = useShortGrade(
     state.selectedTarget
   );
-  const { mutate } = useGradeUpdate();
+  const { mutate: mutateGrade } = useGradeUpdate();
+
+  const {
+    data: submissionRequirements,
+    isLoading: isSubmissionRequirementsLoading,
+  } = useSubmissionRequirements();
+  const { data: submissionDetails, isLoading: isSubmissionDetailsLoading } =
+    useSubmissionDetails(state.selectedTarget);
+  const { mutate: mutateSubmissions } = useSubmissionsUpdate({
+    target: state.selectedTarget,
+  });
 
   useEffect(() => {
     if (!targets || targets.length < 1) {
       return;
     }
 
-    const isSelectedTargetInNewTargets = targets.find((target) =>
-      areTargetsEqual(target, state.selectedTarget)
+    const isSelectedTargetInNewTargets = isSelectedTargetStillAvailable(
+      targets,
+      state.selectedTarget
     );
 
     if (!isSelectedTargetInNewTargets) {
+      // Dispatch HANDLE_STUDENT_SELECTION to reuse target selection logic
       dispatch({
-        type: GradingReducerActions.SET_TARGET,
-        payload: targets[0],
+        type: GradingReducerActions.HANDLE_STUDENT_SELECTION,
+        payload: {
+          target: targets[0],
+          member:
+            targets[0].type === TargetTypes.STUDENT
+              ? targets[0]
+              : targets[0].members[0],
+        },
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- We want this effect to run ONLY when targets list changes.
@@ -91,17 +119,40 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
     });
   }, [grade]);
 
+  useEffect(() => {
+    if (!submissionDetails) {
+      return;
+    }
+
+    dispatch({
+      type: GradingReducerActions.SET_SUBMISSION_DETAILS,
+      payload: {
+        submissionDetails,
+      },
+    });
+  }, [submissionDetails]);
+
   const submitGrade = () => {
     if (!state.selectedTarget) {
       return;
     }
 
-    mutate({
+    mutateGrade({
       target: getRequestTargetFromResponseTarget(state.selectedTarget),
       gradableEventId,
       criteria: state.criteria,
       comment: state.comment,
     });
+  };
+
+  const submitSubmissions = (
+    submissionDetails: SubmissionDetailsResponseDTO
+  ) => {
+    if (!state.selectedTarget) {
+      return;
+    }
+
+    mutateSubmissions(submissionDetails);
   };
 
   return (
@@ -117,9 +168,15 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
         search,
         setSearch,
         targets,
-        isTargetsLoading,
-        isGradeLoading,
+        criteria,
+        submissionRequirements,
+        isGeneralDataLoading:
+          isTargetsLoading ||
+          isCriteriaLoading ||
+          isSubmissionRequirementsLoading,
+        isSpecificDataLoading: isGradeLoading || isSubmissionDetailsLoading,
         submitGrade,
+        submitSubmissions,
       }}
     >
       {children}

@@ -1,6 +1,5 @@
 package com.agh.polymorphia_backend.service.user;
 
-import com.agh.polymorphia_backend.dto.response.user_context.AvailableCoursesResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.UserDetailsResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
@@ -17,9 +16,10 @@ import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+
+import static com.agh.polymorphia_backend.service.user.UserService.USER_NOT_FOUND;
 
 import static com.agh.polymorphia_backend.service.user.UserService.USER_NOT_FOUND;
 
