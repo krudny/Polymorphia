@@ -17,6 +17,10 @@ TRUNCATE TABLE rewards cascade;
 TRUNCATE TABLE items cascade;
 TRUNCATE TABLE flat_bonus_items cascade;
 TRUNCATE TABLE percentage_bonus_items cascade;
+TRUNCATE TABLE project_groups cascade;
+TRUNCATE TABLE project_groups_animals cascade;
+TRUNCATE TABLE submission_requirements cascade;
+TRUNCATE TABLE submissions cascade;
 
 -- Users
 INSERT INTO users (id, first_name, last_name, email, password, preferred_course_id)
@@ -47,7 +51,8 @@ VALUES (1, 'Programowanie Obiektowe', 3, '/coord_url', '/instr_url', 'img_url', 
 
 insert into users(id, first_name, last_name, email, password, preferred_course_id)
 values (12, 'Sample', 'User', 'sampleuser@test.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O',
-        4);
+        4),
+        (13, 'Sample', 'Instructor', 'sampleinstructor@test.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', 4);
 -- Students
 INSERT INTO students(user_id, index_number)
 VALUES (2, 123456),
@@ -66,7 +71,8 @@ WHERE id in (2, 5, 11);
 -- Instructors
 INSERT INTO instructors(user_id)
 VALUES (4),
-       (11);
+       (11),
+       (13);
 
 -- UserCourseRoles
 INSERT INTO user_course_roles(user_id, course_id, role)
@@ -84,7 +90,8 @@ VALUES (3, 1, 'COORDINATOR'),
        (10, 1, 'STUDENT'),
        (11, 1, 'INSTRUCTOR'),
        (12, 4, 'STUDENT'),
-       (4, 4, 'INSTRUCTOR');
+       (4, 4, 'INSTRUCTOR'),
+       (13, 4, 'INSTRUCTOR');
 
 -- Course Groups
 INSERT INTO course_groups (id, name, course_id, instructor_id)
@@ -92,7 +99,8 @@ VALUES (1, 'MI-SR12', 1, 4),
 
        (2, 'BM-SR13', 1, 11),
        (3, 'BM-SR15', 1, 11),
-       (4, 'BM-SR15', 4, 4);
+       (4, 'BM-SR15', 4, 4),
+       (5, 'BM-SR16', 4, 13);
 
 -- Animals
 INSERT INTO animals (id, name)
@@ -131,7 +139,8 @@ INSERT INTO public.event_sections (id, has_gradable_events_with_topics, is_hidde
 VALUES (1, true, true, true, 'Kartkówka', 2, 1),
        (2, true, true, true, 'Lab', 1, 1),
        (3, true, true, true, 'Kartkówka', 2, 4),
-       (4, true, true, true, 'Laboratorium', 1, 4);
+       (4, true, true, true, 'Laboratorium', 1, 4),
+       (5, true, true, true, 'Projekt', 3, 4);
 
 -- Test sections
 INSERT INTO public.test_sections (id)
@@ -142,6 +151,10 @@ VALUES (1),
 INSERT INTO public.assignment_sections (id)
 VALUES (2),
        (4);
+
+-- Project sections
+INSERT INTO public.project_sections (id)
+VALUES (5);
 
 -- Rewards
 INSERT INTO public.rewards (id, description, image_url, name, order_index, course_id)
@@ -212,8 +225,15 @@ VALUES (1, 1, 'kartkówka 1', null, 1, 1, '/url', 'markdown', false, false),
        (3, 3, 'kartkówka 2', null, 1, 1, '/url', 'markdown', false, false),
        (4, 4, 'lab 2', null, 1, 1, '/url', 'markdown', false, false),
        (5, 3, 'kartkówka 3', null, 1, 1, '/url', 'markdown', false, false),
-       (6, 3, 'kartkówka 4', null, 1, 1, '/url', 'markdown', false, false);
+       (6, 3, 'kartkówka 4', null, 1, 1, '/url', 'markdown', false, false),
+       (7, 5, 'projekt', null, 1, 1, '/url', 'markdown', false, false);
 
+-- Project groups
+INSERT INTO public.project_groups (id, instructor_id, project_id)
+VALUES (1, 13, 7);
+
+INSERT INTO public.project_groups_animals (animal_id, project_group_id)
+VALUES (8, 1);
 
 -- Criteria
 INSERT INTO public.criteria (id, gradable_event_id, name, max_xp)
@@ -222,7 +242,8 @@ VALUES (1, 1, 'uzyskane punkty', 20.0),
        (3, 4, 'uzyskane punkty', 4.0),
        (4, 3, 'kryterium2', 10.0),
        (5, 3, 'uzyskane punkty', 8.0),
-       (6, 3, 'uzyskane punkty2', 6.0);
+       (6, 3, 'uzyskane punkty2', 6.0),
+       (7, 7, 'uzyskane punkty', 10.0);
 
 -- Submission Requirements
 INSERT INTO public.submission_requirements (id, gradable_event_id, name, is_mandatory, order_index)
@@ -230,7 +251,13 @@ VALUES (1, 2, 'Wykonanie zadania', true, 1),
        (2, 4, 'Wykonanie zadania 1', true, 1),
        (3, 4, 'Wykonanie zadania 2', true, 2),
        (4, 4, 'Zadanie dodatkowe 1', false, 3),
-       (5, 4, 'Zadanie dodatkowe 2', false, 4);
+       (5, 4, 'Zadanie dodatkowe 2', false, 4),
+       (6, 7, 'Repozytorium projektu', true, 1),
+       (7, 7, 'Slodki kotek', false, 2);
+
+-- Submissions
+INSERT INTO public.submissions (id, submission_requirement_id, animal_id, url, is_locked, created_date, modified_date)
+VALUES (1, 6, 8, 'https://www.google.com', true, NOW(), NOW());
 
 -- Grades
 INSERT INTO public.grades (id, gradable_event_id, animal_id, created_date, modified_date, comment)
@@ -327,3 +354,5 @@ SELECT setval('submission_requirements_id_seq', COALESCE(MAX(id), 0) + 1, false)
 FROM submission_requirements;
 SELECT setval('submissions_id_seq', COALESCE(MAX(id), 0) + 1, false)
 FROM submissions;
+SELECT setval('project_groups_id_seq', COALESCE(MAX(id), 0) + 1, false)
+FROM project_groups;

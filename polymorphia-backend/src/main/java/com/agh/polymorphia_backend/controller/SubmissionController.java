@@ -24,7 +24,7 @@ public class SubmissionController {
         return ResponseEntity.ok(submissionService.getSubmissionRequirements(gradableEventId));
     }
 
-    @GetMapping("")
+    @GetMapping("/details")
     @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<Map<Long, SubmissionDetailsDto>> getSubmissionDetails(@RequestParam Long gradableEventId, @RequestBody TargetRequestDto target) {
         return ResponseEntity.ok(submissionService.getSubmissionDetails(gradableEventId, target));
