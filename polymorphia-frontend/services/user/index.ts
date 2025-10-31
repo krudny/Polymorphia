@@ -1,14 +1,14 @@
 import {
+  ChangePasswordDTO,
   InviteRequestDTO,
   RegisterRequestDTO,
-  ChangePasswordDTO,
+  ResetPasswordRequestDTO,
   Role,
   Roles,
   StudentDetailsDTOWithType,
   UserDetailsDTO,
 } from "@/interfaces/api/user";
 import { API_HOST } from "@/services/api";
-import { AvailableCoursesDTO } from "@/interfaces/api/user-context";
 import {
   CreateAnimalRequestDTO,
   StudentCourseGroupAssignmentIdResponseDTO,
@@ -115,6 +115,8 @@ const UserService = {
       throw new Error("Nie udało się ustawić preferencji użytkownika");
     }
   },
+
+  // todo: move and check
   changePassword: async (request: ChangePasswordDTO): Promise<void> => {
     const response = await fetch(`${API_HOST}/users/change-password`, {
       method: "POST",
@@ -129,6 +131,22 @@ const UserService = {
       throw new Error("Nie udało się zmienić hasła!");
     }
   },
+
+  resetPassword: async (request: ResetPasswordRequestDTO): Promise<void> => {
+    const response = await fetch(`${API_HOST}/password/new-password`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(request),
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error("Nie udało się zmienić hasła!");
+    }
+  },
+
   getRandomUsers: async (): Promise<StudentDetailsDTOWithType[]> => {
     return [
       {
