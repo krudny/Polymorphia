@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.service.validation;
 
-import com.agh.polymorphia_backend.model.invitation.Token;
+import com.agh.polymorphia_backend.model.Token.Token;
 import com.agh.polymorphia_backend.repository.invitation.TokenRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,7 +13,6 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 public class TokenValidator {
     public static final String TOKEN_NOT_EXPIRED = "Active invitation token already exists for this email";
-    public static final String TOKEN_ALREADY_USED = "Invitation token has already been used";
     public static final String TOKEN_EXPIRED = "Invitation token has expired";
 
     private final TokenRepository tokenRepository;
@@ -24,10 +23,6 @@ public class TokenValidator {
                     if (token.getExpiryDate().isAfter(ZonedDateTime.now())) {
                         throw new ResponseStatusException(HttpStatus.CONFLICT, TOKEN_NOT_EXPIRED);
                     }
-
-                    if (token.isUsed()) {
-                        throw new ResponseStatusException(HttpStatus.CONFLICT, TOKEN_ALREADY_USED);
-                    }
                 });
     }
 
@@ -35,14 +30,6 @@ public class TokenValidator {
         if (isTokenExpired(token)) {
             throw new ResponseStatusException(HttpStatus.GONE, TOKEN_EXPIRED);
         }
-
-        if (isTokenUsed(token)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, TOKEN_ALREADY_USED);
-        }
-    }
-
-    public boolean isTokenUsed(Token token) {
-        return token.isUsed();
     }
 
     public boolean isTokenExpired(Token token) {

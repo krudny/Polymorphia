@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.service.user;
 
-import com.agh.polymorphia_backend.model.invitation.Token;
+import com.agh.polymorphia_backend.model.Token.Token;
 import com.agh.polymorphia_backend.repository.invitation.TokenRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UserCleanupService {
     private final static String START_CLEANUP = "Starting cleanup of inactive users";
-    private final static String END_CLEANUP = "Cleanup completed. Deleted {} expired tokens, {} used tokens and {} inactive users.";
+    private final static String END_CLEANUP = "Cleanup completed. Deleted {} expired tokens, {} inactive users.";
 
     private UserRepository userRepository;
     private TokenRepository tokenRepository;
@@ -30,7 +30,7 @@ public class UserCleanupService {
         ZonedDateTime now = ZonedDateTime.now();
 
         List<String> expiredTokenEmails = tokenRepository
-                .findByExpiryDateBeforeAndUsedFalse(now)
+                .findByExpiryDateBefore(now)
                 .stream()
                 .map(Token::getEmail)
                 .toList();
@@ -40,9 +40,8 @@ public class UserCleanupService {
         );
 
         Integer deletedExpiredTokens = tokenRepository.deleteByExpiryDateBefore(now);
-        Integer deletedUsedTokens = tokenRepository.deleteByUsedTrue();
 
-        log.info(END_CLEANUP, deletedExpiredTokens, deletedUsedTokens, deletedUserCount);
+        log.info(END_CLEANUP, deletedExpiredTokens, deletedUserCount);
     }
 }
 

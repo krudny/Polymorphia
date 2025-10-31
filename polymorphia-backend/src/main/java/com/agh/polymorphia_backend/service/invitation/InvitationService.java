@@ -7,7 +7,7 @@ import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.course.CourseGroup;
 import com.agh.polymorphia_backend.model.course.StudentCourseGroupAssignment;
 import com.agh.polymorphia_backend.model.course.StudentCourseGroupAssignmentId;
-import com.agh.polymorphia_backend.model.invitation.Token;
+import com.agh.polymorphia_backend.model.Token.Token;
 import com.agh.polymorphia_backend.model.user.*;
 import com.agh.polymorphia_backend.repository.course.CourseGroupRepository;
 import com.agh.polymorphia_backend.repository.course.StudentCourseGroupRepository;
@@ -21,6 +21,7 @@ import com.agh.polymorphia_backend.service.email.EmailService;
 import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.token.TokenService;
 import com.agh.polymorphia_backend.service.user.UserFactory;
+import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import com.agh.polymorphia_backend.service.validation.TokenValidator;
 import com.agh.polymorphia_backend.service.validation.UserValidator;
@@ -39,7 +40,6 @@ public class InvitationService {
     public static final String FAILED_TO_INVITE = "Failed to send invitation";
     public static final String FAILED_TO_REGISTER = "Failed to create account";
     public static final String USER_NOT_EXIST = "User doesn't exist";
-    public static final String TOKEN_NOT_EXIST = "Token doesn't exist";
     public static final String COURSE_GROUP_NOT_EXIST = "Course group doesn't exist";
     public static final String STUDENT_NOT_EXIST = "Student doesn't exist";
     public static final String STUDENT_ALREADY_IN_GROUP = "Student is already in this group";
@@ -51,7 +51,7 @@ public class InvitationService {
     private final PasswordEncoder passwordEncoder;
     private final TokenValidator tokenValidator;
     private final TokenService tokenService;
-    private final TokenRepository tokenRepository;
+    private final UserService userService;
     private final EmailService emailService;
     private final UserCourseRoleRepository userCourseRoleRepository;
     private final UserRepository userRepository;
@@ -110,22 +110,18 @@ public class InvitationService {
 
     @Transactional
     public void registerUser(RegisterRequestDto registerDTO, HttpServletRequest request) {
-        Token token = tokenRepository.findByToken(registerDTO.getInvitationToken())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, TOKEN_NOT_EXIST));
-
-        User user = userRepository.findByEmail(token.getEmail())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, USER_NOT_EXIST));
+        Token token = tokenService.getTokenFromValue(registerDTO.getInvitationToken());
+        User user = userService.getUserByEmail(token.getEmail());
 
         tokenValidator.validateTokenBeforeRegister(token);
         userValidator.validateUserRegistered(user);
         
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
-        token.setUsed(true);
 
         try {
             userRepository.save(user);
-            tokenRepository.save(token);
             registerUtil.authenticateUserAndCreateSession(user.getEmail(), registerDTO.getPassword(), request);
+            tokenService.deleteToken(token);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FAILED_TO_REGISTER);
         }

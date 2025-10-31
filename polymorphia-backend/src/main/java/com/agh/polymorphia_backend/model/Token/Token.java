@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.model.invitation;
+package com.agh.polymorphia_backend.model.Token;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -28,9 +28,6 @@ public class Token {
 
     @NotNull
     private ZonedDateTime expiryDate;
-
-    @Column(nullable = false)
-    private boolean used = false;
 
     @NotNull
     private ZonedDateTime createdAt;

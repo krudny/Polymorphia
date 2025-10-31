@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.repository.invitation;
 
-import com.agh.polymorphia_backend.model.invitation.Token;
+import com.agh.polymorphia_backend.model.Token.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,13 +17,9 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
 
     Optional<Token> findByToken(String token);
 
-    List<Token> findByExpiryDateBeforeAndUsedFalse(ZonedDateTime date);
+    List<Token> findByExpiryDateBefore(ZonedDateTime date);
 
     @Modifying
     @Query("DELETE FROM Token t WHERE t.expiryDate < :date")
     Integer deleteByExpiryDateBefore(@Param("date") ZonedDateTime date);
-
-    @Modifying
-    @Query("DELETE FROM Token t WHERE t.used = true")
-    Integer deleteByUsedTrue();
 }

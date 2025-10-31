@@ -3,10 +3,11 @@ package com.agh.polymorphia_backend.service.user;
 import com.agh.polymorphia_backend.dto.request.user.ChangePasswordRequestDto;
 import com.agh.polymorphia_backend.dto.request.user.ForgotPasswordRequestDto;
 import com.agh.polymorphia_backend.dto.request.user.NewPasswordRequestDto;
-import com.agh.polymorphia_backend.model.invitation.Token;
+import com.agh.polymorphia_backend.model.Token.Token;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.service.email.EmailService;
+import com.agh.polymorphia_backend.service.invitation.RegisterUtil;
 import com.agh.polymorphia_backend.service.token.TokenService;
 import com.agh.polymorphia_backend.service.validation.TokenValidator;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,7 @@ public class PasswordService {
     public static final String INVALID_OLD_PASSWORD = "Invalid old password";
     public static final String FAILED_TO_CHANGE_PASSWORD = "Failed to change password";
     public static final String INVALID_NEW_PASSWORD = "New password is not matching";
+    public static final String FAILED_TO_RESET_PASSWORD = "Failed to reset password";
     private final UserService userService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -65,11 +67,26 @@ public class PasswordService {
         }
 
         tokenValidator.isTokenAssigned(email);
+
         Token token = tokenService.createAndSaveToken(email);
         emailService.sendForgotPasswordEmail(requestDTO, token);
     }
 
     public void newPassword(NewPasswordRequestDto requestDTO) {
+        Token token = tokenService.getTokenFromValue(requestDTO.getToken());
+        User user = userService.getUserByEmail(token.getEmail());
 
+        if (!requestDTO.getNewPassword().equals(requestDTO.getConfirmNewPassword())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INVALID_NEW_PASSWORD);
+        }
+
+        user.setPassword(passwordEncoder.encode(requestDTO.getNewPassword()));
+
+        try {
+            userRepository.save(user);
+            tokenService.deleteToken(token);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FAILED_TO_RESET_PASSWORD);
+        }
     }
 }
