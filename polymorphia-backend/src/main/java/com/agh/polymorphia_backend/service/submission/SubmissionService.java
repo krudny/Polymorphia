@@ -116,16 +116,16 @@ public class SubmissionService {
 
             boolean isEmpty = !newDetails.isLocked() && newDetails.url().isEmpty();
 
+            if (userService.getCurrentUserRole() == UserType.STUDENT &&
+                    isEmpty &&
+                    submissionRequirements.get(submissionRequirementId).isMandatory()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MANDATORY_MISSING);
+            }
+
             Optional.ofNullable(submissions.getFirst()).ifPresentOrElse(currentSubmission -> {
                 boolean isLockChanged = currentSubmission.isLocked() != newDetails.isLocked();
                 boolean isUrlChanged = !Objects.equals(currentSubmission.getUrl(), newDetails.url());
                 boolean isChanged =  isLockChanged || isUrlChanged;
-
-                if (userService.getCurrentUserRole() == UserType.STUDENT &&
-                        isEmpty &&
-                        submissionRequirements.get(submissionRequirementId).isMandatory()) {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MANDATORY_MISSING);
-                }
 
                 if (!isChanged) {
                     return;
