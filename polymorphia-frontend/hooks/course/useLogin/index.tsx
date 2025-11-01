@@ -6,14 +6,16 @@ import { UseLoginProps } from "@/hooks/course/useLogin/types";
 import UserService from "@/services/user";
 import { redirectToNextStep } from "@/app/(welcome)/redirectHandler";
 import { LoginDTO } from "@/interfaces/api/login";
+import useFetch from "@/hooks/general/useFetch";
 
 export default function useLogin({ form }: UseLoginProps) {
   const router = useRouter();
   const queryClient = useQueryClient();
+  const { fetch: fetchFn } = useFetch();
 
   const mutation = useMutation({
     mutationFn: (data: LoginDTO) => {
-      return toast.promise(AuthService.login(data), {
+      return toast.promise(AuthService.login(fetchFn, data), {
         loading: "Logowanie...",
         success: "Zalogowano pomyślnie!",
         error: () => `Wystąpił błąd przy zalogowaniu!`,
@@ -30,7 +32,7 @@ export default function useLogin({ form }: UseLoginProps) {
 
       const userRole = await queryClient.fetchQuery({
         queryKey: ["userRole"],
-        queryFn: UserService.getUserRole,
+        queryFn: () => UserService.getUserRole(fetchFn),
       });
 
       redirectToNextStep({

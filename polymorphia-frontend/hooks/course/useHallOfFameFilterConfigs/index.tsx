@@ -8,14 +8,17 @@ import {
 } from "@/hooks/course/useFilters/types";
 import CourseGroupsService from "@/services/course-groups";
 import { CourseGroupTypes } from "@/services/course-groups/types";
+import useFetch from "@/hooks/general/useFetch";
 
 export function useHallOfFameFilterConfigs(courseId: number) {
+  const { fetch: fetchFn } = useFetch();
   return useQuery({
     queryKey: ["hallOfFameFilters", courseId],
     queryFn: async (): Promise<FilterConfig<HallOfFameFilterId>[]> => {
       const [eventSections, courseGroups] = await Promise.all([
-        EventSectionService.getEventSections(courseId),
+        EventSectionService.getEventSections(fetchFn, courseId),
         CourseGroupsService.getCourseGroups(
+          fetchFn,
           courseId,
           CourseGroupTypes.ALL_SHORT
         ),

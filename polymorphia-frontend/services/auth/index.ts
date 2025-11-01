@@ -1,13 +1,15 @@
 import { LoginDTO } from "@/interfaces/api/login";
 import { API_HOST } from "@/services/api";
+import { Fetch } from "@/hooks/general/useFetch/types";
 
 const AuthService = {
-  login: async ({ email, password }: LoginDTO) => {
+  login: async (fetchFn: Fetch, data: LoginDTO) => {
+    const { email, password } = data;
     const params = new URLSearchParams();
     params.append("username", email);
     params.append("password", password);
 
-    const response = await fetch(`${API_HOST}/login`, {
+    const response = await fetchFn(`${API_HOST}/login`, {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/x-www-form-urlencoded",
@@ -20,8 +22,8 @@ const AuthService = {
       throw new Error("Wystąpił błąd przy zalogowaniu");
     }
   },
-  logout: async () => {
-    const response = await fetch(`${API_HOST}/logout`, {
+  logout: async (fetchFn: Fetch) => {
+    const response = await fetchFn(`${API_HOST}/logout`, {
       method: "POST",
       credentials: "include",
     });

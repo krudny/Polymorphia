@@ -13,12 +13,14 @@ import {
   StudentCourseGroupAssignmentIdResponseDTO,
   StudentProfileResponseDTO,
 } from "@/interfaces/api/student";
+import { Fetch } from "@/hooks/general/useFetch/types";
 
 const UserService = {
   getStudentProfile: async (
+    fetchFn: Fetch,
     courseId: number
   ): Promise<StudentProfileResponseDTO> => {
-    const response = await fetch(
+    const response = await fetchFn(
       `${API_HOST}/students/profile?courseId=${courseId}`,
       {
         credentials: "include",
@@ -31,8 +33,11 @@ const UserService = {
 
     return await response.json();
   },
-  hasValidAnimalInCourse: async (courseId: number): Promise<boolean> => {
-    const response = await fetch(
+  hasValidAnimalInCourse: async (
+    fetchFn: Fetch,
+    courseId: number
+  ): Promise<boolean> => {
+    const response = await fetchFn(
       `${API_HOST}/students/animals/is-valid?courseId=${courseId}`,
       {
         credentials: "include",
@@ -46,9 +51,10 @@ const UserService = {
     return await response.json();
   },
   getCourseGroup: async (
+    fetchFn: Fetch,
     courseId: number
   ): Promise<StudentCourseGroupAssignmentIdResponseDTO> => {
-    const response = await fetch(
+    const response = await fetchFn(
       `${API_HOST}/students/course-group?courseId=${courseId}`,
       {
         credentials: "include",
@@ -63,8 +69,11 @@ const UserService = {
 
     return await response.json();
   },
-  createAnimal: async (request: CreateAnimalRequestDTO): Promise<void> => {
-    const response = await fetch(`${API_HOST}/students/animals`, {
+  createAnimal: async (
+    fetchFn: Fetch,
+    request: CreateAnimalRequestDTO
+  ): Promise<void> => {
+    const response = await fetchFn(`${API_HOST}/students/animals`, {
       body: JSON.stringify(request),
       method: "POST",
       headers: {
@@ -77,8 +86,8 @@ const UserService = {
       throw new Error("Nie udało się utworzyć zwierzęcia");
     }
   },
-  getUserRole: async (): Promise<Role> => {
-    const response = await fetch(`${API_HOST}/users/role`, {
+  getUserRole: async (fetchFn: Fetch): Promise<Role> => {
+    const response = await fetchFn(`${API_HOST}/users/role`, {
       credentials: "include",
     });
 
@@ -88,9 +97,7 @@ const UserService = {
 
     return await response.json();
   },
-  getCurrentUser: async (
-    fetchFn: typeof fetch = fetch
-  ): Promise<UserDetailsDTO> => {
+  getCurrentUser: async (fetchFn: Fetch): Promise<UserDetailsDTO> => {
     const response = await fetchFn(`${API_HOST}/users/context`, {
       credentials: "include",
     });
@@ -101,8 +108,11 @@ const UserService = {
 
     return await response.json();
   },
-  setUserPreferredCourse: async (courseId: number): Promise<void> => {
-    const response = await fetch(
+  setUserPreferredCourse: async (
+    fetchFn: Fetch,
+    courseId: number
+  ): Promise<void> => {
+    const response = await fetchFn(
       `${API_HOST}/users/preferred-course?courseId=${courseId}`,
       {
         method: "POST",
@@ -116,8 +126,11 @@ const UserService = {
       throw new Error("Nie udało się ustawić preferencji użytkownika");
     }
   },
-  changePassword: async (request: ChangePasswordDTO): Promise<void> => {
-    const response = await fetch(`${API_HOST}/users/change-password`, {
+  changePassword: async (
+    fetchFn: Fetch,
+    request: ChangePasswordDTO
+  ): Promise<void> => {
+    const response = await fetchFn(`${API_HOST}/users/change-password`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -161,8 +174,11 @@ const UserService = {
     ];
   },
 
-  inviteUser: async (request: InviteRequestDTO): Promise<void> => {
-    const response = await fetch(`${API_HOST}/invitation/course`, {
+  inviteUser: async (
+    fetchFn: Fetch,
+    request: InviteRequestDTO
+  ): Promise<void> => {
+    const response = await fetchFn(`${API_HOST}/invitation/course`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -176,8 +192,11 @@ const UserService = {
     }
   },
 
-  register: async (request: RegisterRequestDTO): Promise<void> => {
-    const response = await fetch(`${API_HOST}/invitation/register-user`, {
+  register: async (
+    fetchFn: Fetch,
+    request: RegisterRequestDTO
+  ): Promise<void> => {
+    const response = await fetchFn(`${API_HOST}/invitation/register-user`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

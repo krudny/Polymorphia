@@ -5,13 +5,15 @@ import { RegisterRequestDTO, Roles } from "@/interfaces/api/user";
 import { redirectToNextStep } from "@/app/(welcome)/redirectHandler";
 import { useRouter } from "next/navigation";
 import UserService from "@/services/user";
+import useFetch from "@/hooks/general/useFetch";
 
 export default function useRegister(): UseRegister {
   const router = useRouter();
+  const { fetch: fetchFn } = useFetch();
 
   const mutation = useMutation<void, Error, RegisterRequestDTO>({
     mutationFn: (request: RegisterRequestDTO) => {
-      return toast.promise(UserService.register(request), {
+      return toast.promise(UserService.register(fetchFn, request), {
         loading: "Rejestracja...",
         success: "Utworzono konto!",
         error: (error) => error.message,

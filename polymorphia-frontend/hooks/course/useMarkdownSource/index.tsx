@@ -7,6 +7,7 @@ import useUserContext, {
   useUserDetails,
 } from "@/hooks/contexts/useUserContext";
 import { Roles } from "@/interfaces/api/user";
+import useFetch from "@/hooks/general/useFetch";
 
 export default function useMarkdownSource(
   markdownType: MarkdownType
@@ -14,12 +15,14 @@ export default function useMarkdownSource(
   const { gradableEventId } = useEventParams();
   const { courseId } = useUserDetails();
   const { userRole } = useUserContext();
+  const { fetch: fetchFn } = useFetch();
 
   const resourceId = gradableEventId || courseId;
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["markdownSource", resourceId],
-    queryFn: () => MarkdownService.getSourceUrl({ markdownType, resourceId }),
+    queryFn: () =>
+      MarkdownService.getSourceUrl(fetchFn, { markdownType, resourceId }),
     enabled: userRole !== Roles.STUDENT,
   });
 

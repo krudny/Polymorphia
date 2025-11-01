@@ -5,15 +5,17 @@ import {
   UseMarkdownReset,
   UseMarkdownResetProps,
 } from "@/hooks/course/useMarkdownReset/types";
+import useFetch from "@/hooks/general/useFetch";
 
 export default function useMarkdownReset(
   request: UseMarkdownResetProps
 ): UseMarkdownReset {
   const queryClient = useQueryClient();
+  const { fetch: fetchFn } = useFetch();
 
   return useMutation({
     mutationFn: () => {
-      return toast.promise(MarkdownService.resetMarkdown(request), {
+      return toast.promise(MarkdownService.resetMarkdown(fetchFn, request), {
         loading: "Resetowanie...",
         success: "Pomyślnie zresetowano plik!",
         error: "Wystąpił błąd przy resetowaniu!",

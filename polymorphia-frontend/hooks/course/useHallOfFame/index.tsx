@@ -4,6 +4,7 @@ import {
   UseHallOfFame,
   useHallOfFameProps,
 } from "@/hooks/course/useHallOfFame/types";
+import useFetch from "@/hooks/general/useFetch";
 
 export default function useHallOfFame({
   page,
@@ -15,6 +16,7 @@ export default function useHallOfFame({
   sortBy,
   groups,
 }: useHallOfFameProps): UseHallOfFame {
+  const { fetch: fetchFn } = useFetch();
   const { data, isLoading } = useQuery({
     queryKey: [
       "hallOfFame",
@@ -29,6 +31,7 @@ export default function useHallOfFame({
     ],
     queryFn: () =>
       HallOfFameService.getHallOfFame(
+        fetchFn,
         page,
         pageSize,
         courseId,

@@ -4,9 +4,11 @@ import {
   CourseGroupType,
   CourseGroupTypes,
 } from "@/services/course-groups/types";
+import { Fetch } from "@/hooks/general/useFetch/types";
 
 const CourseGroupsService = {
   getCourseGroups: async <T extends CourseGroupType>(
+    fetchFn: Fetch,
     courseId: number,
     type: T
   ): Promise<CourseGroupResponse<T>> => {
@@ -20,7 +22,7 @@ const CourseGroupsService = {
     const shortPath = isShort ? "/short" : "";
     const mode = isIndividual ? "/individual" : "/all";
 
-    const response = await fetch(
+    const response = await fetchFn(
       `${API_HOST}/course-groups${mode}${shortPath}?courseId=${courseId}`,
       { credentials: "include" }
     );

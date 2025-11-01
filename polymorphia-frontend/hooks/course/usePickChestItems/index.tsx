@@ -4,15 +4,17 @@ import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { EquipmentChestOpenRequestDTO } from "@/interfaces/api/equipment";
 import toast from "react-hot-toast";
 import { UsePickChestItems } from "@/hooks/course/usePickChestItems/types";
+import useFetch from "@/hooks/general/useFetch";
 
 export default function usePickChestItems(): UsePickChestItems {
   const { courseId } = useUserDetails();
   const queryClient = useQueryClient();
+  const { fetch: fetchFn } = useFetch();
 
   return useMutation({
     mutationFn: async (chestItems: EquipmentChestOpenRequestDTO) => {
       return toast.promise(
-        EquipmentService.pickChestItems(courseId, chestItems).then(
+        EquipmentService.pickChestItems(fetchFn, courseId, chestItems).then(
           async (result) => {
             await queryClient.invalidateQueries({
               queryKey: ["equipmentItems"],

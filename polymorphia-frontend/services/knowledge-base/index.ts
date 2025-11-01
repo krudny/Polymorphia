@@ -1,11 +1,13 @@
 import { KnowledgeBaseResponseDTO } from "@/interfaces/api/knowledge-base";
 import { API_HOST } from "@/services/api";
+import { Fetch } from "@/hooks/general/useFetch/types";
 
 const KnowledgeBaseService = {
   getEvolutionStages: async (
+    fetchFn: Fetch,
     courseId: number
   ): Promise<KnowledgeBaseResponseDTO[]> => {
-    const response = await fetch(
+    const response = await fetchFn(
       `${API_HOST}/knowledge-base/evolution-stages?courseId=${courseId}`,
       { credentials: "include" }
     );
@@ -17,8 +19,11 @@ const KnowledgeBaseService = {
     return await response.json();
   },
 
-  getItems: async (courseId: number): Promise<KnowledgeBaseResponseDTO[]> => {
-    const response = await fetch(
+  getItems: async (
+    fetchFn: Fetch,
+    courseId: number
+  ): Promise<KnowledgeBaseResponseDTO[]> => {
+    const response = await fetchFn(
       `${API_HOST}/knowledge-base/items?courseId=${courseId}`,
       {
         credentials: "include",
@@ -32,8 +37,11 @@ const KnowledgeBaseService = {
     return await response.json();
   },
 
-  getChests: async (courseId: number): Promise<KnowledgeBaseResponseDTO[]> => {
-    const response = await fetch(
+  getChests: async (
+    fetchFn: Fetch,
+    courseId: number
+  ): Promise<KnowledgeBaseResponseDTO[]> => {
+    const response = await fetchFn(
       `${API_HOST}/knowledge-base/chests?courseId=${courseId}`,
       {
         credentials: "include",

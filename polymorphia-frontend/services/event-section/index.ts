@@ -87,11 +87,14 @@ for (let i = 0; i < 250; i++) {
   allData.push(item);
 }
 
+import { Fetch } from "@/hooks/general/useFetch/types";
+
 export const EventSectionService = {
   getEventSections: async (
+    fetchFn: Fetch,
     courseId: number
   ): Promise<EventSectionResponseDTO[]> => {
-    const response = await fetch(
+    const response = await fetchFn(
       `${API_HOST}/event-sections?courseId=${courseId}`,
       {
         method: "GET",
