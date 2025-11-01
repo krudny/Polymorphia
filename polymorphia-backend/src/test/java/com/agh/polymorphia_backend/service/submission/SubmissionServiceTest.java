@@ -268,6 +268,60 @@ class SubmissionServiceTest extends BaseTest {
             assertThat(result.get(1L).url()).isEqualTo("http://example.com");
             verify(accessAuthorizer).authorizeCourseAccess(course.getId());
         }
+
+        @Test
+        void getSubmissionDetails_whenStudentTargetsOtherStudent_shouldThrowException() {
+            Student currentUser = Student.builder().build();
+            currentUser.setUserId(1L);
+            long otherStudentId = 2L;
+            TargetRequestDto target = new StudentTargetRequestDto(
+                otherStudentId
+            );
+
+            when(userService.getCurrentUserRole()).thenReturn(UserType.STUDENT);
+            when(userService.getCurrentUser()).thenReturn(currentUser);
+            when(
+                gradableEventService.getGradableEventById(assignment.getId())
+            ).thenReturn(assignment);
+
+            ResponseStatusException ex = assertThrows(
+                ResponseStatusException.class,
+                () ->
+                    submissionService.getSubmissionDetails(
+                        assignment.getId(),
+                        target
+                    )
+            );
+            assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
+            assertEquals("Student not found", ex.getReason());
+        }
+
+        @Test
+        void getSubmissionDetails_whenGroupTargetOnAssignment_shouldThrowException() {
+            Student currentUser = Student.builder().build();
+            currentUser.setUserId(1L);
+            TargetRequestDto target = new StudentGroupTargetRequestDto(1L);
+
+            when(userService.getCurrentUserRole()).thenReturn(UserType.STUDENT);
+            when(userService.getCurrentUser()).thenReturn(currentUser);
+            when(
+                gradableEventService.getGradableEventById(assignment.getId())
+            ).thenReturn(assignment);
+
+            ResponseStatusException ex = assertThrows(
+                ResponseStatusException.class,
+                () ->
+                    submissionService.getSubmissionDetails(
+                        assignment.getId(),
+                        target
+                    )
+            );
+            assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
+            assertEquals(
+                "Group target is supported only for project section",
+                ex.getReason()
+            );
+        }
     }
 
     @Nested
@@ -1013,6 +1067,64 @@ class SubmissionServiceTest extends BaseTest {
                 deleteSubmissionCaptor.getValue();
             assertThat(deletedSubmissions).isEmpty();
         }
+
+        @Test
+        void putSubmissionDetails_whenStudentTargetsOtherStudent_shouldThrowException() {
+            Student currentUser = Student.builder().build();
+            currentUser.setUserId(1L);
+            long otherStudentId = 2L;
+            TargetRequestDto target = new StudentTargetRequestDto(
+                otherStudentId
+            );
+            SubmissionDetailsRequestDto requestDto =
+                new SubmissionDetailsRequestDto(target, Map.of());
+
+            when(userService.getCurrentUserRole()).thenReturn(UserType.STUDENT);
+            when(userService.getCurrentUser()).thenReturn(currentUser);
+            when(
+                gradableEventService.getGradableEventById(assignment.getId())
+            ).thenReturn(assignment);
+
+            ResponseStatusException ex = assertThrows(
+                ResponseStatusException.class,
+                () ->
+                    submissionService.putSubmissionDetails(
+                        assignment.getId(),
+                        requestDto
+                    )
+            );
+            assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
+            assertEquals("Student not found", ex.getReason());
+        }
+
+        @Test
+        void putSubmissionDetails_whenGroupTargetOnAssignment_shouldThrowException() {
+            Student currentUser = Student.builder().build();
+            currentUser.setUserId(1L);
+            TargetRequestDto target = new StudentGroupTargetRequestDto(1L);
+            SubmissionDetailsRequestDto requestDto =
+                new SubmissionDetailsRequestDto(target, Map.of());
+
+            when(userService.getCurrentUserRole()).thenReturn(UserType.STUDENT);
+            when(userService.getCurrentUser()).thenReturn(currentUser);
+            when(
+                gradableEventService.getGradableEventById(assignment.getId())
+            ).thenReturn(assignment);
+
+            ResponseStatusException ex = assertThrows(
+                ResponseStatusException.class,
+                () ->
+                    submissionService.putSubmissionDetails(
+                        assignment.getId(),
+                        requestDto
+                    )
+            );
+            assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
+            assertEquals(
+                "Group target is supported only for project section",
+                ex.getReason()
+            );
+        }
     }
 
     @Nested
@@ -1271,7 +1383,6 @@ class SubmissionServiceTest extends BaseTest {
 
         @Test
         void putSubmissionDetails_whenStudentTargetAndProject_shouldUpdateForAllGroupMembers() {
-            // Given
             Student student1 = Student.builder().build();
             student1.setUserId(1L);
             Student student2 = Student.builder().build();
@@ -1292,7 +1403,6 @@ class SubmissionServiceTest extends BaseTest {
                 .id(1L)
                 .animals(List.of(animal1, animal2))
                 .build();
-            // Target is a single student in the group
             TargetRequestDto target = new StudentTargetRequestDto(
                 student1.getUserId()
             );
@@ -1316,7 +1426,6 @@ class SubmissionServiceTest extends BaseTest {
             when(
                 gradableEventService.getGradableEventById(project.getId())
             ).thenReturn(project);
-            // Service should find the project group based on the student
             when(
                 projectGroupRepository.getProjectGroupByStudentIdAndProjectId(
                     student1.getUserId(),
@@ -1341,15 +1450,13 @@ class SubmissionServiceTest extends BaseTest {
                 animalService.getAnimal(student2.getUserId(), course.getId())
             ).thenReturn(animal2);
 
-            // When
             submissionService.putSubmissionDetails(project.getId(), requestDto);
 
-            // Then
             verify(submissionRepository).saveAll(
                 saveSubmissionCaptor.capture()
             );
             List<Submission> savedSubmissions = saveSubmissionCaptor.getValue();
-            assertThat(savedSubmissions).hasSize(2); // Saves for all students in the group
+            assertThat(savedSubmissions).hasSize(2);
             assertThat(savedSubmissions)
                 .extracting(Submission::getAnimal)
                 .extracting(Animal::getId)
@@ -1358,7 +1465,6 @@ class SubmissionServiceTest extends BaseTest {
 
         @Test
         void putSubmissionDetails_whenInstructorTargetsStudentInProject_shouldUpdateForAllGroupMembers() {
-            // Given
             Instructor instructor = Instructor.builder().build();
             instructor.setUserId(99L);
             Student student1 = Student.builder().build();
@@ -1381,7 +1487,6 @@ class SubmissionServiceTest extends BaseTest {
                 .id(1L)
                 .animals(List.of(animal1, animal2))
                 .build();
-            // Target is a single student in the group
             TargetRequestDto target = new StudentTargetRequestDto(
                 student1.getUserId()
             );
@@ -1407,7 +1512,6 @@ class SubmissionServiceTest extends BaseTest {
             when(
                 gradableEventService.getGradableEventById(project.getId())
             ).thenReturn(project);
-            // Service should find the project group based on the student and instructor
             when(
                 projectGroupRepository.getProjectGroupByStudentIdAndProjectIdAndInstructorId(
                     student1.getUserId(),
@@ -1433,15 +1537,13 @@ class SubmissionServiceTest extends BaseTest {
                 animalService.getAnimal(student2.getUserId(), course.getId())
             ).thenReturn(animal2);
 
-            // When
             submissionService.putSubmissionDetails(project.getId(), requestDto);
 
-            // Then
             verify(submissionRepository).saveAll(
                 saveSubmissionCaptor.capture()
             );
             List<Submission> savedSubmissions = saveSubmissionCaptor.getValue();
-            assertThat(savedSubmissions).hasSize(2); // Saves for all students in the group
+            assertThat(savedSubmissions).hasSize(2);
             assertThat(savedSubmissions)
                 .extracting(Submission::getAnimal)
                 .extracting(Animal::getId)
