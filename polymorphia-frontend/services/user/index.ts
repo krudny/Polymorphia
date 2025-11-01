@@ -8,7 +8,6 @@ import {
   UserDetailsDTO,
 } from "@/interfaces/api/user";
 import { API_HOST } from "@/services/api";
-import { AvailableCoursesDTO } from "@/interfaces/api/user-context";
 import {
   CreateAnimalRequestDTO,
   StudentCourseGroupAssignmentIdResponseDTO,
@@ -89,8 +88,10 @@ const UserService = {
 
     return await response.json();
   },
-  getCurrentUser: async (): Promise<UserDetailsDTO> => {
-    const response = await fetch(`${API_HOST}/users/context`, {
+  getCurrentUser: async (
+    fetchFn: typeof fetch = fetch
+  ): Promise<UserDetailsDTO> => {
+    const response = await fetchFn(`${API_HOST}/users/context`, {
       credentials: "include",
     });
 
