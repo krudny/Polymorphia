@@ -17,6 +17,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collections;
 import java.util.stream.Stream;
@@ -81,7 +82,7 @@ public class HallOfFameSortSpecResolverTest extends BaseTest {
         when(eventSectionRepository.existsByCourseIdAndName(COURSE_ID, EVENT_SECTION_NAME)).thenReturn(false);
 
         // Then
-        assertThrows(IllegalArgumentException.class, () -> hallOfFameSortSpecResolver.resolve(requestDto));
+        assertThrows(ResponseStatusException.class, () -> hallOfFameSortSpecResolver.resolve(requestDto));
     }
 
     private HallOfFameRequestDto testHallOfFameRequestDto(String sortBy) {

@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 import java.util.Set;
@@ -116,7 +117,7 @@ class UserServiceTest extends BaseTest {
         Student student = mock(Student.class);
         doReturn(Set.of(UserType.STUDENT, UserType.INSTRUCTOR)).when(student).getAuthorities();
 
-        assertThrows(IllegalStateException.class, () -> userService.getUserRole(student));
+        assertThrows(ResponseStatusException.class, () -> userService.getUserRole(student));
     }
 
     @Test

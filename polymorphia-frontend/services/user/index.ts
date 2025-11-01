@@ -7,8 +7,7 @@ import {
   StudentDetailsDTOWithType,
   UserDetailsDTO,
 } from "@/interfaces/api/user";
-import { API_HOST } from "@/services/api";
-import { AvailableCoursesDTO } from "@/interfaces/api/user-context";
+import { apiFetch, apiFetchJson } from "@/services/api/client";
 import {
   CreateAnimalRequestDTO,
   StudentCourseGroupAssignmentIdResponseDTO,
@@ -19,115 +18,53 @@ const UserService = {
   getStudentProfile: async (
     courseId: number
   ): Promise<StudentProfileResponseDTO> => {
-    const response = await fetch(
-      `${API_HOST}/students/profile?courseId=${courseId}`,
-      {
-        credentials: "include",
-      }
+    return await apiFetchJson<StudentProfileResponseDTO>(
+      `/students/profile?courseId=${courseId}`
     );
-
-    if (!response.ok) {
-      throw new Error("Nie udało się pobrać profilu studenta");
-    }
-
-    return await response.json();
   },
   hasValidAnimalInCourse: async (courseId: number): Promise<boolean> => {
-    const response = await fetch(
-      `${API_HOST}/students/animals/is-valid?courseId=${courseId}`,
-      {
-        credentials: "include",
-      }
+    return await apiFetchJson<boolean>(
+      `/students/animals/is-valid?courseId=${courseId}`
     );
-
-    if (!response.ok) {
-      throw new Error("Nie udało się sprawdzić czy istnieje zwierzak");
-    }
-
-    return await response.json();
   },
   getCourseGroup: async (
     courseId: number
   ): Promise<StudentCourseGroupAssignmentIdResponseDTO> => {
-    const response = await fetch(
-      `${API_HOST}/students/course-group?courseId=${courseId}`,
-      {
-        credentials: "include",
-      }
+    return await apiFetchJson<StudentCourseGroupAssignmentIdResponseDTO>(
+      `/students/course-group?courseId=${courseId}`
     );
-
-    if (!response.ok) {
-      throw new Error(
-        "Nie udało się sprawdzić czy student jest przypisany do grupy"
-      );
-    }
-
-    return await response.json();
   },
   createAnimal: async (request: CreateAnimalRequestDTO): Promise<void> => {
-    const response = await fetch(`${API_HOST}/students/animals`, {
+    await apiFetch("/students/animals", {
       body: JSON.stringify(request),
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      credentials: "include",
     });
-
-    if (!response.ok) {
-      throw new Error("Nie udało się utworzyć zwierzęcia");
-    }
   },
   getUserRole: async (): Promise<Role> => {
-    const response = await fetch(`${API_HOST}/users/role`, {
-      credentials: "include",
-    });
-
-    if (!response.ok) {
-      throw new Error("Nie udało się sprawdzić preferencji użytkownika");
-    }
-
-    return await response.json();
+    return await apiFetchJson<Role>("/users/role");
   },
   getCurrentUser: async (): Promise<UserDetailsDTO> => {
-    const response = await fetch(`${API_HOST}/users/context`, {
-      credentials: "include",
-    });
-
-    if (!response.ok) {
-      throw new Error("Nie udało się pobrać kontekstu użytkownika");
-    }
-
-    return await response.json();
+    return await apiFetchJson<UserDetailsDTO>("/users/context");
   },
   setUserPreferredCourse: async (courseId: number): Promise<void> => {
-    const response = await fetch(
-      `${API_HOST}/users/preferred-course?courseId=${courseId}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      }
-    );
-    if (!response.ok) {
-      throw new Error("Nie udało się ustawić preferencji użytkownika");
-    }
+    await apiFetch(`/users/preferred-course?courseId=${courseId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   },
   changePassword: async (request: ChangePasswordDTO): Promise<void> => {
-    const response = await fetch(`${API_HOST}/users/change-password`, {
+    await apiFetch("/users/change-password", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(request),
-      credentials: "include",
     });
-
-    if (!response.ok) {
-      throw new Error("Nie udało się zmienić hasła!");
-    }
   },
   getRandomUsers: async (): Promise<StudentDetailsDTOWithType[]> => {
     return [
@@ -161,33 +98,23 @@ const UserService = {
   },
 
   inviteUser: async (request: InviteRequestDTO): Promise<void> => {
-    const response = await fetch(`${API_HOST}/invitation/course`, {
+    await apiFetch("/invitation/course", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(request),
-      credentials: "include",
     });
-
-    if (!response.ok) {
-      throw new Error("Nie udało się zaprosić studenta");
-    }
   },
 
   register: async (request: RegisterRequestDTO): Promise<void> => {
-    const response = await fetch(`${API_HOST}/invitation/register-user`, {
+    await apiFetch("/invitation/register-user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(request),
-      credentials: "include",
     });
-
-    if (!response.ok) {
-      throw new Error("Nie udało się utworzyć konta");
-    }
   },
 };
 

@@ -5,7 +5,6 @@ import {
   UseCSVPreviewUpdateParams,
 } from "@/hooks/general/CSV/useCSVPreviewUpdate/types";
 import { CSVPreviewResponseDTO } from "@/interfaces/api/CSV";
-import toast from "react-hot-toast";
 
 export default function useCSVPreviewUpdate(): UseCSVPreviewUpdate {
   const mutation = useMutation<
@@ -15,9 +14,6 @@ export default function useCSVPreviewUpdate(): UseCSVPreviewUpdate {
   >({
     mutationFn: ({ file, csvHeaders }) =>
       CSVService.getCSVPreview(file, csvHeaders),
-    onError: ({ message }: Error) => {
-      toast.error(message);
-    },
   });
 
   return { mutation };

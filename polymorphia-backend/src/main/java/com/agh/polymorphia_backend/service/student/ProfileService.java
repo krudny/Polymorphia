@@ -29,8 +29,6 @@ import static com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService
 @Service
 @AllArgsConstructor
 public class ProfileService {
-    private static final String PROFILE_INFO_INCOMPLETE = "Profile info incomplete: %s";
-    private static final String LACKING_EVOLUTION_STAGES = "Evolution stages not defined";
     private final AccessAuthorizer accessAuthorizer;
     private final CourseService courseService;
     private final UserService userService;
@@ -74,7 +72,7 @@ public class ProfileService {
 
     private int getCurrentEvolutionStageId(List<EvolutionStageThresholdResponseDto> evolutionStages, User user) {
         String evolutionStageName = Optional.ofNullable(hallOfFameService.getStudentHallOfFame(user).getEvolutionStage())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(PROFILE_INFO_INCOMPLETE, LACKING_EVOLUTION_STAGES)));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Profil jest niekompletny: etapy ewolucji nie zostały zdefiniowane."));
 
         for (int i = 0; i < evolutionStages.size(); i++) {
             if (evolutionStages.get(i).getName().equals(evolutionStageName)) {

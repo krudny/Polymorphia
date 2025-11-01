@@ -1,5 +1,5 @@
 import { LoginDTO } from "@/interfaces/api/login";
-import { API_HOST } from "@/services/api";
+import { apiFetch } from "@/services/api/client";
 
 const AuthService = {
   login: async ({ email, password }: LoginDTO) => {
@@ -7,28 +7,18 @@ const AuthService = {
     params.append("username", email);
     params.append("password", password);
 
-    const response = await fetch(`${API_HOST}/login`, {
+    await apiFetch("/login", {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/x-www-form-urlencoded",
       }),
       body: params.toString(),
-      credentials: "include",
     });
-
-    if (!response.ok) {
-      throw new Error("Wystąpił błąd przy zalogowaniu");
-    }
   },
   logout: async () => {
-    const response = await fetch(`${API_HOST}/logout`, {
+    await apiFetch("/logout", {
       method: "POST",
-      credentials: "include",
     });
-
-    if (!response.ok) {
-      throw new Error("Wystąpił błąd przy wylogowaniu");
-    }
   },
 };
 export default AuthService;

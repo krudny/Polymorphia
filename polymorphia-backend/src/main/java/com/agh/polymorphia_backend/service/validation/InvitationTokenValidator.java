@@ -13,9 +13,9 @@ import java.time.ZonedDateTime;
 @Service
 @AllArgsConstructor
 public class InvitationTokenValidator {
-    public static final String TOKEN_NOT_EXPIRED = "Active invitation token already exists for this email";
-    public static final String TOKEN_ALREADY_USED = "Invitation token has already been used";
-    public static final String TOKEN_EXPIRED = "Invitation token has expired";
+    public static final String TOKEN_NOT_EXPIRED = "Aktywny token już istnieje dla tego adresu email.";
+    public static final String TOKEN_ALREADY_USED = "Token został już wykorzystany.";
+    public static final String TOKEN_EXPIRED = "Token zaproszenia wygasł.";
 
     private final InvitationTokenRepository invitationTokenRepository;
 

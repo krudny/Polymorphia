@@ -20,8 +20,5 @@ export default function useMarkdownUpdate(
       toast.success("Zapisano zmiany!");
       request.setIsEditing(false);
     },
-    onError: (error) => {
-      toast.error(error.message);
-    },
   });
 }

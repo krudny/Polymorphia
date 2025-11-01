@@ -26,12 +26,8 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class UserService implements UserDetailsService {
-    public static final String USER_HAS_NO_VALID_ROLES = "User should have exactly one role";
-    public static final String USER_NOT_FOUND = "User does not exist in the database";
-    private static final String INVALID_OLD_PASSWORD = "Invalid old password";
-    private static final String FAILED_TO_CHANGE_PASSWORD = "Failed to change password";
-    private static final String INVALID_NEW_PASSWORD = "New password is not matching";
-    public final static String INVALID_ROLE = "Invalid user role";
+    public static final String USER_NOT_FOUND = "Nie znaleziono użytkownika.";
+    public final static String INVALID_ROLE = "Nieprawidłowa rola użytkownika.";
     private final UserRepository userRepository;
     private final StudentRepository studentRepository;
     private final CoordinatorRepository coordinatorRepository;
@@ -61,7 +57,7 @@ public class UserService implements UserDetailsService {
                 .collect(Collectors.toSet());
 
         if (roles.size() != 1) {
-            throw new IllegalStateException(USER_HAS_NO_VALID_ROLES);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Użytkownik powinien mieć przypisaną dokładnie jedną rolę.");
         }
 
         return roles.iterator().next();
@@ -81,18 +77,18 @@ public class UserService implements UserDetailsService {
         User user = getCurrentUser().getUser();
 
         if (!requestDTO.getNewPassword().equals(requestDTO.getConfirmNewPassword())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INVALID_NEW_PASSWORD);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Podane nowe hasła różnią się od siebie.");
         }
 
         if (!passwordEncoder.matches(requestDTO.getOldPassword(), user.getPassword())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INVALID_OLD_PASSWORD);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Stare hasło jest niepoprawne.");
         }
 
         try {
             user.setPassword(passwordEncoder.encode(requestDTO.getNewPassword()));
             userRepository.save(user);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FAILED_TO_CHANGE_PASSWORD);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Nie udało się zmienić hasła.");
         }
 
     }

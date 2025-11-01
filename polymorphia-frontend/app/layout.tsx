@@ -3,15 +3,17 @@
 import "../styles/globals.css";
 import localFont from "next/font/local";
 import { League_Gothic } from "next/font/google";
-import { QueryClient } from "@tanstack/query-core";
+import { QueryClient, QueryCache, MutationCache } from "@tanstack/query-core";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactNode, useState } from "react";
 import { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { TitleProvider } from "@/components/navigation/TitleContext";
 import { ThemeProvider } from "next-themes";
 import { ThemeProvider as ThemeProviderMui } from "@mui/material";
 import { themeConfig } from "@/components/speed-dial/config";
 import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
+import { ApiError } from "@/interfaces/api/error";
 
 const leagueGothic = League_Gothic({
   subsets: ["latin"],
@@ -32,7 +34,32 @@ export default function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
-  const [queryClient] = useState(() => new QueryClient());
+  const showApiErrorToast = (error: Error) => {
+    if (error instanceof ApiError) {
+      const message =
+        error.message.trim().length > 0
+          ? error.message
+          : "Wystąpił nieoczekiwany błąd. Spróbuj ponownie.";
+
+      toast.error(message);
+    }
+  };
+
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        queryCache: new QueryCache({
+          onError: (error) => {
+            showApiErrorToast(error);
+          },
+        }),
+        mutationCache: new MutationCache({
+          onError: (error) => {
+            showApiErrorToast(error);
+          },
+        }),
+      })
+  );
 
   return (
     <html lang="pl" className="overflow-hidden" suppressHydrationWarning>

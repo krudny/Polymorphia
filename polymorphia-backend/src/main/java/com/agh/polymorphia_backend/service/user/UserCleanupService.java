@@ -17,15 +17,12 @@ import java.util.List;
 @Slf4j
 @AllArgsConstructor
 public class UserCleanupService {
-    private final static String START_CLEANUP = "Starting cleanup of inactive users";
-    private final static String END_CLEANUP = "Cleanup completed. Deleted {} expired tokens, {} used tokens and {} inactive users.";
-
     private UserRepository userRepository;
     private InvitationTokenRepository invitationTokenRepository;
 
     @Scheduled(cron = "0 0 */6 * * ?")
     public void cleanupInactiveUsers() {
-        log.info(START_CLEANUP);
+        log.info("Starting cleanup of inactive users");
 
         ZonedDateTime now = ZonedDateTime.now();
 
@@ -42,7 +39,8 @@ public class UserCleanupService {
         Integer deletedExpiredTokens = invitationTokenRepository.deleteByExpiryDateBefore(now);
         Integer deletedUsedTokens = invitationTokenRepository.deleteByUsedTrue();
 
-        log.info(END_CLEANUP, deletedExpiredTokens, deletedUsedTokens, deletedUserCount);
+        log.info("Cleanup completed. Deleted {} expired tokens, {} used tokens and {} inactive users.",
+                deletedExpiredTokens, deletedUsedTokens, deletedUserCount);
     }
 }
 

@@ -14,7 +14,6 @@ export default function useRegister(): UseRegister {
       return toast.promise(UserService.register(request), {
         loading: "Rejestracja...",
         success: "Utworzono konto!",
-        error: (error) => error.message,
       });
     },
     onSuccess: () => {

@@ -1,4 +1,4 @@
-import { API_HOST } from "@/services/api";
+import { apiFetchJson } from "@/services/api/client";
 import {
   CourseGroupResponse,
   CourseGroupType,
@@ -20,16 +20,9 @@ const CourseGroupsService = {
     const shortPath = isShort ? "/short" : "";
     const mode = isIndividual ? "/individual" : "/all";
 
-    const response = await fetch(
-      `${API_HOST}/course-groups${mode}${shortPath}?courseId=${courseId}`,
-      { credentials: "include" }
+    return await apiFetchJson<CourseGroupResponse<T>>(
+      `/course-groups${mode}${shortPath}?courseId=${courseId}`
     );
-
-    if (!response.ok) {
-      throw new Error("Nie udało się pobrać grup zajęciowych!");
-    }
-
-    return await response.json();
   },
 };
 
