@@ -2,7 +2,7 @@
 
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
-import { MarkdownProvider } from "@/providers/markdown/MarkdownContext";
+import { MarkdownProvider } from "@/providers/markdown";
 import MarkdownWrapper from "@/components/markdown";
 import { MarkdownTypes } from "@/interfaces/general";
 import { SpeedDialKeys } from "@/components/speed-dial/types";

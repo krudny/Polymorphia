@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { MarkdownContextInterface } from "@/providers/markdown/types";
-import { MarkdownContext } from "@/providers/markdown/MarkdownContext";
+import { MarkdownContext } from "@/providers/markdown";
 
 export default function useMarkdownContext(): MarkdownContextInterface {
   const context = useContext(MarkdownContext);

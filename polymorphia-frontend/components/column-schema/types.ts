@@ -9,3 +9,7 @@ export interface ColumnComponent {
   component: ReactNode;
   forceFullHeight?: boolean;
 }
+
+export interface ColumnSchemaStrategy {
+  getComponents: () => ColumnComponent[][];
+}

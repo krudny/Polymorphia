@@ -1,4 +1,4 @@
-import { StudentTargetData } from "@/interfaces/api/grade/target";
+import { StudentTargetData } from "@/interfaces/api/target";
 
 export interface UseRandomPeopleWithPoints {
   data: StudentTargetData[] | undefined;

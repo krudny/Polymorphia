@@ -2,9 +2,10 @@
 
 import { useTitle } from "@/components/navigation/TitleContext";
 import useGradableEvent from "@/hooks/course/useGradableEvent";
-import { GradingProvider } from "@/providers/grading/GradingContext";
-import Grading from "@/views/course/grading";
+import { GradingProvider } from "@/providers/grading";
+import Grading from "@/views/grading";
 import { useEffect } from "react";
+import { TargetProvider } from "@/providers/target";
 
 export default function GradingView() {
   const { data: gradableEvent, isError } = useGradableEvent();
@@ -19,8 +20,10 @@ export default function GradingView() {
   }, [setTitle, gradableEvent, isError]);
 
   return (
-    <GradingProvider>
-      <Grading />
-    </GradingProvider>
+    <TargetProvider>
+      <GradingProvider>
+        <Grading />
+      </GradingProvider>
+    </TargetProvider>
   );
 }

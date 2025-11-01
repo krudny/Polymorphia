@@ -1,4 +1,4 @@
-import { TargetResponseDTO } from "@/interfaces/api/grade/target";
+import { TargetResponseDTO } from "@/interfaces/api/target";
 
 export interface UseGradingTargets {
   data: TargetResponseDTO[] | undefined;

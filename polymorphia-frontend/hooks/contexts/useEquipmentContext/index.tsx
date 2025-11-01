@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { EquipmentContext } from "@/providers/equipment/EquipmentContext";
+import { EquipmentContext } from "@/providers/equipment";
 import { EquipmentContextInterface } from "@/providers/equipment/types";
 
 export default function useEquipmentContext(): EquipmentContextInterface {

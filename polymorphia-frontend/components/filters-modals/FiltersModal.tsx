@@ -90,7 +90,7 @@ export default function FiltersModal<FilterIdType extends string>({
                       (getFilterValues(filterConfig.id) ?? []).includes(
                         option.value
                       )
-                        ? "filters-modal-filter-option-selected "
+                        ? "filters-modal-filter-option-selected"
                         : "filters-modal-filter-option-unselected"
                     }`}
                   >

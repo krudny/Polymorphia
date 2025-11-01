@@ -1,4 +1,4 @@
-import { TargetResponseDTO, TargetTypes } from "@/interfaces/api/grade/target";
+import { TargetResponseDTO, TargetTypes } from "@/interfaces/api/target";
 
 /// If any target is undefined/null, returns false.
 export default function areTargetsEqual(

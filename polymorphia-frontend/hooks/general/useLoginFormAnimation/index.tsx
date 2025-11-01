@@ -22,7 +22,7 @@ export function useLoginFormAnimation({
       titleRef.current,
       isLoginFormVisible
     );
-  }, [isLoginFormVisible]);
+  }, [isLoginFormVisible, hasMountedRef, titleRef]);
 
   return { loginFormRef };
 }

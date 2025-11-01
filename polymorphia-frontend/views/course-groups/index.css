@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@import "../../styles/globals.css";
+
+.course-groups {
+  @apply pb-24 md:pb-0;
+}

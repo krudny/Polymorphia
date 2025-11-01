@@ -8,7 +8,6 @@ import {
   UserDetailsDTO,
 } from "@/interfaces/api/user";
 import { API_HOST } from "@/services/api";
-import { AvailableCoursesDTO } from "@/interfaces/api/user-context";
 import {
   CreateAnimalRequestDTO,
   StudentCourseGroupAssignmentIdResponseDTO,

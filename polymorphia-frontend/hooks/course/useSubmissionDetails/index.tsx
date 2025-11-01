@@ -1,4 +1,4 @@
-import { TargetRequestDTO, TargetTypes } from "@/interfaces/api/grade/target";
+import { TargetRequestDTO, TargetTypes } from "@/interfaces/api/target";
 import UseSubmissionDetails from "@/hooks/course/useSubmissionDetails/types";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import { useQuery } from "@tanstack/react-query";
@@ -18,7 +18,7 @@ export default function useSubmissionDetails(
           target.type,
           target.type === TargetTypes.STUDENT ? target.id : target.groupId,
         ]
-      : ["submissionDetails", "no-target"],
+      : ["submissionDetails", "noTarget"],
     queryFn: () =>
       EventSectionService.getSubmissionDetails(
         target!,

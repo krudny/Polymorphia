@@ -8,11 +8,15 @@ export default function EquipmentSectionWrapper({
   chests,
 }: EquipmentSectionWrapperProps) {
   const wrapperRef = useScaleShow();
+  const columns = Math.max(
+    Math.min(items.length, 4),
+    Math.min(chests.length, 4)
+  );
 
   return (
     <div ref={wrapperRef}>
-      <EquipmentSection type="item" data={items} />
-      <EquipmentSection type="chest" data={chests} />
+      <EquipmentSection type="item" data={items} columns={columns} />
+      <EquipmentSection type="chest" data={chests} columns={columns} />
     </div>
   );
 }

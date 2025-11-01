@@ -1,5 +1,5 @@
 import { SubmissionDetailsResponseDTO } from "@/interfaces/api/grade/submission";
-import { TargetRequestDTO } from "@/interfaces/api/grade/target";
+import { TargetRequestDTO } from "@/interfaces/api/target";
 import { UseMutationResult } from "@tanstack/react-query";
 
 export interface UseSubmissionsUpdateProps {
