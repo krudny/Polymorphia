@@ -14,9 +14,18 @@
   @apply w-full text-center text-4xl  py-3 border-b-2 border-b-primary-dark focus:outline-none;
 }
 
-.hero-right-wrapper > div > h1 {
-  @apply text-7xl mb-8;
-  @apply md:text-9xl;
+.hero-right-wrapper > div {
+  @apply text-center;
+
+  h1 {
+    @apply text-7xl mb-4;
+    @apply md:text-9xl md:mb-8;
+  }
+
+  h2 {
+    @apply text-3xl mb-4;
+    @apply md:text-4xl md:mb-5;
+  }
 }
 
 .hero-buttons {
