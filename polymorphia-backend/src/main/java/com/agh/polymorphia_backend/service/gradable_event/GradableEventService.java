@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.service.gradable_event;
 
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
-import com.agh.polymorphia_backend.repository.course.GradableEventRepository;
+import com.agh.polymorphia_backend.repository.gradable_event.GradableEventRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
