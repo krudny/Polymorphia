@@ -6,12 +6,15 @@ import { GradingFilterId } from "@/providers/grading/types";
 import { useQuery } from "@tanstack/react-query";
 import CourseGroupsService from "@/services/course-groups";
 import { CourseGroupTypes } from "@/services/course-groups/types";
+import useFetch from "@/hooks/general/useFetch";
 
 export function useGradingFilterConfigs(courseId: number) {
+  const { fetch: fetchFn } = useFetch();
   return useQuery({
     queryKey: ["gradingFilters", courseId],
     queryFn: async () => {
       const courseGroups = await CourseGroupsService.getCourseGroups(
+        fetchFn,
         courseId,
         CourseGroupTypes.INDIVIDUAL_SHORT
       );

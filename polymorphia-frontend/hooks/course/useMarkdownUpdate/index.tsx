@@ -5,14 +5,16 @@ import {
   UseMarkdownUpdateProps,
 } from "@/hooks/course/useMarkdownUpdate/types";
 import { MarkdownService } from "@/services/markdown";
+import useFetch from "@/hooks/general/useFetch";
 
 export default function useMarkdownUpdate(
   request: UseMarkdownUpdateProps
 ): UseMarkdownUpdate {
   const queryClient = useQueryClient();
+  const { fetch: fetchFn } = useFetch();
 
   return useMutation({
-    mutationFn: () => MarkdownService.saveMarkdown(request),
+    mutationFn: () => MarkdownService.saveMarkdown(fetchFn, request),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["markdown", request.resourceId],

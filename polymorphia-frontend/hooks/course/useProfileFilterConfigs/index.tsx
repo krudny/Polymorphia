@@ -4,17 +4,19 @@ import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { UseProfileFilterConfigs } from "@/hooks/course/useProfileFilterConfigs/types";
 import { ProfileFilterId } from "@/app/(logged-in)/profile/types";
 import { EventSectionService } from "@/services/event-section";
+import useFetch from "@/hooks/general/useFetch";
 
 export function useProfileFilterConfigs(): UseProfileFilterConfigs {
   const { courseId } = useUserDetails();
   const queryClient = useQueryClient();
+  const { fetch: fetchFn } = useFetch();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["profileFilters", courseId],
     queryFn: async (): Promise<FilterConfig<ProfileFilterId>[]> => {
       const eventSections = await queryClient.fetchQuery({
         queryKey: ["eventSections", courseId],
-        queryFn: () => EventSectionService.getEventSections(courseId),
+        queryFn: () => EventSectionService.getEventSections(fetchFn, courseId),
       });
       return [
         {

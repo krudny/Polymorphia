@@ -8,22 +8,24 @@ import {
 } from "@/hooks/course/usePreferredCourseUpdate/types";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import { redirectToNextStep } from "@/app/(welcome)/redirectHandler";
+import useFetch from "@/hooks/general/useFetch";
 
 export default function usePreferredCourseUpdate({
   shouldRedirectToMainPage,
 }: UsePreferredCourseUpdateProps): UsePreferredCourseUpdate {
   const queryClient = useQueryClient();
   const router = useRouter();
+  const { fetch: fetchFn } = useFetch();
   const setPreferredCourseMutation = useMutation({
     mutationFn: (courseId: number) =>
-      userService.setUserPreferredCourse(courseId),
+      userService.setUserPreferredCourse(fetchFn, courseId),
     onSuccess: async () => {
       toast.success("Aktywny kurs został zmieniony!");
       await queryClient.invalidateQueries();
 
       const { userRole } = await queryClient.fetchQuery<UserDetailsDTO>({
         queryKey: ["currentUser"],
-        queryFn: () => userService.getCurrentUser(),
+        queryFn: () => userService.getCurrentUser(fetchFn),
       });
 
       if (shouldRedirectToMainPage) {

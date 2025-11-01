@@ -3,9 +3,11 @@ import {
   HallOfFameResponseDTO,
 } from "@/interfaces/api/hall-of-fame";
 import { API_HOST } from "@/services/api";
+import { Fetch } from "@/hooks/general/useFetch/types";
 
 const HallOfFameService = {
   getHallOfFame: async (
+    fetchFn: Fetch,
     page: number,
     size: number,
     courseId: number,
@@ -15,7 +17,7 @@ const HallOfFameService = {
     sortOrder: string,
     groups?: string[]
   ): Promise<HallOfFameResponseDTO> => {
-    const response = await fetch(`${API_HOST}/hall-of-fame`, {
+    const response = await fetchFn(`${API_HOST}/hall-of-fame`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -47,8 +49,11 @@ const HallOfFameService = {
       },
     };
   },
-  getPodium: async (courseId: number): Promise<HallOfFameRecordDTO[]> => {
-    const response = await fetch(
+  getPodium: async (
+    fetchFn: Fetch,
+    courseId: number
+  ): Promise<HallOfFameRecordDTO[]> => {
+    const response = await fetchFn(
       `${API_HOST}/hall-of-fame/podium?courseId=${courseId}`,
       {
         credentials: "include",

@@ -5,10 +5,14 @@ import {
   EquipmentItemResponseDTO,
 } from "@/interfaces/api/equipment";
 import { API_HOST } from "@/services/api";
+import { Fetch } from "@/hooks/general/useFetch/types";
 
 const EquipmentService = {
-  getItems: async (courseId: number): Promise<EquipmentItemResponseDTO[]> => {
-    const response = await fetch(
+  getItems: async (
+    fetchFn: Fetch,
+    courseId: number
+  ): Promise<EquipmentItemResponseDTO[]> => {
+    const response = await fetchFn(
       `${API_HOST}/equipment/items?courseId=${courseId}`,
       { credentials: "include" }
     );
@@ -20,8 +24,11 @@ const EquipmentService = {
     return await response.json();
   },
 
-  getChests: async (courseId: number): Promise<EquipmentChestResponseDTO[]> => {
-    const response = await fetch(
+  getChests: async (
+    fetchFn: Fetch,
+    courseId: number
+  ): Promise<EquipmentChestResponseDTO[]> => {
+    const response = await fetchFn(
       `${API_HOST}/equipment/chests?courseId=${courseId}`,
       { credentials: "include" }
     );
@@ -34,10 +41,11 @@ const EquipmentService = {
   },
 
   pickChestItems: async (
+    fetchFn: Fetch,
     courseId: number,
     requestBody: EquipmentChestOpenRequestDTO
   ) => {
-    const response = await fetch(
+    const response = await fetchFn(
       `${API_HOST}/equipment/chests/open?courseId=${courseId}`,
       {
         method: "POST",
@@ -53,10 +61,11 @@ const EquipmentService = {
   },
 
   getPotentialXp: async (
+    fetchFn: Fetch,
     courseId: number,
     assignedChestId: number
   ): Promise<ChestPotentialXpResponseDTOWithType> => {
-    const response = await fetch(
+    const response = await fetchFn(
       `${API_HOST}/equipment/chests/potential-xp?courseId=${courseId}&assignedChestId=${assignedChestId}`,
       {
         credentials: "include",
