@@ -2,10 +2,12 @@
 @import "../../../styles/globals.css";
 
 .markdown-editor {
-    @apply w-full flex-col-centered opacity-0 lg:px-4;
+  @apply w-full flex-col-centered opacity-0 lg:px-4;
 
-    textarea {
-        @apply w-full max-w-[1200px] min-h-[300px] text-2xl text-primary-dark rounded-xl custom-scrollbar;
-        @apply outline-primary-dark focus:outline-none resize-none dark:text-secondary-light;
-    }
+  textarea,
+  .markdown-textarea {
+    @apply w-full max-w-[1200px] text-2xl text-primary-dark rounded-xl custom-scrollbar;
+    @apply outline-primary-dark focus:outline-none resize-none dark:text-secondary-light;
+    min-height: 300px !important;
+  }
 }
