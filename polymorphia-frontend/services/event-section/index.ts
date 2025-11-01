@@ -29,7 +29,7 @@ import {
   UserDetailsDTO,
 } from "@/interfaces/api/user";
 import { EventTypes } from "@/interfaces/general";
-import { API_HOST } from "@/services/api";
+import { apiFetchJson } from "@/services/api/client";
 import { CriterionResponseDTO } from "@/interfaces/api/grade/criteria";
 import {
   SubmissionDetailsResponseDTO,
@@ -91,19 +91,9 @@ export const EventSectionService = {
   getEventSections: async (
     courseId: number
   ): Promise<EventSectionResponseDTO[]> => {
-    const response = await fetch(
-      `${API_HOST}/event-sections?courseId=${courseId}`,
-      {
-        method: "GET",
-        credentials: "include",
-      }
+    return await apiFetchJson<EventSectionResponseDTO[]>(
+      `/event-sections?courseId=${courseId}`
     );
-
-    if (!response.ok) {
-      throw new Error("Nie udało się pobrać wydarzeń!");
-    }
-
-    return await response.json();
   },
 
   getStudentGradableEvents: async (

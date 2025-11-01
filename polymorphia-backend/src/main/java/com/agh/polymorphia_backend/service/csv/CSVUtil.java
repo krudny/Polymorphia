@@ -9,22 +9,31 @@ import java.util.List;
 import java.util.Objects;
 
 public class CSVUtil {
-    private static final String COLUMN_NOT_FOUND = "Column not found";
-    private static final String EMPTY_FILE = "File is empty or null";
-    private static final String FILE_CSV = "File must have .csv extension";
-    private static final String FILE_TOO_LARGE = "File too large. Maximum allowed size is 5MB";
-
     public static int getColumnIndex(List<String> headers, String columnName) {
-        int index = headers.stream()
-                .map(String::toLowerCase)
-                .toList()
-                .indexOf(columnName.toLowerCase());
+        try {
+            int index = headers.stream()
+//                .filter(Objects::nonNull) -- nie zadziała
+//                    .map(header -> {
+//                        if (header == null){
+//                            return null;
+//                        }
+//                        return header.toLowerCase();
+//                    })
+                    .map(String::toLowerCase)
+                    .toList()
+                    .indexOf(columnName.toLowerCase());
 
-        if (index == -1) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, COLUMN_NOT_FOUND);
+            if (index == -1) {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "Kolumna " + columnName + "nie została znaleziona w pliku."
+                );
+            }
+
+            return index;
+        } catch (NullPointerException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NPE");
         }
-
-        return index;
     }
 
     public static boolean isValidEncoding(List<String[]> data) {
@@ -42,17 +51,17 @@ public class CSVUtil {
 
     public static void validateCSV(MultipartFile file) {
         if (file == null || file.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, EMPTY_FILE);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Plik jest pusty lub nie został podany.");
         }
 
         String filename = file.getOriginalFilename();
         if (filename == null || !filename.endsWith(".csv")) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, FILE_CSV);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Plik musi mieć rozszerzenie .csv");
         }
 
         long maxSize = 5 * 1024 * 1024;
         if (file.getSize() > maxSize) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, FILE_TOO_LARGE);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Plik jest za duży. Maksymalny rozmiar to 5MB.");
         }
     }
 

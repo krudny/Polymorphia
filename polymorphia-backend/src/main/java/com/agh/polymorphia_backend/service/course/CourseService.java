@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class CourseService {
-    public static final String COURSE_NOT_FOUND = "Course does not exist or you're not authorized to access it";
+    public static final String COURSE_NOT_FOUND = "Kurs nie istnieje lub nie masz uprawnień do jego przeglądania.";
     private final CourseRepository courseRepository;
     private final UserService userService;
     private final CourseMapper courseMapper;

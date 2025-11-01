@@ -32,7 +32,7 @@ import static org.mockito.Mockito.*;
 
 @ActiveProfiles("test")
 class AccessAuthorizerTest {
-    private static final String USER_COURSE_ROLE_NOT_FOUND = "User course role not found";
+    private static final String USER_COURSE_ROLE_NOT_FOUND = "Nie znaleziono roli użytkownika w kursie.";
 
     @Mock
     private UserService userService;

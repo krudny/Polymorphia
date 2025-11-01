@@ -36,8 +36,7 @@ import static com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry.*;
 @Service
 @AllArgsConstructor
 public class HallOfFameService {
-    public static final String STUDENT_HOF_NOT_FOUND = "Student's Hall of Fame scores not found";
-    private static final String HOF_EMPTY = "Hall of Fame scores are empty";
+    public static final String STUDENT_HOF_NOT_FOUND = "Brak wyników studenta w Hall of Fame";
     private static final Set<String> INVERT_POSITION_FOR = Set.of(
             FIELD_TOTAL_XP_SUM,
             FIELD_TOTAL_BONUS_SUM
@@ -139,7 +138,7 @@ public class HallOfFameService {
         List<StudentScoreDetail> detailsList = scoreDetailRepository.findByAnimalIdIn(animalIds);
 
         if (detailsList.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, HOF_EMPTY);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Brak wyników w Hall of Fame.");
         }
 
         sortByEventSectionOrderIndex(detailsList);

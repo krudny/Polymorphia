@@ -14,8 +14,5 @@ export default function useGradeUpdate(): UseGradeUpdate {
         queryKey: ["grade"],
       });
     },
-    onError: () => {
-      toast.error("Wystąpił błąd podczas zapisywania oceny");
-    },
   });
 }

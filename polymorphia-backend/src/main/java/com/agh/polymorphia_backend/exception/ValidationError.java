@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.exception.validation;
+package com.agh.polymorphia_backend.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

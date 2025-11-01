@@ -14,8 +14,5 @@ export default function useLogout() {
       toast.success("Wylogowałeś się z aplikacji", { id: "logout-success" });
       router.push("/");
     },
-    onError: () => {
-      toast.error("Błąd wylogowania");
-    },
   });
 }

@@ -14,11 +14,6 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 @RequiredArgsConstructor
 public class MarkdownCourseStrategy implements MarkdownStrategy {
-
-    private static final String COURSE_MARKDOWN_UPDATE_FAILED = "Course rules markdown update failed";
-    private static final String COURSE_MARKDOWN_SOURCE_URL_UNDEFINED = "Course rules markdown source URL is undefined";
-    private static final String COURSE_MARKDOWN_RESET_FAILED = "Course rules markdown reset failed";
-
     private final CourseRepository courseRepository;
     private final CourseService courseService;
     private final FetchClient fetchClient;
@@ -55,7 +50,7 @@ public class MarkdownCourseStrategy implements MarkdownStrategy {
             course.setMarkdown(markdown);
             courseRepository.save(course);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, COURSE_MARKDOWN_UPDATE_FAILED);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Nie udało się zaktualizować zasad kursu.");
         }
     }
 
@@ -65,7 +60,7 @@ public class MarkdownCourseStrategy implements MarkdownStrategy {
         String sourceUrl = course.getMarkdownSourceUrl();
 
         if (sourceUrl == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, COURSE_MARKDOWN_SOURCE_URL_UNDEFINED);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Brak zdefiniowanego adresu URL źródła zasad kursu.");
         }
 
         try {
@@ -73,7 +68,7 @@ public class MarkdownCourseStrategy implements MarkdownStrategy {
             course.setMarkdown(markdown);
             courseRepository.save(course);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, COURSE_MARKDOWN_RESET_FAILED);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Nie udało się zresetować zasad kursu.");
         }
     }
 }

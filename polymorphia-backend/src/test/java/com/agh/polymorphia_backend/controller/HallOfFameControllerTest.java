@@ -139,6 +139,6 @@ class HallOfFameControllerTest extends ControllerTestConfig {
                 .sortOrder(SortOrder.DESC)
                 .build();
 
-        postEndpoint("/hall-of-fame", "student@agh.com", "password", 500, Optional.of(hof));
+        postEndpoint("/hall-of-fame", "student@agh.com", "password", 400, Optional.of(hof));
     }
 }

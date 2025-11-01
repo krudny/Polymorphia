@@ -18,9 +18,6 @@ export default function useCreateAnimal(): UseCreateAnimal {
       closeModal();
       updatePreferredCourse(variables.courseId);
     },
-    onError: ({ message }: Error) => {
-      toast.error(message);
-    },
   });
 
   return { mutation };

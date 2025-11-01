@@ -7,6 +7,9 @@ spring.datasource.password=
 
 spring.jpa.show-sql=true
 
+# To show error messages in response
+spring.mvc.problemdetails.enabled=true
+
 # To make migrations work, this property should be set to validate
 spring.jpa.hibernate.ddl-auto=validate
 

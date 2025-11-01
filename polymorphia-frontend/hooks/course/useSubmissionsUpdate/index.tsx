@@ -20,7 +20,7 @@ export default function useSubmissionsUpdate({
   return useMutation({
     mutationFn: (submissionDetails: SubmissionDetailsResponseDTO) => {
       if (!target) {
-        throw new Error("Wystąpił błąd podczas aktualizacji oddanych zadań.");
+        throw new Error("Wystąpił błąd podczas aktualizacji oddanych zadań."); // TODO: ?
       }
 
       return toast.promise(
@@ -34,7 +34,6 @@ export default function useSubmissionsUpdate({
         {
           loading: "Zapisywanie zmian...",
           success: "Pomyślnie zapisano oddane zadania!",
-          error: () => "Wystąpił błąd przy zapisie oddanych zadań!",
         }
       );
     },

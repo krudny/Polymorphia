@@ -16,7 +16,6 @@ export default function useLogin({ form }: UseLoginProps) {
       return toast.promise(AuthService.login(data), {
         loading: "Logowanie...",
         success: "Zalogowano pomyślnie!",
-        error: () => `Wystąpił błąd przy zalogowaniu!`,
       });
     },
     onSuccess: async () => {

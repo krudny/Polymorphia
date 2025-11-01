@@ -1,4 +1,4 @@
-import { API_HOST } from "@/services/api";
+import { apiFetch } from "@/services/api/client";
 import { ImportCSVType, ImportCSVTypes } from "@/interfaces/general";
 import {
   CSVHeadersResponseDTO,
@@ -14,16 +14,10 @@ const CSVService = {
     formData.append("file", file);
     formData.append("type", type);
 
-    const response = await fetch(`${API_HOST}/csv/headers`, {
+    const response = await apiFetch("/csv/headers", {
       method: "POST",
       body: formData,
-      credentials: "include",
     });
-
-    if (!response.ok) {
-      throw new Error("Nie udało się odczytać nagłówków!");
-    }
-
     return await response.json();
   },
 
@@ -35,16 +29,10 @@ const CSVService = {
     formData.append("file", file);
     formData.append("csvHeaders", JSON.stringify(headers));
 
-    const response = await fetch(`${API_HOST}/csv/preview`, {
+    const response = await apiFetch("/csv/preview", {
       method: "POST",
       body: formData,
-      credentials: "include",
     });
-
-    if (!response.ok) {
-      throw new Error("Nie udało się wczytać podglądu!");
-    }
-
     return await response.json();
   },
 
@@ -60,16 +48,11 @@ const CSVService = {
       ...(gradableEventId && { gradableEventId }),
     });
 
-    const response = await fetch(`${API_HOST}/grading/csv/test`, {
+    await apiFetch("/grading/csv/test", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: body,
-      credentials: "include",
     });
-
-    if (!response.ok) {
-      throw new Error("Nie udało się zapisać ocen!");
-    }
   },
 
   processStudentCourseInvite: async (
@@ -84,16 +67,11 @@ const CSVService = {
       courseId,
     });
 
-    const response = await fetch(`${API_HOST}/invitation/course/csv`, {
+    await apiFetch("/invitation/course/csv", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: body,
-      credentials: "include",
     });
-
-    if (!response.ok) {
-      throw new Error("Nie udało się zaprosić studentów!");
-    }
   },
 
   processStudentGroupInvite: async (
@@ -108,16 +86,11 @@ const CSVService = {
       courseGroupId,
     });
 
-    const response = await fetch(`${API_HOST}/invitation/group/csv`, {
+    await apiFetch("/invitation/group/csv", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: body,
-      credentials: "include",
     });
-
-    if (!response.ok) {
-      throw new Error("Nie udało się zaprosić studentów!");
-    }
   },
 };
 

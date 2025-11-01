@@ -16,7 +16,6 @@ export default function useMarkdownReset(
       return toast.promise(MarkdownService.resetMarkdown(request), {
         loading: "Resetowanie...",
         success: "Pomyślnie zresetowano plik!",
-        error: "Wystąpił błąd przy resetowaniu!",
       });
     },
     onSuccess: () => {

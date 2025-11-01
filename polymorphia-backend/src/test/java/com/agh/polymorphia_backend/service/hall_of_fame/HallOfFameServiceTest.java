@@ -72,7 +72,7 @@ class HallOfFameServiceTest extends BaseTest {
 
         assertThatThrownBy(() -> hallOfFameService.getStudentHallOfFame(user))
                 .isInstanceOf(ResponseStatusException.class)
-                .hasMessageContaining("Student's Hall of Fame scores not found");
+                .hasMessageContaining("Brak wyników studenta w Hall of Fame");
     }
 
     @Test

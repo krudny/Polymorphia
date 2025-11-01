@@ -2,7 +2,7 @@ import {
   HallOfFameRecordDTO,
   HallOfFameResponseDTO,
 } from "@/interfaces/api/hall-of-fame";
-import { API_HOST } from "@/services/api";
+import { apiFetchJson } from "@/services/api/client";
 
 const HallOfFameService = {
   getHallOfFame: async (
@@ -15,9 +15,8 @@ const HallOfFameService = {
     sortOrder: string,
     groups?: string[]
   ): Promise<HallOfFameResponseDTO> => {
-    const response = await fetch(`${API_HOST}/hall-of-fame`, {
+    return await apiFetchJson<HallOfFameResponseDTO>("/hall-of-fame", {
       method: "POST",
-      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -32,32 +31,11 @@ const HallOfFameService = {
         groups: groups && !groups?.includes("all") ? groups : [],
       }),
     });
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch hall of fame!");
-    }
-
-    const data = await response.json();
-
-    // Should return page: -1 when user is not in results
-    return {
-      ...data,
-      currentUser: {
-        page: 0,
-      },
-    };
   },
   getPodium: async (courseId: number): Promise<HallOfFameRecordDTO[]> => {
-    const response = await fetch(
-      `${API_HOST}/hall-of-fame/podium?courseId=${courseId}`,
-      {
-        credentials: "include",
-      }
+    return await apiFetchJson<HallOfFameRecordDTO[]>(
+      `/hall-of-fame/podium?courseId=${courseId}`
     );
-    if (!response.ok) {
-      throw new Error("Failed to fetch hall of fame podium!");
-    }
-    return await response.json();
   },
 };
 
