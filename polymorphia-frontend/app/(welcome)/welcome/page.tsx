@@ -7,11 +7,17 @@ import "./index.css";
 import useUserRole from "@/hooks/course/useUserRole";
 import { animateWelcome } from "@/animations/Welcome";
 import { redirectToNextStep } from "@/app/(welcome)/redirectHandler";
+import { useTitle } from "@/components/navigation/TitleContext";
 
 export default function Welcome() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const { data: userRole, isLoading } = useUserRole();
   const router = useRouter();
+  const { setTitle } = useTitle();
+
+  useEffect(() => {
+    setTitle("");
+  }, [setTitle]);
 
   useEffect(() => {
     if (!wrapperRef.current || isLoading || !userRole) {

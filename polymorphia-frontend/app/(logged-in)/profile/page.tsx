@@ -3,8 +3,6 @@ import Image from "next/image";
 import { useScaleShow } from "@/animations/ScaleShow";
 import { API_STATIC_URL } from "@/services/api";
 import "./index.css";
-import { useTitle } from "@/components/navigation/TitleContext";
-import { useEffect } from "react";
 import UserPoints from "@/components/user-points/UserPoints";
 import { useMediaQuery } from "react-responsive";
 import Loading from "@/components/loading";
@@ -25,8 +23,6 @@ import { notFound } from "next/navigation";
 import { distributeTo100 } from "@/components/progressbar/profile/distributeTo100";
 
 function ProfileContent() {
-  const { setTitle } = useTitle();
-
   // TODO: refactor the rest of the logic to ProfileContext
   const { areFiltersOpen, setAreFiltersOpen } = useProfileContext();
   const isSm = useMediaQuery({ maxWidth: 920 });
@@ -40,10 +36,6 @@ function ProfileContent() {
   } = useProfileFilterConfigs();
 
   const filters = useFilters<ProfileFilterId>(filterConfigs ?? []);
-
-  useEffect(() => {
-    setTitle("Profil");
-  }, [setTitle]);
 
   if (userContext.userRole !== Roles.STUDENT || (!profile && !isLoading)) {
     notFound();

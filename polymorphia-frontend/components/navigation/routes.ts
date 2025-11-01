@@ -1,5 +1,7 @@
+import useEventSectionTitle from "@/hooks/title/useEventSectionTitle";
 import { TitleRule } from "./types";
-import useCourseGroupTitle from "@/hooks/title/course-group";
+import useCourseGroupTitle from "@/hooks/title/useCourseGroupTitle";
+import useGradableEventTitle from "@/hooks/title/useGradableEventTitle";
 
 export const APPLICATION_ROUTES: TitleRule[] = [
   { pattern: /^\/settings$/, useTitleHook: () => "Ustawienia" },
@@ -13,10 +15,10 @@ export const APPLICATION_ROUTES: TitleRule[] = [
   { pattern: /^\/knowledge-base\/items$/, useTitleHook: () => "Przedmioty" },
   { pattern: /^\/knowledge-base\/chests$/, useTitleHook: () => "Skrzynki" },
   {
-    pattern: /^\/knowledge-base\/hall-of-fame$/,
+    pattern: /^\/hall-of-fame$/,
     useTitleHook: () => "Hall of Fame",
   },
-  { pattern: /^\/knowledge-base\/equipment$/, useTitleHook: () => "Ekwipunek" },
+  { pattern: /^\/equipment$/, useTitleHook: () => "Ekwipunek" },
   {
     pattern: /^\/course\/groups$/,
     useTitleHook: () => "Grupy zajęciowe",
@@ -24,5 +26,13 @@ export const APPLICATION_ROUTES: TitleRule[] = [
   {
     pattern: /^\/course\/groups\/(\d+)$/,
     useTitleHook: useCourseGroupTitle,
+  },
+  {
+    pattern: /^\/course\/([a-zA-Z-]+)\/(\d+)$/,
+    useTitleHook: useEventSectionTitle,
+  },
+  {
+    pattern: /^\/course\/([a-zA-Z-]+)\/(\d+)\/(\d+)(?:\/grading)?$/,
+    useTitleHook: useGradableEventTitle,
   },
 ];

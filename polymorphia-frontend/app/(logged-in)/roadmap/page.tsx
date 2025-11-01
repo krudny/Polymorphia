@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useTitle } from "@/components/navigation/TitleContext";
+import { useState } from "react";
 import ProgressBar from "@/components/progressbar/ProgressBar";
 import XPCard from "@/components/xp-card/XPCard";
 import { useFadeInAnimate } from "@/animations/FadeIn";
@@ -16,7 +15,6 @@ import XPCardChest from "@/components/xp-card/components/XPCardChest";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 
 export default function Roadmap() {
-  const { setTitle } = useTitle();
   const [selectedEvent, setSelectedEvent] = useState<
     StudentGradableEventResponseDTO | undefined
   >(undefined);
@@ -25,10 +23,6 @@ export default function Roadmap() {
   const isXL = useMediaQuery({ minWidth: 1280 });
   const isMd = useMediaQuery({ minWidth: 768 });
   const isSm = useMediaQuery({ minWidth: 400 });
-
-  useEffect(() => {
-    setTitle("Roadmapa");
-  }, [setTitle]);
 
   if (isLoading || !roadmap) {
     return <Loading />;

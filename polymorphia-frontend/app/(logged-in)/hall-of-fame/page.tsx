@@ -1,6 +1,4 @@
 "use client";
-import { useTitle } from "@/components/navigation/TitleContext";
-import { useEffect } from "react";
 import { HallOfFameProvider } from "@/providers/hall-of-fame/HallOfFameContext";
 import HallOfFameMobile from "@/views/hall-of-fame/mobile/HallOfFameMobile";
 import FiltersModal from "@/components/filters-modals/FiltersModal";
@@ -54,12 +52,6 @@ function HallOfFameContent() {
 }
 
 export default function HallOfFame() {
-  const { setTitle } = useTitle();
-
-  useEffect(() => {
-    setTitle("Hall of Fame");
-  }, [setTitle]);
-
   return (
     <HallOfFameProvider>
       <HallOfFameContent />
