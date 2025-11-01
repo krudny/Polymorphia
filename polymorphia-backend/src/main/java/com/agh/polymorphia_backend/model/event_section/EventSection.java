@@ -1,12 +1,16 @@
 package com.agh.polymorphia_backend.model.event_section;
 
 import com.agh.polymorphia_backend.model.course.Course;
+import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 @Entity
 @Table(name = "event_sections")
@@ -40,6 +44,11 @@ public abstract class EventSection {
     @NotNull
     @PositiveOrZero
     private Long orderIndex;
+
+    @OneToMany(mappedBy = "eventSection", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @JsonIgnore
+    private List<GradableEvent> gradableEvents;
 
     @NotNull
     private Boolean isHidden = false;

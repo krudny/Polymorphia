@@ -788,31 +788,31 @@ Najważniejsze zadania:
 2. Stworzenie klasy `World` sterującej programem.
 3. Stworze', false, false);
 INSERT INTO gradable_events (id, event_section_id, name, order_index, road_map_order_index, is_hidden, is_locked)
-VALUES (17, 6, 'Kartkówka 1', 0, 0, false, false),
-       (18, 6, 'Kartkówka 2', 1, 1, false, false),
-       (19, 6, 'Kartkówka 3', 2, 2, false, false),
-       (20, 6, 'Kartkówka 4', 3, 3, false, false),
-       (21, 6, 'Kartkówka 5', 4, 4, false, false),
-       (22, 6, 'Kartkówka 6', 5, 5, false, false),
-       (23, 6, 'Kartkówka 7', 6, 6, false, false),
-       (24, 6, 'Kartkówka 8', 7, 7, false, false);
+VALUES (17, 8, 'Kartkówka 1', 0, 0, false, false),
+       (18, 8, 'Kartkówka 2', 1, 1, false, false),
+       (19, 8, 'Kartkówka 3', 2, 2, false, false),
+       (20, 8, 'Kartkówka 4', 3, 3, false, false),
+       (21, 8, 'Kartkówka 5', 4, 4, false, false),
+       (22, 8, 'Kartkówka 6', 5, 5, false, false),
+       (23, 8, 'Kartkówka 7', 6, 6, false, false),
+       (24, 8, 'Kartkówka 8', 7, 7, false, false);
 INSERT INTO gradable_events (id, event_section_id, name, order_index, road_map_order_index, markdown_source_url,
                              is_hidden, is_locked)
-VALUES (25, 8, 'Laboratorium 1', 8, 8,
+VALUES (25, 6, 'Laboratorium 1', 8, 8,
         'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab1/Readme.md', false, false),
-       (26, 8, 'Laboratorium 2', 9, 9,
+       (26, 6, 'Laboratorium 2', 9, 9,
         'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab2/Readme.md', false, false),
-       (27, 8, 'Laboratorium 3', 10, 10,
+       (27, 6, 'Laboratorium 3', 10, 10,
         'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab3/Readme.md', false, false),
-       (28, 8, 'Laboratorium 4', 11, 11,
+       (28, 6, 'Laboratorium 4', 11, 11,
         'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab4/Readme.md', false, false),
-       (29, 8, 'Laboratorium 5', 12, 12,
+       (29, 6, 'Laboratorium 5', 12, 12,
         'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab5/Readme.md', false, false),
-       (30, 8, 'Laboratorium 6', 13, 13,
+       (30, 6, 'Laboratorium 6', 13, 13,
         'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab6/Readme.md', false, false),
-       (31, 8, 'Laboratorium 7', 14, 14,
+       (31, 6, 'Laboratorium 7', 14, 14,
         'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab7/Readme.md', false, false),
-       (32, 8, 'Laboratorium 8', 15, 15,
+       (32, 6, 'Laboratorium 8', 15, 15,
         'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab8/Readme.md', false, false),
        (33, 4, 'Git', 0, 0, null, false, false);
 
@@ -1022,7 +1022,7 @@ VALUES (1, 1, 1, 1.0);
 INSERT INTO criteria_grades (id, grade_id, criterion_id, xp)
 VALUES (2, 2, 2, 2.0);
 INSERT INTO criteria_grades (id, grade_id, criterion_id, xp)
-VALUES (3, 3, 2, 2.0);
+VALUES (3, 3, 3, 2.0);
 INSERT INTO criteria_grades (id, grade_id, criterion_id, xp)
 VALUES (4, 4, 8, 2.0);
 INSERT INTO criteria_grades (id, grade_id, criterion_id, xp)

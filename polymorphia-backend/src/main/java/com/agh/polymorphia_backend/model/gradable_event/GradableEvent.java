@@ -35,9 +35,9 @@ public class GradableEvent {
     private String topic;
 
     @NotNull
-    private Integer orderIndex;
+    private Long orderIndex;
 
-    private Integer roadMapOrderIndex;
+    private Long roadMapOrderIndex;
 
     @Column(length = 128)
     private String markdownSourceUrl;

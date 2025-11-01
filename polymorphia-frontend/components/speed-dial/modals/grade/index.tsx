@@ -23,7 +23,7 @@ export default function GradeModal({
   if (!gradableEventIdProp && !gradableEventId) {
     throw new Error("[GradeModal] invalid gradableEventId");
   }
-
+  console.log(gradableEventIdProp, target);
   const {
     data: gradeData,
     isLoading: isGradeLoading,

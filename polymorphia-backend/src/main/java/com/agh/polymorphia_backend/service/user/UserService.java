@@ -72,6 +72,11 @@ public class UserService implements UserDetailsService {
         return getUserRole(user);
     }
 
+    public UserType getUserRoleInCourse(Long courseId) {
+        return userCourseRoleRepository.findByUserIdAndCourseId(getCurrentUser().getUserId(), courseId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND))
+                .getRole();
+    }
 
     public String getFullName(User user) {
         return String.join(" ", user.getFirstName(), user.getLastName());

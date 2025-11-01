@@ -25,14 +25,12 @@ public class CriterionGrade {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "grade_id")
-    @ToString.Exclude
     @JsonIgnore
     private Grade grade;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "criterion_id")
-    @ToString.Exclude
     @JsonIgnore
     private Criterion criterion;
 
