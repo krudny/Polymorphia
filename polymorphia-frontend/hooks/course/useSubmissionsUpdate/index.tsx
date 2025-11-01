@@ -1,6 +1,5 @@
 import { useEventParams } from "@/hooks/general/useEventParams";
 import { SubmissionDetailsResponseDTO } from "@/interfaces/api/grade/submission";
-import { EventSectionService } from "@/services/event-section";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import {
@@ -8,6 +7,7 @@ import {
   UseSubmissionsUpdateProps,
 } from "@/hooks/course/useSubmissionsUpdate/types";
 import { TargetTypes } from "@/interfaces/api/target";
+import { SubmissionService } from "@/services/submission";
 
 export default function useSubmissionsUpdate({
   target,
@@ -22,7 +22,7 @@ export default function useSubmissionsUpdate({
       }
 
       return toast.promise(
-        EventSectionService.submitSubmissions(gradableEventId, {
+        SubmissionService.submitSubmissions(gradableEventId, {
           target,
           details: submissionDetails,
         }),
