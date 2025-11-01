@@ -1,17 +1,10 @@
 "use client";
 import Slider from "@/components/slider/Slider";
 import Loading from "@/components/loading";
-import { useTitle } from "@/components/navigation/TitleContext";
-import { useEffect } from "react";
 import useEvolutionStages from "@/hooks/course/useEvolutionStages";
 
 export default function EvolutionStages() {
   const { data: evolutionStages, isLoading, error } = useEvolutionStages();
-  const { setTitle } = useTitle();
-
-  useEffect(() => {
-    setTitle("Postacie");
-  }, [setTitle]);
 
   if (isLoading) {
     return <Loading />;

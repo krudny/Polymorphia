@@ -7,11 +7,11 @@ import { QueryClient } from "@tanstack/query-core";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactNode, useState } from "react";
 import { Toaster } from "react-hot-toast";
-import { TitleProvider } from "@/components/navigation/TitleContext";
 import { ThemeProvider } from "next-themes";
 import { ThemeProvider as ThemeProviderMui } from "@mui/material";
 import { themeConfig } from "@/components/speed-dial/config";
 import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
+import { ManualTitleProvider } from "@/components/navigation/TitleContext";
 
 const leagueGothic = League_Gothic({
   subsets: ["latin"],
@@ -50,14 +50,14 @@ export default function RootLayout({
             enableSystem
             storageKey="theme"
           >
-            <TitleProvider>
+            <ManualTitleProvider>
               <QueryClientProvider client={queryClient}>
                 <Toaster toastOptions={{ style: { fontSize: "1.5rem" } }} />
                 <BackgroundWrapper className="hero-background-wrapper">
                   {children}
                 </BackgroundWrapper>
               </QueryClientProvider>
-            </TitleProvider>
+            </ManualTitleProvider>
           </ThemeProvider>
         </ThemeProviderMui>
       </body>
