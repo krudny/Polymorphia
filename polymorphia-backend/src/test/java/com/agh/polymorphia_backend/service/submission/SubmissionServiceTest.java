@@ -1,5 +1,12 @@
 package com.agh.polymorphia_backend.service.submission;
 
+import static com.agh.polymorphia_backend.service.course.CourseService.COURSE_NOT_FOUND;
+import static com.agh.polymorphia_backend.service.submission.SubmissionService.SUBMISSION_TEST_SECTIONS_NOT_SUPPORTED;
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
+
 import com.agh.polymorphia_backend.BaseTest;
 import com.agh.polymorphia_backend.dto.response.submission.SubmissionRequirementResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
@@ -11,28 +18,28 @@ import com.agh.polymorphia_backend.repository.submission.SubmissionRequirementRe
 import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
 import com.agh.polymorphia_backend.service.mapper.SubmissionMapper;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class SubmissionServiceTest extends BaseTest {
 
     @Mock
     private GradableEventService gradableEventService;
+
     @Mock
     private AccessAuthorizer accessAuthorizer;
+
     @Mock
     private SubmissionRequirementRepository submissionRequirementRepository;
-    @Mock
-    private SubmissionMapper submissionMapper;
+
+    @Spy
+    private SubmissionMapper submissionMapper = new SubmissionMapper();
 
     @InjectMocks
     private SubmissionService submissionService;
@@ -48,97 +55,120 @@ class SubmissionServiceTest extends BaseTest {
         course = Course.builder().id(1L).build();
 
         AssignmentSection assignmentSection = AssignmentSection.builder()
-                .id(10L)
-                .course(course)
-                .build();
+            .id(10L)
+            .course(course)
+            .build();
 
         TestSection testSection = TestSection.builder()
-                .id(11L)
-                .course(course)
-                .build();
+            .id(11L)
+            .course(course)
+            .build();
 
         assignment = GradableEvent.builder()
-                .id(100L)
-                .eventSection(assignmentSection)
-                .build();
+            .id(100L)
+            .eventSection(assignmentSection)
+            .build();
 
         test = GradableEvent.builder()
-                .id(101L)
-                .eventSection(testSection)
-                .build();
+            .id(101L)
+            .eventSection(testSection)
+            .build();
     }
 
     @Test
     void shouldReturnSortedSubmissionRequirements() {
         SubmissionRequirement req1 = SubmissionRequirement.builder()
-                .id(1L)
-                .name("Req B")
-                .orderIndex(2L)
-                .build();
+            .id(1L)
+            .name("Req B")
+            .orderIndex(2L)
+            .build();
 
         SubmissionRequirement req2 = SubmissionRequirement.builder()
-                .id(2L)
-                .name("Req A")
-                .orderIndex(1L)
-                .build();
+            .id(2L)
+            .name("Req A")
+            .orderIndex(1L)
+            .build();
 
-        SubmissionRequirementResponseDto dto1 = SubmissionRequirementResponseDto.builder()
-                .id(2L)
-                .name("Req A")
-                .orderIndex(1L)
-                .build();
+        when(
+            gradableEventService.getGradableEventById(assignment.getId())
+        ).thenReturn(assignment);
 
-        SubmissionRequirementResponseDto dto2 = SubmissionRequirementResponseDto.builder()
-                .id(1L)
-                .name("Req B")
-                .orderIndex(2L)
-                .build();
+        doNothing()
+            .when(accessAuthorizer)
+            .authorizeCourseAccess(course.getId());
 
-        when(gradableEventService.getGradableEventById(assignment.getId())).thenReturn(assignment);
-        doNothing().when(accessAuthorizer).authorizeCourseAccess(course.getId());
-        when(submissionRequirementRepository.getSubmissionRequirementsByGradableEvent(assignment))
-                .thenReturn(List.of(req1, req2));
-        when(submissionMapper.toSubmissionRequirementResponseDto(req2)).thenReturn(dto1);
-        when(submissionMapper.toSubmissionRequirementResponseDto(req1)).thenReturn(dto2);
+        when(
+            submissionRequirementRepository.getSubmissionRequirementsByGradableEvent(
+                assignment
+            )
+        ).thenReturn(List.of(req1, req2));
 
         List<SubmissionRequirementResponseDto> result =
-                submissionService.getSubmissionRequirements(assignment.getId());
+            submissionService.getSubmissionRequirements(assignment.getId());
 
         assertThat(result).hasSize(2);
+
         assertThat(result.get(0).orderIndex()).isEqualTo(1L);
+        assertThat(result.get(0).name()).isEqualTo("Req A");
+
         assertThat(result.get(1).orderIndex()).isEqualTo(2L);
+        assertThat(result.get(1).name()).isEqualTo("Req B");
 
         verify(accessAuthorizer).authorizeCourseAccess(course.getId());
-        verify(submissionMapper, times(2)).toSubmissionRequirementResponseDto(any());
     }
 
     @Test
     void shouldThrowWhenEventSectionTypeIsTest() {
-        when(gradableEventService.getGradableEventById(test.getId())).thenReturn(test);
+        when(
+            gradableEventService.getGradableEventById(test.getId())
+        ).thenReturn(test);
 
-        assertThatThrownBy(() -> submissionService.getSubmissionRequirements(test.getId()))
-                .isInstanceOf(ResponseStatusException.class);
+        ResponseStatusException ex =  assertThrows(
+                ResponseStatusException.class,
+                () ->
+            submissionService.getSubmissionRequirements(test.getId())
+        );
+
+        assertEquals(400, ex.getStatusCode().value());
+        assertEquals(SUBMISSION_TEST_SECTIONS_NOT_SUPPORTED, ex.getReason());
     }
 
     @Test
     void shouldThrowWhenAccessNotAuthorized() {
-        when(gradableEventService.getGradableEventById(assignment.getId())).thenReturn(assignment);
-        doThrow(new ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND))
-                .when(accessAuthorizer).authorizeCourseAccess(course.getId());
+        when(
+            gradableEventService.getGradableEventById(assignment.getId())
+        ).thenReturn(assignment);
+        doThrow(
+            new ResponseStatusException(
+                org.springframework.http.HttpStatus.NOT_FOUND
+            )
+        )
+            .when(accessAuthorizer)
+            .authorizeCourseAccess(course.getId());
 
-        assertThatThrownBy(() -> submissionService.getSubmissionRequirements(assignment.getId()))
-                .isInstanceOf(ResponseStatusException.class);
+        ResponseStatusException ex = assertThrows(ResponseStatusException.class, () ->
+            submissionService.getSubmissionRequirements(assignment.getId())
+        );
+
+        assertEquals(404, ex.getStatusCode().value());
     }
 
     @Test
     void shouldReturnEmptyListWhenNoRequirements() {
-        when(gradableEventService.getGradableEventById(assignment.getId())).thenReturn(assignment);
-        doNothing().when(accessAuthorizer).authorizeCourseAccess(course.getId());
-        when(submissionRequirementRepository.getSubmissionRequirementsByGradableEvent(assignment))
-                .thenReturn(List.of());
+        when(
+            gradableEventService.getGradableEventById(assignment.getId())
+        ).thenReturn(assignment);
+        doNothing()
+            .when(accessAuthorizer)
+            .authorizeCourseAccess(course.getId());
+        when(
+            submissionRequirementRepository.getSubmissionRequirementsByGradableEvent(
+                assignment
+            )
+        ).thenReturn(List.of());
 
         List<SubmissionRequirementResponseDto> result =
-                submissionService.getSubmissionRequirements(assignment.getId());
+            submissionService.getSubmissionRequirements(assignment.getId());
 
         assertThat(result).isEmpty();
     }
