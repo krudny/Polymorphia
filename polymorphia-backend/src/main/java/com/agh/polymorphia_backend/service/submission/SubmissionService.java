@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class SubmissionService {
-    public static final String SUBMISSION_TEST_SECTIONS_NOT_SUPPORTED = "Submissions for test event sections is not supported";
+    private static final String SUBMISSION_TEST_SECTIONS_NOT_SUPPORTED = "Submissions for test event sections is not supported";
     private static final String STUDENT_NOT_FOUND = "Student not found";
     private static final String STUDENT_GROUP_NOT_FOUND = "Student group not found";
     private static final String INVALID_TARGET = "Group target is supported only for project section";
