@@ -19,6 +19,7 @@ import com.agh.polymorphia_backend.model.event_section.TestSection;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.submission.Submission;
 import com.agh.polymorphia_backend.model.submission.SubmissionRequirement;
+import com.agh.polymorphia_backend.model.user.Coordinator;
 import com.agh.polymorphia_backend.model.user.Instructor;
 import com.agh.polymorphia_backend.model.user.Student;
 import com.agh.polymorphia_backend.model.user.UserType;
@@ -716,6 +717,322 @@ class SubmissionServiceTest extends BaseTest {
             );
             assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
             assertEquals("Mandatory submission is missing", ex.getReason());
+        }
+
+        @Test
+        void putSubmissionDetails_whenBatchHasEmptyMandatory_shouldThrowException() {
+            // Given
+            Student student = Student.builder().build();
+            student.setUserId(1L);
+            TargetRequestDto target = new StudentTargetRequestDto(
+                student.getUserId()
+            );
+            SubmissionRequirement mandatoryReq = SubmissionRequirement.builder()
+                .id(1L)
+                .isMandatory(true)
+                .build();
+            SubmissionRequirement optionalReq = SubmissionRequirement.builder()
+                .id(2L)
+                .isMandatory(false)
+                .build();
+
+            SubmissionDetailsDto emptyDetails = SubmissionDetailsDto.builder()
+                .url("")
+                .isLocked(false)
+                .build();
+            SubmissionDetailsDto updatedDetails = SubmissionDetailsDto.builder()
+                .url("http://new.com")
+                .isLocked(false)
+                .build();
+            SubmissionDetailsRequestDto requestDto =
+                new SubmissionDetailsRequestDto(
+                    target,
+                    Map.of(
+                        mandatoryReq.getId(),
+                        emptyDetails,
+                        optionalReq.getId(),
+                        updatedDetails
+                    )
+                );
+
+            when(userService.getCurrentUserRole()).thenReturn(UserType.STUDENT);
+            when(userService.getCurrentUser()).thenReturn(student);
+            when(
+                gradableEventService.getGradableEventById(assignment.getId())
+            ).thenReturn(assignment);
+            when(
+                submissionRequirementRepository.getSubmissionRequirementsByGradableEvent(
+                    assignment
+                )
+            ).thenReturn(List.of(mandatoryReq, optionalReq));
+
+            // When & Then
+            ResponseStatusException ex = assertThrows(
+                ResponseStatusException.class,
+                () ->
+                    submissionService.putSubmissionDetails(
+                        assignment.getId(),
+                        requestDto
+                    )
+            );
+            assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
+            assertEquals("Mandatory submission is missing", ex.getReason());
+        }
+
+        @Test
+        void putSubmissionDetails_whenDataIsUnchanged_shouldDoNothing() {
+            // Given
+            Student student = Student.builder().build();
+            student.setUserId(1L);
+            TargetRequestDto target = new StudentTargetRequestDto(
+                student.getUserId()
+            );
+            long requirementId = 1L;
+            Submission existingSubmission = Submission.builder()
+                .id(1L)
+                .submissionRequirement(
+                    SubmissionRequirement.builder().id(requirementId).build()
+                )
+                .isLocked(false)
+                .url("http://old.com")
+                .build();
+            SubmissionDetailsDto detailsDto = SubmissionDetailsDto.builder()
+                .url(existingSubmission.getUrl())
+                .isLocked(existingSubmission.isLocked())
+                .build();
+            SubmissionDetailsRequestDto requestDto =
+                new SubmissionDetailsRequestDto(
+                    target,
+                    Map.of(requirementId, detailsDto)
+                );
+
+            when(userService.getCurrentUserRole()).thenReturn(UserType.STUDENT);
+            when(userService.getCurrentUser()).thenReturn(student);
+            when(
+                gradableEventService.getGradableEventById(assignment.getId())
+            ).thenReturn(assignment);
+            when(
+                submissionRequirementRepository.getSubmissionRequirementsByGradableEvent(
+                    assignment
+                )
+            ).thenReturn(
+                List.of(existingSubmission.getSubmissionRequirement())
+            );
+            when(
+                submissionRepository.getSubmissionsByGradableEventAndStudent(
+                    assignment.getId(),
+                    student.getUserId()
+                )
+            ).thenReturn(List.of(existingSubmission));
+
+            // When
+            submissionService.putSubmissionDetails(
+                assignment.getId(),
+                requestDto
+            );
+
+            // Then
+            verify(submissionRepository).saveAll(
+                saveSubmissionCaptor.capture()
+            );
+            verify(submissionRepository).deleteAll(
+                deleteSubmissionCaptor.capture()
+            );
+            assertThat(saveSubmissionCaptor.getValue()).isEmpty();
+            assertThat(deleteSubmissionCaptor.getValue()).isEmpty();
+        }
+
+        @Test
+        void putSubmissionDetails_whenNewSubmissionIsEmpty_shouldNotBeCreated() {
+            // Given
+            Student student = Student.builder().build();
+            student.setUserId(1L);
+            TargetRequestDto target = new StudentTargetRequestDto(
+                student.getUserId()
+            );
+            long requirementId = 1L;
+            SubmissionDetailsDto detailsDto = SubmissionDetailsDto.builder()
+                .url("")
+                .isLocked(false)
+                .build();
+            SubmissionDetailsRequestDto requestDto =
+                new SubmissionDetailsRequestDto(
+                    target,
+                    Map.of(requirementId, detailsDto)
+                );
+            SubmissionRequirement requirement = SubmissionRequirement.builder()
+                .id(requirementId)
+                .isMandatory(false)
+                .build();
+
+            when(userService.getCurrentUserRole()).thenReturn(UserType.STUDENT);
+            when(userService.getCurrentUser()).thenReturn(student);
+            when(
+                gradableEventService.getGradableEventById(assignment.getId())
+            ).thenReturn(assignment);
+            when(
+                submissionRequirementRepository.getSubmissionRequirementsByGradableEvent(
+                    assignment
+                )
+            ).thenReturn(List.of(requirement));
+            when(
+                submissionRepository.getSubmissionsByGradableEventAndStudent(
+                    assignment.getId(),
+                    student.getUserId()
+                )
+            ).thenReturn(Collections.emptyList());
+
+            // When
+            submissionService.putSubmissionDetails(
+                assignment.getId(),
+                requestDto
+            );
+
+            // Then
+            verify(submissionRepository).saveAll(
+                saveSubmissionCaptor.capture()
+            );
+            verify(submissionRepository).deleteAll(
+                deleteSubmissionCaptor.capture()
+            );
+            assertThat(saveSubmissionCaptor.getValue()).isEmpty();
+            assertThat(deleteSubmissionCaptor.getValue()).isEmpty();
+        }
+
+        @Test
+        void putSubmissionDetails_whenStudentCreatesLockedSubmission_shouldThrowException() {
+            // Given
+            Student student = Student.builder().build();
+            student.setUserId(1L);
+            TargetRequestDto target = new StudentTargetRequestDto(
+                student.getUserId()
+            );
+            long requirementId = 1L;
+            SubmissionDetailsDto detailsDto = SubmissionDetailsDto.builder()
+                .url("http://new.com")
+                .isLocked(true)
+                .build();
+            SubmissionDetailsRequestDto requestDto =
+                new SubmissionDetailsRequestDto(
+                    target,
+                    Map.of(requirementId, detailsDto)
+                );
+            SubmissionRequirement requirement = SubmissionRequirement.builder()
+                .id(requirementId)
+                .build();
+
+            when(userService.getCurrentUserRole()).thenReturn(UserType.STUDENT);
+            when(userService.getCurrentUser()).thenReturn(student);
+            when(
+                gradableEventService.getGradableEventById(assignment.getId())
+            ).thenReturn(assignment);
+            when(
+                submissionRequirementRepository.getSubmissionRequirementsByGradableEvent(
+                    assignment
+                )
+            ).thenReturn(List.of(requirement));
+            when(
+                submissionRepository.getSubmissionsByGradableEventAndStudent(
+                    assignment.getId(),
+                    student.getUserId()
+                )
+            ).thenReturn(Collections.emptyList());
+
+            // When & Then
+            ResponseStatusException ex = assertThrows(
+                ResponseStatusException.class,
+                () ->
+                    submissionService.putSubmissionDetails(
+                        assignment.getId(),
+                        requestDto
+                    )
+            );
+            assertEquals(HttpStatus.FORBIDDEN, ex.getStatusCode());
+            assertEquals(
+                "Students can't change lock status of the submission",
+                ex.getReason()
+            );
+        }
+
+        @Test
+        void putSubmissionDetails_whenCoordinatorLocksSubmission_shouldUpdateAndLock() {
+            // Given
+            var coordinator = new Coordinator();
+            coordinator.setUserId(99L);
+            Student student = Student.builder().build();
+            student.setUserId(1L);
+            TargetRequestDto target = new StudentTargetRequestDto(
+                student.getUserId()
+            );
+            long requirementId = 1L;
+            Submission existingSubmission = Submission.builder()
+                .id(1L)
+                .submissionRequirement(
+                    SubmissionRequirement.builder().id(requirementId).build()
+                )
+                .isLocked(false)
+                .url("http://old-url.com")
+                .build();
+            SubmissionDetailsDto detailsDto = SubmissionDetailsDto.builder()
+                .url(existingSubmission.getUrl())
+                .isLocked(true)
+                .build();
+            SubmissionDetailsRequestDto requestDto =
+                new SubmissionDetailsRequestDto(
+                    target,
+                    Map.of(requirementId, detailsDto)
+                );
+
+            when(userService.getCurrentUserRole()).thenReturn(
+                UserType.COORDINATOR
+            );
+            when(userService.getCurrentUser()).thenReturn(coordinator);
+            when(
+                gradableEventService.getGradableEventById(assignment.getId())
+            ).thenReturn(assignment);
+            when(
+                studentRepository.findByUserIdAndGradableEventId(
+                    student.getUserId(),
+                    assignment.getId()
+                )
+            ).thenReturn(Optional.of(student));
+            when(
+                submissionRequirementRepository.getSubmissionRequirementsByGradableEvent(
+                    assignment
+                )
+            ).thenReturn(
+                List.of(existingSubmission.getSubmissionRequirement())
+            );
+            when(
+                submissionRepository.getSubmissionsByGradableEventAndStudent(
+                    assignment.getId(),
+                    student.getUserId()
+                )
+            ).thenReturn(List.of(existingSubmission));
+
+            // When
+            submissionService.putSubmissionDetails(
+                assignment.getId(),
+                requestDto
+            );
+
+            // Then
+            verify(submissionRepository).saveAll(
+                saveSubmissionCaptor.capture()
+            );
+            verify(submissionRepository).deleteAll(
+                deleteSubmissionCaptor.capture()
+            );
+            List<Submission> savedSubmissions = saveSubmissionCaptor.getValue();
+            assertThat(savedSubmissions).hasSize(1);
+            Submission savedSubmission = savedSubmissions.getFirst();
+            assertThat(savedSubmission.getUrl()).isEqualTo(
+                existingSubmission.getUrl()
+            );
+            assertThat(savedSubmission.isLocked()).isTrue();
+            List<Submission> deletedSubmissions =
+                deleteSubmissionCaptor.getValue();
+            assertThat(deletedSubmissions).isEmpty();
         }
     }
 }
