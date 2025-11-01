@@ -18,7 +18,7 @@ export default function useSubmissionDetails(
           target.type,
           target.type === TargetTypes.STUDENT ? target.id : target.groupId,
         ]
-      : ["submissionDetails", "no-target"],
+      : ["submissionDetails", "noTarget"],
     queryFn: () =>
       EventSectionService.getSubmissionDetails(
         target!,

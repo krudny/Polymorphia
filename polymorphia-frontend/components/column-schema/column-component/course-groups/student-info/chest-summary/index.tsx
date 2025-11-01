@@ -3,11 +3,11 @@ import Loading from "@/components/loading";
 import useStudentChests from "@/hooks/course/useStudentChests";
 import EquipmentChest from "@/components/equipment/components/chest";
 import "../index.css";
-
-const USER_ID = 1;
+import useTargetContext from "@/hooks/contexts/useTargetContext";
 
 export default function ChestSummary(): JSX.Element {
-  const { data: chests, isLoading } = useStudentChests(USER_ID);
+  const { targetId } = useTargetContext();
+  const { data: chests, isLoading } = useStudentChests(targetId);
 
   if (isLoading || !chests) {
     return <Loading />;

@@ -11,7 +11,8 @@ import ColumnComponent from "@/components/column-schema/column-component";
 import { isTargetSelected } from "@/providers/target/utils/is-selected";
 
 export default function TargetList() {
-  const { targets, isTargetsLoading, onTargetSelect } = useTargetContext();
+  const { targets, isTargetsLoading, onTargetSelect, selectedTarget } =
+    useTargetContext();
 
   const topComponent = () => <TargetListTopBar />;
 
@@ -31,7 +32,11 @@ export default function TargetList() {
                     ? [target]
                     : target.members
                   ).map((student, studentIndex) => {
-                    const isSelected = isTargetSelected(target, student);
+                    const isSelected = isTargetSelected(
+                      target,
+                      student,
+                      selectedTarget
+                    );
                     const color = isSelected
                       ? student.gainedXp
                         ? "green"

@@ -48,7 +48,7 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
       groups,
       gradeStatus,
     });
-  }, [sortBy, sortOrder, groups, gradeStatus]);
+  }, [sortBy, sortOrder, groups, gradeStatus, applyFiltersCallback]);
 
   const { data: criteria, isLoading: isCriteriaLoading } = useCriteria();
   const { data: grade, isLoading: isGradeLoading } = useShortGrade(

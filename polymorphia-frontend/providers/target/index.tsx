@@ -39,6 +39,12 @@ export const TargetProvider = ({ children }: TargetProviderProps) => {
   );
   const { selectedTarget } = state;
 
+  const targetId = selectedTarget
+    ? selectedTarget.type === TargetTypes.STUDENT
+      ? selectedTarget.id
+      : selectedTarget.groupId
+    : null;
+
   const applyFiltersCallback = useCallback((filters: AppliedFiltersAdapter) => {
     setAppliedFilters(filters);
     return filters;
@@ -108,6 +114,7 @@ export const TargetProvider = ({ children }: TargetProviderProps) => {
         onTargetSelect,
         handleApplyFilters,
         applyFiltersCallback,
+        targetId,
       }}
     >
       {children}

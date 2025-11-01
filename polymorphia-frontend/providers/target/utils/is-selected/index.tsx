@@ -4,13 +4,12 @@ import {
   TargetTypes,
 } from "@/interfaces/api/target";
 import areTargetsEqual from "@/providers/target/utils/are-targets-equal";
-import useTargetContext from "@/hooks/contexts/useTargetContext";
 
 export const isTargetSelected = (
   target: TargetResponseDTO,
-  student: StudentTargetData
+  student: StudentTargetData,
+  selectedTarget: TargetResponseDTO | null
 ): boolean => {
-  const { selectedTarget } = useTargetContext();
   if (!selectedTarget) {
     return false;
   }

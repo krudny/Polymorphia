@@ -23,6 +23,7 @@ export interface TargetContextInterface {
   applyFiltersCallback: (
     filters: AppliedFiltersAdapter
   ) => Record<string, string[] | string>;
+  targetId: number | null;
 }
 
 export interface TargetProviderProps {

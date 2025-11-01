@@ -1,8 +1,8 @@
 import TextareaAutosize from "react-textarea-autosize";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
-import { GradingReducerActions } from "@/providers/grading/gradingReducer/types";
 import "./index.css";
 import { ChangeEvent } from "react";
+import { GradingReducerActions } from "@/providers/grading/reducer/types";
 
 export default function Comment() {
   const { state, dispatch } = useGradingContext();

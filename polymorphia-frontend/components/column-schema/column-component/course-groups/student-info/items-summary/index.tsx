@@ -3,11 +3,11 @@ import Loading from "@/components/loading";
 import EquipmentItem from "@/components/equipment/components/item";
 import { JSX } from "react";
 import "../index.css";
-
-const USER_ID = 1;
+import useTargetContext from "@/hooks/contexts/useTargetContext";
 
 export default function ItemsSummary(): JSX.Element {
-  const { data: items, isLoading } = useStudentItems(USER_ID);
+  const { targetId } = useTargetContext();
+  const { data: items, isLoading } = useStudentItems(targetId);
 
   if (isLoading || !items) {
     return <Loading />;
