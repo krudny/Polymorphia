@@ -11,11 +11,7 @@ export default function NotFoundContent({ titleRef }: NotFoundContentProps) {
       <div ref={titleRef} className="hero-error">
         <h1>Ooops!</h1>
         <h2>Nie znaleźliśmy strony, której szukasz.</h2>
-        <ButtonWithBorder
-          text="Powrót"
-          onClick={() => router.back()}
-          forceDark
-        />
+        <ButtonWithBorder text="Powrót" onClick={() => router.back()} />
       </div>
     </div>
   );
