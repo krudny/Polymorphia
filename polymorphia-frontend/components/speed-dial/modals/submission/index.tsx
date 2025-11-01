@@ -123,7 +123,11 @@ function SubmissionsModalContent({
                     type="url"
                     id={String(requirement.id)}
                     className="submissions-modal-url-input"
-                    placeholder="Wpisz URL do tej części zadania"
+                    placeholder={
+                      detail.isLocked
+                        ? "Oddawanie zadania zostało zablokowane"
+                        : "Wpisz URL do tej części zadania"
+                    }
                     value={detail.url}
                     onChange={handleChange}
                     disabled={detail.isLocked}
@@ -142,7 +146,8 @@ function SubmissionsModalContent({
       <div className="submissions-modal-submit-section">
         {!isSubmissionValid && (
           <h3>
-            Należy wpisać poprawny URL do wszystkich obowiązkowych wymagań.
+            Należy uzupełnić wszystkie obowiązkowe wymagania. Wszystkie
+            wypełnione URL muszą być poprawne.
           </h3>
         )}
         <ButtonWithBorder

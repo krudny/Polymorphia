@@ -1,0 +1,26 @@
+[
+  {
+    "id": 2,
+    "name": "Wykonanie zadania 1",
+    "isMandatory": true,
+    "orderIndex": 1
+  },
+  {
+    "id": 3,
+    "name": "Wykonanie zadania 2",
+    "isMandatory": true,
+    "orderIndex": 2
+  },
+  {
+    "id": 4,
+    "name": "Zadanie dodatkowe 1",
+    "isMandatory": false,
+    "orderIndex": 3
+  },
+  {
+    "id": 5,
+    "name": "Zadanie dodatkowe 2",
+    "isMandatory": false,
+    "orderIndex": 4
+  }
+]

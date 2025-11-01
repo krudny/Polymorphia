@@ -1,7 +1,5 @@
-import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import { SubmissionDetailsResponseDTO } from "@/interfaces/api/grade/submission";
-import { EventSectionService } from "@/services/event-section";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import {
@@ -9,13 +7,13 @@ import {
   UseSubmissionsUpdateProps,
 } from "@/hooks/course/useSubmissionsUpdate/types";
 import { TargetTypes } from "@/interfaces/api/grade/target";
+import { SubmissionService } from "@/services/submission";
 
 export default function useSubmissionsUpdate({
   target,
 }: UseSubmissionsUpdateProps): UseSubmissionsUpdate {
   const queryClient = useQueryClient();
-  const { courseId } = useUserDetails();
-  const { eventSectionId, gradableEventId } = useEventParams();
+  const { gradableEventId } = useEventParams();
 
   return useMutation({
     mutationFn: (submissionDetails: SubmissionDetailsResponseDTO) => {
@@ -24,13 +22,10 @@ export default function useSubmissionsUpdate({
       }
 
       return toast.promise(
-        EventSectionService.submitSubmissions(
+        SubmissionService.submitSubmissions(gradableEventId, {
           target,
-          courseId,
-          eventSectionId,
-          gradableEventId,
-          submissionDetails
-        ),
+          details: submissionDetails,
+        }),
         {
           loading: "Zapisywanie zmian...",
           success: "Pomyślnie zapisano oddane zadania!",
@@ -43,6 +38,7 @@ export default function useSubmissionsUpdate({
         queryClient.invalidateQueries({
           queryKey: [
             "submissionDetails",
+            gradableEventId,
             target.type,
             target.type === TargetTypes.STUDENT ? target.id : target.groupId,
           ],

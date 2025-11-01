@@ -114,8 +114,6 @@ export const markdownConfig: Components = {
     const isBlock = node?.position?.start.line !== node?.position?.end.line;
     const match = /language-(\w+)/.exec(className || "");
 
-    console.log(match);
-
     if (!isBlock) {
       return (
         <code
