@@ -1,5 +1,5 @@
 import { useEventParams } from "@/hooks/general/useEventParams";
-import { EventSectionService } from "@/services/event-section";
+import { SubmissionService } from "@/services/submission";
 import { useQuery } from "@tanstack/react-query";
 
 export default function useSubmissionRequirements() {
@@ -7,8 +7,7 @@ export default function useSubmissionRequirements() {
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["submissionRequirements", gradableEventId],
-    queryFn: () =>
-      EventSectionService.getSubmissionRequirements(gradableEventId),
+    queryFn: () => SubmissionService.getSubmissionRequirements(gradableEventId),
   });
 
   return { data, isLoading, isError };

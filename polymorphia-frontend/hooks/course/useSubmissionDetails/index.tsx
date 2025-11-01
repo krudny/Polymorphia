@@ -2,7 +2,7 @@ import { TargetRequestDTO, TargetTypes } from "@/interfaces/api/grade/target";
 import UseSubmissionDetails from "@/hooks/course/useSubmissionDetails/types";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/services/event-section";
+import { SubmissionService } from "@/services/submission";
 
 export default function useSubmissionDetails(
   target: TargetRequestDTO | null
@@ -19,7 +19,7 @@ export default function useSubmissionDetails(
         ]
       : ["submissionDetails", "no-target"],
     queryFn: () =>
-      EventSectionService.getSubmissionDetails(gradableEventId, target!),
+      SubmissionService.getSubmissionDetails(gradableEventId, target!),
     enabled: !!target,
   });
 
