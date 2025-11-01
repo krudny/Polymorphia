@@ -54,6 +54,6 @@ public class MarkdownService {
     }
 
     private Long getCourseIdForResourceId(Long resourceId) {
-        return gradableEventRepository.getCourseIdByGradableEventId(resourceId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, COURSE_NOT_FOUND));
+        return gradableEventRepository.getCourseIdByGradableEventId(resourceId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, COURSE_NOT_FOUND));
     }
 }
