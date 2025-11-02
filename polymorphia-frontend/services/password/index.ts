@@ -6,7 +6,6 @@ import {
 } from "@/interfaces/api/password";
 
 const PasswordService = {
-  // todo: check
   changePassword: async (request: ChangePasswordDTO): Promise<void> => {
     const response = await fetch(`${API_HOST}/password/change-password`, {
       method: "POST",

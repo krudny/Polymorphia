@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.model.Token;
+package com.agh.polymorphia_backend.model.token;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -25,6 +25,11 @@ public class Token {
 
     @NotNull
     private String email;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "token_type", nullable = false, length = 20)
+    private TokenType tokenType;
 
     @NotNull
     private ZonedDateTime expiryDate;

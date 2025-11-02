@@ -2,7 +2,7 @@ package com.agh.polymorphia_backend.service.email;
 
 import com.agh.polymorphia_backend.dto.request.user.CourseInvitationRequestDto;
 import com.agh.polymorphia_backend.dto.request.user.ForgotPasswordRequestDto;
-import com.agh.polymorphia_backend.model.Token.Token;
+import com.agh.polymorphia_backend.model.token.Token;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,9 +41,9 @@ public class EmailService {
             helper.setSubject(INVITATION_TITLE);
 
             Context context = new Context();
-            String fullRegisterUrl = baseUrl + "?invitationToken=" + token.getToken();
+            String fullBaseUrl = baseUrl + "?invitationToken=" + token.getToken();
 
-            context.setVariable("registrationLink", fullRegisterUrl);
+            context.setVariable("registrationLink", fullBaseUrl);
             context.setVariable("userRole", inviteDTO.getRole().getDisplayName().toUpperCase());
 
             String htmlContent = templateEngine.process("invitation", context);
@@ -69,9 +69,9 @@ public class EmailService {
             helper.setSubject(RESET_PASSWORD);
 
             Context context = new Context();
-            String fullRegisterUrl = baseUrl + "?forgotPasswordToken=" + token.getToken();
+            String fullBaseUrl = baseUrl + "?forgotPasswordToken=" + token.getToken();
 
-            context.setVariable("registrationLink", fullRegisterUrl);
+            context.setVariable("forgotPasswordLink", fullBaseUrl);
 
             String htmlContent = templateEngine.process("forgot_password", context);
 

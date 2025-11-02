@@ -3,7 +3,7 @@ package com.agh.polymorphia_backend.controller;
 import com.agh.polymorphia_backend.dto.request.user.ChangePasswordRequestDto;
 import com.agh.polymorphia_backend.dto.request.user.ForgotPasswordRequestDto;
 import com.agh.polymorphia_backend.dto.request.user.NewPasswordRequestDto;
-import com.agh.polymorphia_backend.service.user.PasswordService;
+import com.agh.polymorphia_backend.service.password.PasswordService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

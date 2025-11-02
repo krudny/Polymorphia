@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-import static com.agh.polymorphia_backend.service.user.PasswordService.*;
+import static com.agh.polymorphia_backend.service.password.PasswordService.*;
 
 @Data
 public class NewPasswordRequestDto {

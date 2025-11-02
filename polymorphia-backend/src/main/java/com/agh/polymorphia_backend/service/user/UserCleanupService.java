@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.service.user;
 
-import com.agh.polymorphia_backend.model.Token.Token;
+import com.agh.polymorphia_backend.model.token.Token;
 import com.agh.polymorphia_backend.repository.invitation.TokenRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import lombok.AllArgsConstructor;

@@ -9,7 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import static com.agh.polymorphia_backend.service.user.PasswordService.*;
+import static com.agh.polymorphia_backend.service.password.PasswordService.*;
 
 
 @Data
