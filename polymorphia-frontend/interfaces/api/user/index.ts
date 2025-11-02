@@ -86,15 +86,3 @@ export interface RegisterRequestDTO {
 export type HallOfFameUserDTO =
   | StudentDetailsDTOWithNullableName
   | StudentDetailsDTOWithName;
-
-export interface ChangePasswordDTO {
-  oldPassword: string;
-  newPassword: string;
-  confirmNewPassword: string;
-}
-
-export interface ResetPasswordRequestDTO {
-  newPassword: string;
-  confirmNewPassword: string;
-  token: string;
-}

@@ -56,3 +56,7 @@ export const resetPasswordSchema = z
     message: "Hasła nie są zgodne",
     path: ["confirmNewPassword"],
   });
+
+export const forgotPasswordSchema = z.object({
+  email: emailField,
+});

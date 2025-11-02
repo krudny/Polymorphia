@@ -1,8 +1,6 @@
 import {
-  ChangePasswordDTO,
   InviteRequestDTO,
   RegisterRequestDTO,
-  ResetPasswordRequestDTO,
   Role,
   Roles,
   StudentDetailsDTOWithType,
@@ -113,37 +111,6 @@ const UserService = {
     );
     if (!response.ok) {
       throw new Error("Nie udało się ustawić preferencji użytkownika");
-    }
-  },
-
-  // todo: move and check
-  changePassword: async (request: ChangePasswordDTO): Promise<void> => {
-    const response = await fetch(`${API_HOST}/users/change-password`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(request),
-      credentials: "include",
-    });
-
-    if (!response.ok) {
-      throw new Error("Nie udało się zmienić hasła!");
-    }
-  },
-
-  resetPassword: async (request: ResetPasswordRequestDTO): Promise<void> => {
-    const response = await fetch(`${API_HOST}/password/new-password`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(request),
-      credentials: "include",
-    });
-
-    if (!response.ok) {
-      throw new Error("Nie udało się zmienić hasła!");
     }
   },
 

@@ -1,4 +1,4 @@
-import { ResetPasswordRequestDTO } from "@/interfaces/api/user";
+import { ResetPasswordRequestDTO } from "@/interfaces/api/password";
 import { UseMutationResult } from "@tanstack/react-query";
 
 export interface UseResetPassword {
