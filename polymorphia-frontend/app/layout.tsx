@@ -11,7 +11,8 @@ import { ThemeProvider } from "next-themes";
 import { ThemeProvider as ThemeProviderMui } from "@mui/material";
 import { themeConfig } from "@/components/speed-dial/config";
 import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
-import { ManualTitleProvider } from "@/providers/title/TitleContext";
+import { TitleProvider } from "@/providers/title/TitleContext";
+import { GENERAL_APPLICATION_ROUTES } from "@/providers/title/routes";
 
 const leagueGothic = League_Gothic({
   subsets: ["latin"],
@@ -50,14 +51,14 @@ export default function RootLayout({
             enableSystem
             storageKey="theme"
           >
-            <ManualTitleProvider>
+            <TitleProvider routes={GENERAL_APPLICATION_ROUTES}>
               <QueryClientProvider client={queryClient}>
                 <Toaster toastOptions={{ style: { fontSize: "1.5rem" } }} />
                 <BackgroundWrapper className="hero-background-wrapper">
                   {children}
                 </BackgroundWrapper>
               </QueryClientProvider>
-            </ManualTitleProvider>
+            </TitleProvider>
           </ThemeProvider>
         </ThemeProviderMui>
       </body>

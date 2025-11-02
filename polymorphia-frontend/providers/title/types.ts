@@ -1,4 +1,8 @@
-export type UseTitleHook = (match: RegExpMatchArray) => string | undefined;
+import { ReactNode } from "react";
+
+export type UseTitleHook = (
+  match: RegExpMatchArray | null
+) => string | undefined;
 
 export type TitleRule = {
   pattern: RegExp;
@@ -12,5 +16,9 @@ export interface TitleProps {
 
 export interface TitleContextType {
   title: string;
-  setTitle: (title: string) => void;
+}
+
+export interface TitleProviderProps {
+  routes: TitleRule[];
+  children: ReactNode;
 }

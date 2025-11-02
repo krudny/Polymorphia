@@ -1,14 +1,13 @@
 import { usePathname } from "next/navigation";
-import { createContext, ReactNode, useState } from "react";
+import { createContext, useState } from "react";
 import Title from "@/providers/title/utils/Title";
-import { TitleContextType } from "@/providers/title/types";
-import { APPLICATION_ROUTES } from "./routes";
+import { TitleContextType, TitleProviderProps } from "@/providers/title/types";
 
 export const TitleContext = createContext<TitleContextType | undefined>(
   undefined
 );
 
-export function TitleProvider({ children }: { children: ReactNode }) {
+export function TitleProvider({ routes, children }: TitleProviderProps) {
   const [title, setTitle] = useState("");
   const pathname = usePathname();
 
@@ -21,38 +20,17 @@ export function TitleProvider({ children }: { children: ReactNode }) {
     document.title = documentTitle;
   }
 
-  const matchEntry = APPLICATION_ROUTES.find(({ pattern }) =>
-    pattern.test(pathname)
-  );
+  const matchEntry = routes.find(({ pattern }) => pattern.test(pathname));
 
   return (
-    <TitleContext.Provider value={{ title, setTitle: () => {} }}>
+    <TitleContext.Provider value={{ title }}>
       <Title
         key={pathname}
         setTitleWithName={setTitleWithName}
         useTitleHook={() =>
-          matchEntry?.useTitleHook(pathname.match(matchEntry?.pattern)!)
+          matchEntry?.useTitleHook(pathname.match(matchEntry?.pattern))
         }
       />
-      {children}
-    </TitleContext.Provider>
-  );
-}
-
-export function ManualTitleProvider({ children }: { children: ReactNode }) {
-  const [title, setTitle] = useState("");
-
-  function setTitleWithName(title: string) {
-    const headerTitle = title;
-    const documentTitle =
-      title.length > 0 ? `${title} - Polymorphia` : "Polymorphia";
-
-    setTitle(headerTitle);
-    document.title = documentTitle;
-  }
-
-  return (
-    <TitleContext.Provider value={{ title, setTitle: setTitleWithName }}>
       {children}
     </TitleContext.Provider>
   );
