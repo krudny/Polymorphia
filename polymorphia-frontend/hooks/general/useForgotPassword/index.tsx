@@ -9,7 +9,7 @@ export default function useForgotPassword(): UseForgotPassword {
     mutationFn: (request: ForgotPasswordRequestDTO) => {
       return toast.promise(PasswordService.forgotPassword(request), {
         loading: "Wysyłanie emaila...",
-        success: "Email z linkiem do resetowania hasła został wysłany!",
+        success: "Email z linkiem został wysłany!",
         error: (error) => error.message,
       });
     },
