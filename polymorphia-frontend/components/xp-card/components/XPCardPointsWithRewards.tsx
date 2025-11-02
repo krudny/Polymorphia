@@ -1,6 +1,7 @@
 import { XPCardPointsProps } from "@/components/xp-card/components/types";
 import clsx from "clsx";
 import { colorVariants } from "@/components/xp-card/XPCard";
+import "./index.css";
 
 export default function XPCardPointsWithRewards({
   points,
@@ -10,15 +11,15 @@ export default function XPCardPointsWithRewards({
   color,
 }: XPCardPointsProps) {
   return (
-    <div className="w-full h-full flex items-center justify-end bg-green-300">
+    <div className="xp-card-points-with-rewards">
       {hasChest && (
-        <div className="w-fit px-4 flex-col-centered">
-          <span className="material-symbols text-4xl">trophy</span>
+        <div className="xp-card-points-with-rewards-chest">
+          <span>trophy</span>
         </div>
       )}
       <div
         className={clsx(
-          "aspect-square h-full flex-col-centered",
+          "xp-card-points-with-rewards-points",
           colorVariants({ color }).backgroundSecondary(),
           `${color !== "gray" && "text-primary-dark"}`
         )}
