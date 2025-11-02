@@ -44,42 +44,32 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   HttpStatusCode status,
                                                                   WebRequest request) {
 
-        List<ValidationError> validationErrors = ex.getBindingResult().getFieldErrors()
+        List<String> errorMessages = ex.getBindingResult()
+                .getFieldErrors()
                 .stream()
-                .map(error -> ValidationError.builder()
-                        .field(error.getField())
-                        .message(error.getDefaultMessage())
-                        .build())
-                .collect(Collectors.toList());
-
-//        List<String> errorMessages = ex.getBindingResult()
-//                .getFieldErrors()
-//                .stream()
-//                .map(this::mapErrorToMessage)
-//                .toList();
+                .map(this::mapErrorToMessage)
+                .toList();
 
         HttpStatus returnStatus = HttpStatus.BAD_REQUEST;
-//        String detail = "Walidacja się nie powiodła: " + String.join(", ", errorMessages) + ".";
-//        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(returnStatus, detail);
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(returnStatus, "Walidacja się nie powiodła");
-        problemDetail.setProperty("validationErrors", validationErrors);
+        String detail = "Walidacja się nie powiodła: " + String.join(", ", errorMessages) + ".";
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(returnStatus, detail);
 
         return ResponseEntity.status(returnStatus).body(problemDetail);
     }
 
-//    private String mapErrorToMessage(FieldError error) {
-//        String code = error.getCode();
-//
-//        if (code == null) {
-//            return error.getDefaultMessage();
-//        }
-//        return switch (code){
-//            case "NotNull" -> String.format("Pole \"%s\" jest wymagane.", error.getField());
-//            case "NotBlank" -> String.format("Pole \"%s\" nie może być puste.", error.getField());
-//            case "Email" -> "nieprawidłowy adres email";
-//            default -> error.getDefaultMessage();
-//        };
-//    }
+    private String mapErrorToMessage(FieldError error) {
+        String code = error.getCode();
+        if (code == null) {
+            return error.getDefaultMessage();
+        }
+
+        return switch (code) {
+            case "NotNull" -> String.format("pole \"%s\" jest wymagane", error.getField());
+            case "NotBlank" -> String.format("pole \"%s\" nie może być puste", error.getField());
+            case "Email" -> "nieprawidłowy adres email";
+            default -> error.getDefaultMessage();
+        };
+    }
 
 
     @ExceptionHandler(Exception.class)
