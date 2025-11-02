@@ -10,30 +10,17 @@ import java.util.Objects;
 
 public class CSVUtil {
     public static int getColumnIndex(List<String> headers, String columnName) {
-        try {
-            int index = headers.stream()
-//                .filter(Objects::nonNull) -- nie zadziała
-//                    .map(header -> {
-//                        if (header == null){
-//                            return null;
-//                        }
-//                        return header.toLowerCase();
-//                    })
-                    .map(String::toLowerCase)
-                    .toList()
-                    .indexOf(columnName.toLowerCase());
-
-            if (index == -1) {
-                throw new ResponseStatusException(
-                        HttpStatus.BAD_REQUEST,
-                        "Kolumna " + columnName + "nie została znaleziona w pliku."
-                );
+        for (int i = 0; i < headers.size(); i++) {
+            String header = headers.get(i);
+            if (header != null && header.equalsIgnoreCase(columnName)) {
+                return i;
             }
-
-            return index;
-        } catch (NullPointerException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NPE");
         }
+
+        throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                String.format("Kolumna \"%s\"nie została znaleziona w pliku.", columnName)
+        );
     }
 
     public static boolean isValidEncoding(List<String[]> data) {
