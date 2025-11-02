@@ -3,8 +3,8 @@
 import "./index.css";
 import HomeContent from "@/components/home";
 import OwlImage from "@/components/home/owl-image";
-import { useTitle } from "@/components/navigation/TitleContext";
 import { useHeroAnimation } from "@/hooks/general/useHeroAnimation";
+import { useTitle } from "@/hooks/general/useTitle";
 import { useEffect } from "react";
 
 export default function Home() {

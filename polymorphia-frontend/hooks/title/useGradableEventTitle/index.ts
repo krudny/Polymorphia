@@ -1,5 +1,5 @@
-import { UseTitleHook } from "@/components/navigation/types";
 import useGradableEvent from "@/hooks/course/useGradableEvent";
+import { UseTitleHook } from "@/providers/title/types";
 
 const useGradableEventTitle: UseTitleHook = () => {
   const { data: gradableEvent, isError } = useGradableEvent();

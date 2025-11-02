@@ -1,14 +1,12 @@
 import { usePathname } from "next/navigation";
-import { createContext, ReactNode, useContext, useState } from "react";
-import { APPLICATION_ROUTES } from "@/components/navigation/routes";
-import Title from "@/components/navigation/Title";
+import { createContext, ReactNode, useState } from "react";
+import Title from "@/providers/title/utils/Title";
+import { TitleContextType } from "@/providers/title/types";
+import { APPLICATION_ROUTES } from "./routes";
 
-interface TitleContextType {
-  title: string;
-  setTitle: (title: string) => void;
-}
-
-const TitleContext = createContext<TitleContextType | undefined>(undefined);
+export const TitleContext = createContext<TitleContextType | undefined>(
+  undefined
+);
 
 export function TitleProvider({ children }: { children: ReactNode }) {
   const [title, setTitle] = useState("");
@@ -58,14 +56,4 @@ export function ManualTitleProvider({ children }: { children: ReactNode }) {
       {children}
     </TitleContext.Provider>
   );
-}
-
-export function useTitle() {
-  const context = useContext(TitleContext);
-
-  if (context === undefined) {
-    throw new Error("useTitle must be used within a TitleProvider");
-  }
-
-  return context;
 }

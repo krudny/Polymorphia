@@ -11,7 +11,7 @@ import { ThemeProvider } from "next-themes";
 import { ThemeProvider as ThemeProviderMui } from "@mui/material";
 import { themeConfig } from "@/components/speed-dial/config";
 import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
-import { ManualTitleProvider } from "@/components/navigation/TitleContext";
+import { ManualTitleProvider } from "@/providers/title/TitleContext";
 
 const leagueGothic = League_Gothic({
   subsets: ["latin"],

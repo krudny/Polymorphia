@@ -7,7 +7,7 @@ import "./index.css";
 import useUserRole from "@/hooks/course/useUserRole";
 import { animateWelcome } from "@/animations/Welcome";
 import { redirectToNextStep } from "@/app/(welcome)/redirectHandler";
-import { useTitle } from "@/components/navigation/TitleContext";
+import { useTitle } from "@/hooks/general/useTitle";
 
 export default function Welcome() {
   const wrapperRef = useRef<HTMLDivElement>(null);

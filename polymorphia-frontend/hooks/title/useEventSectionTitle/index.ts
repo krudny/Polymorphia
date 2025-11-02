@@ -1,6 +1,6 @@
-import { UseTitleHook } from "@/components/navigation/types";
 import useEventSections from "@/hooks/course/useEventSections";
 import { useEventParams } from "@/hooks/general/useEventParams";
+import { UseTitleHook } from "@/providers/title/types";
 
 const useEventSectionTitle: UseTitleHook = () => {
   const { data: eventSections, error } = useEventSections();

@@ -5,7 +5,7 @@ import { NavigationProvider } from "@/providers/navigation/NavigationContext";
 import { UserProvider } from "@/providers/user/UserContext";
 import MainLayout from "@/components/main-layout";
 import Navigation from "@/components/navigation/Navigation";
-import { TitleProvider } from "@/components/navigation/TitleContext";
+import { TitleProvider } from "@/providers/title/TitleContext";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (

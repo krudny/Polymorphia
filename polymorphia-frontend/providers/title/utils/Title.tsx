@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { TitleProps } from "@/components/navigation/types";
+import { TitleProps } from "@/providers/title/types";
 
 export default function Title({ setTitleWithName, useTitleHook }: TitleProps) {
   const evaluatedTitle = useTitleHook();

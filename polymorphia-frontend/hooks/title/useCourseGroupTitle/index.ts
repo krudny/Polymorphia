@@ -1,6 +1,6 @@
-import { UseTitleHook } from "@/components/navigation/types";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import useCourseGroups from "@/hooks/course/useCourseGroups";
+import { UseTitleHook } from "@/providers/title/types";
 import { CourseGroupTypes } from "@/services/course-groups/types";
 import { useParams } from "next/navigation";
 
