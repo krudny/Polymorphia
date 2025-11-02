@@ -16,6 +16,8 @@ import useCourseGroupsContext from "@/hooks/contexts/useCourseGroupsContext";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
 import { getKeyForSelectedTarget } from "@/providers/grading/utils/getKeyForSelectedTarget";
 import Loading from "@/components/loading";
+import useStudentItems from "@/hooks/course/useStudentItems";
+import useStudentChests from "@/hooks/course/useStudentChests";
 
 const SECTION_IDS = new Set(["student-summary", "items", "chests"]);
 const INITIALLY_OPENED = new Set(["student-summary"]);
@@ -23,7 +25,10 @@ const INITIALLY_OPENED = new Set(["student-summary"]);
 export default function StudentInfo() {
   const accordionRef = useRef<AccordionRef>(null);
   const { isSpecificDataLoading, studentSummary } = useCourseGroupsContext();
-  const { selectedTarget } = useTargetContext();
+  const { selectedTarget, targetId } = useTargetContext();
+  const { data: items, isLoading: isItemsLoading } = useStudentItems(targetId);
+  const { data: chests, isLoading: isChestsLoading } =
+    useStudentChests(targetId);
 
   const topComponent = () => <h1>Student</h1>;
   const mainComponent = () => (
@@ -52,7 +57,7 @@ export default function StudentInfo() {
             {studentSummary && !isSpecificDataLoading ? (
               <StudentSummary studentSummary={studentSummary} />
             ) : (
-              <div className="h-[100px] mt-2 relative">
+              <div className="course-group-loading">
                 <Loading />
               </div>
             )}
@@ -67,12 +72,18 @@ export default function StudentInfo() {
           <SwapAnimationWrapper
             {...baseSwapAnimationWrapperProps}
             keyProp={
-              !isSpecificDataLoading
+              items && !isSpecificDataLoading
                 ? getKeyForSelectedTarget(selectedTarget)
                 : "loading" + getKeyForSelectedTarget(selectedTarget)
             }
           >
-            <ItemsSummary />
+            {items && !isItemsLoading ? (
+              <ItemsSummary items={items} />
+            ) : (
+              <div className="course-group-loading">
+                <Loading />
+              </div>
+            )}
           </SwapAnimationWrapper>
         </AccordionSection>
 
@@ -85,12 +96,18 @@ export default function StudentInfo() {
           <SwapAnimationWrapper
             {...baseSwapAnimationWrapperProps}
             keyProp={
-              !isSpecificDataLoading
+              chests && !isChestsLoading
                 ? getKeyForSelectedTarget(selectedTarget)
                 : "loading" + getKeyForSelectedTarget(selectedTarget)
             }
           >
-            <ChestSummary />
+            {chests && !isChestsLoading ? (
+              <ChestSummary chests={chests} />
+            ) : (
+              <div className="course-group-loading">
+                <Loading />
+              </div>
+            )}
           </SwapAnimationWrapper>
         </AccordionSection>
       </Accordion>

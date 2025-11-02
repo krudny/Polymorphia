@@ -1,24 +1,17 @@
-import { Fragment, JSX } from "react";
-import Loading from "@/components/loading";
-import useStudentChests from "@/hooks/course/useStudentChests";
+import { JSX } from "react";
 import EquipmentChest from "@/components/equipment/components/chest";
 import "../index.css";
-import useTargetContext from "@/hooks/contexts/useTargetContext";
+import { ChestSummaryProps } from "@/components/column-schema/column-component/course-groups/student-info/chest-summary/types";
 
-export default function ChestSummary(): JSX.Element {
-  const { targetId } = useTargetContext();
-  const { data: chests, isLoading } = useStudentChests(targetId);
-
-  if (isLoading || !chests) {
-    return <Loading />;
-  }
-
+export default function ChestSummary({
+  chests,
+}: ChestSummaryProps): JSX.Element {
   return (
     <div className="course-group-student-info-grid">
       {chests.map((chest) => (
-        <Fragment key={chest.base.id}>
+        <div key={chest.base.id}>
           <EquipmentChest chestData={chest} showBadge={true} size="md" />
-        </Fragment>
+        </div>
       ))}
     </div>
   );

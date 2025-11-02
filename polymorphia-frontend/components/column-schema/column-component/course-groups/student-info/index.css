@@ -4,3 +4,7 @@
 .course-group-student-info-grid {
   @apply w-full grid grid-cols-3 gap-3;
 }
+
+.course-group-loading {
+  @apply w-full h-[100px] mt-2 relative mx-auto flex-col-centered;
+}

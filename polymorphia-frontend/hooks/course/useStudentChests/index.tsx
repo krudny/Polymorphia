@@ -9,7 +9,7 @@ export default function useStudentChests(
     queryKey: ["studentChest", userId],
     queryFn: () => CourseGroupsService.getStudentChests(userId!),
     refetchOnWindowFocus: false,
-    enabled: !!userId,
+    enabled: userId !== null,
   });
 
   return { data, isLoading, isError };

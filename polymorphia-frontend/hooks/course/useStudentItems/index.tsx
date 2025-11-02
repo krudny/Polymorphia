@@ -9,7 +9,7 @@ export default function useStudentItems(
     queryKey: ["studentItems", userId],
     queryFn: () => CourseGroupsService.getStudentItems(userId!),
     refetchOnWindowFocus: false,
-    enabled: !!userId,
+    enabled: userId !== null,
   });
 
   return { data, isLoading, isError };
