@@ -8,9 +8,11 @@ import { ForgotPasswordRequestDTO } from "@/interfaces/api/password";
 import useForgotPassword from "@/hooks/general/useForgotPassword";
 import { FieldErrorMessage } from "@/components/form/FieldErrorMessage";
 import "./index.css";
+import useModalContext from "@/hooks/contexts/useModalContext";
 
 function ForgotPasswordModalContent() {
   const { mutation } = useForgotPassword();
+  const { closeModal } = useModalContext();
 
   const form = useForm({
     defaultValues: {
@@ -20,7 +22,9 @@ function ForgotPasswordModalContent() {
       onSubmit: forgotPasswordSchema,
     },
     onSubmit: async ({ value }) => {
-      mutation.mutate(value);
+      mutation.mutate(value, {
+        onSuccess: closeModal,
+      });
     },
   });
 

@@ -102,7 +102,7 @@ function ChangePasswordModalContent() {
           <ButtonWithBorder
             text="Zmień hasło"
             className="!w-full !mt-4"
-            isActive={isPristine || !canSubmit}
+            isActive={!isPristine && canSubmit}
           />
         )}
       </form.Subscribe>

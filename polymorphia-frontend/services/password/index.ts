@@ -8,7 +8,7 @@ import {
 const PasswordService = {
   // todo: check
   changePassword: async (request: ChangePasswordDTO): Promise<void> => {
-    const response = await fetch(`${API_HOST}/users/change-password`, {
+    const response = await fetch(`${API_HOST}/password/change-password`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

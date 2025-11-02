@@ -17,6 +17,7 @@ export default function useResetPassword(): UseResetPassword {
       });
     },
     onSuccess: () => {
+      router.refresh();
       router.push("/");
     },
   });
