@@ -1,5 +1,6 @@
 import { LoginDTO } from "@/interfaces/api/login";
 import { postEndpoint } from "@/services/api/client";
+import { API_HOST } from "../api";
 
 const AuthService = {
   login: async ({ email, password }: LoginDTO) => {
@@ -12,7 +13,10 @@ const AuthService = {
     });
   },
   logout: async () => {
-    await postEndpoint("/logout");
+    await fetch(`${API_HOST}/logout`, {
+      method: "POST",
+      credentials: "include",
+    });
   },
 };
 export default AuthService;
