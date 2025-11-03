@@ -1,5 +1,5 @@
 import { LoginDTO } from "@/interfaces/api/login";
-import { apiFetch } from "@/services/api/client";
+import { postEndpoint } from "@/services/api/client";
 
 const AuthService = {
   login: async ({ email, password }: LoginDTO) => {
@@ -7,18 +7,12 @@ const AuthService = {
     params.append("username", email);
     params.append("password", password);
 
-    await apiFetch("/login", {
-      method: "POST",
-      headers: new Headers({
-        "Content-Type": "application/x-www-form-urlencoded",
-      }),
-      body: params.toString(),
+    await postEndpoint("/login", params.toString(), false, {
+      "Content-Type": "application/x-www-form-urlencoded",
     });
   },
   logout: async () => {
-    await apiFetch("/logout", {
-      method: "POST",
-    });
+    await postEndpoint("/logout");
   },
 };
 export default AuthService;

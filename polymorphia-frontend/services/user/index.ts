@@ -7,64 +7,47 @@ import {
   StudentDetailsDTOWithType,
   UserDetailsDTO,
 } from "@/interfaces/api/user";
-import { apiFetch, apiFetchJson } from "@/services/api/client";
 import {
   CreateAnimalRequestDTO,
   StudentCourseGroupAssignmentIdResponseDTO,
   StudentProfileResponseDTO,
 } from "@/interfaces/api/student";
+import { fetchJson, getEndpoint, postEndpoint } from "@/services/api/client";
 
 const UserService = {
   getStudentProfile: async (
     courseId: number
   ): Promise<StudentProfileResponseDTO> => {
-    return await apiFetchJson<StudentProfileResponseDTO>(
-      `/students/profile?courseId=${courseId}`
+    return await fetchJson<StudentProfileResponseDTO>(
+      getEndpoint(`/students/profile?courseId=${courseId}`)
     );
   },
   hasValidAnimalInCourse: async (courseId: number): Promise<boolean> => {
-    return await apiFetchJson<boolean>(
-      `/students/animals/is-valid?courseId=${courseId}`
+    return await fetchJson<boolean>(
+      getEndpoint(`/students/animals/is-valid?courseId=${courseId}`)
     );
   },
   getCourseGroup: async (
     courseId: number
   ): Promise<StudentCourseGroupAssignmentIdResponseDTO> => {
-    return await apiFetchJson<StudentCourseGroupAssignmentIdResponseDTO>(
-      `/students/course-group?courseId=${courseId}`
+    return await fetchJson<StudentCourseGroupAssignmentIdResponseDTO>(
+      getEndpoint(`/students/course-group?courseId=${courseId}`)
     );
   },
   createAnimal: async (request: CreateAnimalRequestDTO): Promise<void> => {
-    await apiFetch("/students/animals", {
-      body: JSON.stringify(request),
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    await postEndpoint("/students/animals", JSON.stringify(request), true);
   },
   getUserRole: async (): Promise<Role> => {
-    return await apiFetchJson<Role>("/users/role");
+    return await fetchJson<Role>(getEndpoint("/users/role"));
   },
   getCurrentUser: async (): Promise<UserDetailsDTO> => {
-    return await apiFetchJson<UserDetailsDTO>("/users/context");
+    return await fetchJson<UserDetailsDTO>(getEndpoint("/users/context"));
   },
   setUserPreferredCourse: async (courseId: number): Promise<void> => {
-    await apiFetch(`/users/preferred-course?courseId=${courseId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    await postEndpoint(`/users/preferred-course?courseId=${courseId}`);
   },
   changePassword: async (request: ChangePasswordDTO): Promise<void> => {
-    await apiFetch("/users/change-password", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(request),
-    });
+    await postEndpoint("/users/change-password", JSON.stringify(request), true);
   },
   getRandomUsers: async (): Promise<StudentDetailsDTOWithType[]> => {
     return [
@@ -98,23 +81,15 @@ const UserService = {
   },
 
   inviteUser: async (request: InviteRequestDTO): Promise<void> => {
-    await apiFetch("/invitation/course", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(request),
-    });
+    await postEndpoint("/invitation/course", JSON.stringify(request), true);
   },
 
   register: async (request: RegisterRequestDTO): Promise<void> => {
-    await apiFetch("/invitation/register-user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(request),
-    });
+    await postEndpoint(
+      "/invitation/register-user",
+      JSON.stringify(request),
+      true
+    );
   },
 };
 

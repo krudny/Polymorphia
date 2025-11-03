@@ -1,9 +1,9 @@
-import { apiFetchJson } from "@/services/api/client";
 import {
   CourseGroupResponse,
   CourseGroupType,
   CourseGroupTypes,
 } from "@/services/course-groups/types";
+import { fetchJson, getEndpoint } from "@/services/api/client";
 
 const CourseGroupsService = {
   getCourseGroups: async <T extends CourseGroupType>(
@@ -20,8 +20,8 @@ const CourseGroupsService = {
     const shortPath = isShort ? "/short" : "";
     const mode = isIndividual ? "/individual" : "/all";
 
-    return await apiFetchJson<CourseGroupResponse<T>>(
-      `/course-groups${mode}${shortPath}?courseId=${courseId}`
+    return await fetchJson<CourseGroupResponse<T>>(
+      getEndpoint(`/course-groups${mode}${shortPath}?courseId=${courseId}`)
     );
   },
 };

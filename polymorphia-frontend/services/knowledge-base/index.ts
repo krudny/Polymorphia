@@ -1,24 +1,24 @@
 import { KnowledgeBaseResponseDTO } from "@/interfaces/api/knowledge-base";
-import { apiFetchJson } from "@/services/api/client";
+import { fetchJson, getEndpoint } from "@/services/api/client";
 
 const KnowledgeBaseService = {
   getEvolutionStages: async (
     courseId: number
   ): Promise<KnowledgeBaseResponseDTO[]> => {
-    return await apiFetchJson<KnowledgeBaseResponseDTO[]>(
-      `/knowledge-base/evolution-stages?courseId=${courseId}`
+    return await fetchJson<KnowledgeBaseResponseDTO[]>(
+      getEndpoint(`/knowledge-base/evolution-stages?courseId=${courseId}`)
     );
   },
 
   getItems: async (courseId: number): Promise<KnowledgeBaseResponseDTO[]> => {
-    return await apiFetchJson<KnowledgeBaseResponseDTO[]>(
-      `/knowledge-base/items?courseId=${courseId}`
+    return await fetchJson<KnowledgeBaseResponseDTO[]>(
+      getEndpoint(`/knowledge-base/items?courseId=${courseId}`)
     );
   },
 
   getChests: async (courseId: number): Promise<KnowledgeBaseResponseDTO[]> => {
-    return await apiFetchJson<KnowledgeBaseResponseDTO[]>(
-      `/knowledge-base/chests?courseId=${courseId}`
+    return await fetchJson<KnowledgeBaseResponseDTO[]>(
+      getEndpoint(`/knowledge-base/chests?courseId=${courseId}`)
     );
   },
 };

@@ -1,9 +1,9 @@
-import { apiFetch } from "@/services/api/client";
 import { ImportCSVType, ImportCSVTypes } from "@/interfaces/general";
 import {
   CSVHeadersResponseDTO,
   CSVPreviewResponseDTO,
 } from "@/interfaces/api/CSV";
+import { fetchJson, postEndpoint } from "@/services/api/client";
 
 const CSVService = {
   getCSVHeaders: async (
@@ -14,11 +14,7 @@ const CSVService = {
     formData.append("file", file);
     formData.append("type", type);
 
-    const response = await apiFetch("/csv/headers", {
-      method: "POST",
-      body: formData,
-    });
-    return await response.json();
+    return await fetchJson(postEndpoint("/csv/headers", formData));
   },
 
   getCSVPreview: async (
@@ -29,11 +25,7 @@ const CSVService = {
     formData.append("file", file);
     formData.append("csvHeaders", JSON.stringify(headers));
 
-    const response = await apiFetch("/csv/preview", {
-      method: "POST",
-      body: formData,
-    });
-    return await response.json();
+    return await fetchJson(postEndpoint("/csv/preview", formData));
   },
 
   processGradeImport: async (
@@ -48,11 +40,7 @@ const CSVService = {
       ...(gradableEventId && { gradableEventId }),
     });
 
-    await apiFetch("/grading/csv/test", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: body,
-    });
+    await postEndpoint("/grading/csv/test", body, true);
   },
 
   processStudentCourseInvite: async (
@@ -60,18 +48,16 @@ const CSVService = {
     data: string[][],
     courseId: number
   ): Promise<void> => {
-    const body = JSON.stringify({
-      type: ImportCSVTypes.STUDENT_INVITE,
-      csvHeaders,
-      data,
-      courseId,
-    });
-
-    await apiFetch("/invitation/course/csv", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: body,
-    });
+    await postEndpoint(
+      "/invitation/course/csv",
+      JSON.stringify({
+        type: ImportCSVTypes.STUDENT_INVITE,
+        csvHeaders,
+        data,
+        courseId,
+      }),
+      true
+    );
   },
 
   processStudentGroupInvite: async (
@@ -79,18 +65,16 @@ const CSVService = {
     data: string[][],
     courseGroupId: number
   ): Promise<void> => {
-    const body = JSON.stringify({
-      type: ImportCSVTypes.GROUP_INVITE,
-      csvHeaders,
-      data,
-      courseGroupId,
-    });
-
-    await apiFetch("/invitation/group/csv", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: body,
-    });
+    await postEndpoint(
+      "/invitation/group/csv",
+      JSON.stringify({
+        type: ImportCSVTypes.GROUP_INVITE,
+        csvHeaders,
+        data,
+        courseGroupId,
+      }),
+      true
+    );
   },
 };
 

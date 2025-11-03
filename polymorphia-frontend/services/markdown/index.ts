@@ -4,8 +4,8 @@ import {
   MarkdownResponseDTO,
   SourceMarkdownResponseDTO,
 } from "@/interfaces/api/markdown";
-import { apiFetch, apiFetchJson } from "@/services/api/client";
 import { kebabCase } from "case-anything";
+import { fetchJson, getEndpoint, putEndpoint } from "@/services/api/client";
 
 export const MarkdownService = {
   getMarkdown: async (
@@ -14,8 +14,8 @@ export const MarkdownService = {
     const resourceId = request.resourceId;
     const type = kebabCase(request.markdownType.toLowerCase());
 
-    return await apiFetchJson<MarkdownResponseDTO>(
-      `/markdown/${type}/${resourceId}`
+    return await fetchJson<MarkdownResponseDTO>(
+      getEndpoint(`/markdown/${type}/${resourceId}`)
     );
   },
 
@@ -25,8 +25,8 @@ export const MarkdownService = {
     const resourceId = request.resourceId;
     const type = kebabCase(request.markdownType.toLowerCase());
 
-    return await apiFetchJson<SourceMarkdownResponseDTO>(
-      `/markdown/${type}/${resourceId}/source`
+    return await fetchJson<SourceMarkdownResponseDTO>(
+      getEndpoint(`/markdown/${type}/${resourceId}/source`)
     );
   },
 
@@ -34,21 +34,17 @@ export const MarkdownService = {
     const type = kebabCase(request.markdownType.toLowerCase());
     const { markdown, resourceId } = request;
 
-    await apiFetch(`/markdown/${type}/${resourceId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ markdown }),
-    });
+    await putEndpoint(
+      `/markdown/${type}/${resourceId}`,
+      JSON.stringify({ markdown }),
+      true
+    );
   },
 
   resetMarkdown: async (request: MarkdownParamsRequest): Promise<void> => {
     const resourceId = request.resourceId;
     const type = kebabCase(request.markdownType.toLowerCase());
 
-    await apiFetch(`/markdown/${type}/${resourceId}/reset`, {
-      method: "PUT",
-    });
+    await putEndpoint(`/markdown/${type}/${resourceId}/reset`);
   },
 };

@@ -11,8 +11,8 @@ export default function ErrorState({
 }: ErrorStateProps) {
   return (
     <div className="error-state">
-      <h2 className="error-state__title">{title}</h2>
-      {message && <p className="error-state__message">{message}</p>}
+      <h2 className="error-state-title">{title}</h2>
+      {message && <p className="error-state-message">{message}</p>}
     </div>
   );
 }

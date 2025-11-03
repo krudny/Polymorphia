@@ -29,13 +29,13 @@ import {
   UserDetailsDTO,
 } from "@/interfaces/api/user";
 import { EventTypes } from "@/interfaces/general";
-import { apiFetchJson } from "@/services/api/client";
 import { CriterionResponseDTO } from "@/interfaces/api/grade/criteria";
 import {
   SubmissionDetailsResponseDTO,
   SubmissionRequirementResponseDTO,
 } from "@/interfaces/api/grade/submission";
 import { ChestBehaviors } from "@/interfaces/api/reward";
+import { fetchJson, getEndpoint } from "@/services/api/client";
 
 export const studentNames = [
   "Gerard Małoduszny",
@@ -91,8 +91,8 @@ export const EventSectionService = {
   getEventSections: async (
     courseId: number
   ): Promise<EventSectionResponseDTO[]> => {
-    return await apiFetchJson<EventSectionResponseDTO[]>(
-      `/event-sections?courseId=${courseId}`
+    return await fetchJson<EventSectionResponseDTO[]>(
+      getEndpoint(`/event-sections?courseId=${courseId}`)
     );
   },
 

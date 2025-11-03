@@ -12,10 +12,7 @@ const readErrorMessage = async (response: Response): Promise<string> => {
   }
 };
 
-export const apiFetch = async (
-  path: string,
-  init?: RequestInit
-): Promise<Response> => {
+const request = async (path: string, init?: RequestInit): Promise<Response> => {
   const url = `${API_HOST}${path.startsWith("/") ? path : `/${path}`}`;
 
   const response = await fetch(url, {
@@ -30,10 +27,42 @@ export const apiFetch = async (
   return response;
 };
 
-export const apiFetchJson = async <T>(
+export const getEndpoint = (path: string): Promise<Response> =>
+  request(path, { method: "GET" });
+
+export const deleteEndpoint = (path: string): Promise<Response> =>
+  request(path, { method: "DELETE" });
+
+export const postEndpoint = (
   path: string,
-  init?: RequestInit
-): Promise<T> => {
-  const response = await apiFetch(path, init);
+  body?: BodyInit,
+  addJsonContentType: boolean = false,
+  headers?: HeadersInit
+): Promise<Response> => {
+  return request(path, {
+    method: "POST",
+    headers:
+      headers ??
+      (addJsonContentType ? { "Content-Type": "application/json" } : undefined),
+    body,
+  });
+};
+
+export const putEndpoint = (
+  path: string,
+  body?: BodyInit,
+  addJsonContentType: boolean = false
+): Promise<Response> => {
+  return request(path, {
+    method: "PUT",
+    headers: addJsonContentType
+      ? { "Content-Type": "application/json" }
+      : undefined,
+    body,
+  });
+};
+
+export const fetchJson = async <T>(promise: Promise<Response>): Promise<T> => {
+  const response = await promise;
   return (await response.json()) as T;
 };

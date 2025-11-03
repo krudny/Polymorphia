@@ -5,18 +5,10 @@
   @apply flex flex-col items-center justify-center gap-4 p-8 text-center m-auto w-full max-w-xl;
 }
 
-.error-state__title {
+.error-state-title {
   @apply text-3xl font-semibold;
 }
 
-.error-state__message {
+.error-state-message {
   @apply text-lg opacity-80;
-}
-
-.error-state__action {
-  @apply mt-2 px-6 py-2 rounded-xl bg-primary-dark text-secondary-light transition-opacity duration-200 ease-in-out;
-}
-
-.error-state__action:hover {
-  @apply opacity-90;
 }

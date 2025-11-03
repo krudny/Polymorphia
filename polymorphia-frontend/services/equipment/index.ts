@@ -4,18 +4,18 @@ import {
   EquipmentChestResponseDTO,
   EquipmentItemResponseDTO,
 } from "@/interfaces/api/equipment";
-import { apiFetch, apiFetchJson } from "@/services/api/client";
+import { fetchJson, getEndpoint, postEndpoint } from "@/services/api/client";
 
 const EquipmentService = {
   getItems: async (courseId: number): Promise<EquipmentItemResponseDTO[]> => {
-    return await apiFetchJson<EquipmentItemResponseDTO[]>(
-      `/equipment/items?courseId=${courseId}`
+    return await fetchJson<EquipmentItemResponseDTO[]>(
+      getEndpoint(`/equipment/items?courseId=${courseId}`)
     );
   },
 
   getChests: async (courseId: number): Promise<EquipmentChestResponseDTO[]> => {
-    return await apiFetchJson<EquipmentChestResponseDTO[]>(
-      `/equipment/chests?courseId=${courseId}`
+    return await fetchJson<EquipmentChestResponseDTO[]>(
+      getEndpoint(`/equipment/chests?courseId=${courseId}`)
     );
   },
 
@@ -23,19 +23,23 @@ const EquipmentService = {
     courseId: number,
     requestBody: EquipmentChestOpenRequestDTO
   ) => {
-    await apiFetch(`/equipment/chests/open?courseId=${courseId}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(requestBody),
-    });
+    await fetchJson(
+      postEndpoint(
+        `/equipment/chests/open?courseId=${courseId}`,
+        JSON.stringify(requestBody),
+        true
+      )
+    );
   },
 
   getPotentialXp: async (
     courseId: number,
     assignedChestId: number
   ): Promise<ChestPotentialXpResponseDTOWithType> => {
-    return await apiFetchJson<ChestPotentialXpResponseDTOWithType>(
-      `/equipment/chests/potential-xp?courseId=${courseId}&assignedChestId=${assignedChestId}`
+    return await fetchJson<ChestPotentialXpResponseDTOWithType>(
+      getEndpoint(
+        `/equipment/chests/potential-xp?courseId=${courseId}&assignedChestId=${assignedChestId}`
+      )
     );
   },
 };
