@@ -1,6 +1,6 @@
 import { LoginDTO } from "@/interfaces/api/login";
 import { postEndpoint } from "@/services/api/client";
-import { API_HOST } from "../api";
+import { API_HOST } from "@/services/api";
 
 const AuthService = {
   login: async ({ email, password }: LoginDTO) => {
