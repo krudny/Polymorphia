@@ -1,7 +1,7 @@
 import { API_HOST } from "@/services/api";
 import { BackendErrorResponse } from "@/interfaces/api/error";
 import { ApiError } from "@/services/api/error";
-import { handleUnauthorized } from "@/services/api/handle-unauthorized";
+import handleUnauthorized from "@/services/api/handle-unauthorized";
 
 const GENERIC_ERROR_MESSAGE = "Wystąpił nieoczekiwany błąd. Spróbuj ponownie.";
 

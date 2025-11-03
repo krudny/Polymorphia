@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import AuthService from "@/services/auth";
 
-export const handleUnauthorized = async () => {
+export default async function handleUnauthorized() {
   toast.error("Sesja wygasła. Zaloguj się ponownie.", {
     id: "session-expired-toast",
   });
@@ -9,4 +9,4 @@ export const handleUnauthorized = async () => {
   setTimeout(() => {
     window.location.href = "/";
   }, 1000);
-};
+}
