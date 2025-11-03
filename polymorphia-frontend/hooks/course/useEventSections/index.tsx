@@ -9,6 +9,7 @@ export default function useEventSections(): UseEventSections {
     queryKey: ["eventSections", courseId],
     queryFn: () => EventSectionService.getEventSections(courseId),
     refetchOnWindowFocus: false,
+    staleTime: 10 * 60 * 1000,
   });
 
   return { data, isLoading, error };

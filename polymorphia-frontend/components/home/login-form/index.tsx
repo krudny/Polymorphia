@@ -27,7 +27,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
     },
   });
 
-  const { mutation: login } = useLogin({ form });
+  const { mutation: login } = useLogin();
 
   return (
     <>

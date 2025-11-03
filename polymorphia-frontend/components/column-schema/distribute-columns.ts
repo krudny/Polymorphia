@@ -21,15 +21,24 @@ export const getDistributedColumns = ({
     () => []
   );
   let currentColumn = 0;
+  const remainingComponents: ColumnComponent[] = [];
 
   for (const component of flatComponents) {
-    if (currentColumn >= columns) {
-      break;
-    }
-
     if (component.forceFullHeight) {
-      columnData[currentColumn] = [component];
-      currentColumn++;
+      while (
+        currentColumn < columns &&
+        columnData[currentColumn].length > 0 &&
+        columnData[currentColumn][0].forceFullHeight
+      ) {
+        currentColumn++;
+      }
+
+      if (currentColumn < columns) {
+        columnData[currentColumn] = [component];
+        currentColumn++;
+      } else {
+        remainingComponents.push(component);
+      }
     } else {
       while (
         currentColumn < columns &&
@@ -41,8 +50,15 @@ export const getDistributedColumns = ({
 
       if (currentColumn < columns) {
         columnData[currentColumn].push(component);
+        currentColumn = (currentColumn + 1) % columns;
+      } else {
+        remainingComponents.push(component);
       }
     }
+  }
+
+  if (remainingComponents.length > 0) {
+    columnData[columns - 1].push(...remainingComponents);
   }
 
   return columnData;
