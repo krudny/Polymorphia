@@ -17,6 +17,7 @@ import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { ChangeEventHandler, useState } from "react";
 import useSubmissionsUpdate from "@/hooks/course/useSubmissionsUpdate";
 import useModalContext from "@/hooks/contexts/useModalContext";
+import ErrorState from "@/components/error-state";
 
 const urlRegex =
   /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/;
@@ -187,7 +188,7 @@ export default function SubmissionsModal({
     >
       {(isDetailsError || isRequirementsError) && (
         <div className="submission-error">
-          Wystąpił błąd przy ładowaniu szczegółów.
+          <ErrorState message="Nie udało się załadować szczegółów zadania." />
         </div>
       )}
       {(isDetailsLoading || isRequirementsLoading) && (

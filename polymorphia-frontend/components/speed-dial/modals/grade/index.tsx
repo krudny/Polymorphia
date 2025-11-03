@@ -8,6 +8,7 @@ import { TargetTypes } from "@/interfaces/api/grade/target";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import useCriteria from "@/hooks/course/useCriteria";
 import { GradeModalProps } from "@/components/speed-dial/modals/grade/types";
+import ErrorState from "@/components/error-state";
 
 export default function GradeModal({
   onClosedAction,
@@ -49,7 +50,7 @@ export default function GradeModal({
     >
       {(isGradeError || isCriteriaError) && (
         <div className="grade-error">
-          Wystąpił błąd przy ładowaniu szczegółów.
+          <ErrorState message="Nie udało się załadować szczegółów oceny." />
         </div>
       )}
       {(isGradeLoading || isCriteriaLoading) && (

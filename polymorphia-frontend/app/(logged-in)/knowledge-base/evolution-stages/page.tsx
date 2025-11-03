@@ -4,6 +4,7 @@ import Loading from "@/components/loading";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
 import useEvolutionStages from "@/hooks/course/useEvolutionStages";
+import ErrorState from "@/components/error-state";
 
 export default function EvolutionStages() {
   const { data: evolutionStages, isLoading, error } = useEvolutionStages();
@@ -18,11 +19,16 @@ export default function EvolutionStages() {
   }
 
   if (error) {
-    return <div>Error loading evolution stages: {error.message}</div>;
+    return <ErrorState message="Nie udało się załadować poziomów ewolucji." />;
   }
 
   if (!evolutionStages || evolutionStages.length === 0) {
-    return <div>No evolution stages found.</div>;
+    return (
+      <ErrorState
+        title="Brak danych"
+        message="Poziomy ewolucji nie zostały zdefiniowane."
+      />
+    );
   }
 
   return <Slider slides={evolutionStages} />;

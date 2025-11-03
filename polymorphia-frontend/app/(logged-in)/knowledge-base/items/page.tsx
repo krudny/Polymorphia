@@ -6,6 +6,7 @@ import Loading from "@/components/loading";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
 import useItems from "@/hooks/course/useItems";
+import ErrorState from "@/components/error-state";
 
 export default function Items() {
   const searchParams = useSearchParams();
@@ -21,11 +22,16 @@ export default function Items() {
   }
 
   if (error) {
-    return <div>Error loading data: {error.message}</div>;
+    return <ErrorState message="Nie udało się załadować listy przedmiotów." />;
   }
 
   if (!items || items.length === 0) {
-    return <div>No data found.</div>;
+    return (
+      <ErrorState
+        title="Brak danych"
+        message="Przedmioty nie zostały zdefiniowane."
+      />
+    );
   }
 
   return (
