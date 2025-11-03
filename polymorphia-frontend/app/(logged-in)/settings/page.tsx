@@ -1,9 +1,8 @@
 "use client";
 
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useScaleShow } from "@/animations/ScaleShow";
-import { useTitle } from "@/components/navigation/TitleContext";
 import toast from "react-hot-toast";
 import { useTheme } from "next-themes";
 import useNavigationContext from "@/hooks/contexts/useNavigationContext";
@@ -22,7 +21,6 @@ export default function Settings() {
     isSidebarLockedClosed,
     setIsSidebarLockedClosed,
   } = useNavigationContext();
-  const { setTitle } = useTitle();
   const wrapperRef = useScaleShow();
   const { resolvedTheme, setTheme } = useTheme();
   const { courseId } = useUserDetails();
@@ -50,10 +48,6 @@ export default function Settings() {
     }
     setIsSidebarLockedClosed(!isSidebarLockedClosed);
   };
-
-  useEffect(() => {
-    setTitle("Ustawienia");
-  }, [setTitle]);
 
   if (isLoading || !courses || !currentCourse) {
     return <Loading />;

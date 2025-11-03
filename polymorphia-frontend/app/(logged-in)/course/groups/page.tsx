@@ -1,7 +1,6 @@
 "use client";
 
-import { useTitle } from "@/components/navigation/TitleContext";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import useCourseGroups from "@/hooks/course/useCourseGroups";
 import Loading from "@/components/loading";
 import toast from "react-hot-toast";
@@ -15,14 +14,9 @@ import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { CourseGroupTypes } from "@/services/course-groups/types";
 
 export default function CourseGroupsPage() {
-  const { setTitle } = useTitle();
   const router = useRouter();
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const { courseId } = useUserDetails();
-
-  useEffect(() => {
-    setTitle("Grupy zajęciowe");
-  }, [setTitle]);
 
   const {
     data: courseGroups,
