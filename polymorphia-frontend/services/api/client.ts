@@ -1,8 +1,7 @@
 import { API_HOST } from "@/services/api";
 import { BackendErrorResponse } from "@/interfaces/api/error";
 import { ApiError } from "@/services/api/error";
-import toast from "react-hot-toast";
-import AuthService from "@/services/auth";
+import { handleUnauthorized } from "@/services/api/handle-unauthorized";
 
 const GENERIC_ERROR_MESSAGE = "Wystąpił nieoczekiwany błąd. Spróbuj ponownie.";
 
@@ -13,16 +12,6 @@ const readErrorMessage = async (response: Response): Promise<string> => {
   } catch {
     return GENERIC_ERROR_MESSAGE;
   }
-};
-
-const handleUnauthorized = async () => {
-  toast.error("Sesja wygasła. Zaloguj się ponownie.", {
-    id: "session-expired-toast",
-  });
-  await AuthService.logout();
-  setTimeout(() => {
-    window.location.href = "/";
-  }, 1000);
 };
 
 const request = async (path: string, init?: RequestInit): Promise<Response> => {
