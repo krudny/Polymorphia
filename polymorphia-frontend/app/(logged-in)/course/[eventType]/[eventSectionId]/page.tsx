@@ -1,7 +1,7 @@
 "use client";
 
-import StudentGradableEventsView from "@/views/course/student";
-import InstructorGradableEventsView from "@/views/course/instructor";
+import StudentGradableEventsView from "@/views/gradable-events/student";
+import InstructorGradableEventsView from "@/views/gradable-events/instructor";
 import useUserContext from "@/hooks/contexts/useUserContext";
 import { Roles } from "@/interfaces/api/user";
 

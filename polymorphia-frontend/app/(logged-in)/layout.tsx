@@ -1,8 +1,8 @@
 "use client";
 
 import { ReactNode } from "react";
-import { NavigationProvider } from "@/providers/navigation/NavigationContext";
-import { UserProvider } from "@/providers/user/UserContext";
+import { NavigationProvider } from "@/providers/navigation";
+import { UserProvider } from "@/providers/user";
 import MainLayout from "@/components/main-layout";
 import Navigation from "@/components/navigation/Navigation";
 import { TitleProvider } from "@/providers/title/TitleContext";

@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { AvailableCoursesDTO } from "@/interfaces/api/user-context";
-import UserService from "@/services/user";
 import { CourseService } from "@/services/course";
 import { UseAvailableCourses } from "./types";
 

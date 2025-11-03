@@ -1,9 +1,9 @@
 "use client";
 
-import { MarkdownProvider } from "@/providers/markdown/MarkdownContext";
 import MarkdownWrapper from "@/components/markdown";
 import { MarkdownTypes } from "@/interfaces/general";
 import { SpeedDialKeys } from "@/components/speed-dial/types";
+import { MarkdownProvider } from "@/providers/markdown";
 
 export default function CourseRules() {
   return (

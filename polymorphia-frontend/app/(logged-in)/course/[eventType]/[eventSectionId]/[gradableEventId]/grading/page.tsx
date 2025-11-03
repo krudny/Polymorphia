@@ -1,12 +1,14 @@
 "use client";
-
-import { GradingProvider } from "@/providers/grading/GradingContext";
-import Grading from "@/views/course/grading";
+import { TargetProvider } from "@/providers/target";
+import { GradingProvider } from "@/providers/grading";
+import Grading from "@/views/grading";
 
 export default function GradingView() {
   return (
-    <GradingProvider>
-      <Grading />
-    </GradingProvider>
+    <TargetProvider>
+      <GradingProvider>
+        <Grading />
+      </GradingProvider>
+    </TargetProvider>
   );
 }

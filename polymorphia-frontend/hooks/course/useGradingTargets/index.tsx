@@ -3,7 +3,7 @@ import { EventSectionService } from "@/services/event-section";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import { UseGradingTargets } from "@/hooks/course/useGradingTargets/types";
 import { EventTypes } from "@/interfaces/general";
-import { TargetTypes } from "@/interfaces/api/grade/target";
+import { TargetTypes } from "@/interfaces/api/target";
 
 export default function useGradingTargets(
   debouncedSearch: string,

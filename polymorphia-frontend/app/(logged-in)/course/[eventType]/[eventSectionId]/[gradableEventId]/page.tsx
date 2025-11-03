@@ -1,6 +1,6 @@
 "use client";
 
-import { MarkdownProvider } from "@/providers/markdown/MarkdownContext";
+import { MarkdownProvider } from "@/providers/markdown";
 import MarkdownWrapper from "@/components/markdown";
 import { MarkdownTypes, ViewTypes } from "@/interfaces/general";
 import { useEventParams } from "@/hooks/general/useEventParams";

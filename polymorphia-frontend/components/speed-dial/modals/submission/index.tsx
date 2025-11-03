@@ -7,7 +7,7 @@ import useUserContext, {
   useUserDetails,
 } from "@/hooks/contexts/useUserContext";
 import { Roles } from "@/interfaces/api/user";
-import { TargetTypes } from "@/interfaces/api/grade/target";
+import { TargetTypes } from "@/interfaces/api/target";
 import Loading from "@/components/loading";
 import "./index.css";
 import { useMediaQuery } from "react-responsive";
