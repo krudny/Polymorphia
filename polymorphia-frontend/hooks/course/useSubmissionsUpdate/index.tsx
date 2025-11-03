@@ -9,6 +9,7 @@ import {
   UseSubmissionsUpdateProps,
 } from "@/hooks/course/useSubmissionsUpdate/types";
 import { TargetTypes } from "@/interfaces/api/grade/target";
+import { ApiError } from "@/services/api/error";
 
 export default function useSubmissionsUpdate({
   target,
@@ -20,7 +21,9 @@ export default function useSubmissionsUpdate({
   return useMutation({
     mutationFn: (submissionDetails: SubmissionDetailsResponseDTO) => {
       if (!target) {
-        throw new Error("Wystąpił błąd podczas aktualizacji oddanych zadań."); // TODO: ?
+        throw new ApiError(
+          "Wystąpił błąd podczas aktualizacji oddanych zadań."
+        );
       }
 
       return toast.promise(

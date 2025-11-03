@@ -13,7 +13,7 @@ import { ThemeProvider } from "next-themes";
 import { ThemeProvider as ThemeProviderMui } from "@mui/material";
 import { themeConfig } from "@/components/speed-dial/config";
 import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
-import { ApiError } from "@/interfaces/api/error";
+import { ApiError } from "@/services/api/error";
 
 const leagueGothic = League_Gothic({
   subsets: ["latin"],

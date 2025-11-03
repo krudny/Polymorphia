@@ -51,7 +51,7 @@ public class MarkdownGradableEventStrategy implements MarkdownStrategy {
             gradableEvent.setMarkdown(markdown);
             gradableEventRepository.save(gradableEvent);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Nie udało się zaktualizować treści Markdown.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Nie udało się zaktualizować treści markdown.");
         }
     }
 
@@ -61,11 +61,11 @@ public class MarkdownGradableEventStrategy implements MarkdownStrategy {
         String sourceUrl = gradableEvent.getMarkdownSourceUrl();
 
         if (sourceUrl == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Adres URL pliku Markdown nie jest zdefiniowany.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Adres URL pliku markdown nie jest zdefiniowany.");
         }
 
         if (gradableEvent.getEventSection().getEventSectionType() == EventSectionType.TEST) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Format Markdown nie jest obsługiwany dla sekcji testowych wydarzeń");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Format markdown nie jest obsługiwany dla sekcji testowych wydarzeń");
         }
 
         try {

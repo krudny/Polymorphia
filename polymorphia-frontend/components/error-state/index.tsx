@@ -1,9 +1,5 @@
 import "./index.css";
-
-type ErrorStateProps = {
-  title?: string;
-  message?: string;
-};
+import { ErrorStateProps } from "./types";
 
 export default function ErrorState({
   title = "Wystąpił błąd",

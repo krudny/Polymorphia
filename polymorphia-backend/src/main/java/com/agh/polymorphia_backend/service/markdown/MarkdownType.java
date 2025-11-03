@@ -29,6 +29,6 @@ public enum MarkdownType {
                 return type;
             }
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nie znaleziono typu Markdown.");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nie znaleziono typu markdown.");
     }
 }

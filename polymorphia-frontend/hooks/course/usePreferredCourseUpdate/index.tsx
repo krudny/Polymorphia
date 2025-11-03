@@ -8,7 +8,6 @@ import {
 } from "@/hooks/course/usePreferredCourseUpdate/types";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import { redirectToNextStep } from "@/app/(welcome)/redirectHandler";
-import { ApiError } from "@/interfaces/api/error";
 
 export default function usePreferredCourseUpdate({
   shouldRedirectToMainPage,

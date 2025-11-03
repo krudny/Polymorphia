@@ -26,7 +26,7 @@ public class UserFactory {
         User user = createUser(inviteDTO);
 
         if (inviteDTO.getIndexNumber() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Numer indeksu musi zostać podany.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Numer indeksu jest wymagany.");
         }
 
         return Student.builder()

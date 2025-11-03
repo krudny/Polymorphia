@@ -1,5 +1,6 @@
 import { API_HOST } from "@/services/api";
-import { ApiError, BackendErrorResponse } from "@/interfaces/api/error";
+import { BackendErrorResponse } from "@/interfaces/api/error";
+import { ApiError } from "@/services/api/error";
 
 const GENERIC_ERROR_MESSAGE = "Wystąpił nieoczekiwany błąd. Spróbuj ponownie.";
 

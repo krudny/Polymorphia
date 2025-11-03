@@ -2,11 +2,11 @@
 @import "../../styles/globals.css";
 
 .error-state {
-  @apply flex flex-col items-center justify-center gap-4 p-8 text-center m-auto w-full max-w-xl;
+  @apply flex-col-centered gap-4 p-8 text-center m-auto w-full max-w-xl;
 }
 
 .error-state-title {
-  @apply text-3xl font-semibold;
+  @apply text-3xl;
 }
 
 .error-state-message {
