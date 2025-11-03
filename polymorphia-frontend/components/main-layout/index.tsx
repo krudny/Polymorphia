@@ -1,7 +1,7 @@
 import { useScaleShow } from "@/animations/ScaleShow";
-import { useTitle } from "@/components/navigation/TitleContext";
 import { ReactNode } from "react";
 import "./index.css";
+import { useTitle } from "@/hooks/general/useTitle";
 
 export default function MainLayout({ children }: { children: ReactNode }) {
   const { title } = useTitle();
