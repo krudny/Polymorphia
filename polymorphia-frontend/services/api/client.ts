@@ -1,6 +1,7 @@
 import { API_HOST } from "@/services/api";
 import { BackendErrorResponse } from "@/interfaces/api/error";
 import { ApiError } from "@/services/api/error";
+import handleUnauthorized from "@/services/api/handle-unauthorized";
 
 const GENERIC_ERROR_MESSAGE = "Wystąpił nieoczekiwany błąd. Spróbuj ponownie.";
 
@@ -22,6 +23,9 @@ const request = async (path: string, init?: RequestInit): Promise<Response> => {
   });
 
   if (!response.ok) {
+    if (response.status === 401) {
+      handleUnauthorized();
+    }
     throw new ApiError(await readErrorMessage(response));
   }
 
