@@ -72,7 +72,7 @@ export default function StudentInfo() {
           <SwapAnimationWrapper
             {...baseSwapAnimationWrapperProps}
             keyProp={
-              items && !isSpecificDataLoading
+              items && !isItemsLoading
                 ? getKeyForSelectedTarget(selectedTarget)
                 : "loading" + getKeyForSelectedTarget(selectedTarget)
             }
