@@ -17,8 +17,8 @@ export default function useMarkdownUpdate(
       queryClient.invalidateQueries({
         queryKey: ["markdown", request.resourceId],
       });
-      toast.success("Zapisano zmiany!");
       request.setIsEditing(false);
+      toast.success("Zapisano zmiany!");
     },
     onError: (error) => {
       toast.error(error.message);

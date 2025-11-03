@@ -1,22 +1,13 @@
-import { ChangeEventHandler, useEffect, useRef } from "react";
+import TextareaAutosize from "react-textarea-autosize";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
-import "./index.css";
 import { GradingReducerActions } from "@/providers/grading/gradingReducer/types";
+import "./index.css";
+import { ChangeEvent } from "react";
 
 export default function Comment() {
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { state, dispatch } = useGradingContext();
 
-  // TODO: remove that when firefox starts supporting field sizeing
-  const adjustTextareaHeight = () => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "0px";
-      textareaRef.current.style.height =
-        textareaRef.current.scrollHeight + 8 + "px";
-    }
-  };
-
-  const handleChange: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     dispatch({
       type: GradingReducerActions.UPDATE_COMMENT,
       payload: {
@@ -25,26 +16,15 @@ export default function Comment() {
     });
   };
 
-  useEffect(() => {
-    adjustTextareaHeight();
-  }, [state.comment]);
-
   return (
-    <textarea
-      ref={textareaRef}
+    <TextareaAutosize
       className="comment"
       placeholder="Dodaj komentarz..."
       value={state.comment}
-      onInput={adjustTextareaHeight}
       onChange={handleChange}
-      onBlur={(event) => {
-        dispatch({
-          type: GradingReducerActions.UPDATE_COMMENT,
-          payload: {
-            comment: event.target.value,
-          },
-        });
-      }}
+      onBlur={handleChange}
+      minRows={1}
+      maxRows={10}
     />
   );
 }
