@@ -2,6 +2,7 @@ import { API_HOST } from "@/services/api";
 import { BackendErrorResponse } from "@/interfaces/api/error";
 import { ApiError } from "@/services/api/error";
 import handleUnauthorized from "@/services/api/handle-unauthorized";
+import { ApiBody, ApiRequestOptions } from "@/services/api/types";
 
 const GENERIC_ERROR_MESSAGE = "Wystąpił nieoczekiwany błąd. Spróbuj ponownie.";
 
@@ -14,13 +15,55 @@ const readErrorMessage = async (response: Response): Promise<string> => {
   }
 };
 
-const request = async (path: string, init?: RequestInit): Promise<Response> => {
-  const url = `${API_HOST}${path.startsWith("/") ? path : `/${path}`}`;
+const buildUrl = (path: string): string =>
+  `${API_HOST}${path.startsWith("/") ? path : `/${path}`}`;
 
-  const response = await fetch(url, {
-    ...(init ?? {}),
+const buildHeaders = (
+  headers: HeadersInit | undefined,
+  hasJsonBody: boolean
+): Headers | undefined => {
+  if (!headers && !hasJsonBody) {
+    return undefined;
+  }
+  const result = new Headers(headers ?? {});
+  if (hasJsonBody && !result.has("Content-Type")) {
+    result.set("Content-Type", "application/json");
+  }
+  return result;
+};
+
+const isApiJsonBody = (body: unknown): body is ApiBody =>
+  body != null &&
+  typeof body === "object" &&
+  !(body instanceof FormData) &&
+  !(body instanceof URLSearchParams);
+
+async function request<TResponse>({
+  path,
+  method,
+  body,
+  headers,
+}: ApiRequestOptions): Promise<TResponse> {
+  const hasJsonBody = isApiJsonBody(body);
+  const url = buildUrl(path);
+  headers = buildHeaders(headers, hasJsonBody);
+
+  const requestInit: RequestInit = {
+    method,
     credentials: "include",
-  });
+  };
+
+  if (headers) {
+    requestInit.headers = headers;
+  }
+
+  if (hasJsonBody) {
+    requestInit.body = JSON.stringify(body);
+  } else if (body !== undefined) {
+    requestInit.body = body;
+  }
+
+  const response = await fetch(url, requestInit);
 
   if (!response.ok) {
     if (response.status === 401) {
@@ -29,45 +72,16 @@ const request = async (path: string, init?: RequestInit): Promise<Response> => {
     throw new ApiError(await readErrorMessage(response));
   }
 
-  return response;
-};
+  return (await response.json()) as TResponse;
+}
 
-export const getEndpoint = (path: string): Promise<Response> =>
-  request(path, { method: "GET" });
-
-export const deleteEndpoint = (path: string): Promise<Response> =>
-  request(path, { method: "DELETE" });
-
-export const postEndpoint = (
-  path: string,
-  body?: BodyInit,
-  addJsonContentType: boolean = false,
-  headers?: HeadersInit
-): Promise<Response> => {
-  return request(path, {
-    method: "POST",
-    headers:
-      headers ??
-      (addJsonContentType ? { "Content-Type": "application/json" } : undefined),
-    body,
-  });
-};
-
-export const putEndpoint = (
-  path: string,
-  body?: BodyInit,
-  addJsonContentType: boolean = false
-): Promise<Response> => {
-  return request(path, {
-    method: "PUT",
-    headers: addJsonContentType
-      ? { "Content-Type": "application/json" }
-      : undefined,
-    body,
-  });
-};
-
-export const fetchJson = async <T>(promise: Promise<Response>): Promise<T> => {
-  const response = await promise;
-  return (await response.json()) as T;
+export const ApiClient = {
+  request,
+  get: <TResponse>(path: string) => request<TResponse>({ path, method: "GET" }),
+  post: <TResponse>(path: string, body?: ApiBody, headers?: HeadersInit) =>
+    request<TResponse>({ path, method: "POST", body, headers }),
+  put: <TResponse>(path: string, body?: ApiBody) =>
+    request<TResponse>({ path, method: "PUT", body }),
+  delete: <TResponse>(path: string) =>
+    request<TResponse>({ path, method: "DELETE" }),
 };
