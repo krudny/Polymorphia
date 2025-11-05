@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.service.gradable_event;
+package com.agh.polymorphia_backend.service.grade;
 
 import com.agh.polymorphia_backend.model.gradable_event.Grade;
 import com.agh.polymorphia_backend.repository.gradable_event.GradeRepository;
