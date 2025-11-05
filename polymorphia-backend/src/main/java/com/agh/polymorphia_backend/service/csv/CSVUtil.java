@@ -48,7 +48,7 @@ public class CSVUtil {
 
         long maxSize = 5 * 1024 * 1024;
         if (file.getSize() > maxSize) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Plik jest za duży. Maksymalny rozmiar to 5MB.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Plik jest za duży. Maksymalny rozmiar to 5 MB.");
         }
     }
 

@@ -79,7 +79,7 @@ public class AnimalService {
             studentCourseGroupRepository.save(assignment);
             assignment.setAnimal(savedAnimal);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Nie udało się utowrzyć zwierzaka.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Nie udało się utworzyć zwierzaka.");
         }
     }
 }

@@ -79,7 +79,7 @@ public class InvitationService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, USER_NOT_EXIST));
 
         CourseGroup courseGroup = courseGroupRepository.findById(inviteDTO.getCourseGroupId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Grupa kursu nie istenieje."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Grupa kursu nie istnieje."));
 
         Course course = courseGroup.getCourse();
         accessAuthorizer.authorizeCourseAccess(course);
@@ -103,7 +103,7 @@ public class InvitationService {
     @Transactional
     public void registerUser(RegisterRequestDto registerDTO, HttpServletRequest request) {
         InvitationToken token = invitationTokenRepository.findByToken(registerDTO.getInvitationToken())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Token nie istenieje."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Token nie istnieje."));
 
         User user = userRepository.findByEmail(token.getEmail())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, USER_NOT_EXIST));
