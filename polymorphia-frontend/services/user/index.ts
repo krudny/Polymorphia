@@ -12,42 +12,45 @@ import {
   StudentCourseGroupAssignmentIdResponseDTO,
   StudentProfileResponseDTO,
 } from "@/interfaces/api/student";
-import { fetchJson, getEndpoint, postEndpoint } from "@/services/api/client";
+import { ApiClient } from "@/services/api/client";
 
 const UserService = {
   getStudentProfile: async (
     courseId: number
   ): Promise<StudentProfileResponseDTO> => {
-    return await fetchJson<StudentProfileResponseDTO>(
-      getEndpoint(`/students/profile?courseId=${courseId}`)
+    return await ApiClient.get<StudentProfileResponseDTO>(
+      `/students/profile?courseId=${courseId}`
     );
   },
   hasValidAnimalInCourse: async (courseId: number): Promise<boolean> => {
-    return await fetchJson<boolean>(
-      getEndpoint(`/students/animals/is-valid?courseId=${courseId}`)
+    return await ApiClient.get<boolean>(
+      `/students/animals/is-valid?courseId=${courseId}`
     );
   },
   getCourseGroup: async (
     courseId: number
   ): Promise<StudentCourseGroupAssignmentIdResponseDTO> => {
-    return await fetchJson<StudentCourseGroupAssignmentIdResponseDTO>(
-      getEndpoint(`/students/course-group?courseId=${courseId}`)
+    return await ApiClient.get<StudentCourseGroupAssignmentIdResponseDTO>(
+      `/students/course-group?courseId=${courseId}`
     );
   },
   createAnimal: async (request: CreateAnimalRequestDTO): Promise<void> => {
-    await postEndpoint("/students/animals", JSON.stringify(request), true);
+    await ApiClient.post("/students/animals", request);
   },
   getUserRole: async (): Promise<Role> => {
-    return await fetchJson<Role>(getEndpoint("/users/role"));
+    return await ApiClient.get<Role>("/users/role");
   },
   getCurrentUser: async (): Promise<UserDetailsDTO> => {
-    return await fetchJson<UserDetailsDTO>(getEndpoint("/users/context"));
+    return await ApiClient.get<UserDetailsDTO>("/users/context");
   },
   setUserPreferredCourse: async (courseId: number): Promise<void> => {
-    await postEndpoint(`/users/preferred-course?courseId=${courseId}`);
+    await ApiClient.post(
+      `/users/preferred-course?courseId=${courseId}`,
+      undefined
+    );
   },
   changePassword: async (request: ChangePasswordDTO): Promise<void> => {
-    await postEndpoint("/users/change-password", JSON.stringify(request), true);
+    await ApiClient.post("/users/change-password", request);
   },
   getRandomUsers: async (): Promise<StudentDetailsDTOWithType[]> => {
     return [
@@ -81,15 +84,11 @@ const UserService = {
   },
 
   inviteUser: async (request: InviteRequestDTO): Promise<void> => {
-    await postEndpoint("/invitation/course", JSON.stringify(request), true);
+    await ApiClient.post("/invitation/course", request);
   },
 
   register: async (request: RegisterRequestDTO): Promise<void> => {
-    await postEndpoint(
-      "/invitation/register-user",
-      JSON.stringify(request),
-      true
-    );
+    await ApiClient.post("/invitation/register-user", request);
   },
 };
 

@@ -2,7 +2,7 @@ import {
   HallOfFameRecordDTO,
   HallOfFameResponseDTO,
 } from "@/interfaces/api/hall-of-fame";
-import { fetchJson, getEndpoint, postEndpoint } from "@/services/api/client";
+import { ApiClient } from "@/services/api/client";
 
 const HallOfFameService = {
   getHallOfFame: async (
@@ -15,26 +15,20 @@ const HallOfFameService = {
     sortOrder: string,
     groups?: string[]
   ): Promise<HallOfFameResponseDTO> => {
-    return await fetchJson<HallOfFameResponseDTO>(
-      postEndpoint(
-        "/hall-of-fame",
-        JSON.stringify({
-          courseId: courseId,
-          page: page,
-          size: size,
-          searchTerm: !searchTerm || searchTerm.trim() === "" ? "" : searchTerm,
-          searchBy: searchBy,
-          sortBy: sortBy,
-          sortOrder: sortOrder,
-          groups: groups && !groups?.includes("all") ? groups : [],
-        }),
-        true
-      )
-    );
+    return await ApiClient.post<HallOfFameResponseDTO>("/hall-of-fame", {
+      courseId: courseId,
+      page: page,
+      size: size,
+      searchTerm: !searchTerm || searchTerm.trim() === "" ? "" : searchTerm,
+      searchBy: searchBy,
+      sortBy: sortBy,
+      sortOrder: sortOrder,
+      groups: groups && !groups?.includes("all") ? groups : [],
+    });
   },
   getPodium: async (courseId: number): Promise<HallOfFameRecordDTO[]> => {
-    return await fetchJson<HallOfFameRecordDTO[]>(
-      getEndpoint(`/hall-of-fame/podium?courseId=${courseId}`)
+    return await ApiClient.get<HallOfFameRecordDTO[]>(
+      `/hall-of-fame/podium?courseId=${courseId}`
     );
   },
 };

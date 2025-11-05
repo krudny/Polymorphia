@@ -1,5 +1,5 @@
 import { LoginDTO } from "@/interfaces/api/login";
-import { postEndpoint } from "@/services/api/client";
+import { ApiClient } from "@/services/api/client";
 import { API_HOST } from "@/services/api";
 
 const AuthService = {
@@ -8,7 +8,7 @@ const AuthService = {
     params.append("username", email);
     params.append("password", password);
 
-    await postEndpoint("/login", params.toString(), false, {
+    await ApiClient.post("/login", params, {
       "Content-Type": "application/x-www-form-urlencoded",
     });
   },

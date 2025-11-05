@@ -3,7 +3,7 @@ import {
   CSVHeadersResponseDTO,
   CSVPreviewResponseDTO,
 } from "@/interfaces/api/CSV";
-import { fetchJson, postEndpoint } from "@/services/api/client";
+import { ApiClient } from "@/services/api/client";
 
 const CSVService = {
   getCSVHeaders: async (
@@ -14,7 +14,10 @@ const CSVService = {
     formData.append("file", file);
     formData.append("type", type);
 
-    return await fetchJson(postEndpoint("/csv/headers", formData));
+    return await ApiClient.post<CSVHeadersResponseDTO>(
+      "/csv/headers",
+      formData
+    );
   },
 
   getCSVPreview: async (
@@ -25,7 +28,10 @@ const CSVService = {
     formData.append("file", file);
     formData.append("csvHeaders", JSON.stringify(headers));
 
-    return await fetchJson(postEndpoint("/csv/preview", formData));
+    return await ApiClient.post<CSVPreviewResponseDTO>(
+      "/csv/preview",
+      formData
+    );
   },
 
   processGradeImport: async (
@@ -33,14 +39,12 @@ const CSVService = {
     data: string[][],
     gradableEventId?: number
   ): Promise<void> => {
-    const body = JSON.stringify({
+    await ApiClient.post("/grading/csv/test", {
       type: ImportCSVTypes.GRADE_IMPORT,
       csvHeaders: csvHeaders,
       data: data,
       ...(gradableEventId && { gradableEventId }),
     });
-
-    await postEndpoint("/grading/csv/test", body, true);
   },
 
   processStudentCourseInvite: async (
@@ -48,16 +52,12 @@ const CSVService = {
     data: string[][],
     courseId: number
   ): Promise<void> => {
-    await postEndpoint(
-      "/invitation/course/csv",
-      JSON.stringify({
-        type: ImportCSVTypes.STUDENT_INVITE,
-        csvHeaders,
-        data,
-        courseId,
-      }),
-      true
-    );
+    await ApiClient.post("/invitation/course/csv", {
+      type: ImportCSVTypes.STUDENT_INVITE,
+      csvHeaders,
+      data,
+      courseId,
+    });
   },
 
   processStudentGroupInvite: async (
@@ -65,16 +65,12 @@ const CSVService = {
     data: string[][],
     courseGroupId: number
   ): Promise<void> => {
-    await postEndpoint(
-      "/invitation/group/csv",
-      JSON.stringify({
-        type: ImportCSVTypes.GROUP_INVITE,
-        csvHeaders,
-        data,
-        courseGroupId,
-      }),
-      true
-    );
+    await ApiClient.post("/invitation/group/csv", {
+      type: ImportCSVTypes.GROUP_INVITE,
+      csvHeaders,
+      data,
+      courseGroupId,
+    });
   },
 };
 

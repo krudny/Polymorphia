@@ -22,7 +22,7 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Void> setPreferredCourse(@RequestParam Long courseId) {
         userContextService.setPreferredCourseId(courseId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/context")
@@ -43,7 +43,7 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Void> changePassword(@RequestBody ChangePasswordRequestDTO requestDTO) {
         userService.changePassword(requestDTO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
 }

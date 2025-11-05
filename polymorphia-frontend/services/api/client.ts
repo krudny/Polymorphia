@@ -25,7 +25,7 @@ const buildHeaders = (
   if (!headers && !hasJsonBody) {
     return undefined;
   }
-  const result = new Headers(headers ?? {});
+  const result = new Headers(headers);
   if (hasJsonBody && !result.has("Content-Type")) {
     result.set("Content-Type", "application/json");
   }
@@ -67,21 +67,61 @@ async function request<TResponse>({
 
   if (!response.ok) {
     if (response.status === 401) {
-      handleUnauthorized();
+      await handleUnauthorized();
     }
     throw new ApiError(await readErrorMessage(response));
   }
 
+  const contentLength = response.headers.get("content-length");
+  if (
+    response.status === 204 ||
+    !contentLength ||
+    Number(contentLength) === 0
+  ) {
+    return undefined as TResponse;
+  }
   return (await response.json()) as TResponse;
 }
 
+function get<TResponse>(path: string, headers?: HeadersInit) {
+  return request<TResponse>({ path, method: "GET", headers });
+}
+
+function post(
+  path: string,
+  body?: ApiBody,
+  headers?: HeadersInit
+): Promise<void>;
+function post<TResponse>(
+  path: string,
+  body?: ApiBody,
+  headers?: HeadersInit
+): Promise<TResponse>;
+function post<TResponse>(path: string, body?: ApiBody, headers?: HeadersInit) {
+  return request<TResponse>({ path, method: "POST", body, headers });
+}
+
+function put(
+  path: string,
+  body?: ApiBody,
+  headers?: HeadersInit
+): Promise<void>;
+function put<TResponse>(
+  path: string,
+  body?: ApiBody,
+  headers?: HeadersInit
+): Promise<TResponse>;
+function put<TResponse>(path: string, body?: ApiBody, headers?: HeadersInit) {
+  return request<TResponse>({ path, method: "PUT", body, headers });
+}
+
+function del(path: string, headers?: HeadersInit): Promise<void> {
+  return request({ path, method: "DELETE", headers });
+}
+
 export const ApiClient = {
-  request,
-  get: <TResponse>(path: string) => request<TResponse>({ path, method: "GET" }),
-  post: <TResponse>(path: string, body?: ApiBody, headers?: HeadersInit) =>
-    request<TResponse>({ path, method: "POST", body, headers }),
-  put: <TResponse>(path: string, body?: ApiBody) =>
-    request<TResponse>({ path, method: "PUT", body }),
-  delete: <TResponse>(path: string) =>
-    request<TResponse>({ path, method: "DELETE" }),
+  get,
+  post,
+  put,
+  delete: del,
 };
