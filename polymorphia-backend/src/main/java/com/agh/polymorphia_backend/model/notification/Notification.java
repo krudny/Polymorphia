@@ -36,15 +36,15 @@ public class Notification {
     @NotNull
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gradable_event_id")
     private GradableEvent gradableEvent;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "evolution_stage_id")
     private EvolutionStage evolutionStage;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reward_id")
     private Reward reward;
 }

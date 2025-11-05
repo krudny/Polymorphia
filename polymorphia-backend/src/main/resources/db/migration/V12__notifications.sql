@@ -18,7 +18,7 @@ CREATE TABLE notifications (
                                CONSTRAINT FK_NOTIFICATION_REWARD
                                    FOREIGN KEY (reward_id)
                                        REFERENCES rewards(id)
-                                       ON DELETE SET NULL,
+                                       ON DELETE SET NULL
 );
 
 CREATE INDEX idx_notification_user_id ON notifications(user_id);
