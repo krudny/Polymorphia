@@ -5,4 +5,6 @@ export interface NotificationContextInterface {
   setIsNotificationModalOpen: (value: boolean) => void;
   notifications: NotificationResponseDTO[] | undefined;
   notificationCount: number;
+  isLoading: boolean;
+  isError: boolean;
 }
