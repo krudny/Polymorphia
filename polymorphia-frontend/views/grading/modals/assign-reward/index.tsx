@@ -1,4 +1,4 @@
-import Modal from "@/components/modal/Modal";
+import Modal from "@/components/modal";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCardAssign from "@/components/xp-card/components/XPCardAssign";

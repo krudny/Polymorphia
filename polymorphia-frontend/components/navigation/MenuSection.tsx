@@ -55,11 +55,13 @@ export default function MenuSection({ options }: MenuSectionProps) {
         return (
           <div key={option.text}>
             <div className="menu-option-row-wrapper">
-              {option.link ? (
+              {option.link && (
                 <Link href={`/${option.link}`} key={option.text}>
                   {content}
                 </Link>
-              ) : (
+              )}
+
+              {option.onClick && (
                 <div
                   key={option.text}
                   onClick={() => {
