@@ -75,8 +75,7 @@ async function request<TResponse>({
   const contentLength = response.headers.get("content-length");
   if (
     response.status === 204 ||
-    !contentLength ||
-    Number(contentLength) === 0
+    (contentLength && Number(contentLength) === 0)
   ) {
     return undefined as TResponse;
   }
