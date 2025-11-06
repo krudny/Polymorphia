@@ -13,15 +13,14 @@ public class NewGradeNotificationCreator implements NotificationCreator {
 
     @Override
     public Notification create(NotificationCreationRequest request) {
-        GradableEvent event = request.getGradableEvent();
-        String description = "Pojawiło się nowe zadanie do oceny: " + event.getName();
+        GradableEvent gradableEvent = request.getGradableEvent();
+        String description = "Wydarzenie: " + gradableEvent.getName() + " zostało ocenione!";
 
         return Notification.builder()
                 .userId(request.getUserId())
                 .notificationType(getSupportedNotificationType())
-                .createdAt(ZonedDateTime.now())
                 .description(description)
-                .gradableEvent(event)
+                .gradableEvent(gradableEvent)
                 .build();
     }
 

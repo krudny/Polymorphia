@@ -1,18 +1,23 @@
 package com.agh.polymorphia_backend.service.student;
 
 import com.agh.polymorphia_backend.dto.request.hall_of_fame.HallOfFameRequestDto;
+import com.agh.polymorphia_backend.dto.request.notification.NotificationCreationRequest;
 import com.agh.polymorphia_backend.dto.response.profile.EvolutionStageThresholdResponseDto;
 import com.agh.polymorphia_backend.dto.response.profile.ProfileResponseDto;
 import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.course.EvolutionStage;
 import com.agh.polymorphia_backend.model.hall_of_fame.SearchBy;
+import com.agh.polymorphia_backend.model.notification.NotificationType;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.repository.course.EvolutionStagesRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
 import com.agh.polymorphia_backend.service.course.CourseService;
+import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
 import com.agh.polymorphia_backend.service.mapper.ProfileMapper;
+import com.agh.polymorphia_backend.service.notification.NotificationDispatcher;
+import com.agh.polymorphia_backend.service.notification.NotificationService;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import com.agh.polymorphia_backend.util.NumberFormatter;
@@ -39,11 +44,23 @@ public class ProfileService {
     private final HallOfFameRepository hallOfFameRepository;
     private final EvolutionStagesRepository evolutionStagesRepository;
     private final ProfileMapper profileMapper;
+    private final NotificationDispatcher notificationDispatcher;
+    private final GradableEventService gradableEventService;
 
     public ProfileResponseDto getProfile(Long courseId) {
         Course course = courseService.getCourseById(courseId);
         accessAuthorizer.authorizeCourseAccess(course);
         User user = userService.getCurrentUser().getUser();
+
+        // TODO: mock
+        NotificationCreationRequest request = NotificationCreationRequest
+                .builder()
+                .userId(user.getId())
+                .gradableEvent(gradableEventService.getGradableEventById(11L))
+                .notificationType(NotificationType.NEW_GRADE)
+                .build();
+
+        notificationDispatcher.dispatch(request);
 
         BigDecimal totalXp = hallOfFameService.getStudentHallOfFame(user).getTotalXpSum();
         List<EvolutionStageThresholdResponseDto> evolutionStages = getEvolutionStages(courseId);

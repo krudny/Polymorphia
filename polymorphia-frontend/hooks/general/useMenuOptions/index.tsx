@@ -14,6 +14,7 @@ import {
 import { Roles } from "@/interfaces/api/user";
 import useUserContext from "@/hooks/contexts/useUserContext";
 import { useMenuCourseOptionText } from "@/hooks/general/useMenuCourseOptionText";
+import useNotificationContext from "@/hooks/contexts/useNotificationsContext";
 
 export function useBottomMenuItems(): MenuOption[] {
   return [
@@ -27,8 +28,16 @@ export function useBottomMenuItems(): MenuOption[] {
 }
 
 export function useBottomDesktopMenuItems(): MenuOption[] {
+  const { setIsNotificationModalOpen, notificationCount } =
+    useNotificationContext();
+
   return [
-    { icon: BellIcon, text: "Powiadomienia" },
+    {
+      icon: BellIcon,
+      text: `Powiadomienia`,
+      notificationCount: notificationCount,
+      onClick: () => setIsNotificationModalOpen(true),
+    },
     {
       icon: LogOutIcon,
       text: "Wyloguj się",

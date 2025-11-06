@@ -1,10 +1,12 @@
-import React from "react";
+import { ElementType } from "react";
 
 export interface MenuOption {
-  icon: React.ElementType;
+  icon: ElementType;
   text: string;
   link?: string;
   subItems?: SubMenuOption[];
+  onClick?: () => void;
+  notificationCount?: number;
 }
 
 export interface SubMenuOption {
