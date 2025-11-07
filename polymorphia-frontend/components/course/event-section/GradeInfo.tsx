@@ -17,11 +17,11 @@ export default function GradeInfo({ grade, criteria }: GradeInfoProps) {
 
   const accordionSections = [
     ...criteria.map(({ id }) => String(id)),
-    ...(grade.isGraded ? ["Komentarz"] : []),
+    ...(grade.gradeResponse.isGraded ? ["Komentarz"] : []),
   ];
 
   const initiallyOpenedAccordionSections = new Set(
-    accordionSections.length > 0 && isMd && grade.isGraded
+    accordionSections.length > 0 && isMd && grade.gradeResponse.isGraded
       ? [accordionSections[0]]
       : []
   );
@@ -36,9 +36,9 @@ export default function GradeInfo({ grade, criteria }: GradeInfoProps) {
         shouldAnimateInitialOpen={true}
       >
         {criteria.map((criterion) => {
-          const criterionGrade = grade.isGraded
-            ? grade.criteria.find(
-                (gradeCriterion) => gradeCriterion.id === criterion.id
+          const criterionGrade = grade.gradeResponse.isGraded
+            ? grade.gradeResponse.criteria.find(
+                (gradeCriterion) => gradeCriterion.criterionId === criterion.id
               )
             : undefined;
 
@@ -111,15 +111,17 @@ export default function GradeInfo({ grade, criteria }: GradeInfoProps) {
           );
         })}
 
-        {grade.isGraded && (
+        {grade.gradeResponse.isGraded && (
           <AccordionSection
             key={criteria.length + 1}
             id="Komentarz"
             title="Komentarz"
             headerClassName="grade-info-accordion-header"
           >
-            {grade.comment ? (
-              <div className="grade-info-comment">{grade.comment}</div>
+            {grade.gradeResponse.comment ? (
+              <div className="grade-info-comment">
+                {grade.gradeResponse.comment}
+              </div>
             ) : (
               <div className="text-xl">Brak komentarza.</div>
             )}

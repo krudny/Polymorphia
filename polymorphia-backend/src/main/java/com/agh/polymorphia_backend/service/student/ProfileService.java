@@ -44,10 +44,11 @@ public class ProfileService {
         Course course = courseService.getCourseById(courseId);
         accessAuthorizer.authorizeCourseAccess(course);
         User user = userService.getCurrentUser().getUser();
+        Animal animal = animalService.getAnimal(user.getId(), user.getPreferredCourse().getId());
 
-        BigDecimal totalXp = hallOfFameService.getStudentHallOfFame(user).getTotalXpSum();
+        BigDecimal totalXp = hallOfFameService.getStudentHallOfFame(animal).getTotalXpSum();
         List<EvolutionStageThresholdResponseDto> evolutionStages = getEvolutionStages(courseId);
-        int evolutionStageId = getCurrentEvolutionStageId(evolutionStages, user);
+        int evolutionStageId = getCurrentEvolutionStageId(evolutionStages, animal);
 
         return ProfileResponseDto.builder()
                 .evolutionStageThresholds(evolutionStages)
@@ -67,13 +68,14 @@ public class ProfileService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_HOF_NOT_FOUND);
         }
 
-        hallOfFameService.updateXpDetails(xpDetails, hallOfFameService.getStudentHallOfFame(user));
+        hallOfFameService.updateXpDetails(xpDetails, hallOfFameService.getStudentHallOfFame(animal));
 
         return xpDetails;
     }
 
-    private int getCurrentEvolutionStageId(List<EvolutionStageThresholdResponseDto> evolutionStages, User user) {
-        String evolutionStageName = Optional.ofNullable(hallOfFameService.getStudentHallOfFame(user).getEvolutionStage())
+    private int getCurrentEvolutionStageId(List<EvolutionStageThresholdResponseDto> evolutionStages, Animal animal) {
+
+        String evolutionStageName = Optional.ofNullable(hallOfFameService.getStudentHallOfFame(animal).getEvolutionStage())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(PROFILE_INFO_INCOMPLETE, LACKING_EVOLUTION_STAGES)));
 
         for (int i = 0; i < evolutionStages.size(); i++) {

@@ -7,3 +7,12 @@ export interface RoadmapModalsProps {
     SetStateAction<StudentGradableEventResponseDTO | undefined>
   >;
 }
+
+export interface RoadmapCardsProps {
+  gradableEvent: StudentGradableEventResponseDTO;
+  onCardClicked: (gradableEvent: StudentGradableEventResponseDTO) => void;
+}
+
+export interface RoadmapGradeModalProps {
+  gradableEvent: StudentGradableEventResponseDTO;
+}

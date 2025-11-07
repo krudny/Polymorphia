@@ -36,7 +36,9 @@ function AssignRewardModalContent({
           ...prev.criteria[criterionId],
           assignedRewards: prev.criteria[criterionId].assignedRewards.map(
             (reward) =>
-              reward.id === rewardId ? { ...reward, quantity: value } : reward
+              reward.rewardId === rewardId
+                ? { ...reward, quantity: value }
+                : reward
           ),
         },
       },
@@ -70,7 +72,7 @@ function AssignRewardModalContent({
             const rewardId = rewardData.id;
             const currentQuantity =
               localState.criteria[criterionId].assignedRewards.find(
-                (reward) => reward.id === rewardId
+                (reward) => reward.rewardId === rewardId
               )?.quantity ?? 0;
 
             const subtitle =

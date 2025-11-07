@@ -20,6 +20,7 @@ export default function useShortGrade(
           "grade",
           target.type,
           target.type === TargetTypes.STUDENT ? target.id : target.groupId,
+          gradableEventId,
         ]
       : ["grade", "no-target"],
     queryFn: () => EventSectionService.getShortGrade(target!, gradableEventId),

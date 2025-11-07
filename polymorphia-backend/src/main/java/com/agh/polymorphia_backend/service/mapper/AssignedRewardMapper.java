@@ -3,6 +3,7 @@ package com.agh.polymorphia_backend.service.mapper;
 import com.agh.polymorphia_backend.dto.response.equipment.EquipmentChestResponseDto;
 import com.agh.polymorphia_backend.dto.response.equipment.EquipmentItemResponseDto;
 import com.agh.polymorphia_backend.dto.response.reward.assigned.AssignedRewardResponseDto;
+import com.agh.polymorphia_backend.dto.response.reward.assigned.ShortAssignedRewardResponseDto;
 import com.agh.polymorphia_backend.dto.response.reward.assignment_details.BaseRewardAssignmentDetailsResponseDto;
 import com.agh.polymorphia_backend.dto.response.reward.assignment_details.ChestAssignmentDetailsResponseDto;
 import com.agh.polymorphia_backend.dto.response.reward.assignment_details.ItemAssignmentDetailsResponseDto;
@@ -37,6 +38,36 @@ public class AssignedRewardMapper {
     public List<EquipmentChestResponseDto> assignedChestsToResponseDto(List<AssignedChest> assignedChests) {
         return assignedChests.stream()
                 .map(this::chestToResponseDto)
+                .toList();
+    }
+
+    public AssignedRewardResponseDto itemToAssignedRewardDtoWithType(AssignedItem assignedItem) {
+        return AssignedRewardResponseDto.builder()
+                .base(rewardMapper.rewardToRewardResponseDto(assignedItem.getReward()))
+                .details(getItemDetailsDto(assignedItem))
+                .build();
+    }
+
+    public List<ShortAssignedRewardResponseDto> rewardsToShortResponseDto(List<AssignedReward> assignedRewards) {
+        return assignedRewards.stream()
+                .collect(Collectors.groupingBy(
+                        ar -> ar.getReward().getId(),
+                        Collectors.counting()
+                ))
+                .entrySet().stream()
+                .map(entry -> {
+                    AssignedReward assignedReward = assignedRewards.stream()
+                            .filter(ar -> ar.getReward().getId().equals(entry.getKey()))
+                            .findFirst()
+                            .orElseThrow();
+
+                    return ShortAssignedRewardResponseDto.builder()
+                            .rewardId(entry.getKey())
+                            .name(assignedReward.getReward().getName())
+                            .quantity(entry.getValue().intValue())
+                            .imageUrl(assignedReward.getReward().getImageUrl())
+                            .build();
+                })
                 .toList();
     }
 
@@ -88,14 +119,6 @@ public class AssignedRewardMapper {
                 .usedDate(assignedChest.getUsedDate())
                 .receivedDate(assignedChest.getReceivedDate())
                 .receivedItems(receivedItems)
-                .build();
-    }
-
-
-    private AssignedRewardResponseDto itemToAssignedRewardDtoWithType(AssignedItem assignedItem) {
-        return AssignedRewardResponseDto.builder()
-                .base(rewardMapper.rewardToRewardResponseDto(assignedItem.getReward()))
-                .details(getItemDetailsDto(assignedItem))
                 .build();
     }
 }

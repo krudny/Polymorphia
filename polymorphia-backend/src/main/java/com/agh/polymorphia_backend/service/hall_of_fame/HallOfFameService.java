@@ -7,7 +7,6 @@ import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.event_section.EventSection;
 import com.agh.polymorphia_backend.model.hall_of_fame.*;
-import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
@@ -56,8 +55,7 @@ public class HallOfFameService {
         return direction.isAscending() ? Sort.Direction.DESC : Sort.Direction.ASC;
     }
 
-    public HallOfFameEntry getStudentHallOfFame(User user) {
-        Animal animal = animalService.getAnimal(user.getId(), user.getPreferredCourse().getId());
+    public HallOfFameEntry getStudentHallOfFame(Animal animal) {
         return hallOfFameRepository.findByAnimalId(animal.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_HOF_NOT_FOUND));
     }

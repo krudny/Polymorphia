@@ -15,6 +15,10 @@ TRUNCATE TABLE event_sections cascade;
 TRUNCATE TABLE test_sections cascade;
 truncate table assignment_sections cascade;
 truncate table project_sections cascade;
+truncate table projects cascade;
+truncate table project_variants cascade;
+truncate table project_variant_categories cascade;
+truncate table project_groups cascade;
 TRUNCATE TABLE rewards cascade;
 TRUNCATE TABLE items cascade;
 TRUNCATE TABLE flat_bonus_items cascade;
@@ -50,7 +54,7 @@ VALUES (7, 'Sample', 'User', 'sampleuser@test.com', '$2y$10$PnLQWAxCL4VYV6PCkYAD
          NULL);
 
 INSERT INTO instructors (user_id)
-VALUES (4);
+VALUES (4),(5);
 
 
 INSERT INTO users (id, first_name, last_name, email, password,  preferred_course_id)
@@ -376,7 +380,7 @@ VALUES (1, 'Programowanie obiektowe 2024/25', 'google.com', 5, 'images/evolution
         'images/evolution-stages/1.webp', 'images/evolution-stages/7.webp');
 
 INSERT INTO course_groups (id, name, course_id, instructor_id)
-VALUES (1, 'sp-pn-1315', 1, 4);
+VALUES (1, 'sp-pn-1315', 1, 5);
 INSERT INTO course_groups (id, name, course_id, instructor_id)
 VALUES (2, 'mi-13-00', 2, 4);
 insert into course_groups(id, name, course_id, instructor_id)
@@ -390,7 +394,10 @@ VALUES ('STUDENT', 7, 1);
 INSERT INTO user_course_roles (role, user_id, course_id)
 VALUES ('COORDINATOR', 5, 1);
 INSERT INTO user_course_roles (role, user_id, course_id)
-VALUES ('STUDENT', 7, 2);
+VALUES ('COORDINATOR', 5, 2);
+INSERT INTO user_course_roles (role, user_id, course_id)
+VALUES ('STUDENT', 7, 2),
+       ('STUDENT',21,1);
 
 INSERT INTO animals (id, name)
 VALUES
@@ -621,7 +628,7 @@ INSERT INTO event_sections (id, name, is_shown_in_road_map, has_gradable_events_
 VALUES (9, 'Git', true, false, 2, 0, false);
 INSERT INTO event_sections (id, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id, order_index,
                             is_hidden)
-VALUES (10, 'Specjalny lab', true, false, 2, 3, false);
+VALUES (10, 'Specjalne', true, false, 1, 3, false);
 INSERT INTO event_sections (id, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id, order_index,
                             is_hidden)
 VALUES (2, 'Laboratorium', true, false, 1, 2, false);
@@ -728,40 +735,40 @@ INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, roa
 VALUES (1, 1, 'Kartkówka 1', NULL, 0, 0, NULL, NULL, false, false);
 INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
                              markdown, is_hidden, is_locked)
-VALUES (2, 1, 'Kartkówka 2', NULL, 1, 1, NULL, NULL, false, false);
+VALUES (2, 1, 'Kartkówka 2', NULL, 1, 2, NULL, NULL, false, false);
 INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
                              markdown, is_hidden, is_locked)
-VALUES (3, 1, 'Kartkówka 3', NULL, 2, 2, NULL, NULL, false, false);
+VALUES (3, 1, 'Kartkówka 3', NULL, 2, 5, NULL, NULL, false, false);
 INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
                              markdown, is_hidden, is_locked)
-VALUES (4, 1, 'Kartkówka 4', NULL, 3, 3, NULL, NULL, false, false);
+VALUES (4, 1, 'Kartkówka 4', NULL, 3, 7, NULL, NULL, false, false);
 INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
                              markdown, is_hidden, is_locked)
-VALUES (5, 1, 'Kartkówka 5', NULL, 4, 4, NULL, NULL, false, false);
+VALUES (5, 1, 'Kartkówka 5', NULL, 4, 9, NULL, NULL, false, false);
 INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
                              markdown, is_hidden, is_locked)
-VALUES (6, 1, 'Kartkówka 6', NULL, 5, 5, NULL, NULL, false, false);
+VALUES (6, 1, 'Kartkówka 6', NULL, 5, 11, NULL, NULL, false, false);
 INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
                              markdown, is_hidden, is_locked)
-VALUES (7, 1, 'Kartkówka 7', NULL, 6, 6, NULL, NULL, false, false);
+VALUES (7, 1, 'Kartkówka 7', NULL, 6, 13, NULL, NULL, false, false);
 INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
                              markdown, is_hidden, is_locked)
-VALUES (8, 1, 'Kartkówka 8', NULL, 7, 7, NULL, NULL, false, false);
+VALUES (8, 1, 'Kartkówka 8', NULL, 7, 15, NULL, NULL, false, false);
 INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
                              markdown, is_hidden, is_locked)
-VALUES (16, 2, 'Laboratorium 8', NULL, 15, 15,
+VALUES (16, 2, 'Laboratorium 8', NULL, 15, 16,
         'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab8/Readme.md', NULL, false, false);
 INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
                              markdown, is_hidden, is_locked)
-VALUES (13, 2, 'Laboratorium 5', NULL, 12, 12,
+VALUES (13, 2, 'Laboratorium 5', NULL, 12, 10,
         'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab5/Readme.md', NULL, false, false);
 INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
                              markdown, is_hidden, is_locked)
-VALUES (11, 2, 'Laboratorium 3', NULL, 10, 10,
+VALUES (11, 2, 'Laboratorium 3', NULL, 10, 6,
         'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab3/Readme.md', NULL, false, false);
 INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
                              markdown, is_hidden, is_locked)
-VALUES (10, 2, 'Laboratorium 2', NULL, 9, 9,
+VALUES (10, 2, 'Laboratorium 2', NULL, 9, 3,
         'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab2/Readme.md', NULL, false, false);
 INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
                              markdown, is_hidden, is_locked)
@@ -769,15 +776,15 @@ VALUES (15, 2, 'Laboratorium 7', NULL, 14, 14,
         'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab7/Readme.md', NULL, false, false);
 INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
                              markdown, is_hidden, is_locked)
-VALUES (14, 2, 'Laboratorium 6', NULL, 13, 13,
+VALUES (14, 2, 'Laboratorium 6', NULL, 13, 12,
         'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab6/Readme.md', NULL, false, false);
 INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
                              markdown, is_hidden, is_locked)
-VALUES (12, 2, 'Laboratorium 4', NULL, 11, 11,
+VALUES (12, 2, 'Laboratorium 4', NULL, 11, 8,
         'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab4/Readme.md', '', false, false);
 INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
                              markdown, is_hidden, is_locked)
-VALUES (9, 2, 'Laboratorium 1', NULL, 8, 8,
+VALUES (9, 2, 'Laboratorium 1', NULL, 8, 1,
         'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab1/Readme.md', '# Lab 1: Instrukcje sterujące w Javie
 
 Celem laboratorium jest zapoznanie się z podstawowymi pojęciami oraz instrukcjami sterującymi w Javie.
@@ -788,33 +795,71 @@ Najważniejsze zadania:
 2. Stworzenie klasy `World` sterującej programem.
 3. Stworze', false, false);
 INSERT INTO gradable_events (id, event_section_id, name, order_index, road_map_order_index, is_hidden, is_locked)
-VALUES (17, 6, 'Kartkówka 1', 0, 0, false, false),
-       (18, 6, 'Kartkówka 2', 1, 1, false, false),
-       (19, 6, 'Kartkówka 3', 2, 2, false, false),
-       (20, 6, 'Kartkówka 4', 3, 3, false, false),
-       (21, 6, 'Kartkówka 5', 4, 4, false, false),
-       (22, 6, 'Kartkówka 6', 5, 5, false, false),
-       (23, 6, 'Kartkówka 7', 6, 6, false, false),
-       (24, 6, 'Kartkówka 8', 7, 7, false, false);
+VALUES (17, 8, 'Kartkówka 1', 0, 0, false, false),
+       (18, 8, 'Kartkówka 2', 1, 1, false, false),
+       (19, 8, 'Kartkówka 3', 2, 2, false, false),
+       (20, 8, 'Kartkówka 4', 3, 3, false, false),
+       (21, 8, 'Kartkówka 5', 4, 4, false, false),
+       (22, 8, 'Kartkówka 6', 5, 5, false, false),
+       (23, 8, 'Kartkówka 7', 6, 6, false, false),
+       (24, 8, 'Kartkówka 8', 7, 7, false, false);
 INSERT INTO gradable_events (id, event_section_id, name, order_index, road_map_order_index, markdown_source_url,
                              is_hidden, is_locked)
-VALUES (25, 8, 'Laboratorium 1', 8, 8,
+VALUES (25, 6, 'Laboratorium 1', 8, 8,
         'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab1/Readme.md', false, false),
-       (26, 8, 'Laboratorium 2', 9, 9,
+       (26, 6, 'Laboratorium 2', 9, 9,
         'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab2/Readme.md', false, false),
-       (27, 8, 'Laboratorium 3', 10, 10,
+       (27, 6, 'Laboratorium 3', 10, 10,
         'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab3/Readme.md', false, false),
-       (28, 8, 'Laboratorium 4', 11, 11,
+       (28, 6, 'Laboratorium 4', 11, 11,
         'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab4/Readme.md', false, false),
-       (29, 8, 'Laboratorium 5', 12, 12,
+       (29, 6, 'Laboratorium 5', 12, 12,
         'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab5/Readme.md', false, false),
-       (30, 8, 'Laboratorium 6', 13, 13,
+       (30, 6, 'Laboratorium 6', 13, 13,
         'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab6/Readme.md', false, false),
-       (31, 8, 'Laboratorium 7', 14, 14,
+       (31, 6, 'Laboratorium 7', 14, 14,
         'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab7/Readme.md', false, false),
-       (32, 8, 'Laboratorium 8', 15, 15,
+       (32, 6, 'Laboratorium 8', 15, 15,
         'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab8/Readme.md', false, false),
-       (33, 4, 'Git', 0, 0, null, false, false);
+       (33, 4, 'Git', 0, 0, null, false, false),
+       (34, 11, 'Projekt 2a', 0, 0, null, true, true),
+       (35, 10, 'Dziady', 0, 4, null, false, true),
+       (36, 2, 'Laboratorium 9', 17, 17, null, false, true),
+       (37, 2, 'Laboratorium 9', 18, 18, null, false, true),
+       (38,3,'Projekt',0,19,'https://github.com/Soamid/obiektowe-lab/tree/proj-2024/proj',false,false);
+
+insert into projects(gradable_event_id, allow_cross_course_group_project_groups)
+values (38,false);
+
+insert into project_variant_categories(id, project_id, name)
+values (1,38, 'Mapa i roślinność'),
+       (2,38, 'Zwierzaki');
+
+insert into project_groups(id, instructor_id, project_id)
+values (1, 4,38);
+
+insert into project_variants(id, project_variant_category_id, name, short_code, description, image_url)
+values (1,1,'Bieguny', 'A', 'bieguny zdefiniowane są na dolnej i ' ||
+                            'górnej krawędzi mapy. Im bliżej bieguna znajduje się zwierzę, ' ||
+                            'tym większą energię traci podczas pojedynczego ruchu (na biegunach jest zimno)',
+        'images/evolution-stages/5.webp'
+        ),
+    (2,1,'Pożary', 'B','co jakąś (zadaną w konfiguracji) liczbę tur na mapie pojawia się pożar. Pożar zaczyna się na jednym polu z rośliną i w każdej turze rozprzestrzenia się na wszystkie przylegające do niej rośliny (ale nie po skosie). Pożar na każdym polu trwa stałą zadaną (konfigurowalną) liczbę tur i po jego zakończeniu roślina na tym polu znika. Jeśli zwierzak wejdzie na pole z ogniem, umiera.',
+     'images/evolution-stages/5.webp'),
+    (3,2,'Lekka korekta', '1', 'mutacja zmienia gen o 1 w górę lub w dół (np. gen 3 może zostać zamieniony na 2 lub 4, a gen 0 na 1 lub 7)',
+     'images/evolution-stages/6.webp'),
+    (4,2,'Podmianka', '2','mutacja może też skutkować tym, że dwa geny zamienią się miejscami',
+     'images/evolution-stages/4.webp');
+
+insert into project_groups_animals(animal_id, project_group_id)
+values(2,1),
+      (10,1),
+      (14,1);
+
+insert into project_groups_project_variants(project_group_id, project_variant_id)
+values (1,1),
+       (1,3);
+
 
 INSERT INTO rewards (id, name, description, image_url, order_index, course_id)
 VALUES (101, 'Srebrna Skrzynia',
@@ -956,7 +1001,8 @@ VALUES (17, 17, 'Kartkówka', 2.0),
        (30, 30, 'Laboratorium', 4.0),
        (31, 31, 'Laboratorium', 4.0),
        (32, 32, 'Laboratorium', 4.0),
-       (33, 33, 'Git', 10.0);
+       (33, 33, 'Git', 10.0),
+       (35, 35, 'Dziady', 5.0);
 
 INSERT INTO grades (id, gradable_event_id, animal_id, created_date, modified_date, comment)
 VALUES (1, 1, 1, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done');
@@ -1022,7 +1068,7 @@ VALUES (1, 1, 1, 1.0);
 INSERT INTO criteria_grades (id, grade_id, criterion_id, xp)
 VALUES (2, 2, 2, 2.0);
 INSERT INTO criteria_grades (id, grade_id, criterion_id, xp)
-VALUES (3, 3, 2, 2.0);
+VALUES (3, 3, 3, 2.0);
 INSERT INTO criteria_grades (id, grade_id, criterion_id, xp)
 VALUES (4, 4, 8, 2.0);
 INSERT INTO criteria_grades (id, grade_id, criterion_id, xp)
@@ -1034,7 +1080,7 @@ VALUES (7, 7, 1, 0.0);
 INSERT INTO criteria_grades (id, grade_id, criterion_id, xp)
 VALUES (8, 8, 2, 1.5);
 INSERT INTO criteria_grades (id, grade_id, criterion_id, xp)
-VALUES (9, 9, 2, 2.0);
+VALUES (9, 9, 3, 2.0);
 INSERT INTO criteria_grades (id, grade_id, criterion_id, xp)
 VALUES (10, 10, 8, 2.0);
 insert into criteria_grades(id, grade_id, criterion_id, xp)
@@ -1110,6 +1156,11 @@ values (9, 7, 101, NOW(), null, false),
 insert into assigned_chests(assigned_reward_id)
 values (9),(10);
 
+insert into criteria_rewards(criterion_id, reward_id, max_amount)
+values (1, 101, 1),
+       (2, 102, 2),
+       (3, 101, 1),
+       (35, 101, 1);
 
 SELECT setval('animals_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM animals;
 SELECT setval('assigned_rewards_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM assigned_rewards;
@@ -1123,5 +1174,7 @@ SELECT setval('gradable_events_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM gr
 SELECT setval('grades_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM grades;
 SELECT setval('rewards_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM rewards;
 SELECT setval('users_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM users;
-
+SELECT setval('project_groups_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM project_groups;
+SELECT setval('project_variant_categories_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM project_variant_categories;
+SELECT setval('project_variants_id_seq', COALESCE(MAX(id), 0) + 1, false) FROM project_variants;
 commit;

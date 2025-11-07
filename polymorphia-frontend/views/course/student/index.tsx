@@ -59,9 +59,14 @@ export default function StudentView() {
     }
   };
 
-  const cards = gradableEvents.map((gradableEvent) =>
-    GradableEventCard(gradableEvent, false, handleClick)
-  );
+  const cards = gradableEvents.map((gradableEvent) => (
+    <GradableEventCard
+      key={gradableEvent.id}
+      gradableEvent={gradableEvent}
+      isMobile={false}
+      handleGradableEventClick={handleClick}
+    />
+  ));
 
   return (
     <SectionView ref={containerRef}>

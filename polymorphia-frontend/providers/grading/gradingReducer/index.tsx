@@ -124,7 +124,7 @@ export const GradingReducer = (
       };
 
     case GradingReducerActions.SET_GRADE:
-      if (!action.payload.grade.isGraded) {
+      if (!action.payload.grade.gradeResponse.isGraded) {
         return {
           ...state,
           comment: "",
@@ -132,9 +132,9 @@ export const GradingReducer = (
         };
       }
 
-      const criteriaMap = action.payload.grade.criteria.reduce(
+      const criteriaMap = action.payload.grade.gradeResponse.criteria.reduce(
         (acc, criterion) => {
-          acc[criterion.id] = {
+          acc[criterion.criterionId] = {
             gainedXp: criterion.gainedXp,
             assignedRewards: criterion.assignedRewards,
           };
@@ -145,7 +145,7 @@ export const GradingReducer = (
 
       return {
         ...state,
-        comment: action.payload.grade.comment,
+        comment: action.payload.grade.gradeResponse.comment,
         criteria: criteriaMap,
       };
 

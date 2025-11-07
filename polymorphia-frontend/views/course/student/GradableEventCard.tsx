@@ -1,24 +1,42 @@
 import XPCard from "@/components/xp-card/XPCard";
-import { ReactNode } from "react";
-import { StudentGradableEventResponseDTO } from "@/interfaces/api/course";
-import XPCardChest from "@/components/xp-card/components/XPCardChest";
+import useShortGrade from "@/hooks/course/useShortGrade";
+import { TargetTypes } from "@/interfaces/api/grade/target";
+import { useUserDetails } from "@/hooks/contexts/useUserContext";
+import { GradableEventCardProps } from "@/views/course/student/types";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 
-export default function GradableEventCard(
-  gradableEvent: StudentGradableEventResponseDTO,
-  isMobile: boolean,
-  handleGradableEventClick: (id: number, isLocked: boolean) => void
-): ReactNode {
+export default function GradableEventCard({
+  gradableEvent,
+  isMobile,
+  handleGradableEventClick,
+}: GradableEventCardProps) {
+  const { id: userId } = useUserDetails();
+  const target = {
+    id: userId,
+    type: TargetTypes.STUDENT,
+  };
+  const { data: grade, isLoading: isLoading } = useShortGrade(
+    target,
+    gradableEvent.id
+  );
   const { hasReward, gainedXp } = gradableEvent;
+
+  if (isLoading || !grade) {
+    return null;
+  }
+  const hasGainedReward =
+    grade.gradeResponse.isGraded && grade.gradeResponse.hasReward;
+
   const color = gainedXp ? "green" : "sky";
-  const rightComponent = hasReward ? (
-    <XPCardChest />
-  ) : (
+  const rightComponent = (
     <XPCardPoints
-      points={gainedXp}
       isSumLabelVisible={true}
-      hasChest={hasReward}
       color="gray"
+      points={gainedXp}
+      hasChest={hasReward}
+      shouldGreyOutReward={
+        !hasGainedReward && hasReward && grade.gradeResponse.isGraded
+      }
     />
   );
 
