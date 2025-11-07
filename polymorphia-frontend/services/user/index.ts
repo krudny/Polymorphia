@@ -44,10 +44,7 @@ const UserService = {
     return await ApiClient.get<UserDetailsDTO>("/users/context");
   },
   setUserPreferredCourse: async (courseId: number): Promise<void> => {
-    await ApiClient.post(
-      `/users/preferred-course?courseId=${courseId}`,
-      undefined
-    );
+    await ApiClient.post(`/users/preferred-course?courseId=${courseId}`);
   },
   changePassword: async (request: ChangePasswordDTO): Promise<void> => {
     await ApiClient.post("/users/change-password", request);

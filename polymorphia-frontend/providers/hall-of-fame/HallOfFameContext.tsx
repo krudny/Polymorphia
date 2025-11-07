@@ -21,6 +21,7 @@ import useUserContext, {
 } from "@/hooks/contexts/useUserContext";
 import { useFindMeScroll } from "@/hooks/general/useFindMeScroll";
 import { Roles } from "@/interfaces/api/user";
+import ErrorState from "@/components/error-state";
 
 export const HallOfFameContext = createContext<
   HallOfFameContextInterface | undefined
@@ -63,7 +64,11 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
     [filters]
   );
 
-  const { data: hallOfFame, isLoading } = useHallOfFame({
+  const {
+    data: hallOfFame,
+    isLoading,
+    isError,
+  } = useHallOfFame({
     page,
     pageSize,
     courseId,
@@ -93,6 +98,12 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
       setAreAnimalNamesVisible((prev) => !prev);
     }
   };
+
+  if (isError) {
+    return (
+      <ErrorState message="Nie udało się załadować wyników hall of fame." />
+    );
+  }
 
   return (
     <HallOfFameContext.Provider

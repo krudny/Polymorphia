@@ -14,4 +14,5 @@ export interface useHallOfFameProps {
 export interface UseHallOfFame {
   data: HallOfFameResponseDTO | undefined;
   isLoading: boolean;
+  isError: boolean;
 }

@@ -9,7 +9,7 @@ import ErrorState from "@/components/error-state";
 
 export default function Chests() {
   const searchParams = useSearchParams();
-  const { data: chests, isLoading, error } = useChests();
+  const { data: chests, isLoading, isError } = useChests();
   const { setTitle } = useTitle();
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function Chests() {
     return <Loading />;
   }
 
-  if (error) {
+  if (isError) {
     return <ErrorState message="Nie udało się załadować skrzynek." />;
   }
 

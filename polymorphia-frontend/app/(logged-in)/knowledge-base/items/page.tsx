@@ -10,7 +10,7 @@ import ErrorState from "@/components/error-state";
 
 export default function Items() {
   const searchParams = useSearchParams();
-  const { data: items, isLoading, error } = useItems();
+  const { data: items, isLoading, isError } = useItems();
   const { setTitle } = useTitle();
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export default function Items() {
     return <Loading />;
   }
 
-  if (error) {
+  if (isError) {
     return <ErrorState message="Nie udało się załadować listy przedmiotów." />;
   }
 

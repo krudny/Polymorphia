@@ -8,6 +8,7 @@ import useEventSections from "@/hooks/course/useEventSections";
 import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
 import { useEventParams } from "@/hooks/general/useEventParams";
+import ErrorState from "@/components/error-state";
 
 export default function GradableEventsView() {
   const { userRole } = useUserContext();
@@ -34,6 +35,6 @@ export default function GradableEventsView() {
     case Roles.COORDINATOR:
       return <InstructorGradableEventsView />;
     default:
-      return null;
+      return <ErrorState />;
   }
 }

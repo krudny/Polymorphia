@@ -7,7 +7,7 @@ import useEvolutionStages from "@/hooks/course/useEvolutionStages";
 import ErrorState from "@/components/error-state";
 
 export default function EvolutionStages() {
-  const { data: evolutionStages, isLoading, error } = useEvolutionStages();
+  const { data: evolutionStages, isLoading, isError } = useEvolutionStages();
   const { setTitle } = useTitle();
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function EvolutionStages() {
     return <Loading />;
   }
 
-  if (error) {
+  if (isError) {
     return <ErrorState message="Nie udało się załadować poziomów ewolucji." />;
   }
 
