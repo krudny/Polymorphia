@@ -4,7 +4,7 @@ import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCardProjectVariant from "@/components/xp-card/components/XPCardProjectVariant";
 import useProjectVariant from "@/hooks/course/useProjectVariant";
 import { ProjectVariantInfoProps } from "@/shared/project-variant-info/types";
-import ErrorState from "@/components/error-state";
+import ErrorComponent from "@/components/error";
 import "./index.css";
 
 export default function ProjectVariantInfo({
@@ -17,7 +17,7 @@ export default function ProjectVariantInfo({
     <>
       {isError && (
         <div className="project-variant-info">
-          <ErrorState message="Nie udało się załadować informacji o wariancie projektu." />
+          <ErrorComponent message="Nie udało się załadować informacji o wariancie projektu." />
         </div>
       )}
       {isLoading && (

@@ -2,7 +2,7 @@ import Loading from "@/components/loading";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import useRandomUsers from "@/hooks/course/useRandomUsers";
-import ErrorState from "@/components/error-state";
+import ErrorComponent from "@/components/error";
 import "./index.css";
 
 export default function StudentInfo() {
@@ -12,7 +12,7 @@ export default function StudentInfo() {
     <>
       {isError && (
         <div className="gradable-event-section text-xl 2xl:text-2xl">
-          <ErrorState message="Nie udało się załadować informacji o studentach." />
+          <ErrorComponent message="Nie udało się załadować informacji o studentach." />
         </div>
       )}
       {isLoading && (

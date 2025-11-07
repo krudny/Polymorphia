@@ -10,7 +10,7 @@ import OpeningChestModal from "@/components/equipment/modals/OpeningChestModal";
 import { EquipmentProvider } from "@/providers/equipment/EquipmentContext";
 import useEquipment from "@/hooks/course/useEquipment";
 import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
-import ErrorState from "@/components/error-state";
+import ErrorComponent from "@/components/error";
 
 function EquipmentContent() {
   const { setTitle } = useTitle();
@@ -26,7 +26,7 @@ function EquipmentContent() {
   }
 
   if (!items || !chests) {
-    return <ErrorState message="Nie udało się załadować ekwipunku." />;
+    return <ErrorComponent message="Nie udało się załadować ekwipunku." />;
   }
 
   return (

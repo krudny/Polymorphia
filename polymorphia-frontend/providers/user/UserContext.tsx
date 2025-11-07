@@ -2,7 +2,7 @@ import { createContext, ReactNode } from "react";
 import Loading from "@/components/loading";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import useCurrentUser from "@/hooks/course/useCurrentUser";
-import ErrorState from "@/components/error-state";
+import ErrorComponent from "@/components/error";
 
 export const UserContext = createContext<UserDetailsDTO | undefined>(undefined);
 
@@ -11,7 +11,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   if (isError) {
     return (
-      <ErrorState message="Nie udało się pobrać informacji o użytkowniku." />
+      <ErrorComponent message="Nie udało się pobrać informacji o użytkowniku." />
     );
   }
 

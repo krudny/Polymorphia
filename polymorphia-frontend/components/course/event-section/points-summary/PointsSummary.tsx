@@ -6,7 +6,7 @@ import BonusInfoModal from "@/components/course/event-section/points-summary/Bon
 import PointsSummaryElement from "@/components/course/event-section/points-summary/PointsSummaryElement";
 import { PointsSummaryDetailsResponseDTO } from "@/interfaces/api/course/points-summary";
 import usePointsSummary from "@/hooks/course/usePointsSummary";
-import ErrorState from "@/components/error-state";
+import ErrorComponent from "@/components/error";
 
 export default function PointsSummary({ ref }: PointsSummaryProps) {
   const { data: pointsSummary, isLoading, isError } = usePointsSummary();
@@ -19,13 +19,13 @@ export default function PointsSummary({ ref }: PointsSummaryProps) {
 
   if (isError) {
     return (
-      <ErrorState message="Nie udało się załadować podsumowania punktów." />
+      <ErrorComponent message="Nie udało się załadować podsumowania punktów." />
     );
   }
 
   if (!pointsSummary) {
     return (
-      <ErrorState
+      <ErrorComponent
         title="Brak danych"
         message="Nie znaleziono punktów podsumowania."
       />

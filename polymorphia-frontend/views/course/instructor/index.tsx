@@ -8,7 +8,7 @@ import GradableEventCard from "@/views/course/instructor/GradableEventCard";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import useInstructorGradableEvents from "@/hooks/course/useInstructorGradableEvents";
 import "./index.css";
-import ErrorState from "@/components/error-state";
+import ErrorComponent from "@/components/error";
 
 export default function InstructorView() {
   const { eventType, eventSectionId } = useEventParams();
@@ -35,7 +35,7 @@ export default function InstructorView() {
   }
 
   if (isError) {
-    return <ErrorState message="Nie udało się załadować wydarzeń." />;
+    return <ErrorComponent message="Nie udało się załadować wydarzeń." />;
   }
 
   if (!gradableEvents || gradableEvents.length === 0) {

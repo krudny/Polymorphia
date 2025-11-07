@@ -50,7 +50,7 @@ export default function GradeModal({
     >
       {(isGradeError || isCriteriaError) && (
         <div className="grade-error">
-          <ErrorState message="Nie udało się załadować szczegółów oceny." />
+          <ErrorComponent message="Nie udało się załadować szczegółów oceny." />
         </div>
       )}
       {(isGradeLoading || isCriteriaLoading) && (

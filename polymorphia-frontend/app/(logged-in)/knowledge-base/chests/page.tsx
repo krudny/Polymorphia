@@ -5,7 +5,7 @@ import { useTitle } from "@/components/navigation/TitleContext";
 import { useEffect } from "react";
 import useChests from "@/hooks/course/useChests";
 import { useSearchParams } from "next/navigation";
-import ErrorState from "@/components/error-state";
+import ErrorComponent from "@/components/error";
 
 export default function Chests() {
   const searchParams = useSearchParams();
@@ -21,12 +21,12 @@ export default function Chests() {
   }
 
   if (isError) {
-    return <ErrorState message="Nie udało się załadować skrzynek." />;
+    return <ErrorComponent message="Nie udało się załadować skrzynek." />;
   }
 
   if (!chests || chests.length === 0) {
     return (
-      <ErrorState
+      <ErrorComponent
         title="Brak danych"
         message="Skrzynki nie zostały zdefiniowane."
       />

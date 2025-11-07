@@ -1,4 +1,4 @@
-export interface ErrorStateProps {
+export interface ErrorComponentProps {
   title?: string;
   message?: string;
 }

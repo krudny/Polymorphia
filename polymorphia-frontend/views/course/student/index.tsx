@@ -13,7 +13,7 @@ import { useEventParams } from "@/hooks/general/useEventParams";
 import GradeModal from "@/components/speed-dial/modals/grade";
 import useStudentsGradableEvents from "@/hooks/course/useStudentsGradableEvents";
 import { EventTypes } from "@/interfaces/general";
-import ErrorState from "@/components/error-state";
+import ErrorComponent from "@/components/error";
 
 export default function StudentView() {
   const { eventType, eventSectionId } = useEventParams();
@@ -41,7 +41,7 @@ export default function StudentView() {
   }
 
   if (isError) {
-    return <ErrorState message="Nie udało się załadować wydarzeń." />;
+    return <ErrorComponent message="Nie udało się załadować wydarzeń." />;
   }
 
   if (!gradableEvents || gradableEvents.length === 0) {

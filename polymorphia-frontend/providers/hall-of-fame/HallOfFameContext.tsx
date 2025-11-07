@@ -21,7 +21,7 @@ import useUserContext, {
 } from "@/hooks/contexts/useUserContext";
 import { useFindMeScroll } from "@/hooks/general/useFindMeScroll";
 import { Roles } from "@/interfaces/api/user";
-import ErrorState from "@/components/error-state";
+import ErrorComponent from "@/components/error";
 
 export const HallOfFameContext = createContext<
   HallOfFameContextInterface | undefined
@@ -101,7 +101,7 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
 
   if (isError) {
     return (
-      <ErrorState message="Nie udało się załadować wyników hall of fame." />
+      <ErrorComponent message="Nie udało się załadować wyników hall of fame." />
     );
   }
 
