@@ -1,10 +1,12 @@
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
-import { TargetTypes } from "@/interfaces/api/grade/target";
+import { TargetTypes } from "@/interfaces/api/target";
 import useShortGrade from "@/hooks/course/useShortGrade";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
-import { RoadmapGradeModalProps } from "@/app/(logged-in)/roadmap/types";
+import { RoadmapCardRightComponentProps } from "@/app/(logged-in)/roadmap/types";
 
-export default function ({ gradableEvent }: RoadmapGradeModalProps) {
+export default function RoadmapCardRightComponent({
+  gradableEvent,
+}: RoadmapCardRightComponentProps) {
   const { id: userId } = useUserDetails();
   const target = {
     id: userId,

@@ -13,6 +13,6 @@ export interface RoadmapCardsProps {
   onCardClicked: (gradableEvent: StudentGradableEventResponseDTO) => void;
 }
 
-export interface RoadmapGradeModalProps {
+export interface RoadmapCardRightComponentProps {
   gradableEvent: StudentGradableEventResponseDTO;
 }

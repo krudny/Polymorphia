@@ -1,6 +1,6 @@
 import XPCard from "@/components/xp-card/XPCard";
 import useShortGrade from "@/hooks/course/useShortGrade";
-import { TargetTypes } from "@/interfaces/api/grade/target";
+import { TargetTypes } from "@/interfaces/api/target";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { GradableEventCardProps } from "@/views/course/student/types";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";

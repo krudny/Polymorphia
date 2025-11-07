@@ -2,7 +2,7 @@ import XPCard from "@/components/xp-card/XPCard";
 import useUserContext from "@/hooks/contexts/useUserContext";
 import { RoadmapCardsProps } from "@/app/(logged-in)/roadmap/types";
 import { useMediaQuery } from "react-responsive";
-import RoadmapGradeModal from "@/app/(logged-in)/roadmap/RoadmapGradeModal";
+import RoadmapGradeModal from "@/app/(logged-in)/roadmap/RoadmapCardRightComponent";
 
 export default function RoadmapCard({
   gradableEvent,

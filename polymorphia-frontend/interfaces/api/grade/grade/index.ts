@@ -2,7 +2,7 @@ import {
   CriteriaDetailsRequestDTO,
   CriterionGradeResponseDTO,
 } from "@/interfaces/api/grade/criteria";
-import { TargetRequestDTO, TargetType } from "@/interfaces/api/grade/target";
+import { TargetRequestDTO, TargetType } from "@/interfaces/api/target";
 
 export interface ShortAssignedRewardResponseDTO {
   rewardId: number;
