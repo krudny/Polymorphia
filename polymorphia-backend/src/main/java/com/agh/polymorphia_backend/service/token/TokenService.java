@@ -27,7 +27,6 @@ public class TokenService {
                 .build();
     }
 
-    @Transactional
     public Token createAndSaveToken(String email, TokenType tokenType) {
         Token token = createToken(email, tokenType);
         return tokenRepository.save(token);

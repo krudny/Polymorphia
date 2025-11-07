@@ -15,7 +15,7 @@ import java.time.ZonedDateTime;
 public class TokenValidator {
     public static final String TOKEN_NOT_EXPIRED = "Active token already exists for this email";
     public static final String TOKEN_EXPIRED = "Token has expired";
-    public static final String INVALID_TOKEN_TYPE = "Invalid token type";
+    public static final String TOKEN_NOT_FOUND = "Token not found";
 
     private final TokenRepository tokenRepository;
 
@@ -25,6 +25,9 @@ public class TokenValidator {
                     if (token.getExpiryDate().isAfter(ZonedDateTime.now())) {
                         throw new ResponseStatusException(HttpStatus.CONFLICT, TOKEN_NOT_EXPIRED);
                     }
+                    if (!isTokenTypeValid(token, expectedType)) {
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, TOKEN_NOT_FOUND);
+                    }
                 });
     }
 
@@ -32,13 +35,16 @@ public class TokenValidator {
         if (isTokenExpired(token)) {
             throw new ResponseStatusException(HttpStatus.GONE, TOKEN_EXPIRED);
         }
-
-        if (token.getTokenType() != expectedType) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INVALID_TOKEN_TYPE);
+        if (!isTokenTypeValid(token, expectedType)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, TOKEN_NOT_FOUND);
         }
     }
 
     public boolean isTokenExpired(Token token) {
         return token.getExpiryDate().isBefore(ZonedDateTime.now());
+    }
+
+    public boolean isTokenTypeValid(Token token, TokenType expectedType) {
+        return token.getTokenType() == expectedType;
     }
 }

@@ -4,7 +4,7 @@
 /* TODO: duplicate */
 
 .reset-password-wrapper {
-  @apply relative flex-centered w-full max-w-xl px-16 text-primary-dark z-50;
+  @apply relative flex-centered w-full max-w-xl px-16 text-primary-dark z-50 mt-9;
   @apply md:px-0;
 }
 
