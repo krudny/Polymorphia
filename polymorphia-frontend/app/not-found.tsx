@@ -1,5 +1,6 @@
 "use client";
 
+import "./index.css";
 import { useHeroAnimation } from "@/hooks/general/useHeroAnimation";
 import OwlImage from "@/components/home/owl-image";
 import NotFoundContent from "@/components/home/not-found-content";

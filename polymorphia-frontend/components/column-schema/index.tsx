@@ -29,7 +29,9 @@ export default function ColumnSchema({
               const heightClass = gradingComponent.forceFullHeight
                 ? columns === 1
                   ? "h-80"
-                  : "h-full"
+                  : columnComponents.length > 1
+                    ? "h-1/2 overflow-y-auto"
+                    : "h-full"
                 : "";
 
               return (

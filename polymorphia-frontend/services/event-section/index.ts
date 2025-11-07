@@ -10,7 +10,7 @@ import {
   TargetResponseDTO,
   TargetType,
   TargetTypes,
-} from "@/interfaces/api/grade/target";
+} from "@/interfaces/api/target";
 import {
   GradeRequestDTO,
   ShortGradeResponseDTO,

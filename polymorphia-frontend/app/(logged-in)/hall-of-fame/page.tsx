@@ -1,7 +1,4 @@
 "use client";
-import { useTitle } from "@/components/navigation/TitleContext";
-import { useEffect } from "react";
-import { HallOfFameProvider } from "@/providers/hall-of-fame/HallOfFameContext";
 import HallOfFameMobile from "@/views/hall-of-fame/mobile/HallOfFameMobile";
 import FiltersModal from "@/components/filters-modals/FiltersModal";
 import { useQueryClient } from "@tanstack/react-query";
@@ -10,6 +7,7 @@ import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
 import HallOfFameDesktop from "@/views/hall-of-fame/desktop/HallOfFameDesktop";
 import "./index.css";
 import { useMediaQuery } from "react-responsive";
+import { HallOfFameProvider } from "@/providers/hall-of-fame";
 
 function HallOfFameContent() {
   const isDesktop = useMediaQuery({ minWidth: 1024 });
@@ -54,12 +52,6 @@ function HallOfFameContent() {
 }
 
 export default function HallOfFame() {
-  const { setTitle } = useTitle();
-
-  useEffect(() => {
-    setTitle("Hall of Fame");
-  }, [setTitle]);
-
   return (
     <HallOfFameProvider>
       <HallOfFameContent />

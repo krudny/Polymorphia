@@ -5,7 +5,7 @@ import com.agh.polymorphia_backend.dto.response.markdown.MarkdownResponseDto;
 import com.agh.polymorphia_backend.dto.response.markdown.SourceUrlMarkdownResponseDto;
 import com.agh.polymorphia_backend.model.event_section.EventSectionType;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
-import com.agh.polymorphia_backend.repository.course.GradableEventRepository;
+import com.agh.polymorphia_backend.repository.gradable_event.GradableEventRepository;
 import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

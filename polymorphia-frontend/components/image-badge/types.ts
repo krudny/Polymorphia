@@ -1,4 +1,5 @@
 export interface ImageBadgeProps {
-  text: string;
+  text?: string;
+  icon?: string;
   className?: string;
 }

@@ -2,7 +2,7 @@ import {
   GroupTargetTypes,
   TargetResponseDTO,
   TargetTypes,
-} from "@/interfaces/api/grade/target";
+} from "@/interfaces/api/target";
 import areTargetsEqual from "@/providers/grading/utils/areTargetsEqual";
 
 export default function isSelectedTargetStillAvailable(
