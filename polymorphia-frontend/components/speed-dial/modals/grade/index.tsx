@@ -8,7 +8,7 @@ import { TargetTypes } from "@/interfaces/api/grade/target";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import useCriteria from "@/hooks/course/useCriteria";
 import { GradeModalProps } from "@/components/speed-dial/modals/grade/types";
-import ErrorState from "@/components/error-state";
+import ErrorComponent from "@/components/error";
 
 export default function GradeModal({
   onClosedAction,
