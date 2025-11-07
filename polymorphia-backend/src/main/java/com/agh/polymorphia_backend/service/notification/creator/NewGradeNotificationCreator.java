@@ -6,15 +6,13 @@ import com.agh.polymorphia_backend.model.notification.Notification;
 import com.agh.polymorphia_backend.model.notification.NotificationType;
 import org.springframework.stereotype.Component;
 
-import java.time.ZonedDateTime;
-
 @Component
 public class NewGradeNotificationCreator implements NotificationCreator {
 
     @Override
     public Notification create(NotificationCreationRequest request) {
         GradableEvent gradableEvent = request.getGradableEvent();
-        String description = "Wydarzenie: " + gradableEvent.getName() + " zostało ocenione!";
+        String description = "Wydarzenie " + gradableEvent.getName() + " zostało ocenione!";
 
         return Notification.builder()
                 .userId(request.getUserId())

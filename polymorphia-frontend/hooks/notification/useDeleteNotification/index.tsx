@@ -8,11 +8,12 @@ export default function useDeleteNotification(): UseDeleteNotification {
   const mutation = useMutation({
     mutationFn: (notificationId: number) =>
       NotificationService.deleteNotification(notificationId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["notifications"] });
-      queryClient.invalidateQueries({ queryKey: ["notificationCount"] });
-    },
   });
 
-  return { mutation };
+  const invalidateQueries = () => {
+    queryClient.invalidateQueries({ queryKey: ["notifications"] });
+    queryClient.invalidateQueries({ queryKey: ["notificationCount"] });
+  };
+
+  return { mutation, invalidateQueries };
 }

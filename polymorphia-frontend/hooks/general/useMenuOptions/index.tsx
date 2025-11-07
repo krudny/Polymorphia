@@ -79,7 +79,7 @@ export function useMainMenuItems(): MenuOption[] {
         { text: "Skrzynki", link: "knowledge-base/chests" },
       ],
     },
-    { icon: GraduationCapIcon, text: courseOptionText }
+    { icon: GraduationCapIcon, text: courseOptionText, link: "/" }
   );
 
   if (userRole === Roles.STUDENT) {

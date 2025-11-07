@@ -15,8 +15,6 @@ export default function NotificationModal() {
       title="Powiadomienia"
     >
       <div className="w-[350px]">
-        {" "}
-        {/* usunąłem bg-green-200 */}
         {isLoading && (
           <div className="h-[100px] relative">
             <Loading />

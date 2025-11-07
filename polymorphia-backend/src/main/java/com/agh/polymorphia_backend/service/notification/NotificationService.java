@@ -6,6 +6,7 @@ import com.agh.polymorphia_backend.service.mapper.NotificationMapper;
 import com.agh.polymorphia_backend.service.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class NotificationService {
                 .toList();
     }
 
+    @Transactional
     public void deleteNotification(Long notificationId) {
         Long userId = userService.getCurrentUser().getUser().getId();
         notificationRepository.deleteByIdAndUserId(notificationId, userId);
