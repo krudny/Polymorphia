@@ -16,11 +16,11 @@ import { filterXpDetails } from "@/providers/hall-of-fame/utils/filterXpDetails"
 import { ProfileFilterId } from "@/app/(logged-in)/profile/types";
 import ProfileProgressBar from "@/components/progressbar/profile";
 import { ProfileProvider } from "@/providers/profile";
-import SpeedDial from "@/components/speed-dial/SpeedDial";
-import { SpeedDialKeys } from "@/components/speed-dial/types";
 import useProfileContext from "@/hooks/contexts/useProfileContext";
 import { notFound } from "next/navigation";
 import { distributeTo100 } from "@/components/progressbar/profile/distributeTo100";
+import { SpeedDialKeys } from "@/components/speed-dial/types";
+import SpeedDial from "@/components/speed-dial";
 
 function ProfileContent() {
   // TODO: refactor the rest of the logic to ProfileContext
