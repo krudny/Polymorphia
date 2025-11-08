@@ -8,8 +8,8 @@ import {
   UseSubmissionsUpdate,
   UseSubmissionsUpdateProps,
 } from "@/hooks/course/useSubmissionsUpdate/types";
-import { TargetTypes } from "@/interfaces/api/grade/target";
 import { ApiError } from "@/services/api/error";
+import { TargetTypes } from "@/interfaces/api/target";
 
 export default function useSubmissionsUpdate({
   target,

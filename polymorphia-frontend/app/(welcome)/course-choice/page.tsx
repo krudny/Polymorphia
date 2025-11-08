@@ -6,19 +6,12 @@ import useAvailableCourses from "@/hooks/course/useAvailableCourses";
 import Loading from "@/components/loading";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import React, { useEffect } from "react";
 import useLogout from "@/hooks/course/useLogout";
-import { useTitle } from "@/components/navigation/TitleContext";
 
 export default function CourseChoice() {
   const { data: courses, isLoading } = useAvailableCourses();
   const { mutate: logout } = useLogout();
-  const { setTitle } = useTitle();
   const wrapperRef = useFadeInAnimate(!isLoading);
-
-  useEffect(() => {
-    setTitle("");
-  });
 
   if (isLoading || !courses) {
     return <Loading />;

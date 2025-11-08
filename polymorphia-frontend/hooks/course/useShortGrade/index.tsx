@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { EventSectionService } from "@/services/event-section";
 import { UseShortGrade } from "@/hooks/course/useShortGrade/types";
-import { TargetRequestDTO, TargetTypes } from "@/interfaces/api/grade/target";
+import { TargetRequestDTO, TargetTypes } from "@/interfaces/api/target";
 import { useEventParams } from "@/hooks/general/useEventParams";
 
 export default function useShortGrade(
@@ -21,7 +21,7 @@ export default function useShortGrade(
           target.type,
           target.type === TargetTypes.STUDENT ? target.id : target.groupId,
         ]
-      : ["grade", "no-target"],
+      : ["grade", "noTarget"],
     queryFn: () => EventSectionService.getShortGrade(target!, gradableEventId),
     enabled: !!gradableEventId && !!target,
   });

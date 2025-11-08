@@ -1,8 +1,5 @@
 import { forwardRef, useImperativeHandle } from "react";
-import {
-  AccordionContext,
-  useAccordionState,
-} from "@/providers/accordion/AccordionContext";
+import { AccordionContext, useAccordionState } from "@/providers/accordion";
 import { AccordionRef } from "@/providers/accordion/types";
 import "./index.css";
 import { AccordionProps } from "@/components/accordion/types";

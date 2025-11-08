@@ -1,8 +1,6 @@
 "use client";
 import Slider from "@/components/slider/Slider";
 import Loading from "@/components/loading";
-import { useTitle } from "@/components/navigation/TitleContext";
-import { useEffect } from "react";
 import useChests from "@/hooks/course/useChests";
 import { useSearchParams } from "next/navigation";
 import ErrorComponent from "@/components/error";
@@ -10,11 +8,6 @@ import ErrorComponent from "@/components/error";
 export default function Chests() {
   const searchParams = useSearchParams();
   const { data: chests, isLoading, isError } = useChests();
-  const { setTitle } = useTitle();
-
-  useEffect(() => {
-    setTitle("Skrzynki");
-  }, [setTitle]);
 
   if (isLoading) {
     return <Loading />;
