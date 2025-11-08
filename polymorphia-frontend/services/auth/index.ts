@@ -1,6 +1,7 @@
 import { LoginDTO } from "@/interfaces/api/login";
-import { ApiClient } from "@/services/api/client";
+import { readErrorMessage } from "@/services/api/client";
 import { API_HOST } from "@/services/api";
+import { ApiError } from "@/services/api/error";
 
 const AuthService = {
   login: async ({ email, password }: LoginDTO) => {
@@ -8,9 +9,18 @@ const AuthService = {
     params.append("username", email);
     params.append("password", password);
 
-    await ApiClient.post("/login", params, {
-      "Content-Type": "application/x-www-form-urlencoded",
+    const response = await fetch(`${API_HOST}/login`, {
+      method: "POST",
+      body: params,
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
     });
+
+    if (!response.ok) {
+      throw new ApiError(await readErrorMessage(response));
+    }
   },
   logout: async () => {
     await fetch(`${API_HOST}/logout`, {

@@ -6,7 +6,7 @@ import { ApiBody, ApiRequestOptions } from "@/services/api/types";
 
 const GENERIC_ERROR_MESSAGE = "Wystąpił nieoczekiwany błąd. Spróbuj ponownie.";
 
-const readErrorMessage = async (response: Response): Promise<string> => {
+export const readErrorMessage = async (response: Response): Promise<string> => {
   try {
     const { detail, title } = (await response.json()) as BackendErrorResponse;
     return detail?.trim() || title?.trim() || GENERIC_ERROR_MESSAGE;
@@ -68,8 +68,9 @@ async function request<TResponse>({
   if (!response.ok) {
     if (response.status === 401) {
       await handleUnauthorized();
+    } else {
+      throw new ApiError(await readErrorMessage(response));
     }
-    throw new ApiError(await readErrorMessage(response));
   }
 
   const contentLength = response.headers.get("content-length");
