@@ -5,7 +5,7 @@ import useGradingContext from "@/hooks/contexts/useGradingContext";
 import { useMediaQuery } from "react-responsive";
 import { ViewTypes } from "@/interfaces/general";
 import { getSpeedDialKey } from "@/components/speed-dial/util";
-import SpeedDial from "@/components/speed-dial";
+import { SpeedDial } from "@/components/speed-dial";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import ColumnSchema from "@/components/column-schema";
 import useTargetContext from "@/hooks/contexts/useTargetContext";

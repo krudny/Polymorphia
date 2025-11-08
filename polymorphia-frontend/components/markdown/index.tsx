@@ -4,7 +4,7 @@ import MarkdownViewer from "@/components/markdown/markdown-viewer";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import "./index.css";
 import { MarkdownWrapperProps } from "@/components/markdown/types";
-import SpeedDial from "@/components/speed-dial";
+import { SpeedDial } from "@/components/speed-dial";
 
 export default function MarkdownWrapper({
   speedDialKey,

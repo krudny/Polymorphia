@@ -1,5 +1,5 @@
 import { useMediaQuery } from "react-responsive";
-import SpeedDial from "@/components/speed-dial";
+import { SpeedDial } from "@/components/speed-dial";
 import ColumnSchema from "@/components/column-schema";
 import { SpeedDialKeys } from "@/components/speed-dial/types";
 import { useCourseGroupsStrategy } from "@/hooks/strategy/useCourseGroupsStrategy";

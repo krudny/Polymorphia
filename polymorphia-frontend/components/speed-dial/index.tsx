@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useSpeedDialFactory } from "@/hooks/strategy/useSpeedDialStrategy";
 import Loading from "@/components/loading";
@@ -9,11 +9,28 @@ import { SpeedDialProps } from "@/components/speed-dial/types";
 import { useMediaQuery } from "react-responsive";
 import SpeedDialActionWrapper from "@/components/speed-dial/action-wrapper";
 
-export default function SpeedDial({ speedDialKey }: SpeedDialProps) {
+export function SpeedDial({ speedDialKey }: SpeedDialProps) {
   const items = useSpeedDialFactory({ speedDialKey });
   const [activeModal, setActiveModal] = useState<ReactNode | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const isMd = useMediaQuery({ minWidth: "768px" });
+
+  useEffect(() => {
+    const container = document.getElementById("main-container");
+    if (!container) {
+      return;
+    }
+
+    if (!isMd) {
+      container.classList.add("pb-20");
+    } else {
+      container.classList.remove("pb-20");
+    }
+
+    return () => {
+      container.classList.remove("pb-20");
+    };
+  }, [isMd]);
 
   if (!items) {
     return <Loading />;
