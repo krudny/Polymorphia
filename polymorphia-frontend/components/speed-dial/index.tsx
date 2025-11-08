@@ -28,8 +28,8 @@ export default function SpeedDial({ speedDialKey }: SpeedDialProps) {
         icon={<span className="material-symbols">add</span>}
         sx={{
           position: "fixed",
-          bottom: isMd ? 6 : 20,
-          right: isMd ? 12 : 20,
+          bottom: isMd ? 6 : 10,
+          right: isMd ? 12 : 4,
           margin: 0,
           ...(isMd ? {} : { zIndex: 40 }),
         }}
