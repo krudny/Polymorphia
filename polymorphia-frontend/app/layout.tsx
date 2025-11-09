@@ -10,11 +10,14 @@ import { Toaster } from "react-hot-toast";
 import toast from "react-hot-toast";
 import { ThemeProvider } from "next-themes";
 import { ThemeProvider as ThemeProviderMui } from "@mui/material";
+import { useRouter } from "next/navigation";
 import { themeConfig } from "@/components/speed-dial/config";
 import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
 import { TitleProvider } from "@/providers/title/TitleContext";
 import { GENERAL_APPLICATION_ROUTES } from "@/providers/title/routes";
 import { ApiError } from "@/services/api/error";
+import handleUnauthorized from "@/services/api/handle-unauthorized";
+import handleForbidden from "@/services/api/handle-forbidden";
 
 const leagueGothic = League_Gothic({
   subsets: ["latin"],
@@ -35,15 +38,33 @@ export default function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
-  const showApiErrorToast = (error: Error) => {
-    if (error instanceof ApiError) {
-      const message =
-        error.message.trim().length > 0
-          ? error.message
-          : "Wystąpił nieoczekiwany błąd. Spróbuj ponownie.";
+  const router = useRouter();
 
-      toast.error(message);
+  const handleApiError = (error: Error) => {
+    if (!(error instanceof ApiError)) {
+      return;
     }
+
+    if (error.status === 401) {
+      error.message = "Sesja wygasła. Zaloguj się ponownie.";
+      void handleUnauthorized();
+    }
+
+    if (error.status === 403) {
+      void handleForbidden({
+        queryClient,
+        router,
+      });
+    }
+
+    const message =
+      error.message.trim().length > 0
+        ? error.message
+        : "Wystąpił nieoczekiwany błąd. Spróbuj ponownie.";
+
+    toast.error(message, {
+      id: "api-error-toast",
+    });
   };
 
   const [queryClient] = useState(
@@ -51,12 +72,12 @@ export default function RootLayout({
       new QueryClient({
         queryCache: new QueryCache({
           onError: (error) => {
-            showApiErrorToast(error);
+            handleApiError(error);
           },
         }),
         mutationCache: new MutationCache({
           onError: (error) => {
-            showApiErrorToast(error);
+            handleApiError(error);
           },
         }),
       })

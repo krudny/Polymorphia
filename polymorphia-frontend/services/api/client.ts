@@ -1,7 +1,6 @@
 import { API_HOST } from "@/services/api";
 import { BackendErrorResponse } from "@/interfaces/api/error";
 import { ApiError } from "@/services/api/error";
-import handleUnauthorized from "@/services/api/handle-unauthorized";
 import { ApiBody, ApiRequestOptions } from "@/services/api/types";
 
 const GENERIC_ERROR_MESSAGE = "Wystąpił nieoczekiwany błąd. Spróbuj ponownie.";
@@ -63,14 +62,12 @@ async function request<TResponse>({
     requestInit.body = body;
   }
 
-  const response = await fetch(url, requestInit);
+  const response = await fetch(url, requestInit).catch((_error) => {
+    throw new ApiError("Serwer nie odpowiada.", 503);
+  });
 
   if (!response.ok) {
-    if (response.status === 401) {
-      await handleUnauthorized();
-    } else {
-      throw new ApiError(await readErrorMessage(response));
-    }
+    throw new ApiError(await readErrorMessage(response), response.status);
   }
 
   const contentLength = response.headers.get("content-length");

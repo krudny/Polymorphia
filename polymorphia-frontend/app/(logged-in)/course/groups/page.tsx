@@ -3,7 +3,6 @@
 import { useRef } from "react";
 import useCourseGroups from "@/hooks/course/useCourseGroups";
 import Loading from "@/components/loading";
-import toast from "react-hot-toast";
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
 import SectionView from "@/components/section-view/SectionView";
 import "./index.css";
@@ -12,6 +11,7 @@ import CourseGroupCard from "@/app/(logged-in)/course/groups/CourseGroupCard";
 import { useRouter } from "next/navigation";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { CourseGroupTypes } from "@/services/course-groups/types";
+import ErrorComponent from "@/components/error";
 
 export default function CourseGroupsPage() {
   const router = useRouter();
@@ -31,7 +31,9 @@ export default function CourseGroupsPage() {
   }
 
   if (isError) {
-    toast.error("Nie udało się załadować grup zajęciowych.");
+    return (
+      <ErrorComponent message={"Nie udało się załadować grup zajęciowych."} />
+    );
   }
 
   const handleClick = (id: number) => {
