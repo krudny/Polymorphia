@@ -77,7 +77,12 @@ async function request<TResponse>({
   ) {
     return undefined as TResponse;
   }
-  return (await response.json()) as TResponse;
+
+  try {
+    return (await response.json()) as TResponse;
+  } catch {
+    throw new ApiError("Niepoprawna odpowiedź serwera.", 500);
+  }
 }
 
 function get<TResponse>(path: string, headers?: HeadersInit) {

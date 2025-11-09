@@ -20,6 +20,7 @@ import { SpeedDialKeys } from "@/components/speed-dial/types";
 import useProfileContext from "@/hooks/contexts/useProfileContext";
 import { distributeTo100 } from "@/components/progressbar/profile/distributeTo100";
 import ErrorComponent from "@/components/error";
+import { Roles } from "@/interfaces/api/user";
 
 function ProfileContent() {
   // TODO: refactor the rest of the logic to ProfileContext
@@ -40,7 +41,7 @@ function ProfileContent() {
     return <Loading />;
   }
 
-  if (isError || !profile) {
+  if (isError || !profile || userContext.userRole !== Roles.STUDENT) {
     return <ErrorComponent message={"Nie udało się załadować profilu."} />;
   }
 

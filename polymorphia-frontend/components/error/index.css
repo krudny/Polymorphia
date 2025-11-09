@@ -6,9 +6,9 @@
 }
 
 .error-component-title {
-  @apply text-3xl;
+  @apply text-5xl md:text-7xl;
 }
 
 .error-component-message {
-  @apply text-lg opacity-80;
+  @apply text-2xl md:text-3xl opacity-80;
 }
