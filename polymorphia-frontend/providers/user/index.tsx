@@ -2,7 +2,7 @@ import { createContext, ReactNode } from "react";
 import Loading from "@/components/loading";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import useCurrentUser from "@/hooks/course/useCurrentUser";
-import ErrorComponent from "@/components/error";
+import NotFound from "@/components/home/not-found";
 
 export const UserContext = createContext<UserDetailsDTO | undefined>(undefined);
 
@@ -11,7 +11,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   if (isError) {
     return (
-      <ErrorComponent message="Nie udało się pobrać informacji o użytkowniku." />
+      <NotFound
+        actionLabel={"Strona główna"}
+        subtitle={"Coś poszło nie tak."}
+        rerouteTo={"/login"}
+      />
     );
   }
 
