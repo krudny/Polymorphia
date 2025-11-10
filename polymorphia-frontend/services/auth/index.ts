@@ -16,6 +16,8 @@ const AuthService = {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
+    }).catch((_error) => {
+      throw new ApiError("Serwer nie odpowiada.", 503);
     });
 
     if (!response.ok) {

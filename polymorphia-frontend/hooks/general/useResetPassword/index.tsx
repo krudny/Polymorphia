@@ -13,7 +13,6 @@ export default function useResetPassword(): UseResetPassword {
       return toast.promise(PasswordService.resetPassword(request), {
         loading: "Zmiana hasła...",
         success: "Hasło zmienione pomyślnie!",
-        error: (error) => error.message,
       });
     },
     onSuccess: () => {
