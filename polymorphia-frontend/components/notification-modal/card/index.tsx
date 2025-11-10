@@ -26,7 +26,7 @@ export default function NotificationCard({
   return (
     <div
       ref={cardRef}
-      className="w-full flex items-start min-h-fit gap-3 p-3 bg-neutral-50 dark:bg-primary-dark rounded-xl hover:shadow hover:cursor-pointer transition-shadow overflow-hidden"
+      className="w-full flex items-start gap-3 p-3 bg-neutral-50 dark:bg-primary-dark rounded-xl hover:shadow hover:cursor-pointer transition-shadow"
     >
       <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-secondary-dark flex-centered text-2xl">
         <span className="material-symbols text-neutral-50 text-xl">trophy</span>
@@ -50,8 +50,7 @@ export default function NotificationCard({
         </div>
 
         <p className="text-lg break-words">
-          {notification.description} {notification.description}{" "}
-          {notification.description}
+          {notification.description} Ala ma kota a kot ma ale
         </p>
       </div>
 
