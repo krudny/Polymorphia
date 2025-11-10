@@ -1,7 +1,7 @@
 import { API_HOST } from "@/services/api";
 import { BackendErrorResponse } from "@/interfaces/api/error";
 import { ApiError } from "@/services/api/error";
-import { ApiBody, ApiRequestOptions } from "@/services/api/types";
+import { ApiBody, ApiRequestOptions, HttpMethods } from "@/services/api/types";
 
 const GENERIC_ERROR_MESSAGE = "Wystąpił nieoczekiwany błąd. Spróbuj ponownie.";
 
@@ -86,39 +86,27 @@ async function request<TResponse>({
 }
 
 function get<TResponse>(path: string, headers?: HeadersInit) {
-  return request<TResponse>({ path, method: "GET", headers });
+  return request<TResponse>({ path, method: HttpMethods.GET, headers });
 }
 
-function post(
+function post<TResponse = void>(
   path: string,
   body?: ApiBody,
   headers?: HeadersInit
-): Promise<void>;
-function post<TResponse>(
-  path: string,
-  body?: ApiBody,
-  headers?: HeadersInit
-): Promise<TResponse>;
-function post<TResponse>(path: string, body?: ApiBody, headers?: HeadersInit) {
-  return request<TResponse>({ path, method: "POST", body, headers });
+) {
+  return request<TResponse>({ path, method: HttpMethods.POST, body, headers });
 }
 
-function put(
+function put<TResponse = void>(
   path: string,
   body?: ApiBody,
   headers?: HeadersInit
-): Promise<void>;
-function put<TResponse>(
-  path: string,
-  body?: ApiBody,
-  headers?: HeadersInit
-): Promise<TResponse>;
-function put<TResponse>(path: string, body?: ApiBody, headers?: HeadersInit) {
-  return request<TResponse>({ path, method: "PUT", body, headers });
+) {
+  return request<TResponse>({ path, method: HttpMethods.PUT, body, headers });
 }
 
 function del(path: string, headers?: HeadersInit): Promise<void> {
-  return request({ path, method: "DELETE", headers });
+  return request({ path, method: HttpMethods.DELETE, headers });
 }
 
 export const ApiClient = {

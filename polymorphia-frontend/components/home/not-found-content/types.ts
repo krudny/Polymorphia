@@ -5,5 +5,5 @@ export interface NotFoundContentProps {
   title?: string;
   subtitle?: string;
   actionLabel?: string;
-  rerouteTo?: string;
+  redirectTo?: string;
 }

@@ -32,7 +32,7 @@ export default function CourseGroupsPage() {
 
   if (isError) {
     return (
-      <ErrorComponent message={"Nie udało się załadować grup zajęciowych."} />
+      <ErrorComponent message="Nie udało się załadować grup zajęciowych." />
     );
   }
 

@@ -10,13 +10,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const { data: userData, isLoading, isError } = useCurrentUser();
 
   if (isError) {
-    return (
-      <NotFound
-        actionLabel={"Strona główna"}
-        subtitle={"Coś poszło nie tak."}
-        rerouteTo={"/login"}
-      />
-    );
+    return <NotFound subtitle="Coś poszło nie tak." />;
   }
 
   if (isLoading || !userData) {

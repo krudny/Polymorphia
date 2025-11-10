@@ -57,6 +57,11 @@ export default function RootLayout({
       });
     }
 
+    if (error.status === 404) {
+      router.push("/not-found");
+      return;
+    }
+
     const message =
       error.message.trim().length > 0
         ? error.message

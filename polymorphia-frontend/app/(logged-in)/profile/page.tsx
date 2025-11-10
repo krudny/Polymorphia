@@ -42,7 +42,7 @@ function ProfileContent() {
   }
 
   if (isError || !profile || userContext.userRole !== Roles.STUDENT) {
-    return <ErrorComponent message={"Nie udało się załadować profilu."} />;
+    return <ErrorComponent message="Nie udało się załadować profilu." />;
   }
 
   const { imageUrl, fullName, animalName, position } = userContext.userDetails;

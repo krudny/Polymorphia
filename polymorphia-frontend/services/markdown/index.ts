@@ -34,7 +34,9 @@ export const MarkdownService = {
     const type = kebabCase(request.markdownType.toLowerCase());
     const { markdown, resourceId } = request;
 
-    await ApiClient.put(`/markdown/${type}/${resourceId}`, markdown);
+    await ApiClient.put(`/markdown/${type}/${resourceId}`, {
+      markdown: markdown,
+    });
   },
 
   resetMarkdown: async (request: MarkdownParamsRequest): Promise<void> => {

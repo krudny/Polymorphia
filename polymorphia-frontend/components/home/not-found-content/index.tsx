@@ -7,16 +7,16 @@ export default function NotFoundContent({
   titleRef,
   title = "Ooops!",
   subtitle = "Nie znaleźliśmy strony, której szukasz.",
-  actionLabel = "Powrót",
-  rerouteTo,
+  actionLabel = "Strona główna",
+  redirectTo,
 }: NotFoundContentProps) {
   const router = useRouter();
 
   const handleClick = () => {
-    if (rerouteTo) {
-      router.push(rerouteTo);
+    if (redirectTo) {
+      router.push(redirectTo);
     }
-    router.back();
+    router.push("/");
   };
 
   return (
