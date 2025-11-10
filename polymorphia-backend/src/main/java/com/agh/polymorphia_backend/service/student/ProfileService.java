@@ -44,23 +44,11 @@ public class ProfileService {
     private final HallOfFameRepository hallOfFameRepository;
     private final EvolutionStagesRepository evolutionStagesRepository;
     private final ProfileMapper profileMapper;
-    private final NotificationDispatcher notificationDispatcher;
-    private final GradableEventService gradableEventService;
 
     public ProfileResponseDto getProfile(Long courseId) {
         Course course = courseService.getCourseById(courseId);
         accessAuthorizer.authorizeCourseAccess(course);
         User user = userService.getCurrentUser().getUser();
-
-        // TODO: mock
-        NotificationCreationRequest request = NotificationCreationRequest
-                .builder()
-                .userId(user.getId())
-                .gradableEvent(gradableEventService.getGradableEventById(11L))
-                .notificationType(NotificationType.NEW_GRADE)
-                .build();
-
-        notificationDispatcher.dispatch(request);
 
         BigDecimal totalXp = hallOfFameService.getStudentHallOfFame(user).getTotalXpSum();
         List<EvolutionStageThresholdResponseDto> evolutionStages = getEvolutionStages(courseId);
