@@ -175,7 +175,7 @@ class SubmissionServiceTest extends BaseTest {
         );
         assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
         assertEquals(
-            "Submissions for test event sections is not supported",
+            "Testy nie wspierają oddawania zadania.",
             ex.getReason()
         );
     }
@@ -188,7 +188,7 @@ class SubmissionServiceTest extends BaseTest {
         doThrow(
             new ResponseStatusException(
                 HttpStatus.NOT_FOUND,
-                "Course not found"
+                "Nie znaleziono kursu."
             )
         )
             .when(accessAuthorizer)
@@ -199,7 +199,7 @@ class SubmissionServiceTest extends BaseTest {
                 submissionService.getSubmissionRequirements(assignment.getId())
         );
         assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
-        assertEquals("Course not found", ex.getReason());
+        assertEquals("Nie znaleziono kursu.", ex.getReason());
     }
 
     @Test
@@ -293,7 +293,7 @@ class SubmissionServiceTest extends BaseTest {
                     )
             );
             assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
-            assertEquals("Student not found", ex.getReason());
+            assertEquals("Nie znaleziono studenta.", ex.getReason());
         }
 
         @Test
@@ -318,7 +318,7 @@ class SubmissionServiceTest extends BaseTest {
             );
             assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
             assertEquals(
-                "Group target is supported only for project section",
+                "Grupowy podmiot oceny jest wspierany jedynie przy projekcie.",
                 ex.getReason()
             );
         }
@@ -447,7 +447,7 @@ class SubmissionServiceTest extends BaseTest {
                     )
             );
             assertEquals(HttpStatus.FORBIDDEN, ex.getStatusCode());
-            assertEquals("You can't change locked submission", ex.getReason());
+            assertEquals("Nie można zmienić zablokowanego zgłoszenia.", ex.getReason());
         }
 
         @Test
@@ -640,7 +640,7 @@ class SubmissionServiceTest extends BaseTest {
             );
             assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
             assertEquals(
-                "Submission details must contain each requirement",
+                "Szczegóły oddania zadania muszą zawierać wszystkie wymagania.",
                 ex.getReason()
             );
         }
@@ -700,7 +700,7 @@ class SubmissionServiceTest extends BaseTest {
             );
             assertEquals(HttpStatus.FORBIDDEN, ex.getStatusCode());
             assertEquals(
-                "Students can't change lock status of the submission",
+                "Studenci nie mogą zmieniać statusu blokady.",
                 ex.getReason()
             );
         }
@@ -759,7 +759,7 @@ class SubmissionServiceTest extends BaseTest {
                     )
             );
             assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
-            assertEquals("Mandatory submission is missing", ex.getReason());
+            assertEquals("Brak obowiązkowego wymagania.", ex.getReason());
         }
 
         @Test
@@ -817,7 +817,7 @@ class SubmissionServiceTest extends BaseTest {
                     )
             );
             assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
-            assertEquals("Mandatory submission is missing", ex.getReason());
+            assertEquals("Brak obowiązkowego wymagania.", ex.getReason());
         }
 
         @Test
@@ -982,7 +982,7 @@ class SubmissionServiceTest extends BaseTest {
             );
             assertEquals(HttpStatus.FORBIDDEN, ex.getStatusCode());
             assertEquals(
-                "Students can't change lock status of the submission",
+                "Studenci nie mogą zmieniać statusu blokady.",
                 ex.getReason()
             );
         }
@@ -1094,7 +1094,7 @@ class SubmissionServiceTest extends BaseTest {
                     )
             );
             assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
-            assertEquals("Student not found", ex.getReason());
+            assertEquals("Nie znaleziono studenta.", ex.getReason());
         }
 
         @Test
@@ -1121,7 +1121,7 @@ class SubmissionServiceTest extends BaseTest {
             );
             assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
             assertEquals(
-                "Group target is supported only for project section",
+                "Grupowy podmiot oceny jest wspierany jedynie przy projekcie.",
                 ex.getReason()
             );
         }

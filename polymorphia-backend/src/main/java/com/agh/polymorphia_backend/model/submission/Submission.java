@@ -18,7 +18,7 @@ import java.time.ZonedDateTime;
 public class Submission {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    @Setter(AccessLevel.PRIVATE)
+    @Setter(AccessLevel.NONE)
     @EqualsAndHashCode.Include
     private Long id;
 

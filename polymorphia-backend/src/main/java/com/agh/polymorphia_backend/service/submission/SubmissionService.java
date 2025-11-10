@@ -36,16 +36,9 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class SubmissionService {
-    private static final String SUBMISSION_TEST_SECTIONS_NOT_SUPPORTED = "Submissions for test event sections is not supported";
-    private static final String STUDENT_NOT_FOUND = "Student not found";
-    private static final String STUDENT_GROUP_NOT_FOUND = "Student group not found";
-    private static final String INVALID_TARGET = "Group target is supported only for project section";
-    private static final String UNSUPPORTED_ROLE = "User must have valid role";
-    private static final String INCOMPLETE_DETAILS = "Submission details must contain each requirement";
-    private static final String SUBMISSION_LOCKED = "You can't change locked submission";
-    private static final String FORBIDDEN_LOCK_CHANGE = "Students can't change lock status of the submission";
-    private static final String MANDATORY_MISSING = "Mandatory submission is missing";
-    private static final String PERSISTENCE_ERROR = "Unable to save submission";
+    private static final String STUDENT_NOT_FOUND = "Nie znaleziono studenta.";
+    private static final String STUDENT_GROUP_NOT_FOUND = "Nie znaleziono grupy.";
+    private static final String FORBIDDEN_LOCK_CHANGE = "Studenci nie mogą zmieniać statusu blokady.";
 
     private final GradableEventService gradableEventService;
     private final AccessAuthorizer accessAuthorizer;
@@ -60,12 +53,9 @@ public class SubmissionService {
     public List<SubmissionRequirementResponseDto> getSubmissionRequirements(Long gradableEventId) {
         GradableEvent gradableEvent = validateAndGetGradableEvent(gradableEventId);
 
-        return submissionRequirementRepository
-                .getSubmissionRequirementsByGradableEvent(gradableEvent)
-                .stream()
+        return submissionRequirementRepository.getSubmissionRequirementsByGradableEvent(gradableEvent).stream()
                 .sorted(Comparator.comparing(SubmissionRequirement::getOrderIndex))
-                .map(submissionMapper::toSubmissionRequirementResponseDto)
-                .toList();
+                .map(submissionMapper::toSubmissionRequirementResponseDto).toList();
     }
 
     public Map<Long, SubmissionDetailsDto> getSubmissionDetails(Long gradableEventId, TargetRequestDto target) {
@@ -73,8 +63,10 @@ public class SubmissionService {
 
         List<Student> submissionSources = getSubmissionSourcesForTarget(gradableEvent, target);
 
-        List<SubmissionRequirement> submissionRequirements = submissionRequirementRepository.getSubmissionRequirementsByGradableEvent(gradableEvent);
-        List<Submission> submissions = submissionRepository.getSubmissionsByGradableEventAndStudent(gradableEventId, submissionSources.getFirst().getUserId());
+        List<SubmissionRequirement> submissionRequirements =
+                submissionRequirementRepository.getSubmissionRequirementsByGradableEvent(gradableEvent);
+        List<Submission> submissions = submissionRepository.getSubmissionsByGradableEventAndStudent(gradableEventId,
+                submissionSources.getFirst().getUserId());
 
         return submissionMapper.toSubmissionDetailsResponseDto(submissions, submissionRequirements);
     }
@@ -85,47 +77,45 @@ public class SubmissionService {
 
         List<Student> submissionSources = getSubmissionSourcesForTarget(gradableEvent, requestDto.target());
 
-        Map<Long, SubmissionRequirement> submissionRequirements = submissionRequirementRepository.getSubmissionRequirementsByGradableEvent(gradableEvent).stream().collect(Collectors.toMap(SubmissionRequirement::getId, Function.identity()));
+        Map<Long, SubmissionRequirement> submissionRequirements =
+                submissionRequirementRepository.getSubmissionRequirementsByGradableEvent(gradableEvent).stream()
+                        .collect(Collectors.toMap(SubmissionRequirement::getId, Function.identity()));
 
         Set<Long> submissionRequirementsIds = submissionRequirements.keySet();
         Set<Long> receivedSubmissionRequirementsIds = requestDto.details().keySet();
 
         if (submissionRequirementsIds.size() != receivedSubmissionRequirementsIds.size()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INCOMPLETE_DETAILS);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Szczegóły oddania zadania muszą zawierać wszystkie wymagania.");
         }
 
         // studentId -> (submissionRequirementId -> submission)
-        Map<Long, Map<Long, Submission>> submissionsPerStudent = submissionSources.stream().collect(Collectors.toMap(Student::getUserId, (submissionSource) -> submissionRepository
-                .getSubmissionsByGradableEventAndStudent(
-                        gradableEventId,
-                        submissionSource.getUserId()
-                ).stream()
-                .collect(Collectors
-                        .toMap((submission) ->
-                                        submission.getSubmissionRequirement().getId(),
-                                Function.identity()))));
+        Map<Long, Map<Long, Submission>> submissionsPerStudent = submissionSources.stream().collect(
+                Collectors.toMap(Student::getUserId,
+                        (submissionSource) -> submissionRepository.getSubmissionsByGradableEventAndStudent(
+                                gradableEventId, submissionSource.getUserId()).stream().collect(
+                                Collectors.toMap((submission) -> submission.getSubmissionRequirement().getId(),
+                                        Function.identity()))));
 
         List<Submission> submissionsToDelete = new ArrayList<>();
         List<Submission> submissionsToUpdate = new ArrayList<>();
 
         requestDto.details().forEach((submissionRequirementId, newDetails) -> {
             List<Submission> submissions = new ArrayList<>();
-            submissionsPerStudent
-                    .forEach((studentId, studentSubmissions) ->
-                            submissions.add(studentSubmissions.get(submissionRequirementId)));
+            submissionsPerStudent.forEach((studentId, studentSubmissions) -> submissions.add(
+                    studentSubmissions.get(submissionRequirementId)));
 
             boolean isEmpty = !newDetails.isLocked() && newDetails.url().isEmpty();
 
-            if (userService.getCurrentUserRole() == UserType.STUDENT &&
-                    isEmpty &&
+            if (userService.getCurrentUserRole() == UserType.STUDENT && isEmpty &&
                     submissionRequirements.get(submissionRequirementId).isMandatory()) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MANDATORY_MISSING);
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Brak obowiązkowego wymagania.");
             }
 
             Optional.ofNullable(submissions.getFirst()).ifPresentOrElse(currentSubmission -> {
                 boolean isLockChanged = currentSubmission.isLocked() != newDetails.isLocked();
                 boolean isUrlChanged = !Objects.equals(currentSubmission.getUrl(), newDetails.url());
-                boolean isChanged =  isLockChanged || isUrlChanged;
+                boolean isChanged = isLockChanged || isUrlChanged;
 
                 if (!isChanged) {
                     return;
@@ -133,7 +123,8 @@ public class SubmissionService {
 
                 if (userService.getCurrentUserRole() == UserType.STUDENT) {
                     if (currentSubmission.isLocked()) {
-                        throw new ResponseStatusException(HttpStatus.FORBIDDEN, SUBMISSION_LOCKED);
+                        throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+                                "Nie można zmienić zablokowanego zgłoszenia.");
                     }
 
                     if (isLockChanged) {
@@ -162,12 +153,9 @@ public class SubmissionService {
                 submissionSources.forEach(student -> {
                     Submission submission = Submission.builder()
                             .submissionRequirement(submissionRequirements.get(submissionRequirementId))
-                            .animal(animalService.getAnimal(
-                                    student.getUserId(),
-                                    gradableEvent.getEventSection().getCourse().getId()))
-                            .url(newDetails.url())
-                            .isLocked(newDetails.isLocked())
-                            .build();
+                            .animal(animalService.getAnimal(student.getUserId(),
+                                    gradableEvent.getEventSection().getCourse().getId())).url(newDetails.url())
+                            .isLocked(newDetails.isLocked()).build();
                     submissionsToUpdate.add(submission);
                 });
             });
@@ -177,7 +165,7 @@ public class SubmissionService {
             submissionRepository.saveAll(submissionsToUpdate);
             submissionRepository.deleteAll(submissionsToDelete);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, PERSISTENCE_ERROR);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Nie udało się zapisać zadania.");
         }
     }
 
@@ -186,11 +174,13 @@ public class SubmissionService {
             case STUDENT -> getSubmissionSourcesForTargetRequestedByStudent(gradableEvent, target);
             case INSTRUCTOR -> getSubmissionSourcesForTargetRequestedByInstructor(gradableEvent, target);
             case COORDINATOR -> getSubmissionSourcesForTargetRequestedByCoordinator(gradableEvent, target);
-            case UNDEFINED -> throw new ResponseStatusException(HttpStatus.FORBIDDEN, UNSUPPORTED_ROLE);
+            case UNDEFINED ->
+                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Użytkownik musi posiadać poprawną rolę.");
         };
     }
 
-    private List<Student> getSubmissionSourcesForTargetRequestedByStudent(GradableEvent gradableEvent, TargetRequestDto target) {
+    private List<Student> getSubmissionSourcesForTargetRequestedByStudent(GradableEvent gradableEvent,
+                                                                          TargetRequestDto target) {
         switch (target) {
             case StudentTargetRequestDto studentTargetRequestDto -> {
                 if (userService.getCurrentUser().getUserId().longValue() != studentTargetRequestDto.id().longValue()) {
@@ -202,9 +192,8 @@ public class SubmissionService {
                     }
                     case PROJECT -> {
                         ProjectGroup projectGroup = projectGroupRepository.getProjectGroupByStudentIdAndProjectId(
-                                        userService.getCurrentUser().getUserId(),
-                                        gradableEvent.getId())
-                                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND));
+                                userService.getCurrentUser().getUserId(), gradableEvent.getId()).orElseThrow(
+                                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND));
 
                         return getStudentsFromProjectGroup(projectGroup);
                     }
@@ -213,8 +202,7 @@ public class SubmissionService {
             }
             case StudentGroupTargetRequestDto studentGroupTargetRequestDto -> {
                 ProjectGroup projectGroup = projectGroupRepository.getProjectGroupByIdAndStudentIdAndProjectId(
-                                studentGroupTargetRequestDto.groupId(),
-                                userService.getCurrentUser().getUserId(),
+                                studentGroupTargetRequestDto.groupId(), userService.getCurrentUser().getUserId(),
                                 gradableEvent.getId())
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_GROUP_NOT_FOUND));
 
@@ -223,23 +211,23 @@ public class SubmissionService {
         }
     }
 
-    private List<Student> getSubmissionSourcesForTargetRequestedByInstructor(GradableEvent gradableEvent, TargetRequestDto target) {
+    private List<Student> getSubmissionSourcesForTargetRequestedByInstructor(GradableEvent gradableEvent,
+                                                                             TargetRequestDto target) {
         switch (target) {
             case StudentTargetRequestDto studentTargetRequestDto -> {
                 switch (gradableEvent.getEventSection().getEventSectionType()) {
                     case ASSIGNMENT -> {
                         return List.of(studentRepository.findByUserIdAndGradableEventIdAndCourseGroupInstructorId(
-                                studentTargetRequestDto.id(),
-                                gradableEvent.getId(),
-                                userService.getCurrentUser().getUserId()
-                        ).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND)));
+                                studentTargetRequestDto.id(), gradableEvent.getId(),
+                                userService.getCurrentUser().getUserId()).orElseThrow(
+                                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND)));
                     }
                     case PROJECT -> {
-                        ProjectGroup projectGroup = projectGroupRepository.getProjectGroupByStudentIdAndProjectIdAndInstructorId(
-                                studentTargetRequestDto.id(),
-                                gradableEvent.getId(),
-                                userService.getCurrentUser().getUserId()
-                        ).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND));
+                        ProjectGroup projectGroup =
+                                projectGroupRepository.getProjectGroupByStudentIdAndProjectIdAndInstructorId(
+                                        studentTargetRequestDto.id(), gradableEvent.getId(),
+                                        userService.getCurrentUser().getUserId()).orElseThrow(
+                                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND));
 
                         return getStudentsFromProjectGroup(projectGroup);
                     }
@@ -248,31 +236,29 @@ public class SubmissionService {
             }
             case StudentGroupTargetRequestDto studentGroupTargetRequestDto -> {
                 ProjectGroup projectGroup = projectGroupRepository.getProjectGroupByIdAndProjectIdAndInstructorId(
-                        studentGroupTargetRequestDto.groupId(),
-                        gradableEvent.getId(),
-                        userService.getCurrentUser().getUserId()
-                ).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_GROUP_NOT_FOUND));
+                                studentGroupTargetRequestDto.groupId(), gradableEvent.getId(),
+                                userService.getCurrentUser().getUserId())
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_GROUP_NOT_FOUND));
 
                 return getStudentsFromProjectGroup(projectGroup);
             }
         }
     }
 
-    private List<Student> getSubmissionSourcesForTargetRequestedByCoordinator(GradableEvent gradableEvent, TargetRequestDto target) {
+    private List<Student> getSubmissionSourcesForTargetRequestedByCoordinator(GradableEvent gradableEvent,
+                                                                              TargetRequestDto target) {
         switch (target) {
             case StudentTargetRequestDto studentTargetRequestDto -> {
                 switch (gradableEvent.getEventSection().getEventSectionType()) {
                     case ASSIGNMENT -> {
-                        return List.of(studentRepository.findByUserIdAndGradableEventId(
-                                studentTargetRequestDto.id(),
-                                gradableEvent.getId()
-                        ).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND)));
+                        return List.of(studentRepository.findByUserIdAndGradableEventId(studentTargetRequestDto.id(),
+                                gradableEvent.getId()).orElseThrow(
+                                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND)));
                     }
                     case PROJECT -> {
                         ProjectGroup projectGroup = projectGroupRepository.getProjectGroupByStudentIdAndProjectId(
-                                studentTargetRequestDto.id(),
-                                gradableEvent.getId()
-                        ).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND));
+                                studentTargetRequestDto.id(), gradableEvent.getId()).orElseThrow(
+                                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND));
 
                         return getStudentsFromProjectGroup(projectGroup);
                     }
@@ -280,10 +266,10 @@ public class SubmissionService {
                 }
             }
             case StudentGroupTargetRequestDto studentGroupTargetRequestDto -> {
-                ProjectGroup projectGroup = projectGroupRepository.getProjectGroupByIdAndProjectId(
-                        studentGroupTargetRequestDto.groupId(),
-                        gradableEvent.getId()
-                ).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_GROUP_NOT_FOUND));
+                ProjectGroup projectGroup =
+                        projectGroupRepository.getProjectGroupByIdAndProjectId(studentGroupTargetRequestDto.groupId(),
+                                gradableEvent.getId()).orElseThrow(
+                                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_GROUP_NOT_FOUND));
 
                 return getStudentsFromProjectGroup(projectGroup);
             }
@@ -291,8 +277,7 @@ public class SubmissionService {
     }
 
     private List<Student> getStudentsFromProjectGroup(ProjectGroup projectGroup) {
-        return projectGroup.getAnimals().stream()
-                .map(animal -> animal.getStudentCourseGroupAssignment().getStudent())
+        return projectGroup.getAnimals().stream().map(animal -> animal.getStudentCourseGroupAssignment().getStudent())
                 .toList();
     }
 
@@ -300,7 +285,8 @@ public class SubmissionService {
         GradableEvent gradableEvent = validateAndGetGradableEvent(gradableEventId);
         if (target.type() == TargetType.STUDENT_GROUP &&
                 gradableEvent.getEventSection().getEventSectionType() != EventSectionType.PROJECT) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INVALID_TARGET);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Grupowy podmiot oceny jest wspierany jedynie przy projekcie.");
         }
 
         return gradableEvent;
@@ -311,7 +297,7 @@ public class SubmissionService {
         accessAuthorizer.authorizeCourseAccess(gradableEvent.getEventSection().getCourse().getId());
 
         if (gradableEvent.getEventSection().getEventSectionType() == EventSectionType.TEST) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, SUBMISSION_TEST_SECTIONS_NOT_SUPPORTED);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Testy nie wspierają oddawania zadania.");
         }
 
         return gradableEvent;
