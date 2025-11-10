@@ -50,17 +50,27 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
     });
   }, [sortBy, sortOrder, groups, gradeStatus, applyFiltersCallback]);
 
-  const { data: criteria, isLoading: isCriteriaLoading } = useCriteria();
-  const { data: grade, isLoading: isGradeLoading } = useShortGrade(
-    targetState.selectedTarget
-  );
+  const {
+    data: criteria,
+    isLoading: isCriteriaLoading,
+    isError: isCriteriaError,
+  } = useCriteria();
+  const {
+    data: grade,
+    isLoading: isGradeLoading,
+    isError: isGradeError,
+  } = useShortGrade(targetState.selectedTarget);
   const { mutate: mutateGrade } = useGradeUpdate();
   const {
     data: submissionRequirements,
     isLoading: isSubmissionRequirementsLoading,
+    isError: isSubmissionRequirementsError,
   } = useSubmissionRequirements();
-  const { data: submissionDetails, isLoading: isSubmissionDetailsLoading } =
-    useSubmissionDetails(targetState.selectedTarget);
+  const {
+    data: submissionDetails,
+    isLoading: isSubmissionDetailsLoading,
+    isError: isSubmissionDetailsError,
+  } = useSubmissionDetails(targetState.selectedTarget);
   const { mutate: mutateSubmissions } = useSubmissionsUpdate({
     target: targetState.selectedTarget,
   });
@@ -124,7 +134,9 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
         submissionRequirements,
         isGeneralDataLoading:
           isCriteriaLoading || isSubmissionRequirementsLoading,
+        isGeneralDataError: isCriteriaError || isSubmissionRequirementsError,
         isSpecificDataLoading: isGradeLoading || isSubmissionDetailsLoading,
+        isSpecificDataError: isGradeError || isSubmissionDetailsError,
         submitGrade,
         submitSubmissions,
       }}

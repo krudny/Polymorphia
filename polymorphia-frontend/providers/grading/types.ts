@@ -17,7 +17,9 @@ export interface GradingContextInterface {
   criteria: CriterionResponseDTO[] | undefined;
   submissionRequirements: SubmissionRequirementResponseDTO[] | undefined;
   isGeneralDataLoading: boolean;
+  isGeneralDataError: boolean;
   isSpecificDataLoading: boolean;
+  isSpecificDataError: boolean;
   state: GradingReducerState;
   dispatch: Dispatch<GradingReducerActionType>;
   submitGrade: () => void;
