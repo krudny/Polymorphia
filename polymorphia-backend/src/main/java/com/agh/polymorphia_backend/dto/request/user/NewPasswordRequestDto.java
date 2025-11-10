@@ -1,21 +1,15 @@
 package com.agh.polymorphia_backend.dto.request.user;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import static com.agh.polymorphia_backend.service.password.PasswordService.*;
+
 @Data
-public class ChangePasswordRequestDTO {
-    public static final String PASSWORD_SIZE_MESSAGE = "hasło musi mieć od 8 do 256 znaków";
-    public static final String PASSWORD_UPPERCASE_MESSAGE = "hasło musi zawierać co najmniej jedną wielką literę";
-    public static final String PASSWORD_LOWERCASE_MESSAGE = "hasło musi zawierać co najmniej jedną małą literę";
-    public static final String PASSWORD_DIGIT_MESSAGE = "hasło musi zawierać co najmniej jedną cyfrę";
-    public static final String PASSWORD_SPECIAL_CHAR_MESSAGE = "hasło musi zawierać co najmniej jeden znak specjalny";
-
-    @NotNull
-    private String oldPassword;
-
+public class NewPasswordRequestDto {
     @NotNull
     @Size(min = 8, max = 256, message = PASSWORD_SIZE_MESSAGE)
     @Pattern(regexp = ".*[A-Z].*", message = PASSWORD_UPPERCASE_MESSAGE)
@@ -27,5 +21,9 @@ public class ChangePasswordRequestDTO {
     @NotNull
     @Size(min = 8, max = 256, message = PASSWORD_SIZE_MESSAGE)
     private String confirmNewPassword;
+
+    @NotBlank
+    private String token;
 }
+
 

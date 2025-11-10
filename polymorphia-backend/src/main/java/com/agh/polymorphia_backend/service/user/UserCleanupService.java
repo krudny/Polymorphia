@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.service.user;
 
-import com.agh.polymorphia_backend.model.invitation.InvitationToken;
-import com.agh.polymorphia_backend.repository.invitation.InvitationTokenRepository;
+import com.agh.polymorphia_backend.model.token.Token;
+import com.agh.polymorphia_backend.repository.invitation.TokenRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,30 +17,31 @@ import java.util.List;
 @Slf4j
 @AllArgsConstructor
 public class UserCleanupService {
+    private final static String START_CLEANUP = "Starting cleanup of inactive users";
+    private final static String END_CLEANUP = "Cleanup completed. Deleted {} expired tokens, {} inactive users.";
+
     private UserRepository userRepository;
-    private InvitationTokenRepository invitationTokenRepository;
+    private TokenRepository tokenRepository;
 
     @Scheduled(cron = "0 0 */6 * * ?")
     public void cleanupInactiveUsers() {
-        log.info("Starting cleanup of inactive users");
+        log.info(START_CLEANUP);
 
         ZonedDateTime now = ZonedDateTime.now();
 
-        List<String> expiredTokenEmails = invitationTokenRepository
-                .findByExpiryDateBeforeAndUsedFalse(now)
+        List<String> expiredTokenEmails = tokenRepository
+                .findByExpiryDateBefore(now)
                 .stream()
-                .map(InvitationToken::getEmail)
+                .map(Token::getEmail)
                 .toList();
 
         Integer deletedUserCount = userRepository.deleteUsersWithoutPasswordOrWithExpiredTokens(
                 expiredTokenEmails
         );
 
-        Integer deletedExpiredTokens = invitationTokenRepository.deleteByExpiryDateBefore(now);
-        Integer deletedUsedTokens = invitationTokenRepository.deleteByUsedTrue();
+        Integer deletedExpiredTokens = tokenRepository.deleteByExpiryDateBefore(now);
 
-        log.info("Cleanup completed. Deleted {} expired tokens, {} used tokens and {} inactive users.",
-                deletedExpiredTokens, deletedUsedTokens, deletedUserCount);
+        log.info(END_CLEANUP, deletedExpiredTokens, deletedUserCount);
     }
 }
 

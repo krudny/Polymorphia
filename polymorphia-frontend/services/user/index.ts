@@ -1,7 +1,6 @@
 import {
   InviteRequestDTO,
   RegisterRequestDTO,
-  ChangePasswordDTO,
   Role,
   Roles,
   StudentDetailsDTOWithType,
@@ -46,9 +45,7 @@ const UserService = {
   setUserPreferredCourse: async (courseId: number): Promise<void> => {
     await ApiClient.post(`/users/preferred-course?courseId=${courseId}`);
   },
-  changePassword: async (request: ChangePasswordDTO): Promise<void> => {
-    await ApiClient.post("/users/change-password", request);
-  },
+
   getRandomUsers: async (): Promise<StudentDetailsDTOWithType[]> => {
     return [
       {
