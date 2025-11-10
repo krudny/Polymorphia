@@ -57,10 +57,6 @@ public class HallOfFameService {
     private final UserService userService;
     private final HallOfFameSortSpecResolver sortSpecResolver;
 
-    // TODO: mock
-    private final NotificationDispatcher notificationDispatcher;
-    private final GradableEventService gradableEventService;
-
     private static Sort.Direction opposite(Sort.Direction direction) {
         return direction.isAscending() ? Sort.Direction.DESC : Sort.Direction.ASC;
     }
@@ -82,20 +78,6 @@ public class HallOfFameService {
 
     public HallOfFameResponseDto getHallOfFame(HallOfFameRequestDto requestDto) {
         accessAuthorizer.authorizeCourseAccess(requestDto.courseId());
-
-        // TODO: mock
-        User user = userService.getCurrentUser().getUser();
-
-        NotificationCreationRequest request = NotificationCreationRequest
-                .builder()
-                .userId(user.getId())
-                .gradableEvent(gradableEventService.getGradableEventById(11L))
-                .notificationType(NotificationType.NEW_GRADE)
-                .build();
-
-        notificationDispatcher.dispatch(request);
-
-        System.out.println("wyslalem");
 
         HallOfFameSortSpec sortSpec = sortSpecResolver.resolve(requestDto);
         Page<HallOfFameEntry> hallOfFameEntryPage = switch (sortSpec) {

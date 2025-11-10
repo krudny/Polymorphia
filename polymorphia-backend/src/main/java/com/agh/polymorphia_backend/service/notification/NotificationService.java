@@ -16,9 +16,14 @@ public class NotificationService {
     private final NotificationRepository notificationRepository;
     private final NotificationMapper notificationMapper;
     private final UserService userService;
+    private final SseNotificationService sseNotificationService;
+
+    public Long getCurrentUserId() {
+        return userService.getCurrentUser().getUser().getId();
+    }
 
     public List<NotificationResponseDto> getAllNotificationsForUser() {
-        Long userId = userService.getCurrentUser().getUser().getId();
+        Long userId = getCurrentUserId();
 
         return notificationRepository
                 .findAllByUserIdOrderByCreatedAtDesc(userId)
@@ -29,7 +34,18 @@ public class NotificationService {
 
     @Transactional
     public void deleteNotification(Long notificationId) {
-        Long userId = userService.getCurrentUser().getUser().getId();
+        Long userId = getCurrentUserId();
         notificationRepository.deleteByIdAndUserId(notificationId, userId);
+
+        Long remainingCount = notificationRepository.countByUserId(userId);
+        sseNotificationService.sendUnreadCount(userId, remainingCount);
+    }
+
+    public void notifyUser(Long userId, com.agh.polymorphia_backend.model.notification.Notification notification) {
+        NotificationResponseDto dto = notificationMapper.toNotificationResponseDto(notification);
+        sseNotificationService.sendNotificationToUser(userId, dto);
+
+        Long unreadCount = notificationRepository.countByUserId(userId);
+        sseNotificationService.sendUnreadCount(userId, unreadCount);
     }
 }
