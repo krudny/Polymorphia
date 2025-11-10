@@ -72,7 +72,7 @@ public class ProfileService {
 
     private int getCurrentEvolutionStageId(List<EvolutionStageThresholdResponseDto> evolutionStages, User user) {
         String evolutionStageName = Optional.ofNullable(hallOfFameService.getStudentHallOfFame(user).getEvolutionStage())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Profil jest niekompletny: etapy ewolucji nie zostały zdefiniowane."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Profil jest niekompletny: etapy ewolucji nie zostały zdefiniowane."));
 
         for (int i = 0; i < evolutionStages.size(); i++) {
             if (evolutionStages.get(i).getName().equals(evolutionStageName)) {

@@ -28,6 +28,8 @@ const AuthService = {
     await fetch(`${API_HOST}/logout`, {
       method: "POST",
       credentials: "include",
+    }).catch((_error) => {
+      throw new ApiError("Serwer nie odpowiada.", 503);
     });
   },
 };

@@ -59,7 +59,9 @@ export default function RootLayout({
 
     if (error.status === 404) {
       router.push("/not-found");
-      return;
+      if (error.message.startsWith("No static resource")) {
+        return;
+      }
     }
 
     const message =

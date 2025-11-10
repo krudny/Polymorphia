@@ -58,7 +58,7 @@ public class HallOfFameService {
     public HallOfFameEntry getStudentHallOfFame(User user) {
         Animal animal = animalService.getAnimal(user.getId(), user.getPreferredCourse().getId());
         return hallOfFameRepository.findByAnimalId(animal.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_HOF_NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, STUDENT_HOF_NOT_FOUND));
     }
 
     public List<StudentScoreDetail> getStudentScoreDetails(Long animalId) {
@@ -67,7 +67,7 @@ public class HallOfFameService {
 
     public StudentScoreDetail getStudentEventSectionScoreDetails(Long animalId, Long eventSectionId) {
         return scoreDetailRepository.findByAnimalIdAndEventSectionId(animalId, eventSectionId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_HOF_NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, STUDENT_HOF_NOT_FOUND));
     }
 
     public HallOfFameResponseDto getHallOfFame(HallOfFameRequestDto requestDto) {
@@ -138,7 +138,7 @@ public class HallOfFameService {
         List<StudentScoreDetail> detailsList = scoreDetailRepository.findByAnimalIdIn(animalIds);
 
         if (detailsList.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Brak wyników w Hall of Fame.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Brak wyników w Hall of Fame.");
         }
 
         sortByEventSectionOrderIndex(detailsList);
