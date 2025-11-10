@@ -39,7 +39,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class InvitationService {
     public static final String UNSUPPORTED_ROLE = "Nieobsługiwana rola.";
     public static final String FAILED_TO_INVITE = "Nie udało się wysłać zaproszenia.";
-    public static final String USER_NOT_EXIST = "Użytkownik nie istanieje.";
+    public static final String USER_NOT_EXIST = "Użytkownik nie istnieje.";
 
     private final RegisterUtil registerUtil;
     private final UserFactory userFactory;
