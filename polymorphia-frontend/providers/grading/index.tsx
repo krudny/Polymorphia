@@ -14,7 +14,7 @@ import useShortGrade from "@/hooks/course/useShortGrade";
 import { getRequestTargetFromResponseTarget } from "@/providers/grading/utils/getRequestTargetFromResponseTarget";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import useSubmissionDetails from "@/hooks/course/useSubmissionDetails";
-import { SubmissionDetailsResponseDTO } from "@/interfaces/api/grade/submission";
+import { SubmissionDetails } from "@/interfaces/api/grade/submission";
 import useSubmissionsUpdate from "@/hooks/course/useSubmissionsUpdate";
 import useSubmissionRequirements from "@/hooks/course/useSubmissionRequirements";
 import useCriteria from "@/hooks/course/useCriteria";
@@ -104,9 +104,7 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  const submitSubmissions = (
-    submissionDetails: SubmissionDetailsResponseDTO
-  ) => {
+  const submitSubmissions = (submissionDetails: SubmissionDetails) => {
     if (!targetState.selectedTarget) {
       return;
     }
