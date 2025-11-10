@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.model.invitation;
+package com.agh.polymorphia_backend.model.token;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 import java.time.ZonedDateTime;
 
 @Entity
-@Table(name = "invitation_tokens")
+@Table(name = "tokens")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class InvitationToken {
+public class Token {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,10 +27,12 @@ public class InvitationToken {
     private String email;
 
     @NotNull
-    private ZonedDateTime expiryDate;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "token_type", nullable = false, length = 20)
+    private TokenType tokenType;
 
-    @Column(nullable = false)
-    private boolean used = false;
+    @NotNull
+    private ZonedDateTime expiryDate;
 
     @NotNull
     private ZonedDateTime createdAt;

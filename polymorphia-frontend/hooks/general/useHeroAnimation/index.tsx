@@ -9,6 +9,8 @@ export function useHeroAnimation(): UseHeroAnimation {
   const hasMountedRef = useRef(false);
 
   useLayoutEffect(() => {
+    hasMountedRef.current = false;
+
     if (!owlBackgroundRef.current || !titleRef.current || !owlRef.current) {
       return;
     }

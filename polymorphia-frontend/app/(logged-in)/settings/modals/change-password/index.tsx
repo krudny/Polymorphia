@@ -4,7 +4,7 @@ import React, { FormEvent } from "react";
 import { FieldErrorMessage } from "@/components/form/FieldErrorMessage";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { changePasswordSchema } from "@/components/form/schema";
-import { ChangePasswordDTO } from "@/interfaces/api/user";
+import { ChangePasswordDTO } from "@/interfaces/api/password";
 import useChangePassword from "@/hooks/course/useChangePassword";
 import "./index.css";
 import { useForm } from "@tanstack/react-form";
@@ -102,7 +102,7 @@ function ChangePasswordModalContent() {
           <ButtonWithBorder
             text="Zmień hasło"
             className="!w-full !mt-4"
-            isActive={isPristine || !canSubmit}
+            isActive={!isPristine && canSubmit}
           />
         )}
       </form.Subscribe>
