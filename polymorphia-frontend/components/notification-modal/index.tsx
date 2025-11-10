@@ -14,7 +14,7 @@ export default function NotificationModal() {
       onClosed={() => setIsNotificationModalOpen(false)}
       title="Powiadomienia"
     >
-      <div className="w-[350px]">
+      <div className="w-[350px] min-h-[100px]">
         {isLoading && (
           <div className="h-[100px] relative">
             <Loading />
@@ -37,7 +37,9 @@ export default function NotificationModal() {
         )}
         {notifications && notifications.length === 0 && (
           <div className="h-[100px] relative flex-col-centered">
-            <span className="text-lg text-gray-500">Brak powiadomień</span>
+            <span className="text-2xl">
+              Wszystkie powiadomienia przeczytane!
+            </span>
           </div>
         )}
       </div>

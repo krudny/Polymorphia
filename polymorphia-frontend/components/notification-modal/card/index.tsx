@@ -1,3 +1,4 @@
+// NotificationCard.tsx - uproszczona wersja
 import { X } from "lucide-react";
 import { MouseEvent, useRef } from "react";
 import { NotificationCardProps } from "@/components/notification-modal/card/types";
@@ -9,23 +10,22 @@ export default function NotificationCard({
   notification,
 }: NotificationCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const { mutation, invalidateQueries } = useDeleteNotification();
+  const { mutation } = useDeleteNotification();
 
   const handleClose = (event: MouseEvent) => {
     event.stopPropagation();
 
-    mutation.mutate(notification.id, {
-      onSuccess: () => {
-        if (cardRef.current) {
-          animateNotificationRemoval(cardRef.current, () => {
-            // invalidateQueries();
-          });
-        }
-      },
-      onError: (error) => {
-        console.error("Failed to delete notification:", error);
-      },
-    });
+    // Upewnij się, że element istnieje i mutacja nie jest już w toku, aby uniknąć podwójnego kliknięcia
+    if (cardRef.current && !mutation.isPending) {
+      const element = cardRef.current;
+
+      // ✅ Najpierw wykonaj animację, a mutację wywołaj w callbacku onComplete
+      animateNotificationRemoval(element, () => {
+        // Ta funkcja zostanie wywołana PO zakończeniu animacji i usunięciu elementu z DOM przez GSAP.
+        // Teraz jest bezpieczny moment na aktualizację stanu w React Query.
+        mutation.mutate(notification.id);
+      });
+    }
   };
 
   return (
@@ -54,9 +54,7 @@ export default function NotificationCard({
           </h4>
         </div>
 
-        <p className="text-lg break-words">
-          {notification.description} Ala ma kota a kot ma ale
-        </p>
+        <p className="text-lg break-words">{notification.description}</p>
       </div>
 
       <button
