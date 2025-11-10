@@ -5,7 +5,6 @@ import com.agh.polymorphia_backend.dto.request.target.StudentGroupTargetRequestD
 import com.agh.polymorphia_backend.dto.request.target.StudentTargetRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.TargetRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.TargetType;
-import com.agh.polymorphia_backend.dto.response.submission.SubmissionDetailsDto;
 import com.agh.polymorphia_backend.dto.response.submission.SubmissionDetailsResponseDto;
 import com.agh.polymorphia_backend.dto.response.submission.SubmissionRequirementResponseDto;
 import com.agh.polymorphia_backend.model.event_section.EventSectionType;
@@ -20,6 +19,7 @@ import com.agh.polymorphia_backend.repository.submission.SubmissionRepository;
 import com.agh.polymorphia_backend.repository.submission.SubmissionRequirementRepository;
 import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
 import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
+import com.agh.polymorphia_backend.service.gradable_event.project.ProjectGroupService;
 import com.agh.polymorphia_backend.service.mapper.SubmissionMapper;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.user.UserService;
@@ -50,9 +50,10 @@ public class SubmissionService {
     private final ProjectGroupRepository projectGroupRepository;
     private final StudentRepository studentRepository;
     private final AnimalService animalService;
+    private final ProjectGroupService projectGroupService;
 
     public List<SubmissionRequirementResponseDto> getSubmissionRequirements(Long gradableEventId) {
-        GradableEvent gradableEvent = validateAndGetGradableEvent(gradableEventId);
+        GradableEvent gradableEvent = validateUsageAndGetGradableEvent(gradableEventId);
 
         return submissionRequirementRepository.getSubmissionRequirementsByGradableEvent(gradableEvent).stream()
                 .sorted(Comparator.comparing(SubmissionRequirement::getOrderIndex))
@@ -60,7 +61,7 @@ public class SubmissionService {
     }
 
     public SubmissionDetailsResponseDto getSubmissionDetails(Long gradableEventId, TargetRequestDto target) {
-        GradableEvent gradableEvent = validateAndGetGradableEventForTarget(gradableEventId, target);
+        GradableEvent gradableEvent = validateUsageAndGetGradableEventForTarget(gradableEventId, target);
 
         List<Student> submissionSources = getSubmissionSourcesForTarget(gradableEvent, target);
 
@@ -74,7 +75,7 @@ public class SubmissionService {
 
     @Transactional
     public void putSubmissionDetails(Long gradableEventId, SubmissionDetailsRequestDto requestDto) {
-        GradableEvent gradableEvent = validateAndGetGradableEventForTarget(gradableEventId, requestDto.target());
+        GradableEvent gradableEvent = validateUsageAndGetGradableEventForTarget(gradableEventId, requestDto.target());
 
         List<Student> submissionSources = getSubmissionSourcesForTarget(gradableEvent, requestDto.target());
 
@@ -196,7 +197,7 @@ public class SubmissionService {
                                 userService.getCurrentUser().getUserId(), gradableEvent.getId()).orElseThrow(
                                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND));
 
-                        return getStudentsFromProjectGroup(projectGroup);
+                        return projectGroupService.getStudentsFromProjectGroup(projectGroup);
                     }
                     default -> throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
                 }
@@ -207,7 +208,7 @@ public class SubmissionService {
                                 gradableEvent.getId())
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_GROUP_NOT_FOUND));
 
-                return getStudentsFromProjectGroup(projectGroup);
+                return projectGroupService.getStudentsFromProjectGroup(projectGroup);
             }
         }
     }
@@ -230,7 +231,7 @@ public class SubmissionService {
                                         userService.getCurrentUser().getUserId()).orElseThrow(
                                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND));
 
-                        return getStudentsFromProjectGroup(projectGroup);
+                        return projectGroupService.getStudentsFromProjectGroup(projectGroup);
                     }
                     default -> throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
                 }
@@ -241,7 +242,7 @@ public class SubmissionService {
                                 userService.getCurrentUser().getUserId())
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_GROUP_NOT_FOUND));
 
-                return getStudentsFromProjectGroup(projectGroup);
+                return projectGroupService.getStudentsFromProjectGroup(projectGroup);
             }
         }
     }
@@ -261,7 +262,7 @@ public class SubmissionService {
                                 studentTargetRequestDto.id(), gradableEvent.getId()).orElseThrow(
                                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND));
 
-                        return getStudentsFromProjectGroup(projectGroup);
+                        return projectGroupService.getStudentsFromProjectGroup(projectGroup);
                     }
                     default -> throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
                 }
@@ -272,20 +273,18 @@ public class SubmissionService {
                                 gradableEvent.getId()).orElseThrow(
                                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_GROUP_NOT_FOUND));
 
-                return getStudentsFromProjectGroup(projectGroup);
+                return projectGroupService.getStudentsFromProjectGroup(projectGroup);
             }
         }
     }
 
-    private List<Student> getStudentsFromProjectGroup(ProjectGroup projectGroup) {
-        return projectGroup.getAnimals().stream().map(animal -> animal.getStudentCourseGroupAssignment().getStudent())
-                .toList();
-    }
+    private GradableEvent validateUsageAndGetGradableEventForTarget(Long gradableEventId, TargetRequestDto target) {
+        GradableEvent gradableEvent = validateUsageAndGetGradableEvent(gradableEventId);
 
-    private GradableEvent validateAndGetGradableEventForTarget(Long gradableEventId, TargetRequestDto target) {
-        GradableEvent gradableEvent = validateAndGetGradableEvent(gradableEventId);
-        if (target.type() == TargetType.STUDENT_GROUP &&
-                gradableEvent.getEventSection().getEventSectionType() != EventSectionType.PROJECT) {
+        boolean isInvalidGradableEventForStudentGroupTarget = target.type() == TargetType.STUDENT_GROUP &&
+                gradableEvent.getEventSection().getEventSectionType() != EventSectionType.PROJECT;
+
+        if (isInvalidGradableEventForStudentGroupTarget) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Grupowy podmiot oceny jest wspierany jedynie przy projekcie.");
         }
@@ -293,7 +292,7 @@ public class SubmissionService {
         return gradableEvent;
     }
 
-    private GradableEvent validateAndGetGradableEvent(Long gradableEventId) {
+    private GradableEvent validateUsageAndGetGradableEvent(Long gradableEventId) {
         GradableEvent gradableEvent = gradableEventService.getGradableEventById(gradableEventId);
         accessAuthorizer.authorizeCourseAccess(gradableEvent.getEventSection().getCourse().getId());
 

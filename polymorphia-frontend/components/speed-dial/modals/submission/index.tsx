@@ -43,10 +43,14 @@ function SubmissionsModalContent({
 
   const mandatoryUrlsNotEmpty = requirements
     .filter((requirement) => requirement.isMandatory)
-    .every((requirement) => currentDetails[requirement.id].url.length > 0);
+    .every(
+      (requirement) =>
+        currentDetails[requirement.id] &&
+        currentDetails[requirement.id].url.length > 0
+    );
 
   const validUrls = requirements.every((requirement) => {
-    const url = currentDetails[requirement.id].url;
+    const url = currentDetails[requirement.id]?.url ?? "";
     return url.length === 0 || urlRegex.test(url);
   });
 
@@ -183,6 +187,33 @@ export default function SubmissionsModal({
     userRole === Roles.STUDENT ? { type: TargetTypes.STUDENT, id } : null
   );
 
+  const modalContent = () => {
+    if (isDetailsLoading || isRequirementsLoading) {
+      return (
+        <div className="submission-loading">
+          <Loading />
+        </div>
+      );
+    }
+    if (isDetailsError || isRequirementsError || !requirements || !details) {
+      return (
+        <div className="submission-error">
+          Wystąpił błąd przy ładowaniu szczegółów.
+        </div>
+      );
+    }
+    if (requirements.length === 0) {
+      return (
+        <div className="submission-error">
+          To wydarzenie nie ma żadnych wymagań.
+        </div>
+      );
+    }
+    return (
+      <SubmissionsModalContent requirements={requirements} details={details} />
+    );
+  };
+
   return (
     <Modal
       isDataPresented={true}
@@ -194,34 +225,7 @@ export default function SubmissionsModal({
           : "Uzupełnij wymagane linki"
       }
     >
-      {(isDetailsError || isRequirementsError) && (
-        <div className="submission-error">
-          Wystąpił błąd przy ładowaniu szczegółów.
-        </div>
-      )}
-      {(isDetailsLoading || isRequirementsLoading) && (
-        <div className="submission-loading">
-          <Loading />
-        </div>
-      )}
-      {!isDetailsLoading &&
-        !isRequirementsLoading &&
-        requirements &&
-        requirements.length === 0 && (
-          <div className="submission-error">
-            To wydarzenie nie ma żadnych wymagań.
-          </div>
-        )}
-      {!isDetailsLoading &&
-        !isRequirementsLoading &&
-        details &&
-        requirements &&
-        requirements.length > 0 && (
-          <SubmissionsModalContent
-            requirements={requirements}
-            details={details}
-          />
-        )}
+      {modalContent()}
     </Modal>
   );
 }

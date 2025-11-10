@@ -8,12 +8,15 @@ import {
 import { TargetTypes } from "@/interfaces/api/target";
 import { SubmissionService } from "@/services/submission";
 import { SubmissionDetails } from "@/interfaces/api/grade/submission";
+import { Roles } from "@/interfaces/api/user";
+import useUserContext from "@/hooks/contexts/useUserContext";
 
 export default function useSubmissionsUpdate({
   target,
 }: UseSubmissionsUpdateProps): UseSubmissionsUpdate {
   const queryClient = useQueryClient();
   const { gradableEventId } = useEventParams();
+  const { userRole } = useUserContext();
 
   return useMutation({
     mutationFn: (submissionDetails: SubmissionDetails) => {
@@ -26,11 +29,18 @@ export default function useSubmissionsUpdate({
           target,
           details: submissionDetails,
         }),
-        {
-          loading: "Zapisywanie zmian...",
-          success: "Pomyślnie zapisano oddane zadania!",
-          error: () => "Wystąpił błąd przy zapisie oddanych zadań!",
-        }
+        userRole === Roles.STUDENT
+          ? {
+              loading: "Zapisywanie zmian...",
+              success: "Pomyślnie zapisano oddane zadania!",
+              error: () => "Wystąpił błąd przy zapisie oddanych zadań!",
+            }
+          : {
+              loading: "Zapisywanie zmian...",
+              success: "Pomyślnie zmieniono status blokady zadania!",
+              error: () =>
+                "Wystąpił błąd przy próbie zmiany statusu blokady zadania!",
+            }
       );
     },
     onSuccess: () => {
