@@ -1,19 +1,24 @@
 package com.agh.polymorphia_backend.service.hall_of_fame;
 
 import com.agh.polymorphia_backend.dto.request.hall_of_fame.HallOfFameRequestDto;
+import com.agh.polymorphia_backend.dto.request.notification.NotificationCreationRequest;
 import com.agh.polymorphia_backend.dto.response.hall_of_fame.HallOfFameRecordDto;
 import com.agh.polymorphia_backend.dto.response.hall_of_fame.HallOfFameResponseDto;
 import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.event_section.EventSection;
 import com.agh.polymorphia_backend.model.hall_of_fame.*;
+import com.agh.polymorphia_backend.model.notification.NotificationType;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.StudentScoreDetailRepository;
 import com.agh.polymorphia_backend.service.course.CourseService;
+import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
 import com.agh.polymorphia_backend.service.mapper.HallOfFameMapper;
+import com.agh.polymorphia_backend.service.notification.NotificationDispatcher;
+import com.agh.polymorphia_backend.service.notification.NotificationService;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
@@ -52,6 +57,10 @@ public class HallOfFameService {
     private final UserService userService;
     private final HallOfFameSortSpecResolver sortSpecResolver;
 
+    // TODO: mock
+    private final NotificationDispatcher notificationDispatcher;
+    private final GradableEventService gradableEventService;
+
     private static Sort.Direction opposite(Sort.Direction direction) {
         return direction.isAscending() ? Sort.Direction.DESC : Sort.Direction.ASC;
     }
@@ -73,6 +82,20 @@ public class HallOfFameService {
 
     public HallOfFameResponseDto getHallOfFame(HallOfFameRequestDto requestDto) {
         accessAuthorizer.authorizeCourseAccess(requestDto.courseId());
+
+        // TODO: mock
+        User user = userService.getCurrentUser().getUser();
+
+        NotificationCreationRequest request = NotificationCreationRequest
+                .builder()
+                .userId(user.getId())
+                .gradableEvent(gradableEventService.getGradableEventById(11L))
+                .notificationType(NotificationType.NEW_GRADE)
+                .build();
+
+        notificationDispatcher.dispatch(request);
+
+        System.out.println("wyslalem");
 
         HallOfFameSortSpec sortSpec = sortSpecResolver.resolve(requestDto);
         Page<HallOfFameEntry> hallOfFameEntryPage = switch (sortSpec) {
