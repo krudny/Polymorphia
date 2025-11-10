@@ -1,4 +1,3 @@
-// NotificationCard.tsx - uproszczona wersja
 import { X } from "lucide-react";
 import { MouseEvent, useRef } from "react";
 import { NotificationCardProps } from "@/components/notification-modal/card/types";
@@ -15,14 +14,10 @@ export default function NotificationCard({
   const handleClose = (event: MouseEvent) => {
     event.stopPropagation();
 
-    // Upewnij się, że element istnieje i mutacja nie jest już w toku, aby uniknąć podwójnego kliknięcia
     if (cardRef.current && !mutation.isPending) {
       const element = cardRef.current;
 
-      // ✅ Najpierw wykonaj animację, a mutację wywołaj w callbacku onComplete
       animateNotificationRemoval(element, () => {
-        // Ta funkcja zostanie wywołana PO zakończeniu animacji i usunięciu elementu z DOM przez GSAP.
-        // Teraz jest bezpieczny moment na aktualizację stanu w React Query.
         mutation.mutate(notification.id);
       });
     }
@@ -31,7 +26,7 @@ export default function NotificationCard({
   return (
     <div
       ref={cardRef}
-      className="w-full flex items-start gap-3 p-3 bg-neutral-50 dark:bg-primary-dark rounded-xl hover:shadow hover:cursor-pointer transition-shadow"
+      className="w-full flex items-start min-h-fit gap-3 p-3 bg-neutral-50 dark:bg-primary-dark rounded-xl hover:shadow hover:cursor-pointer transition-shadow overflow-hidden"
     >
       <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-secondary-dark flex-centered text-2xl">
         <span className="material-symbols text-neutral-50 text-xl">trophy</span>
@@ -54,7 +49,10 @@ export default function NotificationCard({
           </h4>
         </div>
 
-        <p className="text-lg break-words">{notification.description}</p>
+        <p className="text-lg break-words">
+          {notification.description} {notification.description}{" "}
+          {notification.description}
+        </p>
       </div>
 
       <button

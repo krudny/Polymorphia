@@ -7,7 +7,6 @@ export const animateNotificationRemoval = (
   gsap
     .timeline({
       onComplete: () => {
-        element.remove();
         onComplete?.();
       },
     })
@@ -17,16 +16,15 @@ export const animateNotificationRemoval = (
       duration: 0.2,
       ease: "power2.inOut",
     })
-    .to(
-      element,
-      {
-        height: 0,
-        marginBottom: 0,
-        paddingTop: 0,
-        paddingBottom: 0,
-        duration: 0.1,
-        ease: "power2.inOut",
-      },
-      "+=0.1"
-    );
+    .to(element, {
+      minHeight: 0,
+      height: 0,
+      marginTop: 0,
+      marginBottom: 0,
+      paddingTop: 0,
+      paddingBottom: 0,
+      borderWidth: 0,
+      duration: 0.3,
+      ease: "power1.inOut",
+    });
 };
