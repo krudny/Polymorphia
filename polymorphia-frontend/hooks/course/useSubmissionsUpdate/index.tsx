@@ -1,5 +1,4 @@
 import { useEventParams } from "@/hooks/general/useEventParams";
-import { SubmissionDetailsResponseDTO } from "@/interfaces/api/grade/submission";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import {
@@ -8,6 +7,7 @@ import {
 } from "@/hooks/course/useSubmissionsUpdate/types";
 import { TargetTypes } from "@/interfaces/api/target";
 import { SubmissionService } from "@/services/submission";
+import { SubmissionDetails } from "@/interfaces/api/grade/submission";
 
 export default function useSubmissionsUpdate({
   target,
@@ -16,7 +16,7 @@ export default function useSubmissionsUpdate({
   const { gradableEventId } = useEventParams();
 
   return useMutation({
-    mutationFn: (submissionDetails: SubmissionDetailsResponseDTO) => {
+    mutationFn: (submissionDetails: SubmissionDetails) => {
       if (!target) {
         throw new Error("Wystąpił błąd podczas aktualizacji oddanych zadań.");
       }

@@ -38,7 +38,7 @@ function SubmissionsModalContent({
     target: { type: TargetTypes.STUDENT, id },
   });
 
-  const [currentDetails, setCurrentDetails] = useState(details);
+  const [currentDetails, setCurrentDetails] = useState(details.details);
   const [detailsModified, setDetailsModified] = useState(false);
 
   const mandatoryUrlsNotEmpty = requirements
@@ -188,7 +188,11 @@ export default function SubmissionsModal({
       isDataPresented={true}
       onClosed={onClosedAction}
       title="Oddawanie zadania"
-      subtitle="Uzupełnij wymagane linki"
+      subtitle={
+        details?.modifiedDate
+          ? `Ostatnia modyfikacja: ${details.modifiedDate}`
+          : "Uzupełnij wymagane linki"
+      }
     >
       {(isDetailsError || isRequirementsError) && (
         <div className="submission-error">

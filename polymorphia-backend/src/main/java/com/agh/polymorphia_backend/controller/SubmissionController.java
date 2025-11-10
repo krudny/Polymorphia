@@ -2,7 +2,7 @@ package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.request.SubmissionDetailsRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.TargetRequestDto;
-import com.agh.polymorphia_backend.dto.response.submission.SubmissionDetailsDto;
+import com.agh.polymorphia_backend.dto.response.submission.SubmissionDetailsResponseDto;
 import com.agh.polymorphia_backend.dto.response.submission.SubmissionRequirementResponseDto;
 import com.agh.polymorphia_backend.service.submission.SubmissionService;
 import jakarta.validation.Valid;
@@ -12,7 +12,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -29,9 +28,9 @@ public class SubmissionController {
 
     @PostMapping("/details")
     @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
-    public ResponseEntity<Map<Long, SubmissionDetailsDto>> getSubmissionDetails(@RequestParam Long gradableEventId,
-                                                                                @Valid @RequestBody
-                                                                                TargetRequestDto target) {
+    public ResponseEntity<SubmissionDetailsResponseDto> getSubmissionDetails(@RequestParam Long gradableEventId,
+                                                                             @Valid @RequestBody
+                                                                             TargetRequestDto target) {
         return ResponseEntity.ok(submissionService.getSubmissionDetails(gradableEventId, target));
     }
 

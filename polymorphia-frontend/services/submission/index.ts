@@ -3,7 +3,7 @@ import {
   SubmissionDetailsResponseDTO,
   SubmissionDetailsRequestDTO,
 } from "@/interfaces/api/grade/submission";
-import { TargetRequestDTO } from "@/interfaces/api/grade/target";
+import { TargetRequestDTO } from "@/interfaces/api/target";
 import { API_HOST } from "@/services/api";
 
 export const SubmissionService = {

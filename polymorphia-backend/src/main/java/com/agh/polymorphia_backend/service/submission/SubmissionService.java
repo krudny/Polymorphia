@@ -6,6 +6,7 @@ import com.agh.polymorphia_backend.dto.request.target.StudentTargetRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.TargetRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.TargetType;
 import com.agh.polymorphia_backend.dto.response.submission.SubmissionDetailsDto;
+import com.agh.polymorphia_backend.dto.response.submission.SubmissionDetailsResponseDto;
 import com.agh.polymorphia_backend.dto.response.submission.SubmissionRequirementResponseDto;
 import com.agh.polymorphia_backend.model.event_section.EventSectionType;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
@@ -58,7 +59,7 @@ public class SubmissionService {
                 .map(submissionMapper::toSubmissionRequirementResponseDto).toList();
     }
 
-    public Map<Long, SubmissionDetailsDto> getSubmissionDetails(Long gradableEventId, TargetRequestDto target) {
+    public SubmissionDetailsResponseDto getSubmissionDetails(Long gradableEventId, TargetRequestDto target) {
         GradableEvent gradableEvent = validateAndGetGradableEventForTarget(gradableEventId, target);
 
         List<Student> submissionSources = getSubmissionSourcesForTarget(gradableEvent, target);

@@ -1,10 +1,13 @@
 {
-  "6": {
-    "url": "https://www.google.com",
-    "isLocked": true
+  "details": {
+    "6": {
+      "url": "https://www.google.com",
+      "isLocked": true
+    },
+    "7": {
+      "url": "https://www.bing.com",
+      "isLocked": false
+    }
   },
-  "7": {
-    "url": "https://www.bing.com",
-    "isLocked": false
-  }
+  "modifiedDate": "28.10.2023"
 }

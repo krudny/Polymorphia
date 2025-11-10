@@ -1,8 +1,8 @@
-import { TargetRequestDTO } from "../target";
+import { TargetRequestDTO } from "@/interfaces/api/target";
 
 type SubmissionRequirementId = number;
 
-export interface SubmissionDetails {
+export interface SubmissionDetail {
   url: string;
   isLocked: boolean;
 }
@@ -14,12 +14,17 @@ export interface SubmissionRequirementResponseDTO {
   orderIndex: number;
 }
 
-export type SubmissionDetailsResponseDTO = Record<
+export type SubmissionDetails = Record<
   SubmissionRequirementId,
-  SubmissionDetails
+  SubmissionDetail
 >;
+
+export interface SubmissionDetailsResponseDTO {
+  details: SubmissionDetails;
+  modifiedDate?: string;
+}
 
 export interface SubmissionDetailsRequestDTO {
   target: TargetRequestDTO;
-  details: SubmissionDetailsResponseDTO;
+  details: SubmissionDetails;
 }

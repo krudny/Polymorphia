@@ -10,6 +10,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.test.annotation.Rollback;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -26,6 +27,7 @@ public class SubmissionControllerTest extends ControllerTestConfig {
     @Value("classpath:responses/submission/submission_details_after.json")
     private Resource submissionDetailsAfterJson;
 
+    private static final List<String> datePropertyNames = List.of("modifiedDate");
 
     @Test
     void getSubmissionRequirements_ShouldReturnRequirements() throws IOException {
@@ -51,7 +53,7 @@ public class SubmissionControllerTest extends ControllerTestConfig {
                 7
         );
 
-        assertJsonEquals(submissionDetailsJson, actualResponse);
+        assertJsonEqualsIgnoringDates(submissionDetailsJson, actualResponse, datePropertyNames);
     }
 
     @Test
@@ -65,7 +67,7 @@ public class SubmissionControllerTest extends ControllerTestConfig {
                 7
         );
 
-        assertJsonEquals(submissionDetailsJson, actualResponse);
+        assertJsonEqualsIgnoringDates(submissionDetailsJson, actualResponse, datePropertyNames);
     }
 
     @Test
@@ -102,6 +104,6 @@ public class SubmissionControllerTest extends ControllerTestConfig {
                 7
         );
 
-        assertJsonEquals(submissionDetailsAfterJson, actualResponse);
+        assertJsonEqualsIgnoringDates(submissionDetailsAfterJson, actualResponse, List.of("modifiedDate"));
     }
 }

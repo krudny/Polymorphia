@@ -261,7 +261,7 @@ class SubmissionServiceTest extends BaseTest {
                 submissionService.getSubmissionDetails(
                     assignment.getId(),
                     target
-                );
+                ).details();
 
             assertThat(result).isNotNull();
             assertThat(result).hasSize(1);
@@ -1183,7 +1183,7 @@ class SubmissionServiceTest extends BaseTest {
             ).thenReturn(submissions);
 
             Map<Long, SubmissionDetailsDto> result =
-                submissionService.getSubmissionDetails(project.getId(), target);
+                submissionService.getSubmissionDetails(project.getId(), target).details();
 
             assertThat(result).isNotNull();
             assertThat(result).hasSize(1);
