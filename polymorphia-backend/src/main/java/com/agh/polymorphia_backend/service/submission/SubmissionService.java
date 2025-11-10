@@ -37,8 +37,8 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class SubmissionService {
+
     private static final String STUDENT_NOT_FOUND = "Nie znaleziono studenta.";
-    private static final String STUDENT_GROUP_NOT_FOUND = "Nie znaleziono grupy.";
     private static final String FORBIDDEN_LOCK_CHANGE = "Studenci nie mogą zmieniać statusu blokady.";
 
     private final GradableEventService gradableEventService;
@@ -94,9 +94,9 @@ public class SubmissionService {
         // studentId -> (submissionRequirementId -> submission)
         Map<Long, Map<Long, Submission>> submissionsPerStudent = submissionSources.stream().collect(
                 Collectors.toMap(Student::getUserId,
-                        (submissionSource) -> submissionRepository.getSubmissionsByGradableEventAndStudent(
+                        submissionSource -> submissionRepository.getSubmissionsByGradableEventAndStudent(
                                 gradableEventId, submissionSource.getUserId()).stream().collect(
-                                Collectors.toMap((submission) -> submission.getSubmissionRequirement().getId(),
+                                Collectors.toMap(submission -> submission.getSubmissionRequirement().getId(),
                                         Function.identity()))));
 
         List<Submission> submissionsToDelete = new ArrayList<>();
@@ -172,110 +172,77 @@ public class SubmissionService {
     }
 
     private List<Student> getSubmissionSourcesForTarget(GradableEvent gradableEvent, TargetRequestDto target) {
-        return switch (userService.getCurrentUserRole()) {
-            case STUDENT -> getSubmissionSourcesForTargetRequestedByStudent(gradableEvent, target);
-            case INSTRUCTOR -> getSubmissionSourcesForTargetRequestedByInstructor(gradableEvent, target);
-            case COORDINATOR -> getSubmissionSourcesForTargetRequestedByCoordinator(gradableEvent, target);
-            case UNDEFINED ->
-                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Użytkownik musi posiadać poprawną rolę.");
-        };
-    }
-
-    private List<Student> getSubmissionSourcesForTargetRequestedByStudent(GradableEvent gradableEvent,
-                                                                          TargetRequestDto target) {
+        Long userId = userService.getCurrentUser().getUserId();
+        UserType userType = userService.getCurrentUserRole();
         switch (target) {
             case StudentTargetRequestDto studentTargetRequestDto -> {
-                if (userService.getCurrentUser().getUserId().longValue() != studentTargetRequestDto.id().longValue()) {
+                if (userType.equals(UserType.STUDENT) && (!userId.equals(studentTargetRequestDto.id()))) {
                     throw new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND);
                 }
                 switch (gradableEvent.getEventSection().getEventSectionType()) {
                     case ASSIGNMENT -> {
-                        return List.of((Student) userService.getCurrentUser());
+                        return List.of(
+                                getStudentListForAssigment(gradableEvent.getId(), studentTargetRequestDto.id(), userId,
+                                        userType).orElseThrow(
+                                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND)));
                     }
                     case PROJECT -> {
-                        ProjectGroup projectGroup = projectGroupRepository.getProjectGroupByStudentIdAndProjectId(
-                                userService.getCurrentUser().getUserId(), gradableEvent.getId()).orElseThrow(
-                                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND));
-
-                        return projectGroupService.getStudentsFromProjectGroup(projectGroup);
+                        return getStudentListFromProjectGroup(
+                                getProjectGroupForStudentTarget(gradableEvent.getId(), studentTargetRequestDto.id(),
+                                        userId, userType));
                     }
                     default -> throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             }
             case StudentGroupTargetRequestDto studentGroupTargetRequestDto -> {
-                ProjectGroup projectGroup = projectGroupRepository.getProjectGroupByIdAndStudentIdAndProjectId(
-                                studentGroupTargetRequestDto.groupId(), userService.getCurrentUser().getUserId(),
-                                gradableEvent.getId())
-                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_GROUP_NOT_FOUND));
-
-                return projectGroupService.getStudentsFromProjectGroup(projectGroup);
+                return getStudentListFromProjectGroup(getProjectGroupForStudentGroupTarget(gradableEvent.getId(),
+                        studentGroupTargetRequestDto.groupId(), userId, userType));
             }
         }
     }
 
-    private List<Student> getSubmissionSourcesForTargetRequestedByInstructor(GradableEvent gradableEvent,
-                                                                             TargetRequestDto target) {
-        switch (target) {
-            case StudentTargetRequestDto studentTargetRequestDto -> {
-                switch (gradableEvent.getEventSection().getEventSectionType()) {
-                    case ASSIGNMENT -> {
-                        return List.of(studentRepository.findByUserIdAndGradableEventIdAndCourseGroupInstructorId(
-                                studentTargetRequestDto.id(), gradableEvent.getId(),
-                                userService.getCurrentUser().getUserId()).orElseThrow(
-                                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND)));
-                    }
-                    case PROJECT -> {
-                        ProjectGroup projectGroup =
-                                projectGroupRepository.getProjectGroupByStudentIdAndProjectIdAndInstructorId(
-                                        studentTargetRequestDto.id(), gradableEvent.getId(),
-                                        userService.getCurrentUser().getUserId()).orElseThrow(
-                                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND));
-
-                        return projectGroupService.getStudentsFromProjectGroup(projectGroup);
-                    }
-                    default -> throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
-                }
-            }
-            case StudentGroupTargetRequestDto studentGroupTargetRequestDto -> {
-                ProjectGroup projectGroup = projectGroupRepository.getProjectGroupByIdAndProjectIdAndInstructorId(
-                                studentGroupTargetRequestDto.groupId(), gradableEvent.getId(),
-                                userService.getCurrentUser().getUserId())
-                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_GROUP_NOT_FOUND));
-
-                return projectGroupService.getStudentsFromProjectGroup(projectGroup);
-            }
-        }
+    private Optional<Student> getStudentListForAssigment(Long gradableEventId, Long studentId, Long userId,
+                                                         UserType userType) {
+        return switch (userType) {
+            case STUDENT -> Optional.of((Student) userService.getCurrentUser());
+            case INSTRUCTOR -> studentRepository.findByUserIdAndGradableEventIdAndCourseGroupInstructorId(studentId,
+                    gradableEventId, userId);
+            case COORDINATOR -> studentRepository.findByUserIdAndGradableEventId(studentId, gradableEventId);
+            case UNDEFINED ->
+                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Użytkownik musi mieć poprawną rolę.");
+        };
     }
 
-    private List<Student> getSubmissionSourcesForTargetRequestedByCoordinator(GradableEvent gradableEvent,
-                                                                              TargetRequestDto target) {
-        switch (target) {
-            case StudentTargetRequestDto studentTargetRequestDto -> {
-                switch (gradableEvent.getEventSection().getEventSectionType()) {
-                    case ASSIGNMENT -> {
-                        return List.of(studentRepository.findByUserIdAndGradableEventId(studentTargetRequestDto.id(),
-                                gradableEvent.getId()).orElseThrow(
-                                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND)));
-                    }
-                    case PROJECT -> {
-                        ProjectGroup projectGroup = projectGroupRepository.getProjectGroupByStudentIdAndProjectId(
-                                studentTargetRequestDto.id(), gradableEvent.getId()).orElseThrow(
-                                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND));
+    private Optional<ProjectGroup> getProjectGroupForStudentTarget(Long projectId, Long studentId, Long userId,
+                                                                   UserType userType) {
+        return switch (userType) {
+            case STUDENT -> projectGroupRepository.getProjectGroupByStudentIdAndProjectId(userId, projectId);
+            case INSTRUCTOR ->
+                    projectGroupRepository.getProjectGroupByStudentIdAndProjectIdAndInstructorId(studentId, projectId,
+                            userId);
+            case COORDINATOR -> projectGroupRepository.getProjectGroupByStudentIdAndProjectId(studentId, projectId);
+            case UNDEFINED ->
+                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Użytkownik musi mieć poprawną rolę.");
+        };
+    }
 
-                        return projectGroupService.getStudentsFromProjectGroup(projectGroup);
-                    }
-                    default -> throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
-                }
-            }
-            case StudentGroupTargetRequestDto studentGroupTargetRequestDto -> {
-                ProjectGroup projectGroup =
-                        projectGroupRepository.getProjectGroupByIdAndProjectId(studentGroupTargetRequestDto.groupId(),
-                                gradableEvent.getId()).orElseThrow(
-                                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_GROUP_NOT_FOUND));
+    private Optional<ProjectGroup> getProjectGroupForStudentGroupTarget(Long gradableEventId, Long groupId, Long userId,
+                                                                        UserType userType) {
+        return switch (userType) {
+            case STUDENT -> projectGroupRepository.getProjectGroupByIdAndStudentIdAndProjectId(groupId, userId,
+                    gradableEventId);
+            case INSTRUCTOR ->
+                    projectGroupRepository.getProjectGroupByIdAndProjectIdAndInstructorId(groupId, gradableEventId,
+                            userId);
+            case COORDINATOR -> projectGroupRepository.getProjectGroupByIdAndProjectId(groupId, gradableEventId);
+            case UNDEFINED ->
+                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Użytkownik musi mieć poprawną rolę.");
+        };
+    }
 
-                return projectGroupService.getStudentsFromProjectGroup(projectGroup);
-            }
-        }
+    private List<Student> getStudentListFromProjectGroup(Optional<ProjectGroup> projectGroupOptional) {
+        return projectGroupService.getStudentsFromProjectGroup(projectGroupOptional.orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND)));
     }
 
     private GradableEvent validateUsageAndGetGradableEventForTarget(Long gradableEventId, TargetRequestDto target) {
