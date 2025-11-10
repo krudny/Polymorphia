@@ -202,8 +202,17 @@ export default function SubmissionsModal({
       )}
       {!isDetailsLoading &&
         !isRequirementsLoading &&
+        requirements &&
+        requirements.length === 0 && (
+          <div className="submission-error">
+            To wydarzenie nie ma żadnych wymagań.
+          </div>
+        )}
+      {!isDetailsLoading &&
+        !isRequirementsLoading &&
         details &&
-        requirements && (
+        requirements &&
+        requirements.length > 0 && (
           <SubmissionsModalContent
             requirements={requirements}
             details={details}
