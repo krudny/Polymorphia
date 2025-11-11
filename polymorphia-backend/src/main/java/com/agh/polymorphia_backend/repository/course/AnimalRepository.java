@@ -12,4 +12,11 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
     @Query("select a from Animal a join a.studentCourseGroupAssignment cga  join cga.courseGroup c " +
             "where cga.student.user.id=:studentId AND c.course.id=:courseId")
     Optional<Animal> findByCourseIdAndStudentId(Long courseId, Long studentId);
+
+
+    @Query("""
+                select a from Animal a
+                    where a.name = :name AND a.studentCourseGroupAssignment.courseGroup.course.id = :courseId
+            """)
+    Optional<Animal> findByNameAndCourseId(String name, Long courseId);
 }
