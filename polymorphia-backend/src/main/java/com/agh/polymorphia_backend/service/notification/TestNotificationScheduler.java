@@ -2,6 +2,7 @@ package com.agh.polymorphia_backend.service.notification;
 
 import com.agh.polymorphia_backend.dto.request.notification.NotificationCreationRequest;
 import com.agh.polymorphia_backend.model.notification.NotificationType;
+import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,8 +16,9 @@ import java.util.Set;
 public class TestNotificationScheduler {
     private final NotificationDispatcher notificationDispatcher;
     private final SseNotificationService sseNotificationService;
+    private final GradableEventService gradableEventService;
 
-    @Scheduled(fixedDelay = 15000)
+    @Scheduled(fixedDelay = 20000)
     public void generateTestNotifications() {
         Set<Long> activeUserIds = sseNotificationService.getActiveUserIds();
 
@@ -29,8 +31,8 @@ public class TestNotificationScheduler {
             try {
                 NotificationCreationRequest request = NotificationCreationRequest.builder()
                         .userId(userId)
-                        .notificationType(NotificationType.NEW_REWARD)
-                        .reward(null)
+                        .notificationType(NotificationType.NEW_GRADE)
+                        .gradableEvent(gradableEventService.getGradableEventById(10L))
                         .build();
 
                 notificationDispatcher.dispatch(request);

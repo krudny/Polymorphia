@@ -19,7 +19,7 @@ public class NotificationController {
     private final SseNotificationService sseNotificationService;
 
     @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter streamNotifications() {
+    public SseEmitter streamNotificationCount() {
         return sseNotificationService.subscribe();
     }
 

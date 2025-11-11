@@ -31,7 +31,7 @@ public class NotificationDispatcher {
             Notification notification = creator.create(request);
             Notification savedNotification = notificationRepository.save(notification);
 
-            notificationService.notifyUser(savedNotification.getUserId(), savedNotification);
+            notificationService.notifyUser(savedNotification.getUserId());
         } catch (IllegalArgumentException e) {
             log.warn(FAILED_TO_CREATE_NOTIFICATION, e);
         }

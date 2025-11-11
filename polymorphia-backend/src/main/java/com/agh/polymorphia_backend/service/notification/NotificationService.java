@@ -41,10 +41,7 @@ public class NotificationService {
         sseNotificationService.sendUnreadCount(userId, remainingCount);
     }
 
-    public void notifyUser(Long userId, com.agh.polymorphia_backend.model.notification.Notification notification) {
-        NotificationResponseDto dto = notificationMapper.toNotificationResponseDto(notification);
-        sseNotificationService.sendNotificationToUser(userId, dto);
-
+    public void notifyUser(Long userId) {
         Long unreadCount = notificationRepository.countByUserId(userId);
         sseNotificationService.sendUnreadCount(userId, unreadCount);
     }
