@@ -1,15 +1,27 @@
+"use client";
+
 import { X } from "lucide-react";
-import { MouseEvent, useRef } from "react";
+import { MouseEvent, useEffect, useRef } from "react";
 import { NotificationCardProps } from "@/components/notification-modal/card/types";
 import { getNotificationCardHeader } from "@/components/notification-modal/card/utils";
 import useDeleteNotification from "@/hooks/notification/useDeleteNotification";
-import { animateNotificationRemoval } from "@/animations/Notification";
+import {
+  animateNotificationEntry,
+  animateNotificationRemoval,
+} from "@/animations/Notification";
 
 export default function NotificationCard({
   notification,
+  isNew,
 }: NotificationCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const { mutation } = useDeleteNotification();
+
+  useEffect(() => {
+    if (cardRef.current && isNew) {
+      animateNotificationEntry(cardRef.current);
+    }
+  }, []);
 
   const handleClose = (event: MouseEvent) => {
     event.stopPropagation();
@@ -26,7 +38,7 @@ export default function NotificationCard({
   return (
     <div
       ref={cardRef}
-      className="w-full flex items-start gap-3 p-3 bg-neutral-50 dark:bg-primary-dark rounded-xl hover:shadow hover:cursor-pointer transition-shadow"
+      className={`w-full flex items-start mb-3 last:mb-0 gap-3 p-3 ${isNew && "opacity-0"} bg-neutral-50 dark:bg-primary-dark rounded-xl hover:shadow hover:cursor-pointer transition-shadow`}
     >
       <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-secondary-dark flex-centered text-2xl">
         <span className="material-symbols text-neutral-50 text-xl">trophy</span>

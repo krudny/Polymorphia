@@ -6,4 +6,5 @@ export interface NotificationContextInterface {
   notifications: NotificationResponseDTO[];
   notificationCount: number;
   isNotificationsError: boolean;
+  removeNotification: (notificationId: number) => void;
 }

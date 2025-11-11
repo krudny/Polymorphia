@@ -1,5 +1,25 @@
 import gsap from "gsap";
 
+export const animateNotificationEntry = (element: HTMLElement): void => {
+  gsap.fromTo(
+    element,
+    {
+      opacity: 0,
+      scale: 0.85,
+      height: 0,
+      marginBottom: 0,
+    },
+    {
+      opacity: 1,
+      scale: 1,
+      height: "auto",
+      marginBottom: 16,
+      duration: 0.4,
+      ease: "sine.out",
+    }
+  );
+};
+
 export const animateNotificationRemoval = (
   element: HTMLElement,
   onComplete?: () => void
@@ -7,7 +27,6 @@ export const animateNotificationRemoval = (
   gsap
     .timeline({
       onComplete: () => {
-        element.remove();
         onComplete?.();
       },
     })
@@ -24,8 +43,8 @@ export const animateNotificationRemoval = (
         marginBottom: 0,
         paddingTop: 0,
         paddingBottom: 0,
-        duration: 0.1,
-        ease: "power2.inOut",
+        duration: 0.2,
+        ease: "power1.inOut",
       },
       "+=0.1"
     );

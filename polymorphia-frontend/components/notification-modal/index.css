@@ -2,6 +2,6 @@
 @import "../../styles/globals.css";
 
 .notification-list {
-  @apply w-full flex flex-col gap-y-4 max-h-[300px] overflow-y-auto custom-scrollbar transition-all custom-ease-with-duration;
+  @apply w-full flex flex-col max-h-[300px] overflow-y-auto custom-scrollbar transition-all custom-ease-with-duration;
   scrollbar-gutter: stable both-edges;
 }

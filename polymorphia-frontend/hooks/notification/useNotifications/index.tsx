@@ -15,6 +15,12 @@ export function useNotifications(enabled: boolean): UseNotifications {
   const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const reconnectAttemptsRef = useRef<number>(0);
 
+  const removeNotification = (notificationId: number): void => {
+    setNotifications((prev) =>
+      prev.filter((notification) => notification.id !== notificationId)
+    );
+  };
+
   useEffect(() => {
     if (!enabled) {
       console.log("[SSE Notifications] Closing connection - modal closed");
@@ -115,5 +121,5 @@ export function useNotifications(enabled: boolean): UseNotifications {
     };
   }, [enabled]);
 
-  return { notifications, isError };
+  return { notifications, isError, removeNotification };
 }

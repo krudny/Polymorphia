@@ -10,9 +10,11 @@ export const NotificationContext = createContext<
 export const NotificationProvider = ({ children }: { children: ReactNode }) => {
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
   const { notificationCount } = useNotificationCount();
-  const { notifications, isError: isNotificationsError } = useNotifications(
-    isNotificationModalOpen
-  );
+  const {
+    notifications,
+    isError: isNotificationsError,
+    removeNotification,
+  } = useNotifications(isNotificationModalOpen);
 
   return (
     <NotificationContext.Provider
@@ -22,6 +24,7 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
         notifications,
         notificationCount,
         isNotificationsError,
+        removeNotification,
       }}
     >
       {children}

@@ -18,12 +18,14 @@ export default function NotificationModal() {
       onClosed={() => setIsNotificationModalOpen(false)}
       title="Powiadomienia"
     >
-      <div className="w-[350px] min-h-[100px]">
-        {notificationCount > 0 && !notifications && !isNotificationsError && (
-          <div className="h-[100px] relative">
-            <Loading />
-          </div>
-        )}
+      <div className="w-[350px] min-h-[100px] custom-ease-with-duration">
+        {notificationCount > 0 &&
+          notifications.length == 0 &&
+          !isNotificationsError && (
+            <div className="h-[100px] relative">
+              <Loading />
+            </div>
+          )}
         {isNotificationsError && (
           <div className="h-[100px] relative flex-col-centered">
             <span className="text-3xl">Nie udało się pobrać powiadomień</span>
@@ -31,10 +33,11 @@ export default function NotificationModal() {
         )}
         {notifications && notifications.length > 0 && (
           <div className="notification-list">
-            {notifications.map((notification) => (
+            {notifications.map((notification, index) => (
               <NotificationCard
                 key={notification.id}
                 notification={notification}
+                isNew={index == 0}
               />
             ))}
           </div>
