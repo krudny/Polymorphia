@@ -77,7 +77,7 @@ public class SubmissionControllerTest extends ControllerTestConfig {
                 "submissions/details?gradableEventId={gradableEventId}",
                 "sampleuser@test.com",
                 "password",
-                200,
+                204,
                 Optional.of(SubmissionDetailsRequestDto.builder()
                         .target(StudentGroupTargetRequestDto.builder()
                                 .groupId(1L).build())

@@ -39,6 +39,6 @@ public class SubmissionController {
     public ResponseEntity<Void> putSubmissionDetails(@RequestParam Long gradableEventId,
                                                      @Valid @RequestBody SubmissionDetailsRequestDto requestDto) {
         submissionService.putSubmissionDetails(gradableEventId, requestDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

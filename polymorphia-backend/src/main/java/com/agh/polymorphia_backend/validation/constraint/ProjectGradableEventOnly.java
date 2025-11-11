@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = ProjectGradableEventValidator.class)
 public @interface ProjectGradableEventOnly {
-    String message() default "GradableEvent must belong to ProjectSection";
+    String message() default "Wydarzenie musi być częścią sekcji projektowej.";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

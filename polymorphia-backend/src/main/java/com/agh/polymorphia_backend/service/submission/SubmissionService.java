@@ -40,6 +40,7 @@ public class SubmissionService {
 
     private static final String STUDENT_NOT_FOUND = "Nie znaleziono studenta.";
     private static final String FORBIDDEN_LOCK_CHANGE = "Studenci nie mogą zmieniać statusu blokady.";
+    private static final String INVALID_ROLE = "Użytkownik musi mieć poprawną rolę.";
 
     private final GradableEventService gradableEventService;
     private final AccessAuthorizer accessAuthorizer;
@@ -191,7 +192,8 @@ public class SubmissionService {
                                 getProjectGroupForStudentTarget(gradableEvent.getId(), studentTargetRequestDto.id(),
                                         userId, userType));
                     }
-                    default -> throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+                    default -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                            "Tylko wydarzenia z sekcji zadaniowej i projektowej wspierają oddawanie zadania.");
                 }
             }
             case StudentGroupTargetRequestDto studentGroupTargetRequestDto -> {
@@ -209,7 +211,7 @@ public class SubmissionService {
                     gradableEventId, userId);
             case COORDINATOR -> studentRepository.findByUserIdAndGradableEventId(studentId, gradableEventId);
             case UNDEFINED ->
-                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Użytkownik musi mieć poprawną rolę.");
+                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, INVALID_ROLE);
         };
     }
 
@@ -222,7 +224,7 @@ public class SubmissionService {
                             userId);
             case COORDINATOR -> projectGroupRepository.getProjectGroupByStudentIdAndProjectId(studentId, projectId);
             case UNDEFINED ->
-                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Użytkownik musi mieć poprawną rolę.");
+                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, INVALID_ROLE);
         };
     }
 
@@ -236,7 +238,7 @@ public class SubmissionService {
                             userId);
             case COORDINATOR -> projectGroupRepository.getProjectGroupByIdAndProjectId(groupId, gradableEventId);
             case UNDEFINED ->
-                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Użytkownik musi mieć poprawną rolę.");
+                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, INVALID_ROLE);
         };
     }
 
