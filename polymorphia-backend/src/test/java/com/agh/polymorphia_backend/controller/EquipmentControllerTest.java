@@ -11,6 +11,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.test.annotation.Rollback;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 import static com.agh.polymorphia_backend.controller.ControllerTestUtil.*;
@@ -38,6 +39,8 @@ public class EquipmentControllerTest extends ControllerTestConfig {
     @Value("classpath:responses/equipment/potential_xp_one.json")
     private Resource potentialXpONEJson;
 
+    private static final List<String> datePropertyNames = List.of("receivedDate", "usedDate");
+
     @Test
     @Rollback
     void getItems_ShouldReturnAnimalItems() throws IOException {
@@ -54,28 +57,6 @@ public class EquipmentControllerTest extends ControllerTestConfig {
                 "sampleuser@test.com", "password", 200, 4);
 
         assertJsonEquals(chestsJson, actualResponse);
-    }
-
-    private static void assertJsonEqualsIgnoringDates(Resource expected, String actual) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode expectedNode = mapper.readTree(expected.getInputStream());
-        JsonNode actualNode = mapper.readTree(actual);
-
-        removeDateFields(expectedNode);
-        removeDateFields(actualNode);
-
-        assertEquals(expectedNode, actualNode);
-    }
-
-    private static void removeDateFields(JsonNode node) {
-        if (node.isArray()) {
-            node.forEach(EquipmentControllerTest::removeDateFields);
-        } else if (node.isObject()) {
-            ObjectNode objectNode = (ObjectNode) node;
-            objectNode.remove("receivedDate");
-            objectNode.remove("usedDate");
-            objectNode.elements().forEachRemaining(EquipmentControllerTest::removeDateFields);
-        }
     }
 
     @Test
@@ -104,12 +85,12 @@ public class EquipmentControllerTest extends ControllerTestConfig {
         String chests = getEndpoint("/equipment/chests?courseId={courseId}",
                 "sampleuser@test.com", "password", 200, 4);
 
-        assertJsonEqualsIgnoringDates(chestALLOpenedJson, chests);
+        assertJsonEqualsIgnoringDates(chestALLOpenedJson, chests, datePropertyNames);
 
         String items = getEndpoint("/equipment/items?courseId={courseId}",
                 "sampleuser@test.com", "password", 200, 4);
 
-        assertJsonEqualsIgnoringDates(itemsALLOpenedJson, items);
+        assertJsonEqualsIgnoringDates(itemsALLOpenedJson, items, datePropertyNames);
     }
 
     @Test
@@ -137,12 +118,12 @@ public class EquipmentControllerTest extends ControllerTestConfig {
         String chests = getEndpoint("/equipment/chests?courseId={courseId}",
                 "sampleuser@test.com", "password", 200, 4);
 
-        assertJsonEqualsIgnoringDates(chestONEPercentageOpenedJson, chests);
+        assertJsonEqualsIgnoringDates(chestONEPercentageOpenedJson, chests, datePropertyNames);
 
         String items = getEndpoint("/equipment/items?courseId={courseId}",
                 "sampleuser@test.com", "password", 200, 4);
 
-        assertJsonEqualsIgnoringDates(itemsONEPercentageOpenedJson, items);
+        assertJsonEqualsIgnoringDates(itemsONEPercentageOpenedJson, items, datePropertyNames);
     }
 
     @Test
@@ -158,12 +139,12 @@ public class EquipmentControllerTest extends ControllerTestConfig {
         String chests = getEndpoint("/equipment/chests?courseId={courseId}",
                 "sampleuser@test.com", "password", 200, 4);
 
-        assertJsonEqualsIgnoringDates(chestsJson, chests);
+        assertJsonEqualsIgnoringDates(chestsJson, chests, datePropertyNames);
 
         String items = getEndpoint("/equipment/items?courseId={courseId}",
                 "sampleuser@test.com", "password", 200, 4);
 
-        assertJsonEqualsIgnoringDates(itemsJson, items);
+        assertJsonEqualsIgnoringDates(itemsJson, items, datePropertyNames);
     }
 
     @Test

@@ -17,9 +17,11 @@ import {
   SwapAnimationWrapper,
 } from "@/animations/SwapAnimationWrapper";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
+import ErrorComponent from "@/components/error";
 
 export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
-  const { state, isSpecificDataLoading, submitGrade } = useGradingContext();
+  const { state, isSpecificDataLoading, isSpecificDataError, submitGrade } =
+    useGradingContext();
   const { selectedTarget } = useTargetContext();
   const accordionRef = useRef<AccordionRef>(null);
   const wrapperRef = useFadeInAnimate(!!criteria);
@@ -31,9 +33,21 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
     </div>
   );
 
+  const criterionSectionErrorComponent = (
+    <div className="h-[320px] mt-2 relative">
+      <ErrorComponent message="Nie udało się załadować kryterium." />
+    </div>
+  );
+
   const commentSectionLoadingComponent = (
     <div className="h-[100px] mt-2 relative">
       <Loading />
+    </div>
+  );
+
+  const commentSectionErrorComponent = (
+    <div className="h-[100px] mt-2 relative">
+      <ErrorComponent message="Nie udało się załadować komentarza do oceny." />
     </div>
   );
 
@@ -70,19 +84,26 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
                 <SwapAnimationWrapper
                   {...baseSwapAnimationWrapperProps}
                   keyProp={
-                    criterionGrade && !isSpecificDataLoading
+                    criterionGrade &&
+                    !isSpecificDataLoading &&
+                    !isSpecificDataError
                       ? getKeyForSelectedTarget(selectedTarget)
-                      : "loading" + getKeyForSelectedTarget(selectedTarget)
+                      : (isSpecificDataLoading ? "loading" : "error") +
+                        getKeyForSelectedTarget(selectedTarget)
                   }
                 >
-                  {criterionGrade && !isSpecificDataLoading ? (
+                  {criterionGrade &&
+                  !isSpecificDataLoading &&
+                  !isSpecificDataError ? (
                     <Criterion
                       key={getKeyForSelectedTarget(selectedTarget)}
                       criterion={criterion}
                       criterionGrade={criterionGrade}
                     />
-                  ) : (
+                  ) : isSpecificDataLoading ? (
                     criterionSectionLoadingComponent
+                  ) : (
+                    criterionSectionErrorComponent
                   )}
                 </SwapAnimationWrapper>
               </AccordionSection>
@@ -98,15 +119,18 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
             <SwapAnimationWrapper
               {...baseSwapAnimationWrapperProps}
               keyProp={
-                !isSpecificDataLoading
+                !isSpecificDataLoading && !isSpecificDataError
                   ? getKeyForSelectedTarget(selectedTarget)
-                  : "loading" + getKeyForSelectedTarget(selectedTarget)
+                  : (isSpecificDataLoading ? "loading" : "error") +
+                    getKeyForSelectedTarget(selectedTarget)
               }
             >
-              {!isSpecificDataLoading ? (
+              {!isSpecificDataLoading && !isSpecificDataError ? (
                 <CommentWrapper />
-              ) : (
+              ) : isSpecificDataLoading ? (
                 commentSectionLoadingComponent
+              ) : (
+                commentSectionErrorComponent
               )}
             </SwapAnimationWrapper>
           </AccordionSection>

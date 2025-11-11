@@ -5,9 +5,11 @@ import useGradingContext from "@/hooks/contexts/useGradingContext";
 import GradeCriteria from "@/components/column-schema/column-component/grading/grade/criteria";
 import ColumnComponent from "@/components/column-schema/column-component";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
+import ErrorComponent from "@/components/error";
 
 export default function Grade() {
-  const { criteria, isGeneralDataLoading } = useGradingContext();
+  const { criteria, isGeneralDataLoading, isGeneralDataError } =
+    useGradingContext();
   const { state: targetState } = useTargetContext();
 
   const topComponent = () => <h1>Ocena</h1>;
@@ -16,9 +18,15 @@ export default function Grade() {
       <Loading />
     </div>
   );
+  const errorComponent = (
+    <div className="h-[300px] relative">
+      <ErrorComponent message="Nie udało się załadować kryteriów oceny." />
+    </div>
+  );
 
-  const mainComponent =
-    !criteria || isGeneralDataLoading || !targetState.selectedTarget
+  const mainComponent = isGeneralDataError
+    ? () => errorComponent
+    : !criteria || isGeneralDataLoading || !targetState.selectedTarget
       ? () => loadingComponent
       : () => <GradeCriteria criteria={criteria} />;
 

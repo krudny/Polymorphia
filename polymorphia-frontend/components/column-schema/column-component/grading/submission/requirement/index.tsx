@@ -12,12 +12,17 @@ import {
 } from "@/animations/SwapAnimationWrapper";
 import { getKeyForSelectedTarget } from "@/providers/grading/utils/getKeyForSelectedTarget";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
+import ErrorComponent from "@/components/error";
 
 export default function SubmissionRequirement({
   requirements,
 }: SubmissionsRequirementProps) {
-  const { state, isSpecificDataLoading, submitSubmissions } =
-    useGradingContext();
+  const {
+    state,
+    isSpecificDataLoading,
+    isSpecificDataError,
+    submitSubmissions,
+  } = useGradingContext();
   const { selectedTarget } = useTargetContext();
   const wrapperRef = useFadeInAnimate(!!requirements);
   const isXL = useMediaQuery({ minWidth: "1400px" });
@@ -29,6 +34,12 @@ export default function SubmissionRequirement({
   const requirementLoadingComponent = (
     <div className="h-[146px] mt-2 relative">
       <Loading />
+    </div>
+  );
+
+  const requirementErrorComponent = (
+    <div className="h-[146px] mt-2 relative">
+      <ErrorComponent message="Nie udało się załadować oddanego zadania." />
     </div>
   );
 
@@ -79,12 +90,13 @@ export default function SubmissionRequirement({
               <SwapAnimationWrapper
                 {...baseSwapAnimationWrapperProps}
                 keyProp={
-                  detail && !isSpecificDataLoading
+                  detail && !isSpecificDataLoading && !isSpecificDataError
                     ? getKeyForSelectedTarget(selectedTarget)
-                    : "loading" + getKeyForSelectedTarget(selectedTarget)
+                    : (isSpecificDataLoading ? "loading" : "error") +
+                      getKeyForSelectedTarget(selectedTarget)
                 }
               >
-                {detail && !isSpecificDataLoading ? (
+                {detail && !isSpecificDataLoading && !isSpecificDataError ? (
                   <div className="submissions-requirement">
                     <div className="submissions-requirement-url">
                       <input
@@ -116,8 +128,10 @@ export default function SubmissionRequirement({
                       </div>
                     </div>
                   </div>
-                ) : (
+                ) : isSpecificDataLoading ? (
                   requirementLoadingComponent
+                ) : (
+                  requirementErrorComponent
                 )}
               </SwapAnimationWrapper>
             </AccordionSection>

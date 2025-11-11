@@ -18,17 +18,26 @@ import { getKeyForSelectedTarget } from "@/providers/grading/utils/getKeyForSele
 import Loading from "@/components/loading";
 import useStudentItems from "@/hooks/course/useStudentItems";
 import useStudentChests from "@/hooks/course/useStudentChests";
+import ErrorComponent from "@/components/error";
 
 const SECTION_IDS = new Set(["student-summary", "items", "chests"]);
 const INITIALLY_OPENED = new Set(["student-summary"]);
 
 export default function StudentInfo() {
   const accordionRef = useRef<AccordionRef>(null);
-  const { isSpecificDataLoading, studentSummary } = useCourseGroupsContext();
+  const { isSpecificDataLoading, isSpecificDataError, studentSummary } =
+    useCourseGroupsContext();
   const { selectedTarget, targetId } = useTargetContext();
-  const { data: items, isLoading: isItemsLoading } = useStudentItems(targetId);
-  const { data: chests, isLoading: isChestsLoading } =
-    useStudentChests(targetId);
+  const {
+    data: items,
+    isLoading: isItemsLoading,
+    isError: isItemsError,
+  } = useStudentItems(targetId);
+  const {
+    data: chests,
+    isLoading: isChestsLoading,
+    isError: isChestsError,
+  } = useStudentChests(targetId);
 
   const topComponent = () => <h1>Student</h1>;
   const mainComponent = () => (
@@ -49,16 +58,23 @@ export default function StudentInfo() {
           <SwapAnimationWrapper
             {...baseSwapAnimationWrapperProps}
             keyProp={
-              studentSummary && !isSpecificDataLoading
+              studentSummary && !isSpecificDataLoading && !isSpecificDataError
                 ? getKeyForSelectedTarget(selectedTarget)
-                : "loading" + getKeyForSelectedTarget(selectedTarget)
+                : (isSpecificDataLoading ? "loading" : "error") +
+                  getKeyForSelectedTarget(selectedTarget)
             }
           >
-            {studentSummary && !isSpecificDataLoading ? (
+            {studentSummary &&
+            !isSpecificDataLoading &&
+            !isSpecificDataError ? (
               <StudentSummary studentSummary={studentSummary} />
-            ) : (
+            ) : isSpecificDataLoading ? (
               <div className="course-group-loading">
                 <Loading />
+              </div>
+            ) : (
+              <div className="course-group-loading">
+                <ErrorComponent message="ie udało się załadować szczegółów studenta." />
               </div>
             )}
           </SwapAnimationWrapper>
@@ -72,16 +88,21 @@ export default function StudentInfo() {
           <SwapAnimationWrapper
             {...baseSwapAnimationWrapperProps}
             keyProp={
-              items && !isItemsLoading
+              items && !isItemsLoading && !isItemsError
                 ? getKeyForSelectedTarget(selectedTarget)
-                : "loading" + getKeyForSelectedTarget(selectedTarget)
+                : (isItemsLoading ? "loading" : "error") +
+                  getKeyForSelectedTarget(selectedTarget)
             }
           >
-            {items && !isItemsLoading ? (
+            {items && !isItemsLoading && !isItemsError ? (
               <ItemsSummary items={items} />
-            ) : (
+            ) : isItemsLoading ? (
               <div className="course-group-loading">
                 <Loading />
+              </div>
+            ) : (
+              <div className="course-group-loading">
+                <ErrorComponent message="Nie udało się załadować przedmiotów." />
               </div>
             )}
           </SwapAnimationWrapper>
@@ -96,16 +117,21 @@ export default function StudentInfo() {
           <SwapAnimationWrapper
             {...baseSwapAnimationWrapperProps}
             keyProp={
-              chests && !isChestsLoading
+              chests && !isChestsLoading && !isChestsError
                 ? getKeyForSelectedTarget(selectedTarget)
-                : "loading" + getKeyForSelectedTarget(selectedTarget)
+                : (isChestsLoading ? "loading" : "error") +
+                  getKeyForSelectedTarget(selectedTarget)
             }
           >
-            {chests && !isChestsLoading ? (
+            {chests && !isChestsLoading && !isChestsError ? (
               <ChestSummary chests={chests} />
-            ) : (
+            ) : isChestsLoading ? (
               <div className="course-group-loading">
                 <Loading />
+              </div>
+            ) : (
+              <div className="course-group-loading">
+                <ErrorComponent message="Nie udało się załadować skrzynek." />
               </div>
             )}
           </SwapAnimationWrapper>
