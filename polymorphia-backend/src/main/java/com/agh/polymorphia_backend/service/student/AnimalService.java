@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class AnimalService {
@@ -61,6 +63,10 @@ public class AnimalService {
         Student student = studentRepository.findByUserId(user.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Student nie został znaleziony."));
 
+        getAnimalByNameAndCourseId(requestDTO.getAnimalName(), requestDTO.getCourseId()).ifPresent(animal -> {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Zwierzak z tą nazwą już istnieje.");
+        });
+
         Animal animal = Animal.builder()
                 .name(requestDTO.getAnimalName())
                 .build();
@@ -81,5 +87,9 @@ public class AnimalService {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Nie udało się utworzyć zwierzaka.");
         }
+    }
+
+    private Optional<Animal> getAnimalByNameAndCourseId(String animalName, Long courseId) {
+        return animalRepository.findByNameAndCourseId(animalName, courseId);
     }
 }
