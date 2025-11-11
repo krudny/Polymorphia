@@ -18,7 +18,7 @@ public class TestNotificationScheduler {
     private final SseNotificationService sseNotificationService;
     private final GradableEventService gradableEventService;
 
-    @Scheduled(fixedDelay = 20000)
+    @Scheduled(fixedDelay = 60000)
     public void generateTestNotifications() {
         Set<Long> activeUserIds = sseNotificationService.getActiveUserIds();
 

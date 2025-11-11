@@ -5,8 +5,12 @@ import NotificationCard from "@/components/notification-modal/card";
 import "./index.css";
 
 export default function NotificationModal() {
-  const { notifications, isLoading, isError, setIsNotificationModalOpen } =
-    useNotificationContext();
+  const {
+    notifications,
+    notificationCount,
+    isNotificationsError,
+    setIsNotificationModalOpen,
+  } = useNotificationContext();
 
   return (
     <Modal
@@ -15,12 +19,12 @@ export default function NotificationModal() {
       title="Powiadomienia"
     >
       <div className="w-[350px] min-h-[100px]">
-        {isLoading && (
+        {notificationCount > 0 && !notifications && !isNotificationsError && (
           <div className="h-[100px] relative">
             <Loading />
           </div>
         )}
-        {isError && !isLoading && (
+        {isNotificationsError && (
           <div className="h-[100px] relative flex-col-centered">
             <span className="text-3xl">Nie udało się pobrać powiadomień</span>
           </div>
@@ -35,7 +39,7 @@ export default function NotificationModal() {
             ))}
           </div>
         )}
-        {notifications && notifications.length === 0 && (
+        {notificationCount === 0 && !isNotificationsError && (
           <div className="h-[100px] relative flex-col-centered">
             <span className="text-2xl">
               Wszystkie powiadomienia przeczytane!

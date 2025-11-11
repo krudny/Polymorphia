@@ -7,6 +7,7 @@ export const animateNotificationRemoval = (
   gsap
     .timeline({
       onComplete: () => {
+        element.remove();
         onComplete?.();
       },
     })

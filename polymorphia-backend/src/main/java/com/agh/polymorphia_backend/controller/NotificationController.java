@@ -1,7 +1,5 @@
 package com.agh.polymorphia_backend.controller;
 
-import com.agh.polymorphia_backend.dto.response.notification.NotificationResponseDto;
-import com.agh.polymorphia_backend.service.notification.NotificationService;
 import com.agh.polymorphia_backend.service.notification.SseNotificationService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
@@ -9,28 +7,27 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/notifications")
 @AllArgsConstructor
 public class NotificationController {
-    private final NotificationService notificationService;
     private final SseNotificationService sseNotificationService;
 
-    @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(value = "/stream/count", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter streamNotificationCount() {
-        return sseNotificationService.subscribe();
+        return sseNotificationService.subscribeToCount();
     }
 
-    @GetMapping()
-    public ResponseEntity<List<NotificationResponseDto>> getAllNotifications() {
-        return ResponseEntity.ok(notificationService.getAllNotificationsForUser());
+    @GetMapping(value = "/stream/notifications", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter streamNotifications() {
+        return sseNotificationService.subscribeToNotifications();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteNotification(@PathVariable Long id) {
-        notificationService.deleteNotification(id);
+        sseNotificationService.deleteNotification(id);
         return ResponseEntity.noContent().build();
     }
 }
+
