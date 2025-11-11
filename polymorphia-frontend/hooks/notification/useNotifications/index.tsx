@@ -28,6 +28,7 @@ export function useNotifications(enabled: boolean): UseNotifications {
       }
       reconnectAttemptsRef.current = 0;
       setIsError(false);
+      setNotifications([]);
       return;
     }
 
@@ -110,6 +111,7 @@ export function useNotifications(enabled: boolean): UseNotifications {
         clearTimeout(reconnectTimeoutRef.current);
         reconnectTimeoutRef.current = null;
       }
+      setNotifications([]);
     };
   }, [enabled]);
 
