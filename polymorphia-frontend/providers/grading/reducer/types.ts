@@ -1,11 +1,14 @@
 import { CriteriaDetailsRequestDTO } from "@/interfaces/api/grade/criteria";
-import { SubmissionDetailsResponseDTO } from "@/interfaces/api/grade/submission";
+import {
+  SubmissionDetails,
+  SubmissionDetailsResponseDTO,
+} from "@/interfaces/api/grade/submission";
 import { ShortGradeResponseDTO } from "@/interfaces/api/grade/grade";
 
 export interface GradingReducerState {
   criteria: Record<number, CriteriaDetailsRequestDTO>;
   comment: string;
-  submissionDetails: SubmissionDetailsResponseDTO;
+  submissionDetails: SubmissionDetails;
 }
 
 export const GradingReducerActions = {

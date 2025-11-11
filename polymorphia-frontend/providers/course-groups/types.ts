@@ -12,6 +12,7 @@ export interface CourseGroupsContextInterface {
   studentSummary: StudentSummaryResponseDTO | undefined;
   lastActivities: StudentLastActivityDTO[] | undefined;
   isSpecificDataLoading: boolean;
+  isSpecificDataError: boolean;
 }
 
 export type CourseGroupsFilterId = "sortOrder" | "sortBy";
