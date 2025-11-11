@@ -151,8 +151,8 @@ public class SseNotificationService {
     @Transactional
     public void deleteNotification(Long notificationId) {
         Long userId = userService.getCurrentUser().getUser().getId();
-        sendUnreadCount(userId);
         notificationRepository.deleteByIdAndUserId(notificationId, userId);
+        sendUnreadCount(userId);
     }
 
     private List<NotificationResponseDto> getAllNotificationsForUser(Long userId) {
