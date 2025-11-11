@@ -14,7 +14,7 @@ import useShortGrade from "@/hooks/course/useShortGrade";
 import { getRequestTargetFromResponseTarget } from "@/providers/grading/utils/getRequestTargetFromResponseTarget";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import useSubmissionDetails from "@/hooks/course/useSubmissionDetails";
-import { SubmissionDetailsResponseDTO } from "@/interfaces/api/grade/submission";
+import { SubmissionDetails } from "@/interfaces/api/grade/submission";
 import useSubmissionsUpdate from "@/hooks/course/useSubmissionsUpdate";
 import useSubmissionRequirements from "@/hooks/course/useSubmissionRequirements";
 import useCriteria from "@/hooks/course/useCriteria";
@@ -50,17 +50,27 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
     });
   }, [sortBy, sortOrder, groups, gradeStatus, applyFiltersCallback]);
 
-  const { data: criteria, isLoading: isCriteriaLoading } = useCriteria();
-  const { data: grade, isLoading: isGradeLoading } = useShortGrade(
-    targetState.selectedTarget
-  );
+  const {
+    data: criteria,
+    isLoading: isCriteriaLoading,
+    isError: isCriteriaError,
+  } = useCriteria();
+  const {
+    data: grade,
+    isLoading: isGradeLoading,
+    isError: isGradeError,
+  } = useShortGrade(targetState.selectedTarget);
   const { mutate: mutateGrade } = useGradeUpdate();
   const {
     data: submissionRequirements,
     isLoading: isSubmissionRequirementsLoading,
+    isError: isSubmissionRequirementsError,
   } = useSubmissionRequirements();
-  const { data: submissionDetails, isLoading: isSubmissionDetailsLoading } =
-    useSubmissionDetails(targetState.selectedTarget);
+  const {
+    data: submissionDetails,
+    isLoading: isSubmissionDetailsLoading,
+    isError: isSubmissionDetailsError,
+  } = useSubmissionDetails(targetState.selectedTarget);
   const { mutate: mutateSubmissions } = useSubmissionsUpdate({
     target: targetState.selectedTarget,
   });
@@ -104,9 +114,7 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  const submitSubmissions = (
-    submissionDetails: SubmissionDetailsResponseDTO
-  ) => {
+  const submitSubmissions = (submissionDetails: SubmissionDetails) => {
     if (!targetState.selectedTarget) {
       return;
     }
@@ -126,7 +134,9 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
         submissionRequirements,
         isGeneralDataLoading:
           isCriteriaLoading || isSubmissionRequirementsLoading,
+        isGeneralDataError: isCriteriaError || isSubmissionRequirementsError,
         isSpecificDataLoading: isGradeLoading || isSubmissionDetailsLoading,
+        isSpecificDataError: isGradeError || isSubmissionDetailsError,
         submitGrade,
         submitSubmissions,
       }}

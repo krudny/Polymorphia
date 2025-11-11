@@ -38,15 +38,19 @@ function SubmissionsModalContent({
     target: { type: TargetTypes.STUDENT, id },
   });
 
-  const [currentDetails, setCurrentDetails] = useState(details);
+  const [currentDetails, setCurrentDetails] = useState(details.details);
   const [detailsModified, setDetailsModified] = useState(false);
 
   const mandatoryUrlsNotEmpty = requirements
     .filter((requirement) => requirement.isMandatory)
-    .every((requirement) => currentDetails[requirement.id].url.length > 0);
+    .every(
+      (requirement) =>
+        currentDetails[requirement.id] &&
+        currentDetails[requirement.id].url.length > 0
+    );
 
   const validUrls = requirements.every((requirement) => {
-    const url = currentDetails[requirement.id].url;
+    const url = currentDetails[requirement.id]?.url ?? "";
     return url.length === 0 || urlRegex.test(url);
   });
 
@@ -123,7 +127,11 @@ function SubmissionsModalContent({
                     type="url"
                     id={String(requirement.id)}
                     className="submissions-modal-url-input"
-                    placeholder="Wpisz URL do tej części zadania"
+                    placeholder={
+                      detail.isLocked
+                        ? "Oddawanie zadania zostało zablokowane"
+                        : "Wpisz URL do tej części zadania"
+                    }
                     value={detail.url}
                     onChange={handleChange}
                     disabled={detail.isLocked}
@@ -142,7 +150,8 @@ function SubmissionsModalContent({
       <div className="submissions-modal-submit-section">
         {!isSubmissionValid && (
           <h3>
-            Należy wpisać poprawny URL do wszystkich obowiązkowych wymagań.
+            Należy uzupełnić wszystkie obowiązkowe wymagania. Wszystkie
+            wypełnione URL muszą być poprawne.
           </h3>
         )}
         <ButtonWithBorder
@@ -178,32 +187,45 @@ export default function SubmissionsModal({
     userRole === Roles.STUDENT ? { type: TargetTypes.STUDENT, id } : null
   );
 
+  const modalContent = () => {
+    if (isDetailsLoading || isRequirementsLoading) {
+      return (
+        <div className="submission-loading">
+          <Loading />
+        </div>
+      );
+    }
+    if (isDetailsError || isRequirementsError || !requirements || !details) {
+      return (
+        <div className="submission-error">
+          Wystąpił błąd przy ładowaniu szczegółów.
+        </div>
+      );
+    }
+    if (requirements.length === 0) {
+      return (
+        <div className="submission-error">
+          To wydarzenie nie ma żadnych wymagań.
+        </div>
+      );
+    }
+    return (
+      <SubmissionsModalContent requirements={requirements} details={details} />
+    );
+  };
+
   return (
     <Modal
       isDataPresented={true}
       onClosed={onClosedAction}
       title="Oddawanie zadania"
-      subtitle="Uzupełnij wymagane linki"
+      subtitle={
+        details?.modifiedDate
+          ? `Ostatnia modyfikacja: ${details.modifiedDate}`
+          : "Uzupełnij wymagane linki"
+      }
     >
-      {(isDetailsError || isRequirementsError) && (
-        <div className="submission-error">
-          Wystąpił błąd przy ładowaniu szczegółów.
-        </div>
-      )}
-      {(isDetailsLoading || isRequirementsLoading) && (
-        <div className="submission-loading">
-          <Loading />
-        </div>
-      )}
-      {!isDetailsLoading &&
-        !isRequirementsLoading &&
-        details &&
-        requirements && (
-          <SubmissionsModalContent
-            requirements={requirements}
-            details={details}
-          />
-        )}
+      {modalContent()}
     </Modal>
   );
 }
