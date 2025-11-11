@@ -19,6 +19,7 @@ import Loading from "@/components/loading";
 import useStudentItems from "@/hooks/course/useStudentItems";
 import useStudentChests from "@/hooks/course/useStudentChests";
 import ErrorComponent from "@/components/error";
+import { ErrorComponentSizes } from "@/components/error/types";
 
 const SECTION_IDS = new Set(["student-summary", "items", "chests"]);
 const INITIALLY_OPENED = new Set(["student-summary"]);
@@ -74,7 +75,10 @@ export default function StudentInfo() {
               </div>
             ) : (
               <div className="course-group-loading">
-                <ErrorComponent message="ie udało się załadować szczegółów studenta." />
+                <ErrorComponent
+                  message="Nie udało się załadować szczegółów studenta."
+                  size={ErrorComponentSizes.COMPACT}
+                />
               </div>
             )}
           </SwapAnimationWrapper>
@@ -102,7 +106,10 @@ export default function StudentInfo() {
               </div>
             ) : (
               <div className="course-group-loading">
-                <ErrorComponent message="Nie udało się załadować przedmiotów." />
+                <ErrorComponent
+                  message="Nie udało się załadować przedmiotów."
+                  size={ErrorComponentSizes.COMPACT}
+                />
               </div>
             )}
           </SwapAnimationWrapper>
@@ -131,7 +138,10 @@ export default function StudentInfo() {
               </div>
             ) : (
               <div className="course-group-loading">
-                <ErrorComponent message="Nie udało się załadować skrzynek." />
+                <ErrorComponent
+                  message="Nie udało się załadować skrzynek."
+                  size={ErrorComponentSizes.COMPACT}
+                />
               </div>
             )}
           </SwapAnimationWrapper>

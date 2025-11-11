@@ -9,6 +9,7 @@ import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import useCriteria from "@/hooks/course/useCriteria";
 import { GradeModalProps } from "@/components/speed-dial/modals/grade/types";
 import ErrorComponent from "@/components/error";
+import { ErrorComponentSizes } from "@/components/error/types";
 
 export default function GradeModal({
   onClosedAction,
@@ -50,7 +51,10 @@ export default function GradeModal({
     >
       {(isGradeError || isCriteriaError) && (
         <div className="grade-error">
-          <ErrorComponent message="Nie udało się załadować szczegółów oceny." />
+          <ErrorComponent
+            message="Nie udało się załadować szczegółów oceny."
+            size={ErrorComponentSizes.COMPACT}
+          />
         </div>
       )}
       {(isGradeLoading || isCriteriaLoading) && (

@@ -4,6 +4,7 @@ import SubmissionRequirement from "@/components/column-schema/column-component/g
 import ColumnComponent from "@/components/column-schema/column-component";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
 import ErrorComponent from "@/components/error";
+import { ErrorComponentSizes } from "@/components/error/types";
 
 export default function Submissions() {
   const { submissionRequirements, isGeneralDataLoading, isGeneralDataError } =
@@ -18,7 +19,10 @@ export default function Submissions() {
   );
   const errorComponent = (
     <div className="h-[300px] relative">
-      <ErrorComponent message="Nie udało się załadować wymagań." />
+      <ErrorComponent
+        message="Nie udało się załadować wymagań."
+        size={ErrorComponentSizes.COMPACT}
+      />
     </div>
   );
 

@@ -3,12 +3,24 @@
 
 .error-component {
   @apply flex-col-centered gap-4 p-8 text-center m-auto w-full max-w-xl;
+
+  h1 {
+    @apply text-5xl md:text-6xl;
+  }
+
+  h2 {
+    @apply text-2xl md:text-3xl;
+  }
 }
 
-.error-component-title {
-  @apply text-5xl md:text-6xl;
-}
+.error-component-compact {
+  @apply flex-col-centered gap-4 p-8 text-center m-auto w-full max-w-xl;
 
-.error-component-message {
-  @apply text-2xl md:text-3xl;
+  h1 {
+    @apply text-4xl;
+  }
+
+  h2 {
+    @apply text-2xl;
+  }
 }

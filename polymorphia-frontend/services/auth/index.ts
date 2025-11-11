@@ -21,7 +21,7 @@ const AuthService = {
     });
 
     if (!response.ok) {
-      throw new ApiError(await readErrorMessage(response), response.status);
+      throw new ApiError(await readErrorMessage(response), 400);
     }
   },
   logout: async () => {

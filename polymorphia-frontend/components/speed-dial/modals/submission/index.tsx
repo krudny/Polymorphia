@@ -18,6 +18,7 @@ import { ChangeEventHandler, useState } from "react";
 import useSubmissionsUpdate from "@/hooks/course/useSubmissionsUpdate";
 import useModalContext from "@/hooks/contexts/useModalContext";
 import ErrorComponent from "@/components/error";
+import { ErrorComponentSizes } from "@/components/error/types";
 
 const urlRegex =
   /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/;
@@ -199,7 +200,10 @@ export default function SubmissionsModal({
     if (isDetailsError || isRequirementsError || !requirements || !details) {
       return (
         <div className="submission-error">
-          <ErrorComponent message="Nie udało się załadować szczegółów zadania." />
+          <ErrorComponent
+            message="Nie udało się załadować szczegółów zadania."
+            size={ErrorComponentSizes.COMPACT}
+          />
         </div>
       );
     }

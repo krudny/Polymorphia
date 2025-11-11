@@ -1,14 +1,19 @@
 import "./index.css";
-import { ErrorComponentProps } from "./types";
+import { ErrorComponentProps, ErrorComponentSizes } from "./types";
 
 export default function ErrorComponent({
   title = "Wystąpił błąd",
   message = "Wystąpił błąd przy ładowaniu szczegółów.",
+  size = ErrorComponentSizes.DEFAULT,
 }: ErrorComponentProps) {
+  const classValue =
+    size === ErrorComponentSizes.COMPACT
+      ? "error-component-compact"
+      : "error-component";
   return (
-    <div className="error-component">
-      <h2 className="error-component-title">{title}</h2>
-      {message && <p className="error-component-message">{message}</p>}
+    <div className={classValue}>
+      <h1>{title}</h1>
+      {message && <h2>{message}</h2>}
     </div>
   );
 }

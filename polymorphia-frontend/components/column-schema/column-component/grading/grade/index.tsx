@@ -6,6 +6,7 @@ import GradeCriteria from "@/components/column-schema/column-component/grading/g
 import ColumnComponent from "@/components/column-schema/column-component";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
 import ErrorComponent from "@/components/error";
+import { ErrorComponentSizes } from "@/components/error/types";
 
 export default function Grade() {
   const { criteria, isGeneralDataLoading, isGeneralDataError } =
@@ -20,7 +21,10 @@ export default function Grade() {
   );
   const errorComponent = (
     <div className="h-[300px] relative">
-      <ErrorComponent message="Nie udało się załadować kryteriów oceny." />
+      <ErrorComponent
+        message="Nie udało się załadować kryteriów oceny."
+        size={ErrorComponentSizes.COMPACT}
+      />
     </div>
   );
 
