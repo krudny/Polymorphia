@@ -6,7 +6,7 @@ export interface MenuOption {
   link?: string;
   subItems?: SubMenuOption[];
   onClick?: () => void;
-  notificationCount?: number;
+  showBadge?: boolean;
 }
 
 export interface SubMenuOption {

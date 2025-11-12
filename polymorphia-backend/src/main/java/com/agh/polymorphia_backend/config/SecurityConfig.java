@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers(HttpMethod.GET, "/static/**", "/error", "/notifications/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/static/**", "/error").permitAll()
                         .requestMatchers(HttpMethod.POST, "/invitation/register-user", "/password/forgot-password", "/password/new-password").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form

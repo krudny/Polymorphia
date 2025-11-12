@@ -32,20 +32,14 @@ export function useNotificationCount(): UseNotificationCount {
         reconnectAttemptsRef.current = 0;
       };
 
-      eventSource.addEventListener("connected", (event) => {
-        console.log("Connected:", event.data);
-      });
-
       eventSource.addEventListener("unread-count", (event) => {
         const count = parseInt(event.data, 10);
         if (!isNaN(count)) {
           setNotificationCount(count);
-          console.log(count);
         }
       });
 
       eventSource.onerror = (error) => {
-        console.error("SSE error:", error);
         eventSource.close();
 
         if (reconnectAttemptsRef.current < MAX_RECONNECT_ATTEMPTS) {

@@ -38,7 +38,7 @@ export function useBottomDesktopMenuItems(): MenuOption[] {
     {
       icon: BellIcon,
       text: `Powiadomienia`,
-      notificationCount: notificationCount,
+      showBadge: notificationCount > 0,
       onClick: () => setIsNotificationModalOpen(true),
     },
     {

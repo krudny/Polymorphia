@@ -5,15 +5,10 @@ CREATE TABLE notifications (
                                created_at TIMESTAMP WITH TIME ZONE NOT NULL,
                                description TEXT NOT NULL,
                                gradable_event_id BIGINT,
-                               evolution_stage_id BIGINT,
                                reward_id BIGINT,
                                CONSTRAINT FK_NOTIFICATION_GRADABLE_EVENT
                                    FOREIGN KEY (gradable_event_id)
                                        REFERENCES gradable_events(id)
-                                       ON DELETE SET NULL,
-                               CONSTRAINT FK_NOTIFICATION_EVOLUTION_STAGE
-                                   FOREIGN KEY (evolution_stage_id)
-                                       REFERENCES evolution_stages(id)
                                        ON DELETE SET NULL,
                                CONSTRAINT FK_NOTIFICATION_REWARD
                                    FOREIGN KEY (reward_id)

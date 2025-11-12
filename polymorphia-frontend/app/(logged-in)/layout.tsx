@@ -11,8 +11,8 @@ import { NotificationProvider } from "@/providers/notification";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <NotificationProvider>
-      <UserProvider>
+    <UserProvider>
+      <NotificationProvider>
         <TitleProvider routes={LOGGED_IN_APPLICATION_ROUTES}>
           <NavigationProvider>
             <div className="w-full h-[100dvh] relative flex flex-col lg:flex-row">
@@ -21,7 +21,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             </div>
           </NavigationProvider>
         </TitleProvider>
-      </UserProvider>
-    </NotificationProvider>
+      </NotificationProvider>
+    </UserProvider>
   );
 }

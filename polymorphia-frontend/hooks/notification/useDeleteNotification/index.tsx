@@ -8,7 +8,6 @@ export default function useDeleteNotification(): UseDeleteNotification {
 
   const mutation = useMutation({
     mutationFn: async (notificationId: number) => {
-      await new Promise((resolve) => setTimeout(resolve, 350));
       return NotificationService.deleteNotification(notificationId);
     },
     onSuccess: (data, notificationId) => {

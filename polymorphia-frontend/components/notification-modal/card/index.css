@@ -1,2 +1,50 @@
 @import "tailwindcss";
 @import "../../../styles/globals.css";
+
+.notification-card {
+  @apply w-full flex items-start mb-3 last:mb-0 gap-3 p-3 bg-neutral-50 dark:bg-primary-dark rounded-xl hover:shadow transition-shadow;
+
+  &.is-new {
+    @apply opacity-0;
+  }
+}
+
+.notification-card-icon {
+  @apply flex-shrink-0 w-9 h-9 rounded-xl bg-secondary-dark flex-centered text-2xl;
+
+  > span {
+    @apply text-neutral-50 text-xl;
+  }
+}
+
+.notification-card-content {
+  @apply flex-1 min-w-0;
+}
+
+.notification-card-header {
+  @apply flex items-center gap-x-3;
+}
+
+.notification-card-title {
+  @apply text-3xl;
+}
+
+.notification-card-divider {
+  @apply w-[1px] my-auto h-6 bg-primary-gray;
+}
+
+.notification-card-date {
+  @apply text-xl text-primary-gray;
+}
+
+.notification-card-description {
+  @apply text-lg break-words;
+}
+
+.notification-card-close-button {
+  @apply flex-shrink-0 w-9 h-9 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 flex-centered transition-colors custom-ease-with-duration disabled:opacity-50;
+}
+
+.notification-card-close-icon {
+  @apply w-6 h-6 text-secondary-gray group-hover:text-primary-gray dark:group-hover:text-gray-300 hover:cursor-pointer custom-ease-with-duration;
+}

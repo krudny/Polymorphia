@@ -9,6 +9,7 @@ import {
   animateNotificationEntry,
   animateNotificationRemoval,
 } from "@/animations/Notification";
+import "./index.css";
 
 export default function NotificationCard({
   notification,
@@ -36,21 +37,18 @@ export default function NotificationCard({
   };
 
   return (
-    <div
-      ref={cardRef}
-      className={`w-full flex items-start mb-3 last:mb-0 gap-3 p-3 ${isNew && "opacity-0"} bg-neutral-50 dark:bg-primary-dark rounded-xl hover:shadow hover:cursor-pointer transition-shadow`}
-    >
-      <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-secondary-dark flex-centered text-2xl">
-        <span className="material-symbols text-neutral-50 text-xl">trophy</span>
+    <div ref={cardRef} className={`notification-card ${isNew && "is-new"}`}>
+      <div className="notification-card-icon">
+        <span className="material-symbols">trophy</span>
       </div>
 
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-x-3">
-          <h3 className="text-3xl">
+      <div className="notification-card-content">
+        <div className="notification-card-header">
+          <h3 className="notification-card-title">
             {getNotificationCardHeader(notification.notificationType)}
           </h3>
-          <div className="w-[1px] my-auto h-6 bg-primary-gray"></div>
-          <h4 className="text-xl text-primary-gray">
+          <div className="notification-card-divider"></div>
+          <h4 className="notification-card-date">
             {new Date(notification.createdAt).toLocaleDateString("pl-PL", {
               day: "2-digit",
               month: "2-digit",
@@ -61,7 +59,7 @@ export default function NotificationCard({
           </h4>
         </div>
 
-        <p className="text-lg break-words">
+        <p className="notification-card-description">
           {notification.description}
         </p>
       </div>
@@ -69,10 +67,10 @@ export default function NotificationCard({
       <button
         onClick={handleClose}
         disabled={mutation.isPending}
-        className="flex-shrink-0 w-9 h-9 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 flex-centered transition-colors group custom-ease-with-duration disabled:opacity-50"
+        className="notification-card-close-button"
         aria-label="Zamknij powiadomienie"
       >
-        <X className="w-6 h-6 text-secondary-gray group-hover:text-primary-gray dark:group-hover:text-gray-300 custom-ease-with-duration" />
+        <X className="notification-card-close-icon" />
       </button>
     </div>
   );

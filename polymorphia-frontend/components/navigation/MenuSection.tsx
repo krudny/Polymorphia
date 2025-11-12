@@ -38,16 +38,13 @@ export default function MenuSection({ options }: MenuSectionProps) {
       {options.map((option, idx) => {
         const Icon = option.icon;
         const isOpen = openSubMenu.includes(option.text);
-        const hasNotifications = Boolean(
-          option.notificationCount && option.notificationCount > 0
-        );
 
         const content = (
           <div className="menu-section-options-link-part">
             <Icon />
             <h2>{option.text}</h2>
 
-            {hasNotifications && (
+            {option.showBadge && (
               <span className="menu-section-notification-badge" />
             )}
           </div>
