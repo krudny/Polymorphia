@@ -62,7 +62,7 @@ export default function NotificationCard({
         </div>
 
         <p className="text-lg break-words">
-          {notification.description} Ala ma kota a kot ma ale
+          {notification.description}
         </p>
       </div>
 

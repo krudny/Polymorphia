@@ -30,8 +30,8 @@ public enum NotificationType {
     }
 
     private static final class ErrorMessages {
-        private static final String GRADABLE_EVENT_NULL_FOR_GRADE = "GradableEvent nie może być null dla powiadomienia o nowej ocenie.";
-        private static final String REWARD_NULL = "Reward nie może być null dla tego typu powiadomienia.";
+        private static final String GRADABLE_EVENT_NULL_FOR_GRADE = "Wydarzenie nie może być puste dla powiadomienia o nowej ocenie.";
+        private static final String REWARD_NULL = "Nagroda nie może być pusta dla tego typu powiadomienia.";
 
         private ErrorMessages() {
         }
