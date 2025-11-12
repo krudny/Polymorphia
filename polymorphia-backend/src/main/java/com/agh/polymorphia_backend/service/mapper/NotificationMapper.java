@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@Component
+@Service
 @AllArgsConstructor
 public class NotificationMapper {
 
