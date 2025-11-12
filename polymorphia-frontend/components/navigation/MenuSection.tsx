@@ -52,9 +52,9 @@ export default function MenuSection({ options }: MenuSectionProps) {
                   <h2>{option.text}</h2>
                 </div>
               </Link>
-              {option.subItems && isExpanded && (
+              {option.subItems && (
                 <div
-                  className={`${!isExpanded && "hidden"} menu-section-subitems chevron-container`}
+                  className="menu-section-subitems chevron-container"
                   data-menu-index={idx}
                   onClick={(event) => {
                     event.stopPropagation();
