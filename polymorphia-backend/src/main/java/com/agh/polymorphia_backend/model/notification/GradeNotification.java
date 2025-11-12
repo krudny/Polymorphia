@@ -17,4 +17,9 @@ public class GradeNotification extends Notification {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gradable_event_id")
     private GradableEvent gradableEvent;
+
+    @Override
+    public Long getRelatedEntityId() {
+        return gradableEvent != null ? gradableEvent.getId() : null;
+    }
 }

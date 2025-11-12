@@ -23,7 +23,5 @@ public class NotificationResponseDto {
     @NotNull
     private String description;
 
-    private Long gradableEventId;
-
-    private Long rewardId;
+    private Long relatedEntityId;
 }

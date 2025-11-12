@@ -25,6 +25,10 @@ public abstract class Notification {
     @Column(nullable = false)
     private Long userId;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private NotificationType notificationType;
+
     @NotNull
     private ZonedDateTime createdAt;
 
@@ -37,4 +41,6 @@ public abstract class Notification {
             createdAt = ZonedDateTime.now();
         }
     }
+
+    public abstract Long getRelatedEntityId();
 }

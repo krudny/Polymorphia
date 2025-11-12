@@ -17,4 +17,9 @@ public class RewardNotification extends Notification {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reward_id")
     private Reward reward;
+
+    @Override
+    public Long getRelatedEntityId() {
+        return reward != null ? reward.getId() : null;
+    }
 }
