@@ -12,7 +12,7 @@ import com.agh.polymorphia_backend.model.course.reward.chest.ChestBehavior;
 import com.agh.polymorphia_backend.model.course.reward.item.FlatBonusItemBehavior;
 import com.agh.polymorphia_backend.model.course.reward.item.ItemType;
 import com.agh.polymorphia_backend.model.gradable_event.Grade;
-import com.agh.polymorphia_backend.service.gradable_event.GradeService;
+import com.agh.polymorphia_backend.service.grade.GradeService;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
 import com.agh.polymorphia_backend.service.mapper.PotentialXpMapper;
 import lombok.AllArgsConstructor;

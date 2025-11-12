@@ -1,6 +1,6 @@
 "use client";
 import { Roles, StudentDetailsDTOWithName } from "@/interfaces/api/user";
-import Modal from "@/components/modal/Modal";
+import Modal from "@/components/modal";
 import { ChangeEvent, useEffect, useState } from "react";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { useDebounce } from "use-debounce";

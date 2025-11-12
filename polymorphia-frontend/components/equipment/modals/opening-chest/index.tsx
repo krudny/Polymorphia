@@ -1,4 +1,4 @@
-import Modal from "@/components/modal/Modal";
+import Modal from "@/components/modal";
 import OpeningChestModalContent from "@/components/equipment/modals/opening-chest/OpeningChestModalContent";
 import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
 import { OpeningChestModalProps } from "@/components/equipment/modals/opening-chest/types";
