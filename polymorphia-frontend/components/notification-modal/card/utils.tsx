@@ -2,14 +2,26 @@ import {
   NotificationType,
   NotificationTypes,
 } from "@/interfaces/api/notification";
+import { NotificationCardCustomOptions } from "@/components/notification-modal/card/types";
 
-export function getNotificationCardHeader(notificationType: NotificationType) {
+export function getNotificationCardCustomOptions(
+  notificationType: NotificationType
+): NotificationCardCustomOptions {
   switch (notificationType) {
     case NotificationTypes.NEW_GRADE:
-      return "Nowa ocena!";
+      return {
+        header: "Nowa ocena!",
+        icon: "trophy",
+      };
     case NotificationTypes.NEW_REWARD:
-      return "Nowa nagroda!";
+      return {
+        header: "Nowa nagroda!",
+        icon: "trophy",
+      };
     default:
-      return "";
+      return {
+        header: "",
+        icon: "",
+      };
   }
 }

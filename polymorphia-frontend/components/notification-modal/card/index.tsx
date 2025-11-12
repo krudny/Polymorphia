@@ -3,13 +3,13 @@
 import { X } from "lucide-react";
 import { MouseEvent, useEffect, useRef } from "react";
 import { NotificationCardProps } from "@/components/notification-modal/card/types";
-import { getNotificationCardHeader } from "@/components/notification-modal/card/utils";
 import useDeleteNotification from "@/hooks/notification/useDeleteNotification";
 import {
   animateNotificationEntry,
   animateNotificationRemoval,
 } from "@/animations/Notification";
 import "./index.css";
+import { getNotificationCardCustomOptions } from "@/components/notification-modal/card/utils";
 
 export default function NotificationCard({
   notification,
@@ -36,17 +36,19 @@ export default function NotificationCard({
     }
   };
 
+  const { header, icon } = getNotificationCardCustomOptions(
+    notification.notificationType
+  );
+
   return (
     <div ref={cardRef} className={`notification-card ${isNew && "is-new"}`}>
       <div className="notification-card-icon">
-        <span className="material-symbols">trophy</span>
+        <span className="material-symbols">{icon}</span>
       </div>
 
       <div className="notification-card-content">
         <div className="notification-card-header">
-          <h3 className="notification-card-title">
-            {getNotificationCardHeader(notification.notificationType)}
-          </h3>
+          <h3 className="notification-card-title">{header}</h3>
           <div className="notification-card-divider"></div>
           <h4 className="notification-card-date">
             {new Date(notification.createdAt).toLocaleDateString("pl-PL", {
