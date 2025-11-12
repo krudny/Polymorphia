@@ -117,7 +117,7 @@
 }
 
 .menu-section-subitems {
-  @apply ml-2 hidden;
+  @apply ml-2;
 }
 
 .menu-section-subitems > svg {

@@ -75,7 +75,7 @@ export default function MenuSection({ options }: MenuSectionProps) {
                 </div>
               )}
 
-              {option.subItems && isExpanded && (
+              {option.subItems && (
                 <div
                   className="menu-section-subitems chevron-container"
                   data-menu-index={idx}
