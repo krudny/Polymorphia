@@ -12,6 +12,7 @@ import {
 } from "@/animations/SwapAnimationWrapper";
 import { getKeyForSelectedTarget } from "@/providers/grading/utils/getKeyForSelectedTarget";
 import ErrorComponent from "@/components/error";
+import { ErrorComponentSizes } from "@/components/error/types";
 
 export default function LastActivity() {
   const { isSpecificDataLoading, isSpecificDataError, lastActivities } =
@@ -45,7 +46,10 @@ export default function LastActivity() {
           </div>
         ) : (
           <div className="h-full relative">
-            <ErrorComponent message="Nie udało się załadować ostatniej aktywności." />
+            <ErrorComponent
+              message="Nie udało się załadować ostatniej aktywności."
+              size={ErrorComponentSizes.COMPACT}
+            />
           </div>
         )}
       </div>

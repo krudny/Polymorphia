@@ -64,6 +64,10 @@ export default function RootLayout({
       }
     }
 
+    if (error.status === 503) {
+      router.push("/");
+    }
+
     const message =
       error.message.trim().length > 0
         ? error.message
