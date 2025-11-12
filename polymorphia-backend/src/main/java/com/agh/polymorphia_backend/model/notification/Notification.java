@@ -42,5 +42,7 @@ public abstract class Notification {
         }
     }
 
+    public abstract NotificationType getNotificationType();
+
     public abstract Long getRelatedEntityId();
 }

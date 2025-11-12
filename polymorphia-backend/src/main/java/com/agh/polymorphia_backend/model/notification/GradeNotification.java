@@ -19,6 +19,11 @@ public class GradeNotification extends Notification {
     private GradableEvent gradableEvent;
 
     @Override
+    public NotificationType getNotificationType() {
+        return NotificationType.NEW_GRADE;
+    }
+
+    @Override
     public Long getRelatedEntityId() {
         return gradableEvent != null ? gradableEvent.getId() : null;
     }

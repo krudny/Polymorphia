@@ -19,6 +19,11 @@ public class RewardNotification extends Notification {
     private Reward reward;
 
     @Override
+    public NotificationType getNotificationType() {
+        return NotificationType.NEW_REWARD;
+    }
+
+    @Override
     public Long getRelatedEntityId() {
         return reward != null ? reward.getId() : null;
     }
