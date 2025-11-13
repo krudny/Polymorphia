@@ -2,15 +2,15 @@
 @import "../../../../styles/globals.css";
 
 .submission-error {
-  @apply flex flex-col gap-2 min-[26rem]:w-96 text-xl 2xl:text-2xl;
+  @apply flex flex-col gap-2 min-[26rem]:w-96 sm:w-[430px] text-xl 2xl:text-2xl;
 }
 
 .submission-loading {
-  @apply flex flex-col gap-2 min-[26rem]:w-96 h-[115px] relative;
+  @apply flex flex-col gap-2 min-[26rem]:w-96 sm:w-[430px] h-[115px] relative;
 }
 
 .submissions-modal-section {
-  @apply min-[26rem]:w-96 overflow-y-auto custom-scrollbar;
+  @apply min-[26rem]:w-96 sm:w-[430px] overflow-y-auto custom-scrollbar;
 }
 
 .submissions-modal-accordion-override {

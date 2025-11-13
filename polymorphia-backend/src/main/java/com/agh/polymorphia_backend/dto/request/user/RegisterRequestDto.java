@@ -9,7 +9,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import static com.agh.polymorphia_backend.dto.request.user.ChangePasswordRequestDTO.*;
+import static com.agh.polymorphia_backend.service.password.PasswordService.*;
+
 
 @Data
 @Builder

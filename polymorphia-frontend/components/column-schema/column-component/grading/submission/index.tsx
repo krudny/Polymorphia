@@ -5,7 +5,8 @@ import ColumnComponent from "@/components/column-schema/column-component";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
 
 export default function Submissions() {
-  const { submissionRequirements, isGeneralDataLoading } = useGradingContext();
+  const { submissionRequirements, isGeneralDataLoading, isGeneralDataError } =
+    useGradingContext();
   const { state: targetState } = useTargetContext();
 
   const topComponent = () => <h1>Oddane zadania</h1>;
@@ -14,11 +15,17 @@ export default function Submissions() {
       <Loading />
     </div>
   );
+  const errorComponent = (
+    <div className="h-[300px] relative">
+      <h1>Nie udało się załadować wymagań.</h1>
+    </div>
+  );
 
-  const mainComponent =
-    !submissionRequirements ||
-    isGeneralDataLoading ||
-    !targetState.selectedTarget
+  const mainComponent = isGeneralDataError
+    ? () => errorComponent
+    : !submissionRequirements ||
+        isGeneralDataLoading ||
+        !targetState.selectedTarget
       ? () => loadingComponent
       : () => <SubmissionRequirement requirements={submissionRequirements} />;
 

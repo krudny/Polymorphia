@@ -52,7 +52,7 @@ export const GradingReducer = (
     case GradingReducerActions.SET_SUBMISSION_DETAILS:
       return {
         ...state,
-        submissionDetails: action.payload.submissionDetails,
+        submissionDetails: action.payload.submissionDetails.details,
       };
 
     case GradingReducerActions.UPDATE_GRADE:

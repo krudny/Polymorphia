@@ -13,7 +13,8 @@ import {
 import { getKeyForSelectedTarget } from "@/providers/grading/utils/getKeyForSelectedTarget";
 
 export default function LastActivity() {
-  const { isSpecificDataLoading, lastActivities } = useCourseGroupsContext();
+  const { isSpecificDataLoading, isSpecificDataError, lastActivities } =
+    useCourseGroupsContext();
   const { selectedTarget } = useTargetContext();
 
   const topComponent = () => <h1>Aktywność</h1>;
@@ -21,13 +22,14 @@ export default function LastActivity() {
     <SwapAnimationWrapper
       {...baseSwapAnimationWrapperProps}
       keyProp={
-        lastActivities && !isSpecificDataLoading
+        lastActivities && !isSpecificDataLoading && !isSpecificDataError
           ? getKeyForSelectedTarget(selectedTarget)
-          : "loading" + getKeyForSelectedTarget(selectedTarget)
+          : (isSpecificDataLoading ? "loading" : "error") +
+            getKeyForSelectedTarget(selectedTarget)
       }
     >
       <div className="last-activity">
-        {lastActivities && !isSpecificDataLoading ? (
+        {lastActivities && !isSpecificDataLoading && !isSpecificDataError ? (
           <>
             {lastActivities.map((lastActivity) => (
               <LastActivityDetails
@@ -36,9 +38,14 @@ export default function LastActivity() {
               />
             ))}
           </>
-        ) : (
+        ) : isSpecificDataLoading ? (
           <div className="h-full relative">
             <Loading />
+          </div>
+        ) : (
+          // TODO(OG-112): handle error
+          <div className="h-full relative">
+            <h1>Nie udało się załadować ostatniej aktywności.</h1>
           </div>
         )}
       </div>

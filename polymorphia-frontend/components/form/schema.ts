@@ -46,3 +46,17 @@ export const inviteSchema = z.object({
 export const createAnimalSchema = z.object({
   animalName: z.string().nonempty(),
 });
+
+export const resetPasswordSchema = z
+  .object({
+    newPassword: passwordValidation,
+    confirmNewPassword: z.string(),
+  })
+  .refine((data) => data.newPassword === data.confirmNewPassword, {
+    message: "Hasła nie są zgodne",
+    path: ["confirmNewPassword"],
+  });
+
+export const forgotPasswordSchema = z.object({
+  email: emailField,
+});

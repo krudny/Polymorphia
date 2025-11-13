@@ -30,10 +30,16 @@ export const CourseGroupsProvider = ({ children }: { children: ReactNode }) => {
     });
   }, [sortBy, sortOrder]);
 
-  const { data: studentSummary, isLoading: isStudentSummaryLoading } =
-    useStudentSummary(targetId!);
-  const { data: lastActivities, isLoading: isLastActivitiesLoading } =
-    useStudentLastActivity(targetId!);
+  const {
+    data: studentSummary,
+    isLoading: isStudentSummaryLoading,
+    isError: isStudentSummaryError,
+  } = useStudentSummary(targetId!);
+  const {
+    data: lastActivities,
+    isLoading: isLastActivitiesLoading,
+    isError: isLastActivitiesError,
+  } = useStudentLastActivity(targetId!);
 
   return (
     <CourseGroupsContext.Provider
@@ -47,6 +53,7 @@ export const CourseGroupsProvider = ({ children }: { children: ReactNode }) => {
         lastActivities,
         isSpecificDataLoading:
           isStudentSummaryLoading || isLastActivitiesLoading,
+        isSpecificDataError: isStudentSummaryError || isLastActivitiesError,
       }}
     >
       {children}

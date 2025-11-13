@@ -24,11 +24,19 @@ const INITIALLY_OPENED = new Set(["student-summary"]);
 
 export default function StudentInfo() {
   const accordionRef = useRef<AccordionRef>(null);
-  const { isSpecificDataLoading, studentSummary } = useCourseGroupsContext();
+  const { isSpecificDataLoading, isSpecificDataError, studentSummary } =
+    useCourseGroupsContext();
   const { selectedTarget, targetId } = useTargetContext();
-  const { data: items, isLoading: isItemsLoading } = useStudentItems(targetId);
-  const { data: chests, isLoading: isChestsLoading } =
-    useStudentChests(targetId);
+  const {
+    data: items,
+    isLoading: isItemsLoading,
+    isError: isItemsError,
+  } = useStudentItems(targetId);
+  const {
+    data: chests,
+    isLoading: isChestsLoading,
+    isError: isChestsError,
+  } = useStudentChests(targetId);
 
   const topComponent = () => <h1>Student</h1>;
   const mainComponent = () => (
@@ -49,16 +57,24 @@ export default function StudentInfo() {
           <SwapAnimationWrapper
             {...baseSwapAnimationWrapperProps}
             keyProp={
-              studentSummary && !isSpecificDataLoading
+              studentSummary && !isSpecificDataLoading && !isSpecificDataError
                 ? getKeyForSelectedTarget(selectedTarget)
-                : "loading" + getKeyForSelectedTarget(selectedTarget)
+                : (isSpecificDataLoading ? "loading" : "error") +
+                  getKeyForSelectedTarget(selectedTarget)
             }
           >
-            {studentSummary && !isSpecificDataLoading ? (
+            {studentSummary &&
+            !isSpecificDataLoading &&
+            !isSpecificDataError ? (
               <StudentSummary studentSummary={studentSummary} />
-            ) : (
+            ) : isSpecificDataLoading ? (
               <div className="course-group-loading">
                 <Loading />
+              </div>
+            ) : (
+              // TODO(OG-112): handle error
+              <div className="course-group-loading">
+                <h1>Nie udało się załadować szczegółów studenta.</h1>
               </div>
             )}
           </SwapAnimationWrapper>
@@ -72,16 +88,22 @@ export default function StudentInfo() {
           <SwapAnimationWrapper
             {...baseSwapAnimationWrapperProps}
             keyProp={
-              items && !isItemsLoading
+              items && !isItemsLoading && !isItemsError
                 ? getKeyForSelectedTarget(selectedTarget)
-                : "loading" + getKeyForSelectedTarget(selectedTarget)
+                : (isItemsLoading ? "loading" : "error") +
+                  getKeyForSelectedTarget(selectedTarget)
             }
           >
-            {items && !isItemsLoading ? (
+            {items && !isItemsLoading && !isItemsError ? (
               <ItemsSummary items={items} />
-            ) : (
+            ) : isItemsLoading ? (
               <div className="course-group-loading">
                 <Loading />
+              </div>
+            ) : (
+              // TODO(OG-112): handle error
+              <div className="course-group-loading">
+                <h1>Nie udało się załadować przedmiotów.</h1>
               </div>
             )}
           </SwapAnimationWrapper>
@@ -96,16 +118,22 @@ export default function StudentInfo() {
           <SwapAnimationWrapper
             {...baseSwapAnimationWrapperProps}
             keyProp={
-              chests && !isChestsLoading
+              chests && !isChestsLoading && !isChestsError
                 ? getKeyForSelectedTarget(selectedTarget)
-                : "loading" + getKeyForSelectedTarget(selectedTarget)
+                : (isChestsLoading ? "loading" : "error") +
+                  getKeyForSelectedTarget(selectedTarget)
             }
           >
-            {chests && !isChestsLoading ? (
+            {chests && !isChestsLoading && !isChestsError ? (
               <ChestSummary chests={chests} />
-            ) : (
+            ) : isChestsLoading ? (
               <div className="course-group-loading">
                 <Loading />
+              </div>
+            ) : (
+              // TODO(OG-112): handle error
+              <div className="course-group-loading">
+                <h1>Nie udało się załadować skrzynek.</h1>
               </div>
             )}
           </SwapAnimationWrapper>

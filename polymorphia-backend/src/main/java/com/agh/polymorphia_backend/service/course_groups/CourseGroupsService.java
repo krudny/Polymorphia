@@ -25,7 +25,7 @@ public class CourseGroupsService {
     private final CourseGroupsMapper courseGroupsMapper;
     private final AccessAuthorizer accessAuthorizer;
 
-    private List<CourseGroup> findAllCourseGroups(Long courseId) {
+    public List<CourseGroup> findAllCourseGroups(Long courseId) {
         accessAuthorizer.authorizeCourseAccess(courseId);
         return courseGroupRepository.findByCourseId(courseId);
     }
@@ -62,10 +62,20 @@ public class CourseGroupsService {
         UserType userRole = userService.getCurrentUserRole();
 
         return switch (userRole) {
-            case STUDENT -> courseGroupRepository.findByStudentIdAndCourseIdAndIsAssignedToCourseGroup(userId, courseId);
-            case INSTRUCTOR -> courseGroupRepository.findByInstructorIdAndCourseId(userId, courseId);
+            case STUDENT -> getStudentCourseGroups(userId, courseId);
+            case INSTRUCTOR -> getInstructorCourseGroups(userId, courseId);
             case COORDINATOR -> findAllCourseGroups(courseId);
             case UNDEFINED -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INVALID_ROLE);
         };
     }
+
+    private List<CourseGroup> getStudentCourseGroups(Long userId, Long courseId) {
+        return courseGroupRepository.findByStudentIdAndCourseIdAndIsAssignedToCourseGroup(userId, courseId);
+
+    }
+
+    private List<CourseGroup> getInstructorCourseGroups(Long userId, Long courseId) {
+        return courseGroupRepository.findByInstructorIdAndCourseId(userId, courseId);
+    }
+
 }
