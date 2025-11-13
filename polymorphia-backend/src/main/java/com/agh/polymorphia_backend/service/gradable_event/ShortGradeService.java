@@ -1,8 +1,8 @@
 package com.agh.polymorphia_backend.service.gradable_event;
 
-import com.agh.polymorphia_backend.dto.request.grade.target.StudentGroupTargetRequestDto;
-import com.agh.polymorphia_backend.dto.request.grade.target.StudentTargetRequestDto;
-import com.agh.polymorphia_backend.dto.request.grade.target.TargetRequestDto;
+import com.agh.polymorphia_backend.dto.request.target.StudentGroupTargetRequestDto;
+import com.agh.polymorphia_backend.dto.request.target.StudentTargetRequestDto;
+import com.agh.polymorphia_backend.dto.request.target.TargetRequestDto;
 import com.agh.polymorphia_backend.dto.response.criteria.CriterionGradeResponseDto;
 import com.agh.polymorphia_backend.dto.response.grade.ShortGradeResponseDto;
 import com.agh.polymorphia_backend.dto.response.grade.ShortGradeResponseDtoWithType;
@@ -39,14 +39,14 @@ public class ShortGradeService {
     private final ProjectService projectService;
 
     public ShortGradeResponseDtoWithType getShortGrade(Long gradableEventId, TargetRequestDto targetRequestDto) {
-        ShortGradeResponseDto grade = switch (targetRequestDto.getType()) {
-            case STUDENT -> getShortGradeStudent(gradableEventId, ((StudentTargetRequestDto) targetRequestDto).getId());
+        ShortGradeResponseDto grade = switch (targetRequestDto.type()) {
+            case STUDENT -> getShortGradeStudent(gradableEventId, ((StudentTargetRequestDto) targetRequestDto).id());
             case STUDENT_GROUP ->
-                    getShortGroupGrade(gradableEventId, ((StudentGroupTargetRequestDto) targetRequestDto).getGroupId());
+                    getShortGroupGrade(gradableEventId, ((StudentGroupTargetRequestDto) targetRequestDto).groupId());
         };
 
         return ShortGradeResponseDtoWithType.builder()
-                .targetType(targetRequestDto.getType())
+                .targetType(targetRequestDto.type())
                 .gradeResponse(grade)
                 .build();
     }

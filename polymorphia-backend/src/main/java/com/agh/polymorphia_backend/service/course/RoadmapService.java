@@ -30,7 +30,7 @@ public class RoadmapService {
 
         if (userRole != UserType.INSTRUCTOR && userRole != UserType.COORDINATOR) {
             eventSections = eventSections.stream()
-                    .filter(eventSection -> !eventSection.getIsHidden())
+                    .filter(EventSection::isShownInRoadMap)
                     .toList();
         }
 

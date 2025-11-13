@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.dto.response.grade;
 
-import com.agh.polymorphia_backend.dto.request.grade.target.TargetType;
+import com.agh.polymorphia_backend.dto.request.target.TargetType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;

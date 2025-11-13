@@ -130,7 +130,7 @@ class ProfileServiceTest extends BaseTest {
 
         assertThat(result.getXpDetails()).isEqualTo(xpDetails);
 
-        verify(accessAuthorizer).authorizeCourseAccess(course);
+        verify(accessAuthorizer).authorizeCourseAccess(course.getId());
         verify(hallOfFameService).updateXpDetails(eq(xpDetails), eq(hallOfFame));
 
         ProfileResponseDto result2 = profileService.getProfile(course.getId());
