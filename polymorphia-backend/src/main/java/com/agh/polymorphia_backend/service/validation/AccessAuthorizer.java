@@ -27,8 +27,8 @@ import static com.agh.polymorphia_backend.service.course.CourseService.COURSE_NO
 @AllArgsConstructor
 public class AccessAuthorizer {
     private final static String USER_COURSE_ROLE_NOT_FOUND = "User course role not found";
-    private final static String BAD_USER_OR_PROJECT = "Bad userId or projectId";
-    private final static String BAD_USER = "Bad userId";
+    private final static String BAD_USER_OR_PROJECT = "Niepoprawne id użytkownika lub projektu";
+    private final static String BAD_USER = "Niepoprawne id użytkownika";
 
     private final UserService userService;
     private final UserCourseRoleRepository userCourseRoleRepository;
@@ -45,6 +45,7 @@ public class AccessAuthorizer {
     }
 
     public void authorizeStudentDataAccess(Course course, Long studentId) {
+        authorizeCourseAccess(course);
         User user = userService.getCurrentUser().getUser();
 
         boolean isStudentSelf = user.getId().equals(studentId);
@@ -60,7 +61,7 @@ public class AccessAuthorizer {
     public void authorizeProjectGroupDetailsAccess(ProjectGroup projectGroup) {
         AbstractRoleUser user = userService.getCurrentUser();
         Long userId = user.getUser().getId();
-        Course course = projectGroup.getProject().getGradableEvent().getEventSection().getCourse();
+        Course course = projectGroup.getProject().getEventSection().getCourse();
 
         boolean isProjectGroupsInstructor = projectGroup.getInstructor().getUserId().equals(userId);
         boolean isCoordinatorInCourse = isCourseAccessAuthorizedCoordinator(user.getUser(), course);
@@ -75,7 +76,6 @@ public class AccessAuthorizer {
         if (!isProjectGroupsInstructor && !isCoordinatorInCourse && !isGroupMember) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, BAD_USER_OR_PROJECT);
         }
-
     }
 
     public void authorizeCourseAccess(Course course) {
@@ -124,6 +124,10 @@ public class AccessAuthorizer {
     private boolean hasInstructorAccessToUserInCourse(User user, Course course, Long studentId) {
         return instructorRepository.hasAccessToStudentInCourse(user.getId(), course.getId(), studentId);
     }
+
+//    private boolean hasInstructorAccessToUserInCourse(User user, Course course, Long studentId) {
+//        return instructorRepository.hasAccessToStudentInCourse(user.getId(), course.getId(), studentId);
+//    }
 
     private boolean isCourseAccessAuthorizedCoordinator(User user, Course course) {
         return course.getCoordinator().getUser().equals(user);

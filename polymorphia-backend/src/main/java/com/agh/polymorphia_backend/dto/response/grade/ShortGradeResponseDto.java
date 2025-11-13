@@ -21,5 +21,7 @@ public class ShortGradeResponseDto {
 
     private Boolean hasReward;
 
+    @NotNull
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<CriterionGradeResponseDto> criteria;
 }

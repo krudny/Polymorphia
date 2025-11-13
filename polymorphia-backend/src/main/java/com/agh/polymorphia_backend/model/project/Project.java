@@ -5,24 +5,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
 @Entity
 @Table(name = "projects")
+@Inheritance(strategy = InheritanceType.JOINED)
+
 @Data
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Project {
-    @Id
-    private Long gradableEventId;
-
-    @OneToOne
-    @MapsId("gradableEventId")
-    @JoinColumn(name = "gradable_event_id")
-    private GradableEvent gradableEvent;
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+public class Project extends GradableEvent {
 
     @NotNull
     @Builder.Default

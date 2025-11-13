@@ -5,13 +5,10 @@ export const RoadmapService = {
   getRoadmapData: async (
     courseId: number
   ): Promise<StudentGradableEventResponseDTO[]> => {
-    const response = await fetch(
-      `${API_HOST}/courses/roadmap?courseId=${courseId}`,
-      {
-        method: "GET",
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`${API_HOST}/roadmap?courseId=${courseId}`, {
+      method: "GET",
+      credentials: "include",
+    });
 
     if (!response.ok) {
       throw new Error("Nie udało się pobrać roadmapy!");

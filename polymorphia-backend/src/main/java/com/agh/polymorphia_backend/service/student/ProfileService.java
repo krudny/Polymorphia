@@ -4,7 +4,6 @@ import com.agh.polymorphia_backend.dto.request.hall_of_fame.HallOfFameRequestDto
 import com.agh.polymorphia_backend.dto.response.profile.EvolutionStageThresholdResponseDto;
 import com.agh.polymorphia_backend.dto.response.profile.ProfileResponseDto;
 import com.agh.polymorphia_backend.model.course.Animal;
-import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.course.EvolutionStage;
 import com.agh.polymorphia_backend.model.hall_of_fame.SearchBy;
 import com.agh.polymorphia_backend.model.user.User;
@@ -32,7 +31,6 @@ public class ProfileService {
     private static final String PROFILE_INFO_INCOMPLETE = "Profile info incomplete: %s";
     private static final String LACKING_EVOLUTION_STAGES = "Evolution stages not defined";
     private final AccessAuthorizer accessAuthorizer;
-    private final CourseService courseService;
     private final UserService userService;
     private final HallOfFameService hallOfFameService;
     private final AnimalService animalService;
@@ -41,8 +39,7 @@ public class ProfileService {
     private final ProfileMapper profileMapper;
 
     public ProfileResponseDto getProfile(Long courseId) {
-        Course course = courseService.getCourseById(courseId);
-        accessAuthorizer.authorizeCourseAccess(course);
+        accessAuthorizer.authorizeCourseAccess(courseId);
         User user = userService.getCurrentUser().getUser();
         Animal animal = animalService.getAnimal(user.getId(), user.getPreferredCourse().getId());
 

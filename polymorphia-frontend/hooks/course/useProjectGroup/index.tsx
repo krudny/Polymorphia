@@ -12,7 +12,10 @@ export function useProjectGroup(): UseProjectGroup {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["projectGroup", gradableEventId, userId],
     queryFn: () => EventSectionService.getProjectGroup(userId, gradableEventId),
-    enabled: !!gradableEventId && eventType === EventTypes.PROJECT,
+    enabled:
+      gradableEventId !== undefined &&
+      gradableEventId !== null &&
+      eventType === EventTypes.PROJECT,
   });
 
   return { data, isLoading, isError };

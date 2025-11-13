@@ -24,14 +24,14 @@ export default function RoadmapCardRightComponent({
     grade.gradeResponse.isGraded && grade.gradeResponse.hasReward;
 
   const { gainedXp, hasReward } = gradableEvent;
+  const shouldGreyOutReward =
+    !hasGainedReward && hasReward && grade.gradeResponse.isGraded;
 
   return (
     <XPCardPoints
       points={gainedXp}
       isSumLabelVisible={true}
-      shouldGreyOutReward={
-        !hasGainedReward && hasReward && grade.gradeResponse.isGraded
-      }
+      shouldGreyOutReward={shouldGreyOutReward}
       hasChest={hasReward}
       color="gray"
     />

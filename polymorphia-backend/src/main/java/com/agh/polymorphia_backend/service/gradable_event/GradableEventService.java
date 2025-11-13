@@ -37,9 +37,17 @@ public class GradableEventService {
     private final CriterionMapper criterionMapper;
 
     public GradableEvent getGradableEventById(Long gradableEventId) {
-        return gradableEventRepository
-                .findById(gradableEventId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Gradable event not found"));
+        UserType userRole = userService.getCurrentUserRole();
+        GradableEvent gradableEvent = fetchGradableEvent(gradableEventId);
+
+        if (userRole != UserType.INSTRUCTOR
+                && userRole != UserType.COORDINATOR
+                && (gradableEvent.getIsHidden()
+                || gradableEvent.getEventSection().getIsHidden())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Gradable event nie istnieje");
+        }
+
+        return gradableEvent;
     }
 
     public List<BaseGradableEventResponseDto> getGradableEvents(
@@ -54,9 +62,15 @@ public class GradableEventService {
         UserType userRole = userService.getUserRoleInCourse(course.getId());
 
         Function<GradableEvent, BaseGradableEventResponseDto> mapper = getMapperFunction(userRole, eventSection, course.getId(), orderIndexExtractor);
+        List<GradableEvent> gradableEvents = eventSection.getGradableEvents();
 
-        return eventSection.getGradableEvents().stream()
-                .filter(gradableEvent -> userRole == UserType.INSTRUCTOR || userRole == UserType.COORDINATOR || !gradableEvent.getIsHidden())
+        if (userRole != UserType.INSTRUCTOR && userRole != UserType.COORDINATOR) {
+            gradableEvents = gradableEvents.stream()
+                    .filter(gradableEvent -> !gradableEvent.getIsHidden())
+                    .toList();
+        }
+
+        return gradableEvents.stream()
                 .map(mapper)
                 .sorted(Comparator.comparing(BaseGradableEventResponseDto::getOrderIndex))
                 .toList();
@@ -70,6 +84,12 @@ public class GradableEventService {
         return gradableEvent.getCriteria().stream()
                 .map(criterionMapper::toCriterionResponseDto)
                 .toList();
+    }
+
+    private GradableEvent fetchGradableEvent(Long gradableEventId) {
+        return gradableEventRepository
+                .findById(gradableEventId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Gradable event not found"));
     }
 
     private Function<GradableEvent, BaseGradableEventResponseDto> getMapperFunction(UserType userRole, EventSection eventSection, Long courseId,
@@ -100,7 +120,7 @@ public class GradableEventService {
                         orderIndexExtractor
                 );
             };
-            case UNDEFINED -> throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            case UNDEFINED -> throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Wybierz kurs, by pobrać eventy");
         };
     }
 

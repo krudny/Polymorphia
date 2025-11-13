@@ -51,16 +51,16 @@ public class ShortGradeService {
                 .build();
     }
 
-    private StudentShortGradeResponseDto getShortGradeStudent(Long gradableEventId, Long id) {
+    private StudentShortGradeResponseDto getShortGradeStudent(Long gradableEventId, Long studentId) {
         GradableEvent gradableEvent = gradableEventService.getGradableEventById(gradableEventId);
         Course course = gradableEvent.getEventSection().getCourse();
-        accessAuthorizer.authorizeCourseAccess(course);
-        accessAuthorizer.authorizeStudentDataAccess(course, id);
-        Animal animal = animalService.getAnimal(id, course.getId());
+
+        accessAuthorizer.authorizeStudentDataAccess(course, studentId);
+        Animal animal = animalService.getAnimal(studentId, course.getId());
         Optional<Grade> grade = gradeService.getGradeByAnimalIdAndGradableEventId(animal.getId(), gradableEventId);
-        List<CriterionGradeResponseDto> criteriaGrades = grade.map(criterionGradeService::getCriteriaGrades).orElse(null);
-        Boolean hasReward = !Optional.ofNullable(criteriaGrades)
-                .orElse(Collections.emptyList())
+        List<CriterionGradeResponseDto> criteriaGrades = grade.map(criterionGradeService::getCriteriaGrades)
+                .orElse(Collections.emptyList());
+        Boolean hasReward = !criteriaGrades
                 .stream()
                 .filter(cg -> !cg.getAssignedRewards().isEmpty())
                 .toList()
@@ -81,20 +81,21 @@ public class ShortGradeService {
                 .map(student -> getShortGradeStudent(gradableEventId, student.getUserDetails().getId()))
                 .toList();
 
-        if (shortGrades.isEmpty()) {
+        List<Long> ids = shortGrades.stream()
+                .map(StudentShortGradeResponseDto::getId)
+                .filter(Objects::nonNull)
+                .toList();
+
+        if (ids.isEmpty()) {
             return StudentGroupShortGradeResponseDto.builder()
                     .isGraded(false)
                     .build();
         }
 
         if (!areAllGradesSame(shortGrades)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Grades differ!");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Oceny członków grupy się różnią!");
         }
 
-        List<Long> ids = shortGrades.stream()
-                .map(StudentShortGradeResponseDto::getId)
-                .filter(Objects::nonNull)
-                .toList();
 
         return StudentGroupShortGradeResponseDto.builder()
                 .ids(ids)

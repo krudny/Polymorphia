@@ -74,7 +74,7 @@ public class UserService implements UserDetailsService {
 
     public UserType getUserRoleInCourse(Long courseId) {
         return userCourseRoleRepository.findByUserIdAndCourseId(getCurrentUser().getUserId(), courseId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono użytkownika w kursie"))
                 .getRole();
     }
 

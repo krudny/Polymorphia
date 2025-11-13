@@ -1,10 +1,12 @@
 package com.agh.polymorphia_backend.service.course;
 
 import com.agh.polymorphia_backend.dto.response.event.BaseGradableEventResponseDto;
-import com.agh.polymorphia_backend.model.course.Course;
+import com.agh.polymorphia_backend.model.event_section.EventSection;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
+import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.service.event_section.EventSectionService;
 import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
+import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,16 +19,23 @@ import java.util.List;
 public class RoadmapService {
 
     private final AccessAuthorizer accessAuthorizer;
-    private final CourseService courseService;
     private final EventSectionService eventSectionService;
     private final GradableEventService gradableEventService;
+    private final UserService userService;
 
     public List<BaseGradableEventResponseDto> getRoadmap(Long courseId) {
-        Course course = courseService.getCourseById(courseId);
-        accessAuthorizer.authorizeCourseAccess(course);
+        accessAuthorizer.authorizeCourseAccess(courseId);
+        UserType userRole = userService.getUserRoleInCourse(courseId);
+        List<EventSection> eventSections = eventSectionService.getCourseEventSections(courseId);
 
-        return eventSectionService.getCourseEventSections(courseId).stream()
-                .map(eventSection -> gradableEventService.getGradableEvents(eventSection.id(), GradableEvent::getRoadMapOrderIndex))
+        if (userRole != UserType.INSTRUCTOR && userRole != UserType.COORDINATOR) {
+            eventSections = eventSections.stream()
+                    .filter(eventSection -> !eventSection.getIsHidden())
+                    .toList();
+        }
+
+        return eventSections.stream()
+                .map(eventSection -> gradableEventService.getGradableEvents(eventSection.getId(), GradableEvent::getRoadMapOrderIndex))
                 .flatMap(List::stream)
                 .sorted(Comparator.comparing(BaseGradableEventResponseDto::getOrderIndex))
                 .toList();

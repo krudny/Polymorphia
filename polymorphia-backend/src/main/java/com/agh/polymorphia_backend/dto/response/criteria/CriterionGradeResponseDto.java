@@ -5,6 +5,7 @@ import com.agh.polymorphia_backend.dto.response.reward.assigned.ShortAssignedRew
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -13,6 +14,7 @@ import java.util.List;
 @Builder
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@EqualsAndHashCode
 public class CriterionGradeResponseDto {
     @NotNull
     private Long criterionId;

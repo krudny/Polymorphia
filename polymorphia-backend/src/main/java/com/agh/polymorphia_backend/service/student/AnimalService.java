@@ -2,7 +2,6 @@ package com.agh.polymorphia_backend.service.student;
 
 import com.agh.polymorphia_backend.dto.request.student.CreateAnimalRequestDto;
 import com.agh.polymorphia_backend.model.course.Animal;
-import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.course.StudentCourseGroupAssignment;
 import com.agh.polymorphia_backend.model.course.StudentCourseGroupAssignmentId;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
@@ -14,7 +13,6 @@ import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
 import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
-import jakarta.persistence.Access;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -46,8 +44,7 @@ public class AnimalService {
     }
 
     public Long validateAndGetAnimalId(Long courseId) {
-        Course course = courseService.getCourseById(courseId);
-        accessAuthorizer.authorizeCourseAccess(course);
+        accessAuthorizer.authorizeCourseAccess(courseId);
         AbstractRoleUser student = userService.getCurrentUser();
 
         return getAnimal(student.getUserId(), courseId).getId();

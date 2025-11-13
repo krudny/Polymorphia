@@ -6,11 +6,11 @@ import { useFadeInAnimate } from "@/animations/FadeIn";
 import ProgressBarElement from "@/components/progressbar/ProgressBarElement";
 import Loading from "@/components/loading";
 import { useMediaQuery } from "react-responsive";
-import RoadmapModals from "@/app/(logged-in)/roadmap/RoadmapModals";
 import "./styles.css";
 import { StudentGradableEventResponseDTO } from "@/interfaces/api/course";
 import { useRoadmap } from "@/hooks/course/useRoadmap";
-import RoadmapCard from "@/app/(logged-in)/roadmap/RoadmapCard";
+import RoadmapCard from "@/components/xp-card/RoadmapCard";
+import GradeModal from "@/components/speed-dial/modals/grade";
 
 export default function Roadmap() {
   const [selectedEvent, setSelectedEvent] = useState<
@@ -69,10 +69,12 @@ export default function Roadmap() {
           }
         />
       </div>
-      <RoadmapModals
-        selectedGradableEvent={selectedEvent}
-        setSelectedGradableEvent={setSelectedEvent}
-      />
+      {selectedEvent ? (
+        <GradeModal
+          gradableEventIdProp={selectedEvent.id}
+          onClosedAction={() => setSelectedEvent(undefined)}
+        />
+      ) : null}
     </>
   );
 }

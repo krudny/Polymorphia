@@ -261,11 +261,11 @@ export const EventSectionService = {
   },
 
   getProjectGroup: async (
-    userId: number,
+    studentId: number,
     gradableEventId: number
   ): Promise<StudentDetailsDTOWithType[]> => {
     const response = await fetch(
-      `${API_HOST}/projects/group?userId=${userId}&projectId=${gradableEventId}`,
+      `${API_HOST}/projects/group?studentId=${studentId}&projectId=${gradableEventId}`,
       {
         method: "GET",
         credentials: "include",

@@ -2,7 +2,8 @@ import XPCard from "@/components/xp-card/XPCard";
 import useUserContext from "@/hooks/contexts/useUserContext";
 import { RoadmapCardsProps } from "@/app/(logged-in)/roadmap/types";
 import { useMediaQuery } from "react-responsive";
-import RoadmapGradeModal from "@/app/(logged-in)/roadmap/RoadmapCardRightComponent";
+import { Roles } from "@/interfaces/api/user";
+import RoadmapCardRightComponent from "@/app/(logged-in)/roadmap/RoadmapCardRightComponent";
 
 export default function RoadmapCard({
   gradableEvent,
@@ -14,8 +15,8 @@ export default function RoadmapCard({
 
   const { name, topic, id, gainedXp, isLocked } = gradableEvent;
   const color = gainedXp ? "green" : "silver";
-  const rightComponent = userRole === "STUDENT" && (
-    <RoadmapGradeModal gradableEvent={gradableEvent} />
+  const rightComponent = userRole === Roles.STUDENT && (
+    <RoadmapCardRightComponent gradableEvent={gradableEvent} />
   );
 
   return (
@@ -27,7 +28,7 @@ export default function RoadmapCard({
       size={isXL ? "md" : isMd ? "sm" : "xs"}
       forceWidth={true}
       isLocked={isLocked}
-      onClick={() => userRole === "STUDENT" && onCardClicked(gradableEvent)}
+      onClick={() => userRole === Roles.STUDENT && onCardClicked(gradableEvent)}
       rightComponent={rightComponent}
     />
   );

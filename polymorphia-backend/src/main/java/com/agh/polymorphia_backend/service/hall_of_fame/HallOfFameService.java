@@ -4,7 +4,6 @@ import com.agh.polymorphia_backend.dto.request.hall_of_fame.HallOfFameRequestDto
 import com.agh.polymorphia_backend.dto.response.hall_of_fame.HallOfFameRecordDto;
 import com.agh.polymorphia_backend.dto.response.hall_of_fame.HallOfFameResponseDto;
 import com.agh.polymorphia_backend.model.course.Animal;
-import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.event_section.EventSection;
 import com.agh.polymorphia_backend.model.hall_of_fame.*;
 import com.agh.polymorphia_backend.model.user.UserType;
@@ -46,7 +45,6 @@ public class HallOfFameService {
     private final EventSectionRepository eventSectionRepository;
     private final HallOfFameMapper hallOfFameMapper;
     private final AccessAuthorizer accessAuthorizer;
-    private final CourseService courseService;
     private final AnimalService animalService;
     private final UserService userService;
     private final HallOfFameSortSpecResolver sortSpecResolver;
@@ -185,8 +183,7 @@ public class HallOfFameService {
     }
 
     public List<HallOfFameRecordDto> getPodium(Long courseId) {
-        Course course = courseService.getCourseById(courseId);
-        accessAuthorizer.authorizeCourseAccess(course);
+        accessAuthorizer.authorizeCourseAccess(courseId);
 
         HallOfFameRequestDto requestDto = new HallOfFameRequestDto(
                 courseId,

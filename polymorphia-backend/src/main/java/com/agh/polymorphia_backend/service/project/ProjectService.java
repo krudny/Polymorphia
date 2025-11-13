@@ -32,12 +32,14 @@ public class ProjectService {
 
     public List<ProjectVariantResponseDto> getProjectVariants(Long userId, Long projectId) {
         Project project = getProjectGradableEvent(projectId);
-        Course course = project.getGradableEvent().getEventSection().getCourse();
-        accessAuthorizer.authorizeCourseAccess(course);
-        accessAuthorizer.authorizeStudentDataAccess(course, userId);
+        Course course = project.getEventSection().getCourse();
         Animal animal = animalService.getAnimal(userId, course.getId());
+        ProjectGroup projectGroup = extractProjectGroup(project, animal);
 
-        return extractProjectGroup(project, animal).getProjectVariants().stream()
+        accessAuthorizer.authorizeCourseAccess(course);
+        accessAuthorizer.authorizeProjectGroupDetailsAccess(projectGroup);
+
+        return projectGroup.getProjectVariants().stream()
                 .map(projectMapper::toProjectVariantResponseDto)
                 .toList();
 
@@ -45,12 +47,13 @@ public class ProjectService {
 
     public List<UserDetailsResponseDto> getProjectGroup(Long projectGroupId, Long projectId) {
         Project project = getProjectGradableEvent(projectId);
-        Course course = project.getGradableEvent().getEventSection().getCourse();
+        Course course = project.getEventSection().getCourse();
 
         ProjectGroup projectGroup = project.getProjectGroups()
-                .stream().filter(group -> group.getId().equals(projectGroupId))
-                .toList()
-                .getFirst();
+                .stream()
+                .filter(group -> group.getId().equals(projectGroupId))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono grupy projektowej"));
 
         accessAuthorizer.authorizeCourseAccess(course);
         accessAuthorizer.authorizeProjectGroupDetailsAccess(projectGroup);
@@ -62,12 +65,11 @@ public class ProjectService {
 
     public List<UserDetailsResponseDto> getAnimalProjectGroup(Long userId, Long projectId) {
         Project project = getProjectGradableEvent(projectId);
-        Course course = project.getGradableEvent().getEventSection().getCourse();
-
-        accessAuthorizer.authorizeCourseAccess(course);
-        accessAuthorizer.authorizeStudentDataAccess(course, userId);
-
+        Course course = project.getEventSection().getCourse();
         Animal animal = animalService.getAnimal(userId, course.getId());
+        ProjectGroup projectGroup = extractProjectGroup(project, animal);
+
+        accessAuthorizer.authorizeProjectGroupDetailsAccess(projectGroup);
 
         return extractProjectGroup(project, animal)
                 .getAnimals().stream()
@@ -97,6 +99,6 @@ public class ProjectService {
 
     public Project getProjectGradableEvent(Long projectId) {
         return projectRepository.findById(projectId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Projekt nie został znaleziony"));
     }
 }

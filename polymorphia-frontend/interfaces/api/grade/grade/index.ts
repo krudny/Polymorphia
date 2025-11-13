@@ -2,7 +2,11 @@ import {
   CriteriaDetailsRequestDTO,
   CriterionGradeResponseDTO,
 } from "@/interfaces/api/grade/criteria";
-import { TargetRequestDTO, TargetType } from "@/interfaces/api/target";
+import {
+  TargetRequestDTO,
+  TargetType,
+  TargetTypes,
+} from "@/interfaces/api/target";
 
 export interface ShortAssignedRewardResponseDTO {
   rewardId: number;
@@ -39,14 +43,13 @@ export interface BaseGradeResponseDTOWithType<T extends TargetType, P> {
 
 export type ShortGradeResponseDTO =
   | BaseGradeResponseDTOWithType<
-      "STUDENT",
+      typeof TargetTypes.STUDENT,
       StudentGradeResponseDTO<ShortAssignedRewardResponseDTO>
     >
   | BaseGradeResponseDTOWithType<
-      "STUDENT_GROUP",
+      typeof TargetTypes.STUDENT_GROUP,
       GroupGradeResponseDTO<ShortAssignedRewardResponseDTO>
     >;
-// export type FullGradeResponseDTO = GradeResponseDTO<AssignedRewardResponseDTO>;
 
 export interface GradeRequestDTO {
   target: TargetRequestDTO;

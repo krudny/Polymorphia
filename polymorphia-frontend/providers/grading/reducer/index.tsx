@@ -23,7 +23,8 @@ export const GradingReducer = (
       };
 
     case GradingReducerActions.SET_GRADE:
-      if (!action.payload.grade.gradeResponse.isGraded) {
+      const { gradeResponse } = action.payload.grade;
+      if (!gradeResponse.isGraded) {
         return {
           ...state,
           comment: "",
@@ -31,7 +32,7 @@ export const GradingReducer = (
         };
       }
 
-      const criteriaMap = action.payload.grade.gradeResponse.criteria.reduce(
+      const criteriaMap = gradeResponse.criteria.reduce(
         (acc, criterion) => {
           acc[criterion.criterionId] = {
             gainedXp: criterion.gainedXp,
@@ -44,7 +45,7 @@ export const GradingReducer = (
 
       return {
         ...state,
-        comment: action.payload.grade.gradeResponse.comment,
+        comment: gradeResponse.comment,
         criteria: criteriaMap,
       };
 
@@ -62,13 +63,14 @@ export const GradingReducer = (
       };
 
     case GradingReducerActions.ADD_XP_TO_CRITERION:
+      const { xp, criterionId } = action.payload;
       return {
         ...state,
         criteria: {
           ...state.criteria,
-          [action.payload.criterionId]: {
-            ...state.criteria[action.payload.criterionId],
-            gainedXp: action.payload.xp.toString(),
+          [criterionId]: {
+            ...state.criteria[criterionId],
+            gainedXp: xp.toString(),
           },
         },
       };

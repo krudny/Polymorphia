@@ -14,7 +14,10 @@ export default function useProjectVariant(): UseProjectVariant {
     queryKey: ["projectVariant", gradableEventId, userId],
     queryFn: () =>
       EventSectionService.getProjectVariant(userId, gradableEventId),
-    enabled: !!gradableEventId && eventType === EventTypes.PROJECT,
+    enabled:
+      gradableEventId !== undefined &&
+      gradableEventId !== null &&
+      eventType === EventTypes.PROJECT,
   });
 
   return { data, isLoading, isError };

@@ -27,7 +27,7 @@ public class ProjectController {
 
     @GetMapping("/group")
     @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
-    public ResponseEntity<List<UserDetailsResponseDto>> getProjectGroup(@RequestParam Long userId, @RequestParam Long projectId) {
-        return ResponseEntity.ok(projectService.getAnimalProjectGroup(userId, projectId));
+    public ResponseEntity<List<UserDetailsResponseDto>> getProjectGroupMembers(@RequestParam Long studentId, @RequestParam Long projectId) {
+        return ResponseEntity.ok(projectService.getAnimalProjectGroup(studentId, projectId));
     }
 }
