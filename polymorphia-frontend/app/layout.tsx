@@ -17,7 +17,6 @@ import { TitleProvider } from "@/providers/title/TitleContext";
 import { GENERAL_APPLICATION_ROUTES } from "@/providers/title/routes";
 import { ApiError } from "@/services/api/error";
 import handleLogoutRedirect from "@/services/api/handle-logout-redirect";
-import handleForbidden from "@/services/api/handle-forbidden";
 
 const leagueGothic = League_Gothic({
   subsets: ["latin"],
@@ -50,18 +49,11 @@ export default function RootLayout({
       void handleLogoutRedirect({ router, redirectPath: "/" });
     }
 
-    if (error.status === 403) {
-      void handleForbidden({
-        queryClient,
-        router,
-      });
-    }
-
-    if (error.status === 404) {
-      void handleLogoutRedirect({ router, redirectPath: "/not-found" });
-      if (error.message.startsWith("No static resource")) {
-        return;
-      }
+    if (
+      error.status === 404 &&
+      error.message.startsWith("No static resource")
+    ) {
+      error.message = "Wystąpił nieoczekiwany błąd";
     }
 
     if (error.status === 503) {
