@@ -7,11 +7,12 @@ import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.course.CourseGroup;
 import com.agh.polymorphia_backend.model.course.StudentCourseGroupAssignment;
 import com.agh.polymorphia_backend.model.course.StudentCourseGroupAssignmentId;
-import com.agh.polymorphia_backend.model.invitation.InvitationToken;
+import com.agh.polymorphia_backend.model.email_event.CourseInvitationEvent;
+import com.agh.polymorphia_backend.model.token.Token;
+import com.agh.polymorphia_backend.model.token.TokenType;
 import com.agh.polymorphia_backend.model.user.*;
 import com.agh.polymorphia_backend.repository.course.CourseGroupRepository;
 import com.agh.polymorphia_backend.repository.course.StudentCourseGroupRepository;
-import com.agh.polymorphia_backend.repository.invitation.InvitationTokenRepository;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.repository.user.role.CoordinatorRepository;
@@ -19,12 +20,15 @@ import com.agh.polymorphia_backend.repository.user.role.InstructorRepository;
 import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
 import com.agh.polymorphia_backend.service.email.EmailService;
 import com.agh.polymorphia_backend.service.course.CourseService;
+import com.agh.polymorphia_backend.service.token.TokenService;
 import com.agh.polymorphia_backend.service.user.UserFactory;
+import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
-import com.agh.polymorphia_backend.service.validation.InvitationTokenValidator;
+import com.agh.polymorphia_backend.service.validation.TokenValidator;
 import com.agh.polymorphia_backend.service.validation.UserValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,7 +42,6 @@ public class InvitationService {
     public static final String FAILED_TO_INVITE = "Failed to send invitation";
     public static final String FAILED_TO_REGISTER = "Failed to create account";
     public static final String USER_NOT_EXIST = "User doesn't exist";
-    public static final String TOKEN_NOT_EXIST = "Token doesn't exist";
     public static final String COURSE_GROUP_NOT_EXIST = "Course group doesn't exist";
     public static final String STUDENT_NOT_EXIST = "Student doesn't exist";
     public static final String STUDENT_ALREADY_IN_GROUP = "Student is already in this group";
@@ -48,10 +51,9 @@ public class InvitationService {
     private final RegisterUtil registerUtil;
     private final UserFactory userFactory;
     private final PasswordEncoder passwordEncoder;
-    private final InvitationTokenValidator invitationTokenValidator;
-    private final InvitationTokenService invitationTokenService;
-    private final InvitationTokenRepository invitationTokenRepository;
-    private final EmailService emailService;
+    private final TokenValidator tokenValidator;
+    private final TokenService tokenService;
+    private final UserService userService;
     private final UserCourseRoleRepository userCourseRoleRepository;
     private final UserRepository userRepository;
     private final StudentRepository studentRepository;
@@ -62,19 +64,20 @@ public class InvitationService {
     private final CourseService courseService;
     private final UserValidator userValidator;
     private final AccessAuthorizer accessAuthorizer;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
     public void inviteUserToCourse(CourseInvitationRequestDto inviteDTO) {
         try {
             Course course = courseService.getCourseById(inviteDTO.getCourseId());
-
             accessAuthorizer.authorizeCourseAccess(course);
 
             validateInvitation(inviteDTO);
             AbstractRoleUser roleUser = createAndSaveRoleUser(inviteDTO);
-            InvitationToken token = createAndSaveInvitationToken(inviteDTO);
+            Token token = tokenService.createAndSaveToken(inviteDTO.getEmail(), TokenType.INVITATION);
             createAndSaveUserCourseRole(roleUser.getUser(), course, inviteDTO.getRole());
-            sendInvitationEmail(inviteDTO, token);
+
+            eventPublisher.publishEvent(new CourseInvitationEvent(inviteDTO, token));
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FAILED_TO_INVITE);
         }
@@ -109,31 +112,26 @@ public class InvitationService {
 
     @Transactional
     public void registerUser(RegisterRequestDto registerDTO, HttpServletRequest request) {
-        InvitationToken token = invitationTokenRepository.findByToken(registerDTO.getInvitationToken())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, TOKEN_NOT_EXIST));
+        Token token = tokenService.getTokenFromValue(registerDTO.getInvitationToken());
+        tokenValidator.validateTokenBeforeUse(token, TokenType.INVITATION);
 
-        User user = userRepository.findByEmail(token.getEmail())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, USER_NOT_EXIST));
-
-        invitationTokenValidator.validateTokenBeforeRegister(token);
+        User user = userService.getUserByEmail(token.getEmail());
         userValidator.validateUserRegistered(user);
-        
+
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
-        token.setUsed(true);
 
         try {
             userRepository.save(user);
-            invitationTokenRepository.save(token);
             registerUtil.authenticateUserAndCreateSession(user.getEmail(), registerDTO.getPassword(), request);
+            tokenService.deleteToken(token);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FAILED_TO_REGISTER);
         }
-
     }
 
     private void validateInvitation(CourseInvitationRequestDto inviteDTO) {
         String email = inviteDTO.getEmail();
-        invitationTokenValidator.validateTokenBeforeInvitation(email);
+        tokenValidator.isTokenAssigned(email, TokenType.INVITATION);
         userValidator.validateUserNotExistsByEmail(email);
 
         if (inviteDTO.getRole() == UserType.STUDENT) {
@@ -165,11 +163,6 @@ public class InvitationService {
         return coordinatorRepository.save(coordinator);
     }
 
-    private InvitationToken createAndSaveInvitationToken(CourseInvitationRequestDto inviteDTO) {
-        InvitationToken token = invitationTokenService.createInvitationToken(inviteDTO);
-        return invitationTokenRepository.save(token);
-    }
-
     private void createAndSaveUserCourseRole(User user, Course course, UserType role) {
         UserCourseRoleId id = new UserCourseRoleId(user.getId(), course.getId());
 
@@ -181,10 +174,6 @@ public class InvitationService {
                 .build();
 
         userCourseRoleRepository.save(userCourseRole);
-    }
-
-    private void sendInvitationEmail(CourseInvitationRequestDto inviteDTO, InvitationToken token) {
-        emailService.sendInvitationEmail(inviteDTO, token);
     }
 
     private void addStudentToCourseGroup(User user, CourseGroup courseGroup) {
@@ -218,7 +207,6 @@ public class InvitationService {
         }
 
         courseGroup.setInstructor(instructor);
-
         courseGroupRepository.save(courseGroup);
     }
 }
