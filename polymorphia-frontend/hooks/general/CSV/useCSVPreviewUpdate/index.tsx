@@ -1,4 +1,4 @@
-import CSVService from "@/components/speed-dial/modals/import-csv/CSVService";
+import CSVService from "@/services/csv";
 import { useMutation } from "@tanstack/react-query";
 import {
   UseCSVPreviewUpdate,

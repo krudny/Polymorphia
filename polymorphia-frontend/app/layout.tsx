@@ -16,7 +16,7 @@ import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper
 import { TitleProvider } from "@/providers/title/TitleContext";
 import { GENERAL_APPLICATION_ROUTES } from "@/providers/title/routes";
 import { ApiError } from "@/services/api/error";
-import handleUnauthorized from "@/services/api/handle-unauthorized";
+import handleLogoutRedirect from "@/services/api/handle-logout-redirect";
 import handleForbidden from "@/services/api/handle-forbidden";
 
 const leagueGothic = League_Gothic({
@@ -47,7 +47,7 @@ export default function RootLayout({
 
     if (error.status === 401) {
       error.message = "Sesja wygasła. Zaloguj się ponownie.";
-      void handleUnauthorized();
+      void handleLogoutRedirect({ router, redirectPath: "/" });
     }
 
     if (error.status === 403) {
@@ -58,7 +58,7 @@ export default function RootLayout({
     }
 
     if (error.status === 404) {
-      router.push("/not-found");
+      void handleLogoutRedirect({ router, redirectPath: "/not-found" });
       if (error.message.startsWith("No static resource")) {
         return;
       }

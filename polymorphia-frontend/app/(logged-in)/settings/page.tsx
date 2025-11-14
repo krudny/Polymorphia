@@ -35,7 +35,12 @@ export default function Settings() {
 
   const toggleSidebarLockOpened = () => {
     if (isSidebarLockedClosed) {
-      toast.error("Nie można!");
+      toast.error(
+        "Nie można włączyć trybu ‘zawsze otwarty’, gdy sidebar jest ustawiony jako ‘zawsze zamknięty’.",
+        {
+          id: "settings",
+        }
+      );
       return;
     }
     setIsSidebarLockedOpened(!isSidebarLockedOpened);
@@ -43,7 +48,12 @@ export default function Settings() {
 
   const toggleSidebarLockClosed = () => {
     if (isSidebarLockedOpened) {
-      toast.error("Nie można!");
+      toast.error(
+        "Nie można włączyć trybu ‘zawsze zamknięty’, gdy sidebar jest ustawiony jako ‘zawsze otwarty’.",
+        {
+          id: "settings",
+        }
+      );
       return;
     }
     setIsSidebarLockedClosed(!isSidebarLockedClosed);
@@ -55,7 +65,6 @@ export default function Settings() {
 
   return (
     <div ref={wrapperRef} className="settings-outer-wrapper">
-      <h1>Tymczasowe ustawienia</h1>
       <div className="settings-option-wrapper">
         <h3>Sidebar zawsze otwarty</h3>
         <ButtonWithBorder
