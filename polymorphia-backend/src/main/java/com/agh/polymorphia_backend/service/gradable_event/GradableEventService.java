@@ -1,9 +1,12 @@
 package com.agh.polymorphia_backend.service.gradable_event;
 
+import com.agh.polymorphia_backend.dto.request.target.TargetRequestDto;
+import com.agh.polymorphia_backend.dto.request.target.TargetType;
 import com.agh.polymorphia_backend.dto.response.criteria.CriterionResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.BaseGradableEventResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.event_section.EventSection;
+import com.agh.polymorphia_backend.model.event_section.EventSectionType;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.UserType;
@@ -85,6 +88,17 @@ public class GradableEventService {
                 .map(criterionMapper::toCriterionResponseDto)
                 .toList();
     }
+
+    public void validateTargetGradableEventAccess(TargetRequestDto target, GradableEvent gradableEvent) {
+        boolean isInvalidGradableEventForStudentGroupTarget = target.type() == TargetType.STUDENT_GROUP &&
+                gradableEvent.getEventSection().getEventSectionType() != EventSectionType.PROJECT;
+
+        if (isInvalidGradableEventForStudentGroupTarget) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Grupowy podmiot oceny jest wspierany jedynie przy projekcie.");
+        }
+    }
+
 
     private GradableEvent fetchGradableEvent(Long gradableEventId) {
         return gradableEventRepository

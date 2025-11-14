@@ -39,10 +39,12 @@ public class ShortGradeService {
     private final ProjectService projectService;
 
     public ShortGradeResponseDtoWithType getShortGrade(Long gradableEventId, TargetRequestDto targetRequestDto) {
+        GradableEvent gradableEvent = gradableEventService.getGradableEventById(gradableEventId);
+        gradableEventService.validateTargetGradableEventAccess(targetRequestDto, gradableEvent);
         ShortGradeResponseDto grade = switch (targetRequestDto.type()) {
-            case STUDENT -> getShortGradeStudent(gradableEventId, ((StudentTargetRequestDto) targetRequestDto).id());
+            case STUDENT -> getShortGradeStudent(gradableEvent, ((StudentTargetRequestDto) targetRequestDto).id());
             case STUDENT_GROUP ->
-                    getShortGroupGrade(gradableEventId, ((StudentGroupTargetRequestDto) targetRequestDto).groupId());
+                    getShortGroupGrade(gradableEvent, ((StudentGroupTargetRequestDto) targetRequestDto).groupId());
         };
 
         return ShortGradeResponseDtoWithType.builder()
@@ -51,13 +53,12 @@ public class ShortGradeService {
                 .build();
     }
 
-    private StudentShortGradeResponseDto getShortGradeStudent(Long gradableEventId, Long studentId) {
-        GradableEvent gradableEvent = gradableEventService.getGradableEventById(gradableEventId);
+    private StudentShortGradeResponseDto getShortGradeStudent(GradableEvent gradableEvent, Long studentId) {
         Course course = gradableEvent.getEventSection().getCourse();
 
         accessAuthorizer.authorizeStudentDataAccess(course, studentId);
         Animal animal = animalService.getAnimal(studentId, course.getId());
-        Optional<Grade> grade = gradeService.getGradeByAnimalIdAndGradableEventId(animal.getId(), gradableEventId);
+        Optional<Grade> grade = gradeService.getGradeByAnimalIdAndGradableEventId(animal.getId(), gradableEvent.getId());
         List<CriterionGradeResponseDto> criteriaGrades = grade.map(criterionGradeService::getCriteriaGrades)
                 .orElse(Collections.emptyList());
         Boolean hasReward = !criteriaGrades
@@ -75,10 +76,10 @@ public class ShortGradeService {
                 .build();
     }
 
-    private StudentGroupShortGradeResponseDto getShortGroupGrade(Long gradableEventId, Long groupId) {
-        List<UserDetailsResponseDto> projectGroupStudents = projectService.getProjectGroup(groupId, gradableEventId);
+    private StudentGroupShortGradeResponseDto getShortGroupGrade(GradableEvent gradableEvent, Long groupId) {
+        List<UserDetailsResponseDto> projectGroupStudents = projectService.getProjectGroup(groupId, gradableEvent.getId());
         List<StudentShortGradeResponseDto> shortGrades = projectGroupStudents.stream()
-                .map(student -> getShortGradeStudent(gradableEventId, student.getUserDetails().getId()))
+                .map(student -> getShortGradeStudent(gradableEvent, student.getUserDetails().getId()))
                 .toList();
 
         List<Long> ids = shortGrades.stream()
