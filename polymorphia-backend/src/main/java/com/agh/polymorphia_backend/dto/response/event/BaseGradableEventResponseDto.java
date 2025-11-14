@@ -24,4 +24,7 @@ public class BaseGradableEventResponseDto {
     @NotNull
     private Long orderIndex;
 
+    private Long roadMapOrderIndex;
+
+    private Boolean isHidden;
 }

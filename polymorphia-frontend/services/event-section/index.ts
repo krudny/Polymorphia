@@ -158,8 +158,6 @@ export const EventSectionService = {
     eventSectionId: number,
     gradableEventId: number
   ): Promise<BaseGradableEventResponseDTO> => {
-    console.warn("eventSectionId", eventSectionId);
-    console.warn("gradableEventId", gradableEventId);
     return EventSectionService.getStudentGradableEvents(eventSectionId).then(
       (data) => {
         console.log("data");

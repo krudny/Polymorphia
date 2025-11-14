@@ -35,7 +35,7 @@ public class RoadmapService {
         }
 
         return eventSections.stream()
-                .map(eventSection -> gradableEventService.getGradableEvents(eventSection.getId(), GradableEvent::getRoadMapOrderIndex))
+                .map(eventSection -> gradableEventService.getGradableEvents(eventSection.getId(), BaseGradableEventResponseDto::getOrderIndex))
                 .flatMap(List::stream)
                 .sorted(Comparator.comparing(BaseGradableEventResponseDto::getOrderIndex))
                 .toList();

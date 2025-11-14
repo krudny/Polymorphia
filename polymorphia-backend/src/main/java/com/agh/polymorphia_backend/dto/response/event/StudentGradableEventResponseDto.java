@@ -1,6 +1,5 @@
 package com.agh.polymorphia_backend.dto.response.event;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,9 +12,11 @@ public class StudentGradableEventResponseDto extends BaseGradableEventResponseDt
     private String gainedXp;
 
     @NotNull
-    private boolean hasReward;
+    private boolean hasPossibleReward;
 
     @NotNull
-    @JsonProperty("isLocked")
-    private boolean isLocked;
+    private boolean isGraded;
+
+    @NotNull
+    private boolean isRewardAssigned;
 }
