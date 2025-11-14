@@ -16,7 +16,6 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class RoadmapService {
-
     private final AccessAuthorizer accessAuthorizer;
     private final EventSectionService eventSectionService;
     private final GradableEventService gradableEventService;
@@ -34,9 +33,8 @@ public class RoadmapService {
         }
 
         return eventSections.stream()
-                .map(eventSection -> gradableEventService.getGradableEvents(eventSection.getId(), BaseGradableEventResponseDto::getOrderIndex))
+                .map(eventSection -> gradableEventService.getGradableEvents(eventSection.getId()))
                 .flatMap(List::stream)
-                .sorted(Comparator.comparing(BaseGradableEventResponseDto::getOrderIndex))
                 .toList();
     }
 }

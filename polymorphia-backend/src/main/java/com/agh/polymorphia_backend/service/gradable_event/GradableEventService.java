@@ -65,10 +65,7 @@ public class GradableEventService {
         }
     }
 
-    public List<BaseGradableEventResponseDto> getGradableEvents(
-            Long eventSectionId,
-            Function<BaseGradableEventResponseDto, Long> orderIndexExtractor
-    ) {
+    public List<BaseGradableEventResponseDto> getGradableEvents(Long eventSectionId) {
         EventSection eventSection = eventSectionService.getEventSection(eventSectionId);
         Course course = eventSection.getCourse();
         accessAuthorizer.authorizeCourseAccess(course);
@@ -124,6 +121,6 @@ public class GradableEventService {
     private GradableEvent fetchGradableEvent(Long gradableEventId) {
         return gradableEventRepository
                 .findById(gradableEventId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Gradable event not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Gradable event nie istnieje"));
     }
 }

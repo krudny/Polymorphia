@@ -69,12 +69,12 @@ export default function Roadmap() {
           }
         />
       </div>
-      {selectedEvent ? (
+      {selectedEvent && (
         <GradeModal
           gradableEventIdProp={selectedEvent.id}
           onClosedAction={() => setSelectedEvent(undefined)}
         />
-      ) : null}
+      )}
     </>
   );
 }
