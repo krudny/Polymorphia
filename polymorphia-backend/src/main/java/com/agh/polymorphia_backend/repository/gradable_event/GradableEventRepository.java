@@ -21,9 +21,14 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
         SELECT ge.id as id,
                ge.name as name,
                ge.orderIndex as orderIndex,
+               ge.topic as topic,
                ge.roadMapOrderIndex as roadMapOrderIndex,
-               ge.isHidden as isHidden,
-               COALESCE(SUM(DISTINCT cg.xp), 0) as gainedXp,
+               ge.isLocked as isLocked,
+               CASE
+                   WHEN COUNT(DISTINCT g.id) > 0\s
+                   THEN TO_CHAR(SUM(DISTINCT cg.xp), 'FM9999990.0')
+                   ELSE NULL
+               END as gainedXp,
                CASE WHEN COUNT(DISTINCT cr.criterion.id) > 0 THEN true ELSE false END as hasPossibleReward,
                CASE WHEN COUNT(DISTINCT g.id) > 0 THEN true ELSE false END as isGraded,
                CASE WHEN COUNT(DISTINCT g.id) > 0 AND COUNT(DISTINCT ar.id) > 0 
@@ -36,8 +41,7 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
         LEFT JOIN CriterionGrade cg ON cg.grade.id = g.id AND cg.criterion.id = c.id
         LEFT JOIN CriterionReward cr ON cr.criterion.id = c.id
         LEFT JOIN AssignedReward ar ON ar.criterionGrade.id = cg.id
-        WHERE ge.eventSection.id = :eventSectionId
-          AND ge.isHidden = false
+        WHERE ge.eventSection.id = :eventSectionId AND ge.isHidden = false
         GROUP BY ge.id, ge.name, ge.orderIndex, ge.roadMapOrderIndex, ge.isHidden
         ORDER BY 
             CASE WHEN :sortBy = 'ORDER_INDEX' THEN ge.orderIndex END,
@@ -52,6 +56,7 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
     @Query("""
     SELECT ge.id as id,
            ge.name as name,
+           ge.topic as topic,
            ge.orderIndex as orderIndex,
            ge.roadMapOrderIndex as roadMapOrderIndex,
            ge.isHidden as isHidden,

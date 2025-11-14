@@ -26,5 +26,5 @@ public class BaseGradableEventResponseDto {
 
     private Long roadMapOrderIndex;
 
-    private Boolean isHidden;
+    private Boolean isLocked;
 }

@@ -1,6 +1,4 @@
 import XPCard from "@/components/xp-card/XPCard";
-import { TargetTypes } from "@/interfaces/api/target";
-import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { GradableEventCardProps } from "@/views/course/student/types";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 
@@ -9,22 +7,10 @@ export default function GradableEventCard({
   isMobile,
   handleGradableEventClick,
 }: GradableEventCardProps) {
-  const { id: userId } = useUserDetails();
-  const target = {
-    id: userId,
-    type: TargetTypes.STUDENT,
-  };
-  // const { data: grade, isLoading: isLoading } = useShortGrade(
-  //   target,
-  //   gradableEvent.id
-  // );
-  const { hasReward, gainedXp } = gradableEvent;
+  const { hasPossibleReward, gainedXp, isGraded, isRewardAssigned } =
+    gradableEvent;
 
-  // if (isLoading || !grade) {
-  //   return null;
-  // }
-  // const hasGainedReward =
-  //   grade.gradeResponse.isGraded && grade.gradeResponse.hasReward;
+  console.log(isRewardAssigned, isGraded);
 
   const color = gainedXp ? "green" : "sky";
   const rightComponent = (
@@ -32,11 +18,8 @@ export default function GradableEventCard({
       isSumLabelVisible={true}
       color="gray"
       points={gainedXp}
-      hasChest={hasReward}
-      shouldGreyOutReward={
-        // !hasGainedReward && hasReward && grade.gradeResponse.isGraded
-        false
-      }
+      hasChest={hasPossibleReward}
+      shouldGreyOutReward={isGraded && !isRewardAssigned}
     />
   );
 

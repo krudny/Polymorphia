@@ -13,23 +13,21 @@ export interface BaseGradableEventResponseDTO {
   name: string;
   topic?: string;
   orderIndex: number;
+  roadMapOrderIndex?: number;
+  isLocked: boolean;
 }
 
 export interface StudentGradableEventResponseDTO
   extends BaseGradableEventResponseDTO {
-  gainedXp?: string;
-  hasReward: boolean;
-  isLocked: boolean;
+  gainedXp: string;
+  hasPossibleReward: boolean;
+  isGraded: boolean;
+  isRewardAssigned: boolean;
 }
 
 export interface InstructorGradableEventResponseDTO
   extends BaseGradableEventResponseDTO {
   ungradedStudents: number;
-}
-
-export interface CourseGroupsResponseDTO {
-  id: number;
-  name: string;
-  details: string;
-  studentCount: number;
+  isLocked: boolean;
+  hasPossibleReward: boolean;
 }

@@ -14,7 +14,7 @@ public class InstructorGradableEventResponseDto extends BaseGradableEventRespons
     private Long ungradedStudents;
 
     @NotNull
-    private Boolean isLocked;
+    private Boolean isHidden;
 
     @NotNull
     private Boolean hasPossibleReward;

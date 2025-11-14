@@ -9,6 +9,7 @@ import com.agh.polymorphia_backend.repository.gradable_event.projections.Instruc
 import com.agh.polymorphia_backend.repository.gradable_event.projections.StudentGradableEventProjection;
 import com.agh.polymorphia_backend.util.NumberFormatter;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -17,6 +18,7 @@ import java.util.function.Function;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class GradableEventMapper {
     private static final String mockedTitle = "*********";
     private static final String mockedTopic = "[Wydarzenie ukryte]";
@@ -28,11 +30,12 @@ public class GradableEventMapper {
         return StudentGradableEventResponseDto.builder()
                 .id(projection.getId())
                 .type(eventSectionType)
-                .name(projection.getName())
+                .name(Boolean.TRUE.equals(projection.getIsLocked()) ? mockedTitle : projection.getName())
+                .topic(Boolean.TRUE.equals(projection.getIsLocked()) ? mockedTopic : projection.getTopic())
                 .orderIndex(projection.getOrderIndex())
                 .roadMapOrderIndex(projection.getRoadMapOrderIndex())
-                .isHidden(projection.getIsHidden())
-                .gainedXp(formatXp(projection.getGainedXp()))
+                .isLocked(projection.getIsLocked())
+                .gainedXp(projection.getGainedXp())
                 .hasPossibleReward(projection.getHasPossibleReward())
                 .isGraded(projection.getIsGraded())
                 .isRewardAssigned(projection.getIsRewardAssigned())
@@ -47,6 +50,7 @@ public class GradableEventMapper {
                 .id(projection.getId())
                 .type(eventSectionType)
                 .name(projection.getName())
+                .topic(projection.getTopic())
                 .orderIndex(projection.getOrderIndex())
                 .roadMapOrderIndex(projection.getRoadMapOrderIndex())
                 .isHidden(projection.getIsHidden())
@@ -55,10 +59,4 @@ public class GradableEventMapper {
                 .hasPossibleReward(projection.getHasPossibleReward())
                 .build();
     }
-
-    private String formatXp(Long xp) {
-        return xp != null ? xp.toString() : "-";
-    }
-
-
 }
