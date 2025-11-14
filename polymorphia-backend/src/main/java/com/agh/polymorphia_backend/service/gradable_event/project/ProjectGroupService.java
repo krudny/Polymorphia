@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.service.gradable_event.project;
 
 import com.agh.polymorphia_backend.model.project.ProjectGroup;
-import com.agh.polymorphia_backend.model.user.Student;
+import com.agh.polymorphia_backend.model.user.student.Student;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

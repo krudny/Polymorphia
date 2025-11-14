@@ -13,6 +13,7 @@ import { useEventParams } from "@/hooks/general/useEventParams";
 import useStudentsGradableEvents from "@/hooks/course/useStudentsGradableEvents";
 import { EventTypes } from "@/interfaces/general";
 import usePointsSummary from "@/hooks/course/usePointsSummary";
+import GradeModal from "@/components/speed-dial/modals/grade";
 
 export default function StudentView() {
   const { eventType, eventSectionId } = useEventParams();
@@ -84,11 +85,10 @@ export default function StudentView() {
         <PointsSummary ref={summaryRef} pointsSummary={pointsSummary} />
       </div>
       {eventType === EventTypes.TEST && selectedEventId && (
-        // <GradeModal
-        //   onClosedAction={() => setSelectedEventId(null)}
-        //   gradableEventIdProp={selectedEventId}
-        // />
-        <></>
+        <GradeModal
+          onClosedAction={() => setSelectedEventId(null)}
+          gradableEventIdProp={selectedEventId}
+        />
       )}
     </SectionView>
   );

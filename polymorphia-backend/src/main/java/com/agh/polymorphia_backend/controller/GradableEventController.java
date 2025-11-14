@@ -17,13 +17,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @AllArgsConstructor
 @RequestMapping("/gradable-events")
 public class GradableEventController {
     private final GradableEventService gradableEventService;
     private final PointsSummaryService pointsSummaryService;
-    private final ShortGradeService shortGradeService;
 
     @GetMapping()
     @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
@@ -36,16 +35,4 @@ public class GradableEventController {
     public ResponseEntity<PointsSummaryResponseDto> getPointsSummary(@RequestParam Long eventSectionId) {
         return ResponseEntity.ok(pointsSummaryService.getPointsSummary(eventSectionId));
     }
-
-    @PostMapping("/short-grade")
-    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
-    public ResponseEntity<ShortGradeResponseDtoWithType> getShortGrade(@RequestParam Long gradableEventId, @RequestBody ShortGradeRequestDto requestDto) {
-        return ResponseEntity.ok(shortGradeService.getShortGrade(gradableEventId, requestDto.getTarget()));
-    }
-
-//    @GetMapping("/criteria")
-//    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
-//    public ResponseEntity<List<CriterionResponseDto>> getGradableEventCriteria(@RequestParam Long gradableEventId) {
-//        return ResponseEntity.ok(gradableEventService.getCriteria(gradableEventId));
-//    }
 }

@@ -1,13 +1,13 @@
 package com.agh.polymorphia_backend.service.gradable_event;
 
 import com.agh.polymorphia_backend.dto.response.reward.points_summary.PointsSummaryResponseDto;
-import com.agh.polymorphia_backend.model.course.Animal;
+import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
-import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedItem;
-import com.agh.polymorphia_backend.model.course.reward.item.ItemType;
+import com.agh.polymorphia_backend.model.reward.assigned.AssignedItem;
+import com.agh.polymorphia_backend.model.reward.item.ItemType;
 import com.agh.polymorphia_backend.model.event_section.EventSection;
 import com.agh.polymorphia_backend.model.hall_of_fame.StudentScoreDetail;
-import com.agh.polymorphia_backend.service.course.reward.AssignedRewardService;
+import com.agh.polymorphia_backend.service.reward.AssignedRewardService;
 import com.agh.polymorphia_backend.service.event_section.EventSectionService;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
 import com.agh.polymorphia_backend.service.mapper.PointsSummaryMapper;

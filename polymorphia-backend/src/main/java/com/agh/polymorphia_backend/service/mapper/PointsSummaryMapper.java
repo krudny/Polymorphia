@@ -3,9 +3,9 @@ package com.agh.polymorphia_backend.service.mapper;
 import com.agh.polymorphia_backend.dto.response.reward.assigned.AssignedRewardResponseDto;
 import com.agh.polymorphia_backend.dto.response.reward.points_summary.PointsSummaryDetailsResponseDto;
 import com.agh.polymorphia_backend.dto.response.reward.points_summary.PointsSummaryResponseDto;
-import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedItem;
+import com.agh.polymorphia_backend.model.reward.assigned.AssignedItem;
 import com.agh.polymorphia_backend.model.hall_of_fame.StudentScoreDetail;
-import com.agh.polymorphia_backend.service.course.reward.BonusXpCalculator;
+import com.agh.polymorphia_backend.service.reward.BonusXpCalculator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

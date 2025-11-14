@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.service.gradable_event;
 
-import com.agh.polymorphia_backend.model.gradable_event.Grade;
+import com.agh.polymorphia_backend.model.grade.Grade;
 import com.agh.polymorphia_backend.repository.gradable_event.GradeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

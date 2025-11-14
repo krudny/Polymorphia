@@ -1,11 +1,10 @@
 package com.agh.polymorphia_backend.service.user;
 
 import com.agh.polymorphia_backend.dto.request.user.CourseInvitationRequestDto;
-import com.agh.polymorphia_backend.model.user.Coordinator;
-import com.agh.polymorphia_backend.model.user.Instructor;
-import com.agh.polymorphia_backend.model.user.Student;
+import com.agh.polymorphia_backend.model.user.coordinator.Coordinator;
+import com.agh.polymorphia_backend.model.user.instructor.Instructor;
+import com.agh.polymorphia_backend.model.user.student.Student;
 import com.agh.polymorphia_backend.model.user.User;
-import com.agh.polymorphia_backend.repository.user.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

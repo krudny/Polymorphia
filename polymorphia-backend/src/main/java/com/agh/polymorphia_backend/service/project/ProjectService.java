@@ -3,7 +3,7 @@ package com.agh.polymorphia_backend.service.project;
 import com.agh.polymorphia_backend.dto.response.project.ProjectVariantResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.BaseUserDetailsResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.UserDetailsResponseDto;
-import com.agh.polymorphia_backend.model.course.Animal;
+import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.project.Project;
 import com.agh.polymorphia_backend.model.project.ProjectGroup;

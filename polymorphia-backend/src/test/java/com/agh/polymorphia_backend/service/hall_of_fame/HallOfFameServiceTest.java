@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.service.hall_of_fame;
 
 import com.agh.polymorphia_backend.BaseTest;
-import com.agh.polymorphia_backend.model.course.Animal;
+import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.event_section.AssignmentSection;
 import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry;

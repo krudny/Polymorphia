@@ -1,17 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/services/event-section";
 import { UseStudentsGradableEvents } from "@/hooks/course/useStudentsGradableEvents/types";
 import { useEventParams } from "@/hooks/general/useEventParams";
+import { GradableEventService } from "@/services/gradable-event";
 
 export default function useStudentsGradableEvents(): UseStudentsGradableEvents {
   const { eventSectionId } = useEventParams();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["gradableEvents", eventSectionId],
-    queryFn: () => EventSectionService.getStudentGradableEvents(eventSectionId),
+    queryFn: () =>
+      GradableEventService.getStudentGradableEvents(eventSectionId),
     refetchOnWindowFocus: false,
   });
 
-  console.log("useStudentsGradableEvents data:", data, eventSectionId);
   return { data, isLoading, isError };
 }

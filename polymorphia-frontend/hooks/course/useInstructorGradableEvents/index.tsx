@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/services/event-section";
 import { UseInstructorGradableEvents } from "@/hooks/course/useInstructorGradableEvents/types";
 import { useEventParams } from "@/hooks/general/useEventParams";
+import { GradableEventService } from "@/services/gradable-event";
 
 export default function useInstructorGradableEvents(): UseInstructorGradableEvents {
   const { eventSectionId } = useEventParams();
@@ -9,7 +9,7 @@ export default function useInstructorGradableEvents(): UseInstructorGradableEven
   const { data, isLoading, isError } = useQuery({
     queryKey: ["gradableEvents", eventSectionId],
     queryFn: () =>
-      EventSectionService.getInstructorGradableEvents(eventSectionId),
+      GradableEventService.getInstructorGradableEvents(eventSectionId),
   });
 
   return { data, isLoading, isError };
