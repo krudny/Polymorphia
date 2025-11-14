@@ -9,6 +9,13 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Data
 public class InstructorGradableEventResponseDto extends BaseGradableEventResponseDto {
+
     @NotNull
     private Long ungradedStudents;
+
+    @NotNull
+    private Boolean isLocked;
+
+    @NotNull
+    private Boolean hasPossibleReward;
 }

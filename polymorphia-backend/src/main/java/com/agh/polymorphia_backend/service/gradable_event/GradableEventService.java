@@ -24,12 +24,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.math.BigDecimal;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static com.agh.polymorphia_backend.service.user.UserService.INVALID_ROLE;
 
 @Service
 @AllArgsConstructor
@@ -56,78 +55,6 @@ public class GradableEventService {
         return gradableEvent;
     }
 
-    public List<BaseGradableEventResponseDto> getGradableEvents(
-            Long eventSectionId,
-            Function<BaseGradableEventResponseDto, Long> orderIndexExtractor
-    ) {
-        EventSection eventSection = eventSectionService.getEventSection(eventSectionId);
-        Course course = eventSection.getCourse();
-        accessAuthorizer.authorizeCourseAccess(course);
-
-        UserType userRole = userService.getUserRoleInCourse(course.getId());
-
-        if (userRole == UserType.STUDENT) {
-            return getStudentGradableEvents2(eventSection, course, orderIndexExtractor);
-        }
-
-        return List.of();
-    }
-
-    private List<BaseGradableEventResponseDto> getStudentGradableEvents2(
-            EventSection eventSection,
-            Course course,
-            Function<BaseGradableEventResponseDto, Long> orderIndexExtractor
-    ) {
-        Long userId = userService.getCurrentUser().getUserId();
-        Long animalId = animalService.getAnimal(userId, course.getId()).getId();
-
-        return gradableEventRepository
-                .findStudentGradableEventsWithDetails(eventSection.getId(), animalId)
-                .stream()
-                .map(projection -> gradableEventMapper.toStudentGradableEventResponseDto(
-                        projection,
-                        eventSection.getEventSectionType()
-                ))
-                .sorted(Comparator.comparing(orderIndexExtractor))
-                .collect(Collectors.toList());
-    }
-
-//    public List<BaseGradableEventResponseDto> getGradableEvents(
-//            Long eventSectionId,
-//            Function<GradableEvent, Long> orderIndexExtractor
-//    ) {
-//        EventSection eventSection = eventSectionService.getEventSection(eventSectionId);
-//
-//        Course course = eventSection.getCourse();
-//        accessAuthorizer.authorizeCourseAccess(course);
-//
-//        UserType userRole = userService.getUserRoleInCourse(course.getId());
-//
-//        Function<GradableEvent, BaseGradableEventResponseDto> mapper = getMapperFunction(userRole, eventSection, course.getId(), orderIndexExtractor);
-//        List<GradableEvent> gradableEvents = eventSection.getGradableEvents();
-//
-//        if (userRole != UserType.INSTRUCTOR && userRole != UserType.COORDINATOR) {
-//            gradableEvents = gradableEvents.stream()
-//                    .filter(gradableEvent -> !gradableEvent.getIsHidden())
-//                    .toList();
-//        }
-//
-//        return gradableEvents.stream()
-//                .map(mapper)
-//                .sorted(Comparator.comparing(BaseGradableEventResponseDto::getOrderIndex))
-//                .toList();
-//    }
-
-    public List<CriterionResponseDto> getCriteria(Long gradableEventId) {
-        GradableEvent gradableEvent = getGradableEventById(gradableEventId);
-        Course course = gradableEvent.getEventSection().getCourse();
-        accessAuthorizer.authorizeCourseAccess(course);
-
-        return gradableEvent.getCriteria().stream()
-                .map(criterionMapper::toCriterionResponseDto)
-                .toList();
-    }
-
     public void validateTargetGradableEventAccess(TargetRequestDto target, GradableEvent gradableEvent) {
         boolean isInvalidGradableEventForStudentGroupTarget = target.type() == TargetType.STUDENT_GROUP &&
                 gradableEvent.getEventSection().getEventSectionType() != EventSectionType.PROJECT;
@@ -138,55 +65,65 @@ public class GradableEventService {
         }
     }
 
+    public List<BaseGradableEventResponseDto> getGradableEvents(
+            Long eventSectionId,
+            Function<BaseGradableEventResponseDto, Long> orderIndexExtractor
+    ) {
+        EventSection eventSection = eventSectionService.getEventSection(eventSectionId);
+        Course course = eventSection.getCourse();
+        accessAuthorizer.authorizeCourseAccess(course);
+
+        UserType userRole = userService.getUserRoleInCourse(course.getId());
+
+        String sortBy = "ORDER_INDEX";
+
+        return switch (userRole) {
+            case STUDENT -> getStudentGradableEvents(eventSection, course, sortBy);
+            case INSTRUCTOR, COORDINATOR -> getInstructorGradableEvents(eventSection, sortBy);
+            case UNDEFINED -> throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    INVALID_ROLE
+            );
+        };
+    }
+
+    private List<BaseGradableEventResponseDto> getStudentGradableEvents(
+            EventSection eventSection,
+            Course course,
+            String sortBy
+    ) {
+        Long userId = userService.getCurrentUser().getUserId();
+        Long animalId = animalService.getAnimal(userId, course.getId()).getId();
+
+        return gradableEventRepository
+                .findStudentGradableEventsWithDetails(eventSection.getId(), animalId, sortBy)
+                .stream()
+                .map(projection -> gradableEventMapper.toStudentGradableEventResponseDto(
+                        projection,
+                        eventSection.getEventSectionType()
+                ))
+                .collect(Collectors.toList());
+    }
+
+    private List<BaseGradableEventResponseDto> getInstructorGradableEvents(
+            EventSection eventSection,
+            String sortBy
+    ) {
+        Long instructorId = userService.getCurrentUser().getUserId();
+
+        return gradableEventRepository
+                .findInstructorGradableEventsWithDetails(eventSection.getId(), instructorId, sortBy)
+                .stream()
+                .map(projection -> gradableEventMapper.toInstructorGradableEventResponseDto(
+                        projection,
+                        eventSection.getEventSectionType()
+                ))
+                .collect(Collectors.toList());
+    }
 
     private GradableEvent fetchGradableEvent(Long gradableEventId) {
         return gradableEventRepository
                 .findById(gradableEventId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Gradable event not found"));
-    }
-
-//    private Function<GradableEvent, BaseGradableEventResponseDto> getMapperFunction(UserType userRole, EventSection eventSection, Long courseId,
-//                                                                                    Function<GradableEvent, Long> orderIndexExtractor
-//    ) {
-//        return switch (userRole) {
-//            case STUDENT -> gradableEvent -> {
-//                Long userId = userService.getCurrentUser().getUserId();
-//                Long animalId = animalService.getAnimal(userId, courseId).getId();
-//                Optional<BigDecimal> gainedXp = getGainedXp(gradableEvent, animalId);
-//                boolean hasReward = hasReward(gradableEvent);
-//
-//                return gradableEventMapper.toStudentGradableEventResponseDto(
-//                        gradableEvent,
-//                        eventSection.getEventSectionType(),
-//                        gainedXp,
-//                        hasReward,
-//                        orderIndexExtractor
-//                );
-//            };
-//            case INSTRUCTOR, COORDINATOR -> gradableEvent -> {
-//                Long ungradedStudents = getUngradedStudents(gradableEvent);
-//
-//                return gradableEventMapper.toInstructorGradableEventResponseDto(
-//                        gradableEvent,
-//                        eventSection.getEventSectionType(),
-//                        ungradedStudents,
-//                        orderIndexExtractor
-//                );
-//            };
-//            case UNDEFINED -> throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Wybierz kurs, by pobrać eventy");
-//        };
-//    }
-
-    public boolean hasReward(GradableEvent gradableEvent) {
-        return gradableEventRepository.rewardExists(gradableEvent);
-    }
-
-    public Optional<BigDecimal> getGainedXp(GradableEvent gradableEvent, Long animalId) {
-        return gradableEventRepository.sumGainedXp(gradableEvent, animalId);
-    }
-
-    public Long getUngradedStudents(GradableEvent gradableEvent) {
-        AbstractRoleUser user = userService.getCurrentUser();
-        return gradableEventRepository.countUngradedAnimalsForInstructorAndEvent(user.getUserId(), gradableEvent.getId());
     }
 }

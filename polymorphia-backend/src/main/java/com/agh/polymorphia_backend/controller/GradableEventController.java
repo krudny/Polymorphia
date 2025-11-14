@@ -43,9 +43,9 @@ public class GradableEventController {
         return ResponseEntity.ok(shortGradeService.getShortGrade(gradableEventId, requestDto.getTarget()));
     }
 
-    @GetMapping("/criteria")
-    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
-    public ResponseEntity<List<CriterionResponseDto>> getGradableEventCriteria(@RequestParam Long gradableEventId) {
-        return ResponseEntity.ok(gradableEventService.getCriteria(gradableEventId));
-    }
+//    @GetMapping("/criteria")
+//    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
+//    public ResponseEntity<List<CriterionResponseDto>> getGradableEventCriteria(@RequestParam Long gradableEventId) {
+//        return ResponseEntity.ok(gradableEventService.getCriteria(gradableEventId));
+//    }
 }
