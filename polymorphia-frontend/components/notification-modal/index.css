@@ -15,7 +15,7 @@
 }
 
 .notification-content-loading {
-  @apply h-[100px] relative;
+  @apply h-[300px] relative;
 }
 
 .notification-content-message {

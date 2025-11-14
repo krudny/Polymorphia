@@ -18,6 +18,7 @@ export const animateNotificationEntry = (element: HTMLElement): void => {
       ease: "sine.out",
     }
   );
+  element.classList.remove("is-new");
 };
 
 export const animateNotificationRemoval = (
