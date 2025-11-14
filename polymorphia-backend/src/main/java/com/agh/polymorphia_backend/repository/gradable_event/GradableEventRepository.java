@@ -62,34 +62,24 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
            ge.isHidden as isHidden,
            ge.isLocked as isLocked,
            COUNT(DISTINCT CASE 
-               WHEN NOT EXISTS (
-                   SELECT 1 
-                   FROM Grade g2
-                   WHERE g2.gradableEvent.id = ge.id 
-                     AND g2.animal IN (
-                         SELECT scga.animal
-                         FROM StudentCourseGroupAssignment scga
-                         JOIN scga.courseGroup cg
-                         WHERE cg.instructor.user.id = :instructorId
-                     )
-               )
-               THEN scga.animal.id
+               WHEN g.id IS NULL THEN scga.animal.id
            END) as ungradedStudents,
            CASE WHEN COUNT(DISTINCT cr.criterion.id) > 0 THEN true ELSE false END as hasPossibleReward
     FROM GradableEvent ge
     LEFT JOIN Criterion c ON c.gradableEvent.id = ge.id
     LEFT JOIN CriterionReward cr ON cr.criterion.id = c.id
     CROSS JOIN StudentCourseGroupAssignment scga
-    CROSS JOIN CourseGroup cg
+    JOIN scga.courseGroup cg
+    LEFT JOIN Grade g ON g.gradableEvent.id = ge.id 
+        AND g.animal.id = scga.animal.id
     WHERE ge.eventSection.id = :eventSectionId
       AND cg.instructor.user.id = :instructorId
-      AND scga.courseGroup.id = cg.id
       AND ge.isHidden = false
-    GROUP BY ge.id, ge.name, ge.orderIndex, ge.roadMapOrderIndex, ge.isHidden, ge.isLocked
+    GROUP BY ge.id, ge.name, ge.topic, ge.orderIndex, ge.roadMapOrderIndex, ge.isHidden, ge.isLocked
     ORDER BY 
         CASE WHEN :sortBy = 'ORDER_INDEX' THEN ge.orderIndex END,
         CASE WHEN :sortBy = 'ROADMAP_ORDER_INDEX' THEN ge.roadMapOrderIndex END
-""")
+    """)
     List<InstructorGradableEventProjection> findInstructorGradableEventsWithDetails(
             @Param("eventSectionId") Long eventSectionId,
             @Param("instructorId") Long instructorId,

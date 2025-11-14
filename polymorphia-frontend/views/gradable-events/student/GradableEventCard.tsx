@@ -10,8 +10,6 @@ export default function GradableEventCard({
   const { hasPossibleReward, gainedXp, isGraded, isRewardAssigned } =
     gradableEvent;
 
-  console.log(isRewardAssigned, isGraded);
-
   const color = gainedXp ? "green" : "sky";
   const rightComponent = (
     <XPCardPoints
