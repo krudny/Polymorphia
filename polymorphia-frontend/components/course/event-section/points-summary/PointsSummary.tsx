@@ -1,24 +1,16 @@
 import { PointsSummaryProps } from "@/components/course/event-section/points-summary/types";
 import { useState } from "react";
 import "./index.css";
-import Loading from "@/components/loading";
 import BonusInfoModal from "@/components/course/event-section/points-summary/BonusInfoModal";
 import PointsSummaryElement from "@/components/course/event-section/points-summary/PointsSummaryElement";
 import { PointsSummaryDetailsResponseDTO } from "@/interfaces/api/course/points-summary";
-import usePointsSummary from "@/hooks/course/usePointsSummary";
 
-export default function PointsSummary({ ref }: PointsSummaryProps) {
-  const { data: pointsSummary, isLoading, isError } = usePointsSummary();
+export default function PointsSummary({
+  pointsSummary,
+  ref,
+}: PointsSummaryProps) {
   const [currentBonusInfoModal, setCurrentBonusInfoModal] =
     useState<PointsSummaryDetailsResponseDTO | null>(null);
-
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (isError) {
-    return <div>Error loading points summary</div>;
-  }
 
   if (!pointsSummary) {
     return <div>No points summary</div>;

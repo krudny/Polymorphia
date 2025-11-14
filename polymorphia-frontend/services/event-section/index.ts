@@ -30,11 +30,6 @@ import {
 } from "@/interfaces/api/user";
 import { API_HOST } from "@/services/api";
 import { CriterionResponseDTO } from "@/interfaces/api/grade/criteria";
-import {
-  SubmissionDetailsRequestDTO,
-  SubmissionDetailsResponseDTO,
-  SubmissionRequirementResponseDTO,
-} from "@/interfaces/api/grade/submission";
 
 export const studentNames = [
   "Gerard Małoduszny",
@@ -163,8 +158,11 @@ export const EventSectionService = {
     eventSectionId: number,
     gradableEventId: number
   ): Promise<BaseGradableEventResponseDTO> => {
+    console.warn("eventSectionId", eventSectionId);
+    console.warn("gradableEventId", gradableEventId);
     return EventSectionService.getStudentGradableEvents(eventSectionId).then(
       (data) => {
+        console.log("data");
         const gradableEvent = data.find(
           (gradableEvent) => gradableEvent.id === gradableEventId
         );

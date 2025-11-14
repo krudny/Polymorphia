@@ -10,17 +10,24 @@ import Loading from "@/components/loading";
 import { useRouter } from "next/navigation";
 import GradableEventCard from "@/views/gradable-events/student/GradableEventCard";
 import { useEventParams } from "@/hooks/general/useEventParams";
-import GradeModal from "@/components/speed-dial/modals/grade";
 import useStudentsGradableEvents from "@/hooks/course/useStudentsGradableEvents";
 import { EventTypes } from "@/interfaces/general";
+import usePointsSummary from "@/hooks/course/usePointsSummary";
 
 export default function StudentView() {
   const { eventType, eventSectionId } = useEventParams();
   const {
     data: gradableEvents,
-    isLoading,
-    isError,
+    isLoading: areGradableEventsLoading,
+    isError: areGradableEventsError,
   } = useStudentsGradableEvents();
+  const {
+    data: pointsSummary,
+    isLoading: isPointsSummaryLoading,
+    isError: isPointsSummaryError,
+  } = usePointsSummary();
+  const isLoading = areGradableEventsLoading || isPointsSummaryLoading;
+  const isError = areGradableEventsError || isPointsSummaryError;
   const router = useRouter();
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const summaryRef = useRef<HTMLDivElement | null>(null);
@@ -43,7 +50,7 @@ export default function StudentView() {
     return <div>Error loading gradable events</div>;
   }
 
-  if (!gradableEvents || gradableEvents.length === 0) {
+  if (!gradableEvents || gradableEvents.length === 0 || !pointsSummary) {
     return <div>No gradable events.</div>;
   }
 
@@ -74,13 +81,14 @@ export default function StudentView() {
         <div className="student-view-cards" ref={wrapperRef}>
           <XPCardGrid containerRef={wrapperRef} cards={cards} maxColumns={2} />
         </div>
-        <PointsSummary ref={summaryRef} />
+        <PointsSummary ref={summaryRef} pointsSummary={pointsSummary} />
       </div>
       {eventType === EventTypes.TEST && selectedEventId && (
-        <GradeModal
-          onClosedAction={() => setSelectedEventId(null)}
-          gradableEventIdProp={selectedEventId}
-        />
+        // <GradeModal
+        //   onClosedAction={() => setSelectedEventId(null)}
+        //   gradableEventIdProp={selectedEventId}
+        // />
+        <></>
       )}
     </SectionView>
   );

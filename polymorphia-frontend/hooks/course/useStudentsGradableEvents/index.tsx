@@ -12,5 +12,6 @@ export default function useStudentsGradableEvents(): UseStudentsGradableEvents {
     refetchOnWindowFocus: false,
   });
 
+  console.log("useStudentsGradableEvents data:", data, eventSectionId);
   return { data, isLoading, isError };
 }

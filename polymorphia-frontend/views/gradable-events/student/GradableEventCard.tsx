@@ -1,5 +1,4 @@
 import XPCard from "@/components/xp-card/XPCard";
-import useShortGrade from "@/hooks/course/useShortGrade";
 import { TargetTypes } from "@/interfaces/api/target";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { GradableEventCardProps } from "@/views/course/student/types";
@@ -15,17 +14,17 @@ export default function GradableEventCard({
     id: userId,
     type: TargetTypes.STUDENT,
   };
-  const { data: grade, isLoading: isLoading } = useShortGrade(
-    target,
-    gradableEvent.id
-  );
+  // const { data: grade, isLoading: isLoading } = useShortGrade(
+  //   target,
+  //   gradableEvent.id
+  // );
   const { hasReward, gainedXp } = gradableEvent;
 
-  if (isLoading || !grade) {
-    return null;
-  }
-  const hasGainedReward =
-    grade.gradeResponse.isGraded && grade.gradeResponse.hasReward;
+  // if (isLoading || !grade) {
+  //   return null;
+  // }
+  // const hasGainedReward =
+  //   grade.gradeResponse.isGraded && grade.gradeResponse.hasReward;
 
   const color = gainedXp ? "green" : "sky";
   const rightComponent = (
@@ -35,7 +34,8 @@ export default function GradableEventCard({
       points={gainedXp}
       hasChest={hasReward}
       shouldGreyOutReward={
-        !hasGainedReward && hasReward && grade.gradeResponse.isGraded
+        // !hasGainedReward && hasReward && grade.gradeResponse.isGraded
+        false
       }
     />
   );
