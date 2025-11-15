@@ -4,11 +4,14 @@ import SectionView from "@/components/section-view/SectionView";
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Loading from "@/components/loading";
-import GradableEventCard from "@/views/gradable-events/instructor/GradableEventCard";
+import InstructorGradableEventCard from "@/views/gradable-events/instructor/InstructorGradableEventCard";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import useInstructorGradableEvents from "@/hooks/course/useInstructorGradableEvents";
 import "./index.css";
 import ErrorComponent from "@/components/error";
+import { XPCardSizes } from "@/components/xp-card/types";
+import { useMediaQuery } from "react-responsive";
+import { GradableEventDTO } from "@/interfaces/api/gradable_event/types";
 
 export default function InstructorView() {
   const { eventType, eventSectionId } = useEventParams();
@@ -19,6 +22,7 @@ export default function InstructorView() {
     isLoading,
     isError,
   } = useInstructorGradableEvents();
+  const isMd = useMediaQuery({ minWidth: 768 });
 
   const containerRef = useScaleShow(!isLoading);
 
@@ -42,16 +46,21 @@ export default function InstructorView() {
     return <div>No gradable events.</div>;
   }
 
-  const handleClick = (id: number) => {
+  const handleClick = (gradableEvent: GradableEventDTO) => {
     router.push(
-      `/course/${eventType.toLowerCase()}/${eventSectionId}/${id}/grading`
+      `/course/${eventType.toLowerCase()}/${eventSectionId}/${gradableEvent.id}/grading`
     );
   };
 
-  // TODO: is mobile mocked
-  const cards = gradableEvents.map((gradableEvent) =>
-    GradableEventCard(gradableEvent, false, handleClick)
-  );
+  const cards = gradableEvents.map((gradableEvent) => (
+    <InstructorGradableEventCard
+      key={gradableEvent.id}
+      size={isMd ? XPCardSizes.MD : XPCardSizes.SM}
+      gradableEvent={gradableEvent}
+      isMobile={false}
+      handleClick={handleClick}
+    />
+  ));
 
   return (
     <SectionView ref={containerRef}>

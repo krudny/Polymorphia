@@ -1,12 +1,13 @@
 import XPCard from "@/components/xp-card/XPCard";
-import { GradableEventCardProps } from "@/views/course/student/types";
+import { StudentGradableEventCardProps } from "@/views/gradable-events/student/types";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 
-export default function GradableEventCard({
+export default function StudentGradableEventCard({
   gradableEvent,
+  size,
   isMobile,
-  handleGradableEventClick,
-}: GradableEventCardProps) {
+  handleClick,
+}: StudentGradableEventCardProps) {
   const { hasPossibleReward, gainedXp, isGraded, isRewardAssigned } =
     gradableEvent;
 
@@ -27,12 +28,10 @@ export default function GradableEventCard({
       subtitle={gradableEvent.topic ?? ""}
       color={color}
       rightComponent={rightComponent}
-      size={isMobile ? "sm" : "md"}
+      size={size}
       forceWidth={!isMobile}
       isLocked={gradableEvent.isLocked}
-      onClick={() =>
-        handleGradableEventClick(gradableEvent.id, gradableEvent.isLocked)
-      }
+      onClick={() => handleClick(gradableEvent)}
     />
   );
 }

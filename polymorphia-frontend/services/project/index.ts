@@ -1,4 +1,4 @@
-import { ProjectVariantResponseDTO } from "@/interfaces/api/course/project";
+import { ProjectVariantResponseDTO } from "@/interfaces/api/project";
 import { ApiClient } from "@/services/api/client";
 import { StudentDetailsDTOWithType } from "@/interfaces/api/user";
 

@@ -9,7 +9,7 @@ import {
   TargetType,
   TargetTypes,
 } from "@/interfaces/api/target";
-import { PointsSummaryResponseDTO } from "@/interfaces/api/course/points-summary";
+import { PointsSummaryResponseDTO } from "@/interfaces/api/points-summary";
 import {
   BaseGradableEventResponseDTO,
   EventSectionResponseDTO,
@@ -21,9 +21,6 @@ import {
   UserDetailsDTO,
 } from "@/interfaces/api/user";
 import { API_HOST } from "@/services/api";
-import { EventTypes } from "@/interfaces/general";
-import { CriterionResponseDTO } from "@/interfaces/api/grade/criteria";
-import { ChestBehaviors } from "@/interfaces/api/reward";
 import { ApiClient } from "@/services/api/client";
 
 export const studentNames = [
@@ -104,7 +101,6 @@ export const EventSectionService = {
   },
 
   getGradableEvent: async (
-    eventSectionId: number,
     gradableEventId: number
   ): Promise<BaseGradableEventResponseDTO> => {
     return EventSectionService.getStudentGradableEvents(eventSectionId).then(

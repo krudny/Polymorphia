@@ -1,8 +1,8 @@
+import { ApiClient } from "@/services/api/client";
 import {
   InstructorGradableEventResponseDTO,
   StudentGradableEventResponseDTO,
-} from "@/interfaces/api/course";
-import { ApiClient } from "@/services/api/client";
+} from "@/interfaces/api/gradable_event/types";
 
 export const GradableEventService = {
   getStudentGradableEvents: async (

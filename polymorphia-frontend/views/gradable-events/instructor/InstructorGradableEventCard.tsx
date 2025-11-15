@@ -1,13 +1,14 @@
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardText from "@/components/xp-card/components/XPCardText";
 import { ReactNode } from "react";
-import { InstructorGradableEventResponseDTO } from "@/interfaces/api/course";
+import { InstructorGradableEventCardProps } from "@/views/gradable-events/instructor/types";
 
-export default function GradableEventCard(
-  gradableEvent: InstructorGradableEventResponseDTO,
-  isMobile: boolean,
-  handleClick: (id: number) => void
-): ReactNode {
+export default function InstructorGradableEventCard({
+  gradableEvent,
+  size,
+  isMobile,
+  handleClick,
+}: InstructorGradableEventCardProps): ReactNode {
   return (
     <XPCard
       title={gradableEvent.name}
@@ -20,9 +21,9 @@ export default function GradableEventCard(
           color="gray"
         />
       }
-      size={isMobile ? "sm" : "md"}
+      size={size}
       forceWidth={!isMobile}
-      onClick={() => handleClick(gradableEvent.id)}
+      onClick={() => handleClick(gradableEvent)}
     />
   );
 }

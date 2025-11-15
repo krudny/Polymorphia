@@ -8,13 +8,16 @@ import PointsSummary from "@/components/course/event-section/points-summary/Poin
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
 import Loading from "@/components/loading";
 import { useRouter } from "next/navigation";
-import GradableEventCard from "@/views/gradable-events/student/GradableEventCard";
+import StudentGradableEventCard from "@/views/gradable-events/student/StudentGradableEventCard";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import useStudentsGradableEvents from "@/hooks/course/useStudentsGradableEvents";
 import { EventTypes } from "@/interfaces/general";
 import usePointsSummary from "@/hooks/course/usePointsSummary";
 import GradeModal from "@/components/speed-dial/modals/grade";
 import ErrorComponent from "@/components/error";
+import { GradableEventDTO } from "@/interfaces/api/gradable_event/types";
+import { useMediaQuery } from "react-responsive";
+import { XPCardSizes } from "@/components/xp-card/types";
 
 export default function StudentView() {
   const { eventType, eventSectionId } = useEventParams();
@@ -35,6 +38,7 @@ export default function StudentView() {
   const summaryRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useScaleShow(!isLoading);
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
+  const isMd = useMediaQuery({ minWidth: 768 });
 
   useEffect(() => {
     if (!isLoading && gradableEvents && gradableEvents.length === 1) {
@@ -56,24 +60,27 @@ export default function StudentView() {
     return <div>No gradable events.</div>;
   }
 
-  const handleClick = (id: number, isLocked: boolean) => {
-    if (isLocked) {
+  const handleClick = (gradableEvent: GradableEventDTO) => {
+    if (gradableEvent.isLocked) {
       return;
     }
 
     if (eventType === EventTypes.TEST) {
-      setSelectedEventId(id);
+      setSelectedEventId(gradableEvent.id);
     } else {
-      router.push(`/course/${eventType.toLowerCase()}/${eventSectionId}/${id}`);
+      router.push(
+        `/course/${eventType.toLowerCase()}/${eventSectionId}/${gradableEvent.id}`
+      );
     }
   };
 
   const cards = gradableEvents.map((gradableEvent) => (
-    <GradableEventCard
+    <StudentGradableEventCard
       key={gradableEvent.id}
+      size={isMd ? XPCardSizes.MD : XPCardSizes.SM}
       gradableEvent={gradableEvent}
       isMobile={false}
-      handleGradableEventClick={handleClick}
+      handleClick={handleClick}
     />
   ));
 

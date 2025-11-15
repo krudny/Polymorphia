@@ -1,7 +1,7 @@
 import {
   PointsSummaryDetailsResponseDTO,
   PointsSummaryResponseDTO,
-} from "@/interfaces/api/course/points-summary";
+} from "@/interfaces/api/points-summary";
 import { AssignedItemResponseDTO } from "@/interfaces/api/reward/assigned";
 import { ModalProps } from "@/components/modal/types";
 import { RefObject } from "react";

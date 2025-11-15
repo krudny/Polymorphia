@@ -13,17 +13,31 @@ export interface XPCardProps {
   onClick?: () => void;
 }
 
-export type XPCardColors =
-  | "gold"
-  | "silver"
-  | "bronze"
-  | "green"
-  | "sky"
-  | "gray";
+export const XPCardColors = {
+  GOLD: "gold",
+  SILVER: "silver",
+  BRONZE: "bronze",
+  GREEN: "green",
+  SKY: "sky",
+  GRAY: "gray",
+} as const;
+
+export type XPCardColor = (typeof XPCardColors)[keyof typeof XPCardColors];
+
+export const XPCardSizes = {
+  XS: "xs",
+  SM: "sm",
+  MD: "md",
+  LG: "lg",
+  HOF_DESKTOP: "hofDesktop",
+  PROJECT_GROUP: "projectGroup",
+} as const;
+
+export type XPCardSize = (typeof XPCardSizes)[keyof typeof XPCardSizes];
 
 export type XPCardVariantProps = {
-  size?: "xs" | "sm" | "md" | "lg" | "hofDesktop" | "projectGroup";
-  color?: XPCardColors;
+  size?: XPCardSize;
+  color?: XPCardColor;
   forceWidth?: boolean;
   isLocked?: boolean;
 };
