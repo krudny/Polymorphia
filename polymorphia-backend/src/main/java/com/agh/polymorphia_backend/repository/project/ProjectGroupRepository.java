@@ -40,18 +40,18 @@ public interface ProjectGroupRepository extends JpaRepository<ProjectGroup, Long
                  JOIN pg.animals a
                  WHERE a.studentCourseGroupAssignment.student.userId = :studentId
                     AND pg.project.id = :projectId
-                    AND pg.teachingRoleUser.userId = :instructorId
+                    AND pg.teachingRoleUser.userId = :teachingRoleUserId
             """)
-    Optional<ProjectGroup> getProjectGroupByStudentIdAndProjectIdAndInstructorId(@Param("studentId") Long studentId,
-                                                                                 @Param("projectId") Long projectId,
-                                                                                 @Param("instructorId")
-                                                                                 Long instructorId);
+    Optional<ProjectGroup> getProjectGroupByStudentIdAndProjectIdAndTeachingRoleUserId(
+            @Param("studentId") Long studentId, @Param("projectId") Long projectId,
+            @Param("teachingRoleUserId") Long teachingRoleUserId);
 
     @Query("""
              SELECT pg FROM ProjectGroup pg
-                 WHERE pg.id = :id AND pg.project.id = :projectId AND pg.teachingRoleUser.userId = :instructorId
+                 WHERE pg.id = :id AND pg.project.id = :projectId AND pg.teachingRoleUser.userId = :teachingRoleUserId
             """)
-    Optional<ProjectGroup> getProjectGroupByIdAndProjectIdAndInstructorId(@Param("id") Long id,
-                                                                          @Param("projectId") Long projectId,
-                                                                          @Param("instructorId") Long instructorId);
+    Optional<ProjectGroup> getProjectGroupByIdAndProjectIdAndTeachingRoleUserId(@Param("id") Long id,
+                                                                                @Param("projectId") Long projectId,
+                                                                                @Param("teachingRoleUserId")
+                                                                                Long teachingRoleUserId);
 }
