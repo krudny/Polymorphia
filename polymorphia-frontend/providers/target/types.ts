@@ -4,6 +4,7 @@ import {
   TargetReducerActionType,
   TargetReducerState,
 } from "@/providers/target/reducer/types";
+import { QueryClient } from "@tanstack/react-query";
 
 export interface TargetContextInterface {
   state: TargetReducerState;
@@ -28,9 +29,21 @@ export interface TargetContextInterface {
 }
 
 export interface TargetProviderProps {
+  useTargets: (params: UseTargetsParams) => UseTargets;
+  handleApplyFilters: (queryClient: QueryClient) => void;
   children: ReactNode;
 }
 
 export interface AppliedFiltersAdapter {
   [key: string]: string[] | string;
+}
+
+export interface UseTargets {
+  data: TargetResponseDTO[] | undefined;
+  isLoading: boolean;
+  isError: boolean;
+}
+
+export interface UseTargetsParams extends AppliedFiltersAdapter {
+  search: string;
 }

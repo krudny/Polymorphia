@@ -19,6 +19,14 @@ export const GroupTargetTypes = {
 export type GroupTargetType =
   (typeof GroupTargetTypes)[keyof typeof GroupTargetTypes];
 
+export const TargetListTypes = {
+  COURSE_GROUP: "COURSE_GROUP",
+  GRADING: "GRADING",
+} as const;
+
+export type TargetListType =
+  (typeof TargetListTypes)[keyof typeof TargetListTypes];
+
 export interface StudentTargetResponseDTO {
   type: typeof TargetTypes.STUDENT;
   id: number;
