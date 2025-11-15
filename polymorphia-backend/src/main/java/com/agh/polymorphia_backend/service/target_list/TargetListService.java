@@ -42,7 +42,6 @@ public class TargetListService {
     private final CourseGroupsService courseGroupsService;
     private final UserService userService;
     private final HallOfFameService hallOfFameService;
-    private final HallOfFameSortSpecResolver hallOfFameSortSpecResolver;
     private final TargetListMapper targetListMapper;
     private final ProjectService projectService;
     private final ShortGradeService shortGradeService;
@@ -51,25 +50,9 @@ public class TargetListService {
         CourseGroup courseGroup = courseGroupsService.findCourseGroupForTeachingRoleUser(requestDto.getCourseGroupId());
 
         // This is ugly, but it should be fast and it reuses existing code
-        HallOfFameRequestDto hofRequest = HallOfFameRequestDto.builder()
-                .sortBy(requestDto.getSortBy())
-                .groups(List.of(courseGroup.getName()))
-                .courseId(courseGroup.getCourse().getId())
-                .searchBy(requestDto.getSearchBy())
-                .searchTerm(requestDto.getSearchTerm())
-                .sortOrder(requestDto.getSortOrder())
-                .page(0)
-                .size(Integer.MAX_VALUE)
-                .build();
-
-        HallOfFameSortSpec sortSpec = hallOfFameSortSpecResolver.resolve(hofRequest);
-        Page<HallOfFameEntry> hallOfFameEntryPage = switch (sortSpec) {
-            case OverviewFieldSort overviewFieldSort ->
-                    hallOfFameService.getSortedByOverviewFields(hofRequest, overviewFieldSort.field());
-            case EventSectionSort eventSectionSort ->
-                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
-                            "Nie udało się wczytać listy członków grupy zajęciowej.");
-        };
+        HallOfFameRequestDto hofRequest = targetListMapper.toHofRequest(requestDto, courseGroup);
+        OverviewFieldSort overviewFieldSort = targetListMapper.getOverviewFieldSort(hofRequest);
+        Page<HallOfFameEntry> hallOfFameEntryPage =  hallOfFameService.getSortedByOverviewFields(hofRequest, overviewFieldSort.field());
 
         return targetListMapper.mapHofEntriesToStudentTargets(hallOfFameEntryPage);
     }
@@ -130,10 +113,10 @@ public class TargetListService {
 
                 }).sorted(getGroupComparator(requestDto.getSortBy(), requestDto.getSortOrder())).toList();
             }
-            case ASSIGNMENT, TEST -> {
-                // TODO
-                yield null;
-            }
+            case ASSIGNMENT, TEST -> gradableEventService.getStudentTargets(
+                            userService.getCurrentUser().getUserId(), requestDto).stream()
+                    .map(studentData -> StudentTargetResponseDto.builder().id(studentData.id()).student(studentData)
+                            .build()).toList();
         };
     }
 
