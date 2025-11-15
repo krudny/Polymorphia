@@ -44,6 +44,11 @@ export interface UseTargets {
   isError: boolean;
 }
 
-export interface UseTargetsParams extends AppliedFiltersAdapter {
-  search: string;
+export interface UseTargetsParams {
+  search?: string;
+  groups?: string[];
+  sortBy?: string[];
+  sortOrder?: string[];
+  searchBy?: string[];
+  gradeStatus?: string[];
 }
