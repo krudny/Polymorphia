@@ -4,6 +4,7 @@ import com.agh.polymorphia_backend.dto.request.target.TargetRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.TargetType;
 import com.agh.polymorphia_backend.dto.response.event.BaseGradableEventResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
+import com.agh.polymorphia_backend.model.event_section.EventSection;
 import com.agh.polymorphia_backend.model.event_section.EventSectionType;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEventScope;
@@ -11,6 +12,7 @@ import com.agh.polymorphia_backend.model.gradable_event.GradableEventSortBy;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.gradable_event.GradableEventRepository;
 import com.agh.polymorphia_backend.service.course.CourseService;
+import com.agh.polymorphia_backend.service.event_section.EventSectionService;
 import com.agh.polymorphia_backend.service.mapper.GradableEventMapper;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.user.UserService;
@@ -18,6 +20,7 @@ import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -34,6 +37,13 @@ public class GradableEventService {
     private final GradableEventMapper gradableEventMapper;
     private final AnimalService animalService;
     private final CourseService courseService;
+    private final EventSectionService eventSectionService;
+
+    public BaseGradableEventResponseDto getGradableEventResponseDto(Long gradableEventId) {
+        GradableEvent gradableEvent = getGradableEventById(gradableEventId);
+
+        return gradableEventMapper.toBaseGradableEventResponse(gradableEvent);
+    }
 
     public GradableEvent getGradableEventById(Long gradableEventId) {
         UserType userRole = userService.getCurrentUserRole();

@@ -23,10 +23,20 @@ public class GradableEventMapper {
     private static final String mockedTitle = "*********";
     private static final String mockedTopic = "[Wydarzenie ukryte]";
 
+    public BaseGradableEventResponseDto toBaseGradableEventResponse(GradableEvent gradableEvent) {
+        return BaseGradableEventResponseDto.builder()
+                .id(gradableEvent.getId())
+                .name(Boolean.TRUE.equals(gradableEvent.getIsLocked()) ? mockedTitle : gradableEvent.getName())
+                .topic(Boolean.TRUE.equals(gradableEvent.getIsLocked()) ? mockedTopic : gradableEvent.getTopic())
+                .orderIndex(gradableEvent.getOrderIndex())
+                .roadMapOrderIndex(gradableEvent.getRoadMapOrderIndex())
+                .isLocked(gradableEvent.getIsLocked())
+                .build();
+    }
+
     public StudentGradableEventResponseDto toStudentGradableEventResponseDto(StudentGradableEventProjection projection) {
         return StudentGradableEventResponseDto.builder()
                 .id(projection.getId())
-                .type(EventSectionType.valueOf(projection.getEventSectionType()))
                 .name(Boolean.TRUE.equals(projection.getIsLocked()) ? mockedTitle : projection.getName())
                 .topic(Boolean.TRUE.equals(projection.getIsLocked()) ? mockedTopic : projection.getTopic())
                 .orderIndex(projection.getOrderIndex())
@@ -42,7 +52,6 @@ public class GradableEventMapper {
     public InstructorGradableEventResponseDto toInstructorGradableEventResponseDto(InstructorGradableEventProjection projection) {
         return InstructorGradableEventResponseDto.builder()
                 .id(projection.getId())
-                .type(EventSectionType.valueOf(projection.getEventSectionType()))
                 .name(projection.getName())
                 .topic(projection.getTopic())
                 .orderIndex(projection.getOrderIndex())

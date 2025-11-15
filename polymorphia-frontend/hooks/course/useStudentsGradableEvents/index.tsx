@@ -7,10 +7,11 @@ export default function useStudentsGradableEvents(): UseStudentsGradableEvents {
   const { eventSectionId } = useEventParams();
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["gradableEvents", eventSectionId],
+    queryKey: ["studentGradableEvents", eventSectionId],
     queryFn: () =>
       GradableEventService.getStudentGradableEvents(eventSectionId),
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
+    staleTime: 1000 * 60,
   });
 
   return { data, isLoading, isError };

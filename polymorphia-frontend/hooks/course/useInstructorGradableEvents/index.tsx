@@ -7,9 +7,11 @@ export default function useInstructorGradableEvents(): UseInstructorGradableEven
   const { eventSectionId } = useEventParams();
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["gradableEvents", eventSectionId],
+    queryKey: ["instructorGradableEvents", eventSectionId],
     queryFn: () =>
       GradableEventService.getInstructorGradableEvents(eventSectionId),
+    refetchOnWindowFocus: true,
+    staleTime: 1000 * 60,
   });
 
   return { data, isLoading, isError };

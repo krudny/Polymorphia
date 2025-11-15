@@ -24,12 +24,16 @@ public class EventSectionService {
     private final EventSectionMapper eventSectionMapper;
     private final UserService userService;
 
-
     public List<EventSectionResponseDto> getCourseEventSectionsResponseDto(Long courseId) {
         return getCourseEventSections(courseId).stream()
                 .map(eventSectionMapper::toEventSectionResponseDto)
                 .sorted(Comparator.comparing(EventSectionResponseDto::orderIndex))
                 .toList();
+    }
+
+    public EventSection getEventSectionFromGradableEventId(Long gradableEventId) {
+        return eventSectionRepository.findByGradableEventsId(gradableEventId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, EVENT_SECTION_NOT_FOUND));
     }
 
     public List<EventSection> getCourseEventSections(Long courseId) {

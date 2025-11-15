@@ -10,10 +10,7 @@ import {
   TargetTypes,
 } from "@/interfaces/api/target";
 import { PointsSummaryResponseDTO } from "@/interfaces/api/points-summary";
-import {
-  BaseGradableEventResponseDTO,
-  EventSectionResponseDTO,
-} from "@/interfaces/api/course";
+import { EventSectionResponseDTO } from "@/interfaces/api/course";
 import {
   Roles,
   StudentDetailsDTOWithName,
@@ -98,25 +95,6 @@ export const EventSectionService = {
     }
 
     return await response.json();
-  },
-
-  getGradableEvent: async (
-    gradableEventId: number
-  ): Promise<BaseGradableEventResponseDTO> => {
-    return EventSectionService.getStudentGradableEvents(eventSectionId).then(
-      (data) => {
-        console.log("data");
-        const gradableEvent = data.find(
-          (gradableEvent) => gradableEvent.id === gradableEventId
-        );
-
-        if (!gradableEvent) {
-          throw new Error("Gradable event not found.");
-        }
-
-        return gradableEvent;
-      }
-    );
   },
 
   getRandomPeopleWithPoints: async (
