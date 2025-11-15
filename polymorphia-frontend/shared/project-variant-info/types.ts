@@ -1,6 +1,6 @@
-import { XPCardColor, XPCardSize } from "@/components/xp-card/types";
+import { Size, XPCardColor } from "@/components/xp-card/types";
 
 export interface ProjectVariantInfoProps {
-  size?: XPCardSize;
+  size?: Size;
   color?: XPCardColor;
 }

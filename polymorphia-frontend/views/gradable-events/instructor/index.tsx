@@ -9,7 +9,7 @@ import { useEventParams } from "@/hooks/general/useEventParams";
 import useInstructorGradableEvents from "@/hooks/course/useInstructorGradableEvents";
 import "./index.css";
 import ErrorComponent from "@/components/error";
-import { XPCardSizes } from "@/components/xp-card/types";
+import { Sizes } from "@/components/xp-card/types";
 import { useMediaQuery } from "react-responsive";
 import { GradableEventDTO } from "@/interfaces/api/gradable_event/types";
 
@@ -55,7 +55,7 @@ export default function InstructorView() {
   const cards = gradableEvents.map((gradableEvent) => (
     <InstructorGradableEventCard
       key={gradableEvent.id}
-      size={isMd ? XPCardSizes.MD : XPCardSizes.SM}
+      size={isMd ? Sizes.MD : Sizes.SM}
       gradableEvent={gradableEvent}
       isMobile={false}
       handleClick={handleClick}

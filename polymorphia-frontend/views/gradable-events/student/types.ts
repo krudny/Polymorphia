@@ -2,11 +2,11 @@ import {
   GradableEventDTO,
   StudentGradableEventResponseDTO,
 } from "@/interfaces/api/gradable_event/types";
-import { XPCardSize } from "@/components/xp-card/types";
+import { Size } from "@/components/xp-card/types";
 
 export interface StudentGradableEventCardProps {
   gradableEvent: StudentGradableEventResponseDTO;
-  size: XPCardSize;
+  size: Size;
   isMobile: boolean;
   handleClick: (gradableEvent: GradableEventDTO) => void;
 }

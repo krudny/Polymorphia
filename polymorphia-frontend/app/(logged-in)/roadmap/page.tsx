@@ -19,7 +19,7 @@ import {
   InstructorGradableEventResponseDTO,
   StudentGradableEventResponseDTO,
 } from "@/interfaces/api/gradable_event/types";
-import { XPCardSizes } from "@/components/xp-card/types";
+import { Sizes } from "@/components/xp-card/types";
 
 export default function Roadmap() {
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
@@ -43,7 +43,7 @@ export default function Roadmap() {
   };
 
   const isStudent = userRole === Roles.STUDENT;
-  const cardSize = isXL ? XPCardSizes.MD : XPCardSizes.SM;
+  const cardSize = isXL ? Sizes.MD : Sizes.SM;
 
   const cards = roadmap.map((gradableEvent) =>
     isStudent ? (

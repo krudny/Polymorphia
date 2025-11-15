@@ -1,4 +1,5 @@
 import { ReactNode, RefObject } from "react";
+import { Sizes } from "@/interfaces/general";
 
 export interface XPCardProps {
   title: string;
@@ -25,10 +26,7 @@ export const XPCardColors = {
 export type XPCardColor = (typeof XPCardColors)[keyof typeof XPCardColors];
 
 export const XPCardSizes = {
-  XS: "xs",
-  SM: "sm",
-  MD: "md",
-  LG: "lg",
+  ...Sizes,
   HOF_DESKTOP: "hofDesktop",
   PROJECT_GROUP: "projectGroup",
 } as const;

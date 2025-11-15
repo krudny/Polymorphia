@@ -17,7 +17,7 @@ import GradeModal from "@/components/speed-dial/modals/grade";
 import ErrorComponent from "@/components/error";
 import { GradableEventDTO } from "@/interfaces/api/gradable_event/types";
 import { useMediaQuery } from "react-responsive";
-import { XPCardSizes } from "@/components/xp-card/types";
+import { Sizes } from "@/components/xp-card/types";
 
 export default function StudentView() {
   const { eventType, eventSectionId } = useEventParams();
@@ -81,7 +81,7 @@ export default function StudentView() {
   const cards = gradableEvents.map((gradableEvent) => (
     <StudentGradableEventCard
       key={gradableEvent.id}
-      size={isMd ? XPCardSizes.MD : XPCardSizes.SM}
+      size={isMd ? Sizes.MD : Sizes.SM}
       gradableEvent={gradableEvent}
       isMobile={false}
       handleClick={handleClick}
