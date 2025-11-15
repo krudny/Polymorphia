@@ -206,7 +206,7 @@ public class SubmissionService {
                                                          UserType userType) {
         return switch (userType) {
             case STUDENT -> Optional.of((Student) userService.getCurrentUser());
-            case INSTRUCTOR -> studentRepository.findByUserIdAndGradableEventIdAndCourseGroupInstructorId(studentId,
+            case INSTRUCTOR -> studentRepository.findByUserIdAndGradableEventIdAndCourseGroupTeachingRoleUserId(studentId,
                     gradableEventId, userId);
             case COORDINATOR -> studentRepository.findByUserIdAndGradableEventId(studentId, gradableEventId);
             case UNDEFINED ->
@@ -219,7 +219,7 @@ public class SubmissionService {
         return switch (userType) {
             case STUDENT -> projectGroupRepository.getProjectGroupByStudentIdAndProjectId(userId, projectId);
             case INSTRUCTOR ->
-                    projectGroupRepository.getProjectGroupByStudentIdAndProjectIdAndInstructorId(studentId, projectId,
+                    projectGroupRepository.getProjectGroupByStudentIdAndProjectIdAndTeachingRoleUserId(studentId, projectId,
                             userId);
             case COORDINATOR -> projectGroupRepository.getProjectGroupByStudentIdAndProjectId(studentId, projectId);
             case UNDEFINED ->
@@ -233,7 +233,7 @@ public class SubmissionService {
             case STUDENT -> projectGroupRepository.getProjectGroupByIdAndStudentIdAndProjectId(groupId, userId,
                     gradableEventId);
             case INSTRUCTOR ->
-                    projectGroupRepository.getProjectGroupByIdAndProjectIdAndInstructorId(groupId, gradableEventId,
+                    projectGroupRepository.getProjectGroupByIdAndProjectIdAndTeachingRoleUserId(groupId, gradableEventId,
                             userId);
             case COORDINATOR -> projectGroupRepository.getProjectGroupByIdAndProjectId(groupId, gradableEventId);
             case UNDEFINED ->

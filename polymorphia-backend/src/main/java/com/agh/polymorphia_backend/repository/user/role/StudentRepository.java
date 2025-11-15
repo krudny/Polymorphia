@@ -42,13 +42,13 @@ public interface StudentRepository
                 JOIN c.courseGroups cg
                 JOIN cg.studentCourseGroupAssignments scga
                 JOIN scga.student s
-                WHERE s.userId = :userId AND ge.id = :gradableEventId AND cg.teachingRoleUser.userId = :instructorId
+                WHERE s.userId = :userId AND ge.id = :gradableEventId AND cg.teachingRoleUser.userId = :teachingRoleUserId
         """
     )
-    Optional<Student> findByUserIdAndGradableEventIdAndCourseGroupInstructorId(
+    Optional<Student> findByUserIdAndGradableEventIdAndCourseGroupTeachingRoleUserId(
         @Param("userId") Long userId,
         @Param("gradableEventId") Long gradableEventId,
-        @Param("instructorId") Long instructorId
+        @Param("teachingRoleUserId") Long teachingRoleUserId
     );
 
     @Query(

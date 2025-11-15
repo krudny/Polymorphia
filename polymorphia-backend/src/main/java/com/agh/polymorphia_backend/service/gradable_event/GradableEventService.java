@@ -148,6 +148,6 @@ public class GradableEventService {
 
     public Long getUngradedStudents(GradableEvent gradableEvent) {
         AbstractRoleUser user = userService.getCurrentUser();
-        return gradableEventRepository.countUngradedAnimalsForInstructorAndEvent(user.getUserId(), gradableEvent.getId());
+        return gradableEventRepository.countUngradedAnimalsForTeachingRoleUserAndEvent(user.getUserId(), gradableEvent.getId());
     }
 }
