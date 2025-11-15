@@ -1,5 +1,7 @@
 import { LoginDTO } from "@/interfaces/api/login";
+import { readErrorMessage } from "@/services/api/client";
 import { API_HOST } from "@/services/api";
+import { ApiError } from "@/services/api/error";
 
 const AuthService = {
   login: async ({ email, password }: LoginDTO) => {
@@ -9,26 +11,26 @@ const AuthService = {
 
     const response = await fetch(`${API_HOST}/login`, {
       method: "POST",
-      headers: new Headers({
-        "Content-Type": "application/x-www-form-urlencoded",
-      }),
-      body: params.toString(),
+      body: params,
       credentials: "include",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    }).catch((_error) => {
+      throw new ApiError("Serwer nie odpowiada.", 503);
     });
 
     if (!response.ok) {
-      throw new Error("Wystąpił błąd przy zalogowaniu");
+      throw new ApiError(await readErrorMessage(response), 400);
     }
   },
   logout: async () => {
-    const response = await fetch(`${API_HOST}/logout`, {
+    await fetch(`${API_HOST}/logout`, {
       method: "POST",
       credentials: "include",
+    }).catch((_error) => {
+      throw new ApiError("Serwer nie odpowiada.", 503);
     });
-
-    if (!response.ok) {
-      throw new Error("Wystąpił błąd przy wylogowaniu");
-    }
   },
 };
 export default AuthService;

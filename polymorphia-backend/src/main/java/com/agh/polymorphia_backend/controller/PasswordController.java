@@ -22,18 +22,18 @@ public class PasswordController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Void> changePassword(@RequestBody ChangePasswordRequestDto requestDTO) {
         passwordService.changePassword(requestDTO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/forgot-password")
     public ResponseEntity<Void> forgotPassword(@RequestBody ForgotPasswordRequestDto requestDTO) {
         passwordService.forgotPassword(requestDTO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/new-password")
     public ResponseEntity<Void> newPassword(@RequestBody NewPasswordRequestDto requestDTO) {
         passwordService.newPassword(requestDTO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

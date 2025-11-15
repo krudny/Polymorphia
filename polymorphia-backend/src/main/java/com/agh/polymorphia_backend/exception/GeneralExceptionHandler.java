@@ -1,54 +1,90 @@
 package com.agh.polymorphia_backend.exception;
 
-import com.agh.polymorphia_backend.exception.validation.ValidationError;
-import com.agh.polymorphia_backend.exception.validation.ValidationExceptionResponse;
 import com.fasterxml.jackson.databind.exc.InvalidTypeIdException;
 import jakarta.validation.ConstraintViolationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @ControllerAdvice
 @Order(2)
-public class GeneralExceptionHandler {
-    private static final String INVALID_PARAMS = "Invalid request parameter type";
-    private static final String MISSING_PARAMS = "Missing request parameter: %s";
-
-    @ExceptionHandler({MethodArgumentTypeMismatchException.class, ConstraintViolationException.class, InvalidTypeIdException.class, IllegalArgumentException.class})
-    public void handleArgumentNotValidException(Exception ex) {
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INVALID_PARAMS, ex);
+@Slf4j
+public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
+    @ExceptionHandler({MethodArgumentTypeMismatchException.class, ConstraintViolationException.class, InvalidTypeIdException.class})
+    public ResponseEntity<ProblemDetail> handleArgumentNotValidException(Exception ex) {
+        log.error(ex.getMessage());
+        return getResponseEntity(HttpStatus.BAD_REQUEST, "Niepoprawny typ parametru.");
     }
 
-    @ExceptionHandler(MissingServletRequestParameterException.class)
-    public void handleMissingServletRequestParameterException(MissingServletRequestParameterException ex) {
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(MISSING_PARAMS, ex.getParameterName()), ex);
+    @Override
+    protected ResponseEntity<Object> handleMissingServletRequestParameter(MissingServletRequestParameterException ex,
+                                                                          HttpHeaders headers,
+                                                                          HttpStatusCode status,
+                                                                          WebRequest request) {
+        log.error(ex.getMessage());
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+                HttpStatus.BAD_REQUEST, "Brakujący parametr requestu: " + ex.getParameterName());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problemDetail);
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ValidationExceptionResponse> handleValidationErrors(MethodArgumentNotValidException ex) {
-        List<ValidationError> validationErrors = ex.getBindingResult().getFieldErrors()
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+                                                                  HttpHeaders headers,
+                                                                  HttpStatusCode status,
+                                                                  WebRequest request) {
+
+        List<String> errorMessages = ex.getBindingResult()
+                .getFieldErrors()
                 .stream()
-                .map(error -> ValidationError.builder()
-                        .field(error.getField())
-                        .message(error.getDefaultMessage())
-                        .build())
-                .collect(Collectors.toList());
+                .map(this::mapErrorToMessage)
+                .toList();
 
-        ValidationExceptionResponse response = new ValidationExceptionResponse(
-                "Validation failed",
-                validationErrors
-        );
+        HttpStatus returnStatus = HttpStatus.BAD_REQUEST;
+        String detail = "Walidacja się nie powiodła: " + String.join(", ", errorMessages) + ".";
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(returnStatus, detail);
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        return ResponseEntity.status(returnStatus).body(problemDetail);
+    }
+
+    private String mapErrorToMessage(FieldError error) {
+        String code = error.getCode();
+        if (code == null) {
+            return error.getDefaultMessage();
+        }
+
+        return switch (code) {
+            case "NotNull" -> String.format("pole \"%s\" jest wymagane", error.getField());
+            case "NotBlank" -> String.format("pole \"%s\" nie może być puste", error.getField());
+            case "Email" -> "nieprawidłowy adres email";
+            default -> error.getDefaultMessage();
+        };
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ProblemDetail> handleAccessDenied(AccessDeniedException ex) {
+        return getResponseEntity(HttpStatus.FORBIDDEN, "Brak uprawnień.");
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ProblemDetail> handleUnexpected(Exception ex) {
+        log.error(ex.getMessage());
+        return getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, "Wystąpił nieoczekiwany problem.");
+    }
+
+    private static ResponseEntity<ProblemDetail> getResponseEntity(HttpStatus status, String details) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(status, details);
+        return ResponseEntity.status(status).body(problemDetail);
     }
 
 }

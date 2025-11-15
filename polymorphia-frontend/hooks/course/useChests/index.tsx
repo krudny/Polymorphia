@@ -5,11 +5,11 @@ import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export default function useChests(): UseChests {
   const { courseId } = useUserDetails();
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["chests", courseId],
     queryFn: () => KnowledgeBaseService.getChests(courseId),
     refetchOnWindowFocus: false,
   });
 
-  return { data: data, isLoading, error };
+  return { data: data, isLoading, isError };
 }

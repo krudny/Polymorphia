@@ -5,11 +5,11 @@ import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export default function useItems(): UseItems {
   const { courseId } = useUserDetails();
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["items", courseId],
     queryFn: () => KnowledgeBaseService.getItems(courseId),
     refetchOnWindowFocus: false,
   });
 
-  return { data, isLoading, error };
+  return { data, isLoading, isError };
 }

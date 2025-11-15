@@ -4,6 +4,7 @@ import Loading from "@/components/loading";
 import EquipmentSectionWrapper from "@/components/equipment/EquipmentSectionWrapper";
 import { EquipmentProvider } from "@/providers/equipment";
 import useEquipment from "@/hooks/course/useEquipment";
+import ErrorComponent from "@/components/error";
 import EquipmentModals from "@/components/equipment/modals";
 
 function EquipmentContent() {
@@ -14,7 +15,7 @@ function EquipmentContent() {
   }
 
   if (!items || !chests) {
-    return <div>Error :c</div>;
+    return <ErrorComponent message="Nie udało się załadować ekwipunku." />;
   }
 
   return (

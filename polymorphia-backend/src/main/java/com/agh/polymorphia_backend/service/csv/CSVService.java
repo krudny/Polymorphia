@@ -37,7 +37,7 @@ public class CSVService {
             List<String[]> rawRows = parser.parseAll(reader);
 
             if (!CSVUtil.isValidEncoding(rawRows)) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid encoding detected");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Plik zawiera błędne kodowanie.");
             }
 
             List<List<String>> allRows = rawRows.stream()
@@ -46,7 +46,7 @@ public class CSVService {
 
             return buildCSVResponse(mode, allRows);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error during CSV parsing");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Błąd podczas przetwarzania pliku CSV.");
         }
     }
 
@@ -82,10 +82,6 @@ public class CSVService {
         List<Integer> indices = csvHeaders.values().stream()
                 .map(csvHeader -> CSVUtil.getColumnIndex(csv.csvHeaders(), csvHeader))
                 .toList();
-
-        if (indices.contains(-1)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Selected header not present in CSV");
-        }
 
         List<String> previewCSVHeaders = new ArrayList<>(csvHeaders.keySet());
 

@@ -30,27 +30,27 @@ public class InvitationController {
     @PreAuthorize("hasAnyAuthority('COORDINATOR')")
     public ResponseEntity<Void> inviteUser(@Valid @RequestBody CourseInvitationRequestDto inviteDTO) {
         invitationService.inviteUserToCourse(inviteDTO);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/register-user")
     public ResponseEntity<Void> registerStudent(@Valid @RequestBody RegisterRequestDto registerDTO, HttpServletRequest request) {
         invitationService.registerUser(registerDTO, request);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/course/csv")
     @PreAuthorize("hasAnyAuthority('COORDINATOR')")
     public ResponseEntity<Void> processStudentCourseInviteCSV(@RequestBody StudentCourseInvitationRequestDto requestDTO) {
         studentCourseInvitationCSVProcessor.process(requestDTO);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/group/csv")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<Void> processStudentGroupInviteCSV(@RequestBody StudentGroupInvitationRequestDto requestDTO) {
         studentGroupInvitationCSVProcessor.process(requestDTO);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.noContent().build();
     }
 
 }

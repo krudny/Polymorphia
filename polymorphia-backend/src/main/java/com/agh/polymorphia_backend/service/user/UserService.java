@@ -24,9 +24,9 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class UserService implements UserDetailsService {
-    public static final String USER_HAS_NO_VALID_ROLES = "User should have exactly one role";
-    public static final String USER_NOT_FOUND = "User does not exist in the database";
-    public final static String INVALID_ROLE = "Invalid user role";
+    public static final String USER_NOT_FOUND = "Nie znaleziono użytkownika.";
+    public static final String USER_WITH_EMAIL_NOT_FOUND = "Nie znaleziono użytkownika z emailem %s.";
+    public final static String INVALID_ROLE = "Nieprawidłowa rola użytkownika.";
     private final UserRepository userRepository;
     private final StudentRepository studentRepository;
     private final CoordinatorRepository coordinatorRepository;
@@ -55,7 +55,7 @@ public class UserService implements UserDetailsService {
                 .collect(Collectors.toSet());
 
         if (roles.size() != 1) {
-            throw new IllegalStateException(USER_HAS_NO_VALID_ROLES);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Użytkownik powinien mieć przypisaną dokładnie jedną rolę.");
         }
 
         return roles.iterator().next();
@@ -90,12 +90,12 @@ public class UserService implements UserDetailsService {
 
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND, email)));
+                .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_WITH_EMAIL_NOT_FOUND, email)));
     }
 
     private UserDetails buildUndefinedUser(String email) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND, email)));
+                .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_WITH_EMAIL_NOT_FOUND, email)));
         return UndefinedUser.builder()
                 .user(user)
                 .build();
@@ -108,7 +108,7 @@ public class UserService implements UserDetailsService {
             case STUDENT -> studentRepository.findById(userId);
             case INSTRUCTOR -> instructorRepository.findById(userId);
             case COORDINATOR -> coordinatorRepository.findById(userId);
-            default -> throw new UsernameNotFoundException(String.format(USER_NOT_FOUND, email));
-        }).orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND, email)));
+            default -> throw new UsernameNotFoundException(String.format(USER_WITH_EMAIL_NOT_FOUND, email));
+        }).orElseThrow(() -> new UsernameNotFoundException(String.format(USER_WITH_EMAIL_NOT_FOUND, email)));
     }
 }

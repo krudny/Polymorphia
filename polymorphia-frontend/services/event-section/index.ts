@@ -30,11 +30,7 @@ import {
 } from "@/interfaces/api/user";
 import { API_HOST } from "@/services/api";
 import { CriterionResponseDTO } from "@/interfaces/api/grade/criteria";
-import {
-  SubmissionDetailsRequestDTO,
-  SubmissionDetailsResponseDTO,
-  SubmissionRequirementResponseDTO,
-} from "@/interfaces/api/grade/submission";
+import { ApiClient } from "@/services/api/client";
 
 export const studentNames = [
   "Gerard Małoduszny",
@@ -90,19 +86,9 @@ export const EventSectionService = {
   getEventSections: async (
     courseId: number
   ): Promise<EventSectionResponseDTO[]> => {
-    const response = await fetch(
-      `${API_HOST}/event-sections?courseId=${courseId}`,
-      {
-        method: "GET",
-        credentials: "include",
-      }
+    return await ApiClient.get<EventSectionResponseDTO[]>(
+      `/event-sections?courseId=${courseId}`
     );
-
-    if (!response.ok) {
-      throw new Error("Nie udało się pobrać wydarzeń!");
-    }
-
-    return await response.json();
   },
 
   getStudentGradableEvents: async (
@@ -233,29 +219,6 @@ export const EventSectionService = {
 
     if (!response.ok) {
       throw new Error("Nie udało się pobrać wariantów projektu!");
-    }
-
-    return await response.json();
-  },
-
-  getShortGrade: async (
-    target: TargetRequestDTO,
-    gradableEventId: number
-  ): Promise<ShortGradeResponseDTO> => {
-    const response = await fetch(
-      `${API_HOST}/gradable-events/short-grade?gradableEventId=${gradableEventId}`,
-      {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ target }),
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error("Nie udało się pobrać ocen!");
     }
 
     return await response.json();

@@ -12,6 +12,8 @@ import {
 } from "@/animations/SwapAnimationWrapper";
 import { getKeyForSelectedTarget } from "@/providers/grading/utils/getKeyForSelectedTarget";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
+import ErrorComponent from "@/components/error";
+import { ErrorComponentSizes } from "@/components/error/types";
 
 export default function SubmissionRequirement({
   requirements,
@@ -38,7 +40,10 @@ export default function SubmissionRequirement({
 
   const requirementErrorComponent = (
     <div className="h-[146px] mt-2 relative">
-      <h1>Nie udało się załadować oddanego zadania.</h1>
+      <ErrorComponent
+        message="Nie udało się załadować oddanego zadania."
+        size={ErrorComponentSizes.COMPACT}
+      />
     </div>
   );
 

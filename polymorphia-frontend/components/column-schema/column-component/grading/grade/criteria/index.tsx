@@ -17,6 +17,8 @@ import {
   SwapAnimationWrapper,
 } from "@/animations/SwapAnimationWrapper";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
+import ErrorComponent from "@/components/error";
+import { ErrorComponentSizes } from "@/components/error/types";
 
 export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
   const { state, isSpecificDataLoading, isSpecificDataError, submitGrade } =
@@ -32,11 +34,11 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
     </div>
   );
 
-  // TODO(OG-112): handle error
   const criterionSectionErrorComponent = (
-    <div className="h-[320px] mt-2 relative">
-      <h1>Nie udało się załadować kryterium.</h1>
-    </div>
+    <ErrorComponent
+      message="Nie udało się załadować kryterium."
+      size={ErrorComponentSizes.COMPACT}
+    />
   );
 
   const commentSectionLoadingComponent = (
@@ -45,11 +47,11 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
     </div>
   );
 
-  // TODO(OG-112): handle error
   const commentSectionErrorComponent = (
-    <div className="h-[100px] mt-2 relative">
-      <h1>Nie udało się załadować komentarza do oceny.</h1>
-    </div>
+    <ErrorComponent
+      message="Nie udało się załadować komentarza do oceny."
+      size={ErrorComponentSizes.COMPACT}
+    />
   );
 
   const accordionSections = [
