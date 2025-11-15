@@ -1,14 +1,11 @@
-import {
-  UseCourseGroupTargets,
-  UseCourseGroupTargetsParams,
-} from "@/hooks/course/useCourseGroupTargets/types";
 import { useQuery } from "@tanstack/react-query";
 import TargetListService from "@/services/target-list";
 import { useEventParams } from "@/hooks/general/useEventParams";
+import { UseTargets, UseTargetsParams } from "@/providers/target/types";
 
 export default function useCourseGroupTargets(
-  params: UseCourseGroupTargetsParams
-): UseCourseGroupTargets {
+  params: UseTargetsParams
+): UseTargets {
   const { search = "", sortBy = [], sortOrder = [], searchBy = [] } = params;
   const { courseGroupId } = useEventParams();
 
