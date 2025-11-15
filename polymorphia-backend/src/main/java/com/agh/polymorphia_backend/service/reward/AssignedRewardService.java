@@ -12,7 +12,6 @@ import com.agh.polymorphia_backend.model.reward.item.ItemType;
 import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
 import com.agh.polymorphia_backend.repository.course.reward.assigned.AssignedChestRepository;
 import com.agh.polymorphia_backend.repository.course.reward.assigned.AssignedItemRepository;
-import com.agh.polymorphia_backend.repository.course.reward.assigned.AssignedRewardRepository;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.user.UserService;
 import lombok.AllArgsConstructor;
@@ -23,7 +22,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -34,7 +36,6 @@ import java.util.stream.Stream;
 public class AssignedRewardService {
     private final AssignedChestRepository assignedChestRepository;
     private final AssignedItemRepository assignedItemRepository;
-    private final AssignedRewardRepository assignedRewardRepository;
     private final AnimalService animalService;
     private final UserService userService;
 
@@ -159,15 +160,19 @@ public class AssignedRewardService {
                 .toList();
     }
 
-    public Map<ItemType, List<AssignedItem>> getAssignedItemsByAnimalAndEventSectionGrouped(
-            Long animalId,
-            Long eventSectionId) {
-        return assignedRewardRepository
-                .findAssignedItemsByAnimalAndEventSection(animalId, eventSectionId)
-                .stream()
-                .collect(Collectors.groupingBy(
-                        item -> ((Item) item.getReward()).getItemType()
-                ));
+    public List<AssignedItem> getAnimalEventSectionAssignedItems(Long animalId, Long eventSectionId) {
+        List<AssignedChest> openedChests = getAnimalAssignedChests(animalId).stream()
+                .filter(AssignedReward::getIsUsed)
+                .toList();
+
+        return openedChests.stream()
+                .flatMap(chest -> chest.getAssignedItems().stream())
+                .filter(assignedItem -> ((Item) Hibernate.unproxy(assignedItem.getReward()))
+                        .getEventSection()
+                        .getId()
+                        .equals(eventSectionId)
+                )
+                .toList();
     }
 
     public List<AssignedReward> getCriterionGradeAssignedRewards(CriterionGrade criterionGrade) {

@@ -18,7 +18,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -42,12 +41,10 @@ public class PointsSummaryService {
         Animal animal = animalService.getAnimal(userId, course.getId());
 
         StudentScoreDetail scoreDetail = hallOfFameService.getStudentEventSectionScoreDetails(animal.getId(), eventSectionId);
-        Map<ItemType, List<AssignedItem>> itemsByType = assignedRewardService
-                .getAssignedItemsByAnimalAndEventSectionGrouped(animal.getId(), eventSectionId);
+        List<AssignedItem> assignedItems = assignedRewardService.getAnimalEventSectionAssignedItems(animal.getId(), eventSectionId);
+        List<AssignedItem> percentageBonusItems = assignedRewardService.filterAssignedItemsByType(assignedItems, ItemType.PERCENTAGE_BONUS);
+        List<AssignedItem> flatBonusItems = assignedRewardService.filterAssignedItemsByType(assignedItems, ItemType.FLAT_BONUS);
 
-        return pointsSummaryMapper.toPointsSummaryResponseDto(
-                scoreDetail,
-                itemsByType.getOrDefault(ItemType.FLAT_BONUS, List.of()),
-                itemsByType.getOrDefault(ItemType.PERCENTAGE_BONUS, List.of()));
+        return pointsSummaryMapper.toPointsSummaryResponseDto(scoreDetail, flatBonusItems, percentageBonusItems);
     }
 }

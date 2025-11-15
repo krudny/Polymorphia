@@ -19,4 +19,6 @@ public interface AssignedChestRepository extends JpaRepository<AssignedChest, Lo
     List<AssignedChest> findAnimalAssignedChests(Long animalId);
 
     List<AssignedChest> findByCriterionGrade(CriterionGrade criterionGrade);
+
+
 }
