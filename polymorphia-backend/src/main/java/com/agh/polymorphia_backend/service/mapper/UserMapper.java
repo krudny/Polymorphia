@@ -57,7 +57,7 @@ public class UserMapper {
             case COORDINATOR -> course.getCoordinatorImageUrl();
             case INSTRUCTOR -> course.getInstructorImageUrl();
             default ->
-                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Błąd pobrania obrazu użytkownika");
+                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Błąd pobrania obrazu użytkownika.");
         };
     }
 }

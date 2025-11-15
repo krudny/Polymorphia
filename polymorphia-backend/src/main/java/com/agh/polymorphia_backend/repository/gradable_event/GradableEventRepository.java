@@ -25,6 +25,7 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
                 SELECT SUM(cg.xp)
                 FROM CriterionGrade cg
                 WHERE cg.criterion.gradableEvent = :gradableEvent
+                AND cg.grade.gradableEvent = :gradableEvent
                 AND cg.grade.animal.id = :animalId
             """)
     Optional<BigDecimal> sumGainedXp(GradableEvent gradableEvent, Long animalId);
