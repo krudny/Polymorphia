@@ -4,9 +4,8 @@ import com.agh.polymorphia_backend.dto.request.csv.process.TestGradingRequestDto
 import com.agh.polymorphia_backend.dto.request.grade.ShortGradeRequestDto;
 import com.agh.polymorphia_backend.dto.response.grade.ShortGradeResponseDtoWithType;
 import com.agh.polymorphia_backend.service.csv.processors.TestGradingCSVProcessor;
-import com.agh.polymorphia_backend.service.gradable_event.ShortGradeService;
+import com.agh.polymorphia_backend.service.grade.ShortGradeService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

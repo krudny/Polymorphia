@@ -3,30 +3,17 @@ import {
   GradeRequestDTO,
   ShortGradeResponseDTO,
 } from "@/interfaces/api/grade/grade";
-import { API_HOST } from "@/services/api";
+import { ApiClient } from "@/services/api/client";
 
 export const GradeService = {
   getShortGrade: async (
     target: TargetRequestDTO,
     gradableEventId: number
   ): Promise<ShortGradeResponseDTO> => {
-    const response = await fetch(
-      `${API_HOST}/grading/short-grade?gradableEventId=${gradableEventId}`,
-      {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ target }),
-      }
+    return await ApiClient.post<ShortGradeResponseDTO>(
+      `/grading/short-grade?gradableEventId=${gradableEventId}`,
+      { target }
     );
-
-    if (!response.ok) {
-      throw new Error("Nie udało się pobrać ocen!");
-    }
-
-    return await response.json();
   },
 
   submitGrade: async (gradeData: GradeRequestDTO): Promise<void> => {

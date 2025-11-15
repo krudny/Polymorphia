@@ -1,5 +1,5 @@
 import { StudentGradableEventResponseDTO } from "@/interfaces/api/course";
-import { ApiClient } from "../api/client";
+import { ApiClient } from "@/services/api/client";
 
 export const RoadmapService = {
   getRoadmapData: async (

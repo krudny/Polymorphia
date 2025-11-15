@@ -19,9 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class RoadmapService {
     private final AccessAuthorizer accessAuthorizer;
-    private final EventSectionService eventSectionService;
     private final GradableEventService gradableEventService;
-    private final UserService userService;
 
     public List<BaseGradableEventResponseDto> getRoadmap(Long courseId) {
         accessAuthorizer.authorizeCourseAccess(courseId);

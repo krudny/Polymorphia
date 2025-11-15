@@ -7,7 +7,7 @@ import com.agh.polymorphia_backend.model.reward.assigned.AssignedReward;
 import com.agh.polymorphia_backend.model.reward.item.FlatBonusItemBehavior;
 import com.agh.polymorphia_backend.model.reward.item.ItemType;
 import com.agh.polymorphia_backend.model.grade.Grade;
-import com.agh.polymorphia_backend.service.gradable_event.GradeService;
+import com.agh.polymorphia_backend.service.grade.GradeService;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
 import com.agh.polymorphia_backend.service.reward.AssignedRewardService;
 import com.agh.polymorphia_backend.service.reward.BonusXpCalculator;

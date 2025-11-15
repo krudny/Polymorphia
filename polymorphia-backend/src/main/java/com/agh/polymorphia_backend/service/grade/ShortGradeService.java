@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.service.gradable_event;
+package com.agh.polymorphia_backend.service.grade;
 
 import com.agh.polymorphia_backend.dto.request.target.StudentGroupTargetRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.StudentTargetRequestDto;
@@ -14,6 +14,7 @@ import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.grade.Grade;
 import com.agh.polymorphia_backend.service.criteria.CriteriaGradeService;
+import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
 import com.agh.polymorphia_backend.service.project.ProjectService;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;

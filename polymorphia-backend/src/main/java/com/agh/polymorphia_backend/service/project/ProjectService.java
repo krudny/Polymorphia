@@ -3,12 +3,13 @@ package com.agh.polymorphia_backend.service.project;
 import com.agh.polymorphia_backend.dto.response.project.ProjectVariantResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.BaseUserDetailsResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.UserDetailsResponseDto;
-import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.project.Project;
 import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserType;
+import com.agh.polymorphia_backend.model.user.student.Animal;
+import com.agh.polymorphia_backend.model.user.student.Student;
 import com.agh.polymorphia_backend.repository.project.ProjectRepository;
 import com.agh.polymorphia_backend.service.mapper.ProjectMapper;
 import com.agh.polymorphia_backend.service.mapper.UserMapper;
@@ -100,5 +101,10 @@ public class ProjectService {
     public Project getProjectGradableEvent(Long projectId) {
         return projectRepository.findById(projectId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Projekt nie został znaleziony."));
+    }
+
+    public List<Student> getStudentsFromProjectGroup(ProjectGroup projectGroup) {
+        return projectGroup.getAnimals().stream().map(animal -> animal.getStudentCourseGroupAssignment().getStudent())
+                .toList();
     }
 }
