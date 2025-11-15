@@ -108,12 +108,6 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
             @Param("sortBy") String sortBy
     );
 
-    List<InstructorGradableEventProjection> findInstructorGradableEventsWithDetails(
-            @Param("eventSectionId") Long eventSectionId,
-            @Param("instructorId") Long instructorId,
-            @Param("sortBy") String sortBy
-    );
-
     @Query("""
     SELECT ge.id as id,
            ge.name as name,

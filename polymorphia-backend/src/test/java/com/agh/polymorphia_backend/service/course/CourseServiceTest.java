@@ -8,6 +8,7 @@ import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserCourseRole;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.course.CourseRepository;
+import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.service.mapper.CourseMapper;
 import com.agh.polymorphia_backend.service.user.UserService;
@@ -46,6 +47,9 @@ public class CourseServiceTest {
     private UserCourseRoleRepository userCourseRoleRepository;
 
     @Mock
+    private EventSectionRepository eventSectionRepository;
+
+    @Mock
     private AccessAuthorizer accessAuthorizer;
 
     private User user;
@@ -60,6 +64,7 @@ public class CourseServiceTest {
         MockitoAnnotations.openMocks(this);
         service = new CourseService(
                 courseRepository,
+                eventSectionRepository,
                 userService,
                 courseMapper,
                 userCourseRoleRepository,
