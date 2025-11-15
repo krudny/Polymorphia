@@ -15,13 +15,14 @@ export default function GradableEventCard({
     id: userId,
     type: TargetTypes.STUDENT,
   };
-  const { data: grade, isLoading: isLoading } = useShortGrade(
-    target,
-    gradableEvent.id
-  );
+  const {
+    data: grade,
+    isLoading,
+    isError,
+  } = useShortGrade(target, gradableEvent.id);
   const { hasReward, gainedXp } = gradableEvent;
 
-  if (isLoading || !grade) {
+  if (isLoading || !grade || isError) {
     return null;
   }
   const hasGainedReward =
