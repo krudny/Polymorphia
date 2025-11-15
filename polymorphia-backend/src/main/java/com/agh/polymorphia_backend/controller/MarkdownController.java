@@ -44,7 +44,7 @@ public class MarkdownController {
             @RequestBody @Valid MarkdownRequestDto requestDTO) {
 
         markdownService.setMarkdown(type, resourceId, requestDTO.getMarkdown());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{type}/{resourceId}/reset")
@@ -54,6 +54,6 @@ public class MarkdownController {
             @PathVariable Long resourceId) {
 
         markdownService.resetMarkdown(type, resourceId);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.noContent().build();
     }
 }

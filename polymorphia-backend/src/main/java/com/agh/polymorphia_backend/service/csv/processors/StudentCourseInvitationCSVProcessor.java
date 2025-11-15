@@ -17,8 +17,6 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class StudentCourseInvitationCSVProcessor {
-    private final static String EMAIL_WITHOUT_INDEX_NUMBER = "Email doesn't contain index number";
-    private final static String TOO_MANY_EMAILS = "Attempt to send too many emails!";
     private final InvitationService invitationService;
 
     @Value("${invitation.allow-multiple-emails}")
@@ -32,7 +30,7 @@ public class StudentCourseInvitationCSVProcessor {
         int lastNameIdx = CSVUtil.getColumnIndex(headers, CSVHeaders.LAST_NAME.getValue());
 
         if (!allowMultipleEmails && request.getData().size() > 2) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, TOO_MANY_EMAILS);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Próba wysłania zbyt wielu wiadomości e-mail");
         }
 
         for (List<String> row : request.getData()) {
@@ -60,7 +58,7 @@ public class StudentCourseInvitationCSVProcessor {
         try {
             return Integer.parseInt(beforeAt);
         } catch (NumberFormatException ex) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, EMAIL_WITHOUT_INDEX_NUMBER);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email nie zawiera numeru indeksu.");
         }
     }
 }

@@ -13,9 +13,9 @@ import java.time.ZonedDateTime;
 @Service
 @AllArgsConstructor
 public class TokenValidator {
-    public static final String TOKEN_NOT_EXPIRED = "Active token already exists for this email";
-    public static final String TOKEN_EXPIRED = "Token has expired";
-    public static final String TOKEN_NOT_FOUND = "Token not found";
+    public static final String TOKEN_NOT_EXPIRED = "Aktywny token już istnieje dla tego adresu email.";
+    public static final String TOKEN_EXPIRED = "Token wygasł.";
+    public static final String TOKEN_NOT_FOUND = "Token nie został znaleziony.";
 
     private final TokenRepository tokenRepository;
 

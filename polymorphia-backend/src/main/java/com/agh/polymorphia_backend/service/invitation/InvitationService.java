@@ -40,15 +40,9 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 @AllArgsConstructor
 public class InvitationService {
-    public static final String UNSUPPORTED_ROLE = "Unsupported role";
-    public static final String FAILED_TO_INVITE = "Failed to send invitation";
-    public static final String FAILED_TO_REGISTER = "Failed to create account";
-    public static final String USER_NOT_EXIST = "User doesn't exist";
-    public static final String COURSE_GROUP_NOT_EXIST = "Course group doesn't exist";
-    public static final String STUDENT_NOT_EXIST = "Student doesn't exist";
-    public static final String STUDENT_ALREADY_IN_GROUP = "Student is already in this group";
-    public static final String INSTRUCTOR_NOT_EXIST = "Instructor doesn't exist";
-    public static final String GROUP_HAS_INSTRUCTOR = "Group already has an assigned instructor";
+    public static final String UNSUPPORTED_ROLE = "Nieobsługiwana rola.";
+    public static final String FAILED_TO_INVITE = "Nie udało się wysłać zaproszenia.";
+    public static final String USER_NOT_EXIST = "Użytkownik nie istnieje.";
 
     private final RegisterUtil registerUtil;
     private final UserFactory userFactory;
@@ -91,7 +85,7 @@ public class InvitationService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, USER_NOT_EXIST));
 
         CourseGroup courseGroup = courseGroupRepository.findById(inviteDTO.getCourseGroupId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, COURSE_GROUP_NOT_EXIST));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Grupa kursu nie istnieje."));
 
         Course course = courseGroup.getCourse();
         accessAuthorizer.authorizeCourseAccess(course);
@@ -127,7 +121,7 @@ public class InvitationService {
             registerUtil.authenticateUserAndCreateSession(user.getEmail(), registerDTO.getPassword(), request);
             tokenService.deleteToken(token);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FAILED_TO_REGISTER);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Nie udało się utworzyć konta.");
         }
     }
 
@@ -180,7 +174,7 @@ public class InvitationService {
 
     private void addStudentToCourseGroup(User user, CourseGroup courseGroup) {
         Student student = studentRepository.findByUserId(user.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, STUDENT_NOT_EXIST));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Student nie istnieje."));
 
         StudentCourseGroupAssignmentId assignmentId = StudentCourseGroupAssignmentId.builder()
                 .studentId(student.getUserId())
@@ -188,7 +182,7 @@ public class InvitationService {
                 .build();
 
         if (studentCourseGroupRepository.existsById(assignmentId)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, STUDENT_ALREADY_IN_GROUP);
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Student jest już w tej grupie.");
         }
 
         StudentCourseGroupAssignment assignment = StudentCourseGroupAssignment.builder()
@@ -202,10 +196,10 @@ public class InvitationService {
 
     private void addInstructorToCourseGroup(User user, CourseGroup courseGroup) {
         Instructor instructor = instructorRepository.findByUserId(user.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, INSTRUCTOR_NOT_EXIST));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Prowadzący nie istnieje."));
 
         if (courseGroup.getInstructor() != null) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, GROUP_HAS_INSTRUCTOR);
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Grupa ma już przypisanego prowadzącego.”");
         }
 
         courseGroup.setInstructor(instructor);

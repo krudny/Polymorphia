@@ -125,7 +125,7 @@ public class SubmissionService {
 
                 if (userService.getCurrentUserRole() == UserType.STUDENT) {
                     if (currentSubmission.isLocked()) {
-                        throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                                 "Nie można zmienić zablokowanego zgłoszenia.");
                     }
 
@@ -177,14 +177,14 @@ public class SubmissionService {
         switch (target) {
             case StudentTargetRequestDto studentTargetRequestDto -> {
                 if (userType.equals(UserType.STUDENT) && (!userId.equals(studentTargetRequestDto.id()))) {
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND);
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, STUDENT_NOT_FOUND);
                 }
                 switch (gradableEvent.getEventSection().getEventSectionType()) {
                     case ASSIGNMENT -> {
                         return List.of(
                                 getStudentListForAssigment(gradableEvent.getId(), studentTargetRequestDto.id(), userId,
                                         userType).orElseThrow(
-                                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND)));
+                                        () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, STUDENT_NOT_FOUND)));
                     }
                     case PROJECT -> {
                         return getStudentListFromProjectGroup(
@@ -243,7 +243,7 @@ public class SubmissionService {
 
     private List<Student> getStudentListFromProjectGroup(Optional<ProjectGroup> projectGroupOptional) {
         return projectGroupService.getStudentsFromProjectGroup(projectGroupOptional.orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND)));
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, STUDENT_NOT_FOUND)));
     }
 
     private GradableEvent validateUsageAndGetGradableEventForTarget(Long gradableEventId, TargetRequestDto target) {

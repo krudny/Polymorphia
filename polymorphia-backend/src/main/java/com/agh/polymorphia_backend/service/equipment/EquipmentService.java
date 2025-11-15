@@ -36,8 +36,6 @@ import java.util.stream.Stream;
 @Service
 @AllArgsConstructor
 public class EquipmentService {
-    private static final String INVALID_ITEM = "Item not found in the chest";
-    private static final String ITEM_LIMIT_REACHED = "Item limit reached";
     private final AnimalService animalService;
     private final AssignedRewardService assignedRewardService;
     private final AssignedRewardMapper assignedRewardMapper;
@@ -146,10 +144,10 @@ public class EquipmentService {
                 .map(i -> (Item) Hibernate.unproxy(i))
                 .filter(i -> i.getId().equals(requestDto.getItemId()))
                 .findFirst()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, INVALID_ITEM));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nie znaleziono przedmiotu w skrzyni."));
 
         if (assignedRewardService.isLimitReached(item)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ITEM_LIMIT_REACHED);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Osiągnięto maksymalną liczbę przedmiotów.");
         }
 
         return List.of(

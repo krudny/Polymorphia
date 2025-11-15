@@ -13,8 +13,6 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 @AllArgsConstructor
 public class UserFactory {
-    private static final String NULL_INDEX_NUMBER = "Index number cannot be null";
-
     public User createUser(CourseInvitationRequestDto inviteDTO) {
         return User.builder()
                 .email(inviteDTO.getEmail())
@@ -27,7 +25,7 @@ public class UserFactory {
         User user = createUser(inviteDTO);
 
         if (inviteDTO.getIndexNumber() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, NULL_INDEX_NUMBER);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Numer indeksu jest wymagany.");
         }
 
         return Student.builder()

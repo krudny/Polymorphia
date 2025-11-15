@@ -9,6 +9,9 @@ import SpeedDial from "@/components/speed-dial/SpeedDial";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import ColumnSchema from "@/components/column-schema";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
+import useUserContext from "@/hooks/contexts/useUserContext";
+import { Roles } from "@/interfaces/api/user";
+import ErrorComponent from "@/components/error";
 
 export default function Grading() {
   const { eventType } = useEventParams();
@@ -18,11 +21,16 @@ export default function Grading() {
   const { filters, isFiltersLoading, isFiltersError } = useGradingContext();
   const { areFiltersOpen, setAreFiltersOpen, handleApplyFilters } =
     useTargetContext();
+  const { userRole } = useUserContext();
 
   const speedDialKey = getSpeedDialKey(eventType, ViewTypes.GRADING);
 
   if (!components || !speedDialKey) {
     return null;
+  }
+
+  if (userRole && userRole === Roles.STUDENT) {
+    return <ErrorComponent message="Brak uprawnień." />;
   }
 
   return (

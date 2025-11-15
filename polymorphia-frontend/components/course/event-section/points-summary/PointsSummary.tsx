@@ -4,6 +4,8 @@ import "./index.css";
 import BonusInfoModal from "@/components/course/event-section/points-summary/BonusInfoModal";
 import PointsSummaryElement from "@/components/course/event-section/points-summary/PointsSummaryElement";
 import { PointsSummaryDetailsResponseDTO } from "@/interfaces/api/course/points-summary";
+import usePointsSummary from "@/hooks/course/usePointsSummary";
+import ErrorComponent from "@/components/error";
 
 export default function PointsSummary({
   pointsSummary,
@@ -13,7 +15,12 @@ export default function PointsSummary({
     useState<PointsSummaryDetailsResponseDTO | null>(null);
 
   if (!pointsSummary) {
-    return <div>No points summary</div>;
+    return (
+      <ErrorComponent
+        title="Brak danych"
+        message="Nie znaleziono punktów podsumowania."
+      />
+    );
   }
 
   return (
