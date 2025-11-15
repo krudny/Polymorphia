@@ -21,4 +21,26 @@ public interface EventSectionRepository extends JpaRepository<EventSection, Long
     Optional<Course> findCourseById(@Param("eventSectionId") Long eventSectionId);
 
     Optional<EventSection> findByGradableEventsId(Long gradableEventId);
+
+    @Query("""
+        SELECT es FROM EventSection es
+        WHERE es.course.id = :courseId
+        ORDER BY es.orderIndex ASC
+    """)
+    List<EventSection> findByCourseIdWithHidden(@Param("courseId") Long courseId);
+
+    @Query("""
+        SELECT DISTINCT es 
+        FROM EventSection es
+        WHERE es.course.id = :courseId
+          AND es.isHidden = false
+          AND EXISTS (
+              SELECT 1 
+              FROM GradableEvent ge 
+              WHERE ge.eventSection.id = es.id 
+                AND ge.isHidden = false
+          )
+        ORDER BY es.orderIndex ASC
+    """)
+    List<EventSection> findByCourseIdWithoutHidden(@Param("courseId") Long courseId);
 }

@@ -1,7 +1,6 @@
 package com.agh.polymorphia_backend.repository.gradable_event;
 
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
-import com.agh.polymorphia_backend.repository.gradable_event.projections.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -37,13 +36,7 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
            CASE WHEN COUNT(DISTINCT g.id) > 0 AND COUNT(DISTINCT ar.id) > 0 
                 THEN true 
                 ELSE false 
-           END as isRewardAssigned,
-           CASE
-               WHEN EXISTS (SELECT 1 FROM TestSection ts WHERE ts.id = ge.eventSection.id) THEN 'TEST'
-               WHEN EXISTS (SELECT 1 FROM ProjectSection ps WHERE ps.id = ge.eventSection.id) THEN 'PROJECT'
-               WHEN EXISTS (SELECT 1 FROM AssignmentSection as WHERE as.id = ge.eventSection.id) THEN 'ASSIGNMENT'
-               ELSE ''
-           END as eventSectionType
+           END as isRewardAssigned
     FROM GradableEvent ge
     LEFT JOIN Grade g ON g.gradableEvent.id = ge.id AND g.animal.id = :animalId
     LEFT JOIN Criterion c ON c.gradableEvent.id = ge.id
@@ -78,13 +71,7 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
            COUNT(DISTINCT CASE 
                WHEN g.id IS NULL THEN scga.animal.id
            END) as ungradedStudents,
-           CASE WHEN COUNT(DISTINCT cr.criterion.id) > 0 THEN true ELSE false END as hasPossibleReward,
-           CASE
-               WHEN EXISTS (SELECT 1 FROM TestSection ts WHERE ts.id = ge.eventSection.id) THEN 'TEST'
-               WHEN EXISTS (SELECT 1 FROM ProjectSection ps WHERE ps.id = ge.eventSection.id) THEN 'PROJECT'
-               WHEN EXISTS (SELECT 1 FROM AssignmentSection as WHERE as.id = ge.eventSection.id) THEN 'ASSIGNMENT'
-               ELSE ''
-           END as eventSectionType
+           CASE WHEN COUNT(DISTINCT cr.criterion.id) > 0 THEN true ELSE false END as hasPossibleReward
     FROM GradableEvent ge
     LEFT JOIN Criterion c ON c.gradableEvent.id = ge.id
     LEFT JOIN CriterionReward cr ON cr.criterion.id = c.id
@@ -119,13 +106,7 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
            COUNT(DISTINCT CASE 
                WHEN g.id IS NULL THEN scga.animal.id
            END) as ungradedStudents,
-           CASE WHEN COUNT(DISTINCT cr.criterion.id) > 0 THEN true ELSE false END as hasPossibleReward,
-           CASE
-               WHEN EXISTS (SELECT 1 FROM TestSection ts WHERE ts.id = ge.eventSection.id) THEN 'TEST'
-               WHEN EXISTS (SELECT 1 FROM ProjectSection ps WHERE ps.id = ge.eventSection.id) THEN 'PROJECT'
-               WHEN EXISTS (SELECT 1 FROM AssignmentSection as WHERE as.id = ge.eventSection.id) THEN 'ASSIGNMENT'
-               ELSE ''
-           END as eventSectionType
+           CASE WHEN COUNT(DISTINCT cr.criterion.id) > 0 THEN true ELSE false END as hasPossibleReward
     FROM GradableEvent ge
     LEFT JOIN Criterion c ON c.gradableEvent.id = ge.id
     LEFT JOIN CriterionReward cr ON cr.criterion.id = c.id
@@ -146,4 +127,3 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
             @Param("sortBy") String sortBy
     );
 }
-

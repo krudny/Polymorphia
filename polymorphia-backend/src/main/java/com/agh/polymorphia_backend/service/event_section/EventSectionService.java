@@ -15,6 +15,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.agh.polymorphia_backend.service.user.UserService.INVALID_ROLE;
+
 @Service
 @AllArgsConstructor
 public class EventSectionService {
@@ -25,57 +27,33 @@ public class EventSectionService {
     private final UserService userService;
 
     public List<EventSectionResponseDto> getCourseEventSectionsResponseDto(Long courseId) {
+        accessAuthorizer.authorizeCourseAccess(courseId);
+
         return getCourseEventSections(courseId).stream()
                 .map(eventSectionMapper::toEventSectionResponseDto)
                 .sorted(Comparator.comparing(EventSectionResponseDto::orderIndex))
                 .toList();
     }
 
-    public EventSection getEventSectionFromGradableEventId(Long gradableEventId) {
-        return eventSectionRepository.findByGradableEventsId(gradableEventId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, EVENT_SECTION_NOT_FOUND));
-    }
-
-    public List<EventSection> getCourseEventSections(Long courseId) {
-        accessAuthorizer.authorizeCourseAccess(courseId);
-        UserType userRole = userService.getUserRoleInCourse(courseId);
-
-        List<EventSection> eventSections = eventSectionRepository.findByCourseId(courseId);
-
-        if (userRole != UserType.INSTRUCTOR && userRole != UserType.COORDINATOR) {
-            eventSections = eventSections.stream()
-                    .filter(eventSection -> !eventSection.getIsHidden())
-                    .filter(this::hasAnyUnhiddenGradableEvents)
-                    .toList();
-        }
-
-        return eventSections.stream()
-                .sorted(Comparator.comparing(EventSection::getOrderIndex))
-                .toList();
-    }
-
     public EventSection getEventSection(Long eventSectionId) {
-        EventSection eventSection = fetchEventSection(eventSectionId);
+        EventSection eventSection = eventSectionRepository.findById(eventSectionId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, EVENT_SECTION_NOT_FOUND));
         UserType userRole = userService.getCurrentUserRole();
 
-        if (userRole != UserType.INSTRUCTOR && userRole != UserType.COORDINATOR && eventSection.getIsHidden()) {
+        if (userRole == UserType.STUDENT && Boolean.TRUE.equals(eventSection.getIsHidden())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, EVENT_SECTION_NOT_FOUND);
         }
 
         return eventSection;
     }
 
-    private EventSection fetchEventSection(Long eventSectionId) {
-        return eventSectionRepository.findById(eventSectionId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, EVENT_SECTION_NOT_FOUND));
-    }
+    private List<EventSection> getCourseEventSections(Long courseId) {
+        UserType userRole = userService.getUserRoleInCourse(courseId);
 
-    private boolean hasAnyUnhiddenGradableEvents(EventSection eventSection) {
-        UserType userRole = userService.getCurrentUserRole();
-        if ((userRole == UserType.INSTRUCTOR || userRole == UserType.COORDINATOR) && !eventSection.getGradableEvents().isEmpty()) {
-            return true;
-        }
-        return eventSection.getGradableEvents().stream()
-                .anyMatch(gradableEvent -> !gradableEvent.getIsHidden());
+        return switch (userRole) {
+            case STUDENT -> eventSectionRepository.findByCourseIdWithHidden(courseId);
+            case INSTRUCTOR, COORDINATOR -> eventSectionRepository.findByCourseIdWithoutHidden(courseId);
+            case UNDEFINED -> throw new IllegalArgumentException(INVALID_ROLE);
+        };
     }
 }

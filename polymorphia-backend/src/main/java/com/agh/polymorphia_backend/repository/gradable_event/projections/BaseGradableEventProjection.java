@@ -8,5 +8,4 @@ public interface BaseGradableEventProjection {
     Long getRoadMapOrderIndex();
     Boolean getIsHidden();
     Boolean getIsLocked();
-    String getEventSectionType();
 }
