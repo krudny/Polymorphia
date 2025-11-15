@@ -60,7 +60,7 @@ public class AccessAuthorizer {
         Long userId = user.getUser().getId();
         Course course = projectGroup.getProject().getEventSection().getCourse();
 
-        boolean isProjectGroupsInstructor = projectGroup.getInstructor().getUserId().equals(userId);
+        boolean isProjectGroupsInstructor = projectGroup.getTeachingRoleUser().getUserId().equals(userId);
         boolean isCoordinatorInCourse = isCourseAccessAuthorizedCoordinator(user.getUser(), course);
         boolean isGroupMember = projectGroup.getAnimals().stream()
                 .anyMatch(animal ->

@@ -35,7 +35,7 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
                 SELECT COUNT(distinct scg.animal)
                 FROM StudentCourseGroupAssignment scg
                 join scg.courseGroup cg
-                WHERE cg.instructor.user.id = :instructorId
+                WHERE cg.teachingRoleUser.user.id = :instructorId
                   AND NOT EXISTS (
                       SELECT 1
                       FROM Grade g

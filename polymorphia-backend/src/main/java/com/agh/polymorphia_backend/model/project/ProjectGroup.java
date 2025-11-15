@@ -1,10 +1,7 @@
 package com.agh.polymorphia_backend.model.project;
 
 import com.agh.polymorphia_backend.model.course.Animal;
-import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
-import com.agh.polymorphia_backend.model.user.Instructor;
 import com.agh.polymorphia_backend.model.user.TeachingRoleUser;
-import com.agh.polymorphia_backend.validation.constraint.ProjectGradableEventOnly;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

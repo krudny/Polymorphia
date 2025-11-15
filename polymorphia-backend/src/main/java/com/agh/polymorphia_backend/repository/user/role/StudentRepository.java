@@ -1,10 +1,8 @@
 package com.agh.polymorphia_backend.repository.user.role;
 
-import com.agh.polymorphia_backend.model.user.Instructor;
 import com.agh.polymorphia_backend.model.user.Student;
-import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.repository.user.UserDetailsRepository;
-import java.util.List;
+
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -44,7 +42,7 @@ public interface StudentRepository
                 JOIN c.courseGroups cg
                 JOIN cg.studentCourseGroupAssignments scga
                 JOIN scga.student s
-                WHERE s.userId = :userId AND ge.id = :gradableEventId AND cg.instructor.userId = :instructorId
+                WHERE s.userId = :userId AND ge.id = :gradableEventId AND cg.teachingRoleUser.userId = :instructorId
         """
     )
     Optional<Student> findByUserIdAndGradableEventIdAndCourseGroupInstructorId(
