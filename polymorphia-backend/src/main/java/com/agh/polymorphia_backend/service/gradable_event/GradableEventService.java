@@ -71,7 +71,7 @@ public class GradableEventService {
         return switch (userRole) {
             case STUDENT -> getStudentGradableEvents(relatedId, course, scope, sortBy);
             case INSTRUCTOR -> getInstructorGradableEvents(relatedId, scope, sortBy);
-            case COORDINATOR -> getCoordinatorGradableEvents(relatedId, sortBy);
+            case COORDINATOR -> getCoordinatorGradableEvents(relatedId, scope, sortBy);
             case UNDEFINED -> throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     INVALID_ROLE
@@ -111,13 +111,14 @@ public class GradableEventService {
 
     private List<BaseGradableEventResponseDto> getCoordinatorGradableEvents(
             Long courseId,
+            GradableEventScope scope,
             GradableEventSortBy sortBy
     ) {
         Course course = courseService.getCourseById(courseId);
         accessAuthorizer.authorizeCourseAccess(course);
 
         return gradableEventRepository
-                .getCoordinatorGradableEventsWithDetails(courseId, sortBy.getValue())
+                .getCoordinatorGradableEventsWithDetails(courseId, scope.getValue(), sortBy.getValue())
                 .stream()
                 .map(gradableEventMapper::toInstructorGradableEventResponseDto)
                 .collect(Collectors.toList());

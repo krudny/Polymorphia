@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.repository.course.event_section;
+package com.agh.polymorphia_backend.repository.event_section;
 
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.event_section.EventSection;

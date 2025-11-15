@@ -7,7 +7,7 @@ import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.model.event_section.EventSection;
 import com.agh.polymorphia_backend.model.hall_of_fame.*;
 import com.agh.polymorphia_backend.model.user.UserType;
-import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
+import com.agh.polymorphia_backend.repository.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.StudentScoreDetailRepository;
 import com.agh.polymorphia_backend.service.mapper.HallOfFameMapper;
@@ -25,7 +25,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 

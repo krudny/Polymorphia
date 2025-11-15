@@ -8,7 +8,7 @@ import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserCourseRole;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.course.CourseRepository;
-import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
+import com.agh.polymorphia_backend.repository.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.service.mapper.CourseMapper;
 import com.agh.polymorphia_backend.service.user.UserService;

@@ -3,7 +3,7 @@ package com.agh.polymorphia_backend.service.event_section;
 import com.agh.polymorphia_backend.dto.response.event.EventSectionResponseDto;
 import com.agh.polymorphia_backend.model.event_section.EventSection;
 import com.agh.polymorphia_backend.model.user.UserType;
-import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
+import com.agh.polymorphia_backend.repository.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.service.mapper.EventSectionMapper;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;

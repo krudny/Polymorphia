@@ -130,10 +130,10 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
     LEFT JOIN Criterion c ON c.gradableEvent.id = ge.id
     LEFT JOIN CriterionReward cr ON cr.criterion.id = c.id
     CROSS JOIN StudentCourseGroupAssignment scga
-    JOIN scga.courseGroup cg
     LEFT JOIN Grade g ON g.gradableEvent.id = ge.id 
         AND g.animal.id = scga.animal.id
-    WHERE ge.eventSection.course.id = :courseId
+    WHERE (:scope = 'COURSE' AND ge.eventSection.course.id = :idValue)
+       OR (:scope = 'EVENT_SECTION' AND ge.eventSection.id = :idValue)
       AND ge.isHidden = false
     GROUP BY ge.id, ge.name, ge.topic, ge.orderIndex, ge.roadMapOrderIndex, ge.isHidden, ge.isLocked, ge.eventSection.id
     ORDER BY 
@@ -141,30 +141,9 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
         CASE WHEN :sortBy = 'ROADMAP_ORDER_INDEX' THEN ge.roadMapOrderIndex END
     """)
     List<InstructorGradableEventProjection> getCoordinatorGradableEventsWithDetails(
-            @Param("courseId") Long courseId,
+            @Param("idValue") Long idValue,
+            @Param("scope") String scope,
             @Param("sortBy") String sortBy
     );
-
-
-    @Query("""
-    SELECT ge.id as id,
-           ge.name as name,
-           ge.topic as topic,
-           ge.orderIndex as orderIndex,
-           ge.roadMapOrderIndex as roadMapOrderIndex,
-           ge.isHidden as isHidden,
-           ge.isLocked as isLocked,
-           CASE
-               WHEN EXISTS (SELECT 1 FROM TestSection ts WHERE ts.id = ge.eventSection.id) THEN 'TEST'
-               WHEN EXISTS (SELECT 1 FROM ProjectSection ps WHERE ps.id = ge.eventSection.id) THEN 'PROJECT'
-               WHEN EXISTS (SELECT 1 FROM AssignmentSection as WHERE as.id = ge.eventSection.id) THEN 'ASSIGNMENT'
-               ELSE ''
-           END as eventSectionType
-    FROM GradableEvent ge
-    WHERE ge.eventSection.course.id = :courseId
-    ORDER BY ge.orderIndex, ge.roadMapOrderIndex
-    """)
-    List<BaseGradableEventProjection> getAllGradableEventsByCourse(@Param("courseId") Long courseId);
-
 }
 

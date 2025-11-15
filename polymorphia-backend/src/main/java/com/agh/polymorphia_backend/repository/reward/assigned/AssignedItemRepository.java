@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.repository.course.reward.assigned;
+package com.agh.polymorphia_backend.repository.reward.assigned;
 
 import com.agh.polymorphia_backend.model.reward.assigned.AssignedItem;
 import com.agh.polymorphia_backend.model.criterion.CriterionGrade;

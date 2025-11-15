@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.repository.course.reward;
+package com.agh.polymorphia_backend.repository.reward;
 
 import com.agh.polymorphia_backend.model.reward.Item;
 import org.springframework.data.jpa.repository.JpaRepository;

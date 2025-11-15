@@ -7,7 +7,7 @@ import com.agh.polymorphia_backend.model.event_section.AssignmentSection;
 import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry;
 import com.agh.polymorphia_backend.model.hall_of_fame.StudentScoreDetail;
 import com.agh.polymorphia_backend.model.user.User;
-import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
+import com.agh.polymorphia_backend.repository.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.StudentScoreDetailRepository;
 import com.agh.polymorphia_backend.service.student.AnimalService;
