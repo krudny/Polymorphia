@@ -2,22 +2,15 @@ package com.agh.polymorphia_backend.service.gradable_event;
 
 import com.agh.polymorphia_backend.dto.request.target.TargetRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.TargetType;
-import com.agh.polymorphia_backend.dto.response.criteria.CriterionResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.BaseGradableEventResponseDto;
-import com.agh.polymorphia_backend.dto.response.event.StudentGradableEventResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
-import com.agh.polymorphia_backend.model.event_section.EventSection;
 import com.agh.polymorphia_backend.model.event_section.EventSectionType;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEventScope;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEventSortBy;
-import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.gradable_event.GradableEventRepository;
-import com.agh.polymorphia_backend.repository.gradable_event.projections.StudentGradableEventProjection;
 import com.agh.polymorphia_backend.service.course.CourseService;
-import com.agh.polymorphia_backend.service.event_section.EventSectionService;
-import com.agh.polymorphia_backend.service.mapper.CriterionMapper;
 import com.agh.polymorphia_backend.service.mapper.GradableEventMapper;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.user.UserService;
@@ -28,7 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.agh.polymorphia_backend.service.user.UserService.INVALID_ROLE;
@@ -78,7 +70,8 @@ public class GradableEventService {
 
         return switch (userRole) {
             case STUDENT -> getStudentGradableEvents(relatedId, course, scope, sortBy);
-            case INSTRUCTOR, COORDINATOR -> getInstructorGradableEvents(relatedId, scope, sortBy);
+            case INSTRUCTOR -> getInstructorGradableEvents(relatedId, scope, sortBy);
+            case COORDINATOR -> getCoordinatorGradableEvents(relatedId, sortBy);
             case UNDEFINED -> throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     INVALID_ROLE
@@ -115,6 +108,21 @@ public class GradableEventService {
                 .map(gradableEventMapper::toInstructorGradableEventResponseDto)
                 .collect(Collectors.toList());
     }
+
+    private List<BaseGradableEventResponseDto> getCoordinatorGradableEvents(
+            Long courseId,
+            GradableEventSortBy sortBy
+    ) {
+        Course course = courseService.getCourseById(courseId);
+        accessAuthorizer.authorizeCourseAccess(course);
+
+        return gradableEventRepository
+                .getCoordinatorGradableEventsWithDetails(courseId, sortBy.getValue())
+                .stream()
+                .map(gradableEventMapper::toInstructorGradableEventResponseDto)
+                .collect(Collectors.toList());
+    }
+
 
     private GradableEvent fetchGradableEvent(Long gradableEventId) {
         return gradableEventRepository

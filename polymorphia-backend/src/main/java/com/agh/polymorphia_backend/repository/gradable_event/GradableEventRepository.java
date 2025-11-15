@@ -42,7 +42,7 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
                WHEN EXISTS (SELECT 1 FROM TestSection ts WHERE ts.id = ge.eventSection.id) THEN 'TEST'
                WHEN EXISTS (SELECT 1 FROM ProjectSection ps WHERE ps.id = ge.eventSection.id) THEN 'PROJECT'
                WHEN EXISTS (SELECT 1 FROM AssignmentSection as WHERE as.id = ge.eventSection.id) THEN 'ASSIGNMENT'
-               ELSE 'LECTURE'
+               ELSE ''
            END as eventSectionType
     FROM GradableEvent ge
     LEFT JOIN Grade g ON g.gradableEvent.id = ge.id AND g.animal.id = :animalId
@@ -83,7 +83,7 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
                WHEN EXISTS (SELECT 1 FROM TestSection ts WHERE ts.id = ge.eventSection.id) THEN 'TEST'
                WHEN EXISTS (SELECT 1 FROM ProjectSection ps WHERE ps.id = ge.eventSection.id) THEN 'PROJECT'
                WHEN EXISTS (SELECT 1 FROM AssignmentSection as WHERE as.id = ge.eventSection.id) THEN 'ASSIGNMENT'
-               ELSE 'LECTURE'
+               ELSE ''
            END as eventSectionType
     FROM GradableEvent ge
     LEFT JOIN Criterion c ON c.gradableEvent.id = ge.id
@@ -116,11 +116,49 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
            ge.roadMapOrderIndex as roadMapOrderIndex,
            ge.isHidden as isHidden,
            ge.isLocked as isLocked,
+           COUNT(DISTINCT CASE 
+               WHEN g.id IS NULL THEN scga.animal.id
+           END) as ungradedStudents,
+           CASE WHEN COUNT(DISTINCT cr.criterion.id) > 0 THEN true ELSE false END as hasPossibleReward,
            CASE
                WHEN EXISTS (SELECT 1 FROM TestSection ts WHERE ts.id = ge.eventSection.id) THEN 'TEST'
                WHEN EXISTS (SELECT 1 FROM ProjectSection ps WHERE ps.id = ge.eventSection.id) THEN 'PROJECT'
                WHEN EXISTS (SELECT 1 FROM AssignmentSection as WHERE as.id = ge.eventSection.id) THEN 'ASSIGNMENT'
-               ELSE 'LECTURE'
+               ELSE ''
+           END as eventSectionType
+    FROM GradableEvent ge
+    LEFT JOIN Criterion c ON c.gradableEvent.id = ge.id
+    LEFT JOIN CriterionReward cr ON cr.criterion.id = c.id
+    CROSS JOIN StudentCourseGroupAssignment scga
+    JOIN scga.courseGroup cg
+    LEFT JOIN Grade g ON g.gradableEvent.id = ge.id 
+        AND g.animal.id = scga.animal.id
+    WHERE ge.eventSection.course.id = :courseId
+      AND ge.isHidden = false
+    GROUP BY ge.id, ge.name, ge.topic, ge.orderIndex, ge.roadMapOrderIndex, ge.isHidden, ge.isLocked, ge.eventSection.id
+    ORDER BY 
+        CASE WHEN :sortBy = 'ORDER_INDEX' THEN ge.orderIndex END,
+        CASE WHEN :sortBy = 'ROADMAP_ORDER_INDEX' THEN ge.roadMapOrderIndex END
+    """)
+    List<InstructorGradableEventProjection> getCoordinatorGradableEventsWithDetails(
+            @Param("courseId") Long courseId,
+            @Param("sortBy") String sortBy
+    );
+
+
+    @Query("""
+    SELECT ge.id as id,
+           ge.name as name,
+           ge.topic as topic,
+           ge.orderIndex as orderIndex,
+           ge.roadMapOrderIndex as roadMapOrderIndex,
+           ge.isHidden as isHidden,
+           ge.isLocked as isLocked,
+           CASE
+               WHEN EXISTS (SELECT 1 FROM TestSection ts WHERE ts.id = ge.eventSection.id) THEN 'TEST'
+               WHEN EXISTS (SELECT 1 FROM ProjectSection ps WHERE ps.id = ge.eventSection.id) THEN 'PROJECT'
+               WHEN EXISTS (SELECT 1 FROM AssignmentSection as WHERE as.id = ge.eventSection.id) THEN 'ASSIGNMENT'
+               ELSE ''
            END as eventSectionType
     FROM GradableEvent ge
     WHERE ge.eventSection.course.id = :courseId
