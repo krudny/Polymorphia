@@ -1,21 +1,22 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { FilterConfig } from "@/hooks/course/useFilters/types";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { UseProfileFilterConfigs } from "@/hooks/course/useProfileFilterConfigs/types";
 import { ProfileFilterId } from "@/app/(logged-in)/profile/types";
-import { EventSectionService } from "@/services/event-section";
+import useEventSections from "@/hooks/course/useEventSections";
 
 export function useProfileFilterConfigs(): UseProfileFilterConfigs {
   const { courseId } = useUserDetails();
-  const queryClient = useQueryClient();
+  const { data: eventSections } = useEventSections();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["profileFilters", courseId],
+    enabled: !!eventSections,
     queryFn: async (): Promise<FilterConfig<ProfileFilterId>[]> => {
-      const eventSections = await queryClient.fetchQuery({
-        queryKey: ["eventSections", courseId],
-        queryFn: () => EventSectionService.getEventSections(courseId),
-      });
+      if (!eventSections) {
+        return [];
+      }
+
       return [
         {
           id: "rankingOptions",

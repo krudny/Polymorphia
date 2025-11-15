@@ -1,4 +1,4 @@
-import { ProjectVariantResponseDTO } from "@/interfaces/api/course/project";
+import { ProjectVariantResponseDTO } from "@/interfaces/api/project";
 
 export interface UseProjectVariant {
   data: ProjectVariantResponseDTO[] | undefined;

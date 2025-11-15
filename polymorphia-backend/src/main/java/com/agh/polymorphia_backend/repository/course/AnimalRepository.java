@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.repository.course;
 
-import com.agh.polymorphia_backend.model.course.Animal;
+import com.agh.polymorphia_backend.model.user.student.Animal;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

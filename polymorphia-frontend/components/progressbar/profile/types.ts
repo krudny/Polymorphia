@@ -1,11 +1,11 @@
-import { EvolutionStagesThresholdResponseDTO } from "../../../interfaces/api/student";
-import { sizeVariants } from "@/components/progressbar/types";
+import { EvolutionStagesThresholdResponseDTO } from "@/interfaces/api/student";
+import { Size } from "@/interfaces/general";
 
 export default interface UseProfileProgressBarProps {
   totalXp: number;
   maxPoints: number;
   evolutionStages: EvolutionStagesThresholdResponseDTO[];
-  size?: sizeVariants;
+  size?: Size;
   segmentSizes: number[];
   numSquares: number;
 }

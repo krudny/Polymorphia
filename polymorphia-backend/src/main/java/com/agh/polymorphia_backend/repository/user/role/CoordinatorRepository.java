@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.repository.user.role;
 
-import com.agh.polymorphia_backend.model.user.Coordinator;
+import com.agh.polymorphia_backend.model.user.coordinator.Coordinator;
 import com.agh.polymorphia_backend.repository.user.UserDetailsRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

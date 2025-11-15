@@ -1,4 +1,4 @@
-import { PointsSummaryResponseDTO } from "@/interfaces/api/course/points-summary";
+import { PointsSummaryResponseDTO } from "@/interfaces/api/points-summary";
 
 export interface UsePointsSummary {
   data: PointsSummaryResponseDTO | undefined;

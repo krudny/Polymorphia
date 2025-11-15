@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.model.submission;
 
-import com.agh.polymorphia_backend.model.course.Animal;
+import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

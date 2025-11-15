@@ -9,6 +9,7 @@ export default function usePointsSummary(): UsePointsSummary {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["pointsSummary", eventSectionId],
     queryFn: () => EventSectionService.getPointsSummary(eventSectionId),
+    refetchOnWindowFocus: false,
   });
 
   return { data, isLoading, isError };

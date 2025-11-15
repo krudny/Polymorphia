@@ -1,10 +1,8 @@
 package com.agh.polymorphia_backend.repository.user.role;
 
-import com.agh.polymorphia_backend.model.user.Instructor;
-import com.agh.polymorphia_backend.model.user.Student;
-import com.agh.polymorphia_backend.model.user.User;
+import com.agh.polymorphia_backend.model.user.student.Student;
 import com.agh.polymorphia_backend.repository.user.UserDetailsRepository;
-import java.util.List;
+
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

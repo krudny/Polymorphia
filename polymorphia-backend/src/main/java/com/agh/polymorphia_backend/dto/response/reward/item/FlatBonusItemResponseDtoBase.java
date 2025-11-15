@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.dto.response.reward.item;
 
-import com.agh.polymorphia_backend.model.course.reward.item.FlatBonusItemBehavior;
-import com.agh.polymorphia_backend.model.course.reward.item.ItemType;
+import com.agh.polymorphia_backend.model.reward.item.FlatBonusItemBehavior;
+import com.agh.polymorphia_backend.model.reward.item.ItemType;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;

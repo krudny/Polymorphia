@@ -4,7 +4,7 @@ import com.agh.polymorphia_backend.dto.request.equipment.EquipmentChestOpenReque
 import com.agh.polymorphia_backend.dto.response.equipment.EquipmentChestResponseDto;
 import com.agh.polymorphia_backend.dto.response.equipment.EquipmentItemResponseDto;
 import com.agh.polymorphia_backend.dto.response.equipment.potential_xp.ChestPotentialXpResponseDtoWithType;
-import com.agh.polymorphia_backend.service.EquipmentService;
+import com.agh.polymorphia_backend.service.equipment.EquipmentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

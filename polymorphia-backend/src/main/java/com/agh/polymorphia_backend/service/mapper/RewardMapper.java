@@ -9,8 +9,8 @@ import com.agh.polymorphia_backend.dto.response.reward.chest.ChestResponseDtoBas
 import com.agh.polymorphia_backend.dto.response.reward.item.FlatBonusItemResponseDtoBase;
 import com.agh.polymorphia_backend.dto.response.reward.item.ItemResponseDtoBase;
 import com.agh.polymorphia_backend.dto.response.reward.item.PercentageBonusItemResponseDtoBase;
-import com.agh.polymorphia_backend.model.course.reward.*;
-import com.agh.polymorphia_backend.service.course.reward.AssignedRewardService;
+import com.agh.polymorphia_backend.model.reward.*;
+import com.agh.polymorphia_backend.service.reward.AssignedRewardService;
 import lombok.AllArgsConstructor;
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;

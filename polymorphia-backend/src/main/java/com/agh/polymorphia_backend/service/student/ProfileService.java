@@ -3,10 +3,11 @@ package com.agh.polymorphia_backend.service.student;
 import com.agh.polymorphia_backend.dto.request.hall_of_fame.HallOfFameRequestDto;
 import com.agh.polymorphia_backend.dto.response.profile.EvolutionStageThresholdResponseDto;
 import com.agh.polymorphia_backend.dto.response.profile.ProfileResponseDto;
-import com.agh.polymorphia_backend.model.course.Animal;
-import com.agh.polymorphia_backend.model.course.EvolutionStage;
+import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry;
 import com.agh.polymorphia_backend.model.hall_of_fame.SearchBy;
 import com.agh.polymorphia_backend.model.user.User;
+import com.agh.polymorphia_backend.model.user.student.Animal;
+import com.agh.polymorphia_backend.model.user.student.EvolutionStage;
 import com.agh.polymorphia_backend.repository.course.EvolutionStagesRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
@@ -40,7 +41,8 @@ public class ProfileService {
         User user = userService.getCurrentUser().getUser();
         Animal animal = animalService.getAnimal(user.getId(), user.getPreferredCourse().getId());
 
-        BigDecimal totalXp = hallOfFameService.getStudentHallOfFame(animal).getTotalXpSum();
+        HallOfFameEntry hofEntry = hallOfFameService.getStudentHallOfFame(animal);
+        BigDecimal totalXp = hofEntry.getTotalXpSum();
         List<EvolutionStageThresholdResponseDto> evolutionStages = getEvolutionStages(courseId);
         int evolutionStageId = getCurrentEvolutionStageId(evolutionStages, animal);
 
@@ -50,19 +52,18 @@ public class ProfileService {
                 .rightEvolutionStage(getRightEvolutionStage(evolutionStages, evolutionStageId))
                 .totalXp(NumberFormatter.formatToBigDecimal(totalXp))
                 .totalStudentsInCourse(getTotalStudentsInCourse(courseId))
-                .xpDetails(getXpDetails(user, courseId))
+                .xpDetails(getXpDetails(animal.getId(), hofEntry))
                 .build();
     }
 
-    private Map<String, String> getXpDetails(User user, Long courseId) {
-        Animal animal = animalService.getAnimal(user.getId(), courseId);
-        Map<String, String> xpDetails = hallOfFameService.groupScoreDetails(List.of(animal.getId())).get(animal.getId());
+    private Map<String, String> getXpDetails(Long animalId, HallOfFameEntry hofEntry) {
+        Map<String, String> xpDetails = hallOfFameService.groupScoreDetails(List.of(animalId)).get(animalId);
 
         if (xpDetails.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_HOF_NOT_FOUND);
         }
 
-        hallOfFameService.updateXpDetails(xpDetails, hallOfFameService.getStudentHallOfFame(animal));
+        hallOfFameService.updateXpDetails(xpDetails, hofEntry);
 
         return xpDetails;
     }

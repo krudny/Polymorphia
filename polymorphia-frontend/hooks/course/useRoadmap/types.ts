@@ -1,7 +1,7 @@
-import { StudentGradableEventResponseDTO } from "@/interfaces/api/course";
+import { GradableEventDTO } from "@/interfaces/api/gradable_event/types";
 
 export interface UseRoadmap {
-  data: StudentGradableEventResponseDTO[] | undefined;
+  data: GradableEventDTO[] | undefined;
   isLoading: boolean;
   isError: boolean;
 }

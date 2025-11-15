@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.dto.response.equipment.potential_xp;
 
-import com.agh.polymorphia_backend.model.course.reward.chest.ChestBehavior;
+import com.agh.polymorphia_backend.model.reward.chest.ChestBehavior;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;

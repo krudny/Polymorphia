@@ -1,14 +1,14 @@
 package com.agh.polymorphia_backend.service.course.reward;
 
-import com.agh.polymorphia_backend.model.course.reward.FlatBonusItem;
-import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedItem;
-import com.agh.polymorphia_backend.model.course.reward.item.FlatBonusItemBehavior;
+import com.agh.polymorphia_backend.model.reward.FlatBonusItem;
+import com.agh.polymorphia_backend.model.reward.assigned.AssignedItem;
+import com.agh.polymorphia_backend.model.reward.item.FlatBonusItemBehavior;
 import com.agh.polymorphia_backend.model.criterion.Criterion;
 import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
 import com.agh.polymorphia_backend.model.event_section.EventSection;
 import com.agh.polymorphia_backend.model.event_section.TestSection;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
-import com.agh.polymorphia_backend.model.gradable_event.Grade;
+import com.agh.polymorphia_backend.model.grade.Grade;
 import org.junit.jupiter.params.provider.Arguments;
 
 import java.math.BigDecimal;

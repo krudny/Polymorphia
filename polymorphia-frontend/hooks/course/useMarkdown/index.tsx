@@ -12,10 +12,10 @@ export function useMarkdown(markdownType: MarkdownType): UseMarkdown {
   const resourceId = gradableEventId || courseId;
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["markdown", resourceId],
+    queryKey: ["markdown", markdownType, resourceId],
     queryFn: () => MarkdownService.getMarkdown({ markdownType, resourceId }),
     enabled: !!resourceId,
-    staleTime: 1000 * 60,
+    staleTime: 1000 * 60 * 5,
   });
 
   return { data, isLoading, isError };

@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.repository.gradable_event;
 
-import com.agh.polymorphia_backend.model.gradable_event.Grade;
+import com.agh.polymorphia_backend.model.grade.Grade;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

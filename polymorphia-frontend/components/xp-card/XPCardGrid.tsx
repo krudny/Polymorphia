@@ -46,6 +46,11 @@ export default function XPCardGrid({
     );
   }, [containerRef, maxColumns, maxRows]);
 
+  useEffect(() => {
+    setCurrentPage(0);
+    setPageToShow(0);
+  }, [pageRows, pageCols]);
+
   const pageSize = pageRows * pageCols;
   const pageCount = Math.ceil(cards.length / pageSize);
   const cardsPage = cards.slice(

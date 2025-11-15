@@ -1,4 +1,3 @@
-import { EventSectionService } from "@/services/event-section";
 import { HallOfFameFilterId } from "@/providers/hall-of-fame/types";
 import { EventSectionResponseDTO } from "@/interfaces/api/course";
 import { useQuery } from "@tanstack/react-query";
@@ -6,20 +5,24 @@ import {
   FilterConfig,
   SpecialBehaviors,
 } from "@/hooks/course/useFilters/types";
-import CourseGroupsService from "@/services/course-groups";
 import { CourseGroupTypes } from "@/services/course-groups/types";
+import useEventSections from "@/hooks/course/useEventSections";
+import useCourseGroups from "@/hooks/course/useCourseGroups";
 
 export function useHallOfFameFilterConfigs(courseId: number) {
+  const { data: eventSections } = useEventSections();
+  const { data: courseGroups } = useCourseGroups({
+    courseId,
+    type: CourseGroupTypes.ALL_SHORT,
+  });
+
   return useQuery({
     queryKey: ["hallOfFameFilters", courseId],
+    enabled: !!eventSections && !!courseGroups,
     queryFn: async (): Promise<FilterConfig<HallOfFameFilterId>[]> => {
-      const [eventSections, courseGroups] = await Promise.all([
-        EventSectionService.getEventSections(courseId),
-        CourseGroupsService.getCourseGroups(
-          courseId,
-          CourseGroupTypes.ALL_SHORT
-        ),
-      ]);
+      if (!eventSections || !courseGroups) {
+        return [];
+      }
 
       return [
         {

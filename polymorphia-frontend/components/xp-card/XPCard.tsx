@@ -61,6 +61,7 @@ const xpCard = tv({
       sm: "xp-card-sm",
       md: "xp-card-md",
       lg: "xp-card-lg",
+      xl: "",
       hofDesktop: "xp-card-hall-of-fame-desktop",
       projectGroup: "xp-card-project-group",
     },

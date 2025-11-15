@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.repository.course;
 
-import com.agh.polymorphia_backend.model.course.EvolutionStage;
+import com.agh.polymorphia_backend.model.user.student.EvolutionStage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

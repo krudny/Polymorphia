@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.service.user;
 
 import com.agh.polymorphia_backend.model.user.*;
+import com.agh.polymorphia_backend.model.user.undefined.UndefinedUser;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.repository.user.role.CoordinatorRepository;
@@ -68,7 +69,7 @@ public class UserService implements UserDetailsService {
 
     public UserType getUserRoleInCourse(Long courseId) {
         return userCourseRoleRepository.findByUserIdAndCourseId(getCurrentUser().getUserId(), courseId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono użytkownika w kursie."))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono użytkownika w kursie"))
                 .getRole();
     }
 

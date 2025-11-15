@@ -11,15 +11,15 @@ import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.submission.Submission;
 import com.agh.polymorphia_backend.model.submission.SubmissionRequirement;
-import com.agh.polymorphia_backend.model.user.Student;
+import com.agh.polymorphia_backend.model.user.student.Student;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.project.ProjectGroupRepository;
 import com.agh.polymorphia_backend.repository.submission.SubmissionRepository;
 import com.agh.polymorphia_backend.repository.submission.SubmissionRequirementRepository;
 import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
 import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
-import com.agh.polymorphia_backend.service.gradable_event.project.ProjectGroupService;
 import com.agh.polymorphia_backend.service.mapper.SubmissionMapper;
+import com.agh.polymorphia_backend.service.project.ProjectService;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
@@ -50,7 +50,7 @@ public class SubmissionService {
     private final ProjectGroupRepository projectGroupRepository;
     private final StudentRepository studentRepository;
     private final AnimalService animalService;
-    private final ProjectGroupService projectGroupService;
+    private final ProjectService projectService;
 
     public List<SubmissionRequirementResponseDto> getSubmissionRequirements(Long gradableEventId) {
         GradableEvent gradableEvent = validateUsageAndGetGradableEvent(gradableEventId);
@@ -242,7 +242,7 @@ public class SubmissionService {
     }
 
     private List<Student> getStudentListFromProjectGroup(Optional<ProjectGroup> projectGroupOptional) {
-        return projectGroupService.getStudentsFromProjectGroup(projectGroupOptional.orElseThrow(
+        return projectService.getStudentsFromProjectGroup(projectGroupOptional.orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, STUDENT_NOT_FOUND)));
     }
 

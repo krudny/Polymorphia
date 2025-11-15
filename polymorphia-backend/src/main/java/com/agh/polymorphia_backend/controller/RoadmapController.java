@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.response.event.BaseGradableEventResponseDto;
-import com.agh.polymorphia_backend.service.course.RoadmapService;
+import com.agh.polymorphia_backend.service.roadmap.RoadmapService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

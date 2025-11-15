@@ -1,6 +1,5 @@
 package com.agh.polymorphia_backend.dto.response.event;
 
-import com.agh.polymorphia_backend.model.event_section.EventSectionType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -14,9 +13,6 @@ public class BaseGradableEventResponseDto {
     private Long id;
 
     @NotNull
-    private EventSectionType type;
-
-    @NotNull
     private String name;
 
     private String topic;
@@ -24,4 +20,7 @@ public class BaseGradableEventResponseDto {
     @NotNull
     private Long orderIndex;
 
+    private Long roadMapOrderIndex;
+
+    private Boolean isLocked;
 }

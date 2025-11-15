@@ -1,9 +1,13 @@
-import { PointsSummaryDetailsResponseDTO } from "@/interfaces/api/course/points-summary";
+import {
+  PointsSummaryDetailsResponseDTO,
+  PointsSummaryResponseDTO,
+} from "@/interfaces/api/points-summary";
 import { AssignedItemResponseDTO } from "@/interfaces/api/reward/assigned";
 import { ModalProps } from "@/components/modal/types";
 import { RefObject } from "react";
 
 export interface PointsSummaryProps {
+  pointsSummary: PointsSummaryResponseDTO;
   ref: RefObject<HTMLDivElement | null>;
 }
 

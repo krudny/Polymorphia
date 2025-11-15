@@ -51,3 +51,13 @@ export type InviteType = (typeof InviteTypes)[keyof typeof InviteTypes];
 
 export type InviteSpecificType =
   (typeof InviteSpecificTypes)[keyof typeof InviteSpecificTypes];
+
+export const Sizes = {
+  XS: "xs",
+  SM: "sm",
+  MD: "md",
+  LG: "lg",
+  XL: "xl",
+} as const;
+
+export type Size = (typeof Sizes)[keyof typeof Sizes];
