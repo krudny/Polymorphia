@@ -1,15 +1,14 @@
 import { TargetResponseDTO } from "@/interfaces/api/target";
 
-export interface UseTargets {
+export interface UseCourseGroupTargets {
   data: TargetResponseDTO[] | undefined;
   isLoading: boolean;
   isError: boolean;
 }
 
-export interface UseTargetsParams {
+export interface UseCourseGroupTargetsParams {
   search?: string;
   sortBy?: string[];
   sortOrder?: string[];
-  groups?: string[];
-  gradeStatus?: string[];
+  searchBy?: string[];
 }

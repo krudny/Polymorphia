@@ -23,6 +23,7 @@ export interface TargetContextInterface {
   applyFiltersCallback: (
     filters: AppliedFiltersAdapter
   ) => Record<string, string[] | string>;
+  appliedFilters: AppliedFiltersAdapter;
   targetId: number | null;
 }
 

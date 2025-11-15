@@ -11,8 +11,13 @@ import ColumnComponent from "@/components/column-schema/column-component";
 import { isTargetSelected } from "@/providers/target/utils/is-selected";
 
 export default function TargetList() {
-  const { targets, isTargetsLoading, onTargetSelect, selectedTarget } =
-    useTargetContext();
+  const {
+    targets,
+    isTargetsLoading,
+    onTargetSelect,
+    selectedTarget,
+    appliedFilters,
+  } = useTargetContext();
 
   const topComponent = () => <TargetListTopBar />;
 
@@ -47,10 +52,16 @@ export default function TargetList() {
                       onTargetSelect(target, student);
                     };
 
+                    console.log(appliedFilters);
+
                     return (
                       <XPCard
                         key={studentIndex}
-                        title={student.fullName}
+                        title={
+                          appliedFilters["searchBy"][0] === "animalName"
+                            ? student.animalName
+                            : student.fullName
+                        }
                         color={color}
                         subtitle={student.group}
                         size="xs"
