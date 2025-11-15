@@ -15,7 +15,7 @@ export default function CourseChoiceCard({
 }: RenderCardProps): ReactNode {
   const { id, name, coordinatorName, imageUrl, userRole } = availableCourse;
   const { data: animal } = useHasValidAnimalInCourse(id);
-  const { data: courseGroup } = useCourseGroup(id);
+  const { data: courseGroup } = useCourseGroup(id, userRole === Roles.STUDENT);
 
   const handleClick = () => {
     switch (userRole) {

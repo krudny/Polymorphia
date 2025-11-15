@@ -29,14 +29,9 @@ import {
   UserDetailsDTO,
 } from "@/interfaces/api/user";
 import { EventTypes } from "@/interfaces/general";
-import { API_HOST } from "@/services/api";
 import { CriterionResponseDTO } from "@/interfaces/api/grade/criteria";
-import {
-  SubmissionDetailsRequestDTO,
-  SubmissionDetailsResponseDTO,
-  SubmissionRequirementResponseDTO,
-} from "@/interfaces/api/grade/submission";
 import { ChestBehaviors } from "@/interfaces/api/reward";
+import { ApiClient } from "@/services/api/client";
 
 export const studentNames = [
   "Gerard Małoduszny",
@@ -92,19 +87,9 @@ export const EventSectionService = {
   getEventSections: async (
     courseId: number
   ): Promise<EventSectionResponseDTO[]> => {
-    const response = await fetch(
-      `${API_HOST}/event-sections?courseId=${courseId}`,
-      {
-        method: "GET",
-        credentials: "include",
-      }
+    return await ApiClient.get<EventSectionResponseDTO[]>(
+      `/event-sections?courseId=${courseId}`
     );
-
-    if (!response.ok) {
-      throw new Error("Nie udało się pobrać wydarzeń!");
-    }
-
-    return await response.json();
   },
 
   getStudentGradableEvents: async (

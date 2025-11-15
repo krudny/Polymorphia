@@ -5,6 +5,8 @@ import useGradingContext from "@/hooks/contexts/useGradingContext";
 import GradeCriteria from "@/components/column-schema/column-component/grading/grade/criteria";
 import ColumnComponent from "@/components/column-schema/column-component";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
+import ErrorComponent from "@/components/error";
+import { ErrorComponentSizes } from "@/components/error/types";
 
 export default function Grade() {
   const { criteria, isGeneralDataLoading, isGeneralDataError } =
@@ -17,10 +19,12 @@ export default function Grade() {
       <Loading />
     </div>
   );
-  // TODO(OG-112): handle error
   const errorComponent = (
     <div className="h-[300px] relative">
-      <h1>Nie udało się załadować kryteriów oceny.</h1>
+      <ErrorComponent
+        message="Nie udało się załadować kryteriów oceny."
+        size={ErrorComponentSizes.COMPACT}
+      />
     </div>
   );
 

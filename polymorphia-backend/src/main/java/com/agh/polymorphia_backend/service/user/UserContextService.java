@@ -6,8 +6,6 @@ import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserCourseRole;
 import com.agh.polymorphia_backend.model.user.UserType;
-import com.agh.polymorphia_backend.repository.course.AnimalRepository;
-import com.agh.polymorphia_backend.repository.course.StudentCourseGroupRepository;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.service.course.CourseService;
@@ -17,9 +15,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
-
-import static com.agh.polymorphia_backend.service.user.UserService.USER_NOT_FOUND;
 
 import static com.agh.polymorphia_backend.service.user.UserService.USER_NOT_FOUND;
 
@@ -32,7 +27,6 @@ public class UserContextService {
     private final UserService userService;
     private final UserContextMapper userContextMapper;
     private final UserCourseRoleRepository userCourseRoleRepository;
-    private final StudentCourseGroupRepository studentCourseGroupRepository;
 
     public UserDetailsResponseDto getUserContext() {
         AbstractRoleUser user = userService.getCurrentUser();

@@ -5,6 +5,7 @@ import {
   UseSubmissionsUpdate,
   UseSubmissionsUpdateProps,
 } from "@/hooks/course/useSubmissionsUpdate/types";
+import { ApiError } from "@/services/api/error";
 import { TargetTypes } from "@/interfaces/api/target";
 import { SubmissionService } from "@/services/submission";
 import { SubmissionDetails } from "@/interfaces/api/grade/submission";
@@ -21,7 +22,9 @@ export default function useSubmissionsUpdate({
   return useMutation({
     mutationFn: (submissionDetails: SubmissionDetails) => {
       if (!target) {
-        throw new Error("Wystąpił błąd podczas aktualizacji oddanych zadań.");
+        throw new ApiError(
+          "Wystąpił błąd podczas aktualizacji oddanych zadań."
+        );
       }
 
       return toast.promise(
@@ -33,13 +36,10 @@ export default function useSubmissionsUpdate({
           ? {
               loading: "Zapisywanie zmian...",
               success: "Pomyślnie zapisano oddane zadania!",
-              error: () => "Wystąpił błąd przy zapisie oddanych zadań!",
             }
           : {
               loading: "Zapisywanie zmian...",
               success: "Pomyślnie zmieniono status blokady zadania!",
-              error: () =>
-                "Wystąpił błąd przy próbie zmiany statusu blokady zadania!",
             }
       );
     },

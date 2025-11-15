@@ -32,7 +32,6 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class AssignedRewardService {
-    private static final String NO_ASSIGNED_CHEST_FOUND = "No assigned chest found";
     private final AssignedChestRepository assignedChestRepository;
     private final AssignedItemRepository assignedItemRepository;
     private final AnimalService animalService;
@@ -84,7 +83,7 @@ public class AssignedRewardService {
                                 && !assignedChest.getIsUsed()
                 )
                 .findFirst()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, NO_ASSIGNED_CHEST_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nie znaleziono przypisanej skrzynki."));
     }
 
     public AssignedItem createAssignedItem(AssignedChest assignedChest, Item item, ZonedDateTime openDate) {

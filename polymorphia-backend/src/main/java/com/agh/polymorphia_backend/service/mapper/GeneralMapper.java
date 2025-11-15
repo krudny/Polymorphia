@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Service
 public class GeneralMapper {
-    public static final String NOT_JSON = "String is not in JSON format";
+    public static final String NOT_JSON = "String nie jest w formacie JSON.";
     public Map<String, String> stringToMap(String inputString) {
         try {
             return new ObjectMapper().readValue(inputString, new TypeReference<>() {

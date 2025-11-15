@@ -27,7 +27,6 @@ import static com.agh.polymorphia_backend.service.course.CourseService.COURSE_NO
 @Service
 @AllArgsConstructor
 public class AccessAuthorizer {
-    private final static String USER_COURSE_ROLE_NOT_FOUND = "User course role not found";
     private final UserService userService;
     private final UserCourseRoleRepository userCourseRoleRepository;
     private final InstructorRepository instructorRepository;
@@ -58,7 +57,7 @@ public class AccessAuthorizer {
 
         UserCourseRole userCourseRole = userCourseRoleRepository
                 .findByUserIdAndCourseId(user.getId(), course.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, USER_COURSE_ROLE_NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono roli użytkownika w kursie."));
 
         if (userCourseRole.getRole() == UserType.STUDENT) {
             Optional<Animal> animal = animalRepository.findByCourseIdAndStudentId(course.getId(), user.getId());
