@@ -3,8 +3,8 @@ package com.agh.polymorphia_backend.service.student;
 import com.agh.polymorphia_backend.dto.request.hall_of_fame.HallOfFameRequestDto;
 import com.agh.polymorphia_backend.dto.response.profile.EvolutionStageThresholdResponseDto;
 import com.agh.polymorphia_backend.dto.response.profile.ProfileResponseDto;
-import com.agh.polymorphia_backend.model.user.student.Animal;
-import com.agh.polymorphia_backend.model.user.student.EvolutionStage;
+import com.agh.polymorphia_backend.model.course.Animal;
+import com.agh.polymorphia_backend.model.course.EvolutionStage;
 import com.agh.polymorphia_backend.model.hall_of_fame.SearchBy;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.repository.course.EvolutionStagesRepository;
@@ -67,8 +67,8 @@ public class ProfileService {
         return xpDetails;
     }
 
-    private int getCurrentEvolutionStageId(List<EvolutionStageThresholdResponseDto> evolutionStages, User user) {
-        String evolutionStageName = Optional.ofNullable(hallOfFameService.getStudentHallOfFame(user).getEvolutionStage())
+    private int getCurrentEvolutionStageId(List<EvolutionStageThresholdResponseDto> evolutionStages, Animal animal) {
+        String evolutionStageName = Optional.ofNullable(hallOfFameService.getStudentHallOfFame(animal).getEvolutionStage())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Profil jest niekompletny: etapy ewolucji nie zostały zdefiniowane."));
 
         for (int i = 0; i < evolutionStages.size(); i++) {

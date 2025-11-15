@@ -5,10 +5,10 @@ import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export function useRoadmap(): UseRoadmap {
   const { courseId } = useUserDetails();
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["roadmap"],
     queryFn: () => RoadmapService.getRoadmapData(courseId),
   });
 
-  return { data, isLoading };
+  return { data, isLoading, isError };
 }

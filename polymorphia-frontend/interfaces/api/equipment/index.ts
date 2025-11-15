@@ -44,8 +44,8 @@ export interface AllChestPotentialXpResponseDTO
   summary: PotentialXpWithLossResponseDTO;
 }
 
-export interface OneChestPotentialXpResponseDTO
-  extends BaseChestPotentialXpResponseDTO<PotentialXpWithLossResponseDTO> {}
+export type OneChestPotentialXpResponseDTO =
+  BaseChestPotentialXpResponseDTO<PotentialXpWithLossResponseDTO>;
 
 interface BaseChestPotentialXpResponseDTOWithType<
   T extends ChestBehavior,

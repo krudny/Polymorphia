@@ -1,7 +1,6 @@
 import Loading from "@/components/loading";
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
-import useRandomUsers from "@/hooks/course/useRandomUsers";
 import ErrorComponent from "@/components/error";
 import "./index.css";
 import { useProjectGroup } from "@/hooks/course/useProjectGroup";
