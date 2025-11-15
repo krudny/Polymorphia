@@ -10,8 +10,7 @@ export default function useStudentsGradableEvents(): UseStudentsGradableEvents {
     queryKey: ["studentGradableEvents", eventSectionId],
     queryFn: () =>
       GradableEventService.getStudentGradableEvents(eventSectionId),
-    refetchOnWindowFocus: true,
-    staleTime: 1000 * 60,
+    staleTime: 1000 * 30,
   });
 
   return { data, isLoading, isError };

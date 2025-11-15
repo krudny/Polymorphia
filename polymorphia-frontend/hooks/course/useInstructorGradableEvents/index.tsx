@@ -10,8 +10,7 @@ export default function useInstructorGradableEvents(): UseInstructorGradableEven
     queryKey: ["instructorGradableEvents", eventSectionId],
     queryFn: () =>
       GradableEventService.getInstructorGradableEvents(eventSectionId),
-    refetchOnWindowFocus: true,
-    staleTime: 1000 * 60,
+    staleTime: 1000 * 30,
   });
 
   return { data, isLoading, isError };

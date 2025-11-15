@@ -1,5 +1,3 @@
-import { EventType } from "@/interfaces/general";
-
 export type GradableEventDTO =
   | BaseGradableEventResponseDTO
   | StudentGradableEventResponseDTO
@@ -7,7 +5,6 @@ export type GradableEventDTO =
 
 export interface BaseGradableEventResponseDTO {
   id: number;
-  type: EventType;
   name: string;
   topic?: string;
   orderIndex: number;

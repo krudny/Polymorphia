@@ -41,7 +41,11 @@ export default function StudentView() {
   const isMd = useMediaQuery({ minWidth: 768 });
 
   useEffect(() => {
-    if (!isLoading && gradableEvents && gradableEvents.length === 1) {
+    if (
+      !areGradableEventsLoading &&
+      gradableEvents &&
+      gradableEvents.length === 1
+    ) {
       router.push(
         `/course/${eventType.toLowerCase()}/${eventSectionId}/${gradableEvents[0].id}`
       );
