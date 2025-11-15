@@ -61,6 +61,16 @@ public class CourseGroupsService {
                 .toList();
     }
 
+    public CourseGroup findCourseGroupForTeachingRoleUser(Long courseGroupId) {
+        return switch (userService.getCurrentUserRole()) {
+            case INSTRUCTOR, COORDINATOR -> courseGroupRepository
+                    .findCourseGroupForTeachingRoleUser(courseGroupId, userService.getCurrentUser().getUserId())
+                    .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono grupy zajęciowej."));
+            default -> throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Brak uprawnień.");
+        };
+    }
+
     private List<CourseGroup> getCourseGroups(Long courseId) {
         accessAuthorizer.authorizeCourseAccess(courseId);
         Long userId = userService.getCurrentUser().getUser().getId();

@@ -21,13 +21,13 @@ public class TargetListController {
 
     private final TargetListService targetListService;
 
-    @GetMapping(value = "/course-group")
+    @PostMapping(value = "/course-group")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<List<StudentTargetResponseDto>> getTargetListForCourseGroup(@Valid @RequestBody CourseGroupsTargetListRequestDto requestDto) {
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(targetListService.getTargetListForCourseGroup(requestDto));
     }
 
-    @GetMapping(value = "/grading")
+    @PostMapping(value = "/grading")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<List<TargetResponseDto>> getTargetListForGrading(@Valid @RequestBody GradingTargetListRequestDto requestDto) {
         return ResponseEntity.ok(null);

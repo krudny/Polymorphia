@@ -14,7 +14,7 @@ import {
   TargetProviderProps,
 } from "@/providers/target/types";
 import { initialState, TargetReducer } from "@/providers/target/reducer";
-import useTargets from "@/hooks/course/useTargets";
+import useCourseGroupTargets from "@/hooks/course/useCourseGroupTargets";
 import isSelectedTargetStillAvailable from "@/providers/target/utils/is-target-still-available";
 import { TargetReducerActions } from "@/providers/target/reducer/types";
 import {
@@ -50,14 +50,14 @@ export const TargetProvider = ({ children }: TargetProviderProps) => {
     return filters;
   }, []);
 
-  const { data: targets, isLoading: isTargetsLoading } = useTargets({
+  const { data: targets, isLoading: isTargetsLoading } = useCourseGroupTargets({
     ...appliedFilters,
     search: debouncedSearch,
   });
 
   const handleApplyFilters = () => {
     queryClient.invalidateQueries({
-      queryKey: ["targets"],
+      queryKey: ["courseGroupTargets"],
     });
   };
 
@@ -114,6 +114,7 @@ export const TargetProvider = ({ children }: TargetProviderProps) => {
         onTargetSelect,
         handleApplyFilters,
         applyFiltersCallback,
+        appliedFilters,
         targetId,
       }}
     >

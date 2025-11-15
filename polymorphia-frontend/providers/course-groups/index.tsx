@@ -22,13 +22,17 @@ export const CourseGroupsProvider = ({ children }: { children: ReactNode }) => {
   const filters = useFilters<CourseGroupsFilterId>(filterConfigs ?? []);
   const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["total"];
   const sortOrder = filters.getAppliedFilterValues("sortOrder") ?? ["asc"];
+  const searchBy = filters.getAppliedFilterValues("searchBy") ?? [
+    "studentName",
+  ];
 
   useEffect(() => {
     applyFiltersCallback({
-      sortBy,
+      sortBy: sortBy.map((value) => (value === "name" ? searchBy[0] : value)),
       sortOrder,
+      searchBy,
     });
-  }, [sortBy, sortOrder]);
+  }, [sortBy, sortOrder, searchBy]);
 
   const {
     data: studentSummary,

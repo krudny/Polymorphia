@@ -15,4 +15,4 @@ export interface CourseGroupsContextInterface {
   isSpecificDataError: boolean;
 }
 
-export type CourseGroupsFilterId = "sortOrder" | "sortBy";
+export type CourseGroupsFilterId = "sortOrder" | "sortBy" | "searchBy";
