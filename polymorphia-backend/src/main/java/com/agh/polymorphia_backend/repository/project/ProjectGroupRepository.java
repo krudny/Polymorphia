@@ -57,7 +57,7 @@ public interface ProjectGroupRepository extends JpaRepository<ProjectGroup, Long
                                                                                 Long teachingRoleUserId);
 
     @Query("""
-               select pg.id as projectGroupId, hofe.studentId as studentId, hofe.studentName as fullName, hofe.animalName as animalName, hofe.evolutionStage as evolutionStage, hofe.groupName as group, hofe.imageUrl as imageUrl, sum(cg.xp) as gainedXp
+               select pg.id as projectGroupId, hofe.studentId as studentId, hofe.studentName as fullName, hofe.animalName as animalName, hofe.evolutionStage as evolutionStage, hofe.groupName as group, hofe.imageUrl as imageUrl, cg.grade.id as gradeId, sum(cg.xp) as gainedXp
                from ProjectGroup pg
                join pg.animals a
                join HallOfFameEntry hofe on a.id = hofe.animalId
@@ -65,7 +65,7 @@ public interface ProjectGroupRepository extends JpaRepository<ProjectGroup, Long
                left join CriterionGrade cg on c.id = cg.criterion.id and cg.grade.gradableEvent.id = :projectId and cg.grade.animal.id = a.id
                where pg.project.id = :projectId
                and (pg.teachingRoleUser.userId = :teachingRoleUserId or pg.project.eventSection.course.coordinator.userId = :teachingRoleUserId and :showAllProjectGroupsInCourse = true)
-               group by pg.id, hofe.studentId, hofe.studentName, hofe.animalName, hofe.evolutionStage, hofe.groupName, hofe.imageUrl
+               group by pg.id, hofe.studentId, hofe.studentName, hofe.animalName, hofe.evolutionStage, hofe.groupName, hofe.imageUrl, cg.grade.id
             """)
     List<ProjectTargetDataView> getProjectTargetsData(Long projectId, Long teachingRoleUserId, Boolean showAllProjectGroupsInCourse);
 }
