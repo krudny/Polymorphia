@@ -27,10 +27,6 @@ import static com.agh.polymorphia_backend.service.course.CourseService.COURSE_NO
 @Service
 @AllArgsConstructor
 public class AccessAuthorizer {
-    private final static String USER_COURSE_ROLE_NOT_FOUND = "User course role not found";
-    private final static String BAD_USER_OR_PROJECT = "Niepoprawne id użytkownika lub projektu";
-    private final static String BAD_USER = "Niepoprawne id użytkownika";
-
     private final UserService userService;
     private final UserCourseRoleRepository userCourseRoleRepository;
     private final InstructorRepository instructorRepository;
@@ -54,7 +50,7 @@ public class AccessAuthorizer {
         boolean isStudentsInstructor = hasInstructorAccessToUserInCourse(user, course, studentId);
 
         if (!isStudentSelf && !isCoordinatorInCourse && !isStudentsInstructor) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, BAD_USER);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Niepoprawne id użytkownika");
         }
 
     }
@@ -75,7 +71,7 @@ public class AccessAuthorizer {
                 );
 
         if (!isProjectGroupsInstructor && !isCoordinatorInCourse && !isGroupMember) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, BAD_USER_OR_PROJECT);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Niepoprawne id użytkownika lub projektu");
         }
     }
 
@@ -125,10 +121,6 @@ public class AccessAuthorizer {
     private boolean hasInstructorAccessToUserInCourse(User user, Course course, Long studentId) {
         return instructorRepository.hasAccessToStudentInCourse(user.getId(), course.getId(), studentId);
     }
-
-//    private boolean hasInstructorAccessToUserInCourse(User user, Course course, Long studentId) {
-//        return instructorRepository.hasAccessToStudentInCourse(user.getId(), course.getId(), studentId);
-//    }
 
     private boolean isCourseAccessAuthorizedCoordinator(User user, Course course) {
         return course.getCoordinator().getUser().equals(user);
