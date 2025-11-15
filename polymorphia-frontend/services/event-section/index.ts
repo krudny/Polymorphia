@@ -94,24 +94,20 @@ export const EventSectionService = {
   getStudentGradableEvents: async (
     eventSectionId: number
   ): Promise<StudentGradableEventResponseDTO[]> => {
-    return ApiClient.get(
-      `${API_HOST}/gradable-events?eventSectionId=${eventSectionId}`
-    );
+    return ApiClient.get(`/gradable-events?eventSectionId=${eventSectionId}`);
   },
 
   getInstructorGradableEvents: async (
     eventSectionId: number
   ): Promise<InstructorGradableEventResponseDTO[]> => {
-    return ApiClient.get(
-      `${API_HOST}/gradable-events?eventSectionId=${eventSectionId}`
-    );
+    return ApiClient.get(`/gradable-events?eventSectionId=${eventSectionId}`);
   },
 
   getPointsSummary: async (
     eventSectionId: number
   ): Promise<PointsSummaryResponseDTO> => {
     return ApiClient.get(
-      `${API_HOST}/gradable-events/points-summary?eventSectionId=${eventSectionId}`
+      `/gradable-events/points-summary?eventSectionId=${eventSectionId}`
     );
   },
 
@@ -139,7 +135,7 @@ export const EventSectionService = {
     gradableEventId: number
   ): Promise<CriterionResponseDTO[]> => {
     return ApiClient.get(
-      `${API_HOST}/gradable-events/criteria?gradableEventId=${gradableEventId}`
+      `/gradable-events/criteria?gradableEventId=${gradableEventId}`
     );
   },
 
@@ -148,7 +144,7 @@ export const EventSectionService = {
     gradableEventId: number
   ): Promise<ShortGradeResponseDTO> => {
     return ApiClient.post<ShortGradeResponseDTO>(
-      `${API_HOST}/gradable-events/short-grade?gradableEventId=${gradableEventId}`,
+      `/gradable-events/short-grade?gradableEventId=${gradableEventId}`,
       { target }
     );
   },
@@ -158,7 +154,7 @@ export const EventSectionService = {
     gradableEventId: number
   ): Promise<ProjectVariantResponseDTO[]> => {
     return ApiClient.get(
-      `${API_HOST}/projects/variants?userId=${userId}&projectId=${gradableEventId}`
+      `/projects/variants?userId=${userId}&projectId=${gradableEventId}`
     );
   },
 
@@ -167,7 +163,7 @@ export const EventSectionService = {
     gradableEventId: number
   ): Promise<StudentDetailsDTOWithType[]> => {
     return ApiClient.get(
-      `${API_HOST}/projects/group?studentId=${studentId}&projectId=${gradableEventId}`
+      `/projects/group?studentId=${studentId}&projectId=${gradableEventId}`
     );
   },
 
