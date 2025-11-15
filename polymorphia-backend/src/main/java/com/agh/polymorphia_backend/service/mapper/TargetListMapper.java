@@ -35,7 +35,6 @@ public class TargetListMapper {
                 .evolutionStage(hofEntry.getEvolutionStage())
                 .group(hofEntry.getGroupName())
                 .imageUrl(hofEntry.getImageUrl())
-                .position(hofEntry.getPosition())
                 .gainedXp(hofEntry.getTotalXpSum())
                 .build();
     }

@@ -54,11 +54,32 @@ export function useGradingFilterConfigs(gradableEventId: number) {
           id: "gradeStatus",
           title: "Status oceny",
           options: [
-            { value: "all", label: "Wszystkie" },
-            { value: "ungraded", label: "Nieocenione" },
-            { value: "graded", label: "Ocenione" },
+            {
+              value: "all",
+              label: "Wszystkie",
+              specialBehavior: SpecialBehaviors.EXCLUSIVE,
+            },
+            {
+              value: "ungraded",
+              label: "Nieocenione",
+              specialBehavior: SpecialBehaviors.EXCLUSIVE,
+            },
+            {
+              value: "graded",
+              label: "Ocenione",
+              specialBehavior: SpecialBehaviors.EXCLUSIVE,
+            },
           ],
           defaultValues: ["all"],
+        },
+        {
+          id: "searchBy",
+          title: "Nazwa studenta",
+          options: [
+            { value: "studentName", label: "Student" },
+            { value: "animalName", label: "Zwierzak" },
+          ],
+          defaultValues: ["studentName"],
         },
       ];
 

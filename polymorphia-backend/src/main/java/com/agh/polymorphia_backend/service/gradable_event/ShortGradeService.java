@@ -57,6 +57,10 @@ public class ShortGradeService {
         Course course = gradableEvent.getEventSection().getCourse();
 
         accessAuthorizer.authorizeStudentDataAccess(course, studentId);
+        return getShortGradeWithoutAuthorization(gradableEvent, studentId, course);
+    }
+
+    public StudentShortGradeResponseDto getShortGradeWithoutAuthorization(GradableEvent gradableEvent, Long studentId, Course course) {
         Animal animal = animalService.getAnimal(studentId, course.getId());
         Optional<Grade> grade = gradeService.getGradeByAnimalIdAndGradableEventId(animal.getId(), gradableEvent.getId());
         List<CriterionGradeResponseDto> criteriaGrades = grade.map(criterionGradeService::getCriteriaGrades)
@@ -67,14 +71,11 @@ public class ShortGradeService {
                 .toList()
                 .isEmpty();
 
-        return StudentShortGradeResponseDto.builder()
-                .isGraded(grade.isPresent())
-                .id(grade.map(Grade::getId).orElse(null))
-                .comment(grade.map(Grade::getComment).orElse(null))
-                .hasReward(hasReward)
-                .criteria(criteriaGrades)
-                .build();
+        return StudentShortGradeResponseDto.builder().isGraded(grade.isPresent())
+                .id(grade.map(Grade::getId).orElse(null)).comment(grade.map(Grade::getComment).orElse(null))
+                .hasReward(hasReward).criteria(criteriaGrades).build();
     }
+
 
     private StudentGroupShortGradeResponseDto getShortGroupGrade(GradableEvent gradableEvent, Long groupId) {
         List<UserDetailsResponseDto> projectGroupStudents = projectService.getProjectGroup(groupId, gradableEvent.getId());
@@ -107,7 +108,7 @@ public class ShortGradeService {
                 .build();
     }
 
-    private boolean areAllGradesSame(List<StudentShortGradeResponseDto> grades) {
+    public boolean areAllGradesSame(List<StudentShortGradeResponseDto> grades) {
         return grades.stream()
                 .map(g -> ShortGradeResponseDto.builder()
                         .hasReward(g.getHasReward())

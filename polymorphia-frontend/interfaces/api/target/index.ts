@@ -1,6 +1,7 @@
 import { StudentDetailsDTOWithName } from "@/interfaces/api/user";
 
-export interface StudentTargetData extends StudentDetailsDTOWithName {
+export interface StudentTargetData
+  extends Omit<StudentDetailsDTOWithName, "position"> {
   gainedXp?: string;
 }
 
