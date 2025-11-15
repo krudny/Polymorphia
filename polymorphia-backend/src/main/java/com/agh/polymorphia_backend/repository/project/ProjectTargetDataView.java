@@ -10,5 +10,6 @@ public record ProjectTargetDataView(
     String evolutionStage,
     String group,
     String imageUrl,
+    Long gradeId,
     BigDecimal gainedXp
 ) {}

@@ -2,12 +2,15 @@ package com.agh.polymorphia_backend.service.target_list;
 
 import com.agh.polymorphia_backend.dto.request.hall_of_fame.HallOfFameRequestDto;
 import com.agh.polymorphia_backend.dto.request.target_list.CourseGroupsTargetListRequestDto;
+import com.agh.polymorphia_backend.dto.request.target_list.GradeStatus;
 import com.agh.polymorphia_backend.dto.request.target_list.GradingTargetListRequestDto;
 import com.agh.polymorphia_backend.dto.response.target_list.*;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.course.CourseGroup;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry;
+import com.agh.polymorphia_backend.model.hall_of_fame.SearchBy;
+import com.agh.polymorphia_backend.model.hall_of_fame.SortOrder;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.project.ProjectTargetDataView;
 import com.agh.polymorphia_backend.service.course_groups.CourseGroupsService;
@@ -24,8 +27,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -75,38 +81,108 @@ public class TargetListService {
 
         return switch (gradableEvent.getEventSection().getEventSectionType()) {
             case PROJECT -> {
-                Map<Long, List<StudentTargetDataResponseDto>> groupTargets =
+                Map<Long, List<ProjectTargetDataView>> groupTargets =
                         projectService.getProjectTargets(requestDto.getGradableEventId(),
                                 userService.getCurrentUser().getUserId(),
                                 requestDto.getGroups().stream().findFirst().filter(group -> group.equals("assigned"))
                                         .isEmpty()).stream().collect(
-                                Collectors.groupingBy(ProjectTargetDataView::projectGroupId, Collectors.mapping(
-                                        projectTargetDataView -> StudentTargetDataResponseDto.builder()
-                                                .id(projectTargetDataView.studentId())
-                                                .fullName(projectTargetDataView.fullName())
-                                                .animalName(projectTargetDataView.animalName())
-                                                .evolutionStage(projectTargetDataView.evolutionStage())
-                                                .group(projectTargetDataView.group())
-                                                .imageUrl(projectTargetDataView.imageUrl())
-                                                .gainedXp(projectTargetDataView.gainedXp()).build(),
-                                        Collectors.toList())));
+                                Collectors.groupingBy(ProjectTargetDataView::projectGroupId));
+
+                groupTargets.entrySet().removeIf(entry -> {
+                    List<ProjectTargetDataView> members = entry.getValue();
+
+                    if (!Objects.equals(requestDto.getSearchTerm(), "")) {
+                        boolean matchesSearchTerm = members.stream()
+                                .map(member -> requestDto.getSearchBy() == SearchBy.STUDENT_NAME ? member.fullName() :
+                                        member.animalName()).anyMatch(
+                                        name -> name.toLowerCase().contains(requestDto.getSearchTerm().toLowerCase()));
+
+                        if (!matchesSearchTerm) {
+                            return true;
+                        }
+                    }
+
+                    if (requestDto.getGradeStatus() != GradeStatus.ALL) {
+                        boolean isGraded = members.stream().allMatch(member -> member.gradeId() != null);
+                        return requestDto.getGradeStatus() == GradeStatus.GRADED && !isGraded ||
+                                requestDto.getGradeStatus() == GradeStatus.UNGRADED && isGraded;
+                    }
+
+                    return false;
+                });
 
                 yield groupTargets.entrySet().stream().map((entry) -> {
                     Long courseGroupId = entry.getKey();
-                    List<StudentTargetDataResponseDto> members = entry.getValue();
+                    List<StudentTargetDataResponseDto> members = entry.getValue().stream()
+                            .map(projectTargetDataView -> StudentTargetDataResponseDto.builder()
+                                    .id(projectTargetDataView.studentId()).fullName(projectTargetDataView.fullName())
+                                    .animalName(projectTargetDataView.animalName())
+                                    .evolutionStage(projectTargetDataView.evolutionStage())
+                                    .group(projectTargetDataView.group()).imageUrl(projectTargetDataView.imageUrl())
+                                    .gainedXp(projectTargetDataView.gainedXp()).build())
+                            .sorted(getMemberComparator(requestDto.getSortBy(), requestDto.getSortOrder()))
+                            .toList();
 
                     return StudentGroupTargetResponseDto.builder().groupId(courseGroupId).members(members).groupType(
                             shortGradeService.areAllGradesSame(members.stream()
                                     .map(member -> shortGradeService.getShortGradeWithoutAuthorization(gradableEvent,
                                             member.id(), course)).toList()) ? GroupTargetType.MATCHING : GroupTargetType.DIVERGENT).build();
 
-                }).toList();
+                }).sorted(getGroupComparator(requestDto.getSortBy(), requestDto.getSortOrder())).toList();
             }
             case ASSIGNMENT, TEST -> {
                 // TODO
                 yield null;
             }
         };
+    }
+
+    private Comparator<StudentTargetDataResponseDto> getBaseMemberComparator(String sortBy) {
+        return switch (sortBy) {
+            case "animalName" -> Comparator.comparing(
+                    StudentTargetDataResponseDto::animalName,
+                    Comparator.nullsLast(String::compareToIgnoreCase)
+            );
+            case "total" -> Comparator.comparing(
+                    StudentTargetDataResponseDto::gainedXp,
+                    Comparator.nullsFirst(Comparator.naturalOrder())
+            );
+            default -> Comparator.comparing(
+                    StudentTargetDataResponseDto::fullName,
+                    Comparator.nullsLast(String::compareToIgnoreCase)
+            );
+        };
+    }
+
+    private Comparator<StudentTargetDataResponseDto> getMemberComparator(String sortBy, SortOrder sortOrder) {
+        Comparator<StudentTargetDataResponseDto> comparator = getBaseMemberComparator(sortBy);
+
+        if (sortOrder == SortOrder.DESC) {
+            comparator = comparator.reversed();
+        }
+
+        return comparator;
+    }
+
+    private Comparator<StudentGroupTargetResponseDto> getGroupComparator(String sortBy, SortOrder sortOrder) {
+        Comparator<StudentTargetDataResponseDto> baseMemberComparator = getBaseMemberComparator(sortBy);
+
+        Function<StudentGroupTargetResponseDto, StudentTargetDataResponseDto> getFirstMember =
+                group -> (group.members() == null || group.members().isEmpty())
+                        ? null
+                        : group.members().getFirst();
+
+        Comparator<StudentGroupTargetResponseDto> groupComparator =
+                Comparator.comparing(
+                        getFirstMember,
+                        Comparator.nullsLast(baseMemberComparator)
+                );
+
+        if (sortOrder == SortOrder.DESC) {
+            groupComparator = groupComparator.reversed();
+        }
+
+        return groupComparator;
     }
 
     public List<String> getGroupsForGradingTargetListFilters(Long gradableEventId) {
