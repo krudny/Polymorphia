@@ -21,8 +21,6 @@ import useProfileContext from "@/hooks/contexts/useProfileContext";
 import { distributeTo100 } from "@/components/progressbar/profile/distributeTo100";
 import ErrorComponent from "@/components/error";
 import { Roles } from "@/interfaces/api/user";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 function ProfileContent() {
   // TODO: refactor the rest of the logic to ProfileContext
@@ -31,7 +29,6 @@ function ProfileContent() {
   const { data: profile, isLoading, isError } = useStudentProfile();
   const wrapperRef = useScaleShow(!isLoading);
   const userContext = useUserContext();
-  const router = useRouter();
   const {
     data: filterConfigs,
     isLoading: isFiltersLoading,
@@ -40,21 +37,11 @@ function ProfileContent() {
 
   const filters = useFilters<ProfileFilterId>(filterConfigs ?? []);
 
-  useEffect(() => {
-    if (userContext.userRole && userContext.userRole !== Roles.STUDENT) {
-      router.push("/course/groups");
-    }
-  }, [userContext.userRole, router]);
-
-  if (
-    isLoading ||
-    !userContext.userRole ||
-    userContext.userRole !== Roles.STUDENT
-  ) {
+  if (isLoading || !userContext.userRole) {
     return <Loading />;
   }
 
-  if (isError || !profile) {
+  if (isError || !profile || userContext.userRole !== Roles.STUDENT) {
     return <ErrorComponent message="Nie udało się załadować profilu." />;
   }
 

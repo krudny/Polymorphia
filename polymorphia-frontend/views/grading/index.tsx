@@ -10,10 +10,8 @@ import { useEventParams } from "@/hooks/general/useEventParams";
 import ColumnSchema from "@/components/column-schema";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
 import useUserContext from "@/hooks/contexts/useUserContext";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { Roles } from "@/interfaces/api/user";
-import toast from "react-hot-toast";
+import ErrorComponent from "@/components/error";
 
 export default function Grading() {
   const { eventType } = useEventParams();
@@ -24,21 +22,15 @@ export default function Grading() {
   const { areFiltersOpen, setAreFiltersOpen, handleApplyFilters } =
     useTargetContext();
   const { userRole } = useUserContext();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (userRole && userRole === Roles.STUDENT) {
-      toast.error("Brak uprawnień.", {
-        id: "api-error-toast",
-      });
-      router.push("/profile");
-    }
-  }, [userRole, router]);
 
   const speedDialKey = getSpeedDialKey(eventType, ViewTypes.GRADING);
 
   if (!components || !speedDialKey) {
     return null;
+  }
+
+  if (userRole && userRole === Roles.STUDENT) {
+    return <ErrorComponent message="Brak uprawnień." />;
   }
 
   return (

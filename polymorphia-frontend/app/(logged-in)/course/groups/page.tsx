@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import useCourseGroups from "@/hooks/course/useCourseGroups";
 import Loading from "@/components/loading";
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
@@ -27,19 +27,13 @@ export default function CourseGroupsPage() {
     isError,
   } = useCourseGroups({ courseId, type: CourseGroupTypes.INDIVIDUAL_FULL });
 
-  useEffect(() => {
-    if (userRole && userRole === Roles.STUDENT) {
-      router.push("/profile");
-    }
-  }, [userRole, router]);
-
   const containerRef = useScaleShow(!isLoading);
 
-  if (isLoading || !userRole || userRole === Roles.STUDENT) {
+  if (isLoading || !userRole) {
     return <Loading />;
   }
 
-  if (isError || !courseGroups) {
+  if (isError || !courseGroups || userRole === Roles.STUDENT) {
     return (
       <ErrorComponent message="Nie udało się załadować grup zajęciowych." />
     );
