@@ -27,7 +27,11 @@ export default function isSelectedTargetStillAvailable(
 
       const isGroupMemberMatch = target.members.some((targetMember) => {
         return areTargetsEqual(
-          { ...targetMember, type: TargetTypes.STUDENT },
+          {
+            type: TargetTypes.STUDENT,
+            id: targetMember.id,
+            student: targetMember,
+          },
           selectedTarget
         );
       });

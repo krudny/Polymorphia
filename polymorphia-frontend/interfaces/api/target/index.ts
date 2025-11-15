@@ -1,6 +1,7 @@
 import { StudentDetailsDTOWithName } from "@/interfaces/api/user";
 
-export interface StudentTargetData extends StudentDetailsDTOWithName {
+export interface StudentTargetData
+  extends Omit<StudentDetailsDTOWithName, "position"> {
   gainedXp?: string;
 }
 
@@ -19,8 +20,18 @@ export const GroupTargetTypes = {
 export type GroupTargetType =
   (typeof GroupTargetTypes)[keyof typeof GroupTargetTypes];
 
-export interface StudentTargetResponseDTO extends StudentTargetData {
+export const TargetListTypes = {
+  COURSE_GROUP: "COURSE_GROUP",
+  GRADING: "GRADING",
+} as const;
+
+export type TargetListType =
+  (typeof TargetListTypes)[keyof typeof TargetListTypes];
+
+export interface StudentTargetResponseDTO {
   type: typeof TargetTypes.STUDENT;
+  id: number;
+  student: StudentTargetData;
 }
 
 export interface StudentGroupTargetResponseDTO {

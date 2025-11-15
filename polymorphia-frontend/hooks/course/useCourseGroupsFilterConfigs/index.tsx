@@ -12,17 +12,25 @@ export default function useCourseGroupsFilterConfigs(): FilterConfig<CourseGroup
           { value: "desc", label: "Malejąco" },
           { value: "asc", label: "Rosnąco" },
         ],
-        defaultValues: ["asc"],
+        defaultValues: ["desc"],
       },
       {
         id: "sortBy",
         title: "Sortowanie po kategorii",
         options: [
-          { value: "student_name", label: "Student" },
-          { value: "animal_name", label: "Zwierzak" },
-          { value: "total", label: "Punkty" },
+          { value: "name", label: "Nazwa" },
+          { value: "total", label: "Suma" },
         ],
         defaultValues: ["total"],
+      },
+      {
+        id: "searchBy",
+        title: "Nazwa studenta",
+        options: [
+          { value: "studentName", label: "Student" },
+          { value: "animalName", label: "Zwierzak" },
+        ],
+        defaultValues: ["studentName"],
       },
     ],
     []

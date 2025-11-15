@@ -11,8 +11,13 @@ import ColumnComponent from "@/components/column-schema/column-component";
 import { isTargetSelected } from "@/providers/target/utils/is-selected";
 
 export default function TargetList() {
-  const { targets, isTargetsLoading, onTargetSelect, selectedTarget } =
-    useTargetContext();
+  const {
+    targets,
+    isTargetsLoading,
+    onTargetSelect,
+    selectedTarget,
+    appliedFilters,
+  } = useTargetContext();
 
   const topComponent = () => <TargetListTopBar />;
 
@@ -29,7 +34,7 @@ export default function TargetList() {
               <Fragment key={targetIndex}>
                 <div className="group-record">
                   {(target.type === TargetTypes.STUDENT
-                    ? [target]
+                    ? [target.student]
                     : target.members
                   ).map((student, studentIndex) => {
                     const isSelected = isTargetSelected(
@@ -50,7 +55,11 @@ export default function TargetList() {
                     return (
                       <XPCard
                         key={studentIndex}
-                        title={student.fullName}
+                        title={
+                          appliedFilters["searchBy"][0] === "animalName"
+                            ? student.animalName
+                            : student.fullName
+                        }
                         color={color}
                         subtitle={student.group}
                         size="xs"

@@ -2,8 +2,10 @@ package com.agh.polymorphia_backend.service.gradable_event;
 
 import com.agh.polymorphia_backend.dto.request.target.TargetRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.TargetType;
+import com.agh.polymorphia_backend.dto.request.target_list.GradingTargetListRequestDto;
 import com.agh.polymorphia_backend.dto.response.criteria.CriterionResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.BaseGradableEventResponseDto;
+import com.agh.polymorphia_backend.dto.response.target_list.StudentTargetDataResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.event_section.EventSection;
 import com.agh.polymorphia_backend.model.event_section.EventSectionType;
@@ -18,6 +20,7 @@ import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -149,5 +152,20 @@ public class GradableEventService {
     public Long getUngradedStudents(GradableEvent gradableEvent) {
         AbstractRoleUser user = userService.getCurrentUser();
         return gradableEventRepository.countUngradedAnimalsForTeachingRoleUserAndEvent(user.getUserId(), gradableEvent.getId());
+    }
+
+    public List<StudentTargetDataResponseDto> getStudentTargets(Long teachingRoleUserId,
+                                                                GradingTargetListRequestDto requestDto) {
+
+        boolean includeAllGroups = requestDto.getGroups().isEmpty() ||
+                (requestDto.getGroups().size() == 1 && requestDto.getGroups().getFirst().equals("all"));
+
+        String sortBy = requestDto.getSortBy().equals("total") ? "gainedXp" : requestDto.getSortBy();
+
+        return gradableEventRepository.getStudentTargets(requestDto.getGradableEventId(), teachingRoleUserId,
+                requestDto.getGroups(), includeAllGroups, requestDto.getSearchTerm(),
+                requestDto.getSearchBy().searchByAnimal(), requestDto.getSearchBy().searchByStudent(), sortBy, requestDto.getSortOrder().name(),
+                requestDto.getGradeStatus().name()
+               );
     }
 }
