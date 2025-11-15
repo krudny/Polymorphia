@@ -1,5 +1,5 @@
 "use client";
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, useEffect, useMemo, useState } from "react";
 import {
   CourseGroupsContextInterface,
   CourseGroupsFilterId,
@@ -20,11 +20,18 @@ export const CourseGroupsProvider = ({ children }: { children: ReactNode }) => {
   const [areFiltersOpen, setAreFiltersOpen] = useState(false);
   const filterConfigs = useCourseGroupsFilterConfigs();
   const filters = useFilters<CourseGroupsFilterId>(filterConfigs ?? []);
-  const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["total"];
-  const sortOrder = filters.getAppliedFilterValues("sortOrder") ?? ["asc"];
-  const searchBy = filters.getAppliedFilterValues("searchBy") ?? [
-    "studentName",
-  ];
+  const sortBy = useMemo(
+    () => filters.getAppliedFilterValues("sortBy") ?? ["total"],
+    [filters]
+  );
+  const sortOrder = useMemo(
+    () => filters.getAppliedFilterValues("sortOrder") ?? ["asc"],
+    [filters]
+  );
+  const searchBy = useMemo(
+    () => filters.getAppliedFilterValues("searchBy") ?? ["studentName"],
+    [filters]
+  );
 
   useEffect(() => {
     applyFiltersCallback({
@@ -32,7 +39,7 @@ export const CourseGroupsProvider = ({ children }: { children: ReactNode }) => {
       sortOrder,
       searchBy,
     });
-  }, [sortBy, sortOrder, searchBy]);
+  }, [sortBy, sortOrder, searchBy, applyFiltersCallback]);
 
   const {
     data: studentSummary,

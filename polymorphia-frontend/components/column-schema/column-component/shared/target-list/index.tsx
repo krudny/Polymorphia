@@ -52,8 +52,6 @@ export default function TargetList() {
                       onTargetSelect(target, student);
                     };
 
-                    console.log(appliedFilters);
-
                     return (
                       <XPCard
                         key={studentIndex}

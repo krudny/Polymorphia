@@ -40,6 +40,10 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   } = useGradingFilterConfigs(gradableEventId);
 
   const filters = useFilters<GradingFilterId>(filterConfigs ?? []);
+  const searchBy = useMemo(
+    () => filters.getAppliedFilterValues("searchBy") ?? ["studentName"],
+    [filters]
+  );
   const sortBy = useMemo(
     () => filters.getAppliedFilterValues("sortBy") ?? ["total"],
     [filters]
@@ -59,12 +63,13 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     applyFiltersCallback({
-      sortBy,
+      searchBy,
+      sortBy: sortBy.map((value) => (value === "name" ? searchBy[0] : value)),
       sortOrder,
       groups,
       gradeStatus,
     });
-  }, [sortBy, sortOrder, groups, gradeStatus, applyFiltersCallback]);
+  }, [sortBy, sortOrder, groups, gradeStatus, applyFiltersCallback, searchBy]);
 
   const {
     data: criteria,

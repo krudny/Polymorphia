@@ -29,8 +29,8 @@ public class TargetListController {
 
     @PostMapping(value = "/grading")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
-    public ResponseEntity<List<TargetResponseDto>> getTargetListForGrading(@Valid @RequestBody GradingTargetListRequestDto requestDto) {
-        return ResponseEntity.ok(null);
+    public ResponseEntity<List<? extends TargetResponseDto>> getTargetListForGrading(@Valid @RequestBody GradingTargetListRequestDto requestDto) {
+        return ResponseEntity.ok(targetListService.getTargetListForGrading(requestDto));
     }
 
     @GetMapping(value = "/grading/groups")

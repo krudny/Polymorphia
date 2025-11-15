@@ -9,7 +9,9 @@ import com.agh.polymorphia_backend.model.project.Project;
 import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserType;
+import com.agh.polymorphia_backend.repository.project.ProjectGroupRepository;
 import com.agh.polymorphia_backend.repository.project.ProjectRepository;
+import com.agh.polymorphia_backend.repository.project.ProjectTargetDataView;
 import com.agh.polymorphia_backend.service.mapper.ProjectMapper;
 import com.agh.polymorphia_backend.service.mapper.UserMapper;
 import com.agh.polymorphia_backend.service.student.AnimalService;
@@ -29,6 +31,7 @@ public class ProjectService {
     private final AnimalService animalService;
     private final ProjectMapper projectMapper;
     private final UserMapper userMapper;
+    private final ProjectGroupRepository projectGroupRepository;
 
     public List<ProjectVariantResponseDto> getProjectVariants(Long userId, Long projectId) {
         Project project = getProjectGradableEvent(projectId);
@@ -75,6 +78,10 @@ public class ProjectService {
                 .getAnimals().stream()
                 .map(a -> getUserDetailsResponseDto(a, course))
                 .toList();
+    }
+
+    public List<ProjectTargetDataView> getProjectTargets(Long projectId, Long teachingRoleUserId, Boolean showAllProjectGroupsForCoordinator) {
+        return projectGroupRepository.getProjectTargetsData(projectId, teachingRoleUserId, showAllProjectGroupsForCoordinator);
     }
 
     private ProjectGroup extractProjectGroup(Project project, Animal animal) {
