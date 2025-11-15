@@ -11,13 +11,12 @@ import { useRouter } from "next/navigation";
 import StudentGradableEventCard from "@/views/gradable-events/student/StudentGradableEventCard";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import useStudentsGradableEvents from "@/hooks/course/useStudentsGradableEvents";
-import { EventTypes } from "@/interfaces/general";
+import { EventTypes, Sizes } from "@/interfaces/general";
 import usePointsSummary from "@/hooks/course/usePointsSummary";
 import GradeModal from "@/components/speed-dial/modals/grade";
 import ErrorComponent from "@/components/error";
 import { GradableEventDTO } from "@/interfaces/api/gradable_event/types";
 import { useMediaQuery } from "react-responsive";
-import { Sizes } from "@/components/xp-card/types";
 
 export default function StudentView() {
   const { eventType, eventSectionId } = useEventParams();

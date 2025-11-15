@@ -19,7 +19,7 @@ import {
   InstructorGradableEventResponseDTO,
   StudentGradableEventResponseDTO,
 } from "@/interfaces/api/gradable_event/types";
-import { Sizes } from "@/components/xp-card/types";
+import { Sizes } from "@/interfaces/general";
 
 export default function Roadmap() {
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);

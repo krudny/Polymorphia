@@ -57,8 +57,7 @@ export const Sizes = {
   SM: "sm",
   MD: "md",
   LG: "lg",
-  HOF_DESKTOP: "hofDesktop",
-  PROJECT_GROUP: "projectGroup",
+  XL: "xl",
 } as const;
 
 export type Size = (typeof Sizes)[keyof typeof Sizes];

@@ -9,7 +9,7 @@ import { useEventParams } from "@/hooks/general/useEventParams";
 import useInstructorGradableEvents from "@/hooks/course/useInstructorGradableEvents";
 import "./index.css";
 import ErrorComponent from "@/components/error";
-import { Sizes } from "@/components/xp-card/types";
+import { Sizes } from "@/interfaces/general";
 import { useMediaQuery } from "react-responsive";
 import { GradableEventDTO } from "@/interfaces/api/gradable_event/types";
 
