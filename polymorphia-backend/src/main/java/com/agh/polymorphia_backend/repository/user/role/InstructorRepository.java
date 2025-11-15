@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface InstructorRepository extends JpaRepository<Instructor, Long>, UserDetailsRepository {
     @Query(
             "select i from CourseGroup cg " +
-                    "join  cg.instructor i " +
+                    "join  cg.teachingRoleUser i " +
                     "where i.user.id=:userId and cg.course.id=:courseId"
     )
     @Override
@@ -23,7 +23,7 @@ public interface InstructorRepository extends JpaRepository<Instructor, Long>, U
     @Query("""
             select (count(i) > 0) from StudentCourseGroupAssignment scg
             join scg.courseGroup cg
-            join cg.instructor i
+            join cg.teachingRoleUser i
             where scg.student.user.id=:studentId
             and cg.course.id=:courseId
             and i.user.id=:instructorId

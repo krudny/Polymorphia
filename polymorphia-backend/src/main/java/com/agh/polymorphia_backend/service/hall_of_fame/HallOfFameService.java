@@ -10,7 +10,6 @@ import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.StudentScoreDetailRepository;
-import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.mapper.HallOfFameMapper;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.user.UserService;
