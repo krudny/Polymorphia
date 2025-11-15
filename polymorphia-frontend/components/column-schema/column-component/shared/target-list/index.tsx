@@ -29,7 +29,7 @@ export default function TargetList() {
               <Fragment key={targetIndex}>
                 <div className="group-record">
                   {(target.type === TargetTypes.STUDENT
-                    ? [target]
+                    ? [target.student]
                     : target.members
                   ).map((student, studentIndex) => {
                     const isSelected = isTargetSelected(
