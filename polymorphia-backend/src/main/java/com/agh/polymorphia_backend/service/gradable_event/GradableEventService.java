@@ -9,10 +9,13 @@ import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.event_section.EventSection;
 import com.agh.polymorphia_backend.model.event_section.EventSectionType;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
+import com.agh.polymorphia_backend.model.gradable_event.GradableEventScope;
+import com.agh.polymorphia_backend.model.gradable_event.GradableEventSortBy;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.gradable_event.GradableEventRepository;
 import com.agh.polymorphia_backend.repository.gradable_event.projections.StudentGradableEventProjection;
+import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.event_section.EventSectionService;
 import com.agh.polymorphia_backend.service.mapper.CriterionMapper;
 import com.agh.polymorphia_backend.service.mapper.GradableEventMapper;
@@ -35,11 +38,10 @@ import static com.agh.polymorphia_backend.service.user.UserService.INVALID_ROLE;
 public class GradableEventService {
     private final GradableEventRepository gradableEventRepository;
     private final AccessAuthorizer accessAuthorizer;
-    private final EventSectionService eventSectionService;
     private final UserService userService;
     private final GradableEventMapper gradableEventMapper;
     private final AnimalService animalService;
-    private final CriterionMapper criterionMapper;
+    private final CourseService courseService;
 
     public GradableEvent getGradableEventById(Long gradableEventId) {
         UserType userRole = userService.getCurrentUserRole();
@@ -65,18 +67,18 @@ public class GradableEventService {
         }
     }
 
-    public List<BaseGradableEventResponseDto> getGradableEvents(Long eventSectionId) {
-        EventSection eventSection = eventSectionService.getEventSection(eventSectionId);
-        Course course = eventSection.getCourse();
-        accessAuthorizer.authorizeCourseAccess(course);
+    public List<BaseGradableEventResponseDto> getGradableEvents(Long relatedId, GradableEventScope scope, GradableEventSortBy sortBy) {
+        Course course = switch (scope) {
+            case COURSE -> courseService.getCourseById(relatedId);
+            case EVENT_SECTION -> courseService.getCourseByEventSectionId(relatedId);
+        };
 
+        accessAuthorizer.authorizeCourseAccess(course);
         UserType userRole = userService.getUserRoleInCourse(course.getId());
 
-        String sortBy = "ORDER_INDEX";
-
         return switch (userRole) {
-            case STUDENT -> getStudentGradableEvents(eventSection, course, sortBy);
-            case INSTRUCTOR, COORDINATOR -> getInstructorGradableEvents(eventSection, sortBy);
+            case STUDENT -> getStudentGradableEvents(relatedId, course, scope, sortBy);
+            case INSTRUCTOR, COORDINATOR -> getInstructorGradableEvents(relatedId, sortBy);
             case UNDEFINED -> throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     INVALID_ROLE
@@ -85,36 +87,31 @@ public class GradableEventService {
     }
 
     private List<BaseGradableEventResponseDto> getStudentGradableEvents(
-            EventSection eventSection,
+            Long relatedId,
             Course course,
-            String sortBy
+            GradableEventScope scope,
+            GradableEventSortBy sortBy
     ) {
         Long userId = userService.getCurrentUser().getUserId();
         Long animalId = animalService.getAnimal(userId, course.getId()).getId();
 
         return gradableEventRepository
-                .findStudentGradableEventsWithDetails(eventSection.getId(), animalId, sortBy)
+                .findStudentGradableEventsWithDetails(relatedId, animalId, scope.getValue(), sortBy.getValue())
                 .stream()
-                .map(projection -> gradableEventMapper.toStudentGradableEventResponseDto(
-                        projection,
-                        eventSection.getEventSectionType()
-                ))
+                .map(gradableEventMapper::toStudentGradableEventResponseDto)
                 .collect(Collectors.toList());
     }
 
     private List<BaseGradableEventResponseDto> getInstructorGradableEvents(
-            EventSection eventSection,
-            String sortBy
+            Long relatedId,
+            GradableEventSortBy sortBy
     ) {
         Long instructorId = userService.getCurrentUser().getUserId();
 
         return gradableEventRepository
-                .findInstructorGradableEventsWithDetails(eventSection.getId(), instructorId, sortBy)
+                .findInstructorGradableEventsWithDetails(relatedId, instructorId, sortBy.getValue())
                 .stream()
-                .map(projection -> gradableEventMapper.toInstructorGradableEventResponseDto(
-                        projection,
-                        eventSection.getEventSectionType()
-                ))
+                .map(gradableEventMapper::toInstructorGradableEventResponseDto)
                 .collect(Collectors.toList());
     }
 

@@ -2,6 +2,8 @@ package com.agh.polymorphia_backend.service.roadmap;
 
 import com.agh.polymorphia_backend.dto.response.event.BaseGradableEventResponseDto;
 import com.agh.polymorphia_backend.model.event_section.EventSection;
+import com.agh.polymorphia_backend.model.gradable_event.GradableEventScope;
+import com.agh.polymorphia_backend.model.gradable_event.GradableEventSortBy;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.service.event_section.EventSectionService;
 import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
@@ -23,18 +25,8 @@ public class RoadmapService {
 
     public List<BaseGradableEventResponseDto> getRoadmap(Long courseId) {
         accessAuthorizer.authorizeCourseAccess(courseId);
-        UserType userRole = userService.getUserRoleInCourse(courseId);
-        List<EventSection> eventSections = eventSectionService.getCourseEventSections(courseId);
 
-        if (userRole != UserType.INSTRUCTOR && userRole != UserType.COORDINATOR) {
-            eventSections = eventSections.stream()
-                    .filter(EventSection::isShownInRoadMap)
-                    .toList();
-        }
+        return gradableEventService.getGradableEvents(courseId, GradableEventScope.COURSE, GradableEventSortBy.ROADMAP_ORDER_INDEX);
 
-        return eventSections.stream()
-                .map(eventSection -> gradableEventService.getGradableEvents(eventSection.getId()))
-                .flatMap(List::stream)
-                .toList();
     }
 }

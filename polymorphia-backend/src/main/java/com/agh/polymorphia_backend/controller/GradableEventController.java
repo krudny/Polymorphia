@@ -2,6 +2,8 @@ package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.response.event.BaseGradableEventResponseDto;
 import com.agh.polymorphia_backend.dto.response.reward.points_summary.PointsSummaryResponseDto;
+import com.agh.polymorphia_backend.model.gradable_event.GradableEventScope;
+import com.agh.polymorphia_backend.model.gradable_event.GradableEventSortBy;
 import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
 import com.agh.polymorphia_backend.service.gradable_event.PointsSummaryService;
 import lombok.AllArgsConstructor;
@@ -21,7 +23,7 @@ public class GradableEventController {
     @GetMapping()
     @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<List<BaseGradableEventResponseDto>> getGradableEvents(@RequestParam Long eventSectionId) {
-        return ResponseEntity.ok(gradableEventService.getGradableEvents(eventSectionId));
+        return ResponseEntity.ok(gradableEventService.getGradableEvents(eventSectionId, GradableEventScope.EVENT_SECTION, GradableEventSortBy.ORDER_INDEX));
     }
 
     @GetMapping("/points-summary")

@@ -9,6 +9,7 @@ import com.agh.polymorphia_backend.model.user.UserCourseRole;
 import com.agh.polymorphia_backend.repository.course.CourseGroupRepository;
 import com.agh.polymorphia_backend.repository.course.CourseRepository;
 import com.agh.polymorphia_backend.repository.course.StudentCourseGroupRepository;
+import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.service.mapper.CourseMapper;
 import com.agh.polymorphia_backend.service.user.UserService;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 public class CourseService {
     public static final String COURSE_NOT_FOUND = "Course does not exist or you're not authorized to access it";
     private final CourseRepository courseRepository;
+    private final EventSectionRepository eventSectionRepository;
     private final UserService userService;
     private final CourseMapper courseMapper;
     private final UserCourseRoleRepository userCourseRoleRepository;
@@ -34,6 +36,11 @@ public class CourseService {
 
     public Course getCourseById(Long courseId) {
         return courseRepository.findById(courseId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, COURSE_NOT_FOUND));
+    }
+
+    public Course getCourseByEventSectionId(Long eventSectionId) {
+        return eventSectionRepository.findCourseById(eventSectionId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, COURSE_NOT_FOUND));
     }
 
