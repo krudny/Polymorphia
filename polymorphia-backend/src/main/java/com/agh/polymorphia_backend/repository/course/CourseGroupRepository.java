@@ -19,8 +19,8 @@ public interface CourseGroupRepository extends JpaRepository<CourseGroup, Long> 
 
     @Query(
             "select cg from CourseGroup cg " +
-                    "where cg.instructor.user.id = :userId " +
+                    "where cg.teachingRoleUser.user.id = :userId " +
                     "and cg.course.id = :courseId"
     )
-    List<CourseGroup> findByInstructorIdAndCourseId(Long userId, Long courseId);
+    List<CourseGroup> findByTeachingRoleUserIdAndCourseId(Long userId, Long courseId);
 }

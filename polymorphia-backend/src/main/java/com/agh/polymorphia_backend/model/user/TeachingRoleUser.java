@@ -1,24 +1,21 @@
 package com.agh.polymorphia_backend.model.user;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.springframework.security.core.GrantedAuthority;
-
-import java.util.Collection;
-import java.util.List;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "teaching_role_users")
+@Data
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-@Table(name = "coordinators")
-public class Coordinator extends TeachingRoleUser {
+public abstract class TeachingRoleUser extends AbstractRoleUser {
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(UserType.COORDINATOR);
-    }
 }

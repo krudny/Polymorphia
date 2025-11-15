@@ -1,9 +1,7 @@
 package com.agh.polymorphia_backend.model.project;
 
 import com.agh.polymorphia_backend.model.course.Animal;
-import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
-import com.agh.polymorphia_backend.model.user.Instructor;
-import com.agh.polymorphia_backend.validation.constraint.ProjectGradableEventOnly;
+import com.agh.polymorphia_backend.model.user.TeachingRoleUser;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -28,10 +26,10 @@ public class ProjectGroup {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "instructor_id")
+    @JoinColumn(name = "teaching_role_user_id")
     @ToString.Exclude
     @JsonIgnore
-    private Instructor instructor;
+    private TeachingRoleUser teachingRoleUser;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

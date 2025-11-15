@@ -46,7 +46,6 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 class SubmissionServiceTest extends BaseTest {
@@ -526,7 +525,7 @@ class SubmissionServiceTest extends BaseTest {
                 gradableEventService.getGradableEventById(assignment.getId())
             ).thenReturn(assignment);
             when(
-                studentRepository.findByUserIdAndGradableEventIdAndCourseGroupInstructorId(
+                studentRepository.findByUserIdAndGradableEventIdAndCourseGroupTeachingRoleUserId(
                     student.getUserId(),
                     assignment.getId(),
                     instructor.getUserId()
@@ -1278,7 +1277,7 @@ class SubmissionServiceTest extends BaseTest {
                 gradableEventService.getGradableEventById(project.getId())
             ).thenReturn(project);
             when(
-                projectGroupRepository.getProjectGroupByIdAndProjectIdAndInstructorId(
+                projectGroupRepository.getProjectGroupByIdAndProjectIdAndTeachingRoleUserId(
                     projectGroup.getId(),
                     project.getId(),
                     instructor.getUserId()
@@ -1459,7 +1458,7 @@ class SubmissionServiceTest extends BaseTest {
                 gradableEventService.getGradableEventById(project.getId())
             ).thenReturn(project);
             when(
-                projectGroupRepository.getProjectGroupByStudentIdAndProjectIdAndInstructorId(
+                projectGroupRepository.getProjectGroupByStudentIdAndProjectIdAndTeachingRoleUserId(
                     student1.getUserId(),
                     project.getId(),
                     instructor.getUserId()
