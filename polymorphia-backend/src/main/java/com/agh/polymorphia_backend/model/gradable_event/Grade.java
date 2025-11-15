@@ -45,7 +45,12 @@ public class Grade {
     private String comment;
 
     @NotNull
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "grade")
+    @OneToMany(
+            mappedBy = "grade",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     @ToString.Exclude
     @JsonIgnore
     private List<CriterionGrade> criteriaGrades;

@@ -19,4 +19,14 @@ public interface InstructorRepository extends JpaRepository<Instructor, Long>, U
     Optional<Instructor> findByUserIdAndCourseId(Long userId, Long courseId);
 
     Optional<Instructor> findByUserId(Long userId);
+
+    @Query("""
+            select (count(i) > 0) from StudentCourseGroupAssignment scg
+            join scg.courseGroup cg
+            join cg.instructor i
+            where scg.student.user.id=:studentId
+            and cg.course.id=:courseId
+            and i.user.id=:instructorId
+            """)
+    boolean hasAccessToStudentInCourse(Long instructorId, Long courseId, Long studentId);
 }

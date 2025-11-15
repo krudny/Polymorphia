@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -14,5 +15,9 @@ public class GradeService {
 
     public List<Grade> getAnimalGrades(Long animalId) {
         return gradeRepository.findAllByAnimalId(animalId);
+    }
+
+    public Optional<Grade> getGradeByAnimalIdAndGradableEventId(Long animalId, Long gradableEventId) {
+        return gradeRepository.findAllByAnimalIdAndGradableEventId(animalId, gradableEventId);
     }
 }

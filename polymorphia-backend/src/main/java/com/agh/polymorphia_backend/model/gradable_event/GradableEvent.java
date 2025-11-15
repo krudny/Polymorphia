@@ -1,18 +1,23 @@
 package com.agh.polymorphia_backend.model.gradable_event;
 
+import com.agh.polymorphia_backend.model.criterion.Criterion;
 import com.agh.polymorphia_backend.model.event_section.EventSection;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 @Entity
 @Table(name = "gradable_events")
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class GradableEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +33,12 @@ public class GradableEvent {
     private EventSection eventSection;
 
     @NotNull
+    @OneToMany(mappedBy = "gradableEvent", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @JsonIgnore
+    private List<Criterion> criteria;
+
+    @NotNull
     @Column(length = 64)
     private String name;
 
@@ -35,9 +46,9 @@ public class GradableEvent {
     private String topic;
 
     @NotNull
-    private Integer orderIndex;
+    private Long orderIndex;
 
-    private Integer roadMapOrderIndex;
+    private Long roadMapOrderIndex;
 
     @Column(length = 128)
     private String markdownSourceUrl;

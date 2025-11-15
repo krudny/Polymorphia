@@ -9,6 +9,7 @@ import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedItem;
 import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedReward;
 import com.agh.polymorphia_backend.model.course.reward.item.FlatBonusItemBehavior;
 import com.agh.polymorphia_backend.model.course.reward.item.ItemType;
+import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
 import com.agh.polymorphia_backend.repository.course.reward.assigned.AssignedChestRepository;
 import com.agh.polymorphia_backend.repository.course.reward.assigned.AssignedItemRepository;
 import com.agh.polymorphia_backend.service.student.AnimalService;
@@ -28,6 +29,7 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
@@ -152,9 +154,33 @@ public class AssignedRewardService {
         assignedItemRepository.saveAll(items);
     }
 
-    private List<AssignedItem> filterAssignedItemsByType(List<AssignedItem> assignedItems, ItemType itemType) {
+    public List<AssignedItem> filterAssignedItemsByType(List<AssignedItem> assignedItems, ItemType itemType) {
         return assignedItems.stream()
                 .filter(item -> ((Item) Hibernate.unproxy(item.getReward())).getItemType().equals(itemType))
                 .toList();
+    }
+
+    public List<AssignedItem> getAnimalEventSectionAssignedItems(Long animalId, Long eventSectionId) {
+        List<AssignedChest> openedChests = getAnimalAssignedChests(animalId).stream()
+                .filter(AssignedReward::getIsUsed)
+                .toList();
+
+        return openedChests.stream()
+                .flatMap(chest -> chest.getAssignedItems().stream())
+                .filter(assignedItem -> ((Item) Hibernate.unproxy(assignedItem.getReward()))
+                        .getEventSection()
+                        .getId()
+                        .equals(eventSectionId)
+                )
+                .toList();
+    }
+
+    public List<AssignedReward> getCriterionGradeAssignedRewards(CriterionGrade criterionGrade) {
+        return Stream.of(
+                        assignedItemRepository.findByCriterionGrade(criterionGrade),
+                        assignedChestRepository.findByCriterionGrade(criterionGrade)
+                )
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
     }
 }

@@ -58,16 +58,18 @@ class ProfileServiceTest extends BaseTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        course = Course.builder()
+                .id(1L)
+                .build();
+
         user = User.builder()
                 .id(1L)
+                .preferredCourse(course)
                 .build();
         student = Student.builder()
                 .user(user)
                 .build();
 
-        course = Course.builder()
-                .id(1L)
-                .build();
     }
 
     @Test
@@ -104,7 +106,7 @@ class ProfileServiceTest extends BaseTest {
 
         when(courseService.getCourseById(course.getId())).thenReturn(course);
         when(userService.getCurrentUser()).thenReturn(student);
-        when(hallOfFameService.getStudentHallOfFame(user)).thenReturn(hallOfFame);
+        when(hallOfFameService.getStudentHallOfFame(animal)).thenReturn(hallOfFame);
         when(animalService.getAnimal(user.getId(), course.getId())).thenReturn(animal);
         when(hallOfFameService.groupScoreDetails(List.of(animal.getId())))
                 .thenReturn(Map.of(animal.getId(), xpDetails));
@@ -113,6 +115,7 @@ class ProfileServiceTest extends BaseTest {
         when(profileMapper.toEvolutionStageThresholdResponseDto(stage1)).thenReturn(stageDto1);
         when(profileMapper.toEvolutionStageThresholdResponseDto(stage2)).thenReturn(stageDto2);
         when(hallOfFameRepository.countByCourseIdAndFilters(any())).thenReturn(42L);
+        when(animalService.getAnimal(user.getId(), course.getId())).thenReturn(animal);
 
         ProfileResponseDto result = profileService.getProfile(course.getId());
 
@@ -127,7 +130,7 @@ class ProfileServiceTest extends BaseTest {
 
         assertThat(result.getXpDetails()).isEqualTo(xpDetails);
 
-        verify(accessAuthorizer).authorizeCourseAccess(course);
+        verify(accessAuthorizer).authorizeCourseAccess(course.getId());
         verify(hallOfFameService).updateXpDetails(eq(xpDetails), eq(hallOfFame));
 
         ProfileResponseDto result2 = profileService.getProfile(course.getId());

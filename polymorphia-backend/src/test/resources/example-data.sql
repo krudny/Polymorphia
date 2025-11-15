@@ -13,8 +13,12 @@ TRUNCATE TABLE students_course_groups cascade;
 TRUNCATE TABLE evolution_stages cascade;
 TRUNCATE TABLE event_sections cascade;
 TRUNCATE TABLE test_sections cascade;
-TRUNCATE TABLE assignment_sections cascade;
-TRUNCATE TABLE project_sections cascade;
+TRUNCATE table assignment_sections cascade;
+TRUNCATE table project_sections cascade;
+TRUNCATE table projects cascade;
+TRUNCATE table project_variants cascade;
+TRUNCATE table project_variant_categories cascade;
+TRUNCATE table project_groups cascade;
 TRUNCATE TABLE rewards cascade;
 TRUNCATE TABLE items cascade;
 TRUNCATE TABLE flat_bonus_items cascade;
@@ -59,7 +63,7 @@ VALUES
 INSERT INTO
   instructors (user_id)
 VALUES
-  (4);
+  (4), (5);
 INSERT INTO
   users (id, first_name, last_name, email, password, preferred_course_id)
 VALUES
@@ -321,8 +325,8 @@ VALUES
   ('COORDINATOR', 5, 1);
 INSERT INTO
   user_course_roles (role, user_id, course_id)
-VALUES
-  ('STUDENT', 7, 2);
+VALUES ('STUDENT', 7, 2),
+       ('STUDENT', 21, 1);
 INSERT INTO
   user_course_roles (role, user_id, course_id)
 VALUES
@@ -542,8 +546,7 @@ VALUES
   (7, 1, 2);
 INSERT INTO
   event_sections (id, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id, order_index, is_hidden)
-VALUES
-  (4, 'Git', TRUE, FALSE, 1, 0, FALSE);
+VALUES (4, 'Git', FALSE, FALSE, 1, 0, FALSE);
 INSERT INTO
   event_sections (id, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id, order_index, is_hidden)
 VALUES
@@ -558,8 +561,7 @@ VALUES
   (8, 'Kartkówka', TRUE, FALSE, 2, 1, FALSE);
 INSERT INTO
   event_sections (id, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id, order_index, is_hidden)
-VALUES
-  (9, 'Git', TRUE, FALSE, 2, 0, FALSE);
+VALUES (9, 'Git', FALSE, FALSE, 2, 0, FALSE);
 INSERT INTO
   event_sections (id, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id, order_index, is_hidden)
 VALUES
@@ -764,7 +766,81 @@ VALUES
   (30, 8, 'Laboratorium 6', 13, 13, 'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab6/Readme.md', FALSE, FALSE),
   (31, 8, 'Laboratorium 7', 14, 14, 'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab7/Readme.md', FALSE, FALSE),
   (32, 8, 'Laboratorium 8', 15, 15, 'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab8/Readme.md', FALSE, FALSE),
-  (33, 4, 'Git', 0, 0, NULL, FALSE, FALSE);
+  (33, 4, 'Git', 0, 0, NULL, FALSE, FALSE),
+  (34, 11, 'Projekt 2a', 0, 0, null, true, true),
+  (35, 10, 'Dziady', 0, 4, null, false, true),
+  (36, 2, 'Laboratorium 9', 17, 17, null, false, true),
+  (37, 2, 'Laboratorium 9', 18, 18, null, false, true),
+  (38, 3, 'Projekt', 0, 19, 'https://github.com/Soamid/obiektowe-lab/tree/proj-2024/proj', false, false),
+  (39, 3, 'Projekt 1', 16, 16, null, FALSE, FALSE),
+  (40, 7, 'Projekt 1', 16, 16, null, FALSE, FALSE),
+  (41, 11, 'Projekt 2', 17, 17, null, FALSE, FALSE),
+  (42, 12, 'Projekt 2', 17, 17, null, FALSE, FALSE);
+
+insert into projects(id, allow_cross_course_group_project_groups)
+values (38, false);
+
+insert into project_variant_categories(id, project_id, name)
+values (1, 38, 'Mapa i roślinność'),
+       (2, 38, 'Zwierzaki');
+
+insert into project_groups(id, instructor_id, project_id)
+values (1, 4, 39),
+       (2, 4, 39),
+       (3, 4, 40),
+       (4, 4, 40),
+       (5, 4, 41),
+       (6, 4, 41),
+       (7, 4, 42),
+       (8, 4, 42),
+       (9, 4, 38);
+
+insert into project_variants(id, project_variant_category_id, name, short_code, description, image_url)
+values (1, 1, 'Bieguny', 'A', 'bieguny zdefiniowane są na dolnej i ' ||
+                              'górnej krawędzi mapy. Im bliżej bieguna znajduje się zwierzę, ' ||
+                              'tym większą energię traci podczas pojedynczego ruchu (na biegunach jest zimno)',
+        'images/evolution-stages/5.webp'),
+       (2, 1, 'Pożary', 'B',
+        'co jakąś (zadaną w konfiguracji) liczbę tur na mapie pojawia się pożar. Pożar zaczyna się na jednym polu z rośliną i w każdej turze rozprzestrzenia się na wszystkie przylegające do niej rośliny (ale nie po skosie). Pożar na każdym polu trwa stałą zadaną (konfigurowalną) liczbę tur i po jego zakończeniu roślina na tym polu znika. Jeśli zwierzak wejdzie na pole z ogniem, umiera.',
+        'images/evolution-stages/5.webp'),
+       (3, 2, 'Lekka korekta', '1',
+        'mutacja zmienia gen o 1 w górę lub w dół (np. gen 3 może zostać zamieniony na 2 lub 4, a gen 0 na 1 lub 7)',
+        'images/evolution-stages/6.webp'),
+       (4, 2, 'Podmianka', '2', 'mutacja może też skutkować tym, że dwa geny zamienią się miejscami',
+        'images/evolution-stages/4.webp');
+
+insert into project_groups_animals(animal_id, project_group_id)
+values (2, 9),
+       (10, 9),
+       (14, 9);
+
+INSERT INTO project_groups_animals (project_group_id, animal_id)
+VALUES (1, 1),
+       (1, 6),
+       (2, 10),
+       (2, 14),
+       (2, 17),
+       (3, 4),
+       (3, 8),
+       (4, 11),
+       (4, 15),
+       (4, 16),
+       (5, 18),
+       (5, 21),
+       (6, 22),
+       (6, 24),
+       (6, 25),
+       (7, 20),
+       (7, 23),
+       (8, 26),
+       (8, 27),
+       (8, 28);
+
+insert into project_groups_project_variants(project_group_id, project_variant_id)
+values (9, 1),
+       (9, 3);
+
+
 INSERT INTO
   rewards (id, name, description, image_url, order_index, course_id)
 VALUES
@@ -1183,13 +1259,7 @@ INSERT INTO
 VALUES
   (9),
   (10);
-INSERT INTO
-  gradable_events (id, event_section_id, name, order_index, road_map_order_index, is_hidden, is_locked)
-VALUES
-  (34, 3, 'Projekt 1', 16, 16, FALSE, FALSE),
-  (35, 7, 'Projekt 1', 16, 16, FALSE, FALSE),
-  (38, 11, 'Projekt 2', 17, 17, FALSE, FALSE),
-  (39, 12, 'Projekt 2', 17, 17, FALSE, FALSE);
+
 INSERT INTO
   submission_requirements (id, gradable_event_id, name, is_mandatory, order_index)
 VALUES
@@ -1205,44 +1275,11 @@ VALUES
   (10, 16, 'Wykonanie zadania', TRUE, 1),
   (11, 16, 'Zadanie dodatkowe', FALSE, 2),
   (12, 33, 'Wykonanie zadania', TRUE, 1),
-  (13, 34, 'Link do repozytorium', TRUE, 1),
-  (14, 35, 'Link do repozytorium', TRUE, 1),
-  (15, 38, 'Link do repozytorium', TRUE, 1),
-  (16, 39, 'Link do repozytorium', TRUE, 1);
-INSERT INTO
-  project_groups (id, instructor_id, project_id)
-VALUES
-  (1, 4, 34),
-  (2, 4, 34),
-  (3, 4, 35),
-  (4, 4, 35),
-  (5, 4, 38),
-  (6, 4, 38),
-  (7, 4, 39),
-  (8, 4, 39);
-INSERT INTO
-  project_groups_animals (project_group_id, animal_id)
-VALUES
-  (1, 1),
-  (1, 6),
-  (2, 10),
-  (2, 14),
-  (2, 17),
-  (3, 4),
-  (3, 8),
-  (4, 11),
-  (4, 15),
-  (4, 16),
-  (5, 18),
-  (5, 21),
-  (6, 22),
-  (6, 24),
-  (6, 25),
-  (7, 20),
-  (7, 23),
-  (8, 26),
-  (8, 27),
-  (8, 28);
+  (13, 39, 'Link do repozytorium', TRUE, 1),
+  (14, 40, 'Link do repozytorium', TRUE, 1),
+  (15, 41, 'Link do repozytorium', TRUE, 1),
+  (16, 42, 'Link do repozytorium', TRUE, 1);
+
 INSERT INTO
   submissions (id, submission_requirement_id, animal_id, url, is_locked, created_date, modified_date)
 VALUES

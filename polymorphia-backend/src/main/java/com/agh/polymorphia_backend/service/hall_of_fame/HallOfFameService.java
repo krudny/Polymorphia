@@ -4,10 +4,8 @@ import com.agh.polymorphia_backend.dto.request.hall_of_fame.HallOfFameRequestDto
 import com.agh.polymorphia_backend.dto.response.hall_of_fame.HallOfFameRecordDto;
 import com.agh.polymorphia_backend.dto.response.hall_of_fame.HallOfFameResponseDto;
 import com.agh.polymorphia_backend.model.course.Animal;
-import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.event_section.EventSection;
 import com.agh.polymorphia_backend.model.hall_of_fame.*;
-import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
@@ -46,7 +44,6 @@ public class HallOfFameService {
     private final EventSectionRepository eventSectionRepository;
     private final HallOfFameMapper hallOfFameMapper;
     private final AccessAuthorizer accessAuthorizer;
-    private final CourseService courseService;
     private final AnimalService animalService;
     private final UserService userService;
     private final HallOfFameSortSpecResolver sortSpecResolver;
@@ -55,8 +52,7 @@ public class HallOfFameService {
         return direction.isAscending() ? Sort.Direction.DESC : Sort.Direction.ASC;
     }
 
-    public HallOfFameEntry getStudentHallOfFame(User user) {
-        Animal animal = animalService.getAnimal(user.getId(), user.getPreferredCourse().getId());
+    public HallOfFameEntry getStudentHallOfFame(Animal animal) {
         return hallOfFameRepository.findByAnimalId(animal.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, STUDENT_HOF_NOT_FOUND));
     }
@@ -186,8 +182,7 @@ public class HallOfFameService {
     }
 
     public List<HallOfFameRecordDto> getPodium(Long courseId) {
-        Course course = courseService.getCourseById(courseId);
-        accessAuthorizer.authorizeCourseAccess(course);
+        accessAuthorizer.authorizeCourseAccess(courseId);
 
         HallOfFameRequestDto requestDto = new HallOfFameRequestDto(
                 courseId,

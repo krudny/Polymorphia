@@ -44,7 +44,7 @@ export default function GradeModal({
       onClosed={onClosedAction}
       title="Nagrody"
       subtitle={
-        gradeData?.isGraded === false
+        gradeData?.gradeResponse.isGraded === false
           ? "To wydarzenie nie zostało jeszcze ocenione!"
           : undefined
       }

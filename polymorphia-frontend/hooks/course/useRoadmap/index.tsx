@@ -1,12 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { RoadmapService } from "@/services/roadmap";
 import { UseRoadmap } from "@/hooks/course/useRoadmap/types";
+import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export function useRoadmap(): UseRoadmap {
-  const { data, isLoading } = useQuery({
+  const { courseId } = useUserDetails();
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["roadmap"],
-    queryFn: () => RoadmapService.getRoadmapData(),
+    queryFn: () => RoadmapService.getRoadmapData(courseId),
   });
 
-  return { data, isLoading };
+  return { data, isLoading, isError };
 }

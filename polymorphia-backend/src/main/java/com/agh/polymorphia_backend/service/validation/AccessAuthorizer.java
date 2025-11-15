@@ -2,8 +2,8 @@ package com.agh.polymorphia_backend.service.validation;
 
 import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
+import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
-import com.agh.polymorphia_backend.model.user.Student;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserCourseRole;
 import com.agh.polymorphia_backend.model.user.UserType;
@@ -39,6 +39,40 @@ public class AccessAuthorizer {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, COURSE_NOT_FOUND));
 
         authorizeCourseAccess(course);
+    }
+
+    public void authorizeStudentDataAccess(Course course, Long studentId) {
+        authorizeCourseAccess(course);
+        User user = userService.getCurrentUser().getUser();
+
+        boolean isStudentSelf = user.getId().equals(studentId);
+        boolean isCoordinatorInCourse = isCourseAccessAuthorizedCoordinator(user, course);
+        boolean isStudentsInstructor = hasInstructorAccessToUserInCourse(user, course, studentId);
+
+        if (!isStudentSelf && !isCoordinatorInCourse && !isStudentsInstructor) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Niepoprawne id użytkownika.");
+        }
+
+    }
+
+    public void authorizeProjectGroupDetailsAccess(ProjectGroup projectGroup) {
+        AbstractRoleUser user = userService.getCurrentUser();
+        Long userId = user.getUser().getId();
+        Course course = projectGroup.getProject().getEventSection().getCourse();
+
+        boolean isProjectGroupsInstructor = projectGroup.getInstructor().getUserId().equals(userId);
+        boolean isCoordinatorInCourse = isCourseAccessAuthorizedCoordinator(user.getUser(), course);
+        boolean isGroupMember = projectGroup.getAnimals().stream()
+                .anyMatch(animal ->
+                        animal.getStudentCourseGroupAssignment()
+                                .getStudent()
+                                .getUserId()
+                                .equals(userId)
+                );
+
+        if (!isProjectGroupsInstructor && !isCoordinatorInCourse && !isGroupMember) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Niepoprawne id użytkownika lub projektu.");
+        }
     }
 
     public void authorizeCourseAccess(Course course) {
@@ -83,6 +117,14 @@ public class AccessAuthorizer {
             case UNDEFINED -> isCourseAccessAuthorizedUndefined(user, course);
         };
     }
+
+    private boolean hasInstructorAccessToUserInCourse(User user, Course course, Long studentId) {
+        return instructorRepository.hasAccessToStudentInCourse(user.getId(), course.getId(), studentId);
+    }
+
+//    private boolean hasInstructorAccessToUserInCourse(User user, Course course, Long studentId) {
+//        return instructorRepository.hasAccessToStudentInCourse(user.getId(), course.getId(), studentId);
+//    }
 
     private boolean isCourseAccessAuthorizedCoordinator(User user, Course course) {
         return course.getCoordinator().getUser().equals(user);

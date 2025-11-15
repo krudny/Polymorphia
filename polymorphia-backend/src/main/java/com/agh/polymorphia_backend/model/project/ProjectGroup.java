@@ -38,8 +38,8 @@ public class ProjectGroup {
     @JoinColumn(name = "project_id")
     @ToString.Exclude
     @JsonIgnore
-    @ProjectGradableEventOnly
-    private GradableEvent project;
+    private Project project;
+
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -47,5 +47,19 @@ public class ProjectGroup {
             joinColumns = @JoinColumn(name = "project_group_id"),
             inverseJoinColumns = @JoinColumn(name = "animal_id")
     )
+    @ToString.Exclude
+    @JsonIgnore
     private List<Animal> animals;
+
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "project_groups_project_variants",
+            joinColumns = @JoinColumn(name = "project_group_id"),
+            inverseJoinColumns = @JoinColumn(name = "project_variant_id")
+    )
+    @ToString.Exclude
+    @JsonIgnore
+    private List<ProjectVariant> projectVariants;
+
 }

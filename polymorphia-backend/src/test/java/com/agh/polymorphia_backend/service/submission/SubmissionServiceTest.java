@@ -1,11 +1,5 @@
 package com.agh.polymorphia_backend.service.submission;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
-
 import com.agh.polymorphia_backend.BaseTest;
 import com.agh.polymorphia_backend.dto.request.SubmissionDetailsRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.StudentGroupTargetRequestDto;
@@ -37,21 +31,23 @@ import com.agh.polymorphia_backend.service.mapper.SubmissionMapper;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.mockito.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
 
 class SubmissionServiceTest extends BaseTest {
 
@@ -271,6 +267,7 @@ class SubmissionServiceTest extends BaseTest {
             assertThat(result).hasSize(1);
             assertThat(result.get(1L).url()).isEqualTo("http://example.com");
             verify(accessAuthorizer).authorizeCourseAccess(course.getId());
+            verify(gradableEventService).validateTargetGradableEventAccess(target, assignment);
         }
 
         @Test
@@ -298,33 +295,6 @@ class SubmissionServiceTest extends BaseTest {
             );
             assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
             assertEquals("Nie znaleziono studenta.", ex.getReason());
-        }
-
-        @Test
-        void getSubmissionDetails_whenGroupTargetOnAssignment_shouldThrowException() {
-            Student currentUser = Student.builder().build();
-            currentUser.setUserId(1L);
-            TargetRequestDto target = new StudentGroupTargetRequestDto(1L);
-
-            when(userService.getCurrentUserRole()).thenReturn(UserType.STUDENT);
-            when(userService.getCurrentUser()).thenReturn(currentUser);
-            when(
-                gradableEventService.getGradableEventById(assignment.getId())
-            ).thenReturn(assignment);
-
-            ResponseStatusException ex = assertThrows(
-                ResponseStatusException.class,
-                () ->
-                    submissionService.getSubmissionDetails(
-                        assignment.getId(),
-                        target
-                    )
-            );
-            assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
-            assertEquals(
-                "Grupowy podmiot oceny jest wspierany jedynie przy projekcie.",
-                ex.getReason()
-            );
         }
     }
 
@@ -1059,6 +1029,7 @@ class SubmissionServiceTest extends BaseTest {
             verify(submissionRepository).deleteAll(
                 deleteSubmissionCaptor.capture()
             );
+            verify(gradableEventService).validateTargetGradableEventAccess(target, assignment);
             List<Submission> savedSubmissions = saveSubmissionCaptor.getValue();
             assertThat(savedSubmissions).hasSize(1);
             Submission savedSubmission = savedSubmissions.getFirst();
@@ -1099,35 +1070,6 @@ class SubmissionServiceTest extends BaseTest {
             );
             assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
             assertEquals("Nie znaleziono studenta.", ex.getReason());
-        }
-
-        @Test
-        void putSubmissionDetails_whenGroupTargetOnAssignment_shouldThrowException() {
-            Student currentUser = Student.builder().build();
-            currentUser.setUserId(1L);
-            TargetRequestDto target = new StudentGroupTargetRequestDto(1L);
-            SubmissionDetailsRequestDto requestDto =
-                new SubmissionDetailsRequestDto(target, Map.of());
-
-            when(userService.getCurrentUserRole()).thenReturn(UserType.STUDENT);
-            when(userService.getCurrentUser()).thenReturn(currentUser);
-            when(
-                gradableEventService.getGradableEventById(assignment.getId())
-            ).thenReturn(assignment);
-
-            ResponseStatusException ex = assertThrows(
-                ResponseStatusException.class,
-                () ->
-                    submissionService.putSubmissionDetails(
-                        assignment.getId(),
-                        requestDto
-                    )
-            );
-            assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
-            assertEquals(
-                "Grupowy podmiot oceny jest wspierany jedynie przy projekcie.",
-                ex.getReason()
-            );
         }
     }
 

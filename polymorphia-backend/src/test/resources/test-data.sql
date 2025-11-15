@@ -19,6 +19,8 @@ TRUNCATE TABLE flat_bonus_items cascade;
 TRUNCATE TABLE percentage_bonus_items cascade;
 TRUNCATE TABLE project_groups cascade;
 TRUNCATE TABLE project_groups_animals cascade;
+TRUNCATE TABLE projects cascade;
+TRUNCATE TABLE project_groups_project_variants cascade;
 TRUNCATE TABLE submission_requirements cascade;
 TRUNCATE TABLE submissions cascade;
 
@@ -136,11 +138,11 @@ VALUES (1, 'Pisklak', 20, 'description', 2.0, 'imageUrl_pisklak', 1, 1),
 
 -- Event sections
 INSERT INTO public.event_sections (id, has_gradable_events_with_topics, is_hidden, is_shown_in_road_map, name, order_index,course_id)
-VALUES (1, true, true, true, 'Kartkówka', 2, 1),
-       (2, true, true, true, 'Lab', 1, 1),
-       (3, true, true, true, 'Kartkówka', 2, 4),
-       (4, true, true, true, 'Laboratorium', 1, 4),
-       (5, true, true, true, 'Projekt', 3, 4);
+VALUES (1, true, false, true, 'Kartkówka', 2, 1),
+       (2, true, false, true, 'Lab', 1, 1),
+       (3, true, false, true, 'Kartkówka', 2, 4),
+       (4, true, false, true, 'Laboratorium', 1, 4),
+       (5, true, false, true, 'Projekt', 3, 4);
 
 -- Test sections
 INSERT INTO public.test_sections (id)
@@ -227,6 +229,9 @@ VALUES (1, 1, 'kartkówka 1', null, 1, 1, '/url', 'markdown', false, false),
        (5, 3, 'kartkówka 3', null, 1, 1, '/url', 'markdown', false, false),
        (6, 3, 'kartkówka 4', null, 1, 1, '/url', 'markdown', false, false),
        (7, 5, 'projekt', null, 1, 1, '/url', 'markdown', false, false);
+
+insert into projects(id, allow_cross_course_group_project_groups)
+values (7, false);
 
 -- Project groups
 INSERT INTO public.project_groups (id, instructor_id, project_id)

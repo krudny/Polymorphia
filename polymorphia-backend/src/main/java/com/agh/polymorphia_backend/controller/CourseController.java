@@ -2,7 +2,6 @@ package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.response.user_context.AvailableCoursesResponseDto;
 import com.agh.polymorphia_backend.service.course.CourseService;
-import com.agh.polymorphia_backend.service.user.UserContextService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
