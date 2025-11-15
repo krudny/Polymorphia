@@ -78,7 +78,7 @@ export const TargetProvider = ({ children }: TargetProviderProps) => {
           target: targets[0],
           member:
             targets[0].type === TargetTypes.STUDENT
-              ? targets[0]
+              ? targets[0].student
               : targets[0].members[0],
         },
       });

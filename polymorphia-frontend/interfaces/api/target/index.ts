@@ -19,8 +19,10 @@ export const GroupTargetTypes = {
 export type GroupTargetType =
   (typeof GroupTargetTypes)[keyof typeof GroupTargetTypes];
 
-export interface StudentTargetResponseDTO extends StudentTargetData {
+export interface StudentTargetResponseDTO {
   type: typeof TargetTypes.STUDENT;
+  id: number;
+  student: StudentTargetData;
 }
 
 export interface StudentGroupTargetResponseDTO {

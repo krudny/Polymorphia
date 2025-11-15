@@ -1,14 +1,16 @@
 package com.agh.polymorphia_backend.controller;
 
 
+import com.agh.polymorphia_backend.dto.request.target_list.CourseGroupsTargetListRequestDto;
+import com.agh.polymorphia_backend.dto.request.target_list.GradingTargetListRequestDto;
+import com.agh.polymorphia_backend.dto.response.target_list.StudentTargetResponseDto;
+import com.agh.polymorphia_backend.dto.response.target_list.TargetResponseDto;
 import com.agh.polymorphia_backend.service.target_list.TargetListService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,13 +23,13 @@ public class TargetListController {
 
     @GetMapping(value = "/course-group")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
-    public ResponseEntity<?> getTargetListForCourseGroup() {
+    public ResponseEntity<List<StudentTargetResponseDto>> getTargetListForCourseGroup(@Valid @RequestBody CourseGroupsTargetListRequestDto requestDto) {
         return ResponseEntity.ok(null);
     }
 
     @GetMapping(value = "/grading")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
-    public ResponseEntity<?> getTargetListForGrading() {
+    public ResponseEntity<List<TargetResponseDto>> getTargetListForGrading(@Valid @RequestBody GradingTargetListRequestDto requestDto) {
         return ResponseEntity.ok(null);
     }
 
