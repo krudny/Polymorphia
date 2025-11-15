@@ -30,6 +30,11 @@ public class CourseGroupsService {
         return courseGroupRepository.findByCourseId(courseId);
     }
 
+    public List<String> findAllCourseGroupNames(Long courseId) {
+        accessAuthorizer.authorizeCourseAccess(courseId);
+        return courseGroupRepository.findNamesByCourseId(courseId);
+    }
+
     public List<CourseGroupsResponseDto> getAllCourseGroups(Long courseId) {
         List<CourseGroup> courseGroups = findAllCourseGroups(courseId);
         return courseGroups.stream()

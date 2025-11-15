@@ -4,17 +4,14 @@ import {
 } from "@/hooks/course/useFilters/types";
 import { GradingFilterId } from "@/providers/grading/types";
 import { useQuery } from "@tanstack/react-query";
-import CourseGroupsService from "@/services/course-groups";
-import { CourseGroupTypes } from "@/services/course-groups/types";
+import TargetListService from "@/services/target-list";
 
-export function useGradingFilterConfigs(courseId: number) {
+export function useGradingFilterConfigs(gradableEventId: number) {
   return useQuery({
-    queryKey: ["gradingFilters", courseId],
+    queryKey: ["gradingFilters", gradableEventId],
     queryFn: async () => {
-      const courseGroups = await CourseGroupsService.getCourseGroups(
-        courseId,
-        CourseGroupTypes.INDIVIDUAL_SHORT
-      );
+      const groups =
+        await TargetListService.getGroupsForGradingFilters(gradableEventId);
 
       const configs: FilterConfig<GradingFilterId>[] = [
         {
@@ -44,10 +41,14 @@ export function useGradingFilterConfigs(courseId: number) {
               label: "Wszystkie",
               specialBehavior: SpecialBehaviors.EXCLUSIVE,
             },
-            ...courseGroups.map((courseGroup) => ({ value: courseGroup.name })),
+            ...groups.map((group) =>
+              group === "assigned"
+                ? { value: "assigned", label: "Własne" }
+                : { value: group }
+            ),
           ],
           defaultValues: ["all"],
-          max: courseGroups.length,
+          max: groups.length,
         },
         {
           id: "gradeStatus",
