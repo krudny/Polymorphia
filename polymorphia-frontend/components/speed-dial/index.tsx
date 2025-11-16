@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode, useState } from "react";
-import "./index.css";
+import { createPortal } from "react-dom";
 import { useSpeedDialFactory } from "@/hooks/strategy/useSpeedDialStrategy";
 import Loading from "@/components/loading";
 import { SpeedDial as SpeedDialMui } from "@mui/material";
@@ -9,7 +9,7 @@ import { SpeedDialProps } from "@/components/speed-dial/types";
 import { useMediaQuery } from "react-responsive";
 import SpeedDialActionWrapper from "@/components/speed-dial/action-wrapper";
 
-export default function SpeedDial({ speedDialKey }: SpeedDialProps) {
+export function SpeedDial({ speedDialKey }: SpeedDialProps) {
   const items = useSpeedDialFactory({ speedDialKey });
   const [activeModal, setActiveModal] = useState<ReactNode | null>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -21,17 +21,16 @@ export default function SpeedDial({ speedDialKey }: SpeedDialProps) {
 
   items.sort((a, b) => b.orderIndex - a.orderIndex);
 
-  return (
+  const speedDialContent = (
     <>
       <SpeedDialMui
         ariaLabel="SpeedDial"
         icon={<span className="material-symbols">add</span>}
         sx={{
           position: "fixed",
-          bottom: isMd ? 4 : 20,
-          right: isMd ? 22 : 12,
+          bottom: isMd ? 6 : 10,
+          right: isMd ? 12 : 4,
           margin: 0,
-          ...(isMd ? {} : { zIndex: 9999 }),
         }}
         FabProps={{
           style: {
@@ -58,4 +57,8 @@ export default function SpeedDial({ speedDialKey }: SpeedDialProps) {
       {activeModal}
     </>
   );
+
+  return typeof document !== "undefined"
+    ? createPortal(speedDialContent, document.body)
+    : null;
 }

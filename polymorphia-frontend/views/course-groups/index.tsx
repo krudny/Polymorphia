@@ -1,9 +1,8 @@
 import { useMediaQuery } from "react-responsive";
-import SpeedDial from "@/components/speed-dial/SpeedDial";
+import { SpeedDial } from "@/components/speed-dial";
 import ColumnSchema from "@/components/column-schema";
 import { SpeedDialKeys } from "@/components/speed-dial/types";
 import { useCourseGroupsStrategy } from "@/hooks/strategy/useCourseGroupsStrategy";
-import "./index.css";
 import { CourseGroupsFilterId } from "@/providers/course-groups/types";
 import FiltersModal from "@/components/filters-modals/FiltersModal";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
@@ -22,7 +21,7 @@ export default function CourseGroups() {
   }
 
   return (
-    <div className="course-groups">
+    <div>
       <SpeedDial speedDialKey={SpeedDialKeys.COURSE_GROUP} />
       <ColumnSchema columns={isXL ? 3 : isMd ? 2 : 1} components={components} />
       <FiltersModal<CourseGroupsFilterId>
