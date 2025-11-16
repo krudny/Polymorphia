@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.dto.request.grade;
 
 import com.agh.polymorphia_backend.dto.request.target.TargetRequestDto;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,12 +12,14 @@ import java.util.Map;
 @Builder(toBuilder = true)
 public class GradeRequestDto {
     @NotNull
+    @Valid
     private TargetRequestDto target;
 
     @NotNull
     private Long gradableEventId;
 
     @NotNull
+    @Valid
     private Map<Long, CriterionGradeRequestDto> criteria;
 
     private String comment;

@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -48,5 +49,6 @@ public class CriterionGrade {
     @NotNull
     @ToString.Exclude
     @JsonIgnore
-    private List<AssignedReward> assignedRewards;
+    @Builder.Default
+    private List<AssignedReward> assignedRewards = new ArrayList<>();
 }

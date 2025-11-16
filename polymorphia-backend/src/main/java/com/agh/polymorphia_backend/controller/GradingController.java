@@ -4,8 +4,8 @@ import com.agh.polymorphia_backend.dto.request.csv.process.TestGradingRequestDto
 import com.agh.polymorphia_backend.dto.request.grade.GradeRequestDto;
 import com.agh.polymorphia_backend.service.csv.processors.TestGradingCSVProcessor;
 import com.agh.polymorphia_backend.service.grade.GradingService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +29,7 @@ public class GradingController {
 
     @PostMapping()
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
-    public ResponseEntity<Void> processGrade(@RequestBody GradeRequestDto request) {
+    public ResponseEntity<Void> processGrade(@Valid @RequestBody GradeRequestDto request) {
         gradingService.submitGrade(request);
         return ResponseEntity.ok().build();
     }
