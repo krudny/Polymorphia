@@ -119,14 +119,18 @@ public class GradingService {
     private void createAndSaveAssignedRewards(List<CriterionGrade> criteriaGrades, Map<Long, CriterionGradeRequestDto> criteria) {
         List<AssignedReward> assignedRewards = new ArrayList<>();
 
-        for (CriterionGrade cg : criteriaGrades) {
-            CriterionGradeRequestDto gradeRequest = criteria.get(cg.getCriterion().getId());
+        for (CriterionGrade criterionGrade : criteriaGrades) {
+            CriterionGradeRequestDto gradeRequest = criteria.get(criterionGrade.getCriterion().getId());
+            List<AssignedReward> criterionAssignedRewards = new ArrayList<>();
 
             for (ShortAssignedRewardRequestDto request : gradeRequest.getAssignedRewards()) {
-                assignedRewards.addAll(
-                        assignedRewardService.fetchOrCreateAssignedRewards(request, cg)
-                );
+                List<AssignedReward> rewards = assignedRewardService.fetchOrCreateAssignedRewards(request, criterionGrade);
+                criterionAssignedRewards.addAll(rewards);
+
             }
+            assignedRewards.addAll(criterionAssignedRewards);
+            criterionGrade.getAssignedRewards().clear();
+            criterionGrade.getAssignedRewards().addAll(criterionAssignedRewards);
         }
 
         List<AssignedChest> assignedChests = assignedRewards.stream()
@@ -141,6 +145,7 @@ public class GradingService {
 
         assignedRewardService.saveAssignedChest(assignedChests);
         assignedRewardService.saveAssignedItems(assignedItems);
+        criterionGradeService.saveAll(criteriaGrades);
     }
 
     private GradeRequestDto getStudentGradeRequest(GradeRequestDto request, Long studentId) {

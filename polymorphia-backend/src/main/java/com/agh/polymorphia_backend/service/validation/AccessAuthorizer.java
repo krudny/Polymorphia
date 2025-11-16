@@ -2,6 +2,7 @@ package com.agh.polymorphia_backend.service.validation;
 
 import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
+import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.User;
@@ -41,7 +42,8 @@ public class AccessAuthorizer {
         authorizeCourseAccess(course);
     }
 
-    public void authorizeStudentDataAccess(Course course, Long studentId) {
+    public void authorizeStudentDataAccess(GradableEvent gradableEvent, Long studentId) {
+        Course course = gradableEvent.getEventSection().getCourse();
         authorizeCourseAccess(course);
         User user = userService.getCurrentUser().getUser();
 
@@ -124,7 +126,7 @@ public class AccessAuthorizer {
         boolean isCoordinator = isCourseAccessAuthorizedCoordinator(user, projectGroup.getProject().getEventSection().getCourse());
 
         if (!isProjectGroupInstructor && !isCoordinator) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, BAD_USER_OR_PROJECT);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Niepoprawne id użytkownika lub projektu");
         }
     }
 
