@@ -25,15 +25,15 @@ import static com.agh.polymorphia_backend.service.invitation.InvitationService.U
 @Service
 @AllArgsConstructor
 public class PasswordService {
-    public static final String PASSWORD_SIZE_MESSAGE = "Password must be between 8 and 256 characters";
-    public static final String PASSWORD_UPPERCASE_MESSAGE = "Password must contain at least one uppercase letter";
-    public static final String PASSWORD_LOWERCASE_MESSAGE = "Password must contain at least one lowercase letter";
-    public static final String PASSWORD_DIGIT_MESSAGE = "Password must contain at least one digit";
-    public static final String PASSWORD_SPECIAL_CHAR_MESSAGE = "Password must contain at least one special character";
-    public static final String INVALID_OLD_PASSWORD = "Invalid old password";
-    public static final String FAILED_TO_CHANGE_PASSWORD = "Failed to change password";
-    public static final String INVALID_NEW_PASSWORD = "New password is not matching";
-    public static final String FAILED_TO_RESET_PASSWORD = "Failed to reset password";
+    public static final String PASSWORD_SIZE_MESSAGE = "hasło musi mieć od 8 do 256 znaków";
+    public static final String PASSWORD_UPPERCASE_MESSAGE = "hasło musi zawierać co najmniej jedną wielką literę";
+    public static final String PASSWORD_LOWERCASE_MESSAGE = "hasło musi zawierać co najmniej jedną małą literę";
+    public static final String PASSWORD_DIGIT_MESSAGE = "hasło musi zawierać co najmniej jedną cyfrę";
+    public static final String PASSWORD_SPECIAL_CHAR_MESSAGE = "hasło musi zawierać co najmniej jeden znak specjalny";
+    public static final String INVALID_OLD_PASSWORD = "Stare hasło jest niepoprawne.";
+    public static final String FAILED_TO_CHANGE_PASSWORD = "Nie udało się zmienić hasła.";
+    public static final String INVALID_NEW_PASSWORD = "Podane nowe hasła różnią się od siebie.";
+    public static final String FAILED_TO_RESET_PASSWORD = "Nie udało się zresetować hasła.";
 
     private final UserService userService;
     private final UserRepository userRepository;

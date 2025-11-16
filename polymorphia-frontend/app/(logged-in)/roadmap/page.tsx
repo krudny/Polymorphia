@@ -2,67 +2,49 @@
 
 import { useState } from "react";
 import ProgressBar from "@/components/progressbar/ProgressBar";
-import XPCard from "@/components/xp-card/XPCard";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import ProgressBarElement from "@/components/progressbar/ProgressBarElement";
 import Loading from "@/components/loading";
 import { useMediaQuery } from "react-responsive";
-import RoadmapModals from "@/app/(logged-in)/roadmap/RoadmapModals";
 import "./styles.css";
 import { StudentGradableEventResponseDTO } from "@/interfaces/api/course";
 import { useRoadmap } from "@/hooks/course/useRoadmap";
-import XPCardChest from "@/components/xp-card/components/XPCardChest";
-import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
+import RoadmapCard from "@/components/xp-card/RoadmapCard";
+import GradeModal from "@/components/speed-dial/modals/grade";
+import ErrorComponent from "@/components/error";
 
 export default function Roadmap() {
   const [selectedEvent, setSelectedEvent] = useState<
     StudentGradableEventResponseDTO | undefined
   >(undefined);
   const wrapperRef = useFadeInAnimate();
-  const { data: roadmap, isLoading } = useRoadmap();
+  const { data: roadmap, isLoading, isError } = useRoadmap();
   const isXL = useMediaQuery({ minWidth: 1280 });
   const isMd = useMediaQuery({ minWidth: 768 });
   const isSm = useMediaQuery({ minWidth: 400 });
 
-  if (isLoading || !roadmap) {
+  if (isLoading) {
     return <Loading />;
+  }
+
+  if (isError || !roadmap) {
+    return <ErrorComponent message="Nie udało się załadować danych." />;
   }
 
   const handleClick = (gradableEvent: StudentGradableEventResponseDTO) => {
     setSelectedEvent(gradableEvent);
   };
 
-  const cards = roadmap.map((gradableEvent) => {
-    const { name, topic, id, gainedXp, isLocked, hasReward } = gradableEvent;
-    const color = gainedXp ? "green" : "silver";
-    const rightComponent = hasReward ? (
-      <XPCardChest />
-    ) : (
-      <XPCardPoints
-        points={gainedXp}
-        isSumLabelVisible={true}
-        hasChest={true}
-        color="gray"
-      />
-    );
-
-    return (
-      <XPCard
-        title={name}
-        subtitle={topic}
-        key={id}
-        color={color}
-        size={isXL ? "md" : isMd ? "sm" : "xs"}
-        forceWidth={true}
-        isLocked={isLocked}
-        onClick={() => handleClick(gradableEvent)}
-        rightComponent={rightComponent}
-      />
-    );
-  });
+  const cards = roadmap.map((gradableEvent) => (
+    <RoadmapCard
+      key={gradableEvent.id}
+      gradableEvent={gradableEvent}
+      onCardClicked={handleClick}
+    />
+  ));
 
   const cardHeightWithGap = isXL ? 8 : isMd ? 6.5 : isSm ? 9 : 7;
-  const totalHeight = `${cards.length * cardHeightWithGap}rem`;
+  const totalHeight = `${roadmap.length * cardHeightWithGap}rem`;
 
   return (
     <>
@@ -96,10 +78,12 @@ export default function Roadmap() {
           }
         />
       </div>
-      <RoadmapModals
-        selectedGradableEvent={selectedEvent}
-        setSelectedGradableEvent={setSelectedEvent}
-      />
+      {selectedEvent ? (
+        <GradeModal
+          gradableEventIdProp={selectedEvent.id}
+          onClosedAction={() => setSelectedEvent(undefined)}
+        />
+      ) : null}
     </>
   );
 }

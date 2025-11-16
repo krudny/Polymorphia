@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.model.course.reward.assigned;
 
+import com.agh.polymorphia_backend.model.course.reward.RewardType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -30,4 +31,9 @@ public class AssignedItem extends AssignedReward {
     @ToString.Exclude
     @JsonIgnore
     private AssignedChest assignedChest;
+
+    @Override
+    public RewardType getType() {
+        return RewardType.ITEM;
+    }
 }

@@ -3,6 +3,7 @@ package com.agh.polymorphia_backend.service.mapper;
 import com.agh.polymorphia_backend.dto.response.equipment.EquipmentChestResponseDto;
 import com.agh.polymorphia_backend.dto.response.equipment.EquipmentItemResponseDto;
 import com.agh.polymorphia_backend.dto.response.reward.BaseRewardResponseDto;
+import com.agh.polymorphia_backend.dto.response.reward.BaseRewardResponseDtoWithType;
 import com.agh.polymorphia_backend.dto.response.reward.assignment_details.ChestAssignmentDetailsResponseDto;
 import com.agh.polymorphia_backend.dto.response.reward.chest.ChestResponseDtoBase;
 import com.agh.polymorphia_backend.dto.response.reward.item.FlatBonusItemResponseDtoBase;
@@ -24,6 +25,12 @@ import java.util.List;
 public class RewardMapper {
     private final AssignedRewardService assignedRewardService;
 
+    public BaseRewardResponseDtoWithType rewardToRewardResponseDtoWithType(Reward reward) {
+        return BaseRewardResponseDtoWithType.builder()
+                .rewardType(reward.getRewardType())
+                .reward(rewardToRewardResponseDto(reward))
+                .build();
+    }
 
     public BaseRewardResponseDto rewardToRewardResponseDto(Reward reward) {
         return switch (reward.getRewardType()) {

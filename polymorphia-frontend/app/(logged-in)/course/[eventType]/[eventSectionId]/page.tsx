@@ -4,6 +4,7 @@ import StudentGradableEventsView from "@/views/gradable-events/student";
 import InstructorGradableEventsView from "@/views/gradable-events/instructor";
 import useUserContext from "@/hooks/contexts/useUserContext";
 import { Roles } from "@/interfaces/api/user";
+import ErrorComponent from "@/components/error";
 
 export default function GradableEventsView() {
   const { userRole } = useUserContext();
@@ -15,6 +16,6 @@ export default function GradableEventsView() {
     case Roles.COORDINATOR:
       return <InstructorGradableEventsView />;
     default:
-      return null;
+      return <ErrorComponent />;
   }
 }

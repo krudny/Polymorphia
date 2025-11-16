@@ -1,5 +1,11 @@
 "use client";
-import { createContext, ReactNode, useEffect, useReducer } from "react";
+import {
+  createContext,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useReducer,
+} from "react";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import useGradeUpdate from "@/hooks/course/useGradeUpdate";
 import {
@@ -36,10 +42,22 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   } = useGradingFilterConfigs(courseId);
 
   const filters = useFilters<GradingFilterId>(filterConfigs ?? []);
-  const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["total"];
-  const sortOrder = filters.getAppliedFilterValues("sortOrder") ?? ["asc"];
-  const groups = filters.getAppliedFilterValues("groups") ?? ["all"];
-  const gradeStatus = filters.getAppliedFilterValues("gradeStatus") ?? ["all"];
+  const sortBy = useMemo(
+    () => filters.getAppliedFilterValues("sortBy") ?? ["total"],
+    [filters]
+  );
+  const sortOrder = useMemo(
+    () => filters.getAppliedFilterValues("sortOrder") ?? ["asc"],
+    [filters]
+  );
+  const groups = useMemo(
+    () => filters.getAppliedFilterValues("groups") ?? ["all"],
+    [filters]
+  );
+  const gradeStatus = useMemo(
+    () => filters.getAppliedFilterValues("gradeStatus") ?? ["all"],
+    [filters]
+  );
 
   useEffect(() => {
     applyFiltersCallback({

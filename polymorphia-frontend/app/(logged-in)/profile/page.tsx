@@ -6,7 +6,6 @@ import "./index.css";
 import UserPoints from "@/components/user-points/UserPoints";
 import { useMediaQuery } from "react-responsive";
 import Loading from "@/components/loading";
-import { Roles } from "@/interfaces/api/user";
 import useUserContext from "@/hooks/contexts/useUserContext";
 import useStudentProfile from "@/hooks/course/useStudentProfile";
 import FiltersModal from "@/components/filters-modals/FiltersModal";
@@ -17,8 +16,9 @@ import { ProfileFilterId } from "@/app/(logged-in)/profile/types";
 import ProfileProgressBar from "@/components/progressbar/profile";
 import { ProfileProvider } from "@/providers/profile";
 import useProfileContext from "@/hooks/contexts/useProfileContext";
-import { notFound } from "next/navigation";
 import { distributeTo100 } from "@/components/progressbar/profile/distributeTo100";
+import ErrorComponent from "@/components/error";
+import { Roles } from "@/interfaces/api/user";
 import { SpeedDialKeys } from "@/components/speed-dial/types";
 import { SpeedDial } from "@/components/speed-dial";
 
@@ -26,7 +26,7 @@ function ProfileContent() {
   // TODO: refactor the rest of the logic to ProfileContext
   const { areFiltersOpen, setAreFiltersOpen } = useProfileContext();
   const isSm = useMediaQuery({ maxWidth: 920 });
-  const { data: profile, isLoading } = useStudentProfile();
+  const { data: profile, isLoading, isError } = useStudentProfile();
   const wrapperRef = useScaleShow(!isLoading);
   const userContext = useUserContext();
   const {
@@ -37,12 +37,12 @@ function ProfileContent() {
 
   const filters = useFilters<ProfileFilterId>(filterConfigs ?? []);
 
-  if (userContext.userRole !== Roles.STUDENT || (!profile && !isLoading)) {
-    notFound();
+  if (isLoading || !userContext.userRole) {
+    return <Loading />;
   }
 
-  if (isLoading || !userContext.userRole || !profile) {
-    return <Loading />;
+  if (isError || !profile || userContext.userRole !== Roles.STUDENT) {
+    return <ErrorComponent message="Nie udało się załadować profilu." />;
   }
 
   const { imageUrl, fullName, animalName, position } = userContext.userDetails;

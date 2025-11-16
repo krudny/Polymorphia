@@ -1,9 +1,9 @@
-import { API_HOST } from "@/services/api";
 import {
   CourseGroupResponse,
   CourseGroupType,
   CourseGroupTypes,
 } from "@/services/course-groups/types";
+import { ApiClient } from "@/services/api/client";
 import { StudentLastActivityDTO } from "@/interfaces/api/course-groups";
 import {
   EquipmentChestResponseDTO,
@@ -26,16 +26,9 @@ const CourseGroupsService = {
     const shortPath = isShort ? "/short" : "";
     const mode = isIndividual ? "/individual" : "/all";
 
-    const response = await fetch(
-      `${API_HOST}/course-groups${mode}${shortPath}?courseId=${courseId}`,
-      { credentials: "include" }
+    return await ApiClient.get<CourseGroupResponse<T>>(
+      `/course-groups${mode}${shortPath}?courseId=${courseId}`
     );
-
-    if (!response.ok) {
-      throw new Error("Nie udało się pobrać grup zajęciowych!");
-    }
-
-    return await response.json();
   },
 
   // should be sorted by grade date

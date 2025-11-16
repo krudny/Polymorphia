@@ -14,12 +14,12 @@ export interface CriterionAssignableRewardResponseDTO {
 }
 
 export interface CriterionGradeResponseDTO<AssignedRewardType> {
-  id: number;
+  criterionId: number;
   gainedXp?: string;
   assignedRewards: AssignedRewardType[];
 }
 
 export type CriteriaDetailsRequestDTO = Omit<
   CriterionGradeResponseDTO<ShortAssignedRewardResponseDTO>,
-  "id"
+  "criterionId"
 >;

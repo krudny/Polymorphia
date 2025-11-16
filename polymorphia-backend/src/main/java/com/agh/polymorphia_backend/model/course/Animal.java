@@ -1,11 +1,14 @@
 package com.agh.polymorphia_backend.model.course;
 
+import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "animals")
@@ -29,4 +32,9 @@ public class Animal {
     @ToString.Exclude
     @JsonIgnore
     private StudentCourseGroupAssignment studentCourseGroupAssignment;
+
+    @ManyToMany(mappedBy = "animals", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @JsonIgnore
+    private List<ProjectGroup> projectGroups;
 }

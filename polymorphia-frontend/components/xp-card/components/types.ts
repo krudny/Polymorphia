@@ -5,6 +5,7 @@ export interface XPCardPointsProps {
   isSumLabelVisible?: boolean;
   isXPLabelVisible?: boolean;
   hasChest?: boolean;
+  shouldGreyOutReward?: boolean;
   color?: XPCardColors;
 }
 

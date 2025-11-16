@@ -42,6 +42,6 @@ public class StudentController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Void> createAnimal(@RequestBody @Valid CreateAnimalRequestDto requestDTO) {
         animalService.createAnimal(requestDTO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

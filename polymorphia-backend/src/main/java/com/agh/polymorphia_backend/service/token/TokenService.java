@@ -11,10 +11,11 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.UUID;
 
+import static com.agh.polymorphia_backend.service.validation.TokenValidator.TOKEN_NOT_FOUND;
+
 @Service
 @AllArgsConstructor
 public class TokenService {
-    public final static String TOKEN_NOT_FOUND = "Token not found";
     private final TokenRepository tokenRepository;
 
     public Token createToken(String email, TokenType tokenType) {

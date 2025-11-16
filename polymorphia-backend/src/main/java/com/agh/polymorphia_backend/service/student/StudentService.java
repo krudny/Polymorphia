@@ -13,7 +13,6 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 @AllArgsConstructor
 public class StudentService {
-    private final static String STUDENT_NOT_ASSIGNED = "Student not assigned to any course group in course";
     private final UserService userService;
     private final StudentCourseGroupRepository studentCourseGroupRepository;
 
@@ -23,7 +22,7 @@ public class StudentService {
 
         StudentCourseGroupAssignment assignment = studentCourseGroupRepository
                 .findByIdStudentIdAndCourseId(studentId, courseId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, STUDENT_NOT_ASSIGNED));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Student nie został przypisany do żadnej grupy w ramach kursu."));
 
         return assignment.getId();
     }

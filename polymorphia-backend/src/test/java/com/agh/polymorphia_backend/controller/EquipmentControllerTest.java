@@ -80,7 +80,7 @@ public class EquipmentControllerTest extends ControllerTestConfig {
                 .build();
 
         postEndpoint("/equipment/chests/open?courseId={courseId}",
-                "sampleuser@test.com", "password", 200, Optional.of(requestDto), 4);
+                "sampleuser@test.com", "password", 204, Optional.of(requestDto), 4);
 
         String chests = getEndpoint("/equipment/chests?courseId={courseId}",
                 "sampleuser@test.com", "password", 200, 4);
@@ -113,7 +113,7 @@ public class EquipmentControllerTest extends ControllerTestConfig {
                 .build();
 
         postEndpoint("/equipment/chests/open?courseId={courseId}",
-                "sampleuser@test.com", "password", 200, Optional.of(requestDto), 4);
+                "sampleuser@test.com", "password", 204, Optional.of(requestDto), 4);
 
         String chests = getEndpoint("/equipment/chests?courseId={courseId}",
                 "sampleuser@test.com", "password", 200, 4);

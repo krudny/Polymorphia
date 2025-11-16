@@ -10,7 +10,6 @@ export default function useForgotPassword(): UseForgotPassword {
       return toast.promise(PasswordService.forgotPassword(request), {
         loading: "Wysyłanie emaila...",
         success: "Email z linkiem został wysłany!",
-        error: (error) => error.message,
       });
     },
   });

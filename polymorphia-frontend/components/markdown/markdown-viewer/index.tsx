@@ -8,6 +8,7 @@ import useMarkdownContext from "@/hooks/contexts/useMarkdownContext";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import { useMarkdown } from "@/hooks/course/useMarkdown";
+import ErrorComponent from "@/components/error";
 
 export default function MarkdownViewer() {
   const { markdownType } = useMarkdownContext();
@@ -19,14 +20,15 @@ export default function MarkdownViewer() {
   }
 
   if (isError) {
-    return <div>Nie można pobrać markdown</div>;
+    return <ErrorComponent message="Nie można pobrać markdown." />;
   }
 
   if (!data || data.markdown === "") {
     return (
-      <div className="text-4xl m-auto">
-        Do wydarzenia nie została przypisana żadna treść
-      </div>
+      <ErrorComponent
+        message="Do wydarzenia nie została przypisana żadna treść."
+        title="Brak danych"
+      />
     );
   }
 
