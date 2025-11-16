@@ -24,6 +24,7 @@ import { ErrorComponentSizes } from "@/components/error/types";
 import { Roles } from "@/interfaces/api/user";
 import useStudentChests from "@/hooks/course/useStudentChests";
 import { TargetContext } from "@/providers/target";
+import useStudentItems from "@/hooks/course/useStudentItems";
 
 export default function OpeningChestModalContent({
   equipment,
@@ -50,7 +51,8 @@ export default function OpeningChestModalContent({
   // not using useTargetContext() - if we're in target context we're using it to fetch data for a particular student, otherwise we're using currently logged student's data
   const target = useContext(TargetContext);
   const targetId = target?.targetId ?? null;
-  const { refetch } = useStudentChests(targetId);
+  const { refetch: refetchChests } = useStudentChests(targetId);
+  const { refetch: refetchItems } = useStudentItems(targetId);
 
   useEffect(() => {
     if (!chestPotentialXp) {
@@ -135,12 +137,15 @@ export default function OpeningChestModalContent({
             courseId,
             userId,
           ])
-        : (await refetch()).data;
+        : (await refetchChests()).data;
     const updatedChest =
       allChests?.find((chest) => chest.details.id === equipment.details.id) ??
       null;
 
     if (updatedChest) {
+      if (target) {
+        await refetchItems();
+      }
       dispatch({
         type: EquipmentActions.SHOW_CHEST_MODAL,
         payload: updatedChest,

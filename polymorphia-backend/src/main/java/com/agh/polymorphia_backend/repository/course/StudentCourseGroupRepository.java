@@ -20,5 +20,9 @@ public interface StudentCourseGroupRepository extends JpaRepository<StudentCours
             @Param("courseId") Long courseId
     );
 
+    @Query(value = """
+            SElECT s.student.userId FROM StudentCourseGroupAssignment s
+            WHERE s.animal.id = :animalId
+            """)
     Long getStudentIdByAnimalId(Long animalId);
 }
