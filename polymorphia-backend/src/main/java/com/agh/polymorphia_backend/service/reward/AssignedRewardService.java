@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.service.reward;
 
-import com.agh.polymorphia_backend.model.user.student.Animal;
+import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
 import com.agh.polymorphia_backend.model.reward.FlatBonusItem;
 import com.agh.polymorphia_backend.model.reward.Item;
 import com.agh.polymorphia_backend.model.reward.Reward;
@@ -9,7 +9,7 @@ import com.agh.polymorphia_backend.model.reward.assigned.AssignedItem;
 import com.agh.polymorphia_backend.model.reward.assigned.AssignedReward;
 import com.agh.polymorphia_backend.model.reward.item.FlatBonusItemBehavior;
 import com.agh.polymorphia_backend.model.reward.item.ItemType;
-import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
+import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.repository.reward.assigned.AssignedChestRepository;
 import com.agh.polymorphia_backend.repository.reward.assigned.AssignedItemRepository;
 import com.agh.polymorphia_backend.service.student.AnimalService;

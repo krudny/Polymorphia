@@ -9,10 +9,10 @@ import com.agh.polymorphia_backend.dto.response.grade.ShortGradeResponseDtoWithT
 import com.agh.polymorphia_backend.dto.response.grade.StudentGroupShortGradeResponseDto;
 import com.agh.polymorphia_backend.dto.response.grade.StudentShortGradeResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.UserDetailsResponseDto;
-import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.grade.Grade;
+import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.service.criteria.CriteriaGradeService;
 import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
 import com.agh.polymorphia_backend.service.project.ProjectService;

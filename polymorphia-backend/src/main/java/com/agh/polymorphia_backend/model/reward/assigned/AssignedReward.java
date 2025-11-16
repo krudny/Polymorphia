@@ -1,8 +1,8 @@
 package com.agh.polymorphia_backend.model.reward.assigned;
 
+import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
 import com.agh.polymorphia_backend.model.reward.Reward;
 import com.agh.polymorphia_backend.model.reward.RewardType;
-import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

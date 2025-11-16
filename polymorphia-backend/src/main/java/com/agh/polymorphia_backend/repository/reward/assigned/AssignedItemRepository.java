@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.repository.reward.assigned;
 
-import com.agh.polymorphia_backend.model.reward.assigned.AssignedItem;
 import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
+import com.agh.polymorphia_backend.model.reward.assigned.AssignedItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

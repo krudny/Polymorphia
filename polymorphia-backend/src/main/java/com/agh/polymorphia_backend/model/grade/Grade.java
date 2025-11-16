@@ -1,8 +1,8 @@
 package com.agh.polymorphia_backend.model.grade;
 
-import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
+import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

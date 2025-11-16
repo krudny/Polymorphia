@@ -1,12 +1,12 @@
 package com.agh.polymorphia_backend.service.validation;
 
-import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserCourseRole;
 import com.agh.polymorphia_backend.model.user.UserType;
+import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.repository.course.AnimalRepository;
 import com.agh.polymorphia_backend.repository.course.CourseRepository;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
@@ -50,7 +50,7 @@ public class AccessAuthorizer {
         boolean isStudentsInstructor = hasInstructorAccessToUserInCourse(user, course, studentId);
 
         if (!isStudentSelf && !isCoordinatorInCourse && !isStudentsInstructor) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Niepoprawne id użytkownika");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Niepoprawne id użytkownika.");
         }
 
     }
@@ -71,7 +71,7 @@ public class AccessAuthorizer {
                 );
 
         if (!isProjectGroupsInstructor && !isCoordinatorInCourse && !isGroupMember) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Niepoprawne id użytkownika lub projektu");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Niepoprawne id użytkownika lub projektu.");
         }
     }
 

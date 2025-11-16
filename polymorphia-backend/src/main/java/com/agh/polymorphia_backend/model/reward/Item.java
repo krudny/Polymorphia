@@ -1,8 +1,8 @@
 package com.agh.polymorphia_backend.model.reward;
 
 
-import com.agh.polymorphia_backend.model.reward.item.ItemType;
 import com.agh.polymorphia_backend.model.event_section.EventSection;
+import com.agh.polymorphia_backend.model.reward.item.ItemType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

@@ -1,8 +1,8 @@
 package com.agh.polymorphia_backend.service.reward;
 
+import com.agh.polymorphia_backend.model.grade.Grade;
 import com.agh.polymorphia_backend.model.reward.FlatBonusItem;
 import com.agh.polymorphia_backend.model.reward.assigned.AssignedItem;
-import com.agh.polymorphia_backend.model.grade.Grade;
 import com.google.ortools.sat.*;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;

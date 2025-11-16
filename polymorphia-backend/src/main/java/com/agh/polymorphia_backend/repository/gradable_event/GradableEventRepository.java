@@ -1,6 +1,8 @@
 package com.agh.polymorphia_backend.repository.gradable_event;
 
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
+import com.agh.polymorphia_backend.repository.gradable_event.projections.InstructorGradableEventProjection;
+import com.agh.polymorphia_backend.repository.gradable_event.projections.StudentGradableEventProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -8,8 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import com.agh.polymorphia_backend.repository.gradable_event.projections.InstructorGradableEventProjection;
-import com.agh.polymorphia_backend.repository.gradable_event.projections.StudentGradableEventProjection;
 
 
 @Repository

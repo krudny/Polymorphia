@@ -17,8 +17,8 @@ import {
   StudentDetailsDTOWithType,
   UserDetailsDTO,
 } from "@/interfaces/api/user";
-import { API_HOST } from "@/services/api";
 import { ApiClient } from "@/services/api/client";
+import { InstructorGradableEventResponseDTO } from "@/interfaces/api/gradable_event/types";
 
 export const studentNames = [
   "Gerard Małoduszny",
@@ -82,19 +82,9 @@ export const EventSectionService = {
   getPointsSummary: async (
     eventSectionId: number
   ): Promise<PointsSummaryResponseDTO> => {
-    const response = await fetch(
-      `${API_HOST}/gradable-events/points-summary?eventSectionId=${eventSectionId}`,
-      {
-        method: "GET",
-        credentials: "include",
-      }
+    return await ApiClient.get<InstructorGradableEventResponseDTO[]>(
+      `/gradable-events/points-summary?eventSectionId=${eventSectionId}`
     );
-
-    if (!response.ok) {
-      throw new Error("Nie udało się pobrać podsumowania!");
-    }
-
-    return await response.json();
   },
 
   getRandomPeopleWithPoints: async (

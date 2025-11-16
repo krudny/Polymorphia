@@ -32,6 +32,5 @@ export default function useGradableEvent(): UseGradableEvent {
     staleTime: 1000 * 60 * 10,
   });
 
-  console.log(data);
   return { data, isLoading, isError };
 }

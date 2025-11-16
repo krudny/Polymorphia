@@ -28,7 +28,7 @@ export default function ProgressBarTextLabels({
   return (
     <div
       className={clsx(
-        `progressbar-text-container ${isHorizontal ? "w-full min-h-16" : "h-full min-w-14"} ${className}`
+        `progressbar-text-container ${isHorizontal ? "w-full min-h-12" : "h-full min-w-14"} ${className}`
       )}
     >
       {textLabels.map((label, i) => {

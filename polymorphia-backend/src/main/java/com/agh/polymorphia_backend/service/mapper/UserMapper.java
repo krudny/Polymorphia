@@ -2,11 +2,11 @@ package com.agh.polymorphia_backend.service.mapper;
 
 import com.agh.polymorphia_backend.dto.response.user_context.BaseUserDetailsResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.StudentDetailsResponseDto;
-import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserType;
+import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.user.UserService;
@@ -57,7 +57,7 @@ public class UserMapper {
             case COORDINATOR -> course.getCoordinatorImageUrl();
             case INSTRUCTOR -> course.getInstructorImageUrl();
             default ->
-                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Błąd pobrania obrazu użytkownika");
+                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Błąd pobrania obrazu użytkownika.");
         };
     }
 }

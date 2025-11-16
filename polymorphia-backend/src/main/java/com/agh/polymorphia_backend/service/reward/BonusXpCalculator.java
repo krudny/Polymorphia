@@ -1,13 +1,13 @@
 package com.agh.polymorphia_backend.service.reward;
 
+import com.agh.polymorphia_backend.model.grade.Grade;
+import com.agh.polymorphia_backend.model.hall_of_fame.StudentScoreDetail;
 import com.agh.polymorphia_backend.model.reward.FlatBonusItem;
 import com.agh.polymorphia_backend.model.reward.Item;
 import com.agh.polymorphia_backend.model.reward.PercentageBonusItem;
 import com.agh.polymorphia_backend.model.reward.assigned.AssignedItem;
 import com.agh.polymorphia_backend.model.reward.item.FlatBonusItemBehavior;
 import com.agh.polymorphia_backend.model.reward.item.ItemType;
-import com.agh.polymorphia_backend.model.grade.Grade;
-import com.agh.polymorphia_backend.model.hall_of_fame.StudentScoreDetail;
 import com.agh.polymorphia_backend.service.grade.GradeService;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
 import lombok.AllArgsConstructor;

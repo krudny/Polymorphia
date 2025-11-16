@@ -4,7 +4,6 @@ import com.agh.polymorphia_backend.dto.request.target.TargetRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.TargetType;
 import com.agh.polymorphia_backend.dto.response.event.BaseGradableEventResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
-import com.agh.polymorphia_backend.model.event_section.EventSection;
 import com.agh.polymorphia_backend.model.event_section.EventSectionType;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEventScope;
@@ -20,7 +19,6 @@ import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;

@@ -2,12 +2,12 @@ package com.agh.polymorphia_backend.repository.user.role;
 
 import com.agh.polymorphia_backend.model.user.student.Student;
 import com.agh.polymorphia_backend.repository.user.UserDetailsRepository;
-
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 public interface StudentRepository

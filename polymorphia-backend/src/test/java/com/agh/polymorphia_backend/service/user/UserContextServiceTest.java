@@ -2,7 +2,8 @@ package com.agh.polymorphia_backend.service.user;
 
 import com.agh.polymorphia_backend.dto.response.user_context.BaseUserDetailsResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
-import com.agh.polymorphia_backend.model.user.*;
+import com.agh.polymorphia_backend.model.user.User;
+import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.model.user.student.Student;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.service.course.CourseService;
