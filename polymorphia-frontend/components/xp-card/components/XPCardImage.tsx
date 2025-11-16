@@ -1,7 +1,7 @@
 import { XPCardImageProps } from "@/components/xp-card/components/types";
 import Image from "next/image";
-import { API_STATIC_URL } from "@/services/api";
 import "./index.css";
+import { API_STATIC_URL } from "@/services/api";
 
 export default function XPCardImage({ imageUrl, alt }: XPCardImageProps) {
   return (
@@ -12,6 +12,7 @@ export default function XPCardImage({ imageUrl, alt }: XPCardImageProps) {
         fill
         priority
         fetchPriority="high"
+        className="object-cover"
       />
     </div>
   );

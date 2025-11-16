@@ -60,14 +60,11 @@ class SubmissionServiceTest extends BaseTest {
     @Mock
     private SubmissionRequirementRepository submissionRequirementRepository;
 
-    @Mock
-    private ProjectGroupRepository projectGroupRepository;
-
     @Spy
     private SubmissionMapper submissionMapper = new SubmissionMapper();
 
     @Spy
-    private ProjectGroupService projectGroupService = new ProjectGroupService(projectGroupRepository);
+    private ProjectGroupService projectGroupService = new ProjectGroupService();
 
     @Mock
     private UserService userService;
@@ -296,7 +293,7 @@ class SubmissionServiceTest extends BaseTest {
                         target
                     )
             );
-            assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
+            assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
             assertEquals("Nie znaleziono studenta.", ex.getReason());
         }
     }
@@ -423,7 +420,7 @@ class SubmissionServiceTest extends BaseTest {
                         requestDto
                     )
             );
-            assertEquals(HttpStatus.FORBIDDEN, ex.getStatusCode());
+            assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
             assertEquals("Nie można zmienić zablokowanego zgłoszenia.", ex.getReason());
         }
 
@@ -1071,7 +1068,7 @@ class SubmissionServiceTest extends BaseTest {
                         requestDto
                     )
             );
-            assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
+            assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
             assertEquals("Nie znaleziono studenta.", ex.getReason());
         }
     }

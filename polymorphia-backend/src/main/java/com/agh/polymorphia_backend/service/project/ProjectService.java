@@ -53,7 +53,7 @@ public class ProjectService {
                 .stream()
                 .filter(group -> group.getId().equals(projectGroupId))
                 .findFirst()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono grupy projektowej"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono grupy projektowej."));
 
         accessAuthorizer.authorizeCourseAccess(course);
         accessAuthorizer.authorizeProjectGroupDetailsAccess(projectGroup);
@@ -83,7 +83,7 @@ public class ProjectService {
                 .findFirst()
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
-                        "No project group found for this animal"
+                        "Zwierzak nie jest przypisany do żadnej grupy projektowej."
                 ));
     }
 
@@ -99,6 +99,6 @@ public class ProjectService {
 
     public Project getProjectGradableEvent(Long projectId) {
         return projectRepository.findById(projectId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Projekt nie został znaleziony"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Projekt nie został znaleziony."));
     }
 }

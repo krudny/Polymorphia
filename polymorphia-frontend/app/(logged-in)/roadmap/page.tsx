@@ -11,19 +11,24 @@ import { StudentGradableEventResponseDTO } from "@/interfaces/api/course";
 import { useRoadmap } from "@/hooks/course/useRoadmap";
 import RoadmapCard from "@/components/xp-card/RoadmapCard";
 import GradeModal from "@/components/speed-dial/modals/grade";
+import ErrorComponent from "@/components/error";
 
 export default function Roadmap() {
   const [selectedEvent, setSelectedEvent] = useState<
     StudentGradableEventResponseDTO | undefined
   >(undefined);
   const wrapperRef = useFadeInAnimate();
-  const { data: roadmap, isLoading } = useRoadmap();
+  const { data: roadmap, isLoading, isError } = useRoadmap();
   const isXL = useMediaQuery({ minWidth: 1280 });
   const isMd = useMediaQuery({ minWidth: 768 });
   const isSm = useMediaQuery({ minWidth: 400 });
 
-  if (isLoading || !roadmap) {
+  if (isLoading) {
     return <Loading />;
+  }
+
+  if (isError || !roadmap) {
+    return <ErrorComponent message="Nie udało się załadować danych." />;
   }
 
   const handleClick = (gradableEvent: StudentGradableEventResponseDTO) => {
@@ -31,7 +36,11 @@ export default function Roadmap() {
   };
 
   const cards = roadmap.map((gradableEvent) => (
-    <RoadmapCard gradableEvent={gradableEvent} onCardClicked={handleClick} />
+    <RoadmapCard
+      key={gradableEvent.id}
+      gradableEvent={gradableEvent}
+      onCardClicked={handleClick}
+    />
   ));
 
   const cardHeightWithGap = isXL ? 8 : isMd ? 6.5 : isSm ? 9 : 7;

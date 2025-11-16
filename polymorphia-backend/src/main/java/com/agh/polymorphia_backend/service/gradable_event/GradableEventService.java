@@ -47,7 +47,7 @@ public class GradableEventService {
                 && userRole != UserType.COORDINATOR
                 && (gradableEvent.getIsHidden()
                 || gradableEvent.getEventSection().getIsHidden())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Gradable event nie istnieje");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wydarzenie nie istnieje.");
         }
 
         return gradableEvent;
@@ -103,7 +103,7 @@ public class GradableEventService {
     private GradableEvent fetchGradableEvent(Long gradableEventId) {
         return gradableEventRepository
                 .findById(gradableEventId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Gradable event not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Wydarzenie nie zostało znalezione."));
     }
 
     private Function<GradableEvent, BaseGradableEventResponseDto> getMapperFunction(UserType userRole, EventSection eventSection, Long courseId,

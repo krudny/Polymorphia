@@ -34,9 +34,6 @@ export default function usePreferredCourseUpdate({
         });
       }
     },
-    onError: () => {
-      toast.error("Nie udało się zmienić kursu!");
-    },
   });
 
   return setPreferredCourseMutation.mutate;

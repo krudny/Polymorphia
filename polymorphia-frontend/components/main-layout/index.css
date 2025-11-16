@@ -2,8 +2,12 @@
 @import "../../styles/globals.css";
 
 .main-layout {
-  @apply w-full h-full flex flex-col min-h-[calc(100dvh)] relative overflow-x-hidden custom-scrollbar;
+  @apply w-full h-full flex flex-col min-h-[calc(100dvh)] relative overflow-x-hidden custom-scrollbar mr-24;
   scrollbar-gutter: stable both;
+}
+
+#main-container[screen-size="sm"] {
+  @apply pb-20;
 }
 
 .main-layout-title {

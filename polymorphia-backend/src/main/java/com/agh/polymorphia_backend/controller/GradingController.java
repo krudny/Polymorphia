@@ -24,7 +24,7 @@ public class GradingController {
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<Void> processTestGradeCSV(@RequestBody TestGradingRequestDto request) {
         testGradingCSVProcessor.process(request);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping()

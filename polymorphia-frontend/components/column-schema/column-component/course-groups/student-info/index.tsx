@@ -18,6 +18,8 @@ import { getKeyForSelectedTarget } from "@/providers/grading/utils/getKeyForSele
 import Loading from "@/components/loading";
 import useStudentItems from "@/hooks/course/useStudentItems";
 import useStudentChests from "@/hooks/course/useStudentChests";
+import ErrorComponent from "@/components/error";
+import { ErrorComponentSizes } from "@/components/error/types";
 
 const SECTION_IDS = new Set(["student-summary", "items", "chests"]);
 const INITIALLY_OPENED = new Set(["student-summary"]);
@@ -72,9 +74,11 @@ export default function StudentInfo() {
                 <Loading />
               </div>
             ) : (
-              // TODO(OG-112): handle error
               <div className="course-group-loading">
-                <h1>Nie udało się załadować szczegółów studenta.</h1>
+                <ErrorComponent
+                  message="Nie udało się załadować szczegółów studenta."
+                  size={ErrorComponentSizes.COMPACT}
+                />
               </div>
             )}
           </SwapAnimationWrapper>
@@ -101,9 +105,11 @@ export default function StudentInfo() {
                 <Loading />
               </div>
             ) : (
-              // TODO(OG-112): handle error
               <div className="course-group-loading">
-                <h1>Nie udało się załadować przedmiotów.</h1>
+                <ErrorComponent
+                  message="Nie udało się załadować przedmiotów."
+                  size={ErrorComponentSizes.COMPACT}
+                />
               </div>
             )}
           </SwapAnimationWrapper>
@@ -131,9 +137,11 @@ export default function StudentInfo() {
                 <Loading />
               </div>
             ) : (
-              // TODO(OG-112): handle error
               <div className="course-group-loading">
-                <h1>Nie udało się załadować skrzynek.</h1>
+                <ErrorComponent
+                  message="Nie udało się załadować skrzynek."
+                  size={ErrorComponentSizes.COMPACT}
+                />
               </div>
             )}
           </SwapAnimationWrapper>

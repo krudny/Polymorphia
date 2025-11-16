@@ -2,7 +2,6 @@ package com.agh.polymorphia_backend.service.validation;
 
 import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
-import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.User;
@@ -28,10 +27,6 @@ import static com.agh.polymorphia_backend.service.course.CourseService.COURSE_NO
 @Service
 @AllArgsConstructor
 public class AccessAuthorizer {
-    private final static String USER_COURSE_ROLE_NOT_FOUND = "User course role not found";
-    private final static String BAD_USER_OR_PROJECT = "Niepoprawne id użytkownika lub projektu";
-    private final static String BAD_USER = "Niepoprawne id użytkownika";
-
     private final UserService userService;
     private final UserCourseRoleRepository userCourseRoleRepository;
     private final InstructorRepository instructorRepository;
@@ -46,8 +41,7 @@ public class AccessAuthorizer {
         authorizeCourseAccess(course);
     }
 
-    public void authorizeStudentDataAccess(GradableEvent gradableEvent, Long studentId) {
-        Course course = gradableEvent.getEventSection().getCourse();
+    public void authorizeStudentDataAccess(Course course, Long studentId) {
         authorizeCourseAccess(course);
         User user = userService.getCurrentUser().getUser();
 
@@ -56,7 +50,7 @@ public class AccessAuthorizer {
         boolean isStudentsInstructor = hasInstructorAccessToUserInCourse(user, course, studentId);
 
         if (!isStudentSelf && !isCoordinatorInCourse && !isStudentsInstructor) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, BAD_USER);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Niepoprawne id użytkownika.");
         }
 
     }
@@ -77,7 +71,7 @@ public class AccessAuthorizer {
                 );
 
         if (!isProjectGroupsInstructor && !isCoordinatorInCourse && !isGroupMember) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, BAD_USER_OR_PROJECT);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Niepoprawne id użytkownika lub projektu.");
         }
     }
 
@@ -97,7 +91,7 @@ public class AccessAuthorizer {
 
         UserCourseRole userCourseRole = userCourseRoleRepository
                 .findByUserIdAndCourseId(user.getId(), course.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, USER_COURSE_ROLE_NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono roli użytkownika w kursie."));
 
         if (userCourseRole.getRole() == UserType.STUDENT) {
             Optional<Animal> animal = animalRepository.findByCourseIdAndStudentId(course.getId(), user.getId());

@@ -27,7 +27,6 @@ export default function usePickChestItems(): UsePickChestItems {
         {
           loading: "Otwieranie skrzynki...",
           success: "Skrzynka otwarta pomyślnie!",
-          error: "Wystąpił błąd podczas otwierania skrzynki",
         }
       );
     },

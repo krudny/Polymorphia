@@ -34,7 +34,7 @@ public class EquipmentController {
     @PreAuthorize("hasAnyAuthority('STUDENT')")
     public ResponseEntity<Void> openChest(@RequestParam Long courseId, @RequestBody EquipmentChestOpenRequestDto requestDto) {
         equipmentService.openChest(courseId, requestDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/chests/potential-xp")

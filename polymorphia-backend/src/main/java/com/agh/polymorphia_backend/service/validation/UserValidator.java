@@ -11,8 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 @Component
 @AllArgsConstructor
 public class UserValidator {
-    public static final String USER_ALREADY_REGISTERED = "User has already been registered";
-    public static final String USER_ALREADY_EXISTS = "User already exists";
+    private static final String USER_ALREADY_EXISTS = "Użytkownik już istnieje.";
 
     private final UserRepository userRepository;
     private final StudentRepository studentRepository;
@@ -33,7 +32,7 @@ public class UserValidator {
 
     public void validateUserRegistered(User user) {
         if (user.getPassword() != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, USER_ALREADY_REGISTERED);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Użytkownik został już zarejestrowany.");
         }
     }
 }

@@ -5,11 +5,11 @@ import { UseStudentProfile } from "@/hooks/course/useStudentProfile/types";
 
 export default function useStudentProfile(): UseStudentProfile {
   const { courseId } = useUserDetails();
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["studentProfile", courseId],
     queryFn: () => UserService.getStudentProfile(courseId),
     refetchOnWindowFocus: false,
   });
 
-  return { data, isLoading, error };
+  return { data, isLoading, isError };
 }

@@ -13,9 +13,6 @@ export default function useInviteUser(): UseInviteUser {
       toast.success("Wysłano zaproszenie na maila!");
       closeModal();
     },
-    onError: ({ message }: Error) => {
-      toast.error(message);
-    },
   });
 
   return { mutation };
