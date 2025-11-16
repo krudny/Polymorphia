@@ -1,5 +1,7 @@
 package com.agh.polymorphia_backend.service.gradable_event;
 
+import com.agh.polymorphia_backend.model.course.Animal;
+import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.gradable_event.Grade;
 import com.agh.polymorphia_backend.repository.gradable_event.GradeRepository;
 import lombok.AllArgsConstructor;
@@ -18,6 +20,26 @@ public class GradeService {
     }
 
     public Optional<Grade> getGradeByAnimalIdAndGradableEventId(Long animalId, Long gradableEventId) {
-        return gradeRepository.findAllByAnimalIdAndGradableEventId(animalId, gradableEventId);
+        return gradeRepository.findByAnimalIdAndGradableEventId(animalId, gradableEventId);
     }
+
+    public Grade getOrCreateGrade(Animal animal, GradableEvent gradableEvent, String comment) {
+        return getGradeByAnimalIdAndGradableEventId(animal.getId(), gradableEvent.getId())
+                .orElse(createGrade(animal, gradableEvent, comment));
+
+    }
+
+    public void saveGrade(Grade grade) {
+        gradeRepository.save(grade);
+    }
+
+
+    private Grade createGrade(Animal animal, GradableEvent gradableEvent, String comment) {
+        return Grade.builder()
+                .animal(animal)
+                .gradableEvent(gradableEvent)
+                .comment(comment)
+                .build();
+    }
+
 }

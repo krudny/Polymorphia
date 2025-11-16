@@ -117,7 +117,7 @@ public class EquipmentService {
         assignedChest.setUsedDate(openDate);
         assignedChest.getAssignedItems().addAll(assignedItems);
 
-        assignedRewardService.saveAssignedChest(assignedChest);
+        assignedRewardService.saveAssignedChest(List.of(assignedChest));
         assignedRewardService.saveAssignedItems(assignedItems);
         bonusXpCalculator.updateAnimalFlatBonusXp(animalId);
         bonusXpCalculator.updateAnimalPercentageBonusXp(animalId);
@@ -153,7 +153,7 @@ public class EquipmentService {
         }
 
         return List.of(
-                assignedRewardService.createAssignedItem(assignedChest, item, openDate)
+                assignedRewardService.createAssignedItem(Optional.of(assignedChest), assignedChest.getCriterionGrade(), item, openDate)
         );
     }
 
@@ -192,7 +192,7 @@ public class EquipmentService {
                 .getItems().stream()
                 .map(i -> (Item) Hibernate.unproxy(i))
                 .filter(i -> !assignedRewardService.isLimitReached(i))
-                .map(item -> assignedRewardService.createAssignedItem(assignedChest, item, openDate))
+                .map(item -> assignedRewardService.createAssignedItem(Optional.of(assignedChest), assignedChest.getCriterionGrade(), item, openDate))
                 .collect(Collectors.toList());
     }
 

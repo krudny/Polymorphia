@@ -1053,6 +1053,11 @@ VALUES
   (31, 31, 'Laboratorium', 4.0),
   (32, 32, 'Laboratorium', 4.0),
   (33, 33, 'Git', 10.0);
+
+insert into criteria_rewards(criterion_id, reward_id, max_amount)
+values (14,101,1),
+       (14,2,2);
+
 INSERT INTO
   grades (id, gradable_event_id, animal_id, created_date, modified_date, comment)
 VALUES

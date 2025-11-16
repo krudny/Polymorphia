@@ -2,6 +2,7 @@ package com.agh.polymorphia_backend.service.validation;
 
 import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
+import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.User;
@@ -45,7 +46,8 @@ public class AccessAuthorizer {
         authorizeCourseAccess(course);
     }
 
-    public void authorizeStudentDataAccess(Course course, Long studentId) {
+    public void authorizeStudentDataAccess(GradableEvent gradableEvent, Long studentId) {
+        Course course = gradableEvent.getEventSection().getCourse();
         authorizeCourseAccess(course);
         User user = userService.getCurrentUser().getUser();
 
@@ -122,13 +124,19 @@ public class AccessAuthorizer {
         };
     }
 
+    public void authorizeProjectGroupGrading(ProjectGroup projectGroup) {
+        User user = userService.getCurrentUser().getUser();
+        boolean isProjectGroupInstructor = projectGroup.getInstructor().getUserId().equals(user.getId());
+        boolean isCoordinator = isCourseAccessAuthorizedCoordinator(user, projectGroup.getProject().getEventSection().getCourse());
+
+        if (!isProjectGroupInstructor && !isCoordinator) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, BAD_USER_OR_PROJECT);
+        }
+    }
+
     private boolean hasInstructorAccessToUserInCourse(User user, Course course, Long studentId) {
         return instructorRepository.hasAccessToStudentInCourse(user.getId(), course.getId(), studentId);
     }
-
-//    private boolean hasInstructorAccessToUserInCourse(User user, Course course, Long studentId) {
-//        return instructorRepository.hasAccessToStudentInCourse(user.getId(), course.getId(), studentId);
-//    }
 
     private boolean isCourseAccessAuthorizedCoordinator(User user, Course course) {
         return course.getCoordinator().getUser().equals(user);

@@ -56,7 +56,7 @@ public class ShortGradeService {
     private StudentShortGradeResponseDto getShortGradeStudent(GradableEvent gradableEvent, Long studentId) {
         Course course = gradableEvent.getEventSection().getCourse();
 
-        accessAuthorizer.authorizeStudentDataAccess(course, studentId);
+        accessAuthorizer.authorizeStudentDataAccess(gradableEvent, studentId);
         Animal animal = animalService.getAnimal(studentId, course.getId());
         Optional<Grade> grade = gradeService.getGradeByAnimalIdAndGradableEventId(animal.getId(), gradableEvent.getId());
         List<CriterionGradeResponseDto> criteriaGrades = grade.map(criterionGradeService::getCriteriaGrades)

@@ -1,6 +1,8 @@
 package com.agh.polymorphia_backend.service.course.reward;
 
+import com.agh.polymorphia_backend.dto.request.reward.ShortAssignedRewardRequestDto;
 import com.agh.polymorphia_backend.model.course.Animal;
+import com.agh.polymorphia_backend.model.course.reward.Chest;
 import com.agh.polymorphia_backend.model.course.reward.FlatBonusItem;
 import com.agh.polymorphia_backend.model.course.reward.Item;
 import com.agh.polymorphia_backend.model.course.reward.Reward;
@@ -22,12 +24,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -39,6 +39,7 @@ public class AssignedRewardService {
     private final AssignedItemRepository assignedItemRepository;
     private final AnimalService animalService;
     private final UserService userService;
+    private final RewardService rewardService;
 
     public List<AssignedChest> getAnimalAssignedChests(Long animalId) {
         return assignedChestRepository.findAnimalAssignedChests(animalId);
@@ -61,7 +62,6 @@ public class AssignedRewardService {
         return filterAssignedItemsByType(getAnimalAssignedItems(animalId), itemType);
 
     }
-
 
     public Map<Long, BigDecimal> getTotalBonusByEventSection(List<AssignedItem> assignedItems) {
         Map<Long, BigDecimal> totalBonusByEventSection = new HashMap<>();
@@ -89,15 +89,50 @@ public class AssignedRewardService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, NO_ASSIGNED_CHEST_FOUND));
     }
 
-    public AssignedItem createAssignedItem(AssignedChest assignedChest, Item item, ZonedDateTime openDate) {
+    public List<AssignedReward> fetchOrCreateAssignedRewards(ShortAssignedRewardRequestDto request, CriterionGrade criterionGrade) {
+        Reward reward = rewardService.findById(request.getRewardId());
+
+        return switch (reward.getRewardType()) {
+            case ITEM -> regulateAssignedItemsQuantity(
+                    request.getQuantity(),
+                    criterionGrade,
+                    reward.getId(),
+                    assignedItemRepository::findByCriterionGrade,
+                    () -> createAssignedItem(
+                            Optional.empty(),
+                            criterionGrade,
+                            (Item) Hibernate.unproxy(reward),
+                            ZonedDateTime.now()
+                    )
+            );
+            case CHEST -> regulateAssignedItemsQuantity(
+                    request.getQuantity(),
+                    criterionGrade,
+                    reward.getId(),
+                    assignedChestRepository::findByCriterionGrade,
+                    () -> createAssignedChest((Chest) Hibernate.unproxy(reward), criterionGrade)
+            );
+        };
+    }
+
+    public AssignedItem createAssignedItem(Optional<AssignedChest> assignedChest, CriterionGrade criterionGrade, Item item, ZonedDateTime openDate) {
         return AssignedItem.builder()
                 .reward(item)
-                .assignedChest(assignedChest)
+                .assignedChest(assignedChest.orElse(null))
                 .reward(item)
-                .criterionGrade(assignedChest.getCriterionGrade())
+                .criterionGrade(criterionGrade)
                 .isUsed(false)
                 .bonusXp(BigDecimal.valueOf(0.0))
                 .receivedDate(openDate)
+                .build();
+    }
+
+    public AssignedChest createAssignedChest(Chest chest, CriterionGrade criterionGrade) {
+        return AssignedChest.builder()
+                .reward(chest)
+                .isUsed(false)
+                .receivedDate(ZonedDateTime.now())
+                .criterionGrade(criterionGrade)
                 .build();
     }
 
@@ -147,8 +182,8 @@ public class AssignedRewardService {
     }
 
 
-    public void saveAssignedChest(AssignedChest chest) {
-        assignedChestRepository.save(chest);
+    public void saveAssignedChest(List<AssignedChest> chests) {
+        assignedChestRepository.saveAll(chests);
     }
 
     public void saveAssignedItems(List<AssignedItem> items) {
@@ -183,5 +218,27 @@ public class AssignedRewardService {
                 )
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
+    }
+
+    private <T extends AssignedReward> List<AssignedReward> regulateAssignedItemsQuantity(
+            int quantity,
+            CriterionGrade criterionGrade,
+            Long rewardId,
+            Function<CriterionGrade, List<T>> assignedRewardFetcher,
+            Supplier<T> creator
+    ) {
+        List<AssignedReward> rewards = assignedRewardFetcher.apply(criterionGrade).stream()
+                .filter(r -> r.getReward().getId().equals(rewardId))
+                .collect(Collectors.toList());
+
+        while (rewards.size() < quantity) {
+            rewards.add(creator.get());
+        }
+
+        if (rewards.size() > quantity) {
+            return rewards.subList(0, quantity);
+        }
+
+        return rewards;
     }
 }

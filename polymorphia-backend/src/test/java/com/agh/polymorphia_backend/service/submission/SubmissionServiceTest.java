@@ -60,11 +60,14 @@ class SubmissionServiceTest extends BaseTest {
     @Mock
     private SubmissionRequirementRepository submissionRequirementRepository;
 
+    @Mock
+    private ProjectGroupRepository projectGroupRepository;
+
     @Spy
     private SubmissionMapper submissionMapper = new SubmissionMapper();
 
     @Spy
-    private ProjectGroupService projectGroupService = new ProjectGroupService();
+    private ProjectGroupService projectGroupService = new ProjectGroupService(projectGroupRepository);
 
     @Mock
     private UserService userService;

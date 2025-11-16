@@ -412,6 +412,19 @@ export const EventSectionService = {
   },
 
   submitGrade: async (gradeData: GradeRequestDTO): Promise<void> => {
-    await new Promise<void>((resolve) => setTimeout(resolve, 200));
+    const response = await fetch(`${API_HOST}/grading`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ gradeData }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Nie udało się ocenić wydarzenia!");
+    }
+
+    return await response.json();
   },
 };
