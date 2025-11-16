@@ -106,7 +106,7 @@ class ProfileServiceTest extends BaseTest {
 
         when(courseService.getCourseById(course.getId())).thenReturn(course);
         when(userService.getCurrentUser()).thenReturn(student);
-        when(hallOfFameService.getStudentHallOfFame(animal)).thenReturn(hallOfFame);
+        when(hallOfFameService.getStudentHallOfFame(user.getId(), course.getId())).thenReturn(hallOfFame);
         when(animalService.getAnimal(user.getId(), course.getId())).thenReturn(animal);
         when(hallOfFameService.groupScoreDetails(List.of(animal.getId())))
                 .thenReturn(Map.of(animal.getId(), xpDetails));
@@ -115,7 +115,6 @@ class ProfileServiceTest extends BaseTest {
         when(profileMapper.toEvolutionStageThresholdResponseDto(stage1)).thenReturn(stageDto1);
         when(profileMapper.toEvolutionStageThresholdResponseDto(stage2)).thenReturn(stageDto2);
         when(hallOfFameRepository.countByCourseIdAndFilters(any())).thenReturn(42L);
-        when(animalService.getAnimal(user.getId(), course.getId())).thenReturn(animal);
 
         ProfileResponseDto result = profileService.getProfile(course.getId());
 

@@ -28,7 +28,6 @@ public class AnimalService {
     private final UserService userService;
     private final StudentCourseGroupRepository studentCourseGroupRepository;
     private final StudentRepository studentRepository;
-    private final CourseService courseService;
     private final AccessAuthorizer accessAuthorizer;
 
     public Animal getAnimal(Long userId, Long courseId) {
@@ -44,13 +43,20 @@ public class AnimalService {
     public Long validateAndGetAnimalId(Long courseId) {
         accessAuthorizer.authorizeCourseAccess(courseId);
         AbstractRoleUser student = userService.getCurrentUser();
-
         return getAnimal(student.getUserId(), courseId).getId();
     }
 
     public boolean hasAnimalInCourse(Long courseId) {
         User user = userService.getCurrentUser().getUser();
         return animalRepository.findByCourseIdAndStudentId(courseId, user.getId()).isPresent();
+    }
+
+    public Long getAnimalIdForAssignedChest(Long assignedChestId){
+        return animalRepository.findByAssignedChestId(assignedChestId);
+    }
+
+    public Long getStudentIdForAnimalId(Long animalId){
+        return studentCourseGroupRepository.getStudentIdByAnimalId(animalId);
     }
 
     @Transactional

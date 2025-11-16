@@ -36,12 +36,14 @@ public class AccessAuthorizer {
 
     public void authorizeCourseAccess(Long courseId) {
         Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, COURSE_NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, COURSE_NOT_FOUND));
 
         authorizeCourseAccess(course);
     }
 
-    public void authorizeStudentDataAccess(Course course, Long studentId) {
+    public void authorizeStudentDataAccess(Long courseId, Long studentId) {
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, COURSE_NOT_FOUND));
         authorizeCourseAccess(course);
         User user = userService.getCurrentUser().getUser();
 

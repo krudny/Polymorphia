@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AssignedChestRepository extends JpaRepository<AssignedChest, Long> {
     @Query(value = """
@@ -21,4 +22,11 @@ public interface AssignedChestRepository extends JpaRepository<AssignedChest, Lo
     List<AssignedChest> findByCriterionGrade(CriterionGrade criterionGrade);
 
 
+    @Query(value = """
+            SELECT ac
+            FROM AssignedChest ac
+            JOIN AssignedReward ar ON ar.id = ac.id
+            WHERE ar.isUsed = false AND ac.id = :assignedChestId
+            """)
+    Optional<AssignedChest> findNotUsedAssignedChestsById(Long assignedChestId);
 }

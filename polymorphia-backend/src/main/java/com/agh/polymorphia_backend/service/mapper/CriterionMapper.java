@@ -15,9 +15,9 @@ import java.util.List;
 public class CriterionMapper {
     private final RewardMapper rewardMapper;
 
-    public CriterionResponseDto toCriterionResponseDto(Criterion criterion) {
+    public CriterionResponseDto toCriterionResponseDto(Criterion criterion, Long animalId) {
         List<CriterionAssignableRewardResponseDto> assignableRewards = criterion.getAssignableRewards().stream()
-                .map(this::toCriterionAssignableRewardResponseDto)
+                .map(criterionReward -> toCriterionAssignableRewardResponseDto(criterionReward, animalId))
                 .toList();
 
         return CriterionResponseDto.builder()
@@ -28,10 +28,10 @@ public class CriterionMapper {
                 .build();
     }
 
-    private CriterionAssignableRewardResponseDto toCriterionAssignableRewardResponseDto(CriterionReward criterionReward) {
+    private CriterionAssignableRewardResponseDto toCriterionAssignableRewardResponseDto(CriterionReward criterionReward, Long animalId) {
         return CriterionAssignableRewardResponseDto.builder()
                 .maxAmount(criterionReward.getMaxAmount())
-                .assignableReward(rewardMapper.rewardToRewardResponseDtoWithType(criterionReward.getReward()))
+                .assignableReward(rewardMapper.rewardToRewardResponseDtoWithType(criterionReward.getReward(), animalId))
                 .build();
     }
 }

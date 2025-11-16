@@ -10,7 +10,6 @@ import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.StudentScoreDetailRepository;
-import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.mapper.HallOfFameMapper;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.user.UserService;
@@ -34,7 +33,7 @@ import static com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry.*;
 @Service
 @AllArgsConstructor
 public class HallOfFameService {
-    public static final String STUDENT_HOF_NOT_FOUND = "Brak wyników studenta w Hall of Fame";
+    public static final String STUDENT_HOF_NOT_FOUND = "Brak wyników studenta.";
     private static final Set<String> INVERT_POSITION_FOR = Set.of(
             FIELD_TOTAL_XP_SUM,
             FIELD_TOTAL_BONUS_SUM
@@ -52,7 +51,8 @@ public class HallOfFameService {
         return direction.isAscending() ? Sort.Direction.DESC : Sort.Direction.ASC;
     }
 
-    public HallOfFameEntry getStudentHallOfFame(Animal animal) {
+    public HallOfFameEntry getStudentHallOfFame(Long studentId, Long courseId) {
+        Animal animal = animalService.getAnimal(studentId, courseId);
         return hallOfFameRepository.findByAnimalId(animal.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, STUDENT_HOF_NOT_FOUND));
     }

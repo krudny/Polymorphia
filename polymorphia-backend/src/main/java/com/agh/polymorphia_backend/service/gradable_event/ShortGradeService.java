@@ -54,10 +54,10 @@ public class ShortGradeService {
     }
 
     private StudentShortGradeResponseDto getShortGradeStudent(GradableEvent gradableEvent, Long studentId) {
-        Course course = gradableEvent.getEventSection().getCourse();
+        Long courseId = gradableEvent.getEventSection().getCourse().getId();
 
-        accessAuthorizer.authorizeStudentDataAccess(course, studentId);
-        Animal animal = animalService.getAnimal(studentId, course.getId());
+        accessAuthorizer.authorizeStudentDataAccess(courseId, studentId);
+        Animal animal = animalService.getAnimal(studentId, courseId);
         Optional<Grade> grade = gradeService.getGradeByAnimalIdAndGradableEventId(animal.getId(), gradableEvent.getId());
         List<CriterionGradeResponseDto> criteriaGrades = grade.map(criterionGradeService::getCriteriaGrades)
                 .orElse(Collections.emptyList());

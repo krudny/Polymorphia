@@ -28,6 +28,7 @@ public class PointsSummaryMapper {
             List<AssignedItem> flatBonusItems,
             List<AssignedItem> percentageBonusItems
     ) {
+        Long animalId = studentScoreDetail.getAnimalId();
         BigDecimal rawXp = studentScoreDetail.getRawXp();
         BigDecimal flatBonus = studentScoreDetail.getFlatBonus();
         BigDecimal percentageBonus = bonusXpCalculator.percentsToPercentageBonusXp(
@@ -38,8 +39,8 @@ public class PointsSummaryMapper {
 
         return PointsSummaryResponseDto.builder()
                 .gained(toPointsSummaryDetailsWithoutItems(rawXp, GAINED))
-                .flatBonus(toPointsSummaryDetailsWithItems(flatBonus, FLAT_BONUS, flatBonusItems))
-                .percentageBonus(toPointsSummaryDetailsWithItems(percentageBonus, PERCENTAGE_BONUS, percentageBonusItems))
+                .flatBonus(toPointsSummaryDetailsWithItems(animalId, flatBonus, FLAT_BONUS, flatBonusItems))
+                .percentageBonus(toPointsSummaryDetailsWithItems(animalId, percentageBonus, PERCENTAGE_BONUS, percentageBonusItems))
                 .total(toPointsSummaryDetailsWithoutItems(total, TOTAL))
                 .build();
     }
@@ -51,9 +52,9 @@ public class PointsSummaryMapper {
                 .build();
     }
 
-    private PointsSummaryDetailsResponseDto toPointsSummaryDetailsWithItems(BigDecimal points, String title, List<AssignedItem> assignedItems) {
+    private PointsSummaryDetailsResponseDto toPointsSummaryDetailsWithItems(Long animalId, BigDecimal points, String title, List<AssignedItem> assignedItems) {
         List<AssignedRewardResponseDto> items = assignedItems.stream()
-                .map(assignedRewardMapper::itemToAssignedRewardDtoWithType)
+                .map(assignedItem -> assignedRewardMapper.itemToAssignedRewardDtoWithType(assignedItem, animalId))
                 .sorted(Comparator.comparing(item -> item.base().getOrderIndex()))
                 .toList();
 

@@ -25,31 +25,35 @@ import java.util.List;
 public class RewardMapper {
     private final AssignedRewardService assignedRewardService;
 
-    public BaseRewardResponseDtoWithType rewardToRewardResponseDtoWithType(Reward reward) {
+    public BaseRewardResponseDtoWithType rewardToRewardResponseDtoWithType(Reward reward, Long animalId) {
         return BaseRewardResponseDtoWithType.builder()
                 .rewardType(reward.getRewardType())
-                .reward(rewardToRewardResponseDto(reward))
+                .reward(rewardToRewardResponseDto(reward, animalId))
                 .build();
     }
 
     public BaseRewardResponseDto rewardToRewardResponseDto(Reward reward) {
+        return baseRewardToBaseRewardResponseDto(BaseRewardResponseDto.builder(), reward);
+    }
+
+    public BaseRewardResponseDto rewardToRewardResponseDto(Reward reward, Long animalId) {
         return switch (reward.getRewardType()) {
-            case ITEM -> itemToRewardResponseDto((Item) Hibernate.unproxy(reward));
-            case CHEST -> chestToRewardResponseDto((Chest) Hibernate.unproxy(reward));
+            case ITEM -> itemToRewardResponseDto((Item) Hibernate.unproxy(reward), animalId);
+            case CHEST -> chestToRewardResponseDto((Chest) Hibernate.unproxy(reward), animalId);
         };
     }
 
-    public BaseRewardResponseDto chestToRewardResponseDto(Chest chest) {
+    public BaseRewardResponseDto chestToRewardResponseDto(Chest chest, Long animalId) {
         ChestResponseDtoBase.ChestResponseDtoBaseBuilder builder =
                 ChestResponseDtoBase.builder()
                         .behaviorText(chest.getBehavior().getTextValue())
                         .behavior(chest.getBehavior())
-                        .chestItems(relatedRewardsToResponseDto(chest.getItems()));
+                        .chestItems(relatedRewardsToResponseDto(chest.getItems(), animalId));
 
         return baseRewardToBaseRewardResponseDto(builder, chest);
     }
 
-    public BaseRewardResponseDto itemToRewardResponseDto(Item item) {
+    public BaseRewardResponseDto itemToRewardResponseDto(Item item, Long animalId) {
         String eventSectionName = item.getEventSection().getName();
         ItemResponseDtoBase.ItemResponseDtoBaseBuilder builder = switch (item.getItemType()) {
             case FLAT_BONUS -> {
@@ -73,12 +77,19 @@ public class RewardMapper {
                 builder
                         .limit(item.getLimit())
                         .eventSectionId(item.getEventSection().getId())
-                        .isLimitReached(assignedRewardService.isLimitReached(item))
+                        .isLimitReached(assignedRewardService.isLimitReached(item, animalId))
                 , item
 
         );
     }
 
+
+    public <T extends Reward> List<BaseRewardResponseDto> relatedRewardsToResponseDto(List<T> rewards, Long animalId) {
+        return rewards.stream()
+                .map(reward -> rewardToRewardResponseDto(reward, animalId))
+                .sorted(Comparator.comparing(BaseRewardResponseDto::getOrderIndex))
+                .toList();
+    }
 
     public <T extends Reward> List<BaseRewardResponseDto> relatedRewardsToResponseDto(List<T> rewards) {
         return rewards.stream()
@@ -87,30 +98,23 @@ public class RewardMapper {
                 .toList();
     }
 
-    public List<EquipmentItemResponseDto> itemsToEquipmentResponseDto(List<Item> items) {
+    public List<EquipmentItemResponseDto> itemsToEquipmentResponseDto(List<Item> items, Long animalId) {
         return items.stream()
-                .map(this::itemToEquipmentResponseDto)
+                .map(item -> EquipmentItemResponseDto.builder()
+                        .base(rewardToRewardResponseDto(item, animalId))
+                        .details(Collections.emptyList())
+                        .build()
+                )
                 .toList();
     }
 
-    public List<EquipmentChestResponseDto> chestsToEquipmentResponseDto(List<Chest> chests) {
+    public List<EquipmentChestResponseDto> chestsToEquipmentResponseDto(List<Chest> chests, Long animalId) {
         return chests.stream()
-                .map(this::chestToEquipmentResponseDto)
+                .map(chest -> EquipmentChestResponseDto.builder()
+                        .base(rewardToRewardResponseDto(chest, animalId))
+                        .details(ChestAssignmentDetailsResponseDto.builder().build())
+                        .build())
                 .toList();
-    }
-
-    private EquipmentChestResponseDto chestToEquipmentResponseDto(Chest chest) {
-        return EquipmentChestResponseDto.builder()
-                .base(rewardToRewardResponseDto(chest))
-                .details(ChestAssignmentDetailsResponseDto.builder().build())
-                .build();
-    }
-
-    private EquipmentItemResponseDto itemToEquipmentResponseDto(Item item) {
-        return EquipmentItemResponseDto.builder()
-                .base(rewardToRewardResponseDto(item))
-                .details(Collections.emptyList())
-                .build();
     }
 
     private <T extends BaseRewardResponseDto.BaseRewardResponseDtoBuilder<?, ?>>

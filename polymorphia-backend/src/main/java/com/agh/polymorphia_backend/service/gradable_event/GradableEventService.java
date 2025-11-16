@@ -83,9 +83,11 @@ public class GradableEventService {
         GradableEvent gradableEvent = getGradableEventById(gradableEventId);
         Course course = gradableEvent.getEventSection().getCourse();
         accessAuthorizer.authorizeCourseAccess(course);
+        // TODO: fix for instructor and coordinator
+        Long animalId = animalService.getAnimalIdForCurrentUser(course.getId());
 
         return gradableEvent.getCriteria().stream()
-                .map(criterionMapper::toCriterionResponseDto)
+                .map(criterion -> criterionMapper.toCriterionResponseDto(criterion, animalId))
                 .toList();
     }
 

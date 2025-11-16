@@ -2,6 +2,7 @@ package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.request.student.CreateAnimalRequestDto;
 import com.agh.polymorphia_backend.dto.response.profile.ProfileResponseDto;
+import com.agh.polymorphia_backend.dto.response.profile.StudentSummaryResponseDto;
 import com.agh.polymorphia_backend.model.course.StudentCourseGroupAssignmentId;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.student.ProfileService;
@@ -24,6 +25,12 @@ public class StudentController {
     @PreAuthorize("hasAnyAuthority('STUDENT')")
     public ResponseEntity<ProfileResponseDto> getProfile(@RequestParam Long courseId) {
         return ResponseEntity.ok(profileService.getProfile(courseId));
+    }
+
+    @GetMapping("/{studentId}/profile")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
+    public ResponseEntity<StudentSummaryResponseDto> getStudentsProfile(@RequestParam Long courseId, @PathVariable("studentId") Long studentId) {
+        return ResponseEntity.ok(profileService.getStudentSummary(courseId, studentId));
     }
 
     @GetMapping("/course-group")

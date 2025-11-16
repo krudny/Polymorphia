@@ -1,6 +1,5 @@
 package com.agh.polymorphia_backend.service.course.reward;
 
-import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.reward.FlatBonusItem;
 import com.agh.polymorphia_backend.model.course.reward.Item;
 import com.agh.polymorphia_backend.model.course.reward.Reward;
@@ -12,8 +11,7 @@ import com.agh.polymorphia_backend.model.course.reward.item.ItemType;
 import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
 import com.agh.polymorphia_backend.repository.course.reward.assigned.AssignedChestRepository;
 import com.agh.polymorphia_backend.repository.course.reward.assigned.AssignedItemRepository;
-import com.agh.polymorphia_backend.service.student.AnimalService;
-import com.agh.polymorphia_backend.service.user.UserService;
+
 import lombok.AllArgsConstructor;
 import org.hibernate.Hibernate;
 import org.springframework.http.HttpStatus;
@@ -36,8 +34,6 @@ import java.util.stream.Stream;
 public class AssignedRewardService {
     private final AssignedChestRepository assignedChestRepository;
     private final AssignedItemRepository assignedItemRepository;
-    private final AnimalService animalService;
-    private final UserService userService;
 
     public List<AssignedChest> getAnimalAssignedChests(Long animalId) {
         return assignedChestRepository.findAnimalAssignedChests(animalId);
@@ -77,14 +73,8 @@ public class AssignedRewardService {
         return totalBonusByEventSection;
     }
 
-    public AssignedChest getAssignedChestByIdAndAnimalId(Long assignedChestId, Long animalId) {
-        List<AssignedChest> assignedChests = getAnimalAssignedChests(animalId);
-        return assignedChests.stream()
-                .filter(assignedChest ->
-                        assignedChest.getId().equals(assignedChestId)
-                                && !assignedChest.getIsUsed()
-                )
-                .findFirst()
+    public AssignedChest getAssignedChest(Long assignedChestId) {
+        return assignedChestRepository.findNotUsedAssignedChestsById(assignedChestId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nie znaleziono przypisanej skrzynki."));
     }
 
@@ -101,13 +91,9 @@ public class AssignedRewardService {
     }
 
 
-    public boolean isLimitReached(Item item) {
-        Long userId = userService.getCurrentUser().getUserId();
-        Animal animal = animalService.getAnimal(userId, item.getCourse().getId());
-        List<AssignedItem> animalAssignedItems = getAnimalAssignedItems(animal.getId());
-
+    public boolean isLimitReached(Item item, Long animalId) {
+        List<AssignedItem> animalAssignedItems = getAnimalAssignedItems(animalId);
         Map<Reward, Long> currentItemsByReward = countAssignedItemsByReward(animalAssignedItems);
-
         return currentItemsByReward.getOrDefault(item, 0L) >= item.getLimit();
     }
 

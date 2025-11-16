@@ -19,4 +19,15 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
                     where a.name = :name AND a.studentCourseGroupAssignment.courseGroup.course.id = :courseId
             """)
     Optional<Animal> findByNameAndCourseId(String name, Long courseId);
+
+
+    @Query(value = """
+                select a.id from animals a
+                    join grades g on g.animal_id = a.id
+                    join criteria_grades cg on g.id = cg.grade_id
+                    join assigned_rewards ar on cg.id = ar.criterion_grade_id
+                    where ar.id = :assignedChestId
+            """, nativeQuery = true)
+    Long findByAssignedChestId(Long assignedChestId);
+
 }

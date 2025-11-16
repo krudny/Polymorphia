@@ -20,5 +20,5 @@ public interface StudentCourseGroupRepository extends JpaRepository<StudentCours
             @Param("courseId") Long courseId
     );
 
-
+    Long getStudentIdByAnimalId(Long animalId);
 }
