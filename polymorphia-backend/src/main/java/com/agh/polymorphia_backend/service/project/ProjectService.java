@@ -102,9 +102,4 @@ public class ProjectService {
         return projectRepository.findById(projectId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Projekt nie został znaleziony."));
     }
-
-    public List<Student> getStudentsFromProjectGroup(ProjectGroup projectGroup) {
-        return projectGroup.getAnimals().stream().map(animal -> animal.getStudentCourseGroupAssignment().getStudent())
-                .toList();
-    }
 }

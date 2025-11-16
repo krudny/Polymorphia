@@ -19,5 +19,5 @@ body:has([data-speed-dial-portal="true"]) #main-container {
 }
 
 .main-layout-content-wrapper {
-  @apply w-full flex flex-col flex-1 max-lg:mt-20;
+  @apply w-full flex flex-col flex-1 max-lg:mt-20 relative;
 }
