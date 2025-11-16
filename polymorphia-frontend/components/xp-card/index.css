@@ -7,7 +7,7 @@
 }
 
 .xp-card-grid-center-vertically {
-  @apply flex flex-col justify-between w-fit max-h-full;
+  @apply flex flex-col justify-between w-full md:w-fit max-h-full;
 }
 
 .xp-card-grid-point-summary-layout {
@@ -16,7 +16,7 @@
 }
 
 .xp-card-grid {
-  @apply grid gap-5 w-fit justify-items-start items-start py-1;
+  @apply grid gap-5 w-full md:w-fit justify-items-start items-start py-1;
 }
 
 .xp-card-no-grid {

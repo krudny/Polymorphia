@@ -6,7 +6,6 @@ import { InstructorGradableEventCardProps } from "@/views/gradable-events/instru
 export default function InstructorGradableEventCard({
   gradableEvent,
   size,
-  isMobile,
   handleClick,
 }: InstructorGradableEventCardProps): ReactNode {
   return (
@@ -22,7 +21,7 @@ export default function InstructorGradableEventCard({
         />
       }
       size={size}
-      forceWidth={!isMobile}
+      forceWidth={true}
       onClick={() => handleClick(gradableEvent)}
     />
   );

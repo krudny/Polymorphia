@@ -57,7 +57,6 @@ export default function InstructorView() {
       key={gradableEvent.id}
       size={isMd ? Sizes.MD : Sizes.SM}
       gradableEvent={gradableEvent}
-      isMobile={false}
       handleClick={handleClick}
     />
   ));

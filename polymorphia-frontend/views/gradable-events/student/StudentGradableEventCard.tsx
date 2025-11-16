@@ -5,7 +5,6 @@ import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 export default function StudentGradableEventCard({
   gradableEvent,
   size,
-  isMobile,
   handleClick,
 }: StudentGradableEventCardProps) {
   const { hasPossibleReward, gainedXp, isGraded, isRewardAssigned } =
@@ -29,7 +28,7 @@ export default function StudentGradableEventCard({
       color={color}
       rightComponent={rightComponent}
       size={size}
-      forceWidth={!isMobile}
+      forceWidth={true}
       isLocked={gradableEvent.isLocked}
       onClick={() => handleClick(gradableEvent)}
     />

@@ -51,7 +51,6 @@ export default function Roadmap() {
         key={gradableEvent.id}
         size={cardSize}
         gradableEvent={gradableEvent as StudentGradableEventResponseDTO}
-        isMobile={false}
         handleClick={handleClick}
       />
     ) : (
@@ -59,7 +58,6 @@ export default function Roadmap() {
         key={gradableEvent.id}
         size={cardSize}
         gradableEvent={gradableEvent as InstructorGradableEventResponseDTO}
-        isMobile={false}
         handleClick={handleClick}
       />
     )
