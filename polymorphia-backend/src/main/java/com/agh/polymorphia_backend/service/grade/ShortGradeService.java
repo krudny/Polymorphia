@@ -13,7 +13,7 @@ import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.grade.Grade;
 import com.agh.polymorphia_backend.model.user.student.Animal;
-import com.agh.polymorphia_backend.service.criteria.CriteriaGradeService;
+import com.agh.polymorphia_backend.service.criteria.CriterionGradeService;
 import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
 import com.agh.polymorphia_backend.service.project.ProjectService;
 import com.agh.polymorphia_backend.service.student.AnimalService;
@@ -34,7 +34,7 @@ public class ShortGradeService {
 
     private final GradableEventService gradableEventService;
     private final AccessAuthorizer accessAuthorizer;
-    private final CriteriaGradeService criteriaGradeService;
+    private final CriterionGradeService criterionGradeService;
     private final GradeService gradeService;
     private final AnimalService animalService;
     private final ProjectService projectService;
@@ -60,7 +60,7 @@ public class ShortGradeService {
         accessAuthorizer.authorizeStudentDataAccess(course, studentId);
         Animal animal = animalService.getAnimal(studentId, course.getId());
         Optional<Grade> grade = gradeService.getGradeByAnimalIdAndGradableEventId(animal.getId(), gradableEvent.getId());
-        List<CriterionGradeResponseDto> criteriaGrades = grade.map(criteriaGradeService::getCriteriaGrades)
+        List<CriterionGradeResponseDto> criteriaGrades = grade.map(criterionGradeService::getCriteriaGrades)
                 .orElse(Collections.emptyList());
         Boolean hasReward = !criteriaGrades
                 .stream()

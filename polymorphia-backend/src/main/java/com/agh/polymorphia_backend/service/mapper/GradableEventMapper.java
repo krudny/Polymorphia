@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-@Slf4j
 public class GradableEventMapper {
     private static final String mockedTitle = "*********";
     private static final String mockedTopic = "[Wydarzenie ukryte]";
@@ -20,8 +19,8 @@ public class GradableEventMapper {
     public BaseGradableEventResponseDto toBaseGradableEventResponse(GradableEvent gradableEvent) {
         return BaseGradableEventResponseDto.builder()
                 .id(gradableEvent.getId())
-                .name(Boolean.TRUE.equals(gradableEvent.getIsLocked()) ? mockedTitle : gradableEvent.getName())
-                .topic(Boolean.TRUE.equals(gradableEvent.getIsLocked()) ? mockedTopic : gradableEvent.getTopic())
+                .name(gradableEvent.getIsLocked() ? mockedTitle : gradableEvent.getName())
+                .topic(gradableEvent.getIsLocked() ? mockedTopic : gradableEvent.getTopic())
                 .orderIndex(gradableEvent.getOrderIndex())
                 .roadMapOrderIndex(gradableEvent.getRoadMapOrderIndex())
                 .isLocked(gradableEvent.getIsLocked())
@@ -31,8 +30,8 @@ public class GradableEventMapper {
     public StudentGradableEventResponseDto toStudentGradableEventResponseDto(StudentGradableEventProjection projection) {
         return StudentGradableEventResponseDto.builder()
                 .id(projection.getId())
-                .name(Boolean.TRUE.equals(projection.getIsLocked()) ? mockedTitle : projection.getName())
-                .topic(Boolean.TRUE.equals(projection.getIsLocked()) ? mockedTopic : projection.getTopic())
+                .name(projection.getIsLocked() ? mockedTitle : projection.getName())
+                .topic(projection.getIsLocked() ? mockedTopic : projection.getTopic())
                 .orderIndex(projection.getOrderIndex())
                 .roadMapOrderIndex(projection.getRoadMapOrderIndex())
                 .isLocked(projection.getIsLocked())

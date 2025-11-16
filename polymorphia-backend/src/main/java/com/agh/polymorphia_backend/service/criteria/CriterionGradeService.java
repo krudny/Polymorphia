@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class CriteriaGradeService {
+public class CriterionGradeService {
     private final CriterionGradeMapper criterionGradeMapper;
 
     public List<CriterionGradeResponseDto> getCriteriaGrades(Grade grade) {

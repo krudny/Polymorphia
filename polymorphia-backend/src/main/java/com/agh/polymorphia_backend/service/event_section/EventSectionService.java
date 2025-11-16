@@ -40,7 +40,7 @@ public class EventSectionService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, EVENT_SECTION_NOT_FOUND));
         UserType userRole = userService.getCurrentUserRole();
 
-        if (userRole == UserType.STUDENT && Boolean.TRUE.equals(eventSection.getIsHidden())) {
+        if (userRole == UserType.STUDENT && eventSection.getIsHidden()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, EVENT_SECTION_NOT_FOUND);
         }
 
