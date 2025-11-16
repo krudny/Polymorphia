@@ -31,7 +31,6 @@ export function SpeedDial({ speedDialKey }: SpeedDialProps) {
           bottom: isMd ? 6 : 10,
           right: isMd ? 12 : 4,
           margin: 0,
-          ...(isMd ? {} : { zIndex: 40 }),
         }}
         FabProps={{
           style: {

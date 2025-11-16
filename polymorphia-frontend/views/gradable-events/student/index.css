@@ -6,5 +6,5 @@
 }
 
 .student-view-cards {
-  @apply w-full min-h-full flex-col-centered;
+  @apply w-full lg:min-h-full lg:flex-col-centered;
 }
