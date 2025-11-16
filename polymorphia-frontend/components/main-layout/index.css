@@ -6,6 +6,10 @@
   scrollbar-gutter: stable both;
 }
 
+#main-container[screen-size="sm"] {
+  @apply pb-20;
+}
+
 .main-layout-title {
   @apply w-full flex-centered h-15 shrink-0 hidden lg:flex;
 
