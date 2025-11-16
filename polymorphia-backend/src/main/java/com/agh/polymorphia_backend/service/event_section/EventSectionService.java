@@ -51,9 +51,9 @@ public class EventSectionService {
         UserType userRole = userService.getUserRoleInCourse(courseId);
 
         return switch (userRole) {
-            case STUDENT -> eventSectionRepository.findByCourseIdWithHidden(courseId);
-            case INSTRUCTOR, COORDINATOR -> eventSectionRepository.findByCourseIdWithoutHidden(courseId);
-            case UNDEFINED -> throw new IllegalArgumentException(INVALID_ROLE);
+            case STUDENT -> eventSectionRepository.findByCourseIdWithoutHidden(courseId);
+            case INSTRUCTOR, COORDINATOR -> eventSectionRepository.findByCourseIdWithHidden(courseId);
+            case UNDEFINED -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INVALID_ROLE);
         };
     }
 }

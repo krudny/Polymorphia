@@ -11,6 +11,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+// Intellij SQL parser is different from Postgresql one,
+// so some parts of the queries may be marked as incorrect,
+// even though they work properly during runtime.
 
 @Repository
 public interface GradableEventRepository extends JpaRepository<GradableEvent, Long> {
@@ -26,28 +29,21 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
            ge.roadMapOrderIndex as roadMapOrderIndex,
            ge.isHidden as isHidden,
            ge.isLocked as isLocked,
-           CASE
-               WHEN COUNT(DISTINCT g.id) > 0 
-               THEN TO_CHAR(SUM(DISTINCT cg.xp), 'FM9999990.0')
-               ELSE NULL
-           END as gainedXp,
-           CASE WHEN COUNT(DISTINCT cr.criterion.id) > 0 THEN true ELSE false END as hasPossibleReward,
-           CASE WHEN COUNT(DISTINCT g.id) > 0 THEN true ELSE false END as isGraded,
-           CASE WHEN COUNT(DISTINCT g.id) > 0 AND COUNT(DISTINCT ar.id) > 0 
-                THEN true 
-                ELSE false 
-           END as isRewardAssigned
+           CASE WHEN COUNT(DISTINCT g.id) > 0 THEN SUM(DISTINCT cg.xp) ELSE NULL END as gainedXp,
+           CASE WHEN COUNT(DISTINCT cr.id) > 0 as hasPossibleReward,
+           CASE WHEN COUNT(DISTINCT g.id) > 0 as isGraded,
+           CASE WHEN COUNT(DISTINCT g.id) > 0 AND COUNT(DISTINCT ar.id) > 0 as isRewardAssigned
     FROM GradableEvent ge
     LEFT JOIN Grade g ON g.gradableEvent.id = ge.id AND g.animal.id = :animalId
     LEFT JOIN Criterion c ON c.gradableEvent.id = ge.id
     LEFT JOIN CriterionGrade cg ON cg.grade.id = g.id AND cg.criterion.id = c.id
     LEFT JOIN CriterionReward cr ON cr.criterion.id = c.id
     LEFT JOIN AssignedReward ar ON ar.criterionGrade.id = cg.id
-    WHERE (:scope = 'COURSE' AND ge.eventSection.course.id = :idValue)
-       OR (:scope = 'EVENT_SECTION' AND ge.eventSection.id = :idValue)
+    WHERE ((:scope = 'COURSE' AND ge.eventSection.course.id = :idValue)
+       OR (:scope = 'EVENT_SECTION' AND ge.eventSection.id = :idValue))
       AND ge.isHidden = false
     GROUP BY ge.id, ge.name, ge.orderIndex, ge.roadMapOrderIndex, ge.isHidden, ge.isLocked, ge.topic, ge.eventSection.id
-    ORDER BY 
+    ORDER BY
         CASE WHEN :sortBy = 'ORDER_INDEX' THEN ge.orderIndex END,
         CASE WHEN :sortBy = 'ROADMAP_ORDER_INDEX' THEN ge.roadMapOrderIndex END
     """)
@@ -71,7 +67,7 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
            COUNT(DISTINCT CASE 
                WHEN g.id IS NULL THEN scga.animal.id
            END) as ungradedStudents,
-           CASE WHEN COUNT(DISTINCT cr.criterion.id) > 0 THEN true ELSE false END as hasPossibleReward
+           CASE WHEN COUNT(DISTINCT cr.id) > 0 as hasPossibleReward
     FROM GradableEvent ge
     LEFT JOIN Criterion c ON c.gradableEvent.id = ge.id
     LEFT JOIN CriterionReward cr ON cr.criterion.id = c.id
@@ -79,8 +75,8 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
     JOIN scga.courseGroup cg
     LEFT JOIN Grade g ON g.gradableEvent.id = ge.id 
         AND g.animal.id = scga.animal.id
-    WHERE (:scope = 'COURSE' AND ge.eventSection.course.id = :idValue)
-       OR (:scope = 'EVENT_SECTION' AND ge.eventSection.id = :idValue)
+    WHERE ((:scope = 'COURSE' AND ge.eventSection.course.id = :idValue)
+       OR (:scope = 'EVENT_SECTION' AND ge.eventSection.id = :idValue))
       AND cg.instructor.user.id = :instructorId
       AND ge.isHidden = false
     GROUP BY ge.id, ge.name, ge.topic, ge.orderIndex, ge.roadMapOrderIndex, ge.isHidden, ge.isLocked, ge.eventSection.id
@@ -106,15 +102,15 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
            COUNT(DISTINCT CASE 
                WHEN g.id IS NULL THEN scga.animal.id
            END) as ungradedStudents,
-           CASE WHEN COUNT(DISTINCT cr.criterion.id) > 0 THEN true ELSE false END as hasPossibleReward
+           CASE WHEN COUNT(DISTINCT cr.id) > 0 as hasPossibleReward
     FROM GradableEvent ge
     LEFT JOIN Criterion c ON c.gradableEvent.id = ge.id
     LEFT JOIN CriterionReward cr ON cr.criterion.id = c.id
     CROSS JOIN StudentCourseGroupAssignment scga
     LEFT JOIN Grade g ON g.gradableEvent.id = ge.id 
         AND g.animal.id = scga.animal.id
-    WHERE (:scope = 'COURSE' AND ge.eventSection.course.id = :idValue)
-       OR (:scope = 'EVENT_SECTION' AND ge.eventSection.id = :idValue)
+    WHERE ((:scope = 'COURSE' AND ge.eventSection.course.id = :idValue)
+       OR (:scope = 'EVENT_SECTION' AND ge.eventSection.id = :idValue))
       AND ge.isHidden = false
     GROUP BY ge.id, ge.name, ge.topic, ge.orderIndex, ge.roadMapOrderIndex, ge.isHidden, ge.isLocked, ge.eventSection.id
     ORDER BY 

@@ -11,7 +11,6 @@ import com.agh.polymorphia_backend.model.gradable_event.GradableEventSortBy;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.gradable_event.GradableEventRepository;
 import com.agh.polymorphia_backend.service.course.CourseService;
-import com.agh.polymorphia_backend.service.event_section.EventSectionService;
 import com.agh.polymorphia_backend.service.mapper.GradableEventMapper;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.user.UserService;
@@ -35,7 +34,6 @@ public class GradableEventService {
     private final GradableEventMapper gradableEventMapper;
     private final AnimalService animalService;
     private final CourseService courseService;
-    private final EventSectionService eventSectionService;
 
     public BaseGradableEventResponseDto getGradableEventResponseDto(Long gradableEventId) {
         GradableEvent gradableEvent = getGradableEventById(gradableEventId);
@@ -51,7 +49,7 @@ public class GradableEventService {
                 && userRole != UserType.COORDINATOR
                 && (gradableEvent.getIsHidden()
                 || gradableEvent.getEventSection().getIsHidden())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Gradable event nie istnieje");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Wydarzenie nie istnieje");
         }
 
         return gradableEvent;
@@ -136,6 +134,6 @@ public class GradableEventService {
     private GradableEvent fetchGradableEvent(Long gradableEventId) {
         return gradableEventRepository
                 .findById(gradableEventId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Gradable event nie istnieje"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Wydarzenie nie istnieje"));
     }
 }

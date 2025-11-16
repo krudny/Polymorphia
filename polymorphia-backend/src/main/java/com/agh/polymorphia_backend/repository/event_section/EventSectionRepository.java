@@ -15,12 +15,8 @@ public interface EventSectionRepository extends JpaRepository<EventSection, Long
 
     boolean existsByCourseIdAndName(Long courseId, String name);
 
-    List<EventSection> findByCourseId(Long courseId);
-
     @Query("SELECT es.course FROM EventSection es WHERE es.id = :eventSectionId")
     Optional<Course> findCourseById(@Param("eventSectionId") Long eventSectionId);
-
-    Optional<EventSection> findByGradableEventsId(Long gradableEventId);
 
     @Query("""
         SELECT es FROM EventSection es
