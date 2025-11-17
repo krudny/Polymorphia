@@ -3,7 +3,6 @@ package com.agh.polymorphia_backend.service.user;
 import com.agh.polymorphia_backend.dto.response.user_context.BaseUserDetailsResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.user.*;
-import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.mapper.UserContextMapper;
@@ -18,7 +17,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class UserContextServiceTest {
