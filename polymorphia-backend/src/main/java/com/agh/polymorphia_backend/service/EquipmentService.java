@@ -49,18 +49,17 @@ public class EquipmentService {
     // TODO: performance + sql
     public List<EquipmentItemResponseDto> getEquipmentItems(Long courseId) {
         Long animalId = animalService.validateAndGetAnimalId(courseId);
-
-        List<AssignedItem> assignedItems = assignedRewardService
-                .getAnimalAssignedItems(animalId);
-
-        List<Item> availableItemsInCourse = itemRepository
-                .findAvailableItemsForAnimal(courseId, animalId);
+        List<AssignedItem> assignedItems = assignedRewardService.getAnimalAssignedItems(animalId);
+        List<Long> assignedItemIds = getAssignedRewardsIds(assignedItems);
+        List<Item> remainingCourseItems = itemRepository.findAllByCourseIdAndItemIdNotIn(courseId, assignedItemIds);
 
         return Stream.concat(
-                assignedRewardMapper.assignedItemsToResponseDto(assignedItems).stream()
-                        .sorted(Comparator.comparing(response -> response.getBase().getOrderIndex())),
-                rewardMapper.itemsToEquipmentResponseDto(availableItemsInCourse).stream()
-        ).toList();
+                        assignedRewardMapper.assignedItemsToResponseDto(assignedItems).stream()
+                                .sorted(Comparator.comparing(response -> response.getBase().getOrderIndex())),
+                        rewardMapper.itemsToEquipmentResponseDto(remainingCourseItems).stream()
+                                .sorted(Comparator.comparing(response -> response.getBase().getOrderIndex()))
+                )
+                .toList();
     }
 
     // TODO: performance + sql
@@ -81,7 +80,6 @@ public class EquipmentService {
                 )
                 .toList();
     }
-
 
     public ChestPotentialXpResponseDtoWithType getPotentialXpForChest(Long courseId, Long assignedChestId) {
         Long animalId = animalService.validateAndGetAnimalId(courseId);
