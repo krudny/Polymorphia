@@ -7,16 +7,24 @@ import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import { ChestModalProps } from "@/components/equipment/modals/chest/types";
 
 export default function ChestModal({ equipment, onClose }: ChestModalProps) {
+  const receivedItems = equipment.details.receivedItems;
+
+  console.log(receivedItems);
   return (
     <Modal
-      isDataPresented={equipment !== null}
+      isDataPresented={true}
       onClosed={onClose}
       title={equipment.base.name ?? ""}
-      subtitle="Zdobyte nagrody"
+      subtitle={
+        receivedItems && receivedItems.length > 0
+          ? "Zdobyte nagrody"
+          : "Brak zdobytych nagród"
+      }
     >
       <div className="bonus-info-modal">
-        {equipment.details.receivedItems!.map(
-          (assignedItem: AssignedItemResponseDTO) => (
+        {receivedItems &&
+          receivedItems.length > 0 &&
+          receivedItems.map((assignedItem: AssignedItemResponseDTO) => (
             <XPCard
               key={assignedItem.details.id}
               title={assignedItem.base.name}
@@ -36,8 +44,7 @@ export default function ChestModal({ equipment, onClose }: ChestModalProps) {
                 />
               }
             />
-          )
-        )}
+          ))}
       </div>
     </Modal>
   );
