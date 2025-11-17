@@ -13,7 +13,6 @@ export default function usePotentialXp(
     queryFn: () => {
       return EquipmentService.getPotentialXp(courseId, assignedChestId);
     },
-    refetchOnWindowFocus: false,
   });
 
   return { data, isLoading, isError };
