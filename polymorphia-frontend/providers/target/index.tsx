@@ -60,6 +60,12 @@ export const TargetProvider = ({
 
   useEffect(() => {
     if (!targets || targets.length < 1) {
+      if (selectedTarget !== null) {
+        dispatch({
+          type: TargetReducerActions.SET_TARGET,
+          payload: null,
+        });
+      }
       return;
     }
 
