@@ -14,7 +14,6 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class RewardService {
-    private static final String REWARD_NOT_FOUND = "Nie znaleziono nagrody o id %d";
     private final RewardRepository rewardRepository;
 
     public List<Item> filterItemsByType(List<Item> items, ItemType type) {
@@ -24,7 +23,7 @@ public class RewardService {
     }
 
     public Reward findById(Long id) {
-        String message = String.format(REWARD_NOT_FOUND, id);
+        String message = String.format("Nie znaleziono nagrody o id %d", id);
         return rewardRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, message));
     }

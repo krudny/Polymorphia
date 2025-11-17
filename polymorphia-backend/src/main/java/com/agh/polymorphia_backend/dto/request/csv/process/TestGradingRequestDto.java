@@ -14,5 +14,8 @@ public class TestGradingRequestDto {
     private List<List<String>> data;
 
     @NotNull
-    private Integer gradableEventId;
+    private Long gradableEventId;
+
+    @NotNull
+    private Long criterionId;
 }

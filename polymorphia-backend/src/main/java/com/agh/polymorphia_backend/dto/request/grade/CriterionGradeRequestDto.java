@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,5 +20,6 @@ public class CriterionGradeRequestDto {
     private BigDecimal gainedXp;
 
     @NotNull
-    private List<ShortAssignedRewardRequestDto> assignedRewards;
+    @Builder.Default
+    private List<ShortAssignedRewardRequestDto> assignedRewards = new ArrayList<>();
 }

@@ -331,7 +331,8 @@ INSERT INTO
   user_course_roles (role, user_id, course_id)
 VALUES
   ('INSTRUCTOR', 4, 1),
-  ('INSTRUCTOR', 4, 2);
+  ('INSTRUCTOR', 4, 2),
+  ('STUDENT', 13, 1);
 INSERT INTO
   animals (id, name)
 VALUES

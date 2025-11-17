@@ -18,9 +18,6 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 @AllArgsConstructor
 public class GradingValidator {
-    private static final String MAX_XP_EXCEEDED = "Do tego kryterium można przypisać maksymalnie %s xp";
-    private static final String MAX_REWARD_COUNT_EXCEEDED = "Do tego kryterium można przypisać maksymalnie %s nagród typu %s";
-    private static final String CRITERION_NOT_IN_GRADABLE_EVENT = "Kryterium %d nie należy do eventu %s";
     private final CriterionService criterionService;
     private final RewardService rewardService;
 
@@ -39,7 +36,7 @@ public class GradingValidator {
 
     private void validateCriterionInGradableEvent(Criterion criterion, GradableEvent gradableEvent) {
         if (!criterion.getGradableEvent().equals(gradableEvent)) {
-            String message = String.format(CRITERION_NOT_IN_GRADABLE_EVENT, criterion.getId(), gradableEvent.getName());
+            String message = String.format("Kryterium %d nie należy do eventu %s", criterion.getId(), gradableEvent.getName());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, message);
         }
     }
@@ -47,7 +44,7 @@ public class GradingValidator {
     private void validateXpOverload(Criterion criterion, CriterionGradeRequestDto criterionGradeRequest) {
         if (criterion.getMaxXp().compareTo(criterionGradeRequest.getGainedXp()) < 0) {
             String message = String.format(
-                    MAX_XP_EXCEEDED,
+                    "Do tego kryterium można przypisać maksymalnie %s xp",
                     NumberFormatter.formatToString(criterion.getMaxXp())
             );
 
@@ -70,7 +67,7 @@ public class GradingValidator {
 
 
         if (maxAmount < quantity) {
-            String message = String.format(MAX_REWARD_COUNT_EXCEEDED, maxAmount, reward.getName());
+            String message = String.format("Do tego kryterium można przypisać maksymalnie %s nagród typu %s", maxAmount, reward.getName());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, message);
         }
     }
