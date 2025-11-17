@@ -49,17 +49,18 @@ public class EquipmentService {
     // TODO: performance + sql
     public List<EquipmentItemResponseDto> getEquipmentItems(Long courseId) {
         Long animalId = animalService.validateAndGetAnimalId(courseId);
-        List<AssignedItem> assignedItems = assignedRewardService.getAnimalAssignedItems(animalId);
-        List<Long> assignedItemIds = getAssignedRewardsIds(assignedItems);
-        List<Item> remainingCourseItems = itemRepository.findAllByCourseIdAndItemIdNotIn(courseId, assignedItemIds);
+
+        List<AssignedItem> assignedItems = assignedRewardService
+                .getAnimalAssignedItems(animalId);
+
+        List<Item> availableItemsInCourse = itemRepository
+                .findAvailableItemsForAnimal(courseId, animalId);
 
         return Stream.concat(
-                        assignedRewardMapper.assignedItemsToResponseDto(assignedItems).stream()
-                                .sorted(Comparator.comparing(response -> response.getBase().getOrderIndex())),
-                        rewardMapper.itemsToEquipmentResponseDto(remainingCourseItems).stream()
-                                .sorted(Comparator.comparing(response -> response.getBase().getOrderIndex()))
-                )
-                .toList();
+                assignedRewardMapper.assignedItemsToResponseDto(assignedItems).stream()
+                        .sorted(Comparator.comparing(response -> response.getBase().getOrderIndex())),
+                rewardMapper.itemsToEquipmentResponseDto(availableItemsInCourse).stream()
+        ).toList();
     }
 
     // TODO: performance + sql
@@ -132,7 +133,7 @@ public class EquipmentService {
     }
 
     private List<AssignedItem> createAssignedItemsFromRequest(EquipmentChestOpenRequestDto requestDto, AssignedChest assignedChest, ZonedDateTime openDate) {
-       Chest chest=(Chest) Hibernate.unproxy(assignedChest.getReward());
+        Chest chest=(Chest) Hibernate.unproxy(assignedChest.getReward());
         if (requestDto.getItemId() == null) {
             List<AssignedItem> assignedItems = createNewAssignedItemsFromChest(chest, assignedChest, openDate);
 
