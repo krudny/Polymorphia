@@ -12,7 +12,6 @@ import com.agh.polymorphia_backend.repository.course.CourseRepository;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.role.InstructorRepository;
 import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
-import com.agh.polymorphia_backend.service.course_groups.CourseGroupsService;
 import com.agh.polymorphia_backend.service.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

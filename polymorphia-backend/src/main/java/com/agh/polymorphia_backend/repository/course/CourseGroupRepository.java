@@ -1,8 +1,6 @@
 package com.agh.polymorphia_backend.repository.course;
 
-import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.course.CourseGroup;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -40,6 +38,4 @@ public interface CourseGroupRepository extends JpaRepository<CourseGroup, Long> 
             and cg.id = :courseGroupId
     """)
     Optional<CourseGroup> findCourseGroupForTeachingRoleUser(Long courseGroupId, Long teachingRoleUserId);
-
-    Long course(@NotNull Course course);
 }

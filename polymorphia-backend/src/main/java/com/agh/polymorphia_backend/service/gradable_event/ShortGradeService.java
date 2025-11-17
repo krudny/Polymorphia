@@ -17,15 +17,14 @@ import com.agh.polymorphia_backend.service.gradable_event.criteria.CriterionGrad
 import com.agh.polymorphia_backend.service.project.ProjectService;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
-import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @AllArgsConstructor
@@ -76,7 +75,6 @@ public class ShortGradeService {
                 .hasReward(hasReward).criteria(criteriaGrades).build();
     }
 
-
     private StudentGroupShortGradeResponseDto getShortGroupGrade(GradableEvent gradableEvent, Long groupId) {
         List<UserDetailsResponseDto> projectGroupStudents = projectService.getProjectGroup(groupId, gradableEvent.getId());
         List<StudentShortGradeResponseDto> shortGrades = projectGroupStudents.stream()
@@ -97,7 +95,6 @@ public class ShortGradeService {
         if (!areAllGradesSame(shortGrades)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Oceny członków grupy się różnią!");
         }
-
 
         return StudentGroupShortGradeResponseDto.builder()
                 .ids(ids)

@@ -1,9 +1,7 @@
 package com.agh.polymorphia_backend.repository.gradable_event;
 
-import com.agh.polymorphia_backend.dto.request.target_list.GradingTargetListRequestDto;
 import com.agh.polymorphia_backend.dto.response.target_list.StudentTargetDataResponseDto;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
