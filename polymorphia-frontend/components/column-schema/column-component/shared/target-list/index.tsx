@@ -9,6 +9,9 @@ import TargetListTopBar from "@/components/column-schema/column-component/shared
 import Loading from "@/components/loading";
 import ColumnComponent from "@/components/column-schema/column-component";
 import { isTargetSelected } from "@/providers/target/utils/is-selected";
+import ErrorComponent from "@/components/error";
+import { useEventParams } from "@/hooks/general/useEventParams";
+import { EventTypes } from "@/interfaces/general";
 
 export default function TargetList() {
   const {
@@ -18,6 +21,7 @@ export default function TargetList() {
     selectedTarget,
     appliedFilters,
   } = useTargetContext();
+  const { eventType } = useEventParams();
 
   const topComponent = () => <TargetListTopBar />;
 
@@ -30,6 +34,12 @@ export default function TargetList() {
         )
       : () => (
           <div className="group-list custom-scrollbar">
+            {targets.length === 0 && (
+              <ErrorComponent
+                title={`Brak ${eventType === EventTypes.PROJECT ? "grup" : "studentów"}!`}
+                message={`Nie znaleziono ${eventType === EventTypes.PROJECT ? "grup projektowych" : "studentów"} pasujących do podanych kryteriów.`}
+              />
+            )}
             {targets.map((target, targetIndex) => (
               <Fragment key={targetIndex}>
                 <div className="group-record">

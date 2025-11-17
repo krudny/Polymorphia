@@ -86,15 +86,15 @@ public class TargetListService {
         accessAuthorizer.authorizeCourseAccess(course);
 
         return switch (gradableEvent.getEventSection().getEventSectionType()) {
-            case ASSIGNMENT, TEST -> getTargetListForGradingAssignmentOrTest(requestDto);
+            case ASSIGNMENT, TEST -> getTargetListForGradingAssignmentOrTest(requestDto, course);
             case PROJECT -> getTargetListForGradingProject(requestDto, gradableEvent, course);
         };
     }
 
     private List<StudentTargetResponseDto> getTargetListForGradingAssignmentOrTest(
-        GradingTargetListRequestDto requestDto) {
+        GradingTargetListRequestDto requestDto, Course course) {
         Long currentUserId = userService.getCurrentUser().getUserId();
-        return gradableEventService.getStudentTargets(currentUserId, requestDto).stream()
+        return gradableEventService.getStudentTargets(currentUserId, requestDto, course.getId()).stream()
             .map(targetListMapper::toStudentTargetResponseDto).toList();
     }
 

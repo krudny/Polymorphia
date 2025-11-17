@@ -11,17 +11,18 @@ import { SubmissionService } from "@/services/submission";
 import { SubmissionDetails } from "@/interfaces/api/grade/submission";
 import { Roles } from "@/interfaces/api/user";
 import useUserContext from "@/hooks/contexts/useUserContext";
+import { EventTypes } from "@/interfaces/general";
 
 export default function useSubmissionsUpdate({
   target,
 }: UseSubmissionsUpdateProps): UseSubmissionsUpdate {
   const queryClient = useQueryClient();
-  const { gradableEventId } = useEventParams();
+  const { gradableEventId, eventType } = useEventParams();
   const { userRole } = useUserContext();
 
   return useMutation({
     mutationFn: (submissionDetails: SubmissionDetails) => {
-      if (!target) {
+      if (!target || eventType === EventTypes.TEST) {
         throw new ApiError(
           "Wystąpił błąd podczas aktualizacji oddanych zadań."
         );

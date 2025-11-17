@@ -70,6 +70,7 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
                                      lower(hofe.studentName) like lower(concat('%', :searchTerm, '%')))))
           and (:gradeStatus = 'ALL' or (:gradeStatus = 'GRADED' and g.id is not null) or
                (:gradeStatus = 'UNGRADED' and g.id is null))
+          and hofe.courseId = :courseId
         group by hofe.studentId, hofe.studentName, hofe.animalName, hofe.evolutionStage, hofe.groupName,
                  hofe.imageUrl
         order by case
@@ -83,6 +84,7 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
                  case when :sortBy = 'animalName' and :sortOrder = 'DESC' then hofe.animalName end desc
         """)
     List<StudentTargetDataResponseDto> getStudentTargets(
+            @Param("courseId") Long courseId,
             @Param("gradableEventId") Long gradableEventId,
             @Param("teachingRoleUserId") Long teachingRoleUserId,
             @Param("groups") List<String> groups,
