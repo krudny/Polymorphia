@@ -12,6 +12,8 @@ export default function useEquipment(): UseEquipment {
   } = useQuery({
     queryKey: ["equipmentItems", courseId, id],
     queryFn: () => EquipmentService.getItems(courseId),
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 15,
   });
 
   const {
@@ -21,6 +23,8 @@ export default function useEquipment(): UseEquipment {
   } = useQuery({
     queryKey: ["equipmentChests", courseId, id],
     queryFn: () => EquipmentService.getChests(courseId),
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 15,
   });
 
   return {

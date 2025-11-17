@@ -10,9 +10,16 @@ public interface ChestRepository extends JpaRepository<Chest, Long> {
     List<Chest> findAllByCourseId(Long courseId);
 
     @Query("""
-                SELECT c FROM Chest c
-                WHERE c.course.id = :courseId
-                  AND (:excludedChestIds is null OR c.id NOT IN :excludedChestIds)
-            """)
-    List<Chest> findAllByCourseIdAndChestIdNotIn(Long courseId, List<Long> excludedChestIds);
+    SELECT c FROM Chest c
+    WHERE c.course.id = :courseId
+    AND c.id NOT IN (
+        SELECT r.id FROM Chest r
+        JOIN AssignedChest ac ON r.id = ac.reward.id
+        JOIN CriterionGrade cg ON ac.criterionGrade.id = cg.id
+        JOIN Grade g ON cg.grade.id = g.id
+        WHERE g.animal.id = :animalId
+    )
+    ORDER BY c.orderIndex
+    """)
+    List<Chest> findAvailableChestsForAnimal(Long courseId, Long animalId);
 }

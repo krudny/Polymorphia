@@ -91,8 +91,6 @@ public class AssignedRewardMapper {
                 .base(rewardMapper.rewardToRewardResponseDto(assignedChest.getReward()))
                 .details(getChestDetailsDto(assignedChest))
                 .build();
-
-
     }
 
 

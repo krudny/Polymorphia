@@ -65,20 +65,18 @@ public class EquipmentService {
     // TODO: performance + sql
     public List<EquipmentChestResponseDto> getEquipmentChests(Long courseId) {
         Long animalId = animalService.validateAndGetAnimalId(courseId);
-        List<AssignedChest> assignedChests = assignedRewardService.getAnimalAssignedChests(animalId, ChestFilterEnum.ALL);
-        List<Long> assignedChestIds = getAssignedRewardsIds(assignedChests);
-        List<Chest> remainingCourseChests = chestRepository.findAllByCourseIdAndChestIdNotIn(courseId, assignedChestIds);
+        List<AssignedChest> assignedChests = assignedRewardService.getAnimalAssignedChests(animalId, ChestFilterEnum.UNUSED);
+        List<Chest> availableChestsInCourse = chestRepository.findAvailableChestsForAnimal(courseId, animalId);
         List<EquipmentChestResponseDto> assignedChestsResponse = assignedRewardMapper.assignedChestsToResponseDto(assignedChests);
         setIsLimitReachedForALLChests(assignedChestsResponse, animalId);
 
         return Stream.concat(
-                        assignedChestsResponse.stream()
-                                .sorted(Comparator.comparing((EquipmentChestResponseDto response) -> response.getDetails().getReceivedDate())
-                                        .thenComparing(response -> response.getBase().getOrderIndex())),
-                        rewardMapper.chestsToEquipmentResponseDto(remainingCourseChests).stream()
-                                .sorted(Comparator.comparing(response -> response.getBase().getOrderIndex()))
-                )
-                .toList();
+                assignedChestsResponse.stream()
+                        .sorted(Comparator.comparing((EquipmentChestResponseDto response)
+                                        -> response.getDetails().getReceivedDate())
+                                .thenComparing(response -> response.getBase().getOrderIndex())),
+                rewardMapper.chestsToEquipmentResponseDto(availableChestsInCourse).stream()
+        ).toList();
     }
 
 
@@ -104,6 +102,10 @@ public class EquipmentService {
                 requestDto.getAssignedChestId(),
                 animalId
         );
+
+        if (assignedChest.getIsUsed()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Skrzynka została już otwarta.");
+        }
 
         ZonedDateTime openDate = ZonedDateTime.now();
         Chest chest = (Chest) Hibernate.unproxy(assignedChest.getReward());

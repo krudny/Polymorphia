@@ -36,6 +36,8 @@ export default function OpeningChestModalContent({
     equipment.details.id
   );
   const isSm = useMediaQuery({ maxWidth: 768 });
+
+  // TODO: wrong
   const areAllItemsOverLimit =
     equipment.base.chestItems?.every((item) => item.isLimitReached) ?? false;
 
