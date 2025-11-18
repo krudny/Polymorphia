@@ -1,14 +1,10 @@
-package com.agh.polymorphia_backend.service;
+package com.agh.polymorphia_backend.service.hall_of_fame;
 
 import com.agh.polymorphia_backend.BaseTest;
 import com.agh.polymorphia_backend.dto.request.hall_of_fame.HallOfFameRequestDto;
 import com.agh.polymorphia_backend.model.hall_of_fame.SearchBy;
 import com.agh.polymorphia_backend.model.hall_of_fame.SortOrder;
 import com.agh.polymorphia_backend.repository.event_section.EventSectionRepository;
-import com.agh.polymorphia_backend.service.hall_of_fame.EventSectionSort;
-import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameSortSpec;
-import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameSortSpecResolver;
-import com.agh.polymorphia_backend.service.hall_of_fame.OverviewFieldSort;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
