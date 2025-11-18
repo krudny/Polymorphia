@@ -11,6 +11,7 @@ import com.agh.polymorphia_backend.service.hall_of_fame.EventSectionSort;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameSortSpec;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameSortSpecResolver;
 import com.agh.polymorphia_backend.service.hall_of_fame.OverviewFieldSort;
+import com.agh.polymorphia_backend.util.NumberFormatter;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -66,6 +67,7 @@ public class TargetListMapper {
     private StudentTargetDataResponseDto mapHofEntryToStudentTargetData(HallOfFameEntry hofEntry) {
         return StudentTargetDataResponseDto.builder().id(hofEntry.getStudentId()).fullName(hofEntry.getStudentName())
             .animalName(hofEntry.getAnimalName()).evolutionStage(hofEntry.getEvolutionStage())
-            .group(hofEntry.getGroupName()).imageUrl(hofEntry.getImageUrl()).gainedXp(hofEntry.getTotalXpSum()).build();
+            .group(hofEntry.getGroupName()).imageUrl(hofEntry.getImageUrl())
+            .gainedXp(NumberFormatter.formatToBigDecimal(hofEntry.getTotalXpSum())).build();
     }
 }
