@@ -22,6 +22,6 @@ public class ProjectGroupService {
 
     public ProjectGroup findById(Long projectGroupId) {
         return projectGroupRepository.findById(projectGroupId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono grupy projektowej"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono grupy projektowej."));
     }
 }

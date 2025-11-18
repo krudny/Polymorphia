@@ -28,21 +28,21 @@ public class TestGradingCSVProcessor {
     public void process(TestGradingRequestDto request) {
         List<String> headers = request.getCsvHeaders();
 
-        int emailIdx = CSVUtil.getColumnIndex(headers, CSVHeaders.EMAIL.getValue());
+        int indexNumberIdx = CSVUtil.getColumnIndex(headers, CSVHeaders.INDEX_NUMBER.getValue());
         int gainedXpIdx = CSVUtil.getColumnIndex(headers, CSVHeaders.XP.getValue());
 
         for (List<String> row : request.getData()) {
-            String email = row.get(emailIdx);
+            Integer indexNumber = Integer.valueOf(row.get(indexNumberIdx));
             BigDecimal xp = BigDecimal.valueOf(Double.parseDouble(row.get(gainedXpIdx)));
-            GradeRequestDto gradeRequestDto = createGradeRequestDto(email, xp, request);
+            GradeRequestDto gradeRequestDto = createGradeRequestDto(indexNumber, xp, request);
 
             gradingService.submitGrade(gradeRequestDto);
         }
     }
 
 
-    private GradeRequestDto createGradeRequestDto(String email, BigDecimal xp, TestGradingRequestDto request) {
-        Long studentId = userService.getUserByEmail(email).getId();
+    private GradeRequestDto createGradeRequestDto(Integer indexNumber, BigDecimal xp, TestGradingRequestDto request) {
+        Long studentId = userService.getStudentByIndexNumber(indexNumber).getUser().getId();
         Map<Long, CriterionGradeRequestDto> criteria = Map.of(
                 request.getCriterionId(),
                 CriterionGradeRequestDto.builder()

@@ -15,6 +15,6 @@ public class CriterionService {
 
     public Criterion findById(Long id) {
         return criterionRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono kryterium"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono kryterium."));
     }
 }

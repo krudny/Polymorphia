@@ -129,11 +129,11 @@ public class EquipmentService {
     }
 
     private List<AssignedItem> createAssignedItemsFromRequest(EquipmentChestOpenRequestDto requestDto, AssignedChest assignedChest, ZonedDateTime openDate) {
-       Chest chest=(Chest) Hibernate.unproxy(assignedChest.getReward());
+        Chest chest = (Chest) Hibernate.unproxy(assignedChest.getReward());
         if (requestDto.getItemId() == null) {
             List<AssignedItem> assignedItems = createNewAssignedItemsFromChest(chest, assignedChest, openDate);
 
-            if(!assignedItems.isEmpty()){
+            if (!assignedItems.isEmpty()) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
             }
 

@@ -13,6 +13,12 @@ export default function useGradeUpdate(): UseGradeUpdate {
       queryClient.invalidateQueries({
         queryKey: ["grade"],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["gradingTargets"],
+      });
+    },
+    onError: (err) => {
+      toast.error(err instanceof Error ? err.message : "Błąd zapisu oceny");
     },
   });
 }

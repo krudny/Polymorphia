@@ -95,7 +95,7 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
                         getKeyForSelectedTarget(selectedTarget)
                   }
                 >
-                  {criterionGrade &&
+                  {criterion &&
                   !isSpecificDataLoading &&
                   !isSpecificDataError ? (
                     <Criterion

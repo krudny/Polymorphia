@@ -11,17 +11,17 @@ import java.util.List;
 @Repository
 public interface SubmissionRepository extends JpaRepository<Submission, Long> {
     @Query("""
-        SELECT s FROM Submission s
-            JOIN s.submissionRequirement sr
-            JOIN sr.gradableEvent ge
-            JOIN s.animal a
-            JOIN a.studentCourseGroupAssignment scga
-            JOIN scga.student st
-            WHERE ge.id = :gradableEventId
-                AND st.userId = :studentId
-
-    """)
+                SELECT s FROM Submission s
+                    JOIN s.submissionRequirement sr
+                    JOIN sr.gradableEvent ge
+                    JOIN s.animal a
+                    JOIN a.studentCourseGroupAssignment scga
+                    JOIN scga.student st
+                    WHERE ge.id = :gradableEventId
+                        AND st.userId = :studentId
+            
+            """)
     List<Submission> getSubmissionsByGradableEventAndStudent(@Param("gradableEventId") Long gradableEventId,
-                                                                 @Param("studentId") Long studentId);
+                                                             @Param("studentId") Long studentId);
 
 }

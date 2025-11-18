@@ -12,6 +12,8 @@ import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedReward;
 import com.agh.polymorphia_backend.model.course.reward.item.FlatBonusItemBehavior;
 import com.agh.polymorphia_backend.model.course.reward.item.ItemType;
 import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
+import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
+import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.course.reward.assigned.AssignedChestRepository;
 import com.agh.polymorphia_backend.repository.course.reward.assigned.AssignedItemRepository;
 import com.agh.polymorphia_backend.service.student.AnimalService;
@@ -109,12 +111,12 @@ public class AssignedRewardService {
                     criterionGrade,
                     reward.getId(),
                     assignedChestRepository::findByCriterionGrade,
-                    () -> createAssignedChest((Chest) Hibernate.unproxy(reward), criterionGrade)
+                    () -> createAssignedChest((Chest) Hibernate.unproxy(reward), criterionGrade, ZonedDateTime.now())
             );
         };
     }
 
-    public AssignedItem createAssignedItem(Optional<AssignedChest> assignedChest, CriterionGrade criterionGrade, Item item, ZonedDateTime openDate) {
+    public AssignedItem createAssignedItem(Optional<AssignedChest> assignedChest, CriterionGrade criterionGrade, Item item, ZonedDateTime receivedDate) {
         return AssignedItem.builder()
                 .reward(item)
                 .assignedChest(assignedChest.orElse(null))
@@ -122,28 +124,49 @@ public class AssignedRewardService {
                 .criterionGrade(criterionGrade)
                 .isUsed(false)
                 .bonusXp(BigDecimal.valueOf(0.0))
-                .receivedDate(openDate)
+                .receivedDate(receivedDate)
                 .build();
     }
 
-    public AssignedChest createAssignedChest(Chest chest, CriterionGrade criterionGrade) {
+    public AssignedChest createAssignedChest(Chest chest, CriterionGrade criterionGrade, ZonedDateTime receivedDate) {
         return AssignedChest.builder()
                 .reward(chest)
                 .isUsed(false)
-                .receivedDate(ZonedDateTime.now())
+                .receivedDate(receivedDate)
                 .criterionGrade(criterionGrade)
                 .build();
     }
 
 
     public boolean isLimitReached(Item item) {
-        Long userId = userService.getCurrentUser().getUserId();
+        AbstractRoleUser user = userService.getCurrentUser();
+        Long userId = user.getUserId();
+        UserType userRole = userService.getUserRole(user);
+        if (userRole.equals(UserType.COORDINATOR) || userRole.equals(UserType.INSTRUCTOR)) {
+            return false;
+        }
+
         Animal animal = animalService.getAnimal(userId, item.getCourse().getId());
         List<AssignedItem> animalAssignedItems = getAnimalAssignedItems(animal.getId());
 
         Map<Reward, Long> currentItemsByReward = countAssignedItemsByReward(animalAssignedItems);
 
         return currentItemsByReward.getOrDefault(item, 0L) >= item.getLimit();
+    }
+
+
+    public boolean isLimitReachedWithNewItems(Item item, Long studentId, Integer newItemsQuantity) {
+        UserType userRole = userService.getAnyUserRoleInCourse(item.getCourse().getId(), userService.findById(studentId).getId());
+        if (userRole.equals(UserType.COORDINATOR) || userRole.equals(UserType.INSTRUCTOR)) {
+            return false;
+        }
+
+        Animal animal = animalService.getAnimal(studentId, item.getCourse().getId());
+        List<AssignedItem> animalAssignedItems = getAnimalAssignedItems(animal.getId());
+
+        Map<Reward, Long> currentItemsByReward = countAssignedItemsByReward(animalAssignedItems);
+
+        return (currentItemsByReward.getOrDefault(item, 0L) + newItemsQuantity) > item.getLimit();
     }
 
     public Map<Reward, List<AssignedItem>> groupAssignedItemsByReward(List<AssignedItem> assignedItems) {

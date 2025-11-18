@@ -55,7 +55,7 @@ public class Grade {
     @ToString.Exclude
     @JsonIgnore
     @Builder.Default
-    private List<CriterionGrade> criteriaGrades=new ArrayList<>();
+    private List<CriterionGrade> criteriaGrades = new ArrayList<>();
 
     @PrePersist
     void onCreate() {

@@ -150,11 +150,12 @@ export const EventSectionService = {
   },
 
   getProjectVariant: async (
-    userId: number,
+    target: TargetRequestDTO,
     gradableEventId: number
   ): Promise<ProjectVariantResponseDTO[]> => {
-    return ApiClient.get(
-      `/projects/variants?userId=${userId}&projectId=${gradableEventId}`
+    return ApiClient.post(
+      `/projects/variants?projectId=${gradableEventId}`,
+      target
     );
   },
 
@@ -302,6 +303,6 @@ export const EventSectionService = {
   },
 
   submitGrade: async (gradeData: GradeRequestDTO): Promise<void> => {
-    await new Promise<void>((resolve) => setTimeout(resolve, 200));
+    return await ApiClient.post<void>("/grading", gradeData);
   },
 };

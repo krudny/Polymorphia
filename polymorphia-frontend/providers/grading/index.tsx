@@ -97,7 +97,7 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   });
 
   useEffect(() => {
-    if (!grade) {
+    if (!grade || !criteria) {
       return;
     }
 
@@ -105,9 +105,10 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
       type: GradingReducerActions.SET_GRADE,
       payload: {
         grade,
+        criteria,
       },
     });
-  }, [grade]);
+  }, [grade, criteria]);
 
   useEffect(() => {
     if (!submissionDetails) {

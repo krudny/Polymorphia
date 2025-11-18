@@ -10,5 +10,5 @@ public record SubmissionRequirementResponseDto(
         @NotNull String name,
         @NotNull boolean isMandatory,
         @NotNull @PositiveOrZero Long orderIndex
-        ) {
+) {
 }

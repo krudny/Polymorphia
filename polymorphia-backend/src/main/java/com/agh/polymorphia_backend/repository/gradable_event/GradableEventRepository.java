@@ -48,39 +48,39 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
     long countUngradedAnimalsForTeachingRoleUserAndEvent(Long teachingRoleUserId, Long gradableEventId);
 
     @Query("""
-        select hofe.studentId      as studentId,
-               hofe.studentName    as fullName,
-               hofe.animalName     as animalName,
-               hofe.evolutionStage as evolutionStage,
-               hofe.groupName      as group,
-               hofe.imageUrl       as imageUrl,
-               sum(cg.xp)          as gainedXp
-        from HallOfFameEntry hofe
-                 left join Grade g on g.animal.id = hofe.animalId and g.gradableEvent.id = :gradableEventId
-                 left join g.criteriaGrades cg
-                 join StudentCourseGroupAssignment scga on scga.animal.id = hofe.animalId
-        where (scga.courseGroup.teachingRoleUser.userId = :teachingRoleUserId or
-               scga.courseGroup.course.coordinator.userId = :teachingRoleUserId)
-          and (:includeAllGroups = true or hofe.groupName in :groups)
-          and (:searchTerm = '' or ((:searchByAnimal = true and
-                                     lower(hofe.animalName) like lower(concat('%', :searchTerm, '%'))) or
-                                    (:searchByStudent = true and
-                                     lower(hofe.studentName) like lower(concat('%', :searchTerm, '%')))))
-          and (:gradeStatus = 'ALL' or (:gradeStatus = 'GRADED' and g.id is not null) or
-               (:gradeStatus = 'UNGRADED' and g.id is null))
-          and hofe.courseId = :courseId
-        group by hofe.studentId, hofe.studentName, hofe.animalName, hofe.evolutionStage, hofe.groupName,
-                 hofe.imageUrl
-        order by case
-                     when :sortBy = 'gainedXp' and :sortOrder = 'ASC' then COALESCE(sum(cg.xp), -1) end asc,
-                 case
-                     when :sortBy = 'gainedXp' and :sortOrder = 'DESC'
-                         then COALESCE(sum(cg.xp), -1) end desc,
-                 case when :sortBy = 'studentName' and :sortOrder = 'ASC' then hofe.studentName end asc,
-                 case when :sortBy = 'studentName' and :sortOrder = 'DESC' then hofe.studentName end desc,
-                 case when :sortBy = 'animalName' and :sortOrder = 'ASC' then hofe.animalName end asc,
-                 case when :sortBy = 'animalName' and :sortOrder = 'DESC' then hofe.animalName end desc
-        """)
+            select hofe.studentId      as studentId,
+                   hofe.studentName    as fullName,
+                   hofe.animalName     as animalName,
+                   hofe.evolutionStage as evolutionStage,
+                   hofe.groupName      as group,
+                   hofe.imageUrl       as imageUrl,
+                   sum(cg.xp)          as gainedXp
+            from HallOfFameEntry hofe
+                     left join Grade g on g.animal.id = hofe.animalId and g.gradableEvent.id = :gradableEventId
+                     left join g.criteriaGrades cg
+                     join StudentCourseGroupAssignment scga on scga.animal.id = hofe.animalId
+            where (scga.courseGroup.teachingRoleUser.userId = :teachingRoleUserId or
+                   scga.courseGroup.course.coordinator.userId = :teachingRoleUserId)
+              and (:includeAllGroups = true or hofe.groupName in :groups)
+              and (:searchTerm = '' or ((:searchByAnimal = true and
+                                         lower(hofe.animalName) like lower(concat('%', :searchTerm, '%'))) or
+                                        (:searchByStudent = true and
+                                         lower(hofe.studentName) like lower(concat('%', :searchTerm, '%')))))
+              and (:gradeStatus = 'ALL' or (:gradeStatus = 'GRADED' and g.id is not null) or
+                   (:gradeStatus = 'UNGRADED' and g.id is null))
+              and hofe.courseId = :courseId
+            group by hofe.studentId, hofe.studentName, hofe.animalName, hofe.evolutionStage, hofe.groupName,
+                     hofe.imageUrl
+            order by case
+                         when :sortBy = 'gainedXp' and :sortOrder = 'ASC' then COALESCE(sum(cg.xp), -1) end asc,
+                     case
+                         when :sortBy = 'gainedXp' and :sortOrder = 'DESC'
+                             then COALESCE(sum(cg.xp), -1) end desc,
+                     case when :sortBy = 'studentName' and :sortOrder = 'ASC' then hofe.studentName end asc,
+                     case when :sortBy = 'studentName' and :sortOrder = 'DESC' then hofe.studentName end desc,
+                     case when :sortBy = 'animalName' and :sortOrder = 'ASC' then hofe.animalName end asc,
+                     case when :sortBy = 'animalName' and :sortOrder = 'DESC' then hofe.animalName end desc
+            """)
     List<StudentTargetDataResponseDto> getStudentTargets(
             @Param("courseId") Long courseId,
             @Param("gradableEventId") Long gradableEventId,

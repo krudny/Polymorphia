@@ -22,7 +22,7 @@ public class GradingController {
 
     @PostMapping("/csv/test")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
-    public ResponseEntity<Void> processTestGradeCSV(@RequestBody TestGradingRequestDto request) {
+    public ResponseEntity<Void> processTestGradeCSV(@Valid @RequestBody TestGradingRequestDto request) {
         testGradingCSVProcessor.process(request);
         return ResponseEntity.noContent().build();
     }
@@ -31,6 +31,6 @@ public class GradingController {
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<Void> processGrade(@Valid @RequestBody GradeRequestDto request) {
         gradingService.submitGrade(request);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

@@ -122,11 +122,11 @@ public class AccessAuthorizer {
 
     public void authorizeProjectGroupGrading(ProjectGroup projectGroup) {
         User user = userService.getCurrentUser().getUser();
-        boolean isProjectGroupInstructor = projectGroup.getInstructor().getUserId().equals(user.getId());
+        boolean isProjectGroupInstructor = projectGroup.getTeachingRoleUser().getUserId().equals(user.getId());
         boolean isCoordinator = isCourseAccessAuthorizedCoordinator(user, projectGroup.getProject().getEventSection().getCourse());
 
         if (!isProjectGroupInstructor && !isCoordinator) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Niepoprawne id użytkownika lub projektu");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Niepoprawne id użytkownika lub projektu.");
         }
     }
 

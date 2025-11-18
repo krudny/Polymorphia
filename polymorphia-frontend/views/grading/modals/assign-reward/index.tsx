@@ -28,21 +28,23 @@ function AssignRewardModalContent({
   });
 
   const updateAssignedAmount = (rewardId: number, value: number): void => {
-    setLocalState((prev) => ({
-      ...prev,
-      criteria: {
-        ...prev.criteria,
-        [criterionId]: {
-          ...prev.criteria[criterionId],
-          assignedRewards: prev.criteria[criterionId].assignedRewards.map(
-            (reward) =>
-              reward.rewardId === rewardId
-                ? { ...reward, quantity: value }
-                : reward
-          ),
+    setLocalState((prev) => {
+      return {
+        ...prev,
+        criteria: {
+          ...prev.criteria,
+          [criterionId]: {
+            ...prev.criteria[criterionId],
+            assignedRewards: prev.criteria[criterionId].assignedRewards.map(
+              (reward) =>
+                reward.rewardId === rewardId
+                  ? { ...reward, quantity: value }
+                  : reward
+            ),
+          },
         },
-      },
-    }));
+      };
+    });
   };
 
   const handleAssign = (): void => {

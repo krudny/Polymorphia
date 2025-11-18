@@ -23,7 +23,7 @@ public class RewardService {
     }
 
     public Reward findById(Long id) {
-        String message = String.format("Nie znaleziono nagrody o id %d", id);
+        String message = String.format("Nie znaleziono nagrody o id %d.", id);
         return rewardRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, message));
     }

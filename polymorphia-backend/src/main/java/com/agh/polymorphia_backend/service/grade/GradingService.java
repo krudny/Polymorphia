@@ -59,10 +59,7 @@ public class GradingService {
 
         TargetRequestDto target = request.getTarget();
         switch (target.type()) {
-            case STUDENT -> {
-                Grade grade = validateAndGetStudentGrade(request, gradableEvent, course);
-                gradeService.saveGrade(grade);
-            }
+            case STUDENT -> validateAndGetStudentGrade(request, gradableEvent, course);
             case STUDENT_GROUP -> validateAndGetGroupGrades(request, gradableEvent, course);
         }
 
@@ -106,6 +103,7 @@ public class GradingService {
                 .collect(Collectors.toList());
         grade.getCriteriaGrades().clear();
         grade.getCriteriaGrades().addAll(criteriaGrades);
+        grade.setComment(request.getComment());
 
         gradeService.saveGrade(grade);
         criterionGradeService.saveAll(criteriaGrades);
