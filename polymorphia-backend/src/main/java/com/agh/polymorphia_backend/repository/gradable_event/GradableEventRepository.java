@@ -12,10 +12,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-// Intellij SQL parser is different from Postgresql one,
-// so some parts of the queries may be marked as incorrect,
-// even though they work properly during runtime.
-
 @Repository
 public interface GradableEventRepository extends JpaRepository<GradableEvent, Long> {
     @Query("SELECT ge.eventSection.course.id FROM GradableEvent ge WHERE ge.id = :id")
@@ -30,9 +26,9 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
            ge.isHidden as isHidden,
            ge.isLocked as isLocked,
            CASE WHEN COUNT(DISTINCT g.id) > 0 THEN SUM(DISTINCT cg.xp) ELSE NULL END as gainedXp,
-           CASE WHEN COUNT(DISTINCT cr.id) > 0 as hasPossibleReward,
-           CASE WHEN COUNT(DISTINCT g.id) > 0 as isGraded,
-           CASE WHEN COUNT(DISTINCT g.id) > 0 AND COUNT(DISTINCT ar.id) > 0 as isRewardAssigned
+           CASE WHEN COUNT(DISTINCT cr.id) > 0 THEN true ELSE false END as hasPossibleReward,
+           CASE WHEN COUNT(DISTINCT g.id) > 0 THEN true ELSE false END as isGraded,
+           CASE WHEN COUNT(DISTINCT g.id) > 0 AND COUNT(DISTINCT ar.id) > 0 THEN true ELSE false END as isRewardAssigned
     FROM GradableEvent ge
     LEFT JOIN Grade g ON g.gradableEvent.id = ge.id AND g.animal.id = :animalId
     LEFT JOIN Criterion c ON c.gradableEvent.id = ge.id
@@ -54,8 +50,6 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
             @Param("sortBy") String sortBy
     );
 
-
-
     @Query("""
     SELECT ge.id as id,
            ge.name as name,
@@ -67,7 +61,7 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
            COUNT(DISTINCT CASE 
                WHEN g.id IS NULL THEN scga.animal.id
            END) as ungradedStudents,
-           CASE WHEN COUNT(DISTINCT cr.id) > 0 as hasPossibleReward
+           CASE WHEN COUNT(DISTINCT cr.id) > 0 THEN true ELSE false END as hasPossibleReward
     FROM GradableEvent ge
     LEFT JOIN Criterion c ON c.gradableEvent.id = ge.id
     LEFT JOIN CriterionReward cr ON cr.criterion.id = c.id
@@ -102,7 +96,7 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
            COUNT(DISTINCT CASE 
                WHEN g.id IS NULL THEN scga.animal.id
            END) as ungradedStudents,
-           CASE WHEN COUNT(DISTINCT cr.id) > 0 as hasPossibleReward
+           CASE WHEN COUNT(DISTINCT cr.id) > 0 THEN true ELSE false END as hasPossibleReward
     FROM GradableEvent ge
     LEFT JOIN Criterion c ON c.gradableEvent.id = ge.id
     LEFT JOIN CriterionReward cr ON cr.criterion.id = c.id
@@ -122,7 +116,6 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
             @Param("scope") String scope,
             @Param("sortBy") String sortBy
     );
-
 
     @Query("""
         select hofe.studentId      as studentId,
@@ -170,6 +163,5 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
             @Param("sortBy") String sortBy,
             @Param("sortOrder") String sortOrder,
             @Param("gradeStatus") String gradeStatus
-
     );
 }
