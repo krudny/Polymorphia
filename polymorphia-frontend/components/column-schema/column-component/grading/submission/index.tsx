@@ -38,6 +38,7 @@ export default function Submissions() {
     <ColumnComponent
       topComponent={topComponent}
       mainComponent={mainComponent}
+      hidden={targetState.selectedTarget === null}
     />
   );
 }

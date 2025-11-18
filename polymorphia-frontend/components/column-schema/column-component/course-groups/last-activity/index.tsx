@@ -60,6 +60,7 @@ export default function LastActivity() {
     <ColumnComponent
       topComponent={topComponent}
       mainComponent={mainComponent}
+      hidden={selectedTarget === null}
     />
   );
 }
