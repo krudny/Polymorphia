@@ -17,6 +17,8 @@ import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry;
 import com.agh.polymorphia_backend.model.hall_of_fame.SearchBy;
 import com.agh.polymorphia_backend.model.hall_of_fame.SortOrder;
 import com.agh.polymorphia_backend.model.user.UserType;
+import com.agh.polymorphia_backend.repository.gradable_event.GradableEventRepository;
+import com.agh.polymorphia_backend.repository.project.ProjectGroupRepository;
 import com.agh.polymorphia_backend.repository.project.ProjectTargetDataView;
 import com.agh.polymorphia_backend.service.course_groups.CourseGroupsService;
 import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
@@ -49,6 +51,8 @@ public class TargetListService {
     private final TargetListMapper targetListMapper;
     private final ProjectService projectService;
     private final ShortGradeService shortGradeService;
+    private final GradableEventRepository gradableEventRepository;
+    private final ProjectGroupRepository projectGroupRepository;
 
     public List<StudentTargetResponseDto> getTargetListForCourseGroup(CourseGroupsTargetListRequestDto requestDto) {
         CourseGroup courseGroup = courseGroupsService.findCourseGroupForTeachingRoleUser(requestDto.getCourseGroupId());
@@ -94,7 +98,7 @@ public class TargetListService {
     private List<StudentTargetResponseDto> getTargetListForGradingAssignmentOrTest(
         GradingTargetListRequestDto requestDto, Course course) {
         Long currentUserId = userService.getCurrentUser().getUserId();
-        return gradableEventService.getStudentTargets(currentUserId, requestDto, course.getId()).stream()
+        return getStudentTargets(currentUserId, requestDto, course.getId()).stream()
             .map(targetListMapper::toStudentTargetResponseDto).toList();
     }
 
@@ -104,7 +108,7 @@ public class TargetListService {
         boolean showAllProjectGroupsForCoordinator = requestDto.getGroups().stream().findFirst()
             .filter(group -> group.equals("assigned")).isEmpty();
 
-        Map<Long, List<ProjectTargetDataView>> groupTargets = projectService.getProjectTargets(
+        Map<Long, List<ProjectTargetDataView>> groupTargets = getProjectTargets(
                 requestDto.getGradableEventId(), currentUserId, showAllProjectGroupsForCoordinator).stream()
             .collect(Collectors.groupingBy(ProjectTargetDataView::projectGroupId));
 
@@ -129,6 +133,25 @@ public class TargetListService {
                     : GroupTargetType.DIVERGENT).build();
 
         }).sorted(groupComparator).toList();
+    }
+
+    private List<StudentTargetDataResponseDto> getStudentTargets(Long teachingRoleUserId,
+        GradingTargetListRequestDto requestDto, Long courseId) {
+
+        boolean includeAllGroups =
+            requestDto.getGroups().isEmpty() || (requestDto.getGroups().size() == 1 && requestDto.getGroups().getFirst()
+                .equals("all"));
+
+        String sortBy = requestDto.getSortBy().equals("total") ? "gainedXp" : requestDto.getSortBy();
+
+        return gradableEventRepository.getStudentTargets(courseId, requestDto.getGradableEventId(), teachingRoleUserId,
+            requestDto.getGroups(), includeAllGroups, requestDto.getSearchTerm(),
+            requestDto.getSearchBy().searchByAnimal(), requestDto.getSearchBy().searchByStudent(), sortBy,
+            requestDto.getSortOrder().name(), requestDto.getGradeStatus().name());
+    }
+
+    private List<ProjectTargetDataView> getProjectTargets(Long projectId, Long teachingRoleUserId, Boolean showAllProjectGroupsForCoordinator) {
+        return projectGroupRepository.getProjectTargetsData(projectId, teachingRoleUserId, showAllProjectGroupsForCoordinator);
     }
 
     private void applyRequestFiltersForGradingProjectTargetList(GradingTargetListRequestDto requestDto,

@@ -1,5 +1,5 @@
 import { StudentTargetResponseDTO } from "@/interfaces/api/target";
-import { ApiClient } from "../api/client";
+import { ApiClient } from "@/services/api/client";
 
 const TargetListService = {
   getGroupsForGradingFilters: async (
