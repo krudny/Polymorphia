@@ -37,7 +37,11 @@ export const TargetReducer = (
       if (isSingleMemberGroup) {
         return {
           ...state,
-          selectedTarget: { type: TargetTypes.STUDENT, ...clickedMember },
+          selectedTarget: {
+            type: TargetTypes.STUDENT,
+            id: clickedMember.id,
+            student: clickedMember,
+          },
         };
       }
 
@@ -48,7 +52,11 @@ export const TargetReducer = (
           selectedTarget:
             clickedTarget.groupType === GroupTargetTypes.MATCHING
               ? clickedTarget
-              : { type: TargetTypes.STUDENT, ...clickedMember },
+              : {
+                  type: TargetTypes.STUDENT,
+                  id: clickedMember.id,
+                  student: clickedMember,
+                },
         };
       }
 
@@ -72,7 +80,11 @@ export const TargetReducer = (
           selectedTarget:
             clickedTarget.groupType === GroupTargetTypes.MATCHING
               ? clickedTarget
-              : { type: TargetTypes.STUDENT, ...clickedMember },
+              : {
+                  type: TargetTypes.STUDENT,
+                  id: clickedMember.id,
+                  student: clickedMember,
+                },
         };
       }
 
@@ -84,7 +96,11 @@ export const TargetReducer = (
           }
           return {
             ...state,
-            selectedTarget: { type: TargetTypes.STUDENT, ...clickedMember },
+            selectedTarget: {
+              type: TargetTypes.STUDENT,
+              id: clickedMember.id,
+              student: clickedMember,
+            },
           };
         }
 
@@ -94,7 +110,11 @@ export const TargetReducer = (
           }
           return {
             ...state,
-            selectedTarget: { type: TargetTypes.STUDENT, ...clickedMember },
+            selectedTarget: {
+              type: TargetTypes.STUDENT,
+              id: clickedMember.id,
+              student: clickedMember,
+            },
           };
         }
       }
@@ -106,7 +126,11 @@ export const TargetReducer = (
       ) {
         return {
           ...state,
-          selectedTarget: { type: TargetTypes.STUDENT, ...clickedMember },
+          selectedTarget: {
+            type: TargetTypes.STUDENT,
+            id: clickedMember.id,
+            student: clickedMember,
+          },
         };
       }
 

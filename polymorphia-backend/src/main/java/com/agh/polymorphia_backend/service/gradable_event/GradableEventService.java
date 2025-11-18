@@ -56,12 +56,12 @@ public class GradableEventService {
     }
 
     public void validateTargetGradableEventAccess(TargetRequestDto target, GradableEvent gradableEvent) {
-        boolean isInvalidGradableEventForStudentGroupTarget = target.type() == TargetType.STUDENT_GROUP &&
-                gradableEvent.getEventSection().getEventSectionType() != EventSectionType.PROJECT;
+        boolean isInvalidGradableEventForStudentGroupTarget = target.type() == TargetType.STUDENT_GROUP
+            && gradableEvent.getEventSection().getEventSectionType() != EventSectionType.PROJECT;
 
         if (isInvalidGradableEventForStudentGroupTarget) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Grupowy podmiot oceny jest wspierany jedynie przy projekcie.");
+                "Grupowy podmiot oceny jest wspierany jedynie przy projekcie.");
         }
     }
 

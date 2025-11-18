@@ -18,15 +18,14 @@ import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
 import com.agh.polymorphia_backend.service.project.ProjectService;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
-import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @AllArgsConstructor
@@ -58,6 +57,10 @@ public class ShortGradeService {
         Course course = gradableEvent.getEventSection().getCourse();
 
         accessAuthorizer.authorizeStudentDataAccess(course, studentId);
+        return getShortGradeWithoutAuthorization(gradableEvent, studentId, course);
+    }
+
+    public StudentShortGradeResponseDto getShortGradeWithoutAuthorization(GradableEvent gradableEvent, Long studentId, Course course) {
         Animal animal = animalService.getAnimal(studentId, course.getId());
         Optional<Grade> grade = gradeService.getGradeByAnimalIdAndGradableEventId(animal.getId(), gradableEvent.getId());
         List<CriterionGradeResponseDto> criteriaGrades = grade.map(criterionGradeService::getCriteriaGrades)
@@ -68,13 +71,9 @@ public class ShortGradeService {
                 .toList()
                 .isEmpty();
 
-        return StudentShortGradeResponseDto.builder()
-                .isGraded(grade.isPresent())
-                .id(grade.map(Grade::getId).orElse(null))
-                .comment(grade.map(Grade::getComment).orElse(null))
-                .hasReward(hasReward)
-                .criteria(criteriaGrades)
-                .build();
+        return StudentShortGradeResponseDto.builder().isGraded(grade.isPresent())
+                .id(grade.map(Grade::getId).orElse(null)).comment(grade.map(Grade::getComment).orElse(null))
+                .hasReward(hasReward).criteria(criteriaGrades).build();
     }
 
     private StudentGroupShortGradeResponseDto getShortGroupGrade(GradableEvent gradableEvent, Long groupId) {
@@ -98,7 +97,6 @@ public class ShortGradeService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Oceny członków grupy się różnią!");
         }
 
-
         return StudentGroupShortGradeResponseDto.builder()
                 .ids(ids)
                 .isGraded(shortGrades.getFirst().getIsGraded())
@@ -108,7 +106,7 @@ public class ShortGradeService {
                 .build();
     }
 
-    private boolean areAllGradesSame(List<StudentShortGradeResponseDto> grades) {
+    public boolean areAllGradesSame(List<StudentShortGradeResponseDto> grades) {
         return grades.stream()
                 .map(g -> ShortGradeResponseDto.builder()
                         .hasReward(g.getHasReward())

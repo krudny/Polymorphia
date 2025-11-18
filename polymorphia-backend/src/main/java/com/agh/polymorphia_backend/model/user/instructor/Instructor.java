@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @Table(name = "instructors")
-public class Instructor extends AbstractRoleUser {
+public class Instructor extends TeachingRoleUser {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -167,14 +167,17 @@ export const EventSectionService = {
         data.push({
           type: TargetTypes.STUDENT,
           id: student.id,
-          fullName: student.fullName,
-          animalName: student.animalName,
-          evolutionStage: student.evolutionStage,
-          group: student.group,
-          imageUrl: student.imageUrl,
-          position: student.position,
-          courseId: student.courseId,
-          gainedXp: xp,
+          student: {
+            id: student.id,
+            fullName: student.fullName,
+            animalName: student.animalName,
+            evolutionStage: student.evolutionStage,
+            group: student.group,
+            imageUrl: student.imageUrl,
+            position: student.position,
+            courseId: student.courseId,
+            gainedXp: xp,
+          },
         });
       } else {
         const isDivergent = xp !== undefined && Math.random() < 0.5;

@@ -198,11 +198,11 @@ public class InvitationService {
         Instructor instructor = instructorRepository.findByUserId(user.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Prowadzący nie istnieje."));
 
-        if (courseGroup.getInstructor() != null) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Grupa ma już przypisanego prowadzącego.”");
+        if (courseGroup.getTeachingRoleUser() != null) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Grupa ma już przypisanego prowadzącego.");
         }
 
-        courseGroup.setInstructor(instructor);
+        courseGroup.setTeachingRoleUser(instructor);
         courseGroupRepository.save(courseGroup);
     }
 }
