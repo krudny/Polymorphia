@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.model.user.coordinator;
 
-import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
+import com.agh.polymorphia_backend.model.user.TeachingRoleUser;
 import com.agh.polymorphia_backend.model.user.UserType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

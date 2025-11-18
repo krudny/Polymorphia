@@ -22,7 +22,7 @@ import com.agh.polymorphia_backend.repository.project.ProjectGroupRepository;
 import com.agh.polymorphia_backend.repository.project.ProjectTargetDataView;
 import com.agh.polymorphia_backend.service.course_groups.CourseGroupsService;
 import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
-import com.agh.polymorphia_backend.service.gradable_event.ShortGradeService;
+import com.agh.polymorphia_backend.service.grade.ShortGradeService;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
 import com.agh.polymorphia_backend.service.hall_of_fame.OverviewFieldSort;
 import com.agh.polymorphia_backend.service.mapper.TargetListMapper;
@@ -49,7 +49,6 @@ public class TargetListService {
     private final UserService userService;
     private final HallOfFameService hallOfFameService;
     private final TargetListMapper targetListMapper;
-    private final ProjectService projectService;
     private final ShortGradeService shortGradeService;
     private final GradableEventRepository gradableEventRepository;
     private final ProjectGroupRepository projectGroupRepository;
