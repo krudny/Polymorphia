@@ -154,6 +154,7 @@ export default function StudentInfo() {
     <ColumnComponent
       topComponent={topComponent}
       mainComponent={mainComponent}
+      hidden={selectedTarget === null}
     />
   );
 }

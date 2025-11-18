@@ -36,6 +36,7 @@ TRUNCATE TABLE project_groups cascade;
 TRUNCATE TABLE project_groups_animals cascade;
 TRUNCATE TABLE submission_requirements cascade;
 TRUNCATE TABLE submissions cascade;
+TRUNCATE TABLE teaching_role_users cascade;
 INSERT INTO
   users (id, first_name, last_name, email, password, preferred_course_id)
 VALUES
@@ -61,9 +62,13 @@ INSERT INTO
 VALUES
   (7, 'Sample', 'User', 'sampleuser@test.com', '$2y$10$PnLQWAxCL4VYV6PCkYADeO6EF448OySkzLriI4/SDRShZZBXrvZTm', NULL);
 INSERT INTO
+    teaching_role_users (user_id)
+VALUES
+    (4);
+INSERT INTO
   instructors (user_id)
 VALUES
-  (4), (5);
+  (4);
 INSERT INTO
   users (id, first_name, last_name, email, password, preferred_course_id)
 VALUES
@@ -279,16 +284,16 @@ VALUES
   (106, 100099),
   (107, 100100);
 INSERT INTO
-  coordinators (user_id)
+    teaching_role_users (user_id)
 VALUES
-  (1);
+    (1),
+    (2),
+    (5);
 INSERT INTO
   coordinators (user_id)
 VALUES
-  (2);
-INSERT INTO
-  coordinators (user_id)
-VALUES
+  (1),
+  (2),
   (5);
 INSERT INTO
   courses (id, name, markdown_source_url, coordinator_id, coordinator_image_url, image_url, instructor_image_url)
@@ -299,15 +304,15 @@ INSERT INTO
 VALUES
   (1, 'Programowanie obiektowe 2024/25', 'google.com', 5, 'images/evolution-stages/7.webp', 'images/evolution-stages/1.webp', 'images/evolution-stages/7.webp');
 INSERT INTO
-  course_groups (id, name, course_id, instructor_id)
+  course_groups (id, name, course_id, teaching_role_user_id)
 VALUES
   (1, 'sp-pn-1315', 1, 4);
 INSERT INTO
-  course_groups (id, name, course_id, instructor_id)
+  course_groups (id, name, course_id, teaching_role_user_id)
 VALUES
   (2, 'mi-13-00', 2, 4);
 INSERT INTO
-  course_groups (id, name, course_id, instructor_id)
+  course_groups (id, name, course_id, teaching_role_user_id)
 VALUES
   (3, 'SP-pn-1500', 1, 4),
   (4, 'mi-wt-1145', 1, 4);
@@ -779,13 +784,17 @@ VALUES
   (42, 12, 'Projekt 2', 17, 17, null, FALSE, FALSE);
 
 insert into projects(id, allow_cross_course_group_project_groups)
-values (38, false);
+values (38, false),
+       (39, false),
+       (40, false),
+       (41, false),
+       (42, false);
 
 insert into project_variant_categories(id, project_id, name)
 values (1, 38, 'Mapa i roślinność'),
        (2, 38, 'Zwierzaki');
 
-insert into project_groups(id, instructor_id, project_id)
+insert into project_groups(id, teaching_role_user_id, project_id)
 values (1, 4, 39),
        (2, 4, 39),
        (3, 4, 40),

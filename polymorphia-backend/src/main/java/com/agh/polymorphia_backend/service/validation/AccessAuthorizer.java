@@ -62,7 +62,7 @@ public class AccessAuthorizer {
         Long userId = user.getUser().getId();
         Course course = projectGroup.getProject().getEventSection().getCourse();
 
-        boolean isProjectGroupsInstructor = projectGroup.getInstructor().getUserId().equals(userId);
+        boolean isProjectGroupsTeachingRoleUser = projectGroup.getTeachingRoleUser().getUserId().equals(userId);
         boolean isCoordinatorInCourse = isCourseAccessAuthorizedCoordinator(user.getUser(), course);
         boolean isGroupMember = projectGroup.getAnimals().stream()
                 .anyMatch(animal ->
@@ -72,7 +72,7 @@ public class AccessAuthorizer {
                                 .equals(userId)
                 );
 
-        if (!isProjectGroupsInstructor && !isCoordinatorInCourse && !isGroupMember) {
+        if (!isProjectGroupsTeachingRoleUser && !isCoordinatorInCourse && !isGroupMember) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Niepoprawne id użytkownika lub projektu.");
         }
     }

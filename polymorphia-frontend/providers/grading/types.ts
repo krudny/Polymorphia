@@ -26,4 +26,9 @@ export interface GradingContextInterface {
   submitSubmissions: (submissionDetails: SubmissionDetails) => void;
 }
 
-export type GradingFilterId = "sortOrder" | "sortBy" | "groups" | "gradeStatus";
+export type GradingFilterId =
+  | "searchBy"
+  | "sortOrder"
+  | "sortBy"
+  | "groups"
+  | "gradeStatus";

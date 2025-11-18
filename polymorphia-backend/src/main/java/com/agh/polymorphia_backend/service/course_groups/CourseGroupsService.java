@@ -30,6 +30,11 @@ public class CourseGroupsService {
         return courseGroupRepository.findByCourseId(courseId);
     }
 
+    public List<String> findAllCourseGroupNames(Long courseId) {
+        accessAuthorizer.authorizeCourseAccess(courseId);
+        return courseGroupRepository.findNamesByCourseId(courseId);
+    }
+
     public List<CourseGroupsResponseDto> getAllCourseGroups(Long courseId) {
         List<CourseGroup> courseGroups = findAllCourseGroups(courseId);
         return courseGroups.stream()
@@ -56,6 +61,16 @@ public class CourseGroupsService {
                 .toList();
     }
 
+    public CourseGroup findCourseGroupForTeachingRoleUser(Long courseGroupId) {
+        return switch (userService.getCurrentUserRole()) {
+            case INSTRUCTOR, COORDINATOR -> courseGroupRepository
+                    .findCourseGroupForTeachingRoleUser(courseGroupId, userService.getCurrentUser().getUserId())
+                    .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono grupy zajęciowej."));
+            default -> throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Brak uprawnień.");
+        };
+    }
+
     private List<CourseGroup> getCourseGroups(Long courseId) {
         accessAuthorizer.authorizeCourseAccess(courseId);
         Long userId = userService.getCurrentUser().getUser().getId();
@@ -63,7 +78,7 @@ public class CourseGroupsService {
 
         return switch (userRole) {
             case STUDENT -> getStudentCourseGroups(userId, courseId);
-            case INSTRUCTOR -> getInstructorCourseGroups(userId, courseId);
+            case INSTRUCTOR -> getTeachingRoleUserCourseGroups(userId, courseId);
             case COORDINATOR -> findAllCourseGroups(courseId);
             case UNDEFINED -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INVALID_ROLE);
         };
@@ -74,8 +89,8 @@ public class CourseGroupsService {
 
     }
 
-    private List<CourseGroup> getInstructorCourseGroups(Long userId, Long courseId) {
-        return courseGroupRepository.findByInstructorIdAndCourseId(userId, courseId);
+    private List<CourseGroup> getTeachingRoleUserCourseGroups(Long userId, Long courseId) {
+        return courseGroupRepository.findByTeachingRoleUserIdAndCourseId(userId, courseId);
     }
 
 }
