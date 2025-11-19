@@ -18,6 +18,7 @@ import com.agh.polymorphia_backend.service.course.reward.AssignedRewardService;
 import com.agh.polymorphia_backend.service.course.reward.RewardService;
 import com.agh.polymorphia_backend.service.criterion.CriterionService;
 import com.agh.polymorphia_backend.service.gradable_event.project.ProjectGroupService;
+import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.util.NumberFormatter;
 import lombok.AllArgsConstructor;
 import org.hibernate.Hibernate;
@@ -34,6 +35,7 @@ public class GradingValidator {
     private final RewardService rewardService;
     private final AssignedRewardService assignedRewardService;
     private final ProjectGroupService projectGroupService;
+    private final UserService userService;
 
     public void validate(GradeRequestDto request, GradableEvent gradableEvent) {
         request.getCriteria().forEach((criterionId, criterionRequest) ->
@@ -106,8 +108,8 @@ public class GradingValidator {
     private void validateStudentLimitAssignedRewards(Long studentId, Reward reward, Integer quantity, Long criterionId) {
         if (reward.getRewardType().equals(RewardType.ITEM)
                 && assignedRewardService.isLimitReachedWithNewItems((Item) Hibernate.unproxy(reward), studentId, quantity, criterionId)) {
-
-            String message = String.format("Limit nagród tego typu został osiągnięty dla użytkownika %d.", studentId);
+            String userName = userService.getFullName(userService.findById(studentId));
+            String message = String.format("Limit nagród typu %s został osiągnięty dla użytkownika %s.", reward.getName(), userName);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, message);
         }
     }
