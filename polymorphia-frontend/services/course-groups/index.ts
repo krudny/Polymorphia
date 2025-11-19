@@ -31,59 +31,13 @@ const CourseGroupsService = {
     );
   },
 
-  // should be sorted by grade date
-  getStudentLastActivity: (userId: number): StudentLastActivityDTO[] => {
-    return [
-      {
-        id: 1,
-        gradableEventName: "Kartkówka 4",
-        gainedXp: 2.3,
-        hasReward: true,
-        gradeDate: "24.10.2024",
-      },
-      {
-        id: 2,
-        gradableEventName: "Laboratorium 3",
-        gainedXp: 2.3,
-        hasReward: false,
-        gradeDate: "24.10.2024",
-      },
-      {
-        id: 3,
-        gradableEventName: "Kartkówka 3",
-        gainedXp: 2.3,
-        hasReward: false,
-        gradeDate: "24.10.2024",
-      },
-      {
-        id: 4,
-        gradableEventName: "Laboratorium 2",
-        gainedXp: 2.3,
-        hasReward: false,
-        gradeDate: "24.10.2024",
-      },
-      {
-        id: 5,
-        gradableEventName: "Kartkówka 2",
-        gainedXp: 2.3,
-        hasReward: false,
-        gradeDate: "24.10.2024",
-      },
-      {
-        id: 6,
-        gradableEventName: "Laboratorium 1",
-        gainedXp: 2.3,
-        hasReward: false,
-        gradeDate: "24.10.2024",
-      },
-      {
-        id: 7,
-        gradableEventName: "Kartkówka 1",
-        gainedXp: 2.3,
-        hasReward: false,
-        gradeDate: "24.10.2024",
-      },
-    ];
+  getStudentLastActivity: async (
+    userId: number,
+    courseId: number
+  ): Promise<StudentLastActivityDTO[]> => {
+    return await ApiClient.get<StudentLastActivityDTO[]>(
+      `/students/${userId}/activity?courseId=${courseId}`
+    );
   },
 
   getStudentItems: async (

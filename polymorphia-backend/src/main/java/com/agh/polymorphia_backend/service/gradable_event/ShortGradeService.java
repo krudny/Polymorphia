@@ -10,7 +10,6 @@ import com.agh.polymorphia_backend.dto.response.grade.StudentGroupShortGradeResp
 import com.agh.polymorphia_backend.dto.response.grade.StudentShortGradeResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.UserDetailsResponseDto;
 import com.agh.polymorphia_backend.model.course.Animal;
-import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.gradable_event.Grade;
 import com.agh.polymorphia_backend.service.gradable_event.criteria.CriterionGradeService;

@@ -1140,8 +1140,7 @@ VALUES
   (43, 5, 2, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done'),
   (44, 6, 2, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done'),
   (45, 7, 2, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done'),
-  (46, 9, 2, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done'),
-  (47, 9, 2, NOW(), NOW(), 'You are the best :)');
+  (46, 9, 2, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done');
 INSERT INTO
   criteria_grades (id, grade_id, criterion_id, xp)
 VALUES
@@ -1220,8 +1219,7 @@ VALUES
   (43, 43, 5, 1.0),
   (44, 44, 6, 1.0),
   (45, 45, 7, 1.2),
-  (46, 46, 9, 1.3),
-  (47, 47, 12, 1.4);
+  (46, 46, 9, 1.3);
 
 INSERT INTO
   assigned_rewards (id, criterion_grade_id, reward_id, received_date, used_date, is_used)
@@ -1238,10 +1236,7 @@ VALUES
   (12, 8, 2, NOW(), NULL, FALSE),
   (13, 8, 3, NOW(), NULL, FALSE),
   (14, 7, 1, NOW(), NULL, FALSE),
-  (15, 7, 2, NOW(), NULL, FALSE),
-  (16, 47, 101, NOW(), NULL, FALSE),
-  (17, 47, 102, NOW(), NOW(), TRUE),
-  (18, 47, 1, NOW(), NOW(), TRUE);
+  (15, 7, 2, NOW(), NULL, FALSE);
 INSERT INTO
   assigned_chests (assigned_reward_id)
 VALUES
@@ -1250,16 +1245,13 @@ VALUES
   (5),
   (7),
   (9),
-  (10),
-  (16),
-  (17);
+  (10);
 
 INSERT INTO
     assigned_items (assigned_reward_id, assigned_chest_id, bonus_xp)
 VALUES
     (6, 5, 0.0),
-    (8, 7, 2.5),
-    (18, 17, 0.0);
+    (8, 7, 2.5);
 
 INSERT INTO
   submission_requirements (id, gradable_event_id, name, is_mandatory, order_index)
