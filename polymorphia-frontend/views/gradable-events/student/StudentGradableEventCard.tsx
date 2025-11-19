@@ -10,7 +10,7 @@ export default function StudentGradableEventCard({
   const { hasPossibleReward, gainedXp, isGraded, isRewardAssigned } =
     gradableEvent;
 
-  const color = gainedXp ? "green" : "sky";
+  const color = gainedXp != undefined ? "green" : "sky";
   const rightComponent = (
     <XPCardPoints
       isSumLabelVisible={true}

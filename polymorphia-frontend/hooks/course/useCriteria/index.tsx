@@ -15,6 +15,7 @@ export default function useCriteria(
   const { data, isLoading, isError } = useQuery({
     queryKey: ["criteria", gradableEventId],
     queryFn: () => CriteriaService.getCriteria(gradableEventId),
+    staleTime: 1000 * 15,
   });
 
   return { data, isLoading, isError };

@@ -26,7 +26,7 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
            ge.isHidden as isHidden,
            ge.isLocked as isLocked,
            CASE WHEN COUNT(DISTINCT g.id) > 0 THEN CAST(SUM(DISTINCT cg.xp) AS BigDecimal) ELSE NULL END as gainedXp,
-           CASE WHEN COUNT(DISTINCT cr.id) > 0 THEN true ELSE false END as hasPossibleReward,
+           CASE WHEN COUNT(DISTINCT cr.criterion.id) > 0 THEN true ELSE false END as hasPossibleReward,
            CASE WHEN COUNT(DISTINCT g.id) > 0 THEN true ELSE false END as isGraded,
            CASE WHEN COUNT(DISTINCT g.id) > 0 AND COUNT(DISTINCT ar.id) > 0 THEN true ELSE false END as isRewardAssigned
     FROM GradableEvent ge
