@@ -1,7 +1,8 @@
 import { EquipmentChestOpenRequestDTO } from "@/interfaces/api/equipment";
+import { UseMutationResult } from "@tanstack/react-query";
 
-export interface UsePickChestItems {
-  mutate: (variables: EquipmentChestOpenRequestDTO) => void;
-
-  mutateAsync: (variables: EquipmentChestOpenRequestDTO) => Promise<void>;
-}
+export type UsePickChestItems = UseMutationResult<
+  void,
+  Error,
+  EquipmentChestOpenRequestDTO
+>;

@@ -7,6 +7,7 @@ import com.agh.polymorphia_backend.model.course.reward.Reward;
 import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedChest;
 import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedItem;
 import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedReward;
+import com.agh.polymorphia_backend.model.course.reward.chest.ChestFilterEnum;
 import com.agh.polymorphia_backend.model.course.reward.item.FlatBonusItemBehavior;
 import com.agh.polymorphia_backend.model.course.reward.item.ItemType;
 import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
@@ -39,8 +40,8 @@ public class AssignedRewardService {
     private final AnimalService animalService;
     private final UserService userService;
 
-    public List<AssignedChest> getAnimalAssignedChests(Long animalId) {
-        return assignedChestRepository.findAnimalAssignedChests(animalId);
+    public List<AssignedChest> getAnimalAssignedChests(Long animalId, ChestFilterEnum chestFilter) {
+        return assignedChestRepository.findAnimalAssignedChests(animalId, chestFilter.toString());
     }
 
     public List<AssignedItem> getAnimalAssignedItems(Long animalId) {
@@ -77,15 +78,22 @@ public class AssignedRewardService {
         return totalBonusByEventSection;
     }
 
-    public AssignedChest getAssignedChestByIdAndAnimalId(Long assignedChestId, Long animalId) {
-        List<AssignedChest> assignedChests = getAnimalAssignedChests(animalId);
-        return assignedChests.stream()
-                .filter(assignedChest ->
-                        assignedChest.getId().equals(assignedChestId)
-                                && !assignedChest.getIsUsed()
-                )
-                .findFirst()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nie znaleziono przypisanej skrzynki."));
+    public AssignedChest getAssignedChestByIdAndAnimalIdWithoutLock(Long assignedChestId, Long animalId) {
+        return assignedChestRepository
+                .findByIdAndAnimalId(assignedChestId, animalId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Nie znaleziono przypisanej skrzynki."
+                ));
+    }
+
+    public AssignedChest getAssignedChestByIdAndAnimalIdWithLock(Long assignedChestId, Long animalId) {
+        return assignedChestRepository
+                .findByIdAndAnimalIdWithLock(assignedChestId, animalId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Nie znaleziono przypisanej skrzynki."
+                ));
     }
 
     public AssignedItem createAssignedItem(AssignedChest assignedChest, Item item, ZonedDateTime openDate) {
@@ -161,9 +169,7 @@ public class AssignedRewardService {
     }
 
     public List<AssignedItem> getAnimalEventSectionAssignedItems(Long animalId, Long eventSectionId) {
-        List<AssignedChest> openedChests = getAnimalAssignedChests(animalId).stream()
-                .filter(AssignedReward::getIsUsed)
-                .toList();
+        List<AssignedChest> openedChests = getAnimalAssignedChests(animalId, ChestFilterEnum.USED);
 
         return openedChests.stream()
                 .flatMap(chest -> chest.getAssignedItems().stream())
