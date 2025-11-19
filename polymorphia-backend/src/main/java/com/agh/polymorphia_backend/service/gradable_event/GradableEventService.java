@@ -40,13 +40,13 @@ public class GradableEventService {
     private final CriterionMapper criterionMapper;
 
     public GradableEvent getGradableEventById(Long gradableEventId) {
-        UserType userRole = userService.getCurrentUserRole();
+//        UserType userRole = userService.getCurrentUserRole();
         GradableEvent gradableEvent = fetchGradableEvent(gradableEventId);
 
-        if (userRole != UserType.INSTRUCTOR && userRole != UserType.COORDINATOR && (gradableEvent.getIsHidden()
-            || gradableEvent.getEventSection().getIsHidden())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wydarzenie nie istnieje.");
-        }
+//        if (userRole != UserType.INSTRUCTOR && userRole != UserType.COORDINATOR && (gradableEvent.getIsHidden()
+//            || gradableEvent.getEventSection().getIsHidden())) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wydarzenie nie istnieje.");
+//        }
 
         return gradableEvent;
     }

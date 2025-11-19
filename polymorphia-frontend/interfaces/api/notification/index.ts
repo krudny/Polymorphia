@@ -11,6 +11,6 @@ export interface NotificationResponseDTO {
   notificationType: NotificationType;
   createdAt: string;
   description: string;
-  gradableEventId?: number;
+  relatedEntityId?: number;
   rewardId?: number;
 }

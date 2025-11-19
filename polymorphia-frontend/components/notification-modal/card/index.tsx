@@ -10,12 +10,14 @@ import {
 } from "@/animations/Notification";
 import "./index.css";
 import { getNotificationCardCustomOptions } from "@/components/notification-modal/card/utils";
+import useNotificationContext from "@/hooks/contexts/useNotificationsContext";
 
 export default function NotificationCard({
   notification,
   isNew,
 }: NotificationCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
+  const { handleNotificationClick } = useNotificationContext();
   const { mutation } = useDeleteNotification();
 
   useEffect(() => {
@@ -23,6 +25,10 @@ export default function NotificationCard({
       animateNotificationEntry(cardRef.current);
     }
   }, []);
+
+  const handleClick = () => {
+    handleNotificationClick(notification);
+  };
 
   const handleClose = (event: MouseEvent) => {
     event.stopPropagation();
@@ -41,7 +47,11 @@ export default function NotificationCard({
   );
 
   return (
-    <div ref={cardRef} className={`notification-card ${isNew && "is-new"}`}>
+    <div
+      ref={cardRef}
+      className={`notification-card ${isNew && "is-new"}`}
+      onClick={handleClick}
+    >
       <div className="notification-card-icon">
         <span className="material-symbols">{icon}</span>
       </div>

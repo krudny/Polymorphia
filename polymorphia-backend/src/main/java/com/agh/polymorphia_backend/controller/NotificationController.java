@@ -16,16 +16,19 @@ public class NotificationController {
     private final SseNotificationService sseNotificationService;
 
     @GetMapping(value = "/stream/count", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
     public SseEmitter streamNotificationCount() {
         return sseNotificationService.subscribeToCount();
     }
 
     @GetMapping(value = "/stream/notifications", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
     public SseEmitter streamNotifications() {
         return sseNotificationService.subscribeToNotifications();
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<Void> deleteNotification(@PathVariable Long id) {
         sseNotificationService.deleteNotification(id);
         return ResponseEntity.noContent().build();
