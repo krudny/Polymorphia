@@ -4,13 +4,17 @@ import com.agh.polymorphia_backend.dto.request.csv.process.TestGradingRequestDto
 import com.agh.polymorphia_backend.dto.request.grade.CriterionGradeRequestDto;
 import com.agh.polymorphia_backend.dto.request.grade.GradeRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.StudentTargetRequestDto;
+import com.agh.polymorphia_backend.model.criterion.Criterion;
 import com.agh.polymorphia_backend.service.csv.CSVHeaders;
 import com.agh.polymorphia_backend.service.csv.CSVUtil;
+import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
 import com.agh.polymorphia_backend.service.grade.GradingService;
 import com.agh.polymorphia_backend.service.user.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -22,6 +26,7 @@ public class TestGradingCSVProcessor {
 
     private final UserService userService;
     private final GradingService gradingService;
+    private final GradableEventService gradableEventService;
 
 
     @Transactional
@@ -43,8 +48,17 @@ public class TestGradingCSVProcessor {
 
     private GradeRequestDto createGradeRequestDto(Integer indexNumber, BigDecimal xp, TestGradingRequestDto request) {
         Long studentId = userService.getStudentByIndexNumber(indexNumber).getUser().getId();
+        List<Criterion> gradableEventCriteria = gradableEventService.getGradableEventById((request.getGradableEventId()))
+                .getCriteria();
+
+        if (gradableEventCriteria.size() != 1) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Import csv ocen można wykonać tylko dla wydarzeń o jednym kryterium.");
+        }
+
+        Long criterionId = gradableEventCriteria.getFirst().getId();
+
         Map<Long, CriterionGradeRequestDto> criteria = Map.of(
-                request.getCriterionId(),
+                criterionId,
                 CriterionGradeRequestDto.builder()
                         .gainedXp(xp)
                         .build()

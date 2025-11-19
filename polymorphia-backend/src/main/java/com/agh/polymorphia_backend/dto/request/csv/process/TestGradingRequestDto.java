@@ -15,7 +15,4 @@ public class TestGradingRequestDto {
 
     @NotNull
     private Long gradableEventId;
-
-    @NotNull
-    private Long criterionId;
 }
