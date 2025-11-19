@@ -9,6 +9,11 @@ import useCourseGroupsFilterConfigs from "@/hooks/course/useCourseGroupsFilterCo
 import useStudentSummary from "@/hooks/course/useStudentSummary";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
 import useStudentLastActivity from "@/hooks/course/useStudentLastActivity";
+import {
+  DEFAULT_SEARCH_BY,
+  DEFAULT_SORT_BY,
+  DEFAULT_SORT_ORDER_ASC,
+} from "@/shared/filter-defaults";
 
 export const CourseGroupsContext = createContext<
   CourseGroupsContextInterface | undefined
@@ -21,15 +26,15 @@ export const CourseGroupsProvider = ({ children }: { children: ReactNode }) => {
   const filterConfigs = useCourseGroupsFilterConfigs();
   const filters = useFilters<CourseGroupsFilterId>(filterConfigs ?? []);
   const sortBy = useMemo(
-    () => filters.getAppliedFilterValues("sortBy") ?? ["total"],
+    () => filters.getAppliedFilterValues("sortBy") ?? DEFAULT_SORT_BY,
     [filters]
   );
   const sortOrder = useMemo(
-    () => filters.getAppliedFilterValues("sortOrder") ?? ["asc"],
+    () => filters.getAppliedFilterValues("sortOrder") ?? DEFAULT_SORT_ORDER_ASC,
     [filters]
   );
   const searchBy = useMemo(
-    () => filters.getAppliedFilterValues("searchBy") ?? ["studentName"],
+    () => filters.getAppliedFilterValues("searchBy") ?? DEFAULT_SEARCH_BY,
     [filters]
   );
 
