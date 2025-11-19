@@ -17,21 +17,26 @@ export default function EquipmentChest({
   const { lockedText, badgeContainer } = equipmentVariants({ size });
 
   const handleClick = () => {
-    if (chestData.details.isUsed) {
-      dispatch({
-        type: EquipmentActions.SHOW_CHEST_MODAL,
-        payload: chestData,
-      });
-    } else {
-      dispatch({
-        type: EquipmentActions.SHOW_OPENING_CHEST_MODAL,
-        payload: chestData,
-      });
+    if (chestData.details.id) {
+      if (chestData.details.isUsed) {
+        dispatch({
+          type: EquipmentActions.SHOW_CHEST_MODAL,
+          payload: chestData,
+        });
+      } else {
+        dispatch({
+          type: EquipmentActions.SHOW_OPENING_CHEST_MODAL,
+          payload: chestData,
+        });
+      }
     }
   };
 
   return (
-    <div className="equipment-grid-item" onClick={handleClick}>
+    <div
+      className={`equipment-grid-item ${chestData.details.id ? "hover:cursor-pointer hover:shadow-lg" : ""}`}
+      onClick={handleClick}
+    >
       <Image
         src={`${API_STATIC_URL}/${chestData.base.imageUrl}`}
         alt={chestData.base.name}

@@ -15,7 +15,7 @@ export default function useHallOfFame({
   sortBy,
   groups,
 }: useHallOfFameProps): UseHallOfFame {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: [
       "hallOfFame",
       page,
@@ -42,5 +42,5 @@ export default function useHallOfFame({
       ),
   });
 
-  return { data, isLoading };
+  return { data, isLoading, isError };
 }

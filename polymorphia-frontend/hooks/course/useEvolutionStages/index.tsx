@@ -5,11 +5,11 @@ import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export default function useEvolutionStages(): UseEvolutionStages {
   const { courseId } = useUserDetails();
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["evolutionStages", courseId],
     queryFn: () => KnowledgeBaseService.getEvolutionStages(courseId),
     refetchOnWindowFocus: false,
   });
 
-  return { data, isLoading, error };
+  return { data, isLoading, isError };
 }

@@ -4,7 +4,6 @@ import com.agh.polymorphia_backend.dto.request.SubmissionDetailsRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.StudentGroupTargetRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.StudentTargetRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.TargetRequestDto;
-import com.agh.polymorphia_backend.dto.request.target.TargetType;
 import com.agh.polymorphia_backend.dto.response.submission.SubmissionDetailsResponseDto;
 import com.agh.polymorphia_backend.dto.response.submission.SubmissionRequirementResponseDto;
 import com.agh.polymorphia_backend.model.event_section.EventSectionType;
@@ -126,7 +125,7 @@ public class SubmissionService {
 
                 if (userService.getCurrentUserRole() == UserType.STUDENT) {
                     if (currentSubmission.isLocked()) {
-                        throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                                 "Nie można zmienić zablokowanego zgłoszenia.");
                     }
 
@@ -178,14 +177,14 @@ public class SubmissionService {
         switch (target) {
             case StudentTargetRequestDto studentTargetRequestDto -> {
                 if (userType.equals(UserType.STUDENT) && (!userId.equals(studentTargetRequestDto.id()))) {
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND);
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, STUDENT_NOT_FOUND);
                 }
                 switch (gradableEvent.getEventSection().getEventSectionType()) {
                     case ASSIGNMENT -> {
                         return List.of(
                                 getStudentListForAssigment(gradableEvent.getId(), studentTargetRequestDto.id(), userId,
                                         userType).orElseThrow(
-                                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND)));
+                                        () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, STUDENT_NOT_FOUND)));
                     }
                     case PROJECT -> {
                         return getStudentListFromProjectGroup(
@@ -207,7 +206,7 @@ public class SubmissionService {
                                                          UserType userType) {
         return switch (userType) {
             case STUDENT -> Optional.of((Student) userService.getCurrentUser());
-            case INSTRUCTOR -> studentRepository.findByUserIdAndGradableEventIdAndCourseGroupInstructorId(studentId,
+            case INSTRUCTOR -> studentRepository.findByUserIdAndGradableEventIdAndCourseGroupTeachingRoleUserId(studentId,
                     gradableEventId, userId);
             case COORDINATOR -> studentRepository.findByUserIdAndGradableEventId(studentId, gradableEventId);
             case UNDEFINED ->
@@ -220,7 +219,7 @@ public class SubmissionService {
         return switch (userType) {
             case STUDENT -> projectGroupRepository.getProjectGroupByStudentIdAndProjectId(userId, projectId);
             case INSTRUCTOR ->
-                    projectGroupRepository.getProjectGroupByStudentIdAndProjectIdAndInstructorId(studentId, projectId,
+                    projectGroupRepository.getProjectGroupByStudentIdAndProjectIdAndTeachingRoleUserId(studentId, projectId,
                             userId);
             case COORDINATOR -> projectGroupRepository.getProjectGroupByStudentIdAndProjectId(studentId, projectId);
             case UNDEFINED ->
@@ -234,7 +233,7 @@ public class SubmissionService {
             case STUDENT -> projectGroupRepository.getProjectGroupByIdAndStudentIdAndProjectId(groupId, userId,
                     gradableEventId);
             case INSTRUCTOR ->
-                    projectGroupRepository.getProjectGroupByIdAndProjectIdAndInstructorId(groupId, gradableEventId,
+                    projectGroupRepository.getProjectGroupByIdAndProjectIdAndTeachingRoleUserId(groupId, gradableEventId,
                             userId);
             case COORDINATOR -> projectGroupRepository.getProjectGroupByIdAndProjectId(groupId, gradableEventId);
             case UNDEFINED ->
@@ -244,20 +243,12 @@ public class SubmissionService {
 
     private List<Student> getStudentListFromProjectGroup(Optional<ProjectGroup> projectGroupOptional) {
         return projectGroupService.getStudentsFromProjectGroup(projectGroupOptional.orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND)));
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, STUDENT_NOT_FOUND)));
     }
 
     private GradableEvent validateUsageAndGetGradableEventForTarget(Long gradableEventId, TargetRequestDto target) {
         GradableEvent gradableEvent = validateUsageAndGetGradableEvent(gradableEventId);
-
-        boolean isInvalidGradableEventForStudentGroupTarget = target.type() == TargetType.STUDENT_GROUP &&
-                gradableEvent.getEventSection().getEventSectionType() != EventSectionType.PROJECT;
-
-        if (isInvalidGradableEventForStudentGroupTarget) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Grupowy podmiot oceny jest wspierany jedynie przy projekcie.");
-        }
-
+        gradableEventService.validateTargetGradableEventAccess(target, gradableEvent);
         return gradableEvent;
     }
 

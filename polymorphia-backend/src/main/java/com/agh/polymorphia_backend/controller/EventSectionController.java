@@ -22,6 +22,6 @@ public class EventSectionController {
     @GetMapping("/event-sections")
     @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<List<EventSectionResponseDto>> getEventSections(@RequestParam Long courseId) {
-        return ResponseEntity.ok(eventSectionService.getCourseEventSections(courseId));
+        return ResponseEntity.ok(eventSectionService.getCourseEventSectionsResponseDto(courseId));
     }
 }

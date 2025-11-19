@@ -1,14 +1,10 @@
 package com.agh.polymorphia_backend.service.course;
 
-import com.agh.polymorphia_backend.dto.response.course.CourseGroupsResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.AvailableCoursesResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
-import com.agh.polymorphia_backend.model.course.CourseGroup;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.UserCourseRole;
-import com.agh.polymorphia_backend.repository.course.CourseGroupRepository;
 import com.agh.polymorphia_backend.repository.course.CourseRepository;
-import com.agh.polymorphia_backend.repository.course.StudentCourseGroupRepository;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.service.mapper.CourseMapper;
 import com.agh.polymorphia_backend.service.user.UserService;
@@ -25,7 +21,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class CourseService {
-    public static final String COURSE_NOT_FOUND = "Course does not exist or you're not authorized to access it";
+    public static final String COURSE_NOT_FOUND = "Kurs nie istnieje lub nie masz uprawnień do jego przeglądania.";
     private final CourseRepository courseRepository;
     private final UserService userService;
     private final CourseMapper courseMapper;

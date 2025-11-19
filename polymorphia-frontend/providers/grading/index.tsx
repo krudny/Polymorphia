@@ -1,5 +1,11 @@
 "use client";
-import { createContext, ReactNode, useEffect, useReducer } from "react";
+import {
+  createContext,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useReducer,
+} from "react";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import useGradeUpdate from "@/hooks/course/useGradeUpdate";
 import {
@@ -12,7 +18,6 @@ import { GradingReducerActions } from "@/providers/grading/reducer/types";
 import { GradingReducer, initialState } from "@/providers/grading/reducer";
 import useShortGrade from "@/hooks/course/useShortGrade";
 import { getRequestTargetFromResponseTarget } from "@/providers/grading/utils/getRequestTargetFromResponseTarget";
-import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import useSubmissionDetails from "@/hooks/course/useSubmissionDetails";
 import { SubmissionDetails } from "@/interfaces/api/grade/submission";
 import useSubmissionsUpdate from "@/hooks/course/useSubmissionsUpdate";
@@ -28,27 +33,43 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const { state: targetState, applyFiltersCallback } = useTargetContext();
   const { gradableEventId } = useEventParams();
   const [state, dispatch] = useReducer(GradingReducer, initialState);
-  const { courseId } = useUserDetails();
   const {
     data: filterConfigs,
     isLoading: isFiltersLoading,
     isError: isFiltersError,
-  } = useGradingFilterConfigs(courseId);
+  } = useGradingFilterConfigs(gradableEventId);
 
   const filters = useFilters<GradingFilterId>(filterConfigs ?? []);
-  const sortBy = filters.getAppliedFilterValues("sortBy") ?? ["total"];
-  const sortOrder = filters.getAppliedFilterValues("sortOrder") ?? ["asc"];
-  const groups = filters.getAppliedFilterValues("groups") ?? ["all"];
-  const gradeStatus = filters.getAppliedFilterValues("gradeStatus") ?? ["all"];
+  const searchBy = useMemo(
+    () => filters.getAppliedFilterValues("searchBy") ?? ["studentName"],
+    [filters]
+  );
+  const sortBy = useMemo(
+    () => filters.getAppliedFilterValues("sortBy") ?? ["total"],
+    [filters]
+  );
+  const sortOrder = useMemo(
+    () => filters.getAppliedFilterValues("sortOrder") ?? ["asc"],
+    [filters]
+  );
+  const groups = useMemo(
+    () => filters.getAppliedFilterValues("groups") ?? ["all"],
+    [filters]
+  );
+  const gradeStatus = useMemo(
+    () => filters.getAppliedFilterValues("gradeStatus") ?? ["all"],
+    [filters]
+  );
 
   useEffect(() => {
     applyFiltersCallback({
-      sortBy,
+      searchBy,
+      sortBy: sortBy.map((value) => (value === "name" ? searchBy[0] : value)),
       sortOrder,
       groups,
       gradeStatus,
     });
-  }, [sortBy, sortOrder, groups, gradeStatus, applyFiltersCallback]);
+  }, [sortBy, sortOrder, groups, gradeStatus, applyFiltersCallback, searchBy]);
 
   const {
     data: criteria,

@@ -11,6 +11,8 @@ import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import useModalContext from "@/hooks/contexts/useModalContext";
 import useUserContext from "@/hooks/contexts/useUserContext";
 import "./index.css";
+import ErrorComponent from "@/components/error";
+import { ErrorComponentSizes } from "@/components/error/types";
 
 function GroupPickingModalContent() {
   const { closeModal } = useModalContext();
@@ -45,7 +47,10 @@ function GroupPickingModalContent() {
     <>
       {isError && (
         <div className="group-pick-error">
-          Wystąpił błąd przy ładowaniu szczegółów.
+          <ErrorComponent
+            message="Nie udało się załadować szczegółów."
+            size={ErrorComponentSizes.COMPACT}
+          />
         </div>
       )}
       <form

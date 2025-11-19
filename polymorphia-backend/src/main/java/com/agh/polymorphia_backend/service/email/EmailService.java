@@ -7,16 +7,18 @@ import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 @Service
 @RequiredArgsConstructor
 public class EmailService {
-    private final static String FAILED_TO_SEND_EMAIL = "Failed to send invitation email";
+    private final static String FAILED_TO_SEND_EMAIL = "Nie udało się wysłać wiadomości z zaproszeniem.";
     private final static String INVITATION_TITLE = "Zaproszenie do aplikacji Polymorphia";
     private final static String RESET_PASSWORD = "Reset hasła";
     private final JavaMailSender mailSender;
@@ -82,7 +84,7 @@ public class EmailService {
 
             mailSender.send(message);
         } catch (Exception e) {
-            throw new RuntimeException(FAILED_TO_SEND_EMAIL);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FAILED_TO_SEND_EMAIL);
         }
     }
 }

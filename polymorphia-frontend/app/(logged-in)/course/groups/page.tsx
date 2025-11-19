@@ -3,21 +3,24 @@
 import { useRef } from "react";
 import useCourseGroups from "@/hooks/course/useCourseGroups";
 import Loading from "@/components/loading";
-import toast from "react-hot-toast";
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
 import SectionView from "@/components/section-view/SectionView";
 import "./index.css";
 import { useScaleShow } from "@/animations/ScaleShow";
 import CourseGroupCard from "@/app/(logged-in)/course/groups/CourseGroupCard";
 import { useRouter } from "next/navigation";
-import { useUserDetails } from "@/hooks/contexts/useUserContext";
+import useUserContext, {
+  useUserDetails,
+} from "@/hooks/contexts/useUserContext";
 import { CourseGroupTypes } from "@/services/course-groups/types";
+import ErrorComponent from "@/components/error";
+import { Roles } from "@/interfaces/api/user";
 
 export default function CourseGroupsPage() {
   const router = useRouter();
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const { courseId } = useUserDetails();
-
+  const { userRole } = useUserContext();
   const {
     data: courseGroups,
     isLoading,
@@ -26,12 +29,14 @@ export default function CourseGroupsPage() {
 
   const containerRef = useScaleShow(!isLoading);
 
-  if (isLoading || !courseGroups) {
+  if (isLoading || !userRole) {
     return <Loading />;
   }
 
-  if (isError) {
-    toast.error("Nie udało się załadować grup zajęciowych.");
+  if (isError || !courseGroups || userRole === Roles.STUDENT) {
+    return (
+      <ErrorComponent message="Nie udało się załadować grup zajęciowych." />
+    );
   }
 
   const handleClick = (id: number) => {

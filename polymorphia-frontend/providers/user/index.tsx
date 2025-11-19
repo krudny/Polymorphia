@@ -2,6 +2,7 @@ import { createContext, ReactNode } from "react";
 import Loading from "@/components/loading";
 import { UserDetailsDTO } from "@/interfaces/api/user";
 import useCurrentUser from "@/hooks/course/useCurrentUser";
+import NotFound from "@/components/home/not-found";
 
 export const UserContext = createContext<UserDetailsDTO | undefined>(undefined);
 
@@ -9,7 +10,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const { data: userData, isLoading, isError } = useCurrentUser();
 
   if (isError) {
-    return <div>Nie udało się pobrać użytkownika</div>;
+    return <NotFound subtitle="Coś poszło nie tak." />;
   }
 
   if (isLoading || !userData) {

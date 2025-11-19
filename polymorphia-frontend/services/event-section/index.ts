@@ -28,15 +28,9 @@ import {
   StudentDetailsDTOWithType,
   UserDetailsDTO,
 } from "@/interfaces/api/user";
-import { EventTypes } from "@/interfaces/general";
 import { API_HOST } from "@/services/api";
 import { CriterionResponseDTO } from "@/interfaces/api/grade/criteria";
-import {
-  SubmissionDetailsRequestDTO,
-  SubmissionDetailsResponseDTO,
-  SubmissionRequirementResponseDTO,
-} from "@/interfaces/api/grade/submission";
-import { ChestBehaviors } from "@/interfaces/api/reward";
+import { ApiClient } from "@/services/api/client";
 
 export const studentNames = [
   "Gerard Małoduszny",
@@ -92,487 +86,36 @@ export const EventSectionService = {
   getEventSections: async (
     courseId: number
   ): Promise<EventSectionResponseDTO[]> => {
-    const response = await fetch(
-      `${API_HOST}/event-sections?courseId=${courseId}`,
-      {
-        method: "GET",
-        credentials: "include",
-      }
+    return await ApiClient.get<EventSectionResponseDTO[]>(
+      `/event-sections?courseId=${courseId}`
     );
-
-    if (!response.ok) {
-      throw new Error("Nie udało się pobrać wydarzeń!");
-    }
-
-    return await response.json();
   },
 
   getStudentGradableEvents: async (
     eventSectionId: number
   ): Promise<StudentGradableEventResponseDTO[]> => {
-    if (eventSectionId === 1) {
-      const events: StudentGradableEventResponseDTO[] = [
-        {
-          id: 1,
-          type: EventTypes.TEST,
-          name: "Kartkówka 1",
-          topic: "Instrukcje sterujące",
-          gainedXp: "1.5",
-          orderIndex: 1,
-          isLocked: false,
-          hasReward: false,
-        },
-        {
-          id: 2,
-          type: EventTypes.TEST,
-          name: "Kartkówka 2",
-          topic: "Model obiektowy",
-          gainedXp: "0.0",
-          orderIndex: 2,
-          isLocked: false,
-          hasReward: false,
-        },
-        {
-          id: 3,
-          type: EventTypes.TEST,
-          name: "Kartkówka 3",
-          topic: "Interakcje między obiektami",
-          orderIndex: 3,
-          isLocked: false,
-          hasReward: true,
-        },
-        {
-          id: 4,
-          type: EventTypes.TEST,
-          name: "Kartkówka 4",
-          topic: "Interfejsy i mapy",
-          orderIndex: 4,
-          isLocked: false,
-          hasReward: false,
-        },
-        {
-          id: 5,
-          type: EventTypes.TEST,
-          name: "Kartkówka 5",
-          topic: "Dziedziczenie",
-          orderIndex: 5,
-          isLocked: false,
-          hasReward: false,
-        },
-        {
-          id: 6,
-          type: EventTypes.TEST,
-          name: "Kartkówka 6",
-          topic: "Refactoring kodu",
-          orderIndex: 6,
-          isLocked: false,
-          hasReward: false,
-        },
-        {
-          id: 7,
-          type: EventTypes.TEST,
-          name: "Kartkówka 7",
-          topic: "Wielowątkowość",
-          orderIndex: 7,
-          isLocked: false,
-          hasReward: false,
-        },
-        {
-          id: 8,
-          type: EventTypes.TEST,
-          name: "Kartkówka 8",
-          topic: "Interfejs graficzny",
-          orderIndex: 8,
-          isLocked: false,
-          hasReward: true,
-        },
-        {
-          id: 9,
-          type: EventTypes.TEST,
-          name: "Kartkówka 9",
-          topic: "Lambdy, streamy i zarządzanie zasobami",
-          orderIndex: 9,
-          isLocked: false,
-          hasReward: false,
-        },
-        {
-          id: 10,
-          type: EventTypes.TEST,
-          name: "Kartkówka 10",
-          topic: "Kotlin jako alternatywa dla Javy",
-          orderIndex: 10,
-          isLocked: false,
-          hasReward: false,
-        },
-        {
-          id: 11,
-          type: EventTypes.TEST,
-          name: "Kartkówka 11",
-          topic: "A może Rust?",
-          orderIndex: 11,
-          isLocked: false,
-          hasReward: false,
-        },
-        {
-          id: 12,
-          type: EventTypes.TEST,
-          name: "Kartkówka 12",
-          topic: "Jak wycentrować diva",
-          orderIndex: 12,
-          isLocked: false,
-          hasReward: false,
-        },
-      ];
-      return events.sort((a, b) => a.orderIndex - b.orderIndex);
-    } else if (eventSectionId === 2) {
-      const events: StudentGradableEventResponseDTO[] = [
-        {
-          id: 9,
-          type: EventTypes.ASSIGNMENT,
-          name: "Laboratorium 1",
-          topic: "Instrukcje sterujące w Javie",
-          gainedXp: "2.0",
-          orderIndex: 1,
-          isLocked: false,
-          hasReward: false,
-        },
-        {
-          id: 10,
-          type: EventTypes.ASSIGNMENT,
-          name: "Laboratorium 2",
-          topic: "Model obiektowy",
-          gainedXp: "0.0",
-          orderIndex: 2,
-          isLocked: false,
-          hasReward: false,
-        },
-        {
-          id: 11,
-          type: EventTypes.ASSIGNMENT,
-          name: "Laboratorium 3",
-          topic: "Interakcje między obiektami",
-          orderIndex: 3,
-          isLocked: false,
-          hasReward: true,
-        },
-        {
-          id: 12,
-          type: EventTypes.ASSIGNMENT,
-          name: "Laboratorium 4",
-          topic: "Interfejsy i mapy",
-          orderIndex: 4,
-          isLocked: false,
-          hasReward: false,
-        },
-        {
-          id: 13,
-          type: EventTypes.ASSIGNMENT,
-          name: "Laboratorium 5",
-          topic: "Dziedziczenie",
-          orderIndex: 5,
-          isLocked: false,
-          hasReward: false,
-        },
-        {
-          id: 14,
-          type: EventTypes.ASSIGNMENT,
-          name: "Laboratorium 6",
-          topic: "Refactoring kodu",
-          orderIndex: 6,
-          isLocked: false,
-          hasReward: false,
-        },
-        {
-          id: 15,
-          type: EventTypes.ASSIGNMENT,
-          name: "Laboratorium 7",
-          topic: "Wielowątkowość",
-          orderIndex: 7,
-          isLocked: false,
-          hasReward: false,
-        },
-        {
-          id: 16,
-          type: EventTypes.ASSIGNMENT,
-          name: "Laboratorium 8",
-          topic: "Interfejs graficzny",
-          orderIndex: 8,
-          isLocked: false,
-          hasReward: false,
-        },
-      ];
-      return events.sort((a, b) => a.orderIndex - b.orderIndex);
-    } else if (eventSectionId === 4) {
-      return [
-        {
-          id: 33,
-          type: EventTypes.ASSIGNMENT,
-          name: "Laboratorium 0",
-          topic: "Git jest cool",
-          orderIndex: 1,
-          isLocked: false,
-          hasReward: true,
-        },
-      ];
-    } else if (eventSectionId === 3 || eventSectionId === 7) {
-      return [
-        {
-          id: 34,
-          type: EventTypes.PROJECT,
-          name: "Projekt",
-          topic: "Darwin World",
-          orderIndex: 1,
-          isLocked: false,
-          hasReward: false,
-        },
-      ];
-    } else if (eventSectionId === 10 || eventSectionId === 11) {
-      return [
-        {
-          id: 36,
-          type: EventTypes.ASSIGNMENT,
-          name: "Bonus Lab 1",
-          topic: "Funkcyjna Java",
-          orderIndex: 1,
-          isLocked: false,
-          hasReward: false,
-        },
-        {
-          id: 37,
-          type: EventTypes.ASSIGNMENT,
-          name: "Bonus Lab 2",
-          topic: "Kotlin",
-          orderIndex: 1,
-          isLocked: false,
-          hasReward: false,
-        },
-      ];
-    } else {
-      return [];
-    }
+    return ApiClient.get(`/gradable-events?eventSectionId=${eventSectionId}`);
   },
 
   getInstructorGradableEvents: async (
     eventSectionId: number
   ): Promise<InstructorGradableEventResponseDTO[]> => {
-    if (eventSectionId === 1) {
-      const events = [
-        {
-          type: EventTypes.TEST,
-          id: 1,
-          name: "Kartkówka 1",
-          topic: "Instrukcje sterujące",
-          orderIndex: 1,
-          ungradedStudents: 3,
-        },
-        {
-          type: EventTypes.TEST,
-          id: 2,
-          name: "Kartkówka 2",
-          topic: "Model obiektowy",
-          orderIndex: 2,
-          ungradedStudents: 12,
-        },
-        {
-          type: EventTypes.TEST,
-          id: 3,
-          name: "Kartkówka 3",
-          topic: "Interakcje między obiektami",
-          orderIndex: 3,
-          ungradedStudents: 0,
-        },
-        {
-          type: EventTypes.TEST,
-          id: 4,
-          name: "Kartkówka 4",
-          topic: "Interfejsy i mapy",
-          orderIndex: 4,
-          ungradedStudents: 8,
-        },
-        {
-          type: EventTypes.TEST,
-          id: 5,
-          name: "Kartkówka 5",
-          topic: "Dziedziczenie",
-          orderIndex: 5,
-          ungradedStudents: 15,
-        },
-        {
-          type: EventTypes.TEST,
-          id: 6,
-          name: "Kartkówka 6",
-          topic: "Refactoring kodu",
-          orderIndex: 6,
-          ungradedStudents: 5,
-        },
-        {
-          type: EventTypes.TEST,
-          id: 7,
-          name: "Kartkówka 7",
-          topic: "Wielowątkowość",
-          orderIndex: 7,
-          ungradedStudents: 21,
-        },
-        {
-          type: EventTypes.TEST,
-          id: 8,
-          name: "Kartkówka 8",
-          topic: "Interfejs graficzny",
-          orderIndex: 8,
-          ungradedStudents: 7,
-        },
-        {
-          type: EventTypes.TEST,
-          id: 9,
-          name: "Kartkówka 9",
-          topic: "Lambdy, streamy i zarządzanie zasobami",
-          orderIndex: 9,
-          ungradedStudents: 18,
-        },
-        {
-          type: EventTypes.TEST,
-          id: 10,
-          name: "Kartkówka 10",
-          topic: "Kotlin jako alternatywa dla Javy",
-          orderIndex: 10,
-          ungradedStudents: 2,
-        },
-        {
-          type: EventTypes.TEST,
-          id: 11,
-          name: "Kartkówka 11",
-          topic: "A może Rust?",
-          orderIndex: 11,
-          ungradedStudents: 9,
-        },
-        {
-          type: EventTypes.TEST,
-          id: 12,
-          name: "Kartkówka 12",
-          topic: "Jak wycentrować diva",
-          orderIndex: 12,
-          ungradedStudents: 14,
-        },
-      ];
-      return events.sort((a, b) => a.orderIndex - b.orderIndex);
-    } else if (eventSectionId === 2) {
-      const events = [
-        {
-          type: EventTypes.ASSIGNMENT,
-          id: 9,
-          name: "Laboratorium 1",
-          topic: "Instrukcje sterujące w Javie",
-          orderIndex: 1,
-          ungradedStudents: 6,
-        },
-        {
-          type: EventTypes.ASSIGNMENT,
-          id: 10,
-          name: "Laboratorium 2",
-          topic: "Model obiektowy",
-          orderIndex: 2,
-          ungradedStudents: 11,
-        },
-        {
-          type: EventTypes.ASSIGNMENT,
-          id: 11,
-          name: "Laboratorium 3",
-          topic: "Interakcje między obiektami",
-          orderIndex: 3,
-          ungradedStudents: 4,
-        },
-        {
-          type: EventTypes.ASSIGNMENT,
-          id: 12,
-          name: "Laboratorium 4",
-          topic: "Interfejsy i mapy",
-          orderIndex: 4,
-          ungradedStudents: 17,
-        },
-        {
-          type: EventTypes.ASSIGNMENT,
-          id: 13,
-          name: "Laboratorium 5",
-          topic: "Dziedziczenie",
-          orderIndex: 5,
-          ungradedStudents: 1,
-        },
-        {
-          type: EventTypes.ASSIGNMENT,
-          id: 14,
-          name: "Laboratorium 6",
-          topic: "Refactoring kodu",
-          orderIndex: 6,
-          ungradedStudents: 13,
-        },
-        {
-          type: EventTypes.ASSIGNMENT,
-          id: 15,
-          name: "Laboratorium 7",
-          topic: "Wielowątkowość",
-          orderIndex: 7,
-          ungradedStudents: 8,
-        },
-        {
-          type: EventTypes.ASSIGNMENT,
-          id: 16,
-          name: "Laboratorium 8",
-          topic: "Interfejs graficzny",
-          orderIndex: 8,
-          ungradedStudents: 22,
-        },
-      ];
-      return events.sort((a, b) => a.orderIndex - b.orderIndex);
-    } else if (eventSectionId === 4) {
-      return [
-        {
-          type: EventTypes.ASSIGNMENT,
-          id: 33,
-          name: "Laboratorium 0",
-          topic: "Git jest cool",
-          orderIndex: 1,
-          ungradedStudents: 5,
-        },
-      ];
-    } else if (eventSectionId === 3 || eventSectionId === 7) {
-      return [
-        {
-          type: EventTypes.PROJECT,
-          id: 34,
-          name: "Projekt",
-          topic: "Darwin World",
-          orderIndex: 1,
-          ungradedStudents: 7,
-        },
-      ];
-    } else if (eventSectionId === 10 || eventSectionId === 11) {
-      return [
-        {
-          type: EventTypes.ASSIGNMENT,
-          id: 36,
-          name: "Bonus Lab 1",
-          topic: "Funkcyjna Java",
-          orderIndex: 1,
-          ungradedStudents: 3,
-        },
-        {
-          type: EventTypes.ASSIGNMENT,
-          id: 37,
-          name: "Bonus Lab 2",
-          topic: "Kotlin",
-          orderIndex: 2,
-          ungradedStudents: 5,
-        },
-      ];
-    } else {
-      return [];
-    }
+    return ApiClient.get(`/gradable-events?eventSectionId=${eventSectionId}`);
+  },
+
+  getPointsSummary: async (
+    eventSectionId: number
+  ): Promise<PointsSummaryResponseDTO> => {
+    return ApiClient.get(
+      `/gradable-events/points-summary?eventSectionId=${eventSectionId}`
+    );
   },
 
   getGradableEvent: async (
     eventSectionId: number,
     gradableEventId: number
   ): Promise<BaseGradableEventResponseDTO> => {
+    // TODO: fix
     return EventSectionService.getStudentGradableEvents(eventSectionId).then(
       (data) => {
         const gradableEvent = data.find(
@@ -588,268 +131,40 @@ export const EventSectionService = {
     );
   },
 
-  getPointsSummary: async (
-    eventSectionId: number
-  ): Promise<PointsSummaryResponseDTO> => {
-    if (eventSectionId === 1) {
-      return {
-        gained: {
-          title: "Zdobyte xp",
-          gainedXp: "3.5",
-        },
-        percentageBonus: {
-          title: "Bonusy procentowe",
-          gainedXp: "0.2",
-          assignedItems: [
-            {
-              base: {
-                id: 1,
-                itemBonusType: "PERCENTAGE_BONUS",
-                name: "Pietruszka",
-                bonusText: "+5% do kategorii Kartkówka",
-                imageUrl: "images/items/parsley.jpg",
-                percentage: 5,
-                orderIndex: 0,
-                limit: 3,
-                isLimitReached: false,
-                eventSectionId: 1,
-              },
-              details: {
-                id: 1,
-                receivedDate: "07.06.2025",
-                gainedXp: "0.2",
-                isUsed: false,
-              },
-            },
-          ],
-        },
-        flatBonus: {
-          title: "Bonusy punktowe",
-          gainedXp: "0.0",
-          assignedItems: [],
-        },
-        total: {
-          title: "Łącznie",
-          gainedXp: "3.7",
-        },
-      };
-    } else if (eventSectionId === 2) {
-      return {
-        gained: {
-          title: "Zdobyte xp",
-          gainedXp: "2.0",
-        },
-        percentageBonus: {
-          title: "Bonusy procentowe",
-          gainedXp: "0.0",
-          assignedItems: [],
-        },
-        flatBonus: {
-          title: "Bonusy punktowe",
-          gainedXp: "0.0",
-          assignedItems: [],
-        },
-        total: {
-          title: "Łącznie",
-          gainedXp: "2.0",
-        },
-      };
-    } else {
-      return {
-        gained: {
-          title: "Zdobyte xp",
-          gainedXp: "0.0",
-        },
-        percentageBonus: {
-          title: "Bonusy procentowe",
-          gainedXp: "0.0",
-          assignedItems: [],
-        },
-        flatBonus: {
-          title: "Bonusy punktowe",
-          gainedXp: "0.0",
-          assignedItems: [],
-        },
-        total: {
-          title: "Łącznie",
-          gainedXp: "0.0",
-        },
-      };
-    }
-  },
-
   getCriteria: async (
     gradableEventId: number
   ): Promise<CriterionResponseDTO[]> => {
-    return [
-      {
-        id: 1,
-        name: "Wykonanie zadania",
-        maxXp: "4.0",
-        assignableRewards: [
-          {
-            assignableReward: {
-              rewardType: "CHEST",
-              reward: {
-                id: 1,
-                name: "Srebrna Skrzynia",
-                imageUrl: "images/chests/s1.webp",
-                behavior: ChestBehaviors.ONE_OF_MANY,
-                behaviorText: "Wybierz jeden przedmiot ze skrzynki",
-                orderIndex: 0,
-                chestItems: [
-                  {
-                    id: 1,
-                    itemBonusType: "PERCENTAGE_BONUS",
-                    name: "Pietruszka",
-                    bonusText: "+5% do kategorii Kartkówka",
-                    imageUrl: "images/items/parsley.jpg",
-                    percentage: 5,
-                    orderIndex: 0,
-                    limit: 3,
-                    isLimitReached: false,
-                    eventSectionId: 1,
-                  },
-                  {
-                    id: 2,
-                    itemBonusType: "PERCENTAGE_BONUS",
-                    name: "Marchewka",
-                    bonusText: "+5% do kategorii Kartkówka",
-                    imageUrl: "images/items/parsley.jpg",
-                    percentage: 5,
-                    orderIndex: 0,
-                    limit: 3,
-                    isLimitReached: false,
-                    eventSectionId: 1,
-                  },
-                  {
-                    id: 3,
-                    itemBonusType: "PERCENTAGE_BONUS",
-                    name: "Apteczka",
-                    bonusText: "+5% do kategorii Kartkówka",
-                    imageUrl: "images/items/parsley.jpg",
-                    percentage: 5,
-                    orderIndex: 0,
-                    limit: 3,
-                    isLimitReached: false,
-                    eventSectionId: 1,
-                  },
-                ],
-              },
-            },
-            maxAmount: 2,
-          },
-          {
-            assignableReward: {
-              rewardType: "ITEM",
-              reward: {
-                id: 2,
-                name: "Pietruszka",
-                imageUrl: "images/items/parsley.webp",
-                itemBonusType: "PERCENTAGE_BONUS",
-                bonusText: "+5% do kategorii Kartkówka",
-                orderIndex: 1,
-                percentage: 5,
-                limit: 5,
-                isLimitReached: false,
-                eventSectionId: 1,
-              },
-            },
-            maxAmount: 3,
-          },
-        ],
-      },
-      {
-        id: 2,
-        name: "Dodatkowe kryterium",
-        maxXp: "4.0",
-        assignableRewards: [
-          {
-            assignableReward: {
-              rewardType: "ITEM",
-              reward: {
-                id: 3,
-                itemBonusType: "PERCENTAGE_BONUS",
-                name: "Marchewka",
-                bonusText: "+5% do kategorii Kartkówka",
-                imageUrl: "images/items/carrot.webp",
-                percentage: 5,
-                orderIndex: 0,
-                limit: 3,
-                isLimitReached: false,
-                eventSectionId: 1,
-              },
-            },
-            maxAmount: 3,
-          },
-        ],
-      },
-    ];
+    return ApiClient.get(
+      `/gradable-events/criteria?gradableEventId=${gradableEventId}`
+    );
   },
 
   getShortGrade: async (
     target: TargetRequestDTO,
     gradableEventId: number
   ): Promise<ShortGradeResponseDTO> => {
-    await new Promise<void>((resolve) => setTimeout(resolve, 300));
-
-    return {
-      isGraded: true,
-      id: 123,
-      comment:
-        "Bardzo dobra praca! Student wykazał się doskonałą znajomością tematu.",
-      criteria: [
-        {
-          id: 1,
-          gainedXp: "3.5",
-          assignedRewards: [
-            {
-              id: 1,
-              name: "Srebrna Skrzynia",
-              imageUrl: "images/chests/s1.webp",
-              quantity: 2,
-            },
-            {
-              id: 2,
-              name: "Pietruszka",
-              imageUrl: "images/items/parsley.jpg",
-              quantity: 1,
-            },
-          ],
-        },
-        {
-          id: 2,
-          gainedXp: "2.7",
-          assignedRewards: [
-            {
-              id: 3,
-              name: "Marchewka",
-              imageUrl: "images/items/carrot.jpg",
-              quantity: 1,
-            },
-          ],
-        },
-      ],
-    };
+    return ApiClient.post<ShortGradeResponseDTO>(
+      `/gradable-events/short-grade?gradableEventId=${gradableEventId}`,
+      { target }
+    );
   },
 
-  getProjectVariant: async (): Promise<ProjectVariantResponseDTO[]> => {
-    return [
-      {
-        id: 1,
-        shortCode: "G",
-        name: "Pożary",
-        categoryName: "Mapa i roślinność",
-        imageUrl: "images/general/pozary.jpg",
-      },
-      {
-        id: 2,
-        shortCode: "2",
-        name: "Podmianka",
-        categoryName: "Zwierzaki",
-        imageUrl: "images/general/podmianka.jpg",
-      },
-    ];
+  getProjectVariant: async (
+    userId: number,
+    gradableEventId: number
+  ): Promise<ProjectVariantResponseDTO[]> => {
+    return ApiClient.get(
+      `/projects/variants?userId=${userId}&projectId=${gradableEventId}`
+    );
+  },
+
+  getProjectGroup: async (
+    studentId: number,
+    gradableEventId: number
+  ): Promise<StudentDetailsDTOWithType[]> => {
+    return ApiClient.get(
+      `/projects/group?studentId=${studentId}&projectId=${gradableEventId}`
+    );
   },
 
   getRandomPeople: async (searchTerm: string): Promise<UserDetailsDTO[]> => {
@@ -947,14 +262,17 @@ export const EventSectionService = {
         data.push({
           type: TargetTypes.STUDENT,
           id: student.id,
-          fullName: student.fullName,
-          animalName: student.animalName,
-          evolutionStage: student.evolutionStage,
-          group: student.group,
-          imageUrl: student.imageUrl,
-          position: student.position,
-          courseId: student.courseId,
-          gainedXp: xp,
+          student: {
+            id: student.id,
+            fullName: student.fullName,
+            animalName: student.animalName,
+            evolutionStage: student.evolutionStage,
+            group: student.group,
+            imageUrl: student.imageUrl,
+            position: student.position,
+            courseId: student.courseId,
+            gainedXp: xp,
+          },
         });
       } else {
         const isDivergent = xp !== undefined && Math.random() < 0.5;

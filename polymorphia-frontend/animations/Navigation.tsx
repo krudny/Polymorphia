@@ -102,7 +102,7 @@ export const animateNavbar = (
   gsap.killTweensOf([drawer, ...allElements]);
 
   if (isExpanded) {
-    gsap.set(drawer, { opacity: 0, y: -100, display: "flex" });
+    gsap.set(drawer, { opacity: 0, y: -100, display: "flex", zIndex: 1400 });
     gsap.set(allElements, { opacity: 1, x: 0 });
     gsap.set([...chevrons], { display: "block" });
 
@@ -124,7 +124,7 @@ export const animateNavbar = (
         opacity: 0,
         duration: 0.1,
       })
-      .to(drawer, { opacity: 0, y: -50, duration: 0.25 }, "<0.1")
+      .to(drawer, { opacity: 0, y: -50, duration: 0.25, zIndex: 0 }, "<0.1")
       .set(drawer, { display: "none" });
   }
 };

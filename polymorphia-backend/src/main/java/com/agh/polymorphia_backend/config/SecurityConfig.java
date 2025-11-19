@@ -1,12 +1,15 @@
 package com.agh.polymorphia_backend.config;
 
 import com.agh.polymorphia_backend.service.user.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -22,7 +25,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.io.IOException;
-import java.time.Instant;
+import java.net.URI;
 import java.util.List;
 
 @AllArgsConstructor
@@ -30,6 +33,7 @@ import java.util.List;
 @EnableWebSecurity
 @EnableMethodSecurity(jsr250Enabled = true)
 public class SecurityConfig {
+    private final ObjectMapper objectMapper = new ObjectMapper();
     private final PasswordEncoder passwordEncoder;
     private final CorsProperties corsProperties;
     private final UserService userService;
@@ -61,12 +65,12 @@ public class SecurityConfig {
                             response.setStatus(HttpServletResponse.SC_OK);
                         })
                         .failureHandler((request, response, exception) -> {
-                            writeErrorResponse(request, response, HttpServletResponse.SC_UNAUTHORIZED, "Invalid credentials");
+                            writeErrorResponse(request, response, HttpStatus.UNAUTHORIZED, "Niepoprawne dane.");
                         })
                         .permitAll())
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint((request, response, authException) -> {
-                            writeErrorResponse(request, response, HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+                            writeErrorResponse(request, response, HttpStatus.UNAUTHORIZED, "Nieautoryzowany dostęp.");
                         }))
                 .logout(logout -> logout
                         .logoutUrl("/logout")
@@ -79,16 +83,14 @@ public class SecurityConfig {
     }
 
     private void writeErrorResponse(HttpServletRequest request, HttpServletResponse response,
-                                    int status, String errorMessage) throws IOException {
-        response.setStatus(status);
+                                    HttpStatus status, String errorMessage) throws IOException {
+        response.setStatus(status.value());
         response.setContentType("application/json");
 
-        String json = String.format(
-                "{\"timestamp\": \"%s\", \"status\": %d, \"error\": \"%s\", \"path\": \"%s\"}",
-                Instant.now(), status, errorMessage, request.getRequestURI()
-        );
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(status, errorMessage);
+        problemDetail.setInstance(URI.create(request.getRequestURI()));
 
-        response.getWriter().write(json);
+        response.getWriter().write(objectMapper.writeValueAsString(problemDetail));
     }
 
     @Bean

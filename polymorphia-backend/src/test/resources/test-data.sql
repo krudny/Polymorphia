@@ -19,8 +19,11 @@ TRUNCATE TABLE flat_bonus_items cascade;
 TRUNCATE TABLE percentage_bonus_items cascade;
 TRUNCATE TABLE project_groups cascade;
 TRUNCATE TABLE project_groups_animals cascade;
+TRUNCATE TABLE projects cascade;
+TRUNCATE TABLE project_groups_project_variants cascade;
 TRUNCATE TABLE submission_requirements cascade;
 TRUNCATE TABLE submissions cascade;
+TRUNCATE TABLE teaching_role_users cascade;
 
 -- Users
 INSERT INTO users (id, first_name, last_name, email, password, preferred_course_id)
@@ -37,16 +40,18 @@ VALUES (3, 'Michał', 'Kowalski', 'coordinator@agh.com', '$2a$10$k/sZH/gK6qzlLpH
         null);
 
 -- Coordinators
+INSERT INTO teaching_role_users(user_id)
+VALUES (3);
+
 INSERT INTO coordinators(user_id)
-VALUES (3),
-       (4);
+VALUES (3);
 
 -- Courses
 INSERT INTO courses (id, name, coordinator_id, coordinator_image_url, instructor_image_url, image_url, markdown, markdown_source_url)
 VALUES (1, 'Programowanie Obiektowe', 3, '/coord_url', '/instr_url', 'img_url', '', ''),
        (2, 'Programowanie Obiektowe', 3, '/coord_url', '/instr_url', 'img_url', '', ''),
-       (3, 'Programowanie Obiektowe', 4, '/coord_url', '/instr_url', 'img_url', '', ''),
-       (4, 'Programowanie Obiektowe', 4, '/coord_url', '/instr_url', 'img_url', '', '');
+       (3, 'Programowanie Obiektowe', 3, '/coord_url', '/instr_url', 'img_url', '', ''),
+       (4, 'Programowanie Obiektowe', 3, '/coord_url', '/instr_url', 'img_url', '', '');
 
 
 insert into users(id, first_name, last_name, email, password, preferred_course_id)
@@ -69,6 +74,11 @@ SET preferred_course_id=1
 WHERE id in (2, 5, 11);
 
 -- Instructors
+INSERT INTO teaching_role_users(user_id)
+VALUES (4),
+       (11),
+       (13);
+
 INSERT INTO instructors(user_id)
 VALUES (4),
        (11),
@@ -81,7 +91,6 @@ VALUES (3, 1, 'COORDINATOR'),
        (4, 1, 'INSTRUCTOR'),
        (4, 3, 'COORDINATOR'),
        (2, 1, 'STUDENT'),
-
        (5, 1, 'STUDENT'),
        (6, 1, 'STUDENT'),
        (7, 1, 'STUDENT'),
@@ -94,9 +103,8 @@ VALUES (3, 1, 'COORDINATOR'),
        (13, 4, 'INSTRUCTOR');
 
 -- Course Groups
-INSERT INTO course_groups (id, name, course_id, instructor_id)
+INSERT INTO course_groups (id, name, course_id, teaching_role_user_id)
 VALUES (1, 'MI-SR12', 1, 4),
-
        (2, 'BM-SR13', 1, 11),
        (3, 'BM-SR15', 1, 11),
        (4, 'BM-SR15', 4, 4),
@@ -136,11 +144,11 @@ VALUES (1, 'Pisklak', 20, 'description', 2.0, 'imageUrl_pisklak', 1, 1),
 
 -- Event sections
 INSERT INTO public.event_sections (id, has_gradable_events_with_topics, is_hidden, is_shown_in_road_map, name, order_index,course_id)
-VALUES (1, true, true, true, 'Kartkówka', 2, 1),
-       (2, true, true, true, 'Lab', 1, 1),
-       (3, true, true, true, 'Kartkówka', 2, 4),
-       (4, true, true, true, 'Laboratorium', 1, 4),
-       (5, true, true, true, 'Projekt', 3, 4);
+VALUES (1, true, false, true, 'Kartkówka', 2, 1),
+       (2, true, false, true, 'Lab', 1, 1),
+       (3, true, false, true, 'Kartkówka', 2, 4),
+       (4, true, false, true, 'Laboratorium', 1, 4),
+       (5, true, false, true, 'Projekt', 3, 4);
 
 -- Test sections
 INSERT INTO public.test_sections (id)
@@ -228,8 +236,11 @@ VALUES (1, 1, 'kartkówka 1', null, 1, 1, '/url', 'markdown', false, false),
        (6, 3, 'kartkówka 4', null, 1, 1, '/url', 'markdown', false, false),
        (7, 5, 'projekt', null, 1, 1, '/url', 'markdown', false, false);
 
+insert into projects(id, allow_cross_course_group_project_groups)
+values (7, false);
+
 -- Project groups
-INSERT INTO public.project_groups (id, instructor_id, project_id)
+INSERT INTO public.project_groups (id, teaching_role_user_id, project_id)
 VALUES (1, 13, 7);
 
 INSERT INTO public.project_groups_animals (animal_id, project_group_id)

@@ -13,7 +13,6 @@ import {
 } from "@/interfaces/general";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import "./index.css";
-import toast from "react-hot-toast";
 
 export default function InviteUserModal({
   onClosedAction,
@@ -50,8 +49,17 @@ export default function InviteUserModal({
       return <InviteUserToCourseModal onClosedAction={onClosedAction} />;
 
     case InviteSpecificTypes.GROUP_MANUAL:
-      toast.error("Not implemented");
-      break;
+      return (
+        <Modal
+          isDataPresented={true}
+          onClosed={onClosedAction}
+          title="Zaproś użytkownika do grupy"
+        >
+          <div className="text-2xl my-4">
+            Ta funkcjonalność nie została jeszcze zaimplementowana.
+          </div>
+        </Modal>
+      );
 
     case InviteSpecificTypes.COURSE_CSV:
       return (

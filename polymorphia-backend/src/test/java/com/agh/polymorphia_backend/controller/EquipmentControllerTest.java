@@ -1,9 +1,6 @@
 package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.request.equipment.EquipmentChestOpenRequestDto;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.ortools.Loader;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.agh.polymorphia_backend.controller.ControllerTestUtil.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class EquipmentControllerTest extends ControllerTestConfig {
     static {
@@ -80,7 +76,7 @@ public class EquipmentControllerTest extends ControllerTestConfig {
                 .build();
 
         postEndpoint("/equipment/chests/open?courseId={courseId}",
-                "sampleuser@test.com", "password", 200, Optional.of(requestDto), 4);
+                "sampleuser@test.com", "password", 204, Optional.of(requestDto), 4);
 
         String chests = getEndpoint("/equipment/chests?courseId={courseId}",
                 "sampleuser@test.com", "password", 200, 4);
@@ -113,7 +109,7 @@ public class EquipmentControllerTest extends ControllerTestConfig {
                 .build();
 
         postEndpoint("/equipment/chests/open?courseId={courseId}",
-                "sampleuser@test.com", "password", 200, Optional.of(requestDto), 4);
+                "sampleuser@test.com", "password", 204, Optional.of(requestDto), 4);
 
         String chests = getEndpoint("/equipment/chests?courseId={courseId}",
                 "sampleuser@test.com", "password", 200, 4);

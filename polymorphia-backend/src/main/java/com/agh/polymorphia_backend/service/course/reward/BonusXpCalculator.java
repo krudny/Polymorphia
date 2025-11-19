@@ -59,6 +59,10 @@ public class BonusXpCalculator {
         assignedRewardService.saveAssignedItems(assignedItems);
     }
 
+    public BigDecimal percentsToPercentageBonusXp(BigDecimal percentageBonus, BigDecimal totalXpSum) {
+        return totalXpSum.multiply(percentageBonus).divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP);
+    }
+
     private void calculateFlatBonusXp(List<Grade> grades, List<AssignedItem> oneEventItems, List<AssignedItem> multipleEventsItems) {
         countOneEventItemsBonus(oneEventItems, grades);
         countMultipleEventsItemsBonus(oneEventItems, multipleEventsItems, grades);

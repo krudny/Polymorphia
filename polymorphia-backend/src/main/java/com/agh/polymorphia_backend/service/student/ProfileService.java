@@ -5,13 +5,11 @@ import com.agh.polymorphia_backend.dto.request.notification.NotificationCreation
 import com.agh.polymorphia_backend.dto.response.profile.EvolutionStageThresholdResponseDto;
 import com.agh.polymorphia_backend.dto.response.profile.ProfileResponseDto;
 import com.agh.polymorphia_backend.model.course.Animal;
-import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.course.EvolutionStage;
 import com.agh.polymorphia_backend.model.hall_of_fame.SearchBy;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.repository.course.EvolutionStagesRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
-import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
 import com.agh.polymorphia_backend.service.mapper.ProfileMapper;
 import com.agh.polymorphia_backend.service.user.UserService;
@@ -30,10 +28,7 @@ import static com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService
 @Service
 @AllArgsConstructor
 public class ProfileService {
-    private static final String PROFILE_INFO_INCOMPLETE = "Profile info incomplete: %s";
-    private static final String LACKING_EVOLUTION_STAGES = "Evolution stages not defined";
     private final AccessAuthorizer accessAuthorizer;
-    private final CourseService courseService;
     private final UserService userService;
     private final HallOfFameService hallOfFameService;
     private final AnimalService animalService;
@@ -42,13 +37,13 @@ public class ProfileService {
     private final ProfileMapper profileMapper;
 
     public ProfileResponseDto getProfile(Long courseId) {
-        Course course = courseService.getCourseById(courseId);
-        accessAuthorizer.authorizeCourseAccess(course);
+        accessAuthorizer.authorizeCourseAccess(courseId);
         User user = userService.getCurrentUser().getUser();
+        Animal animal = animalService.getAnimal(user.getId(), user.getPreferredCourse().getId());
 
-        BigDecimal totalXp = hallOfFameService.getStudentHallOfFame(user).getTotalXpSum();
+        BigDecimal totalXp = hallOfFameService.getStudentHallOfFame(animal).getTotalXpSum();
         List<EvolutionStageThresholdResponseDto> evolutionStages = getEvolutionStages(courseId);
-        int evolutionStageId = getCurrentEvolutionStageId(evolutionStages, user);
+        int evolutionStageId = getCurrentEvolutionStageId(evolutionStages, animal);
 
         return ProfileResponseDto.builder()
                 .evolutionStageThresholds(evolutionStages)
@@ -68,14 +63,14 @@ public class ProfileService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_HOF_NOT_FOUND);
         }
 
-        hallOfFameService.updateXpDetails(xpDetails, hallOfFameService.getStudentHallOfFame(user));
+        hallOfFameService.updateXpDetails(xpDetails, hallOfFameService.getStudentHallOfFame(animal));
 
         return xpDetails;
     }
 
-    private int getCurrentEvolutionStageId(List<EvolutionStageThresholdResponseDto> evolutionStages, User user) {
-        String evolutionStageName = Optional.ofNullable(hallOfFameService.getStudentHallOfFame(user).getEvolutionStage())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(PROFILE_INFO_INCOMPLETE, LACKING_EVOLUTION_STAGES)));
+    private int getCurrentEvolutionStageId(List<EvolutionStageThresholdResponseDto> evolutionStages, Animal animal) {
+        String evolutionStageName = Optional.ofNullable(hallOfFameService.getStudentHallOfFame(animal).getEvolutionStage())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Profil jest niekompletny: etapy ewolucji nie zostały zdefiniowane."));
 
         for (int i = 0; i < evolutionStages.size(); i++) {
             if (evolutionStages.get(i).getName().equals(evolutionStageName)) {

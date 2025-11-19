@@ -5,15 +5,12 @@ import com.agh.polymorphia_backend.dto.request.notification.NotificationCreation
 import com.agh.polymorphia_backend.dto.response.hall_of_fame.HallOfFameRecordDto;
 import com.agh.polymorphia_backend.dto.response.hall_of_fame.HallOfFameResponseDto;
 import com.agh.polymorphia_backend.model.course.Animal;
-import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.event_section.EventSection;
 import com.agh.polymorphia_backend.model.hall_of_fame.*;
-import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.StudentScoreDetailRepository;
-import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.mapper.HallOfFameMapper;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.user.UserService;
@@ -37,8 +34,7 @@ import static com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry.*;
 @Service
 @AllArgsConstructor
 public class HallOfFameService {
-    public static final String STUDENT_HOF_NOT_FOUND = "Student's Hall of Fame scores not found";
-    private static final String HOF_EMPTY = "Hall of Fame scores are empty";
+    public static final String STUDENT_HOF_NOT_FOUND = "Brak wyników studenta w Hall of Fame";
     private static final Set<String> INVERT_POSITION_FOR = Set.of(
             FIELD_TOTAL_XP_SUM,
             FIELD_TOTAL_BONUS_SUM
@@ -48,7 +44,6 @@ public class HallOfFameService {
     private final EventSectionRepository eventSectionRepository;
     private final HallOfFameMapper hallOfFameMapper;
     private final AccessAuthorizer accessAuthorizer;
-    private final CourseService courseService;
     private final AnimalService animalService;
     private final UserService userService;
     private final HallOfFameSortSpecResolver sortSpecResolver;
@@ -57,10 +52,9 @@ public class HallOfFameService {
         return direction.isAscending() ? Sort.Direction.DESC : Sort.Direction.ASC;
     }
 
-    public HallOfFameEntry getStudentHallOfFame(User user) {
-        Animal animal = animalService.getAnimal(user.getId(), user.getPreferredCourse().getId());
+    public HallOfFameEntry getStudentHallOfFame(Animal animal) {
         return hallOfFameRepository.findByAnimalId(animal.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_HOF_NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, STUDENT_HOF_NOT_FOUND));
     }
 
     public List<StudentScoreDetail> getStudentScoreDetails(Long animalId) {
@@ -69,7 +63,7 @@ public class HallOfFameService {
 
     public StudentScoreDetail getStudentEventSectionScoreDetails(Long animalId, Long eventSectionId) {
         return scoreDetailRepository.findByAnimalIdAndEventSectionId(animalId, eventSectionId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_HOF_NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, STUDENT_HOF_NOT_FOUND));
     }
 
     public HallOfFameResponseDto getHallOfFame(HallOfFameRequestDto requestDto) {
@@ -140,7 +134,7 @@ public class HallOfFameService {
         List<StudentScoreDetail> detailsList = scoreDetailRepository.findByAnimalIdIn(animalIds);
 
         if (detailsList.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, HOF_EMPTY);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Brak wyników w Hall of Fame.");
         }
 
         sortByEventSectionOrderIndex(detailsList);
@@ -188,8 +182,7 @@ public class HallOfFameService {
     }
 
     public List<HallOfFameRecordDto> getPodium(Long courseId) {
-        Course course = courseService.getCourseById(courseId);
-        accessAuthorizer.authorizeCourseAccess(course);
+        accessAuthorizer.authorizeCourseAccess(courseId);
 
         HallOfFameRequestDto requestDto = new HallOfFameRequestDto(
                 courseId,
