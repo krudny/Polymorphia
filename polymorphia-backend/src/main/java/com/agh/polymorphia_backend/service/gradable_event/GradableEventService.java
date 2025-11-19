@@ -122,9 +122,10 @@ public class GradableEventService {
     ) {
         Course course = courseService.getCourseById(courseId);
         accessAuthorizer.authorizeCourseAccess(course);
+        Long coordinatorId = userService.getCurrentUser().getUserId();
 
         return gradableEventRepository
-                .getCoordinatorGradableEventsWithDetails(courseId, scope.getValue(), sortBy.getValue())
+                .findCoordinatorGradableEventsWithDetails(courseId, coordinatorId, scope.getValue(), sortBy.getValue())
                 .stream()
                 .map(gradableEventMapper::toInstructorGradableEventResponseDto)
                 .collect(Collectors.toList());

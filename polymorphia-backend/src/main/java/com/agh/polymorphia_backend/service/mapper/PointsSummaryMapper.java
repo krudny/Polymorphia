@@ -6,6 +6,7 @@ import com.agh.polymorphia_backend.dto.response.reward.points_summary.PointsSumm
 import com.agh.polymorphia_backend.model.hall_of_fame.StudentScoreDetail;
 import com.agh.polymorphia_backend.model.reward.assigned.AssignedItem;
 import com.agh.polymorphia_backend.service.reward.BonusXpCalculator;
+import com.agh.polymorphia_backend.util.NumberFormatter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +47,7 @@ public class PointsSummaryMapper {
 
     private PointsSummaryDetailsResponseDto toPointsSummaryDetailsWithoutItems(BigDecimal points, String title) {
         return PointsSummaryDetailsResponseDto.builder()
-                .gainedXp(points)
+                .gainedXp(NumberFormatter.formatToBigDecimal(points))
                 .title(title)
                 .build();
     }
@@ -58,7 +59,7 @@ public class PointsSummaryMapper {
                 .toList();
 
         return PointsSummaryDetailsResponseDto.builder()
-                .gainedXp(points)
+                .gainedXp(NumberFormatter.formatToBigDecimal(points))
                 .title(title)
                 .assignedItems(items)
                 .build();

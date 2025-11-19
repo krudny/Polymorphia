@@ -7,12 +7,14 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 import org.springframework.lang.Nullable;
 
+import java.math.BigDecimal;
+
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @Data
 public class StudentGradableEventResponseDto extends BaseGradableEventResponseDto {
     @Nullable
-    private String gainedXp;
+    private BigDecimal gainedXp;
 
     @NotNull
     private boolean hasPossibleReward;

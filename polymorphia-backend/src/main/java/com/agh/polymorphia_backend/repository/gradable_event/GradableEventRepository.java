@@ -25,7 +25,7 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
            ge.roadMapOrderIndex as roadMapOrderIndex,
            ge.isHidden as isHidden,
            ge.isLocked as isLocked,
-           CASE WHEN COUNT(DISTINCT g.id) > 0 THEN SUM(DISTINCT cg.xp) ELSE NULL END as gainedXp,
+           CASE WHEN COUNT(DISTINCT g.id) > 0 THEN CAST(SUM(DISTINCT cg.xp) AS BigDecimal) ELSE NULL END as gainedXp,
            CASE WHEN COUNT(DISTINCT cr.id) > 0 THEN true ELSE false END as hasPossibleReward,
            CASE WHEN COUNT(DISTINCT g.id) > 0 THEN true ELSE false END as isGraded,
            CASE WHEN COUNT(DISTINCT g.id) > 0 AND COUNT(DISTINCT ar.id) > 0 THEN true ELSE false END as isRewardAssigned
@@ -50,34 +50,53 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
             @Param("sortBy") String sortBy
     );
 
-    @Query("""
-    SELECT ge.id as id,
-           ge.name as name,
-           ge.topic as topic,
-           ge.orderIndex as orderIndex,
-           ge.roadMapOrderIndex as roadMapOrderIndex,
-           ge.isHidden as isHidden,
-           ge.isLocked as isLocked,
-           COUNT(DISTINCT CASE 
-               WHEN g.id IS NULL THEN scga.animal.id
-           END) as ungradedStudents,
-           CASE WHEN COUNT(DISTINCT cr.id) > 0 THEN true ELSE false END as hasPossibleReward
-    FROM GradableEvent ge
-    LEFT JOIN Criterion c ON c.gradableEvent.id = ge.id
-    LEFT JOIN CriterionReward cr ON cr.criterion.id = c.id
-    CROSS JOIN StudentCourseGroupAssignment scga
-    JOIN scga.courseGroup cg
-    LEFT JOIN Grade g ON g.gradableEvent.id = ge.id 
-        AND g.animal.id = scga.animal.id
-    WHERE ((:scope = 'COURSE' AND ge.eventSection.course.id = :idValue)
-       OR (:scope = 'EVENT_SECTION' AND ge.eventSection.id = :idValue))
-      AND cg.teachingRoleUser.userId = :instructorId
-      AND ge.isHidden = false
-    GROUP BY ge.id, ge.name, ge.topic, ge.orderIndex, ge.roadMapOrderIndex, ge.isHidden, ge.isLocked, ge.eventSection.id
-    ORDER BY 
-        CASE WHEN :sortBy = 'ORDER_INDEX' THEN ge.orderIndex END,
-        CASE WHEN :sortBy = 'ROADMAP_ORDER_INDEX' THEN ge.roadMapOrderIndex END
-    """)
+    @Query(value = """
+    SELECT
+        ge.id,
+        ge.name,
+        ge.topic,
+        ge.order_index,
+        ge.road_map_order_index,
+        ge.is_hidden,
+        ge.is_locked,
+        COUNT(DISTINCT CASE
+            WHEN scga.animal_id IS NOT NULL AND g.id IS NULL
+                THEN scga.animal_id
+        END) as ungraded_students,
+        CASE
+            WHEN COUNT(DISTINCT cr.criterion_id) > 0 THEN true
+            ELSE false
+        END as has_possible_reward
+    FROM gradable_events ge
+    LEFT JOIN criteria c ON c.gradable_event_id = ge.id
+    LEFT JOIN criteria_rewards cr ON cr.criterion_id = c.id
+    LEFT JOIN (
+        SELECT scga.animal_id, scga.course_group_id
+        FROM students_course_groups scga
+        JOIN course_groups cg ON cg.id = scga.course_group_id
+        WHERE cg.teaching_role_user_id = :instructorId
+    ) scga ON true
+    LEFT JOIN grades g ON g.gradable_event_id = ge.id AND g.animal_id = scga.animal_id
+    WHERE (
+        (:scope = 'COURSE' AND ge.event_section_id IN (
+            SELECT es.id FROM event_sections es WHERE es.course_id = :idValue
+        ))
+        OR (:scope = 'EVENT_SECTION' AND ge.event_section_id = :idValue)
+    )
+    AND ge.is_hidden = false
+    GROUP BY
+        ge.id,
+        ge.name,
+        ge.topic,
+        ge.order_index,
+        ge.road_map_order_index,
+        ge.is_hidden,
+        ge.is_locked,
+        ge.event_section_id
+    ORDER BY
+        CASE WHEN :sortBy = 'ORDER_INDEX' THEN ge.order_index END,
+        CASE WHEN :sortBy = 'ROADMAP_ORDER_INDEX' THEN ge.road_map_order_index END
+    """, nativeQuery = true)
     List<InstructorGradableEventProjection> findInstructorGradableEventsWithDetails(
             @Param("idValue") Long idValue,
             @Param("instructorId") Long instructorId,
@@ -85,37 +104,61 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
             @Param("sortBy") String sortBy
     );
 
-    @Query("""
-    SELECT ge.id as id,
-           ge.name as name,
-           ge.topic as topic,
-           ge.orderIndex as orderIndex,
-           ge.roadMapOrderIndex as roadMapOrderIndex,
-           ge.isHidden as isHidden,
-           ge.isLocked as isLocked,
-           COUNT(DISTINCT CASE 
-               WHEN g.id IS NULL THEN scga.animal.id
-           END) as ungradedStudents,
-           CASE WHEN COUNT(DISTINCT cr.id) > 0 THEN true ELSE false END as hasPossibleReward
-    FROM GradableEvent ge
-    LEFT JOIN Criterion c ON c.gradableEvent.id = ge.id
-    LEFT JOIN CriterionReward cr ON cr.criterion.id = c.id
-    CROSS JOIN StudentCourseGroupAssignment scga
-    LEFT JOIN Grade g ON g.gradableEvent.id = ge.id 
-        AND g.animal.id = scga.animal.id
-    WHERE ((:scope = 'COURSE' AND ge.eventSection.course.id = :idValue)
-       OR (:scope = 'EVENT_SECTION' AND ge.eventSection.id = :idValue))
-      AND ge.isHidden = false
-    GROUP BY ge.id, ge.name, ge.topic, ge.orderIndex, ge.roadMapOrderIndex, ge.isHidden, ge.isLocked, ge.eventSection.id
-    ORDER BY 
-        CASE WHEN :sortBy = 'ORDER_INDEX' THEN ge.orderIndex END,
-        CASE WHEN :sortBy = 'ROADMAP_ORDER_INDEX' THEN ge.roadMapOrderIndex END
-    """)
-    List<InstructorGradableEventProjection> getCoordinatorGradableEventsWithDetails(
+    @Query(value = """
+    SELECT
+        ge.id,
+        ge.name,
+        ge.topic,
+        ge.order_index,
+        ge.road_map_order_index,
+        ge.is_hidden,
+        ge.is_locked,
+        COUNT(DISTINCT CASE
+            WHEN scga.animal_id IS NOT NULL AND g.id IS NULL
+                THEN scga.animal_id
+        END) as ungraded_students,
+        CASE
+            WHEN COUNT(DISTINCT cr.criterion_id) > 0 THEN true
+            ELSE false
+        END as has_possible_reward
+    FROM gradable_events ge
+    LEFT JOIN criteria c ON c.gradable_event_id = ge.id
+    LEFT JOIN criteria_rewards cr ON cr.criterion_id = c.id
+    LEFT JOIN (
+        SELECT scga.animal_id, scga.course_group_id
+        FROM students_course_groups scga
+        JOIN course_groups cg ON cg.id = scga.course_group_id
+        JOIN courses co ON co.id = cg.course_id
+        WHERE co.coordinator_id = :coordinatorId
+    ) scga ON true
+    LEFT JOIN grades g ON g.gradable_event_id = ge.id AND g.animal_id = scga.animal_id
+    WHERE (
+        (:scope = 'COURSE' AND ge.event_section_id IN (
+            SELECT es.id FROM event_sections es WHERE es.course_id = :idValue
+        ))
+        OR (:scope = 'EVENT_SECTION' AND ge.event_section_id = :idValue)
+    )
+    AND ge.is_hidden = false
+    GROUP BY
+        ge.id,
+        ge.name,
+        ge.topic,
+        ge.order_index,
+        ge.road_map_order_index,
+        ge.is_hidden,
+        ge.is_locked,
+        ge.event_section_id
+    ORDER BY
+        CASE WHEN :sortBy = 'ORDER_INDEX' THEN ge.order_index END,
+        CASE WHEN :sortBy = 'ROADMAP_ORDER_INDEX' THEN ge.road_map_order_index END
+    """, nativeQuery = true)
+    List<InstructorGradableEventProjection> findCoordinatorGradableEventsWithDetails(
             @Param("idValue") Long idValue,
+            @Param("coordinatorId") Long coordinatorId,
             @Param("scope") String scope,
             @Param("sortBy") String sortBy
     );
+
 
     @Query("""
         select hofe.studentId      as studentId,

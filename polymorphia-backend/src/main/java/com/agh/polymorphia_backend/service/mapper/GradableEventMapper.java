@@ -3,9 +3,11 @@ package com.agh.polymorphia_backend.service.mapper;
 import com.agh.polymorphia_backend.dto.response.event.BaseGradableEventResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.InstructorGradableEventResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.StudentGradableEventResponseDto;
+import com.agh.polymorphia_backend.model.event_section.EventSectionType;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.repository.gradable_event.projections.InstructorGradableEventProjection;
 import com.agh.polymorphia_backend.repository.gradable_event.projections.StudentGradableEventProjection;
+import com.agh.polymorphia_backend.util.NumberFormatter;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -35,7 +37,7 @@ public class GradableEventMapper {
                 .orderIndex(projection.getOrderIndex())
                 .roadMapOrderIndex(projection.getRoadMapOrderIndex())
                 .isLocked(projection.getIsLocked())
-                .gainedXp(projection.getGainedXp())
+                .gainedXp(projection.getGainedXp() != null ? NumberFormatter.formatToBigDecimal(projection.getGainedXp()) : null)
                 .hasPossibleReward(projection.getHasPossibleReward())
                 .isGraded(projection.getIsGraded())
                 .isRewardAssigned(projection.getIsRewardAssigned())
