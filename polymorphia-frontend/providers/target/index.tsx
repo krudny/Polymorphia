@@ -14,7 +14,6 @@ import {
   TargetProviderProps,
 } from "@/providers/target/types";
 import { initialState, TargetReducer } from "@/providers/target/reducer";
-import useTargets from "@/hooks/course/useTargets";
 import isSelectedTargetStillAvailable from "@/providers/target/utils/is-target-still-available";
 import { TargetReducerActions } from "@/providers/target/reducer/types";
 import {
@@ -28,7 +27,11 @@ export const TargetContext = createContext<TargetContextInterface | undefined>(
   undefined
 );
 
-export const TargetProvider = ({ children }: TargetProviderProps) => {
+export const TargetProvider = ({
+  useTargets,
+  handleApplyFilters,
+  children,
+}: TargetProviderProps) => {
   const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 400);
@@ -55,14 +58,14 @@ export const TargetProvider = ({ children }: TargetProviderProps) => {
     search: debouncedSearch,
   });
 
-  const handleApplyFilters = () => {
-    queryClient.invalidateQueries({
-      queryKey: ["targets"],
-    });
-  };
-
   useEffect(() => {
     if (!targets || targets.length < 1) {
+      if (selectedTarget !== null) {
+        dispatch({
+          type: TargetReducerActions.SET_TARGET,
+          payload: null,
+        });
+      }
       return;
     }
 
@@ -78,7 +81,7 @@ export const TargetProvider = ({ children }: TargetProviderProps) => {
           target: targets[0],
           member:
             targets[0].type === TargetTypes.STUDENT
-              ? targets[0]
+              ? targets[0].student
               : targets[0].members[0],
         },
       });
@@ -112,8 +115,9 @@ export const TargetProvider = ({ children }: TargetProviderProps) => {
         targets,
         isTargetsLoading,
         onTargetSelect,
-        handleApplyFilters,
+        handleApplyFilters: () => handleApplyFilters(queryClient),
         applyFiltersCallback,
+        appliedFilters,
         targetId,
       }}
     >

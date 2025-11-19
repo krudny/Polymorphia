@@ -30,6 +30,11 @@ public class CourseGroupsService {
         return courseGroupRepository.findByCourseId(courseId);
     }
 
+    public List<String> findAllCourseGroupNames(Long courseId) {
+        accessAuthorizer.authorizeCourseAccess(courseId);
+        return courseGroupRepository.findNamesByCourseId(courseId);
+    }
+
     public List<CourseGroupsResponseDto> getAllCourseGroups(Long courseId) {
         List<CourseGroup> courseGroups = findAllCourseGroups(courseId);
         return courseGroups.stream()
@@ -54,6 +59,16 @@ public class CourseGroupsService {
         return getCourseGroups(courseId).stream()
                 .map(courseGroupsMapper::toCourseGroupShortResponseDto)
                 .toList();
+    }
+
+    public CourseGroup findCourseGroupForTeachingRoleUser(Long courseGroupId) {
+        return switch (userService.getCurrentUserRole()) {
+            case INSTRUCTOR, COORDINATOR -> courseGroupRepository
+                    .findCourseGroupForTeachingRoleUser(courseGroupId, userService.getCurrentUser().getUserId())
+                    .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono grupy zajęciowej."));
+            default -> throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Brak uprawnień.");
+        };
     }
 
     private List<CourseGroup> getCourseGroups(Long courseId) {

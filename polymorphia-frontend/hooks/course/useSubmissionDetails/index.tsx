@@ -3,11 +3,12 @@ import UseSubmissionDetails from "@/hooks/course/useSubmissionDetails/types";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import { useQuery } from "@tanstack/react-query";
 import { SubmissionService } from "@/services/submission";
+import { EventTypes } from "@/interfaces/general";
 
 export default function useSubmissionDetails(
   target: TargetRequestDTO | null
 ): UseSubmissionDetails {
-  const { gradableEventId } = useEventParams();
+  const { gradableEventId, eventType } = useEventParams();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: target
@@ -20,7 +21,7 @@ export default function useSubmissionDetails(
       : ["submissionDetails", "noTarget"],
     queryFn: () =>
       SubmissionService.getSubmissionDetails(gradableEventId, target!),
-    enabled: !!target,
+    enabled: !!target && eventType !== EventTypes.TEST,
   });
 
   return { data, isLoading, isError };

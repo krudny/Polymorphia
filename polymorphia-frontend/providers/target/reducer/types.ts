@@ -12,7 +12,7 @@ export const TargetReducerActions = {
 export type TargetReducerActionType =
   | {
       type: typeof TargetReducerActions.SET_TARGET;
-      payload: TargetResponseDTO;
+      payload: TargetResponseDTO | null;
     }
   | {
       type: typeof TargetReducerActions.HANDLE_STUDENT_SELECTION;
