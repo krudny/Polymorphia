@@ -1,7 +1,7 @@
-import { InstructorGradableEventResponseDTO } from "@/interfaces/api/gradable_event/types";
+import { TeachingRoleGradableEventResponseDTO } from "@/interfaces/api/gradable_event/types";
 
 export interface UseInstructorGradableEvents {
-  data: InstructorGradableEventResponseDTO[] | undefined;
+  data: TeachingRoleGradableEventResponseDTO[] | undefined;
   isLoading: boolean;
   isError: boolean;
 }

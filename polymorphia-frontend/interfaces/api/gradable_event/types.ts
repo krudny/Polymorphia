@@ -1,7 +1,7 @@
 export type GradableEventDTO =
   | BaseGradableEventResponseDTO
   | StudentGradableEventResponseDTO
-  | InstructorGradableEventResponseDTO;
+  | TeachingRoleGradableEventResponseDTO;
 
 export interface BaseGradableEventResponseDTO {
   id: number;
@@ -20,7 +20,7 @@ export interface StudentGradableEventResponseDTO
   isRewardAssigned: boolean;
 }
 
-export interface InstructorGradableEventResponseDTO
+export interface TeachingRoleGradableEventResponseDTO
   extends BaseGradableEventResponseDTO {
   ungradedStudents: number;
   isLocked: boolean;

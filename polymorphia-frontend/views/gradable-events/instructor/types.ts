@@ -1,11 +1,11 @@
 import {
   GradableEventDTO,
-  InstructorGradableEventResponseDTO,
+  TeachingRoleGradableEventResponseDTO,
 } from "@/interfaces/api/gradable_event/types";
 import { Size } from "@/interfaces/general";
 
 export interface InstructorGradableEventCardProps {
-  gradableEvent: InstructorGradableEventResponseDTO;
+  gradableEvent: TeachingRoleGradableEventResponseDTO;
   size: Size;
   handleClick: (gradableEvent: GradableEventDTO) => void;
 }

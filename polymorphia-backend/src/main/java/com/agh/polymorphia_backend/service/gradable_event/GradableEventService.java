@@ -76,8 +76,7 @@ public class GradableEventService {
 
         return switch (userRole) {
             case STUDENT -> getStudentGradableEvents(relatedId, course, scope, sortBy);
-            case INSTRUCTOR -> getInstructorGradableEvents(relatedId, scope, sortBy);
-            case COORDINATOR -> getCoordinatorGradableEvents(relatedId, scope, sortBy);
+            case INSTRUCTOR, COORDINATOR  -> getTeachingRoleGradableEvents(relatedId, scope, sortBy);
             case UNDEFINED -> throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     INVALID_ROLE
@@ -101,33 +100,18 @@ public class GradableEventService {
                 .collect(Collectors.toList());
     }
 
-    private List<BaseGradableEventResponseDto> getInstructorGradableEvents(
+    private List<BaseGradableEventResponseDto> getTeachingRoleGradableEvents(
             Long relatedId,
             GradableEventScope scope,
             GradableEventSortBy sortBy
     ) {
-        Long instructorId = userService.getCurrentUser().getUserId();
+        Long teachingRoleId = userService.getCurrentUser().getUserId();
+        UserType userRole = userService.getCurrentUserRole();
 
         return gradableEventRepository
-                .findInstructorGradableEventsWithDetails(relatedId, instructorId, scope.getValue(), sortBy.getValue())
+                .findTeachingRoleGradableEventsWithDetails(relatedId, teachingRoleId, userRole.name(), scope.getValue(), sortBy.getValue())
                 .stream()
-                .map(gradableEventMapper::toInstructorGradableEventResponseDto)
-                .collect(Collectors.toList());
-    }
-
-    private List<BaseGradableEventResponseDto> getCoordinatorGradableEvents(
-            Long courseId,
-            GradableEventScope scope,
-            GradableEventSortBy sortBy
-    ) {
-        Course course = courseService.getCourseById(courseId);
-        accessAuthorizer.authorizeCourseAccess(course);
-        Long coordinatorId = userService.getCurrentUser().getUserId();
-
-        return gradableEventRepository
-                .findCoordinatorGradableEventsWithDetails(courseId, coordinatorId, scope.getValue(), sortBy.getValue())
-                .stream()
-                .map(gradableEventMapper::toInstructorGradableEventResponseDto)
+                .map(gradableEventMapper::toTeacherRoleGradableEventResponseDto)
                 .collect(Collectors.toList());
     }
 

@@ -8,7 +8,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @Data
-public class InstructorGradableEventResponseDto extends BaseGradableEventResponseDto {
+public class TeachingRoleGradableEventResponseDto extends BaseGradableEventResponseDto {
 
     @NotNull
     private Long ungradedStudents;

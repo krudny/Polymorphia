@@ -1,8 +1,8 @@
 import { ApiClient } from "@/services/api/client";
 import {
   BaseGradableEventResponseDTO,
-  InstructorGradableEventResponseDTO,
   StudentGradableEventResponseDTO,
+  TeachingRoleGradableEventResponseDTO,
 } from "@/interfaces/api/gradable_event/types";
 
 export const GradableEventService = {
@@ -24,8 +24,8 @@ export const GradableEventService = {
 
   getInstructorGradableEvents: async (
     eventSectionId: number
-  ): Promise<InstructorGradableEventResponseDTO[]> => {
-    return await ApiClient.get<InstructorGradableEventResponseDTO[]>(
+  ): Promise<TeachingRoleGradableEventResponseDTO[]> => {
+    return await ApiClient.get<TeachingRoleGradableEventResponseDTO[]>(
       `/gradable-events?eventSectionId=${eventSectionId}`
     );
   },

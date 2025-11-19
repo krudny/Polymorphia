@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.service.mapper;
 
 import com.agh.polymorphia_backend.dto.response.event.BaseGradableEventResponseDto;
-import com.agh.polymorphia_backend.dto.response.event.InstructorGradableEventResponseDto;
+import com.agh.polymorphia_backend.dto.response.event.TeachingRoleGradableEventResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.StudentGradableEventResponseDto;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.repository.gradable_event.projections.TeachingRoleGradableEventProjection;
@@ -42,8 +42,8 @@ public class GradableEventMapper {
                 .build();
     }
 
-    public InstructorGradableEventResponseDto toInstructorGradableEventResponseDto(TeachingRoleGradableEventProjection projection) {
-        return InstructorGradableEventResponseDto.builder()
+    public TeachingRoleGradableEventResponseDto toTeacherRoleGradableEventResponseDto(TeachingRoleGradableEventProjection projection) {
+        return TeachingRoleGradableEventResponseDto.builder()
                 .id(projection.getId())
                 .name(projection.getName())
                 .topic(projection.getTopic())

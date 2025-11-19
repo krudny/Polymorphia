@@ -16,8 +16,8 @@ import { Roles } from "@/interfaces/api/user";
 import InstructorGradableEventCard from "@/views/gradable-events/instructor/InstructorGradableEventCard";
 import {
   GradableEventDTO,
-  InstructorGradableEventResponseDTO,
   StudentGradableEventResponseDTO,
+  TeachingRoleGradableEventResponseDTO,
 } from "@/interfaces/api/gradable_event/types";
 import { Sizes } from "@/interfaces/general";
 
@@ -59,7 +59,7 @@ export default function Roadmap() {
       <InstructorGradableEventCard
         key={gradableEvent.id}
         size={cardSize}
-        gradableEvent={gradableEvent as InstructorGradableEventResponseDTO}
+        gradableEvent={gradableEvent as TeachingRoleGradableEventResponseDTO}
         handleClick={handleClick}
       />
     )

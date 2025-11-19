@@ -18,7 +18,7 @@ import {
   UserDetailsDTO,
 } from "@/interfaces/api/user";
 import { ApiClient } from "@/services/api/client";
-import { InstructorGradableEventResponseDTO } from "@/interfaces/api/gradable_event/types";
+import { TeachingRoleGradableEventResponseDTO } from "@/interfaces/api/gradable_event/types";
 
 export const studentNames = [
   "Gerard Małoduszny",
@@ -82,7 +82,7 @@ export const EventSectionService = {
   getPointsSummary: async (
     eventSectionId: number
   ): Promise<PointsSummaryResponseDTO> => {
-    return await ApiClient.get<InstructorGradableEventResponseDTO[]>(
+    return await ApiClient.get<TeachingRoleGradableEventResponseDTO[]>(
       `/gradable-events/points-summary?eventSectionId=${eventSectionId}`
     );
   },
