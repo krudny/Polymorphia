@@ -25,10 +25,10 @@ import java.util.List;
 public class RewardMapper {
     private final AssignedRewardService assignedRewardService;
 
-    public BaseRewardResponseDtoWithType rewardToRewardResponseDtoWithType(Reward reward, Long animalId) {
+    public BaseRewardResponseDtoWithType rewardToRewardResponseDtoWithType(Reward reward) {
         return BaseRewardResponseDtoWithType.builder()
                 .rewardType(reward.getRewardType())
-                .reward(rewardToRewardResponseDto(reward, animalId))
+                .reward(rewardToRewardResponseDto(reward))
                 .build();
     }
 

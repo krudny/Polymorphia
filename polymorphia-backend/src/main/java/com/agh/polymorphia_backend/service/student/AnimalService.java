@@ -10,7 +10,6 @@ import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.repository.course.AnimalRepository;
 import com.agh.polymorphia_backend.repository.course.StudentCourseGroupRepository;
 import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
-import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import lombok.AllArgsConstructor;
