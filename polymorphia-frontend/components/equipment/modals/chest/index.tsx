@@ -9,7 +9,6 @@ import { ChestModalProps } from "@/components/equipment/modals/chest/types";
 export default function ChestModal({ equipment, onClose }: ChestModalProps) {
   const receivedItems = equipment.details.receivedItems;
 
-  console.log(receivedItems);
   return (
     <Modal
       isDataPresented={true}

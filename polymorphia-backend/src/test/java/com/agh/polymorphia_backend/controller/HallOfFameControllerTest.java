@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static io.restassured.path.json.JsonPath.from;
 import static com.agh.polymorphia_backend.controller.ControllerTestUtil.*;
+import static io.restassured.path.json.JsonPath.from;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HallOfFameControllerTest extends ControllerTestConfig {

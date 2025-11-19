@@ -37,6 +37,9 @@ export default function OpeningChestModalContent({
   );
   const isSm = useMediaQuery({ maxWidth: 768 });
 
+  const areAllItemsOverLimit =
+    equipment.base.chestItems?.every((item) => item.isLimitReached) ?? false;
+
   useEffect(() => {
     if (!chestPotentialXp) {
       return;
@@ -206,6 +209,7 @@ export default function OpeningChestModalContent({
           isActive={
             !pickChestItemsMutation.isPending &&
             (state.pickedItemId !== null ||
+              areAllItemsOverLimit ||
               equipment.base.behavior == ChestBehaviors.ALL)
           }
         />
