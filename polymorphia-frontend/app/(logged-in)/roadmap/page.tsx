@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import ProgressBar from "@/components/progressbar/ProgressBar";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import ProgressBarElement from "@/components/progressbar/ProgressBarElement";
@@ -27,7 +26,6 @@ export default function Roadmap() {
   const wrapperRef = useFadeInAnimate();
   const { data: roadmap, isLoading, isError } = useRoadmap();
   const { userRole } = useUserContext();
-  const router = useRouter();
   const isXL = useMediaQuery({ minWidth: 1280 });
   const isMd = useMediaQuery({ minWidth: 768 });
   const isSm = useMediaQuery({ minWidth: 400 });
@@ -43,10 +41,6 @@ export default function Roadmap() {
   const handleClick = (gradableEvent: GradableEventDTO) => {
     if (isStudent) {
       setSelectedEventId(gradableEvent.id);
-    } else {
-      router.push(
-        `course/${gradableEvent.eventType}/${gradableEvent.id}/grading`
-      );
     }
   };
 

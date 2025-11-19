@@ -39,4 +39,27 @@ public interface EventSectionRepository extends JpaRepository<EventSection, Long
         ORDER BY es.orderIndex ASC
     """)
     List<EventSection> findByCourseIdWithoutHidden(@Param("courseId") Long courseId);
+
+    @Query("""
+    SELECT es 
+    FROM EventSection es
+    LEFT JOIN es.gradableEvents ge
+    WHERE es.id = :eventSectionId
+      AND (
+          :userRole <> 'STUDENT'
+          OR (
+              es.isHidden = false 
+              AND EXISTS (
+                  SELECT 1 
+                  FROM GradableEvent g 
+                  WHERE g.eventSection.id = es.id 
+                    AND g.isHidden = false
+              )
+          )
+      )
+    """)
+    Optional<EventSection> findByIdWithVisibilityCheck(
+            @Param("eventSectionId") Long eventSectionId,
+            @Param("userRole") String userRole
+    );
 }

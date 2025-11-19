@@ -2,7 +2,7 @@ package com.agh.polymorphia_backend.repository.gradable_event;
 
 import com.agh.polymorphia_backend.dto.response.target_list.StudentTargetDataResponseDto;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
-import com.agh.polymorphia_backend.repository.gradable_event.projections.InstructorGradableEventProjection;
+import com.agh.polymorphia_backend.repository.gradable_event.projections.TeachingRoleGradableEventProjection;
 import com.agh.polymorphia_backend.repository.gradable_event.projections.StudentGradableEventProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -77,13 +77,9 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
         WHERE cg.teaching_role_user_id = :instructorId
     ) scga ON true
     LEFT JOIN grades g ON g.gradable_event_id = ge.id AND g.animal_id = scga.animal_id
-    WHERE (
-        (:scope = 'COURSE' AND ge.event_section_id IN (
-            SELECT es.id FROM event_sections es WHERE es.course_id = :idValue
-        ))
-        OR (:scope = 'EVENT_SECTION' AND ge.event_section_id = :idValue)
-    )
-    AND ge.is_hidden = false
+    WHERE ((:scope = 'COURSE' AND ge.eventSection.course.id = :idValue)
+       OR (:scope = 'EVENT_SECTION' AND ge.eventSection.id = :idValue))
+      AND ge.isHidden = false
     GROUP BY
         ge.id,
         ge.name,
@@ -97,7 +93,7 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
         CASE WHEN :sortBy = 'ORDER_INDEX' THEN ge.order_index END,
         CASE WHEN :sortBy = 'ROADMAP_ORDER_INDEX' THEN ge.road_map_order_index END
     """, nativeQuery = true)
-    List<InstructorGradableEventProjection> findInstructorGradableEventsWithDetails(
+    List<TeachingRoleGradableEventProjection> findInstructorGradableEventsWithDetails(
             @Param("idValue") Long idValue,
             @Param("instructorId") Long instructorId,
             @Param("scope") String scope,
@@ -152,7 +148,7 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
         CASE WHEN :sortBy = 'ORDER_INDEX' THEN ge.order_index END,
         CASE WHEN :sortBy = 'ROADMAP_ORDER_INDEX' THEN ge.road_map_order_index END
     """, nativeQuery = true)
-    List<InstructorGradableEventProjection> findCoordinatorGradableEventsWithDetails(
+    List<TeachingRoleGradableEventProjection> findCoordinatorGradableEventsWithDetails(
             @Param("idValue") Long idValue,
             @Param("coordinatorId") Long coordinatorId,
             @Param("scope") String scope,

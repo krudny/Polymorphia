@@ -3,13 +3,11 @@ package com.agh.polymorphia_backend.service.mapper;
 import com.agh.polymorphia_backend.dto.response.event.BaseGradableEventResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.InstructorGradableEventResponseDto;
 import com.agh.polymorphia_backend.dto.response.event.StudentGradableEventResponseDto;
-import com.agh.polymorphia_backend.model.event_section.EventSectionType;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
-import com.agh.polymorphia_backend.repository.gradable_event.projections.InstructorGradableEventProjection;
+import com.agh.polymorphia_backend.repository.gradable_event.projections.TeachingRoleGradableEventProjection;
 import com.agh.polymorphia_backend.repository.gradable_event.projections.StudentGradableEventProjection;
 import com.agh.polymorphia_backend.util.NumberFormatter;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -44,7 +42,7 @@ public class GradableEventMapper {
                 .build();
     }
 
-    public InstructorGradableEventResponseDto toInstructorGradableEventResponseDto(InstructorGradableEventProjection projection) {
+    public InstructorGradableEventResponseDto toInstructorGradableEventResponseDto(TeachingRoleGradableEventProjection projection) {
         return InstructorGradableEventResponseDto.builder()
                 .id(projection.getId())
                 .name(projection.getName())

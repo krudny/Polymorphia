@@ -2,6 +2,7 @@ package com.agh.polymorphia_backend.service.event_section;
 
 import com.agh.polymorphia_backend.dto.response.event.EventSectionResponseDto;
 import com.agh.polymorphia_backend.model.event_section.EventSection;
+import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.service.mapper.EventSectionMapper;
@@ -36,15 +37,10 @@ public class EventSectionService {
     }
 
     public EventSection getEventSection(Long eventSectionId) {
-        EventSection eventSection = eventSectionRepository.findById(eventSectionId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, EVENT_SECTION_NOT_FOUND));
         UserType userRole = userService.getCurrentUserRole();
 
-        if (userRole == UserType.STUDENT && eventSection.getIsHidden()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, EVENT_SECTION_NOT_FOUND);
-        }
-
-        return eventSection;
+        return eventSectionRepository.findByIdWithVisibilityCheck(eventSectionId, userRole.name())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, EVENT_SECTION_NOT_FOUND));
     }
 
     private List<EventSection> getCourseEventSections(Long courseId) {
