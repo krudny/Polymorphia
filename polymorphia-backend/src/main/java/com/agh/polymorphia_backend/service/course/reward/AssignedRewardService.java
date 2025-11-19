@@ -50,6 +50,12 @@ public class AssignedRewardService {
         return assignedItemRepository.findAnimalAssignedItems(animalId);
     }
 
+    public List<AssignedItem> getAnimalAssignedItemsWithoutCriterionItems(Long animalId, Long criterionId) {
+        return getAnimalAssignedItems(animalId).stream()
+                .filter(i -> !i.getCriterionGrade().getCriterion().getId().equals(criterionId))
+                .toList();
+    }
+
     public Map<FlatBonusItemBehavior, List<AssignedItem>> groupFlatBonusItemsByBehavior(List<AssignedItem> assignedItems) {
         return filterAssignedItemsByType(assignedItems, ItemType.FLAT_BONUS).stream()
                 .sorted(Comparator.comparing(AssignedReward::getReceivedDate))
@@ -146,27 +152,31 @@ public class AssignedRewardService {
             return false;
         }
 
-        Animal animal = animalService.getAnimal(userId, item.getCourse().getId());
-        List<AssignedItem> animalAssignedItems = getAnimalAssignedItems(animal.getId());
-
-        Map<Reward, Long> currentItemsByReward = countAssignedItemsByReward(animalAssignedItems);
-
-        return currentItemsByReward.getOrDefault(item, 0L) >= item.getLimit();
+        return getCurrentItemCount(userId, item, Optional.empty()) >= item.getLimit();
     }
 
 
-    public boolean isLimitReachedWithNewItems(Item item, Long studentId, Integer newItemsQuantity) {
+    public boolean isLimitReachedWithNewItems(Item item, Long studentId, Integer newItemsQuantity, Long criterionIdToIgnore) {
         UserType userRole = userService.getAnyUserRoleInCourse(item.getCourse().getId(), userService.findById(studentId).getId());
         if (userRole.equals(UserType.COORDINATOR) || userRole.equals(UserType.INSTRUCTOR)) {
             return false;
         }
 
+        return (getCurrentItemCount(studentId, item, Optional.of(criterionIdToIgnore)) + newItemsQuantity) > item.getLimit();
+    }
+
+    public Long getCurrentItemCount(Long studentId, Item item, Optional<Long> criterionIdToIgnore) {
         Animal animal = animalService.getAnimal(studentId, item.getCourse().getId());
-        List<AssignedItem> animalAssignedItems = getAnimalAssignedItems(animal.getId());
+
+        List<AssignedItem> animalAssignedItems;
+        if (criterionIdToIgnore.isPresent()) {
+            animalAssignedItems = getAnimalAssignedItemsWithoutCriterionItems(animal.getId(), criterionIdToIgnore.get());
+        } else {
+            animalAssignedItems = getAnimalAssignedItems(animal.getId());
+        }
 
         Map<Reward, Long> currentItemsByReward = countAssignedItemsByReward(animalAssignedItems);
-
-        return (currentItemsByReward.getOrDefault(item, 0L) + newItemsQuantity) > item.getLimit();
+        return currentItemsByReward.getOrDefault(item, 0L);
     }
 
     public Map<Reward, List<AssignedItem>> groupAssignedItemsByReward(List<AssignedItem> assignedItems) {

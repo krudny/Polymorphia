@@ -316,28 +316,16 @@ INSERT INTO
 VALUES
   (3, 'SP-pn-1500', 1, 4),
   (4, 'mi-wt-1145', 1, 4);
-INSERT INTO
-  user_course_roles (role, user_id, course_id)
-VALUES
-  ('STUDENT', 3, 1);
-INSERT INTO
-  user_course_roles (role, user_id, course_id)
-VALUES
-  ('STUDENT', 7, 1);
+
 INSERT INTO
   user_course_roles (role, user_id, course_id)
 VALUES
   ('COORDINATOR', 5, 1);
 INSERT INTO
   user_course_roles (role, user_id, course_id)
-VALUES ('STUDENT', 7, 2),
-       ('STUDENT', 21, 1);
-INSERT INTO
-  user_course_roles (role, user_id, course_id)
 VALUES
   ('INSTRUCTOR', 4, 1),
-  ('INSTRUCTOR', 4, 2),
-  ('STUDENT', 13, 1);
+  ('INSTRUCTOR', 4, 2);
 INSERT INTO
   animals (id, name)
 VALUES
@@ -550,6 +538,23 @@ VALUES
   (3, 1, 1),
   (7, 2, 4),
   (7, 1, 2);
+
+INSERT INTO user_course_roles (role, user_id, course_id)
+SELECT
+    'STUDENT' AS role,
+    scg.student_id AS user_id,
+    cg.course_id
+FROM students_course_groups scg
+         JOIN course_groups cg
+              ON scg.course_group_id = cg.id
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM user_course_roles ucr
+    WHERE ucr.user_id = scg.student_id
+      AND ucr.course_id = cg.course_id
+      AND ucr.role = 'STUDENT'
+);
+
 INSERT INTO
   event_sections (id, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id, order_index, is_hidden)
 VALUES (4, 'Git', FALSE, FALSE, 1, 0, FALSE);

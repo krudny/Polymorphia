@@ -10,12 +10,14 @@ import { ChestResponseDTO, ItemResponseDTO } from "@/interfaces/api/reward";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import "./index.css";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   GradingReducerActions,
   GradingReducerState,
 } from "@/providers/grading/reducer/types";
 import useModalContext from "@/hooks/contexts/useModalContext";
+import { ShortAssignedRewardResponseDTO } from "@/interfaces/api/grade/grade";
+import { CriteriaDetailsRequestDTO } from "@/interfaces/api/grade/criteria";
 
 function AssignRewardModalContent({
   criterionId,
@@ -27,26 +29,61 @@ function AssignRewardModalContent({
     ...state,
   });
 
+  useEffect(() => {
+    if (state.criteria?.[criterionId]) {
+      setLocalState(state);
+    }
+  }, [state, criterionId]);
+
   const updateAssignedAmount = (rewardId: number, value: number): void => {
     setLocalState((prev) => {
+      const criteria = prev.criteria ?? {};
+      const criterion: CriteriaDetailsRequestDTO = criteria[criterionId] ?? {
+        gainedXp: "0",
+        assignedRewards: [],
+      };
+
+      const rewardData = assignableRewards?.find(
+        (pr) => pr.assignableReward.reward.id === rewardId
+      );
+
+      if (!rewardData) return prev;
+
+      const { reward } = rewardData.assignableReward;
+      const existing = criterion.assignedRewards.find(
+        (reward) => reward.rewardId === rewardId
+      );
+
+      let updatedAssignedRewards: ShortAssignedRewardResponseDTO[];
+
+      if (existing) {
+        updatedAssignedRewards = criterion.assignedRewards.map((reward) =>
+          reward.rewardId === rewardId ? { ...reward, quantity: value } : reward
+        );
+      } else {
+        updatedAssignedRewards = [
+          ...criterion.assignedRewards,
+          {
+            rewardId,
+            name: reward.name,
+            imageUrl: reward.imageUrl,
+            quantity: value,
+          },
+        ];
+      }
+
       return {
         ...prev,
         criteria: {
-          ...prev.criteria,
+          ...criteria,
           [criterionId]: {
-            ...prev.criteria[criterionId],
-            assignedRewards: prev.criteria[criterionId].assignedRewards.map(
-              (reward) =>
-                reward.rewardId === rewardId
-                  ? { ...reward, quantity: value }
-                  : reward
-            ),
+            ...criterion,
+            assignedRewards: updatedAssignedRewards,
           },
         },
       };
     });
   };
-
   const handleAssign = (): void => {
     dispatch({
       type: GradingReducerActions.UPDATE_GRADE,
@@ -73,7 +110,7 @@ function AssignRewardModalContent({
 
             const rewardId = rewardData.id;
             const currentQuantity =
-              localState.criteria[criterionId].assignedRewards.find(
+              localState.criteria[criterionId]?.assignedRewards?.find(
                 (reward) => reward.rewardId === rewardId
               )?.quantity ?? 0;
 

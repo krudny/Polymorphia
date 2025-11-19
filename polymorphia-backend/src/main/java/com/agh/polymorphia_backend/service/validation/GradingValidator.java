@@ -20,6 +20,7 @@ import com.agh.polymorphia_backend.service.criterion.CriterionService;
 import com.agh.polymorphia_backend.service.gradable_event.project.ProjectGroupService;
 import com.agh.polymorphia_backend.util.NumberFormatter;
 import lombok.AllArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -86,25 +87,25 @@ public class GradingValidator {
 
         switch (target.type()) {
             case STUDENT ->
-                    validateStudentLimitAssignedRewards(((StudentTargetRequestDto) target).id(), reward, quantity);
+                    validateStudentLimitAssignedRewards(((StudentTargetRequestDto) target).id(), reward, quantity, criterion.getId());
             case STUDENT_GROUP ->
-                    validateStudentGroupLimitAssignedRewards(((StudentGroupTargetRequestDto) target).groupId(), reward, quantity);
+                    validateStudentGroupLimitAssignedRewards(((StudentGroupTargetRequestDto) target).groupId(), reward, quantity, criterion.getId());
         }
     }
 
-    private void validateStudentGroupLimitAssignedRewards(Long groupId, Reward reward, Integer quantity) {
+    private void validateStudentGroupLimitAssignedRewards(Long groupId, Reward reward, Integer quantity, Long criterionId) {
         ProjectGroup projectGroup = projectGroupService.findById(groupId);
         List<Long> studentIds = projectGroupService.getStudentsFromProjectGroup(projectGroup)
                 .stream()
                 .map(Student::getUserId)
                 .toList();
 
-        studentIds.forEach(studentId -> validateStudentGroupLimitAssignedRewards(studentId, reward, quantity));
+        studentIds.forEach(studentId -> validateStudentLimitAssignedRewards(studentId, reward, quantity, criterionId));
     }
 
-    private void validateStudentLimitAssignedRewards(Long studentId, Reward reward, Integer quantity) {
+    private void validateStudentLimitAssignedRewards(Long studentId, Reward reward, Integer quantity, Long criterionId) {
         if (reward.getRewardType().equals(RewardType.ITEM)
-                && assignedRewardService.isLimitReachedWithNewItems((Item) reward, studentId, quantity)) {
+                && assignedRewardService.isLimitReachedWithNewItems((Item) Hibernate.unproxy(reward), studentId, quantity, criterionId)) {
 
             String message = String.format("Limit nagród tego typu został osiągnięty dla użytkownika %d.", studentId);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, message);

@@ -30,9 +30,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -92,13 +91,20 @@ public class GradingService {
         Animal animal = animalService.getAnimal(target.id(), course.getId());
         Grade grade = gradeService.getOrCreateGrade(animal, gradableEvent, request.getComment());
 
-        List<CriterionGrade> criteriaGrades = request.getCriteria().entrySet().stream()
+        List<CriterionGrade> criteriaGrades = gradableEvent.getCriteria().stream()
                 .map(
-                        entry -> criterionGradeService.fetchOrCreateCriterionGrade(
-                                entry.getKey(),
-                                entry.getValue().getGainedXp(),
-                                grade
-                        )
+                        criterion -> {
+                            BigDecimal gainedXp =
+                                    Optional.ofNullable(request.getCriteria().get(criterion.getId()))
+                                            .map(CriterionGradeRequestDto::getGainedXp)
+                                            .orElse(BigDecimal.ZERO);
+
+                            return criterionGradeService.fetchOrCreateCriterionGrade(
+                                    criterion.getId(),
+                                    gainedXp,
+                                    grade
+                            );
+                        }
                 )
                 .collect(Collectors.toList());
         grade.getCriteriaGrades().clear();
@@ -118,7 +124,12 @@ public class GradingService {
         List<AssignedReward> assignedRewards = new ArrayList<>();
 
         for (CriterionGrade criterionGrade : criteriaGrades) {
-            CriterionGradeRequestDto gradeRequest = criteria.get(criterionGrade.getCriterion().getId());
+            CriterionGradeRequestDto gradeRequest = criteria.getOrDefault(criterionGrade.getCriterion().getId(),
+                    CriterionGradeRequestDto.builder()
+                            .gainedXp(BigDecimal.valueOf(0.0))
+                            .assignedRewards(Collections.emptyList())
+                            .build()
+            );
             List<AssignedReward> criterionAssignedRewards = new ArrayList<>();
 
             for (ShortAssignedRewardRequestDto request : gradeRequest.getAssignedRewards()) {
