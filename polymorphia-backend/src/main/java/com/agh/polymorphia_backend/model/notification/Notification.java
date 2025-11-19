@@ -11,7 +11,7 @@ import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "notifications")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "notification_type", discriminatorType = DiscriminatorType.STRING)
 @Data
 @NoArgsConstructor

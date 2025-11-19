@@ -6,13 +6,13 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@DiscriminatorValue("NEW_GRADE")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@PrimaryKeyJoinColumn(name = "notification_id")
 public class GradeNotification extends Notification {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gradable_event_id")
@@ -26,5 +26,11 @@ public class GradeNotification extends Notification {
     @Override
     public Long getRelatedEntityId() {
         return gradableEvent != null ? gradableEvent.getId() : null;
+    }
+
+    @Transient
+    @Override
+    public String getDiscriminatorValue() {
+        return "NEW_REWARD";
     }
 }
