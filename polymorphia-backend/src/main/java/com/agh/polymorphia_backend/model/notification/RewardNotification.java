@@ -13,6 +13,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @PrimaryKeyJoinColumn(name = "notification_id")
+@Table(name = "reward_notifications")
 public class RewardNotification extends Notification {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reward_id")
