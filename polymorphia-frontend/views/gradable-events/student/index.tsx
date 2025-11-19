@@ -39,12 +39,12 @@ export default function StudentView() {
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
   const isMd = useMediaQuery({ minWidth: 768 });
 
-  // TODO: if its test, we shouldnt redirect
   useEffect(() => {
     if (
       !areGradableEventsLoading &&
       gradableEvents &&
-      gradableEvents.length === 1
+      gradableEvents.length === 1 &&
+      eventType !== EventTypes.TEST
     ) {
       router.push(
         `/course/${eventType.toLowerCase()}/${eventSectionId}/${gradableEvents[0].id}`
