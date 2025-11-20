@@ -24,6 +24,13 @@ import useSubmissionsUpdate from "@/hooks/course/useSubmissionsUpdate";
 import useSubmissionRequirements from "@/hooks/course/useSubmissionRequirements";
 import useCriteria from "@/hooks/course/useCriteria";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
+import {
+  DEFAULT_SEARCH_BY,
+  DEFAULT_SORT_BY,
+  DEFAULT_SORT_ORDER_ASC,
+  DEFAULT_GROUPS,
+  DEFAULT_GRADE_STATUS,
+} from "@/shared/filter-defaults";
 
 export const GradingContext = createContext<
   GradingContextInterface | undefined
@@ -41,27 +48,31 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
 
   const filters = useFilters<GradingFilterId>(filterConfigs ?? []);
   const searchBy = useMemo(
-    () => filters.getAppliedFilterValues("searchBy") ?? ["studentName"],
+    () => filters.getAppliedFilterValues("searchBy") ?? DEFAULT_SEARCH_BY,
     [filters]
   );
   const sortBy = useMemo(
-    () => filters.getAppliedFilterValues("sortBy") ?? ["total"],
+    () => filters.getAppliedFilterValues("sortBy") ?? DEFAULT_SORT_BY,
     [filters]
   );
   const sortOrder = useMemo(
-    () => filters.getAppliedFilterValues("sortOrder") ?? ["asc"],
+    () => filters.getAppliedFilterValues("sortOrder") ?? DEFAULT_SORT_ORDER_ASC,
     [filters]
   );
   const groups = useMemo(
-    () => filters.getAppliedFilterValues("groups") ?? ["all"],
+    () => filters.getAppliedFilterValues("groups") ?? DEFAULT_GROUPS,
     [filters]
   );
   const gradeStatus = useMemo(
-    () => filters.getAppliedFilterValues("gradeStatus") ?? ["all"],
+    () => filters.getAppliedFilterValues("gradeStatus") ?? DEFAULT_GRADE_STATUS,
     [filters]
   );
 
   useEffect(() => {
+    if (isFiltersLoading || !filterConfigs) {
+      return;
+    }
+
     applyFiltersCallback({
       searchBy,
       sortBy: sortBy.map((value) => (value === "name" ? searchBy[0] : value)),
@@ -69,7 +80,16 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
       groups,
       gradeStatus,
     });
-  }, [sortBy, sortOrder, groups, gradeStatus, applyFiltersCallback, searchBy]);
+  }, [
+    sortBy,
+    sortOrder,
+    groups,
+    gradeStatus,
+    applyFiltersCallback,
+    searchBy,
+    isFiltersLoading,
+    filterConfigs,
+  ]);
 
   const {
     data: criteria,
