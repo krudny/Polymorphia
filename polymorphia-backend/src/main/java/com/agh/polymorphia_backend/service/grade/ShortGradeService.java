@@ -18,14 +18,15 @@ import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
 import com.agh.polymorphia_backend.service.project.ProjectService;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor

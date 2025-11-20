@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.model.course.reward.chest;
+package com.agh.polymorphia_backend.model.reward.chest;
 
 public enum ChestFilterEnum {
     ALL,

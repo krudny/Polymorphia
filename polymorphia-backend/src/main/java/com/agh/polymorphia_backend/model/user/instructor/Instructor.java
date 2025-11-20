@@ -1,6 +1,5 @@
 package com.agh.polymorphia_backend.model.user.instructor;
 
-import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.TeachingRoleUser;
 import com.agh.polymorphia_backend.model.user.UserType;
 import jakarta.persistence.Entity;

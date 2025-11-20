@@ -7,6 +7,7 @@ import com.agh.polymorphia_backend.model.reward.Reward;
 import com.agh.polymorphia_backend.model.reward.assigned.AssignedChest;
 import com.agh.polymorphia_backend.model.reward.assigned.AssignedItem;
 import com.agh.polymorphia_backend.model.reward.assigned.AssignedReward;
+import com.agh.polymorphia_backend.model.reward.chest.ChestFilterEnum;
 import com.agh.polymorphia_backend.model.reward.item.FlatBonusItemBehavior;
 import com.agh.polymorphia_backend.model.reward.item.ItemType;
 import com.agh.polymorphia_backend.model.user.student.Animal;

@@ -13,6 +13,7 @@ import com.agh.polymorphia_backend.model.reward.assigned.AssignedChest;
 import com.agh.polymorphia_backend.model.reward.assigned.AssignedItem;
 import com.agh.polymorphia_backend.model.reward.assigned.AssignedReward;
 import com.agh.polymorphia_backend.model.reward.chest.ChestBehavior;
+import com.agh.polymorphia_backend.model.reward.chest.ChestFilterEnum;
 import com.agh.polymorphia_backend.repository.reward.ChestRepository;
 import com.agh.polymorphia_backend.repository.reward.ItemRepository;
 import com.agh.polymorphia_backend.service.mapper.AssignedRewardMapper;

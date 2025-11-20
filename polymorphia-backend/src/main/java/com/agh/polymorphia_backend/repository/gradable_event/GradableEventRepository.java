@@ -2,8 +2,8 @@ package com.agh.polymorphia_backend.repository.gradable_event;
 
 import com.agh.polymorphia_backend.dto.response.target_list.StudentTargetDataResponseDto;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
-import com.agh.polymorphia_backend.repository.gradable_event.projections.TeachingRoleGradableEventProjection;
 import com.agh.polymorphia_backend.repository.gradable_event.projections.StudentGradableEventProjection;
+import com.agh.polymorphia_backend.repository.gradable_event.projections.TeachingRoleGradableEventProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

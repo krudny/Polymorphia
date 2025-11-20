@@ -20,7 +20,6 @@ import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
 import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
 import com.agh.polymorphia_backend.service.mapper.SubmissionMapper;
 import com.agh.polymorphia_backend.service.project.ProjectGroupService;
-import com.agh.polymorphia_backend.service.project.ProjectService;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;

@@ -1,7 +1,7 @@
-package com.agh.polymorphia_backend.repository.course.reward.assigned;
+package com.agh.polymorphia_backend.repository.reward.assigned;
 
-import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedChest;
 import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
+import com.agh.polymorphia_backend.model.reward.assigned.AssignedChest;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
