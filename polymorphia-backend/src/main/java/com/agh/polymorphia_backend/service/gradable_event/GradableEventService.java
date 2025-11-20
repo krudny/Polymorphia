@@ -28,7 +28,7 @@ import static com.agh.polymorphia_backend.service.user.UserService.INVALID_ROLE;
 @Service
 @AllArgsConstructor
 public class GradableEventService {
-    private static final String GRADABLE_EVENT_NOT_FOUND = "Wydarzenie nie istnieje";
+    private static final String GRADABLE_EVENT_NOT_FOUND = "Wydarzenie nie istnieje.";
     private final GradableEventRepository gradableEventRepository;
     private final AccessAuthorizer accessAuthorizer;
     private final UserService userService;
