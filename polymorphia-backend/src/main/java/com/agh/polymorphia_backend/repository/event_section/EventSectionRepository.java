@@ -43,7 +43,6 @@ public interface EventSectionRepository extends JpaRepository<EventSection, Long
     @Query("""
     SELECT es 
     FROM EventSection es
-    LEFT JOIN es.gradableEvents ge
     WHERE es.id = :eventSectionId
       AND (
           :userRole <> 'STUDENT'
