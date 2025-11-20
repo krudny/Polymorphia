@@ -50,12 +50,12 @@ export const CourseGroupsProvider = ({ children }: { children: ReactNode }) => {
     data: studentSummary,
     isLoading: isStudentSummaryLoading,
     isError: isStudentSummaryError,
-  } = useStudentSummary(targetId!);
+  } = useStudentSummary(targetId);
   const {
     data: lastActivities,
     isLoading: isLastActivitiesLoading,
     isError: isLastActivitiesError,
-  } = useStudentLastActivity(targetId!);
+  } = useStudentLastActivity(targetId);
 
   return (
     <CourseGroupsContext.Provider
