@@ -25,7 +25,7 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
            ge.roadMapOrderIndex as roadMapOrderIndex,
            ge.isHidden as isHidden,
            ge.isLocked as isLocked,
-           CASE WHEN COUNT(DISTINCT g.id) > 0 THEN CAST(SUM(DISTINCT cg.xp) AS BigDecimal) ELSE NULL END as gainedXp,
+           CASE WHEN COUNT(DISTINCT g.id) > 0 THEN CAST(SUM(cg.xp) AS BigDecimal) ELSE NULL END as gainedXp,
            CASE WHEN COUNT(DISTINCT cr.criterion.id) > 0 THEN true ELSE false END as hasPossibleReward,
            CASE WHEN COUNT(DISTINCT g.id) > 0 THEN true ELSE false END as isGraded,
            CASE WHEN COUNT(DISTINCT g.id) > 0 AND COUNT(DISTINCT ar.id) > 0 THEN true ELSE false END as isRewardAssigned
@@ -74,23 +74,17 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
         SELECT scga.animal_id, scga.course_group_id
         FROM students_course_groups scga
         JOIN course_groups cg ON cg.id = scga.course_group_id
+        JOIN courses co ON co.id = cg.course_id
         WHERE (
             (:roleType = 'INSTRUCTOR' AND cg.teaching_role_user_id = :roleId)
-            OR (:roleType = 'COORDINATOR' AND cg.course_id IN (
-                SELECT co.id FROM courses co WHERE co.coordinator_id = :roleId
-            ))
+            OR (:roleType = 'COORDINATOR' AND co.coordinator_id = :roleId)
         )
     ) scga ON true
     JOIN event_sections es ON ge.event_section_id = es.id
     JOIN courses co ON es.course_id = co.id
     LEFT JOIN grades g ON g.gradable_event_id = ge.id AND g.animal_id = scga.animal_id
     WHERE (
-        (:scope = 'COURSE' AND (
-            (:roleType = 'INSTRUCTOR' AND co.id = :idValue)
-            OR (:roleType = 'COORDINATOR' AND es.id IN (
-                SELECT es2.id FROM event_sections es2 WHERE es2.course_id = :idValue
-            ))
-        ))
+        (:scope = 'COURSE' AND co.id = :idValue)
         OR (:scope = 'EVENT_SECTION' AND es.id = :idValue)
     )
     AND ge.is_hidden = false

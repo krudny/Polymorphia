@@ -28,6 +28,7 @@ import static com.agh.polymorphia_backend.service.user.UserService.INVALID_ROLE;
 @Service
 @AllArgsConstructor
 public class GradableEventService {
+    private static final String GRADABLE_EVENT_NOT_FOUND = "Wydarzenie nie istnieje";
     private final GradableEventRepository gradableEventRepository;
     private final AccessAuthorizer accessAuthorizer;
     private final UserService userService;
@@ -49,7 +50,7 @@ public class GradableEventService {
                 && userRole != UserType.COORDINATOR
                 && (gradableEvent.getIsHidden()
                 || gradableEvent.getEventSection().getIsHidden())) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Wydarzenie nie istnieje");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, GRADABLE_EVENT_NOT_FOUND);
         }
 
         return gradableEvent;
@@ -119,6 +120,6 @@ public class GradableEventService {
     private GradableEvent fetchGradableEvent(Long gradableEventId) {
         return gradableEventRepository
                 .findById(gradableEventId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Wydarzenie nie istnieje"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, GRADABLE_EVENT_NOT_FOUND));
     }
 }
