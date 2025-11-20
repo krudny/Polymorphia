@@ -9,12 +9,10 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<Item, Long> {
     List<Item> findAllByCourseId(Long courseId);
 
-
     @Query("""
                 SELECT i FROM Item i
                 WHERE i.course.id = :courseId
                   AND (:excludedItemIds is null OR i.id NOT IN :excludedItemIds)
             """)
     List<Item> findAllByCourseIdAndItemIdNotIn(Long courseId, List<Long> excludedItemIds);
-
 }

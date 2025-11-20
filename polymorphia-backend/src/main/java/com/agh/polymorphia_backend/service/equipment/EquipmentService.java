@@ -45,12 +45,12 @@ public class EquipmentService {
     private final ItemRepository itemRepository;
     private final PotentialBonusXpCalculator potentialBonusXpCalculator;
 
+    // TODO: performance + sql
     public List<EquipmentItemResponseDto> getEquipmentItems(Long courseId) {
         Long animalId = animalService.validateAndGetAnimalId(courseId);
         List<AssignedItem> assignedItems = assignedRewardService.getAnimalAssignedItems(animalId);
         List<Long> assignedItemIds = getAssignedRewardsIds(assignedItems);
         List<Item> remainingCourseItems = itemRepository.findAllByCourseIdAndItemIdNotIn(courseId, assignedItemIds);
-
 
         return Stream.concat(
                         assignedRewardMapper.assignedItemsToResponseDto(assignedItems).stream()
@@ -61,9 +61,10 @@ public class EquipmentService {
                 .toList();
     }
 
+    // TODO: performance + sql
     public List<EquipmentChestResponseDto> getEquipmentChests(Long courseId) {
         Long animalId = animalService.validateAndGetAnimalId(courseId);
-        List<AssignedChest> assignedChests = assignedRewardService.getAnimalAssignedChests(animalId);
+        List<AssignedChest> assignedChests = assignedRewardService.getAnimalAssignedChests(animalId, ChestFilterEnum.ALL);
         List<Long> assignedChestIds = getAssignedRewardsIds(assignedChests);
         List<Chest> remainingCourseChests = chestRepository.findAllByCourseIdAndChestIdNotIn(courseId, assignedChestIds);
         List<EquipmentChestResponseDto> assignedChestsResponse = assignedRewardMapper.assignedChestsToResponseDto(assignedChests);
@@ -79,10 +80,9 @@ public class EquipmentService {
                 .toList();
     }
 
-
     public ChestPotentialXpResponseDtoWithType getPotentialXpForChest(Long courseId, Long assignedChestId) {
         Long animalId = animalService.validateAndGetAnimalId(courseId);
-        AssignedChest assignedChest = assignedRewardService.getAssignedChestByIdAndAnimalId(
+        AssignedChest assignedChest = assignedRewardService.getAssignedChestByIdAndAnimalIdWithoutLock(
                 assignedChestId,
                 animalId
         );
@@ -98,7 +98,7 @@ public class EquipmentService {
     @Transactional
     public void openChest(Long courseId, EquipmentChestOpenRequestDto requestDto) {
         Long animalId = animalService.validateAndGetAnimalId(courseId);
-        AssignedChest assignedChest = assignedRewardService.getAssignedChestByIdAndAnimalId(
+        AssignedChest assignedChest = assignedRewardService.getAssignedChestByIdAndAnimalIdWithLock(
                 requestDto.getAssignedChestId(),
                 animalId
         );
@@ -119,7 +119,6 @@ public class EquipmentService {
         assignedRewardService.saveAssignedItems(assignedItems);
         bonusXpCalculator.updateAnimalFlatBonusXp(animalId);
         bonusXpCalculator.updateAnimalPercentageBonusXp(animalId);
-
     }
 
     private List<Long> getAssignedRewardsIds(List<? extends AssignedReward> assignedRewards) {
@@ -129,7 +128,7 @@ public class EquipmentService {
     }
 
     private List<AssignedItem> createAssignedItemsFromRequest(EquipmentChestOpenRequestDto requestDto, AssignedChest assignedChest, ZonedDateTime openDate) {
-       Chest chest=(Chest) Hibernate.unproxy(assignedChest.getReward());
+        Chest chest=(Chest) Hibernate.unproxy(assignedChest.getReward());
         if (requestDto.getItemId() == null) {
             List<AssignedItem> assignedItems = createNewAssignedItemsFromChest(chest, assignedChest, openDate);
 
