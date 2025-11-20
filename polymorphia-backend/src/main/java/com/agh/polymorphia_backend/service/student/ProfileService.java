@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.service.student;
 
 import com.agh.polymorphia_backend.dto.request.hall_of_fame.HallOfFameRequestDto;
+import com.agh.polymorphia_backend.dto.response.profile.BaseProfileResponseDto;
 import com.agh.polymorphia_backend.dto.response.profile.EvolutionStageThresholdResponseDto;
 import com.agh.polymorphia_backend.dto.response.profile.ProfileResponseDto;
 import com.agh.polymorphia_backend.dto.response.profile.StudentSummaryResponseDto;
@@ -9,6 +10,7 @@ import com.agh.polymorphia_backend.model.course.EvolutionStage;
 import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry;
 import com.agh.polymorphia_backend.model.hall_of_fame.SearchBy;
 import com.agh.polymorphia_backend.model.user.User;
+import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.course.EvolutionStagesRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
@@ -36,37 +38,33 @@ public class ProfileService {
     private final EvolutionStagesRepository evolutionStagesRepository;
     private final ProfileMapper profileMapper;
 
-    public ProfileResponseDto getProfile(Long courseId) {
-        accessAuthorizer.authorizeCourseAccess(courseId);
-        User user = userService.getCurrentUser().getUser();
-
-        HallOfFameEntry hallOfFameEntry = hallOfFameService.getStudentHallOfFame(user.getId(), courseId);
-        List<EvolutionStageThresholdResponseDto> evolutionStages = getEvolutionStages(courseId);
-        int evolutionStageId = getCurrentEvolutionStageId(evolutionStages, hallOfFameEntry);
-
-        return ProfileResponseDto.builder()
-                .evolutionStageThresholds(evolutionStages)
-                .leftEvolutionStage(getLeftEvolutionStage(evolutionStages, evolutionStageId))
-                .rightEvolutionStage(getRightEvolutionStage(evolutionStages, evolutionStageId))
-                .totalXp(NumberFormatter.formatToBigDecimal(hallOfFameEntry.getTotalXpSum()))
-                .totalStudentsInCourse(getTotalStudentsInCourse(courseId))
-                .xpDetails(getXpDetails(user, courseId, hallOfFameEntry))
-                .build();
-    }
-
-    public StudentSummaryResponseDto getStudentSummary(Long courseId, Long studentId) {
+    public BaseProfileResponseDto getProfile(Long courseId, Optional<Long> studentIdOptional) {
+        User currentUser = userService.getCurrentUser().getUser();
+        Long studentId = studentIdOptional.orElse(currentUser.getId());
         accessAuthorizer.authorizeStudentDataAccess(courseId, studentId);
+
         HallOfFameEntry hallOfFameEntry = hallOfFameService.getStudentHallOfFame(studentId, courseId);
         List<EvolutionStageThresholdResponseDto> evolutionStages = getEvolutionStages(courseId);
         int evolutionStageId = getCurrentEvolutionStageId(evolutionStages, hallOfFameEntry);
 
-        return StudentSummaryResponseDto.builder()
+        BaseProfileResponseDto.BaseProfileResponseDtoBuilder builder;
+
+        if (UserType.STUDENT.equals(userService.getCurrentUserRole())) {
+            builder = ProfileResponseDto.builder()
+                    .evolutionStageThresholds(evolutionStages)
+                    .totalXp(NumberFormatter.formatToBigDecimal(hallOfFameEntry.getTotalXpSum()))
+                    .xpDetails(getXpDetails(currentUser, courseId, hallOfFameEntry));
+        } else {
+            builder = StudentSummaryResponseDto.builder()
+                    .studentName(hallOfFameEntry.getStudentName())
+                    .animalName(hallOfFameEntry.getAnimalName())
+                    .position(hallOfFameEntry.getPosition());
+        }
+
+        return builder
                 .totalStudentsInCourse(getTotalStudentsInCourse(courseId))
                 .leftEvolutionStage(getLeftEvolutionStage(evolutionStages, evolutionStageId))
                 .rightEvolutionStage(getRightEvolutionStage(evolutionStages, evolutionStageId))
-                .studentName(hallOfFameEntry.getStudentName())
-                .animalName(hallOfFameEntry.getAnimalName())
-                .position(hallOfFameEntry.getPosition())
                 .build();
     }
 

@@ -2,11 +2,15 @@ package com.agh.polymorphia_backend.dto.response.profile;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
-@Builder
-@Getter
-public class StudentSummaryResponseDto {
+@EqualsAndHashCode(callSuper = true)
+@SuperBuilder
+@Data
+public class StudentSummaryResponseDto extends BaseProfileResponseDto {
     @NotNull
     private String studentName;
 
@@ -15,15 +19,6 @@ public class StudentSummaryResponseDto {
 
     @NotNull
     private String imageUrl;
-
-    @NotNull
-    private EvolutionStageThresholdResponseDto leftEvolutionStage;
-
-    @NotNull
-    private EvolutionStageThresholdResponseDto rightEvolutionStage;
-
-    @NotNull
-    private Long totalStudentsInCourse;
 
     @NotNull
     private Integer position;
