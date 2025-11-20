@@ -2,9 +2,9 @@ package com.agh.polymorphia_backend.service.mapper;
 
 import com.agh.polymorphia_backend.dto.response.knowledge_base.KnowledgeBaseResponseDto;
 import com.agh.polymorphia_backend.dto.response.knowledge_base.KnowledgeBaseType;
-import com.agh.polymorphia_backend.model.course.EvolutionStage;
-import com.agh.polymorphia_backend.model.course.reward.*;
-import com.agh.polymorphia_backend.model.course.reward.item.ItemType;
+import com.agh.polymorphia_backend.model.reward.*;
+import com.agh.polymorphia_backend.model.reward.item.ItemType;
+import com.agh.polymorphia_backend.model.user.student.EvolutionStage;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

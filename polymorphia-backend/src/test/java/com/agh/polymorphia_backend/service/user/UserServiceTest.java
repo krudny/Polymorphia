@@ -3,6 +3,8 @@ package com.agh.polymorphia_backend.service.user;
 import com.agh.polymorphia_backend.BaseTest;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.user.*;
+import com.agh.polymorphia_backend.model.user.student.Student;
+import com.agh.polymorphia_backend.model.user.undefined.UndefinedUser;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.repository.user.role.StudentRepository;

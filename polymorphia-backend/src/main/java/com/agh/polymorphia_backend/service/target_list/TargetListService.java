@@ -5,11 +5,7 @@ import com.agh.polymorphia_backend.dto.request.target_list.CourseGroupsTargetLis
 import com.agh.polymorphia_backend.dto.request.target_list.GradeStatus;
 import com.agh.polymorphia_backend.dto.request.target_list.GradingTargetListRequestDto;
 import com.agh.polymorphia_backend.dto.response.grade.StudentShortGradeResponseDto;
-import com.agh.polymorphia_backend.dto.response.target_list.GroupTargetType;
-import com.agh.polymorphia_backend.dto.response.target_list.StudentGroupTargetResponseDto;
-import com.agh.polymorphia_backend.dto.response.target_list.StudentTargetDataResponseDto;
-import com.agh.polymorphia_backend.dto.response.target_list.StudentTargetResponseDto;
-import com.agh.polymorphia_backend.dto.response.target_list.TargetResponseDto;
+import com.agh.polymorphia_backend.dto.response.target_list.*;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.course.CourseGroup;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
@@ -22,22 +18,22 @@ import com.agh.polymorphia_backend.repository.project.ProjectGroupRepository;
 import com.agh.polymorphia_backend.repository.project.ProjectTargetDataView;
 import com.agh.polymorphia_backend.service.course_groups.CourseGroupsService;
 import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
-import com.agh.polymorphia_backend.service.gradable_event.ShortGradeService;
+import com.agh.polymorphia_backend.service.grade.ShortGradeService;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
 import com.agh.polymorphia_backend.service.hall_of_fame.OverviewFieldSort;
 import com.agh.polymorphia_backend.service.mapper.TargetListMapper;
-import com.agh.polymorphia_backend.service.project.ProjectService;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
+import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
@@ -49,7 +45,6 @@ public class TargetListService {
     private final UserService userService;
     private final HallOfFameService hallOfFameService;
     private final TargetListMapper targetListMapper;
-    private final ProjectService projectService;
     private final ShortGradeService shortGradeService;
     private final GradableEventRepository gradableEventRepository;
     private final ProjectGroupRepository projectGroupRepository;

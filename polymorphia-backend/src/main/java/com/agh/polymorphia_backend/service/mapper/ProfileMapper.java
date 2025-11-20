@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.service.mapper;
 
 import com.agh.polymorphia_backend.dto.response.profile.EvolutionStageThresholdResponseDto;
-import com.agh.polymorphia_backend.model.course.EvolutionStage;
+import com.agh.polymorphia_backend.model.user.student.EvolutionStage;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

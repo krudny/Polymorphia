@@ -1,0 +1,26 @@
+package com.agh.polymorphia_backend.model.user.instructor;
+
+import com.agh.polymorphia_backend.model.user.TeachingRoleUser;
+import com.agh.polymorphia_backend.model.user.UserType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Collection;
+import java.util.List;
+
+@Entity
+@SuperBuilder
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+@Table(name = "instructors")
+public class Instructor extends TeachingRoleUser {
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(UserType.INSTRUCTOR);
+    }
+}

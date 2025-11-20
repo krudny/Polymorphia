@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.model.course;
 
-import com.agh.polymorphia_backend.model.user.Student;
+import com.agh.polymorphia_backend.model.user.student.Animal;
+import com.agh.polymorphia_backend.model.user.student.Student;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;

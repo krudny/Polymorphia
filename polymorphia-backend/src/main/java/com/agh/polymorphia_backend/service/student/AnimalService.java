@@ -1,12 +1,12 @@
 package com.agh.polymorphia_backend.service.student;
 
 import com.agh.polymorphia_backend.dto.request.student.CreateAnimalRequestDto;
-import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.StudentCourseGroupAssignment;
 import com.agh.polymorphia_backend.model.course.StudentCourseGroupAssignmentId;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
-import com.agh.polymorphia_backend.model.user.Student;
 import com.agh.polymorphia_backend.model.user.User;
+import com.agh.polymorphia_backend.model.user.student.Animal;
+import com.agh.polymorphia_backend.model.user.student.Student;
 import com.agh.polymorphia_backend.repository.course.AnimalRepository;
 import com.agh.polymorphia_backend.repository.course.StudentCourseGroupRepository;
 import com.agh.polymorphia_backend.repository.user.role.StudentRepository;

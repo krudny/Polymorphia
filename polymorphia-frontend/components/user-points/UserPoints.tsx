@@ -1,6 +1,7 @@
 import { tv } from "tailwind-variants";
 import { UserPointsProps } from "@/components/user-points/types";
 import "./index.css";
+import { Sizes } from "@/interfaces/general";
 
 const headerVariant = tv({
   base: "transition-all",
@@ -21,7 +22,7 @@ const headerVariant = tv({
 export default function UserPoints({
   separators = false,
   titleSize = "md",
-  xpSize = "xl",
+  xpSize = Sizes.XL,
   xpDetails,
 }: UserPointsProps) {
   const items = Object.entries(xpDetails);
