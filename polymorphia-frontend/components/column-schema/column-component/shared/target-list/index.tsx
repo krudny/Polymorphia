@@ -47,7 +47,7 @@ export default function TargetList() {
                       selectedTarget
                     );
                     const color = isSelected
-                      ? student.gainedXp
+                      ? student.gainedXp !== null
                         ? "green"
                         : "sky"
                       : "gray";

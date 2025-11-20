@@ -51,9 +51,7 @@ public class AssignedRewardService {
     }
 
     public List<AssignedItem> getAnimalAssignedItemsWithoutCriterionItems(Long animalId, Long criterionId) {
-        return getAnimalAssignedItems(animalId).stream()
-                .filter(i -> !i.getCriterionGrade().getCriterion().getId().equals(criterionId))
-                .toList();
+        return assignedItemRepository.findAnimalAssignedItemsWithoutCriterionItems(animalId, criterionId);
     }
 
     public Map<FlatBonusItemBehavior, List<AssignedItem>> groupFlatBonusItemsByBehavior(List<AssignedItem> assignedItems) {

@@ -1,9 +1,11 @@
 package com.agh.polymorphia_backend.dto.request.grade;
 
 import com.agh.polymorphia_backend.dto.request.reward.ShortAssignedRewardRequestDto;
+import com.agh.polymorphia_backend.util.BigDecimalDefaultZeroDeserializer;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -18,6 +20,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode
 public class CriterionGradeRequestDto {
+    @JsonDeserialize(using = BigDecimalDefaultZeroDeserializer.class)
     private BigDecimal gainedXp;
 
     @Builder.Default

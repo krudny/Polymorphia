@@ -25,32 +25,30 @@ export const GradingReducer = (
     case GradingReducerActions.SET_GRADE:
       const { gradeResponse } = action.payload.grade;
       const criteria = action.payload.criteria;
-      if (!gradeResponse.isGraded) {
-        return {
-          ...state,
-          comment: "",
-          criteria: {},
-        };
-      }
-
-      const criteriaMap = gradeResponse.criteria.reduce(
+      const criteriaMap = criteria.reduce(
         (acc, criterion) => {
-          acc[criterion.criterionId] = {
-            gainedXp: criterion.gainedXp,
-            assignedRewards: criterion.assignedRewards,
+          acc[criterion.id] = {
+            gainedXp: "",
+            assignedRewards: [],
           };
           return acc;
         },
         {} as Record<number, CriteriaDetailsRequestDTO>
       );
 
-      criteria.forEach((criterion) => {
-        if (!(criterion.id in criteriaMap)) {
-          criteriaMap[criterion.id] = {
-            gainedXp: "0.0",
-            assignedRewards: [],
-          };
-        }
+      if (!gradeResponse.isGraded) {
+        return {
+          ...state,
+          comment: "",
+          criteria: criteriaMap,
+        };
+      }
+
+      gradeResponse.criteria.forEach((criterion) => {
+        criteriaMap[criterion.criterionId] = {
+          gainedXp: criterion.gainedXp,
+          assignedRewards: criterion.assignedRewards,
+        };
       });
 
       return {

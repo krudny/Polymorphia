@@ -97,7 +97,7 @@ public class GradingService {
                             BigDecimal gainedXp =
                                     Optional.ofNullable(request.getCriteria().get(criterion.getId()))
                                             .map(CriterionGradeRequestDto::getGainedXp)
-                                            .orElse(BigDecimal.ZERO);
+                                            .orElse(BigDecimal.valueOf(0.0));
 
                             return criterionGradeService.fetchOrCreateCriterionGrade(
                                     criterion.getId(),

@@ -52,7 +52,7 @@ public class TestGradingCSVProcessor {
                 .getCriteria();
 
         if (gradableEventCriteria.size() != 1) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Import csv ocen można wykonać tylko dla wydarzeń o jednym kryterium.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Import CSV ocen można wykonać tylko dla wydarzeń o jednym kryterium.");
         }
 
         Long criterionId = gradableEventCriteria.getFirst().getId();
