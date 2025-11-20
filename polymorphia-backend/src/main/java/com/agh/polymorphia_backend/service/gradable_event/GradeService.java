@@ -29,10 +29,10 @@ public class GradeService {
         return gradeRepository.findAllByAnimalIdAndGradableEventId(animalId, gradableEventId);
     }
 
-    public List<StudentActivityResponseDto> getStudentsActivity(Long studentId, Long courseId) {
+    public List<StudentActivityResponseDto> getStudentActivity(Long studentId, Long courseId) {
         accessAuthorizer.authorizeStudentDataAccess(courseId, studentId);
         Long animalId = animalService.getAnimal(studentId, courseId).getId();
-        List<StudentActivityProjection> projections = gradeRepository.findStudentsActivity(animalId);
+        List<StudentActivityProjection> projections = gradeRepository.findStudentActivity(animalId);
         return projections.stream()
                 .map(studentDetailsMapper::studentActivityProjectionToDto)
                 .toList();

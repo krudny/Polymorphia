@@ -11,7 +11,7 @@ export default function useStudentItems(
 ): UseStudentItems {
   const { courseId } = useUserDetails();
   const { userRole } = useUserContext();
-  const { data, isLoading, isError, refetch } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["studentItems", userId],
     queryFn: () => CourseGroupsService.getStudentItems(courseId, userId!),
     refetchOnWindowFocus: false,
@@ -20,5 +20,5 @@ export default function useStudentItems(
       (userRole === Roles.INSTRUCTOR || userRole === Roles.COORDINATOR),
   });
 
-  return { data, isLoading, isError, refetch };
+  return { data, isLoading, isError };
 }

@@ -34,14 +34,14 @@ public class StudentController {
 
     @GetMapping("/{studentId}/profile")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
-    public ResponseEntity<BaseProfileResponseDto> getStudentsProfile(@RequestParam Long courseId, @PathVariable("studentId") Long studentId) {
+    public ResponseEntity<BaseProfileResponseDto> getStudentProfile(@RequestParam Long courseId, @PathVariable("studentId") Long studentId) {
         return ResponseEntity.ok(profileService.getProfile(courseId, Optional.of(studentId)));
     }
 
     @GetMapping("/{studentId}/activity")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<List<StudentActivityResponseDto>> getStudentActivity(@PathVariable Long studentId, @RequestParam Long courseId) {
-        return ResponseEntity.ok(gradeService.getStudentsActivity(studentId, courseId));
+        return ResponseEntity.ok(gradeService.getStudentActivity(studentId, courseId));
     }
 
     @GetMapping("/course-group")

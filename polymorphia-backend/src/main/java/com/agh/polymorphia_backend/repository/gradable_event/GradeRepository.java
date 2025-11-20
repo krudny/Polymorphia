@@ -37,5 +37,5 @@ where animal_id = :animalId
 group by ge.id, ge.name , g.modified_date, g.animal_id, cg.xp
 order by g.modified_date desc
     """, nativeQuery = true)
-    List<StudentActivityProjection> findStudentsActivity(Long animalId);
+    List<StudentActivityProjection> findStudentActivity(Long animalId);
 }

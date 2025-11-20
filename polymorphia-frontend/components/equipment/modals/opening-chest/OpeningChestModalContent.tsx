@@ -23,7 +23,6 @@ import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
 import { Roles } from "@/interfaces/api/user";
 import useStudentChests from "@/hooks/course/useStudentChests";
-import useStudentItems from "@/hooks/course/useStudentItems";
 
 export default function OpeningChestModalContent({
   equipment,
@@ -51,7 +50,6 @@ export default function OpeningChestModalContent({
     equipment.base.chestItems?.every((item) => item.isLimitReached) ?? false;
   const targetId = targetStudentIdOverride ?? null;
   const { refetch: refetchChests } = useStudentChests(targetId);
-  const { refetch: refetchItems } = useStudentItems(targetId);
 
   useEffect(() => {
     if (!chestPotentialXp) {
@@ -142,9 +140,15 @@ export default function OpeningChestModalContent({
       null;
 
     if (updatedChest) {
-      if (targetId) {
-        await refetchItems();
-      }
+      await queryClient.invalidateQueries({
+        queryKey: ["studentItems", targetId],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ["studentSummary", targetId],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ["courseGroupTargets"],
+      });
       dispatch({
         type: EquipmentActions.SHOW_CHEST_MODAL,
         payload: updatedChest,

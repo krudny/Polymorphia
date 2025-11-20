@@ -22,7 +22,8 @@ export default function GradeModal({
   const { gradableEventId } = useEventParams();
   const { id } = useUserDetails();
   const { userRole } = useUserContext();
-  const targetId = userRole === Roles.STUDENT ? id : targetStudentIdOverride;
+  const targetId =
+    targetStudentIdOverride ?? (userRole === Roles.STUDENT ? id : null);
   if (!targetId) {
     throw new Error("[GradeModal] invalid targetId");
   }
