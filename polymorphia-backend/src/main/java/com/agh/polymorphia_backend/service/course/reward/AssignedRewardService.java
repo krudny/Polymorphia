@@ -73,9 +73,9 @@ public class AssignedRewardService {
         return totalBonusByEventSection;
     }
 
-    public AssignedChest getAssignedChest(Long assignedChestId) {
+    public AssignedChest getUnopenedAssignedChest(Long assignedChestId) {
         return assignedChestRepository.findNotUsedAssignedChestsById(assignedChestId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nie znaleziono przypisanej skrzynki."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nie znaleziono nieotwartej skrzynki, przypisanej do zwierzaka, o podanym ID."));
     }
 
     public AssignedItem createAssignedItem(AssignedChest assignedChest, Item item, ZonedDateTime openDate) {

@@ -10,7 +10,7 @@ import XPCard from "@/components/xp-card/XPCard";
 import { useQueryClient } from "@tanstack/react-query";
 import usePotentialXp from "@/hooks/course/usePotentialXp";
 import Loading from "@/components/loading";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import XPCardImageWithLock from "@/components/xp-card/components/XPCardImageLocked";
 import { useMediaQuery } from "react-responsive";
 import clsx from "clsx";
@@ -23,11 +23,11 @@ import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
 import { Roles } from "@/interfaces/api/user";
 import useStudentChests from "@/hooks/course/useStudentChests";
-import { TargetContext } from "@/providers/target";
 import useStudentItems from "@/hooks/course/useStudentItems";
 
 export default function OpeningChestModalContent({
   equipment,
+  targetStudentIdOverride,
 }: Omit<OpeningChestModalProps, "onClose">) {
   const { closeModal } = useModalContext();
   const { state, dispatch } = useEquipmentContext();
@@ -48,9 +48,7 @@ export default function OpeningChestModalContent({
   const isSm = useMediaQuery({ maxWidth: 768 });
   const areAllItemsOverLimit =
     equipment.base.chestItems?.every((item) => item.isLimitReached) ?? false;
-  // not using useTargetContext() - if we're in target context we're using it to fetch data for a particular student, otherwise we're using currently logged student's data
-  const target = useContext(TargetContext);
-  const targetId = target?.targetId ?? null;
+  const targetId = targetStudentIdOverride ?? null;
   const { refetch: refetchChests } = useStudentChests(targetId);
   const { refetch: refetchItems } = useStudentItems(targetId);
 
@@ -143,7 +141,7 @@ export default function OpeningChestModalContent({
       null;
 
     if (updatedChest) {
-      if (target) {
+      if (targetId) {
         await refetchItems();
       }
       dispatch({

@@ -13,18 +13,16 @@ import { GradeModalProps } from "@/components/speed-dial/modals/grade/types";
 import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
 import { Roles } from "@/interfaces/api/user";
-import { useContext } from "react";
-import { TargetContext } from "@/providers/target";
 
 export default function GradeModal({
   onClosedAction,
   gradableEventIdProp,
+  targetStudentIdOverride,
 }: GradeModalProps) {
   const { gradableEventId } = useEventParams();
   const { id } = useUserDetails();
   const { userRole } = useUserContext();
-  const targetContext = useContext(TargetContext); // TODO: I know, I know
-  const targetId = userRole === Roles.STUDENT ? id : targetContext?.targetId;
+  const targetId = userRole === Roles.STUDENT ? id : targetStudentIdOverride;
   if (!targetId) {
     throw new Error("[GradeModal] invalid targetId");
   }

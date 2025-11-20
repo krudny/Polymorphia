@@ -2,7 +2,6 @@ package com.agh.polymorphia_backend.repository.gradable_event;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 public interface StudentActivityProjection {
     Long getId();

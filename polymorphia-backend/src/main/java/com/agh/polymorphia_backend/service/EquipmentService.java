@@ -99,7 +99,7 @@ public class EquipmentService {
 
     public ChestPotentialXpResponseDtoWithType getPotentialXpForChest(Long courseId, Long assignedChestId) {
         Long animalId = animalService.getAnimalIdForAssignedChest(assignedChestId);
-        AssignedChest assignedChest = assignedRewardService.getAssignedChest(assignedChestId);
+        AssignedChest assignedChest = assignedRewardService.getUnopenedAssignedChest(assignedChestId);
         validatePermissions(courseId, animalId);
 
         Chest chest = (Chest) Hibernate.unproxy(assignedChest.getReward());
@@ -113,7 +113,7 @@ public class EquipmentService {
     @Transactional
     public void openChest(Long courseId, EquipmentChestOpenRequestDto requestDto) {
         Long animalId = animalService.getAnimalIdForAssignedChest(requestDto.getAssignedChestId());
-        AssignedChest assignedChest = assignedRewardService.getAssignedChest(requestDto.getAssignedChestId());
+        AssignedChest assignedChest = assignedRewardService.getUnopenedAssignedChest(requestDto.getAssignedChestId());
         validatePermissions(courseId, animalId);
 
         ZonedDateTime openDate = ZonedDateTime.now();
