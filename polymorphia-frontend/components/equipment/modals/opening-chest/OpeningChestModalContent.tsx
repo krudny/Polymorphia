@@ -46,6 +46,7 @@ export default function OpeningChestModalContent({
   } = usePotentialXp(equipment.details.id);
   const { userRole } = useUserContext();
   const isSm = useMediaQuery({ maxWidth: 768 });
+
   const areAllItemsOverLimit =
     equipment.base.chestItems?.every((item) => item.isLimitReached) ?? false;
   const targetId = targetStudentIdOverride ?? null;
@@ -233,9 +234,10 @@ export default function OpeningChestModalContent({
           className="w-full rounded-xl"
           onClick={handleModalSubmit}
           isActive={
-            state.pickedItemId !== null ||
-            areAllItemsOverLimit ||
-            equipment.base.behavior == ChestBehaviors.ALL
+            !pickChestItemsMutation.isPending &&
+            (state.pickedItemId !== null ||
+              areAllItemsOverLimit ||
+              equipment.base.behavior == ChestBehaviors.ALL)
           }
         />
       </div>

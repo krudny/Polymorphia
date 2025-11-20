@@ -6,6 +6,7 @@ import com.agh.polymorphia_backend.model.course.reward.Reward;
 import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedChest;
 import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedItem;
 import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedReward;
+import com.agh.polymorphia_backend.model.course.reward.chest.ChestFilterEnum;
 import com.agh.polymorphia_backend.model.course.reward.item.FlatBonusItemBehavior;
 import com.agh.polymorphia_backend.model.course.reward.item.ItemType;
 import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
@@ -35,8 +36,10 @@ public class AssignedRewardService {
     private final AssignedChestRepository assignedChestRepository;
     private final AssignedItemRepository assignedItemRepository;
 
-    public List<AssignedChest> getAnimalAssignedChests(Long animalId) {
-        return assignedChestRepository.findAnimalAssignedChests(animalId);
+    private static final String UNOPENED_ASSIGNED_CHEST_NOT_FOUND = "Nie znaleziono nieotwartej skrzynki, przypisanej do zwierzaka, o podanym ID.";
+
+    public List<AssignedChest> getAnimalAssignedChests(Long animalId, ChestFilterEnum chestFilter) {
+        return assignedChestRepository.findAnimalAssignedChests(animalId, chestFilter.toString());
     }
 
     public List<AssignedItem> getAnimalAssignedItems(Long animalId) {
@@ -73,9 +76,22 @@ public class AssignedRewardService {
         return totalBonusByEventSection;
     }
 
-    public AssignedChest getUnopenedAssignedChest(Long assignedChestId) {
-        return assignedChestRepository.findNotUsedAssignedChestsById(assignedChestId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nie znaleziono nieotwartej skrzynki, przypisanej do zwierzaka, o podanym ID."));
+    public AssignedChest getUnopenedAssignedChestByIdWithoutLock(Long assignedChestId) {
+        return assignedChestRepository
+                .findNotUsedAssignedChestsById(assignedChestId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        UNOPENED_ASSIGNED_CHEST_NOT_FOUND
+                ));
+    }
+
+    public AssignedChest getUnopenedAssignedChestByIdWithLock(Long assignedChestId) {
+        return assignedChestRepository
+                .findNotUsedAssignedChestsByIdWithLock(assignedChestId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        UNOPENED_ASSIGNED_CHEST_NOT_FOUND
+                ));
     }
 
     public AssignedItem createAssignedItem(AssignedChest assignedChest, Item item, ZonedDateTime openDate) {
@@ -147,9 +163,7 @@ public class AssignedRewardService {
     }
 
     public List<AssignedItem> getAnimalEventSectionAssignedItems(Long animalId, Long eventSectionId) {
-        List<AssignedChest> openedChests = getAnimalAssignedChests(animalId).stream()
-                .filter(AssignedReward::getIsUsed)
-                .toList();
+        List<AssignedChest> openedChests = getAnimalAssignedChests(animalId, ChestFilterEnum.USED);
 
         return openedChests.stream()
                 .flatMap(chest -> chest.getAssignedItems().stream())

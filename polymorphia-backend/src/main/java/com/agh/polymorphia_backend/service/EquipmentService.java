@@ -14,6 +14,9 @@ import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedItem;
 import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedReward;
 import com.agh.polymorphia_backend.model.course.reward.chest.ChestBehavior;
 import com.agh.polymorphia_backend.model.user.UserType;
+import com.agh.polymorphia_backend.model.course.reward.chest.ChestFilterEnum;
+import com.agh.polymorphia_backend.model.course.reward.chest.ChestFilterEnum;
+import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.course.reward.ChestRepository;
 import com.agh.polymorphia_backend.repository.course.reward.ItemRepository;
 import com.agh.polymorphia_backend.service.course.reward.AssignedRewardService;
@@ -52,12 +55,12 @@ public class EquipmentService {
     private final ItemRepository itemRepository;
     private final PotentialBonusXpCalculator potentialBonusXpCalculator;
 
+    // TODO: performance + sql
     public List<EquipmentItemResponseDto> getEquipmentItems(Long courseId, Optional<Long> studentId) {
         Long animalId = getAnimalIdAndValidatePermissions(courseId, studentId);
         List<AssignedItem> assignedItems = assignedRewardService.getAnimalAssignedItems(animalId);
         List<Long> assignedItemIds = getAssignedRewardsIds(assignedItems);
         List<Item> remainingCourseItems = itemRepository.findAllByCourseIdAndItemIdNotIn(courseId, assignedItemIds);
-
 
         return Stream.concat(
                         assignedRewardMapper.assignedItemsToResponseDto(assignedItems, animalId).stream()
@@ -68,9 +71,10 @@ public class EquipmentService {
                 .toList();
     }
 
+    // TODO: performance + sql
     public List<EquipmentChestResponseDto> getEquipmentChests(Long courseId, Optional<Long> studentId) {
         Long animalId = getAnimalIdAndValidatePermissions(courseId, studentId);
-        List<AssignedChest> assignedChests = assignedRewardService.getAnimalAssignedChests(animalId);
+        List<AssignedChest> assignedChests = assignedRewardService.getAnimalAssignedChests(animalId, ChestFilterEnum.ALL);
         List<Long> assignedChestIds = getAssignedRewardsIds(assignedChests);
         List<Chest> remainingCourseChests = chestRepository.findAllByCourseIdAndChestIdNotIn(courseId, assignedChestIds);
         List<EquipmentChestResponseDto> assignedChestsResponse = assignedRewardMapper.assignedChestsToResponseDto(assignedChests, animalId);
@@ -99,7 +103,7 @@ public class EquipmentService {
 
     public ChestPotentialXpResponseDtoWithType getPotentialXpForChest(Long courseId, Long assignedChestId) {
         Long animalId = animalService.getAnimalIdForAssignedChest(assignedChestId);
-        AssignedChest assignedChest = assignedRewardService.getUnopenedAssignedChest(assignedChestId);
+        AssignedChest assignedChest = assignedRewardService.getUnopenedAssignedChestByIdWithoutLock(assignedChestId);
         validatePermissions(courseId, animalId);
 
         Chest chest = (Chest) Hibernate.unproxy(assignedChest.getReward());
@@ -113,7 +117,7 @@ public class EquipmentService {
     @Transactional
     public void openChest(Long courseId, EquipmentChestOpenRequestDto requestDto) {
         Long animalId = animalService.getAnimalIdForAssignedChest(requestDto.getAssignedChestId());
-        AssignedChest assignedChest = assignedRewardService.getUnopenedAssignedChest(requestDto.getAssignedChestId());
+        AssignedChest assignedChest = assignedRewardService.getUnopenedAssignedChestByIdWithLock(requestDto.getAssignedChestId());
         validatePermissions(courseId, animalId);
 
         ZonedDateTime openDate = ZonedDateTime.now();
