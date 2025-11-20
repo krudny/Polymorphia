@@ -81,7 +81,7 @@ export default function GradeInfo({ grade, criteria }: GradeInfoProps) {
                 {rewards.length === 0 ? (
                   <h3>
                     {grade.gradeResponse.isGraded
-                      ? "Nie zdobyto żadnych nagród"
+                      ? "Nie zdobyto żadnych nagród."
                       : "W tym zadaniu nie jest dostępna żadna nagroda do wygrania."}
                   </h3>
                 ) : (
