@@ -35,6 +35,7 @@ import java.util.stream.Stream;
 @Service
 @AllArgsConstructor
 public class AssignedRewardService {
+    private static final String ASSIGNED_CHEST_NOT_FOUND = "Nie znaleziono przypisanej skrzynki.";
     private final AssignedChestRepository assignedChestRepository;
     private final AssignedItemRepository assignedItemRepository;
     private final AnimalService animalService;
@@ -83,7 +84,7 @@ public class AssignedRewardService {
                 .findByIdAndAnimalId(assignedChestId, animalId)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
-                        "Nie znaleziono przypisanej skrzynki."
+                       ASSIGNED_CHEST_NOT_FOUND
                 ));
     }
 
@@ -92,7 +93,7 @@ public class AssignedRewardService {
                 .findByIdAndAnimalIdWithLock(assignedChestId, animalId)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
-                        "Nie znaleziono przypisanej skrzynki."
+                        ASSIGNED_CHEST_NOT_FOUND
                 ));
     }
 
