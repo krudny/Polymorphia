@@ -14,6 +14,7 @@ import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.gradable_event.Grade;
 import com.agh.polymorphia_backend.service.gradable_event.criteria.CriterionGradeService;
+import com.agh.polymorphia_backend.service.grade.GradeService;
 import com.agh.polymorphia_backend.service.project.ProjectService;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;

@@ -39,19 +39,39 @@ export default function MenuSection({ options }: MenuSectionProps) {
         const Icon = option.icon;
         const isOpen = openSubMenu.includes(option.text);
 
+        const content = (
+          <div className="menu-section-options-link-part">
+            <Icon />
+            <h2>{option.text}</h2>
+
+            {option.showBadge && (
+              <span className="menu-section-notification-badge" />
+            )}
+          </div>
+        );
+
         return (
           <div key={option.text}>
             <div className="menu-option-row-wrapper">
-              <Link
-                href={`/${option?.link ?? ""}`}
-                key={option.text}
-                onClick={() => setIsNavbarExpanded(false)}
-              >
-                <div className="menu-section-options-link-part">
-                  <Icon />
-                  <h2>{option.text}</h2>
+              {option.link && (
+                <Link href={`/${option.link}`} key={option.text}>
+                  {content}
+                </Link>
+              )}
+
+              {option.onClick && (
+                <div
+                  key={option.text}
+                  onClick={() => {
+                    if (option.onClick) {
+                      option.onClick();
+                    }
+                  }}
+                >
+                  {content}
                 </div>
-              </Link>
+              )}
+
               {option.subItems && (
                 <div
                   className="menu-section-subitems chevron-container"

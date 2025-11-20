@@ -1,4 +1,4 @@
-import Modal from "@/components/modal/Modal";
+import Modal from "@/components/modal";
 import GradeInfo from "@/components/course/event-section/GradeInfo";
 import Loading from "@/components/loading";
 import { useEventParams } from "@/hooks/general/useEventParams";

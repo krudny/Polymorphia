@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Modal from "@/components/modal/Modal";
+import Modal from "@/components/modal";
 import { InviteUserModalProps } from "./types";
 import ImportCSVModal from "../import-csv";
 import InviteUserToCourseModal from "./invite-to-course";

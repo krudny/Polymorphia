@@ -1,5 +1,5 @@
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
-import Modal from "@/components/modal/Modal";
+import Modal from "@/components/modal";
 import "./index.css";
 import React, { FormEvent, useState } from "react";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";

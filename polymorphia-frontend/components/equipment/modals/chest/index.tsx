@@ -1,5 +1,5 @@
 import XPCard from "@/components/xp-card/XPCard";
-import Modal from "@/components/modal/Modal";
+import Modal from "@/components/modal";
 import "../index.css";
 import { AssignedItemResponseDTO } from "@/interfaces/api/reward/assigned";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
