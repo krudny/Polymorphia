@@ -107,7 +107,7 @@ public class GradingValidator {
 
     private void validateStudentLimitAssignedRewards(Long studentId, Reward reward, Integer quantity, Long criterionId) {
         if (reward.getRewardType().equals(RewardType.ITEM)
-                && assignedRewardService.isLimitReachedWithNewItems((Item) Hibernate.unproxy(reward), studentId, quantity, criterionId)) {
+                && assignedRewardService.willLimitBeCrossedWithNewItems((Item) Hibernate.unproxy(reward), studentId, quantity, criterionId)) {
             String userName = userService.getFullName(userService.findById(studentId));
             String message = String.format("Limit nagród typu %s został osiągnięty dla użytkownika %s.", reward.getName(), userName);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, message);

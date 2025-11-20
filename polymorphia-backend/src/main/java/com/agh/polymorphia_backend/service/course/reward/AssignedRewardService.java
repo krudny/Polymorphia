@@ -162,7 +162,7 @@ public class AssignedRewardService {
     }
 
 
-    public boolean isLimitReachedWithNewItems(Item item, Long studentId, Integer newItemsQuantity, Long criterionIdToIgnore) {
+    public boolean willLimitBeCrossedWithNewItems(Item item, Long studentId, Integer newItemsQuantity, Long criterionIdToIgnore) {
         UserType userRole = userService.getAnyUserRoleInCourse(item.getCourse().getId(), userService.findById(studentId).getId());
         if (userRole.equals(UserType.COORDINATOR) || userRole.equals(UserType.INSTRUCTOR)) {
             return false;
