@@ -19,6 +19,7 @@ import useProfileContext from "@/hooks/contexts/useProfileContext";
 import { distributeTo100 } from "@/components/progressbar/profile/distributeTo100";
 import ErrorComponent from "@/components/error";
 import { Roles } from "@/interfaces/api/user";
+import { Sizes } from "@/interfaces/general";
 import { SpeedDialKeys } from "@/components/speed-dial/types";
 import { SpeedDial } from "@/components/speed-dial";
 
@@ -83,8 +84,8 @@ function ProfileContent() {
             <div className="profile-user-points-xs">
               <UserPoints
                 separators
-                titleSize="sm"
-                xpSize="md"
+                titleSize={Sizes.SM}
+                xpSize={Sizes.MD}
                 maxCols={6}
                 xpDetails={filteredXpDetails}
               />
@@ -92,16 +93,16 @@ function ProfileContent() {
             <div className="profile-user-points-md">
               <UserPoints
                 separators
-                titleSize="sm"
-                xpSize="md"
+                titleSize={Sizes.SM}
+                xpSize={Sizes.MD}
                 xpDetails={filteredXpDetails}
               />
             </div>
             <div className="profile-user-points-2xl">
               <UserPoints
                 separators
-                titleSize="md"
-                xpSize="lg"
+                titleSize={Sizes.MD}
+                xpSize={Sizes.LG}
                 xpDetails={filteredXpDetails}
               />
             </div>
@@ -119,7 +120,7 @@ function ProfileContent() {
             ]}
             numSquares={2}
             segmentSizes={[0, 100, 0]}
-            size={"sm"}
+            size={Sizes.SM}
           />
         </div>
 
@@ -130,7 +131,7 @@ function ProfileContent() {
             evolutionStages={profile.evolutionStageThresholds}
             numSquares={profile.evolutionStageThresholds.length}
             segmentSizes={distributeTo100(profile.evolutionStageThresholds)}
-            size={isSm ? "sm" : "md"}
+            size={isSm ? Sizes.SM : Sizes.MD}
           />
         </div>
         <FiltersModal<ProfileFilterId>

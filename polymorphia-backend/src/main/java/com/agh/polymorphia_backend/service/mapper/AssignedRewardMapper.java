@@ -7,10 +7,10 @@ import com.agh.polymorphia_backend.dto.response.reward.assigned.ShortAssignedRew
 import com.agh.polymorphia_backend.dto.response.reward.assignment_details.BaseRewardAssignmentDetailsResponseDto;
 import com.agh.polymorphia_backend.dto.response.reward.assignment_details.ChestAssignmentDetailsResponseDto;
 import com.agh.polymorphia_backend.dto.response.reward.assignment_details.ItemAssignmentDetailsResponseDto;
-import com.agh.polymorphia_backend.model.course.reward.Reward;
-import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedChest;
-import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedItem;
-import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedReward;
+import com.agh.polymorphia_backend.model.reward.Reward;
+import com.agh.polymorphia_backend.model.reward.assigned.AssignedChest;
+import com.agh.polymorphia_backend.model.reward.assigned.AssignedItem;
+import com.agh.polymorphia_backend.model.reward.assigned.AssignedReward;
 import com.agh.polymorphia_backend.util.NumberFormatter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

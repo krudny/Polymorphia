@@ -2,9 +2,9 @@ package com.agh.polymorphia_backend.service.mapper;
 
 import com.agh.polymorphia_backend.dto.response.equipment.potential_xp.ChestPotentialXpResponseDto;
 import com.agh.polymorphia_backend.dto.response.equipment.potential_xp.PotentialBonusXpResponseDto;
-import com.agh.polymorphia_backend.model.course.reward.Reward;
-import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedItem;
-import com.agh.polymorphia_backend.service.course.reward.AssignedRewardService;
+import com.agh.polymorphia_backend.model.reward.Reward;
+import com.agh.polymorphia_backend.model.reward.assigned.AssignedItem;
+import com.agh.polymorphia_backend.service.reward.AssignedRewardService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

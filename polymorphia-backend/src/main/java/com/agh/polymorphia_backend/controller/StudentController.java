@@ -4,7 +4,7 @@ import com.agh.polymorphia_backend.dto.request.student.CreateAnimalRequestDto;
 import com.agh.polymorphia_backend.dto.response.profile.BaseProfileResponseDto;
 import com.agh.polymorphia_backend.dto.response.user.StudentActivityResponseDto;
 import com.agh.polymorphia_backend.model.course.StudentCourseGroupAssignmentId;
-import com.agh.polymorphia_backend.service.gradable_event.GradeService;
+import com.agh.polymorphia_backend.service.grade.GradeService;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.student.ProfileService;
 import com.agh.polymorphia_backend.service.student.StudentService;

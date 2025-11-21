@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/services/event-section";
 import { UseProjectVariant } from "@/hooks/course/useProjectVariant/types";
 import { useEventParams } from "@/hooks/general/useEventParams";
 
 import { EventTypes } from "@/interfaces/general";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
+import { ProjectService } from "@/services/project";
 
 export default function useProjectVariant(): UseProjectVariant {
   const { gradableEventId, eventType } = useEventParams();
@@ -12,8 +12,7 @@ export default function useProjectVariant(): UseProjectVariant {
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["projectVariant", gradableEventId, userId],
-    queryFn: () =>
-      EventSectionService.getProjectVariant(userId, gradableEventId),
+    queryFn: () => ProjectService.getProjectVariant(userId, gradableEventId),
     enabled:
       gradableEventId !== undefined &&
       gradableEventId !== null &&

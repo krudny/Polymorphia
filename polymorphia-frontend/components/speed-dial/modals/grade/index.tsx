@@ -1,5 +1,4 @@
 import Modal from "@/components/modal/Modal";
-import GradeInfo from "@/components/course/event-section/GradeInfo";
 import Loading from "@/components/loading";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import "./index.css";
@@ -13,6 +12,7 @@ import { GradeModalProps } from "@/components/speed-dial/modals/grade/types";
 import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
 import { Roles } from "@/interfaces/api/user";
+import GradeInfo from "@/components/course/event-section/GradeInfo";
 
 export default function GradeModal({
   onClosedAction,
@@ -59,22 +59,24 @@ export default function GradeModal({
           : undefined
       }
     >
-      {(isGradeError || isCriteriaError) && (
-        <div className="grade-error">
-          <ErrorComponent
-            message="Nie udało się załadować szczegółów oceny."
-            size={ErrorComponentSizes.COMPACT}
-          />
-        </div>
-      )}
-      {(isGradeLoading || isCriteriaLoading) && (
-        <div className="grade-loading">
-          <Loading />
-        </div>
-      )}
-      {!isGradeLoading && !isCriteriaLoading && gradeData && criteriaData && (
-        <GradeInfo grade={gradeData} criteria={criteriaData} />
-      )}
+      <div className="grade-wrapper">
+        {(isGradeError || isCriteriaError) && (
+          <div className="grade-error">
+            <ErrorComponent
+              message="Nie udało się załadować szczegółów oceny."
+              size={ErrorComponentSizes.COMPACT}
+            />
+          </div>
+        )}
+        {(isGradeLoading || isCriteriaLoading) && (
+          <div className="grade-loading">
+            <Loading />
+          </div>
+        )}
+        {!isGradeLoading && !isCriteriaLoading && gradeData && criteriaData && (
+          <GradeInfo grade={gradeData} criteria={criteriaData} />
+        )}
+      </div>
     </Modal>
   );
 }
