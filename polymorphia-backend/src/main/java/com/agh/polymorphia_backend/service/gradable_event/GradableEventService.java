@@ -31,7 +31,6 @@ public class GradableEventService {
     private static final String GRADABLE_EVENT_NOT_FOUND = "Wydarzenie nie istnieje.";
     private final GradableEventRepository gradableEventRepository;
     private final AccessAuthorizer accessAuthorizer;
-    private final EventSectionService eventSectionService;
     private final UserService userService;
     private final GradableEventMapper gradableEventMapper;
     private final AnimalService animalService;

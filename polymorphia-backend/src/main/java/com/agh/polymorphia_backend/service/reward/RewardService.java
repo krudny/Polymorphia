@@ -1,9 +1,8 @@
 package com.agh.polymorphia_backend.service.reward;
 
-import com.agh.polymorphia_backend.model.course.reward.Item;
-import com.agh.polymorphia_backend.model.course.reward.Reward;
-import com.agh.polymorphia_backend.model.course.reward.item.ItemType;
-import com.agh.polymorphia_backend.repository.course.reward.RewardRepository;
+import com.agh.polymorphia_backend.model.reward.Item;
+import com.agh.polymorphia_backend.model.reward.item.ItemType;
+import com.agh.polymorphia_backend.repository.reward.RewardRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ public class RewardService {
                 .toList();
     }
 
-    public Reward findById(Long id) {
+    public com.agh.polymorphia_backend.model.reward.Reward findById(Long id) {
         String message = String.format("Nie znaleziono nagrody o id %d.", id);
         return rewardRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, message));

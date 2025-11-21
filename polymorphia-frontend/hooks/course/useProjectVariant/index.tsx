@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/services/event-section";
 import {
   UseProjectVariant,
   UseProjectVariantProps,
@@ -7,6 +6,7 @@ import {
 import { useEventParams } from "@/hooks/general/useEventParams";
 
 import { EventTypes } from "@/interfaces/general";
+import { ProjectService } from "@/services/project";
 
 export default function useProjectVariant({
   target,

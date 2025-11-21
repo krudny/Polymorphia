@@ -1,9 +1,9 @@
-package com.agh.polymorphia_backend.service.gradable_event.criteria;
+package com.agh.polymorphia_backend.service.criteria;
 
 import com.agh.polymorphia_backend.dto.response.criteria.CriterionGradeResponseDto;
 import com.agh.polymorphia_backend.model.criterion.Criterion;
 import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
-import com.agh.polymorphia_backend.model.gradable_event.Grade;
+import com.agh.polymorphia_backend.model.grade.Grade;
 import com.agh.polymorphia_backend.repository.criterion.CriterionGradeRepository;
 import com.agh.polymorphia_backend.service.criterion.CriterionService;
 import com.agh.polymorphia_backend.service.mapper.CriterionGradeMapper;

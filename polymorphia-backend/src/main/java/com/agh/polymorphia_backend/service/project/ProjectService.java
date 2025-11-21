@@ -14,7 +14,6 @@ import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.repository.project.ProjectRepository;
-import com.agh.polymorphia_backend.service.gradable_event.project.ProjectGroupService;
 import com.agh.polymorphia_backend.service.mapper.ProjectMapper;
 import com.agh.polymorphia_backend.service.mapper.UserMapper;
 import com.agh.polymorphia_backend.service.student.AnimalService;

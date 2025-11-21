@@ -17,6 +17,6 @@ export const GradeService = {
   },
 
   submitGrade: async (gradeData: GradeRequestDTO): Promise<void> => {
-    await new Promise<void>((resolve) => setTimeout(resolve, 200));
+    return await ApiClient.post<void>("/grading", gradeData);
   },
 };
