@@ -4,6 +4,7 @@ import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserCourseRole;
 import com.agh.polymorphia_backend.model.user.UserType;
+import com.agh.polymorphia_backend.model.user.student.Student;
 import com.agh.polymorphia_backend.model.user.undefined.UndefinedUser;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
@@ -65,13 +66,22 @@ public class UserService implements UserDetailsService {
         return roles.iterator().next();
     }
 
+    public User findById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono użytkownika."));
+    }
+
     public UserType getCurrentUserRole() {
         AbstractRoleUser user = getCurrentUser();
         return getUserRole(user);
     }
 
     public UserType getUserRoleInCourse(Long courseId) {
-        return userCourseRoleRepository.findByUserIdAndCourseId(getCurrentUser().getUserId(), courseId)
+        return getAnyUserRoleInCourse(courseId, getCurrentUser().getUserId());
+    }
+
+    public UserType getAnyUserRoleInCourse(Long courseId, Long userId) {
+        return userCourseRoleRepository.findByUserIdAndCourseId(userId, courseId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono użytkownika w kursie."))
                 .getRole();
     }
@@ -95,6 +105,11 @@ public class UserService implements UserDetailsService {
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_WITH_EMAIL_NOT_FOUND, email)));
+    }
+
+    public Student getStudentByIndexNumber(Integer indexNumber) {
+        return studentRepository.findByIndexNumber(indexNumber)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono użytkownika o podanym numerze indeksu"));
     }
 
     private UserDetails buildUndefinedUser(String email) {

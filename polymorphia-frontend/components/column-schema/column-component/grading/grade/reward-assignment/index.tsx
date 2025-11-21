@@ -20,7 +20,7 @@ export default function AssignReward({
   return (
     <>
       <div className="grade-assign-reward">
-        {criterionGrade.assignedRewards.map((assignedReward, index) => {
+        {criterionGrade?.assignedRewards?.map((assignedReward, index) => {
           if (assignedReward.quantity === 0) {
             return;
           }

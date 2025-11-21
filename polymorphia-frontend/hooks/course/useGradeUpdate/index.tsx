@@ -13,6 +13,9 @@ export default function useGradeUpdate(): UseGradeUpdate {
       queryClient.invalidateQueries({
         queryKey: ["grade"],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["gradingTargets"],
+      });
     },
   });
 }

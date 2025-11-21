@@ -1,10 +1,17 @@
 import Modal from "@/components/modal/Modal";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import ProjectVariantInfo from "@/shared/project-variant-info";
+import { useUserDetails } from "@/hooks/contexts/useUserContext";
+import { TargetRequestDTO, TargetTypes } from "@/interfaces/api/target";
 
 export default function ProjectVariantModal({
   onClosedAction,
 }: SpeedDialModalProps) {
+  const { id } = useUserDetails();
+  const target = {
+    type: TargetTypes.STUDENT,
+    id,
+  } as TargetRequestDTO;
   return (
     <Modal
       isDataPresented={true}
@@ -12,7 +19,7 @@ export default function ProjectVariantModal({
       title="Wariant projektu"
       subtitle="Oto przydzielone Tobie warianty projektu:"
     >
-      <ProjectVariantInfo />
+      <ProjectVariantInfo target={target} />
     </Modal>
   );
 }

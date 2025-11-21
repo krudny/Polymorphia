@@ -20,7 +20,7 @@ public interface GradeRepository extends JpaRepository<Grade, Long> {
                     AND g.gradableEvent.id = :gradableEventId
                     """
     )
-    Optional<Grade> findAllByAnimalIdAndGradableEventId(Long animalId, Long gradableEventId);
+    Optional<Grade> findByAnimalIdAndGradableEventId(Long animalId, Long gradableEventId);
 
     @Query(value = """
         select

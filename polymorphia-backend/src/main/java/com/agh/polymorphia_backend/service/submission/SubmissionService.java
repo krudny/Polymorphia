@@ -205,11 +205,11 @@ public class SubmissionService {
                                                          UserType userType) {
         return switch (userType) {
             case STUDENT -> Optional.of((Student) userService.getCurrentUser());
-            case INSTRUCTOR -> studentRepository.findByUserIdAndGradableEventIdAndCourseGroupTeachingRoleUserId(studentId,
-                    gradableEventId, userId);
+            case INSTRUCTOR ->
+                    studentRepository.findByUserIdAndGradableEventIdAndCourseGroupTeachingRoleUserId(studentId,
+                            gradableEventId, userId);
             case COORDINATOR -> studentRepository.findByUserIdAndGradableEventId(studentId, gradableEventId);
-            case UNDEFINED ->
-                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, INVALID_ROLE);
+            case UNDEFINED -> throw new ResponseStatusException(HttpStatus.FORBIDDEN, INVALID_ROLE);
         };
     }
 
@@ -221,8 +221,7 @@ public class SubmissionService {
                     projectGroupRepository.getProjectGroupByStudentIdAndProjectIdAndTeachingRoleUserId(studentId, projectId,
                             userId);
             case COORDINATOR -> projectGroupRepository.getProjectGroupByStudentIdAndProjectId(studentId, projectId);
-            case UNDEFINED ->
-                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, INVALID_ROLE);
+            case UNDEFINED -> throw new ResponseStatusException(HttpStatus.FORBIDDEN, INVALID_ROLE);
         };
     }
 
@@ -235,8 +234,7 @@ public class SubmissionService {
                     projectGroupRepository.getProjectGroupByIdAndProjectIdAndTeachingRoleUserId(groupId, gradableEventId,
                             userId);
             case COORDINATOR -> projectGroupRepository.getProjectGroupByIdAndProjectId(groupId, gradableEventId);
-            case UNDEFINED ->
-                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, INVALID_ROLE);
+            case UNDEFINED -> throw new ResponseStatusException(HttpStatus.FORBIDDEN, INVALID_ROLE);
         };
     }
 

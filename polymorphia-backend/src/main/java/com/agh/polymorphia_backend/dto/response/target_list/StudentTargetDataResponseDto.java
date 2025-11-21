@@ -13,4 +13,5 @@ public record StudentTargetDataResponseDto(
         String group,
         String imageUrl,
         BigDecimal gainedXp
-) { }
+) {
+}

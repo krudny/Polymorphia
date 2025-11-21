@@ -130,7 +130,7 @@ public class EquipmentService {
         assignedChest.setUsedDate(openDate);
         assignedChest.getAssignedItems().addAll(assignedItems);
 
-        assignedRewardService.saveAssignedChest(assignedChest);
+        assignedRewardService.saveAssignedChest(List.of(assignedChest));
         assignedRewardService.saveAssignedItems(assignedItems);
         bonusXpCalculator.updateAnimalFlatBonusXp(animalId);
         bonusXpCalculator.updateAnimalPercentageBonusXp(animalId);
@@ -161,11 +161,11 @@ public class EquipmentService {
     }
 
     private List<AssignedItem> createAssignedItemsFromRequest(EquipmentChestOpenRequestDto requestDto, AssignedChest assignedChest, ZonedDateTime openDate, Long animalId) {
-       Chest chest=(Chest) Hibernate.unproxy(assignedChest.getReward());
+        Chest chest = (Chest) Hibernate.unproxy(assignedChest.getReward());
         if (requestDto.getItemId() == null) {
             List<AssignedItem> assignedItems = createNewAssignedItemsFromChest(chest, assignedChest, openDate, animalId);
 
-            if(!assignedItems.isEmpty()){
+            if (!assignedItems.isEmpty()) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
             }
 
@@ -183,7 +183,7 @@ public class EquipmentService {
         }
 
         return List.of(
-                assignedRewardService.createAssignedItem(assignedChest, item, openDate)
+                assignedRewardService.createAssignedItem(Optional.of(assignedChest), assignedChest.getCriterionGrade(), item, openDate)
         );
     }
 
@@ -222,7 +222,7 @@ public class EquipmentService {
                 .getItems().stream()
                 .map(i -> (Item) Hibernate.unproxy(i))
                 .filter(i -> !assignedRewardService.isLimitReached(i, animalId))
-                .map(item -> assignedRewardService.createAssignedItem(assignedChest, item, openDate))
+                .map(item -> assignedRewardService.createAssignedItem(Optional.of(assignedChest), assignedChest.getCriterionGrade(), item, openDate))
                 .collect(Collectors.toList());
     }
 

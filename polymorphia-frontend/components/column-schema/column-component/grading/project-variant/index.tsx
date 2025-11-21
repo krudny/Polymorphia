@@ -8,7 +8,13 @@ export function ProjectVariant() {
   return (
     <ColumnComponent
       topComponent={() => <h1>Warianty</h1>}
-      mainComponent={() => <ProjectVariantInfo size="xs" color="gray" />}
+      mainComponent={() => (
+        <ProjectVariantInfo
+          size="xs"
+          color="gray"
+          target={state.selectedTarget}
+        />
+      )}
       hidden={state.selectedTarget === null}
     />
   );

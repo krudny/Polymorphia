@@ -66,7 +66,7 @@ public class CourseGroupsService {
             case INSTRUCTOR, COORDINATOR -> courseGroupRepository
                     .findCourseGroupForTeachingRoleUser(courseGroupId, userService.getCurrentUser().getUserId())
                     .orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono grupy zajęciowej."));
+                            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono grupy zajęciowej."));
             default -> throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Brak uprawnień.");
         };
     }

@@ -47,7 +47,7 @@ export default function TargetList() {
                       selectedTarget
                     );
                     const color = isSelected
-                      ? student.gainedXp
+                      ? student.gainedXp != null
                         ? "green"
                         : "sky"
                       : "gray";
@@ -78,7 +78,7 @@ export default function TargetList() {
                             points={student.gainedXp}
                             color={color}
                             isSumLabelVisible={true}
-                            isXPLabelVisible={!!student.gainedXp}
+                            isXPLabelVisible={student.gainedXp != null}
                           />
                         }
                         onClick={handleSelection}

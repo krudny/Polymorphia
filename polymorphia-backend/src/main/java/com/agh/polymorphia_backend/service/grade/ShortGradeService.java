@@ -9,6 +9,7 @@ import com.agh.polymorphia_backend.dto.response.grade.ShortGradeResponseDtoWithT
 import com.agh.polymorphia_backend.dto.response.grade.StudentGroupShortGradeResponseDto;
 import com.agh.polymorphia_backend.dto.response.grade.StudentShortGradeResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.UserDetailsResponseDto;
+import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.grade.Grade;
 import com.agh.polymorphia_backend.model.user.student.Animal;
@@ -54,10 +55,9 @@ public class ShortGradeService {
     }
 
     private StudentShortGradeResponseDto getShortGradeStudent(GradableEvent gradableEvent, Long studentId) {
-        Long courseId = gradableEvent.getEventSection().getCourse().getId();
-
-        accessAuthorizer.authorizeStudentDataAccess(courseId, studentId);
-        return getShortGradeWithoutAuthorization(gradableEvent, studentId, courseId);
+        Course course = gradableEvent.getEventSection().getCourse();
+        accessAuthorizer.authorizeStudentDataAccess(course, studentId);
+        return getShortGradeWithoutAuthorization(gradableEvent, studentId, course.getId());
     }
 
     public StudentShortGradeResponseDto getShortGradeWithoutAuthorization(GradableEvent gradableEvent, Long studentId, Long courseId) {
@@ -71,9 +71,13 @@ public class ShortGradeService {
                 .toList()
                 .isEmpty();
 
-        return StudentShortGradeResponseDto.builder().isGraded(grade.isPresent())
-                .id(grade.map(Grade::getId).orElse(null)).comment(grade.map(Grade::getComment).orElse(null))
-                .hasReward(hasReward).criteria(criteriaGrades).build();
+        return StudentShortGradeResponseDto.builder()
+                .isGraded(grade.isPresent())
+                .id(grade.map(Grade::getId).orElse(null))
+                .comment(grade.map(Grade::getComment).orElse(null))
+                .hasReward(hasReward)
+                .criteria(criteriaGrades)
+                .build();
     }
 
     private StudentGroupShortGradeResponseDto getShortGroupGrade(GradableEvent gradableEvent, Long groupId) {

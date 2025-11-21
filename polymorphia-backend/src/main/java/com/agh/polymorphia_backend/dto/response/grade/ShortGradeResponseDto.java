@@ -3,15 +3,16 @@ package com.agh.polymorphia_backend.dto.response.grade;
 import com.agh.polymorphia_backend.dto.response.criteria.CriterionGradeResponseDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SuperBuilder
 @Getter
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode
 public class ShortGradeResponseDto {
     @NotNull
@@ -22,6 +23,7 @@ public class ShortGradeResponseDto {
     private Boolean hasReward;
 
     @NotNull
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private List<CriterionGradeResponseDto> criteria;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Builder.Default
+    private List<CriterionGradeResponseDto> criteria = new ArrayList<>();
 }

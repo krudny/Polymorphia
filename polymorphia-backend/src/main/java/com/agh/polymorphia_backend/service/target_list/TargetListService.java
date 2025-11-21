@@ -56,7 +56,7 @@ public class TargetListService {
         HallOfFameRequestDto hofRequest = targetListMapper.toHofRequest(requestDto, courseGroup);
         OverviewFieldSort overviewFieldSort = targetListMapper.getOverviewFieldSort(hofRequest);
         Page<HallOfFameEntry> hallOfFameEntryPage = hallOfFameService.getSortedByOverviewFields(hofRequest,
-            overviewFieldSort.field());
+                overviewFieldSort.field());
 
         return targetListMapper.mapHofEntriesToStudentTargets(hallOfFameEntryPage);
     }
@@ -91,58 +91,62 @@ public class TargetListService {
     }
 
     private List<StudentTargetResponseDto> getTargetListForGradingAssignmentOrTest(
-        GradingTargetListRequestDto requestDto, Course course) {
+            GradingTargetListRequestDto requestDto, Course course) {
         Long currentUserId = userService.getCurrentUser().getUserId();
         return getStudentTargets(currentUserId, requestDto, course.getId()).stream()
-            .map(targetListMapper::toStudentTargetResponseDto).toList();
+                .map(targetListMapper::toStudentTargetResponseDto).toList();
     }
 
     private List<StudentGroupTargetResponseDto> getTargetListForGradingProject(GradingTargetListRequestDto requestDto,
-        GradableEvent gradableEvent, Course course) {
+                                                                               GradableEvent gradableEvent, Course course) {
         Long currentUserId = userService.getCurrentUser().getUserId();
         boolean showAllProjectGroupsForCoordinator = requestDto.getGroups().stream().findFirst()
-            .filter(group -> group.equals("assigned")).isEmpty();
+                .filter(group -> group.equals("assigned")).isEmpty();
 
         Map<Long, List<ProjectTargetDataView>> groupTargets = getProjectTargets(
                 requestDto.getGradableEventId(), currentUserId, showAllProjectGroupsForCoordinator).stream()
-            .collect(Collectors.groupingBy(ProjectTargetDataView::projectGroupId));
+                .collect(Collectors.groupingBy(ProjectTargetDataView::projectGroupId));
 
         applyRequestFiltersForGradingProjectTargetList(requestDto, groupTargets);
 
         Comparator<StudentGroupTargetResponseDto> groupComparator = getGroupComparator(requestDto.getSortBy(),
-            requestDto.getSortOrder());
+                requestDto.getSortOrder());
 
         return groupTargets.entrySet().stream().map((entry) -> {
             Long courseGroupId = entry.getKey();
 
             Comparator<StudentTargetDataResponseDto> memberComparator = getMemberComparator(requestDto.getSortBy(),
-                requestDto.getSortOrder());
+                    requestDto.getSortOrder());
             List<StudentTargetDataResponseDto> members = entry.getValue().stream()
-                .map(targetListMapper::toStudentTargetDataResponseDto).sorted(memberComparator).toList();
+                    .map(targetListMapper::toStudentTargetDataResponseDto).sorted(memberComparator).toList();
             List<StudentShortGradeResponseDto> membersShortGrades = members.stream()
                 .map(member -> shortGradeService.getShortGradeWithoutAuthorization(gradableEvent, member.id(), course.getId()))
                 .toList();
 
-            return StudentGroupTargetResponseDto.builder().groupId(courseGroupId).members(members).groupType(
-                shortGradeService.areAllGradesSame(membersShortGrades) ? GroupTargetType.MATCHING
-                    : GroupTargetType.DIVERGENT).build();
+            return StudentGroupTargetResponseDto.builder()
+                    .groupId(courseGroupId)
+                    .members(members)
+                    .groupType(
+                            shortGradeService.areAllGradesSame(membersShortGrades) ? GroupTargetType.MATCHING
+                                    : GroupTargetType.DIVERGENT)
+                    .build();
 
         }).sorted(groupComparator).toList();
     }
 
     private List<StudentTargetDataResponseDto> getStudentTargets(Long teachingRoleUserId,
-        GradingTargetListRequestDto requestDto, Long courseId) {
+                                                                 GradingTargetListRequestDto requestDto, Long courseId) {
 
         boolean includeAllGroups =
-            requestDto.getGroups().isEmpty() || (requestDto.getGroups().size() == 1 && requestDto.getGroups().getFirst()
-                .equals("all"));
+                requestDto.getGroups().isEmpty() || (requestDto.getGroups().size() == 1 && requestDto.getGroups().getFirst()
+                        .equals("all"));
 
         String sortBy = requestDto.getSortBy().equals("total") ? "gainedXp" : requestDto.getSortBy();
 
         return gradableEventRepository.getStudentTargets(courseId, requestDto.getGradableEventId(), teachingRoleUserId,
-            requestDto.getGroups(), includeAllGroups, requestDto.getSearchTerm(),
-            requestDto.getSearchBy().searchByAnimal(), requestDto.getSearchBy().searchByStudent(), sortBy,
-            requestDto.getSortOrder().name(), requestDto.getGradeStatus().name());
+                requestDto.getGroups(), includeAllGroups, requestDto.getSearchTerm(),
+                requestDto.getSearchBy().searchByAnimal(), requestDto.getSearchBy().searchByStudent(), sortBy,
+                requestDto.getSortOrder().name(), requestDto.getGradeStatus().name());
     }
 
     private List<ProjectTargetDataView> getProjectTargets(Long projectId, Long teachingRoleUserId, Boolean showAllProjectGroupsForCoordinator) {
@@ -150,15 +154,15 @@ public class TargetListService {
     }
 
     private void applyRequestFiltersForGradingProjectTargetList(GradingTargetListRequestDto requestDto,
-        Map<Long, List<ProjectTargetDataView>> groupTargets) {
+                                                                Map<Long, List<ProjectTargetDataView>> groupTargets) {
         groupTargets.entrySet().removeIf(entry -> {
             List<ProjectTargetDataView> members = entry.getValue();
 
             if (!Objects.equals(requestDto.getSearchTerm(), "")) {
                 boolean matchesSearchTerm = members.stream().map(
-                        member -> requestDto.getSearchBy() == SearchBy.STUDENT_NAME ? member.fullName()
-                            : member.animalName())
-                    .anyMatch(name -> name.toLowerCase().contains(requestDto.getSearchTerm().toLowerCase()));
+                                member -> requestDto.getSearchBy() == SearchBy.STUDENT_NAME ? member.fullName()
+                                        : member.animalName())
+                        .anyMatch(name -> name.toLowerCase().contains(requestDto.getSearchTerm().toLowerCase()));
 
                 if (!matchesSearchTerm) {
                     return true;
@@ -168,7 +172,7 @@ public class TargetListService {
             if (requestDto.getGradeStatus() != GradeStatus.ALL) {
                 boolean isGraded = members.stream().allMatch(member -> member.gradeId() != null);
                 return requestDto.getGradeStatus() == GradeStatus.GRADED && !isGraded
-                    || requestDto.getGradeStatus() == GradeStatus.UNGRADED && isGraded;
+                        || requestDto.getGradeStatus() == GradeStatus.UNGRADED && isGraded;
             }
 
             return false;
@@ -178,11 +182,11 @@ public class TargetListService {
     private Comparator<StudentTargetDataResponseDto> getBaseMemberComparator(String sortBy) {
         return switch (sortBy) {
             case "animalName" -> Comparator.comparing(StudentTargetDataResponseDto::animalName,
-                Comparator.nullsLast(String::compareToIgnoreCase));
+                    Comparator.nullsLast(String::compareToIgnoreCase));
             case "total" -> Comparator.comparing(StudentTargetDataResponseDto::gainedXp,
-                Comparator.nullsFirst(Comparator.naturalOrder()));
+                    Comparator.nullsFirst(Comparator.naturalOrder()));
             default -> Comparator.comparing(StudentTargetDataResponseDto::fullName,
-                Comparator.nullsLast(String::compareToIgnoreCase));
+                    Comparator.nullsLast(String::compareToIgnoreCase));
         };
     }
 
@@ -200,10 +204,10 @@ public class TargetListService {
         Comparator<StudentTargetDataResponseDto> baseMemberComparator = getBaseMemberComparator(sortBy);
 
         Function<StudentGroupTargetResponseDto, StudentTargetDataResponseDto> getFirstMember = group ->
-            (group.members() == null || group.members().isEmpty()) ? null : group.members().getFirst();
+                (group.members() == null || group.members().isEmpty()) ? null : group.members().getFirst();
 
         Comparator<StudentGroupTargetResponseDto> groupComparator = Comparator.comparing(getFirstMember,
-            Comparator.nullsLast(baseMemberComparator));
+                Comparator.nullsLast(baseMemberComparator));
 
         if (sortOrder == SortOrder.DESC) {
             groupComparator = groupComparator.reversed();
