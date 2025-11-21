@@ -32,7 +32,7 @@ public interface AssignedItemRepository extends JpaRepository<AssignedItem, Long
             """
                         select ai
                         from AssignedItem ai
-                        where ai.criterionGrade=:criterionGrade AND ai.assignedChest=null
+                        where ai.criterionGrade=:criterionGrade AND ai.assignedChest is null
                     """
     )
     List<AssignedItem> findByCriterionGrade(CriterionGrade criterionGrade);

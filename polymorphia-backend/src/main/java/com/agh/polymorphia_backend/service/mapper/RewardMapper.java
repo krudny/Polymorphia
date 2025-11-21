@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -28,22 +29,18 @@ public class RewardMapper {
     public BaseRewardResponseDtoWithType rewardToRewardResponseDtoWithType(Reward reward) {
         return BaseRewardResponseDtoWithType.builder()
                 .rewardType(reward.getRewardType())
-                .reward(rewardToRewardResponseDto(reward))
+                .reward(rewardToRewardResponseDto(reward, Optional.empty()))
                 .build();
     }
 
-    public BaseRewardResponseDto rewardToRewardResponseDto(Reward reward) {
-        return baseRewardToBaseRewardResponseDto(BaseRewardResponseDto.builder(), reward);
-    }
-
-    public BaseRewardResponseDto rewardToRewardResponseDto(Reward reward, Long animalId) {
+    public BaseRewardResponseDto rewardToRewardResponseDto(Reward reward, Optional<Long> animalId) {
         return switch (reward.getRewardType()) {
             case ITEM -> itemToRewardResponseDto((Item) Hibernate.unproxy(reward), animalId);
             case CHEST -> chestToRewardResponseDto((Chest) Hibernate.unproxy(reward), animalId);
         };
     }
 
-    public BaseRewardResponseDto chestToRewardResponseDto(Chest chest, Long animalId) {
+    public BaseRewardResponseDto chestToRewardResponseDto(Chest chest, Optional<Long> animalId) {
         ChestResponseDtoBase.ChestResponseDtoBaseBuilder builder =
                 ChestResponseDtoBase.builder()
                         .behaviorText(chest.getBehavior().getTextValue())
@@ -53,7 +50,7 @@ public class RewardMapper {
         return baseRewardToBaseRewardResponseDto(builder, chest);
     }
 
-    public BaseRewardResponseDto itemToRewardResponseDto(Item item, Long animalId) {
+    public BaseRewardResponseDto itemToRewardResponseDto(Item item, Optional<Long> animalId) {
         String eventSectionName = item.getEventSection().getName();
         ItemResponseDtoBase.ItemResponseDtoBaseBuilder builder = switch (item.getItemType()) {
             case FLAT_BONUS -> {
@@ -73,18 +70,18 @@ public class RewardMapper {
             }
         };
 
+        animalId.ifPresent(id -> builder.isLimitReached(assignedRewardService.isLimitReached(item, id)));
+
         return baseRewardToBaseRewardResponseDto(
                 builder
                         .limit(item.getLimit())
                         .eventSectionId(item.getEventSection().getId())
-                        .isLimitReached(assignedRewardService.isLimitReached(item, animalId))
                 , item
-
         );
     }
 
 
-    public <T extends Reward> List<BaseRewardResponseDto> relatedRewardsToResponseDto(List<T> rewards, Long animalId) {
+    public <T extends Reward> List<BaseRewardResponseDto> relatedRewardsToResponseDto(List<T> rewards, Optional<Long> animalId) {
         return rewards.stream()
                 .map(reward -> rewardToRewardResponseDto(reward, animalId))
                 .sorted(Comparator.comparing(BaseRewardResponseDto::getOrderIndex))
@@ -93,7 +90,7 @@ public class RewardMapper {
 
     public <T extends Reward> List<BaseRewardResponseDto> relatedRewardsToResponseDto(List<T> rewards) {
         return rewards.stream()
-                .map(this::rewardToRewardResponseDto)
+                .map(reward -> baseRewardToBaseRewardResponseDto(BaseRewardResponseDto.builder(), reward))
                 .sorted(Comparator.comparing(BaseRewardResponseDto::getOrderIndex))
                 .toList();
     }
@@ -101,7 +98,7 @@ public class RewardMapper {
     public List<EquipmentItemResponseDto> itemsToEquipmentResponseDto(List<Item> items, Long animalId) {
         return items.stream()
                 .map(item -> EquipmentItemResponseDto.builder()
-                        .base(rewardToRewardResponseDto(item, animalId))
+                        .base(rewardToRewardResponseDto(item, Optional.of(animalId)))
                         .details(Collections.emptyList())
                         .build()
                 )
@@ -111,7 +108,7 @@ public class RewardMapper {
     public List<EquipmentChestResponseDto> chestsToEquipmentResponseDto(List<Chest> chests, Long animalId) {
         return chests.stream()
                 .map(chest -> EquipmentChestResponseDto.builder()
-                        .base(rewardToRewardResponseDto(chest, animalId))
+                        .base(rewardToRewardResponseDto(chest, Optional.of(animalId)))
                         .details(ChestAssignmentDetailsResponseDto.builder().build())
                         .build())
                 .toList();

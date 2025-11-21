@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,7 +43,7 @@ public class AssignedRewardMapper {
 
     public AssignedRewardResponseDto itemToAssignedRewardDtoWithType(AssignedItem assignedItem, Long animalId) {
         return AssignedRewardResponseDto.builder()
-                .base(rewardMapper.rewardToRewardResponseDto(assignedItem.getReward(), animalId))
+                .base(rewardMapper.rewardToRewardResponseDto(assignedItem.getReward(), Optional.of(animalId)))
                 .details(getItemDetailsDto(assignedItem))
                 .build();
     }
@@ -80,14 +81,14 @@ public class AssignedRewardMapper {
                 .toList();
 
         return EquipmentItemResponseDto.builder()
-                .base(rewardMapper.rewardToRewardResponseDto(reward, animalId))
+                .base(rewardMapper.rewardToRewardResponseDto(reward, Optional.of(animalId)))
                 .details(details)
                 .build();
     }
 
     private EquipmentChestResponseDto chestToResponseDto(AssignedChest assignedChest, Long animalId) {
         return EquipmentChestResponseDto.builder()
-                .base(rewardMapper.rewardToRewardResponseDto(assignedChest.getReward(), animalId))
+                .base(rewardMapper.rewardToRewardResponseDto(assignedChest.getReward(), Optional.of(animalId)))
                 .details(getChestDetailsDto(assignedChest, animalId))
                 .build();
     }
