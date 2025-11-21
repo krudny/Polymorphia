@@ -22,7 +22,7 @@ export function SpeedDial({ speedDialKey }: SpeedDialProps) {
   items.sort((a, b) => b.orderIndex - a.orderIndex);
 
   const speedDialContent = (
-    <>
+    <div data-speed-dial-portal="true">
       <SpeedDialMui
         ariaLabel="SpeedDial"
         icon={<span className="material-symbols">add</span>}
@@ -55,7 +55,7 @@ export function SpeedDial({ speedDialKey }: SpeedDialProps) {
         ))}
       </SpeedDialMui>
       {activeModal}
-    </>
+    </div>
   );
 
   return typeof document !== "undefined"

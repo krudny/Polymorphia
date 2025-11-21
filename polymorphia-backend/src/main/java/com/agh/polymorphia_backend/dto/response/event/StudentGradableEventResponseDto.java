@@ -5,17 +5,25 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
+import org.springframework.lang.Nullable;
+
+import java.math.BigDecimal;
 
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @Data
 public class StudentGradableEventResponseDto extends BaseGradableEventResponseDto {
-    private String gainedXp;
+    @Nullable
+    private BigDecimal gainedXp;
 
     @NotNull
-    private boolean hasReward;
+    private boolean hasPossibleReward;
 
     @NotNull
-    @JsonProperty("isLocked")
-    private boolean isLocked;
+    @JsonProperty("isGraded")
+    private boolean isGraded;
+
+    @NotNull
+    @JsonProperty("isRewardAssigned")
+    private boolean isRewardAssigned;
 }

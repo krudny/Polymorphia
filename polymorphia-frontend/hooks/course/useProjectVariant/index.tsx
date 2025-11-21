@@ -17,8 +17,7 @@ export default function useProjectVariant({
     queryKey: target
       ? ["projectVariant", gradableEventId, target]
       : ["projectVariant", "noTarget"],
-    queryFn: () =>
-      EventSectionService.getProjectVariant(target!, gradableEventId),
+    queryFn: () => ProjectService.getProjectVariant(target!, gradableEventId),
     enabled:
       gradableEventId !== undefined &&
       gradableEventId !== null &&

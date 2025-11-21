@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.config;
 
-import com.agh.polymorphia_backend.model.user.Coordinator;
 import com.agh.polymorphia_backend.model.user.User;
+import com.agh.polymorphia_backend.model.user.coordinator.Coordinator;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.repository.user.role.CoordinatorRepository;
 import jakarta.annotation.PostConstruct;

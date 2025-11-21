@@ -3,9 +3,10 @@ package com.agh.polymorphia_backend.service.mapper;
 import com.agh.polymorphia_backend.dto.response.reward.assigned.AssignedRewardResponseDto;
 import com.agh.polymorphia_backend.dto.response.reward.points_summary.PointsSummaryDetailsResponseDto;
 import com.agh.polymorphia_backend.dto.response.reward.points_summary.PointsSummaryResponseDto;
-import com.agh.polymorphia_backend.model.course.reward.assigned.AssignedItem;
 import com.agh.polymorphia_backend.model.hall_of_fame.StudentScoreDetail;
-import com.agh.polymorphia_backend.service.course.reward.BonusXpCalculator;
+import com.agh.polymorphia_backend.model.reward.assigned.AssignedItem;
+import com.agh.polymorphia_backend.service.reward.BonusXpCalculator;
+import com.agh.polymorphia_backend.util.NumberFormatter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +47,7 @@ public class PointsSummaryMapper {
 
     private PointsSummaryDetailsResponseDto toPointsSummaryDetailsWithoutItems(BigDecimal points, String title) {
         return PointsSummaryDetailsResponseDto.builder()
-                .gainedXp(points)
+                .gainedXp(NumberFormatter.formatToBigDecimal(points))
                 .title(title)
                 .build();
     }
@@ -58,7 +59,7 @@ public class PointsSummaryMapper {
                 .toList();
 
         return PointsSummaryDetailsResponseDto.builder()
-                .gainedXp(points)
+                .gainedXp(NumberFormatter.formatToBigDecimal(points))
                 .title(title)
                 .assignedItems(items)
                 .build();

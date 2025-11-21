@@ -1,4 +1,4 @@
-import { ProjectVariantResponseDTO } from "@/interfaces/api/course/project";
+import { ProjectVariantResponseDTO } from "@/interfaces/api/project";
 import { TargetRequestDTO } from "@/interfaces/api/target";
 
 export interface UseProjectVariant {

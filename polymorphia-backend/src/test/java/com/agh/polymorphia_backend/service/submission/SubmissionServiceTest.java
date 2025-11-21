@@ -7,7 +7,6 @@ import com.agh.polymorphia_backend.dto.request.target.StudentTargetRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.TargetRequestDto;
 import com.agh.polymorphia_backend.dto.response.submission.SubmissionDetailsDto;
 import com.agh.polymorphia_backend.dto.response.submission.SubmissionRequirementResponseDto;
-import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.course.StudentCourseGroupAssignment;
 import com.agh.polymorphia_backend.model.event_section.AssignmentSection;
@@ -17,17 +16,18 @@ import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.submission.Submission;
 import com.agh.polymorphia_backend.model.submission.SubmissionRequirement;
-import com.agh.polymorphia_backend.model.user.Coordinator;
-import com.agh.polymorphia_backend.model.user.Instructor;
-import com.agh.polymorphia_backend.model.user.Student;
 import com.agh.polymorphia_backend.model.user.UserType;
+import com.agh.polymorphia_backend.model.user.coordinator.Coordinator;
+import com.agh.polymorphia_backend.model.user.instructor.Instructor;
+import com.agh.polymorphia_backend.model.user.student.Animal;
+import com.agh.polymorphia_backend.model.user.student.Student;
 import com.agh.polymorphia_backend.repository.project.ProjectGroupRepository;
 import com.agh.polymorphia_backend.repository.submission.SubmissionRepository;
 import com.agh.polymorphia_backend.repository.submission.SubmissionRequirementRepository;
 import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
 import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
-import com.agh.polymorphia_backend.service.gradable_event.project.ProjectGroupService;
 import com.agh.polymorphia_backend.service.mapper.SubmissionMapper;
+import com.agh.polymorphia_backend.service.project.ProjectGroupService;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
@@ -292,7 +292,7 @@ class SubmissionServiceTest extends BaseTest {
                         target
                     )
             );
-            assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
+            assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
             assertEquals("Nie znaleziono studenta.", ex.getReason());
         }
     }
@@ -419,7 +419,7 @@ class SubmissionServiceTest extends BaseTest {
                         requestDto
                     )
             );
-            assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
+            assertEquals(HttpStatus.FORBIDDEN, ex.getStatusCode());
             assertEquals("Nie można zmienić zablokowanego zgłoszenia.", ex.getReason());
         }
 
@@ -1067,7 +1067,7 @@ class SubmissionServiceTest extends BaseTest {
                         requestDto
                     )
             );
-            assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
+            assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
             assertEquals("Nie znaleziono studenta.", ex.getReason());
         }
     }

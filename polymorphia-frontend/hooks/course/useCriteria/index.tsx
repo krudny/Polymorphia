@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/services/event-section";
 import { UseCriteria } from "@/hooks/course/useCriteria/types";
 import { useEventParams } from "@/hooks/general/useEventParams";
+import { CriteriaService } from "@/services/criteria";
 
 export default function useCriteria(
   gradableEventIdOverride?: number
@@ -14,7 +14,8 @@ export default function useCriteria(
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["criteria", gradableEventId],
-    queryFn: () => EventSectionService.getCriteria(gradableEventId),
+    queryFn: () => CriteriaService.getCriteria(gradableEventId),
+    staleTime: 1000 * 15,
   });
 
   return { data, isLoading, isError };

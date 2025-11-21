@@ -1,6 +1,10 @@
 package com.agh.polymorphia_backend.service.user;
 
-import com.agh.polymorphia_backend.model.user.*;
+import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
+import com.agh.polymorphia_backend.model.user.User;
+import com.agh.polymorphia_backend.model.user.UserCourseRole;
+import com.agh.polymorphia_backend.model.user.UserType;
+import com.agh.polymorphia_backend.model.user.undefined.UndefinedUser;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.repository.user.role.CoordinatorRepository;

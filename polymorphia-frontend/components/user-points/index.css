@@ -4,13 +4,13 @@
 /* UserPoints */
 
 .user-points {
-    @apply w-full h-full grid grid-cols-4 sm:gap-1 lg:px-2;
+  @apply w-full h-full grid grid-cols-4 sm:gap-1 lg:px-2;
 
-    .user-point {
-        @apply flex-col-centered min-h-fit lg:min-h-24 my-auto truncate;
-    }
+  .user-point {
+    @apply flex-col-centered min-h-fit lg:min-h-24 my-auto truncate;
+  }
 
-    .user-point-separators {
-        @apply sm:border-r-[1px] border-primary-dark dark:border-secondary-light;
-    }
+  .user-point-separators {
+    @apply border-r-[1px] border-primary-dark dark:border-secondary-light;
+  }
 }

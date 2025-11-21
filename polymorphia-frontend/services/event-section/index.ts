@@ -1,36 +1,24 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ProjectVariantResponseDTO } from "@/interfaces/api/course/project";
 import {
   GroupTargetTypes,
   StudentGroupTargetResponseDTO,
   StudentTargetData,
-  TargetRequestDTO,
   TargetResponseDTO,
   TargetType,
   TargetTypes,
 } from "@/interfaces/api/target";
-import {
-  GradeRequestDTO,
-  ShortGradeResponseDTO,
-} from "@/interfaces/api/grade/grade";
-import { PointsSummaryResponseDTO } from "@/interfaces/api/course/points-summary";
-import {
-  BaseGradableEventResponseDTO,
-  EventSectionResponseDTO,
-  InstructorGradableEventResponseDTO,
-  StudentGradableEventResponseDTO,
-} from "@/interfaces/api/course";
+import { PointsSummaryResponseDTO } from "@/interfaces/api/points-summary";
+import { EventSectionResponseDTO } from "@/interfaces/api/course";
 import {
   Roles,
   StudentDetailsDTOWithName,
   StudentDetailsDTOWithType,
   UserDetailsDTO,
 } from "@/interfaces/api/user";
-import { API_HOST } from "@/services/api";
-import { CriterionResponseDTO } from "@/interfaces/api/grade/criteria";
 import { ApiClient } from "@/services/api/client";
+import { TeachingRoleGradableEventResponseDTO } from "@/interfaces/api/gradable_event/types";
 
 export const studentNames = [
   "Gerard Małoduszny",
@@ -91,96 +79,12 @@ export const EventSectionService = {
     );
   },
 
-  getStudentGradableEvents: async (
-    eventSectionId: number
-  ): Promise<StudentGradableEventResponseDTO[]> => {
-    return ApiClient.get(`/gradable-events?eventSectionId=${eventSectionId}`);
-  },
-
-  getInstructorGradableEvents: async (
-    eventSectionId: number
-  ): Promise<InstructorGradableEventResponseDTO[]> => {
-    return ApiClient.get(`/gradable-events?eventSectionId=${eventSectionId}`);
-  },
-
   getPointsSummary: async (
     eventSectionId: number
   ): Promise<PointsSummaryResponseDTO> => {
-    return ApiClient.get(
+    return await ApiClient.get<TeachingRoleGradableEventResponseDTO[]>(
       `/gradable-events/points-summary?eventSectionId=${eventSectionId}`
     );
-  },
-
-  getGradableEvent: async (
-    eventSectionId: number,
-    gradableEventId: number
-  ): Promise<BaseGradableEventResponseDTO> => {
-    // TODO: fix
-    return EventSectionService.getStudentGradableEvents(eventSectionId).then(
-      (data) => {
-        const gradableEvent = data.find(
-          (gradableEvent) => gradableEvent.id === gradableEventId
-        );
-
-        if (!gradableEvent) {
-          throw new Error("Gradable event not found.");
-        }
-
-        return gradableEvent;
-      }
-    );
-  },
-
-  getCriteria: async (
-    gradableEventId: number
-  ): Promise<CriterionResponseDTO[]> => {
-    return ApiClient.get(
-      `/gradable-events/criteria?gradableEventId=${gradableEventId}`
-    );
-  },
-
-  getShortGrade: async (
-    target: TargetRequestDTO,
-    gradableEventId: number
-  ): Promise<ShortGradeResponseDTO> => {
-    return ApiClient.post<ShortGradeResponseDTO>(
-      `/gradable-events/short-grade?gradableEventId=${gradableEventId}`,
-      { target }
-    );
-  },
-
-  getProjectVariant: async (
-    target: TargetRequestDTO,
-    gradableEventId: number
-  ): Promise<ProjectVariantResponseDTO[]> => {
-    return ApiClient.post(
-      `/projects/variants?projectId=${gradableEventId}`,
-      target
-    );
-  },
-
-  getProjectGroup: async (
-    studentId: number,
-    gradableEventId: number
-  ): Promise<StudentDetailsDTOWithType[]> => {
-    return ApiClient.get(
-      `/projects/group?studentId=${studentId}&projectId=${gradableEventId}`
-    );
-  },
-
-  getRandomPeople: async (searchTerm: string): Promise<UserDetailsDTO[]> => {
-    // await new Promise<void>((resolve) => setTimeout(resolve, 1000));
-
-    let filteredData = allData;
-
-    if (searchTerm && searchTerm.trim() !== "") {
-      const lowerSearch = searchTerm.toLowerCase();
-      filteredData = filteredData.filter((item) =>
-        item.userDetails.fullName.toLowerCase().includes(lowerSearch)
-      );
-    }
-
-    return filteredData;
   },
 
   getRandomPeopleWithPoints: async (
@@ -300,9 +204,5 @@ export const EventSectionService = {
     }
 
     return data;
-  },
-
-  submitGrade: async (gradeData: GradeRequestDTO): Promise<void> => {
-    return await ApiClient.post<void>("/grading", gradeData);
   },
 };
