@@ -24,7 +24,6 @@ public class StudentController {
     private final ProfileService profileService;
     private final AnimalService animalService;
     private final StudentService studentService;
-    private final GradeService gradeService;
 
     @GetMapping("/profile")
     @PreAuthorize("hasAnyAuthority('STUDENT')")
@@ -41,7 +40,7 @@ public class StudentController {
     @GetMapping("/{studentId}/activity")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<List<StudentActivityResponseDto>> getStudentActivity(@PathVariable Long studentId, @RequestParam Long courseId) {
-        return ResponseEntity.ok(gradeService.getStudentActivity(studentId, courseId));
+        return ResponseEntity.ok(studentService.getStudentActivity(studentId, courseId));
     }
 
     @GetMapping("/course-group")

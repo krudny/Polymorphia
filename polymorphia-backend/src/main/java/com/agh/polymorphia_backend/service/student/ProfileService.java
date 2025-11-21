@@ -52,7 +52,6 @@ public class ProfileService {
         if (UserType.STUDENT.equals(userService.getCurrentUserRole())) {
             builder = ProfileResponseDto.builder()
                     .evolutionStageThresholds(evolutionStages)
-                    .totalXp(NumberFormatter.formatToBigDecimal(hallOfFameEntry.getTotalXpSum()))
                     .xpDetails(getXpDetails(currentUser, courseId, hallOfFameEntry));
         } else {
             builder = StudentSummaryResponseDto.builder()
@@ -62,6 +61,7 @@ public class ProfileService {
         }
 
         return builder
+                .totalXp(NumberFormatter.formatToBigDecimal(hallOfFameEntry.getTotalXpSum()))
                 .totalStudentsInCourse(getTotalStudentsInCourse(courseId))
                 .leftEvolutionStage(getLeftEvolutionStage(evolutionStages, evolutionStageId))
                 .rightEvolutionStage(getRightEvolutionStage(evolutionStages, evolutionStageId))

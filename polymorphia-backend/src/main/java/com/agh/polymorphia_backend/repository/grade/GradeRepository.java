@@ -1,6 +1,7 @@
-package com.agh.polymorphia_backend.repository.gradable_event;
+package com.agh.polymorphia_backend.repository.grade;
 
 import com.agh.polymorphia_backend.model.grade.Grade;
+import com.agh.polymorphia_backend.repository.grade.projections.StudentActivityProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

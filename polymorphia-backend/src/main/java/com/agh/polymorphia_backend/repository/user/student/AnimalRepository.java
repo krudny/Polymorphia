@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.repository.course;
+package com.agh.polymorphia_backend.repository.user.student;
 
 import com.agh.polymorphia_backend.model.user.student.Animal;
 import org.springframework.data.jpa.repository.JpaRepository;

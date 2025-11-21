@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.repository.gradable_event;
+package com.agh.polymorphia_backend.repository.grade.projections;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

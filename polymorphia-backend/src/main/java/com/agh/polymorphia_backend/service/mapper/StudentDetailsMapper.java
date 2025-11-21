@@ -6,7 +6,7 @@ import com.agh.polymorphia_backend.dto.response.user.StudentDetailsWithNameRespo
 import com.agh.polymorphia_backend.dto.response.user.StudentDetailsWithoutNameResponseDto;
 import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry;
 import com.agh.polymorphia_backend.model.user.UserType;
-import com.agh.polymorphia_backend.repository.gradable_event.StudentActivityProjection;
+import com.agh.polymorphia_backend.repository.grade.projections.StudentActivityProjection;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

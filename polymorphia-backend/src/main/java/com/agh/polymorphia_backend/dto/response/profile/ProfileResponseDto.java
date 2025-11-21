@@ -20,7 +20,4 @@ public class ProfileResponseDto extends BaseProfileResponseDto {
 
     @NotNull
     private List<EvolutionStageThresholdResponseDto> evolutionStageThresholds;
-
-    @NotNull
-    private BigDecimal totalXp;
 }
