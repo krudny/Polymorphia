@@ -11,7 +11,7 @@ import useTargetContext from "@/hooks/contexts/useTargetContext";
 import useStudentLastActivity from "@/hooks/course/useStudentLastActivity";
 import {
   DEFAULT_SEARCH_BY,
-  DEFAULT_SORT_BY,
+  DEFAULT_SORT_BY_TOTAL,
   DEFAULT_SORT_ORDER_ASC,
 } from "@/shared/filter-defaults";
 
@@ -26,7 +26,7 @@ export const CourseGroupsProvider = ({ children }: { children: ReactNode }) => {
   const filterConfigs = useCourseGroupsFilterConfigs();
   const filters = useFilters<CourseGroupsFilterId>(filterConfigs ?? []);
   const sortBy = useMemo(
-    () => filters.getAppliedFilterValues("sortBy") ?? DEFAULT_SORT_BY,
+    () => filters.getAppliedFilterValues("sortBy") ?? DEFAULT_SORT_BY_TOTAL,
     [filters]
   );
   const sortOrder = useMemo(

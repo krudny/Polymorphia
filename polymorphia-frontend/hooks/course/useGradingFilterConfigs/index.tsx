@@ -30,7 +30,7 @@ export function useGradingFilterConfigs(gradableEventId: number) {
             { value: "name", label: "Nazwa" },
             { value: "total", label: "Suma" },
           ],
-          defaultValues: ["total"],
+          defaultValues: ["name"],
         },
         {
           id: "groups",

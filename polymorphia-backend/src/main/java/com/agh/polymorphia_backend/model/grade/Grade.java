@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -54,7 +55,8 @@ public class Grade {
     )
     @ToString.Exclude
     @JsonIgnore
-    private List<CriterionGrade> criteriaGrades;
+    @Builder.Default
+    private List<CriterionGrade> criteriaGrades = new ArrayList<>();
 
     @PrePersist
     void onCreate() {

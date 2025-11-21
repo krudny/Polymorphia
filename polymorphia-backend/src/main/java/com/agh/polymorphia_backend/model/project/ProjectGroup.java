@@ -41,7 +41,7 @@ public class ProjectGroup {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name="project_groups_animals",
+            name = "project_groups_animals",
             joinColumns = @JoinColumn(name = "project_group_id"),
             inverseJoinColumns = @JoinColumn(name = "animal_id")
     )

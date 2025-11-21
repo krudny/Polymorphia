@@ -57,7 +57,7 @@ public class ShortGradeService {
     private StudentShortGradeResponseDto getShortGradeStudent(GradableEvent gradableEvent, Long studentId) {
         Course course = gradableEvent.getEventSection().getCourse();
 
-        accessAuthorizer.authorizeStudentDataAccess(course, studentId);
+        accessAuthorizer.authorizeStudentDataAccess(gradableEvent, studentId);
         return getShortGradeWithoutAuthorization(gradableEvent, studentId, course);
     }
 
@@ -72,9 +72,13 @@ public class ShortGradeService {
                 .toList()
                 .isEmpty();
 
-        return StudentShortGradeResponseDto.builder().isGraded(grade.isPresent())
-                .id(grade.map(Grade::getId).orElse(null)).comment(grade.map(Grade::getComment).orElse(null))
-                .hasReward(hasReward).criteria(criteriaGrades).build();
+        return StudentShortGradeResponseDto.builder()
+                .isGraded(grade.isPresent())
+                .id(grade.map(Grade::getId).orElse(null))
+                .comment(grade.map(Grade::getComment).orElse(null))
+                .hasReward(hasReward)
+                .criteria(criteriaGrades)
+                .build();
     }
 
     private StudentGroupShortGradeResponseDto getShortGroupGrade(GradableEvent gradableEvent, Long groupId) {

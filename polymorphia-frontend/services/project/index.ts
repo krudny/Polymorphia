@@ -1,14 +1,16 @@
 import { ProjectVariantResponseDTO } from "@/interfaces/api/project";
 import { ApiClient } from "@/services/api/client";
 import { StudentDetailsDTOWithType } from "@/interfaces/api/user";
+import { TargetRequestDTO } from "@/interfaces/api/target";
 
 export const ProjectService = {
   getProjectVariant: async (
-    userId: number,
+    target: TargetRequestDTO,
     gradableEventId: number
   ): Promise<ProjectVariantResponseDTO[]> => {
-    return await ApiClient.get<ProjectVariantResponseDTO[]>(
-      `/projects/variants?userId=${userId}&projectId=${gradableEventId}`
+    return ApiClient.post(
+      `/projects/variants?projectId=${gradableEventId}`,
+      target
     );
   },
 

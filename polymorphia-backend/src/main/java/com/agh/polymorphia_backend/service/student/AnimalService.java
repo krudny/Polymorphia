@@ -10,7 +10,6 @@ import com.agh.polymorphia_backend.model.user.student.Student;
 import com.agh.polymorphia_backend.repository.course.AnimalRepository;
 import com.agh.polymorphia_backend.repository.course.StudentCourseGroupRepository;
 import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
-import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import lombok.AllArgsConstructor;
@@ -28,7 +27,6 @@ public class AnimalService {
     private final UserService userService;
     private final StudentCourseGroupRepository studentCourseGroupRepository;
     private final StudentRepository studentRepository;
-    private final CourseService courseService;
     private final AccessAuthorizer accessAuthorizer;
 
     public Animal getAnimal(Long userId, Long courseId) {

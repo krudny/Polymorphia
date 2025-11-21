@@ -31,10 +31,15 @@ public class TargetListMapper {
     }
 
     public StudentTargetDataResponseDto toStudentTargetDataResponseDto(ProjectTargetDataView projectTargetDataView) {
-        return StudentTargetDataResponseDto.builder().id(projectTargetDataView.studentId())
-            .fullName(projectTargetDataView.fullName()).animalName(projectTargetDataView.animalName())
-            .evolutionStage(projectTargetDataView.evolutionStage()).group(projectTargetDataView.group())
-            .imageUrl(projectTargetDataView.imageUrl()).gainedXp(projectTargetDataView.gainedXp()).build();
+        return StudentTargetDataResponseDto.builder()
+                .id(projectTargetDataView.studentId())
+                .fullName(projectTargetDataView.fullName())
+                .animalName(projectTargetDataView.animalName())
+                .evolutionStage(projectTargetDataView.evolutionStage())
+                .group(projectTargetDataView.group())
+                .imageUrl(projectTargetDataView.imageUrl())
+                .gainedXp(projectTargetDataView.gainedXp())
+                .build();
     }
 
     public List<StudentTargetResponseDto> mapHofEntriesToStudentTargets(Page<HallOfFameEntry> hofEntries) {
@@ -43,9 +48,9 @@ public class TargetListMapper {
 
     public HallOfFameRequestDto toHofRequest(CourseGroupsTargetListRequestDto requestDto, CourseGroup courseGroup) {
         return HallOfFameRequestDto.builder().sortBy(requestDto.getSortBy()).groups(List.of(courseGroup.getName()))
-            .courseId(courseGroup.getCourse().getId()).searchBy(requestDto.getSearchBy())
-            .searchTerm(requestDto.getSearchTerm()).sortOrder(requestDto.getSortOrder()).page(0).size(Integer.MAX_VALUE)
-            .build();
+                .courseId(courseGroup.getCourse().getId()).searchBy(requestDto.getSearchBy())
+                .searchTerm(requestDto.getSearchTerm()).sortOrder(requestDto.getSortOrder()).page(0).size(Integer.MAX_VALUE)
+                .build();
     }
 
     public OverviewFieldSort getOverviewFieldSort(HallOfFameRequestDto hofRequest) {
@@ -53,8 +58,8 @@ public class TargetListMapper {
         return switch (sortSpec) {
             case OverviewFieldSort overviewFieldSort -> overviewFieldSort;
             case EventSectionSort eventSectionSort ->
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Nie udało się wczytać listy członków grupy zajęciowej.");
+                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                            "Nie udało się wczytać listy członków grupy zajęciowej.");
         };
     }
 
@@ -62,13 +67,13 @@ public class TargetListMapper {
         StudentTargetDataResponseDto studentTargetDataResponseDto = mapHofEntryToStudentTargetData(hofEntry);
 
         return StudentTargetResponseDto.builder().id(studentTargetDataResponseDto.id())
-            .student(studentTargetDataResponseDto).build();
+                .student(studentTargetDataResponseDto).build();
     }
 
     private StudentTargetDataResponseDto mapHofEntryToStudentTargetData(HallOfFameEntry hofEntry) {
         return StudentTargetDataResponseDto.builder().id(hofEntry.getStudentId()).fullName(hofEntry.getStudentName())
-            .animalName(hofEntry.getAnimalName()).evolutionStage(hofEntry.getEvolutionStage())
-            .group(hofEntry.getGroupName()).imageUrl(hofEntry.getImageUrl())
-            .gainedXp(NumberFormatter.formatToBigDecimal(hofEntry.getTotalXpSum())).build();
+                .animalName(hofEntry.getAnimalName()).evolutionStage(hofEntry.getEvolutionStage())
+                .group(hofEntry.getGroupName()).imageUrl(hofEntry.getImageUrl())
+                .gainedXp(NumberFormatter.formatToBigDecimal(hofEntry.getTotalXpSum())).build();
     }
 }

@@ -5,7 +5,7 @@ import {
 
 export interface RewardProps {
   criterion: CriterionResponseDTO;
-  criterionGrade: CriteriaDetailsRequestDTO;
+  criterionGrade: CriteriaDetailsRequestDTO | undefined;
 }
 
 export interface GradingInputProps {

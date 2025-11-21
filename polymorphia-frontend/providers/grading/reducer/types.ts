@@ -1,4 +1,7 @@
-import { CriteriaDetailsRequestDTO } from "@/interfaces/api/grade/criteria";
+import {
+  CriteriaDetailsRequestDTO,
+  CriterionResponseDTO,
+} from "@/interfaces/api/grade/criteria";
 import {
   SubmissionDetails,
   SubmissionDetailsResponseDTO,
@@ -23,7 +26,10 @@ export const GradingReducerActions = {
 export type GradingReducerActionType =
   | {
       type: typeof GradingReducerActions.SET_GRADE;
-      payload: { grade: ShortGradeResponseDTO };
+      payload: {
+        grade: ShortGradeResponseDTO;
+        criteria: CriterionResponseDTO[];
+      };
     }
   | {
       type: typeof GradingReducerActions.SET_SUBMISSION_DETAILS;

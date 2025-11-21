@@ -1,5 +1,9 @@
 package com.agh.polymorphia_backend.service.project;
 
+import com.agh.polymorphia_backend.dto.request.target.StudentGroupTargetRequestDto;
+import com.agh.polymorphia_backend.dto.request.target.StudentTargetRequestDto;
+import com.agh.polymorphia_backend.dto.request.target.TargetRequestDto;
+import com.agh.polymorphia_backend.dto.request.target.TargetType;
 import com.agh.polymorphia_backend.dto.response.project.ProjectVariantResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.BaseUserDetailsResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.UserDetailsResponseDto;
@@ -29,12 +33,12 @@ public class ProjectService {
     private final AnimalService animalService;
     private final ProjectMapper projectMapper;
     private final UserMapper userMapper;
+    private final ProjectGroupService projectGroupService;
 
-    public List<ProjectVariantResponseDto> getProjectVariants(Long userId, Long projectId) {
+    public List<ProjectVariantResponseDto> getProjectVariants(TargetRequestDto target, Long projectId) {
         Project project = getProjectGradableEvent(projectId);
         Course course = project.getEventSection().getCourse();
-        Animal animal = animalService.getAnimal(userId, course.getId());
-        ProjectGroup projectGroup = extractProjectGroup(project, animal);
+        ProjectGroup projectGroup = getProjectGroupForTarget(project, course, target);
 
         accessAuthorizer.authorizeCourseAccess(course);
         accessAuthorizer.authorizeProjectGroupDetailsAccess(projectGroup);
@@ -75,6 +79,15 @@ public class ProjectService {
                 .getAnimals().stream()
                 .map(a -> getUserDetailsResponseDto(a, course))
                 .toList();
+    }
+
+    private ProjectGroup getProjectGroupForTarget(Project project, Course course, TargetRequestDto target) {
+        if (target.type().equals(TargetType.STUDENT)) {
+            Animal animal = animalService.getAnimal(((StudentTargetRequestDto) target).id(), course.getId());
+            return extractProjectGroup(project, animal);
+        }
+
+        return projectGroupService.findById(((StudentGroupTargetRequestDto) target).groupId());
     }
 
     private ProjectGroup extractProjectGroup(Project project, Animal animal) {
