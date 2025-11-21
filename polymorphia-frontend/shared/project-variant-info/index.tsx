@@ -10,8 +10,9 @@ import "./index.css";
 export default function ProjectVariantInfo({
   size = "sm",
   color = "gray",
+  target,
 }: ProjectVariantInfoProps) {
-  const { data, isLoading, isError } = useProjectVariant();
+  const { data, isLoading, isError } = useProjectVariant({ target });
 
   return (
     <>

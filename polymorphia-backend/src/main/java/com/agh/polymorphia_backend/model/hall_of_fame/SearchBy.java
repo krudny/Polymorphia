@@ -12,14 +12,6 @@ public enum SearchBy {
     STUDENT_NAME,
     ANIMAL_NAME;
 
-    public boolean searchByAnimal() {
-        return this == ANIMAL_NAME;
-    }
-
-    public boolean searchByStudent() {
-        return this == STUDENT_NAME;
-    }
-
     @JsonCreator
     public static SearchBy fromString(String value) {
         return switch (value) {
@@ -30,6 +22,14 @@ public enum SearchBy {
                     "Wartość " + value + " jest niepoprawna dla parametru \"searchBy\"."
             );
         };
+    }
+
+    public boolean searchByAnimal() {
+        return this == ANIMAL_NAME;
+    }
+
+    public boolean searchByStudent() {
+        return this == STUDENT_NAME;
     }
 
     @JsonValue

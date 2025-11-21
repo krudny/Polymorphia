@@ -6,7 +6,7 @@ import lombok.experimental.SuperBuilder;
 
 @Data
 @SuperBuilder
-public class CourseGroupsResponseDto extends CourseGroupsShortResponseDto{
+public class CourseGroupsResponseDto extends CourseGroupsShortResponseDto {
     @NotNull
     private final String details;
 

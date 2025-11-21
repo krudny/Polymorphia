@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
-@Table(name="students_course_groups")
+@Table(name = "students_course_groups")
 @Data
 @Builder
 @AllArgsConstructor

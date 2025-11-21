@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.service.validation;
 
 import com.agh.polymorphia_backend.model.course.Course;
+import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.User;
@@ -41,7 +42,8 @@ public class AccessAuthorizer {
         authorizeCourseAccess(course);
     }
 
-    public void authorizeStudentDataAccess(Course course, Long studentId) {
+    public void authorizeStudentDataAccess(GradableEvent gradableEvent, Long studentId) {
+        Course course = gradableEvent.getEventSection().getCourse();
         authorizeCourseAccess(course);
         User user = userService.getCurrentUser().getUser();
 
@@ -50,7 +52,7 @@ public class AccessAuthorizer {
         boolean isStudentsInstructor = hasInstructorAccessToUserInCourse(user, course, studentId);
 
         if (!isStudentSelf && !isCoordinatorInCourse && !isStudentsInstructor) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Niepoprawne id użytkownika.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Brak dostępu do danych użytkownika.");
         }
 
     }
@@ -116,6 +118,16 @@ public class AccessAuthorizer {
             case COORDINATOR -> isCourseAccessAuthorizedCoordinator(user, course);
             case UNDEFINED -> isCourseAccessAuthorizedUndefined(user, course);
         };
+    }
+
+    public void authorizeProjectGroupGrading(ProjectGroup projectGroup) {
+        User user = userService.getCurrentUser().getUser();
+        boolean isProjectGroupInstructor = projectGroup.getTeachingRoleUser().getUserId().equals(user.getId());
+        boolean isCoordinator = isCourseAccessAuthorizedCoordinator(user, projectGroup.getProject().getEventSection().getCourse());
+
+        if (!isProjectGroupInstructor && !isCoordinator) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Niepoprawne id użytkownika lub projektu.");
+        }
     }
 
     private boolean hasInstructorAccessToUserInCourse(User user, Course course, Long studentId) {
