@@ -52,7 +52,7 @@ public class AccessAuthorizer {
         boolean isStudentsInstructor = hasInstructorAccessToUserInCourse(user, course, studentId);
 
         if (!isStudentSelf && !isCoordinatorInCourse && !isStudentsInstructor) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Niepoprawne id użytkownika.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Brak dostępu do danych użytkownika.");
         }
 
     }

@@ -26,10 +26,11 @@ import useCriteria from "@/hooks/course/useCriteria";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
 import {
   DEFAULT_SEARCH_BY,
-  DEFAULT_SORT_BY,
+  DEFAULT_SORT_BY_TOTAL,
   DEFAULT_SORT_ORDER_ASC,
   DEFAULT_GROUPS,
   DEFAULT_GRADE_STATUS,
+  DEFAULT_SORT_BY_NAME,
 } from "@/shared/filter-defaults";
 
 export const GradingContext = createContext<
@@ -52,7 +53,7 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
     [filters]
   );
   const sortBy = useMemo(
-    () => filters.getAppliedFilterValues("sortBy") ?? DEFAULT_SORT_BY,
+    () => filters.getAppliedFilterValues("sortBy") ?? DEFAULT_SORT_BY_NAME,
     [filters]
   );
   const sortOrder = useMemo(

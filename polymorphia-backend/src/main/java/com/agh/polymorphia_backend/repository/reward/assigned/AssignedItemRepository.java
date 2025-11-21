@@ -28,5 +28,12 @@ public interface AssignedItemRepository extends JpaRepository<AssignedItem, Long
     )
     List<AssignedItem> findAnimalAssignedItemsWithoutCriterionItems(Long animalId, Long criterionId);
 
+    @Query(
+            """
+                        select ai
+                        from AssignedItem ai
+                        where ai.criterionGrade=:criterionGrade AND ai.assignedChest=null
+                    """
+    )
     List<AssignedItem> findByCriterionGrade(CriterionGrade criterionGrade);
 }
