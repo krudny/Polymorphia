@@ -30,9 +30,13 @@ export default function ColumnSchema({
                 ? columns === 1
                   ? "h-80"
                   : columnComponents.length > 1
-                    ? "flex-1 overflow-y-auto"
+                    ? columnComponents.length == 2
+                      ? "flex-1 overflow-y-auto"
+                      : "overflow-y-auto"
                     : "h-full"
-                : "flex-1 overflow-y-auto";
+                : columnComponents.length == 2
+                  ? "flex-1 overflow-y-auto"
+                  : "overflow-y-auto";
 
               return (
                 <div
