@@ -55,7 +55,8 @@ export default function Navbar() {
           className="cursor-pointer"
         />
         <h1>{title}</h1>
-        <span>notifications</span>
+        {/* TODO: notifications */}
+        <span className="opacity-0 cursor-default!">notifications</span>
       </div>
       <div ref={drawerRef} className="navbar-drawer">
         <div className="flex-1">

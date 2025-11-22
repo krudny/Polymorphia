@@ -41,14 +41,14 @@ function ResetMarkdownModalContent() {
       <h1>Czy na pewno chcesz kontynuować?</h1>
       <div className="update-markdown-buttons">
         <ButtonWithBorder
-          text="Zatwierdź"
-          className="!mx-0 !py-0 !w-full"
-          onClick={handleConfirm}
-        />
-        <ButtonWithBorder
           text="Powrót"
           className="!mx-0 !py-0 !w-full"
           onClick={closeModal}
+        />
+        <ButtonWithBorder
+          text="Zatwierdź"
+          className="!mx-0 !py-0 !w-full"
+          onClick={handleConfirm}
         />
       </div>
     </div>

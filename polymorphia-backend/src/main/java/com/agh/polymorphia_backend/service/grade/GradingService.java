@@ -115,6 +115,7 @@ public class GradingService {
         createAndSaveAssignedRewards(criteriaGrades, request.getCriteria());
 
         bonusXpCalculator.updateAnimalFlatBonusXp(animal.getId());
+        bonusXpCalculator.updateAnimalPercentageBonusXp(animal.getId());
 
         return grade;
     }
