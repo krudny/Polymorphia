@@ -31,7 +31,7 @@ export function ProjectVariant() {
       )}
       renderDataErrorComponent={() => errorComponent}
       renderEmptyDataErrorComponent={() => noProjectVariantsErrorComponent}
-      minHeightClassName="h-[250px]"
+      minHeightClassName="min-h-[250px]"
       selectedTarget={targetState.selectedTarget}
     />
   );

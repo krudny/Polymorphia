@@ -67,7 +67,7 @@ export default function SubmissionRequirement({
                   />
                 )}
                 renderDataErrorComponent={() => requirementErrorComponent}
-                minHeightClassName="h-[146px]"
+                minHeightClassName="min-h-[146px]"
                 selectedTarget={selectedTarget}
               />
             </AccordionSection>

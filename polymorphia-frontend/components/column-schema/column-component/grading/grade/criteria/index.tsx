@@ -82,7 +82,7 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
                   renderDataErrorComponent={() =>
                     criterionSectionErrorComponent
                   }
-                  minHeightClassName="h-80"
+                  minHeightClassName="min-h-80"
                   selectedTarget={selectedTarget}
                 />
               </AccordionSection>
@@ -103,7 +103,7 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
                 <CommentWrapper key={key} comment={data} />
               )}
               renderDataErrorComponent={() => commentSectionErrorComponent}
-              minHeightClassName="h-[100px]"
+              minHeightClassName="min-h-[100px]"
               selectedTarget={selectedTarget}
             />
           </AccordionSection>
