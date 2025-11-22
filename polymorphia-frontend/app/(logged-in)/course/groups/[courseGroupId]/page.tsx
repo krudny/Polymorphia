@@ -8,18 +8,21 @@ import GradeModal from "@/components/speed-dial/modals/grade";
 import useCourseGroupsContext from "@/hooks/contexts/useCourseGroupsContext";
 import { TargetProvider } from "@/providers/target";
 import useCourseGroupTargets from "@/hooks/course/useCourseGroupTargets";
+import useTargetContext from "@/hooks/contexts/useTargetContext";
 
 function CourseGroupViewContent() {
   const { gradableEventId, setGradableEventId } = useCourseGroupsContext();
+  const { targetId } = useTargetContext();
 
   return (
     <>
       <CourseGroups />
-      <EquipmentModals />
+      <EquipmentModals targetStudentIdOverride={targetId} />
       {gradableEventId && (
         <GradeModal
           gradableEventIdProp={gradableEventId}
           onClosedAction={() => setGradableEventId(null)}
+          targetStudentIdOverride={targetId}
         />
       )}
     </>

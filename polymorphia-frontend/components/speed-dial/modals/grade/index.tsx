@@ -4,22 +4,32 @@ import { useEventParams } from "@/hooks/general/useEventParams";
 import "./index.css";
 import useShortGrade from "@/hooks/course/useShortGrade";
 import { TargetTypes } from "@/interfaces/api/target";
-import { useUserDetails } from "@/hooks/contexts/useUserContext";
+import useUserContext, {
+  useUserDetails,
+} from "@/hooks/contexts/useUserContext";
 import useCriteria from "@/hooks/course/useCriteria";
 import { GradeModalProps } from "@/components/speed-dial/modals/grade/types";
 import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
+import { Roles } from "@/interfaces/api/user";
 import GradeInfo from "@/components/course/event-section/GradeInfo";
 
 export default function GradeModal({
   onClosedAction,
   gradableEventIdProp,
+  targetStudentIdOverride,
 }: GradeModalProps) {
   const { gradableEventId } = useEventParams();
   const { id } = useUserDetails();
+  const { userRole } = useUserContext();
+  const targetId =
+    targetStudentIdOverride ?? (userRole === Roles.STUDENT ? id : null);
+  if (!targetId) {
+    throw new Error("[GradeModal] invalid targetId");
+  }
   const target = {
     type: TargetTypes.STUDENT,
-    id,
+    id: targetId,
   };
 
   if (!gradableEventIdProp && !gradableEventId) {

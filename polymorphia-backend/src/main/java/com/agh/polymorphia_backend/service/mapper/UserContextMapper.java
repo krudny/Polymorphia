@@ -28,6 +28,4 @@ public class UserContextMapper {
 
         return userMapper.toBaseUserDetailsResponseDto(user, userType);
     }
-
-
 }

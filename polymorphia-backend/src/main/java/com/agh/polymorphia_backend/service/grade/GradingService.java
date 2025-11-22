@@ -79,7 +79,7 @@ public class GradingService {
     }
 
     private Grade validateAndGetStudentGrade(GradeRequestDto request, GradableEvent gradableEvent, Course course) {
-        accessAuthorizer.authorizeStudentDataAccess(gradableEvent, ((StudentTargetRequestDto) request.getTarget()).id());
+        accessAuthorizer.authorizeStudentDataAccess(gradableEvent.getEventSection().getCourse(), ((StudentTargetRequestDto) request.getTarget()).id());
         gradingValidator.validate(request, gradableEvent);
 
         return getStudentGrade(request, gradableEvent, course);

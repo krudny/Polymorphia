@@ -8,7 +8,7 @@ import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserCourseRole;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.model.user.student.Animal;
-import com.agh.polymorphia_backend.repository.course.AnimalRepository;
+import com.agh.polymorphia_backend.repository.user.student.AnimalRepository;
 import com.agh.polymorphia_backend.repository.course.CourseRepository;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.role.InstructorRepository;
@@ -37,13 +37,18 @@ public class AccessAuthorizer {
 
     public void authorizeCourseAccess(Long courseId) {
         Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, COURSE_NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, COURSE_NOT_FOUND));
 
         authorizeCourseAccess(course);
     }
 
-    public void authorizeStudentDataAccess(GradableEvent gradableEvent, Long studentId) {
-        Course course = gradableEvent.getEventSection().getCourse();
+    public void authorizeStudentDataAccess(Long courseId, Long studentId) {
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, COURSE_NOT_FOUND));
+        authorizeStudentDataAccess(course, studentId);
+    }
+
+    public void authorizeStudentDataAccess(Course course, Long studentId) {
         authorizeCourseAccess(course);
         User user = userService.getCurrentUser().getUser();
 
@@ -54,7 +59,6 @@ public class AccessAuthorizer {
         if (!isStudentSelf && !isCoordinatorInCourse && !isStudentsInstructor) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Brak dostępu do danych użytkownika.");
         }
-
     }
 
     public void authorizeProjectGroupDetailsAccess(ProjectGroup projectGroup) {

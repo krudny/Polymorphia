@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -19,26 +20,28 @@ public class EquipmentController {
     private final EquipmentService equipmentService;
 
     @GetMapping("/items")
-    @PreAuthorize("hasAnyAuthority('STUDENT')")
-    public ResponseEntity<List<EquipmentItemResponseDto>> getEquipmentItems(@RequestParam Long courseId) {
-        return ResponseEntity.ok(equipmentService.getEquipmentItems(courseId));
+    @PreAuthorize("hasAnyAuthority('STUDENT','INSTRUCTOR', 'COORDINATOR')")
+    public ResponseEntity<List<EquipmentItemResponseDto>> getEquipmentItems(@RequestParam Long courseId, @RequestParam Optional<Long> studentId) {
+        // if studentId is present, the request is validated for instructor/coordinator access
+        return ResponseEntity.ok(equipmentService.getEquipmentItems(courseId, studentId));
     }
 
     @GetMapping("/chests")
-    @PreAuthorize("hasAnyAuthority('STUDENT')")
-    public ResponseEntity<List<EquipmentChestResponseDto>> getEquipmentChests(@RequestParam Long courseId) {
-        return ResponseEntity.ok(equipmentService.getEquipmentChests(courseId));
+    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
+    public ResponseEntity<List<EquipmentChestResponseDto>> getEquipmentChests(@RequestParam Long courseId, @RequestParam Optional<Long> studentId) {
+        // if studentId is present, the request is validated for instructor/coordinator access
+        return ResponseEntity.ok(equipmentService.getEquipmentChests(courseId, studentId));
     }
 
     @PostMapping("/chests/open")
-    @PreAuthorize("hasAnyAuthority('STUDENT')")
+    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<Void> openChest(@RequestParam Long courseId, @RequestBody EquipmentChestOpenRequestDto requestDto) {
         equipmentService.openChest(courseId, requestDto);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/chests/potential-xp")
-    @PreAuthorize("hasAnyAuthority('STUDENT')")
+    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<ChestPotentialXpResponseDtoWithType> getPotentialXp(@RequestParam Long courseId, @RequestParam Long assignedChestId) {
         return ResponseEntity.ok(equipmentService.getPotentialXpForChest(courseId, assignedChestId));
     }

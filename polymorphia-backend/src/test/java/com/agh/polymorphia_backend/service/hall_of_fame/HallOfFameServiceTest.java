@@ -55,26 +55,24 @@ class HallOfFameServiceTest extends BaseTest {
 
     @Test
     void shouldReturnStudentHallOfFame_WhenFound() {
-        Animal animal = Animal.builder().id(10L).build();
-        when(animalService.getAnimal(1L, 10L)).thenReturn(animal);
+        when(animalService.getAnimal(1L, 10L)).thenReturn(Animal.builder().id(10L).build());
         when(hallOfFameRepository.findByAnimalId(10L))
                 .thenReturn(Optional.of(hof));
 
-        HallOfFameEntry result = hallOfFameService.getStudentHallOfFame(animal);
+        HallOfFameEntry result = hallOfFameService.getStudentHallOfFame(user.getId(), user.getPreferredCourse().getId());
 
         assertThat(result).isEqualTo(hof);
     }
 
     @Test
     void shouldThrowException_WhenHallOfFameNotFound() {
-        Animal animal = Animal.builder().id(10L).build();
-        when(animalService.getAnimal(1L, 10L)).thenReturn(animal);
+        when(animalService.getAnimal(1L, 10L)).thenReturn(Animal.builder().id(10L).build());
         when(hallOfFameRepository.findByAnimalId(10L))
                 .thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> hallOfFameService.getStudentHallOfFame(animal))
+        assertThatThrownBy(() -> hallOfFameService.getStudentHallOfFame(user.getId(), user.getPreferredCourse().getId()))
                 .isInstanceOf(ResponseStatusException.class)
-                .hasMessageContaining("Brak wyników studenta w Hall of Fame");
+                .hasMessageContaining("Brak wyników studenta.");
     }
 
     @Test

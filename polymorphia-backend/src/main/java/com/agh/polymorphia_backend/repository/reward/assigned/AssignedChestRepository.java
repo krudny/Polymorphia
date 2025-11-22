@@ -12,6 +12,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AssignedChestRepository extends JpaRepository<AssignedChest, Long> {
+    String SELECT_ASSIGNED_CHEST_NOT_USED = """
+            SELECT ac
+            FROM AssignedChest ac
+            JOIN AssignedReward ar ON ar.id = ac.id
+            WHERE ar.isUsed = false AND ac.id = :assignedChestId
+            """;
+
     @Query(value = """
             SELECT ac
             FROM AssignedChest ac
@@ -31,31 +38,9 @@ public interface AssignedChestRepository extends JpaRepository<AssignedChest, Lo
     List<AssignedChest> findByCriterionGrade(CriterionGrade criterionGrade);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query(value = """
-            SELECT ac
-            FROM AssignedChest ac
-            JOIN ac.criterionGrade cg
-            JOIN cg.grade g
-            WHERE ac.id = :assignedChestId
-            AND g.animal.id = :animalId
-            """
-    )
-    Optional<AssignedChest> findByIdAndAnimalIdWithLock(
-            @Param("assignedChestId") Long assignedChestId,
-            @Param("animalId") Long animalId
-    );
+    @Query(value = SELECT_ASSIGNED_CHEST_NOT_USED)
+    Optional<AssignedChest> findNotUsedAssignedChestsByIdWithLock(@Param("assignedChestId") Long assignedChestId);
 
-    @Query(value = """
-            SELECT ac
-            FROM AssignedChest ac
-            JOIN ac.criterionGrade cg
-            JOIN cg.grade g
-            WHERE ac.id = :assignedChestId
-            AND g.animal.id = :animalId
-            """
-    )
-    Optional<AssignedChest> findByIdAndAnimalId(
-            @Param("assignedChestId") Long assignedChestId,
-            @Param("animalId") Long animalId
-    );
+    @Query(value = SELECT_ASSIGNED_CHEST_NOT_USED)
+    Optional<AssignedChest> findNotUsedAssignedChestsById(@Param("assignedChestId") Long assignedChestId);
 }

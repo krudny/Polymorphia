@@ -15,7 +15,10 @@ export default function StudentSummary({
     leftEvolutionStage,
     rightEvolutionStage,
     imageUrl,
+    totalXp,
   } = studentSummary;
+
+  const maxPoints = rightEvolutionStage.minXp - leftEvolutionStage.minXp;
 
   return (
     <div className="course-group-student-summary">
@@ -40,8 +43,8 @@ export default function StudentSummary({
       </div>
       <div className="course-group-student-summary-progress-bar">
         <ProfileProgressBar
-          totalXp={86.8}
-          maxPoints={100}
+          totalXp={totalXp - leftEvolutionStage.minXp}
+          maxPoints={maxPoints}
           evolutionStages={[leftEvolutionStage, rightEvolutionStage]}
           numSquares={2}
           segmentSizes={[0, 100, 0]}

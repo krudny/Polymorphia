@@ -31,7 +31,18 @@ export default function LastActivity() {
       }
     >
       <div className="last-activity">
-        {lastActivities && !isSpecificDataLoading && !isSpecificDataError ? (
+        {isSpecificDataLoading ? (
+          <div className="h-full relative">
+            <Loading />
+          </div>
+        ) : isSpecificDataError ? (
+          <div className="h-full relative">
+            <ErrorComponent
+              message="Nie udało się załadować ostatniej aktywności."
+              size={ErrorComponentSizes.COMPACT}
+            />
+          </div>
+        ) : lastActivities && lastActivities.length > 0 ? (
           <>
             {lastActivities.map((lastActivity) => (
               <LastActivityDetails
@@ -40,14 +51,11 @@ export default function LastActivity() {
               />
             ))}
           </>
-        ) : isSpecificDataLoading ? (
-          <div className="h-full relative">
-            <Loading />
-          </div>
         ) : (
           <div className="h-full relative">
             <ErrorComponent
-              message="Nie udało się załadować ostatniej aktywności."
+              title="Brak danych"
+              message="Student nie dostał jeszcze żadnych ocen."
               size={ErrorComponentSizes.COMPACT}
             />
           </div>

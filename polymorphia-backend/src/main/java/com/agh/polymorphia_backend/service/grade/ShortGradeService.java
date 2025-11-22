@@ -56,13 +56,12 @@ public class ShortGradeService {
 
     private StudentShortGradeResponseDto getShortGradeStudent(GradableEvent gradableEvent, Long studentId) {
         Course course = gradableEvent.getEventSection().getCourse();
-
-        accessAuthorizer.authorizeStudentDataAccess(gradableEvent, studentId);
-        return getShortGradeWithoutAuthorization(gradableEvent, studentId, course);
+        accessAuthorizer.authorizeStudentDataAccess(course, studentId);
+        return getShortGradeWithoutAuthorization(gradableEvent, studentId, course.getId());
     }
 
-    public StudentShortGradeResponseDto getShortGradeWithoutAuthorization(GradableEvent gradableEvent, Long studentId, Course course) {
-        Animal animal = animalService.getAnimal(studentId, course.getId());
+    public StudentShortGradeResponseDto getShortGradeWithoutAuthorization(GradableEvent gradableEvent, Long studentId, Long courseId) {
+        Animal animal = animalService.getAnimal(studentId, courseId);
         Optional<Grade> grade = gradeService.getGradeByAnimalIdAndGradableEventId(animal.getId(), gradableEvent.getId());
         List<CriterionGradeResponseDto> criteriaGrades = grade.map(criterionGradeService::getCriteriaGrades)
                 .orElse(Collections.emptyList());

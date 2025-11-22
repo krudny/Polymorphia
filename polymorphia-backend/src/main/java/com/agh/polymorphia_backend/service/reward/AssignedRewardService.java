@@ -37,7 +37,7 @@ import java.util.stream.Stream;
 @Service
 @AllArgsConstructor
 public class AssignedRewardService {
-    private static final String ASSIGNED_CHEST_NOT_FOUND = "Nie znaleziono przypisanej skrzynki.";
+    private static final String UNOPENED_ASSIGNED_CHEST_NOT_FOUND = "Nie znaleziono nieotwartej skrzynki, przypisanej do zwierzaka, o podanym ID.";
     private final AssignedChestRepository assignedChestRepository;
     private final AssignedItemRepository assignedItemRepository;
     private final AnimalService animalService;
@@ -85,21 +85,21 @@ public class AssignedRewardService {
         return totalBonusByEventSection;
     }
 
-    public AssignedChest getAssignedChestByIdAndAnimalIdWithoutLock(Long assignedChestId, Long animalId) {
+    public AssignedChest getUnopenedAssignedChestByIdWithoutLock(Long assignedChestId) {
         return assignedChestRepository
-                .findByIdAndAnimalId(assignedChestId, animalId)
+                .findNotUsedAssignedChestsById(assignedChestId)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
-                       ASSIGNED_CHEST_NOT_FOUND
+                        UNOPENED_ASSIGNED_CHEST_NOT_FOUND
                 ));
     }
 
-    public AssignedChest getAssignedChestByIdAndAnimalIdWithLock(Long assignedChestId, Long animalId) {
+    public AssignedChest getUnopenedAssignedChestByIdWithLock(Long assignedChestId) {
         return assignedChestRepository
-                .findByIdAndAnimalIdWithLock(assignedChestId, animalId)
+                .findNotUsedAssignedChestsByIdWithLock(assignedChestId)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
-                        ASSIGNED_CHEST_NOT_FOUND
+                        UNOPENED_ASSIGNED_CHEST_NOT_FOUND
                 ));
     }
 
@@ -151,40 +151,31 @@ public class AssignedRewardService {
     }
 
 
-    public boolean isLimitReached(Item item) {
-        AbstractRoleUser user = userService.getCurrentUser();
-        Long userId = user.getUserId();
-        UserType userRole = userService.getUserRole(user);
-        if (userRole.equals(UserType.COORDINATOR) || userRole.equals(UserType.INSTRUCTOR)) {
-            return false;
-        }
-
-        return getCurrentItemCount(userId, item, Optional.empty()) >= item.getLimit();
+    public boolean isLimitReached(Item item, Long animalId) {
+        return getCurrentItemCount(animalId, item, Optional.empty()) >= item.getLimit();
     }
-
 
     public boolean willLimitBeCrossedWithNewItems(Item item, Long studentId, Integer newItemsQuantity, Long criterionIdToIgnore) {
         UserType userRole = userService.getAnyUserRoleInCourse(item.getCourse().getId(), userService.findById(studentId).getId());
         if (userRole.equals(UserType.COORDINATOR) || userRole.equals(UserType.INSTRUCTOR)) {
             return false;
         }
-
-        return (getCurrentItemCount(studentId, item, Optional.of(criterionIdToIgnore)) + newItemsQuantity) > item.getLimit();
+        Long animalId = animalService.getAnimal(studentId, item.getCourse().getId()).getId();
+        return (getCurrentItemCount(animalId, item, Optional.of(criterionIdToIgnore)) + newItemsQuantity) > item.getLimit();
     }
 
-    public Long getCurrentItemCount(Long studentId, Item item, Optional<Long> criterionIdToIgnore) {
-        Animal animal = animalService.getAnimal(studentId, item.getCourse().getId());
-
+    public Long getCurrentItemCount(Long animalId, Item item, Optional<Long> criterionIdToIgnore) {
         List<AssignedItem> animalAssignedItems;
         if (criterionIdToIgnore.isPresent()) {
-            animalAssignedItems = getAnimalAssignedItemsWithoutCriterionItems(animal.getId(), criterionIdToIgnore.get());
+            animalAssignedItems = getAnimalAssignedItemsWithoutCriterionItems(animalId, criterionIdToIgnore.get());
         } else {
-            animalAssignedItems = getAnimalAssignedItems(animal.getId());
+            animalAssignedItems = getAnimalAssignedItems(animalId);
         }
 
         Map<Reward, Long> currentItemsByReward = countAssignedItemsByReward(animalAssignedItems);
         return currentItemsByReward.getOrDefault(item, 0L);
     }
+
 
     public Map<Reward, List<AssignedItem>> groupAssignedItemsByReward(List<AssignedItem> assignedItems) {
         return assignedItems.stream()
