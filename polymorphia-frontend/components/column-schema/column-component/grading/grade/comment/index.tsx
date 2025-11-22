@@ -3,7 +3,7 @@ import useGradingContext from "@/hooks/contexts/useGradingContext";
 import "./index.css";
 import { ChangeEvent } from "react";
 import { GradingReducerActions } from "@/providers/grading/reducer/types";
-import { CommentProps } from "./types";
+import { CommentProps } from "@/components/column-schema/column-component/grading/grade/comment/types";
 
 export default function Comment({ comment }: CommentProps) {
   const { dispatch } = useGradingContext();

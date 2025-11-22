@@ -12,7 +12,7 @@ import Criterion from "@/components/column-schema/column-component/grading/grade
 import CommentWrapper from "@/components/column-schema/column-component/grading/grade/criteria/comment-wrapper";
 import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
-import ColumnSwappableComponent from "../../../shared/column-swappable-component";
+import ColumnSwappableComponent from "@/components/column-schema/column-component/shared/column-swappable-component";
 import { CriteriaDetailsRequestDTO } from "@/interfaces/api/grade/criteria";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
 

@@ -2,7 +2,7 @@ import ProjectVariantInfo from "@/shared/project-variant-info";
 import ColumnComponent from "@/components/column-schema/column-component";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
-import ColumnSwappableComponent from "../../shared/column-swappable-component";
+import ColumnSwappableComponent from "@/components/column-schema/column-component/shared/column-swappable-component";
 import { ProjectVariantResponseDTO } from "@/interfaces/api/project";
 import {
   errorComponent,

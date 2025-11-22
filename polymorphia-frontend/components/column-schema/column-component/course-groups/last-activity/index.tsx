@@ -7,7 +7,7 @@ import useTargetContext from "@/hooks/contexts/useTargetContext";
 import useCourseGroupsContext from "@/hooks/contexts/useCourseGroupsContext";
 import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
-import ColumnSwappableComponent from "../../shared/column-swappable-component";
+import ColumnSwappableComponent from "@/components/column-schema/column-component/shared/column-swappable-component";
 import { StudentLastActivityDTO } from "@/interfaces/api/course-groups";
 
 export default function LastActivity() {

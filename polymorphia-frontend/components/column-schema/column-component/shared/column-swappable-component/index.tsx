@@ -1,4 +1,4 @@
-import { ColumnSwappableComponentProps } from "./types";
+import { ColumnSwappableComponentProps } from "@/components/column-schema/column-component/shared/column-swappable-component/types";
 import clsx from "clsx";
 import {
   baseSwapAnimationWrapperProps,

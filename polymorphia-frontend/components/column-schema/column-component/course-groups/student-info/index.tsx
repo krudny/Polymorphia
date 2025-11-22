@@ -14,7 +14,7 @@ import useStudentItems from "@/hooks/course/useStudentItems";
 import useStudentChests from "@/hooks/course/useStudentChests";
 import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
-import ColumnSwappableComponent from "../../shared/column-swappable-component";
+import ColumnSwappableComponent from "@/components/column-schema/column-component/shared/column-swappable-component";
 import { StudentSummaryResponseDTO } from "@/interfaces/api/student";
 import {
   EquipmentChestResponseDTO,

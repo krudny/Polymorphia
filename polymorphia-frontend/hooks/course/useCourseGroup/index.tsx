@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { UseCourseGroup } from "./types";
+import { UseCourseGroup } from "@/hooks/course/useCourseGroup/types";
 import UserService from "@/services/user";
 
 export default function useCourseGnoroup(

@@ -7,9 +7,9 @@ import useGradingContext from "@/hooks/contexts/useGradingContext";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
-import ColumnSwappableComponent from "../../../shared/column-swappable-component";
+import ColumnSwappableComponent from "@/components/column-schema/column-component/shared/column-swappable-component";
 import { SubmissionDetail } from "@/interfaces/api/grade/submission";
-import SubmissionDetailComponent from "../detail";
+import SubmissionDetailComponent from "@/components/column-schema/column-component/grading/submission/detail";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
 
 export default function SubmissionRequirement({

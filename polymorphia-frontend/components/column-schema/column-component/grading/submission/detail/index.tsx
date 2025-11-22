@@ -1,5 +1,5 @@
 import { SubmissionRequirementResponseDTO } from "@/interfaces/api/grade/submission";
-import { SubmissionDetailProps } from "./types";
+import { SubmissionDetailProps } from "@/components/column-schema/column-component/grading/submission/detail/types";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 
 export default function SubmissionDetailComponent({
