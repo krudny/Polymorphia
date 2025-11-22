@@ -50,7 +50,14 @@ export default function StudentView() {
         `/course/${eventType.toLowerCase()}/${eventSectionId}/${gradableEvents[0].id}`
       );
     }
-  }, [isLoading, gradableEvents, eventType, eventSectionId, router]);
+  }, [
+    isLoading,
+    gradableEvents,
+    eventType,
+    eventSectionId,
+    router,
+    areGradableEventsLoading,
+  ]);
 
   if (isLoading || (gradableEvents && gradableEvents.length < 2)) {
     return <Loading />;

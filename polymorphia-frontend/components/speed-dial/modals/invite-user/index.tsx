@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import Modal from "@/components/modal/Modal";
-import { InviteUserModalProps } from "./types";
-import ImportCSVModal from "../import-csv";
-import InviteUserToCourseModal from "./invite-to-course";
+import { InviteUserModalProps } from "@/components/speed-dial/modals/invite-user/types";
+import ImportCSVModal from "@/components/speed-dial/modals//import-csv";
 import {
   ImportCSVTypes,
   InviteSpecificType,
@@ -13,6 +12,7 @@ import {
 } from "@/interfaces/general";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import "./index.css";
+import InviteUserToCourseModal from "@/components/speed-dial/modals/invite-user/invite-to-course";
 
 export default function InviteUserModal({
   onClosedAction,

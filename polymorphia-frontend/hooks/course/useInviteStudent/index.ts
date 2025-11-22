@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { UseInviteUser } from "./types";
+import { UseInviteUser } from "@/hooks/course/useInviteStudent/types";
 import { InviteRequestDTO } from "@/interfaces/api/user";
 import useModalContext from "@/hooks/contexts/useModalContext";
 import UserService from "@/services/user";

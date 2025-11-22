@@ -1,5 +1,8 @@
 import "./index.css";
-import { ErrorComponentProps, ErrorComponentSizes } from "./types";
+import {
+  ErrorComponentProps,
+  ErrorComponentSizes,
+} from "@/components/error/types";
 
 export default function ErrorComponent({
   title = "Wystąpił błąd",

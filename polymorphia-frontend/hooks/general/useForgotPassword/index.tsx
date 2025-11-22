@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import PasswordService from "@/services/password";
-import { UseForgotPassword } from "./types";
+import { UseForgotPassword } from "@/hooks/general/useForgotPassword/types";
 import { ForgotPasswordRequestDTO } from "@/interfaces/api/password";
 
 export default function useForgotPassword(): UseForgotPassword {

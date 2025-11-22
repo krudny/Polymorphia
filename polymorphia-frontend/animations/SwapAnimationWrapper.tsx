@@ -83,5 +83,9 @@ export function SwapAnimationWrapper({
     animateToLatest();
   }, [animateToLatest, children, keyProp]);
 
-  return <div ref={containerRef}>{displayed}</div>;
+  return (
+    <div ref={containerRef} className="h-full flex-1">
+      {displayed}
+    </div>
+  );
 }

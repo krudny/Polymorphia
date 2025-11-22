@@ -3,9 +3,10 @@ import useGradingContext from "@/hooks/contexts/useGradingContext";
 import "./index.css";
 import { ChangeEvent } from "react";
 import { GradingReducerActions } from "@/providers/grading/reducer/types";
+import { CommentProps } from "@/components/column-schema/column-component/grading/grade/comment/types";
 
-export default function Comment() {
-  const { state, dispatch } = useGradingContext();
+export default function Comment({ comment }: CommentProps) {
+  const { dispatch } = useGradingContext();
 
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     dispatch({
@@ -20,7 +21,7 @@ export default function Comment() {
     <TextareaAutosize
       className="comment"
       placeholder="Dodaj komentarz..."
-      value={state.comment}
+      value={comment}
       onChange={handleChange}
       onBlur={handleChange}
       minRows={1}

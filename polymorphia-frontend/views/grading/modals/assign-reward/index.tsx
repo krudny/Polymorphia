@@ -47,7 +47,9 @@ function AssignRewardModalContent({
         (pr) => pr.assignableReward.reward.id === rewardId
       );
 
-      if (!rewardData) return prev;
+      if (!rewardData) {
+        return prev;
+      }
 
       const { reward } = rewardData.assignableReward;
       const existing = criterion.assignedRewards.find(

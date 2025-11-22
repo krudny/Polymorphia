@@ -1,4 +1,4 @@
-import { EvolutionStagesThresholdResponseDTO } from "../../../interfaces/api/student";
+import { EvolutionStagesThresholdResponseDTO } from "@/interfaces/api/student";
 
 export function distributeTo100(
   evolutionStages: EvolutionStagesThresholdResponseDTO[]

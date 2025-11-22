@@ -1,9 +1,9 @@
 import { XPCardColor } from "@/components/xp-card/types";
 import { Size } from "@/interfaces/general";
-import { TargetRequestDTO } from "@/interfaces/api/target";
+import { ProjectVariantResponseDTO } from "@/interfaces/api/project";
 
 export interface ProjectVariantInfoProps {
   size?: Size;
   color?: XPCardColor;
-  target: TargetRequestDTO | null;
+  projectVariants: ProjectVariantResponseDTO[];
 }

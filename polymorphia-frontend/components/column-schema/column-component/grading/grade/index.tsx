@@ -28,11 +28,23 @@ export default function Grade() {
     </div>
   );
 
-  const mainComponent = isGeneralDataError
-    ? () => errorComponent
-    : !criteria || isGeneralDataLoading || !targetState.selectedTarget
-      ? () => loadingComponent
-      : () => <GradeCriteria criteria={criteria} />;
+  const noCriteriaErrorComponent = (
+    <div className="h-[300px] relative">
+      <ErrorComponent
+        title="Brak kryteriów"
+        message="To zadanie nie posiada kryteriów oceny."
+        size={ErrorComponentSizes.COMPACT}
+      />
+    </div>
+  );
+
+  const mainComponent = isGeneralDataLoading
+    ? () => loadingComponent
+    : !criteria || isGeneralDataError
+      ? () => errorComponent
+      : criteria.length === 0
+        ? () => noCriteriaErrorComponent
+        : () => <GradeCriteria criteria={criteria} />;
 
   return (
     <ColumnComponent
