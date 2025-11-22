@@ -13,7 +13,7 @@ public class CourseGroupsMapper {
         return CourseGroupsResponseDto.builder()
                 .id(courseGroup.getId())
                 .name(courseGroup.getName())
-                .details("Details")
+                .room(courseGroup.getRoom())
                 .studentCount(courseGroup.getStudentCourseGroupAssignments().size())
                 .build();
     }

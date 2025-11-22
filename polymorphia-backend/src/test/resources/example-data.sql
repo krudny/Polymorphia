@@ -304,18 +304,18 @@ INSERT INTO
 VALUES
   (1, 'Programowanie obiektowe 2024/25', 'google.com', 5, 'images/evolution-stages/7.webp', 'images/evolution-stages/1.webp', 'images/evolution-stages/7.webp');
 INSERT INTO
-  course_groups (id, name, course_id, teaching_role_user_id)
+  course_groups (id, name, room, course_id, teaching_role_user_id)
 VALUES
-  (1, 'sp-pn-1315', 1, 4);
+  (1, 'sp-pn-1315', '3.27', 1, 4);
 INSERT INTO
-  course_groups (id, name, course_id, teaching_role_user_id)
+  course_groups (id, name, room, course_id, teaching_role_user_id)
 VALUES
-  (2, 'mi-13-00', 2, 4);
+  (2, 'mi-13-00', '3.28', 2, 4);
 INSERT INTO
-  course_groups (id, name, course_id, teaching_role_user_id)
+  course_groups (id, name, room, course_id, teaching_role_user_id)
 VALUES
-  (3, 'SP-pn-1500', 1, 4),
-  (4, 'mi-wt-1145', 1, 4);
+  (3, 'SP-pn-1500', '1.37', 1, 4),
+  (4, 'mi-wt-1145', '4.27', 1, 4);
 
 INSERT INTO
   user_course_roles (role, user_id, course_id)

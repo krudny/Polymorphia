@@ -1,14 +1,17 @@
 package com.agh.polymorphia_backend.dto.response.course_groups;
 
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 @Data
 @SuperBuilder
+@EqualsAndHashCode(callSuper = true)
 public class CourseGroupsResponseDto extends CourseGroupsShortResponseDto {
-    @NotNull
-    private final String details;
+    @NotEmpty
+    private final String room;
 
     @NotNull
     private final int studentCount;
