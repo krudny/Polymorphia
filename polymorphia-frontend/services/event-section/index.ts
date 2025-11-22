@@ -9,16 +9,11 @@ import {
   TargetType,
   TargetTypes,
 } from "@/interfaces/api/target";
-import { PointsSummaryResponseDTO } from "@/interfaces/api/points-summary";
-import { EventSectionResponseDTO } from "@/interfaces/api/course";
-import {
-  Roles,
-  StudentDetailsDTOWithName,
-  StudentDetailsDTOWithType,
-  UserDetailsDTO,
-} from "@/interfaces/api/user";
-import { ApiClient } from "@/services/api/client";
-import { TeachingRoleGradableEventResponseDTO } from "@/interfaces/api/gradable_event/types";
+import {PointsSummaryResponseDTO} from "@/interfaces/api/points-summary";
+import {EventSectionResponseDTO} from "@/interfaces/api/course";
+import {Roles, StudentDetailsDTOWithName, StudentDetailsDTOWithType, UserDetailsDTO,} from "@/interfaces/api/user";
+import {ApiClient} from "@/services/api/client";
+import {TeachingRoleGradableEventResponseDTO} from "@/interfaces/api/gradable_event/types";
 
 export const studentNames = [
   "Gerard Małoduszny",
