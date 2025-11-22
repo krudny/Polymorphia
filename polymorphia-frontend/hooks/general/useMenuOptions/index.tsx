@@ -31,7 +31,8 @@ export function useBottomMenuItems(): MenuOption[] {
 
 export function useBottomDesktopMenuItems(): MenuOption[] {
   return [
-    { icon: BellIcon, text: "Powiadomienia" },
+    // TODO: notifications
+    // { icon: BellIcon, text: "Powiadomienia" },
     {
       icon: LogOutIcon,
       text: "Wyloguj się",
