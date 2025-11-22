@@ -20,7 +20,7 @@ export default function useMarkdownReset(
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["markdown", request.resourceId],
+        queryKey: ["markdown", request.markdownType, request.resourceId],
       });
     },
   });
