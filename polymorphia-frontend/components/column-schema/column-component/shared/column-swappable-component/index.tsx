@@ -37,21 +37,32 @@ export default function ColumnSwappableComponent<T>({
     selectedTarget === null ? "noTarget" : targetKey + targetKeySuffix;
 
   let content;
+  switch (true) {
+    case selectedTarget === null:
+      content = undefined;
+      break;
 
-  if (selectedTarget === null) {
-    content = undefined;
-  } else if (isDataLoadingUtil) {
-    content = (
-      <div className={clsx("mt-2", "relative", minHeightClassName, className)}>
-        <Loading />
-      </div>
-    );
-  } else if (isDataErrorUtil) {
-    content = renderDataErrorComponent();
-  } else if (isDataEmpty) {
-    content = renderEmptyDataErrorComponent();
-  } else {
-    content = renderComponent(data, key);
+    case isDataLoadingUtil:
+      content = (
+        <div
+          className={clsx("mt-2", "relative", minHeightClassName, className)}
+        >
+          <Loading />
+        </div>
+      );
+      break;
+
+    case isDataErrorUtil:
+      content = renderDataErrorComponent();
+      break;
+
+    case isDataEmpty:
+      content = renderEmptyDataErrorComponent();
+      break;
+
+    default:
+      content = renderComponent(data, key);
+      break;
   }
 
   return (
