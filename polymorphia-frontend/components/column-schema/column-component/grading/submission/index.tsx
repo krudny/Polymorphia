@@ -26,13 +26,21 @@ export default function Submissions() {
     </div>
   );
 
-  const mainComponent = isGeneralDataError
-    ? () => errorComponent
-    : !submissionRequirements ||
-        isGeneralDataLoading ||
-        !targetState.selectedTarget
-      ? () => loadingComponent
-      : () => <SubmissionRequirement requirements={submissionRequirements} />;
+  const noSubmissionRequirementsErrorComponent = (
+    <ErrorComponent
+      title="Brak wymagań"
+      message="To zadanie nie wymaga oddania."
+      size={ErrorComponentSizes.COMPACT}
+    />
+  );
+
+  const mainComponent = isGeneralDataLoading
+    ? () => loadingComponent
+    : !submissionRequirements || isGeneralDataError
+      ? () => errorComponent
+      : submissionRequirements.length === 0
+        ? () => noSubmissionRequirementsErrorComponent
+        : () => <SubmissionRequirement requirements={submissionRequirements} />;
 
   return (
     <ColumnComponent

@@ -6,5 +6,6 @@ export interface ColumnSwappableComponentProps<T> {
   isDataError: boolean;
   renderComponent: (data: T, key: string) => ReactNode;
   renderDataErrorComponent: () => ReactNode;
+  renderEmptyDataErrorComponent?: () => ReactNode;
   minHeightClassName: string;
 }

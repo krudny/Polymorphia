@@ -5,26 +5,17 @@ import "./index.css";
 import AccordionSection from "@/components/accordion/AccordionSection";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import { useFadeInAnimate } from "@/animations/FadeIn";
-import Loading from "@/components/loading";
-import {
-  baseSwapAnimationWrapperProps,
-  SwapAnimationWrapper,
-} from "@/animations/SwapAnimationWrapper";
-import { getKeyForSelectedTarget } from "@/providers/grading/utils/getKeyForSelectedTarget";
-import useTargetContext from "@/hooks/contexts/useTargetContext";
 import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
+import ColumnSwappableComponent from "../../../shared/column-swappable-component";
+import { SubmissionDetail } from "@/interfaces/api/grade/submission";
+import SubmissionDetailComponent from "../detail";
 
 export default function SubmissionRequirement({
   requirements,
 }: SubmissionsRequirementProps) {
-  const {
-    state,
-    isSpecificDataLoading,
-    isSpecificDataError,
-    submitSubmissions,
-  } = useGradingContext();
-  const { selectedTarget } = useTargetContext();
+  const { state, isSpecificDataLoading, isSpecificDataError } =
+    useGradingContext();
   const wrapperRef = useFadeInAnimate(!!requirements);
   const isXL = useMediaQuery({ minWidth: "1400px" });
   const accordionSections = [...requirements.map(({ id }) => String(id))];
@@ -32,42 +23,13 @@ export default function SubmissionRequirement({
     accordionSections.length > 0 && isXL ? [accordionSections[0]] : []
   );
 
-  const requirementLoadingComponent = (
-    <div className="h-[146px] mt-2 relative">
-      <Loading />
-    </div>
-  );
-
   const requirementErrorComponent = (
-    <div className="h-[146px] mt-2 relative">
-      <ErrorComponent
-        message="Nie udało się załadować oddanego zadania."
-        size={ErrorComponentSizes.COMPACT}
-      />
-    </div>
+    <ErrorComponent
+      title=""
+      message="Nie udało się załadować oddanego zadania."
+      size={ErrorComponentSizes.COMPACT}
+    />
   );
-
-  const handleChange = (requirementId: number) => {
-    const requirement = requirements.find(
-      (requirement) => requirement.id === requirementId
-    );
-
-    if (!requirement) {
-      return;
-    }
-
-    submitSubmissions({
-      ...state.submissionDetails,
-      [requirement.id]: {
-        ...state.submissionDetails[requirement.id],
-        isLocked: !state.submissionDetails[requirement.id].isLocked,
-      },
-    });
-  };
-
-  const handleCopy = (url: string) => {
-    navigator.clipboard.writeText(url);
-  };
 
   return (
     <div ref={wrapperRef} className="opacity-0">
@@ -91,53 +53,20 @@ export default function SubmissionRequirement({
               }
               headerClassName="submissions-requirement-accordion-header"
             >
-              <SwapAnimationWrapper
-                {...baseSwapAnimationWrapperProps}
-                keyProp={
-                  detail && !isSpecificDataLoading && !isSpecificDataError
-                    ? getKeyForSelectedTarget(selectedTarget)
-                    : (isSpecificDataLoading ? "loading" : "error") +
-                      getKeyForSelectedTarget(selectedTarget)
-                }
-              >
-                {detail && !isSpecificDataLoading && !isSpecificDataError ? (
-                  <div className="submissions-requirement">
-                    <div className="submissions-requirement-url">
-                      <input
-                        type="url"
-                        className="submissions-requirement-url-input"
-                        placeholder="Nie przesłano URL do tej części zadania"
-                        value={detail.url}
-                        disabled
-                      />
-                      <div className="submissions-requirement-url-symbols">
-                        <div className="submissions-requirement-url-symbol">
-                          <span
-                            className="material-symbols submissions-requirement-url-symbol-clickable"
-                            onClick={() => handleChange(requirement.id)}
-                          >
-                            {detail.isLocked ? "lock" : "lock_open_right"}
-                          </span>
-                        </div>
-                        {detail.url.length > 0 && (
-                          <div className="submissions-requirement-url-symbol">
-                            <span
-                              className="material-symbols submissions-requirement-url-symbol-clickable"
-                              onClick={() => handleCopy(detail.url)}
-                            >
-                              content_copy
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                ) : isSpecificDataLoading ? (
-                  requirementLoadingComponent
-                ) : (
-                  requirementErrorComponent
+              <ColumnSwappableComponent<SubmissionDetail>
+                data={detail}
+                isDataLoading={isSpecificDataLoading}
+                isDataError={isSpecificDataError}
+                renderComponent={(data, key) => (
+                  <SubmissionDetailComponent
+                    key={key}
+                    detail={data}
+                    requirement={requirement}
+                  />
                 )}
-              </SwapAnimationWrapper>
+                renderDataErrorComponent={() => requirementErrorComponent}
+                minHeightClassName="h-[146px]"
+              />
             </AccordionSection>
           );
         })}

@@ -14,16 +14,26 @@ export default function ColumnSwappableComponent<T>({
   isDataError,
   renderComponent,
   renderDataErrorComponent,
+  renderEmptyDataErrorComponent,
   minHeightClassName,
 }: ColumnSwappableComponentProps<T>) {
   const { selectedTarget } = useTargetContext();
 
+  const isDataLoadingUtil = isDataLoading;
+  const isDataErrorUtil = isDataError || data === undefined;
+  const isDataEmpty =
+    renderEmptyDataErrorComponent !== undefined &&
+    Array.isArray(data) &&
+    data.length === 0;
+
   const targetKey = getKeyForSelectedTarget(selectedTarget);
-  const targetKeySuffix = isDataLoading
+  const targetKeySuffix = isDataLoadingUtil
     ? "_loading"
-    : isDataError || data === undefined
+    : isDataErrorUtil
       ? "_error"
-      : "";
+      : isDataEmpty
+        ? "_empty"
+        : "";
   const key =
     selectedTarget === null ? "noTarget" : targetKey + targetKeySuffix;
 
@@ -31,21 +41,23 @@ export default function ColumnSwappableComponent<T>({
 
   if (selectedTarget === null) {
     content = undefined;
-  } else if (isDataLoading) {
+  } else if (isDataLoadingUtil) {
     content = (
       <div className="relative">
         <Loading />
       </div>
     );
-  } else if (isDataError || data === undefined) {
+  } else if (isDataErrorUtil) {
     content = renderDataErrorComponent();
+  } else if (isDataEmpty) {
+    content = renderEmptyDataErrorComponent();
   } else {
     content = renderComponent(data, key);
   }
 
   return (
     <SwapAnimationWrapper {...baseSwapAnimationWrapperProps} keyProp={key}>
-      <div className={clsx(minHeightClassName)}>{content}</div>
+      <div className={clsx("mt-2", minHeightClassName)}>{content}</div>
     </SwapAnimationWrapper>
   );
 }
