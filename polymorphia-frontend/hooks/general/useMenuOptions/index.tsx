@@ -1,7 +1,6 @@
 import { MenuOption } from "@/components/navigation/types";
 import {
   BadgeHelpIcon,
-  BellIcon,
   GraduationCapIcon,
   LogOutIcon,
   MedalIcon,
