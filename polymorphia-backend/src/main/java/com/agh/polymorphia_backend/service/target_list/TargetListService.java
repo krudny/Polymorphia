@@ -120,8 +120,8 @@ public class TargetListService {
             List<StudentTargetDataResponseDto> members = entry.getValue().stream()
                     .map(targetListMapper::toStudentTargetDataResponseDto).sorted(memberComparator).toList();
             List<StudentShortGradeResponseDto> membersShortGrades = members.stream()
-                    .map(member -> shortGradeService.getShortGradeWithoutAuthorization(gradableEvent, member.id(), course))
-                    .toList();
+                .map(member -> shortGradeService.getShortGradeWithoutAuthorization(gradableEvent, member.id(), course.getId()))
+                .toList();
 
             return StudentGroupTargetResponseDto.builder()
                     .groupId(courseGroupId)

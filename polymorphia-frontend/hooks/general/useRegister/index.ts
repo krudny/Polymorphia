@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { UseRegister } from "./types";
+import { UseRegister } from "@/hooks/general/useRegister/types";
 import { RegisterRequestDTO, Roles } from "@/interfaces/api/user";
 import { redirectToNextStep } from "@/app/(welcome)/redirectHandler";
 import { useRouter } from "next/navigation";

@@ -72,14 +72,14 @@ export default function PickCSVHeaders() {
 
       <div className="import-csv-button-wrapper">
         <ButtonWithBorder
-          text="Zatwierdź"
-          className="!mx-0 !py-0 !w-full"
-          onClick={handlePickHeaders}
-        />
-        <ButtonWithBorder
           text="Powrót"
           className="!mx-0 !py-0 !w-full"
           onClick={goBackToUpload}
+        />
+        <ButtonWithBorder
+          text="Zatwierdź"
+          className="!mx-0 !py-0 !w-full"
+          onClick={handlePickHeaders}
         />
       </div>
     </div>

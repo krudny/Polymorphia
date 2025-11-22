@@ -1,6 +1,6 @@
 import Modal from "@/components/modal/Modal";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
-import { SubmissionsModalContentProps } from "./types";
+import { SubmissionsModalContentProps } from "@/components/speed-dial/modals/submission/types";
 import useSubmissionRequirements from "@/hooks/course/useSubmissionRequirements";
 import useSubmissionDetails from "@/hooks/course/useSubmissionDetails";
 import useUserContext, {

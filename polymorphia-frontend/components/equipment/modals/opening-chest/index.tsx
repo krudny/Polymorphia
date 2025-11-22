@@ -7,6 +7,7 @@ import { EquipmentActions } from "@/providers/equipment/reducer/types";
 export default function OpeningChestModal({
   equipment,
   onClose,
+  targetStudentIdOverride,
 }: OpeningChestModalProps) {
   const { dispatch } = useEquipmentContext();
 
@@ -22,7 +23,10 @@ export default function OpeningChestModal({
       title={equipment.base.name ?? ""}
       subtitle={equipment.base.behaviorText ?? ""}
     >
-      <OpeningChestModalContent equipment={equipment} />
+      <OpeningChestModalContent
+        equipment={equipment}
+        targetStudentIdOverride={targetStudentIdOverride}
+      />
     </Modal>
   );
 }

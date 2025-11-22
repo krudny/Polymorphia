@@ -7,7 +7,7 @@ import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.model.user.student.Student;
-import com.agh.polymorphia_backend.repository.course.AnimalRepository;
+import com.agh.polymorphia_backend.repository.user.student.AnimalRepository;
 import com.agh.polymorphia_backend.repository.course.StudentCourseGroupRepository;
 import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
 import com.agh.polymorphia_backend.service.user.UserService;
@@ -42,13 +42,20 @@ public class AnimalService {
     public Long validateAndGetAnimalId(Long courseId) {
         accessAuthorizer.authorizeCourseAccess(courseId);
         AbstractRoleUser student = userService.getCurrentUser();
-
         return getAnimal(student.getUserId(), courseId).getId();
     }
 
     public boolean hasAnimalInCourse(Long courseId) {
         User user = userService.getCurrentUser().getUser();
         return animalRepository.findByCourseIdAndStudentId(courseId, user.getId()).isPresent();
+    }
+
+    public Long getAnimalIdForAssignedChest(Long assignedChestId){
+        return animalRepository.findByAssignedChestId(assignedChestId);
+    }
+
+    public Long getStudentIdForAnimalId(Long animalId){
+        return studentCourseGroupRepository.getStudentIdByAnimalId(animalId);
     }
 
     @Transactional

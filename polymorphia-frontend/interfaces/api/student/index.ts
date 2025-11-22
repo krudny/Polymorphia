@@ -15,6 +15,7 @@ export interface StudentSummaryResponseDTO {
   rightEvolutionStage: EvolutionStagesThresholdResponseDTO;
   totalStudentsInCourse: number;
   position: number;
+  totalXp: number;
 }
 
 export interface EvolutionStagesThresholdResponseDTO {

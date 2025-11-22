@@ -25,7 +25,11 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
            ge.roadMapOrderIndex as roadMapOrderIndex,
            ge.isHidden as isHidden,
            ge.isLocked as isLocked,
-           CASE WHEN COUNT(DISTINCT g.id) > 0 THEN CAST(SUM(cg.xp) AS BigDecimal) ELSE NULL END as gainedXp,
+           (SELECT CAST(SUM(sub_cg.xp) AS BigDecimal)
+              FROM CriterionGrade sub_cg
+              JOIN sub_cg.grade sub_g
+              WHERE sub_g.gradableEvent.id = ge.id
+                AND sub_g.animal.id = :animalId) as gainedXp,
            CASE WHEN COUNT(DISTINCT cr.criterion.id) > 0 THEN true ELSE false END as hasPossibleReward,
            CASE WHEN COUNT(DISTINCT g.id) > 0 THEN true ELSE false END as isGraded,
            CASE WHEN COUNT(DISTINCT g.id) > 0 AND COUNT(DISTINCT ar.id) > 0 THEN true ELSE false END as isRewardAssigned

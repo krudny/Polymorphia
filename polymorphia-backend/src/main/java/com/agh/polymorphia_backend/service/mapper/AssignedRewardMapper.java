@@ -18,32 +18,32 @@ import org.springframework.stereotype.Service;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class AssignedRewardMapper {
-
     private final RewardMapper rewardMapper;
 
-    public List<EquipmentItemResponseDto> assignedItemsToResponseDto(List<AssignedItem> assignedRewards) {
+    public List<EquipmentItemResponseDto> assignedItemsToResponseDto(List<AssignedItem> assignedRewards, Long animalId) {
         return assignedRewards.stream()
                 .collect(Collectors.groupingBy(AssignedReward::getReward))
                 .entrySet().stream()
-                .map(this::itemGroupToResponseDto)
+                .map(entry -> itemGroupToResponseDto(entry, animalId))
                 .sorted(Comparator.comparing(dto -> dto.getBase().getOrderIndex()))
                 .collect(Collectors.toList());
     }
 
-    public List<EquipmentChestResponseDto> assignedChestsToResponseDto(List<AssignedChest> assignedChests) {
+    public List<EquipmentChestResponseDto> assignedChestsToResponseDto(List<AssignedChest> assignedChests, Long animalId) {
         return assignedChests.stream()
-                .map(this::chestToResponseDto)
+                .map(assignedChest -> chestToResponseDto(assignedChest, animalId))
                 .toList();
     }
 
-    public AssignedRewardResponseDto itemToAssignedRewardDtoWithType(AssignedItem assignedItem) {
+    public AssignedRewardResponseDto itemToAssignedRewardDtoWithType(AssignedItem assignedItem, Long animalId) {
         return AssignedRewardResponseDto.builder()
-                .base(rewardMapper.rewardToRewardResponseDto(assignedItem.getReward()))
+                .base(rewardMapper.rewardToRewardResponseDto(assignedItem.getReward(), Optional.of(animalId)))
                 .details(getItemDetailsDto(assignedItem))
                 .build();
     }
@@ -71,7 +71,7 @@ public class AssignedRewardMapper {
                 .toList();
     }
 
-    private EquipmentItemResponseDto itemGroupToResponseDto(Map.Entry<Reward, List<AssignedItem>> entry) {
+    private EquipmentItemResponseDto itemGroupToResponseDto(Map.Entry<Reward, List<AssignedItem>> entry, Long animalId) {
         Reward reward = entry.getKey();
         List<AssignedItem> assignedItems = entry.getValue();
 
@@ -81,18 +81,16 @@ public class AssignedRewardMapper {
                 .toList();
 
         return EquipmentItemResponseDto.builder()
-                .base(rewardMapper.rewardToRewardResponseDto(reward))
+                .base(rewardMapper.rewardToRewardResponseDto(reward, Optional.of(animalId)))
                 .details(details)
                 .build();
     }
 
-    private EquipmentChestResponseDto chestToResponseDto(AssignedChest assignedChest) {
+    private EquipmentChestResponseDto chestToResponseDto(AssignedChest assignedChest, Long animalId) {
         return EquipmentChestResponseDto.builder()
-                .base(rewardMapper.rewardToRewardResponseDto(assignedChest.getReward()))
-                .details(getChestDetailsDto(assignedChest))
+                .base(rewardMapper.rewardToRewardResponseDto(assignedChest.getReward(), Optional.of(animalId)))
+                .details(getChestDetailsDto(assignedChest, animalId))
                 .build();
-
-
     }
 
 
@@ -107,9 +105,9 @@ public class AssignedRewardMapper {
     }
 
 
-    private ChestAssignmentDetailsResponseDto getChestDetailsDto(AssignedChest assignedChest) {
+    private ChestAssignmentDetailsResponseDto getChestDetailsDto(AssignedChest assignedChest, Long animalId) {
         List<AssignedRewardResponseDto> receivedItems = assignedChest.getAssignedItems().stream()
-                .map(this::itemToAssignedRewardDtoWithType)
+                .map(assignedItem -> itemToAssignedRewardDtoWithType(assignedItem, animalId))
                 .sorted(Comparator.comparing(response -> response.base().getOrderIndex()))
                 .toList();
 

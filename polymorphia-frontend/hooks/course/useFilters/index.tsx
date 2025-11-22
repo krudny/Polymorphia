@@ -4,7 +4,7 @@ import {
   FilterState,
   FilterAction,
   FilterActions,
-} from "./types";
+} from "@/hooks/course/useFilters/types";
 import { filterReducer } from "@/hooks/course/useFilters/utils/filterReducer";
 import { getInitialState } from "@/hooks/course/useFilters/utils/getInitialState";
 import { validateFilters } from "@/hooks/course/useFilters/utils/validateFilters";

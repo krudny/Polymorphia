@@ -1,5 +1,5 @@
 import useEventSectionTitle from "@/hooks/title/useEventSectionTitle";
-import { TitleRule } from "./types";
+import { TitleRule } from "@/providers/title/types";
 import useCourseGroupTitle from "@/hooks/title/useCourseGroupTitle";
 import useGradableEventTitle from "@/hooks/title/useGradableEventTitle";
 

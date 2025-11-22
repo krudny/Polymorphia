@@ -1,5 +1,5 @@
 import useMarkdownContext from "@/hooks/contexts/useMarkdownContext";
-import MarkdownEditor from "./markdown-editor";
+import MarkdownEditor from "@/components/markdown/markdown-editor";
 import MarkdownViewer from "@/components/markdown/markdown-viewer";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import "./index.css";

@@ -1,4 +1,4 @@
-import { StudentProfileResponseDTO } from "../../../interfaces/api/student";
+import { StudentProfileResponseDTO } from "@/interfaces/api/student";
 
 export interface UseStudentProfile {
   data: StudentProfileResponseDTO | undefined;

@@ -19,6 +19,10 @@ public class DbInit {
 
     @PostConstruct
     public void init() {
+        if (initialUserProperties.email() == null || initialUserProperties.password() == null) {
+            return;
+        }
+
         if (userRepository.findByEmail(initialUserProperties.email()).isEmpty()) {
             User user = User.builder()
                     .firstName(initialUserProperties.firstName())

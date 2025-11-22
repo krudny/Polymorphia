@@ -3,7 +3,7 @@ package com.agh.polymorphia_backend.service.grade;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.grade.Grade;
 import com.agh.polymorphia_backend.model.user.student.Animal;
-import com.agh.polymorphia_backend.repository.gradable_event.GradeRepository;
+import com.agh.polymorphia_backend.repository.grade.GradeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

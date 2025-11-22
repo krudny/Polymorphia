@@ -1,7 +1,11 @@
-import { TargetResponseDTO, TargetTypes } from "@/interfaces/api/target";
+import {
+  TargetRequestDTO,
+  TargetResponseDTO,
+  TargetTypes,
+} from "@/interfaces/api/target";
 
 export function getKeyForSelectedTarget(
-  selectedTarget: TargetResponseDTO | null
+  selectedTarget: TargetResponseDTO | TargetRequestDTO | null
 ): string | undefined {
   if (selectedTarget === null) {
     return undefined;

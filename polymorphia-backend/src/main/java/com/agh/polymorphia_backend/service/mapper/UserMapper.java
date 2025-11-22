@@ -8,7 +8,6 @@ import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
-import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.user.UserService;
 import lombok.AllArgsConstructor;
 import org.hibernate.Hibernate;
@@ -22,7 +21,6 @@ public class UserMapper {
 
     private final HallOfFameService hallOfFameService;
     private final UserService userService;
-    private final AnimalService animalService;
 
     public BaseUserDetailsResponseDto toBaseUserDetailsResponseDto(User user, UserType userType) {
         Course course = user.getPreferredCourse();
@@ -37,8 +35,7 @@ public class UserMapper {
     }
 
     public BaseUserDetailsResponseDto toStudentDetailsResponseDto(User student, Course course) {
-        Animal animal = animalService.getAnimal(student.getId(), course.getId());
-        HallOfFameEntry hallOfFame = hallOfFameService.getStudentHallOfFame(animal);
+        HallOfFameEntry hallOfFame = hallOfFameService.getStudentHallOfFame(student.getId(), course.getId());
 
         return StudentDetailsResponseDto.builder()
                 .id(student.getId())

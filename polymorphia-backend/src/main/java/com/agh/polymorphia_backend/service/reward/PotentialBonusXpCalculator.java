@@ -228,7 +228,7 @@ public class PotentialBonusXpCalculator {
 
     private void calculatePotentialPercentageBonusXp(Long animalId, Map<Long, BigDecimal> flatBonusByEventSection, AssignedItem assignedItem) {
         PercentageBonusItem item = (PercentageBonusItem) assignedItem.getReward();
-        if (assignedRewardService.isLimitReached(item)) {
+        if (assignedRewardService.isLimitReached(item, animalId)) {
             return;
         }
         Long eventSectionId = item.getEventSection().getId();
