@@ -14,10 +14,12 @@ import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
 import ColumnSwappableComponent from "../../../shared/column-swappable-component";
 import { CriteriaDetailsRequestDTO } from "@/interfaces/api/grade/criteria";
+import useTargetContext from "@/hooks/contexts/useTargetContext";
 
 export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
   const { state, isSpecificDataLoading, isSpecificDataError, submitGrade } =
     useGradingContext();
+  const { selectedTarget } = useTargetContext();
   const accordionRef = useRef<AccordionRef>(null);
   const wrapperRef = useFadeInAnimate(!!criteria);
   const isMd = useMediaQuery({ minWidth: "768px" });
@@ -81,6 +83,7 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
                     criterionSectionErrorComponent
                   }
                   minHeightClassName="h-80"
+                  selectedTarget={selectedTarget}
                 />
               </AccordionSection>
             );
@@ -101,6 +104,7 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
               )}
               renderDataErrorComponent={() => commentSectionErrorComponent}
               minHeightClassName="h-[100px]"
+              selectedTarget={selectedTarget}
             />
           </AccordionSection>
         </Accordion>

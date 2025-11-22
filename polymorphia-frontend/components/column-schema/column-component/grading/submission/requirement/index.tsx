@@ -10,12 +10,14 @@ import { ErrorComponentSizes } from "@/components/error/types";
 import ColumnSwappableComponent from "../../../shared/column-swappable-component";
 import { SubmissionDetail } from "@/interfaces/api/grade/submission";
 import SubmissionDetailComponent from "../detail";
+import useTargetContext from "@/hooks/contexts/useTargetContext";
 
 export default function SubmissionRequirement({
   requirements,
 }: SubmissionsRequirementProps) {
   const { state, isSpecificDataLoading, isSpecificDataError } =
     useGradingContext();
+  const { selectedTarget } = useTargetContext();
   const wrapperRef = useFadeInAnimate(!!requirements);
   const isXL = useMediaQuery({ minWidth: "1400px" });
   const accordionSections = [...requirements.map(({ id }) => String(id))];
@@ -66,6 +68,7 @@ export default function SubmissionRequirement({
                 )}
                 renderDataErrorComponent={() => requirementErrorComponent}
                 minHeightClassName="h-[146px]"
+                selectedTarget={selectedTarget}
               />
             </AccordionSection>
           );

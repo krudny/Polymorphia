@@ -1,3 +1,4 @@
+import { TargetRequestDTO, TargetResponseDTO } from "@/interfaces/api/target";
 import { ReactNode } from "react";
 
 export interface ColumnSwappableComponentProps<T> {
@@ -8,4 +9,6 @@ export interface ColumnSwappableComponentProps<T> {
   renderDataErrorComponent: () => ReactNode;
   renderEmptyDataErrorComponent?: () => ReactNode;
   minHeightClassName: string;
+  className?: string;
+  selectedTarget: TargetResponseDTO | TargetRequestDTO | null;
 }

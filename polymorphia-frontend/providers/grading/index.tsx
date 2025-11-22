@@ -26,12 +26,12 @@ import useCriteria from "@/hooks/course/useCriteria";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
 import {
   DEFAULT_SEARCH_BY,
-  DEFAULT_SORT_BY_TOTAL,
   DEFAULT_SORT_ORDER_ASC,
   DEFAULT_GROUPS,
   DEFAULT_GRADE_STATUS,
   DEFAULT_SORT_BY_NAME,
 } from "@/shared/filter-defaults";
+import useProjectVariant from "@/hooks/course/useProjectVariant";
 
 export const GradingContext = createContext<
   GradingContextInterface | undefined
@@ -116,6 +116,11 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const { mutate: mutateSubmissions } = useSubmissionsUpdate({
     target: targetState.selectedTarget,
   });
+  const {
+    data: projectVariants,
+    isLoading: isProjectVariantsLoading,
+    isError: isProjectVariantsError,
+  } = useProjectVariant({ target: targetState.selectedTarget });
 
   useEffect(() => {
     if (!grade || !criteria) {
@@ -175,11 +180,16 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
         dispatch,
         criteria,
         submissionRequirements,
+        projectVariants,
         isGeneralDataLoading:
           isCriteriaLoading || isSubmissionRequirementsLoading,
         isGeneralDataError: isCriteriaError || isSubmissionRequirementsError,
-        isSpecificDataLoading: isGradeLoading || isSubmissionDetailsLoading,
-        isSpecificDataError: isGradeError || isSubmissionDetailsError,
+        isSpecificDataLoading:
+          isGradeLoading ||
+          isSubmissionDetailsLoading ||
+          isProjectVariantsLoading,
+        isSpecificDataError:
+          isGradeError || isSubmissionDetailsError || isProjectVariantsError,
         submitGrade,
         submitSubmissions,
       }}

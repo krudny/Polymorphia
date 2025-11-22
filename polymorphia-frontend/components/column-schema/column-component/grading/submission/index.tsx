@@ -27,11 +27,13 @@ export default function Submissions() {
   );
 
   const noSubmissionRequirementsErrorComponent = (
-    <ErrorComponent
-      title="Brak wymagań"
-      message="To zadanie nie wymaga oddania."
-      size={ErrorComponentSizes.COMPACT}
-    />
+    <div className="h-[300px] relative">
+      <ErrorComponent
+        title="Brak wymagań"
+        message="To zadanie nie wymaga oddania."
+        size={ErrorComponentSizes.COMPACT}
+      />
+    </div>
   );
 
   const mainComponent = isGeneralDataLoading

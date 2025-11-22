@@ -1,4 +1,3 @@
-import useTargetContext from "@/hooks/contexts/useTargetContext";
 import { ColumnSwappableComponentProps } from "./types";
 import clsx from "clsx";
 import {
@@ -16,9 +15,9 @@ export default function ColumnSwappableComponent<T>({
   renderDataErrorComponent,
   renderEmptyDataErrorComponent,
   minHeightClassName,
+  className,
+  selectedTarget,
 }: ColumnSwappableComponentProps<T>) {
-  const { selectedTarget } = useTargetContext();
-
   const isDataLoadingUtil = isDataLoading;
   const isDataErrorUtil = isDataError || data === undefined;
   const isDataEmpty =
@@ -43,7 +42,7 @@ export default function ColumnSwappableComponent<T>({
     content = undefined;
   } else if (isDataLoadingUtil) {
     content = (
-      <div className="relative">
+      <div className={clsx("mt-2", "relative", minHeightClassName, className)}>
         <Loading />
       </div>
     );
@@ -57,7 +56,9 @@ export default function ColumnSwappableComponent<T>({
 
   return (
     <SwapAnimationWrapper {...baseSwapAnimationWrapperProps} keyProp={key}>
-      <div className={clsx("mt-2", minHeightClassName)}>{content}</div>
+      <div className={clsx("mt-2", minHeightClassName, className)}>
+        {content}
+      </div>
     </SwapAnimationWrapper>
   );
 }

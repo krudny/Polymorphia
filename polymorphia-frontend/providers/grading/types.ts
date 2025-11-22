@@ -9,6 +9,7 @@ import {
   SubmissionRequirementResponseDTO,
 } from "@/interfaces/api/grade/submission";
 import { CriterionResponseDTO } from "@/interfaces/api/grade/criteria";
+import { ProjectVariantResponseDTO } from "@/interfaces/api/project";
 
 export interface GradingContextInterface {
   isFiltersLoading: boolean;
@@ -16,6 +17,7 @@ export interface GradingContextInterface {
   filters: ReturnType<typeof useFilters<GradingFilterId>>;
   criteria: CriterionResponseDTO[] | undefined;
   submissionRequirements: SubmissionRequirementResponseDTO[] | undefined;
+  projectVariants: ProjectVariantResponseDTO[] | undefined;
   isGeneralDataLoading: boolean;
   isGeneralDataError: boolean;
   isSpecificDataLoading: boolean;
