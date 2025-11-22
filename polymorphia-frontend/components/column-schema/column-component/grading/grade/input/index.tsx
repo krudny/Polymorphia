@@ -4,9 +4,11 @@ import useGradingContext from "@/hooks/contexts/useGradingContext";
 import "./index.css";
 import { GradingReducerActions } from "@/providers/grading/reducer/types";
 
-export default function GradingInput({ criterion }: GradingInputProps) {
-  const { state, dispatch } = useGradingContext();
-  const currentXp = state.criteria[Number(criterion.id)]?.gainedXp ?? "";
+export default function GradingInput({
+  criterion,
+  gainedXp,
+}: GradingInputProps) {
+  const { dispatch } = useGradingContext();
 
   const handleXPChange = (event: ChangeEvent<HTMLInputElement>) => {
     const xp = event.target.value;
@@ -34,7 +36,7 @@ export default function GradingInput({ criterion }: GradingInputProps) {
     <input
       type="text"
       placeholder="Punkty"
-      value={currentXp}
+      value={gainedXp}
       onChange={handleXPChange}
       className="input"
     />

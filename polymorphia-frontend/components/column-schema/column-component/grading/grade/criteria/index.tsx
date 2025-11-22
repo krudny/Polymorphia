@@ -1,7 +1,6 @@
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import AccordionSection from "@/components/accordion/AccordionSection";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import Loading from "@/components/loading";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import { AccordionRef } from "@/providers/accordion/types";
 import { Fragment, useRef } from "react";
@@ -11,40 +10,23 @@ import "./index.css";
 import { GradeCriteriaProps } from "@/components/column-schema/column-component/grading/grade/criteria/types";
 import Criterion from "@/components/column-schema/column-component/grading/grade/criteria/criterion";
 import CommentWrapper from "@/components/column-schema/column-component/grading/grade/criteria/comment-wrapper";
-import { getKeyForSelectedTarget } from "@/providers/grading/utils/getKeyForSelectedTarget";
-import {
-  baseSwapAnimationWrapperProps,
-  SwapAnimationWrapper,
-} from "@/animations/SwapAnimationWrapper";
-import useTargetContext from "@/hooks/contexts/useTargetContext";
 import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
+import ColumnSwappableComponent from "../../../shared/column-swappable-component";
+import { CriteriaDetailsRequestDTO } from "@/interfaces/api/grade/criteria";
 
 export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
   const { state, isSpecificDataLoading, isSpecificDataError, submitGrade } =
     useGradingContext();
-  const { selectedTarget } = useTargetContext();
   const accordionRef = useRef<AccordionRef>(null);
   const wrapperRef = useFadeInAnimate(!!criteria);
   const isMd = useMediaQuery({ minWidth: "768px" });
-
-  const criterionSectionLoadingComponent = (
-    <div className="h-[320px] mt-2 relative">
-      <Loading />
-    </div>
-  );
 
   const criterionSectionErrorComponent = (
     <ErrorComponent
       message="Nie udało się załadować kryterium."
       size={ErrorComponentSizes.COMPACT}
     />
-  );
-
-  const commentSectionLoadingComponent = (
-    <div className="h-[100px] mt-2 relative">
-      <Loading />
-    </div>
   );
 
   const commentSectionErrorComponent = (
@@ -84,31 +66,22 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
                 title={criterion.name}
                 headerClassName="grading-accordion-header"
               >
-                <SwapAnimationWrapper
-                  {...baseSwapAnimationWrapperProps}
-                  keyProp={
-                    criterionGrade &&
-                    !isSpecificDataLoading &&
-                    !isSpecificDataError
-                      ? getKeyForSelectedTarget(selectedTarget)
-                      : (isSpecificDataLoading ? "loading" : "error") +
-                        getKeyForSelectedTarget(selectedTarget)
-                  }
-                >
-                  {criterionGrade &&
-                  !isSpecificDataLoading &&
-                  !isSpecificDataError ? (
+                <ColumnSwappableComponent<CriteriaDetailsRequestDTO>
+                  data={criterionGrade}
+                  isDataLoading={isSpecificDataLoading}
+                  isDataError={isSpecificDataError}
+                  renderComponent={(data, key) => (
                     <Criterion
-                      key={getKeyForSelectedTarget(selectedTarget)}
+                      key={key}
                       criterion={criterion}
-                      criterionGrade={criterionGrade}
+                      criterionGrade={data}
                     />
-                  ) : isSpecificDataLoading ? (
-                    criterionSectionLoadingComponent
-                  ) : (
-                    criterionSectionErrorComponent
                   )}
-                </SwapAnimationWrapper>
+                  renderDataErrorComponent={() =>
+                    criterionSectionErrorComponent
+                  }
+                  minHeightClassName="h-80"
+                />
               </AccordionSection>
             );
           })}
@@ -119,23 +92,16 @@ export default function GradeCriteria({ criteria }: GradeCriteriaProps) {
             title="Komentarz"
             headerClassName="grading-accordion-header"
           >
-            <SwapAnimationWrapper
-              {...baseSwapAnimationWrapperProps}
-              keyProp={
-                !isSpecificDataLoading && !isSpecificDataError
-                  ? getKeyForSelectedTarget(selectedTarget)
-                  : (isSpecificDataLoading ? "loading" : "error") +
-                    getKeyForSelectedTarget(selectedTarget)
-              }
-            >
-              {!isSpecificDataLoading && !isSpecificDataError ? (
-                <CommentWrapper />
-              ) : isSpecificDataLoading ? (
-                commentSectionLoadingComponent
-              ) : (
-                commentSectionErrorComponent
+            <ColumnSwappableComponent<string>
+              data={state.comment}
+              isDataLoading={isSpecificDataLoading}
+              isDataError={isSpecificDataError}
+              renderComponent={(data, key) => (
+                <CommentWrapper key={key} comment={data} />
               )}
-            </SwapAnimationWrapper>
+              renderDataErrorComponent={() => commentSectionErrorComponent}
+              minHeightClassName="h-[100px]"
+            />
           </AccordionSection>
         </Accordion>
       </div>

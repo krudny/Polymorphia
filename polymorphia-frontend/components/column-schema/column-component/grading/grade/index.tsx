@@ -28,10 +28,10 @@ export default function Grade() {
     </div>
   );
 
-  const mainComponent = isGeneralDataError
-    ? () => errorComponent
-    : !criteria || isGeneralDataLoading || !targetState.selectedTarget
-      ? () => loadingComponent
+  const mainComponent = isGeneralDataLoading
+    ? () => loadingComponent
+    : !criteria || isGeneralDataError
+      ? () => errorComponent
       : () => <GradeCriteria criteria={criteria} />;
 
   return (
