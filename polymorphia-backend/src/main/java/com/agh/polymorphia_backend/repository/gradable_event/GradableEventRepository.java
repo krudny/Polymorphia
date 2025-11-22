@@ -91,7 +91,6 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
         (:scope = 'COURSE' AND co.id = :idValue)
         OR (:scope = 'EVENT_SECTION' AND es.id = :idValue)
     )
-    AND ge.is_hidden = false
     GROUP BY
         ge.id,
         ge.name,
