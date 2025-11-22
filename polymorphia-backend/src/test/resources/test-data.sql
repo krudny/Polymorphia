@@ -103,12 +103,12 @@ VALUES (3, 1, 'COORDINATOR'),
        (13, 4, 'INSTRUCTOR');
 
 -- Course Groups
-INSERT INTO course_groups (id, name, course_id, teaching_role_user_id)
-VALUES (1, 'MI-SR12', 1, 4),
-       (2, 'BM-SR13', 1, 11),
-       (3, 'BM-SR15', 1, 11),
-       (4, 'BM-SR15', 4, 4),
-       (5, 'BM-SR16', 4, 13);
+INSERT INTO course_groups (id, name, room, course_id, teaching_role_user_id)
+VALUES (1, 'MI-SR12', '3.27', 1, 4),
+       (2, 'BM-SR13', '3.28', 1, 11),
+       (3, 'BM-SR15', '1.37', 1, 11),
+       (4, 'BM-SR15', '4.27', 4, 4),
+       (5, 'BM-SR16', '3.27', 4, 13);
 
 -- Animals
 INSERT INTO animals (id, name)
