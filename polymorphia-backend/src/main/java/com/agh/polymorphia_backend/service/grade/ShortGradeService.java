@@ -74,7 +74,7 @@ public class ShortGradeService {
         return StudentShortGradeResponseDto.builder()
                 .isGraded(grade.isPresent())
                 .id(grade.map(Grade::getId).orElse(null))
-                .comment(grade.map(Grade::getComment).orElse(null))
+                .comment(grade.map(Grade::getComment).orElse(""))
                 .hasReward(hasReward)
                 .criteria(criteriaGrades)
                 .build();

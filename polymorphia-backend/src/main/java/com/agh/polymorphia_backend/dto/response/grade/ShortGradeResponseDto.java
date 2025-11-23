@@ -18,6 +18,7 @@ public class ShortGradeResponseDto {
     @NotNull
     private Boolean isGraded;
 
+    @NotNull
     private String comment;
 
     private Boolean hasReward;

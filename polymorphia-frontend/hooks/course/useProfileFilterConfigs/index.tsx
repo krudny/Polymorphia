@@ -28,11 +28,11 @@ export function useProfileFilterConfigs(): UseProfileFilterConfigs {
             { value: "bonuses", label: "Bonusy" },
             { value: "total", label: "Suma" },
           ],
-          min: Math.min(4, eventSections.length),
-          max: Math.min(4, eventSections.length),
+          min: Math.min(4, eventSections.length + 2),
+          max: Math.min(4, eventSections.length + 2),
           defaultValues: [
             ...eventSections
-              .slice(0, Math.min(2, Math.max(0, eventSections.length - 1)))
+              .slice(0, Math.min(2, eventSections.length))
               .map((eventSection) => eventSection.name),
             "bonuses",
             "total",
