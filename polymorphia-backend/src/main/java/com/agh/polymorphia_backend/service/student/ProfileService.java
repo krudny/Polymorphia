@@ -57,6 +57,7 @@ public class ProfileService {
             builder = StudentSummaryResponseDto.builder()
                     .studentName(hallOfFameEntry.getStudentName())
                     .animalName(hallOfFameEntry.getAnimalName())
+                    .imageUrl(hallOfFameEntry.getImageUrl())
                     .position(hallOfFameEntry.getPosition());
         }
 
