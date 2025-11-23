@@ -2,6 +2,7 @@ import { tv } from "tailwind-variants";
 import { UserPointsProps } from "@/components/user-points/types";
 import "./index.css";
 import { Sizes } from "@/interfaces/general";
+import clsx from "clsx";
 
 const headerVariant = tv({
   base: "transition-all",
@@ -26,9 +27,10 @@ export default function UserPoints({
   xpDetails,
 }: UserPointsProps) {
   const items = Object.entries(xpDetails);
+  const columns = Math.max(1, Math.min(4, items.length));
 
   return (
-    <div className="user-points">
+    <div className={clsx("user-points", `grid-cols-${columns}`)}>
       {items.map(([item, xp], i) => (
         <div
           className={`user-point ${separators && i !== items.length - 1 ? "user-point-separators" : ""}`}
