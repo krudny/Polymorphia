@@ -160,7 +160,7 @@ function AssignRewardModalContent({
           <div className="assign-reward-button-wrapper">
             <ButtonWithBorder
               text="Przypisz"
-              className="w-full !border-3 !rounded-md"
+              className="w-full !border-3 !rounded-xl"
               onClick={() => {
                 handleAssign();
                 closeModal();

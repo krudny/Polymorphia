@@ -7,9 +7,13 @@ export default function useGradeUpdate(): UseGradeUpdate {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: GradeService.submitGrade,
+    mutationFn: async (data) => {
+      return toast.promise(GradeService.submitGrade(data), {
+        loading: "Zapisywanie oceny...",
+        success: "Ocena została pomyślnie zapisana!",
+      });
+    },
     onSuccess: () => {
-      toast.success("Ocena została pomyślnie zapisana!");
       queryClient.invalidateQueries({
         queryKey: ["grade"],
       });

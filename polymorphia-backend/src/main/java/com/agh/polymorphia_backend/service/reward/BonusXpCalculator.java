@@ -167,12 +167,12 @@ public class BonusXpCalculator {
     }
 
     private void setPercentageBonusItemBonusXp(AssignedItem item, Map<Long, BigDecimal> totalPointsPerEventSection) {
-        Long eventSectionId = ((Item) (item.getReward()))
+        Long eventSectionId = ((Item) Hibernate.unproxy(item.getReward()))
                 .getEventSection()
                 .getId();
 
         BigDecimal percentageBonus = BigDecimal.valueOf(
-                ((PercentageBonusItem) item.getReward())
+                ((PercentageBonusItem) Hibernate.unproxy(item.getReward()))
                         .getPercentageBonus()
         );
 
