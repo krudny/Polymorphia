@@ -1,0 +1,49 @@
+package com.agh.polymorphia_backend.model.token;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.ZonedDateTime;
+
+@Entity
+@Table(name = "tokens")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Token {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true)
+    private String token;
+
+    @NotNull
+    private String email;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "token_type", nullable = false, length = 20)
+    private TokenType tokenType;
+
+    @NotNull
+    private ZonedDateTime expiryDate;
+
+    @NotNull
+    private ZonedDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        if (createdAt == null) {
+            createdAt = ZonedDateTime.now();
+        }
+        if (expiryDate == null) {
+            expiryDate = ZonedDateTime.now().plusHours(72);
+        }
+    }
+}

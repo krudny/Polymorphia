@@ -3,12 +3,9 @@ import Image from "next/image";
 import { useScaleShow } from "@/animations/ScaleShow";
 import { API_STATIC_URL } from "@/services/api";
 import "./index.css";
-import { useTitle } from "@/components/navigation/TitleContext";
-import { useEffect } from "react";
 import UserPoints from "@/components/user-points/UserPoints";
 import { useMediaQuery } from "react-responsive";
 import Loading from "@/components/loading";
-import { Roles } from "@/interfaces/api/user";
 import useUserContext from "@/hooks/contexts/useUserContext";
 import useStudentProfile from "@/hooks/course/useStudentProfile";
 import FiltersModal from "@/components/filters-modals/FiltersModal";
@@ -17,20 +14,20 @@ import { useFilters } from "@/hooks/course/useFilters";
 import { filterXpDetails } from "@/providers/hall-of-fame/utils/filterXpDetails";
 import { ProfileFilterId } from "@/app/(logged-in)/profile/types";
 import ProfileProgressBar from "@/components/progressbar/profile";
-import { ProfileProvider } from "@/providers/profile/ProfileContext";
-import SpeedDial from "@/components/speed-dial/SpeedDial";
-import { SpeedDialKeys } from "@/components/speed-dial/types";
+import { ProfileProvider } from "@/providers/profile";
 import useProfileContext from "@/hooks/contexts/useProfileContext";
-import { notFound } from "next/navigation";
 import { distributeTo100 } from "@/components/progressbar/profile/distributeTo100";
+import ErrorComponent from "@/components/error";
+import { Roles } from "@/interfaces/api/user";
+import { Sizes } from "@/interfaces/general";
+import { SpeedDialKeys } from "@/components/speed-dial/types";
+import { SpeedDial } from "@/components/speed-dial";
 
 function ProfileContent() {
-  const { setTitle } = useTitle();
-
   // TODO: refactor the rest of the logic to ProfileContext
   const { areFiltersOpen, setAreFiltersOpen } = useProfileContext();
   const isSm = useMediaQuery({ maxWidth: 920 });
-  const { data: profile, isLoading } = useStudentProfile();
+  const { data: profile, isLoading, isError } = useStudentProfile();
   const wrapperRef = useScaleShow(!isLoading);
   const userContext = useUserContext();
   const {
@@ -41,16 +38,12 @@ function ProfileContent() {
 
   const filters = useFilters<ProfileFilterId>(filterConfigs ?? []);
 
-  useEffect(() => {
-    setTitle("Profil");
-  }, [setTitle]);
-
-  if (userContext.userRole !== Roles.STUDENT || (!profile && !isLoading)) {
-    notFound();
+  if (isLoading || !userContext.userRole) {
+    return <Loading />;
   }
 
-  if (isLoading || !userContext.userRole || !profile) {
-    return <Loading />;
+  if (isError || !profile || userContext.userRole !== Roles.STUDENT) {
+    return <ErrorComponent message="Nie udało się załadować profilu." />;
   }
 
   const { imageUrl, fullName, animalName, position } = userContext.userDetails;
@@ -91,8 +84,8 @@ function ProfileContent() {
             <div className="profile-user-points-xs">
               <UserPoints
                 separators
-                titleSize="sm"
-                xpSize="md"
+                titleSize={Sizes.SM}
+                xpSize={Sizes.MD}
                 maxCols={6}
                 xpDetails={filteredXpDetails}
               />
@@ -100,16 +93,16 @@ function ProfileContent() {
             <div className="profile-user-points-md">
               <UserPoints
                 separators
-                titleSize="sm"
-                xpSize="md"
+                titleSize={Sizes.SM}
+                xpSize={Sizes.MD}
                 xpDetails={filteredXpDetails}
               />
             </div>
             <div className="profile-user-points-2xl">
               <UserPoints
                 separators
-                titleSize="md"
-                xpSize="lg"
+                titleSize={Sizes.MD}
+                xpSize={Sizes.LG}
                 xpDetails={filteredXpDetails}
               />
             </div>
@@ -127,7 +120,7 @@ function ProfileContent() {
             ]}
             numSquares={2}
             segmentSizes={[0, 100, 0]}
-            size={"sm"}
+            size={Sizes.SM}
           />
         </div>
 
@@ -138,7 +131,7 @@ function ProfileContent() {
             evolutionStages={profile.evolutionStageThresholds}
             numSquares={profile.evolutionStageThresholds.length}
             segmentSizes={distributeTo100(profile.evolutionStageThresholds)}
-            size={isSm ? "sm" : "md"}
+            size={isSm ? Sizes.SM : Sizes.MD}
           />
         </div>
         <FiltersModal<ProfileFilterId>

@@ -1,22 +1,23 @@
-import { XPCardColors } from "@/components/xp-card/types";
+import { XPCardColor } from "@/components/xp-card/types";
 
 export interface XPCardPointsProps {
-  points: string | undefined;
+  points?: string;
   isSumLabelVisible?: boolean;
   isXPLabelVisible?: boolean;
   hasChest?: boolean;
-  color?: XPCardColors;
+  shouldGreyOutReward?: boolean;
+  color?: XPCardColor;
 }
 
 export interface XPCardTextProps {
   topText: string;
   bottomText: string;
-  color?: XPCardColors;
+  color?: XPCardColor;
 }
 
 export interface XPCardProjectVariantProps {
   shortCode: string;
-  color?: XPCardColors;
+  color?: XPCardColor;
 }
 
 export interface XPCardImageProps {
@@ -24,13 +25,8 @@ export interface XPCardImageProps {
   alt: string;
 }
 
-export interface XPCardDoubleImageProps {
-  images: singleImage[];
-}
-
-interface singleImage {
-  imageUrl: string;
-  alt: string;
+export interface XPCardImageWithLockProps extends XPCardImageProps {
+  isLocked: boolean;
 }
 
 export interface XPCardAssignProps {
@@ -38,5 +34,5 @@ export interface XPCardAssignProps {
   maxAssigned: number;
   increment: () => void;
   decrement: () => void;
-  color?: XPCardColors;
+  color?: XPCardColor;
 }

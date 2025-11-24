@@ -1,15 +1,14 @@
 "use client";
 
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useScaleShow } from "@/animations/ScaleShow";
-import { useTitle } from "@/components/navigation/TitleContext";
 import toast from "react-hot-toast";
 import { useTheme } from "next-themes";
 import useNavigationContext from "@/hooks/contexts/useNavigationContext";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import "./index.css";
-import useUserCourses from "@/hooks/course/useUserCourses";
+import useAvailableCourses from "@/hooks/course/useAvailableCourses";
 import Loading from "@/components/loading";
 import usePreferredCourseUpdate from "@/hooks/course/usePreferredCourseUpdate";
 import Selector from "@/components/selector";
@@ -22,12 +21,11 @@ export default function Settings() {
     isSidebarLockedClosed,
     setIsSidebarLockedClosed,
   } = useNavigationContext();
-  const { setTitle } = useTitle();
   const wrapperRef = useScaleShow();
   const { resolvedTheme, setTheme } = useTheme();
   const { courseId } = useUserDetails();
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const { data: courses, isLoading } = useUserCourses();
+  const { data: courses, isLoading } = useAvailableCourses();
   const currentCourse = courses?.find((course) => course.id === courseId);
   const [changePasswordModalVisible, setChangePasswordModalVisible] =
     useState(false);
@@ -37,7 +35,12 @@ export default function Settings() {
 
   const toggleSidebarLockOpened = () => {
     if (isSidebarLockedClosed) {
-      toast.error("Nie można!");
+      toast.error(
+        "Nie można włączyć trybu ‘zawsze otwarty’, gdy sidebar jest ustawiony jako ‘zawsze zamknięty’.",
+        {
+          id: "settings",
+        }
+      );
       return;
     }
     setIsSidebarLockedOpened(!isSidebarLockedOpened);
@@ -45,15 +48,16 @@ export default function Settings() {
 
   const toggleSidebarLockClosed = () => {
     if (isSidebarLockedOpened) {
-      toast.error("Nie można!");
+      toast.error(
+        "Nie można włączyć trybu ‘zawsze zamknięty’, gdy sidebar jest ustawiony jako ‘zawsze otwarty’.",
+        {
+          id: "settings",
+        }
+      );
       return;
     }
     setIsSidebarLockedClosed(!isSidebarLockedClosed);
   };
-
-  useEffect(() => {
-    setTitle("Ustawienia");
-  }, [setTitle]);
 
   if (isLoading || !courses || !currentCourse) {
     return <Loading />;
@@ -61,7 +65,6 @@ export default function Settings() {
 
   return (
     <div ref={wrapperRef} className="settings-outer-wrapper">
-      <h1>Tymczasowe ustawienia</h1>
       <div className="settings-option-wrapper">
         <h3>Sidebar zawsze otwarty</h3>
         <ButtonWithBorder

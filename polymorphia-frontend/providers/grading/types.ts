@@ -1,33 +1,36 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch } from "react";
 import { useFilters } from "@/hooks/course/useFilters";
 import {
   GradingReducerActionType,
   GradingReducerState,
-} from "@/providers/grading/gradingReducer/types";
-import { TargetResponseDTO } from "@/interfaces/api/grade/target";
+} from "@/providers/grading/reducer/types";
 import {
-  SubmissionDetailsResponseDTO,
+  SubmissionDetails,
   SubmissionRequirementResponseDTO,
 } from "@/interfaces/api/grade/submission";
 import { CriterionResponseDTO } from "@/interfaces/api/grade/criteria";
+import { ProjectVariantResponseDTO } from "@/interfaces/api/project";
 
-export type GradingContextInterface = {
-  areFiltersOpen: boolean;
-  setAreFiltersOpen: Dispatch<SetStateAction<boolean>>;
+export interface GradingContextInterface {
   isFiltersLoading: boolean;
   isFiltersError: boolean;
   filters: ReturnType<typeof useFilters<GradingFilterId>>;
-  search: string;
-  setSearch: (search: string) => void;
-  targets: TargetResponseDTO[] | undefined;
   criteria: CriterionResponseDTO[] | undefined;
   submissionRequirements: SubmissionRequirementResponseDTO[] | undefined;
+  projectVariants: ProjectVariantResponseDTO[] | undefined;
   isGeneralDataLoading: boolean;
+  isGeneralDataError: boolean;
   isSpecificDataLoading: boolean;
+  isSpecificDataError: boolean;
   state: GradingReducerState;
   dispatch: Dispatch<GradingReducerActionType>;
   submitGrade: () => void;
-  submitSubmissions: (submissionDetails: SubmissionDetailsResponseDTO) => void;
-};
+  submitSubmissions: (submissionDetails: SubmissionDetails) => void;
+}
 
-export type GradingFilterId = "sortOrder" | "sortBy" | "groups" | "gradeStatus";
+export type GradingFilterId =
+  | "searchBy"
+  | "sortOrder"
+  | "sortBy"
+  | "groups"
+  | "gradeStatus";

@@ -1,3 +1,3 @@
 export interface RegisterFormProps {
-  invitationToken: string;
+  token: string;
 }

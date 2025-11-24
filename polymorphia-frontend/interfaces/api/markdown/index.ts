@@ -6,7 +6,7 @@ export interface MarkdownResponseDTO {
 
 export interface MarkdownRequestDTO {
   resourceId: number;
-  type: MarkdownType;
+  markdownType: MarkdownType;
   markdown: string;
 }
 
@@ -16,5 +16,5 @@ export interface SourceMarkdownResponseDTO {
 
 export interface MarkdownParamsRequest {
   resourceId: number;
-  type: MarkdownType;
+  markdownType: MarkdownType;
 }

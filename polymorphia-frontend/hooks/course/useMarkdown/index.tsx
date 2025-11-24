@@ -5,17 +5,17 @@ import { MarkdownType } from "@/interfaces/general";
 import { UseMarkdown } from "@/hooks/course/useMarkdown/types";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
-export function useMarkdown(type: MarkdownType): UseMarkdown {
+export function useMarkdown(markdownType: MarkdownType): UseMarkdown {
   const { gradableEventId } = useEventParams();
   const { courseId } = useUserDetails();
 
   const resourceId = gradableEventId || courseId;
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["markdown", resourceId],
-    queryFn: () => MarkdownService.getMarkdown({ type, resourceId }),
+    queryKey: ["markdown", markdownType, resourceId],
+    queryFn: () => MarkdownService.getMarkdown({ markdownType, resourceId }),
     enabled: !!resourceId,
-    staleTime: 1000 * 60,
+    staleTime: 1000 * 60 * 5,
   });
 
   return { data, isLoading, isError };

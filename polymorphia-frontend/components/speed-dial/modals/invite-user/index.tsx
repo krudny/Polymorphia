@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import Modal from "@/components/modal/Modal";
-import { InviteUserModalProps } from "./types";
-import ImportCSVModal from "../import-csv";
-import InviteUserToCourseModal from "./invite-to-course";
+import { InviteUserModalProps } from "@/components/speed-dial/modals/invite-user/types";
+import ImportCSVModal from "@/components/speed-dial/modals//import-csv";
 import {
   ImportCSVTypes,
   InviteSpecificType,
@@ -13,7 +12,7 @@ import {
 } from "@/interfaces/general";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import "./index.css";
-import toast from "react-hot-toast";
+import InviteUserToCourseModal from "@/components/speed-dial/modals/invite-user/invite-to-course";
 
 export default function InviteUserModal({
   onClosedAction,
@@ -50,8 +49,17 @@ export default function InviteUserModal({
       return <InviteUserToCourseModal onClosedAction={onClosedAction} />;
 
     case InviteSpecificTypes.GROUP_MANUAL:
-      toast.error("Not implemented");
-      break;
+      return (
+        <Modal
+          isDataPresented={true}
+          onClosed={onClosedAction}
+          title="Zaproś użytkownika do grupy"
+        >
+          <div className="text-2xl my-4">
+            Ta funkcjonalność nie została jeszcze zaimplementowana.
+          </div>
+        </Modal>
+      );
 
     case InviteSpecificTypes.COURSE_CSV:
       return (

@@ -3,7 +3,6 @@ package com.agh.polymorphia_backend.model.user;
 import com.agh.polymorphia_backend.model.course.Course;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -34,6 +33,7 @@ public class User {
     private String password;
 
     @ManyToOne()
+    @ToString.Exclude
     @JoinColumn(name = "preferred_course_id")
     private Course preferredCourse;
 }

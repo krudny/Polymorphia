@@ -1,7 +1,11 @@
 package com.agh.polymorphia_backend.service.user;
 
-import com.agh.polymorphia_backend.dto.request.user.ChangePasswordRequestDTO;
-import com.agh.polymorphia_backend.model.user.*;
+import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
+import com.agh.polymorphia_backend.model.user.User;
+import com.agh.polymorphia_backend.model.user.UserCourseRole;
+import com.agh.polymorphia_backend.model.user.UserType;
+import com.agh.polymorphia_backend.model.user.student.Student;
+import com.agh.polymorphia_backend.model.user.undefined.UndefinedUser;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.repository.user.role.CoordinatorRepository;
@@ -15,7 +19,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -26,17 +29,14 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class UserService implements UserDetailsService {
-    public static final String USER_HAS_NO_VALID_ROLES = "User should have exactly one role";
-    public static final String USER_NOT_FOUND = "User does not exist in the database";
-    private static final String INVALID_OLD_PASSWORD = "Invalid old password";
-    private static final String FAILED_TO_CHANGE_PASSWORD = "Failed to change password";
-    private static final String INVALID_NEW_PASSWORD = "New password is not matching";
+    public static final String USER_NOT_FOUND = "Nie znaleziono użytkownika.";
+    public static final String USER_WITH_EMAIL_NOT_FOUND = "Nie znaleziono użytkownika z emailem %s.";
+    public final static String INVALID_ROLE = "Nieprawidłowa rola użytkownika.";
     private final UserRepository userRepository;
     private final StudentRepository studentRepository;
     private final CoordinatorRepository coordinatorRepository;
     private final InstructorRepository instructorRepository;
     private final UserCourseRoleRepository userCourseRoleRepository;
-    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -60,10 +60,15 @@ public class UserService implements UserDetailsService {
                 .collect(Collectors.toSet());
 
         if (roles.size() != 1) {
-            throw new IllegalStateException(USER_HAS_NO_VALID_ROLES);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Użytkownik powinien mieć przypisaną dokładnie jedną rolę.");
         }
 
         return roles.iterator().next();
+    }
+
+    public User findById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono użytkownika."));
     }
 
     public UserType getCurrentUserRole() {
@@ -71,29 +76,18 @@ public class UserService implements UserDetailsService {
         return getUserRole(user);
     }
 
+    public UserType getUserRoleInCourse(Long courseId) {
+        return getAnyUserRoleInCourse(courseId, getCurrentUser().getUserId());
+    }
+
+    public UserType getAnyUserRoleInCourse(Long courseId, Long userId) {
+        return userCourseRoleRepository.findByUserIdAndCourseId(userId, courseId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono użytkownika w kursie."))
+                .getRole();
+    }
 
     public String getFullName(User user) {
         return String.join(" ", user.getFirstName(), user.getLastName());
-    }
-
-    public void changePassword(ChangePasswordRequestDTO requestDTO) {
-        User user = getCurrentUser().getUser();
-
-        if (!requestDTO.getNewPassword().equals(requestDTO.getConfirmNewPassword())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INVALID_NEW_PASSWORD);
-        }
-
-        if (!passwordEncoder.matches(requestDTO.getOldPassword(), user.getPassword())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INVALID_OLD_PASSWORD);
-        }
-
-        try {
-            user.setPassword(passwordEncoder.encode(requestDTO.getNewPassword()));
-            userRepository.save(user);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FAILED_TO_CHANGE_PASSWORD);
-        }
-
     }
 
     public void updateSecurityCredentials(User user) {
@@ -108,9 +102,19 @@ public class UserService implements UserDetailsService {
         SecurityContextHolder.getContext().setAuthentication(newAuth);
     }
 
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_WITH_EMAIL_NOT_FOUND, email)));
+    }
+
+    public Student getStudentByIndexNumber(Integer indexNumber) {
+        return studentRepository.findByIndexNumber(indexNumber)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono użytkownika o podanym numerze indeksu"));
+    }
+
     private UserDetails buildUndefinedUser(String email) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND, email)));
+                .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_WITH_EMAIL_NOT_FOUND, email)));
         return UndefinedUser.builder()
                 .user(user)
                 .build();
@@ -123,7 +127,7 @@ public class UserService implements UserDetailsService {
             case STUDENT -> studentRepository.findById(userId);
             case INSTRUCTOR -> instructorRepository.findById(userId);
             case COORDINATOR -> coordinatorRepository.findById(userId);
-            default -> throw new UsernameNotFoundException(String.format(USER_NOT_FOUND, email));
-        }).orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND, email)));
+            default -> throw new UsernameNotFoundException(String.format(USER_WITH_EMAIL_NOT_FOUND, email));
+        }).orElseThrow(() -> new UsernameNotFoundException(String.format(USER_WITH_EMAIL_NOT_FOUND, email)));
     }
 }

@@ -1,5 +1,5 @@
 import { UseMutationResult } from "@tanstack/react-query";
-import { ChangePasswordDTO } from "@/interfaces/api/user";
+import { ChangePasswordDTO } from "@/interfaces/api/password";
 
 export interface UseChangePasswordProps {
   form: {

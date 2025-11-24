@@ -10,7 +10,7 @@ export default function CourseGroupCard(
   return (
     <XPCard
       title={courseGroup.name.toUpperCase()}
-      subtitle={courseGroup.details ?? ""}
+      subtitle={courseGroup.room}
       color="sky"
       rightComponent={
         <XPCardText

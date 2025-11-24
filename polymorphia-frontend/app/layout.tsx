@@ -3,15 +3,20 @@
 import "../styles/globals.css";
 import localFont from "next/font/local";
 import { League_Gothic } from "next/font/google";
-import { QueryClient } from "@tanstack/query-core";
+import { QueryClient, QueryCache, MutationCache } from "@tanstack/query-core";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactNode, useState } from "react";
 import { Toaster } from "react-hot-toast";
-import { TitleProvider } from "@/components/navigation/TitleContext";
+import toast from "react-hot-toast";
 import { ThemeProvider } from "next-themes";
 import { ThemeProvider as ThemeProviderMui } from "@mui/material";
+import { useRouter } from "next/navigation";
 import { themeConfig } from "@/components/speed-dial/config";
 import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
+import { TitleProvider } from "@/providers/title/TitleContext";
+import { GENERAL_APPLICATION_ROUTES } from "@/providers/title/routes";
+import { ApiError } from "@/services/api/error";
+import handleLogoutRedirect from "@/services/api/handle-logout-redirect";
 
 const leagueGothic = League_Gothic({
   subsets: ["latin"],
@@ -32,7 +37,54 @@ export default function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
-  const [queryClient] = useState(() => new QueryClient());
+  const router = useRouter();
+
+  const handleApiError = (error: Error) => {
+    if (!(error instanceof ApiError)) {
+      return;
+    }
+
+    if (error.status === 401) {
+      error.message = "Sesja wygasła. Zaloguj się ponownie.";
+      void handleLogoutRedirect({ router, redirectPath: "/" });
+    }
+
+    if (
+      error.status === 404 &&
+      error.message.startsWith("No static resource")
+    ) {
+      error.message = "Wystąpił nieoczekiwany błąd";
+    }
+
+    if (error.status === 503) {
+      router.push("/");
+    }
+
+    const message =
+      error.message.trim().length > 0
+        ? error.message
+        : "Wystąpił nieoczekiwany błąd. Spróbuj ponownie.";
+
+    toast.error(message, {
+      id: "api-error-toast",
+    });
+  };
+
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        queryCache: new QueryCache({
+          onError: (error) => {
+            handleApiError(error);
+          },
+        }),
+        mutationCache: new MutationCache({
+          onError: (error) => {
+            handleApiError(error);
+          },
+        }),
+      })
+  );
 
   return (
     <html lang="pl" className="overflow-hidden" suppressHydrationWarning>
@@ -50,7 +102,7 @@ export default function RootLayout({
             enableSystem
             storageKey="theme"
           >
-            <TitleProvider>
+            <TitleProvider routes={GENERAL_APPLICATION_ROUTES}>
               <QueryClientProvider client={queryClient}>
                 <Toaster toastOptions={{ style: { fontSize: "1.5rem" } }} />
                 <BackgroundWrapper className="hero-background-wrapper">

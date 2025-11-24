@@ -81,16 +81,16 @@ export default function UploadCSV(): ReactNode {
       {selectedFile && (
         <div className="import-csv-button-wrapper">
           <ButtonWithBorder
+            text="Usuń"
+            className="!mx-0 !py-0 !w-full"
+            onClick={goBackToUpload}
+          />
+          <ButtonWithBorder
             text={
               csvHeadersMutation.isPending ? "Przesyłanie" : "Analizuj plik"
             }
             className="!mx-0 !py-0 !w-full"
             onClick={handleUpload}
-          />
-          <ButtonWithBorder
-            text="Usuń"
-            className="!mx-0 !py-0 !w-full"
-            onClick={goBackToUpload}
           />
         </div>
       )}

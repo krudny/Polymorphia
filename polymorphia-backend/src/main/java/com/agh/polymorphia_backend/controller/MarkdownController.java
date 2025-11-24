@@ -7,7 +7,6 @@ import com.agh.polymorphia_backend.service.markdown.MarkdownService;
 import com.agh.polymorphia_backend.service.markdown.MarkdownType;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -44,7 +43,7 @@ public class MarkdownController {
             @RequestBody @Valid MarkdownRequestDto requestDTO) {
 
         markdownService.setMarkdown(type, resourceId, requestDTO.getMarkdown());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{type}/{resourceId}/reset")
@@ -54,6 +53,6 @@ public class MarkdownController {
             @PathVariable Long resourceId) {
 
         markdownService.resetMarkdown(type, resourceId);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.noContent().build();
     }
 }

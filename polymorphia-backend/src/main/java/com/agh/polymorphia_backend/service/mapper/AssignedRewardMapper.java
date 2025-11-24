@@ -1,0 +1,122 @@
+package com.agh.polymorphia_backend.service.mapper;
+
+import com.agh.polymorphia_backend.dto.response.equipment.EquipmentChestResponseDto;
+import com.agh.polymorphia_backend.dto.response.equipment.EquipmentItemResponseDto;
+import com.agh.polymorphia_backend.dto.response.reward.assigned.AssignedRewardResponseDto;
+import com.agh.polymorphia_backend.dto.response.reward.assigned.ShortAssignedRewardResponseDto;
+import com.agh.polymorphia_backend.dto.response.reward.assignment_details.BaseRewardAssignmentDetailsResponseDto;
+import com.agh.polymorphia_backend.dto.response.reward.assignment_details.ChestAssignmentDetailsResponseDto;
+import com.agh.polymorphia_backend.dto.response.reward.assignment_details.ItemAssignmentDetailsResponseDto;
+import com.agh.polymorphia_backend.model.reward.Reward;
+import com.agh.polymorphia_backend.model.reward.assigned.AssignedChest;
+import com.agh.polymorphia_backend.model.reward.assigned.AssignedItem;
+import com.agh.polymorphia_backend.model.reward.assigned.AssignedReward;
+import com.agh.polymorphia_backend.util.NumberFormatter;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service
+@AllArgsConstructor
+public class AssignedRewardMapper {
+    private final RewardMapper rewardMapper;
+
+    public List<EquipmentItemResponseDto> assignedItemsToResponseDto(List<AssignedItem> assignedRewards, Long animalId) {
+        return assignedRewards.stream()
+                .collect(Collectors.groupingBy(AssignedReward::getReward))
+                .entrySet().stream()
+                .map(entry -> itemGroupToResponseDto(entry, animalId))
+                .sorted(Comparator.comparing(dto -> dto.getBase().getOrderIndex()))
+                .collect(Collectors.toList());
+    }
+
+    public List<EquipmentChestResponseDto> assignedChestsToResponseDto(List<AssignedChest> assignedChests, Long animalId) {
+        return assignedChests.stream()
+                .map(assignedChest -> chestToResponseDto(assignedChest, animalId))
+                .toList();
+    }
+
+    public AssignedRewardResponseDto itemToAssignedRewardDtoWithType(AssignedItem assignedItem, Long animalId) {
+        return AssignedRewardResponseDto.builder()
+                .base(rewardMapper.rewardToRewardResponseDto(assignedItem.getReward(), Optional.of(animalId)))
+                .details(getItemDetailsDto(assignedItem))
+                .build();
+    }
+
+    public List<ShortAssignedRewardResponseDto> rewardsToShortResponseDto(List<AssignedReward> assignedRewards) {
+        return assignedRewards.stream()
+                .collect(Collectors.groupingBy(
+                        ar -> ar.getReward().getId(),
+                        Collectors.counting()
+                ))
+                .entrySet().stream()
+                .map(entry -> {
+                    AssignedReward assignedReward = assignedRewards.stream()
+                            .filter(ar -> ar.getReward().getId().equals(entry.getKey()))
+                            .findFirst()
+                            .orElseThrow();
+
+                    return ShortAssignedRewardResponseDto.builder()
+                            .rewardId(entry.getKey())
+                            .name(assignedReward.getReward().getName())
+                            .quantity(entry.getValue().intValue())
+                            .imageUrl(assignedReward.getReward().getImageUrl())
+                            .build();
+                })
+                .toList();
+    }
+
+    private EquipmentItemResponseDto itemGroupToResponseDto(Map.Entry<Reward, List<AssignedItem>> entry, Long animalId) {
+        Reward reward = entry.getKey();
+        List<AssignedItem> assignedItems = entry.getValue();
+
+        List<ItemAssignmentDetailsResponseDto> details = assignedItems.stream()
+                .map(this::getItemDetailsDto)
+                .sorted(Comparator.comparing(BaseRewardAssignmentDetailsResponseDto::getReceivedDate))
+                .toList();
+
+        return EquipmentItemResponseDto.builder()
+                .base(rewardMapper.rewardToRewardResponseDto(reward, Optional.of(animalId)))
+                .details(details)
+                .build();
+    }
+
+    private EquipmentChestResponseDto chestToResponseDto(AssignedChest assignedChest, Long animalId) {
+        return EquipmentChestResponseDto.builder()
+                .base(rewardMapper.rewardToRewardResponseDto(assignedChest.getReward(), Optional.of(animalId)))
+                .details(getChestDetailsDto(assignedChest, animalId))
+                .build();
+    }
+
+
+    private ItemAssignmentDetailsResponseDto getItemDetailsDto(AssignedItem assignedItem) {
+        return ItemAssignmentDetailsResponseDto.builder()
+                .id(assignedItem.getId())
+                .isUsed(assignedItem.getIsUsed())
+                .usedDate(assignedItem.getUsedDate())
+                .receivedDate(assignedItem.getReceivedDate())
+                .gainedXp(NumberFormatter.formatToString(assignedItem.getBonusXp()))
+                .build();
+    }
+
+
+    private ChestAssignmentDetailsResponseDto getChestDetailsDto(AssignedChest assignedChest, Long animalId) {
+        List<AssignedRewardResponseDto> receivedItems = assignedChest.getAssignedItems().stream()
+                .map(assignedItem -> itemToAssignedRewardDtoWithType(assignedItem, animalId))
+                .sorted(Comparator.comparing(response -> response.base().getOrderIndex()))
+                .toList();
+
+        return ChestAssignmentDetailsResponseDto.builder()
+                .id(assignedChest.getId())
+                .isUsed(assignedChest.getIsUsed())
+                .usedDate(assignedChest.getUsedDate())
+                .receivedDate(assignedChest.getReceivedDate())
+                .receivedItems(receivedItems)
+                .build();
+    }
+}

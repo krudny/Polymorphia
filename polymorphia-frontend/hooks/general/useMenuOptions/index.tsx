@@ -1,7 +1,6 @@
 import { MenuOption } from "@/components/navigation/types";
 import {
   BadgeHelpIcon,
-  BellIcon,
   GraduationCapIcon,
   LogOutIcon,
   MedalIcon,
@@ -14,6 +13,9 @@ import {
 import { Roles } from "@/interfaces/api/user";
 import useUserContext from "@/hooks/contexts/useUserContext";
 import { useMenuCourseOptionText } from "@/hooks/general/useMenuCourseOptionText";
+import useEventSections from "@/hooks/course/useEventSections";
+import { updateMenuItems } from "@/components/course/event-section/EventSectionUtils";
+import { useMemo } from "react";
 
 export function useBottomMenuItems(): MenuOption[] {
   return [
@@ -28,7 +30,8 @@ export function useBottomMenuItems(): MenuOption[] {
 
 export function useBottomDesktopMenuItems(): MenuOption[] {
   return [
-    { icon: BellIcon, text: "Powiadomienia" },
+    // TODO: notifications
+    // { icon: BellIcon, text: "Powiadomienia" },
     {
       icon: LogOutIcon,
       text: "Wyloguj się",
@@ -45,42 +48,50 @@ export function useBottomDesktopMenuItems(): MenuOption[] {
 export function useMainMenuItems(): MenuOption[] {
   const { userRole } = useUserContext();
   const courseOptionText = useMenuCourseOptionText(userRole);
+  const { data: eventSections } = useEventSections();
+
   const isInstructorOrCoordinator =
     userRole === Roles.COORDINATOR || userRole === Roles.INSTRUCTOR;
 
-  const items: MenuOption[] = [];
+  return useMemo(() => {
+    const items: MenuOption[] = [];
 
-  if (isInstructorOrCoordinator) {
-    items.push({ icon: UsersIcon, text: "Grupy", link: "course/groups" });
-  }
+    if (isInstructorOrCoordinator) {
+      items.push({ icon: UsersIcon, text: "Grupy", link: "course/groups" });
+    }
 
-  if (userRole === Roles.STUDENT) {
-    items.push({ icon: UserIcon, text: "Profil", link: "profile" });
-  }
+    if (userRole === Roles.STUDENT) {
+      items.push({ icon: UserIcon, text: "Profil", link: "profile" });
+    }
 
-  items.push(
-    {
-      icon: BadgeHelpIcon,
-      text: "Baza wiedzy",
-      link: "knowledge-base/",
-      subItems: [
-        { text: "Zasady", link: "knowledge-base/rules" },
-        { text: "Postacie", link: "knowledge-base/evolution-stages" },
-        { text: "Przedmioty", link: "knowledge-base/items" },
-        { text: "Skrzynki", link: "knowledge-base/chests" },
-      ],
-    },
-    { icon: GraduationCapIcon, text: courseOptionText }
-  );
+    items.push(
+      {
+        icon: BadgeHelpIcon,
+        text: "Baza wiedzy",
+        link: "knowledge-base/",
+        subItems: [
+          { text: "Zasady", link: "knowledge-base/rules" },
+          { text: "Postacie", link: "knowledge-base/evolution-stages" },
+          { text: "Przedmioty", link: "knowledge-base/items" },
+          { text: "Skrzynki", link: "knowledge-base/chests" },
+        ],
+      },
+      { icon: GraduationCapIcon, text: courseOptionText }
+    );
 
-  if (userRole === Roles.STUDENT) {
-    items.push({ icon: TrophyIcon, text: "Ekwipunek", link: "equipment" });
-  }
+    if (userRole === Roles.STUDENT) {
+      items.push({ icon: TrophyIcon, text: "Ekwipunek", link: "equipment" });
+    }
 
-  items.push(
-    { icon: MedalIcon, text: "Hall of Fame", link: "hall-of-fame" },
-    { icon: MilestoneIcon, text: "Roadmapa", link: "roadmap" }
-  );
+    items.push(
+      { icon: MedalIcon, text: "Hall of Fame", link: "hall-of-fame" },
+      { icon: MilestoneIcon, text: "Roadmapa", link: "roadmap" }
+    );
 
-  return items;
+    if (eventSections) {
+      return updateMenuItems(items, eventSections, courseOptionText);
+    }
+
+    return items;
+  }, [userRole, courseOptionText, eventSections, isInstructorOrCoordinator]);
 }

@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import { MarkdownType } from "@/interfaces/general";
-import { SourceMarkdownResponseDTO } from "@/interfaces/api/markdown";
 import { UseMutateFunction } from "@tanstack/react-query";
 
 export interface MarkdownContextInterface {
@@ -13,7 +12,6 @@ export interface MarkdownContextInterface {
   resetMarkdown: UseMutateFunction<void, Error, void | undefined, unknown>;
   markdownType: MarkdownType;
   resourceId: number;
-  markdownSource: SourceMarkdownResponseDTO | undefined;
 }
 
 export interface MarkdownProviderProps {

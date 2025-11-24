@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@import "../../../../../../../styles/globals.css";
+
+.grade-comment-wrapper {
+  @apply w-full;
+}

@@ -10,17 +10,19 @@ export default function useHallOfFame({
   pageSize,
   courseId,
   debouncedSearch,
+  searchBy,
   sortOrder,
   sortBy,
   groups,
 }: useHallOfFameProps): UseHallOfFame {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: [
       "hallOfFame",
       page,
       pageSize,
       courseId,
       debouncedSearch,
+      searchBy,
       sortOrder,
       sortBy,
       groups,
@@ -31,6 +33,7 @@ export default function useHallOfFame({
         pageSize,
         courseId,
         debouncedSearch,
+        searchBy,
         sortBy[0].length > 0 ? sortBy[0] : "total",
         sortOrder[0] === "asc" || sortOrder[0] === "desc"
           ? sortOrder[0]
@@ -39,5 +42,5 @@ export default function useHallOfFame({
       ),
   });
 
-  return { data, isLoading };
+  return { data, isLoading, isError };
 }

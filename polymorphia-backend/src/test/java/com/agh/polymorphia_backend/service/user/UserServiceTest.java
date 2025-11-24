@@ -1,7 +1,10 @@
 package com.agh.polymorphia_backend.service.user;
 
+import com.agh.polymorphia_backend.BaseTest;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.user.*;
+import com.agh.polymorphia_backend.model.user.student.Student;
+import com.agh.polymorphia_backend.model.user.undefined.UndefinedUser;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
@@ -15,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 import java.util.Set;
@@ -22,7 +26,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class UserServiceTest {
+class UserServiceTest extends BaseTest {
 
     @Mock
     private UserRepository userRepository;
@@ -115,7 +119,7 @@ class UserServiceTest {
         Student student = mock(Student.class);
         doReturn(Set.of(UserType.STUDENT, UserType.INSTRUCTOR)).when(student).getAuthorities();
 
-        assertThrows(IllegalStateException.class, () -> userService.getUserRole(student));
+        assertThrows(ResponseStatusException.class, () -> userService.getUserRole(student));
     }
 
     @Test

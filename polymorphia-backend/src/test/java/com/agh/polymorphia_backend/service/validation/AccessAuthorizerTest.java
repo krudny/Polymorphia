@@ -1,9 +1,15 @@
 package com.agh.polymorphia_backend.service.validation;
 
-import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
-import com.agh.polymorphia_backend.model.user.*;
-import com.agh.polymorphia_backend.repository.course.AnimalRepository;
+import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
+import com.agh.polymorphia_backend.model.user.User;
+import com.agh.polymorphia_backend.model.user.UserCourseRole;
+import com.agh.polymorphia_backend.model.user.UserType;
+import com.agh.polymorphia_backend.model.user.coordinator.Coordinator;
+import com.agh.polymorphia_backend.model.user.instructor.Instructor;
+import com.agh.polymorphia_backend.model.user.student.Animal;
+import com.agh.polymorphia_backend.model.user.student.Student;
+import com.agh.polymorphia_backend.repository.user.student.AnimalRepository;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.role.InstructorRepository;
 import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
@@ -32,7 +38,7 @@ import static org.mockito.Mockito.*;
 
 @ActiveProfiles("test")
 class AccessAuthorizerTest {
-    private static final String USER_COURSE_ROLE_NOT_FOUND = "User course role not found";
+    private static final String USER_COURSE_ROLE_NOT_FOUND = "Nie znaleziono roli użytkownika w kursie.";
 
     @Mock
     private UserService userService;
@@ -93,7 +99,7 @@ class AccessAuthorizerTest {
         switch (scenario.role) {
             case STUDENT -> doReturn(Optional.empty())
                     .when(studentRepository)
-                    .findByUserIdAndCourseId(scenario.id, 10L);
+                    .findByUserIdAndCourseIdAndAssignedToCourseGroup(scenario.id, 10L);
             case INSTRUCTOR -> doReturn(Optional.empty())
                     .when(instructorRepository)
                     .findByUserIdAndCourseId(scenario.id, 10L);
@@ -117,7 +123,7 @@ class AccessAuthorizerTest {
         switch (scenario.role) {
             case STUDENT -> doReturn(Optional.of(new Student()))
                     .when(studentRepository)
-                    .findByUserIdAndCourseId(scenario.id, 10L);
+                    .findByUserIdAndCourseIdAndAssignedToCourseGroup(scenario.id, 10L);
             case INSTRUCTOR -> doReturn(Optional.of(new Instructor()))
                     .when(instructorRepository)
                     .findByUserIdAndCourseId(scenario.id, 10L);

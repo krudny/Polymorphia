@@ -7,7 +7,7 @@ import {
 } from "@/components/course-choice/types";
 import usePreferredCourseUpdate from "@/hooks/course/usePreferredCourseUpdate";
 import CourseChoiceCard from "@/components/course-choice/CourseChoiceCard";
-import CreateAnimalModal from "./modal/createAnimal";
+import CreateAnimalModal from "@/components/course-choice/modal/createAnimal";
 import React, { useState } from "react";
 
 export default function CourseChoiceGrid({

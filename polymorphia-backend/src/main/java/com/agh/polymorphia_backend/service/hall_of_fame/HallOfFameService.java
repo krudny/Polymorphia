@@ -1,18 +1,18 @@
 package com.agh.polymorphia_backend.service.hall_of_fame;
 
-import com.agh.polymorphia_backend.dto.request.HallOfFameRequestDto;
+import com.agh.polymorphia_backend.dto.request.hall_of_fame.HallOfFameRequestDto;
+import com.agh.polymorphia_backend.dto.response.hall_of_fame.HallOfFameRecordDto;
 import com.agh.polymorphia_backend.dto.response.hall_of_fame.HallOfFameResponseDto;
-import com.agh.polymorphia_backend.model.course.Animal;
-import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.event_section.EventSection;
 import com.agh.polymorphia_backend.model.hall_of_fame.*;
-import com.agh.polymorphia_backend.model.user.User;
-import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
+import com.agh.polymorphia_backend.model.user.UserType;
+import com.agh.polymorphia_backend.model.user.student.Animal;
+import com.agh.polymorphia_backend.repository.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.StudentScoreDetailRepository;
-import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.mapper.HallOfFameMapper;
 import com.agh.polymorphia_backend.service.student.AnimalService;
+import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import com.agh.polymorphia_backend.util.NumberFormatter;
 import lombok.AllArgsConstructor;
@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -27,57 +28,95 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry.FIELD_POSITION;
+import static com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry.*;
 
 @Service
 @AllArgsConstructor
 public class HallOfFameService {
-    public static final String STUDENT_HOF_NOT_FOUND = "Student's Hall of Fame scores not found";
-    private static final String HOF_EMPTY = "Hall of Fame scores are empty";
+    public static final String STUDENT_HOF_NOT_FOUND = "Brak wyników studenta.";
+    private static final Set<String> INVERT_POSITION_FOR = Set.of(
+            FIELD_TOTAL_XP_SUM,
+            FIELD_TOTAL_BONUS_SUM
+    );
     private final StudentScoreDetailRepository scoreDetailRepository;
     private final HallOfFameRepository hallOfFameRepository;
     private final EventSectionRepository eventSectionRepository;
     private final HallOfFameMapper hallOfFameMapper;
     private final AccessAuthorizer accessAuthorizer;
-    private final CourseService courseService;
     private final AnimalService animalService;
+    private final UserService userService;
     private final HallOfFameSortSpecResolver sortSpecResolver;
 
-    public HallOfFameEntry getStudentHallOfFame(User user) {
-        Animal animal = animalService.getAnimal(user.getId(), user.getPreferredCourse().getId());
-        return hallOfFameRepository.findByAnimalId(animal.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_HOF_NOT_FOUND));
+    private static Sort.Direction opposite(Sort.Direction direction) {
+        return direction.isAscending() ? Sort.Direction.DESC : Sort.Direction.ASC;
     }
 
-    public Page<HallOfFameResponseDto> getHallOfFame(HallOfFameRequestDto requestDto) {
-        Course course = courseService.getCourseById(requestDto.courseId());
-        accessAuthorizer.authorizeCourseAccess(course);
+    public HallOfFameEntry getStudentHallOfFame(Long studentId, Long courseId) {
+        Animal animal = animalService.getAnimal(studentId, courseId);
+        return hallOfFameRepository.findByAnimalId(animal.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, STUDENT_HOF_NOT_FOUND));
+    }
+
+    public List<StudentScoreDetail> getStudentScoreDetails(Long animalId) {
+        return scoreDetailRepository.findByAnimalId(animalId);
+    }
+
+    public StudentScoreDetail getStudentEventSectionScoreDetails(Long animalId, Long eventSectionId) {
+        return scoreDetailRepository.findByAnimalIdAndEventSectionId(animalId, eventSectionId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, STUDENT_HOF_NOT_FOUND));
+    }
+
+    public HallOfFameResponseDto getHallOfFame(HallOfFameRequestDto requestDto) {
+        accessAuthorizer.authorizeCourseAccess(requestDto.courseId());
 
         HallOfFameSortSpec sortSpec = sortSpecResolver.resolve(requestDto);
-        return switch (sortSpec) {
+        Page<HallOfFameEntry> hallOfFameEntryPage = switch (sortSpec) {
             case OverviewFieldSort overviewFieldSort ->
                     getSortedByOverviewFields(requestDto, overviewFieldSort.field());
             case EventSectionSort eventSectionSort -> getSortedByEventSection(requestDto);
         };
+        Page<HallOfFameRecordDto> hallOfFameRecordDtoPage = hallOfFamePageToRecordDto(hallOfFameEntryPage);
+
+        UserType currentUserRole = userService.getCurrentUserRole();
+        if (UserType.STUDENT.equals(currentUserRole)) {
+            Long animalId = animalService.getAnimalIdForCurrentUser(requestDto.courseId());
+
+            if (hallOfFameEntryPage.stream().anyMatch(entry -> entry.getAnimalId().equals(animalId))) {
+                return new HallOfFameResponseDto(hallOfFameRecordDtoPage, hallOfFameRecordDtoPage.getNumber());
+            } else {
+                List<Long> animalIds = getAllAnimalIds(requestDto, sortSpec);
+                int position = animalIds.indexOf(animalId);
+                int currentUserPage = position < 0 ? -1 : position / requestDto.size();
+                return new HallOfFameResponseDto(hallOfFameRecordDtoPage, currentUserPage);
+            }
+        } else {
+            return new HallOfFameResponseDto(hallOfFameRecordDtoPage, -1);
+        }
+
     }
 
-    public Page<HallOfFameResponseDto> getSortedByOverviewFields(HallOfFameRequestDto requestDto, String sortBy) {
-        Pageable pageable = PageRequest.of(
-                requestDto.page(),
-                requestDto.size(),
-                Sort.by(requestDto.sortOrder().getDirection(), sortBy).and(Sort.by(FIELD_POSITION).ascending())
-        );
-        Page<HallOfFameEntry> pageResult = hallOfFameRepository.findHofPageFromOverviewField(requestDto, pageable);
-        return hallOfFamePageToResponseDto(pageResult);
+    public Page<HallOfFameEntry> getSortedByOverviewFields(HallOfFameRequestDto requestDto, String sortBy) {
+        Pageable pageable = PageRequest.of(requestDto.page(), requestDto.size(), getOverviewSort(requestDto, sortBy));
+        return hallOfFameRepository.findHofPageFromOverviewField(requestDto, pageable);
     }
 
-    public Page<HallOfFameResponseDto> getSortedByEventSection(HallOfFameRequestDto requestDto) {
-        Pageable pageable = PageRequest.of(requestDto.page(), requestDto.size());
-        Page<HallOfFameEntry> pageResult = hallOfFameRepository.findHofPageFromEventSection(requestDto, pageable);
-        return hallOfFamePageToResponseDto(pageResult);
+    private Sort getOverviewSort(HallOfFameRequestDto requestDto, String sortBy) {
+        Sort.Direction sortByDirection = requestDto.sortOrder().getDirection();
+        Sort.Direction positionDirection = INVERT_POSITION_FOR.contains(sortBy) ? opposite(sortByDirection) : sortByDirection;
+        return Sort.by(sortByDirection, sortBy).and(Sort.by(positionDirection, FIELD_POSITION));
     }
 
-    private Page<HallOfFameResponseDto> hallOfFamePageToResponseDto(Page<HallOfFameEntry> hallOfFamePage) {
+    public Page<HallOfFameEntry> getSortedByEventSection(HallOfFameRequestDto requestDto) {
+        Pageable pageable = PageRequest.of(requestDto.page(), requestDto.size(), getEventSectionSort(requestDto));
+        return hallOfFameRepository.findHofPageFromEventSection(requestDto, pageable);
+    }
+
+    private Sort getEventSectionSort(HallOfFameRequestDto requestDto) {
+        Sort.Direction direction = requestDto.sortOrder().getDirection();
+        return JpaSort.unsafe(direction, "ssd.rawXp").and(Sort.by(opposite(direction), FIELD_POSITION));
+    }
+
+    private Page<HallOfFameRecordDto> hallOfFamePageToRecordDto(Page<HallOfFameEntry> hallOfFamePage) {
         List<Long> animalIds = hallOfFamePage.getContent().stream()
                 .map(HallOfFameEntry::getAnimalId)
                 .toList();
@@ -95,7 +134,7 @@ public class HallOfFameService {
         List<StudentScoreDetail> detailsList = scoreDetailRepository.findByAnimalIdIn(animalIds);
 
         if (detailsList.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, HOF_EMPTY);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Brak wyników w Hall of Fame.");
         }
 
         sortByEventSectionOrderIndex(detailsList);
@@ -129,9 +168,21 @@ public class HallOfFameService {
                 k -> NumberFormatter.formatToString(hallOfFameEntry.getTotalXpSum()));
     }
 
-    public List<HallOfFameResponseDto> getPodium(Long courseId) {
-        Course course = courseService.getCourseById(courseId);
-        accessAuthorizer.authorizeCourseAccess(course);
+    private List<Long> getAllAnimalIds(HallOfFameRequestDto requestDto, HallOfFameSortSpec sortSpec) {
+        return switch (sortSpec) {
+            case OverviewFieldSort overviewFieldSort -> hallOfFameRepository.findAllAnimalIdsForOverviewField(
+                    requestDto,
+                    getOverviewSort(requestDto, overviewFieldSort.field())
+            );
+            case EventSectionSort eventSectionSort -> hallOfFameRepository.findAllAnimalIdsForEventSection(
+                    requestDto,
+                    getEventSectionSort(requestDto)
+            );
+        };
+    }
+
+    public List<HallOfFameRecordDto> getPodium(Long courseId) {
+        accessAuthorizer.authorizeCourseAccess(courseId);
 
         HallOfFameRequestDto requestDto = new HallOfFameRequestDto(
                 courseId,
@@ -143,6 +194,6 @@ public class HallOfFameService {
                 SortOrder.DESC,
                 Collections.emptyList()
         );
-        return getSortedByOverviewFields(requestDto, requestDto.sortBy()).getContent();
+        return hallOfFamePageToRecordDto(getSortedByOverviewFields(requestDto, requestDto.sortBy())).getContent();
     }
 }

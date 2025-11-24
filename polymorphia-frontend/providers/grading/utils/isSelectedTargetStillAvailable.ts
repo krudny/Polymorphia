@@ -2,7 +2,7 @@ import {
   GroupTargetTypes,
   TargetResponseDTO,
   TargetTypes,
-} from "@/interfaces/api/grade/target";
+} from "@/interfaces/api/target";
 import areTargetsEqual from "@/providers/grading/utils/areTargetsEqual";
 
 export default function isSelectedTargetStillAvailable(
@@ -27,7 +27,11 @@ export default function isSelectedTargetStillAvailable(
 
       const isGroupMemberMatch = target.members.some((targetMember) => {
         return areTargetsEqual(
-          { ...targetMember, type: TargetTypes.STUDENT },
+          {
+            type: TargetTypes.STUDENT,
+            id: targetMember.id,
+            student: targetMember,
+          },
           selectedTarget
         );
       });

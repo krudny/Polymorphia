@@ -1,14 +1,20 @@
-export interface AnimalResponseDTO {
-  id: number;
-  name: string;
-}
-
 export interface StudentProfileResponseDTO {
   xpDetails: Record<string, string>;
   evolutionStageThresholds: EvolutionStagesThresholdResponseDTO[];
   leftEvolutionStage: EvolutionStagesThresholdResponseDTO;
   rightEvolutionStage: EvolutionStagesThresholdResponseDTO;
   totalStudentsInCourse: number;
+  totalXp: number;
+}
+
+export interface StudentSummaryResponseDTO {
+  studentName: string;
+  animalName: string;
+  imageUrl: string;
+  leftEvolutionStage: EvolutionStagesThresholdResponseDTO;
+  rightEvolutionStage: EvolutionStagesThresholdResponseDTO;
+  totalStudentsInCourse: number;
+  position: number;
   totalXp: number;
 }
 

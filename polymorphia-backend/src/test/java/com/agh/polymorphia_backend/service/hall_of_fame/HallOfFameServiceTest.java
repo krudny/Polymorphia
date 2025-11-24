@@ -1,12 +1,13 @@
 package com.agh.polymorphia_backend.service.hall_of_fame;
 
-import com.agh.polymorphia_backend.model.course.Animal;
+import com.agh.polymorphia_backend.BaseTest;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.event_section.AssignmentSection;
 import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry;
 import com.agh.polymorphia_backend.model.hall_of_fame.StudentScoreDetail;
 import com.agh.polymorphia_backend.model.user.User;
-import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
+import com.agh.polymorphia_backend.model.user.student.Animal;
+import com.agh.polymorphia_backend.repository.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.StudentScoreDetailRepository;
 import com.agh.polymorphia_backend.service.student.AnimalService;
@@ -24,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
-class HallOfFameServiceTest {
+class HallOfFameServiceTest extends BaseTest {
 
     @Mock
     private HallOfFameRepository hallOfFameRepository;
@@ -58,7 +59,7 @@ class HallOfFameServiceTest {
         when(hallOfFameRepository.findByAnimalId(10L))
                 .thenReturn(Optional.of(hof));
 
-        HallOfFameEntry result = hallOfFameService.getStudentHallOfFame(user);
+        HallOfFameEntry result = hallOfFameService.getStudentHallOfFame(user.getId(), user.getPreferredCourse().getId());
 
         assertThat(result).isEqualTo(hof);
     }
@@ -69,9 +70,9 @@ class HallOfFameServiceTest {
         when(hallOfFameRepository.findByAnimalId(10L))
                 .thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> hallOfFameService.getStudentHallOfFame(user))
+        assertThatThrownBy(() -> hallOfFameService.getStudentHallOfFame(user.getId(), user.getPreferredCourse().getId()))
                 .isInstanceOf(ResponseStatusException.class)
-                .hasMessageContaining("Student's Hall of Fame scores not found");
+                .hasMessageContaining("Brak wyników studenta.");
     }
 
     @Test

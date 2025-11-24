@@ -5,7 +5,6 @@ import Line from "@/components/navigation/Line";
 import { animateNavbar } from "@/animations/Navigation";
 import "./index.css";
 import { updateMenuItems } from "@/components/course/event-section/EventSectionUtils";
-import { useTitle } from "@/components/navigation/TitleContext";
 import useEventSections from "@/hooks/course/useEventSections";
 import useNavigationContext from "@/hooks/contexts/useNavigationContext";
 import {
@@ -13,6 +12,7 @@ import {
   useMainMenuItems,
 } from "@/hooks/general/useMenuOptions";
 import useUserContext from "@/hooks/contexts/useUserContext";
+import { useTitle } from "@/hooks/general/useTitle";
 
 export default function Navbar() {
   const { isNavbarExpanded, setIsNavbarExpanded } = useNavigationContext();
@@ -55,7 +55,8 @@ export default function Navbar() {
           className="cursor-pointer"
         />
         <h1>{title}</h1>
-        <span>notifications</span>
+        {/* TODO: notifications */}
+        <span className="opacity-0 cursor-default!">notifications</span>
       </div>
       <div ref={drawerRef} className="navbar-drawer">
         <div className="flex-1">

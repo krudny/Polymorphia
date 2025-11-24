@@ -1,41 +1,47 @@
-import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { useEventParams } from "@/hooks/general/useEventParams";
-import { SubmissionDetailsResponseDTO } from "@/interfaces/api/grade/submission";
-import { EventSectionService } from "@/services/event-section";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import {
   UseSubmissionsUpdate,
   UseSubmissionsUpdateProps,
 } from "@/hooks/course/useSubmissionsUpdate/types";
-import { TargetTypes } from "@/interfaces/api/grade/target";
+import { ApiError } from "@/services/api/error";
+import { TargetTypes } from "@/interfaces/api/target";
+import { SubmissionService } from "@/services/submission";
+import { SubmissionDetails } from "@/interfaces/api/grade/submission";
+import { Roles } from "@/interfaces/api/user";
+import useUserContext from "@/hooks/contexts/useUserContext";
+import { EventTypes } from "@/interfaces/general";
 
 export default function useSubmissionsUpdate({
   target,
 }: UseSubmissionsUpdateProps): UseSubmissionsUpdate {
   const queryClient = useQueryClient();
-  const { courseId } = useUserDetails();
-  const { eventSectionId, gradableEventId } = useEventParams();
+  const { gradableEventId, eventType } = useEventParams();
+  const { userRole } = useUserContext();
 
   return useMutation({
-    mutationFn: (submissionDetails: SubmissionDetailsResponseDTO) => {
-      if (!target) {
-        throw new Error("Wystąpił błąd podczas aktualizacji oddanych zadań.");
+    mutationFn: (submissionDetails: SubmissionDetails) => {
+      if (!target || eventType === EventTypes.TEST) {
+        throw new ApiError(
+          "Wystąpił błąd podczas aktualizacji oddanych zadań."
+        );
       }
 
       return toast.promise(
-        EventSectionService.submitSubmissions(
+        SubmissionService.submitSubmissions(gradableEventId, {
           target,
-          courseId,
-          eventSectionId,
-          gradableEventId,
-          submissionDetails
-        ),
-        {
-          loading: "Zapisywanie zmian...",
-          success: "Pomyślnie zapisano oddane zadania!",
-          error: () => "Wystąpił błąd przy zapisie oddanych zadań!",
-        }
+          details: submissionDetails,
+        }),
+        userRole === Roles.STUDENT
+          ? {
+              loading: "Zapisywanie zmian...",
+              success: "Pomyślnie zapisano oddane zadania!",
+            }
+          : {
+              loading: "Zapisywanie zmian...",
+              success: "Pomyślnie zmieniono status blokady zadania!",
+            }
       );
     },
     onSuccess: () => {
@@ -43,6 +49,7 @@ export default function useSubmissionsUpdate({
         queryClient.invalidateQueries({
           queryKey: [
             "submissionDetails",
+            gradableEventId,
             target.type,
             target.type === TargetTypes.STUDENT ? target.id : target.groupId,
           ],

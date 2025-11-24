@@ -13,4 +13,5 @@ export type EquipmentSectionType = "item" | "chest";
 export interface EquipmentSectionProps {
   type: EquipmentSectionType;
   data: EquipmentItemResponseDTO[] | EquipmentChestResponseDTO[];
+  columns: number;
 }

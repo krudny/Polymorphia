@@ -17,13 +17,11 @@ export default function GradeInfo({ grade, criteria }: GradeInfoProps) {
 
   const accordionSections = [
     ...criteria.map(({ id }) => String(id)),
-    ...(grade.isGraded ? ["Komentarz"] : []),
+    ...(grade.gradeResponse.isGraded ? ["Komentarz"] : []),
   ];
 
   const initiallyOpenedAccordionSections = new Set(
-    accordionSections.length > 0 && isMd && grade.isGraded
-      ? [accordionSections[0]]
-      : []
+    accordionSections.length > 0 && isMd ? [accordionSections[0]] : []
   );
 
   return (
@@ -36,9 +34,9 @@ export default function GradeInfo({ grade, criteria }: GradeInfoProps) {
         shouldAnimateInitialOpen={true}
       >
         {criteria.map((criterion) => {
-          const criterionGrade = grade.isGraded
-            ? grade.criteria.find(
-                (gradeCriterion) => gradeCriterion.id === criterion.id
+          const criterionGrade = grade.gradeResponse.isGraded
+            ? grade.gradeResponse.criteria.find(
+                (gradeCriterion) => gradeCriterion.criterionId === criterion.id
               )
             : undefined;
 
@@ -80,46 +78,56 @@ export default function GradeInfo({ grade, criteria }: GradeInfoProps) {
                   </div>
                 </div>
                 <h2>{criterionGrade ? "Nagrody" : "Nagrody do zdobycia"}</h2>
-                <div className="grade-info-reward">
-                  {rewards.map((reward, index) => {
-                    if (reward.quantity === 0) {
-                      return;
-                    }
+                {rewards.length === 0 ? (
+                  <h3>
+                    {grade.gradeResponse.isGraded
+                      ? "Nie zdobyto żadnych nagród."
+                      : "W tym zadaniu nie jest dostępna żadna nagroda do wygrania."}
+                  </h3>
+                ) : (
+                  <div className="grade-info-reward">
+                    {rewards.map((reward, index) => {
+                      if (reward.quantity === 0) {
+                        return;
+                      }
 
-                    return (
-                      <div key={index} className="grade-info-reward-wrapper">
-                        <div className="grade-info-reward-image-wrapper">
-                          <Image
-                            src={`${API_STATIC_URL}/${reward.imageUrl}`}
-                            alt={reward.name}
-                            fill
-                            priority
-                            className="object-cover"
-                            sizes="(min-width: 1024px) 25vw, 50vw"
-                          />
-                          <ImageBadge
-                            text={reward.quantity.toString()}
-                            className="grade-info-reward-image-badge"
-                          />
+                      return (
+                        <div key={index} className="grade-info-reward-wrapper">
+                          <div className="grade-info-reward-image-wrapper">
+                            <Image
+                              src={`${API_STATIC_URL}/${reward.imageUrl}`}
+                              alt={reward.name}
+                              fill
+                              priority
+                              className="object-cover"
+                              sizes="(min-width: 1024px) 25vw, 50vw"
+                            />
+                            <ImageBadge
+                              text={reward.quantity.toString()}
+                              className="grade-info-reward-image-badge"
+                            />
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
-                </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             </AccordionSection>
           );
         })}
 
-        {grade.isGraded && (
+        {grade.gradeResponse.isGraded && (
           <AccordionSection
             key={criteria.length + 1}
             id="Komentarz"
             title="Komentarz"
             headerClassName="grade-info-accordion-header"
           >
-            {grade.comment ? (
-              <div className="grade-info-comment">{grade.comment}</div>
+            {grade.gradeResponse.comment ? (
+              <div className="grade-info-comment">
+                {grade.gradeResponse.comment}
+              </div>
             ) : (
               <div className="text-xl">Brak komentarza.</div>
             )}

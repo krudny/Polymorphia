@@ -1,31 +1,43 @@
 import { useQuery } from "@tanstack/react-query";
-import { EventSectionService } from "@/services/event-section";
 import { useEventParams } from "@/hooks/general/useEventParams";
-import { UseGradingTargets } from "@/hooks/course/useGradingTargets/types";
-import { EventTypes } from "@/interfaces/general";
-import { TargetTypes } from "@/interfaces/api/grade/target";
+import { UseTargets, UseTargetsParams } from "@/providers/target/types";
+import TargetListService from "@/services/target-list";
 
 export default function useGradingTargets(
-  debouncedSearch: string,
-  sortBy: string[],
-  sortOrder: string[],
-  groups: string[],
-  gradeStatus: string[]
-): UseGradingTargets {
-  const { eventType, gradableEventId } = useEventParams();
+  params: UseTargetsParams
+): UseTargets {
+  const {
+    search = "",
+    sortBy = [],
+    sortOrder = [],
+    searchBy = [],
+    groups = [],
+    gradeStatus = [],
+  } = params;
+  const { gradableEventId } = useEventParams();
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["gradingTargets", debouncedSearch],
+    queryKey: [
+      "gradingTargets",
+      gradableEventId,
+      search,
+      sortBy,
+      sortOrder,
+      searchBy,
+      groups,
+      gradeStatus,
+    ],
     queryFn: () =>
-      EventSectionService.getRandomTargets(
-        eventType === EventTypes.PROJECT
-          ? TargetTypes.STUDENT_GROUP
-          : TargetTypes.STUDENT,
+      TargetListService.getGradingTargetList(
         gradableEventId,
-        sortBy,
-        sortOrder,
+        search,
+        searchBy[0],
+        sortBy[0].length > 0 ? sortBy[0] : "total",
+        sortOrder[0] === "asc" || sortOrder[0] === "desc"
+          ? sortOrder[0]
+          : "desc",
         groups,
-        gradeStatus
+        gradeStatus[0]
       ),
   });
 

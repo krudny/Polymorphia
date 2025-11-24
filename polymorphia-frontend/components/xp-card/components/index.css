@@ -60,3 +60,33 @@
     @apply material-symbols text-2xl;
   }
 }
+
+.xp-card-locked-item {
+  @apply absolute bg-secondary-gray/70 dark:bg-primary-dark/80 flex-centered w-full h-full;
+
+  span {
+    @apply material-symbols;
+
+    p {
+      @apply text-4xl;
+    }
+  }
+}
+
+/* xp card points with rewards */
+
+.xp-card-points-with-rewards {
+  @apply w-full h-full flex items-center justify-end;
+}
+
+.xp-card-points-with-rewards-chest {
+  @apply w-fit px-4 flex-col-centered;
+
+  span {
+    @apply material-symbols text-4xl;
+  }
+}
+
+.xp-card-points-with-rewards-points {
+  @apply aspect-square h-full flex-col-centered;
+}

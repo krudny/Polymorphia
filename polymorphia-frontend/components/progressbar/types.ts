@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
-
-export type sizeVariants = "xs" | "sm" | "md" | "lg";
+import { Size } from "@/interfaces/general";
 
 export interface ProgressBarProps {
   minXP: number;
@@ -29,7 +28,7 @@ export interface ProgressBarRangeLabelsProps {
 
 export interface ProgressBarTextLabelsProps {
   textLabels: string[];
-  size?: sizeVariants;
+  size?: Size;
   isHorizontal?: boolean;
   className?: string;
 }

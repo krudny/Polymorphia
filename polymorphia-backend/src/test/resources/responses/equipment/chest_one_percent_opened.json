@@ -1,0 +1,186 @@
+[
+  {
+    "base": {
+      "id": 7,
+      "name": "ONE_OF_MANY",
+      "imageUrl": "url",
+      "orderIndex": 2,
+      "behaviorText": "Wybierz jeden przedmiot ze skrzynki",
+      "behavior": "ONE_OF_MANY",
+      "chestItems": [
+        {
+          "id": 8,
+          "name": "PercentageBonusItem",
+          "imageUrl": "percentageBonus_url",
+          "orderIndex": 0,
+          "bonusText": "+5% do eventów z kategorii Laboratorium",
+          "shortBonusText": "+5% Laboratorium",
+          "limit": 2,
+          "isLimitReached": false,
+          "eventSectionId": 4,
+          "itemBonusType": "PERCENTAGE_BONUS",
+          "percentage": 5
+        },
+        {
+          "id": 9,
+          "name": "limit reached",
+          "imageUrl": "url",
+          "orderIndex": 1,
+          "bonusText": "+2.5 xp do eventów z kategorii Kartkówka",
+          "shortBonusText": "+2.5 xp Kartkówka",
+          "limit": 1,
+          "isLimitReached": true,
+          "eventSectionId": 3,
+          "itemBonusType": "FLAT_BONUS",
+          "xp": 2.5,
+          "behavior": "ONE_EVENT"
+        }
+      ]
+    },
+    "details": {
+      "id": 7,
+      "receivedDate": "20.08.2025",
+      "usedDate": "26.10.2025",
+      "isUsed": true,
+      "receivedItems": [
+        {
+          "base": {
+            "id": 8,
+            "name": "PercentageBonusItem",
+            "imageUrl": "percentageBonus_url",
+            "orderIndex": 0,
+            "bonusText": "+5% do eventów z kategorii Laboratorium",
+            "shortBonusText": "+5% Laboratorium",
+            "limit": 2,
+            "isLimitReached": false,
+            "eventSectionId": 4,
+            "itemBonusType": "PERCENTAGE_BONUS",
+            "percentage": 5
+          },
+          "details": {
+            "id": 12,
+            "receivedDate": "26.10.2025",
+            "usedDate": null,
+            "isUsed": false,
+            "gainedXp": "0.2"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "base": {
+      "id": 6,
+      "name": "ALL",
+      "imageUrl": "url",
+      "orderIndex": 3,
+      "behaviorText": "Otrzymasz pełną zawartość skrzynki",
+      "behavior": "ALL",
+      "chestItems": [
+        {
+          "id": 9,
+          "name": "limit reached",
+          "imageUrl": "url",
+          "orderIndex": 1,
+          "bonusText": "+2.5 xp do eventów z kategorii Kartkówka",
+          "shortBonusText": "+2.5 xp Kartkówka",
+          "limit": 1,
+          "isLimitReached": true,
+          "eventSectionId": 3,
+          "itemBonusType": "FLAT_BONUS",
+          "xp": 2.5,
+          "behavior": "ONE_EVENT"
+        },
+        {
+          "id": 10,
+          "name": "flatbonus ONE",
+          "imageUrl": "url",
+          "orderIndex": 2,
+          "bonusText": "+1.5 xp do eventów z kategorii Kartkówka",
+          "shortBonusText": "+1.5 xp Kartkówka",
+          "limit": 4,
+          "isLimitReached": false,
+          "eventSectionId": 3,
+          "itemBonusType": "FLAT_BONUS",
+          "xp": 1.5,
+          "behavior": "ONE_EVENT"
+        },
+        {
+          "id": 10,
+          "name": "flatbonus ONE",
+          "imageUrl": "url",
+          "orderIndex": 2,
+          "bonusText": "+1.5 xp do eventów z kategorii Kartkówka",
+          "shortBonusText": "+1.5 xp Kartkówka",
+          "limit": 4,
+          "isLimitReached": false,
+          "eventSectionId": 3,
+          "itemBonusType": "FLAT_BONUS",
+          "xp": 1.5,
+          "behavior": "ONE_EVENT"
+        },
+        {
+          "id": 11,
+          "name": "flatbonus multiple",
+          "imageUrl": "url",
+          "orderIndex": 3,
+          "bonusText": "+4.0 xp do eventów z kategorii Kartkówka",
+          "shortBonusText": "+4.0 xp Kartkówka",
+          "limit": 2,
+          "isLimitReached": false,
+          "eventSectionId": 3,
+          "itemBonusType": "FLAT_BONUS",
+          "xp": 4.0,
+          "behavior": "MULTIPLE_EVENTS"
+        }
+      ]
+    },
+    "details": {
+      "id": 6,
+      "receivedDate": "20.09.2025",
+      "isUsed": false,
+      "receivedItems": []
+    }
+  },
+  {
+    "base": {
+      "id": 12,
+      "name": "ONE_OF_MANY reached limit",
+      "imageUrl": "url",
+      "orderIndex": 4,
+      "behaviorText": "Wybierz jeden przedmiot ze skrzynki",
+      "behavior": "ONE_OF_MANY",
+      "chestItems": [
+        {
+          "id": 9,
+          "name": "limit reached",
+          "imageUrl": "url",
+          "orderIndex": 1,
+          "bonusText": "+2.5 xp do eventów z kategorii Kartkówka",
+          "shortBonusText": "+2.5 xp Kartkówka",
+          "limit": 1,
+          "isLimitReached": true,
+          "eventSectionId": 3,
+          "itemBonusType": "FLAT_BONUS",
+          "xp": 2.5,
+          "behavior": "ONE_EVENT"
+        },
+        {
+          "id": 9,
+          "name": "limit reached",
+          "imageUrl": "url",
+          "orderIndex": 1,
+          "bonusText": "+2.5 xp do eventów z kategorii Kartkówka",
+          "shortBonusText": "+2.5 xp Kartkówka",
+          "limit": 1,
+          "isLimitReached": true,
+          "eventSectionId": 3,
+          "itemBonusType": "FLAT_BONUS",
+          "xp": 2.5,
+          "behavior": "ONE_EVENT"
+        }
+      ]
+    },
+    "details": {}
+  }
+]

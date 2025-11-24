@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.config;
 
-import com.agh.polymorphia_backend.model.user.Coordinator;
 import com.agh.polymorphia_backend.model.user.User;
+import com.agh.polymorphia_backend.model.user.coordinator.Coordinator;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.repository.user.role.CoordinatorRepository;
 import jakarta.annotation.PostConstruct;
@@ -19,6 +19,10 @@ public class DbInit {
 
     @PostConstruct
     public void init() {
+        if (initialUserProperties.email() == null || initialUserProperties.password() == null) {
+            return;
+        }
+
         if (userRepository.findByEmail(initialUserProperties.email()).isEmpty()) {
             User user = User.builder()
                     .firstName(initialUserProperties.firstName())

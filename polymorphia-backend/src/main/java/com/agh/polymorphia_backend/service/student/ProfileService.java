@@ -1,16 +1,18 @@
 package com.agh.polymorphia_backend.service.student;
 
-import com.agh.polymorphia_backend.dto.request.HallOfFameRequestDto;
+import com.agh.polymorphia_backend.dto.request.hall_of_fame.HallOfFameRequestDto;
+import com.agh.polymorphia_backend.dto.response.profile.BaseProfileResponseDto;
 import com.agh.polymorphia_backend.dto.response.profile.EvolutionStageThresholdResponseDto;
 import com.agh.polymorphia_backend.dto.response.profile.ProfileResponseDto;
-import com.agh.polymorphia_backend.model.course.Animal;
-import com.agh.polymorphia_backend.model.course.Course;
-import com.agh.polymorphia_backend.model.course.EvolutionStage;
+import com.agh.polymorphia_backend.dto.response.profile.StudentSummaryResponseDto;
+import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry;
 import com.agh.polymorphia_backend.model.hall_of_fame.SearchBy;
 import com.agh.polymorphia_backend.model.user.User;
+import com.agh.polymorphia_backend.model.user.UserType;
+import com.agh.polymorphia_backend.model.user.student.Animal;
+import com.agh.polymorphia_backend.model.user.student.EvolutionStage;
 import com.agh.polymorphia_backend.repository.course.EvolutionStagesRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
-import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
 import com.agh.polymorphia_backend.service.mapper.ProfileMapper;
 import com.agh.polymorphia_backend.service.user.UserService;
@@ -21,7 +23,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 import static com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService.STUDENT_HOF_NOT_FOUND;
@@ -29,10 +30,7 @@ import static com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService
 @Service
 @AllArgsConstructor
 public class ProfileService {
-    private static final String PROFILE_INFO_INCOMPLETE = "Profile info incomplete: %s";
-    private static final String LACKING_EVOLUTION_STAGES = "Evolution stages not defined";
     private final AccessAuthorizer accessAuthorizer;
-    private final CourseService courseService;
     private final UserService userService;
     private final HallOfFameService hallOfFameService;
     private final AnimalService animalService;
@@ -40,26 +38,38 @@ public class ProfileService {
     private final EvolutionStagesRepository evolutionStagesRepository;
     private final ProfileMapper profileMapper;
 
-    public ProfileResponseDto getProfile(Long courseId) {
-        Course course = courseService.getCourseById(courseId);
-        accessAuthorizer.authorizeCourseAccess(course);
-        User user = userService.getCurrentUser().getUser();
+    public BaseProfileResponseDto getProfile(Long courseId, Optional<Long> studentIdOptional) {
+        User currentUser = userService.getCurrentUser().getUser();
+        Long studentId = studentIdOptional.orElse(currentUser.getId());
+        accessAuthorizer.authorizeStudentDataAccess(courseId, studentId);
 
-        BigDecimal totalXp = hallOfFameService.getStudentHallOfFame(user).getTotalXpSum();
+        HallOfFameEntry hallOfFameEntry = hallOfFameService.getStudentHallOfFame(studentId, courseId);
         List<EvolutionStageThresholdResponseDto> evolutionStages = getEvolutionStages(courseId);
-        int evolutionStageId = getCurrentEvolutionStageId(evolutionStages, user);
+        int evolutionStageId = getCurrentEvolutionStageId(evolutionStages, hallOfFameEntry);
 
-        return ProfileResponseDto.builder()
-                .evolutionStageThresholds(evolutionStages)
+        BaseProfileResponseDto.BaseProfileResponseDtoBuilder builder;
+
+        if (UserType.STUDENT.equals(userService.getCurrentUserRole())) {
+            builder = ProfileResponseDto.builder()
+                    .evolutionStageThresholds(evolutionStages)
+                    .xpDetails(getXpDetails(currentUser, courseId, hallOfFameEntry));
+        } else {
+            builder = StudentSummaryResponseDto.builder()
+                    .studentName(hallOfFameEntry.getStudentName())
+                    .animalName(hallOfFameEntry.getAnimalName())
+                    .imageUrl(hallOfFameEntry.getImageUrl())
+                    .position(hallOfFameEntry.getPosition());
+        }
+
+        return builder
+                .totalXp(NumberFormatter.formatToBigDecimal(hallOfFameEntry.getTotalXpSum()))
+                .totalStudentsInCourse(getTotalStudentsInCourse(courseId))
                 .leftEvolutionStage(getLeftEvolutionStage(evolutionStages, evolutionStageId))
                 .rightEvolutionStage(getRightEvolutionStage(evolutionStages, evolutionStageId))
-                .totalXp(NumberFormatter.formatToBigDecimal(totalXp))
-                .totalStudentsInCourse(getTotalStudentsInCourse(courseId))
-                .xpDetails(getXpDetails(user, courseId))
                 .build();
     }
 
-    private Map<String, String> getXpDetails(User user, Long courseId) {
+    private Map<String, String> getXpDetails(User user, Long courseId, HallOfFameEntry hallOfFameEntry) {
         Animal animal = animalService.getAnimal(user.getId(), courseId);
         Map<String, String> xpDetails = hallOfFameService.groupScoreDetails(List.of(animal.getId())).get(animal.getId());
 
@@ -67,14 +77,13 @@ public class ProfileService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_HOF_NOT_FOUND);
         }
 
-        hallOfFameService.updateXpDetails(xpDetails, hallOfFameService.getStudentHallOfFame(user));
-
+        hallOfFameService.updateXpDetails(xpDetails, hallOfFameEntry);
         return xpDetails;
     }
 
-    private int getCurrentEvolutionStageId(List<EvolutionStageThresholdResponseDto> evolutionStages, User user) {
-        String evolutionStageName = Optional.ofNullable(hallOfFameService.getStudentHallOfFame(user).getEvolutionStage())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(PROFILE_INFO_INCOMPLETE, LACKING_EVOLUTION_STAGES)));
+    private int getCurrentEvolutionStageId(List<EvolutionStageThresholdResponseDto> evolutionStages, HallOfFameEntry hallOfFameEntry) {
+        String evolutionStageName = Optional.ofNullable(hallOfFameEntry.getEvolutionStage())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Profil jest niekompletny: etapy ewolucji nie zostały zdefiniowane."));
 
         for (int i = 0; i < evolutionStages.size(); i++) {
             if (evolutionStages.get(i).getName().equals(evolutionStageName)) {

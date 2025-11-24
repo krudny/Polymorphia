@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef } from "react";
 import { animateInitialMount } from "@/animations/Home";
-import { UseHeroAnimation } from "./types";
+import { UseHeroAnimation } from "@/hooks/general/useHeroAnimation/types";
 
 export function useHeroAnimation(): UseHeroAnimation {
   const owlBackgroundRef = useRef<HTMLDivElement>(null);
@@ -9,6 +9,8 @@ export function useHeroAnimation(): UseHeroAnimation {
   const hasMountedRef = useRef(false);
 
   useLayoutEffect(() => {
+    hasMountedRef.current = false;
+
     if (!owlBackgroundRef.current || !titleRef.current || !owlRef.current) {
       return;
     }

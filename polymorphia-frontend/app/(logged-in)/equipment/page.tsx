@@ -1,40 +1,35 @@
 "use client";
 import "./index.css";
-import { useTitle } from "@/components/navigation/TitleContext";
-import { useEffect } from "react";
-import ItemModal from "@/components/equipment/modals/ItemModal";
-import ChestModal from "@/components/equipment/modals/ChestModal";
 import Loading from "@/components/loading";
 import EquipmentSectionWrapper from "@/components/equipment/EquipmentSectionWrapper";
-import OpeningChestModal from "@/components/equipment/modals/OpeningChestModal";
-import { EquipmentProvider } from "@/providers/equipment/EquipmentContext";
+import { EquipmentProvider } from "@/providers/equipment";
 import useEquipment from "@/hooks/course/useEquipment";
+import ErrorComponent from "@/components/error";
+import EquipmentModals from "@/components/equipment/modals";
 
-export default function Equipment() {
-  const { setTitle } = useTitle();
+function EquipmentContent() {
   const { items, chests, isLoading } = useEquipment();
-
-  useEffect(() => {
-    setTitle("Ekwipunek");
-  }, [setTitle]);
 
   if (isLoading) {
     return <Loading />;
   }
 
   if (!items || !chests) {
-    return <div>Error :c</div>;
+    return <ErrorComponent message="Nie udało się załadować ekwipunku." />;
   }
 
   return (
-    <EquipmentProvider>
-      <div className="equipment">
-        <EquipmentSectionWrapper items={items} chests={chests} />
+    <div className="equipment">
+      <EquipmentSectionWrapper items={items} chests={chests} />
+      <EquipmentModals />
+    </div>
+  );
+}
 
-        <ItemModal />
-        <ChestModal />
-        <OpeningChestModal />
-      </div>
+export default function Equipment() {
+  return (
+    <EquipmentProvider>
+      <EquipmentContent />
     </EquipmentProvider>
   );
 }

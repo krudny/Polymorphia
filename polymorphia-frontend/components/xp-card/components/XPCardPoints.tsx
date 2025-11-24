@@ -8,6 +8,7 @@ export default function XPCardPoints({
   isSumLabelVisible = false,
   isXPLabelVisible = true,
   hasChest = false,
+  shouldGreyOutReward = false,
   color,
 }: XPCardPointsProps) {
   return (
@@ -19,12 +20,16 @@ export default function XPCardPoints({
       )}
     >
       <h1>
-        {points || "-"} {isXPLabelVisible && "xp"}
+        {points != null ? points : "-"} {isXPLabelVisible && "xp"}
       </h1>
       {isSumLabelVisible && <h2>Suma</h2>}
       {hasChest && (
-        <div className="xp-card-points-has-chest">
-          <span className="material-symbols">featured_seasonal_and_gifts</span>
+        <div
+          className={clsx("xp-card-points-has-chest", {
+            "text-gray-400": shouldGreyOutReward,
+          })}
+        >
+          <span className="material-symbols">trophy</span>
         </div>
       )}
     </div>

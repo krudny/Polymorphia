@@ -1,14 +1,17 @@
-import { TargetTypes } from "@/interfaces/api/grade/target";
-import { GradingReducerState } from "@/providers/grading/gradingReducer/types";
+import {
+  TargetRequestDTO,
+  TargetResponseDTO,
+  TargetTypes,
+} from "@/interfaces/api/target";
 
 export function getKeyForSelectedTarget(
-  state: GradingReducerState
+  selectedTarget: TargetResponseDTO | TargetRequestDTO | null
 ): string | undefined {
-  if (state.selectedTarget === null) {
+  if (selectedTarget === null) {
     return undefined;
-  } else if (state.selectedTarget.type === TargetTypes.STUDENT) {
-    return `${state.selectedTarget.type}_${state.selectedTarget.id}`;
+  } else if (selectedTarget.type === TargetTypes.STUDENT) {
+    return `${selectedTarget.type}_${selectedTarget.id}`;
   } else {
-    return `${state.selectedTarget.type}_${state.selectedTarget.groupId}`;
+    return `${selectedTarget.type}_${selectedTarget.groupId}`;
   }
 }

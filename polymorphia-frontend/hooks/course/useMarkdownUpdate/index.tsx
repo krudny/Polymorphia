@@ -15,13 +15,10 @@ export default function useMarkdownUpdate(
     mutationFn: () => MarkdownService.saveMarkdown(request),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["markdown", request.resourceId],
+        queryKey: ["markdown", request.markdownType, request.resourceId],
       });
-      toast.success("Zapisano zmiany!");
       request.setIsEditing(false);
-    },
-    onError: (error) => {
-      toast.error(error.message);
+      toast.success("Zapisano zmiany!");
     },
   });
 }

@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.model.course;
 
-import com.agh.polymorphia_backend.model.user.Instructor;
+import com.agh.polymorphia_backend.model.user.TeachingRoleUser;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -26,6 +26,10 @@ public class CourseGroup {
     @NotEmpty
     private String name;
 
+    @NotEmpty
+    @Column(length = 16, nullable = false)
+    private String room;
+
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
@@ -34,10 +38,10 @@ public class CourseGroup {
     private Course course;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "instructor_id")
+    @JoinColumn(name = "teaching_role_user_id")
     @ToString.Exclude
     @JsonIgnore
-    private Instructor instructor;
+    private TeachingRoleUser teachingRoleUser;
 
     @NotNull
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "courseGroup")

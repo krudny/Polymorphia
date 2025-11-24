@@ -28,7 +28,7 @@ public class UserControllerTest extends ControllerTestConfig {
     @Test
     void setPreferredCourse_success() {
         String actualResponse = postEndpoint("/users/preferred-course?courseId={courseId}",
-                "instructor@agh.com", "password", 200, Optional.empty(), 1);
+                "instructor@agh.com", "password", 204, Optional.empty(), 1);
 
         User instructor = userRepository.findByEmail("instructor@agh.com")
                 .orElseThrow();

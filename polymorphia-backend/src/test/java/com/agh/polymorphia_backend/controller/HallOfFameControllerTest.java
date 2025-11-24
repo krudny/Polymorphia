@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.controller;
 
-import com.agh.polymorphia_backend.dto.request.HallOfFameRequestDto;
+import com.agh.polymorphia_backend.dto.request.hall_of_fame.HallOfFameRequestDto;
 import com.agh.polymorphia_backend.model.hall_of_fame.SearchBy;
 import com.agh.polymorphia_backend.model.hall_of_fame.SortOrder;
 import org.junit.jupiter.api.Test;
@@ -16,86 +16,129 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import static com.agh.polymorphia_backend.controller.ControllerTestUtil.*;
+import static io.restassured.path.json.JsonPath.from;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HallOfFameControllerTest extends ControllerTestConfig {
-    private static final HallOfFameRequestDto.HallOfFameRequestDtoBuilder hofBuilder = HallOfFameRequestDto.builder()
-            .courseId(1L)
-            .page(0)
-            .size(10)
-            .searchBy(SearchBy.ANIMAL_NAME)
-            .searchTerm("hof_")
-            .groups(List.of("mi-sr12"));
+    private static final String RESOURCE_BASE_PATH = "responses/hall_of_fame/";
+
+    private static Resource getResource(String fileName) {
+        return new ClassPathResource(RESOURCE_BASE_PATH + fileName + ".json");
+    }
+
+    private static HallOfFameRequestDto.HallOfFameRequestDtoBuilder baseRequestBuilder() {
+        return HallOfFameRequestDto.builder()
+                .courseId(1L)
+                .page(0)
+                .size(10)
+                .groups(List.of("BM-SR13"))
+                .searchBy(SearchBy.ANIMAL_NAME)
+                .searchTerm("hof_");
+    }
 
     private static Stream<Arguments> hallOfFameSource() {
         return Stream.of(
-                Arguments.of(
-                        hofBuilder
-                                .sortBy("animalName")
-                                .sortOrder(SortOrder.ASC)
-                                .build(),
-                        new ClassPathResource("responses/hall_of_fame/sortByAnimalNameAsc.json"),
-                        "sort by animalName asc"
-                ),
-                Arguments.of(
-                        hofBuilder
-                                .sortBy("bonuses")
-                                .sortOrder(SortOrder.DESC)
-                                .build(),
-                        new ClassPathResource("responses/hall_of_fame/sortByBonusesDesc.json"),
-                        "sort by bonuses desc"
-                ),
-                Arguments.of(
-                        hofBuilder
-                                .sortBy("total")
-                                .sortOrder(SortOrder.DESC)
-                                .build(),
-                        new ClassPathResource("responses/hall_of_fame/sortByTotalDesc.json"),
-                        "sort by total desc"
-                ),
-                Arguments.of(
-                        hofBuilder
-                                .sortBy("Lab")
-                                .sortOrder(SortOrder.DESC)
-                                .build(),
-                        new ClassPathResource("responses/hall_of_fame/sortByFirstEventSectionDesc.json"),
-                        "sort by \"Lab\" desc"
-                ),
-                Arguments.of(
-                        hofBuilder
-                                .sortBy("Kartkówka")
-                                .sortOrder(SortOrder.DESC)
-                                .build(),
-                        new ClassPathResource("responses/hall_of_fame/sortBySecondEventSectionDesc.json"),
-                        "sort by \"Kartkówka\" desc"
-                )
+                Arguments.of("animalName", SortOrder.ASC, "sortByAnimalNameAsc", "sort by animalName asc"),
+                Arguments.of("bonuses", SortOrder.DESC, "sortByBonusesDesc", "sort by bonuses desc"),
+                Arguments.of("total", SortOrder.DESC, "sortByTotalDesc", "sort by total desc"),
+                Arguments.of("total", SortOrder.ASC, "sortByTotalAsc", "sort by total asc"),
+                Arguments.of("Lab", SortOrder.DESC, "sortByFirstEventSectionDesc", "sort by \"Lab\" desc"),
+                Arguments.of("Lab", SortOrder.ASC, "sortByFirstEventSectionAsc", "sort by \"Lab\" asc"),
+                Arguments.of("Kartkówka", SortOrder.DESC, "sortBySecondEventSectionDesc", "sort by \"Kartkówka\" desc")
+        );
+    }
+
+    private static Stream<Arguments> hallOfFameSource_ForInstructor() {
+        return Stream.of(
+                Arguments.of("studentName", SortOrder.ASC, "sortByStudentNameAsc", "sort by studentName asc"),
+                Arguments.of("studentName", SortOrder.DESC, "sortByStudentNameDesc", "sort by studentName desc")
+        );
+    }
+
+    private static Stream<Arguments> hallOfFameSource_currentPage() {
+        return Stream.of(
+                Arguments.of("animalName", SortOrder.ASC, 0, "sort by animalName asc"),
+                Arguments.of("animalName", SortOrder.DESC, 2, "sort by animalName desc"),
+                Arguments.of("total", SortOrder.DESC, 1, "sort by total desc"),
+                Arguments.of("bonuses", SortOrder.DESC, 0, "sort by bonus desc"),
+                Arguments.of("Lab", SortOrder.DESC, 1, "sort by \"Lab\" desc"),
+                Arguments.of("Kartkówka", SortOrder.DESC, 2, "sort by \"Kartkówka\" desc"),
+                Arguments.of("Kartkówka", SortOrder.ASC, 0, "sort by \"Kartkówka\" desc")
         );
     }
 
     @Test
-    void getPodium_shouldReturnPodium() throws IOException {
+    void getPodium_shouldReturnPodium_ForStudent() throws IOException {
         String actualResponse = getEndpoint("/hall-of-fame/podium?courseId={courseId}",
                 "student@agh.com", "password", 200, 1);
 
-        Resource resource = new ClassPathResource("responses/hall_of_fame/podium.json");
-        assertJsonEquals(resource, actualResponse);
+        assertJsonEquals(getResource("podium"), actualResponse);
     }
 
-    @ParameterizedTest(name = "{2}")
+    @Test
+    void getPodium_shouldReturnPodium_forInstructor() throws IOException {
+        String actualResponse = getEndpoint("/hall-of-fame/podium?courseId={courseId}",
+                "instructor2@agh.com", "password", 200, 1);
+
+        assertJsonEquals(getResource("podiumInstructor"), actualResponse);
+    }
+
+    @ParameterizedTest(name = "{3}")
     @MethodSource("hallOfFameSource")
-    void getHallOfFame_shouldReturnHalOfFame(HallOfFameRequestDto requestDto, Resource resource, String testName) throws IOException {
-        String actualResponse = postEndpoint("/hall-of-fame", "student@agh.com",
+    void getHallOfFame_shouldReturnHalOfFame_forStudent(String sortBy, SortOrder sortOrder, String fileName, String testName) throws IOException {
+        HallOfFameRequestDto requestDto = baseRequestBuilder().sortBy(sortBy).sortOrder(sortOrder).build();
+        String actualResponse = postEndpoint("/hall-of-fame", "anowak@agh.com",
                 "password", 200, Optional.of(requestDto));
 
-        assertJsonEquals(resource, actualResponse);
+        assertJsonEquals(getResource(fileName), actualResponse);
+    }
+
+    @ParameterizedTest(name = "{3}")
+    @MethodSource({"hallOfFameSource", "hallOfFameSource_ForInstructor"})
+    void getHallOfFame_shouldReturnHalOfFame_ForInstructor(String sortBy, SortOrder sortOrder, String fileName, String testName) throws IOException {
+        HallOfFameRequestDto requestDto = baseRequestBuilder().sortBy(sortBy).sortOrder(sortOrder).build();
+        String actualResponse = postEndpoint("/hall-of-fame", "instructor2@agh.com",
+                "password", 200, Optional.of(requestDto));
+
+        assertJsonEquals(getResource(fileName+"Instructor"), actualResponse);
+    }
+
+    @Test
+    void getHallOfFame_shouldReturnHalOfFame_SearchByStudentName() throws IOException {
+        HallOfFameRequestDto requestDto = baseRequestBuilder()
+                .searchBy(SearchBy.STUDENT_NAME)
+                .searchTerm("and")
+                .sortBy("studentName")
+                .sortOrder(SortOrder.DESC)
+                .build();
+        String actualResponse = postEndpoint("/hall-of-fame", "instructor2@agh.com",
+                "password", 200, Optional.of(requestDto));
+
+        assertJsonEquals(getResource("searchByStudentName"), actualResponse);
+    }
+
+    @ParameterizedTest(name = "{3}")
+    @MethodSource("hallOfFameSource_currentPage")
+    void getHallOfFame_shouldReturnValidCurrentPage(String sortBy, SortOrder sortOrder, int expectedUserPage, String testName) {
+        HallOfFameRequestDto requestDto = baseRequestBuilder()
+                .sortBy(sortBy)
+                .sortOrder(sortOrder)
+                .size(2)
+                .build();
+        String actualResponse = postEndpoint("/hall-of-fame", "anowak@agh.com",
+                "password", 200, Optional.of(requestDto));
+        int actualUserPage = from(actualResponse).getInt("currentUserPage");
+
+        assertEquals(expectedUserPage, actualUserPage);
     }
 
     @Test
     void getHallOfFame_shouldReturnError() {
-        HallOfFameRequestDto hof = hofBuilder
+        HallOfFameRequestDto hof = baseRequestBuilder()
                 .sortBy("some-not-existing-sort-by")
                 .sortOrder(SortOrder.DESC)
                 .build();
 
-        postEndpoint("/hall-of-fame", "student@agh.com", "password", 500, Optional.of(hof));
+        postEndpoint("/hall-of-fame", "student@agh.com", "password", 400, Optional.of(hof));
     }
 }

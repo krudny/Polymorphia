@@ -2,7 +2,7 @@
 @import "../../styles/globals.css";
 
 .search {
-  @apply w-44 md:w-64 md:min-w-0 flex-centered min-h-full h-full flex-shrink;
+  @apply w-full max-w-44 md:max-w-64 md:min-w-0 flex-centered min-h-full h-full shrink;
 }
 
 .search-wrapper {

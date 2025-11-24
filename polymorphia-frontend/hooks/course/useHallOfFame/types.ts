@@ -5,6 +5,7 @@ export interface useHallOfFameProps {
   pageSize: number;
   courseId: number;
   debouncedSearch: string;
+  searchBy: string;
   sortOrder: string[];
   sortBy: string[];
   groups: string[];
@@ -13,4 +14,5 @@ export interface useHallOfFameProps {
 export interface UseHallOfFame {
   data: HallOfFameResponseDTO | undefined;
   isLoading: boolean;
+  isError: boolean;
 }

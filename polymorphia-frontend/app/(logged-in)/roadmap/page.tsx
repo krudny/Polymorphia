@@ -1,74 +1,72 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useTitle } from "@/components/navigation/TitleContext";
+import { useState } from "react";
 import ProgressBar from "@/components/progressbar/ProgressBar";
-import XPCard from "@/components/xp-card/XPCard";
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import ProgressBarElement from "@/components/progressbar/ProgressBarElement";
 import Loading from "@/components/loading";
 import { useMediaQuery } from "react-responsive";
-import RoadmapModals from "@/app/(logged-in)/roadmap/RoadmapModals";
 import "./styles.css";
-import { StudentGradableEventResponseDTO } from "@/interfaces/api/course";
 import { useRoadmap } from "@/hooks/course/useRoadmap";
-import XPCardChest from "@/components/xp-card/components/XPCardChest";
-import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
+import GradeModal from "@/components/speed-dial/modals/grade";
+import ErrorComponent from "@/components/error";
+import useUserContext from "@/hooks/contexts/useUserContext";
+import StudentGradableEventCard from "@/views/gradable-events/student/StudentGradableEventCard";
+import { Roles } from "@/interfaces/api/user";
+import InstructorGradableEventCard from "@/views/gradable-events/instructor/InstructorGradableEventCard";
+import {
+  GradableEventDTO,
+  StudentGradableEventResponseDTO,
+  TeachingRoleGradableEventResponseDTO,
+} from "@/interfaces/api/gradable_event/types";
+import { Sizes } from "@/interfaces/general";
 
 export default function Roadmap() {
-  const { setTitle } = useTitle();
-  const [selectedEvent, setSelectedEvent] = useState<
-    StudentGradableEventResponseDTO | undefined
-  >(undefined);
+  const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
   const wrapperRef = useFadeInAnimate();
-  const { data: roadmap, isLoading } = useRoadmap();
+  const { data: roadmap, isLoading, isError } = useRoadmap();
+  const { userRole } = useUserContext();
   const isXL = useMediaQuery({ minWidth: 1280 });
   const isMd = useMediaQuery({ minWidth: 768 });
   const isSm = useMediaQuery({ minWidth: 400 });
 
-  useEffect(() => {
-    setTitle("Roadmapa");
-  }, [setTitle]);
-
-  if (isLoading || !roadmap) {
+  if (isLoading) {
     return <Loading />;
   }
 
-  const handleClick = (gradableEvent: StudentGradableEventResponseDTO) => {
-    setSelectedEvent(gradableEvent);
+  if (isError || !roadmap) {
+    return <ErrorComponent message="Nie udało się załadować danych." />;
+  }
+
+  const handleClick = (gradableEvent: GradableEventDTO) => {
+    if (isStudent) {
+      setSelectedEventId(gradableEvent.id);
+    }
   };
 
-  const cards = roadmap.map((gradableEvent) => {
-    const { name, topic, id, gainedXp, isLocked, hasReward } = gradableEvent;
-    const color = gainedXp ? "green" : "silver";
-    const rightComponent = hasReward ? (
-      <XPCardChest />
-    ) : (
-      <XPCardPoints
-        points={gainedXp}
-        isSumLabelVisible={true}
-        hasChest={true}
-        color="gray"
-      />
-    );
+  const isStudent = userRole === Roles.STUDENT;
+  const cardSize = isXL ? Sizes.MD : Sizes.SM;
 
-    return (
-      <XPCard
-        title={name}
-        subtitle={topic}
-        key={id}
-        color={color}
-        size={isXL ? "md" : isMd ? "sm" : "xs"}
-        forceWidth={true}
-        isLocked={isLocked}
-        onClick={() => handleClick(gradableEvent)}
-        rightComponent={rightComponent}
+  const cards = roadmap.map((gradableEvent) =>
+    isStudent ? (
+      <StudentGradableEventCard
+        key={gradableEvent.id}
+        size={cardSize}
+        gradableEvent={gradableEvent as StudentGradableEventResponseDTO}
+        handleClick={handleClick}
       />
-    );
-  });
+    ) : (
+      <InstructorGradableEventCard
+        key={gradableEvent.id}
+        size={cardSize}
+        gradableEvent={gradableEvent as TeachingRoleGradableEventResponseDTO}
+        handleClick={handleClick}
+      />
+    )
+  );
 
   const cardHeightWithGap = isXL ? 8 : isMd ? 6.5 : isSm ? 9 : 7;
-  const totalHeight = `${cards.length * cardHeightWithGap}rem`;
+  const totalHeight = `${roadmap.length * cardHeightWithGap}rem`;
 
   return (
     <>
@@ -91,21 +89,23 @@ export default function Roadmap() {
             />
           }
           lowerElement={
-            isMd ? (
+            isMd && (
               <ProgressBarElement
                 elements={cards ?? []}
                 alternate={isMd}
                 isUpper={false}
                 isHorizontal={false}
               />
-            ) : undefined
+            )
           }
         />
       </div>
-      <RoadmapModals
-        selectedGradableEvent={selectedEvent}
-        setSelectedGradableEvent={setSelectedEvent}
-      />
+      {selectedEventId && (
+        <GradeModal
+          gradableEventIdProp={selectedEventId}
+          onClosedAction={() => setSelectedEventId(null)}
+        />
+      )}
     </>
   );
 }

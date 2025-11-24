@@ -17,11 +17,6 @@ public enum MarkdownType {
         this.value = value;
     }
 
-    @JsonValue
-    public String getValue() {
-        return value;
-    }
-
     @JsonCreator
     public static MarkdownType fromValue(String value) {
         for (MarkdownType type : values()) {
@@ -29,6 +24,11 @@ public enum MarkdownType {
                 return type;
             }
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Markdown type not found");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nie znaleziono typu markdown.");
+    }
+
+    @JsonValue
+    public String getValue() {
+        return value;
     }
 }

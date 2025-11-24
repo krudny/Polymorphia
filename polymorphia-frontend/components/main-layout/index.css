@@ -2,8 +2,12 @@
 @import "../../styles/globals.css";
 
 .main-layout {
-  @apply w-full flex flex-col h-[calc(100dvh)] relative overflow-x-hidden custom-scrollbar;
+  @apply w-full h-full flex flex-col min-h-[calc(100dvh)] relative overflow-x-hidden custom-scrollbar lg:pr-24;
   scrollbar-gutter: stable both;
+}
+
+body:has([data-speed-dial-portal="true"]) #main-container {
+  @apply pb-20 lg:pb-0;
 }
 
 .main-layout-title {
@@ -15,5 +19,5 @@
 }
 
 .main-layout-content-wrapper {
-  @apply w-full flex flex-col flex-1 max-lg:mt-20;
+  @apply w-full flex flex-col flex-1 max-lg:mt-20 relative;
 }

@@ -15,7 +15,6 @@ public final class NumberFormatter {
     }
 
     public static BigDecimal formatToBigDecimal(BigDecimal number) {
-        return number.setScale(2, RoundingMode.HALF_UP);
+        return number.setScale(1, RoundingMode.HALF_UP);
     }
-
 }

@@ -1,12 +1,14 @@
 package com.agh.polymorphia_backend.service.validation;
 
-import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
+import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
+import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserCourseRole;
 import com.agh.polymorphia_backend.model.user.UserType;
-import com.agh.polymorphia_backend.repository.course.AnimalRepository;
+import com.agh.polymorphia_backend.model.user.student.Animal;
+import com.agh.polymorphia_backend.repository.user.student.AnimalRepository;
 import com.agh.polymorphia_backend.repository.course.CourseRepository;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.role.InstructorRepository;
@@ -26,7 +28,6 @@ import static com.agh.polymorphia_backend.service.course.CourseService.COURSE_NO
 @Service
 @AllArgsConstructor
 public class AccessAuthorizer {
-    private final static String USER_COURSE_ROLE_NOT_FOUND = "User course role not found";
     private final UserService userService;
     private final UserCourseRoleRepository userCourseRoleRepository;
     private final InstructorRepository instructorRepository;
@@ -36,9 +37,48 @@ public class AccessAuthorizer {
 
     public void authorizeCourseAccess(Long courseId) {
         Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, COURSE_NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, COURSE_NOT_FOUND));
 
         authorizeCourseAccess(course);
+    }
+
+    public void authorizeStudentDataAccess(Long courseId, Long studentId) {
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, COURSE_NOT_FOUND));
+        authorizeStudentDataAccess(course, studentId);
+    }
+
+    public void authorizeStudentDataAccess(Course course, Long studentId) {
+        authorizeCourseAccess(course);
+        User user = userService.getCurrentUser().getUser();
+
+        boolean isStudentSelf = user.getId().equals(studentId);
+        boolean isCoordinatorInCourse = isCourseAccessAuthorizedCoordinator(user, course);
+        boolean isStudentsInstructor = hasInstructorAccessToUserInCourse(user, course, studentId);
+
+        if (!isStudentSelf && !isCoordinatorInCourse && !isStudentsInstructor) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Brak dostępu do danych użytkownika.");
+        }
+    }
+
+    public void authorizeProjectGroupDetailsAccess(ProjectGroup projectGroup) {
+        AbstractRoleUser user = userService.getCurrentUser();
+        Long userId = user.getUser().getId();
+        Course course = projectGroup.getProject().getEventSection().getCourse();
+
+        boolean isProjectGroupsTeachingRoleUser = projectGroup.getTeachingRoleUser().getUserId().equals(userId);
+        boolean isCoordinatorInCourse = isCourseAccessAuthorizedCoordinator(user.getUser(), course);
+        boolean isGroupMember = projectGroup.getAnimals().stream()
+                .anyMatch(animal ->
+                        animal.getStudentCourseGroupAssignment()
+                                .getStudent()
+                                .getUserId()
+                                .equals(userId)
+                );
+
+        if (!isProjectGroupsTeachingRoleUser && !isCoordinatorInCourse && !isGroupMember) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Niepoprawne id użytkownika lub projektu.");
+        }
     }
 
     public void authorizeCourseAccess(Course course) {
@@ -57,7 +97,7 @@ public class AccessAuthorizer {
 
         UserCourseRole userCourseRole = userCourseRoleRepository
                 .findByUserIdAndCourseId(user.getId(), course.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, USER_COURSE_ROLE_NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono roli użytkownika w kursie."));
 
         if (userCourseRole.getRole() == UserType.STUDENT) {
             Optional<Animal> animal = animalRepository.findByCourseIdAndStudentId(course.getId(), user.getId());
@@ -72,7 +112,7 @@ public class AccessAuthorizer {
         return roles.contains(userService.getUserRole(user));
     }
 
-    private boolean isCourseAccessAuthorized(AbstractRoleUser roleUser, Course course) {
+    public boolean isCourseAccessAuthorized(AbstractRoleUser roleUser, Course course) {
         UserType role = userService.getUserRole(roleUser);
         User user = roleUser.getUser();
 
@@ -80,8 +120,22 @@ public class AccessAuthorizer {
             case STUDENT -> isCourseAccessAuthorizedStudent(user, course);
             case INSTRUCTOR -> isCourseAccessAuthorizedInstructor(user, course);
             case COORDINATOR -> isCourseAccessAuthorizedCoordinator(user, course);
-            case UNDEFINED -> false;
+            case UNDEFINED -> isCourseAccessAuthorizedUndefined(user, course);
         };
+    }
+
+    public void authorizeProjectGroupGrading(ProjectGroup projectGroup) {
+        User user = userService.getCurrentUser().getUser();
+        boolean isProjectGroupInstructor = projectGroup.getTeachingRoleUser().getUserId().equals(user.getId());
+        boolean isCoordinator = isCourseAccessAuthorizedCoordinator(user, projectGroup.getProject().getEventSection().getCourse());
+
+        if (!isProjectGroupInstructor && !isCoordinator) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Niepoprawne id użytkownika lub projektu.");
+        }
+    }
+
+    private boolean hasInstructorAccessToUserInCourse(User user, Course course, Long studentId) {
+        return instructorRepository.hasAccessToStudentInCourse(user.getId(), course.getId(), studentId);
     }
 
     private boolean isCourseAccessAuthorizedCoordinator(User user, Course course) {
@@ -93,6 +147,12 @@ public class AccessAuthorizer {
     }
 
     private boolean isCourseAccessAuthorizedStudent(User user, Course course) {
-        return studentRepository.findByUserIdAndCourseId(user.getId(), course.getId()).isPresent();
+        return studentRepository.findByUserIdAndCourseIdAndAssignedToCourseGroup(user.getId(), course.getId()).isPresent();
+    }
+
+    private boolean isCourseAccessAuthorizedUndefined(User user, Course course) {
+        return isCourseAccessAuthorizedStudent(user, course)
+                || isCourseAccessAuthorizedInstructor(user, course)
+                || isCourseAccessAuthorizedCoordinator(user, course);
     }
 }
