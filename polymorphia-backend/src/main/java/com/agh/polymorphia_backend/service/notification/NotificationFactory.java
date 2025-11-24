@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class NotificationFactory {
-    private static final String NOTIFICATION_CREATOR_NOT_FOUND = "Notification creator not found";
+    private static final String NOTIFICATION_CREATOR_NOT_FOUND = "Nie znaleziono typu kreatora powiadomień.";
     private final Map<NotificationType, NotificationCreator> creators;
 
     public NotificationFactory(List<NotificationCreator> creatorList) {

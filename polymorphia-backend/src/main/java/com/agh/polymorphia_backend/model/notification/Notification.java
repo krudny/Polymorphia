@@ -12,12 +12,11 @@ import java.time.ZonedDateTime;
 @Entity
 @Table(name = "notifications")
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "notification_type", discriminatorType = DiscriminatorType.STRING)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public abstract class Notification {
+public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,6 +28,9 @@ public abstract class Notification {
     private ZonedDateTime createdAt;
 
     @NotNull
+    private NotificationType type;
+
+    @NotNull
     private String description;
 
     @PrePersist
@@ -37,8 +39,4 @@ public abstract class Notification {
             createdAt = ZonedDateTime.now();
         }
     }
-
-    public abstract NotificationType getNotificationType();
-
-    public abstract Long getRelatedEntityId();
 }

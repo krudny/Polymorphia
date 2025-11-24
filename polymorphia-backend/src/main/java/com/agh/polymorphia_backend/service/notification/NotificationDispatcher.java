@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 @Slf4j
 public class NotificationDispatcher {
-    private static final String FAILED_TO_CREATE_NOTIFICATION = "Failed to create notification";
+    private static final String FAILED_TO_CREATE_NOTIFICATION = "Nie udało się utworzyć powiadomienia.";
     private final NotificationRepository notificationRepository;
     private final NotificationFactory notificationFactory;
     private final NotificationMapper notificationMapper;
