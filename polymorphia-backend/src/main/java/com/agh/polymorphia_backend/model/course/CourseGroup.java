@@ -26,6 +26,10 @@ public class CourseGroup {
     @NotEmpty
     private String name;
 
+    @NotEmpty
+    @Column(length = 16, nullable = false)
+    private String room;
+
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")

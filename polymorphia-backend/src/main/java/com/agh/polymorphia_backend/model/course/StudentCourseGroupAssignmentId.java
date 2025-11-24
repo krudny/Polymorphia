@@ -20,6 +20,6 @@ public class StudentCourseGroupAssignmentId implements Serializable {
     private Long studentId;
 
     @NotNull
-    @Column(name= "course_group_id", nullable = false)
+    @Column(name = "course_group_id", nullable = false)
     private Long courseGroupId;
 }

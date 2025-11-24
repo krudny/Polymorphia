@@ -12,52 +12,7 @@
         "id": 5,
         "name": "Złota",
         "imageUrl": "url",
-        "orderIndex": 1,
-        "behaviorText": "Otrzymasz pełną zawartość skrzynki",
-        "behavior": "ALL",
-        "chestItems": [
-          {
-            "id": 3,
-            "name": "Marchewka",
-            "imageUrl": "url",
-            "orderIndex": 0,
-            "bonusText": "+10% do eventów z kategorii Kartkówka",
-            "shortBonusText": "+10% Kartkówka",
-            "limit": 2,
-            "isLimitReached": false,
-            "eventSectionId": 1,
-            "itemBonusType": "PERCENTAGE_BONUS",
-            "percentage": 10
-          },
-          {
-            "id": 1,
-            "name": "Apteczka",
-            "imageUrl": "url",
-            "orderIndex": 1,
-            "bonusText": "+2.0 xp do eventów z kategorii Kartkówka",
-            "shortBonusText": "+2.0 xp Kartkówka",
-            "limit": 2,
-            "isLimitReached": false,
-            "eventSectionId": 1,
-            "itemBonusType": "FLAT_BONUS",
-            "xp": 2.0,
-            "behavior": "ONE_EVENT"
-          },
-          {
-            "id": 2,
-            "name": "Apteczka2",
-            "imageUrl": "url",
-            "orderIndex": 2,
-            "bonusText": "+3.0 xp do eventów z kategorii Kartkówka",
-            "shortBonusText": "+3.0 xp Kartkówka",
-            "limit": 2,
-            "isLimitReached": false,
-            "eventSectionId": 1,
-            "itemBonusType": "FLAT_BONUS",
-            "xp": 3.0,
-            "behavior": "MULTIPLE_EVENTS"
-          }
-        ]
+        "orderIndex": 1
       }
     ]
   },
@@ -74,90 +29,13 @@
         "id": 4,
         "name": "Srebrna",
         "imageUrl": "url",
-        "orderIndex": 0,
-        "behaviorText": "Wybierz jeden przedmiot ze skrzynki",
-        "behavior": "ONE_OF_MANY",
-        "chestItems": [
-          {
-            "id": 1,
-            "name": "Apteczka",
-            "imageUrl": "url",
-            "orderIndex": 1,
-            "bonusText": "+2.0 xp do eventów z kategorii Kartkówka",
-            "shortBonusText": "+2.0 xp Kartkówka",
-            "limit": 2,
-            "isLimitReached": false,
-            "eventSectionId": 1,
-            "itemBonusType": "FLAT_BONUS",
-            "xp": 2.0,
-            "behavior": "ONE_EVENT"
-          },
-          {
-            "id": 2,
-            "name": "Apteczka2",
-            "imageUrl": "url",
-            "orderIndex": 2,
-            "bonusText": "+3.0 xp do eventów z kategorii Kartkówka",
-            "shortBonusText": "+3.0 xp Kartkówka",
-            "limit": 2,
-            "isLimitReached": false,
-            "eventSectionId": 1,
-            "itemBonusType": "FLAT_BONUS",
-            "xp": 3.0,
-            "behavior": "MULTIPLE_EVENTS"
-          }
-        ]
+        "orderIndex": 0
       },
       {
         "id": 5,
         "name": "Złota",
         "imageUrl": "url",
-        "orderIndex": 1,
-        "behaviorText": "Otrzymasz pełną zawartość skrzynki",
-        "behavior": "ALL",
-        "chestItems": [
-          {
-            "id": 3,
-            "name": "Marchewka",
-            "imageUrl": "url",
-            "orderIndex": 0,
-            "bonusText": "+10% do eventów z kategorii Kartkówka",
-            "shortBonusText": "+10% Kartkówka",
-            "limit": 2,
-            "isLimitReached": false,
-            "eventSectionId": 1,
-            "itemBonusType": "PERCENTAGE_BONUS",
-            "percentage": 10
-          },
-          {
-            "id": 1,
-            "name": "Apteczka",
-            "imageUrl": "url",
-            "orderIndex": 1,
-            "bonusText": "+2.0 xp do eventów z kategorii Kartkówka",
-            "shortBonusText": "+2.0 xp Kartkówka",
-            "limit": 2,
-            "isLimitReached": false,
-            "eventSectionId": 1,
-            "itemBonusType": "FLAT_BONUS",
-            "xp": 2.0,
-            "behavior": "ONE_EVENT"
-          },
-          {
-            "id": 2,
-            "name": "Apteczka2",
-            "imageUrl": "url",
-            "orderIndex": 2,
-            "bonusText": "+3.0 xp do eventów z kategorii Kartkówka",
-            "shortBonusText": "+3.0 xp Kartkówka",
-            "limit": 2,
-            "isLimitReached": false,
-            "eventSectionId": 1,
-            "itemBonusType": "FLAT_BONUS",
-            "xp": 3.0,
-            "behavior": "MULTIPLE_EVENTS"
-          }
-        ]
+        "orderIndex": 1
       }
     ]
   },
@@ -174,90 +52,13 @@
         "id": 4,
         "name": "Srebrna",
         "imageUrl": "url",
-        "orderIndex": 0,
-        "behaviorText": "Wybierz jeden przedmiot ze skrzynki",
-        "behavior": "ONE_OF_MANY",
-        "chestItems": [
-          {
-            "id": 1,
-            "name": "Apteczka",
-            "imageUrl": "url",
-            "orderIndex": 1,
-            "bonusText": "+2.0 xp do eventów z kategorii Kartkówka",
-            "shortBonusText": "+2.0 xp Kartkówka",
-            "limit": 2,
-            "isLimitReached": false,
-            "eventSectionId": 1,
-            "itemBonusType": "FLAT_BONUS",
-            "xp": 2.0,
-            "behavior": "ONE_EVENT"
-          },
-          {
-            "id": 2,
-            "name": "Apteczka2",
-            "imageUrl": "url",
-            "orderIndex": 2,
-            "bonusText": "+3.0 xp do eventów z kategorii Kartkówka",
-            "shortBonusText": "+3.0 xp Kartkówka",
-            "limit": 2,
-            "isLimitReached": false,
-            "eventSectionId": 1,
-            "itemBonusType": "FLAT_BONUS",
-            "xp": 3.0,
-            "behavior": "MULTIPLE_EVENTS"
-          }
-        ]
+        "orderIndex": 0
       },
       {
         "id": 5,
         "name": "Złota",
         "imageUrl": "url",
-        "orderIndex": 1,
-        "behaviorText": "Otrzymasz pełną zawartość skrzynki",
-        "behavior": "ALL",
-        "chestItems": [
-          {
-            "id": 3,
-            "name": "Marchewka",
-            "imageUrl": "url",
-            "orderIndex": 0,
-            "bonusText": "+10% do eventów z kategorii Kartkówka",
-            "shortBonusText": "+10% Kartkówka",
-            "limit": 2,
-            "isLimitReached": false,
-            "eventSectionId": 1,
-            "itemBonusType": "PERCENTAGE_BONUS",
-            "percentage": 10
-          },
-          {
-            "id": 1,
-            "name": "Apteczka",
-            "imageUrl": "url",
-            "orderIndex": 1,
-            "bonusText": "+2.0 xp do eventów z kategorii Kartkówka",
-            "shortBonusText": "+2.0 xp Kartkówka",
-            "limit": 2,
-            "isLimitReached": false,
-            "eventSectionId": 1,
-            "itemBonusType": "FLAT_BONUS",
-            "xp": 2.0,
-            "behavior": "ONE_EVENT"
-          },
-          {
-            "id": 2,
-            "name": "Apteczka2",
-            "imageUrl": "url",
-            "orderIndex": 2,
-            "bonusText": "+3.0 xp do eventów z kategorii Kartkówka",
-            "shortBonusText": "+3.0 xp Kartkówka",
-            "limit": 2,
-            "isLimitReached": false,
-            "eventSectionId": 1,
-            "itemBonusType": "FLAT_BONUS",
-            "xp": 3.0,
-            "behavior": "MULTIPLE_EVENTS"
-          }
-        ]
+        "orderIndex": 1
       }
     ]
   }

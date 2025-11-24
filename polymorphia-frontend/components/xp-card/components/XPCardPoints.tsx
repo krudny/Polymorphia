@@ -20,7 +20,7 @@ export default function XPCardPoints({
       )}
     >
       <h1>
-        {points || "-"} {isXPLabelVisible && "xp"}
+        {points != null ? points : "-"} {isXPLabelVisible && "xp"}
       </h1>
       {isSumLabelVisible && <h2>Suma</h2>}
       {hasChest && (

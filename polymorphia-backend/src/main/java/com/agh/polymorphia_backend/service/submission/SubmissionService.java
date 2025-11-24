@@ -11,15 +11,15 @@ import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.submission.Submission;
 import com.agh.polymorphia_backend.model.submission.SubmissionRequirement;
-import com.agh.polymorphia_backend.model.user.Student;
 import com.agh.polymorphia_backend.model.user.UserType;
+import com.agh.polymorphia_backend.model.user.student.Student;
 import com.agh.polymorphia_backend.repository.project.ProjectGroupRepository;
 import com.agh.polymorphia_backend.repository.submission.SubmissionRepository;
 import com.agh.polymorphia_backend.repository.submission.SubmissionRequirementRepository;
 import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
 import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
-import com.agh.polymorphia_backend.service.gradable_event.project.ProjectGroupService;
 import com.agh.polymorphia_backend.service.mapper.SubmissionMapper;
+import com.agh.polymorphia_backend.service.project.ProjectGroupService;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
@@ -36,7 +36,6 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class SubmissionService {
-
     private static final String STUDENT_NOT_FOUND = "Nie znaleziono studenta.";
     private static final String FORBIDDEN_LOCK_CHANGE = "Studenci nie mogą zmieniać statusu blokady.";
     private static final String INVALID_ROLE = "Użytkownik musi mieć poprawną rolę.";
@@ -125,7 +124,7 @@ public class SubmissionService {
 
                 if (userService.getCurrentUserRole() == UserType.STUDENT) {
                     if (currentSubmission.isLocked()) {
-                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        throw new ResponseStatusException(HttpStatus.FORBIDDEN,
                                 "Nie można zmienić zablokowanego zgłoszenia.");
                     }
 
@@ -177,14 +176,14 @@ public class SubmissionService {
         switch (target) {
             case StudentTargetRequestDto studentTargetRequestDto -> {
                 if (userType.equals(UserType.STUDENT) && (!userId.equals(studentTargetRequestDto.id()))) {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, STUDENT_NOT_FOUND);
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND);
                 }
                 switch (gradableEvent.getEventSection().getEventSectionType()) {
                     case ASSIGNMENT -> {
                         return List.of(
                                 getStudentListForAssigment(gradableEvent.getId(), studentTargetRequestDto.id(), userId,
                                         userType).orElseThrow(
-                                        () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, STUDENT_NOT_FOUND)));
+                                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, STUDENT_NOT_FOUND)));
                     }
                     case PROJECT -> {
                         return getStudentListFromProjectGroup(
@@ -206,11 +205,11 @@ public class SubmissionService {
                                                          UserType userType) {
         return switch (userType) {
             case STUDENT -> Optional.of((Student) userService.getCurrentUser());
-            case INSTRUCTOR -> studentRepository.findByUserIdAndGradableEventIdAndCourseGroupTeachingRoleUserId(studentId,
-                    gradableEventId, userId);
+            case INSTRUCTOR ->
+                    studentRepository.findByUserIdAndGradableEventIdAndCourseGroupTeachingRoleUserId(studentId,
+                            gradableEventId, userId);
             case COORDINATOR -> studentRepository.findByUserIdAndGradableEventId(studentId, gradableEventId);
-            case UNDEFINED ->
-                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, INVALID_ROLE);
+            case UNDEFINED -> throw new ResponseStatusException(HttpStatus.FORBIDDEN, INVALID_ROLE);
         };
     }
 
@@ -222,8 +221,7 @@ public class SubmissionService {
                     projectGroupRepository.getProjectGroupByStudentIdAndProjectIdAndTeachingRoleUserId(studentId, projectId,
                             userId);
             case COORDINATOR -> projectGroupRepository.getProjectGroupByStudentIdAndProjectId(studentId, projectId);
-            case UNDEFINED ->
-                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, INVALID_ROLE);
+            case UNDEFINED -> throw new ResponseStatusException(HttpStatus.FORBIDDEN, INVALID_ROLE);
         };
     }
 
@@ -236,8 +234,7 @@ public class SubmissionService {
                     projectGroupRepository.getProjectGroupByIdAndProjectIdAndTeachingRoleUserId(groupId, gradableEventId,
                             userId);
             case COORDINATOR -> projectGroupRepository.getProjectGroupByIdAndProjectId(groupId, gradableEventId);
-            case UNDEFINED ->
-                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, INVALID_ROLE);
+            case UNDEFINED -> throw new ResponseStatusException(HttpStatus.FORBIDDEN, INVALID_ROLE);
         };
     }
 

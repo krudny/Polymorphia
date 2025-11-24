@@ -64,14 +64,14 @@ export default function PreviewCSV() {
         className={`import-csv-button-wrapper ${data.length > 10 && "preview-buttons-override"}`}
       >
         <ButtonWithBorder
-          text="Zatwierdź"
-          className="!mx-0 !py-0 !w-full"
-          onClick={handleConfirm}
-        />
-        <ButtonWithBorder
           text="Powrót"
           className="!mx-0 !py-0 !w-full"
           onClick={goBackToUpload}
+        />
+        <ButtonWithBorder
+          text="Zatwierdź"
+          className="!mx-0 !py-0 !w-full"
+          onClick={handleConfirm}
         />
       </div>
     </div>

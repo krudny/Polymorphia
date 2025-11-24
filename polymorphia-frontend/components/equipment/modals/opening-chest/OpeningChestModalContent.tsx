@@ -7,7 +7,6 @@ import { EquipmentChestResponseDTO } from "@/interfaces/api/equipment";
 import usePickChestItems from "@/hooks/course/usePickChestItems";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import XPCard from "@/components/xp-card/XPCard";
-import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
 import usePotentialXp from "@/hooks/course/usePotentialXp";
 import Loading from "@/components/loading";
@@ -15,12 +14,19 @@ import { useEffect, useState } from "react";
 import XPCardImageWithLock from "@/components/xp-card/components/XPCardImageLocked";
 import { useMediaQuery } from "react-responsive";
 import clsx from "clsx";
-import { useUserDetails } from "@/hooks/contexts/useUserContext";
+import useUserContext, {
+  useUserDetails,
+} from "@/hooks/contexts/useUserContext";
 import { OpeningChestModalProps } from "@/components/equipment/modals/opening-chest/types";
 import { EquipmentActions } from "@/providers/equipment/reducer/types";
+import ErrorComponent from "@/components/error";
+import { ErrorComponentSizes } from "@/components/error/types";
+import { Roles } from "@/interfaces/api/user";
+import useStudentChests from "@/hooks/course/useStudentChests";
 
 export default function OpeningChestModalContent({
   equipment,
+  targetStudentIdOverride,
 }: Omit<OpeningChestModalProps, "onClose">) {
   const { closeModal } = useModalContext();
   const { state, dispatch } = useEquipmentContext();
@@ -32,12 +38,18 @@ export default function OpeningChestModalContent({
     loss: "0.0 xp",
     sum: "0.0 xp",
   });
-  const { data: chestPotentialXp, isLoading } = usePotentialXp(
-    equipment.details.id
-  );
+  const {
+    data: chestPotentialXp,
+    isLoading,
+    isError,
+  } = usePotentialXp(equipment.details.id);
+  const { userRole } = useUserContext();
   const isSm = useMediaQuery({ maxWidth: 768 });
+
   const areAllItemsOverLimit =
     equipment.base.chestItems?.every((item) => item.isLimitReached) ?? false;
+  const targetId = targetStudentIdOverride ?? null;
+  const { refetch: refetchChests } = useStudentChests(targetId);
 
   useEffect(() => {
     if (!chestPotentialXp) {
@@ -55,7 +67,7 @@ export default function OpeningChestModalContent({
     }
   }, [chestPotentialXp]);
 
-  if (isLoading || !chestPotentialXp) {
+  if (isLoading) {
     return (
       <>
         <div className="opening-chest-modal">
@@ -64,6 +76,15 @@ export default function OpeningChestModalContent({
           </div>
         </div>
       </>
+    );
+  }
+
+  if (!chestPotentialXp || isError) {
+    return (
+      <ErrorComponent
+        message="Nie udało się pobrać danych."
+        size={ErrorComponentSizes.COMPACT}
+      />
     );
   }
 
@@ -106,24 +127,35 @@ export default function OpeningChestModalContent({
 
     await pickChestItemsMutation.mutateAsync(requestBody);
 
+    const allChests =
+      userRole === Roles.STUDENT
+        ? queryClient.getQueryData<EquipmentChestResponseDTO[]>([
+            "equipmentChests",
+            courseId,
+            userId,
+          ])
+        : (await refetchChests()).data;
     const updatedChest =
-      queryClient
-        .getQueryData<
-          EquipmentChestResponseDTO[]
-        >(["equipmentChests", courseId, userId])
-        ?.find((chest) => chest.details.id === equipment.details.id) ?? null;
+      allChests?.find((chest) => chest.details.id === equipment.details.id) ??
+      null;
 
-    if (!updatedChest) {
-      toast.error("Nie udało się pobrać danych o nowo otwartej skrzynce");
-      return;
+    if (updatedChest) {
+      await queryClient.invalidateQueries({
+        queryKey: ["studentItems", targetId],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ["studentSummary", targetId],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ["courseGroupTargets"],
+      });
+      dispatch({
+        type: EquipmentActions.SHOW_CHEST_MODAL,
+        payload: updatedChest,
+      });
+      dispatch({ type: EquipmentActions.CLOSE_OPENING_CHEST_MODAL });
+      closeModal();
     }
-
-    dispatch({
-      type: EquipmentActions.SHOW_CHEST_MODAL,
-      payload: updatedChest,
-    });
-    dispatch({ type: EquipmentActions.CLOSE_OPENING_CHEST_MODAL });
-    closeModal();
   };
 
   const getItemKey = (index: number, item: BaseItem) => {
@@ -206,9 +238,10 @@ export default function OpeningChestModalContent({
           className="w-full rounded-xl"
           onClick={handleModalSubmit}
           isActive={
-            state.pickedItemId !== null ||
-            areAllItemsOverLimit ||
-            equipment.base.behavior == ChestBehaviors.ALL
+            !pickChestItemsMutation.isPending &&
+            (state.pickedItemId !== null ||
+              areAllItemsOverLimit ||
+              equipment.base.behavior == ChestBehaviors.ALL)
           }
         />
       </div>

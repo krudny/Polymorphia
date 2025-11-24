@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.model.project;
 
-import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.user.TeachingRoleUser;
+import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -41,7 +41,7 @@ public class ProjectGroup {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name="project_groups_animals",
+            name = "project_groups_animals",
             joinColumns = @JoinColumn(name = "project_group_id"),
             inverseJoinColumns = @JoinColumn(name = "animal_id")
     )

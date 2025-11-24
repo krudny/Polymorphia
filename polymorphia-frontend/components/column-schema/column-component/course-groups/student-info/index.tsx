@@ -4,22 +4,22 @@ import ColumnComponent from "@/components/column-schema/column-component";
 import { Fragment, useRef } from "react";
 import { Accordion } from "@/components/accordion/Accordion";
 import AccordionSection from "@/components/accordion/AccordionSection";
-import {
-  baseSwapAnimationWrapperProps,
-  SwapAnimationWrapper,
-} from "@/animations/SwapAnimationWrapper";
 import { AccordionRef } from "@/providers/accordion/types";
 import ItemsSummary from "@/components/column-schema/column-component/course-groups/student-info/items-summary";
 import ChestSummary from "@/components/column-schema/column-component/course-groups/student-info/chest-summary";
 import StudentSummary from "@/components/column-schema/column-component/course-groups/student-info/student-summary";
 import useCourseGroupsContext from "@/hooks/contexts/useCourseGroupsContext";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
-import { getKeyForSelectedTarget } from "@/providers/grading/utils/getKeyForSelectedTarget";
-import Loading from "@/components/loading";
 import useStudentItems from "@/hooks/course/useStudentItems";
 import useStudentChests from "@/hooks/course/useStudentChests";
 import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
+import ColumnSwappableComponent from "@/components/column-schema/column-component/shared/column-swappable-component";
+import { StudentSummaryResponseDTO } from "@/interfaces/api/student";
+import {
+  EquipmentChestResponseDTO,
+  EquipmentItemResponseDTO,
+} from "@/interfaces/api/equipment";
 
 const SECTION_IDS = new Set(["student-summary", "items", "chests"]);
 const INITIALLY_OPENED = new Set(["student-summary"]);
@@ -56,32 +56,22 @@ export default function StudentInfo() {
           title="Profil"
           headerClassName="equipment-accordion-header"
         >
-          <SwapAnimationWrapper
-            {...baseSwapAnimationWrapperProps}
-            keyProp={
-              studentSummary && !isSpecificDataLoading && !isSpecificDataError
-                ? getKeyForSelectedTarget(selectedTarget)
-                : (isSpecificDataLoading ? "loading" : "error") +
-                  getKeyForSelectedTarget(selectedTarget)
-            }
-          >
-            {studentSummary &&
-            !isSpecificDataLoading &&
-            !isSpecificDataError ? (
-              <StudentSummary studentSummary={studentSummary} />
-            ) : isSpecificDataLoading ? (
-              <div className="course-group-loading">
-                <Loading />
-              </div>
-            ) : (
-              <div className="course-group-loading">
-                <ErrorComponent
-                  message="Nie udało się załadować szczegółów studenta."
-                  size={ErrorComponentSizes.COMPACT}
-                />
-              </div>
+          <ColumnSwappableComponent<StudentSummaryResponseDTO>
+            data={studentSummary}
+            isDataLoading={isSpecificDataLoading}
+            isDataError={isSpecificDataError}
+            renderComponent={(data, key) => (
+              <StudentSummary key={key} studentSummary={data} />
             )}
-          </SwapAnimationWrapper>
+            renderDataErrorComponent={() => (
+              <ErrorComponent
+                message="Nie udało się załadować szczegółów studenta."
+                size={ErrorComponentSizes.COMPACT}
+              />
+            )}
+            minHeightClassName="min-h-[340px]"
+            selectedTarget={selectedTarget}
+          />
         </AccordionSection>
         <AccordionSection
           key="items"
@@ -89,30 +79,30 @@ export default function StudentInfo() {
           title="Przedmioty"
           headerClassName="equipment-accordion-header"
         >
-          <SwapAnimationWrapper
-            {...baseSwapAnimationWrapperProps}
-            keyProp={
-              items && !isItemsLoading && !isItemsError
-                ? getKeyForSelectedTarget(selectedTarget)
-                : (isItemsLoading ? "loading" : "error") +
-                  getKeyForSelectedTarget(selectedTarget)
-            }
-          >
-            {items && !isItemsLoading && !isItemsError ? (
-              <ItemsSummary items={items} />
-            ) : isItemsLoading ? (
-              <div className="course-group-loading">
-                <Loading />
-              </div>
-            ) : (
-              <div className="course-group-loading">
-                <ErrorComponent
-                  message="Nie udało się załadować przedmiotów."
-                  size={ErrorComponentSizes.COMPACT}
-                />
-              </div>
+          <ColumnSwappableComponent<EquipmentItemResponseDTO[]>
+            data={items}
+            isDataLoading={isChestsLoading}
+            isDataError={isChestsError}
+            renderComponent={(data, key) => (
+              <ItemsSummary key={key} items={data} />
             )}
-          </SwapAnimationWrapper>
+            renderDataErrorComponent={() => (
+              <ErrorComponent
+                message="Nie udało się załadować przedmiotów."
+                size={ErrorComponentSizes.COMPACT}
+              />
+            )}
+            renderEmptyDataErrorComponent={() => (
+              <ErrorComponent
+                title="Brak przedmiotów"
+                message="W kursie nie istnieją żadne przedmioty możliwe do zdobycia."
+                size={ErrorComponentSizes.COMPACT}
+              />
+            )}
+            minHeightClassName="min-h-[140px]"
+            className="pb-5 px-2"
+            selectedTarget={selectedTarget}
+          />
         </AccordionSection>
 
         <AccordionSection
@@ -121,30 +111,30 @@ export default function StudentInfo() {
           title="Skrzynki"
           headerClassName="equipment-accordion-header"
         >
-          <SwapAnimationWrapper
-            {...baseSwapAnimationWrapperProps}
-            keyProp={
-              chests && !isChestsLoading && !isChestsError
-                ? getKeyForSelectedTarget(selectedTarget)
-                : (isChestsLoading ? "loading" : "error") +
-                  getKeyForSelectedTarget(selectedTarget)
-            }
-          >
-            {chests && !isChestsLoading && !isChestsError ? (
-              <ChestSummary chests={chests} />
-            ) : isChestsLoading ? (
-              <div className="course-group-loading">
-                <Loading />
-              </div>
-            ) : (
-              <div className="course-group-loading">
-                <ErrorComponent
-                  message="Nie udało się załadować skrzynek."
-                  size={ErrorComponentSizes.COMPACT}
-                />
-              </div>
+          <ColumnSwappableComponent<EquipmentChestResponseDTO[]>
+            data={chests}
+            isDataLoading={isItemsLoading}
+            isDataError={isItemsError}
+            renderComponent={(data, key) => (
+              <ChestSummary key={key} chests={data} />
             )}
-          </SwapAnimationWrapper>
+            renderDataErrorComponent={() => (
+              <ErrorComponent
+                message="Nie udało się załadować skrzynek."
+                size={ErrorComponentSizes.COMPACT}
+              />
+            )}
+            renderEmptyDataErrorComponent={() => (
+              <ErrorComponent
+                title="Brak skrzynek"
+                message="W kursie nie istnieją żadne skrzynki możliwe do zdobycia."
+                size={ErrorComponentSizes.COMPACT}
+              />
+            )}
+            minHeightClassName="min-h-[140px]"
+            className="pb-5 px-2"
+            selectedTarget={selectedTarget}
+          />
         </AccordionSection>
       </Accordion>
     </Fragment>

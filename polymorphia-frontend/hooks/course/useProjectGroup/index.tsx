@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
-import { EventSectionService } from "@/services/event-section";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import { EventTypes } from "@/interfaces/general";
 import { UseProjectGroup } from "@/hooks/course/useProjectGroup/types";
+import { ProjectService } from "@/services/project";
 
 export function useProjectGroup(): UseProjectGroup {
   const { gradableEventId, eventType } = useEventParams();
@@ -11,7 +11,7 @@ export function useProjectGroup(): UseProjectGroup {
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["projectGroup", gradableEventId, userId],
-    queryFn: () => EventSectionService.getProjectGroup(userId, gradableEventId),
+    queryFn: () => ProjectService.getProjectGroup(userId, gradableEventId),
     enabled:
       gradableEventId !== undefined &&
       gradableEventId !== null &&

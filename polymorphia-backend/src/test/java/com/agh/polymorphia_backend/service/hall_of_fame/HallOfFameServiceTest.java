@@ -1,13 +1,13 @@
 package com.agh.polymorphia_backend.service.hall_of_fame;
 
 import com.agh.polymorphia_backend.BaseTest;
-import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.event_section.AssignmentSection;
 import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry;
 import com.agh.polymorphia_backend.model.hall_of_fame.StudentScoreDetail;
 import com.agh.polymorphia_backend.model.user.User;
-import com.agh.polymorphia_backend.repository.course.event_section.EventSectionRepository;
+import com.agh.polymorphia_backend.model.user.student.Animal;
+import com.agh.polymorphia_backend.repository.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.StudentScoreDetailRepository;
 import com.agh.polymorphia_backend.service.student.AnimalService;
@@ -55,26 +55,24 @@ class HallOfFameServiceTest extends BaseTest {
 
     @Test
     void shouldReturnStudentHallOfFame_WhenFound() {
-        Animal animal = Animal.builder().id(10L).build();
-        when(animalService.getAnimal(1L, 10L)).thenReturn(animal);
+        when(animalService.getAnimal(1L, 10L)).thenReturn(Animal.builder().id(10L).build());
         when(hallOfFameRepository.findByAnimalId(10L))
                 .thenReturn(Optional.of(hof));
 
-        HallOfFameEntry result = hallOfFameService.getStudentHallOfFame(animal);
+        HallOfFameEntry result = hallOfFameService.getStudentHallOfFame(user.getId(), user.getPreferredCourse().getId());
 
         assertThat(result).isEqualTo(hof);
     }
 
     @Test
     void shouldThrowException_WhenHallOfFameNotFound() {
-        Animal animal = Animal.builder().id(10L).build();
-        when(animalService.getAnimal(1L, 10L)).thenReturn(animal);
+        when(animalService.getAnimal(1L, 10L)).thenReturn(Animal.builder().id(10L).build());
         when(hallOfFameRepository.findByAnimalId(10L))
                 .thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> hallOfFameService.getStudentHallOfFame(animal))
+        assertThatThrownBy(() -> hallOfFameService.getStudentHallOfFame(user.getId(), user.getPreferredCourse().getId()))
                 .isInstanceOf(ResponseStatusException.class)
-                .hasMessageContaining("Brak wyników studenta w Hall of Fame");
+                .hasMessageContaining("Brak wyników studenta.");
     }
 
     @Test

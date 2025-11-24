@@ -15,7 +15,7 @@ export default function useMarkdownUpdate(
     mutationFn: () => MarkdownService.saveMarkdown(request),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["markdown", request.resourceId],
+        queryKey: ["markdown", request.markdownType, request.resourceId],
       });
       request.setIsEditing(false);
       toast.success("Zapisano zmiany!");

@@ -16,9 +16,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Modifying
     @Query("""
-        DELETE FROM User u 
-        WHERE u.password IS NULL 
-        OR u.email IN :expiredTokenEmails
-    """)
+                DELETE FROM User u
+                WHERE u.password IS NULL
+                OR u.email IN :expiredTokenEmails
+            """)
     Integer deleteUsersWithoutPasswordOrWithExpiredTokens(@Param("expiredTokenEmails") List<String> expiredTokenEmails);
 }

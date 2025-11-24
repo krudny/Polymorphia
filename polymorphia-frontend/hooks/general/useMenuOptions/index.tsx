@@ -85,7 +85,7 @@ export function useMainMenuItems(): MenuOption[] {
           { text: "Skrzynki", link: "knowledge-base/chests" },
         ],
       },
-      { icon: GraduationCapIcon, text: courseOptionText, link: "/" }
+      { icon: GraduationCapIcon, text: courseOptionText }
     );
 
     if (userRole === Roles.STUDENT) {

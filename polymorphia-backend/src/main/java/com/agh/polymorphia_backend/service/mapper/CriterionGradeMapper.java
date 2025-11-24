@@ -4,7 +4,7 @@ package com.agh.polymorphia_backend.service.mapper;
 import com.agh.polymorphia_backend.dto.response.criteria.CriterionGradeResponseDto;
 import com.agh.polymorphia_backend.dto.response.reward.assigned.ShortAssignedRewardResponseDto;
 import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
-import com.agh.polymorphia_backend.service.course.reward.AssignedRewardService;
+import com.agh.polymorphia_backend.service.reward.AssignedRewardService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,17 +1,24 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { EventSectionService } from "@/services/event-section";
 import toast from "react-hot-toast";
 import { UseGradeUpdate } from "@/hooks/course/useGradeUpdate/types";
+import { GradeService } from "@/services/grade";
 
 export default function useGradeUpdate(): UseGradeUpdate {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: EventSectionService.submitGrade,
+    mutationFn: async (data) => {
+      return toast.promise(GradeService.submitGrade(data), {
+        loading: "Zapisywanie oceny...",
+        success: "Ocena została pomyślnie zapisana!",
+      });
+    },
     onSuccess: () => {
-      toast.success("Ocena została pomyślnie zapisana!");
       queryClient.invalidateQueries({
         queryKey: ["grade"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["gradingTargets"],
       });
     },
   });

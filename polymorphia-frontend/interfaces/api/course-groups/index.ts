@@ -1,7 +1,7 @@
 export interface CourseGroupsResponseDTO {
   id: number;
   name: string;
-  details: string;
+  room: string;
   studentCount: number;
 }
 

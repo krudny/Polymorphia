@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.model.submission;
 
-import com.agh.polymorphia_backend.model.course.Animal;
+import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +17,7 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Submission {
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     @EqualsAndHashCode.Include
     private Long id;

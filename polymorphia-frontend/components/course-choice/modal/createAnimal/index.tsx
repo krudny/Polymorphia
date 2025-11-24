@@ -6,7 +6,7 @@ import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { useForm } from "@tanstack/react-form";
 import { createAnimalSchema } from "@/components/form/schema";
 import useCreateAnimal from "@/hooks/course/useCreateAnimal";
-import { CreateAnimalModalProps } from "./types";
+import { CreateAnimalModalProps } from "@/components/course-choice/modal/createAnimal/types";
 import { FieldErrorMessage } from "@/components/form/FieldErrorMessage";
 
 function CreateAnimalModalContent({ clickedDetails }: CreateAnimalModalProps) {

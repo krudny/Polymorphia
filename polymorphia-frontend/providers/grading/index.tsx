@@ -24,6 +24,14 @@ import useSubmissionsUpdate from "@/hooks/course/useSubmissionsUpdate";
 import useSubmissionRequirements from "@/hooks/course/useSubmissionRequirements";
 import useCriteria from "@/hooks/course/useCriteria";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
+import {
+  DEFAULT_SEARCH_BY,
+  DEFAULT_SORT_ORDER_ASC,
+  DEFAULT_GROUPS,
+  DEFAULT_GRADE_STATUS,
+  DEFAULT_SORT_BY_NAME,
+} from "@/shared/filter-defaults";
+import useProjectVariant from "@/hooks/course/useProjectVariant";
 
 export const GradingContext = createContext<
   GradingContextInterface | undefined
@@ -41,27 +49,31 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
 
   const filters = useFilters<GradingFilterId>(filterConfigs ?? []);
   const searchBy = useMemo(
-    () => filters.getAppliedFilterValues("searchBy") ?? ["studentName"],
+    () => filters.getAppliedFilterValues("searchBy") ?? DEFAULT_SEARCH_BY,
     [filters]
   );
   const sortBy = useMemo(
-    () => filters.getAppliedFilterValues("sortBy") ?? ["total"],
+    () => filters.getAppliedFilterValues("sortBy") ?? DEFAULT_SORT_BY_NAME,
     [filters]
   );
   const sortOrder = useMemo(
-    () => filters.getAppliedFilterValues("sortOrder") ?? ["asc"],
+    () => filters.getAppliedFilterValues("sortOrder") ?? DEFAULT_SORT_ORDER_ASC,
     [filters]
   );
   const groups = useMemo(
-    () => filters.getAppliedFilterValues("groups") ?? ["all"],
+    () => filters.getAppliedFilterValues("groups") ?? DEFAULT_GROUPS,
     [filters]
   );
   const gradeStatus = useMemo(
-    () => filters.getAppliedFilterValues("gradeStatus") ?? ["all"],
+    () => filters.getAppliedFilterValues("gradeStatus") ?? DEFAULT_GRADE_STATUS,
     [filters]
   );
 
   useEffect(() => {
+    if (isFiltersLoading || !filterConfigs) {
+      return;
+    }
+
     applyFiltersCallback({
       searchBy,
       sortBy: sortBy.map((value) => (value === "name" ? searchBy[0] : value)),
@@ -69,7 +81,16 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
       groups,
       gradeStatus,
     });
-  }, [sortBy, sortOrder, groups, gradeStatus, applyFiltersCallback, searchBy]);
+  }, [
+    sortBy,
+    sortOrder,
+    groups,
+    gradeStatus,
+    applyFiltersCallback,
+    searchBy,
+    isFiltersLoading,
+    filterConfigs,
+  ]);
 
   const {
     data: criteria,
@@ -95,9 +116,14 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
   const { mutate: mutateSubmissions } = useSubmissionsUpdate({
     target: targetState.selectedTarget,
   });
+  const {
+    data: projectVariants,
+    isLoading: isProjectVariantsLoading,
+    isError: isProjectVariantsError,
+  } = useProjectVariant({ target: targetState.selectedTarget });
 
   useEffect(() => {
-    if (!grade) {
+    if (!grade || !criteria) {
       return;
     }
 
@@ -105,9 +131,10 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
       type: GradingReducerActions.SET_GRADE,
       payload: {
         grade,
+        criteria,
       },
     });
-  }, [grade]);
+  }, [grade, criteria]);
 
   useEffect(() => {
     if (!submissionDetails) {
@@ -153,11 +180,16 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
         dispatch,
         criteria,
         submissionRequirements,
+        projectVariants,
         isGeneralDataLoading:
           isCriteriaLoading || isSubmissionRequirementsLoading,
         isGeneralDataError: isCriteriaError || isSubmissionRequirementsError,
-        isSpecificDataLoading: isGradeLoading || isSubmissionDetailsLoading,
-        isSpecificDataError: isGradeError || isSubmissionDetailsError,
+        isSpecificDataLoading:
+          isGradeLoading ||
+          isSubmissionDetailsLoading ||
+          isProjectVariantsLoading,
+        isSpecificDataError:
+          isGradeError || isSubmissionDetailsError || isProjectVariantsError,
         submitGrade,
         submitSubmissions,
       }}

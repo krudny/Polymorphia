@@ -1,21 +1,22 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { FilterConfig } from "@/hooks/course/useFilters/types";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { UseProfileFilterConfigs } from "@/hooks/course/useProfileFilterConfigs/types";
 import { ProfileFilterId } from "@/app/(logged-in)/profile/types";
-import { EventSectionService } from "@/services/event-section";
+import useEventSections from "@/hooks/course/useEventSections";
 
 export function useProfileFilterConfigs(): UseProfileFilterConfigs {
   const { courseId } = useUserDetails();
-  const queryClient = useQueryClient();
+  const { data: eventSections } = useEventSections();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["profileFilters", courseId],
+    enabled: !!eventSections,
     queryFn: async (): Promise<FilterConfig<ProfileFilterId>[]> => {
-      const eventSections = await queryClient.fetchQuery({
-        queryKey: ["eventSections", courseId],
-        queryFn: () => EventSectionService.getEventSections(courseId),
-      });
+      if (!eventSections) {
+        return [];
+      }
+
       return [
         {
           id: "rankingOptions",
@@ -27,11 +28,11 @@ export function useProfileFilterConfigs(): UseProfileFilterConfigs {
             { value: "bonuses", label: "Bonusy" },
             { value: "total", label: "Suma" },
           ],
-          min: Math.min(4, eventSections.length),
-          max: Math.min(4, eventSections.length),
+          min: Math.min(4, eventSections.length + 2),
+          max: Math.min(4, eventSections.length + 2),
           defaultValues: [
             ...eventSections
-              .slice(0, Math.min(2, Math.max(0, eventSections.length - 1)))
+              .slice(0, Math.min(2, eventSections.length))
               .map((eventSection) => eventSection.name),
             "bonuses",
             "total",

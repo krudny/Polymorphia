@@ -304,34 +304,23 @@ INSERT INTO
 VALUES
   (1, 'Programowanie obiektowe 2024/25', 'google.com', 5, 'images/evolution-stages/7.webp', 'images/evolution-stages/1.webp', 'images/evolution-stages/7.webp');
 INSERT INTO
-  course_groups (id, name, course_id, teaching_role_user_id)
+  course_groups (id, name, room, course_id, teaching_role_user_id)
 VALUES
-  (1, 'sp-pn-1315', 1, 4);
+  (1, 'sp-pn-1315', '3.27', 1, 4);
 INSERT INTO
-  course_groups (id, name, course_id, teaching_role_user_id)
+  course_groups (id, name, room, course_id, teaching_role_user_id)
 VALUES
-  (2, 'mi-13-00', 2, 4);
+  (2, 'mi-13-00', '3.28', 2, 4);
 INSERT INTO
-  course_groups (id, name, course_id, teaching_role_user_id)
+  course_groups (id, name, room, course_id, teaching_role_user_id)
 VALUES
-  (3, 'SP-pn-1500', 1, 4),
-  (4, 'mi-wt-1145', 1, 4);
-INSERT INTO
-  user_course_roles (role, user_id, course_id)
-VALUES
-  ('STUDENT', 3, 1);
-INSERT INTO
-  user_course_roles (role, user_id, course_id)
-VALUES
-  ('STUDENT', 7, 1);
+  (3, 'SP-pn-1500', '1.37', 1, 4),
+  (4, 'mi-wt-1145', '4.27', 1, 4);
+
 INSERT INTO
   user_course_roles (role, user_id, course_id)
 VALUES
   ('COORDINATOR', 5, 1);
-INSERT INTO
-  user_course_roles (role, user_id, course_id)
-VALUES ('STUDENT', 7, 2),
-       ('STUDENT', 21, 1);
 INSERT INTO
   user_course_roles (role, user_id, course_id)
 VALUES
@@ -549,6 +538,23 @@ VALUES
   (3, 1, 1),
   (7, 2, 4),
   (7, 1, 2);
+
+INSERT INTO user_course_roles (role, user_id, course_id)
+SELECT
+    'STUDENT' AS role,
+    scg.student_id AS user_id,
+    cg.course_id
+FROM students_course_groups scg
+         JOIN course_groups cg
+              ON scg.course_group_id = cg.id
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM user_course_roles ucr
+    WHERE ucr.user_id = scg.student_id
+      AND ucr.course_id = cg.course_id
+      AND ucr.role = 'STUDENT'
+);
+
 INSERT INTO
   event_sections (id, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id, order_index, is_hidden)
 VALUES (4, 'Git', FALSE, FALSE, 1, 0, FALSE);
@@ -1061,213 +1067,15 @@ VALUES
   (30, 30, 'Laboratorium', 4.0),
   (31, 31, 'Laboratorium', 4.0),
   (32, 32, 'Laboratorium', 4.0),
-  (33, 33, 'Git', 10.0);
-INSERT INTO
-  grades (id, gradable_event_id, animal_id, created_date, modified_date, comment)
-VALUES
-  (1, 1, 1, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done');
-INSERT INTO
-  grades (id, gradable_event_id, animal_id, created_date, modified_date, comment)
-VALUES
-  (2, 2, 1, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done');
-INSERT INTO
-  grades (id, gradable_event_id, animal_id, created_date, modified_date, comment)
-VALUES
-  (3, 3, 1, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done');
-INSERT INTO
-  grades (id, gradable_event_id, animal_id, created_date, modified_date, comment)
-VALUES
-  (4, 8, 1, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done');
-INSERT INTO
-  grades (id, gradable_event_id, animal_id, created_date, modified_date, comment)
-VALUES
-  (5, 9, 1, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done');
-INSERT INTO
-  grades (id, gradable_event_id, animal_id, created_date, modified_date, comment)
-VALUES
-  (6, 10, 1, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done');
-INSERT INTO
-  grades (id, gradable_event_id, animal_id, created_date, modified_date, comment)
-VALUES
-  (7, 1, 2, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done');
-INSERT INTO
-  grades (id, gradable_event_id, animal_id, created_date, modified_date, comment)
-VALUES
-  (8, 2, 2, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done');
-INSERT INTO
-  grades (id, gradable_event_id, animal_id, created_date, modified_date, comment)
-VALUES
-  (9, 3, 2, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done');
-INSERT INTO
-  grades (id, gradable_event_id, animal_id, created_date, modified_date, comment)
-VALUES
-  (10, 8, 2, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done');
-INSERT INTO
-  grades (id, gradable_event_id, animal_id, created_date, modified_date, comment)
-VALUES
-  (11, 1, 58, NOW(), NOW(), NULL),
-  (12, 17, 100, NOW(), NOW(), NULL),
-  (13, 6, 17, NOW(), NOW(), NULL),
-  (14, 4, 69, NOW(), NOW(), NULL),
-  (15, 5, 69, NOW(), NOW(), NULL),
-  (16, 3, 58, NOW(), NOW(), NULL),
-  (17, 1, 17, NOW(), NOW(), NULL),
-  (18, 9, 21, NOW(), NOW(), NULL),
-  (19, 10, 21, NOW(), NOW(), NULL),
-  (20, 11, 21, NOW(), NOW(), NULL),
-  (21, 12, 21, NOW(), NOW(), NULL),
-  (22, 13, 21, NOW(), NOW(), NULL),
-  (23, 14, 21, NOW(), NOW(), NULL),
-  (24, 15, 21, NOW(), NOW(), NULL),
-  (25, 9, 23, NOW(), NOW(), NULL),
-  (26, 10, 23, NOW(), NOW(), NULL),
-  (27, 11, 23, NOW(), NOW(), NULL),
-  (28, 12, 23, NOW(), NOW(), NULL),
-  (29, 13, 23, NOW(), NOW(), NULL),
-  (30, 14, 23, NOW(), NOW(), NULL),
-  (31, 15, 23, NOW(), NOW(), NULL),
-  (32, 1, 23, NOW(), NOW(), NULL),
-  (33, 2, 23, NOW(), NOW(), NULL),
-  (34, 3, 23, NOW(), NOW(), NULL),
-  (35, 4, 23, NOW(), NOW(), NULL),
-  (36, 5, 23, NOW(), NOW(), NULL),
-  (37, 6, 23, NOW(), NOW(), NULL),
-  (38, 7, 23, NOW(), NOW(), NULL),
-  (39, 8, 23, NOW(), NOW(), NULL),
-  (40, 33, 23, NOW(), NOW(), NULL),
-  (41, 10, 2, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done'),
-  (42, 4, 2, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done'),
-  (43, 5, 2, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done'),
-  (44, 6, 2, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done'),
-  (45, 7, 2, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done'),
-  (46, 9, 2, '2025-09-20 17:23:03', '2025-09-20 17:23:03', 'Well done');
-INSERT INTO
-  criteria_grades (id, grade_id, criterion_id, xp)
-VALUES
-  (1, 1, 1, 1.0);
-INSERT INTO
-  criteria_grades (id, grade_id, criterion_id, xp)
-VALUES
-  (2, 2, 2, 2.0);
-INSERT INTO
-  criteria_grades (id, grade_id, criterion_id, xp)
-VALUES
-  (3, 3, 2, 2.0);
-INSERT INTO
-  criteria_grades (id, grade_id, criterion_id, xp)
-VALUES
-  (4, 4, 8, 2.0);
-INSERT INTO
-  criteria_grades (id, grade_id, criterion_id, xp)
-VALUES
-  (5, 5, 9, 1.5);
-INSERT INTO
-  criteria_grades (id, grade_id, criterion_id, xp)
-VALUES
-  (6, 6, 10, 1.4);
-INSERT INTO
-  criteria_grades (id, grade_id, criterion_id, xp)
-VALUES
-  (7, 7, 1, 0.0);
-INSERT INTO
-  criteria_grades (id, grade_id, criterion_id, xp)
-VALUES
-  (8, 8, 2, 1.5);
-INSERT INTO
-  criteria_grades (id, grade_id, criterion_id, xp)
-VALUES
-  (9, 9, 2, 2.0);
-INSERT INTO
-  criteria_grades (id, grade_id, criterion_id, xp)
-VALUES
-  (10, 10, 8, 2.0);
-INSERT INTO
-  criteria_grades (id, grade_id, criterion_id, xp)
-VALUES
-  (11, 11, 1, 1.4),
-  (12, 12, 9, 1.0),
-  (13, 13, 6, 1.0),
-  (14, 14, 4, 2.0),
-  (15, 15, 5, 1.2),
-  (16, 16, 3, 1.0),
-  (17, 17, 1, 2.0),
-  (18, 18, 9, 4.0),
-  (19, 19, 10, 4.0),
-  (20, 20, 11, 4.0),
-  (21, 21, 12, 4.0),
-  (22, 22, 13, 4.0),
-  (23, 23, 14, 4.0),
-  (24, 24, 15, 4.0),
-  (25, 25, 9, 4.0),
-  (26, 26, 10, 4.0),
-  (27, 27, 11, 4.0),
-  (28, 28, 12, 4.0),
-  (29, 29, 13, 4.0),
-  (30, 30, 14, 4.0),
-  (31, 31, 15, 4.0),
-  (32, 32, 1, 2.0),
-  (33, 33, 2, 2.0),
-  (34, 34, 3, 2.0),
-  (35, 35, 4, 2.0),
-  (36, 36, 5, 2.0),
-  (37, 37, 6, 2.0),
-  (38, 38, 7, 2.0),
-  (39, 39, 8, 2.0),
-  (40, 40, 33, 10.0),
-  (41, 41, 10, 2.0),
-  (42, 42, 4, 1.0),
-  (43, 43, 5, 1.0),
-  (44, 44, 6, 1.0),
-  (45, 45, 7, 1.2),
-  (46, 46, 9, 1.3);
-INSERT INTO
-  assigned_rewards (id, criterion_grade_id, reward_id, received_date, used_date, is_used)
-VALUES
-  (1, 1, 101, '2025-09-20 17:23:03', NULL, FALSE);
-INSERT INTO
-  assigned_rewards (id, criterion_grade_id, reward_id, received_date, used_date, is_used)
-VALUES
-  (2, 1, 102, '2025-09-20 17:23:03', '2025-09-20 17:23:03', FALSE);
-INSERT INTO
-  assigned_rewards (id, criterion_grade_id, reward_id, received_date, used_date, is_used)
-VALUES
-  (5, 11, 101, NOW(), NOW(), TRUE),
-  (6, 11, 1, NOW(), NOW(), TRUE),
-  (7, 12, 101, NOW(), NOW(), TRUE),
-  (8, 12, 1, NOW(), NOW(), TRUE);
-INSERT INTO
-  assigned_chests (assigned_reward_id)
-VALUES
-  (1);
-INSERT INTO
-  assigned_chests (assigned_reward_id)
-VALUES
-  (2);
-INSERT INTO
-  assigned_chests (assigned_reward_id)
-VALUES
-  (5),
-  (7);
-INSERT INTO
-  assigned_items (assigned_reward_id, assigned_chest_id, bonus_xp)
-VALUES
-  (6, 5, 0.0),
-  (8, 7, 2.5);
-INSERT INTO
-  assigned_rewards (id, criterion_grade_id, reward_id, received_date, used_date, is_used)
-VALUES
-  (9, 7, 101, NOW(), NULL, FALSE),
-  (10, 8, 102, NOW(), NULL, FALSE),
-  (11, 8, 1, NOW(), NULL, FALSE),
-  (12, 8, 2, NOW(), NULL, FALSE),
-  (13, 8, 3, NOW(), NULL, FALSE),
-  (14, 7, 1, NOW(), NULL, FALSE),
-  (15, 7, 2, NOW(), NULL, FALSE);
-INSERT INTO
-  assigned_chests (assigned_reward_id)
-VALUES
-  (9),
-  (10);
+  (33, 33, 'Git', 10.0),
+  (34, 38, 'Kod', 5.0),
+  (35, 38, 'Wzorce projektowe', 5.0);
+
+insert into criteria_rewards(criterion_id, reward_id, max_amount)
+values (14,101,1),
+       (14, 2, 2),
+       (34, 101, 1),
+       (35, 1, 2);
 
 INSERT INTO
   submission_requirements (id, gradable_event_id, name, is_mandatory, order_index)

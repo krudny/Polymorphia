@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect } from "react";
-import { UseFindMeScrollParams } from "./types";
+import { UseFindMeScrollParams } from "@/hooks/general/useFindMeScroll/types";
 import { Roles } from "@/interfaces/api/user";
 import useUserContext from "@/hooks/contexts/useUserContext";
 import toast from "react-hot-toast";

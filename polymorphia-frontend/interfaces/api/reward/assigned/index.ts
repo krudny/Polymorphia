@@ -1,4 +1,9 @@
-import { RewardType, BaseReward, ItemResponseDTO, ChestResponseDTO } from "..";
+import {
+  RewardType,
+  BaseReward,
+  ItemResponseDTO,
+  ChestResponseDTO,
+} from "@/interfaces/api/reward";
 
 // Assignment Details
 export interface BaseRewardAssignmentDetails {

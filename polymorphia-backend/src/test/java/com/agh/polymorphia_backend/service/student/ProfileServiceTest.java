@@ -3,12 +3,13 @@ package com.agh.polymorphia_backend.service.student;
 import com.agh.polymorphia_backend.BaseTest;
 import com.agh.polymorphia_backend.dto.response.profile.EvolutionStageThresholdResponseDto;
 import com.agh.polymorphia_backend.dto.response.profile.ProfileResponseDto;
-import com.agh.polymorphia_backend.model.course.Animal;
 import com.agh.polymorphia_backend.model.course.Course;
-import com.agh.polymorphia_backend.model.course.EvolutionStage;
 import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry;
-import com.agh.polymorphia_backend.model.user.Student;
 import com.agh.polymorphia_backend.model.user.User;
+import com.agh.polymorphia_backend.model.user.UserType;
+import com.agh.polymorphia_backend.model.user.student.Animal;
+import com.agh.polymorphia_backend.model.user.student.EvolutionStage;
+import com.agh.polymorphia_backend.model.user.student.Student;
 import com.agh.polymorphia_backend.repository.course.EvolutionStagesRepository;
 import com.agh.polymorphia_backend.repository.hall_of_fame.HallOfFameRepository;
 import com.agh.polymorphia_backend.service.course.CourseService;
@@ -25,6 +26,7 @@ import org.mockito.MockitoAnnotations;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -106,7 +108,8 @@ class ProfileServiceTest extends BaseTest {
 
         when(courseService.getCourseById(course.getId())).thenReturn(course);
         when(userService.getCurrentUser()).thenReturn(student);
-        when(hallOfFameService.getStudentHallOfFame(animal)).thenReturn(hallOfFame);
+        when(userService.getCurrentUserRole()).thenReturn(UserType.STUDENT);
+        when(hallOfFameService.getStudentHallOfFame(user.getId(), course.getId())).thenReturn(hallOfFame);
         when(animalService.getAnimal(user.getId(), course.getId())).thenReturn(animal);
         when(hallOfFameService.groupScoreDetails(List.of(animal.getId())))
                 .thenReturn(Map.of(animal.getId(), xpDetails));
@@ -115,9 +118,8 @@ class ProfileServiceTest extends BaseTest {
         when(profileMapper.toEvolutionStageThresholdResponseDto(stage1)).thenReturn(stageDto1);
         when(profileMapper.toEvolutionStageThresholdResponseDto(stage2)).thenReturn(stageDto2);
         when(hallOfFameRepository.countByCourseIdAndFilters(any())).thenReturn(42L);
-        when(animalService.getAnimal(user.getId(), course.getId())).thenReturn(animal);
 
-        ProfileResponseDto result = profileService.getProfile(course.getId());
+        ProfileResponseDto result = (ProfileResponseDto) profileService.getProfile(course.getId(), Optional.empty());
 
         assertThat(result).isNotNull();
         assertThat(result.getTotalXp()).isEqualByComparingTo(BigDecimal.valueOf(1234));
@@ -130,10 +132,10 @@ class ProfileServiceTest extends BaseTest {
 
         assertThat(result.getXpDetails()).isEqualTo(xpDetails);
 
-        verify(accessAuthorizer).authorizeCourseAccess(course.getId());
+        verify(accessAuthorizer).authorizeStudentDataAccess(course.getId(), user.getId());
         verify(hallOfFameService).updateXpDetails(eq(xpDetails), eq(hallOfFame));
 
-        ProfileResponseDto result2 = profileService.getProfile(course.getId());
+        ProfileResponseDto result2 = (ProfileResponseDto) profileService.getProfile(course.getId(), Optional.empty());
         assertThat(result2.getLeftEvolutionStage()).isEqualTo(stageDto1);
         assertThat(result2.getRightEvolutionStage()).isEqualTo(stageDto2);
     }

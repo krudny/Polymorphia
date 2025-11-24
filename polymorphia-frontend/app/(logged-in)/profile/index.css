@@ -46,7 +46,7 @@
 }
 
 .profile-user-points-xs {
-  @apply w-full md:hidden mt-4;
+  @apply w-full md:hidden mt-6;
 }
 
 .profile-user-points-md {
@@ -62,9 +62,9 @@
 }
 
 .profile-progress-bar-mobile {
-  @apply md:hidden w-full px-12 h-fit;
+  @apply md:hidden w-full px-12 h-fit mt-6;
 }
 
 .profile-progress-bar-desktop {
-  @apply hidden md:block w-full h-fit pb-5 px-8;
+  @apply hidden md:block w-full h-fit pb-5 px-10 mt-4 lg:mt-0;
 }

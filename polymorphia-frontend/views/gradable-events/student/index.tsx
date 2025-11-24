@@ -8,33 +8,56 @@ import PointsSummary from "@/components/course/event-section/points-summary/Poin
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
 import Loading from "@/components/loading";
 import { useRouter } from "next/navigation";
-import GradableEventCard from "@/views/gradable-events/student/GradableEventCard";
+import StudentGradableEventCard from "@/views/gradable-events/student/StudentGradableEventCard";
 import { useEventParams } from "@/hooks/general/useEventParams";
-import GradeModal from "@/components/speed-dial/modals/grade";
 import useStudentsGradableEvents from "@/hooks/course/useStudentsGradableEvents";
-import { EventTypes } from "@/interfaces/general";
+import { EventTypes, Sizes } from "@/interfaces/general";
+import usePointsSummary from "@/hooks/course/usePointsSummary";
+import GradeModal from "@/components/speed-dial/modals/grade";
 import ErrorComponent from "@/components/error";
+import { GradableEventDTO } from "@/interfaces/api/gradable_event/types";
+import { useMediaQuery } from "react-responsive";
 
 export default function StudentView() {
   const { eventType, eventSectionId } = useEventParams();
   const {
     data: gradableEvents,
-    isLoading,
-    isError,
+    isLoading: areGradableEventsLoading,
+    isError: areGradableEventsError,
   } = useStudentsGradableEvents();
+  const {
+    data: pointsSummary,
+    isLoading: isPointsSummaryLoading,
+    isError: isPointsSummaryError,
+  } = usePointsSummary();
+  const isLoading = areGradableEventsLoading || isPointsSummaryLoading;
+  const isError = areGradableEventsError || isPointsSummaryError;
   const router = useRouter();
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const summaryRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useScaleShow(!isLoading);
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
+  const isMd = useMediaQuery({ minWidth: 768 });
 
   useEffect(() => {
-    if (!isLoading && gradableEvents && gradableEvents.length === 1) {
+    if (
+      !areGradableEventsLoading &&
+      gradableEvents &&
+      gradableEvents.length === 1 &&
+      eventType !== EventTypes.TEST
+    ) {
       router.push(
         `/course/${eventType.toLowerCase()}/${eventSectionId}/${gradableEvents[0].id}`
       );
     }
-  }, [isLoading, gradableEvents, eventType, eventSectionId, router]);
+  }, [
+    isLoading,
+    gradableEvents,
+    eventType,
+    eventSectionId,
+    router,
+    areGradableEventsLoading,
+  ]);
 
   if (isLoading || (gradableEvents && gradableEvents.length < 2)) {
     return <Loading />;
@@ -44,28 +67,30 @@ export default function StudentView() {
     return <ErrorComponent message="Nie udało się załadować wydarzeń." />;
   }
 
-  if (!gradableEvents || gradableEvents.length === 0) {
+  if (!gradableEvents || gradableEvents.length === 0 || !pointsSummary) {
     return <div>No gradable events.</div>;
   }
 
-  const handleClick = (id: number, isLocked: boolean) => {
-    if (isLocked) {
+  const handleClick = (gradableEvent: GradableEventDTO) => {
+    if (gradableEvent.isLocked) {
       return;
     }
 
     if (eventType === EventTypes.TEST) {
-      setSelectedEventId(id);
+      setSelectedEventId(gradableEvent.id);
     } else {
-      router.push(`/course/${eventType.toLowerCase()}/${eventSectionId}/${id}`);
+      router.push(
+        `/course/${eventType.toLowerCase()}/${eventSectionId}/${gradableEvent.id}`
+      );
     }
   };
 
   const cards = gradableEvents.map((gradableEvent) => (
-    <GradableEventCard
+    <StudentGradableEventCard
       key={gradableEvent.id}
+      size={isMd ? Sizes.MD : Sizes.SM}
       gradableEvent={gradableEvent}
-      isMobile={false}
-      handleGradableEventClick={handleClick}
+      handleClick={handleClick}
     />
   ));
 
@@ -75,7 +100,7 @@ export default function StudentView() {
         <div className="student-view-cards" ref={wrapperRef}>
           <XPCardGrid containerRef={wrapperRef} cards={cards} maxColumns={2} />
         </div>
-        <PointsSummary ref={summaryRef} />
+        <PointsSummary ref={summaryRef} pointsSummary={pointsSummary} />
       </div>
       {eventType === EventTypes.TEST && selectedEventId && (
         <GradeModal

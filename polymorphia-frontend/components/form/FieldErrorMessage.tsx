@@ -1,4 +1,4 @@
-import { FieldErrorMessageProps } from "./types";
+import { FieldErrorMessageProps } from "@/components/form/types";
 
 export function FieldErrorMessage({ field }: FieldErrorMessageProps) {
   return (

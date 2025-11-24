@@ -6,5 +6,9 @@
 }
 
 .grade-loading {
-  @apply flex flex-col gap-2 min-[26rem]:w-96 h-50;
+  @apply relative flex-col-centered gap-2 min-[26rem]:w-96 h-32;
+}
+
+.grade-wrapper {
+  @apply min-h-32;
 }

@@ -21,9 +21,7 @@ export default function GradeInfo({ grade, criteria }: GradeInfoProps) {
   ];
 
   const initiallyOpenedAccordionSections = new Set(
-    accordionSections.length > 0 && isMd && grade.gradeResponse.isGraded
-      ? [accordionSections[0]]
-      : []
+    accordionSections.length > 0 && isMd ? [accordionSections[0]] : []
   );
 
   return (
@@ -80,32 +78,40 @@ export default function GradeInfo({ grade, criteria }: GradeInfoProps) {
                   </div>
                 </div>
                 <h2>{criterionGrade ? "Nagrody" : "Nagrody do zdobycia"}</h2>
-                <div className="grade-info-reward">
-                  {rewards.map((reward, index) => {
-                    if (reward.quantity === 0) {
-                      return;
-                    }
+                {rewards.length === 0 ? (
+                  <h3>
+                    {grade.gradeResponse.isGraded
+                      ? "Nie zdobyto żadnych nagród."
+                      : "W tym zadaniu nie jest dostępna żadna nagroda do wygrania."}
+                  </h3>
+                ) : (
+                  <div className="grade-info-reward">
+                    {rewards.map((reward, index) => {
+                      if (reward.quantity === 0) {
+                        return;
+                      }
 
-                    return (
-                      <div key={index} className="grade-info-reward-wrapper">
-                        <div className="grade-info-reward-image-wrapper">
-                          <Image
-                            src={`${API_STATIC_URL}/${reward.imageUrl}`}
-                            alt={reward.name}
-                            fill
-                            priority
-                            className="object-cover"
-                            sizes="(min-width: 1024px) 25vw, 50vw"
-                          />
-                          <ImageBadge
-                            text={reward.quantity.toString()}
-                            className="grade-info-reward-image-badge"
-                          />
+                      return (
+                        <div key={index} className="grade-info-reward-wrapper">
+                          <div className="grade-info-reward-image-wrapper">
+                            <Image
+                              src={`${API_STATIC_URL}/${reward.imageUrl}`}
+                              alt={reward.name}
+                              fill
+                              priority
+                              className="object-cover"
+                              sizes="(min-width: 1024px) 25vw, 50vw"
+                            />
+                            <ImageBadge
+                              text={reward.quantity.toString()}
+                              className="grade-info-reward-image-badge"
+                            />
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
-                </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             </AccordionSection>
           );

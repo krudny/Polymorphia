@@ -1,12 +1,13 @@
 package com.agh.polymorphia_backend.model.course;
 
-import com.agh.polymorphia_backend.model.user.Student;
+import com.agh.polymorphia_backend.model.user.student.Animal;
+import com.agh.polymorphia_backend.model.user.student.Student;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
-@Table(name="students_course_groups")
+@Table(name = "students_course_groups")
 @Data
 @Builder
 @AllArgsConstructor

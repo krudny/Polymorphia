@@ -22,6 +22,11 @@ import useUserContext, {
 import { useFindMeScroll } from "@/hooks/general/useFindMeScroll";
 import { Roles } from "@/interfaces/api/user";
 import ErrorComponent from "@/components/error";
+import {
+  DEFAULT_SORT_BY_TOTAL,
+  DEFAULT_SORT_ORDER_DESC,
+  DEFAULT_GROUPS,
+} from "@/shared/filter-defaults";
 
 export const HallOfFameContext = createContext<
   HallOfFameContextInterface | undefined
@@ -49,18 +54,19 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
   const filters = useFilters<HallOfFameFilterId>(filterConfigs ?? []);
 
   const sortByFilterValues = useMemo(
-    () => filters.getAppliedFilterValues("sortBy") ?? ["total"],
+    () => filters.getAppliedFilterValues("sortBy") ?? DEFAULT_SORT_BY_TOTAL,
     [filters]
   );
   const sortBy = sortByFilterValues.map((value) =>
     value === "name" ? searchBy : value
   );
   const sortOrder = useMemo(
-    () => filters.getAppliedFilterValues("sortOrder") ?? ["desc"],
+    () =>
+      filters.getAppliedFilterValues("sortOrder") ?? DEFAULT_SORT_ORDER_DESC,
     [filters]
   );
   const groups = useMemo(
-    () => filters.getAppliedFilterValues("groups") ?? ["all"],
+    () => filters.getAppliedFilterValues("groups") ?? DEFAULT_GROUPS,
     [filters]
   );
 

@@ -1,7 +1,7 @@
 @import "../../../../styles/globals.css";
 
 .assign-reward {
-  @apply w-full flex flex-col gap-y-2;
+  @apply w-full flex flex-col gap-y-2 text-2xl;
 }
 
 .assign-reward-button-wrapper {

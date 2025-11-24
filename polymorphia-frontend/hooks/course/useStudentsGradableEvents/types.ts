@@ -1,4 +1,4 @@
-import { StudentGradableEventResponseDTO } from "@/interfaces/api/course";
+import { StudentGradableEventResponseDTO } from "@/interfaces/api/gradable_event/types";
 
 export interface UseStudentsGradableEvents {
   data: StudentGradableEventResponseDTO[] | undefined;
