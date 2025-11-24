@@ -11,7 +11,7 @@
 }
 
 .notification-modal-container {
-  @apply w-[350px] min-h-[100px] custom-ease-with-duration;
+  @apply w-[360px] min-h-[100px] custom-ease-with-duration;
 }
 
 .notification-content-loading {

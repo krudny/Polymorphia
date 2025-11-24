@@ -12,7 +12,7 @@ public class NewRewardNotificationCreator implements NotificationCreator {
     @Override
     public Notification create(NotificationCreationRequest request) {
         Reward reward = request.getReward();
-        String description = "Gratulacje! Otrzymałeś nową nagrodę: " + reward.getName();
+        String description = "Otrzymano nową nagrodę: " + reward.getName() + "!";
 
         return Notification.builder()
                 .userId(request.getUserId())

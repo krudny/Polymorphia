@@ -11,7 +11,7 @@ export function getNotificationCardCustomOptions(
     case NotificationTypes.NEW_GRADE:
       return {
         header: "Nowa ocena!",
-        icon: "trophy",
+        icon: "assignment_returned",
       };
     case NotificationTypes.NEW_REWARD:
       return {
