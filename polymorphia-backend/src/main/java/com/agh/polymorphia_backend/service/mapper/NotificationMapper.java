@@ -12,10 +12,9 @@ public class NotificationMapper {
     public NotificationResponseDto toNotificationResponseDto(Notification notification) {
         return NotificationResponseDto.builder()
                 .id(notification.getId())
-                .notificationType(notification.getNotificationType())
+                .notificationType(notification.getType())
                 .description(notification.getDescription())
                 .createdAt(notification.getCreatedAt())
-                .relatedEntityId(notification.getRelatedEntityId())
                 .build();
     }
 }

@@ -22,6 +22,4 @@ public class NotificationResponseDto {
 
     @NotNull
     private String description;
-
-    private Long relatedEntityId;
 }
