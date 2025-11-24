@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.model.notification;
 
-import com.agh.polymorphia_backend.model.course.reward.Reward;
+import com.agh.polymorphia_backend.model.reward.Reward;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
