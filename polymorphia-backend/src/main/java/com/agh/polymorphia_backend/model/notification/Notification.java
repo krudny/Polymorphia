@@ -11,7 +11,6 @@ import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "notifications")
-@Inheritance(strategy = InheritanceType.JOINED)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,6 +27,7 @@ public class Notification {
     private ZonedDateTime createdAt;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private NotificationType type;
 
     @NotNull
