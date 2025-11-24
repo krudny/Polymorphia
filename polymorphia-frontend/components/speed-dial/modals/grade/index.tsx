@@ -1,4 +1,3 @@
-import Modal from "@/components/modal/Modal";
 import Loading from "@/components/loading";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import "./index.css";
@@ -13,6 +12,7 @@ import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
 import { Roles } from "@/interfaces/api/user";
 import GradeInfo from "@/components/course/event-section/GradeInfo";
+import Modal from "@/components/modal";
 
 export default function GradeModal({
   onClosedAction,
