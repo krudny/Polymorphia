@@ -28,7 +28,6 @@ public class NotificationDispatcher {
     public void dispatch(NotificationCreationRequest request) {
         try {
             NotificationType type = request.getNotificationType();
-            type.validate(request);
 
             NotificationCreator creator = notificationFactory.getCreator(type);
             Notification notification = creator.create(request);
