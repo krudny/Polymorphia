@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.service.mapper;
 
 import com.agh.polymorphia_backend.dto.response.notification.NotificationResponseDto;
-import com.agh.polymorphia_backend.model.notification.*;
+import com.agh.polymorphia_backend.model.notification.Notification;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

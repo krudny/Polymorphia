@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.dto.request.notification;
 
-import com.agh.polymorphia_backend.model.notification.NotificationType;
+import com.agh.polymorphia_backend.model.reward.Reward;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,10 +11,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class NotificationCreationRequest {
+public class RewardNotificationRequest extends NotificationCreationRequest {
     @NonNull
-    private Long userId;
-
-    @NonNull
-    private NotificationType notificationType;
+    private Reward reward;
 }

@@ -2,7 +2,8 @@ package com.agh.polymorphia_backend.service.grade;
 
 import com.agh.polymorphia_backend.dto.request.grade.CriterionGradeRequestDto;
 import com.agh.polymorphia_backend.dto.request.grade.GradeRequestDto;
-import com.agh.polymorphia_backend.dto.request.notification.NotificationCreationRequest;
+import com.agh.polymorphia_backend.dto.request.notification.GradeNotificationRequest;
+import com.agh.polymorphia_backend.dto.request.notification.RewardNotificationRequest;
 import com.agh.polymorphia_backend.dto.request.reward.ShortAssignedRewardRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.StudentGroupTargetRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.StudentTargetRequestDto;
@@ -121,7 +122,7 @@ public class GradingService {
         bonusXpCalculator.updateAnimalFlatBonusXp(animal.getId());
         bonusXpCalculator.updateAnimalPercentageBonusXp(animal.getId());
 
-        NotificationCreationRequest notificationRequest = NotificationCreationRequest.builder()
+        GradeNotificationRequest notificationRequest = GradeNotificationRequest.builder()
                 .userId(target.id())
                 .notificationType(NotificationType.NEW_GRADE)
                 .gradableEvent(gradableEventService.getGradableEventById(grade.getGradableEvent().getId()))
@@ -169,7 +170,7 @@ public class GradingService {
         criterionGradeService.saveAll(criteriaGrades);
 
         for(AssignedReward reward : assignedRewards) {
-            NotificationCreationRequest notificationRequest = NotificationCreationRequest.builder()
+            RewardNotificationRequest notificationRequest = RewardNotificationRequest.builder()
                     .userId(targetId)
                     .notificationType(NotificationType.NEW_REWARD)
                     .reward(reward.getReward())

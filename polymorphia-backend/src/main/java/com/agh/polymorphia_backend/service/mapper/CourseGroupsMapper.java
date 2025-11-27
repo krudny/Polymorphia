@@ -2,7 +2,6 @@ package com.agh.polymorphia_backend.service.mapper;
 
 import com.agh.polymorphia_backend.dto.response.course_groups.CourseGroupsResponseDto;
 import com.agh.polymorphia_backend.dto.response.course_groups.CourseGroupsShortResponseDto;
-import com.agh.polymorphia_backend.model.course.CourseGroup;
 import com.agh.polymorphia_backend.repository.course.projections.CourseGroupProjection;
 import com.agh.polymorphia_backend.repository.course.projections.CourseGroupShortProjection;
 import lombok.AllArgsConstructor;

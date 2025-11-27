@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.service.notification.creator;
 
 import com.agh.polymorphia_backend.dto.request.notification.NotificationCreationRequest;
+import com.agh.polymorphia_backend.dto.request.notification.RewardNotificationRequest;
 import com.agh.polymorphia_backend.model.notification.Notification;
 import com.agh.polymorphia_backend.model.notification.NotificationType;
 import com.agh.polymorphia_backend.model.reward.Reward;
@@ -11,7 +12,8 @@ public class NewRewardNotificationCreator implements NotificationCreator {
 
     @Override
     public Notification create(NotificationCreationRequest request) {
-        Reward reward = request.getReward();
+        RewardNotificationRequest rewardRequest = (RewardNotificationRequest) request;
+        Reward reward = rewardRequest.getReward();
         String description = "Otrzymano nową nagrodę: " + reward.getName() + "!";
 
         return Notification.builder()
