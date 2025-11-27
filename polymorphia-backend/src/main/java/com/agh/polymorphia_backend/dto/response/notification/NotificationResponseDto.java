@@ -20,6 +20,6 @@ public class NotificationResponseDto {
     @NotNull
     private ZonedDateTime createdAt;
 
-    @NotNull
+    @NotEmpty
     private String description;
 }
