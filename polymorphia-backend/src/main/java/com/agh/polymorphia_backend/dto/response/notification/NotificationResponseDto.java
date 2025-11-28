@@ -2,6 +2,7 @@ package com.agh.polymorphia_backend.dto.response.notification;
 
 import com.agh.polymorphia_backend.model.notification.NotificationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;

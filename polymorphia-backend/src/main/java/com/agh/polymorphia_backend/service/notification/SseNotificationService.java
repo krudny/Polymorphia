@@ -144,10 +144,6 @@ public class SseNotificationService {
         }
     }
 
-    public Set<Long> getActiveUserIds() {
-        return countEmitters.keySet();
-    }
-
     @Transactional
     public void deleteNotification(Long notificationId) {
         Long userId = userService.getCurrentUser().getUser().getId();
@@ -157,7 +153,7 @@ public class SseNotificationService {
 
     private List<NotificationResponseDto> getAllNotificationsForUser(Long userId) {
         return notificationRepository
-                .findAllByUserIdOrderByCreatedAtDesc(userId)
+                .findAllByUserIdOrderByCreatedAtAsc(userId)
                 .stream()
                 .map(notificationMapper::toNotificationResponseDto)
                 .toList();

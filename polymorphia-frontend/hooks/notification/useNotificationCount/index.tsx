@@ -24,7 +24,7 @@ export function useNotificationCount(): UseNotificationCount {
       }
 
       const eventSource = new EventSource(
-        `${API_HOST}/notifications/stream/count`,
+        `${API_HOST}/notifications/stream/notification-count`,
         { withCredentials: true }
       );
 
