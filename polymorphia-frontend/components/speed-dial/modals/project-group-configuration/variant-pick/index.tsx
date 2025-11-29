@@ -43,7 +43,7 @@ export default function ProjectVariantPick() {
 
   if (isProjectCategoriesLoading) {
     return (
-      <div className="relative min-h-80">
+      <div className="relative min-h-80 w-full">
         <Loading />
       </div>
     );
@@ -85,7 +85,7 @@ export default function ProjectVariantPick() {
   };
 
   return (
-    <div className="w-full">
+    <div className="max-w-full w-full">
       {projectCategories.length > 0 ? (
         <Accordion
           className="gap-y-5 mb-5"
@@ -135,6 +135,7 @@ export default function ProjectVariantPick() {
                         <XPCard
                           title={variant.name}
                           key={index}
+                          forceWidth={true}
                           leftComponent={
                             <XPCardImage
                               imageUrl={variant.imageUrl}

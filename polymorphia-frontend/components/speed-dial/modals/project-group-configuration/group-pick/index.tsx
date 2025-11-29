@@ -139,7 +139,7 @@ export default function ProjectGroupPick() {
             setSearch={setSearch}
             placeholder="Znajdź studenta..."
           />
-          <div className="flex gap-x-2 lg:gap-x-4">
+          <div className="flex gap-x-2 lg:gap-x-4 mt-1">
             <ButtonWithBorder
               text="Filtry"
               className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none"
