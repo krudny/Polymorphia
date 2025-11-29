@@ -95,7 +95,7 @@ export default function ProjectGroupPick() {
 
   if (isStudentsForGroupPickLoading) {
     return (
-      <div className="relative">
+      <div className="relative min-h-80">
         <Loading />
       </div>
     );

@@ -35,7 +35,7 @@ function ProjectGroupConfigurationModalContent({
       case isGeneralDataLoading:
         return {
           content: (
-            <div className="relative">
+            <div className="relative min-h-80">
               <Loading />
             </div>
           ),
@@ -81,7 +81,7 @@ function ProjectGroupConfigurationModalContent({
         title="Konfiguracja grupy"
         subtitle={subtitle}
       >
-        <div className="flex-col-centered min-h-80 min-w-96">{content}</div>
+        <div className="flex-col min-w-96 max-w-full">{content}</div>
       </Modal>
       <FiltersModal<ProjectGroupConfigurationFilterId>
         filters={filters}
