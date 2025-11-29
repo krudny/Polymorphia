@@ -4,7 +4,7 @@ import {
 } from "@/components/speed-dial/modals/project-group-configuration/types";
 import { ProjectGroupConfigurationProvider } from "@/providers/project-group-configuration";
 import { ReactNode } from "react";
-import { SpeedDialModalProps } from "../types";
+import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import Modal from "@/components/modal";
 import useProjectGroupConfigurationContext from "@/hooks/contexts/useProjectGroupConfigurationContext";
 import Loading from "@/components/loading";
@@ -14,8 +14,8 @@ import {
   ProjectGroupConfigurationFilterId,
   ProjectGroupConfigurationSteps,
 } from "@/providers/project-group-configuration/types";
-import ProjectGroupPick from "./group-pick";
-import ProjectVariantPick from "./variant-pick";
+import ProjectGroupPick from "@/components/speed-dial/modals/project-group-configuration/group-pick";
+import ProjectVariantPick from "@/components/speed-dial/modals/project-group-configuration/variant-pick";
 import FiltersModal from "@/components/filters-modals/FiltersModal";
 import "./index.css";
 

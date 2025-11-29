@@ -4,7 +4,7 @@ import Modal from "@/components/modal";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import useModalContext from "@/hooks/contexts/useModalContext";
 import useProjectGroupDelete from "@/hooks/course/useProjectGroupDelete";
-import { ProjectGroupDeletionModalContentProps } from "./types";
+import { ProjectGroupDeletionModalContentProps } from "@/components/speed-dial/modals/project-group-deletion/types";
 import "./index.css";
 
 function ProjectGroupDeletionModalContent({

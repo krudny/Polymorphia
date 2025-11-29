@@ -1,7 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useEventParams } from "@/hooks/general/useEventParams";
-import { UseProjectGroupDelete, UseProjectGroupDeleteParams } from "./types";
+import {
+  UseProjectGroupDelete,
+  UseProjectGroupDeleteParams,
+} from "@/hooks/course/useProjectGroupDelete/types";
 import { ProjectService } from "@/services/project";
 
 export default function useProjectGroupDelete(): UseProjectGroupDelete {
