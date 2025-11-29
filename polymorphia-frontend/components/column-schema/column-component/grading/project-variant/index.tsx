@@ -3,7 +3,7 @@ import ColumnComponent from "@/components/column-schema/column-component";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import ColumnSwappableComponent from "@/components/column-schema/column-component/shared/column-swappable-component";
-import { ProjectVariantResponseDTO } from "@/interfaces/api/project";
+import { ProjectVariantWithCategoryNameResponseDTO } from "@/interfaces/api/project";
 import {
   errorComponent,
   noProjectVariantsErrorComponent,
@@ -17,7 +17,7 @@ export function ProjectVariant() {
   const topComponent = () => <h1>Warianty</h1>;
 
   const mainComponent = () => (
-    <ColumnSwappableComponent<ProjectVariantResponseDTO[]>
+    <ColumnSwappableComponent<ProjectVariantWithCategoryNameResponseDTO[]>
       data={projectVariants}
       isDataLoading={isSpecificDataLoading}
       isDataError={isSpecificDataError}

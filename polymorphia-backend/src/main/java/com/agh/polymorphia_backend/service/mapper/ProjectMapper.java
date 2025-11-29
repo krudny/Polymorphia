@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.service.mapper;
 
-import com.agh.polymorphia_backend.dto.response.project.ProjectVariantResponseDto;
+import com.agh.polymorphia_backend.dto.response.project.ProjectVariantWithCategoryNameResponseDto;
 import com.agh.polymorphia_backend.model.project.ProjectVariant;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class ProjectMapper {
 
-    public ProjectVariantResponseDto toProjectVariantResponseDto(ProjectVariant projectVariant) {
-        return ProjectVariantResponseDto.builder()
+    public ProjectVariantWithCategoryNameResponseDto toProjectVariantResponseDto(ProjectVariant projectVariant) {
+        return ProjectVariantWithCategoryNameResponseDto.builder()
                 .id(projectVariant.getId())
                 .name(projectVariant.getName())
                 .categoryName(projectVariant.getCategory().getName())

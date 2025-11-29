@@ -9,7 +9,7 @@ import {
   noProjectVariantsErrorComponent,
 } from "@/shared/project-variant-info/errors";
 import ColumnSwappableComponent from "@/components/column-schema/column-component/shared/column-swappable-component";
-import { ProjectVariantResponseDTO } from "@/interfaces/api/project";
+import { ProjectVariantWithCategoryNameResponseDTO } from "@/interfaces/api/project";
 import { useMediaQuery } from "react-responsive";
 
 export default function ProjectVariantModal({
@@ -30,7 +30,7 @@ export default function ProjectVariantModal({
       title="Wariant projektu"
       subtitle="Oto przydzielone Tobie warianty projektu:"
     >
-      <ColumnSwappableComponent<ProjectVariantResponseDTO[]>
+      <ColumnSwappableComponent<ProjectVariantWithCategoryNameResponseDTO[]>
         data={data}
         isDataLoading={isLoading}
         isDataError={isError}
