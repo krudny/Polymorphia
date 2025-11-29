@@ -30,7 +30,7 @@ export const ProjectService = {
     await new Promise((resolve) => {
       setTimeout(() => {
         resolve(null);
-      }, 3000);
+      }, 500);
     });
 
     return [
@@ -199,6 +199,17 @@ export const ProjectService = {
     target: TargetRequestDTO | null,
     gradableEventId: number,
     configuration: ProjectGroupConfigurationResponseDTO
+  ): Promise<void> => {
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(null);
+      }, 500);
+    });
+  },
+
+  deleteProjectGroup: async (
+    target: TargetRequestDTO,
+    gradableEventId: number
   ): Promise<void> => {
     await new Promise((resolve) => {
       setTimeout(() => {

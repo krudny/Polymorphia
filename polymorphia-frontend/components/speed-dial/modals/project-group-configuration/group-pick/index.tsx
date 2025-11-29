@@ -206,7 +206,7 @@ export default function ProjectGroupPick() {
       <div className="group-pick-button">
         <ButtonWithBorder
           text="Dalej"
-          className="w-full rounded-xl"
+          className="!mx-0 !py-0 !w-full"
           isActive={selectedStudents.length > 0}
           onClick={handleSubmit}
         />

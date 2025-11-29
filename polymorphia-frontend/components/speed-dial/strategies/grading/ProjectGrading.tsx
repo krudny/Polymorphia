@@ -11,6 +11,7 @@ export class ProjectGradingStrategy
       this.createRedirectToMarkdown(),
       this.createNewProjectGroupConfiguration(),
       this.createEditProjectGroupConfiguration(),
+      this.createDeleteProjectGroup(),
     ];
   }
 }
