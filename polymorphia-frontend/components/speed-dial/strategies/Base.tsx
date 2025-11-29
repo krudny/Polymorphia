@@ -25,6 +25,7 @@ import InviteUserModal from "@/components/speed-dial/modals/invite-user";
 import SubmissionsModal from "@/components/speed-dial/modals/submission";
 import ProjectGroupConfigurationModal from "../modals/project-group-configuration";
 import { useEditProjectGroupConfigurationModalSpeedDialDynamicBehavior } from "@/hooks/speed-dial-dynamic-behavior/project-group-configuration";
+import { useDeleteProjectGroupModalSpeedDialDynamicBehavior } from "@/hooks/speed-dial-dynamic-behavior/project-group-deletion";
 
 export abstract class BaseSpeedDialStrategy {
   abstract getItems(role: Role): SpeedDialItem[];
@@ -221,7 +222,7 @@ export abstract class BaseSpeedDialStrategy {
   protected createNewProjectGroupConfiguration(): SpeedDialItem {
     return {
       id: 14,
-      orderIndex: -2,
+      orderIndex: -3,
       label: "Nowa grupa projektowa",
       icon: "group_add",
       useDynamicBehavior: () => ({
@@ -235,9 +236,19 @@ export abstract class BaseSpeedDialStrategy {
     };
   }
 
-  protected createEditProjectGroupConfiguration(): SpeedDialItem {
+  protected createDeleteProjectGroup(): SpeedDialItem {
     return {
       id: 15,
+      orderIndex: -2,
+      label: "Usuń grupę projektową",
+      icon: "group_remove",
+      useDynamicBehavior: useDeleteProjectGroupModalSpeedDialDynamicBehavior,
+    };
+  }
+
+  protected createEditProjectGroupConfiguration(): SpeedDialItem {
+    return {
+      id: 16,
       orderIndex: -1,
       label: "Edytuj grupę projektową",
       icon: "edit",
