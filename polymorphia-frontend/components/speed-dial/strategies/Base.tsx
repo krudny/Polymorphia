@@ -24,6 +24,7 @@ import { Role } from "@/interfaces/api/user";
 import { useProfileFiltersModalSpeedDialDynamicBehavior } from "@/hooks/speed-dial-dynamic-behavior/profile";
 import InviteUserModal from "@/components/speed-dial/modals/invite-user";
 import SubmissionsModal from "@/components/speed-dial/modals/submission";
+import CreateCourseGroupModal from "@/components/course-groups/modals/create-course-group";
 
 export abstract class BaseSpeedDialStrategy {
   abstract getItems(role: Role): SpeedDialItem[];
@@ -225,6 +226,18 @@ export abstract class BaseSpeedDialStrategy {
       icon: "upload_file",
       useDynamicBehavior: () => ({
         modal: (onClose) => <SubmissionsModal onClosedAction={onClose} />,
+      }),
+    };
+  }
+
+  protected createCourseGroupSetupModal(): SpeedDialItem {
+    return {
+      id: 14,
+      orderIndex: 1,
+      label: "Utwórz grupę",
+      icon: "add",
+      useDynamicBehavior: () => ({
+        modal: (onClose) => <CreateCourseGroupModal onClosedAction={onClose} />,
       }),
     };
   }
