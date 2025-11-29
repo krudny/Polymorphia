@@ -1,4 +1,4 @@
-import Modal from "@/components/modal/Modal";
+import Modal from "@/components/modal";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import StudentInfo from "@/shared/student-info/StudentInfo";
 

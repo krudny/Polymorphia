@@ -1,12 +1,12 @@
 package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.request.csv.process.TestGradingRequestDto;
+import com.agh.polymorphia_backend.dto.request.grade.GradeRequestDto;
 import com.agh.polymorphia_backend.dto.request.grade.ShortGradeRequestDto;
 import com.agh.polymorphia_backend.dto.response.grade.ShortGradeResponseDtoWithType;
-import com.agh.polymorphia_backend.dto.request.grade.GradeRequestDto;
 import com.agh.polymorphia_backend.service.csv.processors.TestGradingCSVProcessor;
-import com.agh.polymorphia_backend.service.grade.ShortGradeService;
 import com.agh.polymorphia_backend.service.grade.GradingService;
+import com.agh.polymorphia_backend.service.grade.ShortGradeService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
