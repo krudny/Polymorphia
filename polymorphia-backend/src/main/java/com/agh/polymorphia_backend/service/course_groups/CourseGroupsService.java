@@ -1,10 +1,15 @@
 package com.agh.polymorphia_backend.service.course_groups;
 
+import com.agh.polymorphia_backend.dto.request.course_group.CreateCourseGroupRequestDto;
 import com.agh.polymorphia_backend.dto.response.course_groups.CourseGroupsResponseDto;
 import com.agh.polymorphia_backend.dto.response.course_groups.CourseGroupsShortResponseDto;
+import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.course.CourseGroup;
+import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
+import com.agh.polymorphia_backend.model.user.TeachingRoleUser;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.repository.course.CourseGroupRepository;
+import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.mapper.CourseGroupsMapper;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
@@ -25,6 +30,7 @@ public class CourseGroupsService {
     private final UserService userService;
     private final AccessAuthorizer accessAuthorizer;
     private final CourseGroupsMapper courseGroupsMapper;
+    private final CourseService courseService;
 
     public List<String> findAllCourseGroupNames(Long courseId) {
         accessAuthorizer.authorizeCourseAccess(courseId);
@@ -56,6 +62,28 @@ public class CourseGroupsService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono grupy zajęciowej."));
             default -> throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Brak uprawnień.");
         };
+    }
+
+    public void createCourseGroup(CreateCourseGroupRequestDto requestDto) {
+//        accessAuthorizer.authorizeCourseAccess(requestDto.getCourseId());
+
+        Course course = courseService.getCourseById(requestDto.getCourseId());
+        TeachingRoleUser teachingRoleUser = userService.getTeachingRoleUser(requestDto.getTeachingRoleId(), requestDto.getCourseId());
+
+        CourseGroup courseGroup = CourseGroup.builder()
+                .name(requestDto.getName())
+                .room(requestDto.getRoom())
+                .course(course)
+                .teachingRoleUser(teachingRoleUser)
+                .studentCourseGroupAssignments(List.of())
+                .build();
+
+        try {
+            courseGroupRepository.save(courseGroup);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Nie udało się utworzyć grupy zajęciowej.");
+        }
+
     }
 
     private List<CourseGroupsResponseDto> getCourseGroups(Long courseId) {
@@ -92,5 +120,4 @@ public class CourseGroupsService {
         return courseGroupRepository.findShortCourseGroups(courseId, userId, teachingRoleUserId).stream()
             .map(courseGroupsMapper::toCourseGroupShortResponseDto).toList();
     }
-
 }

@@ -1,5 +1,7 @@
 package com.agh.polymorphia_backend.controller;
 
+import com.agh.polymorphia_backend.dto.request.course_group.CreateCourseGroupRequestDto;
+import com.agh.polymorphia_backend.dto.request.equipment.EquipmentChestOpenRequestDto;
 import com.agh.polymorphia_backend.dto.response.course_groups.CourseGroupsResponseDto;
 import com.agh.polymorphia_backend.dto.response.course_groups.CourseGroupsShortResponseDto;
 import com.agh.polymorphia_backend.service.course_groups.CourseGroupsService;
@@ -17,10 +19,10 @@ public class CourseGroupsController {
     private final CourseGroupsService courseGroupService;
 
     @PostMapping()
-    @PreAuthorize("hasAnyAuthority('COORDINATOR')")
-    public ResponseEntity<Void> createCourseGroups(@RequestParam Long courseId) {
-//        courseGroupService.createCourseGroups(courseId);
-        return ResponseEntity.noContent().build();
+//    @PreAuthorize("hasAnyAuthority('COORDINATOR')")
+    public ResponseEntity<Void> createCourseGroup(@RequestBody CreateCourseGroupRequestDto requestDto) {
+        courseGroupService.createCourseGroup(requestDto);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/all")

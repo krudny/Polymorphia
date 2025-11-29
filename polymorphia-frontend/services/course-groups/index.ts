@@ -4,7 +4,10 @@ import {
   CourseGroupTypes,
 } from "@/services/course-groups/types";
 import { ApiClient } from "@/services/api/client";
-import { StudentLastActivityDTO } from "@/interfaces/api/course-groups";
+import {
+  CreateCourseGroupRequestDTO,
+  StudentLastActivityDTO,
+} from "@/interfaces/api/course-groups";
 import {
   EquipmentChestResponseDTO,
   EquipmentItemResponseDTO,
@@ -65,6 +68,12 @@ const CourseGroupsService = {
     return await ApiClient.get<StudentSummaryResponseDTO>(
       `/students/${userId}/profile?courseId=${courseId}`
     );
+  },
+
+  createCourseGroup: async (
+    body: CreateCourseGroupRequestDTO
+  ): Promise<void> => {
+    await ApiClient.post(`/course-groups`, body);
   },
 };
 
