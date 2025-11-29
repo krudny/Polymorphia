@@ -27,7 +27,7 @@ export const ProjectService = {
     );
   },
 
-  getProjectVariants: async (
+  getProjectCategories: async (
     gradableEventId: number
   ): Promise<ProjectCategoryWithVariantsResponseDTO[]> => {
     await new Promise((resolve) => {
@@ -87,7 +87,7 @@ export const ProjectService = {
       },
       {
         id: 2,
-        name: "Mapa i roślinność",
+        name: "Zwierzaki",
         variants: [
           {
             id: 8,

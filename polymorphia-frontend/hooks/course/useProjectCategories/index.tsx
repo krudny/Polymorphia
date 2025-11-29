@@ -2,13 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import { EventTypes } from "@/interfaces/general";
 import { ProjectService } from "@/services/project";
+import { UseProjectCategories } from "./types";
 
-export function useProjectVariants(): UseProjectVariants {
+export function useProjectCategories(): UseProjectCategories {
   const { gradableEventId, eventType } = useEventParams();
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["projectVariants", gradableEventId],
-    queryFn: () => ProjectService.getProjectVariants(gradableEventId),
+    queryKey: ["projectCategories", gradableEventId],
+    queryFn: () => ProjectService.getProjectCategories(gradableEventId),
     enabled: eventType === EventTypes.PROJECT,
   });
 

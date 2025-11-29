@@ -1,0 +1,12 @@
+@import "tailwindcss";
+@import "../../../../../styles/globals.css";
+
+.variant-accordion-header {
+  h1 {
+    @apply !text-4xl;
+  }
+
+  h2 {
+    @apply !text-3xl;
+  }
+}
