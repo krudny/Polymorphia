@@ -23,7 +23,7 @@ import { Role } from "@/interfaces/api/user";
 import { useProfileFiltersModalSpeedDialDynamicBehavior } from "@/hooks/speed-dial-dynamic-behavior/profile";
 import InviteUserModal from "@/components/speed-dial/modals/invite-user";
 import SubmissionsModal from "@/components/speed-dial/modals/submission";
-import ProjectConfigurationModal from "../modals/project-group-configuration";
+import ProjectGroupConfigurationModal from "../modals/project-group-configuration";
 import { useEditProjectGroupConfigurationModalSpeedDialDynamicBehavior } from "@/hooks/speed-dial-dynamic-behavior/project-group-configuration";
 
 export abstract class BaseSpeedDialStrategy {
@@ -226,7 +226,7 @@ export abstract class BaseSpeedDialStrategy {
       icon: "group_add",
       useDynamicBehavior: () => ({
         modal: (onClose) => (
-          <ProjectConfigurationModal
+          <ProjectGroupConfigurationModal
             onClosedAction={onClose}
             initialTarget={null}
           />

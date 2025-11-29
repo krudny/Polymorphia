@@ -1,4 +1,7 @@
-import { ProjectVariantResponseDTO } from "@/interfaces/api/project";
+import {
+  ProjectGroupConfigurationResponseDTO,
+  ProjectVariantResponseDTO,
+} from "@/interfaces/api/project";
 import { ApiClient } from "@/services/api/client";
 import { StudentDetailsDTOWithType } from "@/interfaces/api/user";
 import { TargetRequestDTO } from "@/interfaces/api/target";
@@ -21,5 +24,23 @@ export const ProjectService = {
     return await ApiClient.get<StudentDetailsDTOWithType[]>(
       `/projects/group?studentId=${studentId}&projectId=${gradableEventId}`
     );
+  },
+
+  getProjectGroupConfiguration: async (
+    target: TargetRequestDTO,
+    gradableEventId: number
+  ): Promise<ProjectGroupConfigurationResponseDTO> => {
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(null);
+      }, 3000);
+    });
+    return {
+      animalIds: [1, 2],
+      selectedVariants: {
+        1: 1,
+        2: 2,
+      },
+    };
   },
 };

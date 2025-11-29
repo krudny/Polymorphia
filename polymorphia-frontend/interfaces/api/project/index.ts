@@ -5,3 +5,8 @@ export interface ProjectVariantResponseDTO {
   shortCode: string;
   imageUrl: string;
 }
+
+export interface ProjectGroupConfigurationResponseDTO {
+  animalIds: number[];
+  selectedVariants: Record<number, number>; // maps categoryId to variantId
+}

@@ -1,4 +1,4 @@
-import ProjectConfigurationModal from "@/components/speed-dial/modals/project-group-configuration";
+import ProjectGroupConfigurationModal from "@/components/speed-dial/modals/project-group-configuration";
 import { SpeedDialItemDynamicBehavior } from "@/components/speed-dial/types";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
 
@@ -7,7 +7,7 @@ export function useEditProjectGroupConfigurationModalSpeedDialDynamicBehavior():
 
   return {
     modal: (onClose) => (
-      <ProjectConfigurationModal
+      <ProjectGroupConfigurationModal
         onClosedAction={onClose}
         initialTarget={selectedTarget}
       />
