@@ -12,18 +12,24 @@ import XPCardProjectVariant from "@/components/xp-card/components/XPCardProjectV
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCard from "@/components/xp-card/XPCard";
 import clsx from "clsx";
+import useProjectGroupUpdate from "@/hooks/course/useProjectGroupUpdate";
+import useModalContext from "@/hooks/contexts/useModalContext";
 
 export default function ProjectVariantPick() {
   const {
     setCurrentStep,
     currentProjectGroupConfiguration,
     setCurrentProjectGroupConfiguration,
+    initialTarget,
   } = useProjectGroupConfigurationContext();
   const {
     data: projectCategories,
     isLoading: isProjectCategoriesLoading,
     isError: isProjectCategoriesError,
   } = useProjectCategories();
+
+  const { mutation } = useProjectGroupUpdate();
+  const { closeModal } = useModalContext();
 
   const handleSelection = (categoryId: number, variantId: number) => {
     setCurrentProjectGroupConfiguration((previousConfiguration) => ({
@@ -61,10 +67,21 @@ export default function ProjectVariantPick() {
   );
 
   const handleSubmit = () => {
-    // todo
     if (!isSelectionValid) {
       return;
     }
+
+    mutation.mutate(
+      {
+        target: initialTarget,
+        configuration: currentProjectGroupConfiguration,
+      },
+      {
+        onSuccess: () => {
+          closeModal();
+        },
+      }
+    );
   };
 
   return (
@@ -160,7 +177,10 @@ export default function ProjectVariantPick() {
         <ButtonWithBorder
           text="Zapisz"
           className="!mx-0 !py-0 !w-full"
-          isActive={projectCategories.length === 0 || isSelectionValid}
+          isActive={
+            (projectCategories.length === 0 || isSelectionValid) &&
+            !mutation.isPending
+          }
           onClick={handleSubmit}
         />
       </div>
