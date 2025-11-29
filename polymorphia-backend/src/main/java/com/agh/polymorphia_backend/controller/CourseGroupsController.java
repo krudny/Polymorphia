@@ -1,9 +1,9 @@
 package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.request.course_group.CreateCourseGroupRequestDto;
-import com.agh.polymorphia_backend.dto.request.equipment.EquipmentChestOpenRequestDto;
 import com.agh.polymorphia_backend.dto.response.course_groups.CourseGroupsResponseDto;
 import com.agh.polymorphia_backend.dto.response.course_groups.CourseGroupsShortResponseDto;
+import com.agh.polymorphia_backend.dto.response.user.TeachingRoleUserResponseDto;
 import com.agh.polymorphia_backend.service.course_groups.CourseGroupsService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class CourseGroupsController {
     private final CourseGroupsService courseGroupService;
 
     @PostMapping()
-//    @PreAuthorize("hasAnyAuthority('COORDINATOR')")
+    @PreAuthorize("hasAnyAuthority('COORDINATOR')")
     public ResponseEntity<Void> createCourseGroup(@RequestBody CreateCourseGroupRequestDto requestDto) {
         courseGroupService.createCourseGroup(requestDto);
         return ResponseEntity.ok().build();
@@ -47,5 +47,11 @@ public class CourseGroupsController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<CourseGroupsShortResponseDto>> getIndividualShortCourseGroups(@RequestParam Long courseId) {
         return ResponseEntity.ok(courseGroupService.getIndividualShortCourseGroups(courseId));
+    }
+
+    @GetMapping("/teaching-role")
+    @PreAuthorize("hasAuthority('COORDINATOR')")
+    public ResponseEntity<List<TeachingRoleUserResponseDto>> getTeachingRoleUsers(@RequestParam Long courseId) {
+        return ResponseEntity.ok(courseGroupService.getTeachingRoleUsers(courseId));
     }
 }

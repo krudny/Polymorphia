@@ -57,7 +57,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers(HttpMethod.GET, "/static/**", "/error").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/invitation/register-user", "/password/forgot-password", "/password/new-password", "/course-groups/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/invitation/register-user", "/password/forgot-password", "/password/new-password").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginProcessingUrl("/login")

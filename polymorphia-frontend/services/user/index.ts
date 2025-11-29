@@ -77,8 +77,8 @@ const UserService = {
     ];
   },
 
-  inviteUser: async (request: InviteRequestDTO): Promise<void> => {
-    await ApiClient.post("/invitation/course", request);
+  inviteUser: async (request: InviteRequestDTO): Promise<number> => {
+    return await ApiClient.post("/invitation/course", request);
   },
 
   register: async (request: RegisterRequestDTO): Promise<void> => {

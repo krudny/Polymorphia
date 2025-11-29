@@ -24,3 +24,8 @@ export interface CreateCourseGroupRequestDTO {
   courseId: number;
   teachingRoleId: number;
 }
+
+export interface TeachingRoleUserResponseDTO {
+  userId: number;
+  fullName: string;
+}

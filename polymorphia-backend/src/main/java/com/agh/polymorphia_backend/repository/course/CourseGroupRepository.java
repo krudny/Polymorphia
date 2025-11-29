@@ -43,3 +43,4 @@ public interface CourseGroupRepository extends JpaRepository<CourseGroup, Long> 
 
     Long course(@NotNull Course course);
 }
+

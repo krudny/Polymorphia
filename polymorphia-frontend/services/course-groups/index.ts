@@ -7,6 +7,7 @@ import { ApiClient } from "@/services/api/client";
 import {
   CreateCourseGroupRequestDTO,
   StudentLastActivityDTO,
+  TeachingRoleUserResponseDTO,
 } from "@/interfaces/api/course-groups";
 import {
   EquipmentChestResponseDTO,
@@ -74,6 +75,14 @@ const CourseGroupsService = {
     body: CreateCourseGroupRequestDTO
   ): Promise<void> => {
     await ApiClient.post(`/course-groups`, body);
+  },
+
+  getTeachingRoleUsers: async (
+    courseId: number
+  ): Promise<TeachingRoleUserResponseDTO[]> => {
+    return await ApiClient.get<TeachingRoleUserResponseDTO[]>(
+      `/course-groups/teaching-role?courseId=${courseId}`
+    );
   },
 };
 
