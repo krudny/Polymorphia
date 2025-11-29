@@ -15,9 +15,9 @@ export interface GradingContextInterface {
   isFiltersLoading: boolean;
   isFiltersError: boolean;
   filters: ReturnType<typeof useFilters<GradingFilterId>>;
-  criteria: CriterionResponseDTO[] | undefined;
-  submissionRequirements: SubmissionRequirementResponseDTO[] | undefined;
-  projectVariants: ProjectVariantWithCategoryNameResponseDTO[] | undefined;
+  criteria?: CriterionResponseDTO[];
+  submissionRequirements?: SubmissionRequirementResponseDTO[];
+  projectVariants?: ProjectVariantWithCategoryNameResponseDTO[];
   isGeneralDataLoading: boolean;
   isGeneralDataError: boolean;
   isSpecificDataLoading: boolean;

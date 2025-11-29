@@ -5,6 +5,7 @@ import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import useModalContext from "@/hooks/contexts/useModalContext";
 import useProjectGroupDelete from "@/hooks/course/useProjectGroupDelete";
 import { ProjectGroupDeletionModalContentProps } from "./types";
+import "./index.css";
 
 function ProjectGroupDeletionModalContent({
   initialTarget,
@@ -26,11 +27,9 @@ function ProjectGroupDeletionModalContent({
   };
 
   return (
-    <div className="flex-col w-full max-w-80">
-      <h1 className="text-3xl mb-5">
-        Czy na pewno chcesz usunąć aktualnie wybraną grupę projektową?
-      </h1>
-      <div className="w-full flex gap-x-4">
+    <div className="project-group-deletion">
+      <h1>Czy na pewno chcesz usunąć aktualnie wybraną grupę projektową?</h1>
+      <div className="project-group-deletion-buttons">
         <ButtonWithBorder
           text="Anuluj"
           className="!mx-0 !py-0 !w-full"

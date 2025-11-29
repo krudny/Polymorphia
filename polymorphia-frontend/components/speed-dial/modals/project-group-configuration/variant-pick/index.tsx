@@ -43,7 +43,7 @@ export default function ProjectVariantPick() {
 
   if (isProjectCategoriesLoading) {
     return (
-      <div className="relative min-h-80 w-full">
+      <div className="variant-pick-loading">
         <Loading />
       </div>
     );
@@ -85,10 +85,10 @@ export default function ProjectVariantPick() {
   };
 
   return (
-    <div className="max-w-full w-full">
+    <div className="variant-pick">
       {projectCategories.length > 0 ? (
         <Accordion
-          className="gap-y-5 mb-5"
+          className="variant-pick-accordion-override"
           sectionIds={
             new Set(projectCategories.map((category) => String(category.id)))
           }
@@ -116,18 +116,17 @@ export default function ProjectVariantPick() {
                   (selectedVariant ? `[${selectedVariant?.shortCode}] ` : "") +
                   category.name
                 }
-                headerClassName="variant-accordion-header"
+                headerClassName="variant-pick-accordion-header"
               >
                 {category.variants.length > 0 ? (
-                  <div className="space-y-2 p-1 h-fit max-h-80 overflow-y-auto custom-scrollbar">
+                  <div className="variant-pick-list">
                     {category.variants.map((variant, index) => (
                       <div
                         key={index}
                         className={clsx(
                           currentProjectGroupConfiguration.selectedVariants[
                             category.id
-                          ] === variant.id &&
-                            "outline-4 outline-amber-400 rounded-lg",
+                          ] === variant.id && "variant-pick-list-selected",
                           "cursor-pointer"
                         )}
                         onClick={() => handleSelection(category.id, variant.id)}
@@ -167,7 +166,7 @@ export default function ProjectVariantPick() {
           size={ErrorComponentSizes.COMPACT}
         />
       )}
-      <div className="w-full flex gap-x-4">
+      <div className="variant-pick-buttons">
         <ButtonWithBorder
           text="Powrót"
           className="!mx-0 !py-0 !w-full"
