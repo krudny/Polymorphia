@@ -6,10 +6,7 @@ import com.agh.polymorphia_backend.service.course_groups.CourseGroupsService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,25 +16,32 @@ import java.util.List;
 public class CourseGroupsController {
     private final CourseGroupsService courseGroupService;
 
-    @GetMapping(value = "/all")
+    @PostMapping()
+    @PreAuthorize("hasAnyAuthority('COORDINATOR')")
+    public ResponseEntity<Void> createCourseGroups(@RequestParam Long courseId) {
+//        courseGroupService.createCourseGroups(courseId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/all")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<CourseGroupsResponseDto>> getAllCourseGroups(@RequestParam Long courseId) {
         return ResponseEntity.ok(courseGroupService.getAllCourseGroups(courseId));
     }
 
-    @GetMapping(value = "/all/short")
+    @GetMapping("/all/short")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<CourseGroupsShortResponseDto>> getAllShortCourseGroups(@RequestParam Long courseId) {
         return ResponseEntity.ok(courseGroupService.getAllShortCourseGroups(courseId));
     }
 
-    @GetMapping(value = "/individual")
+    @GetMapping("/individual")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<CourseGroupsResponseDto>> getIndividualCourseGroups(@RequestParam Long courseId) {
         return ResponseEntity.ok(courseGroupService.getIndividualCourseGroups(courseId));
     }
 
-    @GetMapping(value = "/individual/short")
+    @GetMapping("/individual/short")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<CourseGroupsShortResponseDto>> getIndividualShortCourseGroups(@RequestParam Long courseId) {
         return ResponseEntity.ok(courseGroupService.getIndividualShortCourseGroups(courseId));
