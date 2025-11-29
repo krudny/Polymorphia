@@ -81,7 +81,9 @@ function ProjectGroupConfigurationModalContent({
         title="Konfiguracja grupy"
         subtitle={subtitle}
       >
-        <div className="flex-col min-w-96 max-w-full">{content}</div>
+        <div className="flex-col w-fit min-[550px]:w-[420px] min-[550px]:max-w-[420px] overflow-y-auto custom-scrollbar">
+          {content}
+        </div>
       </Modal>
       <FiltersModal<ProjectGroupConfigurationFilterId>
         filters={filters}

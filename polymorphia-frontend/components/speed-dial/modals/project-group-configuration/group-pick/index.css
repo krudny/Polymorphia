@@ -31,7 +31,7 @@
 }
 
 .group-pick-group {
-  @apply w-full overflow-y-auto custom-scrollbar flex flex-col gap-y-1 z-[999];
+  @apply w-full max-h-[250px]　overflow-y-auto custom-scrollbar flex flex-col gap-y-1 z-[999];
 }
 
 .group-pick-button {
