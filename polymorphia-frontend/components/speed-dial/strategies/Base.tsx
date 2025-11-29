@@ -28,7 +28,7 @@ import DeleteCourseGroupModal from "@/components/course-groups/modals/delete-cou
 import DeleteAnimalModal from "@/components/course-groups/modals/delete-animal";
 import MoveAnimalModal from "@/components/course-groups/modals/move-animal";
 import EditCourseGroupModal from "@/components/course-groups/modals/edit-course-group";
-import ProjectGroupConfigurationModal from "../modals/project-group-configuration";
+import ProjectGroupConfigurationModal from "@/components/speed-dial/modals/project-group-configuration";
 import { useEditProjectGroupConfigurationModalSpeedDialDynamicBehavior } from "@/hooks/speed-dial-dynamic-behavior/project-group-configuration";
 import { useDeleteProjectGroupModalSpeedDialDynamicBehavior } from "@/hooks/speed-dial-dynamic-behavior/project-group-deletion";
 

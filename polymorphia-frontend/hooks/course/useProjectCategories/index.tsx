@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import { EventTypes } from "@/interfaces/general";
 import { ProjectService } from "@/services/project";
-import { UseProjectCategories } from "./types";
+import { UseProjectCategories } from "@/hooks/course/useProjectCategories/types";
 
 export function useProjectCategories(): UseProjectCategories {
   const { gradableEventId, eventType } = useEventParams();

@@ -4,7 +4,7 @@ import { useEventParams } from "@/hooks/general/useEventParams";
 import {
   UseProjectGroupConfigurationUpdate,
   UseProjectGroupConfigurationUpdateParams,
-} from "./types";
+} from "@/hooks/course/useProjectGroupUpdate/types";
 import { ProjectService } from "@/services/project";
 
 export default function useProjectGroupUpdate(): UseProjectGroupConfigurationUpdate {
