@@ -14,6 +14,7 @@ export interface ProjectGroupConfigurationContextInterface {
   currentStep: ProjectGroupConfigurationStep;
   setCurrentStep: Dispatch<SetStateAction<ProjectGroupConfigurationStep>>;
 
+  initialTarget: TargetRequestDTO | null;
   isInitialProjectGroupConfigurationLoading: boolean;
   isInitialProjectGroupConfigurationError: boolean;
 

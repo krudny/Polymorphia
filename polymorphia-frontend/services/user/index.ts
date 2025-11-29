@@ -74,6 +74,32 @@ const UserService = {
           courseId: 1,
         },
       },
+      {
+        userRole: Roles.STUDENT,
+        userDetails: {
+          id: 3,
+          fullName: "Kamil Rudny2",
+          animalName: "Gerard Pocieszny",
+          evolutionStage: "Majestatyczna bestia",
+          group: "BM-20-00",
+          imageUrl: "images/evolution-stages/4.jpg",
+          position: 1,
+          courseId: 1,
+        },
+      },
+      {
+        userRole: Roles.STUDENT,
+        userDetails: {
+          id: 4,
+          fullName: "Kamil Śmieszny2",
+          animalName: "Gerard Wesoły",
+          evolutionStage: "Majestatyczna bestia",
+          group: "BM-20-00",
+          imageUrl: "images/evolution-stages/5.jpg",
+          position: 2,
+          courseId: 1,
+        },
+      },
     ];
   },
 

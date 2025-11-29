@@ -73,7 +73,7 @@ function ProjectGroupConfigurationModalContent({
       title="Konfiguracja grupy"
       subtitle={subtitle}
     >
-      <div className="flex-col-centered min-h-80 min-w-80">{content}</div>
+      <div className="flex-col-centered min-h-80 min-w-96">{content}</div>
     </Modal>
   );
 }
