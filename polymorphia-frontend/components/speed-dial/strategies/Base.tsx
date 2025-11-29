@@ -2,7 +2,6 @@ import { SpeedDialItem } from "@/components/speed-dial/types";
 import GradeModal from "@/components/speed-dial/modals/grade";
 import ProjectVariantModal from "@/components/speed-dial/modals/project-variant";
 import GroupModal from "@/components/speed-dial/modals/group-info";
-import GroupPickingModal from "@/components/speed-dial/modals/group-pick";
 import ImportCSVModal from "@/components/speed-dial/modals/import-csv";
 import {
   ImportCSVType,
@@ -24,6 +23,8 @@ import { Role } from "@/interfaces/api/user";
 import { useProfileFiltersModalSpeedDialDynamicBehavior } from "@/hooks/speed-dial-dynamic-behavior/profile";
 import InviteUserModal from "@/components/speed-dial/modals/invite-user";
 import SubmissionsModal from "@/components/speed-dial/modals/submission";
+import ProjectConfigurationModal from "../modals/project-group-configuration";
+import { useEditProjectGroupConfigurationModalSpeedDialDynamicBehavior } from "@/hooks/speed-dial-dynamic-behavior/project-group-configuration";
 
 export abstract class BaseSpeedDialStrategy {
   abstract getItems(role: Role): SpeedDialItem[];
@@ -92,18 +93,6 @@ export abstract class BaseSpeedDialStrategy {
       icon: "person",
       useDynamicBehavior: () => ({
         modal: (onClose) => <GroupModal onClosedAction={onClose} />,
-      }),
-    };
-  }
-
-  protected createProjectGroupPicking(): SpeedDialItem {
-    return {
-      id: 4,
-      orderIndex: 4,
-      label: "Utwórz grupę",
-      icon: "person_add",
-      useDynamicBehavior: () => ({
-        modal: (onClose) => <GroupPickingModal onClosedAction={onClose} />,
       }),
     };
   }
@@ -226,6 +215,34 @@ export abstract class BaseSpeedDialStrategy {
       useDynamicBehavior: () => ({
         modal: (onClose) => <SubmissionsModal onClosedAction={onClose} />,
       }),
+    };
+  }
+
+  protected createNewProjectGroupConfiguration(): SpeedDialItem {
+    return {
+      id: 14,
+      orderIndex: -2,
+      label: "Nowa grupa projektowa",
+      icon: "group_add",
+      useDynamicBehavior: () => ({
+        modal: (onClose) => (
+          <ProjectConfigurationModal
+            onClosedAction={onClose}
+            initialTarget={null}
+          />
+        ),
+      }),
+    };
+  }
+
+  protected createEditProjectGroupConfiguration(): SpeedDialItem {
+    return {
+      id: 15,
+      orderIndex: -1,
+      label: "Edytuj grupę projektową",
+      icon: "edit",
+      useDynamicBehavior:
+        useEditProjectGroupConfigurationModalSpeedDialDynamicBehavior,
     };
   }
 }
