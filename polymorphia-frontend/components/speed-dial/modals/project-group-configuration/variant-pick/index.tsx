@@ -84,15 +84,22 @@ export default function ProjectVariantPick() {
     );
   };
 
+  const sectionIds = new Set(
+    projectCategories.map((category) => String(category.id))
+  );
+
+  const initiallyOpenedSectionIds =
+    projectCategories.length > 0
+      ? new Set([String(projectCategories[0].id)])
+      : undefined;
+
   return (
     <div className="variant-pick">
       {projectCategories.length > 0 ? (
         <Accordion
           className="variant-pick-accordion-override"
-          sectionIds={
-            new Set(projectCategories.map((category) => String(category.id)))
-          }
-          initiallyOpenedSectionIds={new Set([String(projectCategories[0].id)])}
+          sectionIds={sectionIds}
+          initiallyOpenedSectionIds={initiallyOpenedSectionIds}
           maxOpen={1}
           shouldAnimateInitialOpen={false}
         >
