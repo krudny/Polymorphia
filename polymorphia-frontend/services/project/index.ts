@@ -10,10 +10,7 @@ import {
 } from "@/interfaces/api/user";
 import { TargetRequestDTO } from "@/interfaces/api/target";
 import UserService from "../user";
-import {
-  FilterOption,
-  SpecialBehaviors,
-} from "@/hooks/course/useFilters/types";
+import { SpecialBehaviors } from "@/hooks/course/useFilters/types";
 import { ProjectGroupConfigurationPartialFilterConfig } from "@/providers/project-group-configuration/types";
 
 export const ProjectService = {
@@ -140,7 +137,7 @@ export const ProjectService = {
       studentIds: [1, 2],
       selectedVariants: {
         1: 1,
-        2: 2,
+        2: 11,
       },
     };
   },
@@ -196,5 +193,17 @@ export const ProjectService = {
           groups.some((group) => group === "all") ||
           groups.some((group) => group === user.group)
       );
+  },
+
+  submitProjectGroupConfiguration: async (
+    target: TargetRequestDTO | null,
+    gradableEventId: number,
+    configuration: ProjectGroupConfigurationResponseDTO
+  ): Promise<void> => {
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(null);
+      }, 500);
+    });
   },
 };
