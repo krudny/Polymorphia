@@ -7,6 +7,6 @@ export interface ProjectVariantResponseDTO {
 }
 
 export interface ProjectGroupConfigurationResponseDTO {
-  animalIds: number[];
+  studentIds: number[];
   selectedVariants: Record<number, number>; // maps categoryId to variantId
 }

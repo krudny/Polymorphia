@@ -2,29 +2,32 @@ import { useQuery } from "@tanstack/react-query";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import { EventTypes } from "@/interfaces/general";
 import { ProjectService } from "@/services/project";
-import {
-  UseProjectGroupConfiguration,
-  UseProjectGroupConfigurationProps,
-} from "@/hooks/course/useProjectGroupConfiguration/types";
 import { TargetTypes } from "@/interfaces/api/target";
+import {
+  UseProjectGroupConfigurationGroupPickStudents,
+  UseProjectGroupConfigurationGroupPickStudentsProps,
+} from "./types";
 
-export function useProjectGroupConfiguration({
+export function useProjectGroupConfigurationGroupPickStudents({
   target,
-}: UseProjectGroupConfigurationProps): UseProjectGroupConfiguration {
+}: UseProjectGroupConfigurationGroupPickStudentsProps): UseProjectGroupConfigurationGroupPickStudents {
   const { gradableEventId, eventType } = useEventParams();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: target
       ? [
-          "projectGroupConfiguration",
+          "projectGroupConfigurationStudents",
           target.type,
           target.type === TargetTypes.STUDENT ? target.id : target.groupId,
           gradableEventId,
         ]
-      : ["projectGroupConfiguration", "noTarget"],
+      : ["projectGroupConfigurationStudents", "noTarget"],
     queryFn: () =>
-      ProjectService.getProjectGroupConfiguration(target!, gradableEventId),
-    enabled: eventType === EventTypes.PROJECT && target !== null,
+      ProjectService.getProjectGroupConfigurationGroupPickStudents(
+        target,
+        gradableEventId
+      ),
+    enabled: eventType === EventTypes.PROJECT,
   });
 
   return { data, isLoading, isError };

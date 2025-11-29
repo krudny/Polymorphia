@@ -23,7 +23,7 @@ export function ProjectGroupConfigurationProvider({
     currentProjectGroupConfiguration,
     setCurrentProjectGroupConfiguration,
   ] = useState<ProjectGroupConfigurationResponseDTO>({
-    animalIds: [],
+    studentIds: [],
     selectedVariants: {},
   });
 
@@ -44,6 +44,7 @@ export function ProjectGroupConfigurationProvider({
       value={{
         currentStep,
         setCurrentStep,
+        initialTarget,
         isInitialProjectGroupConfigurationLoading,
         isInitialProjectGroupConfigurationError,
         currentProjectGroupConfiguration,
