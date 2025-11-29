@@ -6,7 +6,7 @@ import { TargetTypes } from "@/interfaces/api/target";
 import {
   UseProjectGroupConfigurationGroupPickStudents,
   UseProjectGroupConfigurationGroupPickStudentsProps,
-} from "./types";
+} from "@/hooks/course/useProjectGroupConfigurationGroupPickStudents/types";
 
 export function useProjectGroupConfigurationGroupPickStudents({
   target,
