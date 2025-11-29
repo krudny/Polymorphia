@@ -95,7 +95,7 @@ export default function ProjectGroupPick() {
 
   if (isStudentsForGroupPickLoading) {
     return (
-      <div className="relative min-h-80">
+      <div className="group-pick-loading">
         <Loading />
       </div>
     );
@@ -131,7 +131,7 @@ export default function ProjectGroupPick() {
   );
 
   return (
-    <div className="flex-col w-full">
+    <div className="group-pick">
       <div onSubmit={(event) => event.preventDefault()}>
         <div className="group-pick-wrapper">
           <Search
@@ -139,7 +139,7 @@ export default function ProjectGroupPick() {
             setSearch={setSearch}
             placeholder="Znajdź studenta..."
           />
-          <div className="flex gap-x-2 lg:gap-x-4 mt-1">
+          <div className="group-pick-filters-button">
             <ButtonWithBorder
               text="Filtry"
               className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none"

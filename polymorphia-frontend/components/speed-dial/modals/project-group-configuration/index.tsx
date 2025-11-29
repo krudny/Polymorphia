@@ -17,6 +17,7 @@ import {
 import ProjectGroupPick from "./group-pick";
 import ProjectVariantPick from "./variant-pick";
 import FiltersModal from "@/components/filters-modals/FiltersModal";
+import "./index.css";
 
 function ProjectGroupConfigurationModalContent({
   onClosedAction,
@@ -35,7 +36,7 @@ function ProjectGroupConfigurationModalContent({
       case isGeneralDataLoading:
         return {
           content: (
-            <div className="relative min-h-80">
+            <div className="project-group-configuration-loading">
               <Loading />
             </div>
           ),
@@ -81,9 +82,7 @@ function ProjectGroupConfigurationModalContent({
         title="Konfiguracja grupy"
         subtitle={subtitle}
       >
-        <div className="flex-col w-fit min-[550px]:w-[420px] min-[550px]:max-w-[420px] overflow-y-auto custom-scrollbar">
-          {content}
-        </div>
+        <div className="project-group-configuration">{content}</div>
       </Modal>
       <FiltersModal<ProjectGroupConfigurationFilterId>
         filters={filters}

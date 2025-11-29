@@ -2,16 +2,11 @@
 @import "../../../../../styles/globals.css";
 
 .group-pick {
-  @apply w-full flex-col-centered;
+  @apply flex-col w-full;
 }
 
 .group-pick-wrapper {
-  /*@apply w-full h-full flex items-center text-2xl border-b-2  border-primary-dark dark:border-secondary-light;*/
   @apply flex w-full gap-x-2 justify-between overflow-x-hidden;
-}
-
-.group-pick-input {
-  @apply w-full ml-2 text-primary-dark dark:text-secondary-light placeholder-primary-dark dark:placeholder-secondary-light focus:outline-none;
 }
 
 .group-pick-text {
@@ -26,14 +21,18 @@
   @apply min-h-fit;
 }
 
-.group-pick-no-results {
-  @apply w-full h-full flex-col-centered text-2xl;
-}
-
 .group-pick-group {
   @apply w-full max-h-[250px]　overflow-y-auto custom-scrollbar flex flex-col gap-y-1 z-[999];
 }
 
+.group-pick-filters-button {
+  @apply flex gap-x-2 lg:gap-x-4 mt-1;
+}
+
 .group-pick-button {
   @apply w-full mt-4;
+}
+
+.group-pick-loading {
+  @apply relative min-h-80;
 }
