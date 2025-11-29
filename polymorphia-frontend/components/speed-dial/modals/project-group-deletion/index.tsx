@@ -1,6 +1,6 @@
 import { ProjectGroupConfigurationModalProps } from "@/components/speed-dial/modals/project-group-configuration/types";
 import { ReactNode } from "react";
-import Modal from "@/components/modal/Modal";
+import Modal from "@/components/modal";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import useModalContext from "@/hooks/contexts/useModalContext";
 import useProjectGroupDelete from "@/hooks/course/useProjectGroupDelete";

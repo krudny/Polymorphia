@@ -5,7 +5,7 @@ import {
 import { ProjectGroupConfigurationProvider } from "@/providers/project-group-configuration";
 import { ReactNode } from "react";
 import { SpeedDialModalProps } from "../types";
-import Modal from "@/components/modal/Modal";
+import Modal from "@/components/modal";
 import useProjectGroupConfigurationContext from "@/hooks/contexts/useProjectGroupConfigurationContext";
 import Loading from "@/components/loading";
 import ErrorComponent from "@/components/error";
