@@ -28,7 +28,7 @@ import DeleteCourseGroupModal from "@/components/course-groups/modals/delete-cou
 import DeleteAnimalModal from "@/components/course-groups/modals/delete-animal";
 import MoveAnimalModal from "@/components/course-groups/modals/move-animal";
 import EditCourseGroupModal from "@/components/course-groups/modals/edit-course-group";
-import ProjectConfigurationModal from "../modals/project-group-configuration";
+import ProjectGroupConfigurationModal from "../modals/project-group-configuration";
 import { useEditProjectGroupConfigurationModalSpeedDialDynamicBehavior } from "@/hooks/speed-dial-dynamic-behavior/project-group-configuration";
 
 export abstract class BaseSpeedDialStrategy {
@@ -290,7 +290,7 @@ export abstract class BaseSpeedDialStrategy {
       icon: "group_add",
       useDynamicBehavior: () => ({
         modal: (onClose) => (
-          <ProjectConfigurationModal
+          <ProjectGroupConfigurationModal
             onClosedAction={onClose}
             initialTarget={null}
           />

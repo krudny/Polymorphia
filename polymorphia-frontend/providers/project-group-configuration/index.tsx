@@ -1,19 +1,56 @@
-import { createContext, ReactNode } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import {
-  ProjectConfigurationContextInterface,
-  ProjectConfigurationProviderProps,
+  ProjectGroupConfigurationContextInterface,
+  ProjectGroupConfigurationProviderProps,
+  ProjectGroupConfigurationStep,
+  ProjectGroupConfigurationSteps,
 } from "./types";
+import { useProjectGroupConfiguration } from "@/hooks/course/useProjectGroupConfiguration";
+import { ProjectGroupConfigurationResponseDTO } from "@/interfaces/api/project";
 
-export const ProjectConfigurationContext = createContext<
-  ProjectConfigurationContextInterface | undefined
+export const ProjectGroupConfigurationContext = createContext<
+  ProjectGroupConfigurationContextInterface | undefined
 >(undefined);
 
-export function ProjectConfigurationProvider({
+export function ProjectGroupConfigurationProvider({
   children,
-}: ProjectConfigurationProviderProps): ReactNode {
+  initialTarget,
+}: ProjectGroupConfigurationProviderProps): ReactNode {
+  const [currentStep, setCurrentStep] = useState<ProjectGroupConfigurationStep>(
+    ProjectGroupConfigurationSteps.GROUP_PICK
+  );
+  const [
+    currentProjectGroupConfiguration,
+    setCurrentProjectGroupConfiguration,
+  ] = useState<ProjectGroupConfigurationResponseDTO>({
+    animalIds: [],
+    selectedVariants: {},
+  });
+
+  const {
+    data: initialProjectGroupConfiugation,
+    isLoading: isInitialProjectGroupConfigurationLoading,
+    isError: isInitialProjectGroupConfigurationError,
+  } = useProjectGroupConfiguration({ target: initialTarget });
+
+  useEffect(() => {
+    if (initialProjectGroupConfiugation) {
+      setCurrentProjectGroupConfiguration(initialProjectGroupConfiugation);
+    }
+  }, [initialProjectGroupConfiugation]);
+
   return (
-    <ProjectConfigurationContext.Provider value={{}}>
+    <ProjectGroupConfigurationContext.Provider
+      value={{
+        currentStep,
+        setCurrentStep,
+        isInitialProjectGroupConfigurationLoading,
+        isInitialProjectGroupConfigurationError,
+        currentProjectGroupConfiguration,
+        setCurrentProjectGroupConfiguration,
+      }}
+    >
       {children}
-    </ProjectConfigurationContext.Provider>
+    </ProjectGroupConfigurationContext.Provider>
   );
 }
