@@ -1,7 +1,5 @@
 package com.agh.polymorphia_backend.service.course_groups;
 
-import static com.agh.polymorphia_backend.service.user.UserService.INVALID_ROLE;
-
 import com.agh.polymorphia_backend.dto.response.course_groups.CourseGroupsResponseDto;
 import com.agh.polymorphia_backend.dto.response.course_groups.CourseGroupsShortResponseDto;
 import com.agh.polymorphia_backend.model.course.CourseGroup;
@@ -10,11 +8,14 @@ import com.agh.polymorphia_backend.repository.course.CourseGroupRepository;
 import com.agh.polymorphia_backend.service.mapper.CourseGroupsMapper;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+
+import static com.agh.polymorphia_backend.service.user.UserService.INVALID_ROLE;
 
 @Service
 @AllArgsConstructor

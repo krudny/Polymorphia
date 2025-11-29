@@ -1,4 +1,4 @@
-import Modal from "@/components/modal/Modal";
+import Modal from "@/components/modal";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import ProjectVariantInfo from "@/shared/project-variant-info";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";

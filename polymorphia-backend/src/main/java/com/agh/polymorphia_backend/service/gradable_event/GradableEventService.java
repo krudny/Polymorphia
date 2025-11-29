@@ -46,11 +46,9 @@ public class GradableEventService {
         UserType userRole = userService.getCurrentUserRole();
         GradableEvent gradableEvent = fetchGradableEvent(gradableEventId);
 
-        if (userRole != UserType.INSTRUCTOR
-                && userRole != UserType.COORDINATOR
-                && (gradableEvent.getIsHidden()
-                || gradableEvent.getEventSection().getIsHidden())) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, GRADABLE_EVENT_NOT_FOUND);
+        if (userRole != UserType.INSTRUCTOR && userRole != UserType.COORDINATOR && (gradableEvent.getIsHidden()
+            || gradableEvent.getEventSection().getIsHidden())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wydarzenie nie istnieje.");
         }
 
         return gradableEvent;
