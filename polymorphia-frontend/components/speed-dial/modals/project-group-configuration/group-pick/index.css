@@ -6,11 +6,8 @@
 }
 
 .group-pick-wrapper {
-  @apply w-full h-full flex items-center text-2xl border-b-2  border-primary-dark dark:border-secondary-light;
-
-  span {
-    @apply material-symbols text-3xl;
-  }
+  /*@apply w-full h-full flex items-center text-2xl border-b-2  border-primary-dark dark:border-secondary-light;*/
+  @apply flex w-full gap-x-2 justify-between overflow-x-hidden;
 }
 
 .group-pick-input {

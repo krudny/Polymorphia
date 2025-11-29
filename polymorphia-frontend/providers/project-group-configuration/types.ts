@@ -1,3 +1,5 @@
+import { useFilters } from "@/hooks/course/useFilters";
+import { FilterOption } from "@/hooks/course/useFilters/types";
 import { ProjectGroupConfigurationResponseDTO } from "@/interfaces/api/project";
 import { TargetRequestDTO } from "@/interfaces/api/target";
 import { Dispatch, ReactNode, SetStateAction } from "react";
@@ -10,18 +12,30 @@ export const ProjectGroupConfigurationSteps = {
 export type ProjectGroupConfigurationStep =
   (typeof ProjectGroupConfigurationSteps)[keyof typeof ProjectGroupConfigurationSteps];
 
+export type ProjectGroupConfigurationFilterId = "groups";
+
 export interface ProjectGroupConfigurationContextInterface {
   currentStep: ProjectGroupConfigurationStep;
   setCurrentStep: Dispatch<SetStateAction<ProjectGroupConfigurationStep>>;
 
   initialTarget: TargetRequestDTO | null;
-  isInitialProjectGroupConfigurationLoading: boolean;
-  isInitialProjectGroupConfigurationError: boolean;
+  isGeneralDataLoading: boolean;
+  isGeneralDataError: boolean;
 
   currentProjectGroupConfiguration: ProjectGroupConfigurationResponseDTO;
   setCurrentProjectGroupConfiguration: Dispatch<
     SetStateAction<ProjectGroupConfigurationResponseDTO>
   >;
+
+  filters: ReturnType<typeof useFilters<ProjectGroupConfigurationFilterId>>;
+  areFiltersOpen: boolean;
+  setAreFiltersOpen: Dispatch<SetStateAction<boolean>>;
+}
+
+export interface ProjectGroupConfigurationPartialFilterConfig {
+  options: FilterOption[];
+  max: number;
+  defaultValues: string[];
 }
 
 export interface ProjectGroupConfigurationProviderProps {

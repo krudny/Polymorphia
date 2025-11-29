@@ -10,22 +10,29 @@ import useProjectGroupConfigurationContext from "@/hooks/contexts/useProjectGrou
 import Loading from "@/components/loading";
 import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
-import { ProjectGroupConfigurationSteps } from "@/providers/project-group-configuration/types";
+import {
+  ProjectGroupConfigurationFilterId,
+  ProjectGroupConfigurationSteps,
+} from "@/providers/project-group-configuration/types";
 import ProjectGroupPick from "./group-pick";
 import ProjectVariantPick from "./variant-pick";
+import FiltersModal from "@/components/filters-modals/FiltersModal";
 
 function ProjectGroupConfigurationModalContent({
   onClosedAction,
 }: SpeedDialModalProps) {
   const {
-    isInitialProjectGroupConfigurationLoading,
-    isInitialProjectGroupConfigurationError,
+    isGeneralDataLoading,
+    isGeneralDataError,
     currentStep,
+    filters,
+    areFiltersOpen,
+    setAreFiltersOpen,
   } = useProjectGroupConfigurationContext();
 
   const renderData = (): ProjectGroupConfigurationModalResult => {
     switch (true) {
-      case isInitialProjectGroupConfigurationLoading:
+      case isGeneralDataLoading:
         return {
           content: (
             <div className="relative">
@@ -35,11 +42,11 @@ function ProjectGroupConfigurationModalContent({
           subtitle: "",
         };
 
-      case isInitialProjectGroupConfigurationError:
+      case isGeneralDataError:
         return {
           content: (
             <ErrorComponent
-              message="Nie udało się załadować konfiguracji istniejącej grupy projektowej."
+              message="Nie udało się załadować konfiguracji grupy projektowej."
               size={ErrorComponentSizes.COMPACT}
             />
           ),
@@ -67,14 +74,23 @@ function ProjectGroupConfigurationModalContent({
   const { content, subtitle } = renderData();
 
   return (
-    <Modal
-      isDataPresented={true}
-      onClosed={onClosedAction}
-      title="Konfiguracja grupy"
-      subtitle={subtitle}
-    >
-      <div className="flex-col-centered min-h-80 min-w-96">{content}</div>
-    </Modal>
+    <>
+      <Modal
+        isDataPresented={true}
+        onClosed={onClosedAction}
+        title="Konfiguracja grupy"
+        subtitle={subtitle}
+      >
+        <div className="flex-col-centered min-h-80 min-w-96">{content}</div>
+      </Modal>
+      <FiltersModal<ProjectGroupConfigurationFilterId>
+        filters={filters}
+        isModalOpen={areFiltersOpen}
+        setIsModalOpen={setAreFiltersOpen}
+        isFiltersLoading={isGeneralDataLoading}
+        isFiltersError={isGeneralDataError}
+      />
+    </>
   );
 }
 

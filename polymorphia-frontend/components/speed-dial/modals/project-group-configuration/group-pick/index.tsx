@@ -7,9 +7,11 @@ import XPCard from "@/components/xp-card/XPCard";
 import useProjectGroupConfigurationContext from "@/hooks/contexts/useProjectGroupConfigurationContext";
 import { useProjectGroupConfigurationGroupPickStudents } from "@/hooks/course/useProjectGroupConfigurationGroupPickStudents";
 import { ProjectGroupConfigurationSteps } from "@/providers/project-group-configuration/types";
-import { ChangeEvent, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "use-debounce";
 import "./index.css";
+import Search from "@/components/search";
+import { useMediaQuery } from "react-responsive";
 
 export default function ProjectGroupPick() {
   const {
@@ -17,20 +19,51 @@ export default function ProjectGroupPick() {
     currentProjectGroupConfiguration,
     setCurrentProjectGroupConfiguration,
     setCurrentStep,
+    filters,
+    setAreFiltersOpen,
   } = useProjectGroupConfigurationContext();
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 300);
+
+  const isMd = useMediaQuery({ minWidth: 768 });
+  const isLg = useMediaQuery({ minWidth: 1024 });
+  const buttonVariant = isLg ? "md" : isMd ? "base" : "sm";
+
+  const groups = useMemo(
+    () => filters.getAppliedFilterValues("groups"),
+    [filters]
+  );
 
   const {
     data: studentsForGroupPick,
     isLoading: isStudentsForGroupPickLoading,
     isError: isStudentsForGroupPickError,
-  } = useProjectGroupConfigurationGroupPickStudents({ target: initialTarget });
+  } = useProjectGroupConfigurationGroupPickStudents({
+    target: initialTarget,
+    groups,
+  });
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    setSearch(event.target.value);
-  };
+  useEffect(() => {
+    if (
+      !studentsForGroupPick ||
+      isStudentsForGroupPickLoading ||
+      isStudentsForGroupPickError
+    ) {
+      return;
+    }
+
+    setCurrentProjectGroupConfiguration((previousConfiguration) => ({
+      ...previousConfiguration,
+      studentIds: previousConfiguration.studentIds.filter((studentId) =>
+        studentsForGroupPick.some(({ id }) => studentId === id)
+      ),
+    }));
+  }, [
+    isStudentsForGroupPickError,
+    isStudentsForGroupPickLoading,
+    setCurrentProjectGroupConfiguration,
+    studentsForGroupPick,
+  ]);
 
   const handleStudentSelection = (selectedStudentId: number) => {
     setCurrentProjectGroupConfiguration((previousConfiguration) => ({
@@ -99,20 +132,21 @@ export default function ProjectGroupPick() {
 
   return (
     <div className="flex-col w-full">
-      <form
-        className="group-pick"
-        autoComplete="off"
-        onSubmit={(event) => event.preventDefault()}
-      >
+      <div onSubmit={(event) => event.preventDefault()}>
         <div className="group-pick-wrapper">
-          <span>search</span>
-          <input
-            type="text"
-            value={search}
-            onChange={handleInputChange}
+          <Search
+            search={search}
+            setSearch={setSearch}
             placeholder="Znajdź studenta..."
-            className="group-pick-input"
           />
+          <div className="flex gap-x-2 lg:gap-x-4">
+            <ButtonWithBorder
+              text="Filtry"
+              className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none"
+              size={buttonVariant}
+              onClick={() => setAreFiltersOpen(true)}
+            />
+          </div>
         </div>
         <div className="group-pick-search">
           {selectableStudents.length > 0 ? (
@@ -140,7 +174,7 @@ export default function ProjectGroupPick() {
             />
           )}
         </div>
-      </form>
+      </div>
       <h3 className="group-pick-text">Skład grupy</h3>
       <div className="group-pick-group">
         {selectedStudents.length > 0 ? (
