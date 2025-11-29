@@ -1,10 +1,8 @@
 package com.agh.polymorphia_backend.dto.request.notification;
 
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 
@@ -12,7 +10,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class GradeNotificationRequest extends NotificationCreationRequest {
-    @NonNull
+    @NotNull
     private GradableEvent gradableEvent;
 }
