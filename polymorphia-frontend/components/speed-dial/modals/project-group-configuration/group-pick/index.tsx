@@ -43,6 +43,7 @@ export default function ProjectGroupPick() {
     groups,
   });
 
+  // Update selection based on groups
   useEffect(() => {
     if (
       !studentsForGroupPick ||
@@ -86,7 +87,7 @@ export default function ProjectGroupPick() {
   };
 
   const handleSubmit = () => {
-    if (selectedStudents.length < 1) {
+    if (selectedStudents.length === 0) {
       return;
     }
 
