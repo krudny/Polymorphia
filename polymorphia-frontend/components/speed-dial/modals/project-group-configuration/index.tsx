@@ -76,8 +76,8 @@ function ProjectGroupConfigurationModalContent({
   return (
     <>
       <Modal
-        isDataPresented={true}
-        onClosed={onClosedAction}
+        isDataPresented={!areFiltersOpen}
+        onClosed={areFiltersOpen ? () => {} : onClosedAction}
         title="Konfiguracja grupy"
         subtitle={subtitle}
       >
