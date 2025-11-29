@@ -10,6 +10,7 @@ import {
 
 export function useProjectGroupConfigurationGroupPickStudents({
   target,
+  groups,
 }: UseProjectGroupConfigurationGroupPickStudentsProps): UseProjectGroupConfigurationGroupPickStudents {
   const { gradableEventId, eventType } = useEventParams();
 
@@ -20,11 +21,13 @@ export function useProjectGroupConfigurationGroupPickStudents({
           target.type,
           target.type === TargetTypes.STUDENT ? target.id : target.groupId,
           gradableEventId,
+          groups,
         ]
-      : ["projectGroupConfigurationStudents", "noTarget"],
+      : ["projectGroupConfigurationStudents", "noTarget", groups],
     queryFn: () =>
       ProjectService.getProjectGroupConfigurationGroupPickStudents(
         target,
+        groups,
         gradableEventId
       ),
     enabled: eventType === EventTypes.PROJECT,

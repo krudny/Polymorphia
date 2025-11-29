@@ -10,6 +10,11 @@ import {
 } from "@/interfaces/api/user";
 import { TargetRequestDTO } from "@/interfaces/api/target";
 import UserService from "../user";
+import {
+  FilterOption,
+  SpecialBehaviors,
+} from "@/hooks/course/useFilters/types";
+import { ProjectGroupConfigurationPartialFilterConfig } from "@/providers/project-group-configuration/types";
 
 export const ProjectService = {
   getProjectVariant: async (
@@ -129,7 +134,7 @@ export const ProjectService = {
     await new Promise((resolve) => {
       setTimeout(() => {
         resolve(null);
-      }, 3000);
+      }, 500);
     });
     return {
       studentIds: [1, 2],
@@ -140,20 +145,56 @@ export const ProjectService = {
     };
   },
 
+  getProjectGroupConfigurationFilterConfigs: async (
+    target: TargetRequestDTO | null,
+    gradableEventId: number
+  ): Promise<ProjectGroupConfigurationPartialFilterConfig> => {
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(null);
+      }, 500);
+    });
+
+    return {
+      options: [
+        {
+          value: "all",
+          label: "Wszystkie",
+          specialBehavior: SpecialBehaviors.EXCLUSIVE,
+        },
+        {
+          value: "BM-15-00",
+        },
+        {
+          value: "BM-16-40",
+        },
+      ],
+      max: 2,
+      defaultValues: ["all"],
+    };
+  },
+
   // IMPORTANT FOR BACKEND IMPLEMENTATION!
   // if target is provided, we want to get all students without project group assigned
   // for this project AND students that are assigned to the group related to the target
   getProjectGroupConfigurationGroupPickStudents: async (
     target: TargetRequestDTO | null,
+    groups: string[],
     gradableEventId: number
   ): Promise<StudentDetailsDTOWithName[]> => {
     await new Promise((resolve) => {
       setTimeout(() => {
         resolve(null);
-      }, 3000);
+      }, 500);
     });
 
     const users = await UserService.getRandomUsers();
-    return users.map((user) => user.userDetails);
+    return users
+      .map((user) => user.userDetails)
+      .filter(
+        (user) =>
+          groups.some((group) => group === "all") ||
+          groups.some((group) => group === user.group)
+      );
   },
 };
