@@ -31,8 +31,8 @@ public class CourseController {
     }
 
     @GetMapping("/config")
-    @PreAuthorize("hasAnyAuthority('COORDINATOR')")
-    public ResponseEntity<CourseDetailsRequestDto> createCourse(@RequestParam Long courseId) {
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<CourseDetailsRequestDto> getCourseConfig(@RequestParam Long courseId) {
         return ResponseEntity.ok(courseDetailsService.getCourseDetails(courseId));
     }
 }
