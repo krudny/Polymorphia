@@ -9,8 +9,6 @@ import {
   StudentDetailsDTOWithType,
 } from "@/interfaces/api/user";
 import { TargetRequestDTO } from "@/interfaces/api/target";
-import UserService from "@/services/user";
-import { SpecialBehaviors } from "@/hooks/course/useFilters/types";
 import { ProjectGroupConfigurationPartialFilterConfig } from "@/providers/project-group-configuration/types";
 
 export const ProjectService = {
@@ -27,92 +25,9 @@ export const ProjectService = {
   getProjectCategories: async (
     gradableEventId: number
   ): Promise<ProjectCategoryWithVariantsResponseDTO[]> => {
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(null);
-      }, 500);
-    });
-
-    return [
-      {
-        id: 1,
-        name: "Mapa i roślinność",
-        variants: [
-          {
-            id: 1,
-            name: "Bieguny",
-            shortCode: "A",
-            imageUrl: "placeholder",
-          },
-          {
-            id: 2,
-            name: "Pożary",
-            shortCode: "B",
-            imageUrl: "placeholder",
-          },
-          {
-            id: 3,
-            name: "Przypływy i odpływy",
-            shortCode: "C",
-            imageUrl: "placeholder",
-          },
-          {
-            id: 4,
-            name: "Dziki sowoniedźwiedź",
-            shortCode: "D",
-            imageUrl: "placeholder",
-          },
-          {
-            id: 5,
-            name: "Życiodajne truchła",
-            shortCode: "E",
-            imageUrl: "placeholder",
-          },
-          {
-            id: 6,
-            name: "Pełzająca dżungla",
-            shortCode: "F",
-            imageUrl: "placeholder",
-          },
-          {
-            id: 7,
-            name: "Dorodne plony",
-            shortCode: "G",
-            imageUrl: "placeholder",
-          },
-        ],
-      },
-      {
-        id: 2,
-        name: "Zwierzaki",
-        variants: [
-          {
-            id: 8,
-            name: "Lekka korekta",
-            shortCode: "1",
-            imageUrl: "placeholder",
-          },
-          {
-            id: 9,
-            name: "Podmianka",
-            shortCode: "2",
-            imageUrl: "placeholder",
-          },
-          {
-            id: 10,
-            name: "Nieco szaleństwa",
-            shortCode: "3",
-            imageUrl: "placeholder",
-          },
-          {
-            id: 11,
-            name: "Starość nie radość",
-            shortCode: "4",
-            imageUrl: "placeholder",
-          },
-        ],
-      },
-    ];
+    return ApiClient.get<ProjectCategoryWithVariantsResponseDTO[]>(
+      `/projects/variants/categories?projectId=${gradableEventId}`
+    );
   },
 
   getProjectGroup: async (
@@ -128,71 +43,34 @@ export const ProjectService = {
     target: TargetRequestDTO,
     gradableEventId: number
   ): Promise<ProjectGroupConfigurationResponseDTO> => {
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(null);
-      }, 500);
-    });
-    return {
-      studentIds: [1, 2],
-      selectedVariants: {
-        1: 1,
-        2: 11,
-      },
-    };
+    return await ApiClient.post<ProjectGroupConfigurationResponseDTO>(
+      `/projects/group/configuration?projectId=${gradableEventId}`,
+      target
+    );
   },
 
   getProjectGroupConfigurationFilterConfigs: async (
     target: TargetRequestDTO | null,
     gradableEventId: number
   ): Promise<ProjectGroupConfigurationPartialFilterConfig> => {
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(null);
-      }, 500);
-    });
-
-    return {
-      options: [
-        {
-          value: "all",
-          label: "Wszystkie",
-          specialBehavior: SpecialBehaviors.EXCLUSIVE,
-        },
-        {
-          value: "BM-15-00",
-        },
-        {
-          value: "BM-16-40",
-        },
-      ],
-      max: 2,
-      defaultValues: ["all"],
-    };
+    return await ApiClient.post<ProjectGroupConfigurationPartialFilterConfig>(
+      `/projects/group/configuration/filters?projectId=${gradableEventId}`,
+      target
+    );
   },
 
-  // IMPORTANT FOR BACKEND IMPLEMENTATION!
-  // if target is provided, we want to get all students without project group assigned
-  // for this project AND students that are assigned to the group related to the target
   getProjectGroupConfigurationGroupPickStudents: async (
     target: TargetRequestDTO | null,
     groups: string[],
     gradableEventId: number
   ): Promise<StudentDetailsDTOWithName[]> => {
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(null);
-      }, 500);
-    });
-
-    const users = await UserService.getRandomUsers();
-    return users
-      .map((user) => user.userDetails)
-      .filter(
-        (user) =>
-          groups.some((group) => group === "all") ||
-          groups.some((group) => group === user.group)
-      );
+    return await ApiClient.post<StudentDetailsDTOWithName[]>(
+      `/projects/group/students?projectId=${gradableEventId}`,
+      {
+        target,
+        groups,
+      }
+    );
   },
 
   submitProjectGroupConfiguration: async (
@@ -218,27 +96,13 @@ export const ProjectService = {
     });
   },
 
-  // Returns map categoryId -> variantId
   getRandomProjectVariant: async (
     target: TargetRequestDTO | null,
     gradableEventId: number
   ): Promise<Record<number, number>> => {
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(null);
-      }, 500);
-    });
-
-    const getRandomInt = (min: number, max: number) => {
-      // The maximum is exclusive and the minimum is inclusive
-      const minCeiled = Math.ceil(min);
-      const maxFloored = Math.floor(max);
-      return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
-    };
-
-    return {
-      1: getRandomInt(1, 8),
-      2: getRandomInt(8, 12),
-    };
+    return await ApiClient.post<Record<number, number>>(
+      `/projects/variants/suggestions?projectId=${gradableEventId}`,
+      target
+    );
   },
 };

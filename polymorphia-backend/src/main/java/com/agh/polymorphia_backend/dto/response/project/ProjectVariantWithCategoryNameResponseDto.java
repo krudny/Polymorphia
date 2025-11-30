@@ -4,22 +4,11 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
-@Builder
+@SuperBuilder
 @Getter
-public class ProjectVariantWithCategoryNameResponseDto {
-    @NotNull
-    private Long id;
-
-    @NotEmpty
-    private String name;
-
+public class ProjectVariantWithCategoryNameResponseDto extends ProjectVariantResponseDto{
     @NotEmpty
     private String categoryName;
-
-    @NotEmpty
-    private String shortCode;
-
-    @NotEmpty
-    private String imageUrl;
 }

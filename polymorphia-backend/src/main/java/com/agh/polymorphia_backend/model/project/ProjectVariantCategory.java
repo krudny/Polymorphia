@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "project_variant_categories")
 @Data
@@ -27,4 +30,9 @@ public class ProjectVariantCategory {
 
     @NotEmpty
     private String name;
+
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @JsonIgnore
+    private List<ProjectVariant> variants = new ArrayList<>();
 }
