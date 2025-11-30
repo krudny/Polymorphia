@@ -24,7 +24,10 @@ export const CourseGroupsProvider = ({ children }: { children: ReactNode }) => {
   const [gradableEventId, setGradableEventId] = useState<number | null>(null);
   const [areFiltersOpen, setAreFiltersOpen] = useState(false);
   const filterConfigs = useCourseGroupsFilterConfigs();
-  const filters = useFilters<CourseGroupsFilterId>(filterConfigs ?? []);
+  const filters = useFilters<CourseGroupsFilterId>(
+    filterConfigs ?? [],
+    "courseGroups"
+  );
   const sortBy = useMemo(
     () => filters.getAppliedFilterValues("sortBy") ?? DEFAULT_SORT_BY_TOTAL,
     [filters]
