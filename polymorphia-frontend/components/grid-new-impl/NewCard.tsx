@@ -88,11 +88,11 @@ export const newCardSizes: Record<
     width: {
       0: {
         min: 210,
-        max: 310,
-        className: "min-w-0 max-w-[310px]",
+        max: 290,
+        className: "min-w-0 max-w-[290px]",
       },
-      1: { min: 380, max: 480, className: "min-w-0 max-w-[480px]" },
-      2: { min: 550, max: 650, className: "min-w-0 max-w-[650px]" },
+      1: { min: 380, max: 460, className: "min-w-0 max-w-[460px]" },
+      2: { min: 550, max: 630, className: "min-w-0 max-w-[630px]" },
     },
     className: "text-4xl",
   },
