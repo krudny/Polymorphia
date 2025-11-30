@@ -23,6 +23,7 @@ import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.repository.course.CourseGroupRepository;
 import com.agh.polymorphia_backend.repository.project.ProjectRepository;
+import com.agh.polymorphia_backend.repository.project.SuggestedVariant;
 import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
 import com.agh.polymorphia_backend.service.mapper.ProjectMapper;
 import com.agh.polymorphia_backend.service.mapper.UserMapper;
@@ -42,6 +43,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class ProjectService {
+    private static final int PER_CATEGORY_LIMIT = 2;
     private final ProjectRepository projectRepository;
     private final CourseGroupRepository courseGroupRepository;
     private final AccessAuthorizer accessAuthorizer;
@@ -59,6 +61,20 @@ public class ProjectService {
         return projectGroup.getProjectVariants().stream()
                 .map(projectMapper::toProjectVariantResponseDto)
                 .toList();
+    }
+
+    public Map<Long, Long> getSuggestedProjectVariants(Optional<TargetRequestDto> target, Long projectId) {
+        Project project = getProjectGradableEvent(projectId);
+        Optional<ProjectGroup> projectGroup = getProjectGroupForTargetAndAuthorize(project, project.getEventSection().getCourse(),target);
+        Long groupId = projectGroup.map(ProjectGroup::getId).orElse(null);
+
+        List<SuggestedVariant> suggestedVariants = projectRepository.suggestVariantsForNewGroup(projectId, groupId, PER_CATEGORY_LIMIT);
+
+        return suggestedVariants.stream()
+                .collect(Collectors.toMap(
+                        SuggestedVariant::categoryId,
+                        SuggestedVariant::variantId
+                ));
     }
 
     public List<UserDetailsResponseDto> getProjectGroup(Long projectGroupId, Long projectId) {
