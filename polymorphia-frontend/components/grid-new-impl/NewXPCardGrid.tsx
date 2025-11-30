@@ -4,6 +4,7 @@ import NewCard, { NewCardProps } from "./NewCard";
 import { PointsSummaryResponseDTO } from "@/interfaces/api/points-summary";
 import Pagination from "../pagination/Pagination";
 import NewPointsSummary from "./NewPointsSummary";
+import clsx from "clsx";
 
 export interface NewXPCardGridProps {
   gridParams: GridParams;
@@ -45,17 +46,18 @@ export default function NewXPCardGrid({
 
   const cardsView = (
     <div
-      className="grid min-w-0 flex-1 h-full gap-5 align-start justify-start"
+      className={clsx(
+        "grid min-w-0 h-full content-center justify-start gap-5 transition-opacity custom-ease-with-duration",
+        gridParams.isReady ? "opacity-100" : "opacity-0"
+      )}
       style={{
-        gridTemplateColumns: `repeat(${gridParams.cols}, minmax(0, 1fr))`,
+        gridTemplateColumns: `repeat(${gridParams.cols}, minmax(0, ${gridParams.cardWidth.max}px))`,
 
         gridTemplateRows: `repeat(${gridParams.rows}, 1fr)`,
       }}
     >
       {cardConfigurationsForPage.map((cardConfig, index) => (
-        <div key={index} className="w-full h-full min-w-0 min-h-0">
-          <NewCard {...cardConfig} mode={gridParams.mode} />
-        </div>
+        <NewCard key={index} {...cardConfig} mode={gridParams.mode} />
       ))}
     </div>
   );
@@ -71,10 +73,10 @@ export default function NewXPCardGrid({
     return (
       <div className="flex flex-col w-full">
         <div className="flex w-full justify-between gap-5">
-          {cardsView}
-          {pointsSummaryView}
+          <div className="flex-1">{cardsView}</div>
+          <div className="shrink-0">{pointsSummaryView}</div>
         </div>
-        {pagination}
+        <div>{pagination}</div>
       </div>
     );
   } else {

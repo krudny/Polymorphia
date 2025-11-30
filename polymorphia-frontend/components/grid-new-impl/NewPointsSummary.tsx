@@ -56,7 +56,7 @@ export default function NewPointsSummary({
   return (
     <div
       className={clsx(
-        "h-full flex flex-col justify-between shrink-0",
+        "h-full flex flex-col justify-between",
         pointsSummarySizes[mode].width.className,
         pointsSummarySizes[mode].height.className
       )}
