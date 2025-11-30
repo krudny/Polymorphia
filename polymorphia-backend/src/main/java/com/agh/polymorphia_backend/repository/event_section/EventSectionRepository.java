@@ -2,6 +2,7 @@ package com.agh.polymorphia_backend.repository.event_section;
 
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.event_section.EventSection;
+import com.agh.polymorphia_backend.repository.event_section.projection.EventSectionDetailsProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -61,4 +62,27 @@ public interface EventSectionRepository extends JpaRepository<EventSection, Long
             @Param("eventSectionId") Long eventSectionId,
             @Param("userRole") String userRole
     );
+
+    @Query(value = """
+            SELECT
+                es.id,
+                es.key,
+                es.name,
+                es.is_shown_in_road_map,
+                es.has_gradable_events_with_topics,
+                es.is_hidden,
+                CASE
+                    WHEN ases.id IS NOT NULL THEN 'ASSIGNMENT'
+                    WHEN tses.id IS NOT NULL THEN 'TEST'
+                    WHEN pses.id IS NOT NULL THEN 'PROJECT'
+                END as event_section_type
+            FROM event_sections es
+            LEFT JOIN assignment_sections ases ON es.id = ases.id
+            LEFT JOIN test_sections tses ON es.id = tses.id
+            LEFT JOIN project_sections pses ON es.id = pses.id
+            WHERE es.course_id = :courseId
+            ORDER BY es.order_index
+            """, nativeQuery = true)
+    List<EventSectionDetailsProjection> findBasicByCourseId(@Param("courseId") Long courseId);
+
 }

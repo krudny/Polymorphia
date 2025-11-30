@@ -24,6 +24,9 @@ public class EvolutionStage {
     private Long id;
 
     @NotEmpty
+    private String key;
+
+    @NotEmpty
     private String name;
 
     @NotEmpty

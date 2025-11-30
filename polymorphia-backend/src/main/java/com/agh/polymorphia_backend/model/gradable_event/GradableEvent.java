@@ -4,6 +4,7 @@ import com.agh.polymorphia_backend.model.criterion.Criterion;
 import com.agh.polymorphia_backend.model.event_section.EventSection;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -24,6 +25,9 @@ public class GradableEvent {
     @Setter(AccessLevel.NONE)
     @EqualsAndHashCode.Include
     private Long id;
+
+    @NotEmpty
+    private String key;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)

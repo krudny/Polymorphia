@@ -2,6 +2,8 @@ package com.agh.polymorphia_backend.repository.gradable_event;
 
 import com.agh.polymorphia_backend.dto.response.target_list.StudentTargetDataResponseDto;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
+import com.agh.polymorphia_backend.repository.gradable_event.projections.GradableEventDetailsProjection;
+import com.agh.polymorphia_backend.repository.gradable_event.projections.ProjectDetailsDetailsProjection;
 import com.agh.polymorphia_backend.repository.gradable_event.projections.StudentGradableEventProjection;
 import com.agh.polymorphia_backend.repository.gradable_event.projections.TeachingRoleGradableEventProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -159,4 +161,37 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
             @Param("sortOrder") String sortOrder,
             @Param("gradeStatus") String gradeStatus
     );
+
+
+    @Query("""
+            SELECT
+                ge.id as id,
+                ge.key as key,
+                ge.name as name,
+                ge.topic as topic,
+                ge.markdownSourceUrl as markdownSourceUrl,
+                ge.isHidden as isHidden,
+                ge.isLocked as isLocked,
+                ge.eventSection.id as eventSectionId,
+                ge.roadMapOrderIndex as roadMapOrderIndex,
+                CASE
+                    WHEN TYPE(ge) = Project THEN 'PROJECT'
+                    WHEN TYPE(ge) = Test THEN 'TEST'
+                    WHEN TYPE(ge)= Assignment THEN 'ASSIGNMENT'
+                END as type
+            FROM GradableEvent ge
+            WHERE ge.eventSection.course.id = :courseId
+            ORDER BY ge.eventSection.id, ge.orderIndex
+            """)
+    List<GradableEventDetailsProjection> findGradableEventsByCourseId(@Param("courseId") Long courseId);
+
+    @Query("""
+            SELECT
+                p.id as id,
+                p.allowCrossCourseGroupProjectGroups as allowCrossCourseGroupProjectGroups
+            FROM Project p
+            WHERE p.eventSection.course.id = :courseId
+            """)
+    List<ProjectDetailsDetailsProjection> findProjectDetailsByCourseId(@Param("courseId") Long courseId);
+
 }

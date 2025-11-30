@@ -28,6 +28,9 @@ public abstract class EventSection {
     private Long id;
 
     @NotEmpty
+    private String key;
+
+    @NotEmpty
     private String name;
 
     @NotNull

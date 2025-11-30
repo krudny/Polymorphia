@@ -1,13 +1,13 @@
 package com.agh.polymorphia_backend.controller;
 
+import com.agh.polymorphia_backend.dto.request.course_import.CourseDetailsRequestDto;
 import com.agh.polymorphia_backend.dto.response.user_context.AvailableCoursesResponseDto;
+import com.agh.polymorphia_backend.service.course.CourseDetailsService;
 import com.agh.polymorphia_backend.service.course.CourseService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,10 +16,23 @@ import java.util.List;
 @RequestMapping("/courses")
 public class CourseController {
     private final CourseService courseService;
+    private final CourseDetailsService courseDetailsService;
 
     @GetMapping()
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<AvailableCoursesResponseDto>> getAvailableCourses() {
         return ResponseEntity.ok(courseService.getAvailableCourses());
+    }
+
+    @PostMapping("/create")
+    @PreAuthorize("hasAnyAuthority('COORDINATOR')")
+    public ResponseEntity<Void> createCourse() {
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/config")
+    @PreAuthorize("hasAnyAuthority('COORDINATOR')")
+    public ResponseEntity<CourseDetailsRequestDto> createCourse(@RequestParam Long courseId) {
+        return ResponseEntity.ok(courseDetailsService.getCourseDetails(courseId));
     }
 }

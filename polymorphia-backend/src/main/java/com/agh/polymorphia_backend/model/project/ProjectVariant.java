@@ -23,6 +23,9 @@ public class ProjectVariant {
     private ProjectVariantCategory category;
 
     @NotEmpty
+    private String key;
+
+    @NotEmpty
     private String name;
 
     @NotEmpty

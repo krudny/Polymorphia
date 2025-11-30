@@ -24,6 +24,9 @@ public abstract class Reward {
     private Long id;
 
     @NotEmpty
+    private String key;
+
+    @NotEmpty
     private String name;
 
     @NotEmpty

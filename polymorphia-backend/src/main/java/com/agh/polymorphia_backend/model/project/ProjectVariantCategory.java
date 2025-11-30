@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.model.project;
 
+import com.agh.polymorphia_backend.model.gradable_event.Project;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -17,6 +18,9 @@ public class ProjectVariantCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty
+    private String key;
 
     @NotNull
     @ManyToOne(optional = false)

@@ -1,0 +1,39 @@
+package com.agh.polymorphia_backend.dto.request.course_import.gradable_event;
+
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
+
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY,
+        property = "type",
+        visible = true
+)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = AssignmentDetailsRequestDto.class, name = "assignment"),
+        @JsonSubTypes.Type(value = TestDetailsRequestDto.class, name = "test"),
+        @JsonSubTypes.Type(value = ProjectDetailsRequestDto.class, name = "project")
+})
+@Getter
+@SuperBuilder
+public class GradableEventDetailsRequestDto {
+    @NotEmpty
+    private String key;
+
+    @NotEmpty
+    private String name;
+
+    private String topic;
+
+    private String markdownSourceUrl;
+
+    @NotNull
+    private Boolean isHidden;
+
+    @NotNull
+    private Boolean isLocked;
+}
