@@ -17,6 +17,9 @@ import GradeModal from "@/components/speed-dial/modals/grade";
 import ErrorComponent from "@/components/error";
 import { GradableEventDTO } from "@/interfaces/api/gradable_event/types";
 import { useMediaQuery } from "react-responsive";
+import NewSectionView from "@/components/grid-new-impl/NewSectionView";
+import NewCard from "@/components/grid-new-impl/NewCard";
+import NewPointsSummary from "@/components/grid-new-impl/NewPointsSummary";
 
 export default function StudentView() {
   const { eventType, eventSectionId } = useEventParams();
@@ -94,20 +97,35 @@ export default function StudentView() {
     />
   ));
 
+  // return (
+  //   <SectionView ref={containerRef}>
+  //     <div className="student-view">
+  //       <div className="student-view-cards" ref={wrapperRef}>
+  //         <XPCardGrid containerRef={wrapperRef} cards={cards} maxColumns={2} />
+  //       </div>
+  //       <PointsSummary ref={summaryRef} pointsSummary={pointsSummary} />
+  //     </div>
+  //     {eventType === EventTypes.TEST && selectedEventId && (
+  //       <GradeModal
+  //         onClosedAction={() => setSelectedEventId(null)}
+  //         gradableEventIdProp={selectedEventId}
+  //       />
+  //     )}
+  //   </SectionView>
+  // );
   return (
-    <SectionView ref={containerRef}>
-      <div className="student-view">
-        <div className="student-view-cards" ref={wrapperRef}>
-          <XPCardGrid containerRef={wrapperRef} cards={cards} maxColumns={2} />
-        </div>
-        <PointsSummary ref={summaryRef} pointsSummary={pointsSummary} />
-      </div>
-      {eventType === EventTypes.TEST && selectedEventId && (
-        <GradeModal
-          onClosedAction={() => setSelectedEventId(null)}
-          gradableEventIdProp={selectedEventId}
-        />
-      )}
-    </SectionView>
+    <NewSectionView
+      ref={containerRef}
+      cardConfigurations={gradableEvents.map((gradableEvent) => ({
+        title: gradableEvent.name,
+        subtitle: gradableEvent.topic,
+        rightComponent: () => (
+          <div className="flex-centered">{gradableEvent.gainedXp}</div>
+        ),
+        color: "silver",
+      }))}
+      usesPointsSummary={true}
+      pointsSummaryConfiguration={pointsSummary}
+    />
   );
 }
