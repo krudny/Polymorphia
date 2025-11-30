@@ -40,15 +40,18 @@ export default function NewXPCardGrid({
       forcePage={pageCount > 0 ? currentPage : undefined}
       pageRangeDisplayed={2}
       marginPagesDisplayed={1}
-      containerClassName="ml-3"
+      containerClassName={gridParams.isDesktop ? "ml-3" : ""}
     />
   );
 
   const cardsView = (
     <div
       className={clsx(
-        "grid min-w-0 h-full content-center justify-start gap-5 transition-opacity custom-ease-with-duration",
-        gridParams.isReady ? "opacity-100" : "opacity-0"
+        "grid min-w-0 gap-5 transition-opacity custom-ease-with-duration",
+        gridParams.isReady ? "opacity-100" : "opacity-0",
+        gridParams.isDesktop
+          ? "h-full content-center justify-start"
+          : "h-auto content-start w-full justify-center"
       )}
       style={{
         gridTemplateColumns: `repeat(${gridParams.cols}, minmax(0, ${gridParams.cardWidth.max}px))`,
@@ -80,10 +83,14 @@ export default function NewXPCardGrid({
       </div>
     );
   } else {
-    <div className="flex flex-col">
-      {cardsView}
-      {pagination}
-      {pointsSummaryView}
-    </div>;
+    return (
+      <div className="flex flex-col w-full gap-4 pb-10 items-center">
+        <div className="w-full flex justify-center">{cardsView}</div>
+        <div className="flex justify-center w-full">{pagination}</div>
+        <div className="flex justify-center w-full h-[600px]">
+          {pointsSummaryView}
+        </div>
+      </div>
+    );
   }
 }
