@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class ProjectVariantResponseDto {
+public class ProjectVariantWithCategoryNameResponseDto {
     @NotNull
     private Long id;
 

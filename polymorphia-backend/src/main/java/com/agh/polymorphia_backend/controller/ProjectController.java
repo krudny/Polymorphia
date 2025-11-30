@@ -1,7 +1,7 @@
 package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.request.target.TargetRequestDto;
-import com.agh.polymorphia_backend.dto.response.project.ProjectVariantResponseDto;
+import com.agh.polymorphia_backend.dto.response.project.ProjectVariantWithCategoryNameResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.UserDetailsResponseDto;
 import com.agh.polymorphia_backend.service.project.ProjectService;
 import lombok.AllArgsConstructor;
@@ -20,7 +20,7 @@ public class ProjectController {
 
     @PostMapping("/variants")
     @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
-    public ResponseEntity<List<ProjectVariantResponseDto>> getProjectVariants(@RequestBody TargetRequestDto target, @RequestParam Long projectId) {
+    public ResponseEntity<List<ProjectVariantWithCategoryNameResponseDto>> getProjectVariants(@RequestBody TargetRequestDto target, @RequestParam Long projectId) {
         return ResponseEntity.ok(projectService.getProjectVariants(target, projectId));
     }
 

@@ -4,7 +4,7 @@ import com.agh.polymorphia_backend.dto.request.target.StudentGroupTargetRequestD
 import com.agh.polymorphia_backend.dto.request.target.StudentTargetRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.TargetRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.TargetType;
-import com.agh.polymorphia_backend.dto.response.project.ProjectVariantResponseDto;
+import com.agh.polymorphia_backend.dto.response.project.ProjectVariantWithCategoryNameResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.BaseUserDetailsResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.UserDetailsResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
@@ -35,7 +35,7 @@ public class ProjectService {
     private final UserMapper userMapper;
     private final ProjectGroupService projectGroupService;
 
-    public List<ProjectVariantResponseDto> getProjectVariants(TargetRequestDto target, Long projectId) {
+    public List<ProjectVariantWithCategoryNameResponseDto> getProjectVariants(TargetRequestDto target, Long projectId) {
         Project project = getProjectGradableEvent(projectId);
         Course course = project.getEventSection().getCourse();
         ProjectGroup projectGroup = getProjectGroupForTarget(project, course, target);
