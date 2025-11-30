@@ -14,6 +14,7 @@ import XPCard from "@/components/xp-card/XPCard";
 import clsx from "clsx";
 import useProjectGroupUpdate from "@/hooks/course/useProjectGroupUpdate";
 import useModalContext from "@/hooks/contexts/useModalContext";
+import useRandomProjectVariant from "@/hooks/course/useRandomProjectVariant";
 
 export default function ProjectVariantPick() {
   const {
@@ -28,7 +29,8 @@ export default function ProjectVariantPick() {
     isError: isProjectCategoriesError,
   } = useProjectCategories();
 
-  const { mutation } = useProjectGroupUpdate();
+  const { mutation: submitMutation } = useProjectGroupUpdate();
+  const { mutation: randomVariantMutation } = useRandomProjectVariant();
   const { closeModal } = useModalContext();
 
   const handleSelection = (categoryId: number, variantId: number) => {
@@ -71,7 +73,7 @@ export default function ProjectVariantPick() {
       return;
     }
 
-    mutation.mutate(
+    submitMutation.mutate(
       {
         target: initialTarget,
         configuration: currentProjectGroupConfiguration,
@@ -79,6 +81,20 @@ export default function ProjectVariantPick() {
       {
         onSuccess: () => {
           closeModal();
+        },
+      }
+    );
+  };
+
+  const handleRandom = () => {
+    randomVariantMutation.mutate(
+      { target: initialTarget },
+      {
+        onSuccess: (newVariant) => {
+          setCurrentProjectGroupConfiguration((previousConfiguration) => ({
+            ...previousConfiguration,
+            selectedVariants: newVariant,
+          }));
         },
       }
     );
@@ -174,22 +190,32 @@ export default function ProjectVariantPick() {
         />
       )}
       <div className="variant-pick-buttons">
-        <ButtonWithBorder
-          text="Powrót"
-          className="!mx-0 !py-0 !w-full"
-          onClick={() =>
-            setCurrentStep(ProjectGroupConfigurationSteps.GROUP_PICK)
-          }
-        />
-        <ButtonWithBorder
-          text="Zapisz"
-          className="!mx-0 !py-0 !w-full"
-          isActive={
-            (projectCategories.length === 0 || isSelectionValid) &&
-            !mutation.isPending
-          }
-          onClick={handleSubmit}
-        />
+        <div className="variant-pick-buttons-row">
+          <ButtonWithBorder
+            text="Wylosuj"
+            icon="ifl"
+            className="!mx-0 !py-0 !w-full"
+            onClick={handleRandom}
+          />
+        </div>
+        <div className="variant-pick-buttons-row">
+          <ButtonWithBorder
+            text="Powrót"
+            className="!mx-0 !py-0 !w-full"
+            onClick={() =>
+              setCurrentStep(ProjectGroupConfigurationSteps.GROUP_PICK)
+            }
+          />
+          <ButtonWithBorder
+            text="Zapisz"
+            className="!mx-0 !py-0 !w-full"
+            isActive={
+              (projectCategories.length === 0 || isSelectionValid) &&
+              !submitMutation.isPending
+            }
+            onClick={handleSubmit}
+          />
+        </div>
       </div>
     </div>
   );
