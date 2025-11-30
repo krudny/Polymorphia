@@ -2,7 +2,7 @@
 @import "../../../../styles/globals.css";
 
 .project-group-configuration {
-  @apply flex-col w-fit min-[550px]:w-[420px] min-[550px]:max-w-[420px] overflow-y-auto custom-scrollbar;
+  @apply flex-col w-fit overflow-y-auto custom-scrollbar min-[550px]:w-[420px] min-[550px]:max-w-[420px];
 }
 
 .project-group-configuration-loading {
