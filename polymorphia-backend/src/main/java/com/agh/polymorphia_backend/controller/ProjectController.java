@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -26,6 +27,12 @@ public class ProjectController {
     @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<List<ProjectVariantResponseDto>> getProjectVariants(@Valid @RequestBody TargetRequestDto target, @RequestParam Long projectId) {
         return ResponseEntity.ok(projectService.getProjectVariants(target, projectId));
+    }
+
+    @PostMapping("/variants/suggestions")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
+    public ResponseEntity<Map<Long, Long>> getProjectVariants(@RequestBody Optional<TargetRequestDto> target, @RequestParam Long projectId) {
+        return ResponseEntity.ok(projectService.getSuggestedProjectVariants(target, projectId));
     }
 
     @GetMapping("/group")
