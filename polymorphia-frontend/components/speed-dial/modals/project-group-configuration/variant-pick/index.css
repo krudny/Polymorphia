@@ -32,5 +32,9 @@
 }
 
 .variant-pick-buttons {
+  @apply w-full flex flex-col gap-y-4;
+}
+
+.variant-pick-buttons-row {
   @apply w-full flex gap-x-4;
 }

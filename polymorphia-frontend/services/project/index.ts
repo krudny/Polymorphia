@@ -217,4 +217,28 @@ export const ProjectService = {
       }, 500);
     });
   },
+
+  // Returns map categoryId -> variantId
+  getRandomProjectVariant: async (
+    target: TargetRequestDTO | null,
+    gradableEventId: number
+  ): Promise<Record<number, number>> => {
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(null);
+      }, 500);
+    });
+
+    const getRandomInt = (min: number, max: number) => {
+      // The maximum is exclusive and the minimum is inclusive
+      const minCeiled = Math.ceil(min);
+      const maxFloored = Math.floor(max);
+      return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
+    };
+
+    return {
+      1: getRandomInt(1, 8),
+      2: getRandomInt(8, 12),
+    };
+  },
 };
