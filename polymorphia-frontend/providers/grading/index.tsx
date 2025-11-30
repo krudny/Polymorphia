@@ -47,7 +47,7 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
     isError: isFiltersError,
   } = useGradingFilterConfigs(gradableEventId);
 
-  const filters = useFilters<GradingFilterId>(filterConfigs ?? []);
+  const filters = useFilters<GradingFilterId>(filterConfigs ?? [], "grading");
   const searchBy = useMemo(
     () => filters.getAppliedFilterValues("searchBy") ?? DEFAULT_SEARCH_BY,
     [filters]

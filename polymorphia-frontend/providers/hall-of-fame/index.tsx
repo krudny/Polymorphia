@@ -51,7 +51,10 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
     isLoading: isFiltersLoading,
     isError: isFiltersError,
   } = useHallOfFameFilterConfigs(courseId);
-  const filters = useFilters<HallOfFameFilterId>(filterConfigs ?? []);
+  const filters = useFilters<HallOfFameFilterId>(
+    filterConfigs ?? [],
+    "hallOfFame"
+  );
 
   const sortByFilterValues = useMemo(
     () => filters.getAppliedFilterValues("sortBy") ?? DEFAULT_SORT_BY_TOTAL,
