@@ -8,8 +8,8 @@ import {
 import { filterReducer } from "@/hooks/course/useFilters/utils/filterReducer";
 import { getInitialState } from "@/hooks/course/useFilters/utils/getInitialState";
 import { validateFilters } from "@/hooks/course/useFilters/utils/validateFilters";
-import { readFiltersFromLocalStorage } from "./utils/readFiltersFromLocalStorage";
-import { saveFiltersToLocalStorage } from "./utils/saveFiltersToLocalStorage";
+import { readFiltersFromLocalStorage } from "@/hooks/course/useFilters/utils/readFiltersFromLocalStorage";
+import { saveFiltersToLocalStorage } from "@/hooks/course/useFilters/utils/saveFiltersToLocalStorage";
 
 export function useFilters<FilterIdType extends string>(
   configs: FilterConfig<FilterIdType>[],
