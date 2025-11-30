@@ -8,7 +8,7 @@ export const HttpMethods = {
 
 export type HttpMethod = (typeof HttpMethods)[keyof typeof HttpMethods];
 
-export type ApiBody = string | FormData | URLSearchParams | object;
+export type ApiBody = null | string | FormData | URLSearchParams | object;
 
 export interface ApiRequestOptions {
   path: string;
