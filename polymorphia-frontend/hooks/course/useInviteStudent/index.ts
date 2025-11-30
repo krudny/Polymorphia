@@ -7,10 +7,14 @@ import UserService from "@/services/user";
 
 export default function useInviteUser(): UseInviteUser {
   const { closeModal } = useModalContext();
-  const mutation = useMutation<void, Error, InviteRequestDTO>({
-    mutationFn: async (request) => UserService.inviteUser(request),
+  const mutation = useMutation<number, Error, InviteRequestDTO>({
+    mutationFn: (request: InviteRequestDTO) => {
+      return toast.promise(UserService.inviteUser(request), {
+        loading: "Wysyłanie zaproszenia...",
+        success: "Wysłano zaproszenie na maila!",
+      });
+    },
     onSuccess: () => {
-      toast.success("Wysłano zaproszenie na maila!");
       closeModal();
     },
   });

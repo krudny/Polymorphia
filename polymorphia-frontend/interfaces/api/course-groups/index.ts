@@ -17,3 +17,15 @@ export interface StudentLastActivityDTO {
   hasReward: boolean;
   gradeDate: string;
 }
+
+export interface CreateCourseGroupRequestDTO {
+  name: string;
+  room: string;
+  courseId: number;
+  teachingRoleId: number;
+}
+
+export interface TeachingRoleUserResponseDTO {
+  userId: number;
+  fullName: string;
+}
