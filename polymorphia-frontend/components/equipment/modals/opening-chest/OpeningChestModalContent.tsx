@@ -23,6 +23,7 @@ import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
 import { Roles } from "@/interfaces/api/user";
 import useStudentChests from "@/hooks/course/useStudentChests";
+import { useEnterListener } from "@/hooks/general/useEnterListener";
 
 export default function OpeningChestModalContent({
   equipment,
@@ -124,6 +125,8 @@ export default function OpeningChestModalContent({
           ? null
           : state.pickedItemId,
     };
+
+    useEnterListener(handleModalSubmit);
 
     await pickChestItemsMutation.mutateAsync(requestBody);
 

@@ -7,11 +7,14 @@ import ColumnComponent from "@/components/column-schema/column-component";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
 import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
+import { useEnterListener } from "@/hooks/general/useEnterListener";
 
 export default function Grade() {
-  const { criteria, isGeneralDataLoading, isGeneralDataError } =
+  const { criteria, isGeneralDataLoading, isGeneralDataError, submitGrade } =
     useGradingContext();
   const { state: targetState } = useTargetContext();
+
+  useEnterListener(submitGrade);
 
   const topComponent = () => <h1>Ocena</h1>;
   const loadingComponent = (

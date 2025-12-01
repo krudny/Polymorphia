@@ -11,6 +11,7 @@ import { useLoginFormAnimation } from "@/hooks/general/useLoginFormAnimation";
 import { useToken } from "@/hooks/general/useToken";
 import { TokenTypes } from "@/interfaces/api/token";
 import ResetPasswordForm from "@/components/home/reset-password-form";
+import { useEnterListener } from "@/hooks/general/useEnterListener";
 
 export default function HomeContent({
   titleRef,
@@ -26,6 +27,8 @@ export default function HomeContent({
 
   const openLoginForm = () => setIsLoginFormVisible(true);
   const closeLoginForm = () => setIsLoginFormVisible(false);
+
+  useEnterListener(openLoginForm);
 
   useLayoutEffect(() => {
     if (!hasMountedRef.current || !loginFormRef.current || !titleRef.current) {
