@@ -6,18 +6,22 @@ import com.agh.polymorphia_backend.dto.response.course_groups.CourseGroupsShortR
 import com.agh.polymorphia_backend.dto.response.user.TeachingRoleUserResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.course.CourseGroup;
+import com.agh.polymorphia_backend.model.course.StudentCourseGroupAssignment;
 import com.agh.polymorphia_backend.model.user.TeachingRoleUser;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserType;
+import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.repository.course.CourseGroupRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.service.course.CourseService;
+import com.agh.polymorphia_backend.service.grade.GradeService;
 import com.agh.polymorphia_backend.service.mapper.CourseGroupsMapper;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -34,6 +38,7 @@ public class CourseGroupsService {
     private final CourseGroupsMapper courseGroupsMapper;
     private final CourseService courseService;
     private final UserRepository userRepository;
+    private final GradeService gradeService;
 
     public List<String> findAllCourseGroupNames(Long courseId) {
         accessAuthorizer.authorizeCourseAccess(courseId);
@@ -67,6 +72,7 @@ public class CourseGroupsService {
         };
     }
 
+    @Transactional
     public void createCourseGroup(CreateCourseGroupRequestDto requestDto) {
         accessAuthorizer.authorizeCourseAccess(requestDto.getCourseId());
 
@@ -100,6 +106,20 @@ public class CourseGroupsService {
                 .fullName(userService.getFullName(user))
                 .build())
                 .toList();
+    }
+
+    @Transactional
+    public void deleteCourseGroup(Long courseGroupId) {
+        CourseGroup courseGroup = courseGroupRepository.findById(courseGroupId).orElseThrow(
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono grupy zajęciowej."));
+
+        List<Long> animalIds = courseGroup.getStudentCourseGroupAssignments().stream()
+                .map(StudentCourseGroupAssignment::getAnimal)
+                .map(Animal::getId)
+                .toList();
+
+        gradeService.deleteGradesForAnimals(animalIds);
+        courseGroupRepository.deleteById(courseGroupId);
     }
 
     private List<CourseGroupsResponseDto> getCourseGroups(Long courseId) {

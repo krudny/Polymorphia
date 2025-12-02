@@ -25,6 +25,7 @@ import { useProfileFiltersModalSpeedDialDynamicBehavior } from "@/hooks/speed-di
 import InviteUserModal from "@/components/speed-dial/modals/invite-user";
 import SubmissionsModal from "@/components/speed-dial/modals/submission";
 import CreateCourseGroupModal from "@/components/course-groups/modals/create-course-group";
+import DeleteCourseGroupModal from "@/components/course-groups/modals/delete-course-group";
 
 export abstract class BaseSpeedDialStrategy {
   abstract getItems(role: Role): SpeedDialItem[];
@@ -238,6 +239,18 @@ export abstract class BaseSpeedDialStrategy {
       icon: "add",
       useDynamicBehavior: () => ({
         modal: (onClose) => <CreateCourseGroupModal onClosedAction={onClose} />,
+      }),
+    };
+  }
+
+  protected createDeleteCourseGroupModal(): SpeedDialItem {
+    return {
+      id: 14,
+      orderIndex: 10,
+      label: "Usuń grupę",
+      icon: "close",
+      useDynamicBehavior: () => ({
+        modal: (onClose) => <DeleteCourseGroupModal onClosedAction={onClose} />,
       }),
     };
   }

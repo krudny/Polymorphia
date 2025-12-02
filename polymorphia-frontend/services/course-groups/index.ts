@@ -77,6 +77,10 @@ const CourseGroupsService = {
     await ApiClient.post(`/course-groups`, body);
   },
 
+  deleteCourseGroup: async (courseGroupId: number): Promise<void> => {
+    await ApiClient.delete(`/course-groups/${courseGroupId}`);
+  },
+
   getTeachingRoleUsers: async (
     courseId: number
   ): Promise<TeachingRoleUserResponseDTO[]> => {

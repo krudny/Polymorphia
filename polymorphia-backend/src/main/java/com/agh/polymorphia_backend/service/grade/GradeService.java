@@ -6,6 +6,7 @@ import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.repository.grade.GradeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +32,11 @@ public class GradeService {
 
     public void saveGrade(Grade grade) {
         gradeRepository.save(grade);
+    }
+
+    @Transactional
+    public void deleteGradesForAnimals(List<Long> animalIds) {
+        gradeRepository.deleteAllByAnimalIdIn(animalIds);
     }
 
 

@@ -54,4 +54,11 @@ public class CourseGroupsController {
     public ResponseEntity<List<TeachingRoleUserResponseDto>> getTeachingRoleUsers(@RequestParam Long courseId) {
         return ResponseEntity.ok(courseGroupService.getTeachingRoleUsers(courseId));
     }
+
+    @DeleteMapping("/{courseGroupId}")
+    @PreAuthorize("hasAnyAuthority('COORDINATOR')")
+    public ResponseEntity<Void> deleteCourseGroup(@PathVariable Long courseGroupId) {
+        courseGroupService.deleteCourseGroup(courseGroupId);
+        return ResponseEntity.ok().build();
+    }
 }

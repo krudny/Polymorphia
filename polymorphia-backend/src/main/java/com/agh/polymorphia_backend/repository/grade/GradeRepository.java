@@ -47,4 +47,6 @@ public interface GradeRepository extends JpaRepository<Grade, Long> {
         order by g.modified_date desc
     """, nativeQuery = true)
     List<StudentActivityProjection> findStudentActivity(Long animalId);
+
+    void deleteAllByAnimalIdIn(List<Long> animalIds);
 }
