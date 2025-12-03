@@ -41,7 +41,6 @@ import java.util.Map;
 @AllArgsConstructor
 public class CourseDetailsMapper {
 
-
     public List<EventSectionDetailsRequestDto> toEventSectionsDetailsRequestDto(
             List<EventSectionDetailsProjection> eventSections,
             Map<Long, List<CriterionDetailsProjection>> criteriaByGradableEvent,
@@ -118,18 +117,11 @@ public class CourseDetailsMapper {
             Map<Long, List<SubmissionRequirementDetailsProjection>> submissionRequirementsByEvent) {
 
         List<AssignmentDetailsRequestDto> assignments = gradableEvents.stream()
-                .map(this::toAssignmentDto)
-                .toList();
-
-        List<SubmissionRequirementDetailsRequestDto> requirements = gradableEvents.stream()
-                .flatMap(gradableEvent -> submissionRequirementsByEvent.getOrDefault(gradableEvent.getId(), List.of()).stream())
-                .map(this::toSubmissionRequirementDto)
+                .map(gradableEvent -> toAssignmentDto(gradableEvent, submissionRequirementsByEvent))
                 .toList();
 
         AssignmentSectionDetailsRequestDto.AssignmentSectionDetailsRequestDtoBuilder<?, ?> response = AssignmentSectionDetailsRequestDto.builder()
-                .submissionRequirements(requirements)
-                .gradableEvents(assignments)
-                .submissionRequirements(requirements);
+                .gradableEvents(assignments);
 
         return applyCommonEventSectionFields(response, eventSection, criteriaByEvent.getOrDefault(eventSection.getId(), Collections.emptyList()), rewardsByCriterion);
     }
@@ -226,9 +218,19 @@ public class CourseDetailsMapper {
                 .build();
     }
 
-    private AssignmentDetailsRequestDto toAssignmentDto(GradableEventDetailsProjection gradableEvent) {
+    private AssignmentDetailsRequestDto toAssignmentDto(
+            GradableEventDetailsProjection gradableEvent,
+            Map<Long, List<SubmissionRequirementDetailsProjection>> submissionRequirementsByEvent
+    ) {
+        List<SubmissionRequirementDetailsRequestDto> requirements = submissionRequirementsByEvent
+                .getOrDefault(gradableEvent.getId(), List.of())
+                .stream()
+                .map(this::toSubmissionRequirementDto)
+                .toList();
+
         return (AssignmentDetailsRequestDto) applyCommonGradableEventFields(
-                AssignmentDetailsRequestDto.builder(),
+                AssignmentDetailsRequestDto.builder()
+                        .submissionRequirements(requirements),
                 gradableEvent
         );
     }
@@ -259,6 +261,7 @@ public class CourseDetailsMapper {
                 .markdownSourceUrl(gradableEvent.getMarkdownSourceUrl())
                 .isHidden(gradableEvent.getIsHidden())
                 .isLocked(gradableEvent.getIsLocked())
+                .type(gradableEvent.getType())
                 .build();
     }
 
@@ -343,6 +346,7 @@ public class CourseDetailsMapper {
     private <T extends ItemDetailsRequestDto.ItemDetailsRequestDtoBuilder<?, ?>> ItemDetailsRequestDto applyCommonItemFields(
             T builder, ItemDetailsDetailsProjection item) {
         return builder
+                .name(item.getName())
                 .key(item.getKey())
                 .description(item.getDescription())
                 .imageUrl(item.getImageUrl())

@@ -163,26 +163,31 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
     );
 
 
-    @Query("""
+    @Query(value = """
             SELECT
                 ge.id as id,
                 ge.key as key,
                 ge.name as name,
                 ge.topic as topic,
-                ge.markdownSourceUrl as markdownSourceUrl,
-                ge.isHidden as isHidden,
-                ge.isLocked as isLocked,
-                ge.eventSection.id as eventSectionId,
-                ge.roadMapOrderIndex as roadMapOrderIndex,
+                ge.markdown_source_url as markdownSourceUrl,
+                ge.is_hidden as isHidden,
+                ge.is_locked as isLocked,
+                ge.event_section_id as eventSectionId,
+                ge.road_map_order_index as roadMapOrderIndex,
                 CASE
-                    WHEN TYPE(ge) = Project THEN 'PROJECT'
-                    WHEN TYPE(ge) = Test THEN 'TEST'
-                    WHEN TYPE(ge)= Assignment THEN 'ASSIGNMENT'
+                    WHEN p.id IS NOT NULL THEN 'PROJECT'
+                    WHEN t.id IS NOT NULL THEN 'TEST'
+                    WHEN a.id IS NOT NULL THEN 'ASSIGNMENT'
+                    ELSE 'UNKNOWN'
                 END as type
-            FROM GradableEvent ge
-            WHERE ge.eventSection.course.id = :courseId
-            ORDER BY ge.eventSection.id, ge.orderIndex
-            """)
+            FROM gradable_events ge
+            LEFT JOIN projects p ON ge.id = p.id
+            LEFT JOIN tests t ON ge.id = t.id
+            LEFT JOIN assignments a ON ge.id = a.id
+            JOIN event_sections es ON ge.event_section_id = es.id
+            WHERE es.course_id = :courseId
+            ORDER BY ge.event_section_id, ge.order_index
+            """, nativeQuery = true)
     List<GradableEventDetailsProjection> findGradableEventsByCourseId(@Param("courseId") Long courseId);
 
     @Query("""

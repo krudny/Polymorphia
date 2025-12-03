@@ -19,7 +19,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     List<Item> findAllByCourseIdAndItemIdNotIn(Long courseId, List<Long> excludedItemIds);
 
     @Query(value = """
-            SELECT 
+            SELECT
                 r.id,
                 r.key,
                 r.name,
@@ -27,7 +27,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
                 r.image_url,
                 i.limit,
                 es.key as event_section_key,
-                CASE 
+                CASE
                     WHEN fbi.item_id IS NOT NULL THEN 'FLAT_BONUS'
                     WHEN pbi.item_id IS NOT NULL THEN 'PERCENTAGE_BONUS'
                 END as item_type,
@@ -43,4 +43,15 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             ORDER BY r.order_index
             """, nativeQuery = true)
     List<ItemDetailsDetailsProjection> findAllItemDetailsByCourseId(@Param("courseId") Long courseId);
+
+    Item findByKey(String key);
+
+    List<Item> findAllByKeyIn(List<String> keys);
+
+    @Query("""
+            select i.id
+            from Item i
+            where i.key =:key
+            """)
+    Long getIdByKey(String key);
 }

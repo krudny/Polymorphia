@@ -9,4 +9,8 @@ import java.util.List;
 @Repository
 public interface EvolutionStagesRepository extends JpaRepository<EvolutionStage, Long> {
     List<EvolutionStage> findAllByCourseId(Long courseId);
+
+    List<EvolutionStage> findAllByKeyIn(List<String> keys);
+
+    EvolutionStage findByKey(String key);
 }

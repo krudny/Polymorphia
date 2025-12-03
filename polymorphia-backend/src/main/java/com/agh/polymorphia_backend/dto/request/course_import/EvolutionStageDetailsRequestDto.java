@@ -3,12 +3,14 @@ package com.agh.polymorphia_backend.dto.request.course_import;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.math.BigDecimal;
 
 @Getter
 @Builder
+@EqualsAndHashCode
 public class EvolutionStageDetailsRequestDto {
     @NotEmpty
     private String key;

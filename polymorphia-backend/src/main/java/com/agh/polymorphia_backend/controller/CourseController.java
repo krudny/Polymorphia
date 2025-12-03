@@ -3,7 +3,9 @@ package com.agh.polymorphia_backend.controller;
 import com.agh.polymorphia_backend.dto.request.course_import.CourseDetailsRequestDto;
 import com.agh.polymorphia_backend.dto.response.user_context.AvailableCoursesResponseDto;
 import com.agh.polymorphia_backend.service.course.CourseDetailsService;
+import com.agh.polymorphia_backend.service.course.CourseImportService;
 import com.agh.polymorphia_backend.service.course.CourseService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +19,7 @@ import java.util.List;
 public class CourseController {
     private final CourseService courseService;
     private final CourseDetailsService courseDetailsService;
+    private final CourseImportService courseImportService;
 
     @GetMapping()
     @PreAuthorize("isAuthenticated()")
@@ -26,7 +29,14 @@ public class CourseController {
 
     @PostMapping("/create")
     @PreAuthorize("hasAnyAuthority('COORDINATOR')")
-    public ResponseEntity<Void> createCourse() {
+    public ResponseEntity<Void> createCourse(@RequestBody CourseDetailsRequestDto request) {
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/update")
+    @PreAuthorize("hasAnyAuthority('COORDINATOR')")
+    public ResponseEntity<Void> updateCourse(@Valid @RequestBody CourseDetailsRequestDto request, @RequestParam Long courseId) {
+        courseImportService.updateCourse(request, courseId);
         return ResponseEntity.noContent().build();
     }
 

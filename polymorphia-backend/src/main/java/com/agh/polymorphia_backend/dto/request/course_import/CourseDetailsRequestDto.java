@@ -6,16 +6,20 @@ import com.agh.polymorphia_backend.dto.request.course_import.reward.ItemDetailsR
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.util.List;
 
 @Getter
 @Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class CourseDetailsRequestDto {
     @NotEmpty
+    @EqualsAndHashCode.Include
     private String name;
 
+    @EqualsAndHashCode.Include
     private String markdownSourceUrl;
 
     @NotNull

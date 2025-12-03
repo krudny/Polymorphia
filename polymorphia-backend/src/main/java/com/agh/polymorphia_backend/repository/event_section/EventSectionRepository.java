@@ -14,6 +14,13 @@ import java.util.Set;
 public interface EventSectionRepository extends JpaRepository<EventSection, Long> {
     List<EventSection> findByIdIn(Set<Long> ids);
 
+    @Query("""
+            select es.id
+            from EventSection es
+            where es.key=:key
+            """)
+    Long findIdByKey(String key);
+
     boolean existsByCourseIdAndName(Long courseId, String name);
 
     @Query("SELECT es.course FROM EventSection es WHERE es.id = :eventSectionId")
@@ -27,14 +34,14 @@ public interface EventSectionRepository extends JpaRepository<EventSection, Long
     List<EventSection> findByCourseIdWithHidden(@Param("courseId") Long courseId);
 
     @Query("""
-        SELECT DISTINCT es 
+        SELECT DISTINCT es
         FROM EventSection es
         WHERE es.course.id = :courseId
           AND es.isHidden = false
           AND EXISTS (
-              SELECT 1 
-              FROM GradableEvent ge 
-              WHERE ge.eventSection.id = es.id 
+              SELECT 1
+              FROM GradableEvent ge
+              WHERE ge.eventSection.id = es.id
                 AND ge.isHidden = false
           )
         ORDER BY es.orderIndex ASC
@@ -42,17 +49,17 @@ public interface EventSectionRepository extends JpaRepository<EventSection, Long
     List<EventSection> findByCourseIdWithoutHidden(@Param("courseId") Long courseId);
 
     @Query("""
-    SELECT es 
+    SELECT es
     FROM EventSection es
     WHERE es.id = :eventSectionId
       AND (
           :userRole <> 'STUDENT'
           OR (
-              es.isHidden = false 
+              es.isHidden = false
               AND EXISTS (
-                  SELECT 1 
-                  FROM GradableEvent g 
-                  WHERE g.eventSection.id = es.id 
+                  SELECT 1
+                  FROM GradableEvent g
+                  WHERE g.eventSection.id = es.id
                     AND g.isHidden = false
               )
           )

@@ -1,10 +1,13 @@
 package com.agh.polymorphia_backend.dto.request.course_import.gradable_event;
 
+import com.agh.polymorphia_backend.model.event_section.EventSectionType;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @JsonTypeInfo(
@@ -20,7 +23,12 @@ import lombok.experimental.SuperBuilder;
 })
 @Getter
 @SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public class GradableEventDetailsRequestDto {
+    @NotNull
+    private EventSectionType type;
+
     @NotEmpty
     private String key;
 

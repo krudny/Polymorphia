@@ -37,6 +37,8 @@ TRUNCATE TABLE project_groups_animals cascade;
 TRUNCATE TABLE submission_requirements cascade;
 TRUNCATE TABLE submissions cascade;
 TRUNCATE TABLE teaching_role_users cascade;
+TRUNCATE TABLE assignments cascade;
+TRUNCATE TABLE tests cascade;
 INSERT INTO
   users (id, first_name, last_name, email, password, preferred_course_id)
 VALUES
@@ -784,11 +786,19 @@ VALUES (25, '25', 8, 'Laboratorium 1', 8, 8,
        (42, '42', 12, 'Projekt 2', 17, 17, null, FALSE, FALSE);
 
 insert into projects(id, allow_cross_course_group_project_groups)
-values (38, false),
+values (34, false),
+       (38, false),
        (39, false),
        (40, false),
        (41, false),
        (42, false);
+insert into assignments(id)
+values (9),(10),(11),(12),(13),(14),(15),(16),
+    (25),(26),(27),(28),(29),(30),(31),(32),(33), (35), (36), (37);
+
+insert into tests(id)
+values (1),(2),(3),(4),(5),(6),(7),(8),(17),
+       (18),(19),(20),(21),(22),(23),(24);
 
 insert into project_variant_categories(id, project_id, name, key)
 values (1, 38, 'Mapa i roślinność', '1'),

@@ -37,4 +37,8 @@ public interface ChestRepository extends JpaRepository<Chest, Long> {
             ORDER BY c.order_index
             """, nativeQuery = true)
     List<ChestDetailsDetailsProjection> findAllChestDetailssByCourseId(@Param("courseId") Long courseId);
+
+    List<Chest> findAllByKeyIn(List<String> keys);
+
+    Chest findByKey(String key);
 }

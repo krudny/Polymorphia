@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
@@ -24,6 +26,8 @@ import java.util.List;
 })
 @Getter
 @SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public class EventSectionDetailsRequestDto {
     @NotEmpty
     private String key;
