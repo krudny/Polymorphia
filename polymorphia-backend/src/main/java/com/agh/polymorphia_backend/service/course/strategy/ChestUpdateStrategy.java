@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
@@ -62,10 +61,7 @@ public class ChestUpdateStrategy implements EntityUpdateStrategy<ChestDetailsReq
     @Override
     public Chest updateEntity(Chest entity, ChestDetailsRequestDto dto,
                               Map<ChestDetailsRequestDto, Long> orderIds, Long courseId) {
-        List<Item> items = dto.getItemKeys().stream()
-                .map(itemRepository::getIdByKey)
-                .map(itemRepository::getReferenceById)
-                .collect(Collectors.toList());
+        List<Item> items = itemRepository.findAllByKeyIn(dto.getItemKeys());
 
         entity.setName(dto.getName());
         entity.setDescription(dto.getDescription());

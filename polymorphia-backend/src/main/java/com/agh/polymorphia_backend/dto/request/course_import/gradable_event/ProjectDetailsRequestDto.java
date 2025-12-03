@@ -1,11 +1,12 @@
 package com.agh.polymorphia_backend.dto.request.course_import.gradable_event;
 
+import com.agh.polymorphia_backend.dto.request.course_import.variant.VariantCategoryDetailsRequestDto;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @SuperBuilder
@@ -15,4 +16,8 @@ import lombok.experimental.SuperBuilder;
 public class ProjectDetailsRequestDto extends GradableEventDetailsRequestDto {
     @NotNull
     private Boolean allowCrossCourseGroupProjectGroup;
+
+    @NotNull
+    @Builder.Default
+    private List<VariantCategoryDetailsRequestDto> variantCategories = new ArrayList<>();
 }

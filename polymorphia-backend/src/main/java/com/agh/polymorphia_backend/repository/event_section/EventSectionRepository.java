@@ -92,4 +92,7 @@ public interface EventSectionRepository extends JpaRepository<EventSection, Long
             """, nativeQuery = true)
     List<EventSectionDetailsProjection> findBasicByCourseId(@Param("courseId") Long courseId);
 
+    EventSection findByKey(String key);
+
+    List<EventSection> findAllByKeyIn(List<String> keys);
 }

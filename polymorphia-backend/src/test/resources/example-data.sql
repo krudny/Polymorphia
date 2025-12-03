@@ -989,118 +989,67 @@ INSERT INTO
   chests_items (chest_id, item_id)
 VALUES
   (104, 5);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (1, 1, 'Kartkówka', 2.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (2, 2, 'Kartkówka', 2.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (3, 3, 'Kartkówka', 2.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (4, 4, 'Kartkówka', 2.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (5, 5, 'Kartkówka', 2.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (6, 6, 'Kartkówka', 2.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (7, 7, 'Kartkówka', 2.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (8, 8, 'Kartkówka', 2.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (9, 9, 'Laboratorium', 4.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (10, 10, 'Laboratorium', 4.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (11, 11, 'Laboratorium', 4.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (12, 12, 'Laboratorium', 4.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (13, 13, 'Laboratorium', 4.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (14, 14, 'Laboratorium', 4.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (15, 15, 'Laboratorium', 4.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (16, 16, 'Laboratorium', 4.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (17, 17, 'Kartkówka', 2.0),
-  (18, 18, 'Kartkówka', 2.0),
-  (19, 19, 'Kartkówka', 2.0),
-  (20, 20, 'Kartkówka', 2.0),
-  (21, 21, 'Kartkówka', 2.0),
-  (22, 22, 'Kartkówka', 2.0),
-  (23, 23, 'Kartkówka', 2.0),
-  (24, 24, 'Kartkówka', 2.0),
-  (25, 25, 'Laboratorium', 4.0),
-  (26, 26, 'Laboratorium', 4.0),
-  (27, 27, 'Laboratorium', 4.0),
-  (28, 28, 'Laboratorium', 4.0),
-  (29, 29, 'Laboratorium', 4.0),
-  (30, 30, 'Laboratorium', 4.0),
-  (31, 31, 'Laboratorium', 4.0),
-  (32, 32, 'Laboratorium', 4.0),
-  (33, 33, 'Git', 10.0),
-  (34, 38, 'Kod', 5.0),
-  (35, 38, 'Wzorce projektowe', 5.0);
+INSERT INTO criteria (id, gradable_event_id, name, max_xp, key)
+VALUES (1, 1, 'Kartkówka', 2.0, '1');
+INSERT INTO criteria (id, gradable_event_id, name, max_xp, key)
+VALUES (2, 2, 'Kartkówka', 2.0, '2'),
+       (3, 3, 'Kartkówka', 2.0, '3'),
+       (4, 4, 'Kartkówka', 2.0, '4'),
+       (5, 5, 'Kartkówka', 2.0, '5'),
+       (6, 6, 'Kartkówka', 2.0, '6'),
+       (7, 7, 'Kartkówka', 2.0, '7'),
+       (8, 8, 'Kartkówka', 2.0, '8'),
+       (9, 9, 'Laboratorium', 4.0, '9'),
+       (10, 10, 'Laboratorium', 4.0, '10'),
+       (11, 11, 'Laboratorium', 4.0, '11'),
+       (12, 12, 'Laboratorium', 4.0, '12'),
+       (13, 13, 'Laboratorium', 4.0, '13'),
+       (14, 14, 'Laboratorium', 4.0, '14'),
+       (15, 15, 'Laboratorium', 4.0, '15'),
+       (16, 16, 'Laboratorium', 4.0, '16'),
+       (17, 17, 'Kartkówka', 2.0, '17'),
+       (18, 18, 'Kartkówka', 2.0, '18'),
+       (19, 19, 'Kartkówka', 2.0, '19'),
+       (20, 20, 'Kartkówka', 2.0, '20'),
+       (21, 21, 'Kartkówka', 2.0, '21'),
+       (22, 22, 'Kartkówka', 2.0, '22'),
+       (23, 23, 'Kartkówka', 2.0, '23'),
+       (24, 24, 'Kartkówka', 2.0, '24'),
+       (25, 25, 'Laboratorium', 4.0, '25'),
+       (26, 26, 'Laboratorium', 4.0, '26'),
+       (27, 27, 'Laboratorium', 4.0, '27'),
+       (28, 28, 'Laboratorium', 4.0, '28'),
+       (29, 29, 'Laboratorium', 4.0, '29'),
+       (30, 30, 'Laboratorium', 4.0, '30'),
+       (31, 31, 'Laboratorium', 4.0, '31'),
+       (32, 32, 'Laboratorium', 4.0, '32'),
+       (33, 33, 'Git', 10.0, '33'),
+       (34, 38, 'Kod', 5.0, '34'),
+       (35, 38, 'Wzorce projektowe', 5.0, '35');
+
 
 insert into criteria_rewards(criterion_id, reward_id, max_amount)
 values (14,101,1),
        (14, 2, 2),
        (34, 101, 1),
        (35, 1, 2);
-
-INSERT INTO
-  submission_requirements (id, gradable_event_id, name, is_mandatory, order_index)
-VALUES
-  (1, 9, 'Wykonanie zadania', TRUE, 1),
-  (2, 10, 'Wykonanie zadania', TRUE, 1),
-  (3, 11, 'Wykonanie zadania', TRUE, 1),
-  (4, 12, 'Wykonanie zadania', TRUE, 1),
-  (5, 12, 'Zadanie dodatkowe', FALSE, 2),
-  (6, 13, 'Wykonanie zadania', TRUE, 1),
-  (7, 13, 'Zadanie dodatkowe', FALSE, 2),
-  (8, 14, 'Wykonanie zadania', TRUE, 1),
-  (9, 15, 'Wykonanie zadania', TRUE, 1),
-  (10, 16, 'Wykonanie zadania', TRUE, 1),
-  (11, 16, 'Zadanie dodatkowe', FALSE, 2),
-  (12, 33, 'Wykonanie zadania', TRUE, 1),
-  (13, 39, 'Link do repozytorium', TRUE, 1),
-  (14, 40, 'Link do repozytorium', TRUE, 1),
-  (15, 41, 'Link do repozytorium', TRUE, 1),
-  (16, 42, 'Link do repozytorium', TRUE, 1);
+INSERT INTO submission_requirements (id, gradable_event_id, name, is_mandatory, order_index, key)
+VALUES (1, 9, 'Wykonanie zadania', TRUE, 1, '1'),
+       (2, 10, 'Wykonanie zadania', TRUE, 1, '2'),
+       (3, 11, 'Wykonanie zadania', TRUE, 1, '3'),
+       (4, 12, 'Wykonanie zadania', TRUE, 1, '4'),
+       (5, 12, 'Zadanie dodatkowe', FALSE, 2, '5'),
+       (6, 13, 'Wykonanie zadania', TRUE, 1, '6'),
+       (7, 13, 'Zadanie dodatkowe', FALSE, 2, '7'),
+       (8, 14, 'Wykonanie zadania', TRUE, 1, '8'),
+       (9, 15, 'Wykonanie zadania', TRUE, 1, '9'),
+       (10, 16, 'Wykonanie zadania', TRUE, 1, '10'),
+       (11, 16, 'Zadanie dodatkowe', FALSE, 2, '11'),
+       (12, 33, 'Wykonanie zadania', TRUE, 1, '12'),
+       (13, 39, 'Link do repozytorium', TRUE, 1, '13'),
+       (14, 40, 'Link do repozytorium', TRUE, 1, '14'),
+       (15, 41, 'Link do repozytorium', TRUE, 1, '15'),
+       (16, 42, 'Link do repozytorium', TRUE, 1, '16');
 
 INSERT INTO
   submissions (id, submission_requirement_id, animal_id, url, is_locked, created_date, modified_date)
@@ -1172,4 +1121,9 @@ SELECT
   setval('users_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
 FROM
   users;
+SELECT setval('project_variants_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
+FROM project_variants;
+
+SELECT setval('project_variant_categories_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
+FROM project_variant_categories;
 COMMIT;

@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -47,5 +48,6 @@ public class CourseGroup {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "courseGroup")
     @ToString.Exclude
     @JsonIgnore
-    private List<StudentCourseGroupAssignment> studentCourseGroupAssignments;
+    @Builder.Default
+    private List<StudentCourseGroupAssignment> studentCourseGroupAssignments = new ArrayList<>();
 }

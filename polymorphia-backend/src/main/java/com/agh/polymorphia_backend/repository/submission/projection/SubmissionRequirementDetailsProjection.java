@@ -8,4 +8,6 @@ public interface SubmissionRequirementDetailsProjection {
     Boolean getIsMandatory();
 
     Long getGradableEventId();
+
+    String getKey();
 }

@@ -5,15 +5,15 @@ import com.agh.polymorphia_backend.dto.request.course_import.reward.ChestDetails
 import com.agh.polymorphia_backend.dto.request.course_import.reward.ItemDetailsRequestDto;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class CourseDetailsRequestDto {
     @NotEmpty
     @EqualsAndHashCode.Include

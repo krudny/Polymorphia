@@ -16,6 +16,24 @@ ALTER TABLE project_variants
 ALTER TABLE rewards
     ADD key VARCHAR(255);
 
+ALTER TABLE criteria
+    ADD key VARCHAR(64);
+
+
+UPDATE criteria
+SET key = CONCAT('criterion_', id);
+
+ALTER TABLE criteria ALTER COLUMN key SET NOT NULL;
+
+ALTER TABLE submission_requirements
+    ADD key VARCHAR(64);
+
+
+UPDATE submission_requirements
+SET key = CONCAT('submission_requirement_', id);
+
+ALTER TABLE submission_requirements ALTER COLUMN key SET NOT NULL;
+
 UPDATE event_sections
 SET key = CONCAT('event_section_', id);
 

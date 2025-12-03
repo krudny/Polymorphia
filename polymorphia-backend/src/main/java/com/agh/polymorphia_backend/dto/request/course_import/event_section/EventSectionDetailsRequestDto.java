@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.dto.request.course_import.event_section;
 
-import com.agh.polymorphia_backend.dto.request.course_import.criterion.CriterionDetailsRequestDto;
+import com.agh.polymorphia_backend.dto.request.course_import.gradable_event.GradableEventDetailsRequestDto;
 import com.agh.polymorphia_backend.model.event_section.EventSectionType;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -28,7 +28,7 @@ import java.util.List;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class EventSectionDetailsRequestDto {
+public abstract class EventSectionDetailsRequestDto {
     @NotEmpty
     private String key;
 
@@ -47,6 +47,6 @@ public class EventSectionDetailsRequestDto {
     @NotNull
     private Boolean isHidden;
 
-    @NotNull
-    private List<CriterionDetailsRequestDto> criteria;
+
+    public abstract List<? extends GradableEventDetailsRequestDto> getGradableEvents();
 }

@@ -24,4 +24,15 @@ public interface ProjectVariantCategoryRepository extends JpaRepository<ProjectV
             """, nativeQuery = true
     )
     List<ProjectVariantCategoryDetailsProjection> findAllByCourseId(Long courseId);
+
+    ProjectVariantCategory findByKey(String key);
+
+    List<ProjectVariantCategory> findAllByKeyIn(List<String> keys);
+
+    @Query("""
+            select p.id
+            from ProjectVariantCategory p
+            where p.key=:key
+            """)
+    Long findIdByKey(String key);
 }

@@ -10,4 +10,6 @@ public interface CriterionDetailsProjection {
     BigDecimal getMaxXp();
 
     Long getGradableEventId();
+
+    String getKey();
 }

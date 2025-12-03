@@ -28,6 +28,9 @@ public class SubmissionRequirement {
     @JsonIgnore
     private GradableEvent gradableEvent;
 
+    @NotNull
+    private String key;
+
     @NotEmpty
     private String name;
 

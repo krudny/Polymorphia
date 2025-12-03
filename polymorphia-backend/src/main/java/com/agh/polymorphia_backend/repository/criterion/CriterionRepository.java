@@ -17,7 +17,8 @@ public interface CriterionRepository extends JpaRepository<Criterion, Long> {
                 c.id,
                 c.name,
                 c.max_xp,
-                c.gradable_event_id
+                c.gradable_event_id,
+                c.key
             FROM criteria c
             JOIN gradable_events ge ON c.gradable_event_id = ge.id
             JOIN event_sections es ON ge.event_section_id = es.id
@@ -27,7 +28,7 @@ public interface CriterionRepository extends JpaRepository<Criterion, Long> {
     List<CriterionDetailsProjection> findByCourseId(@Param("courseId") Long courseId);
 
     @Query(value = """
-            SELECT 
+            SELECT
                 cr.criterion_id,
                 r.key as reward_key,
                 cr.max_amount
@@ -39,4 +40,15 @@ public interface CriterionRepository extends JpaRepository<Criterion, Long> {
             WHERE es.course_id = :courseId
             """, nativeQuery = true)
     List<CriterionRewardDetailsProjection> findCriteriaRewardsByCourseId(@Param("courseId") Long courseId);
+
+    Criterion findByKey(String key);
+
+    List<Criterion> findAllByKeyIn(List<String> keys);
+
+    @Query("""
+            select c.id
+            from Criterion c
+            where c.key=:key
+            """)
+    Long findIdByKey(String key);
 }

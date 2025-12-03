@@ -21,7 +21,7 @@ public interface EntityUpdateStrategy<T, R> {
 
     R createNewEntity(T dto);
 
-    R updateEntity(R entity, T dto, Map<T, Long> orderIds, Long courseId);
+    R updateEntity(R entity, T dto, Map<T, Long> orderIds, Long superEntityId);
 
     default void flush() {
         getRepository().flush();

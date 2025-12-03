@@ -19,7 +19,8 @@ public interface SubmissionRequirementRepository extends JpaRepository<Submissio
                 sr.id,
                 sr.name,
                 sr.is_mandatory,
-                sr.gradable_event_id
+                sr.gradable_event_id,
+                sr.key
             FROM submission_requirements sr
             JOIN gradable_events ge ON sr.gradable_event_id = ge.id
             JOIN event_sections es ON ge.event_section_id = es.id
@@ -27,4 +28,8 @@ public interface SubmissionRequirementRepository extends JpaRepository<Submissio
             ORDER BY sr.order_index
             """, nativeQuery = true)
     List<SubmissionRequirementDetailsProjection> findByCourseId(@Param("courseId") Long courseId);
+
+    SubmissionRequirement findByKey(String key);
+
+    List<SubmissionRequirement> findAllByKeyIn(List<String> keys);
 }

@@ -249,24 +249,24 @@ INSERT INTO public.project_groups_animals (animal_id, project_group_id)
 VALUES (8, 1);
 
 -- Criteria
-INSERT INTO public.criteria (id, gradable_event_id, name, max_xp)
-VALUES (1, 1, 'uzyskane punkty', 20.0),
-       (2, 1, 'jakość kodu', 20.0),
-       (3, 4, 'uzyskane punkty', 4.0),
-       (4, 3, 'kryterium2', 10.0),
-       (5, 3, 'uzyskane punkty', 8.0),
-       (6, 3, 'uzyskane punkty2', 6.0),
-       (7, 7, 'uzyskane punkty', 10.0);
+INSERT INTO public.criteria (id, gradable_event_id, name, max_xp, key)
+VALUES (1, 1, 'uzyskane punkty', 20.0, '1'),
+       (2, 1, 'jakość kodu', 20.0, '2'),
+       (3, 4, 'uzyskane punkty', 4.0, '3'),
+       (4, 3, 'kryterium2', 10.0, '4'),
+       (5, 3, 'uzyskane punkty', 8.0, '5'),
+       (6, 3, 'uzyskane punkty2', 6.0, '6'),
+       (7, 7, 'uzyskane punkty', 10.0, '7');
 
 -- Submission Requirements
-INSERT INTO public.submission_requirements (id, gradable_event_id, name, is_mandatory, order_index)
-VALUES (1, 2, 'Wykonanie zadania', true, 1),
-       (2, 4, 'Wykonanie zadania 1', true, 1),
-       (3, 4, 'Wykonanie zadania 2', true, 2),
-       (4, 4, 'Zadanie dodatkowe 1', false, 3),
-       (5, 4, 'Zadanie dodatkowe 2', false, 4),
-       (6, 7, 'Repozytorium projektu', true, 1),
-       (7, 7, 'Slodki kotek', false, 2);
+INSERT INTO public.submission_requirements (id, gradable_event_id, name, is_mandatory, order_index, key)
+VALUES (1, 2, 'Wykonanie zadania', TRUE, 1, '1'),
+       (2, 4, 'Wykonanie zadania 1', TRUE, 1, '2'),
+       (3, 4, 'Wykonanie zadania 2', TRUE, 2, '3'),
+       (4, 4, 'Zadanie dodatkowe 1', FALSE, 3, '4'),
+       (5, 4, 'Zadanie dodatkowe 2', FALSE, 4, '5'),
+       (6, 7, 'Repozytorium projektu', TRUE, 1, '6'),
+       (7, 7, 'Slodki kotek', FALSE, 2, '7');
 
 -- Submissions
 INSERT INTO public.submissions (id, submission_requirement_id, animal_id, url, is_locked, created_date, modified_date)

@@ -103,7 +103,7 @@ public class CourseDetailsMapper {
                     projectDetailsMap,
                     criteriaByEvent,
                     rewardsByCriterion,
-                    projectVariantCategoriesByProject.getOrDefault(eventSection.getId(), Collections.emptyList()),
+                    projectVariantCategoriesByProject,
                     projectVariantsByCategory
             );
         };
@@ -117,54 +117,64 @@ public class CourseDetailsMapper {
             Map<Long, List<SubmissionRequirementDetailsProjection>> submissionRequirementsByEvent) {
 
         List<AssignmentDetailsRequestDto> assignments = gradableEvents.stream()
-                .map(gradableEvent -> toAssignmentDto(gradableEvent, submissionRequirementsByEvent))
+                .map(gradableEvent -> toAssignmentDto(
+                        gradableEvent,
+                        submissionRequirementsByEvent,
+                        criteriaByEvent.getOrDefault(gradableEvent.getId(), Collections.emptyList()),
+                        rewardsByCriterion
+                ))
                 .toList();
 
         AssignmentSectionDetailsRequestDto.AssignmentSectionDetailsRequestDtoBuilder<?, ?> response = AssignmentSectionDetailsRequestDto.builder()
                 .gradableEvents(assignments);
 
-        return applyCommonEventSectionFields(response, eventSection, criteriaByEvent.getOrDefault(eventSection.getId(), Collections.emptyList()), rewardsByCriterion);
+        return applyCommonEventSectionFields(response, eventSection);
     }
 
     private EventSectionDetailsRequestDto toTestSection(
             EventSectionDetailsProjection section,
             List<GradableEventDetailsProjection> gradableEvents,
-            Map<Long, List<CriterionDetailsProjection>> criteriaByEvent,
+            Map<Long, List<CriterionDetailsProjection>> criteriaByGradableEvent,
             Map<Long, List<CriterionRewardDetailsProjection>> rewardsByCriterion) {
 
 
         List<TestDetailsRequestDto> tests = gradableEvents.stream()
-                .map(this::toTestDto)
+                .map(test -> toTestDto(test, criteriaByGradableEvent.getOrDefault(test.getId(), Collections.emptyList()), rewardsByCriterion))
                 .toList();
 
         TestSectionDetailsRequestDto.TestSectionDetailsRequestDtoBuilder<?, ?> response = TestSectionDetailsRequestDto.builder()
                 .gradableEvents(tests);
 
-        return applyCommonEventSectionFields(response, section, criteriaByEvent.getOrDefault(section.getId(), Collections.emptyList()), rewardsByCriterion);
+        return applyCommonEventSectionFields(response, section);
     }
 
     private EventSectionDetailsRequestDto toProjectSection(
             EventSectionDetailsProjection section,
             List<GradableEventDetailsProjection> gradableEvents,
             Map<Long, List<ProjectDetailsDetailsProjection>> projectDetailsByGradableEvent,
-            Map<Long, List<CriterionDetailsProjection>> criteriaByEvent,
+            Map<Long, List<CriterionDetailsProjection>> criteriaByGradableEvent,
             Map<Long, List<CriterionRewardDetailsProjection>> rewardsByCriterion,
-            List<ProjectVariantCategoryDetailsProjection> projectVariantCategories,
+            Map<Long, List<ProjectVariantCategoryDetailsProjection>> projectVariantCategoriesByProject,
             Map<Long, List<ProjectVariantDetailsProjection>> projectVariantsByCategory) {
 
         List<ProjectDetailsRequestDto> projects = gradableEvents.stream()
-                .map(project -> toProjectDto(
-                        project,
-                        projectDetailsByGradableEvent.get(project.getId())
-                                .getFirst()
-                                .getAllowCrossCourseGroupProjectGroups()
-                ))
+                .map(project ->
+                        toProjectDto(
+                                project,
+                                projectDetailsByGradableEvent.get(project.getId())
+                                        .getFirst()
+                                        .getAllowCrossCourseGroupProjectGroups(),
+                                criteriaByGradableEvent.getOrDefault(project.getId(), Collections.emptyList()),
+                                rewardsByCriterion,
+                                projectVariantCategoriesByProject.getOrDefault(project.getId(), Collections.emptyList()),
+                                projectVariantsByCategory
+                        )
+                )
                 .toList();
         ProjectSectionDetailsRequestDto.ProjectSectionDetailsRequestDtoBuilder<?, ?> response = ProjectSectionDetailsRequestDto.builder()
-                .gradableEvents(projects)
-                .variantCategories(getVariantCategories(projectVariantCategories, projectVariantsByCategory));
+                .gradableEvents(projects);
 
-        return applyCommonEventSectionFields(response, section, criteriaByEvent.getOrDefault(section.getId(), Collections.emptyList()), rewardsByCriterion);
+        return applyCommonEventSectionFields(response, section);
     }
 
     private List<VariantCategoryDetailsRequestDto> getVariantCategories(List<ProjectVariantCategoryDetailsProjection> projectVariantCategories,
@@ -195,17 +205,8 @@ public class CourseDetailsMapper {
 
     private EventSectionDetailsRequestDto applyCommonEventSectionFields(
             EventSectionDetailsRequestDto.EventSectionDetailsRequestDtoBuilder<?, ?> builder,
-            EventSectionDetailsProjection section,
-            List<CriterionDetailsProjection> criteria,
-            Map<Long, List<CriterionRewardDetailsProjection>> rewardsByCriterion
+            EventSectionDetailsProjection section
     ) {
-
-        List<CriterionDetailsRequestDto> criteriaDto = criteria.stream()
-                .map(criterion -> toCriterionDto(
-                        criterion,
-                        rewardsByCriterion.getOrDefault(criterion.getId(), Collections.emptyList()))
-                )
-                .toList();
 
         return builder
                 .key(section.getKey())
@@ -214,13 +215,14 @@ public class CourseDetailsMapper {
                 .eventsWithTopics(section.getHasGradableEventsWithTopics())
                 .isHidden(section.getIsHidden())
                 .type(section.getEventSectionType())
-                .criteria(criteriaDto)
                 .build();
     }
 
     private AssignmentDetailsRequestDto toAssignmentDto(
             GradableEventDetailsProjection gradableEvent,
-            Map<Long, List<SubmissionRequirementDetailsProjection>> submissionRequirementsByEvent
+            Map<Long, List<SubmissionRequirementDetailsProjection>> submissionRequirementsByEvent,
+            List<CriterionDetailsProjection> criteria,
+            Map<Long, List<CriterionRewardDetailsProjection>> rewardsByCriterion
     ) {
         List<SubmissionRequirementDetailsRequestDto> requirements = submissionRequirementsByEvent
                 .getOrDefault(gradableEvent.getId(), List.of())
@@ -231,28 +233,56 @@ public class CourseDetailsMapper {
         return (AssignmentDetailsRequestDto) applyCommonGradableEventFields(
                 AssignmentDetailsRequestDto.builder()
                         .submissionRequirements(requirements),
-                gradableEvent
+                gradableEvent,
+                criteria,
+                rewardsByCriterion
         );
     }
 
-    private TestDetailsRequestDto toTestDto(GradableEventDetailsProjection gradableEvent) {
+    private TestDetailsRequestDto toTestDto(
+            GradableEventDetailsProjection gradableEvent,
+            List<CriterionDetailsProjection> criteria,
+            Map<Long, List<CriterionRewardDetailsProjection>> rewardsByCriterion
+    ) {
         return (TestDetailsRequestDto) applyCommonGradableEventFields(
                 TestDetailsRequestDto.builder(),
-                gradableEvent
+                gradableEvent,
+                criteria,
+                rewardsByCriterion
         );
     }
 
-    private ProjectDetailsRequestDto toProjectDto(GradableEventDetailsProjection gradableEvent, Boolean allowCrossCourseGroupProjectGroup) {
+    private ProjectDetailsRequestDto toProjectDto(
+            GradableEventDetailsProjection gradableEvent,
+            Boolean allowCrossCourseGroupProjectGroup,
+            List<CriterionDetailsProjection> criteria,
+            Map<Long, List<CriterionRewardDetailsProjection>> rewardsByCriterion,
+            List<ProjectVariantCategoryDetailsProjection> projectVariantCategories,
+            Map<Long, List<ProjectVariantDetailsProjection>> projectVariantsByCategory
+    ) {
         return (ProjectDetailsRequestDto) applyCommonGradableEventFields(
                 ProjectDetailsRequestDto
                         .builder()
+                        .variantCategories(getVariantCategories(projectVariantCategories, projectVariantsByCategory))
                         .allowCrossCourseGroupProjectGroup(allowCrossCourseGroupProjectGroup),
-                gradableEvent);
+                gradableEvent,
+                criteria,
+                rewardsByCriterion
+        );
     }
 
     private GradableEventDetailsRequestDto applyCommonGradableEventFields(
             GradableEventDetailsRequestDto.GradableEventDetailsRequestDtoBuilder<?, ?> builder,
-            GradableEventDetailsProjection gradableEvent) {
+            GradableEventDetailsProjection gradableEvent,
+            List<CriterionDetailsProjection> criteria,
+            Map<Long, List<CriterionRewardDetailsProjection>> rewardsByCriterion) {
+
+        List<CriterionDetailsRequestDto> criteriaDto = criteria.stream()
+                .map(criterion -> toCriterionDto(
+                        criterion,
+                        rewardsByCriterion.getOrDefault(criterion.getId(), Collections.emptyList()))
+                )
+                .toList();
 
         return builder
                 .key(gradableEvent.getKey())
@@ -262,6 +292,7 @@ public class CourseDetailsMapper {
                 .isHidden(gradableEvent.getIsHidden())
                 .isLocked(gradableEvent.getIsLocked())
                 .type(gradableEvent.getType())
+                .criteria(criteriaDto)
                 .build();
     }
 
@@ -271,6 +302,7 @@ public class CourseDetailsMapper {
         return SubmissionRequirementDetailsRequestDto.builder()
                 .name(submissionRequirement.getName())
                 .isMandatory(submissionRequirement.getIsMandatory())
+                .key(submissionRequirement.getKey())
                 .build();
     }
 
@@ -289,6 +321,7 @@ public class CourseDetailsMapper {
         return CriterionDetailsRequestDto.builder()
                 .name(criterion.getName())
                 .maxXp(criterion.getMaxXp())
+                .key(criterion.getKey())
                 .rewards(criterionRewards)
                 .build();
     }

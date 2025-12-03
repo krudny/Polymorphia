@@ -199,4 +199,14 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
             """)
     List<ProjectDetailsDetailsProjection> findProjectDetailsByCourseId(@Param("courseId") Long courseId);
 
+    @Query("""
+            select g.id
+            from GradableEvent g
+            where g.key=:key
+            """)
+    Long findIdByKey(String key);
+
+    GradableEvent findByKey(String key);
+
+    List<GradableEvent> findAllByKeyIn(List<String> keys);
 }
