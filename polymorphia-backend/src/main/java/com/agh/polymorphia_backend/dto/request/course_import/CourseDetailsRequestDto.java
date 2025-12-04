@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -35,17 +36,22 @@ public class CourseDetailsRequestDto {
     private String instructorImageUrl;
 
     @NotNull
-    private List<EvolutionStageDetailsRequestDto> evolutionStages;
+    @Builder.Default
+    private List<EvolutionStageDetailsRequestDto> evolutionStages = new ArrayList<>();
 
     @NotNull
-    private List<EventSectionDetailsRequestDto> eventSections;
+    @Builder.Default
+    private List<EventSectionDetailsRequestDto> eventSections = new ArrayList<>();
 
     @NotNull
-    private List<ItemDetailsRequestDto> items;
+    @Builder.Default
+    private List<ItemDetailsRequestDto> items = new ArrayList<>();
 
     @NotNull
-    private List<ChestDetailsRequestDto> chests;
+    @Builder.Default
+    private List<ChestDetailsRequestDto> chests = new ArrayList<>();
 
     @NotNull
-    private List<String> roadmapOrderKeys;
+    @Builder.Default
+    private List<String> roadmapOrderKeys = new ArrayList<>();
 }

@@ -84,7 +84,7 @@ public class CourseDetailsService {
 
     private List<String> getRoadmapOrder(List<GradableEventDetailsProjection> gradableEvents) {
         return gradableEvents.stream()
-                .sorted(Comparator.comparing(GradableEventDetailsProjection::getEventSectionId))
+                .sorted(Comparator.comparing(GradableEventDetailsProjection::getRoadmapOrderIndex))
                 .map(GradableEventDetailsProjection::getKey)
                 .toList();
     }

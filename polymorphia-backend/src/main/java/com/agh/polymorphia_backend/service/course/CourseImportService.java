@@ -16,6 +16,7 @@ import com.agh.polymorphia_backend.dto.request.course_import.variant.VariantDeta
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.criterion.CriterionReward;
 import com.agh.polymorphia_backend.model.event_section.EventSectionType;
+import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.reward.Reward;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserCourseRole;
@@ -38,7 +39,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -93,11 +93,8 @@ public class CourseImportService {
                 .build();
         userCourseRoleRepository.save(userCourseRole);
 
-        updateEvolutionStages(request.getEvolutionStages(), Collections.emptyList(), courseId);
-        updateEventSections(request.getEventSections(), Collections.emptyList(), courseId);
-        updateItems(request.getItems(), Collections.emptyList(), courseId);
-        updateChests(request.getChests(), Collections.emptyList(), courseId);
-        updateAllCriteriaRewards(request.getEventSections());
+        updateCourseElements(request, new CourseDetailsRequestDto(), courseId);
+
     }
 
     @Transactional
@@ -109,11 +106,40 @@ public class CourseImportService {
             updateCourseDetails(request, course);
             courseRepository.save(course);
         }
+        updateCourseElements(request, currentConfig, courseId);
+    }
+
+    private void updateCourseElements(CourseDetailsRequestDto request, CourseDetailsRequestDto currentConfig, Long courseId) {
         updateEvolutionStages(request.getEvolutionStages(), currentConfig.getEvolutionStages(), courseId);
         updateEventSections(request.getEventSections(), currentConfig.getEventSections(), courseId);
         updateItems(request.getItems(), currentConfig.getItems(), courseId);
         updateChests(request.getChests(), currentConfig.getChests(), courseId);
         updateAllCriteriaRewards(request.getEventSections());
+        updateRoadmapOrder(request.getRoadmapOrderKeys());
+    }
+
+    private void updateRoadmapOrder(List<String> roadmapOrderKeys) {
+        if (roadmapOrderKeys == null || roadmapOrderKeys.isEmpty()) {
+            return;
+        }
+
+        List<GradableEvent> gradableEvents = gradableEventRepository.findAllByKeyIn(roadmapOrderKeys);
+
+        Map<String, GradableEvent> eventsByKey = gradableEvents.stream()
+                .collect(Collectors.toMap(GradableEvent::getKey, Function.identity()));
+
+        List<GradableEvent> updatedGradableEvents = new ArrayList<>();
+        for (int i = 0; i < roadmapOrderKeys.size(); i++) {
+            String key = roadmapOrderKeys.get(i);
+            GradableEvent gradableEvent = eventsByKey.get(key);
+            if (gradableEvent != null) {
+                gradableEvent.setRoadMapOrderIndex((long) i);
+                updatedGradableEvents.add(gradableEvent);
+            }
+        }
+
+        gradableEventRepository.saveAll(updatedGradableEvents);
+        gradableEventRepository.flush();
     }
 
     private void updateCourseDetails(CourseDetailsRequestDto request, Course course) {
@@ -137,7 +163,7 @@ public class CourseImportService {
         request.stream().filter(gradableEvent -> gradableEvent.getType().equals(EventSectionType.ASSIGNMENT)).forEach(gradableEvent -> {
             GradableEventDetailsRequestDto currentGradableEvent = currentConfigByKey.get(gradableEvent.getKey());
 
-            updateSubmissions(((AssignmentDetailsRequestDto) gradableEvent).getSubmissionRequirements(), currentGradableEvent != null && !currentGradableEvent.getType().equals(EventSectionType.ASSIGNMENT) ? ((AssignmentDetailsRequestDto) currentGradableEvent).getSubmissionRequirements() : List.of(), gradableEventRepository.findIdByKey(gradableEvent.getKey()));
+            updateSubmissionRequirements(((AssignmentDetailsRequestDto) gradableEvent).getSubmissionRequirements(), currentGradableEvent != null && currentGradableEvent.getType().equals(EventSectionType.ASSIGNMENT) ? ((AssignmentDetailsRequestDto) currentGradableEvent).getSubmissionRequirements() : List.of(), gradableEventRepository.findIdByKey(gradableEvent.getKey()));
         });
 
         request.stream().filter(gradableEvent -> gradableEvent.getType().equals(EventSectionType.PROJECT)).forEach(gradableEvent -> {
@@ -163,7 +189,7 @@ public class CourseImportService {
 
     }
 
-    private void updateSubmissions(List<SubmissionRequirementDetailsRequestDto> request, List<SubmissionRequirementDetailsRequestDto> currentConfig, Long gradableEventId) {
+    private void updateSubmissionRequirements(List<SubmissionRequirementDetailsRequestDto> request, List<SubmissionRequirementDetailsRequestDto> currentConfig, Long gradableEventId) {
         updateEntities(request, currentConfig, gradableEventId, submissionRequirementUpdateStrategy);
     }
 

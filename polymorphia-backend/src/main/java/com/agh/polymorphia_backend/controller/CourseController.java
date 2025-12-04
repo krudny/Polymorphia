@@ -36,7 +36,7 @@ public class CourseController {
     }
 
     @PostMapping("/create")
-    @PreAuthorize("hasAnyAuthority('COORDINATOR')")
+    @PreAuthorize("isAuthenticated()")
     @SkipUnexpectedExceptionHandler
     public ResponseEntity<Void> createCourse(@RequestBody CourseDetailsRequestDto request) {
         courseImportService.importCourse(request);
@@ -44,7 +44,7 @@ public class CourseController {
     }
 
     @PostMapping(value = "/create/file", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @PreAuthorize("hasAnyAuthority('COORDINATOR')")
+    @PreAuthorize("isAuthenticated()")
     @SkipUnexpectedExceptionHandler
     public ResponseEntity<Void> createCourseFromFile(@RequestBody CourseDetailsRequestDto request) {
         courseImportService.importCourse(request);
@@ -73,13 +73,13 @@ public class CourseController {
 
 
     @GetMapping("/config")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('COORDINATOR')")
     public ResponseEntity<CourseDetailsRequestDto> getCourseConfig(@RequestParam Long courseId) {
         return ResponseEntity.ok(courseDetailsService.getCourseDetails(courseId));
     }
 
     @GetMapping("/config/file")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('COORDINATOR')")
     public ResponseEntity<byte[]> getCourseConfigAsFile(@RequestParam Long courseId) throws JsonProcessingException {
         CourseDetailsRequestDto courseDetails = courseDetailsService.getCourseDetails(courseId);
 

@@ -49,7 +49,7 @@ public abstract class EventSection {
     @PositiveOrZero
     private Long orderIndex;
 
-    @OneToMany(mappedBy = "eventSection", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "eventSection", fetch = FetchType.LAZY, orphanRemoval = true)
     @ToString.Exclude
     @JsonIgnore
     @Builder.Default
