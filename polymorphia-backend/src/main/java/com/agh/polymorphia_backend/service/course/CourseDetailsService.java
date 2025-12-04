@@ -70,6 +70,9 @@ public class CourseDetailsService {
 
         return CourseDetailsRequestDto.builder()
                 .name(course.getName())
+                .imageUrl(course.getImageUrl())
+                .coordinatorImageUrl(course.getCoordinatorImageUrl())
+                .instructorImageUrl(course.getInstructorImageUrl())
                 .markdownSourceUrl(course.getMarkdownSourceUrl())
                 .eventSections(getEventSectionDetails(courseId, gradableEventsByEventSection))
                 .evolutionStages(courseDetailsMapper.toEvolutionStagesDetailsRequestDto(evolutionStages))

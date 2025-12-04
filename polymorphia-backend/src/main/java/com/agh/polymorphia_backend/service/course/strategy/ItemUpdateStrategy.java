@@ -71,7 +71,7 @@ public class ItemUpdateStrategy implements EntityUpdateStrategy<ItemDetailsReque
     @Override
     public Item updateEntity(Item entity, ItemDetailsRequestDto dto,
                              Map<ItemDetailsRequestDto, Long> orderIds, Long courseId) {
-        Long eventSectionId = eventSectionRepository.findIdByKey(dto.getKey());
+        Long eventSectionId = eventSectionRepository.findIdByKey(dto.getEventSectionKey());
         entity.setName(dto.getName());
         entity.setDescription(dto.getDescription());
         entity.setKey(dto.getKey());

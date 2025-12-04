@@ -17,18 +17,28 @@ import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.criterion.CriterionReward;
 import com.agh.polymorphia_backend.model.event_section.EventSectionType;
 import com.agh.polymorphia_backend.model.reward.Reward;
+import com.agh.polymorphia_backend.model.user.User;
+import com.agh.polymorphia_backend.model.user.UserCourseRole;
+import com.agh.polymorphia_backend.model.user.UserCourseRoleId;
+import com.agh.polymorphia_backend.model.user.UserType;
+import com.agh.polymorphia_backend.model.user.coordinator.Coordinator;
+import com.agh.polymorphia_backend.repository.course.CourseRepository;
 import com.agh.polymorphia_backend.repository.criterion.CriterionRepository;
 import com.agh.polymorphia_backend.repository.criterion.CriterionRewardRepository;
 import com.agh.polymorphia_backend.repository.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.repository.gradable_event.GradableEventRepository;
 import com.agh.polymorphia_backend.repository.project.ProjectVariantCategoryRepository;
 import com.agh.polymorphia_backend.repository.reward.RewardRepository;
+import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
+import com.agh.polymorphia_backend.repository.user.role.CoordinatorRepository;
 import com.agh.polymorphia_backend.service.course.strategy.*;
+import com.agh.polymorphia_backend.service.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -55,10 +65,39 @@ public class CourseImportService {
     private final CriterionRepository criterionRepository;
     private final RewardRepository rewardRepository;
     private final CriterionRewardRepository criterionRewardRepository;
+    private final CourseRepository courseRepository;
+    private final UserService userService;
+    private final UserCourseRoleRepository userCourseRoleRepository;
+    private final CoordinatorRepository coordinatorRepository;
 
     @Transactional
     public void importCourse(CourseDetailsRequestDto request) {
+        User currentUser = userService.getCurrentUser().getUser();
+        Coordinator coordinator = coordinatorRepository.findById(currentUser.getId())
+                .orElse(Coordinator.builder().user(currentUser).build());
+        coordinatorRepository.save(coordinator);
 
+        Course course = Course.builder()
+                .coordinator(coordinator)
+                .build();
+        updateCourseDetails(request, course);
+        Course savedCourse = courseRepository.save(course);
+        courseRepository.flush();
+        Long courseId = savedCourse.getId();
+
+        UserCourseRole userCourseRole = UserCourseRole.builder()
+                .course(savedCourse)
+                .user(currentUser)
+                .id(new UserCourseRoleId(currentUser.getId(), courseId))
+                .role(UserType.COORDINATOR)
+                .build();
+        userCourseRoleRepository.save(userCourseRole);
+
+        updateEvolutionStages(request.getEvolutionStages(), Collections.emptyList(), courseId);
+        updateEventSections(request.getEventSections(), Collections.emptyList(), courseId);
+        updateItems(request.getItems(), Collections.emptyList(), courseId);
+        updateChests(request.getChests(), Collections.emptyList(), courseId);
+        updateAllCriteriaRewards(request.getEventSections());
     }
 
     @Transactional
@@ -67,13 +106,22 @@ public class CourseImportService {
 
         if (!request.equals(currentConfig)) {
             Course course = courseService.getCourseById(courseId);
-            course.setName(request.getName());
-            course.setMarkdownSourceUrl(request.getMarkdownSourceUrl());
+            updateCourseDetails(request, course);
+            courseRepository.save(course);
         }
         updateEvolutionStages(request.getEvolutionStages(), currentConfig.getEvolutionStages(), courseId);
+        updateEventSections(request.getEventSections(), currentConfig.getEventSections(), courseId);
         updateItems(request.getItems(), currentConfig.getItems(), courseId);
         updateChests(request.getChests(), currentConfig.getChests(), courseId);
-        updateEventSections(request.getEventSections(), currentConfig.getEventSections(), courseId);
+        updateAllCriteriaRewards(request.getEventSections());
+    }
+
+    private void updateCourseDetails(CourseDetailsRequestDto request, Course course) {
+        course.setName(request.getName());
+        course.setMarkdownSourceUrl(request.getMarkdownSourceUrl());
+        course.setImageUrl(request.getImageUrl());
+        course.setCoordinatorImageUrl(request.getCoordinatorImageUrl());
+        course.setInstructorImageUrl(request.getInstructorImageUrl());
     }
 
     private void updateGradableEvents(List<GradableEventDetailsRequestDto> request, List<GradableEventDetailsRequestDto> currentConfig, Long eventSectionId) {
@@ -121,8 +169,6 @@ public class CourseImportService {
 
     private void updateCriteria(List<CriterionDetailsRequestDto> request, List<CriterionDetailsRequestDto> currentConfig, Long gradableEventId) {
         updateEntities(request, currentConfig, gradableEventId, criterionUpdateStrategy);
-
-        request.forEach(criterion -> updateCriteriaRewards(criterion.getRewards(), criterionRepository.findIdByKey(criterion.getKey())));
     }
 
     private void updateCriteriaRewards(List<CriterionRewardDetailsRequestDto> request, Long criterionId) {
@@ -137,6 +183,19 @@ public class CourseImportService {
         criterionRewardRepository.saveAll(criteriaRewards);
     }
 
+    private void updateAllCriteriaRewards(List<EventSectionDetailsRequestDto> eventSections) {
+        eventSections.forEach(eventSection ->
+                eventSection.getGradableEvents().forEach(gradableEvent ->
+                        gradableEvent.getCriteria().forEach(criterion ->
+                                updateCriteriaRewards(
+                                        criterion.getRewards(),
+                                        criterionRepository.findIdByKey(criterion.getKey())
+                                )
+                        )
+                )
+        );
+    }
+
     private void updateEventSections(List<EventSectionDetailsRequestDto> request, List<EventSectionDetailsRequestDto> currentConfig, Long courseId) {
         updateEntities(request, currentConfig, courseId, eventSectionUpdateStrategy);
         Map<String, EventSectionDetailsRequestDto> currentConfigByKey = currentConfig.stream().collect(Collectors.toMap(EventSectionDetailsRequestDto::getKey, Function.identity()));
@@ -144,7 +203,12 @@ public class CourseImportService {
         request.forEach(eventSection -> {
             EventSectionDetailsRequestDto currentSection = currentConfigByKey.get(eventSection.getKey());
 
-            updateGradableEvents(new ArrayList<>(eventSection.getGradableEvents()), currentSection != null ? new ArrayList<>(currentSection.getGradableEvents()) : List.of(), eventSectionRepository.findIdByKey(eventSection.getKey()));
+            updateGradableEvents(
+                    new ArrayList<>(eventSection.getGradableEvents()),
+                    currentSection != null
+                            ? new ArrayList<>(currentSection.getGradableEvents())
+                            : List.of(), eventSectionRepository.findIdByKey(eventSection.getKey())
+            );
         });
     }
 
@@ -161,24 +225,22 @@ public class CourseImportService {
         updateEntities(request, currentConfig, courseId, evolutionStageUpdateStrategy);
     }
 
-    public <T, R> void updateEntities(List<T> request, List<T> currentConfig, Long courseId, EntityUpdateStrategy<T, R> strategy) {
+    public <T, R> void updateEntities(List<T> request, List<T> currentConfig, Long superEntityId, EntityUpdateStrategy<T, R> strategy) {
         if (request.equals(currentConfig)) return;
 
         Map<T, Long> orderIds = CourseImportUtil.enumerateAsMap(request);
 
-        List<T> newItems = CourseImportUtil.getNewEntities(request, currentConfig, strategy.getKeyExtractor());
-        List<T> deletedItems = CourseImportUtil.getDeletedEntities(request, currentConfig, strategy.getKeyExtractor());
-        List<T> modifiedItems = CourseImportUtil.getModifiedEntities(request, currentConfig, strategy.getKeyExtractor());
+        List<T> newEntities = CourseImportUtil.getNewEntities(request, currentConfig, strategy.getKeyExtractor());
+        List<T> deletedEntities = CourseImportUtil.getDeletedEntities(request, currentConfig, strategy.getKeyExtractor());
+        List<T> modifiedEntities = CourseImportUtil.getModifiedEntities(request, currentConfig, strategy.getKeyExtractor());
 
         if (strategy.getTypeExtractor() != null) {
-            CourseImportUtil.handleTypeChangedObjects(newItems, deletedItems, modifiedItems, currentConfig, strategy.getKeyExtractor(), strategy.getTypeExtractor());
+            CourseImportUtil.handleTypeChangedObjects(newEntities, deletedEntities, modifiedEntities, currentConfig, strategy.getKeyExtractor(), strategy.getTypeExtractor());
         }
 
-        deleteEntities(deletedItems, strategy);
-        strategy.flush();
-        createEntities(newItems, orderIds, courseId, strategy);
-        updateExistingEntities(modifiedItems, orderIds, courseId, strategy);
-        strategy.flush();
+        deleteEntities(deletedEntities, strategy);
+        createEntities(newEntities, orderIds, superEntityId, strategy);
+        updateExistingEntities(modifiedEntities, orderIds, superEntityId, strategy);
     }
 
     private <T, R> void deleteEntities(List<T> entities, EntityUpdateStrategy<T, R> strategy) {
@@ -188,17 +250,20 @@ public class CourseImportService {
 
         List<R> entitiesToDelete = strategy.findAllByKeys(keys);
         strategy.getRepository().deleteAll(entitiesToDelete);
+        strategy.flush();
+
     }
 
-    private <T, R> void createEntities(List<T> items, Map<T, Long> orderIds, Long courseId, EntityUpdateStrategy<T, R> strategy) {
+    private <T, R> void createEntities(List<T> items, Map<T, Long> orderIds, Long superEntityId, EntityUpdateStrategy<T, R> strategy) {
         if (items.isEmpty()) return;
 
         List<R> newEntities = items.stream().map(dto -> {
             R entity = strategy.createNewEntity(dto);
-            return strategy.updateEntity(entity, dto, orderIds, courseId);
+            return strategy.updateEntity(entity, dto, orderIds, superEntityId);
         }).toList();
 
         strategy.getRepository().saveAll(newEntities);
+        strategy.flush();
     }
 
     private <T, R> void updateExistingEntities(List<T> entities, Map<T, Long> orderIds, Long courseId, EntityUpdateStrategy<T, R> strategy) {
@@ -225,6 +290,8 @@ public class CourseImportService {
                 .collect(Collectors.toCollection(ArrayList::new));
 
         strategy.getRepository().saveAll(updatedEntities);
+        strategy.flush();
+
     }
 
 }

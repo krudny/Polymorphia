@@ -43,6 +43,14 @@ public class CourseController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping(value = "/create/file", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PreAuthorize("hasAnyAuthority('COORDINATOR')")
+    @SkipUnexpectedExceptionHandler
+    public ResponseEntity<Void> createCourseFromFile(@RequestBody CourseDetailsRequestDto request) {
+        courseImportService.importCourse(request);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping("/update")
     @PreAuthorize("hasAnyAuthority('COORDINATOR')")
     @SkipUnexpectedExceptionHandler

@@ -22,6 +22,18 @@ public class CourseDetailsRequestDto {
     @EqualsAndHashCode.Include
     private String markdownSourceUrl;
 
+    @NotEmpty
+    @EqualsAndHashCode.Include
+    private String imageUrl;
+
+    @NotEmpty
+    @EqualsAndHashCode.Include
+    private String coordinatorImageUrl;
+
+    @NotEmpty
+    @EqualsAndHashCode.Include
+    private String instructorImageUrl;
+
     @NotNull
     private List<EvolutionStageDetailsRequestDto> evolutionStages;
 
