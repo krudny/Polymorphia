@@ -36,10 +36,12 @@ export default function ButtonWithBorder({
   isActive = true,
   forceDark,
   icon,
+  type = "submit",
 }: ButtonWithBorderProps & VariantProps) {
   return (
     <button
       onClick={onClick}
+      type={type}
       className={clsx(
         buttonWithBorder({ size, isActive, forceDark }),
         icon && "button-use-flex",

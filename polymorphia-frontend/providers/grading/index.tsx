@@ -25,13 +25,14 @@ import useSubmissionRequirements from "@/hooks/course/useSubmissionRequirements"
 import useCriteria from "@/hooks/course/useCriteria";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
 import {
-  DEFAULT_SEARCH_BY,
-  DEFAULT_SORT_ORDER_ASC,
-  DEFAULT_GROUPS,
   DEFAULT_GRADE_STATUS,
+  DEFAULT_GROUPS,
+  DEFAULT_SEARCH_BY,
   DEFAULT_SORT_BY_NAME,
+  DEFAULT_SORT_ORDER_ASC,
 } from "@/shared/filter-defaults";
 import useProjectVariant from "@/hooks/course/useProjectVariant";
+import toast from "react-hot-toast";
 
 export const GradingContext = createContext<
   GradingContextInterface | undefined
@@ -151,6 +152,18 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
 
   const submitGrade = () => {
     if (!targetState.selectedTarget) {
+      return;
+    }
+
+    const allCriteriaEmpty =
+      Object.values(state.criteria).every(
+        (criterion) =>
+          (!criterion.gainedXp || String(criterion.gainedXp).trim() === "") &&
+          (!criterion.assignedRewards || criterion.assignedRewards.length === 0)
+      ) && !state.comment?.trim();
+
+    if (allCriteriaEmpty) {
+      toast.error("Nie możesz zapisać pustej oceny.");
       return;
     }
 
