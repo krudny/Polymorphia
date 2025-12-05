@@ -36,7 +36,7 @@ function ProfileContent() {
     isError: isFiltersError,
   } = useProfileFilterConfigs();
 
-  const filters = useFilters<ProfileFilterId>(filterConfigs ?? []);
+  const filters = useFilters<ProfileFilterId>(filterConfigs ?? [], "profile");
 
   if (isLoading || !userContext.userRole) {
     return <Loading />;
