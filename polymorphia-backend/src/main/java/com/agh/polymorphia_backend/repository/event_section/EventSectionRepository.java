@@ -17,9 +17,9 @@ public interface EventSectionRepository extends JpaRepository<EventSection, Long
     @Query("""
             select es.id
             from EventSection es
-            where es.key=:key
+            where es.key=:key and es.course.id=:courseId
             """)
-    Long findIdByKey(String key);
+    Long findIdByKeyAndCourseId(String key, Long courseId);
 
     boolean existsByCourseIdAndName(Long courseId, String name);
 
@@ -92,7 +92,10 @@ public interface EventSectionRepository extends JpaRepository<EventSection, Long
             """, nativeQuery = true)
     List<EventSectionDetailsProjection> findBasicByCourseId(@Param("courseId") Long courseId);
 
-    EventSection findByKey(String key);
-
-    List<EventSection> findAllByKeyIn(List<String> keys);
+    @Query("""
+                SELECT e FROM EventSection e
+                WHERE e.key IN :keys
+                AND e.course.id = :courseId
+            """)
+    List<EventSection> findAllByKeyIn(List<String> keys, Long courseId);
 }

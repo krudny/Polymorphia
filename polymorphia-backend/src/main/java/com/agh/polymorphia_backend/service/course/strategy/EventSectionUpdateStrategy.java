@@ -43,13 +43,8 @@ public class EventSectionUpdateStrategy implements EntityUpdateStrategy<EventSec
     }
 
     @Override
-    public List<EventSection> findAllByKeys(List<String> keys) {
-        return eventSectionRepository.findAllByKeyIn(keys);
-    }
-
-    @Override
-    public EventSection findByKey(String key) {
-        return eventSectionRepository.findByKey(key);
+    public List<EventSection> findAllByKeys(List<String> keys, Long courseId) {
+        return eventSectionRepository.findAllByKeyIn(keys, courseId);
     }
 
     @Override

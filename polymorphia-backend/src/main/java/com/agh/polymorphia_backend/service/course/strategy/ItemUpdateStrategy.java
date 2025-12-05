@@ -46,13 +46,8 @@ public class ItemUpdateStrategy implements EntityUpdateStrategy<ItemDetailsReque
     }
 
     @Override
-    public List<Item> findAllByKeys(List<String> keys) {
-        return itemRepository.findAllByKeyIn(keys);
-    }
-
-    @Override
-    public Item findByKey(String key) {
-        return itemRepository.findByKey(key);
+    public List<Item> findAllByKeys(List<String> keys, Long courseId) {
+        return itemRepository.findAllByKeyIn(keys, courseId);
     }
 
     @Override
@@ -71,7 +66,7 @@ public class ItemUpdateStrategy implements EntityUpdateStrategy<ItemDetailsReque
     @Override
     public Item updateEntity(Item entity, ItemDetailsRequestDto dto,
                              Map<ItemDetailsRequestDto, Long> orderIds, Long courseId) {
-        Long eventSectionId = eventSectionRepository.findIdByKey(dto.getEventSectionKey());
+        Long eventSectionId = eventSectionRepository.findIdByKeyAndCourseId(dto.getEventSectionKey(), courseId);
         entity.setName(dto.getName());
         entity.setDescription(dto.getDescription());
         entity.setKey(dto.getKey());

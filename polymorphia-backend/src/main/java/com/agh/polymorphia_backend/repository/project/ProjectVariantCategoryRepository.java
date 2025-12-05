@@ -25,14 +25,17 @@ public interface ProjectVariantCategoryRepository extends JpaRepository<ProjectV
     )
     List<ProjectVariantCategoryDetailsProjection> findAllByCourseId(Long courseId);
 
-    ProjectVariantCategory findByKey(String key);
-
-    List<ProjectVariantCategory> findAllByKeyIn(List<String> keys);
+    @Query("""
+                SELECT pvc FROM ProjectVariantCategory pvc
+                WHERE pvc.key IN :keys
+                AND pvc.project.eventSection.course.id = :courseId
+            """)
+    List<ProjectVariantCategory> findAllByKeyIn(List<String> keys, Long courseId);
 
     @Query("""
             select p.id
             from ProjectVariantCategory p
-            where p.key=:key
+            where p.key=:key and p.project.eventSection.course.id = :courseId
             """)
-    Long findIdByKey(String key);
+    Long findIdByKeyAndCourseId(String key, Long courseId);
 }

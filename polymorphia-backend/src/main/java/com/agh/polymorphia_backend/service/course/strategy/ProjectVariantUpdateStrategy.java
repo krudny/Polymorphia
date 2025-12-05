@@ -40,14 +40,10 @@ public class ProjectVariantUpdateStrategy implements EntityUpdateStrategy<Varian
     }
 
     @Override
-    public List<ProjectVariant> findAllByKeys(List<String> keys) {
-        return projectVariantRepository.findAllByKeyIn(keys);
+    public List<ProjectVariant> findAllByKeys(List<String> keys, Long courseId) {
+        return projectVariantRepository.findAllByKeyIn(keys, courseId);
     }
 
-    @Override
-    public ProjectVariant findByKey(String key) {
-        return projectVariantRepository.findByKey(key);
-    }
 
     @Override
     public ProjectVariant createNewEntity(VariantDetailsRequestDto dto) {

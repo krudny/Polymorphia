@@ -16,7 +16,6 @@ import java.util.function.Function;
 @AllArgsConstructor
 public class CriterionUpdateStrategy implements EntityUpdateStrategy<CriterionDetailsRequestDto, Criterion> {
 
-
     private final CriterionRepository criterionRepository;
     private final GradableEventRepository gradableEventRepository;
 
@@ -41,13 +40,8 @@ public class CriterionUpdateStrategy implements EntityUpdateStrategy<CriterionDe
     }
 
     @Override
-    public List<Criterion> findAllByKeys(List<String> keys) {
-        return criterionRepository.findAllByKeyIn(keys);
-    }
-
-    @Override
-    public Criterion findByKey(String key) {
-        return criterionRepository.findByKey(key);
+    public List<Criterion> findAllByKeys(List<String> keys, Long courseId) {
+        return criterionRepository.findAllByKeyIn(keys, courseId);
     }
 
     @Override

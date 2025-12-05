@@ -41,14 +41,17 @@ public interface CriterionRepository extends JpaRepository<Criterion, Long> {
             """, nativeQuery = true)
     List<CriterionRewardDetailsProjection> findCriteriaRewardsByCourseId(@Param("courseId") Long courseId);
 
-    Criterion findByKey(String key);
-
-    List<Criterion> findAllByKeyIn(List<String> keys);
+    @Query("""
+                SELECT c FROM Criterion c
+                WHERE c.key IN :keys
+                AND c.gradableEvent.eventSection.course.id = :courseId
+            """)
+    List<Criterion> findAllByKeyIn(List<String> keys, Long courseId);
 
     @Query("""
             select c.id
             from Criterion c
-            where c.key=:key
+            where c.key=:key and c.gradableEvent.eventSection.course.id=:courseId
             """)
-    Long findIdByKey(String key);
+    Long findIdByKeyAndCourseId(String key, Long courseId);
 }

@@ -41,13 +41,8 @@ public class EvolutionStageUpdateStrategy
     }
 
     @Override
-    public List<EvolutionStage> findAllByKeys(List<String> keys) {
-        return evolutionStagesRepository.findAllByKeyIn(keys);
-    }
-
-    @Override
-    public EvolutionStage findByKey(String key) {
-        return evolutionStagesRepository.findByKey(key);
+    public List<EvolutionStage> findAllByKeys(List<String> keys, Long courseId) {
+        return evolutionStagesRepository.findAllByKeyIn(keys, courseId);
     }
 
     @Override

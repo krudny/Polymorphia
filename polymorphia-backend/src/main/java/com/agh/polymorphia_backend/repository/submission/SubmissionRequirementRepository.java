@@ -29,7 +29,10 @@ public interface SubmissionRequirementRepository extends JpaRepository<Submissio
             """, nativeQuery = true)
     List<SubmissionRequirementDetailsProjection> findByCourseId(@Param("courseId") Long courseId);
 
-    SubmissionRequirement findByKey(String key);
-
-    List<SubmissionRequirement> findAllByKeyIn(List<String> keys);
+    @Query("""
+                SELECT sr FROM SubmissionRequirement sr
+                WHERE sr.key IN :keys
+                AND sr.gradableEvent.eventSection.course.id = :courseId
+            """)
+    List<SubmissionRequirement> findAllByKeyIn(List<String> keys, Long courseId);
 }

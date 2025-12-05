@@ -44,13 +44,8 @@ public class GradableEventUpdateStrategy implements EntityUpdateStrategy<Gradabl
     }
 
     @Override
-    public List<GradableEvent> findAllByKeys(List<String> keys) {
-        return gradableEventRepository.findAllByKeyIn(keys);
-    }
-
-    @Override
-    public GradableEvent findByKey(String key) {
-        return gradableEventRepository.findByKey(key);
+    public List<GradableEvent> findAllByKeys(List<String> keys, Long courseId) {
+        return gradableEventRepository.findAllByKeyIn(keys, courseId);
     }
 
     @Override

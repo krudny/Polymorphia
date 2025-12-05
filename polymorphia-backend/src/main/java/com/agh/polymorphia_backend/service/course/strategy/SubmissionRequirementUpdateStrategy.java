@@ -41,13 +41,8 @@ public class SubmissionRequirementUpdateStrategy implements EntityUpdateStrategy
     }
 
     @Override
-    public List<SubmissionRequirement> findAllByKeys(List<String> keys) {
-        return submissionRequirementRepository.findAllByKeyIn(keys);
-    }
-
-    @Override
-    public SubmissionRequirement findByKey(String key) {
-        return submissionRequirementRepository.findByKey(key);
+    public List<SubmissionRequirement> findAllByKeys(List<String> keys, Long courseId) {
+        return submissionRequirementRepository.findAllByKeyIn(keys, courseId);
     }
 
     @Override

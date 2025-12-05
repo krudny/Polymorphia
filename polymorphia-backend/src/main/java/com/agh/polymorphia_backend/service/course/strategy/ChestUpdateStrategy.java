@@ -44,13 +44,8 @@ public class ChestUpdateStrategy implements EntityUpdateStrategy<ChestDetailsReq
     }
 
     @Override
-    public List<Chest> findAllByKeys(List<String> keys) {
-        return chestRepository.findAllByKeyIn(keys);
-    }
-
-    @Override
-    public Chest findByKey(String key) {
-        return chestRepository.findByKey(key);
+    public List<Chest> findAllByKeys(List<String> keys, Long courseId) {
+        return chestRepository.findAllByKeyIn(keys, courseId);
     }
 
     @Override
@@ -61,7 +56,7 @@ public class ChestUpdateStrategy implements EntityUpdateStrategy<ChestDetailsReq
     @Override
     public Chest updateEntity(Chest entity, ChestDetailsRequestDto dto,
                               Map<ChestDetailsRequestDto, Long> orderIds, Long courseId) {
-        List<Item> items = itemRepository.findAllByKeyIn(dto.getItemKeys());
+        List<Item> items = itemRepository.findAllByKeyIn(dto.getItemKeys(), courseId);
 
         entity.setName(dto.getName());
         entity.setDescription(dto.getDescription());
@@ -73,6 +68,7 @@ public class ChestUpdateStrategy implements EntityUpdateStrategy<ChestDetailsReq
 
         if (entity.getId() == null) {
             entity.setCourse(courseRepository.getReferenceById(courseId));
+            chestRepository.saveAndFlush(entity);
         }
         updateChestItems(entity, items);
 

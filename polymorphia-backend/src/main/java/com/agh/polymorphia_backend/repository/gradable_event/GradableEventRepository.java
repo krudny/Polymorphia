@@ -206,11 +206,14 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
     @Query("""
             select g.id
             from GradableEvent g
-            where g.key=:key
+            where g.key=:key and g.eventSection.course.id=:courseId
             """)
-    Long findIdByKey(String key);
+    Long findIdByKeyAndCourseId(String key, Long courseId);
 
-    GradableEvent findByKey(String key);
-
-    List<GradableEvent> findAllByKeyIn(List<String> keys);
+    @Query("""
+                SELECT ge FROM GradableEvent ge
+                WHERE ge.key IN :keys
+                AND ge.eventSection.course.id = :courseId
+            """)
+    List<GradableEvent> findAllByKeyIn(List<String> keys, Long courseId);
 }

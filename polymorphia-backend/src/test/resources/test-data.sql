@@ -137,19 +137,19 @@ VALUES (1, 2, 1),
 
 -- Evolution Stages
 INSERT INTO evolution_stages (id, key, name, min_xp, description, grade, image_url, order_index, course_id)
-VALUES (1, '1', 'Pisklak', 20, 'description', 2.0, 'imageUrl_pisklak', 1, 1),
-       (2, '2', 'Jajo', 0, 'description', 2.0, 'imageUrl_jajo', 0, 1),
-       (3, '3', 'Podlot', 50, 'description', 3.0, 'imageUrl_podlot', 2, 1),
-       (4, '14', 'Podlot2', 50, 'description2', 3.0, 'imageUrl2', 3, 2);
+VALUES (1, 'evolution_stages1', 'Pisklak', 20, 'description', 2.0, 'imageUrl_pisklak', 1, 1),
+       (2, 'evolution_stages2', 'Jajo', 0, 'description', 2.0, 'imageUrl_jajo', 0, 1),
+       (3, 'evolution_stages3', 'Podlot', 50, 'description', 3.0, 'imageUrl_podlot', 2, 1),
+       (4, 'evolution_stages14', 'Podlot2', 50, 'description2', 3.0, 'imageUrl2', 3, 2);
 
 -- Event sections
 INSERT INTO event_sections (id, key, has_gradable_events_with_topics, is_hidden, is_shown_in_road_map, name,
                             order_index, course_id)
-VALUES (1, '1', true, false, true, 'Kartkówka', 2, 1),
-       (2, '2', true, false, true, 'Lab', 1, 1),
-       (3, '3', true, false, true, 'Kartkówka', 2, 4),
-       (4, '4', true, false, true, 'Laboratorium', 1, 4),
-       (5, '5', true, false, true, 'Projekt', 3, 4);
+VALUES (1, 'event_sections1', true, false, true, 'Kartkówka', 2, 1),
+       (2, 'event_sections2', true, false, true, 'Lab', 1, 1),
+       (3, 'event_sections3', true, false, true, 'Kartkówka', 2, 4),
+       (4, 'event_sections4', true, false, true, 'Laboratorium', 1, 4),
+       (5, 'event_sections5', true, false, true, 'Projekt', 3, 4);
 
 -- Test sections
 INSERT INTO public.test_sections (id)
@@ -167,18 +167,18 @@ VALUES (5);
 
 -- Rewards
 INSERT INTO public.rewards (id, key, description, image_url, name, order_index, course_id)
-VALUES (1, '1', 'desc', 'url', 'Apteczka', 1, 1),
-       (2, '2', 'desc', 'url', 'Apteczka2', 2, 1),
-       (3, '3', 'desc', 'url', 'Marchewka', 0, 1),
-       (4, '4', 'desc', 'url', 'Srebrna', 0, 1),
-       (5, '5', 'desc', 'url', 'Złota', 1, 1),
-       (6, '6', 'desc', 'url', 'ALL', 3, 4),
-       (7, '7', 'desc', 'url', 'ONE_OF_MANY', 2, 4),
-       (8, '8', 'desc', 'percentageBonus_url', 'PercentageBonusItem', 0, 4),
-       (9, '9', 'desc', 'url', 'limit reached', 1, 4),
-       (10, '10', 'desc', 'url', 'flatbonus ONE', 2, 4),
-       (11, '11', 'desc', 'url', 'flatbonus multiple', 3, 4),
-       (12, '12', 'desc', 'url', 'ONE_OF_MANY reached limit', 4, 4);
+VALUES (1, 'rewards1', 'desc', 'url', 'Apteczka', 1, 1),
+       (2, 'rewards2', 'desc', 'url', 'Apteczka2', 2, 1),
+       (3, 'rewards3', 'desc', 'url', 'Marchewka', 0, 1),
+       (4, 'rewards4', 'desc', 'url', 'Srebrna', 0, 1),
+       (5, 'rewards5', 'desc', 'url', 'Złota', 1, 1),
+       (6, 'rewards6', 'desc', 'url', 'ALL', 3, 4),
+       (7, 'rewards7', 'desc', 'url', 'ONE_OF_MANY', 2, 4),
+       (8, 'rewards8', 'desc', 'percentageBonus_url', 'PercentageBonusItem', 0, 4),
+       (9, 'rewards9', 'desc', 'url', 'limit reached', 1, 4),
+       (10, 'rewards10', 'desc', 'url', 'flatbonus ONE', 2, 4),
+       (11, 'rewards11', 'desc', 'url', 'flatbonus multiple', 3, 4),
+       (12, 'rewards12', 'desc', 'url', 'ONE_OF_MANY reached limit', 4, 4);
 
 -- Items
 INSERT INTO public.items ("limit", reward_id, event_section_id)
@@ -230,13 +230,13 @@ VALUES (1, 4),
 -- Gradable events
 INSERT INTO public.gradable_events (id, key, event_section_id, name, topic, order_index, road_map_order_index,
                                     markdown_source_url, markdown, is_hidden, is_locked)
-VALUES (1, '1', 1, 'kartkówka 1', null, 1, 1, '/url', 'markdown', false, false),
-       (2, '2', 2, 'lab 1', null, 1, 1, '/url', 'markdown', false, false),
-       (3, '3', 3, 'kartkówka 2', null, 1, 1, '/url', 'markdown', false, false),
-       (4, '4', 4, 'lab 2', null, 1, 1, '/url', 'markdown', false, false),
-       (5, '5', 3, 'kartkówka 3', null, 1, 1, '/url', 'markdown', false, false),
-       (6, '6', 3, 'kartkówka 4', null, 1, 1, '/url', 'markdown', false, false),
-       (7, '7', 5, 'projekt', null, 1, 1, '/url', 'markdown', false, false);
+VALUES (1, 'gradable_events1', 1, 'kartkówka 1', null, 1, 1, '/url', 'markdown', false, false),
+       (2, 'gradable_events2', 2, 'lab 1', null, 1, 1, '/url', 'markdown', false, false),
+       (3, 'gradable_events3', 3, 'kartkówka 2', null, 1, 1, '/url', 'markdown', false, false),
+       (4, 'gradable_events4', 4, 'lab 2', null, 1, 1, '/url', 'markdown', false, false),
+       (5, 'gradable_events5', 3, 'kartkówka 3', null, 1, 1, '/url', 'markdown', false, false),
+       (6, 'gradable_events6', 3, 'kartkówka 4', null, 1, 1, '/url', 'markdown', false, false),
+       (7, 'gradable_events7', 5, 'projekt', null, 1, 1, '/url', 'markdown', false, false);
 
 insert into projects(id, allow_cross_course_group_project_groups)
 values (7, false);
@@ -250,13 +250,13 @@ VALUES (8, 1);
 
 -- Criteria
 INSERT INTO public.criteria (id, gradable_event_id, name, max_xp, key)
-VALUES (1, 1, 'uzyskane punkty', 20.0, '1'),
-       (2, 1, 'jakość kodu', 20.0, '2'),
-       (3, 4, 'uzyskane punkty', 4.0, '3'),
-       (4, 3, 'kryterium2', 10.0, '4'),
-       (5, 3, 'uzyskane punkty', 8.0, '5'),
-       (6, 3, 'uzyskane punkty2', 6.0, '6'),
-       (7, 7, 'uzyskane punkty', 10.0, '7');
+VALUES (1, 1, 'uzyskane punkty', 20.0, 'criteria1'),
+       (2, 1, 'jakość kodu', 20.0, 'criteria2'),
+       (3, 4, 'uzyskane punkty', 4.0, 'criteria3'),
+       (4, 3, 'kryterium2', 10.0, 'criteria4'),
+       (5, 3, 'uzyskane punkty', 8.0, 'criteria5'),
+       (6, 3, 'uzyskane punkty2', 6.0, 'criteria6'),
+       (7, 7, 'uzyskane punkty', 10.0, 'criteria7');
 
 -- Submission Requirements
 INSERT INTO public.submission_requirements (id, gradable_event_id, name, is_mandatory, order_index, key)

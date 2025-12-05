@@ -30,13 +30,13 @@ public class CourseController {
     private final CourseImportService courseImportService;
 
     @GetMapping()
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<List<AvailableCoursesResponseDto>> getAvailableCourses() {
         return ResponseEntity.ok(courseService.getAvailableCourses());
     }
 
     @PostMapping("/create")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
     @SkipUnexpectedExceptionHandler
     public ResponseEntity<Void> createCourse(@RequestBody CourseDetailsRequestDto request) {
         courseImportService.importCourse(request);
@@ -44,7 +44,7 @@ public class CourseController {
     }
 
     @PostMapping(value = "/create/file", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
     @SkipUnexpectedExceptionHandler
     public ResponseEntity<Void> createCourseFromFile(@RequestBody CourseDetailsRequestDto request) {
         courseImportService.importCourse(request);

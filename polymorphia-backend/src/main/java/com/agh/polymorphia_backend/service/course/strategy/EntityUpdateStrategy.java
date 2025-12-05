@@ -15,13 +15,11 @@ public interface EntityUpdateStrategy<T, R> {
 
     JpaRepository<R, Long> getRepository();
 
-    List<R> findAllByKeys(List<String> keys);
-
-    R findByKey(String key);
+    List<R> findAllByKeys(List<String> keys, Long courseId);
 
     R createNewEntity(T dto);
 
-    R updateEntity(R entity, T dto, Map<T, Long> orderIds, Long superEntityId);
+    R updateEntity(R entity, T dto, Map<T, Long> orderIds, Long parentEntityId);
 
     default void flush() {
         getRepository().flush();

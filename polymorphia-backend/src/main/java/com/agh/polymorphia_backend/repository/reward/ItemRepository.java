@@ -44,14 +44,10 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             """, nativeQuery = true)
     List<ItemDetailsDetailsProjection> findAllItemDetailsByCourseId(@Param("courseId") Long courseId);
 
-    Item findByKey(String key);
-
-    List<Item> findAllByKeyIn(List<String> keys);
-
     @Query("""
-            select i.id
-            from Item i
-            where i.key =:key
+                SELECT i FROM Item i
+                WHERE i.key IN :keys
+                AND i.course.id = :courseId
             """)
-    Long getIdByKey(String key);
+    List<Item> findAllByKeyIn(List<String> keys, Long courseId);
 }

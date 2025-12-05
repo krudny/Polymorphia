@@ -38,7 +38,10 @@ public interface ChestRepository extends JpaRepository<Chest, Long> {
             """, nativeQuery = true)
     List<ChestDetailsDetailsProjection> findAllChestDetailssByCourseId(@Param("courseId") Long courseId);
 
-    List<Chest> findAllByKeyIn(List<String> keys);
-
-    Chest findByKey(String key);
+    @Query("""
+                SELECT c FROM Chest c
+                WHERE c.key IN :keys
+                AND c.course.id = :courseId
+            """)
+    List<Chest> findAllByKeyIn(List<String> keys, Long courseId);
 }
