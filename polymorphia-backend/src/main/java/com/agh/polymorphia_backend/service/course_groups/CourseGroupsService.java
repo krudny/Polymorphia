@@ -118,7 +118,9 @@ public class CourseGroupsService {
                 .map(Animal::getId)
                 .toList();
 
-        gradeService.deleteGradesForAnimals(animalIds);
+        if (!animalIds.isEmpty()) {
+            gradeService.deleteCascadeForAnimals(animalIds);
+        }
         courseGroupRepository.deleteById(courseGroupId);
     }
 

@@ -3,10 +3,14 @@ package com.agh.polymorphia_backend.service.grade;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.grade.Grade;
 import com.agh.polymorphia_backend.model.user.student.Animal;
+import com.agh.polymorphia_backend.repository.criterion.CriterionGradeRepository;
 import com.agh.polymorphia_backend.repository.grade.GradeRepository;
+import com.agh.polymorphia_backend.repository.reward.assigned.AssignedRewardRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +19,9 @@ import java.util.Optional;
 @AllArgsConstructor
 public class GradeService {
     private final GradeRepository gradeRepository;
+    private final AssignedRewardRepository assignedRewardRepository;
+    private final CriterionGradeRepository criteriaGradeRepository;
+
 
     public List<Grade> getAnimalGrades(Long animalId) {
         return gradeRepository.findAllByAnimalId(animalId);
@@ -35,8 +42,14 @@ public class GradeService {
     }
 
     @Transactional
-    public void deleteGradesForAnimals(List<Long> animalIds) {
-        gradeRepository.deleteAllByAnimalIdIn(animalIds);
+    public void deleteCascadeForAnimals(List<Long> animalIds) {
+        try {
+            assignedRewardRepository.deleteAssignedRewardsForAnimals(animalIds);
+            criteriaGradeRepository.deleteCriteriaGradesForAnimals(animalIds);
+            gradeRepository.deleteAllByAnimalIdIn(animalIds);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Nie udało się usunąć ocen.");
+        }
     }
 
 

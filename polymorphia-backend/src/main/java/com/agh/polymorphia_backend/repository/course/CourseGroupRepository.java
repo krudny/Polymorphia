@@ -12,13 +12,16 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CourseGroupRepository extends JpaRepository<CourseGroup, Long> {
-   String COURSE_GROUPS_QUERY_BASE = """
-               from CourseGroup cg
-            join cg.studentCourseGroupAssignments scga
-            where (:studentId is null or scga.student.user.id = :studentId)
-            and (:teachingRoleUserId is null or cg.teachingRoleUser.user.id = :teachingRoleUserId or cg.course.coordinator.user.id = :teachingRoleUserId)
-            and cg.course.id = :courseId
-        """;
+    String COURSE_GROUPS_QUERY_BASE = """
+      from CourseGroup cg
+          left join cg.studentCourseGroupAssignments scga
+          left join scga.student s
+          left join s.user u
+      where
+          (:studentId is null or u.id = :studentId)
+          and (:teachingRoleUserId is null or cg.teachingRoleUser.user.id = :teachingRoleUserId or cg.course.coordinator.user.id = :teachingRoleUserId)
+          and cg.course.id = :courseId
+    """;
 
     @Query("""
                 select cg.name from CourseGroup cg
@@ -34,8 +37,8 @@ public interface CourseGroupRepository extends JpaRepository<CourseGroup, Long> 
             """)
     Optional<CourseGroup> findCourseGroupForTeachingRoleUser(Long courseGroupId, Long teachingRoleUserId);
 
-    @Query("select cg.id as id, cg.name as name, cg.room as room, coalesce(count(scga.id), 0) as studentCount "
-        + COURSE_GROUPS_QUERY_BASE + " group by cg.id, cg.name, cg.room")
+    @Query("select cg.id as id, cg.name as name, cg.room as room, coalesce(count(u.id), 0) as studentCount "
+            + COURSE_GROUPS_QUERY_BASE + " group by cg.id, cg.name, cg.room")
     List<CourseGroupProjection> findCourseGroups(Long courseId, Long studentId, Long teachingRoleUserId);
 
     @Query("select distinct cg.id as id, cg.name as name" + COURSE_GROUPS_QUERY_BASE)
