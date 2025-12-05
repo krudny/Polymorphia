@@ -2,8 +2,11 @@ package com.agh.polymorphia_backend.repository.user.student;
 
 import com.agh.polymorphia_backend.model.user.student.Animal;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -29,5 +32,19 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
                     where ar.id = :assignedChestId
             """, nativeQuery = true)
     Long findByAssignedChestId(Long assignedChestId);
+
+    @Modifying
+    @Transactional
+    @Query(value = """
+    DELETE FROM animals a
+    WHERE EXISTS (
+        SELECT 1 
+        FROM students_course_groups scg
+        WHERE scg.animal_id = a.id 
+        AND scg.course_group_id = :courseGroupId
+    )
+    """, nativeQuery = true)
+    void deleteAnimalsByCourseGroupId(@Param("courseGroupId") Long courseGroupId);
+
 
 }

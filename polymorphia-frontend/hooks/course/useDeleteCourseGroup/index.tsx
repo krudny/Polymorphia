@@ -33,6 +33,9 @@ export default function useDeleteCourseGroup(): UseDeleteCourseGroup {
       queryClient.invalidateQueries({
         queryKey: ["courseGroups", courseId, CourseGroupTypes.INDIVIDUAL_FULL],
       });
+      queryClient.removeQueries({
+        queryKey: ["courseGroupTargets"],
+      });
       closeModal();
       router.push(`/course/groups`);
     },

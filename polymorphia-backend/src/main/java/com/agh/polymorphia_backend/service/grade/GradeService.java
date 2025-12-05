@@ -19,8 +19,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class GradeService {
     private final GradeRepository gradeRepository;
-    private final AssignedRewardRepository assignedRewardRepository;
-    private final CriterionGradeRepository criteriaGradeRepository;
 
 
     public List<Grade> getAnimalGrades(Long animalId) {
@@ -39,17 +37,6 @@ public class GradeService {
 
     public void saveGrade(Grade grade) {
         gradeRepository.save(grade);
-    }
-
-    @Transactional
-    public void deleteCascadeForAnimals(List<Long> animalIds) {
-        try {
-            assignedRewardRepository.deleteAssignedRewardsForAnimals(animalIds);
-            criteriaGradeRepository.deleteCriteriaGradesForAnimals(animalIds);
-            gradeRepository.deleteAllByAnimalIdIn(animalIds);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Nie udało się usunąć ocen.");
-        }
     }
 
 

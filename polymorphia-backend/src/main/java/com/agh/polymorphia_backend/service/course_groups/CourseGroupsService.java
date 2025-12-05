@@ -13,6 +13,7 @@ import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.repository.course.CourseGroupRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
+import com.agh.polymorphia_backend.repository.user.student.AnimalRepository;
 import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.grade.GradeService;
 import com.agh.polymorphia_backend.service.mapper.CourseGroupsMapper;
@@ -31,14 +32,13 @@ import static com.agh.polymorphia_backend.service.user.UserService.INVALID_ROLE;
 @Service
 @AllArgsConstructor
 public class CourseGroupsService {
-
     private final CourseGroupRepository courseGroupRepository;
     private final UserService userService;
     private final AccessAuthorizer accessAuthorizer;
     private final CourseGroupsMapper courseGroupsMapper;
     private final CourseService courseService;
     private final UserRepository userRepository;
-    private final GradeService gradeService;
+    private final AnimalRepository animalRepository;
 
     public List<String> findAllCourseGroupNames(Long courseId) {
         accessAuthorizer.authorizeCourseAccess(courseId);
@@ -110,17 +110,7 @@ public class CourseGroupsService {
 
     @Transactional
     public void deleteCourseGroup(Long courseGroupId) {
-        CourseGroup courseGroup = courseGroupRepository.findById(courseGroupId).orElseThrow(
-            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono grupy zajęciowej."));
-
-        List<Long> animalIds = courseGroup.getStudentCourseGroupAssignments().stream()
-                .map(StudentCourseGroupAssignment::getAnimal)
-                .map(Animal::getId)
-                .toList();
-
-        if (!animalIds.isEmpty()) {
-            gradeService.deleteCascadeForAnimals(animalIds);
-        }
+        animalRepository.deleteAnimalsByCourseGroupId(courseGroupId);
         courseGroupRepository.deleteById(courseGroupId);
     }
 
