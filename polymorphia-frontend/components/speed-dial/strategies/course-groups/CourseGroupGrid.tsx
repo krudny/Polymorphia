@@ -7,6 +7,9 @@ export class CourseGroupGridStrategy
   implements SpeedDialStrategy
 {
   getItems(): SpeedDialItem[] {
-    return [this.createCourseGroupSetupModal()];
+    return [
+      this.createInviteUserToCourse(),
+      this.createCourseGroupSetupModal(),
+    ];
   }
 }

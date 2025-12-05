@@ -42,6 +42,7 @@ export interface UseTargets {
   data: TargetResponseDTO[] | undefined;
   isLoading: boolean;
   isError: boolean;
+  refetch: () => void;
 }
 
 export interface UseTargetsParams {

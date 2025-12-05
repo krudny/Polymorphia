@@ -29,3 +29,16 @@ export interface TeachingRoleUserResponseDTO {
   userId: number;
   fullName: string;
 }
+
+export interface CourseGroupDetailsResponseDTO {
+  courseGroupId: number;
+  name: string;
+  room: string;
+  teachingRoleId: number;
+}
+
+export interface UpdateCourseGroupRequestDTO {
+  name: string;
+  room: string;
+  teachingRoleId: number;
+}

@@ -26,6 +26,7 @@ import InviteUserModal from "@/components/speed-dial/modals/invite-user";
 import SubmissionsModal from "@/components/speed-dial/modals/submission";
 import CreateCourseGroupModal from "@/components/course-groups/modals/create-course-group";
 import DeleteCourseGroupModal from "@/components/course-groups/modals/delete-course-group";
+import DeleteAnimalModal from "@/components/course-groups/modals/delete-animal";
 
 export abstract class BaseSpeedDialStrategy {
   abstract getItems(role: Role): SpeedDialItem[];
@@ -245,12 +246,24 @@ export abstract class BaseSpeedDialStrategy {
 
   protected createDeleteCourseGroupModal(): SpeedDialItem {
     return {
-      id: 14,
-      orderIndex: 10,
+      id: 15,
+      orderIndex: 11,
       label: "Usuń grupę",
       icon: "close",
       useDynamicBehavior: () => ({
         modal: (onClose) => <DeleteCourseGroupModal onClosedAction={onClose} />,
+      }),
+    };
+  }
+
+  protected createDeleteAnimalModal(): SpeedDialItem {
+    return {
+      id: 16,
+      orderIndex: 10,
+      label: "Usuń zwierzaka",
+      icon: "account_circle_off",
+      useDynamicBehavior: () => ({
+        modal: (onClose) => <DeleteAnimalModal onClosedAction={onClose} />,
       }),
     };
   }

@@ -9,7 +9,7 @@ export default function useCourseGroupTargets(
   const { search = "", sortBy = [], sortOrder = [], searchBy = [] } = params;
   const { courseGroupId } = useEventParams();
 
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ["courseGroupTargets", search, sortBy, sortOrder, searchBy],
     queryFn: () =>
       TargetListService.getCourseGroupTargetList(
@@ -23,5 +23,5 @@ export default function useCourseGroupTargets(
       ),
   });
 
-  return { data, isLoading, isError };
+  return { data, isLoading, isError, refetch };
 }

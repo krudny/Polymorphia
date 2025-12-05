@@ -5,9 +5,11 @@ import {
 } from "@/services/course-groups/types";
 import { ApiClient } from "@/services/api/client";
 import {
+  CourseGroupDetailsResponseDTO,
   CreateCourseGroupRequestDTO,
   StudentLastActivityDTO,
   TeachingRoleUserResponseDTO,
+  UpdateCourseGroupRequestDTO,
 } from "@/interfaces/api/course-groups";
 import {
   EquipmentChestResponseDTO,
@@ -79,6 +81,21 @@ const CourseGroupsService = {
 
   deleteCourseGroup: async (courseGroupId: number): Promise<void> => {
     await ApiClient.delete(`/course-groups/${courseGroupId}`);
+  },
+
+  getCourseGroupDetails: async (
+    courseGroupId: number
+  ): Promise<CourseGroupDetailsResponseDTO> => {
+    return await ApiClient.get<CourseGroupDetailsResponseDTO>(
+      `/course-groups/${courseGroupId}`
+    );
+  },
+
+  updateCourseGroup: async (
+    courseGroupId: number,
+    body: UpdateCourseGroupRequestDTO
+  ): Promise<void> => {
+    await ApiClient.put(`/course-groups/${courseGroupId}`, body);
   },
 
   getTeachingRoleUsers: async (
