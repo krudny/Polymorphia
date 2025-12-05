@@ -15,6 +15,7 @@ import clsx from "clsx";
 import useProjectGroupUpdate from "@/hooks/course/useProjectGroupUpdate";
 import useModalContext from "@/hooks/contexts/useModalContext";
 import useRandomProjectVariant from "@/hooks/course/useRandomProjectVariant";
+import { random } from "gsap-trial/src/all";
 
 export default function ProjectVariantPick() {
   const {
@@ -192,10 +193,11 @@ export default function ProjectVariantPick() {
       <div className="variant-pick-buttons">
         <div className="variant-pick-buttons-row">
           <ButtonWithBorder
-            text="Wylosuj"
+            text={randomVariantMutation.isPending ? "Losowanie..." : "Wylosuj"}
             icon="ifl"
             className="!mx-0 !py-0 !w-full"
             onClick={handleRandom}
+            isActive={!randomVariantMutation.isPending}
           />
         </div>
         <div className="variant-pick-buttons-row">
