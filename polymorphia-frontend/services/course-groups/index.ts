@@ -5,7 +5,7 @@ import {
 } from "@/services/course-groups/types";
 import { ApiClient } from "@/services/api/client";
 import {
-  CourseGroupDetailsResponseDTO,
+  ChangeStudentCourseGroupRequestDTO,
   CreateCourseGroupRequestDTO,
   StudentLastActivityDTO,
   TeachingRoleUserResponseDTO,
@@ -83,19 +83,17 @@ const CourseGroupsService = {
     await ApiClient.delete(`/course-groups/${courseGroupId}`);
   },
 
-  getCourseGroupDetails: async (
-    courseGroupId: number
-  ): Promise<CourseGroupDetailsResponseDTO> => {
-    return await ApiClient.get<CourseGroupDetailsResponseDTO>(
-      `/course-groups/${courseGroupId}`
-    );
-  },
-
   updateCourseGroup: async (
     courseGroupId: number,
     body: UpdateCourseGroupRequestDTO
   ): Promise<void> => {
     await ApiClient.put(`/course-groups/${courseGroupId}`, body);
+  },
+
+  changeStudentCourseGroup: async (
+    body: ChangeStudentCourseGroupRequestDTO
+  ): Promise<void> => {
+    await ApiClient.put(`/course-groups/change-student-group`, body);
   },
 
   getTeachingRoleUsers: async (

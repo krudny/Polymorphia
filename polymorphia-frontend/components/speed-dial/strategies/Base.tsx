@@ -27,10 +27,11 @@ import SubmissionsModal from "@/components/speed-dial/modals/submission";
 import CreateCourseGroupModal from "@/components/course-groups/modals/create-course-group";
 import DeleteCourseGroupModal from "@/components/course-groups/modals/delete-course-group";
 import DeleteAnimalModal from "@/components/course-groups/modals/delete-animal";
+import MoveAnimalModal from "@/components/course-groups/modals/move-animal";
+import EditCourseGroupModal from "@/components/course-groups/modals/edit-course-group";
 
 export abstract class BaseSpeedDialStrategy {
   abstract getItems(role: Role): SpeedDialItem[];
-
   protected createRewards(): SpeedDialItem {
     return {
       id: 1,
@@ -247,7 +248,7 @@ export abstract class BaseSpeedDialStrategy {
   protected createDeleteCourseGroupModal(): SpeedDialItem {
     return {
       id: 15,
-      orderIndex: 11,
+      orderIndex: 13,
       label: "Usuń grupę",
       icon: "close",
       useDynamicBehavior: () => ({
@@ -264,6 +265,30 @@ export abstract class BaseSpeedDialStrategy {
       icon: "account_circle_off",
       useDynamicBehavior: () => ({
         modal: (onClose) => <DeleteAnimalModal onClosedAction={onClose} />,
+      }),
+    };
+  }
+
+  protected createMoveAnimalModal(): SpeedDialItem {
+    return {
+      id: 17,
+      orderIndex: 9,
+      label: "Przenieś studenta",
+      icon: "person_edit",
+      useDynamicBehavior: () => ({
+        modal: (onClose) => <MoveAnimalModal onClosedAction={onClose} />,
+      }),
+    };
+  }
+
+  protected createEditCourseGroupModal(): SpeedDialItem {
+    return {
+      id: 18,
+      orderIndex: 12,
+      label: "Edytuj grupę",
+      icon: "edit",
+      useDynamicBehavior: () => ({
+        modal: (onClose) => <EditCourseGroupModal onClosedAction={onClose} />,
       }),
     };
   }

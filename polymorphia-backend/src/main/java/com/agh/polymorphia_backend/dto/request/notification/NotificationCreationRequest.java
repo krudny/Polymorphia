@@ -2,7 +2,9 @@ package com.agh.polymorphia_backend.dto.request.notification;
 
 import com.agh.polymorphia_backend.model.notification.NotificationType;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Data

@@ -1,6 +1,8 @@
 package com.agh.polymorphia_backend.controller;
 
+import com.agh.polymorphia_backend.dto.request.course_group.ChangeStudentCourseGroupRequestDto;
 import com.agh.polymorphia_backend.dto.request.course_group.CreateCourseGroupRequestDto;
+import com.agh.polymorphia_backend.dto.request.course_group.UpdateCourseGroupRequestDto;
 import com.agh.polymorphia_backend.dto.response.course_groups.CourseGroupsResponseDto;
 import com.agh.polymorphia_backend.dto.response.course_groups.CourseGroupsShortResponseDto;
 import com.agh.polymorphia_backend.dto.response.user.TeachingRoleUserResponseDto;
@@ -53,6 +55,20 @@ public class CourseGroupsController {
     @PreAuthorize("hasAuthority('COORDINATOR')")
     public ResponseEntity<List<TeachingRoleUserResponseDto>> getTeachingRoleUsers(@RequestParam Long courseId) {
         return ResponseEntity.ok(courseGroupService.getTeachingRoleUsers(courseId));
+    }
+
+    @PutMapping("/{courseGroupId}")
+    @PreAuthorize("hasAuthority('COORDINATOR')")
+    public ResponseEntity<Void> updateCourseGroup(@PathVariable Long courseGroupId, @RequestBody UpdateCourseGroupRequestDto requestDto) {
+        courseGroupService.updateCourseGroup(courseGroupId, requestDto);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/change-student-group")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
+    public ResponseEntity<Void> changeStudentCourseGroup(@RequestBody ChangeStudentCourseGroupRequestDto requestDto) {
+        courseGroupService.changeStudentCourseGroup(requestDto);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{courseGroupId}")

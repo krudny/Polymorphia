@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -34,11 +33,10 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
     Long findByAssignedChestId(Long assignedChestId);
 
     @Modifying
-    @Transactional
     @Query(value = """
     DELETE FROM animals a
     WHERE EXISTS (
-        SELECT 1 
+        SELECT 1
         FROM students_course_groups scg
         WHERE scg.animal_id = a.id 
         AND scg.course_group_id = :courseGroupId
@@ -46,5 +44,7 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
     """, nativeQuery = true)
     void deleteAnimalsByCourseGroupId(@Param("courseGroupId") Long courseGroupId);
 
-
+    @Modifying
+    @Query("DELETE FROM Animal a WHERE a.id = :id")
+    void deleteAnimalById(@Param("id") Long id);
 }

@@ -8,13 +8,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateCourseGroupRequestDto {
+public class ChangeStudentCourseGroupRequestDto {
     @NotNull
-    private String name;
+    private Long animalId;
 
     @NotNull
-    private String room;
-
-    @NotNull
-    private Long teachingRoleId;
+    private Long newCourseGroupId;
 }
+

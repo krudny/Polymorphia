@@ -3,14 +3,9 @@ package com.agh.polymorphia_backend.service.grade;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.grade.Grade;
 import com.agh.polymorphia_backend.model.user.student.Animal;
-import com.agh.polymorphia_backend.repository.criterion.CriterionGradeRepository;
 import com.agh.polymorphia_backend.repository.grade.GradeRepository;
-import com.agh.polymorphia_backend.repository.reward.assigned.AssignedRewardRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;

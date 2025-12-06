@@ -2,6 +2,7 @@ export interface CourseGroupsResponseDTO {
   id: number;
   name: string;
   room: string;
+  teachingRoleId: number;
   studentCount: number;
 }
 
@@ -30,15 +31,13 @@ export interface TeachingRoleUserResponseDTO {
   fullName: string;
 }
 
-export interface CourseGroupDetailsResponseDTO {
-  courseGroupId: number;
+export interface UpdateCourseGroupRequestDTO {
   name: string;
   room: string;
   teachingRoleId: number;
 }
 
-export interface UpdateCourseGroupRequestDTO {
-  name: string;
-  room: string;
-  teachingRoleId: number;
+export interface ChangeStudentCourseGroupRequestDTO {
+  animalId: number;
+  newCourseGroupId: number;
 }

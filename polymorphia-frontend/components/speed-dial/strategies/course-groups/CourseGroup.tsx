@@ -10,10 +10,16 @@ export class CourseGroupStrategy
   getItems(role: Role): SpeedDialItem[] {
     switch (role) {
       case Roles.INSTRUCTOR:
-        return [this.createInviteUserToGroup(), this.createDeleteAnimalModal()];
+        return [
+          this.createInviteUserToGroup(),
+          this.createMoveAnimalModal(),
+          this.createDeleteAnimalModal(),
+        ];
       case Roles.COORDINATOR:
         return [
           this.createInviteUserToGroup(),
+          this.createEditCourseGroupModal(),
+          this.createMoveAnimalModal(),
           this.createDeleteAnimalModal(),
           this.createDeleteCourseGroupModal(),
         ];

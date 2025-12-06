@@ -37,8 +37,8 @@ public interface CourseGroupRepository extends JpaRepository<CourseGroup, Long> 
             """)
     Optional<CourseGroup> findCourseGroupForTeachingRoleUser(Long courseGroupId, Long teachingRoleUserId);
 
-    @Query("select cg.id as id, cg.name as name, cg.room as room, coalesce(count(u.id), 0) as studentCount "
-            + COURSE_GROUPS_QUERY_BASE + " group by cg.id, cg.name, cg.room")
+    @Query("select cg.id as id, cg.name as name, cg.teachingRoleUser.userId as teachingRoleId, cg.room as room, coalesce(count(u.id), 0) as studentCount "
+            + COURSE_GROUPS_QUERY_BASE + " group by cg.id, cg.name, cg.room, cg.teachingRoleUser.userId")
     List<CourseGroupProjection> findCourseGroups(Long courseId, Long studentId, Long teachingRoleUserId);
 
     @Query("select distinct cg.id as id, cg.name as name" + COURSE_GROUPS_QUERY_BASE)

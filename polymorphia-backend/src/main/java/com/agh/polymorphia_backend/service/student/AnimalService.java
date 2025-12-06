@@ -31,7 +31,7 @@ public class AnimalService {
 
     public Animal getAnimal(Long userId, Long courseId) {
         return animalRepository.findByCourseIdAndStudentId(courseId, userId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Zwierzak nie został znaleziony." + userId));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Zwierzak nie został znaleziony."));
     }
 
     public Long getAnimalIdForCurrentUser(Long courseId) {
@@ -93,5 +93,10 @@ public class AnimalService {
 
     private Optional<Animal> getAnimalByNameAndCourseId(String animalName, Long courseId) {
         return animalRepository.findByNameAndCourseId(animalName, courseId);
+    }
+
+    @Transactional
+    public void deleteAnimal(Long animalId) {
+        animalRepository.deleteAnimalById(animalId);
     }
 }

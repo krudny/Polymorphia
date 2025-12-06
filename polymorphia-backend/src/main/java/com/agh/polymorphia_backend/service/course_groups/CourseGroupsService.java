@@ -1,6 +1,8 @@
 package com.agh.polymorphia_backend.service.course_groups;
 
+import com.agh.polymorphia_backend.dto.request.course_group.ChangeStudentCourseGroupRequestDto;
 import com.agh.polymorphia_backend.dto.request.course_group.CreateCourseGroupRequestDto;
+import com.agh.polymorphia_backend.dto.request.course_group.UpdateCourseGroupRequestDto;
 import com.agh.polymorphia_backend.dto.response.course_groups.CourseGroupsResponseDto;
 import com.agh.polymorphia_backend.dto.response.course_groups.CourseGroupsShortResponseDto;
 import com.agh.polymorphia_backend.dto.response.user.TeachingRoleUserResponseDto;
@@ -12,10 +14,10 @@ import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.repository.course.CourseGroupRepository;
+import com.agh.polymorphia_backend.repository.course.StudentCourseGroupRepository;
 import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.repository.user.student.AnimalRepository;
 import com.agh.polymorphia_backend.service.course.CourseService;
-import com.agh.polymorphia_backend.service.grade.GradeService;
 import com.agh.polymorphia_backend.service.mapper.CourseGroupsMapper;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
@@ -32,6 +34,7 @@ import static com.agh.polymorphia_backend.service.user.UserService.INVALID_ROLE;
 @Service
 @AllArgsConstructor
 public class CourseGroupsService {
+    private static final String COURSE_GROUP_NOT_FOUND = "Nie znaleziono grupy zajęciowej.";
     private final CourseGroupRepository courseGroupRepository;
     private final UserService userService;
     private final AccessAuthorizer accessAuthorizer;
@@ -39,6 +42,7 @@ public class CourseGroupsService {
     private final CourseService courseService;
     private final UserRepository userRepository;
     private final AnimalRepository animalRepository;
+    private final StudentCourseGroupRepository studentCourseGroupRepository;
 
     public List<String> findAllCourseGroupNames(Long courseId) {
         accessAuthorizer.authorizeCourseAccess(courseId);
@@ -67,7 +71,7 @@ public class CourseGroupsService {
         return switch (userService.getCurrentUserRole()) {
             case INSTRUCTOR, COORDINATOR -> courseGroupRepository.findCourseGroupForTeachingRoleUser(courseGroupId,
                 userService.getCurrentUser().getUserId()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono grupy zajęciowej."));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, COURSE_GROUP_NOT_FOUND));
             default -> throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Brak uprawnień.");
         };
     }
@@ -109,6 +113,48 @@ public class CourseGroupsService {
     }
 
     @Transactional
+    public void updateCourseGroup(Long courseGroupId, UpdateCourseGroupRequestDto requestDto) {
+        CourseGroup courseGroup = getCourseGroupById(courseGroupId);
+
+        accessAuthorizer.authorizeCourseAccess(courseGroup.getCourse());
+
+        TeachingRoleUser teachingRoleUser = userService.getTeachingRoleUser(requestDto.getTeachingRoleId(), courseGroup.getCourse().getId());
+
+        courseGroup.setName(requestDto.getName());
+        courseGroup.setRoom(requestDto.getRoom());
+        courseGroup.setTeachingRoleUser(teachingRoleUser);
+
+        try {
+            courseGroupRepository.save(courseGroup);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Nie udało się zaktualizować grupy zajęciowej.");
+        }
+    }
+
+    @Transactional
+    public void changeStudentCourseGroup(ChangeStudentCourseGroupRequestDto requestDto) {
+        Animal animal = animalRepository.findById(requestDto.getAnimalId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono zwierzaka."));
+
+        StudentCourseGroupAssignment currentAssignment = animal.getStudentCourseGroupAssignment();
+        if (currentAssignment == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Zwierzak nie jest przypisany do żadnej grupy.");
+        }
+
+        Long oldCourseGroupId = currentAssignment.getCourseGroup().getId();
+        Long newCourseGroupId = requestDto.getNewCourseGroupId();
+
+        CourseGroup newCourseGroup = getCourseGroupById(newCourseGroupId);
+
+        if (!currentAssignment.getCourseGroup().getCourse().getId().equals(newCourseGroup.getCourse().getId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Grupy należą do różnych kursów.");
+        }
+
+        studentCourseGroupRepository.updateStudentCourseGroupId(animal.getId(), oldCourseGroupId, newCourseGroupId);
+    }
+
+
+    @Transactional
     public void deleteCourseGroup(Long courseGroupId) {
         animalRepository.deleteAnimalsByCourseGroupId(courseGroupId);
         courseGroupRepository.deleteById(courseGroupId);
@@ -147,5 +193,10 @@ public class CourseGroupsService {
         Long teachingRoleUserId) {
         return courseGroupRepository.findShortCourseGroups(courseId, userId, teachingRoleUserId).stream()
             .map(courseGroupsMapper::toCourseGroupShortResponseDto).toList();
+    }
+
+    private CourseGroup getCourseGroupById(Long courseGroupId) {
+        return courseGroupRepository.findById(courseGroupId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, COURSE_GROUP_NOT_FOUND));
     }
 }

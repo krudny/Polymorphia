@@ -21,7 +21,7 @@
   }
 
   h4 {
-    @apply text-4xl;
+    @apply text-4xl max-w-52 truncate;
   }
 
   h5 {
