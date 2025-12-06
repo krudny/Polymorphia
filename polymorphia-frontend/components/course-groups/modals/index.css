@@ -1,0 +1,22 @@
+@import "tailwindcss";
+@import "../../../styles/globals.css";
+
+.course-group-modal {
+  @apply flex flex-col gap-y-4 w-md;
+
+  h1 {
+    @apply text-3xl;
+  }
+}
+
+.course-group-modal-buttons {
+  @apply w-full flex gap-x-4;
+}
+
+.course-group-modal-columns {
+  @apply flex justify-between items-center;
+
+  h1 {
+    @apply max-w-44 truncate;
+  }
+}

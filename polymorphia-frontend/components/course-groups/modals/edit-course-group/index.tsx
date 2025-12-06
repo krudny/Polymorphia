@@ -6,6 +6,7 @@ import { ErrorComponentSizes } from "@/components/error/types";
 import Selector from "@/components/selector";
 import Loading from "@/components/loading";
 import "./index.css";
+import "../index.css";
 import useModalContext from "@/hooks/contexts/useModalContext";
 import useUpdateCourseGroup from "@/hooks/course/useUpdateCourseGroup";
 import useCourseGroups from "@/hooks/course/useCourseGroups";
@@ -106,13 +107,13 @@ function EditCourseGroupModalContent() {
     formData.name.trim() && formData.room.trim() && formData.teachingRoleId;
 
   return (
-    <div className="edit-course-group">
+    <div className="course-group-modal">
       <h1>
         Edytuj szczegóły grupy zajęciowej. Upewnij się, że wszystkie pola są
         poprawnie wypełnione.
       </h1>
 
-      <div className="edit-course-group-columns">
+      <div className="course-group-modal-columns">
         <h1>Nazwa grupy</h1>
         <input
           type="text"
@@ -123,7 +124,7 @@ function EditCourseGroupModalContent() {
         />
       </div>
 
-      <div className="edit-course-group-columns">
+      <div className="course-group-modal-columns">
         <h1>Sala</h1>
         <input
           type="text"
@@ -134,7 +135,7 @@ function EditCourseGroupModalContent() {
         />
       </div>
 
-      <div className="edit-course-group-columns">
+      <div className="course-group-modal-columns">
         <h1>Instruktor</h1>
         <div className="w-40">
           <Selector
@@ -157,7 +158,7 @@ function EditCourseGroupModalContent() {
         </div>
       </div>
 
-      <div className="edit-course-group-buttons">
+      <div className="course-group-modal-buttons">
         <ButtonWithBorder
           text="Anuluj"
           className="!mx-0 !py-0 !w-full"

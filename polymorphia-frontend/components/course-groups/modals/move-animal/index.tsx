@@ -5,7 +5,7 @@ import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
 import Selector from "@/components/selector";
 import Loading from "@/components/loading";
-import "./index.css";
+import "../index.css";
 import useModalContext from "@/hooks/contexts/useModalContext";
 import useChangeStudentCourseGroup from "@/hooks/course/useChangeStudentCourseGroup";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
@@ -76,20 +76,20 @@ function MoveAnimalModalContent() {
     }));
 
   return (
-    <div className="move-animal">
+    <div className="course-group-modal">
       <h1>
         Zanim przeniesiesz studenta, upewnij się, że wybrałeś właściwą grupę
         zajęciową.
       </h1>
-      <div className="move-animal-columns">
+      <div className="course-group-modal-columns">
         <h1>Student</h1>
         <h1>{selectedTarget.student.fullName}</h1>
       </div>
-      <div className="move-animal-columns">
+      <div className="course-group-modal-columns">
         <h1>Zwierzak</h1>
         <h1>{selectedTarget.student.animalName}</h1>
       </div>
-      <div className="move-animal-columns">
+      <div className="course-group-modal-columns">
         <h1>Nowa grupa zajęciowa</h1>
         <div className="w-40">
           <Selector
@@ -105,7 +105,7 @@ function MoveAnimalModalContent() {
           />
         </div>
       </div>
-      <div className="move-animal-buttons">
+      <div className="course-group-modal-buttons">
         <ButtonWithBorder
           text="Anuluj"
           className="!mx-0 !py-0 !w-full"

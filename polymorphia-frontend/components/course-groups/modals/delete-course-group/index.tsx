@@ -1,7 +1,7 @@
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import Modal from "@/components/modal";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
-import "./index.css";
+import "../index.css";
 import useModalContext from "@/hooks/contexts/useModalContext";
 import useDeleteCourseGroup from "@/hooks/course/useDeleteCourseGroup";
 
@@ -14,14 +14,14 @@ function DeleteCourseGroupModalContent() {
   };
 
   return (
-    <div className="delete-course-group">
+    <div className="course-group-modal">
       <h1>
         Usunięcie grupy zajęciowej powoduje usunięcie przypisania studentów do
         grup, a także ich zwierzaków, wraz z powiązanymi ocenami. Operacja jest
         nieodwracalna.{" "}
       </h1>
       <h1>Czy na pewno chcesz kontynuować?</h1>
-      <div className="delete-course-group-buttons">
+      <div className="course-group-modal-buttons">
         <ButtonWithBorder
           text="Powrót"
           className="!mx-0 !py-0 !w-full"

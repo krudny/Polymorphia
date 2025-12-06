@@ -3,7 +3,7 @@ import Modal from "@/components/modal";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
-import "./index.css";
+import "../index.css";
 import useModalContext from "@/hooks/contexts/useModalContext";
 import useDeleteAnimal from "@/hooks/course/useDeleteAnimal";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
@@ -29,7 +29,7 @@ function DeleteAnimalModalContent() {
   };
 
   return (
-    <div className="delete-animal">
+    <div className="course-group-modal">
       <h1>
         Usunięcie zwierzaka powoduje usunięcie go z kursu oraz wszystkich jego
         ocen. Operacja jest nieodwracalna.
@@ -39,7 +39,7 @@ function DeleteAnimalModalContent() {
         {selectedTarget.student.animalName})
       </h1>
       <h1>Czy na pewno chcesz kontynuować?</h1>
-      <div className="delete-animal-buttons">
+      <div className="course-group-modal-buttons">
         <ButtonWithBorder
           text="Powrót"
           className="!mx-0 !py-0 !w-full"
