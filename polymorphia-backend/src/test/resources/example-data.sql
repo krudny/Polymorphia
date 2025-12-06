@@ -37,6 +37,8 @@ TRUNCATE TABLE project_groups_animals cascade;
 TRUNCATE TABLE submission_requirements cascade;
 TRUNCATE TABLE submissions cascade;
 TRUNCATE TABLE teaching_role_users cascade;
+TRUNCATE TABLE assignments cascade;
+TRUNCATE TABLE tests cascade;
 INSERT INTO
   users (id, first_name, last_name, email, password, preferred_course_id)
 VALUES
@@ -555,49 +557,40 @@ WHERE NOT EXISTS (
       AND ucr.role = 'STUDENT'
 );
 
-INSERT INTO
-  event_sections (id, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id, order_index, is_hidden)
-VALUES (4, 'Git', FALSE, FALSE, 1, 0, FALSE);
-INSERT INTO
-  event_sections (id, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id, order_index, is_hidden)
-VALUES
-  (6, 'Laboratorium', TRUE, FALSE, 2, 2, FALSE);
-INSERT INTO
-  event_sections (id, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id, order_index, is_hidden)
-VALUES
-  (7, 'Projekt 1', TRUE, FALSE, 2, 4, FALSE);
-INSERT INTO
-  event_sections (id, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id, order_index, is_hidden)
-VALUES
-  (8, 'Kartkówka', TRUE, FALSE, 2, 1, FALSE);
-INSERT INTO
-  event_sections (id, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id, order_index, is_hidden)
-VALUES (9, 'Git', FALSE, FALSE, 2, 0, FALSE);
-INSERT INTO
-  event_sections (id, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id, order_index, is_hidden)
-VALUES
-  (10, 'Specjalny lab', TRUE, FALSE, 2, 3, FALSE);
-INSERT INTO
-  event_sections (id, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id, order_index, is_hidden)
-VALUES
-  (2, 'Laboratorium', TRUE, FALSE, 1, 2, FALSE);
-INSERT INTO
-  event_sections (id, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id, order_index, is_hidden)
-VALUES
-  (3, 'Projekt 1', TRUE, FALSE, 1, 4, FALSE);
-INSERT INTO
-  event_sections (id, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id, order_index, is_hidden)
-VALUES
-  (1, 'Kartkówka', TRUE, FALSE, 1, 1, FALSE);
-INSERT INTO
-  event_sections (id, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id, order_index, is_hidden)
-VALUES
-  (5, 'Specjalny lab', TRUE, FALSE, 1, 3, FALSE);
-INSERT INTO
-  event_sections (id, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id, order_index, is_hidden)
-VALUES
-  (11, 'Projekt 2', TRUE, FALSE, 1, 5, FALSE),
-  (12, 'Projekt 2', TRUE, FALSE, 2, 5, FALSE);
+INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
+                            order_index, is_hidden)
+VALUES (4, '4', 'Git', FALSE, FALSE, 1, 0, FALSE);
+INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
+                            order_index, is_hidden)
+VALUES (6, '6', 'Laboratorium', TRUE, FALSE, 2, 2, FALSE);
+INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
+                            order_index, is_hidden)
+VALUES (7, '7', 'Projekt 1', TRUE, FALSE, 2, 4, FALSE);
+INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
+                            order_index, is_hidden)
+VALUES (8, '8', 'Kartkówka', TRUE, FALSE, 2, 1, FALSE);
+INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
+                            order_index, is_hidden)
+VALUES (9, '9', 'Git', FALSE, FALSE, 2, 0, FALSE);
+INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
+                            order_index, is_hidden)
+VALUES (10, '10', 'Specjalny lab', TRUE, FALSE, 2, 3, FALSE);
+INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
+                            order_index, is_hidden)
+VALUES (2, '2', 'Laboratorium', TRUE, FALSE, 1, 2, FALSE);
+INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
+                            order_index, is_hidden)
+VALUES (3, '3', 'Projekt 1', TRUE, FALSE, 1, 4, FALSE);
+INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
+                            order_index, is_hidden)
+VALUES (1, '1', 'Kartkówka', TRUE, FALSE, 1, 1, FALSE);
+INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
+                            order_index, is_hidden)
+VALUES (5, '5', 'Specjalny lab', TRUE, FALSE, 1, 3, FALSE);
+INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
+                            order_index, is_hidden)
+VALUES (11, '11', 'Projekt 2', TRUE, FALSE, 1, 5, FALSE),
+       (12, '12', 'Projekt 2', TRUE, FALSE, 2, 5, FALSE);
 INSERT INTO
   test_sections (id)
 VALUES
@@ -619,132 +612,131 @@ VALUES
   (4),
   (6),
   (9);
-INSERT INTO
-  evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id)
-VALUES
-  (6, 'Nieopierzony Odkrywca', 'Nieopierzony Odkrywca z zapałem przemierza nieznane tereny Polymorphii. Mimo braku doświadczenia, jego ciekawość i odwaga nie znają granic. Czasem popełnia błędy, ale każdy z nich uczy go czegoś nowego. To podróżnik, który wierzy, że każde potknięcie przybliża go do celu. Pragnie zostać Samodzielnym Zwierzakiem, zdobywając mądrość przez przygody. Jego pióra, choć jeszcze niekompletne, nabierają kolorów odzwierciedlających przeżyte doświadczenia. W jego spojrzeniu widać determinację i głód wiedzy, który pcha go naprzód nawet wtedy, gdy droga staje się trudna. Nieopierzony Odkrywca buduje własną tożsamość, łącząc fragmenty zdobytej wiedzy w spójną całość.', 80.0, 5, 4.5, 'images/evolution-stages/5.webp', 1);
-INSERT INTO
-  evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id)
-VALUES
-  (2, 'Pisklak', 'Pisklak to młoda istota pełna energii, która stawia swoje pierwsze, niepewne kroki. Jego determinacja przewyższa jeszcze skromne umiejętności, ale nie brakuje mu zapału do nauki. To etap eksploracji i chłonięcia wiedzy od starszych. Każde wyzwanie traktuje jako lekcję, a entuzjazm sprawia, że śmiało patrzy w przyszłość Polymorphii. Z puchatymi piórkami i szeroko otwartymi oczami pochłania obrazy świata, budując własne rozumienie rzeczywistości. Jego nieustanna ciekawość i zdolność do szybkiej nauki sprawiają, że każdy dzień przynosi nowe odkrycia. W sercu Pisklaka rodzi się odwaga, która pewnego dnia pozwoli mu wznieść się wysoko.', 25.0, 1, 2.0, 'images/evolution-stages/1.webp', 1);
-INSERT INTO
-  evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id)
-VALUES
-  (1, 'Jajo', 'Jajo to symbol narodzin i początek niezwykłej podróży. Choć nieporadne, tętni ciekawością świata i gotowe jest na pierwsze doświadczenia. To faza, w której wszystko jest nowe, a każdy bodziec rozwija wyobraźnię. Mimo braku umiejętności, Jajo ma w sobie pasję i wewnętrzną energię, które popychają je do działania i poznawania Polymorphii. Otulone delikatną skorupką skrywa potencjał, który czeka na właściwy moment, by rozkwitnąć. Wewnątrz niego drzemie przyszłość, która z każdym dniem nabiera kształtów, przygotowując się na moment wielkiej przemiany. Jajo uosabia nadzieję i wiarę w to, co nieodkryte.', 0.0, 0, 2.0, 'images/evolution-stages/egg.webp', 1);
-INSERT INTO
-  evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id)
-VALUES
-  (8, 'Władca Polymorphii', 'Władca Polymorphii to najwyższa forma doskonałości i mocy, która osiągnęła szczyt swojej ewolucji. Jego obecność wzbudza podziw i respekt, a każdy jego krok niesie ze sobą siłę przemiany i niezmąconą pewność siebie. Władca zna wszystkie sekrety świata Polymorphii, potrafi kształtować rzeczywistość według własnej woli i przewodzi z mądrością, którą zdobył dzięki niezliczonym doświadczeniom. Jego spojrzenie przenika najgłębsze zakamarki istnienia, dostrzegając to, co niewidoczne dla innych. Pomimo ogromnej potęgi, Władca pozostaje pokorny i świadomy swojej odpowiedzialności wobec świata i jego mieszkańców. Jego pióra błyszczą jak koronny diadem, a aura, którą emanuje, inspiruje innych do dążenia do własnej przemiany i wzrostu. To mistrz równowagi, który łączy siłę z mądrością, a wolę z współczuciem, tworząc harmonię zarówno w sobie, jak i w całej Polymorphii.', 100.0, 7, 5.0, 'images/evolution-stages/7.webp', 1);
-INSERT INTO
-  evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id)
-VALUES
-  (7, 'Majestatyczna Bestia', 'Majestatyczna Bestia to istota o ogromnej sile i głębokiej mądrości. Zyskała szacunek dzięki odwadze i rozwadze, z jaką stawia czoła losowi. Jej potęga nie leży jedynie w mocy, lecz w zdolności rozumienia innych. To postać, która inspiruje, prowadzi i uczy. Każde jej działanie jest świadectwem drogi, jaką przebyła w Polymorphii. W jej oczach odbija się historia wielu pokoleń, a w głosie brzmi echo dawnych legend. Majestatyczna Bestia stoi na straży równowagi świata, wykorzystując swoją mądrość do rozwiązywania najbardziej złożonych problemów. Jej obecność przynosi spokój, a rada - jasność w chaosie. To ucieleśnienie potęgi płynącej z harmonii między siłą a dobrocią.', 90.0, 6, 5.0, 'images/evolution-stages/6.webp', 1);
-INSERT INTO
-  evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id)
-VALUES
-  (3, 'Podlot', 'Podlot to fascynujący etap przemiany, zawieszony między niewinnością młodości a rodzącą się dojrzałością. Opuszcza bezpieczne gniazdo, kierowany instynktem odkrywania rozległego świata Polymorphii, choć jego pierwsze loty naznaczone są jeszcze niepewnością i drobnymi potknięciami. Z ciekawością chłonie wiedzę i doświadczenia od starszych, uważnie obserwując ich mądrość i umiejętności, lecz jednocześnie zaczyna instynktownie poszukiwać własnej, unikalnej ścieżki. Każde nowe wyzwanie traktuje z mieszanką entuzjazmu i lekkiego strachu, a każda napotkana trudność staje się cenną lekcją, budując jego wewnętrzną siłę i odporność. W jego młodym sercu coraz mocniej pulsuje pragnienie samodzielności, a ciekawość świata pcha go do eksploracji nieznanych zakątków Polymorphii.', 50.0, 2, 3.0, 'images/evolution-stages/2.webp', 1);
-INSERT INTO
-  evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id)
-VALUES
-  (5, 'Samodzielny Zwierzak', 'Samodzielny Zwierzak to dojrzała postać, która wie, jak poruszać się po świecie Polymorphii. Jego decyzje są przemyślane, a działania odważne, lecz odpowiedzialne. Zdobyte doświadczenie pozwala mu lepiej rozumieć otoczenie i siebie. Choć wiele już osiągnął, nieustannie dąży do rozwoju, z pokorą i mądrością podejmując kolejne wyzwania. Jego pióra lśnią pełnią barw, odzwierciedlając bogactwo przeżyć i zdobytą wiedzę. Potrafi dostrzec subtelne połączenia między zjawiskami, co czyni go cennym towarzyszem i doradcą. Samodzielny Zwierzak znajduje równowagę między własnym dobrem a potrzebami społeczności, tworząc harmonię w swoim otoczeniu.', 70.0, 4, 4.0, 'images/evolution-stages/4.webp', 1);
-INSERT INTO
-  evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id)
-VALUES
-  (4, 'Żółtodziób', 'Żółtodziób to pełna entuzjazmu postać, która zaczyna rozumieć świat wokół siebie. Choć wciąż brakuje mu pewności i doświadczenia, chętnie podejmuje nowe wyzwania. Z otwartym umysłem i niegasnącą energią stara się rozwijać swoje zdolności. Każda sytuacja jest dla niego szansą, by stać się mądrzejszym i bardziej świadomym mieszkańcem Polymorphii. Jego charakterystyczny żółty dziób symbolizuje świeżość spojrzenia i gotowość do nauki. Popełnia błędy, ale szybko wyciąga z nich wnioski, co czyni go coraz bardziej odpornym na przeciwności losu. Żółtodziób balansuje między dziecięcą radością odkrywania a rodzącym się pragnieniem zrozumienia głębszych prawd świata.', 60.0, 3, 3.5, 'images/evolution-stages/3.webp', 1);
-INSERT INTO
-  evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id)
-VALUES
-  (9, 'Nieopierzony Odkrywca', 'Nieopierzony Odkrywca z zapałem przemierza nieznane tereny Polymorphii. Mimo braku doświadczenia, jego ciekawość i odwaga nie znają granic. Czasem popełnia błędy, ale każdy z nich uczy go czegoś nowego. To podróżnik, który wierzy, że każde potknięcie przybliża go do celu. Pragnie zostać Samodzielnym Zwierzakiem, zdobywając mądrość przez przygody. Jego pióra, choć jeszcze niekompletne, nabierają kolorów odzwierciedlających przeżyte doświadczenia. W jego spojrzeniu widać determinację i głód wiedzy, który pcha go naprzód nawet wtedy, gdy droga staje się trudna. Nieopierzony Odkrywca buduje własną tożsamość, łącząc fragmenty zdobytej wiedzy w spójną całość.', 80.0, 5, 4.5, 'images/evolution-stages/5.webp', 2);
-INSERT INTO
-  evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id)
-VALUES
-  (10, 'Pisklak', 'Pisklak to młoda istota pełna energii, która stawia swoje pierwsze, niepewne kroki. Jego determinacja przewyższa jeszcze skromne umiejętności, ale nie brakuje mu zapału do nauki. To etap eksploracji i chłonięcia wiedzy od starszych. Każde wyzwanie traktuje jako lekcję, a entuzjazm sprawia, że śmiało patrzy w przyszłość Polymorphii. Z puchatymi piórkami i szeroko otwartymi oczami pochłania obrazy świata, budując własne rozumienie rzeczywistości. Jego nieustanna ciekawość i zdolność do szybkiej nauki sprawiają, że każdy dzień przynosi nowe odkrycia. W sercu Pisklaka rodzi się odwaga, która pewnego dnia pozwoli mu wznieść się wysoko.', 25.0, 1, 2.0, 'images/evolution-stages/1.webp', 2);
-INSERT INTO
-  evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id)
-VALUES
-  (11, 'Jajo', 'Jajo to symbol narodzin i początek niezwykłej podróży. Choć nieporadne, tętni ciekawością świata i gotowe jest na pierwsze doświadczenia. To faza, w której wszystko jest nowe, a każdy bodziec rozwija wyobraźnię. Mimo braku umiejętności, Jajo ma w sobie pasję i wewnętrzną energię, które popychają je do działania i poznawania Polymorphii. Otulone delikatną skorupką skrywa potencjał, który czeka na właściwy moment, by rozkwitnąć. Wewnątrz niego drzemie przyszłość, która z każdym dniem nabiera kształtów, przygotowując się na moment wielkiej przemiany. Jajo uosabia nadzieję i wiarę w to, co nieodkryte.', 0.0, 0, 2.0, 'images/evolution-stages/egg.webp', 2);
-INSERT INTO
-  evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id)
-VALUES
-  (12, 'Władca Polymorphii', 'Władca Polymorphii to najwyższa forma doskonałości i mocy, która osiągnęła szczyt swojej ewolucji. Jego obecność wzbudza podziw i respekt, a każdy jego krok niesie ze sobą siłę przemiany i niezmąconą pewność siebie. Władca zna wszystkie sekrety świata Polymorphii, potrafi kształtować rzeczywistość według własnej woli i przewodzi z mądrością, którą zdobył dzięki niezliczonym doświadczeniom. Jego spojrzenie przenika najgłębsze zakamarki istnienia, dostrzegając to, co niewidoczne dla innych. Pomimo ogromnej potęgi, Władca pozostaje pokorny i świadomy swojej odpowiedzialności wobec świata i jego mieszkańców. Jego pióra błyszczą jak koronny diadem, a aura, którą emanuje, inspiruje innych do dążenia do własnej przemiany i wzrostu. To mistrz równowagi, który łączy siłę z mądrością, a wolę z współczuciem, tworząc harmonię zarówno w sobie, jak i w całej Polymorphii.', 100.0, 7, 5.0, 'images/evolution-stages/7.webp', 2);
-INSERT INTO
-  evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id)
-VALUES
-  (13, 'Majestatyczna Bestia', 'Majestatyczna Bestia to istota o ogromnej sile i głębokiej mądrości. Zyskała szacunek dzięki odwadze i rozwadze, z jaką stawia czoła losowi. Jej potęga nie leży jedynie w mocy, lecz w zdolności rozumienia innych. To postać, która inspiruje, prowadzi i uczy. Każde jej działanie jest świadectwem drogi, jaką przebyła w Polymorphii. W jej oczach odbija się historia wielu pokoleń, a w głosie brzmi echo dawnych legend. Majestatyczna Bestia stoi na straży równowagi świata, wykorzystując swoją mądrość do rozwiązywania najbardziej złożonych problemów. Jej obecność przynosi spokój, a rada - jasność w chaosie. To ucieleśnienie potęgi płynącej z harmonii między siłą a dobrocią.', 90.0, 6, 5.0, 'images/evolution-stages/6.webp', 2);
-INSERT INTO
-  evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id)
-VALUES
-  (14, 'Podlot', 'Podlot to fascynujący etap przemiany, zawieszony między niewinnością młodości a rodzącą się dojrzałością. Opuszcza bezpieczne gniazdo, kierowany instynktem odkrywania rozległego świata Polymorphii, choć jego pierwsze loty naznaczone są jeszcze niepewnością i drobnymi potknięciami. Z ciekawością chłonie wiedzę i doświadczenia od starszych, uważnie obserwując ich mądrość i umiejętności, lecz jednocześnie zaczyna instynktownie poszukiwać własnej, unikalnej ścieżki. Każde nowe wyzwanie traktuje z mieszanką entuzjazmu i lekkiego strachu, a każda napotkana trudność staje się cenną lekcją, budując jego wewnętrzną siłę i odporność. W jego młodym sercu coraz mocniej pulsuje pragnienie samodzielności, a ciekawość świata pcha go do eksploracji nieznanych zakątków Polymorphii.', 50.0, 2, 3.0, 'images/evolution-stages/2.webp', 2);
-INSERT INTO
-  evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id)
-VALUES
-  (15, 'Samodzielny Zwierzak', 'Samodzielny Zwierzak to dojrzała postać, która wie, jak poruszać się po świecie Polymorphii. Jego decyzje są przemyślane, a działania odważne, lecz odpowiedzialne. Zdobyte doświadczenie pozwala mu lepiej rozumieć otoczenie i siebie. Choć wiele już osiągnął, nieustannie dąży do rozwoju, z pokorą i mądrością podejmując kolejne wyzwania. Jego pióra lśnią pełnią barw, odzwierciedlając bogactwo przeżyć i zdobytą wiedzę. Potrafi dostrzec subtelne połączenia między zjawiskami, co czyni go cennym towarzyszem i doradcą. Samodzielny Zwierzak znajduje równowagę między własnym dobrem a potrzebami społeczności, tworząc harmonię w swoim otoczeniu.', 70.0, 4, 4.0, 'images/evolution-stages/4.webp', 2);
-INSERT INTO
-  evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id)
-VALUES
-  (16, 'Żółtodziób', 'Żółtodziób to pełna entuzjazmu postać, która zaczyna rozumieć świat wokół siebie. Choć wciąż brakuje mu pewności i doświadczenia, chętnie podejmuje nowe wyzwania. Z otwartym umysłem i niegasnącą energią stara się rozwijać swoje zdolności. Każda sytuacja jest dla niego szansą, by stać się mądrzejszym i bardziej świadomym mieszkańcem Polymorphii. Jego charakterystyczny żółty dziób symbolizuje świeżość spojrzenia i gotowość do nauki. Popełnia błędy, ale szybko wyciąga z nich wnioski, co czyni go coraz bardziej odpornym na przeciwności losu. Żółtodziób balansuje między dziecięcą radością odkrywania a rodzącym się pragnieniem zrozumienia głębszych prawd świata.', 60.0, 3, 3.5, 'images/evolution-stages/3.webp', 2);
-INSERT INTO
-  gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url, markdown, is_hidden, is_locked)
-VALUES
-  (1, 1, 'Kartkówka 1', NULL, 0, 0, NULL, NULL, FALSE, FALSE);
-INSERT INTO
-  gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url, markdown, is_hidden, is_locked)
-VALUES
-  (2, 1, 'Kartkówka 2', NULL, 1, 1, NULL, NULL, FALSE, FALSE);
-INSERT INTO
-  gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url, markdown, is_hidden, is_locked)
-VALUES
-  (3, 1, 'Kartkówka 3', NULL, 2, 2, NULL, NULL, FALSE, FALSE);
-INSERT INTO
-  gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url, markdown, is_hidden, is_locked)
-VALUES
-  (4, 1, 'Kartkówka 4', NULL, 3, 3, NULL, NULL, FALSE, FALSE);
-INSERT INTO
-  gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url, markdown, is_hidden, is_locked)
-VALUES
-  (5, 1, 'Kartkówka 5', NULL, 4, 4, NULL, NULL, FALSE, FALSE);
-INSERT INTO
-  gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url, markdown, is_hidden, is_locked)
-VALUES
-  (6, 1, 'Kartkówka 6', NULL, 5, 5, NULL, NULL, FALSE, FALSE);
-INSERT INTO
-  gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url, markdown, is_hidden, is_locked)
-VALUES
-  (7, 1, 'Kartkówka 7', NULL, 6, 6, NULL, NULL, FALSE, FALSE);
-INSERT INTO
-  gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url, markdown, is_hidden, is_locked)
-VALUES
-  (8, 1, 'Kartkówka 8', NULL, 7, 7, NULL, NULL, FALSE, FALSE);
-INSERT INTO
-  gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url, markdown, is_hidden, is_locked)
-VALUES
-  (16, 2, 'Laboratorium 8', NULL, 15, 15, 'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab8/Readme.md', NULL, FALSE, FALSE);
-INSERT INTO
-  gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url, markdown, is_hidden, is_locked)
-VALUES
-  (13, 2, 'Laboratorium 5', NULL, 12, 12, 'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab5/Readme.md', NULL, FALSE, FALSE);
-INSERT INTO
-  gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url, markdown, is_hidden, is_locked)
-VALUES
-  (11, 2, 'Laboratorium 3', NULL, 10, 10, 'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab3/Readme.md', NULL, FALSE, FALSE);
-INSERT INTO
-  gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url, markdown, is_hidden, is_locked)
-VALUES
-  (10, 2, 'Laboratorium 2', NULL, 9, 9, 'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab2/Readme.md', NULL, FALSE, FALSE);
-INSERT INTO
-  gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url, markdown, is_hidden, is_locked)
-VALUES
-  (15, 2, 'Laboratorium 7', NULL, 14, 14, 'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab7/Readme.md', NULL, FALSE, FALSE);
-INSERT INTO
-  gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url, markdown, is_hidden, is_locked)
-VALUES
-  (14, 2, 'Laboratorium 6', NULL, 13, 13, 'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab6/Readme.md', NULL, FALSE, FALSE);
-INSERT INTO
-  gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url, markdown, is_hidden, is_locked)
-VALUES
-  (12, 2, 'Laboratorium 4', NULL, 11, 11, 'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab4/Readme.md', '', FALSE, FALSE);
-INSERT INTO
-  gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url, markdown, is_hidden, is_locked)
+INSERT INTO evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id, key)
+VALUES (6, 'Nieopierzony Odkrywca',
+        'Nieopierzony Odkrywca z zapałem przemierza nieznane tereny Polymorphii. Mimo braku doświadczenia, jego ciekawość i odwaga nie znają granic. Czasem popełnia błędy, ale każdy z nich uczy go czegoś nowego. To podróżnik, który wierzy, że każde potknięcie przybliża go do celu. Pragnie zostać Samodzielnym Zwierzakiem, zdobywając mądrość przez przygody. Jego pióra, choć jeszcze niekompletne, nabierają kolorów odzwierciedlających przeżyte doświadczenia. W jego spojrzeniu widać determinację i głód wiedzy, który pcha go naprzód nawet wtedy, gdy droga staje się trudna. Nieopierzony Odkrywca buduje własną tożsamość, łącząc fragmenty zdobytej wiedzy w spójną całość.',
+        80.0, 5, 4.5, 'images/evolution-stages/5.webp', 1, 'evolution_stages6');
+INSERT INTO evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id, key)
+VALUES (2, 'Pisklak',
+        'Pisklak to młoda istota pełna energii, która stawia swoje pierwsze, niepewne kroki. Jego determinacja przewyższa jeszcze skromne umiejętności, ale nie brakuje mu zapału do nauki. To etap eksploracji i chłonięcia wiedzy od starszych. Każde wyzwanie traktuje jako lekcję, a entuzjazm sprawia, że śmiało patrzy w przyszłość Polymorphii. Z puchatymi piórkami i szeroko otwartymi oczami pochłania obrazy świata, budując własne rozumienie rzeczywistości. Jego nieustanna ciekawość i zdolność do szybkiej nauki sprawiają, że każdy dzień przynosi nowe odkrycia. W sercu Pisklaka rodzi się odwaga, która pewnego dnia pozwoli mu wznieść się wysoko.',
+        25.0, 1, 2.0, 'images/evolution-stages/1.webp', 1, 'evolution_stages2');
+INSERT INTO evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id, key)
+VALUES (1, 'Jajo',
+        'Jajo to symbol narodzin i początek niezwykłej podróży. Choć nieporadne, tętni ciekawością świata i gotowe jest na pierwsze doświadczenia. To faza, w której wszystko jest nowe, a każdy bodziec rozwija wyobraźnię. Mimo braku umiejętności, Jajo ma w sobie pasję i wewnętrzną energię, które popychają je do działania i poznawania Polymorphii. Otulone delikatną skorupką skrywa potencjał, który czeka na właściwy moment, by rozkwitnąć. Wewnątrz niego drzemie przyszłość, która z każdym dniem nabiera kształtów, przygotowując się na moment wielkiej przemiany. Jajo uosabia nadzieję i wiarę w to, co nieodkryte.',
+        0.0, 0, 2.0, 'images/evolution-stages/egg.webp', 1, 'evolution_stages1');
+INSERT INTO evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id, key)
+VALUES (8, 'Władca Polymorphii',
+        'Władca Polymorphii to najwyższa forma doskonałości i mocy, która osiągnęła szczyt swojej ewolucji. Jego obecność wzbudza podziw i respekt, a każdy jego krok niesie ze sobą siłę przemiany i niezmąconą pewność siebie. Władca zna wszystkie sekrety świata Polymorphii, potrafi kształtować rzeczywistość według własnej woli i przewodzi z mądrością, którą zdobył dzięki niezliczonym doświadczeniom. Jego spojrzenie przenika najgłębsze zakamarki istnienia, dostrzegając to, co niewidoczne dla innych. Pomimo ogromnej potęgi, Władca pozostaje pokorny i świadomy swojej odpowiedzialności wobec świata i jego mieszkańców. Jego pióra błyszczą jak koronny diadem, a aura, którą emanuje, inspiruje innych do dążenia do własnej przemiany i wzrostu. To mistrz równowagi, który łączy siłę z mądrością, a wolę z współczuciem, tworząc harmonię zarówno w sobie, jak i w całej Polymorphii.',
+        100.0, 7, 5.0, 'images/evolution-stages/7.webp', 1, 'evolution_stages8');
+INSERT INTO evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id, key)
+VALUES (7, 'Majestatyczna Bestia',
+        'Majestatyczna Bestia to istota o ogromnej sile i głębokiej mądrości. Zyskała szacunek dzięki odwadze i rozwadze, z jaką stawia czoła losowi. Jej potęga nie leży jedynie w mocy, lecz w zdolności rozumienia innych. To postać, która inspiruje, prowadzi i uczy. Każde jej działanie jest świadectwem drogi, jaką przebyła w Polymorphii. W jej oczach odbija się historia wielu pokoleń, a w głosie brzmi echo dawnych legend. Majestatyczna Bestia stoi na straży równowagi świata, wykorzystując swoją mądrość do rozwiązywania najbardziej złożonych problemów. Jej obecność przynosi spokój, a rada - jasność w chaosie. To ucieleśnienie potęgi płynącej z harmonii między siłą a dobrocią.',
+        90.0, 6, 5.0, 'images/evolution-stages/6.webp', 1, 'evolution_stages7');
+INSERT INTO evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id, key)
+VALUES (3, 'Podlot',
+        'Podlot to fascynujący etap przemiany, zawieszony między niewinnością młodości a rodzącą się dojrzałością. Opuszcza bezpieczne gniazdo, kierowany instynktem odkrywania rozległego świata Polymorphii, choć jego pierwsze loty naznaczone są jeszcze niepewnością i drobnymi potknięciami. Z ciekawością chłonie wiedzę i doświadczenia od starszych, uważnie obserwując ich mądrość i umiejętności, lecz jednocześnie zaczyna instynktownie poszukiwać własnej, unikalnej ścieżki. Każde nowe wyzwanie traktuje z mieszanką entuzjazmu i lekkiego strachu, a każda napotkana trudność staje się cenną lekcją, budując jego wewnętrzną siłę i odporność. W jego młodym sercu coraz mocniej pulsuje pragnienie samodzielności, a ciekawość świata pcha go do eksploracji nieznanych zakątków Polymorphii.',
+        50.0, 2, 3.0, 'images/evolution-stages/2.webp', 1, 'evolution_stages3');
+INSERT INTO evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id, key)
+VALUES (5, 'Samodzielny Zwierzak',
+        'Samodzielny Zwierzak to dojrzała postać, która wie, jak poruszać się po świecie Polymorphii. Jego decyzje są przemyślane, a działania odważne, lecz odpowiedzialne. Zdobyte doświadczenie pozwala mu lepiej rozumieć otoczenie i siebie. Choć wiele już osiągnął, nieustannie dąży do rozwoju, z pokorą i mądrością podejmując kolejne wyzwania. Jego pióra lśnią pełnią barw, odzwierciedlając bogactwo przeżyć i zdobytą wiedzę. Potrafi dostrzec subtelne połączenia między zjawiskami, co czyni go cennym towarzyszem i doradcą. Samodzielny Zwierzak znajduje równowagę między własnym dobrem a potrzebami społeczności, tworząc harmonię w swoim otoczeniu.',
+        70.0, 4, 4.0, 'images/evolution-stages/4.webp', 1, 'evolution_stages5');
+INSERT INTO evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id, key)
+VALUES (4, 'Żółtodziób',
+        'Żółtodziób to pełna entuzjazmu postać, która zaczyna rozumieć świat wokół siebie. Choć wciąż brakuje mu pewności i doświadczenia, chętnie podejmuje nowe wyzwania. Z otwartym umysłem i niegasnącą energią stara się rozwijać swoje zdolności. Każda sytuacja jest dla niego szansą, by stać się mądrzejszym i bardziej świadomym mieszkańcem Polymorphii. Jego charakterystyczny żółty dziób symbolizuje świeżość spojrzenia i gotowość do nauki. Popełnia błędy, ale szybko wyciąga z nich wnioski, co czyni go coraz bardziej odpornym na przeciwności losu. Żółtodziób balansuje między dziecięcą radością odkrywania a rodzącym się pragnieniem zrozumienia głębszych prawd świata.',
+        60.0, 3, 3.5, 'images/evolution-stages/3.webp', 1, 'evolution_stages4');
+INSERT INTO evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id, key)
+VALUES (9, 'Nieopierzony Odkrywca',
+        'Nieopierzony Odkrywca z zapałem przemierza nieznane tereny Polymorphii. Mimo braku doświadczenia, jego ciekawość i odwaga nie znają granic. Czasem popełnia błędy, ale każdy z nich uczy go czegoś nowego. To podróżnik, który wierzy, że każde potknięcie przybliża go do celu. Pragnie zostać Samodzielnym Zwierzakiem, zdobywając mądrość przez przygody. Jego pióra, choć jeszcze niekompletne, nabierają kolorów odzwierciedlających przeżyte doświadczenia. W jego spojrzeniu widać determinację i głód wiedzy, który pcha go naprzód nawet wtedy, gdy droga staje się trudna. Nieopierzony Odkrywca buduje własną tożsamość, łącząc fragmenty zdobytej wiedzy w spójną całość.',
+        80.0, 5, 4.5, 'images/evolution-stages/5.webp', 2, 'evolution_stages9');
+INSERT INTO evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id, key)
+VALUES (10, 'Pisklak',
+        'Pisklak to młoda istota pełna energii, która stawia swoje pierwsze, niepewne kroki. Jego determinacja przewyższa jeszcze skromne umiejętności, ale nie brakuje mu zapału do nauki. To etap eksploracji i chłonięcia wiedzy od starszych. Każde wyzwanie traktuje jako lekcję, a entuzjazm sprawia, że śmiało patrzy w przyszłość Polymorphii. Z puchatymi piórkami i szeroko otwartymi oczami pochłania obrazy świata, budując własne rozumienie rzeczywistości. Jego nieustanna ciekawość i zdolność do szybkiej nauki sprawiają, że każdy dzień przynosi nowe odkrycia. W sercu Pisklaka rodzi się odwaga, która pewnego dnia pozwoli mu wznieść się wysoko.',
+        25.0, 1, 2.0, 'images/evolution-stages/1.webp', 2, 'evolution_stages10');
+INSERT INTO evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id, key)
+VALUES (11, 'Jajo',
+        'Jajo to symbol narodzin i początek niezwykłej podróży. Choć nieporadne, tętni ciekawością świata i gotowe jest na pierwsze doświadczenia. To faza, w której wszystko jest nowe, a każdy bodziec rozwija wyobraźnię. Mimo braku umiejętności, Jajo ma w sobie pasję i wewnętrzną energię, które popychają je do działania i poznawania Polymorphii. Otulone delikatną skorupką skrywa potencjał, który czeka na właściwy moment, by rozkwitnąć. Wewnątrz niego drzemie przyszłość, która z każdym dniem nabiera kształtów, przygotowując się na moment wielkiej przemiany. Jajo uosabia nadzieję i wiarę w to, co nieodkryte.',
+        0.0, 0, 2.0, 'images/evolution-stages/egg.webp', 2, 'evolution_stages11');
+INSERT INTO evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id, key)
+VALUES (12, 'Władca Polymorphii',
+        'Władca Polymorphii to najwyższa forma doskonałości i mocy, która osiągnęła szczyt swojej ewolucji. Jego obecność wzbudza podziw i respekt, a każdy jego krok niesie ze sobą siłę przemiany i niezmąconą pewność siebie. Władca zna wszystkie sekrety świata Polymorphii, potrafi kształtować rzeczywistość według własnej woli i przewodzi z mądrością, którą zdobył dzięki niezliczonym doświadczeniom. Jego spojrzenie przenika najgłębsze zakamarki istnienia, dostrzegając to, co niewidoczne dla innych. Pomimo ogromnej potęgi, Władca pozostaje pokorny i świadomy swojej odpowiedzialności wobec świata i jego mieszkańców. Jego pióra błyszczą jak koronny diadem, a aura, którą emanuje, inspiruje innych do dążenia do własnej przemiany i wzrostu. To mistrz równowagi, który łączy siłę z mądrością, a wolę z współczuciem, tworząc harmonię zarówno w sobie, jak i w całej Polymorphii.',
+        100.0, 7, 5.0, 'images/evolution-stages/7.webp', 2, 'evolution_stages12');
+INSERT INTO evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id, key)
+VALUES (13, 'Majestatyczna Bestia',
+        'Majestatyczna Bestia to istota o ogromnej sile i głębokiej mądrości. Zyskała szacunek dzięki odwadze i rozwadze, z jaką stawia czoła losowi. Jej potęga nie leży jedynie w mocy, lecz w zdolności rozumienia innych. To postać, która inspiruje, prowadzi i uczy. Każde jej działanie jest świadectwem drogi, jaką przebyła w Polymorphii. W jej oczach odbija się historia wielu pokoleń, a w głosie brzmi echo dawnych legend. Majestatyczna Bestia stoi na straży równowagi świata, wykorzystując swoją mądrość do rozwiązywania najbardziej złożonych problemów. Jej obecność przynosi spokój, a rada - jasność w chaosie. To ucieleśnienie potęgi płynącej z harmonii między siłą a dobrocią.',
+        90.0, 6, 5.0, 'images/evolution-stages/6.webp', 2, 'evolution_stages13');
+INSERT INTO evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id, key)
+VALUES (14, 'Podlot',
+        'Podlot to fascynujący etap przemiany, zawieszony między niewinnością młodości a rodzącą się dojrzałością. Opuszcza bezpieczne gniazdo, kierowany instynktem odkrywania rozległego świata Polymorphii, choć jego pierwsze loty naznaczone są jeszcze niepewnością i drobnymi potknięciami. Z ciekawością chłonie wiedzę i doświadczenia od starszych, uważnie obserwując ich mądrość i umiejętności, lecz jednocześnie zaczyna instynktownie poszukiwać własnej, unikalnej ścieżki. Każde nowe wyzwanie traktuje z mieszanką entuzjazmu i lekkiego strachu, a każda napotkana trudność staje się cenną lekcją, budując jego wewnętrzną siłę i odporność. W jego młodym sercu coraz mocniej pulsuje pragnienie samodzielności, a ciekawość świata pcha go do eksploracji nieznanych zakątków Polymorphii.',
+        50.0, 2, 3.0, 'images/evolution-stages/2.webp', 2, 'evolution_stages14');
+INSERT INTO evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id, key)
+VALUES (15, 'Samodzielny Zwierzak',
+        'Samodzielny Zwierzak to dojrzała postać, która wie, jak poruszać się po świecie Polymorphii. Jego decyzje są przemyślane, a działania odważne, lecz odpowiedzialne. Zdobyte doświadczenie pozwala mu lepiej rozumieć otoczenie i siebie. Choć wiele już osiągnął, nieustannie dąży do rozwoju, z pokorą i mądrością podejmując kolejne wyzwania. Jego pióra lśnią pełnią barw, odzwierciedlając bogactwo przeżyć i zdobytą wiedzę. Potrafi dostrzec subtelne połączenia między zjawiskami, co czyni go cennym towarzyszem i doradcą. Samodzielny Zwierzak znajduje równowagę między własnym dobrem a potrzebami społeczności, tworząc harmonię w swoim otoczeniu.',
+        70.0, 4, 4.0, 'images/evolution-stages/4.webp', 2, 'evolution_stages15');
+INSERT INTO evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id, key)
+VALUES (16, 'Żółtodziób',
+        'Żółtodziób to pełna entuzjazmu postać, która zaczyna rozumieć świat wokół siebie. Choć wciąż brakuje mu pewności i doświadczenia, chętnie podejmuje nowe wyzwania. Z otwartym umysłem i niegasnącą energią stara się rozwijać swoje zdolności. Każda sytuacja jest dla niego szansą, by stać się mądrzejszym i bardziej świadomym mieszkańcem Polymorphii. Jego charakterystyczny żółty dziób symbolizuje świeżość spojrzenia i gotowość do nauki. Popełnia błędy, ale szybko wyciąga z nich wnioski, co czyni go coraz bardziej odpornym na przeciwności losu. Żółtodziób balansuje między dziecięcą radością odkrywania a rodzącym się pragnieniem zrozumienia głębszych prawd świata.',
+        60.0, 3, 3.5, 'images/evolution-stages/3.webp', 2, 'evolution_stages16');
+INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
+                             markdown, is_hidden, is_locked, key)
+VALUES (1, 1, 'Kartkówka 1', NULL, 0, 0, NULL, NULL, FALSE, FALSE, 'gradable_events1');
+INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
+                             markdown, is_hidden, is_locked, key)
+VALUES (2, 1, 'Kartkówka 2', NULL, 1, 1, NULL, NULL, FALSE, FALSE, 'gradable_events2');
+INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
+                             markdown, is_hidden, is_locked, key)
+VALUES (3, 1, 'Kartkówka 3', NULL, 2, 2, NULL, NULL, FALSE, FALSE, 'gradable_events3');
+INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
+                             markdown, is_hidden, is_locked, key)
+VALUES (4, 1, 'Kartkówka 4', NULL, 3, 3, NULL, NULL, FALSE, FALSE, 'gradable_events4');
+INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
+                             markdown, is_hidden, is_locked, key)
+VALUES (5, 1, 'Kartkówka 5', NULL, 4, 4, NULL, NULL, FALSE, FALSE, 'gradable_events5');
+INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
+                             markdown, is_hidden, is_locked, key)
+VALUES (6, 1, 'Kartkówka 6', NULL, 5, 5, NULL, NULL, FALSE, FALSE, 'gradable_events6');
+INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
+                             markdown, is_hidden, is_locked, key)
+VALUES (7, 1, 'Kartkówka 7', NULL, 6, 6, NULL, NULL, FALSE, FALSE, 'gradable_events7');
+INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
+                             markdown, is_hidden, is_locked, key)
+VALUES (8, 1, 'Kartkówka 8', NULL, 7, 7, NULL, NULL, FALSE, FALSE, 'gradable_events8');
+INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
+                             markdown, is_hidden, is_locked, key)
+VALUES (16, 2, 'Laboratorium 8', NULL, 15, 15,
+        'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab8/Readme.md', NULL, FALSE, FALSE,
+        'gradable_events16');
+INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
+                             markdown, is_hidden, is_locked, key)
+VALUES (13, 2, 'Laboratorium 5', NULL, 12, 12,
+        'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab5/Readme.md', NULL, FALSE, FALSE,
+        'gradable_events13');
+INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
+                             markdown, is_hidden, is_locked, key)
+VALUES (11, 2, 'Laboratorium 3', NULL, 10, 10,
+        'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab3/Readme.md', NULL, FALSE, FALSE,
+        'gradable_events11');
+INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
+                             markdown, is_hidden, is_locked, key)
+VALUES (10, 2, 'Laboratorium 2', NULL, 9, 9,
+        'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab2/Readme.md', NULL, FALSE, FALSE,
+        'gradable_events10');
+INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
+                             markdown, is_hidden, is_locked, key)
+VALUES (15, 2, 'Laboratorium 7', NULL, 14, 14,
+        'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab7/Readme.md', NULL, FALSE, FALSE,
+        'gradable_events15');
+INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
+                             markdown, is_hidden, is_locked, key)
+VALUES (14, 2, 'Laboratorium 6', NULL, 13, 13,
+        'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab6/Readme.md', NULL, FALSE, FALSE,
+        'gradable_events14');
+INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
+                             markdown, is_hidden, is_locked, key)
+VALUES (12, 2, 'Laboratorium 4', NULL, 11, 11,
+        'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab4/Readme.md', '', FALSE, FALSE,
+        'gradable_events12');
+INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
+                             markdown, is_hidden, is_locked, key)
 VALUES
   (9, 2, 'Laboratorium 1', NULL, 8, 8, 'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab1/Readme.md', '# Lab 1: Instrukcje sterujące w Javie
 
@@ -754,50 +746,63 @@ Najważniejsze zadania:
 
 1. Konfiguracja środowiska.
 2. Stworzenie klasy `World` sterującej programem.
-3. Stworze', FALSE, FALSE);
-INSERT INTO
-  gradable_events (id, event_section_id, name, order_index, road_map_order_index, is_hidden, is_locked)
-VALUES
-  (17, 6, 'Kartkówka 1', 0, 0, FALSE, FALSE),
-  (18, 6, 'Kartkówka 2', 1, 1, FALSE, FALSE),
-  (19, 6, 'Kartkówka 3', 2, 2, FALSE, FALSE),
-  (20, 6, 'Kartkówka 4', 3, 3, FALSE, FALSE),
-  (21, 6, 'Kartkówka 5', 4, 4, FALSE, FALSE),
-  (22, 6, 'Kartkówka 6', 5, 5, FALSE, FALSE),
-  (23, 6, 'Kartkówka 7', 6, 6, FALSE, FALSE),
-  (24, 6, 'Kartkówka 8', 7, 7, FALSE, FALSE);
-INSERT INTO
-  gradable_events (id, event_section_id, name, order_index, road_map_order_index, markdown_source_url, is_hidden, is_locked)
-VALUES
-  (25, 8, 'Laboratorium 1', 8, 8, 'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab1/Readme.md', FALSE, FALSE),
-  (26, 8, 'Laboratorium 2', 9, 9, 'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab2/Readme.md', FALSE, FALSE),
-  (27, 8, 'Laboratorium 3', 10, 10, 'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab3/Readme.md', FALSE, FALSE),
-  (28, 8, 'Laboratorium 4', 11, 11, 'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab4/Readme.md', FALSE, FALSE),
-  (29, 8, 'Laboratorium 5', 12, 12, 'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab5/Readme.md', FALSE, FALSE),
-  (30, 8, 'Laboratorium 6', 13, 13, 'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab6/Readme.md', FALSE, FALSE),
-  (31, 8, 'Laboratorium 7', 14, 14, 'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab7/Readme.md', FALSE, FALSE),
-  (32, 8, 'Laboratorium 8', 15, 15, 'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab8/Readme.md', FALSE, FALSE),
-  (33, 4, 'Git', 0, 0, NULL, FALSE, FALSE),
-  (34, 11, 'Projekt 2a', 0, 0, null, true, true),
-  (35, 10, 'Dziady', 0, 4, null, false, true),
-  (36, 2, 'Laboratorium 9', 17, 17, null, false, true),
-  (37, 2, 'Laboratorium 9', 18, 18, null, false, true),
-  (38, 3, 'Projekt', 0, 19, 'https://github.com/Soamid/obiektowe-lab/tree/proj-2024/proj', false, false),
-  (39, 3, 'Projekt 1', 16, 16, null, FALSE, FALSE),
-  (40, 7, 'Projekt 1', 16, 16, null, FALSE, FALSE),
-  (41, 11, 'Projekt 2', 17, 17, null, FALSE, FALSE),
-  (42, 12, 'Projekt 2', 17, 17, null, FALSE, FALSE);
+3. Stworze', FALSE, FALSE, 'gradable_events9');
+INSERT INTO gradable_events (id, key, event_section_id, name, order_index, road_map_order_index, is_hidden, is_locked)
+VALUES (17, 'gradable_events17', 6, 'Kartkówka 1', 0, 0, FALSE, FALSE),
+       (18, 'gradable_events18', 6, 'Kartkówka 2', 1, 1, FALSE, FALSE),
+       (19, 'gradable_events19', 6, 'Kartkówka 3', 2, 2, FALSE, FALSE),
+       (20, 'gradable_events20', 6, 'Kartkówka 4', 3, 3, FALSE, FALSE),
+       (21, 'gradable_events21', 6, 'Kartkówka 5', 4, 4, FALSE, FALSE),
+       (22, 'gradable_events22', 6, 'Kartkówka 6', 5, 5, FALSE, FALSE),
+       (23, 'gradable_events23', 6, 'Kartkówka 7', 6, 6, FALSE, FALSE),
+       (24, 'gradable_events24', 6, 'Kartkówka 8', 7, 7, FALSE, FALSE);
+INSERT INTO gradable_events (id, key, event_section_id, name, order_index, road_map_order_index, markdown_source_url,
+                             is_hidden, is_locked)
+VALUES (25, 'gradable_events25', 8, 'Laboratorium 1', 8, 8,
+        'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab1/Readme.md', FALSE, FALSE),
+       (26, 'gradable_events26', 8, 'Laboratorium 2', 9, 9,
+        'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab2/Readme.md', FALSE, FALSE),
+       (27, 'gradable_events27', 8, 'Laboratorium 3', 10, 10,
+        'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab3/Readme.md', FALSE, FALSE),
+       (28, 'gradable_events28', 8, 'Laboratorium 4', 11, 11,
+        'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab4/Readme.md', FALSE, FALSE),
+       (29, 'gradable_events29', 8, 'Laboratorium 5', 12, 12,
+        'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab5/Readme.md', FALSE, FALSE),
+       (30, 'gradable_events30', 8, 'Laboratorium 6', 13, 13,
+        'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab6/Readme.md', FALSE, FALSE),
+       (31, 'gradable_events31', 8, 'Laboratorium 7', 14, 14,
+        'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab7/Readme.md', FALSE, FALSE),
+       (32, 'gradable_events32', 8, 'Laboratorium 8', 15, 15,
+        'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab8/Readme.md', FALSE, FALSE),
+       (33, 'gradable_events33', 4, 'Git', 0, 0, NULL, FALSE, FALSE),
+       (34, 'gradable_events34', 11, 'Projekt 2a', 0, 0, null, true, true),
+       (35, 'gradable_events35', 10, 'Dziady', 0, 4, null, false, true),
+       (36, 'gradable_events36', 2, 'Laboratorium 9', 17, 17, null, false, true),
+       (37, 'gradable_events37', 2, 'Laboratorium 9', 18, 18, null, false, true),
+       (38, 'gradable_events38', 3, 'Projekt', 0, 19, 'https://github.com/Soamid/obiektowe-lab/tree/proj-2024/proj', false, false),
+       (39, 'gradable_events39', 3, 'Projekt 1', 16, 16, null, FALSE, FALSE),
+       (40, 'gradable_events40', 7, 'Projekt 1', 16, 16, null, FALSE, FALSE),
+       (41, 'gradable_events41', 11, 'Projekt 2', 17, 17, null, FALSE, FALSE),
+       (42, 'gradable_events42', 12, 'Projekt 2', 17, 17, null, FALSE, FALSE);
 
 insert into projects(id, allow_cross_course_group_project_groups)
-values (38, false),
+values (34, false),
+       (38, false),
        (39, false),
        (40, false),
        (41, false),
        (42, false);
+insert into assignments(id)
+values (9),(10),(11),(12),(13),(14),(15),(16),
+    (25),(26),(27),(28),(29),(30),(31),(32),(33), (35), (36), (37);
 
-insert into project_variant_categories(id, project_id, name)
-values (1, 38, 'Mapa i roślinność'),
-       (2, 38, 'Zwierzaki');
+insert into tests(id)
+values (1),(2),(3),(4),(5),(6),(7),(8),(17),
+       (18),(19),(20),(21),(22),(23),(24);
+
+insert into project_variant_categories(id, project_id, name, key)
+values (1, 38, 'Mapa i roślinność', 'project_variant_categories1'),
+       (2, 38, 'Zwierzaki', 'project_variant_categories2');
 
 insert into project_groups(id, teaching_role_user_id, project_id)
 values (1, 4, 39),
@@ -810,19 +815,19 @@ values (1, 4, 39),
        (8, 4, 42),
        (9, 4, 38);
 
-insert into project_variants(id, project_variant_category_id, name, short_code, description, image_url)
+insert into project_variants(id, project_variant_category_id, name, short_code, description, image_url, key)
 values (1, 1, 'Bieguny', 'A', 'bieguny zdefiniowane są na dolnej i ' ||
                               'górnej krawędzi mapy. Im bliżej bieguna znajduje się zwierzę, ' ||
                               'tym większą energię traci podczas pojedynczego ruchu (na biegunach jest zimno)',
-        'images/evolution-stages/5.webp'),
+        'images/evolution-stages/5.webp', 'project_variants1'),
        (2, 1, 'Pożary', 'B',
         'co jakąś (zadaną w konfiguracji) liczbę tur na mapie pojawia się pożar. Pożar zaczyna się na jednym polu z rośliną i w każdej turze rozprzestrzenia się na wszystkie przylegające do niej rośliny (ale nie po skosie). Pożar na każdym polu trwa stałą zadaną (konfigurowalną) liczbę tur i po jego zakończeniu roślina na tym polu znika. Jeśli zwierzak wejdzie na pole z ogniem, umiera.',
-        'images/evolution-stages/5.webp'),
-       (3, 2, 'Lekka korekta', '1',
+        'images/evolution-stages/5.webp', 'project_variants2'),
+       (3, 2, 'Lekka korekta', 'project_variants1',
         'mutacja zmienia gen o 1 w górę lub w dół (np. gen 3 może zostać zamieniony na 2 lub 4, a gen 0 na 1 lub 7)',
-        'images/evolution-stages/6.webp'),
+        'images/evolution-stages/6.webp', 'project_variants3'),
        (4, 2, 'Podmianka', '2', 'mutacja może też skutkować tym, że dwa geny zamienią się miejscami',
-        'images/evolution-stages/4.webp');
+        'images/evolution-stages/4.webp', 'project_variants4');
 
 insert into project_groups_animals(animal_id, project_group_id)
 values (2, 9),
@@ -856,42 +861,42 @@ values (9, 1),
        (9, 3);
 
 
-INSERT INTO
-  rewards (id, name, description, image_url, order_index, course_id)
-VALUES
-  (101, 'Srebrna Skrzynia', 'Srebrna Skrzynia skrywa w sobie obietnicę wartości i elegancji. Jej chłodny blask sugeruje sekrety czekające na odkrycie. Nie emanuje taką potęgą jak jej złota siostra, lecz jej zawartość niesie ze sobą subtelne bogactwo i wyrafinowanie. Otwarcie Srebrnej Skrzyni to krok ku poznaniu piękna w jego bardziej stonowanej formie, nagroda za ciekawość i wytrwałość w poszukiwaniach.', 'images/chests/s1.webp', 0, 1);
-INSERT INTO
-  rewards (id, name, description, image_url, order_index, course_id)
-VALUES
-  (1, 'Pietruszka', 'Pietruszka to dusza radosna i wszechstronna. Jej świeżość wprowadza lekkość, a obecność - mimo niewielkich rozmiarów - potrafi odmienić całe otoczenie. W Polymorphii uczy, że nawet najmniejsze działania mogą mieć wielką moc. Z otwartym sercem chłonie nowe doświadczenia, a jej naturalna ciekawość i elastyczność pozwalają jej odnaleźć się w każdej sytuacji. Pietruszka delikatnie odnawia siły witalne, regenerując energię potrzebną do dalszej drogi. Jej działanie to przypomnienie, że odnowa przychodzi często z najmniej spodziewanych miejsc.', 'images/items/parsley.webp', 0, 1);
-INSERT INTO
-  rewards (id, name, description, image_url, order_index, course_id)
-VALUES
-  (2, 'Marchewka', 'Marchewka to symbol ukrytej siły i cierpliwości. Choć na powierzchni wygląda skromnie, w głębi kryje soczystą energię i bogactwo doświadczeń. W Polymorphii reprezentuje wytrwałość i rozwój – potrzebuje czasu, by osiągnąć pełnię swojego potencjału. Każdy dzień spędzony na zgłębianiu świata czyni ją silniejszą i bardziej świadomą swoich możliwości. Marchewka przywraca zmęczonym duszom utracone doświadczenie, pozwalając im szybciej powrócić na ścieżkę nauki. To dar dla tych, którzy nie boją się uczyć na własnych błędach i iść naprzód', 'images/items/carrot.webp', 1, 1);
-INSERT INTO
-  rewards (id, name, description, image_url, order_index, course_id)
-VALUES
-  (102, 'Złota Skrzynia', 'Złota Skrzynia symbolizuje szczyt wartości i nieokiełznany przepych. Jej olśniewający blask wprost zdradza, jakie skarby kryją się w środku. Posiada moc, której jej srebrna siostra może tylko pozazdrościć, a jej wnętrze wypełnia czyste, bezkompromisowe bogactwo i splendor. Otwarcie Złotej Skrzyni to brama do świata absolutnego luksusu, ostateczna nagroda zarezerwowana dla tych, którzy mają śmiałość sięgnąć po największe bogactwa w swoich poszukiwaniach.', 'images/chests/s2.webp', 1, 1);
-INSERT INTO
-  rewards (id, name, description, image_url, order_index, course_id)
-VALUES
-  (3, 'Apteczka', 'Apteczka to symbol gotowości i szybkiej regeneracji. Choć często wygląda niepozornie, kryje w sobie narzędzia niezbędne do leczenia ran i przywracania sił witalnych. W Polymorphii reprezentuje zdolność do powrotu do formy i kontynuowania walki – pozwala przetrwać kryzysowe momenty. Użycie jej w potrzebie pozwala błyskawicznie odzyskać zdrowie i gotowość do działania. To dar dla tych, którzy cenią przezorność i potrafią zadbać o siebie lub swoich towarzyszy, nie pozwalając, by odnieśli trwałe rany.', 'images/items/aid.webp', 2, 1);
-INSERT INTO
-  rewards (id, name, description, image_url, order_index, course_id)
-VALUES
-  (103, 'Srebrna Skrzynia', 'Srebrna Skrzynia skrywa w sobie obietnicę wartości i elegancji. Jej chłodny blask sugeruje sekrety czekające na odkrycie. Nie emanuje taką potęgą jak jej złota siostra, lecz jej zawartość niesie ze sobą subtelne bogactwo i wyrafinowanie. Otwarcie Srebrnej Skrzyni to krok ku poznaniu piękna w jego bardziej stonowanej formie, nagroda za ciekawość i wytrwałość w poszukiwaniach.', 'images/chests/s1.webp', 0, 1);
-INSERT INTO
-  rewards (id, name, description, image_url, order_index, course_id)
-VALUES
-  (4, 'Pietruszka', 'Pietruszka to dusza radosna i wszechstronna. Jej świeżość wprowadza lekkość, a obecność - mimo niewielkich rozmiarów - potrafi odmienić całe otoczenie. W Polymorphii uczy, że nawet najmniejsze działania mogą mieć wielką moc. Z otwartym sercem chłonie nowe doświadczenia, a jej naturalna ciekawość i elastyczność pozwalają jej odnaleźć się w każdej sytuacji. Pietruszka delikatnie odnawia siły witalne, regenerując energię potrzebną do dalszej drogi. Jej działanie to przypomnienie, że odnowa przychodzi często z najmniej spodziewanych miejsc.', 'images/items/parsley.webp', 0, 2);
-INSERT INTO
-  rewards (id, name, description, image_url, order_index, course_id)
-VALUES
-  (5, 'Marchewka', 'Marchewka to symbol ukrytej siły i cierpliwości. Choć na powierzchni wygląda skromnie, w głębi kryje soczystą energię i bogactwo doświadczeń. W Polymorphii reprezentuje wytrwałość i rozwój – potrzebuje czasu, by osiągnąć pełnię swojego potencjału. Każdy dzień spędzony na zgłębianiu świata czyni ją silniejszą i bardziej świadomą swoich możliwości. Marchewka przywraca zmęczonym duszom utracone doświadczenie, pozwalając im szybciej powrócić na ścieżkę nauki. To dar dla tych, którzy nie boją się uczyć na własnych błędach i iść naprzód', 'images/items/carrot.webp', 1, 2);
-INSERT INTO
-  rewards (id, name, description, image_url, order_index, course_id)
-VALUES
-  (104, 'Złota Skrzynia', 'Złota Skrzynia symbolizuje szczyt wartości i nieokiełznany przepych. Jej olśniewający blask wprost zdradza, jakie skarby kryją się w środku. Posiada moc, której jej srebrna siostra może tylko pozazdrościć, a jej wnętrze wypełnia czyste, bezkompromisowe bogactwo i splendor. Otwarcie Złotej Skrzyni to brama do świata absolutnego luksusu, ostateczna nagroda zarezerwowana dla tych, którzy mają śmiałość sięgnąć po największe bogactwa w swoich poszukiwaniach.', 'images/chests/s2.webp', 1, 2);
+INSERT INTO rewards (id, name, description, image_url, order_index, course_id, key)
+VALUES (101, 'Srebrna Skrzynia',
+        'Srebrna Skrzynia skrywa w sobie obietnicę wartości i elegancji. Jej chłodny blask sugeruje sekrety czekające na odkrycie. Nie emanuje taką potęgą jak jej złota siostra, lecz jej zawartość niesie ze sobą subtelne bogactwo i wyrafinowanie. Otwarcie Srebrnej Skrzyni to krok ku poznaniu piękna w jego bardziej stonowanej formie, nagroda za ciekawość i wytrwałość w poszukiwaniach.',
+        'images/chests/s1.webp', 0, 1, 'rewards101');
+INSERT INTO rewards (id, name, description, image_url, order_index, course_id, key)
+VALUES (1, 'Pietruszka',
+        'Pietruszka to dusza radosna i wszechstronna. Jej świeżość wprowadza lekkość, a obecność - mimo niewielkich rozmiarów - potrafi odmienić całe otoczenie. W Polymorphii uczy, że nawet najmniejsze działania mogą mieć wielką moc. Z otwartym sercem chłonie nowe doświadczenia, a jej naturalna ciekawość i elastyczność pozwalają jej odnaleźć się w każdej sytuacji. Pietruszka delikatnie odnawia siły witalne, regenerując energię potrzebną do dalszej drogi. Jej działanie to przypomnienie, że odnowa przychodzi często z najmniej spodziewanych miejsc.',
+        'images/items/parsley.webp', 0, 1, 'rewards1');
+INSERT INTO rewards (id, name, description, image_url, order_index, course_id, key)
+VALUES (2, 'Marchewka',
+        'Marchewka to symbol ukrytej siły i cierpliwości. Choć na powierzchni wygląda skromnie, w głębi kryje soczystą energię i bogactwo doświadczeń. W Polymorphii reprezentuje wytrwałość i rozwój – potrzebuje czasu, by osiągnąć pełnię swojego potencjału. Każdy dzień spędzony na zgłębianiu świata czyni ją silniejszą i bardziej świadomą swoich możliwości. Marchewka przywraca zmęczonym duszom utracone doświadczenie, pozwalając im szybciej powrócić na ścieżkę nauki. To dar dla tych, którzy nie boją się uczyć na własnych błędach i iść naprzód',
+        'images/items/carrot.webp', 1, 1, 'rewards2');
+INSERT INTO rewards (id, name, description, image_url, order_index, course_id, key)
+VALUES (102, 'Złota Skrzynia',
+        'Złota Skrzynia symbolizuje szczyt wartości i nieokiełznany przepych. Jej olśniewający blask wprost zdradza, jakie skarby kryją się w środku. Posiada moc, której jej srebrna siostra może tylko pozazdrościć, a jej wnętrze wypełnia czyste, bezkompromisowe bogactwo i splendor. Otwarcie Złotej Skrzyni to brama do świata absolutnego luksusu, ostateczna nagroda zarezerwowana dla tych, którzy mają śmiałość sięgnąć po największe bogactwa w swoich poszukiwaniach.',
+        'images/chests/s2.webp', 1, 1, 'rewards102');
+INSERT INTO rewards (id, name, description, image_url, order_index, course_id, key)
+VALUES (3, 'Apteczka',
+        'Apteczka to symbol gotowości i szybkiej regeneracji. Choć często wygląda niepozornie, kryje w sobie narzędzia niezbędne do leczenia ran i przywracania sił witalnych. W Polymorphii reprezentuje zdolność do powrotu do formy i kontynuowania walki – pozwala przetrwać kryzysowe momenty. Użycie jej w potrzebie pozwala błyskawicznie odzyskać zdrowie i gotowość do działania. To dar dla tych, którzy cenią przezorność i potrafią zadbać o siebie lub swoich towarzyszy, nie pozwalając, by odnieśli trwałe rany.',
+        'images/items/aid.webp', 2, 1, 'rewards3');
+INSERT INTO rewards (id, name, description, image_url, order_index, course_id, key)
+VALUES (103, 'Srebrna Skrzynia',
+        'Srebrna Skrzynia skrywa w sobie obietnicę wartości i elegancji. Jej chłodny blask sugeruje sekrety czekające na odkrycie. Nie emanuje taką potęgą jak jej złota siostra, lecz jej zawartość niesie ze sobą subtelne bogactwo i wyrafinowanie. Otwarcie Srebrnej Skrzyni to krok ku poznaniu piękna w jego bardziej stonowanej formie, nagroda za ciekawość i wytrwałość w poszukiwaniach.',
+        'images/chests/s1.webp', 0, 1, 'rewards103');
+INSERT INTO rewards (id, name, description, image_url, order_index, course_id, key)
+VALUES (4, 'Pietruszka',
+        'Pietruszka to dusza radosna i wszechstronna. Jej świeżość wprowadza lekkość, a obecność - mimo niewielkich rozmiarów - potrafi odmienić całe otoczenie. W Polymorphii uczy, że nawet najmniejsze działania mogą mieć wielką moc. Z otwartym sercem chłonie nowe doświadczenia, a jej naturalna ciekawość i elastyczność pozwalają jej odnaleźć się w każdej sytuacji. Pietruszka delikatnie odnawia siły witalne, regenerując energię potrzebną do dalszej drogi. Jej działanie to przypomnienie, że odnowa przychodzi często z najmniej spodziewanych miejsc.',
+        'images/items/parsley.webp', 0, 2, 'rewards4');
+INSERT INTO rewards (id, name, description, image_url, order_index, course_id, key)
+VALUES (5, 'Marchewka',
+        'Marchewka to symbol ukrytej siły i cierpliwości. Choć na powierzchni wygląda skromnie, w głębi kryje soczystą energię i bogactwo doświadczeń. W Polymorphii reprezentuje wytrwałość i rozwój – potrzebuje czasu, by osiągnąć pełnię swojego potencjału. Każdy dzień spędzony na zgłębianiu świata czyni ją silniejszą i bardziej świadomą swoich możliwości. Marchewka przywraca zmęczonym duszom utracone doświadczenie, pozwalając im szybciej powrócić na ścieżkę nauki. To dar dla tych, którzy nie boją się uczyć na własnych błędach i iść naprzód',
+        'images/items/carrot.webp', 1, 2, 'rewards5');
+INSERT INTO rewards (id, name, description, image_url, order_index, course_id, key)
+VALUES (104, 'Złota Skrzynia',
+        'Złota Skrzynia symbolizuje szczyt wartości i nieokiełznany przepych. Jej olśniewający blask wprost zdradza, jakie skarby kryją się w środku. Posiada moc, której jej srebrna siostra może tylko pozazdrościć, a jej wnętrze wypełnia czyste, bezkompromisowe bogactwo i splendor. Otwarcie Złotej Skrzyni to brama do świata absolutnego luksusu, ostateczna nagroda zarezerwowana dla tych, którzy mają śmiałość sięgnąć po największe bogactwa w swoich poszukiwaniach.',
+        'images/chests/s2.webp', 1, 2, 'rewards104');
 INSERT INTO
   items (reward_id, "limit", event_section_id)
 VALUES
@@ -984,118 +989,67 @@ INSERT INTO
   chests_items (chest_id, item_id)
 VALUES
   (104, 5);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (1, 1, 'Kartkówka', 2.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (2, 2, 'Kartkówka', 2.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (3, 3, 'Kartkówka', 2.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (4, 4, 'Kartkówka', 2.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (5, 5, 'Kartkówka', 2.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (6, 6, 'Kartkówka', 2.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (7, 7, 'Kartkówka', 2.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (8, 8, 'Kartkówka', 2.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (9, 9, 'Laboratorium', 4.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (10, 10, 'Laboratorium', 4.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (11, 11, 'Laboratorium', 4.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (12, 12, 'Laboratorium', 4.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (13, 13, 'Laboratorium', 4.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (14, 14, 'Laboratorium', 4.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (15, 15, 'Laboratorium', 4.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (16, 16, 'Laboratorium', 4.0);
-INSERT INTO
-  criteria (id, gradable_event_id, name, max_xp)
-VALUES
-  (17, 17, 'Kartkówka', 2.0),
-  (18, 18, 'Kartkówka', 2.0),
-  (19, 19, 'Kartkówka', 2.0),
-  (20, 20, 'Kartkówka', 2.0),
-  (21, 21, 'Kartkówka', 2.0),
-  (22, 22, 'Kartkówka', 2.0),
-  (23, 23, 'Kartkówka', 2.0),
-  (24, 24, 'Kartkówka', 2.0),
-  (25, 25, 'Laboratorium', 4.0),
-  (26, 26, 'Laboratorium', 4.0),
-  (27, 27, 'Laboratorium', 4.0),
-  (28, 28, 'Laboratorium', 4.0),
-  (29, 29, 'Laboratorium', 4.0),
-  (30, 30, 'Laboratorium', 4.0),
-  (31, 31, 'Laboratorium', 4.0),
-  (32, 32, 'Laboratorium', 4.0),
-  (33, 33, 'Git', 10.0),
-  (34, 38, 'Kod', 5.0),
-  (35, 38, 'Wzorce projektowe', 5.0);
+INSERT INTO criteria (id, gradable_event_id, name, max_xp, key)
+VALUES (1, 1, 'Kartkówka', 2.0, 'criteria1');
+INSERT INTO criteria (id, gradable_event_id, name, max_xp, key)
+VALUES (2, 2, 'Kartkówka', 2.0, 'criteria2'),
+       (3, 3, 'Kartkówka', 2.0, 'criteria3'),
+       (4, 4, 'Kartkówka', 2.0, 'criteria4'),
+       (5, 5, 'Kartkówka', 2.0, 'criteria5'),
+       (6, 6, 'Kartkówka', 2.0, 'criteria6'),
+       (7, 7, 'Kartkówka', 2.0, 'criteria7'),
+       (8, 8, 'Kartkówka', 2.0, 'criteria8'),
+       (9, 9, 'Laboratorium', 4.0, 'criteria9'),
+       (10, 10, 'Laboratorium', 4.0, 'criteria10'),
+       (11, 11, 'Laboratorium', 4.0, 'criteria11'),
+       (12, 12, 'Laboratorium', 4.0, 'criteria12'),
+       (13, 13, 'Laboratorium', 4.0, 'criteria13'),
+       (14, 14, 'Laboratorium', 4.0, 'criteria14'),
+       (15, 15, 'Laboratorium', 4.0, 'criteria15'),
+       (16, 16, 'Laboratorium', 4.0, 'criteria16'),
+       (17, 17, 'Kartkówka', 2.0, 'criteria17'),
+       (18, 18, 'Kartkówka', 2.0, 'criteria18'),
+       (19, 19, 'Kartkówka', 2.0, 'criteria19'),
+       (20, 20, 'Kartkówka', 2.0, 'criteria20'),
+       (21, 21, 'Kartkówka', 2.0, 'criteria21'),
+       (22, 22, 'Kartkówka', 2.0, 'criteria22'),
+       (23, 23, 'Kartkówka', 2.0, 'criteria23'),
+       (24, 24, 'Kartkówka', 2.0, 'criteria24'),
+       (25, 25, 'Laboratorium', 4.0, 'criteria25'),
+       (26, 26, 'Laboratorium', 4.0, 'criteria26'),
+       (27, 27, 'Laboratorium', 4.0, 'criteria27'),
+       (28, 28, 'Laboratorium', 4.0, 'criteria28'),
+       (29, 29, 'Laboratorium', 4.0, 'criteria29'),
+       (30, 30, 'Laboratorium', 4.0, 'criteria30'),
+       (31, 31, 'Laboratorium', 4.0, 'criteria31'),
+       (32, 32, 'Laboratorium', 4.0, 'criteria32'),
+       (33, 33, 'Git', 10.0, 'criteria33'),
+       (34, 38, 'Kod', 5.0, 'criteria34'),
+       (35, 38, 'Wzorce projektowe', 5.0, 'criteria35');
+
 
 insert into criteria_rewards(criterion_id, reward_id, max_amount)
 values (14,101,1),
        (14, 2, 2),
        (34, 101, 1),
        (35, 1, 2);
-
-INSERT INTO
-  submission_requirements (id, gradable_event_id, name, is_mandatory, order_index)
-VALUES
-  (1, 9, 'Wykonanie zadania', TRUE, 1),
-  (2, 10, 'Wykonanie zadania', TRUE, 1),
-  (3, 11, 'Wykonanie zadania', TRUE, 1),
-  (4, 12, 'Wykonanie zadania', TRUE, 1),
-  (5, 12, 'Zadanie dodatkowe', FALSE, 2),
-  (6, 13, 'Wykonanie zadania', TRUE, 1),
-  (7, 13, 'Zadanie dodatkowe', FALSE, 2),
-  (8, 14, 'Wykonanie zadania', TRUE, 1),
-  (9, 15, 'Wykonanie zadania', TRUE, 1),
-  (10, 16, 'Wykonanie zadania', TRUE, 1),
-  (11, 16, 'Zadanie dodatkowe', FALSE, 2),
-  (12, 33, 'Wykonanie zadania', TRUE, 1),
-  (13, 39, 'Link do repozytorium', TRUE, 1),
-  (14, 40, 'Link do repozytorium', TRUE, 1),
-  (15, 41, 'Link do repozytorium', TRUE, 1),
-  (16, 42, 'Link do repozytorium', TRUE, 1);
+INSERT INTO submission_requirements (id, gradable_event_id, name, is_mandatory, order_index, key)
+VALUES (1, 9, 'Wykonanie zadania', TRUE, 1, 'submission_requirements1'),
+       (2, 10, 'Wykonanie zadania', TRUE, 1, 'submission_requirements2'),
+       (3, 11, 'Wykonanie zadania', TRUE, 1, 'submission_requirements3'),
+       (4, 12, 'Wykonanie zadania', TRUE, 1, 'submission_requirements4'),
+       (5, 12, 'Zadanie dodatkowe', FALSE, 2, 'submission_requirements5'),
+       (6, 13, 'Wykonanie zadania', TRUE, 1, 'submission_requirements6'),
+       (7, 13, 'Zadanie dodatkowe', FALSE, 2, 'submission_requirements7'),
+       (8, 14, 'Wykonanie zadania', TRUE, 1, 'submission_requirements8'),
+       (9, 15, 'Wykonanie zadania', TRUE, 1, 'submission_requirements9'),
+       (10, 16, 'Wykonanie zadania', TRUE, 1, 'submission_requirements10'),
+       (11, 16, 'Zadanie dodatkowe', FALSE, 2, 'submission_requirements11'),
+       (12, 33, 'Wykonanie zadania', TRUE, 1, 'submission_requirements12'),
+       (13, 39, 'Link do repozytorium', TRUE, 1, 'submission_requirements13'),
+       (14, 40, 'Link do repozytorium', TRUE, 1, 'submission_requirements14'),
+       (15, 41, 'Link do repozytorium', TRUE, 1, 'submission_requirements15'),
+       (16, 42, 'Link do repozytorium', TRUE, 1, 'submission_requirements16');
 
 INSERT INTO
   submissions (id, submission_requirement_id, animal_id, url, is_locked, created_date, modified_date)
@@ -1167,4 +1121,9 @@ SELECT
   setval('users_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
 FROM
   users;
+SELECT setval('project_variants_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
+FROM project_variants;
+
+SELECT setval('project_variant_categories_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
+FROM project_variant_categories;
 COMMIT;

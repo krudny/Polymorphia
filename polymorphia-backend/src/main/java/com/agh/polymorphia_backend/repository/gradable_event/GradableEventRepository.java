@@ -2,6 +2,8 @@ package com.agh.polymorphia_backend.repository.gradable_event;
 
 import com.agh.polymorphia_backend.dto.response.target_list.StudentTargetDataResponseDto;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
+import com.agh.polymorphia_backend.repository.gradable_event.projections.GradableEventDetailsProjection;
+import com.agh.polymorphia_backend.repository.gradable_event.projections.ProjectDetailsDetailsProjection;
 import com.agh.polymorphia_backend.repository.gradable_event.projections.StudentGradableEventProjection;
 import com.agh.polymorphia_backend.repository.gradable_event.projections.TeachingRoleGradableEventProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -55,55 +57,59 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
     );
 
     @Query(value = """
-    SELECT
-        ge.id,
-        ge.name,
-        ge.topic,
-        ge.order_index,
-        ge.road_map_order_index,
-        ge.is_hidden,
-        ge.is_locked,
-        COUNT(DISTINCT CASE
-            WHEN scga.animal_id IS NOT NULL AND g.id IS NULL
-                THEN scga.animal_id
-        END) as ungraded_students,
-        CASE
-            WHEN COUNT(DISTINCT cr.criterion_id) > 0 THEN true
-            ELSE false
-        END as has_possible_reward
-    FROM gradable_events ge
-    LEFT JOIN criteria c ON c.gradable_event_id = ge.id
-    LEFT JOIN criteria_rewards cr ON cr.criterion_id = c.id
-    LEFT JOIN (
-        SELECT scga.animal_id, scga.course_group_id
-        FROM students_course_groups scga
-        JOIN course_groups cg ON cg.id = scga.course_group_id
-        JOIN courses co ON co.id = cg.course_id
-        WHERE (
-            (:roleType = 'INSTRUCTOR' AND cg.teaching_role_user_id = :roleId)
-            OR (:roleType = 'COORDINATOR' AND co.coordinator_id = :roleId)
-        )
-    ) scga ON true
-    JOIN event_sections es ON ge.event_section_id = es.id
-    JOIN courses co ON es.course_id = co.id
-    LEFT JOIN grades g ON g.gradable_event_id = ge.id AND g.animal_id = scga.animal_id
-    WHERE (
-        (:scope = 'COURSE' AND co.id = :idValue)
-        OR (:scope = 'EVENT_SECTION' AND es.id = :idValue)
-    )
-    GROUP BY
-        ge.id,
-        ge.name,
-        ge.topic,
-        ge.order_index,
-        ge.road_map_order_index,
-        ge.is_hidden,
-        ge.is_locked,
-        ge.event_section_id
-    ORDER BY
-        CASE WHEN :sortBy = 'ORDER_INDEX' THEN ge.order_index END,
-        CASE WHEN :sortBy = 'ROADMAP_ORDER_INDEX' THEN ge.road_map_order_index END
-    """, nativeQuery = true)
+            SELECT
+                ge.id,
+                ge.name,
+                ge.topic,
+                ge.order_index,
+                ge.road_map_order_index,
+                ge.is_hidden,
+                ge.is_locked,
+                COUNT(DISTINCT CASE
+                    WHEN scga.animal_id IS NOT NULL AND g.id IS NULL
+                        THEN scga.animal_id
+                END) as ungraded_students,
+                CASE
+                    WHEN COUNT(DISTINCT cr.criterion_id) > 0 THEN true
+                    ELSE false
+                END as has_possible_reward
+            FROM gradable_events ge
+            LEFT JOIN criteria c ON c.gradable_event_id = ge.id
+            LEFT JOIN criteria_rewards cr ON cr.criterion_id = c.id
+            LEFT JOIN (
+                SELECT scga.animal_id, scga.course_group_id
+                FROM students_course_groups scga
+                JOIN course_groups cg ON cg.id = scga.course_group_id
+                JOIN courses co ON co.id = cg.course_id
+                JOIN event_sections es on es.course_id = co.id
+                WHERE (
+                    (:roleType = 'INSTRUCTOR' AND cg.teaching_role_user_id = :roleId)
+                    OR (:roleType = 'COORDINATOR' AND co.coordinator_id = :roleId)
+                ) AND (
+                            (:scope = 'COURSE' AND co.id = :idValue)
+                OR (:scope = 'EVENT_SECTION' AND es.id = :idValue)
+                )
+            ) scga ON true
+            JOIN event_sections es ON ge.event_section_id = es.id
+            JOIN courses co ON es.course_id = co.id
+            LEFT JOIN grades g ON g.gradable_event_id = ge.id AND g.animal_id = scga.animal_id
+            WHERE (
+                (:scope = 'COURSE' AND co.id = :idValue)
+                OR (:scope = 'EVENT_SECTION' AND es.id = :idValue)
+            )
+            GROUP BY
+                ge.id,
+                ge.name,
+                ge.topic,
+                ge.order_index,
+                ge.road_map_order_index,
+                ge.is_hidden,
+                ge.is_locked,
+                ge.event_section_id
+            ORDER BY
+                CASE WHEN :sortBy = 'ORDER_INDEX' THEN ge.order_index END,
+                CASE WHEN :sortBy = 'ROADMAP_ORDER_INDEX' THEN ge.road_map_order_index END
+            """, nativeQuery = true)
     List<TeachingRoleGradableEventProjection> findTeachingRoleGradableEventsWithDetails(
             @Param("idValue") Long idValue,
             @Param("roleId") Long roleId,
@@ -159,4 +165,56 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
             @Param("sortOrder") String sortOrder,
             @Param("gradeStatus") String gradeStatus
     );
+
+
+    @Query(value = """
+            SELECT
+                ge.id as id,
+                ge.key as key,
+                ge.name as name,
+                ge.topic as topic,
+                ge.markdown_source_url as markdownSourceUrl,
+                ge.is_hidden as isHidden,
+                ge.is_locked as isLocked,
+                ge.event_section_id as eventSectionId,
+                ge.road_map_order_index as roadMapOrderIndex,
+                es.is_shown_in_road_map as isShownInRoadmap,
+                CASE
+                    WHEN p.id IS NOT NULL THEN 'PROJECT'
+                    WHEN t.id IS NOT NULL THEN 'TEST'
+                    WHEN a.id IS NOT NULL THEN 'ASSIGNMENT'
+                    ELSE 'UNKNOWN'
+                END as type
+            FROM gradable_events ge
+            LEFT JOIN projects p ON ge.id = p.id
+            LEFT JOIN tests t ON ge.id = t.id
+            LEFT JOIN assignments a ON ge.id = a.id
+            JOIN event_sections es ON ge.event_section_id = es.id
+            WHERE es.course_id = :courseId
+            ORDER BY ge.event_section_id, ge.order_index
+            """, nativeQuery = true)
+    List<GradableEventDetailsProjection> findGradableEventsByCourseId(@Param("courseId") Long courseId);
+
+    @Query("""
+            SELECT
+                p.id as id,
+                p.allowCrossCourseGroupProjectGroups as allowCrossCourseGroupProjectGroups
+            FROM Project p
+            WHERE p.eventSection.course.id = :courseId
+            """)
+    List<ProjectDetailsDetailsProjection> findProjectDetailsByCourseId(@Param("courseId") Long courseId);
+
+    @Query("""
+            select g.id
+            from GradableEvent g
+            where g.key=:key and g.eventSection.course.id=:courseId
+            """)
+    Long findIdByKeyAndCourseId(String key, Long courseId);
+
+    @Query("""
+                SELECT ge FROM GradableEvent ge
+                WHERE ge.key IN :keys
+                AND ge.eventSection.course.id = :courseId
+            """)
+    List<GradableEvent> findAllByKeyIn(List<String> keys, Long courseId);
 }

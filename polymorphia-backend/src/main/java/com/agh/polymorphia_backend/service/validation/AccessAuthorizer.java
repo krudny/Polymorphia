@@ -133,12 +133,12 @@ public class AccessAuthorizer {
         }
     }
 
-    private boolean hasInstructorAccessToUserInCourse(User user, Course course, Long studentId) {
-        return instructorRepository.hasAccessToStudentInCourse(user.getId(), course.getId(), studentId);
+    public boolean isCourseAccessAuthorizedCoordinator(User user, Course course) {
+        return course.getCoordinator().getUser().equals(user);
     }
 
-    private boolean isCourseAccessAuthorizedCoordinator(User user, Course course) {
-        return course.getCoordinator().getUser().equals(user);
+    private boolean hasInstructorAccessToUserInCourse(User user, Course course, Long studentId) {
+        return instructorRepository.hasAccessToStudentInCourse(user.getId(), course.getId(), studentId);
     }
 
     private boolean isCourseAccessAuthorizedInstructor(User user, Course course) {

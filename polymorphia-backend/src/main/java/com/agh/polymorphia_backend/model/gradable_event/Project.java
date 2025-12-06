@@ -1,12 +1,14 @@
-package com.agh.polymorphia_backend.model.project;
+package com.agh.polymorphia_backend.model.gradable_event;
 
-import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
+import com.agh.polymorphia_backend.model.project.ProjectGroup;
+import com.agh.polymorphia_backend.model.project.ProjectVariantCategory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,10 +29,12 @@ public class Project extends GradableEvent {
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
     @ToString.Exclude
     @JsonIgnore
-    private List<ProjectGroup> projectGroups;
+    @Builder.Default
+    private List<ProjectGroup> projectGroups = new ArrayList<>();
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
     @ToString.Exclude
     @JsonIgnore
-    private List<ProjectVariantCategory> variantCategories;
+    @Builder.Default
+    private List<ProjectVariantCategory> variantCategories = new ArrayList<>();
 }
