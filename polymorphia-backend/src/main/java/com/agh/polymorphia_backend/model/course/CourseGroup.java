@@ -44,7 +44,12 @@ public class CourseGroup {
     private TeachingRoleUser teachingRoleUser;
 
     @NotNull
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "courseGroup")
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "courseGroup",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     @ToString.Exclude
     @JsonIgnore
     private List<StudentCourseGroupAssignment> studentCourseGroupAssignments;

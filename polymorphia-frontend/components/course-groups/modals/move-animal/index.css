@@ -1,0 +1,22 @@
+@import "tailwindcss";
+@import "../../../../styles/globals.css";
+
+.move-animal {
+  @apply flex flex-col gap-y-4 w-sm;
+
+  h1 {
+    @apply text-3xl;
+  }
+}
+
+.move-animal-columns {
+  @apply flex justify-between items-center;
+
+  h1 {
+    @apply max-w-44 truncate;
+  }
+}
+
+.move-animal-buttons {
+  @apply w-full flex gap-x-4;
+}

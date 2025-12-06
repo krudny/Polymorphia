@@ -3,6 +3,7 @@ export interface ButtonWithBorderProps {
   className?: string;
   onClick?: () => void;
   icon?: string;
+  type?: "button" | "submit" | "reset";
 }
 
 export type VariantProps = {

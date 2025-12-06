@@ -36,6 +36,9 @@ const UserService = {
   createAnimal: async (request: CreateAnimalRequestDTO): Promise<void> => {
     await ApiClient.post("/students/animals", request);
   },
+  deleteAnimal: async (animalId: number): Promise<void> => {
+    await ApiClient.delete(`/students/${animalId}`);
+  },
   getUserRole: async (): Promise<Role> => {
     return await ApiClient.get<Role>("/users/role");
   },
@@ -77,8 +80,8 @@ const UserService = {
     ];
   },
 
-  inviteUser: async (request: InviteRequestDTO): Promise<void> => {
-    await ApiClient.post("/invitation/course", request);
+  inviteUser: async (request: InviteRequestDTO): Promise<number> => {
+    return await ApiClient.post("/invitation/course", request);
   },
 
   register: async (request: RegisterRequestDTO): Promise<void> => {

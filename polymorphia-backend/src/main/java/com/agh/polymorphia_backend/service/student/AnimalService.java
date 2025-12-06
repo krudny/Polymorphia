@@ -94,4 +94,9 @@ public class AnimalService {
     private Optional<Animal> getAnimalByNameAndCourseId(String animalName, Long courseId) {
         return animalRepository.findByNameAndCourseId(animalName, courseId);
     }
+
+    @Transactional
+    public void deleteAnimal(Long animalId) {
+        animalRepository.deleteAnimalById(animalId);
+    }
 }

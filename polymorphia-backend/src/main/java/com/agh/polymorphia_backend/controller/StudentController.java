@@ -60,4 +60,11 @@ public class StudentController {
         animalService.createAnimal(requestDTO);
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/{animalId}")
+    @PreAuthorize("hasAnyAuthority('COORDINATOR', 'INSTRUCTOR')")
+    public ResponseEntity<Void> deleteAnimal(@PathVariable Long animalId) {
+        animalService.deleteAnimal(animalId);
+        return ResponseEntity.ok().build();
+    }
 }

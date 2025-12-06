@@ -10,6 +10,7 @@ import com.agh.polymorphia_backend.service.invitation.InvitationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,9 +28,9 @@ public class InvitationController {
 
     @PostMapping("/course")
     @PreAuthorize("hasAnyAuthority('COORDINATOR')")
-    public ResponseEntity<Void> inviteUser(@Valid @RequestBody CourseInvitationRequestDto inviteDTO) {
-        invitationService.inviteUserToCourse(inviteDTO);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Long> inviteUser(@Valid @RequestBody CourseInvitationRequestDto inviteDTO) {
+        Long createdUserId = invitationService.inviteUserToCourse(inviteDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdUserId);
     }
 
     @PostMapping("/register-user")

@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@import "../../../../styles/globals.css";
+
+.delete-course-group {
+  @apply w-lg flex flex-col gap-y-4;
+
+  h1 {
+    @apply text-3xl;
+  }
+}
+
+.delete-course-group-buttons {
+  @apply w-full flex gap-x-4;
+}
