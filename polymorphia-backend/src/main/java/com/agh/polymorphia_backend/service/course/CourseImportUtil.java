@@ -17,7 +17,7 @@ public class CourseImportUtil {
                 .collect(Collectors.toList());
     }
 
-    public static <T> List<T> getDeletedEntities(List<T> request, List<T> current, Function<T, String> keyExtractor) {
+    public static <Dto> List<Dto> getDeletedEntities(List<Dto> request, List<Dto> current, Function<Dto, String> keyExtractor) {
         List<String> requestKeys = request.stream()
                 .map(keyExtractor)
                 .toList();
@@ -70,8 +70,7 @@ public class CourseImportUtil {
         List<T> typeChangedItems = modifiedObjects.stream()
                 .filter(modified -> {
                     T current = currentItemsByKey.get(keyExtractor.apply(modified));
-                    return current != null &&
-                            !typeExtractor.apply(current).equals(typeExtractor.apply(modified));
+                    return !typeExtractor.apply(current).equals(typeExtractor.apply(modified));
                 })
                 .toList();
 

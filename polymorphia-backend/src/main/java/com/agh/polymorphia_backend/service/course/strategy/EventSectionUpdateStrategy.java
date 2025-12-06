@@ -51,11 +51,11 @@ public class EventSectionUpdateStrategy implements EntityUpdateStrategy<EventSec
     public EventSection createNewEntity(EventSectionDetailsRequestDto dto) {
         return switch (dto.getType()) {
             case ASSIGNMENT:
-                yield AssignmentSection.builder().build();
+                yield new AssignmentSection();
             case TEST:
-                yield TestSection.builder().build();
+                yield new TestSection();
             case PROJECT:
-                yield ProjectSection.builder().build();
+                yield new ProjectSection();
         };
     }
 

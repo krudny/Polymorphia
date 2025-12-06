@@ -1,10 +1,10 @@
 
-ALTER TABLE event_sections ADD key VARCHAR(255);
-ALTER TABLE gradable_events ADD key VARCHAR(255);
-ALTER TABLE evolution_stages ADD key VARCHAR(255);
-ALTER TABLE project_variant_categories ADD key VARCHAR(255);
-ALTER TABLE project_variants ADD key VARCHAR(255);
-ALTER TABLE rewards ADD key VARCHAR(255);
+ALTER TABLE event_sections ADD key VARCHAR(64);
+ALTER TABLE gradable_events ADD key VARCHAR(64);
+ALTER TABLE evolution_stages ADD key VARCHAR(64);
+ALTER TABLE project_variant_categories ADD key VARCHAR(64);
+ALTER TABLE project_variants ADD key VARCHAR(64);
+ALTER TABLE rewards ADD key VARCHAR(64);
 ALTER TABLE criteria ADD key VARCHAR(64);
 ALTER TABLE submission_requirements ADD key VARCHAR(64);
 
@@ -152,20 +152,20 @@ CREATE OR REPLACE FUNCTION enforce_unique_key_gradable_events()
     RETURNS TRIGGER AS $$
 DECLARE
     conflict_count INTEGER;
-    cid BIGINT;
+    current_course_id BIGINT;
 BEGIN
-    SELECT course_id INTO cid
+    SELECT course_id INTO current_course_id
     FROM event_sections
     WHERE id = NEW.event_section_id;
 
     SELECT COUNT(*) INTO conflict_count
     FROM all_course_keys
-    WHERE course_id = cid
+    WHERE course_id = current_course_id
       AND key = NEW.key
       AND NOT (table_name = 'gradable_events' AND record_id = NEW.id);
 
     IF conflict_count > 0 THEN
-        RAISE EXCEPTION 'Key "%" already exists in course %', NEW.key, cid;
+        RAISE EXCEPTION 'Key "%" already exists in course %', NEW.key, current_course_id;
     END IF;
 
     RETURN NEW;
@@ -182,21 +182,21 @@ CREATE OR REPLACE FUNCTION enforce_unique_key_criteria()
     RETURNS TRIGGER AS $$
 DECLARE
     conflict_count INTEGER;
-    cid BIGINT;
+    current_course_id BIGINT;
 BEGIN
-    SELECT es.course_id INTO cid
+    SELECT es.course_id INTO current_course_id
     FROM gradable_events ge
              JOIN event_sections es ON es.id = ge.event_section_id
     WHERE ge.id = NEW.gradable_event_id;
 
     SELECT COUNT(*) INTO conflict_count
     FROM all_course_keys
-    WHERE course_id = cid
+    WHERE course_id = current_course_id
       AND key = NEW.key
       AND NOT (table_name = 'criteria' AND record_id = NEW.id);
 
     IF conflict_count > 0 THEN
-        RAISE EXCEPTION 'Key "%" already exists in course %', NEW.key, cid;
+        RAISE EXCEPTION 'Key "%" already exists in course %', NEW.key, current_course_id;
     END IF;
 
     RETURN NEW;
@@ -213,21 +213,21 @@ CREATE OR REPLACE FUNCTION enforce_unique_key_submission_requirements()
     RETURNS TRIGGER AS $$
 DECLARE
     conflict_count INTEGER;
-    cid BIGINT;
+    current_course_id BIGINT;
 BEGIN
-    SELECT es.course_id INTO cid
+    SELECT es.course_id INTO current_course_id
     FROM gradable_events ge
              JOIN event_sections es ON es.id = ge.event_section_id
     WHERE ge.id = NEW.gradable_event_id;
 
     SELECT COUNT(*) INTO conflict_count
     FROM all_course_keys
-    WHERE course_id = cid
+    WHERE course_id = current_course_id
       AND key = NEW.key
       AND NOT (table_name = 'submission_requirements' AND record_id = NEW.id);
 
     IF conflict_count > 0 THEN
-        RAISE EXCEPTION 'Key "%" already exists in course %', NEW.key, cid;
+        RAISE EXCEPTION 'Key "%" already exists in course %', NEW.key, current_course_id;
     END IF;
 
     RETURN NEW;
@@ -244,21 +244,21 @@ CREATE OR REPLACE FUNCTION enforce_unique_key_project_variant_categories()
     RETURNS TRIGGER AS $$
 DECLARE
     conflict_count INTEGER;
-    cid BIGINT;
+    current_course_id BIGINT;
 BEGIN
-    SELECT es.course_id INTO cid
+    SELECT es.course_id INTO current_course_id
     FROM gradable_events ge
              JOIN event_sections es ON es.id = ge.event_section_id
     WHERE ge.id = NEW.project_id;
 
     SELECT COUNT(*) INTO conflict_count
     FROM all_course_keys
-    WHERE course_id = cid
+    WHERE course_id = current_course_id
       AND key = NEW.key
       AND NOT (table_name = 'project_variant_categories' AND record_id = NEW.id);
 
     IF conflict_count > 0 THEN
-        RAISE EXCEPTION 'Key "%" already exists in course %', NEW.key, cid;
+        RAISE EXCEPTION 'Key "%" already exists in course %', NEW.key, current_course_id;
     END IF;
 
     RETURN NEW;
@@ -275,9 +275,9 @@ CREATE OR REPLACE FUNCTION enforce_unique_key_project_variants()
     RETURNS TRIGGER AS $$
 DECLARE
     conflict_count INTEGER;
-    cid BIGINT;
+    current_course_id BIGINT;
 BEGIN
-    SELECT es.course_id INTO cid
+    SELECT es.course_id INTO current_course_id
     FROM project_variant_categories pvc
              JOIN gradable_events ge ON ge.id = pvc.project_id
              JOIN event_sections es ON es.id = ge.event_section_id
@@ -285,12 +285,12 @@ BEGIN
 
     SELECT COUNT(*) INTO conflict_count
     FROM all_course_keys
-    WHERE course_id = cid
+    WHERE course_id = current_course_id
       AND key = NEW.key
       AND NOT (table_name = 'project_variants' AND record_id = NEW.id);
 
     IF conflict_count > 0 THEN
-        RAISE EXCEPTION 'Key "%" already exists in course %', NEW.key, cid;
+        RAISE EXCEPTION 'Key "%" already exists in course %', NEW.key, current_course_id;
     END IF;
 
     RETURN NEW;

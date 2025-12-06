@@ -178,6 +178,7 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
                 ge.is_locked as isLocked,
                 ge.event_section_id as eventSectionId,
                 ge.road_map_order_index as roadMapOrderIndex,
+                es.is_shown_in_road_map as isShownInRoadmap,
                 CASE
                     WHEN p.id IS NOT NULL THEN 'PROJECT'
                     WHEN t.id IS NOT NULL THEN 'TEST'

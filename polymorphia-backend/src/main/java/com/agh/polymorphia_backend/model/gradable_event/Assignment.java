@@ -9,7 +9,6 @@ import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "assignments")
-
 @Data
 @NoArgsConstructor
 @SuperBuilder

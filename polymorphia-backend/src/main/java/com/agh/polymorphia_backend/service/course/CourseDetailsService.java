@@ -60,7 +60,7 @@ public class CourseDetailsService {
         User user = userService.getCurrentUser().getUser();
         accessAuthorizer.isCourseAccessAuthorizedCoordinator(user, course);
         List<ItemDetailsDetailsProjection> items = itemRepository.findAllItemDetailsByCourseId(courseId);
-        List<ChestDetailsDetailsProjection> chests = chestRepository.findAllChestDetailssByCourseId(courseId);
+        List<ChestDetailsDetailsProjection> chests = chestRepository.findAllChestDetailsByCourseId(courseId);
         List<EvolutionStage> evolutionStages = evolutionStagesRepository.findAllByCourseId(courseId);
         List<GradableEventDetailsProjection> gradableEvents = gradableEventRepository.findGradableEventsByCourseId(courseId);
         Map<Long, List<GradableEventDetailsProjection>> gradableEventsByEventSection = groupBy(

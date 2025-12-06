@@ -20,6 +20,7 @@ public class ProjectVariantCategory {
     private Long id;
 
     @NotEmpty
+    @Column(length = 64)
     private String key;
 
     @NotNull

@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.dto.request.course_import.gradable_event;
 
+import com.agh.polymorphia_backend.dto.request.course_import.SubmissionRequirementDetailsRequestDto;
 import com.agh.polymorphia_backend.dto.request.course_import.variant.VariantCategoryDetailsRequestDto;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -20,4 +21,8 @@ public class ProjectDetailsRequestDto extends GradableEventDetailsRequestDto {
     @NotNull
     @Builder.Default
     private List<VariantCategoryDetailsRequestDto> variantCategories = new ArrayList<>();
+
+    @NotNull
+    @Builder.Default
+    private List<SubmissionRequirementDetailsRequestDto> submissionRequirements = new ArrayList<>();
 }

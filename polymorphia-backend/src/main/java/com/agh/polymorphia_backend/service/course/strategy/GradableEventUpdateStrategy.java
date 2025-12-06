@@ -2,6 +2,7 @@ package com.agh.polymorphia_backend.service.course.strategy;
 
 import com.agh.polymorphia_backend.dto.request.course_import.gradable_event.GradableEventDetailsRequestDto;
 import com.agh.polymorphia_backend.dto.request.course_import.gradable_event.ProjectDetailsRequestDto;
+import com.agh.polymorphia_backend.model.event_section.EventSectionType;
 import com.agh.polymorphia_backend.model.gradable_event.Assignment;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.gradable_event.Project;
@@ -52,15 +53,11 @@ public class GradableEventUpdateStrategy implements EntityUpdateStrategy<Gradabl
     public GradableEvent createNewEntity(GradableEventDetailsRequestDto dto) {
         return switch (dto.getType()) {
             case ASSIGNMENT:
-                yield Assignment.builder().build();
+                yield new Assignment();
             case TEST:
-                yield Test.builder().build();
+                yield new Test();
             case PROJECT:
-                yield Project.builder()
-                        .allowCrossCourseGroupProjectGroups(
-                                ((ProjectDetailsRequestDto) dto).getAllowCrossCourseGroupProjectGroup()
-                        )
-                        .build();
+                yield new Project();
         };
     }
 
@@ -73,9 +70,11 @@ public class GradableEventUpdateStrategy implements EntityUpdateStrategy<Gradabl
         entity.setIsLocked(dto.getIsLocked());
         entity.setMarkdownSourceUrl(dto.getMarkdownSourceUrl());
         entity.setOrderIndex(orderIds.get(dto));
-//        entity.setRoadMapOrderIndex();
         entity.setEventSection(eventSectionRepository.getReferenceById(eventSectionId));
 
+        if (dto.getType().equals(EventSectionType.PROJECT)) {
+            ((Project) entity).setAllowCrossCourseGroupProjectGroups(((ProjectDetailsRequestDto) dto).getAllowCrossCourseGroupProjectGroup());
+        }
         return entity;
     }
 

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
@@ -47,19 +48,20 @@ public class ItemUpdateStrategy implements EntityUpdateStrategy<ItemDetailsReque
 
     @Override
     public List<Item> findAllByKeys(List<String> keys, Long courseId) {
-        return itemRepository.findAllByKeyIn(keys, courseId);
+        List<Item> itemsFromKeys = itemRepository.findAllByKeyIn(keys, courseId);
+        Map<String, Item> itemByKey = itemsFromKeys.stream()
+                .collect(Collectors.toMap(Item::getKey, item -> item));
+
+        return keys.stream()
+                .map(itemByKey::get)
+                .collect(Collectors.toList());
     }
 
     @Override
     public Item createNewEntity(ItemDetailsRequestDto dto) {
         return switch (dto.getType()) {
-            case FLAT_BONUS -> FlatBonusItem.builder()
-                    .xpBonus(((FlatBonusItemDetailsRequestDto) dto).getXpBonus())
-                    .behavior(((FlatBonusItemDetailsRequestDto) dto).getBehavior())
-                    .build();
-            case PERCENTAGE_BONUS -> PercentageBonusItem.builder()
-                    .percentageBonus(((PercentageBonusItemDetailsRequestDto) dto).getPercentageBonus())
-                    .build();
+            case FLAT_BONUS -> new FlatBonusItem();
+            case PERCENTAGE_BONUS -> new PercentageBonusItem();
         };
     }
 
@@ -77,6 +79,19 @@ public class ItemUpdateStrategy implements EntityUpdateStrategy<ItemDetailsReque
         if (entity.getId() == null) {
             entity.setCourse(courseRepository.getReferenceById(courseId));
         }
+
+        switch (dto.getType()) {
+            case FLAT_BONUS: {
+                ((FlatBonusItem) entity).setXpBonus(((FlatBonusItemDetailsRequestDto) dto).getXpBonus());
+                ((FlatBonusItem) entity).setBehavior(((FlatBonusItemDetailsRequestDto) dto).getBehavior());
+                break;
+            }
+            case PERCENTAGE_BONUS: {
+                ((PercentageBonusItem) entity).setPercentageBonus(((PercentageBonusItemDetailsRequestDto) dto).getPercentageBonus());
+                break;
+            }
+        }
+
         return entity;
     }
 }

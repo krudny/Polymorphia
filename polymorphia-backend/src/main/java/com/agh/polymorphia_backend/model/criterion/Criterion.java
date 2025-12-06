@@ -3,6 +3,7 @@ package com.agh.polymorphia_backend.model.criterion;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -24,7 +25,7 @@ public class Criterion {
     @EqualsAndHashCode.Include
     private Long id;
 
-    @NotNull
+    @NotEmpty
     @Column(length = 64)
     private String key;
 
@@ -41,7 +42,7 @@ public class Criterion {
     @Builder.Default
     private List<CriterionReward> assignableRewards = new ArrayList<>();
 
-    @NotNull
+    @NotEmpty
     @Column(length = 64)
     private String name;
 

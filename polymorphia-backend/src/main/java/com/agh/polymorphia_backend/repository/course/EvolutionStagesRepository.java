@@ -9,6 +9,12 @@ import java.util.List;
 
 @Repository
 public interface EvolutionStagesRepository extends JpaRepository<EvolutionStage, Long> {
+    @Query("""
+            select es
+            from EvolutionStage es
+            where es.course.id = :courseId
+            order by es.orderIndex
+            """)
     List<EvolutionStage> findAllByCourseId(Long courseId);
 
     @Query("""

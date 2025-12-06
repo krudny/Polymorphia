@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
@@ -56,7 +57,13 @@ public class ChestUpdateStrategy implements EntityUpdateStrategy<ChestDetailsReq
     @Override
     public Chest updateEntity(Chest entity, ChestDetailsRequestDto dto,
                               Map<ChestDetailsRequestDto, Long> orderIds, Long courseId) {
-        List<Item> items = itemRepository.findAllByKeyIn(dto.getItemKeys(), courseId);
+        List<Item> itemsFromKeys = itemRepository.findAllByKeyIn(dto.getItemKeys(), courseId);
+        Map<String, Item> itemByKey = itemsFromKeys.stream()
+                .collect(Collectors.toMap(Item::getKey, item -> item));
+
+        List<Item> items = dto.getItemKeys().stream()
+                .map(itemByKey::get)
+                .collect(Collectors.toList());
 
         entity.setName(dto.getName());
         entity.setDescription(dto.getDescription());
@@ -64,7 +71,6 @@ public class ChestUpdateStrategy implements EntityUpdateStrategy<ChestDetailsReq
         entity.setImageUrl(dto.getImageUrl());
         entity.setOrderIndex(orderIds.get(dto));
         entity.setBehavior(dto.getBehavior());
-        entity.setItems(items);
 
         if (entity.getId() == null) {
             entity.setCourse(courseRepository.getReferenceById(courseId));
@@ -78,7 +84,9 @@ public class ChestUpdateStrategy implements EntityUpdateStrategy<ChestDetailsReq
     private void updateChestItems(Chest chest, List<Item> newItems) {
         if (chest.getItems() != null) {
             for (Item oldItem : chest.getItems()) {
-                oldItem.getChests().remove(chest);
+                if (!newItems.contains(oldItem)) {
+                    oldItem.getChests().remove(chest);
+                }
             }
         }
 
