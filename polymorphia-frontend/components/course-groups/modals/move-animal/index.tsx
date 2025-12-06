@@ -28,7 +28,7 @@ function MoveAnimalModalContent() {
     isError,
   } = useCourseGroups({
     courseId,
-    type: CourseGroupTypes.ALL_SHORT,
+    type: CourseGroupTypes.INDIVIDUAL_FULL,
   });
 
   if (!selectedTarget || selectedTarget.type !== TargetTypes.STUDENT) {
@@ -97,8 +97,8 @@ function MoveAnimalModalContent() {
             value={selectedGroupId}
             onChange={setSelectedGroupId}
             placeholder="Wybierz grupę"
-            size="xl"
-            padding="sm"
+            size="2xl"
+            padding="xs"
             centeredPlaceholder={true}
             centeredOptions={true}
             className="!border-b-2 !border-t-0 !border-x-0 !rounded-none !w-full"
