@@ -3,7 +3,7 @@ import GradeModal from "@/components/speed-dial/modals/grade";
 import ProjectVariantModal from "@/components/speed-dial/modals/project-variant";
 import GroupModal from "@/components/speed-dial/modals/group-info";
 import GroupPickingModal from "@/components/speed-dial/modals/group-pick";
-import ImportCSVModal from "@/components/speed-dial/modals/import-csv";
+import ImportCSVModal from "@/components/speed-dial/modals/file-import/import-csv";
 import {
   ImportCSVType,
   ImportCSVTypes,

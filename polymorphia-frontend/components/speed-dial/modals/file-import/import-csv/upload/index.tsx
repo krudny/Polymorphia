@@ -7,7 +7,7 @@ import useImportCSVContext from "@/hooks/contexts/useImportCSVContext";
 import "./index.css";
 import "../index.css";
 import Loading from "@/components/loading";
-import { importCSVError } from "@/components/speed-dial/modals/import-csv/upload/importCSVError";
+import { fileImportError } from "@/components/speed-dial/modals/file-import/import-csv/upload/fileImportError";
 
 export default function UploadCSV(): ReactNode {
   const {
@@ -34,7 +34,7 @@ export default function UploadCSV(): ReactNode {
     maxSize: 5 * 1024 * 1024,
     multiple: false,
     disabled: csvHeadersMutation.isPending,
-    onDropRejected: (rejectedFiles) => importCSVError(rejectedFiles),
+    onDropRejected: (rejectedFiles) => fileImportError(rejectedFiles),
   });
 
   const handleUpload = () => {
@@ -44,34 +44,34 @@ export default function UploadCSV(): ReactNode {
   };
 
   return (
-    <div className="import-csv">
+    <div className="file-import">
       <div
         {...getRootProps()}
         className={`
-            import-csv-upload-wrapper
+            file-import-upload-wrapper
             ${isDragActive ? "drag-active" : ""}
           `}
       >
         <input {...getInputProps()} />
 
         {csvHeadersMutation.isPending ? (
-          <div className="import-csv-loading">
+          <div className="file-import-loading">
             <Loading />
           </div>
         ) : selectedFile ? (
           <>
-            <span className="import-csv-upload-icon">description</span>
-            <span className="import-csv-text">{selectedFile.name}</span>
+            <span className="file-import-upload-icon">description</span>
+            <span className="file-import-text">{selectedFile.name}</span>
           </>
         ) : isDragActive ? (
           <>
-            <span className="import-csv-upload-icon">cloud_upload</span>
-            <span className="import-csv-text">Upuść plik tutaj</span>
+            <span className="file-import-upload-icon">cloud_upload</span>
+            <span className="file-import-text">Upuść plik tutaj</span>
           </>
         ) : (
           <>
-            <span className="import-csv-upload-icon">cloud_upload</span>
-            <span className="import-csv-text">
+            <span className="file-import-upload-icon">cloud_upload</span>
+            <span className="file-import-text">
               Przeciągnij lub wgraj plik CSV tutaj
             </span>
           </>
@@ -79,7 +79,7 @@ export default function UploadCSV(): ReactNode {
       </div>
 
       {selectedFile && (
-        <div className="import-csv-button-wrapper">
+        <div className="file-import-button-wrapper">
           <ButtonWithBorder
             text="Usuń"
             className="!mx-0 !py-0 !w-full"
