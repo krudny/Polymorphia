@@ -15,4 +15,7 @@ export interface ApiRequestOptions {
   method: HttpMethod;
   headers?: HeadersInit;
   body?: ApiBody;
+  responseType?: ResponseType;
 }
+
+export type ResponseType = "json" | "blob";

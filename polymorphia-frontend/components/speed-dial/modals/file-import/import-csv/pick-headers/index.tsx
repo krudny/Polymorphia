@@ -35,7 +35,7 @@ export default function PickCSVHeaders() {
   };
 
   return (
-    <div className="import-csv">
+    <div className="file-import">
       <div className="headers-mapping">
         {csvHeadersMutation.data?.requiredCSVHeaders.map((csvHeader) => {
           const columnOptions =
@@ -70,7 +70,7 @@ export default function PickCSVHeaders() {
         })}
       </div>
 
-      <div className="import-csv-button-wrapper">
+      <div className="file-import-button-wrapper">
         <ButtonWithBorder
           text="Powrót"
           className="!mx-0 !py-0 !w-full"

@@ -36,7 +36,7 @@ export default function PreviewCSV() {
   const gridTemplateColumns = `repeat(${csvHeaders.length}, minmax(150px, 1fr))`;
 
   return (
-    <div className="import-csv">
+    <div className="file-import">
       <div className="table-wrapper">
         <div
           className="table"
@@ -61,7 +61,7 @@ export default function PreviewCSV() {
       </div>
 
       <div
-        className={`import-csv-button-wrapper ${data.length > 10 && "preview-buttons-override"}`}
+        className={`file-import-button-wrapper ${data.length > 10 && "preview-buttons-override"}`}
       >
         <ButtonWithBorder
           text="Powrót"

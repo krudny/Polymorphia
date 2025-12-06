@@ -6,13 +6,22 @@ import { useScaleShow } from "@/animations/ScaleShow";
 import toast from "react-hot-toast";
 import { useTheme } from "next-themes";
 import useNavigationContext from "@/hooks/contexts/useNavigationContext";
-import { useUserDetails } from "@/hooks/contexts/useUserContext";
+import useUserContext, {
+  useUserDetails,
+} from "@/hooks/contexts/useUserContext";
 import "./index.css";
 import useAvailableCourses from "@/hooks/course/useAvailableCourses";
 import Loading from "@/components/loading";
 import usePreferredCourseUpdate from "@/hooks/course/usePreferredCourseUpdate";
 import Selector from "@/components/selector";
 import ChangePasswordModal from "@/app/(logged-in)/settings/modals/change-password";
+import useDownloadCourseConfig from "@/hooks/course/useDownloadCourseConfig";
+import { UploadCourseModal } from "@/components/speed-dial/modals/file-import/import-course";
+import { Roles } from "@/interfaces/api/user";
+import {
+  CourseFileAction,
+  CourseFileActions,
+} from "@/components/speed-dial/modals/file-import/import-course/upload/types";
 
 export default function Settings() {
   const {
@@ -24,15 +33,21 @@ export default function Settings() {
   const wrapperRef = useScaleShow();
   const { resolvedTheme, setTheme } = useTheme();
   const { courseId } = useUserDetails();
+  const { userRole } = useUserContext();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { data: courses, isLoading } = useAvailableCourses();
   const currentCourse = courses?.find((course) => course.id === courseId);
   const [changePasswordModalVisible, setChangePasswordModalVisible] =
     useState(false);
+  const [importCourseModalVisible, setImportCourseModalVisible] =
+    useState(false);
+  const [courseFileAction, setCourseFileAction] = useState<CourseFileAction>(
+    CourseFileActions.UPDATE
+  );
   const setPreferredCourse = usePreferredCourseUpdate({
     shouldRedirectToMainPage: false,
   });
-
+  const downloadCourseMutation = useDownloadCourseConfig();
   const toggleSidebarLockOpened = () => {
     if (isSidebarLockedClosed) {
       toast.error(
@@ -123,9 +138,49 @@ export default function Settings() {
           className="!mx-0"
         />
       </div>
+      {userRole === Roles.COORDINATOR ? (
+        <div className="settings-option-wrapper">
+          <h3>Konfiguracja kursu</h3>
+          <ButtonWithBorder
+            text="Pobierz"
+            onClick={() => downloadCourseMutation.mutate()}
+            size="md"
+            className="!mx-0"
+          />
+          <ButtonWithBorder
+            text="Zmień"
+            onClick={() => {
+              setCourseFileAction(CourseFileActions.UPDATE);
+              setImportCourseModalVisible(true);
+            }}
+            size="md"
+            className="!mx-0"
+          />
+        </div>
+      ) : null}
+      {userRole === Roles.INSTRUCTOR || userRole === Roles.COORDINATOR ? (
+        <div className="settings-option-wrapper">
+          <h3>Nowy kurs</h3>
+          <ButtonWithBorder
+            text="Utwórz"
+            onClick={() => {
+              setCourseFileAction(CourseFileActions.CREATE);
+              setImportCourseModalVisible(true);
+            }}
+            size="md"
+            className="!mx-0"
+          />
+        </div>
+      ) : null}
       {changePasswordModalVisible && (
         <ChangePasswordModal
           onClosedAction={() => setChangePasswordModalVisible(false)}
+        />
+      )}
+      {importCourseModalVisible && (
+        <UploadCourseModal
+          onClosedAction={() => setImportCourseModalVisible(false)}
+          courseFileAction={courseFileAction}
         />
       )}
     </div>
