@@ -1,4 +1,4 @@
-import Modal from "@/components/modal/Modal";
+import Modal from "@/components/modal";
 import { ChangePasswordModalProps } from "@/app/(logged-in)/settings/modals/change-password/types";
 import React, { FormEvent } from "react";
 import { FieldErrorMessage } from "@/components/form/FieldErrorMessage";

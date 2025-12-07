@@ -1,6 +1,12 @@
 @import "tailwindcss";
 @import "../../styles/globals.css";
 
+@tailwind utilities;
+
+@utility notification-badge {
+  @apply absolute w-3 h-3 rounded-full bg-primary-error transition-colors custom-ease-with-duration;
+}
+
 /* Navigation */
 
 .navigation {
@@ -44,8 +50,16 @@
   @apply text-4xl;
 }
 
-.navbar-visible > span {
+.navbar-visible-notifications {
+  @apply relative;
+}
+
+.navbar-visible-notifications > span {
   @apply material-symbols text-3xl cursor-pointer;
+}
+
+.navbar-notification-badge {
+  @apply notification-badge left-[15px] top-[3px];
 }
 
 .navbar-drawer {
@@ -86,12 +100,16 @@
 }
 
 .menu-section-options-link-part {
-  @apply flex-centered;
+  @apply flex-centered relative;
 }
 
 .menu-section-options-link-part > h2 {
   @apply text-3xl ml-5 whitespace-nowrap hover:text-primary-gray;
   @apply lg:text-2xl transition-colors ease-in duration-150 opacity-0;
+}
+
+.menu-section-notification-badge {
+  @apply notification-badge left-[12px] top-0;
 }
 
 .menu-section > svg {

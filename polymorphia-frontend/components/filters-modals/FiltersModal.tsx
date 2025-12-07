@@ -2,7 +2,7 @@ import { Accordion } from "@/components/accordion/Accordion";
 import AccordionSection from "@/components/accordion/AccordionSection";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import Loading from "@/components/loading";
-import Modal from "@/components/modal/Modal";
+import Modal from "@/components/modal";
 import { AccordionRef } from "@/providers/accordion/types";
 import { FilterActions, FilterOption } from "@/hooks/course/useFilters/types";
 import { useRef } from "react";

@@ -1,6 +1,7 @@
 import { MenuOption } from "@/components/navigation/types";
 import {
   BadgeHelpIcon,
+  BellIcon,
   GraduationCapIcon,
   LogOutIcon,
   MedalIcon,
@@ -13,6 +14,7 @@ import {
 import { Roles } from "@/interfaces/api/user";
 import useUserContext from "@/hooks/contexts/useUserContext";
 import { useMenuCourseOptionText } from "@/hooks/general/useMenuCourseOptionText";
+import useNotificationContext from "@/hooks/contexts/useNotificationsContext";
 import useEventSections from "@/hooks/course/useEventSections";
 import { updateMenuItems } from "@/components/course/event-section/EventSectionUtils";
 import { useMemo } from "react";
@@ -29,9 +31,16 @@ export function useBottomMenuItems(): MenuOption[] {
 }
 
 export function useBottomDesktopMenuItems(): MenuOption[] {
+  const { setIsNotificationModalOpen, notificationCount } =
+    useNotificationContext();
+
   return [
-    // TODO: notifications
-    // { icon: BellIcon, text: "Powiadomienia" },
+    {
+      icon: BellIcon,
+      text: `Powiadomienia`,
+      showBadge: notificationCount > 0,
+      onClick: () => setIsNotificationModalOpen(true),
+    },
     {
       icon: LogOutIcon,
       text: "Wyloguj się",
@@ -76,7 +85,7 @@ export function useMainMenuItems(): MenuOption[] {
           { text: "Skrzynki", link: "knowledge-base/chests" },
         ],
       },
-      { icon: GraduationCapIcon, text: courseOptionText }
+      { icon: GraduationCapIcon, text: courseOptionText, link: "/" }
     );
 
     if (userRole === Roles.STUDENT) {
