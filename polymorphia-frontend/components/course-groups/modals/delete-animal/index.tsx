@@ -14,7 +14,6 @@ function DeleteAnimalModalContent() {
   const { closeModal } = useModalContext();
   const { selectedTarget } = useTargetContext();
 
-  // TODO: student id != animal id
   if (!selectedTarget || selectedTarget.type !== TargetTypes.STUDENT) {
     return (
       <ErrorComponent
@@ -25,7 +24,7 @@ function DeleteAnimalModalContent() {
   }
 
   const handleConfirm = () => {
-    mutation.mutate({ animalId: selectedTarget.student.id });
+    mutation.mutate({ animalId: selectedTarget.student.animalId });
   };
 
   return (

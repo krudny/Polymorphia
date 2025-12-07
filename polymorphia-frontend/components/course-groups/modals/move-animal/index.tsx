@@ -63,7 +63,7 @@ function MoveAnimalModalContent() {
     }
 
     mutation.mutate({
-      animalId: selectedTarget.student.id,
+      animalId: selectedTarget.student.animalId,
       newCourseGroupId: Number(selectedGroupId),
     });
   };
