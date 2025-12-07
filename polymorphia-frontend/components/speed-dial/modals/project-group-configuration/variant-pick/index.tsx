@@ -15,7 +15,6 @@ import clsx from "clsx";
 import useProjectGroupUpdate from "@/hooks/course/useProjectGroupUpdate";
 import useModalContext from "@/hooks/contexts/useModalContext";
 import useRandomProjectVariant from "@/hooks/course/useRandomProjectVariant";
-import { random } from "gsap-trial/src/all";
 
 export default function ProjectVariantPick() {
   const {
