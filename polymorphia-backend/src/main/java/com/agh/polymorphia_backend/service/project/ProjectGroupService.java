@@ -24,4 +24,12 @@ public class ProjectGroupService {
         return projectGroupRepository.findById(projectGroupId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono grupy projektowej."));
     }
+
+    public void save(ProjectGroup projectGroup) {
+        projectGroupRepository.save(projectGroup);
+    }
+
+    public void delete(ProjectGroup projectGroup) {
+        projectGroupRepository.delete(projectGroup);
+    }
 }

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -89,6 +90,10 @@ public class AnimalService {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Nie udało się utworzyć zwierzaka.");
         }
+    }
+
+    public Long countAnimalCourseGroups(List<Animal> animals){
+        return animalRepository.countAnimalCourseGroups(animals);
     }
 
     private Optional<Animal> getAnimalByNameAndCourseId(String animalName, Long courseId) {

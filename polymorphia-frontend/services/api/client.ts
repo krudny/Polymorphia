@@ -105,8 +105,12 @@ function put<TResponse = void>(
   return request<TResponse>({ path, method: HttpMethods.PUT, body, headers });
 }
 
-function del(path: string, headers?: HeadersInit): Promise<void> {
-  return request({ path, method: HttpMethods.DELETE, headers });
+function del(
+  path: string,
+  body?: ApiBody,
+  headers?: HeadersInit
+): Promise<void> {
+  return request({ path, method: HttpMethods.DELETE, body, headers });
 }
 
 export const ApiClient = {

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -32,13 +33,21 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
             """, nativeQuery = true)
     Long findByAssignedChestId(Long assignedChestId);
 
+    @Query(value = """
+                select count(cg.id) from Animal a
+                    join a.studentCourseGroupAssignment scga
+                    join scga.courseGroup cg
+                    where a.id in :animals
+    """)
+    Long countAnimalCourseGroups(List<Animal> animals);
+
     @Modifying
     @Query(value = """
     DELETE FROM animals a
     WHERE EXISTS (
         SELECT 1
         FROM students_course_groups scg
-        WHERE scg.animal_id = a.id 
+        WHERE scg.animal_id = a.id
         AND scg.course_group_id = :courseGroupId
     )
     """, nativeQuery = true)

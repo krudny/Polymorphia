@@ -6,6 +6,7 @@ import {
   UseProjectGroupDeleteParams,
 } from "@/hooks/course/projects/useProjectGroupDelete/types";
 import { ProjectService } from "@/services/project";
+import { TargetTypes } from "@/interfaces/api/target";
 
 export default function useProjectGroupDelete(): UseProjectGroupDelete {
   const { gradableEventId } = useEventParams();
@@ -21,24 +22,49 @@ export default function useProjectGroupDelete(): UseProjectGroupDelete {
         }
       );
     },
-    onSuccess: () => {
+    onSuccess: (_, { target }) => {
       queryClient.invalidateQueries({
         queryKey: ["gradingTargets"],
       });
       queryClient.invalidateQueries({
-        queryKey: ["grade"],
+        queryKey: [
+          "grade",
+          target.type,
+          target.type === TargetTypes.STUDENT ? target.id : target.groupId,
+          gradableEventId,
+        ],
+        refetchType: "none",
       });
       queryClient.invalidateQueries({
-        queryKey: ["submissionDetails"],
+        queryKey: [
+          "submissionDetails",
+          gradableEventId,
+          target.type,
+          target.type === TargetTypes.STUDENT ? target.id : target.groupId,
+        ],
+        refetchType: "none",
       });
       queryClient.invalidateQueries({
-        queryKey: ["projectVariant"],
+        queryKey: ["projectVariant", gradableEventId, target],
+        refetchType: "none",
       });
       queryClient.invalidateQueries({
-        queryKey: ["projectGroupConfigurationStudents"],
+        queryKey: [
+          "projectGroupConfigurationStudents",
+          target.type,
+          target.type === TargetTypes.STUDENT ? target.id : target.groupId,
+          gradableEventId,
+        ],
+        refetchType: "none",
       });
       queryClient.invalidateQueries({
-        queryKey: ["projectGroupConfiguration"],
+        queryKey: [
+          "projectGroupConfiguration",
+          target.type,
+          target.type === TargetTypes.STUDENT ? target.id : target.groupId,
+          gradableEventId,
+        ],
+        refetchType: "none",
       });
     },
   });

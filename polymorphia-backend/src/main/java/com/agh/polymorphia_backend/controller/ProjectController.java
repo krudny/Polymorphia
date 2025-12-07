@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.controller;
 
+import com.agh.polymorphia_backend.dto.request.project.ProjectGroupConfigurationRequestDto;
 import com.agh.polymorphia_backend.dto.request.project.ProjectGroupPickStudentsRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.TargetRequestDto;
 import com.agh.polymorphia_backend.dto.response.project.*;
@@ -41,10 +42,24 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.getAnimalProjectGroup(studentId, projectId));
     }
 
+    @DeleteMapping("/group")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
+    public ResponseEntity<Void> deleteProjectGroup(@Valid @RequestBody TargetRequestDto requestDto, @RequestParam Long projectId) {
+        projectService.deleteProjectGroup(requestDto, projectId);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping("/group/configuration")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<ProjectGroupConfigurationResponseDto> getProjectGroupConfiguration(@Valid @RequestBody TargetRequestDto target, @RequestParam Long projectId) {
         return ResponseEntity.ok(projectService.getProjectGroupConfiguration(target, projectId));
+    }
+
+    @PutMapping("/group/configuration")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
+    public ResponseEntity<Void> processProjectGroupConfiguration(@Valid @RequestBody ProjectGroupConfigurationRequestDto requestDTO, @RequestParam Long projectId) {
+        projectService.processProjectGroupConfiguration(requestDTO, projectId);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/group/configuration/filters")

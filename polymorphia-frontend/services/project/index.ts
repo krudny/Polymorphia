@@ -78,22 +78,23 @@ export const ProjectService = {
     gradableEventId: number,
     configuration: ProjectGroupConfigurationResponseDTO
   ): Promise<void> => {
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(null);
-      }, 500);
-    });
+    return await ApiClient.put(
+      `/projects/group/configuration?projectId=${gradableEventId}`,
+      {
+        target,
+        projectGroupUpdate: configuration,
+      }
+    );
   },
 
   deleteProjectGroup: async (
     target: TargetRequestDTO,
     gradableEventId: number
   ): Promise<void> => {
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(null);
-      }, 500);
-    });
+    return await ApiClient.delete(
+      `/projects/group?projectId=${gradableEventId}`,
+      target
+    );
   },
 
   getRandomProjectVariant: async (
