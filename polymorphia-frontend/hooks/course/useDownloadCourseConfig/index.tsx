@@ -12,7 +12,7 @@ export default function useDownloadCourseConfig(): UseCourseDownload {
       const promise = CourseService.downloadCourseConfig(courseId);
 
       return toast.promise(promise, {
-        loading: "Pobieranie konfiguracji...",
+        loading: "Generowanie konfiguracji...",
         success: "Konfiguracja pobrana pomyślnie",
       });
     },

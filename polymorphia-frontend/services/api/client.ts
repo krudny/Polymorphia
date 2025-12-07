@@ -1,7 +1,12 @@
 import { API_HOST } from "@/services/api";
 import { BackendErrorResponse } from "@/interfaces/api/error";
 import { ApiError } from "@/services/api/error";
-import { ApiBody, ApiRequestOptions, HttpMethods } from "@/services/api/types";
+import {
+  ApiBody,
+  ApiRequestOptions,
+  HttpMethods,
+  ResponseType,
+} from "@/services/api/types";
 
 const GENERIC_ERROR_MESSAGE = "Wystąpił nieoczekiwany błąd. Spróbuj ponownie.";
 
@@ -42,7 +47,7 @@ async function request<TResponse>({
   method,
   body,
   headers,
-  responseType = "json",
+  responseType = ResponseType.JSON,
 }: ApiRequestOptions): Promise<TResponse> {
   const hasJsonBody = isApiJsonBody(body);
   const url = buildUrl(path);
@@ -99,7 +104,7 @@ function getBlob(path: string, headers?: HeadersInit): Promise<Blob> {
     path,
     method: HttpMethods.GET,
     headers,
-    responseType: "blob",
+    responseType: ResponseType.BLOB,
   });
 }
 

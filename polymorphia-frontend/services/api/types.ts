@@ -18,4 +18,7 @@ export interface ApiRequestOptions {
   responseType?: ResponseType;
 }
 
-export type ResponseType = "json" | "blob";
+export enum ResponseType {
+  JSON = "json",
+  BLOB = "blob",
+}

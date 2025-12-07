@@ -8,6 +8,7 @@ import "./index.css";
 import "../index.css";
 import Loading from "@/components/loading";
 import { fileImportError } from "@/components/speed-dial/modals/file-import/import-csv/upload/fileImportError";
+import { FileType } from "@/components/speed-dial/modals/file-import/import-csv/upload/types";
 
 export default function UploadCSV(): ReactNode {
   const {
@@ -34,7 +35,8 @@ export default function UploadCSV(): ReactNode {
     maxSize: 5 * 1024 * 1024,
     multiple: false,
     disabled: csvHeadersMutation.isPending,
-    onDropRejected: (rejectedFiles) => fileImportError(rejectedFiles),
+    onDropRejected: (rejectedFiles) =>
+      fileImportError({ rejectedFiles, expectedFileType: FileType.CSV }),
   });
 
   const handleUpload = () => {

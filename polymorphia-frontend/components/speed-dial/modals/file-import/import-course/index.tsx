@@ -7,12 +7,7 @@ export const UploadCourseModal = ({
   courseFileAction,
 }: UseUploadCourseModalProps) => {
   return (
-    <Modal
-      isDataPresented={true}
-      onClosed={onClosedAction}
-      title="Import JSON"
-      subtitle=""
-    >
+    <Modal isDataPresented={true} onClosed={onClosedAction} title="Import JSON">
       <UploadCourseConfig courseFileAction={courseFileAction} />
     </Modal>
   );

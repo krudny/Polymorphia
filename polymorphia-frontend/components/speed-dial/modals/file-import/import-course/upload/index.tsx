@@ -14,6 +14,7 @@ import {
   CourseFileActions,
   UseCourseUploadProps,
 } from "@/components/speed-dial/modals/file-import/import-course/upload/types";
+import { FileType } from "@/components/speed-dial/modals/file-import/import-csv/upload/types";
 
 export default function UploadCourseConfig({
   courseFileAction,
@@ -42,10 +43,11 @@ export default function UploadCourseConfig({
     accept: {
       "application/json": [".json"],
     },
-    maxSize: 5 * 1024 * 1024,
+    maxSize: 200 * 1024,
     multiple: false,
     disabled: courseUpdateMutation.isPending || courseCreateMutation.isPending,
-    onDropRejected: (rejectedFiles) => fileImportError(rejectedFiles),
+    onDropRejected: (rejectedFiles) =>
+      fileImportError({ rejectedFiles, expectedFileType: FileType.JSON }),
   });
 
   const handleUpload = () => {

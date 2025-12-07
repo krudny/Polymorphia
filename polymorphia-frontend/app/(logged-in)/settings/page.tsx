@@ -113,6 +113,15 @@ export default function Settings() {
           className="!mx-0"
         />
       </div>
+      <div className="settings-option-wrapper">
+        <h3>Hasło</h3>
+        <ButtonWithBorder
+          text="Zmień hasło"
+          onClick={() => setChangePasswordModalVisible(true)}
+          size="md"
+          className="!mx-0"
+        />
+      </div>
       <div ref={containerRef} className="settings-option-wrapper">
         <h3>Aktywny kurs</h3>
         <div className="settings-selector-wrapper">
@@ -129,16 +138,7 @@ export default function Settings() {
           />
         </div>
       </div>
-      <div className="settings-option-wrapper">
-        <h3>Hasło</h3>
-        <ButtonWithBorder
-          text="Zmień hasło"
-          onClick={() => setChangePasswordModalVisible(true)}
-          size="md"
-          className="!mx-0"
-        />
-      </div>
-      {userRole === Roles.COORDINATOR ? (
+      {userRole === Roles.COORDINATOR && (
         <div className="settings-option-wrapper">
           <h3>Konfiguracja kursu</h3>
           <ButtonWithBorder
@@ -157,21 +157,22 @@ export default function Settings() {
             className="!mx-0"
           />
         </div>
-      ) : null}
-      {userRole === Roles.INSTRUCTOR || userRole === Roles.COORDINATOR ? (
-        <div className="settings-option-wrapper">
-          <h3>Nowy kurs</h3>
-          <ButtonWithBorder
-            text="Utwórz"
-            onClick={() => {
-              setCourseFileAction(CourseFileActions.CREATE);
-              setImportCourseModalVisible(true);
-            }}
-            size="md"
-            className="!mx-0"
-          />
-        </div>
-      ) : null}
+      )}
+      {userRole === Roles.INSTRUCTOR ||
+        (userRole === Roles.COORDINATOR && (
+          <div className="settings-option-wrapper">
+            <h3>Nowy kurs</h3>
+            <ButtonWithBorder
+              text="Utwórz"
+              onClick={() => {
+                setCourseFileAction(CourseFileActions.CREATE);
+                setImportCourseModalVisible(true);
+              }}
+              size="md"
+              className="!mx-0"
+            />
+          </div>
+        ))}
       {changePasswordModalVisible && (
         <ChangePasswordModal
           onClosedAction={() => setChangePasswordModalVisible(false)}
