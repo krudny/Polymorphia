@@ -145,7 +145,7 @@ public class CourseImportService {
     private void validateRoadmapOrderKeys(List<String> roadmapOrderKeys, Long courseId) {
         Set<String> uniqueKeys = new HashSet<>(roadmapOrderKeys);
         if (uniqueKeys.size() != roadmapOrderKeys.size()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Klucze w roadmapOrder nie mogą się powtarzać");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Klucze w roadmapOrder nie mogą się powtarzać.");
         }
 
         List<GradableEventDetailsProjection> gradableEvents = gradableEventRepository.findGradableEventsByCourseId(courseId);
