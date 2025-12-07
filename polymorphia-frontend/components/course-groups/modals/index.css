@@ -2,10 +2,10 @@
 @import "../../../styles/globals.css";
 
 .course-group-modal {
-  @apply flex flex-col gap-y-4 w-md;
+  @apply flex flex-col gap-y-3 w-80 md:w-md md:gap-y-4;
 
   h1 {
-    @apply text-3xl;
+    @apply text-2xl leading-none md:text-3xl md:leading-tight;
   }
 }
 
@@ -17,10 +17,14 @@
   @apply flex justify-between items-center;
 
   h1 {
-    @apply max-w-44 truncate;
+    @apply max-w-36 md:max-w-44 truncate;
   }
 }
 
 .course-group-modal-loading {
   @apply w-88 h-[220px] flex-col-centered relative;
+}
+
+.course-group-modal-selector-wrapper {
+  @apply w-40 md:w-44;
 }

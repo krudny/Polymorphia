@@ -14,6 +14,7 @@ import { TargetTypes } from "@/interfaces/api/target";
 import { CourseGroupTypes } from "@/services/course-groups/types";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import React, { useState } from "react";
+import { useMediaQuery } from "react-responsive";
 
 function MoveAnimalModalContent() {
   const { mutation } = useChangeStudentCourseGroup();
@@ -21,6 +22,7 @@ function MoveAnimalModalContent() {
   const { selectedTarget } = useTargetContext();
   const { courseId } = useUserDetails();
   const [selectedGroupId, setSelectedGroupId] = useState<string>("");
+  const isMd = useMediaQuery({ minWidth: "786px" });
 
   const {
     data: courseGroups,
@@ -91,13 +93,13 @@ function MoveAnimalModalContent() {
       </div>
       <div className="course-group-modal-columns">
         <h1>Nowa grupa zajęciowa</h1>
-        <div className="w-40">
+        <div className="course-group-modal-selector-wrapper">
           <Selector
             options={groupOptions}
             value={selectedGroupId}
             onChange={setSelectedGroupId}
             placeholder="Wybierz grupę"
-            size="2xl"
+            size={isMd ? "2xl" : "xl"}
             padding="xs"
             centeredPlaceholder={true}
             centeredOptions={true}

@@ -16,11 +16,13 @@ import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { CourseGroupTypes } from "@/services/course-groups/types";
 import { useEffect, useState } from "react";
 import { UpdateCourseGroupRequestDTO } from "@/interfaces/api/course-groups";
+import { useMediaQuery } from "react-responsive";
 
 function EditCourseGroupModalContent() {
   const { mutation } = useUpdateCourseGroup();
   const { closeModal } = useModalContext();
   const { courseId } = useUserDetails();
+  const isMd = useMediaQuery({ minWidth: "786px" });
   const { courseGroupId } = useEventParams();
   const {
     data: courseGroups,
@@ -137,7 +139,7 @@ function EditCourseGroupModalContent() {
 
       <div className="course-group-modal-columns">
         <h1>Instruktor</h1>
-        <div className="w-40">
+        <div className="course-group-modal-selector-wrapper">
           <Selector
             options={teachingRoleOptions}
             value={
@@ -149,8 +151,8 @@ function EditCourseGroupModalContent() {
               setFormData({ ...formData, teachingRoleId: Number(value) })
             }
             placeholder="Wybierz"
-            size="2xl"
-            padding="sm"
+            size={isMd ? "3xl" : "2xl"}
+            padding={isMd ? "sm" : "xs"}
             centeredPlaceholder={true}
             centeredOptions={true}
             className="!border-b-2 !border-t-0 !border-x-0 !rounded-none !w-full"
