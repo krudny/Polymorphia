@@ -10,6 +10,7 @@ import com.agh.polymorphia_backend.model.user.student.Student;
 import com.agh.polymorphia_backend.repository.course.CourseRepository;
 import com.agh.polymorphia_backend.repository.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
+import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.service.mapper.CourseMapper;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
@@ -52,6 +53,9 @@ public class CourseServiceTest {
     @Mock
     private AccessAuthorizer accessAuthorizer;
 
+    @Mock
+    private UserRepository userRepository;
+
     private User user;
     private AbstractRoleUser abstractRoleUser;
     private Course course1;
@@ -68,7 +72,8 @@ public class CourseServiceTest {
                 userService,
                 courseMapper,
                 userCourseRoleRepository,
-                accessAuthorizer
+                accessAuthorizer,
+                userRepository
         );
 
         user = User.builder()

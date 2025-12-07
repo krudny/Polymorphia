@@ -65,7 +65,8 @@ public interface ProjectGroupRepository extends JpaRepository<ProjectGroup, Long
                    hofe.groupName      as group,
                    hofe.imageUrl       as imageUrl,
                    cg.grade.id         as gradeId,
-                   sum(cg.xp)          as gainedXp
+                   sum(cg.xp)          as gainedXp,
+                   hofe.animalId       as animalId
             from ProjectGroup pg
                      join pg.animals a
                      join HallOfFameEntry hofe on a.id = hofe.animalId
@@ -78,7 +79,7 @@ public interface ProjectGroupRepository extends JpaRepository<ProjectGroup, Long
                    pg.project.eventSection.course.coordinator.userId = :teachingRoleUserId and
                    :showAllProjectGroupsInCourse = true)
             group by pg.id, hofe.studentId, hofe.studentName, hofe.animalName, hofe.evolutionStage,
-                     hofe.groupName, hofe.imageUrl, cg.grade.id
+                     hofe.groupName, hofe.imageUrl, cg.grade.id, hofe.animalId
             
             """)
     List<ProjectTargetDataView> getProjectTargetsData(Long projectId, Long teachingRoleUserId, Boolean showAllProjectGroupsInCourse);

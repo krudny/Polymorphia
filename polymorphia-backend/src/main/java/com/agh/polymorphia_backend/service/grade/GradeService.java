@@ -15,6 +15,7 @@ import java.util.Optional;
 public class GradeService {
     private final GradeRepository gradeRepository;
 
+
     public List<Grade> getAnimalGrades(Long animalId) {
         return gradeRepository.findAllByAnimalId(animalId);
     }

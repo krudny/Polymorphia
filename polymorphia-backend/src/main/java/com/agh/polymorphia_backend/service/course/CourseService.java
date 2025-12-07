@@ -1,12 +1,15 @@
 package com.agh.polymorphia_backend.service.course;
 
+import com.agh.polymorphia_backend.dto.response.user.TeachingRoleUserResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.AvailableCoursesResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
+import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserCourseRole;
 import com.agh.polymorphia_backend.repository.course.CourseRepository;
 import com.agh.polymorphia_backend.repository.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
+import com.agh.polymorphia_backend.repository.user.UserRepository;
 import com.agh.polymorphia_backend.service.mapper.CourseMapper;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
@@ -29,6 +32,7 @@ public class CourseService {
     private final CourseMapper courseMapper;
     private final UserCourseRoleRepository userCourseRoleRepository;
     private final AccessAuthorizer accessAuthorizer;
+    private final UserRepository userRepository;
 
     public Course getCourseById(Long courseId) {
         return courseRepository.findById(courseId)
@@ -66,5 +70,18 @@ public class CourseService {
                 ))
                 .toList();
 
+    }
+
+    public List<TeachingRoleUserResponseDto> getTeachingRoleUsers(Long courseId) {
+        accessAuthorizer.authorizeCourseAccess(courseId);
+
+        List<User> users = userRepository.findAllTeachingRoleUsers();
+
+        return users.stream()
+                .map(user -> TeachingRoleUserResponseDto.builder()
+                        .userId(user.getId())
+                        .fullName(userService.getFullName(user))
+                        .build())
+                .toList();
     }
 }

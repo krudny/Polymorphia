@@ -39,6 +39,7 @@ public class TargetListMapper {
                 .group(projectTargetDataView.group())
                 .imageUrl(projectTargetDataView.imageUrl())
                 .gainedXp(projectTargetDataView.gainedXp())
+                .animalId(projectTargetDataView.animalId())
                 .build();
     }
 
@@ -74,6 +75,8 @@ public class TargetListMapper {
         return StudentTargetDataResponseDto.builder().id(hofEntry.getStudentId()).fullName(hofEntry.getStudentName())
                 .animalName(hofEntry.getAnimalName()).evolutionStage(hofEntry.getEvolutionStage())
                 .group(hofEntry.getGroupName()).imageUrl(hofEntry.getImageUrl())
-                .gainedXp(NumberFormatter.formatToBigDecimal(hofEntry.getTotalXpSum())).build();
+                .gainedXp(NumberFormatter.formatToBigDecimal(hofEntry.getTotalXpSum()))
+                .animalId(hofEntry.getAnimalId())
+                .build();
     }
 }

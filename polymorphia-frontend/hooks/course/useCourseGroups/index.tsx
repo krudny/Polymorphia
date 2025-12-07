@@ -13,6 +13,7 @@ export default function useCourseGroups<T extends CourseGroupType>({
   const { data, isLoading, isError } = useQuery({
     queryKey: ["courseGroups", courseId, type],
     queryFn: () => CourseGroupsService.getCourseGroups(courseId, type),
+    staleTime: 5 * 60 * 1000,
   });
 
   return { data, isLoading, isError };

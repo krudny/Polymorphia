@@ -12,6 +12,7 @@ public record StudentTargetDataResponseDto(
         String evolutionStage,
         String group,
         String imageUrl,
-        BigDecimal gainedXp
+        BigDecimal gainedXp,
+        Long animalId
 ) {
 }

@@ -30,7 +30,10 @@ public class StudentCourseGroupAssignment {
     @JoinColumn(name = "course_group_id", nullable = false)
     private CourseGroup courseGroup;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
+    )
     @JoinColumn(name = "animal_id")
     private Animal animal;
 }
