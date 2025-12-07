@@ -1,6 +1,7 @@
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import Modal from "@/components/modal";
 import "./index.css";
+import "../index.css";
 import { useForm } from "@tanstack/react-form";
 import { CreateCourseGroupRequestDTO } from "@/interfaces/api/course-groups";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
@@ -75,7 +76,7 @@ function CreateCourseGroupForm({
 
   if (isLoading) {
     return (
-      <div className="w-88 h-[220px] flex-col-centered relative">
+      <div className="course-group-modal-loading">
         <Loading />
       </div>
     );

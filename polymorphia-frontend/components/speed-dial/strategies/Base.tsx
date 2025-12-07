@@ -154,7 +154,7 @@ export abstract class BaseSpeedDialStrategy {
       id: 6,
       orderIndex: 8,
       label: "Zaproś użytkownika do grupy",
-      icon: "group_add",
+      icon: "person_add",
       useDynamicBehavior: () => ({
         modal: (onClose) => (
           <InviteUserModal
@@ -238,7 +238,7 @@ export abstract class BaseSpeedDialStrategy {
       id: 14,
       orderIndex: 1,
       label: "Utwórz grupę",
-      icon: "add",
+      icon: "group_add",
       useDynamicBehavior: () => ({
         modal: (onClose) => <CreateCourseGroupModal onClosedAction={onClose} />,
       }),

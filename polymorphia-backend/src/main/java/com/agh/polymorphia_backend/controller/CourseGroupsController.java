@@ -51,30 +51,24 @@ public class CourseGroupsController {
         return ResponseEntity.ok(courseGroupService.getIndividualShortCourseGroups(courseId));
     }
 
-    @GetMapping("/teaching-role")
-    @PreAuthorize("hasAuthority('COORDINATOR')")
-    public ResponseEntity<List<TeachingRoleUserResponseDto>> getTeachingRoleUsers(@RequestParam Long courseId) {
-        return ResponseEntity.ok(courseGroupService.getTeachingRoleUsers(courseId));
-    }
-
     @PutMapping("/{courseGroupId}")
     @PreAuthorize("hasAuthority('COORDINATOR')")
     public ResponseEntity<Void> updateCourseGroup(@PathVariable Long courseGroupId, @RequestBody UpdateCourseGroupRequestDto requestDto) {
         courseGroupService.updateCourseGroup(courseGroupId, requestDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/change-student-group")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
     public ResponseEntity<Void> changeStudentCourseGroup(@RequestBody ChangeStudentCourseGroupRequestDto requestDto) {
         courseGroupService.changeStudentCourseGroup(requestDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{courseGroupId}")
     @PreAuthorize("hasAnyAuthority('COORDINATOR')")
     public ResponseEntity<Void> deleteCourseGroup(@PathVariable Long courseGroupId) {
         courseGroupService.deleteCourseGroup(courseGroupId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

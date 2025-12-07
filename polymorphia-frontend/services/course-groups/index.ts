@@ -8,7 +8,6 @@ import {
   ChangeStudentCourseGroupRequestDTO,
   CreateCourseGroupRequestDTO,
   StudentLastActivityDTO,
-  TeachingRoleUserResponseDTO,
   UpdateCourseGroupRequestDTO,
 } from "@/interfaces/api/course-groups";
 import {
@@ -94,14 +93,6 @@ const CourseGroupsService = {
     body: ChangeStudentCourseGroupRequestDTO
   ): Promise<void> => {
     await ApiClient.put(`/course-groups/change-student-group`, body);
-  },
-
-  getTeachingRoleUsers: async (
-    courseId: number
-  ): Promise<TeachingRoleUserResponseDTO[]> => {
-    return await ApiClient.get<TeachingRoleUserResponseDTO[]>(
-      `/course-groups/teaching-role?courseId=${courseId}`
-    );
   },
 };
 

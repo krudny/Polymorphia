@@ -20,3 +20,7 @@
     @apply max-w-44 truncate;
   }
 }
+
+.course-group-modal-loading {
+  @apply w-88 h-[220px] flex-col-centered relative;
+}

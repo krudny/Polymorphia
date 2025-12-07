@@ -99,19 +99,6 @@ public class CourseGroupsService {
 
     }
 
-    public List<TeachingRoleUserResponseDto> getTeachingRoleUsers(Long courseId) {
-        accessAuthorizer.authorizeCourseAccess(courseId);
-
-        List<User> users = userRepository.findAllTeachingRoleUsers();
-
-        return users.stream()
-                .map(user -> TeachingRoleUserResponseDto.builder()
-                .userId(user.getId())
-                .fullName(userService.getFullName(user))
-                .build())
-                .toList();
-    }
-
     @Transactional
     public void updateCourseGroup(Long courseGroupId, UpdateCourseGroupRequestDto requestDto) {
         CourseGroup courseGroup = getCourseGroupById(courseGroupId);

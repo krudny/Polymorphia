@@ -65,6 +65,6 @@ public class StudentController {
     @PreAuthorize("hasAnyAuthority('COORDINATOR', 'INSTRUCTOR')")
     public ResponseEntity<Void> deleteAnimal(@PathVariable Long animalId) {
         animalService.deleteAnimal(animalId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

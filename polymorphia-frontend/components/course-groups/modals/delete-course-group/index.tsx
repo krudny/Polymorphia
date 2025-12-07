@@ -18,7 +18,7 @@ function DeleteCourseGroupModalContent() {
       <h1>
         Usunięcie grupy zajęciowej powoduje usunięcie przypisania studentów do
         grup, a także ich zwierzaków, wraz z powiązanymi ocenami. Operacja jest
-        nieodwracalna.{" "}
+        nieodwracalna.
       </h1>
       <h1>Czy na pewno chcesz kontynuować?</h1>
       <div className="course-group-modal-buttons">

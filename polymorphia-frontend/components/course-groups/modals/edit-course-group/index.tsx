@@ -58,7 +58,7 @@ function EditCourseGroupModalContent() {
 
   if (isLoadingGroups || isLoadingUsers) {
     return (
-      <div className="w-88 h-[220px] flex-col-centered relative">
+      <div className="course-group-modal-loading">
         <Loading />
       </div>
     );

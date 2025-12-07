@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.dto.request.course_group;
 
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateCourseGroupRequestDto {
-    @NotNull
+    @NotEmpty
     private String name;
 
     @NotNull
