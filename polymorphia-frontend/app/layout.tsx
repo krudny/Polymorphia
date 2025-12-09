@@ -62,10 +62,10 @@ export default function RootLayout({
       return;
     }
 
-    const qc = queryClientRef.current;
-    if (qc && (error.status === 401 || error.status === 503)) {
-      await qc.cancelQueries({ predicate: () => true });
-      await qc.resetQueries({ predicate: () => true });
+    const currentQueryClient = queryClientRef.current;
+    if (currentQueryClient && (error.status === 401 || error.status === 503)) {
+      await currentQueryClient.cancelQueries({ predicate: () => true });
+      await currentQueryClient.resetQueries({ predicate: () => true });
     }
 
     if (error.status === 401) {
