@@ -3,7 +3,7 @@ import {
   FilterState,
   SpecialBehaviors,
   ValidateFiltersProps,
-} from "@/hooks/course/useFilters/types";
+} from "@/hooks/course/filters/useFilters/types";
 
 export function validateFilters<FilterIdType extends string>(
   state: FilterState<FilterIdType>,
