@@ -4,11 +4,11 @@ import { BaseItem, ChestBehaviors } from "@/interfaces/api/reward";
 import useModalContext from "@/hooks/contexts/useModalContext";
 import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
 import { EquipmentChestResponseDTO } from "@/interfaces/api/equipment";
-import usePickChestItems from "@/hooks/course/usePickChestItems";
+import usePickChestItems from "@/hooks/course/equipment/usePickChestItems";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import XPCard from "@/components/xp-card/XPCard";
 import { useQueryClient } from "@tanstack/react-query";
-import usePotentialXp from "@/hooks/course/usePotentialXp";
+import usePotentialXp from "@/hooks/course/equipment/usePotentialXp";
 import Loading from "@/components/loading";
 import { useEffect, useState } from "react";
 import XPCardImageWithLock from "@/components/xp-card/components/XPCardImageLocked";
@@ -22,7 +22,7 @@ import { EquipmentActions } from "@/providers/equipment/reducer/types";
 import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
 import { Roles } from "@/interfaces/api/user";
-import useStudentChests from "@/hooks/course/useStudentChests";
+import useStudentChests from "@/hooks/course/course-group/useStudentChests";
 
 export default function OpeningChestModalContent({
   equipment,

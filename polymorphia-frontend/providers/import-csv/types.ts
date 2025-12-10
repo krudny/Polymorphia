@@ -1,13 +1,13 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
 import { UseMutationResult } from "@tanstack/react-query";
-import { UseCSVHeadersUpdateParams } from "@/hooks/general/CSV/useCSVHeadersUpdate/types";
-import { UseCSVPreviewUpdateParams } from "@/hooks/general/CSV/useCSVPreviewUpdate/types";
+import { UseCSVHeadersUpdateParams } from "@/hooks/app/csv/useCSVHeadersUpdate/types";
+import { UseCSVPreviewUpdateParams } from "@/hooks/app/csv/useCSVPreviewUpdate/types";
 import { ImportCSVType } from "@/interfaces/general";
 import {
   CSVHeadersResponseDTO,
   CSVPreviewResponseDTO,
 } from "@/interfaces/api/CSV";
-import { UseCSVProcessUpdateParams } from "@/hooks/general/CSV/useCSVProcessUpdate/types";
+import { UseCSVProcessUpdateParams } from "@/hooks/app/csv/useCSVProcessUpdate/types";
 
 export interface ImportCSVContextInterface {
   selectedFile: File | null;

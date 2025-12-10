@@ -3,7 +3,7 @@
 import { X } from "lucide-react";
 import { MouseEvent, useEffect, useRef } from "react";
 import { NotificationCardProps } from "@/components/notification-modal/card/types";
-import useDeleteNotification from "@/hooks/notification/useDeleteNotification";
+import useDeleteNotification from "@/hooks/course/notification/useDeleteNotification";
 import {
   animateNotificationEntry,
   animateNotificationRemoval,

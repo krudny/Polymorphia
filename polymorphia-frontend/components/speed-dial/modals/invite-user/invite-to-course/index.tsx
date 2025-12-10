@@ -11,7 +11,7 @@ import {
   Roles,
   RoleTextMap,
 } from "@/interfaces/api/user";
-import useInviteUser from "@/hooks/course/useInviteStudent";
+import useInviteUser from "@/hooks/course/invitation/useInviteStudent";
 import Selector from "@/components/selector";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { isValidRole } from "@/shared/is-valid-role";

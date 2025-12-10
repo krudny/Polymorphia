@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Loading from "@/components/loading";
 import "./index.css";
-import useUserRole from "@/hooks/course/useUserRole";
+import useUserRole from "@/hooks/course/user/useUserRole";
 import { animateWelcome } from "@/animations/Welcome";
 import { redirectToNextStep } from "@/app/(welcome)/redirectHandler";
 

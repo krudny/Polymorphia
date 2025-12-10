@@ -3,7 +3,7 @@ import Modal from "@/components/modal";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import "../index.css";
 import useModalContext from "@/hooks/contexts/useModalContext";
-import useDeleteCourseGroup from "@/hooks/course/useDeleteCourseGroup";
+import useDeleteCourseGroup from "@/hooks/course/course-group/useDeleteCourseGroup";
 
 function DeleteCourseGroupModalContent() {
   const { mutation } = useDeleteCourseGroup();

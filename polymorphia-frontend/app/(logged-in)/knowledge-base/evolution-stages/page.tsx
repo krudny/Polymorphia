@@ -1,7 +1,7 @@
 "use client";
 import Slider from "@/components/slider/Slider";
 import Loading from "@/components/loading";
-import useEvolutionStages from "@/hooks/course/useEvolutionStages";
+import useEvolutionStages from "@/hooks/course/knowledge-base/useEvolutionStages";
 import ErrorComponent from "@/components/error";
 
 export default function EvolutionStages() {

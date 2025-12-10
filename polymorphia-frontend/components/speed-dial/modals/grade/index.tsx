@@ -1,12 +1,12 @@
 import Loading from "@/components/loading";
-import { useEventParams } from "@/hooks/general/useEventParams";
+import { useEventParams } from "@/hooks/app/params/useEventParams";
 import "./index.css";
-import useShortGrade from "@/hooks/course/useShortGrade";
+import useShortGrade from "@/hooks/course/grading/useShortGrade";
 import { TargetTypes } from "@/interfaces/api/target";
 import useUserContext, {
   useUserDetails,
 } from "@/hooks/contexts/useUserContext";
-import useCriteria from "@/hooks/course/useCriteria";
+import useCriteria from "@/hooks/course/grading/useCriteria";
 import { GradeModalProps } from "@/components/speed-dial/modals/grade/types";
 import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";

@@ -1,4 +1,4 @@
-import { useFilters } from "@/hooks/course/useFilters";
+import { useFilters } from "@/hooks/course/filters/useFilters";
 import { HallOfFameResponseDTO } from "@/interfaces/api/hall-of-fame";
 import { Dispatch, RefObject, SetStateAction } from "react";
 
