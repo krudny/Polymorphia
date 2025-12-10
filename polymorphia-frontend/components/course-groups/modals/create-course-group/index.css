@@ -1,0 +1,30 @@
+@import "tailwindcss";
+@import "../../../../styles/globals.css";
+
+.create-course-group {
+  @apply min-w-88;
+}
+
+.create-course-group form {
+  @apply w-full flex flex-col gap-y-3;
+}
+
+.create-course-group-row {
+  @apply flex justify-between gap-x-4 items-center;
+
+  h3 {
+    @apply text-3xl;
+  }
+}
+
+.create-course-group-row-input-wrapper {
+  @apply w-44 h-[46px];
+}
+
+.create-course-group-row-input-wrapper input {
+  @apply w-full text-center h-full text-2xl border-b-2 border-b-primary-dark focus:outline-none text-primary-dark;
+}
+
+.create-course-group-row-selector-wrapper {
+  @apply w-44 h-[46px];
+}

@@ -11,6 +11,7 @@ public record ProjectTargetDataView(
         String group,
         String imageUrl,
         Long gradeId,
-        BigDecimal gainedXp
+        BigDecimal gainedXp,
+        Long animalId
 ) {
 }

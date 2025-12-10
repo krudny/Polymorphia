@@ -21,4 +21,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
                 OR u.email IN :expiredTokenEmails
             """)
     Integer deleteUsersWithoutPasswordOrWithExpiredTokens(@Param("expiredTokenEmails") List<String> expiredTokenEmails);
+
+    @Query("select tru.user from TeachingRoleUser tru")
+    List<User> findAllTeachingRoleUsers();
 }

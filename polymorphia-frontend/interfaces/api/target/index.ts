@@ -1,8 +1,11 @@
 import { StudentDetailsDTOWithName } from "@/interfaces/api/user";
 
-export interface StudentTargetData
-  extends Omit<StudentDetailsDTOWithName, "position"> {
+export interface StudentTargetData extends Omit<
+  StudentDetailsDTOWithName,
+  "position"
+> {
   gainedXp?: string;
+  animalId: number;
 }
 
 export const TargetTypes = {

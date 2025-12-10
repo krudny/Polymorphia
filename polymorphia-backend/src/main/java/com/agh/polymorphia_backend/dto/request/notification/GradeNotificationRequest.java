@@ -2,7 +2,10 @@ package com.agh.polymorphia_backend.dto.request.notification;
 
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 
