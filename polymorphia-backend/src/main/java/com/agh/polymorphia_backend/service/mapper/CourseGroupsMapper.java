@@ -15,6 +15,7 @@ public class CourseGroupsMapper {
                 .id(courseGroupProjection.getId())
                 .name(courseGroupProjection.getName())
                 .room(courseGroupProjection.getRoom())
+                .teachingRoleId(courseGroupProjection.getTeachingRoleId())
                 .studentCount(courseGroupProjection.getStudentCount())
                 .build();
     }

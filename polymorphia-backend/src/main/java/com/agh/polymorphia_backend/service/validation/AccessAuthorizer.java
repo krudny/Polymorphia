@@ -133,7 +133,7 @@ public class AccessAuthorizer {
         }
     }
 
-    public boolean isCourseAccessAuthorizedCoordinator(User user, Course course) {
+    private boolean isCourseAccessAuthorizedCoordinator(User user, Course course) {
         return course.getCoordinator().getUser().equals(user);
     }
 

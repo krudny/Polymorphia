@@ -2,11 +2,14 @@ import { BaseSpeedDialStrategy } from "@/components/speed-dial/strategies/Base";
 import { SpeedDialStrategy } from "@/components/speed-dial/strategies/types";
 import { SpeedDialItem } from "@/components/speed-dial/types";
 
-export class CourseGroupStrategy
+export class CourseGroupGridStrategy
   extends BaseSpeedDialStrategy
   implements SpeedDialStrategy
 {
   getItems(): SpeedDialItem[] {
-    return [this.createInviteUserToCourse(), this.createInviteUserToGroup()];
+    return [
+      this.createInviteUserToCourse(),
+      this.createCourseGroupSetupModal(),
+    ];
   }
 }

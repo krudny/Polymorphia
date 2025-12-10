@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { UseCourseGroup } from "@/hooks/course/useCourseGroup/types";
 import UserService from "@/services/user";
 
-export default function useCourseGnoroup(
+export default function useCourseGroup(
   courseId: number,
   isStudent: boolean = true
 ): UseCourseGroup {

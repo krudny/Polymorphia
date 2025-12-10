@@ -16,5 +16,8 @@ public class CourseGroupsResponseDto extends CourseGroupsShortResponseDto {
     private final String room;
 
     @NotNull
+    private final Long teachingRoleId;
+
+    @NotNull
     private final int studentCount;
 }

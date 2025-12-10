@@ -7,7 +7,7 @@ import XPCardGrid from "@/components/xp-card/XPCardGrid";
 import SectionView from "@/components/section-view/SectionView";
 import "./index.css";
 import { useScaleShow } from "@/animations/ScaleShow";
-import CourseGroupCard from "@/app/(logged-in)/course/groups/CourseGroupCard";
+import CourseGroupCard from "@/components/course-groups/course-group-card";
 import { useRouter } from "next/navigation";
 import useUserContext, {
   useUserDetails,
@@ -15,6 +15,8 @@ import useUserContext, {
 import { CourseGroupTypes } from "@/services/course-groups/types";
 import ErrorComponent from "@/components/error";
 import { Roles } from "@/interfaces/api/user";
+import { SpeedDialKeys } from "@/components/speed-dial/types";
+import { SpeedDial } from "@/components/speed-dial";
 
 export default function CourseGroupsPage() {
   const router = useRouter();
@@ -49,6 +51,9 @@ export default function CourseGroupsPage() {
 
   return (
     <SectionView ref={containerRef}>
+      {userRole === Roles.COORDINATOR && (
+        <SpeedDial speedDialKey={SpeedDialKeys.COURSE_GROUP_GRID} />
+      )}
       <div className="course-groups-view">
         <div className="course-groups-cards" ref={wrapperRef}>
           <XPCardGrid containerRef={wrapperRef} cards={cards} />

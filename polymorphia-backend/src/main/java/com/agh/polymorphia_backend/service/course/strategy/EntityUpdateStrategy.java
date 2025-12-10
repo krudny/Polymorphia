@@ -40,7 +40,7 @@ public interface EntityUpdateStrategy<Dto, Entity> {
     List<Entity> findAllByKeys(List<String> keys, Long courseId);
 
     /**
-     * @param dto requested changes for the entity
+     * @param dto with requested changes for the entity
      * @return changed entity
      * When the entity is created, we create it under proper subclass
      */

@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.controller;
 
 import com.agh.polymorphia_backend.dto.request.course_import.CourseDetailsRequestDto;
+import com.agh.polymorphia_backend.dto.response.user.TeachingRoleUserResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.AvailableCoursesResponseDto;
 import com.agh.polymorphia_backend.exception.SkipUnexpectedExceptionHandler;
 import com.agh.polymorphia_backend.service.course.CourseDetailsService;
@@ -35,9 +36,15 @@ public class CourseController {
     private final Validator validator;
 
     @GetMapping()
-    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<AvailableCoursesResponseDto>> getAvailableCourses() {
         return ResponseEntity.ok(courseService.getAvailableCourses());
+    }
+
+    @GetMapping("/teaching-roles")
+    @PreAuthorize("hasAuthority('COORDINATOR')")
+    public ResponseEntity<List<TeachingRoleUserResponseDto>> getTeachingRoleUsers(@RequestParam Long courseId) {
+        return ResponseEntity.ok(courseService.getTeachingRoleUsers(courseId));
     }
 
     @PostMapping()

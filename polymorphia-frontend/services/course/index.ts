@@ -1,10 +1,19 @@
 import { AvailableCoursesDTO } from "@/interfaces/api/user-context";
 import { ApiClient } from "@/services/api/client";
+import { TeachingRoleUserResponseDTO } from "@/interfaces/api/course-groups";
 import { saveAs } from "file-saver";
 
 export const CourseService = {
   getAvailableCourses: async (): Promise<AvailableCoursesDTO[]> => {
     return await ApiClient.get<AvailableCoursesDTO[]>("/courses");
+  },
+
+  getTeachingRoleUsers: async (
+    courseId: number
+  ): Promise<TeachingRoleUserResponseDTO[]> => {
+    return await ApiClient.get<TeachingRoleUserResponseDTO[]>(
+      `/courses/teaching-roles?courseId=${courseId}`
+    );
   },
   downloadCourseConfig: async (courseId: number): Promise<void> => {
     const response = await ApiClient.getBlob(
