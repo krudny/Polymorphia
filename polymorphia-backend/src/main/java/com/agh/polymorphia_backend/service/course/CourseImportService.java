@@ -74,9 +74,7 @@ public class CourseImportService {
     @Transactional
     public void importCourse(CourseDetailsRequestDto request) {
         User currentUser = userService.getCurrentUser().getUser();
-        Coordinator coordinator = coordinatorRepository.findById(currentUser.getId())
-                .orElse(Coordinator.builder().user(currentUser).build());
-        coordinatorRepository.save(coordinator);
+        Coordinator coordinator = getOrCreateCoordinator(currentUser);
 
         Course course = Course.builder()
                 .coordinator(coordinator)
@@ -107,6 +105,12 @@ public class CourseImportService {
             courseRepository.save(course);
         }
         updateCourseElements(request, currentConfig, courseId);
+    }
+
+    private Coordinator getOrCreateCoordinator(User user) {
+        Coordinator coordinator = coordinatorRepository.findById(user.getId())
+                .orElse(Coordinator.builder().user(user).build());
+        return coordinatorRepository.save(coordinator);
     }
 
     private void updateCourseElements(CourseDetailsRequestDto request, CourseDetailsRequestDto currentConfig, Long courseId) {

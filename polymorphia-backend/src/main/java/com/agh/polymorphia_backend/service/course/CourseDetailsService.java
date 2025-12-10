@@ -3,7 +3,7 @@ package com.agh.polymorphia_backend.service.course;
 import com.agh.polymorphia_backend.dto.request.course_import.CourseDetailsRequestDto;
 import com.agh.polymorphia_backend.dto.request.course_import.event_section.EventSectionDetailsRequestDto;
 import com.agh.polymorphia_backend.model.course.Course;
-import com.agh.polymorphia_backend.model.user.User;
+import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.student.EvolutionStage;
 import com.agh.polymorphia_backend.repository.course.EvolutionStagesRepository;
 import com.agh.polymorphia_backend.repository.criterion.CriterionRepository;
@@ -57,8 +57,8 @@ public class CourseDetailsService {
     @Transactional(readOnly = true)
     public CourseDetailsRequestDto getCourseDetails(Long courseId) {
         Course course = courseService.getCourseById(courseId);
-        User user = userService.getCurrentUser().getUser();
-        accessAuthorizer.isCourseAccessAuthorizedCoordinator(user, course);
+        AbstractRoleUser user = userService.getCurrentUser();
+        accessAuthorizer.isCourseAccessAuthorized(user, course);
         List<ItemDetailsDetailsProjection> items = itemRepository.findAllItemDetailsByCourseId(courseId);
         List<ChestDetailsDetailsProjection> chests = chestRepository.findAllChestDetailsByCourseId(courseId);
         List<EvolutionStage> evolutionStages = evolutionStagesRepository.findAllByCourseId(courseId);

@@ -2,12 +2,8 @@ BEGIN;
 TRUNCATE TABLE users cascade;
 TRUNCATE TABLE chests_items cascade;
 TRUNCATE TABLE courses cascade;
-TRUNCATE TABLE coordinators cascade;
-TRUNCATE TABLE students cascade;
-TRUNCATE TABLE instructors cascade;
 TRUNCATE TABLE user_course_roles cascade;
 TRUNCATE TABLE course_groups cascade;
-TRUNCATE TABLE chests cascade;
 TRUNCATE TABLE animals cascade;
 TRUNCATE TABLE students_course_groups cascade;
 TRUNCATE TABLE evolution_stages cascade;
@@ -20,9 +16,6 @@ TRUNCATE table project_variants cascade;
 TRUNCATE table project_variant_categories cascade;
 TRUNCATE table project_groups cascade;
 TRUNCATE TABLE rewards cascade;
-TRUNCATE TABLE items cascade;
-TRUNCATE TABLE flat_bonus_items cascade;
-TRUNCATE TABLE percentage_bonus_items cascade;
 TRUNCATE TABLE assigned_chests cascade;
 TRUNCATE TABLE assigned_items cascade;
 TRUNCATE TABLE assigned_rewards cascade;
@@ -37,8 +30,6 @@ TRUNCATE TABLE project_groups_animals cascade;
 TRUNCATE TABLE submission_requirements cascade;
 TRUNCATE TABLE submissions cascade;
 TRUNCATE TABLE teaching_role_users cascade;
-TRUNCATE TABLE assignments cascade;
-TRUNCATE TABLE tests cascade;
 INSERT INTO
   users (id, first_name, last_name, email, password, preferred_course_id)
 VALUES
