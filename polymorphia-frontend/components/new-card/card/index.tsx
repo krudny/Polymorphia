@@ -105,7 +105,7 @@ export default function NewCard({
       >
         {leftComponent && (
           <div className="aspect-square flex-centered h-full shrink-0 bg-green-200">
-            {leftComponent(mode, color)}
+            {leftComponent({ mode, color })}
           </div>
         )}
         <div
@@ -119,7 +119,7 @@ export default function NewCard({
         </div>
         {rightComponent && (
           <div className="aspect-square flex-centered h-full shrink-0 bg-green-200">
-            {rightComponent(mode, color)}
+            {rightComponent({ mode, color })}
           </div>
         )}
       </div>

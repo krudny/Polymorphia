@@ -2,8 +2,10 @@ import { clsx } from "clsx";
 import { NewCardPointsAccessoryProps } from "@/components/new-card/card/accessory/points/types";
 import "./index.css";
 import { colorVariants } from "@/components/new-card/card";
+import { NewCardModes } from "@/components/new-card/types";
 
 export default function NewCardPointsAccessory({
+  mode,
   points,
   isSumLabelVisible = false,
   isXPLabelVisible = true,
@@ -18,7 +20,8 @@ export default function NewCardPointsAccessory({
       className={clsx(
         "w-full h-full flex-col-centered relative",
         colorVariants({ color: backgroundColor }).backgroundSecondary(),
-        backgroundColor !== "gray" && "text-primary-dark"
+        backgroundColor !== "gray" && "text-primary-dark",
+        mode === NewCardModes.NORMAL ? "gap-3" : "gap-1"
       )}
     >
       <h1>
@@ -31,11 +34,21 @@ export default function NewCardPointsAccessory({
       {hasChest && (
         <div
           className={clsx(
-            "absolute bottom-1 right-1 flex-centered",
+            "absolute  flex-centered",
+            mode === NewCardModes.NORMAL
+              ? "bottom-3 right-3"
+              : "bottom-2 right-2",
             shouldGrayOutReward && "text-neutral-400"
           )}
         >
-          <span className="material-symbols text-xl leading-none">trophy</span>
+          <span
+            className={clsx(
+              "material-symbols leading-none",
+              mode === NewCardModes.NORMAL ? "text-2xl" : "text-lg"
+            )}
+          >
+            trophy
+          </span>
         </div>
       )}
     </div>

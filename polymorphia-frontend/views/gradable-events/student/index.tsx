@@ -84,8 +84,9 @@ export default function StudentView() {
       cardConfigurations={gradableEvents.map((gradableEvent) => ({
         title: gradableEvent.name,
         subtitle: gradableEvent.topic,
-        rightComponent: () => (
+        rightComponent: ({ mode }) => (
           <NewCardPointsAccessory
+            mode={mode}
             points={gradableEvent.gainedXp}
             isSumLabelVisible={true}
             backgroundColor="gray"
