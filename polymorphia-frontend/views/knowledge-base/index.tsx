@@ -1,21 +1,18 @@
 "use client";
-import {
-  KNOWLEDGE_BASE_ERROR_MESSAGES,
-  KNOWLEDGE_BASE_SLIDE_HOOKS,
-} from "@/views/knowledge-base/util";
+import { KNOWLEDGE_BASE_ERROR_MESSAGES } from "@/views/knowledge-base/util";
 import { KnowledgeBaseSliderViewProps } from "./types";
 import Slider from "@/components/slider/Slider";
 import Loading from "@/components/loading";
 import ErrorComponent from "@/components/error";
 import { useSearchParams } from "next/navigation";
+import { useKnowledgeBase } from "@/hooks/course/knowledge-base/useKnowledgeBase";
 
 export default function KnowledgeBaseSliderView({
   type,
 }: KnowledgeBaseSliderViewProps) {
-  const useHook = KNOWLEDGE_BASE_SLIDE_HOOKS[type];
   const messages = KNOWLEDGE_BASE_ERROR_MESSAGES[type];
   const searchParams = useSearchParams();
-  const { data, isLoading, isError } = useHook();
+  const { data, isLoading, isError } = useKnowledgeBase(type);
 
   if (isLoading) {
     return <Loading />;
