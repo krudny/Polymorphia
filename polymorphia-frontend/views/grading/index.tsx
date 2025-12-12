@@ -13,7 +13,7 @@ import useUserContext from "@/hooks/contexts/useUserContext";
 import { Roles } from "@/interfaces/api/user";
 import ErrorComponent from "@/components/error";
 
-export default function Grading() {
+export default function GradingView() {
   const { eventType } = useEventParams();
   const isXL = useMediaQuery({ minWidth: "1280px" });
   const isMd = useMediaQuery({ minWidth: "768px" });
