@@ -12,6 +12,7 @@ import usePointsSummary from "@/hooks/course/usePointsSummary";
 import ErrorComponent from "@/components/error";
 import { GradableEventDTO } from "@/interfaces/api/gradable_event/types";
 import NewCardGridView from "@/components/new-card/grid";
+import NewCardPointsAccessory from "@/components/new-card/card/accessory/points";
 
 export default function StudentView() {
   const { eventType, eventSectionId } = useEventParams();
@@ -84,10 +85,19 @@ export default function StudentView() {
         title: gradableEvent.name,
         subtitle: gradableEvent.topic,
         rightComponent: () => (
-          <div className="flex-centered">{gradableEvent.gainedXp}</div>
+          <NewCardPointsAccessory
+            points={gradableEvent.gainedXp}
+            isSumLabelVisible={true}
+            backgroundColor="gray"
+            hasChest={gradableEvent.hasPossibleReward}
+            shouldGrayOutReward={
+              gradableEvent.isGraded && !gradableEvent.isRewardAssigned
+            }
+          />
         ),
         color: gradableEvent.gainedXp != undefined ? "green" : "sky",
         onClick: () => handleClick(gradableEvent),
+        isLocked: gradableEvent.isLocked,
       }))}
       usesPointsSummary={true}
       pointsSummaryConfiguration={pointsSummary}
