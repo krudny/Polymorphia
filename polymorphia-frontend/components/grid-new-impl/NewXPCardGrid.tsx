@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { GridParams } from "./NewSectionView";
 import NewCard, { NewCardProps } from "./NewCard";
 import { PointsSummaryResponseDTO } from "@/interfaces/api/points-summary";
@@ -17,6 +17,7 @@ export default function NewXPCardGrid({
   gridParams,
   cardConfigurations,
   pointsSummaryConfiguration,
+  usesPointsSummary,
 }: NewXPCardGridProps) {
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -77,7 +78,9 @@ export default function NewXPCardGrid({
       <div className="flex flex-col w-full">
         <div className="flex w-full justify-between gap-5">
           <div className="flex-1">{cardsView}</div>
-          <div className="shrink-0">{pointsSummaryView}</div>
+          {usesPointsSummary && (
+            <div className="shrink-0">{pointsSummaryView}</div>
+          )}
         </div>
         <div>{pagination}</div>
       </div>
@@ -87,9 +90,11 @@ export default function NewXPCardGrid({
       <div className="flex flex-col w-full gap-4 pb-10 items-center">
         <div className="w-full flex justify-center">{cardsView}</div>
         <div className="flex justify-center w-full">{pagination}</div>
-        <div className="flex justify-center w-full h-[600px]">
-          {pointsSummaryView}
-        </div>
+        {usesPointsSummary && (
+          <div className="flex justify-center w-full h-[600px]">
+            {pointsSummaryView}
+          </div>
+        )}
       </div>
     );
   }

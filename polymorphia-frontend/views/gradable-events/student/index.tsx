@@ -123,6 +123,7 @@ export default function StudentView() {
           <div className="flex-centered">{gradableEvent.gainedXp}</div>
         ),
         color: "silver",
+        // wide: true,
       }))}
       usesPointsSummary={true}
       pointsSummaryConfiguration={pointsSummary}
