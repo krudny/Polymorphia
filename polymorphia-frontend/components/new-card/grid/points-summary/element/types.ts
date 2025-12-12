@@ -5,5 +5,6 @@ export interface NewPointsSummaryElementProps {
   mode: NewCardMode;
   bonus: PointsSummaryDetailsResponseDTO;
   onClick?: () => void;
-  horizontal?: boolean;
+  inline?: boolean;
+  isDesktop: boolean;
 }

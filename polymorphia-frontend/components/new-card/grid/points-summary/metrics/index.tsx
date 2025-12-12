@@ -15,7 +15,7 @@ export const POINTS_SUMMARY_METRICS: Record<NewCardMode, PointsSummaryMetrics> =
     [NewCardModes.COMPACT]: {
       width: 240,
       minHeight: 425,
-      maxHeight: 620,
+      maxHeight: 575,
     },
   };
 

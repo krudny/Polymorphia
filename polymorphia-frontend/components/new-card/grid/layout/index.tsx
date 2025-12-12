@@ -75,6 +75,7 @@ export default function NewCardGridLayout({
     <NewPointsSummary
       pointsSummary={pointsSummaryConfiguration}
       mode={gridParams.mode}
+      isDesktop={gridParams.isDesktop}
     />
   );
 

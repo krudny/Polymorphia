@@ -21,7 +21,6 @@ export function getPointsSummaryElementStyles({
   mode,
 }: GetPointsSummaryElementStylesProps): HTMLAttributes<HTMLDivElement>["style"] {
   return {
-    height: `${POINTS_SUMMARY_ELEMENT_METRICS[mode].height}px`,
     maxHeight: `${POINTS_SUMMARY_ELEMENT_METRICS[mode].height}px`,
   };
 }

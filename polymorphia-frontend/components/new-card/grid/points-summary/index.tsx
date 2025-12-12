@@ -9,6 +9,7 @@ import NewPointsSummaryElement from "@/components/new-card/grid/points-summary/e
 export default function NewPointsSummary({
   mode,
   pointsSummary,
+  isDesktop,
 }: NewPointsSummaryProps) {
   const [currentBonusInfoModal, setCurrentBonusInfoModal] =
     useState<PointsSummaryDetailsResponseDTO | null>(null);
@@ -29,19 +30,31 @@ export default function NewPointsSummary({
     >
       {pointsSummary !== undefined ? (
         <>
-          <NewPointsSummaryElement mode={mode} bonus={pointsSummary.gained} />
+          <NewPointsSummaryElement
+            mode={mode}
+            isDesktop={isDesktop}
+            bonus={pointsSummary.gained}
+          />
           {invisibleDivider}
           <NewPointsSummaryElement
             mode={mode}
+            isDesktop={isDesktop}
             bonus={pointsSummary.flatBonus}
           />
           {invisibleDivider}
           <NewPointsSummaryElement
             mode={mode}
+            isDesktop={isDesktop}
             bonus={pointsSummary.percentageBonus}
+            onClick={() => {}}
           />
           {divider}
-          <NewPointsSummaryElement mode={mode} bonus={pointsSummary.total} />
+          <NewPointsSummaryElement
+            mode={mode}
+            isDesktop={isDesktop}
+            bonus={pointsSummary.total}
+            inline={true}
+          />
         </>
       ) : (
         <ErrorComponent
