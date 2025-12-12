@@ -70,7 +70,11 @@ export default function Roadmap() {
 
   return (
     <>
-      <div ref={wrapperRef} style={{ height: totalHeight }} className="roadmap">
+      <div
+        ref={wrapperRef}
+        style={{ minHeight: totalHeight }}
+        className="roadmap"
+      >
         <ProgressBar
           minXP={0}
           currentXP={27}
