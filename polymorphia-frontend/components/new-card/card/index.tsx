@@ -79,17 +79,14 @@ export default function NewCard({
     <div
       onClick={!isLocked ? onClick : undefined}
       className={clsx(
-        "relative w-full flex drop-shadow-sm transition-all overflow-hidden bg-neutral-50 dark:bg-primary-dark",
+        "new-card",
         !isLocked
           ? colorVariants({ color }).borderPrimary()
           : colorVariants({ color: "gray" }).borderPrimary(),
-        onClick && !isLocked
-          ? "cursor-pointer hover:drop-shadow-xl"
-          : "select-none",
-        mode === NewCardModes.NORMAL ? "rounded-xl" : "rounded-lg",
+        onClick && !isLocked ? "new-card-hover" : "new-card-regular",
         mode === NewCardModes.NORMAL
-          ? "[&_h1]:text-[2.5rem] [&_h2]:text-[1.5rem]"
-          : "[&_h1]:text-2xl [&_h2]:text-lg"
+          ? "new-card-normal-mode"
+          : "new-card-compact-mode"
       )}
       style={getCardStyles({
         cardMetrics: getCardMetrics({
@@ -104,32 +101,28 @@ export default function NewCard({
     >
       <div
         className={clsx(
-          "flex flex-1 flex-row w-full",
-          isLocked && "grayscale filter"
+          "new-card-wrapper",
+          isLocked && "new-card-wrapper-locked"
         )}
       >
         {leftComponent && (
-          <div className="aspect-square flex-centered h-full shrink-0">
+          <div className="new-card-accessory">
             {leftComponent({ mode, color })}
           </div>
         )}
-        <div
-          className={clsx(
-            "flex flex-col justify-center h-full px-5 min-w-0 flex-1"
-          )}
-        >
+        <div className={clsx("new-card-middle")}>
           <h1 className="truncate">{title}</h1>
-          {subtitle && <h2 className="truncate">{subtitle}</h2>}
+          {true && <h2 className="truncate">ac{subtitle}</h2>}
           {details && <h2 className="truncate">{details}</h2>}
         </div>
         {rightComponent && (
-          <div className="aspect-square flex-centered h-full shrink-0">
+          <div className="new-card-accessory">
             {rightComponent({ mode, color })}
           </div>
         )}
       </div>
       {isLocked && (
-        <div className="absolute inset-0 z-10 bg-secondary-gray/70 dark:bg-primary-dark/80 flex-col-centered">
+        <div className="new-card-locked-overlay">
           <span
             className={clsx(
               "material-symbols text-primary-dark",

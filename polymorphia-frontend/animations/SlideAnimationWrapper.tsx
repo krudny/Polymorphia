@@ -1,5 +1,7 @@
 import { ReactNode, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import "./index.css";
+import clsx from "clsx";
 
 interface SlideAnimationWrapperProps {
   children: ReactNode;
@@ -65,17 +67,10 @@ export default function SlideAnimationWrapper({
   return (
     <div
       ref={containerRef}
-      className={`relative grid grid-cols-1 grid-rows-1 overflow-x-clip overflow-y-visible ${className}`}
+      className={clsx("slide-animation-wrapper-container", className)}
     >
-      <div className="slide-enter col-start-1 row-start-1 w-full h-full">
-        {activeContent}
-      </div>
-
-      {leavingContent && (
-        <div className="slide-exit col-start-1 row-start-1 w-full h-full pointer-events-none">
-          {leavingContent}
-        </div>
-      )}
+      <div className="slide-enter">{activeContent}</div>
+      {leavingContent && <div className="slide-exit">{leavingContent}</div>}
     </div>
   );
 }

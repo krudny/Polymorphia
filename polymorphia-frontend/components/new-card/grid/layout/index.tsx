@@ -6,6 +6,7 @@ import { usePageable } from "@/hooks/general/usePageable";
 import { useMemo } from "react";
 import NewCard from "@/components/new-card/card";
 import { NewCardGridLayoutProps } from "@/components/new-card/grid/layout/types";
+import "./index.css";
 
 export default function NewCardGridLayout({
   gridParams,
@@ -45,15 +46,19 @@ export default function NewCardGridLayout({
     <SlideAnimationWrapper
       triggerKey={currentPage}
       direction={direction}
-      className={clsx(gridParams.isDesktop ? "h-full w-fit" : "h-auto w-full")}
+      className={clsx(
+        gridParams.isDesktop
+          ? "new-card-grid-layout-animation-desktop"
+          : "new-card-grid-layout-animation-mobile"
+      )}
     >
       <div
         className={clsx(
-          "grid min-w-0 gap-5 transition-opacity custom-ease-with-duration px-3",
+          "new-card-grid-layout-cards",
           gridParams.isReady ? "opacity-100" : "opacity-0",
           gridParams.isDesktop
-            ? "h-full content-center justify-start"
-            : "h-auto content-start w-full justify-center"
+            ? "new-card-grid-layout-cards-desktop"
+            : "new-card-grid-layout-cards-mobile"
         )}
         style={{
           gridTemplateColumns: `repeat(${gridParams.cols}, minmax(0, ${gridParams.cardMaxWidth}px))`,
@@ -82,12 +87,19 @@ export default function NewCardGridLayout({
   if (gridParams.isDesktop) {
     return (
       <div
-        className={clsx("flex flex-col gap-5", usesPointsSummary && "w-full")}
+        className={clsx(
+          "new-card-grid-layout-desktop-wrapper",
+          usesPointsSummary && "w-full"
+        )}
       >
-        <div className="flex w-full justify-between gap-5">
-          <div className="flex-1">{cardsView}</div>
+        <div className="new-card-grid-layout-desktop-top">
+          <div className="new-card-grid-layout-desktop-cards-wrapper">
+            {cardsView}
+          </div>
           {usesPointsSummary && (
-            <div className="shrink-0">{pointsSummaryView}</div>
+            <div className="new-card-grid-layout-desktop-points-summary-wrapper">
+              {pointsSummaryView}
+            </div>
           )}
         </div>
         <div>{pagination}</div>
@@ -95,11 +107,15 @@ export default function NewCardGridLayout({
     );
   } else {
     return (
-      <div className="flex flex-col w-full gap-4 pb-10 items-center">
-        <div className="w-full flex justify-center">{cardsView}</div>
-        <div className="flex justify-center w-full">{pagination}</div>
+      <div className="new-card-grid-layout-mobile-wrapper">
+        <div className="new-card-grid-layout-mobile-cards-wrapper">
+          {cardsView}
+        </div>
+        <div className="new-card-grid-layout-mobile-pagination-wrapper">
+          {pagination}
+        </div>
         {usesPointsSummary && (
-          <div className="flex justify-center w-full h-[600px]">
+          <div className="new-card-grid-layout-mobile-points-summary-wrapper">
             {pointsSummaryView}
           </div>
         )}

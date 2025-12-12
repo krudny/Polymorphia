@@ -12,7 +12,7 @@ export default function NewCardTextAccessory({
   return (
     <div
       className={clsx(
-        "w-full h-full flex-col-centered relative",
+        "new-card-text-accessory",
         colorVariants({ color: backgroundColor }).backgroundSecondary(),
         backgroundColor !== "gray" && "text-primary-dark"
       )}

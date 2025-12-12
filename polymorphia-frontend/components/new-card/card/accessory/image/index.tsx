@@ -8,7 +8,7 @@ export default function NewCardImageAccessory({
   alt,
 }: NewCardImageAccessoryProps) {
   return (
-    <div className="w-full h-full relative flex-shrink-0 select-none aspect-square">
+    <div className="new-card-image-accessory">
       <Image
         src={`${API_STATIC_URL}/${imageUrl}`}
         alt={alt}

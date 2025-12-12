@@ -18,8 +18,10 @@ export default function NewCardPointsAccessory({
   const additionalView = hasChest ? (
     <div
       className={clsx(
-        "absolute  flex-centered",
-        mode === NewCardModes.NORMAL ? "bottom-3 right-3" : "bottom-2 right-2",
+        "new-card-points-accessory-view",
+        mode === NewCardModes.NORMAL
+          ? "new-card-points-accessory-view-normal"
+          : "new-card-points-accessory-view-compact",
         shouldGrayOutReward && "text-neutral-400"
       )}
     >

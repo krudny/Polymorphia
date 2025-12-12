@@ -1,12 +1,12 @@
 import { PointsSummaryDetailsResponseDTO } from "@/interfaces/api/points-summary";
 import { useState } from "react";
-import clsx from "clsx";
 import { NewPointsSummaryProps } from "@/components/new-card/grid/points-summary/types";
 import { getPointsSummaryStyles } from "@/components/new-card/grid/points-summary/metrics";
 import ErrorComponent from "@/components/error";
 import NewPointsSummaryElement from "@/components/new-card/grid/points-summary/element";
 import { NewCardModes } from "../../types";
 import BonusInfoModal from "@/components/course/event-section/points-summary/BonusInfoModal";
+import "./index.css";
 
 export default function NewPointsSummary({
   mode,
@@ -18,17 +18,15 @@ export default function NewPointsSummary({
 
   const effectiveMode = isDesktop ? mode : NewCardModes.NORMAL;
 
-  const divider = (
-    <div className="border-t-2 border-primary-dark dark:border-secondary-light w-full" />
-  );
+  const divider = <div className="new-card-points-summary-divider" />;
   const invisibleDivider = (
-    <div className="border-t-2 border-primary-dark dark:border-secondary-light w-full opacity-0" />
+    <div className="new-card-points-summary-divider opacity-0" />
   );
 
   return (
     <>
       <div
-        className={clsx("h-full flex flex-col justify-between")}
+        className="new-card-points-summary"
         style={getPointsSummaryStyles({
           mode: effectiveMode,
         })}

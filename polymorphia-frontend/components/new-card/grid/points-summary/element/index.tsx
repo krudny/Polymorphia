@@ -3,6 +3,7 @@ import { getPointsSummaryElementStyles } from "@/components/new-card/grid/points
 import clsx from "clsx";
 import { SquareMousePointer } from "lucide-react";
 import { NewCardModes } from "@/components/new-card/types";
+import "./index.css";
 
 export default function NewPointsSummaryElement({
   bonus,
@@ -14,18 +15,18 @@ export default function NewPointsSummaryElement({
   return (
     <div
       className={clsx(
-        "w-full flex text-shadow-sm gap-1",
-        inline && "flex-row gap-3",
-        !inline && "flex-col h-full",
+        "new-card-points-summary-element",
+        inline && "new-card-points-summary-element-inline",
+        !inline && "new-card-points-summary-element-not-inline",
         isDesktop ? "items-end" : "items-center",
         inline && isDesktop ? "justify-end" : "justify-center",
-        onClick && "cursor-pointer hover:text-shadow-lg"
+        onClick && "new-card-points-summary-element-hover"
       )}
       style={getPointsSummaryElementStyles({ mode })}
     >
       <div
         className={clsx(
-          "flex flex-row items-center gap-4 no-wrap",
+          "new-card-points-summary-element-content",
           onClick && "-ml-[40px]"
         )}
       >
