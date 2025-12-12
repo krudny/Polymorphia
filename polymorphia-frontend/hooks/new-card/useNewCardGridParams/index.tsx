@@ -49,24 +49,36 @@ export default function useNewCardGridParams(
       const cardWidth = cardMetrics.minWidth;
       const cardHeight = cardMetrics.height;
 
-      const pointsSummaryImpactsWidth = usesPointsSummary && isDesktop;
+      const pointsSummaryImpactsDimensions = usesPointsSummary && isDesktop;
 
-      const cardsWidth =
+      const cardsAvailableWidth =
         width -
-        (pointsSummaryImpactsWidth
+        (pointsSummaryImpactsDimensions
           ? POINTS_SUMMARY_METRICS[cardMode].width + gap
           : 0);
-      const cardsHeight = Math.min(
+      const cardsAvailableHeight = Math.min(
         height,
         POINTS_SUMMARY_METRICS[cardMode].maxHeight
       );
 
       const rows = isDesktop
-        ? Math.max(Math.floor((cardsHeight + gap) / (cardHeight + gap)), 1)
+        ? Math.max(
+            Math.floor((cardsAvailableHeight + gap) / (cardHeight + gap)),
+            1
+          )
         : 5;
       const cols = Math.max(
-        Math.floor((cardsWidth + gap) / (cardWidth + gap)),
+        Math.floor((cardsAvailableWidth + gap) / (cardWidth + gap)),
         1
+      );
+
+      const cardsActualWidth = Math.min(
+        cols * cardWidth + (cols - 1) * gap,
+        cardsAvailableWidth
+      );
+      const cardsActualHeight = Math.min(
+        rows * cardHeight + (rows - 1) * gap,
+        cardsAvailableHeight
       );
 
       return {
@@ -74,11 +86,22 @@ export default function useNewCardGridParams(
         rows: rows,
         cols: cols,
         cardMaxWidth: cardMetrics.maxWidth,
+        breaksConstraints:
+          (pointsSummaryImpactsDimensions &&
+            cardsActualHeight < POINTS_SUMMARY_METRICS[cardMode].minHeight) ||
+          cardsActualWidth < cardMetrics.minWidth,
       };
     });
 
-    const bestLayout =
-      stats.find((s) => s.rows >= 2 && s.cols >= 2) || stats[0];
+    let bestLayout = stats.find(
+      (layout) =>
+        layout.rows >= 2 && layout.cols >= 2 && !layout.breaksConstraints
+    );
+
+    if (!bestLayout) {
+      bestLayout =
+        stats.find((layout) => !layout.breaksConstraints) ?? stats.at(-1)!;
+    }
 
     const nextParams: GridParams = {
       ...bestLayout,
