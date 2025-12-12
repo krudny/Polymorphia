@@ -18,6 +18,6 @@ export interface GetCardMetricsProps {
   stepCount: number;
 }
 
-export interface GetCardClassNameProps {
+export interface GetCardStylesProps {
   cardMetrics: EvaluatedCardMetrics;
 }

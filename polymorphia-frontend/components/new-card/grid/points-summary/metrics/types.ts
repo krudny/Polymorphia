@@ -6,6 +6,6 @@ export interface PointsSummaryMetrics {
   maxHeight: number;
 }
 
-export interface GetPointsSummaryClassNameProps {
+export interface GetPointsSummaryStylesProps {
   mode: NewCardMode;
 }

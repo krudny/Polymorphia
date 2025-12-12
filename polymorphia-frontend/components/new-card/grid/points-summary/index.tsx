@@ -2,7 +2,7 @@ import { PointsSummaryDetailsResponseDTO } from "@/interfaces/api/points-summary
 import { useState } from "react";
 import clsx from "clsx";
 import { NewPointsSummaryProps } from "@/components/new-card/grid/points-summary/types";
-import { getPointsSummaryClassName } from "@/components/new-card/grid/points-summary/metrics";
+import { getPointsSummaryStyles } from "@/components/new-card/grid/points-summary/metrics";
 import ErrorComponent from "@/components/error";
 import NewPointsSummaryElement from "@/components/new-card/grid/points-summary/element";
 
@@ -24,10 +24,8 @@ export default function NewPointsSummary({
 
   return (
     <div
-      className={clsx(
-        "h-full flex flex-col justify-between",
-        getPointsSummaryClassName({ mode })
-      )}
+      className={clsx("h-full flex flex-col justify-between")}
+      style={getPointsSummaryStyles({ mode })}
     >
       {pointsSummary !== undefined ? (
         <>

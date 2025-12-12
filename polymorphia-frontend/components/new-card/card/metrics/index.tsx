@@ -3,9 +3,10 @@ import { NewCardProps } from "@/components/new-card/card/types";
 import {
   BaseCardMetrics,
   EvaluatedCardMetrics,
-  GetCardClassNameProps,
+  GetCardStylesProps,
   GetCardMetricsProps,
 } from "@/components/new-card/card/metrics/types";
+import { HTMLAttributes } from "react";
 
 export const CARD_METRICS: Record<NewCardMode, BaseCardMetrics> = {
   [NewCardModes.NORMAL]: {
@@ -49,6 +50,12 @@ export function getCardStepCount({
   );
 }
 
-export function getCardClassName({ cardMetrics }: GetCardClassNameProps) {
-  return `h-[${cardMetrics.height}px] min-w-0 max-w-[${cardMetrics.maxWidth}px]`;
+export function getCardStyles({
+  cardMetrics,
+}: GetCardStylesProps): HTMLAttributes<HTMLDivElement>["style"] {
+  return {
+    height: `${cardMetrics.height}px`,
+    minWidth: 0,
+    maxWidth: `${cardMetrics.maxWidth}px`,
+  };
 }

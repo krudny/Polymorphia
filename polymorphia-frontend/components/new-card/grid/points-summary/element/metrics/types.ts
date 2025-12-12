@@ -4,6 +4,6 @@ export interface PointsSummaryElementMetrics {
   height: number;
 }
 
-export interface GetPointsSummaryElementClassNameProps {
+export interface GetPointsSummaryElementStylesProps {
   mode: NewCardMode;
 }

@@ -1,8 +1,9 @@
 import { NewCardMode, NewCardModes } from "@/components/new-card/types";
 import {
-  GetPointsSummaryClassNameProps,
+  GetPointsSummaryStylesProps,
   PointsSummaryMetrics,
 } from "@/components/new-card/grid/points-summary/metrics/types";
+import { HTMLAttributes } from "react";
 
 export const POINTS_SUMMARY_METRICS: Record<NewCardMode, PointsSummaryMetrics> =
   {
@@ -18,8 +19,11 @@ export const POINTS_SUMMARY_METRICS: Record<NewCardMode, PointsSummaryMetrics> =
     },
   };
 
-export function getPointsSummaryClassName({
+export function getPointsSummaryStyles({
   mode,
-}: GetPointsSummaryClassNameProps) {
-  return `w-[${POINTS_SUMMARY_METRICS[mode].width}px] max-h-[${POINTS_SUMMARY_METRICS[mode].maxHeight}px]`;
+}: GetPointsSummaryStylesProps): HTMLAttributes<HTMLDivElement>["style"] {
+  return {
+    width: `${POINTS_SUMMARY_METRICS[mode].width}px`,
+    maxHeight: `${POINTS_SUMMARY_METRICS[mode].maxHeight}px`,
+  };
 }

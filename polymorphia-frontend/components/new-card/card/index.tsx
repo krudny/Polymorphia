@@ -2,9 +2,9 @@ import { tv } from "tailwind-variants";
 import clsx from "clsx";
 import { NewCardProps } from "@/components/new-card/card/types";
 import {
-  getCardClassName,
   getCardMetrics,
   getCardStepCount,
+  getCardStyles,
 } from "@/components/new-card/card/metrics";
 import { NewCardModes } from "../types";
 import "./index.css";
@@ -75,16 +75,6 @@ export default function NewCard({
       onClick={!isLocked ? onClick : undefined}
       className={clsx(
         "relative w-full flex box-content drop-shadow-sm transition-all overflow-hidden bg-neutral-50 dark:bg-primary-dark",
-        getCardClassName({
-          cardMetrics: getCardMetrics({
-            mode,
-            stepCount: getCardStepCount({
-              leftComponent,
-              rightComponent,
-              sizeBonus,
-            }),
-          }),
-        }),
         !isLocked
           ? colorVariants({ color }).borderPrimary()
           : colorVariants({ color: "gray" }).borderPrimary(),
@@ -96,6 +86,16 @@ export default function NewCard({
           ? "[&_h1]:text-4xl [&_h2]:text-2xl"
           : "[&_h1]:text-2xl [&_h2]:text-lg"
       )}
+      style={getCardStyles({
+        cardMetrics: getCardMetrics({
+          mode,
+          stepCount: getCardStepCount({
+            leftComponent,
+            rightComponent,
+            sizeBonus,
+          }),
+        }),
+      })}
     >
       <div
         className={clsx(
