@@ -1,0 +1,15 @@
+@import "tailwindcss";
+@import "../../../../styles/globals.css";
+@import "../../general/index.css";
+
+@tailwind utilities;
+
+.card-mobile-record-wrapper {
+  @apply hall-of-fame-record-wrapper flex flex-col justify-between border-b-6 p-3 gap-y-3;
+}
+
+.card-mobile-record-wrapper > div {
+  @apply w-full flex h-fit;
+}
+
+@source inline('border-amber-400 border-slate-400 border-amber-800 border-none border-b-6');

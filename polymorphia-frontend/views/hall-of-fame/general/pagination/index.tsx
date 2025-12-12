@@ -2,7 +2,7 @@ import { handlePageChange } from "@/providers/hall-of-fame/utils/handlePageChang
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
 import Pagination from "@/components/pagination/Pagination";
 import { useFadeInAnimate } from "@/animations/FadeIn";
-import "../desktop/index.css";
+import "./index.css";
 import { useMediaQuery } from "react-responsive";
 
 export default function HallOfFamePagination() {
@@ -11,12 +11,12 @@ export default function HallOfFamePagination() {
   const isDesktop = useMediaQuery({ minWidth: 1024 });
 
   if (isLoading || !hallOfFame) {
-    return <div className="min-h-14"></div>;
+    return <div className="h-14"></div>;
   }
 
   return (
     <div
-      className={`hall-of-fame-pagination-wrapper ${isDesktop && "justify-end"}`}
+      className={`pagination-wrapper ${isDesktop ? "justify-end" : "justify-center"}`}
       ref={wrapperRef}
     >
       {!isLoading && hallOfFame.page.totalPages > 0 && (

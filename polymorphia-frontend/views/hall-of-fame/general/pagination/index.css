@@ -1,0 +1,11 @@
+@import "tailwindcss";
+@import "../../../../styles/globals.css";
+@import "../index.css";
+
+@tailwind utilities;
+
+.pagination-wrapper {
+  @apply hall-of-fame-pagination-wrapper;
+}
+
+@source inline('justify-end min-h-14');

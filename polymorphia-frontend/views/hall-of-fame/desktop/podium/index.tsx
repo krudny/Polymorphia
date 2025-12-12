@@ -23,7 +23,7 @@ export default function HallOfFamePodium() {
   }
 
   return (
-    <div className="hall-of-fame-desktop-podium" ref={wrapperRef}>
+    <div className="podium-desktop" ref={wrapperRef}>
       {podium.map((student, index) => {
         const { evolutionStage, position } = student.userDetails;
 
@@ -34,7 +34,7 @@ export default function HallOfFamePodium() {
         );
 
         return (
-          <div className="hall-of-fame-podium" key={index}>
+          <div className="podium-item" key={index}>
             <XPCard
               title={displayName}
               subtitle={evolutionStage}

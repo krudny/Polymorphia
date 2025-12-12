@@ -15,7 +15,7 @@ export default function HallOfFameUserData(studentDetails: HallOfFameUserDTO) {
   );
 
   return (
-    <div className="hall-of-fame-user-data">
+    <div className="user-data">
       <h1>{displayName}</h1>
       <h2>
         {studentDetails.group} | {studentDetails.evolutionStage}

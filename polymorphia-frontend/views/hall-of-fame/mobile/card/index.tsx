@@ -1,6 +1,6 @@
-import HallOfFameImage from "@/views/hall-of-fame/general/HallOfFameImage";
-import HallOfFamePointsSummary from "@/views/hall-of-fame/general/HallOfFamePointsSummary";
-import HallOfFameUserData from "@/views/hall-of-fame/general/HallOfFameUserData";
+import HallOfFameImage from "@/views/hall-of-fame/general/image";
+import HallOfFamePointsSummary from "@/views/hall-of-fame/general/points-summary";
+import HallOfFameUserData from "@/views/hall-of-fame/general/user-data";
 import UserPoints from "@/components/user-points/UserPoints";
 import "./index.css";
 import { HallOfFameRecordDTO } from "@/interfaces/api/hall-of-fame";
@@ -25,7 +25,7 @@ export default forwardRef<HTMLDivElement, HallOfFameRecordDTO>(
     );
 
     return (
-      <div className={`hall-of-fame-mobile-record-wrapper ${border}`} ref={ref}>
+      <div className={`card-mobile-record-wrapper ${border}`} ref={ref}>
         <div>
           <HallOfFameImage position={position} imageUrl={imageUrl} />
           <HallOfFameUserData {...userDetails} />
