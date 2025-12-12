@@ -1,4 +1,4 @@
-import { GetCourseChoiceCardConfigurationProps } from "./types";
+import { GetCourseChoiceCardConfigurationProps } from "@/components/course-choice/get-course-choice-card-configuration/types";
 import { NewCardProps } from "@/components/new-card/card/types";
 import useHasValidAnimalInCourse from "@/hooks/course/useHasValidAnimalInCourse";
 import useCourseGroup from "@/hooks/course/useCourseGroup";

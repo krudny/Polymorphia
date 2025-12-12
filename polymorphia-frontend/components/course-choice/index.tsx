@@ -7,9 +7,9 @@ import {
 import usePreferredCourseUpdate from "@/hooks/course/usePreferredCourseUpdate";
 import CreateAnimalModal from "@/components/course-choice/modal/createAnimal";
 import React, { useState } from "react";
-import NewCardGridView from "../new-card/grid";
-import getCourseChoiceCardConfiguration from "./get-course-choice-card-configuration";
-import ErrorComponent from "../error";
+import NewCardGridView from "@/components/new-card/grid";
+import getCourseChoiceCardConfiguration from "@/components/course-choice/get-course-choice-card-configuration";
+import ErrorComponent from "@/components/error";
 
 export default function CourseChoiceGrid({
   courses,

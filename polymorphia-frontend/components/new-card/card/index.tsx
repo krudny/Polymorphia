@@ -6,7 +6,7 @@ import {
   getCardStepCount,
   getCardStyles,
 } from "@/components/new-card/card/metrics";
-import { NewCardModes } from "../types";
+import { NewCardModes } from "@/components/new-card/types";
 import "./index.css";
 
 export const colorVariants = tv({
@@ -112,7 +112,7 @@ export default function NewCard({
         )}
         <div className={clsx("new-card-middle")}>
           <h1 className="truncate">{title}</h1>
-          {true && <h2 className="truncate">ac{subtitle}</h2>}
+          {subtitle && <h2 className="truncate">{subtitle}</h2>}
           {details && <h2 className="truncate">{details}</h2>}
         </div>
         {rightComponent && (

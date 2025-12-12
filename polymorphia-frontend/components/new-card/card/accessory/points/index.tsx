@@ -2,7 +2,7 @@ import { clsx } from "clsx";
 import { NewCardPointsAccessoryProps } from "@/components/new-card/card/accessory/points/types";
 import "./index.css";
 import { NewCardModes } from "@/components/new-card/types";
-import NewCardTextAccessory from "../text";
+import NewCardTextAccessory from "@/components/new-card/card/accessory/text";
 
 export default function NewCardPointsAccessory({
   mode,

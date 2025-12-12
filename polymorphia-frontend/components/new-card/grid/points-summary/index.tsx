@@ -4,7 +4,7 @@ import { NewPointsSummaryProps } from "@/components/new-card/grid/points-summary
 import { getPointsSummaryStyles } from "@/components/new-card/grid/points-summary/metrics";
 import ErrorComponent from "@/components/error";
 import NewPointsSummaryElement from "@/components/new-card/grid/points-summary/element";
-import { NewCardModes } from "../../types";
+import { NewCardModes } from "@/components/new-card/types";
 import BonusInfoModal from "@/components/course/event-section/points-summary/BonusInfoModal";
 import "./index.css";
 
