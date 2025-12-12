@@ -1,19 +1,17 @@
 "use client";
 
 import { useScaleShow } from "@/animations/ScaleShow";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "./index.css";
 import Loading from "@/components/loading";
 import { useRouter } from "next/navigation";
-import StudentGradableEventCard from "@/views/gradable-events/student/StudentGradableEventCard";
 import { useEventParams } from "@/hooks/general/useEventParams";
 import useStudentsGradableEvents from "@/hooks/course/useStudentsGradableEvents";
-import { EventTypes, Sizes } from "@/interfaces/general";
+import { EventTypes } from "@/interfaces/general";
 import usePointsSummary from "@/hooks/course/usePointsSummary";
 import ErrorComponent from "@/components/error";
 import { GradableEventDTO } from "@/interfaces/api/gradable_event/types";
-import { useMediaQuery } from "react-responsive";
-import NewSectionView from "@/components/grid-new-impl/NewSectionView";
+import NewCardGridView from "@/components/new-card/grid";
 
 export default function StudentView() {
   const { eventType, eventSectionId } = useEventParams();
@@ -30,11 +28,8 @@ export default function StudentView() {
   const isLoading = areGradableEventsLoading || isPointsSummaryLoading;
   const isError = areGradableEventsError || isPointsSummaryError;
   const router = useRouter();
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
-  const summaryRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useScaleShow(!isLoading);
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
-  const isMd = useMediaQuery({ minWidth: 768 });
 
   useEffect(() => {
     if (
@@ -82,33 +77,8 @@ export default function StudentView() {
     }
   };
 
-  const cards = gradableEvents.map((gradableEvent) => (
-    <StudentGradableEventCard
-      key={gradableEvent.id}
-      size={isMd ? Sizes.MD : Sizes.SM}
-      gradableEvent={gradableEvent}
-      handleClick={handleClick}
-    />
-  ));
-
-  // return (
-  //   <SectionView ref={containerRef}>
-  //     <div className="student-view">
-  //       <div className="student-view-cards" ref={wrapperRef}>
-  //         <XPCardGrid containerRef={wrapperRef} cards={cards} maxColumns={2} />
-  //       </div>
-  //       <PointsSummary ref={summaryRef} pointsSummary={pointsSummary} />
-  //     </div>
-  //     {eventType === EventTypes.TEST && selectedEventId && (
-  //       <GradeModal
-  //         onClosedAction={() => setSelectedEventId(null)}
-  //         gradableEventIdProp={selectedEventId}
-  //       />
-  //     )}
-  //   </SectionView>
-  // );
   return (
-    <NewSectionView
+    <NewCardGridView
       ref={containerRef}
       cardConfigurations={gradableEvents.map((gradableEvent) => ({
         title: gradableEvent.name,
@@ -117,10 +87,16 @@ export default function StudentView() {
           <div className="flex-centered">{gradableEvent.gainedXp}</div>
         ),
         color: "silver",
-        // sizeBonus: 2,
+        onClick: () => handleClick(gradableEvent),
       }))}
       usesPointsSummary={true}
       pointsSummaryConfiguration={pointsSummary}
     />
+    //     {eventType === EventTypes.TEST && selectedEventId && (
+    //       <GradeModal
+    //         onClosedAction={() => setSelectedEventId(null)}
+    //         gradableEventIdProp={selectedEventId}
+    //       />
+    //     )}
   );
 }

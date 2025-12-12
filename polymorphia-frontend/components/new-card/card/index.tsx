@@ -1,7 +1,11 @@
-import { ReactNode } from "react";
 import { tv } from "tailwind-variants";
-import { XPCardColor } from "../xp-card/types";
 import clsx from "clsx";
+import { NewCardProps } from "@/components/new-card/card/types";
+import {
+  getCardClassName,
+  getCardMetrics,
+  getCardStepCount,
+} from "@/components/new-card/card/metrics";
 
 export const colorVariants = tv({
   slots: {
@@ -52,98 +56,6 @@ export const colorVariants = tv({
     },
   },
 });
-
-// Important: from largest to smallest!
-export const NewCardModes = {
-  NORMAL: "NORMAL",
-  COMPACT: "COMPACT",
-} as const;
-
-export type NewCardMode = (typeof NewCardModes)[keyof typeof NewCardModes];
-
-export interface NewCardProps {
-  mode: NewCardMode;
-  title: string;
-  subtitle?: string;
-  leftComponent?: (mode: NewCardMode, color: XPCardColor) => ReactNode;
-  rightComponent?: (mode: NewCardMode, color: XPCardColor) => ReactNode;
-  onClick?: () => void;
-  color: XPCardColor;
-  sizeBonus?: number;
-}
-
-interface BaseCardMetrics {
-  height: number;
-  baseMinWidth: number;
-  baseMaxWidth: number;
-  widthStep: number;
-  textClassName: string;
-}
-
-interface EvaluatedCardMetrics {
-  height: number;
-  minWidth: number;
-  maxWidth: number;
-  textClassName: string;
-}
-
-export const CARD_METRICS: Record<NewCardMode, BaseCardMetrics> = {
-  [NewCardModes.NORMAL]: {
-    height: 170,
-    baseMinWidth: 210,
-    baseMaxWidth: 290,
-    widthStep: 170,
-    textClassName: "text-4xl",
-  },
-  [NewCardModes.COMPACT]: {
-    height: 100,
-    baseMinWidth: 140,
-    baseMaxWidth: 260,
-    widthStep: 100,
-    textClassName: "text-2xl",
-  },
-};
-
-interface GetCardMetricsProps {
-  mode: NewCardMode;
-  stepCount: number;
-}
-
-export function getCardMetrics({
-  mode,
-  stepCount,
-}: GetCardMetricsProps): EvaluatedCardMetrics {
-  return {
-    height: CARD_METRICS[mode].height,
-    minWidth:
-      CARD_METRICS[mode].baseMinWidth +
-      stepCount * CARD_METRICS[mode].widthStep,
-    maxWidth:
-      CARD_METRICS[mode].baseMaxWidth +
-      stepCount * CARD_METRICS[mode].widthStep,
-    textClassName: CARD_METRICS[mode].textClassName,
-  };
-}
-
-export function getCardStepCount({
-  leftComponent,
-  rightComponent,
-  sizeBonus,
-}: Pick<NewCardProps, "leftComponent" | "rightComponent" | "sizeBonus">) {
-  return (
-    (leftComponent !== undefined ? 1 : 0) +
-    (rightComponent !== undefined ? 1 : 0) +
-    (sizeBonus ?? 0)
-  );
-}
-
-interface GetCardClassNameProps {
-  cardMetrics: EvaluatedCardMetrics;
-}
-
-function getCardClassName({ cardMetrics }: GetCardClassNameProps) {
-  return `${cardMetrics.textClassName} h-[${cardMetrics.height}px] min-w-0 max-w-[${cardMetrics.maxWidth}px]`;
-}
 
 export default function NewCard({
   mode,

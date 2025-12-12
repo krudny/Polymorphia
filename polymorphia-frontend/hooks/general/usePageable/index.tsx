@@ -1,15 +1,15 @@
 import { useRef, useState, useEffect } from "react";
 
-interface UsePageTransitionParams {
+interface UsePageableProps {
   initialPage?: number;
   // Optional dependency the change of which will reset the page to 0
   resetDependency?: unknown;
 }
 
-export function usePageTransition({
+export function usePageable({
   initialPage = 0,
   resetDependency,
-}: UsePageTransitionParams = {}) {
+}: UsePageableProps = {}) {
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [direction, setDirection] = useState<"left" | "right">("right");
   const prevPageRef = useRef(initialPage);

@@ -1,29 +1,20 @@
-// components/NewXPCardGrid.tsx
-import { GridParams } from "./NewSectionView";
-import NewCard, { NewCardProps } from "./NewCard";
-import { PointsSummaryResponseDTO } from "@/interfaces/api/points-summary";
-import Pagination from "../pagination/Pagination";
-import NewPointsSummary from "./NewPointsSummary";
+import Pagination from "@/components/pagination/Pagination";
+import NewPointsSummary from "@/components/new-card/grid/points-summary";
 import clsx from "clsx";
-import SlideAnimationWrapper from "./SlideAnimationWrapper";
-import { usePageTransition } from "./UsePageTransition";
+import SlideAnimationWrapper from "@/animations/SlideAnimationWrapper";
+import { usePageable } from "@/hooks/general/usePageable";
 import { useMemo } from "react";
+import NewCard from "@/components/new-card/card";
+import { NewCardGridLayoutProps } from "@/components/new-card/grid/layout/types";
 
-export interface NewXPCardGridProps {
-  gridParams: GridParams;
-  cardConfigurations: Omit<NewCardProps, "mode">[];
-  usesPointsSummary: boolean;
-  pointsSummaryConfiguration?: PointsSummaryResponseDTO;
-}
-
-export default function NewXPCardGrid({
+export default function NewCardGridLayout({
   gridParams,
   cardConfigurations,
   pointsSummaryConfiguration,
   usesPointsSummary,
-}: NewXPCardGridProps) {
-  const { currentPage, direction, handlePageChange } = usePageTransition({
-    resetDependency: gridParams, // Reset page when gridParams change
+}: NewCardGridLayoutProps) {
+  const { currentPage, direction, handlePageChange } = usePageable({
+    resetDependency: gridParams, // reset page when gridParams change
   });
 
   const pageSize = gridParams.rows * gridParams.cols;
