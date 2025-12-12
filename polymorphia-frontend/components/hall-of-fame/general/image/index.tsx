@@ -16,7 +16,7 @@ export default function HallOfFameImage({
         src={`${API_STATIC_URL}/${imageUrl}`}
         alt="User profile"
         fill
-        className="hof-image-img"
+        className="hof-image"
         priority
       />
       <ImageBadge

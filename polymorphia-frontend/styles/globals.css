@@ -71,10 +71,6 @@
   @apply w-full overflow-y-scroll custom-scrollbar;
 }
 
-@utility hall-of-fame-pagination-wrapper {
-  @apply w-full h-14 flex items-center text-2xl py-2 lg:px-3;
-}
-
 @utility hall-of-fame-record-wrapper {
   @apply w-full rounded-xl shadow-lg bg-primary-light dark:bg-primary-dark;
 }

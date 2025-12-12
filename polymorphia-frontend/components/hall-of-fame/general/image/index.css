@@ -5,7 +5,7 @@
   @apply h-full relative aspect-square;
 }
 
-.hof-image-img {
+.hof-image {
   @apply object-cover rounded-xl lg:rounded-bl-xl lg:rounded-tr-none lg:rounded-br-none;
 }
 

@@ -16,7 +16,7 @@ export default function HallOfFamePagination() {
 
   return (
     <div
-      className={`hof-pagination-wrapper ${isDesktop ? "justify-end" : "justify-center"}`}
+      className={`hof-pagination ${isDesktop ? "justify-end" : "justify-center"}`}
       ref={wrapperRef}
     >
       {!isLoading && hallOfFame.page.totalPages > 0 && (

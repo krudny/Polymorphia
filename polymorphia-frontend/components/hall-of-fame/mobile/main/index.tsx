@@ -11,8 +11,8 @@ export default function HallOfFameMobile() {
   const wrapperRef = useScaleShow();
 
   return (
-    <div ref={wrapperRef} className="hof-main-mobile">
-      <div className="hof-main-mobile-search-wrapper">
+    <div ref={wrapperRef} className="hof-mobile">
+      <div className="hof-mobile-search-wrapper">
         <HallOfFameTopBar />
       </div>
       <HallOfFameList />
