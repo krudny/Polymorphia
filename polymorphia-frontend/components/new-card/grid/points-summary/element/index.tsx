@@ -15,14 +15,20 @@ export default function NewPointsSummaryElement({
     <div
       className={clsx(
         "w-full flex text-shadow-sm gap-1",
-        inline
-          ? "flex-row justify-end items-end gap-5"
-          : "flex-col justify-center items-end h-full",
+        inline && "flex-row gap-3",
+        !inline && "flex-col h-full",
+        isDesktop ? "items-end" : "items-center",
+        inline && isDesktop ? "justify-end" : "justify-center",
         onClick && "cursor-pointer hover:text-shadow-lg"
       )}
       style={getPointsSummaryElementStyles({ mode })}
     >
-      <div className="flex flex-row items-center gap-4">
+      <div
+        className={clsx(
+          "flex flex-row items-center gap-4 no-wrap",
+          onClick && "-ml-[40px]"
+        )}
+      >
         {onClick && <SquareMousePointer className="text-neutral-500" />}
         <h1
           className={clsx(

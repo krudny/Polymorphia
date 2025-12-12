@@ -5,6 +5,7 @@ import { NewPointsSummaryProps } from "@/components/new-card/grid/points-summary
 import { getPointsSummaryStyles } from "@/components/new-card/grid/points-summary/metrics";
 import ErrorComponent from "@/components/error";
 import NewPointsSummaryElement from "@/components/new-card/grid/points-summary/element";
+import { NewCardModes } from "../../types";
 
 export default function NewPointsSummary({
   mode,
@@ -23,34 +24,38 @@ export default function NewPointsSummary({
 
   // todo: handle undef
 
+  const effectiveMode = isDesktop ? mode : NewCardModes.NORMAL;
+
   return (
     <div
       className={clsx("h-full flex flex-col justify-between")}
-      style={getPointsSummaryStyles({ mode })}
+      style={getPointsSummaryStyles({
+        mode: effectiveMode,
+      })}
     >
       {pointsSummary !== undefined ? (
         <>
           <NewPointsSummaryElement
-            mode={mode}
+            mode={effectiveMode}
             isDesktop={isDesktop}
             bonus={pointsSummary.gained}
           />
           {invisibleDivider}
           <NewPointsSummaryElement
-            mode={mode}
+            mode={effectiveMode}
             isDesktop={isDesktop}
             bonus={pointsSummary.flatBonus}
           />
           {invisibleDivider}
           <NewPointsSummaryElement
-            mode={mode}
+            mode={effectiveMode}
             isDesktop={isDesktop}
             bonus={pointsSummary.percentageBonus}
             onClick={() => {}}
           />
           {divider}
           <NewPointsSummaryElement
-            mode={mode}
+            mode={effectiveMode}
             isDesktop={isDesktop}
             bonus={pointsSummary.total}
             inline={true}

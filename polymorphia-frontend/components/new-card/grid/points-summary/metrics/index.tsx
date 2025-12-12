@@ -8,7 +8,7 @@ import { HTMLAttributes } from "react";
 export const POINTS_SUMMARY_METRICS: Record<NewCardMode, PointsSummaryMetrics> =
   {
     [NewCardModes.NORMAL]: {
-      width: 280,
+      width: 300,
       minHeight: 525,
       maxHeight: 720,
     },
