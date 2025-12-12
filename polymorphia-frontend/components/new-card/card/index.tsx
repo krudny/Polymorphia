@@ -63,18 +63,23 @@ export default function NewCard({
   mode,
   title,
   subtitle,
+  details,
   leftComponent,
   rightComponent,
   color,
   sizeBonus,
-  onClick,
+  onClick: propOnClick,
+  useDynamicBehavior,
   isLocked,
 }: NewCardProps) {
+  const dynamicBehavior = useDynamicBehavior?.();
+  const onClick = dynamicBehavior?.onClick ?? propOnClick;
+
   return (
     <div
       onClick={!isLocked ? onClick : undefined}
       className={clsx(
-        "relative w-full flex box-content drop-shadow-sm transition-all overflow-hidden bg-neutral-50 dark:bg-primary-dark",
+        "relative w-full flex drop-shadow-sm transition-all overflow-hidden bg-neutral-50 dark:bg-primary-dark",
         !isLocked
           ? colorVariants({ color }).borderPrimary()
           : colorVariants({ color: "gray" }).borderPrimary(),
@@ -104,7 +109,7 @@ export default function NewCard({
         )}
       >
         {leftComponent && (
-          <div className="aspect-square flex-centered h-full shrink-0 bg-green-200">
+          <div className="aspect-square flex-centered h-full shrink-0">
             {leftComponent({ mode, color })}
           </div>
         )}
@@ -115,9 +120,10 @@ export default function NewCard({
         >
           <h1 className="truncate">{title}</h1>
           {subtitle && <h2 className="truncate">{subtitle}</h2>}
+          {details && <h2 className="truncate">{details}</h2>}
         </div>
         {rightComponent && (
-          <div className="aspect-square flex-centered h-full shrink-0 bg-green-200">
+          <div className="aspect-square flex-centered h-full shrink-0">
             {rightComponent({ mode, color })}
           </div>
         )}

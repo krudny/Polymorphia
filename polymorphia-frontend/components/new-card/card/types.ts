@@ -6,6 +6,7 @@ export interface NewCardProps {
   mode: NewCardMode;
   title: string;
   subtitle?: string;
+  details?: string;
   leftComponent?: (props: {
     mode: NewCardMode;
     color: XPCardColor;
@@ -15,6 +16,7 @@ export interface NewCardProps {
     color: XPCardColor;
   }) => ReactNode;
   onClick?: () => void;
+  useDynamicBehavior?: () => { onClick: () => void };
   color: XPCardColor;
   sizeBonus?: number;
   isLocked?: boolean;

@@ -7,4 +7,5 @@ export interface NewCardGridViewProps {
   cardConfigurations: Omit<NewCardProps, "mode">[];
   usesPointsSummary: boolean;
   pointsSummaryConfiguration?: PointsSummaryResponseDTO;
+  mobileRows?: number;
 }

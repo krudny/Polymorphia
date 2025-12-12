@@ -10,6 +10,7 @@ export default function NewCardGridView({
   usesPointsSummary,
   pointsSummaryConfiguration,
   ref,
+  mobileRows,
 }: NewCardGridViewProps) {
   const cardStepCount = Math.max(
     ...cardConfigurations.map((cardConfig) => getCardStepCount(cardConfig))
@@ -18,13 +19,14 @@ export default function NewCardGridView({
   const gridParams = useNewCardGridParams(
     ref,
     cardStepCount,
-    usesPointsSummary
+    usesPointsSummary,
+    mobileRows
   );
   return (
     <div className="w-full p-3 flex flex-col flex-1 mx-auto overflow-y-scroll custom-scrollbar lg:h-full lg:justify-center lg:overflow-hidden 3xl:extra-large-center">
       <div
         ref={ref}
-        className="lg:flex lg:flex-1 lg:items-center lg:justify-center lg:min-h-0 lg:h-full w-full"
+        className="lg:flex lg:flex-1 lg:items-center lg:justify-center lg:min-h-0 lg:h-full lg:flex-col w-full"
       >
         <NewCardGridLayout
           gridParams={gridParams}

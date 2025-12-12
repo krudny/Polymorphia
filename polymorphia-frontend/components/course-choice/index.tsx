@@ -1,14 +1,14 @@
 "use client";
 
-import XPCardGrid from "@/components/xp-card/XPCardGrid";
 import {
   CourseChoiceClickedDetails,
   CourseChoiceProps,
 } from "@/components/course-choice/types";
 import usePreferredCourseUpdate from "@/hooks/course/usePreferredCourseUpdate";
-import CourseChoiceCard from "@/components/course-choice/CourseChoiceCard";
 import CreateAnimalModal from "@/components/course-choice/modal/createAnimal";
 import React, { useState } from "react";
+import NewCardGridView from "../new-card/grid";
+import getCourseChoiceCardConfiguration from "./get-course-choice-card-configuration";
 
 export default function CourseChoiceGrid({
   courses,
@@ -23,23 +23,20 @@ export default function CourseChoiceGrid({
     shouldRedirectToMainPage: fastForward,
   });
 
-  const cards = courses.map((availableCourse) =>
-    CourseChoiceCard({
-      availableCourse,
-      currentCourseId,
-      handleCourseSelection,
-      setClickedDetails,
-    })
-  );
-
-  const colNumber = Math.min(cards.length - (cards.length % 2), 4);
-
   return (
     <>
-      <XPCardGrid
-        containerRef={containerRef}
-        cards={cards}
-        maxColumns={colNumber}
+      <NewCardGridView
+        ref={containerRef}
+        cardConfigurations={courses.map((availableCourse) =>
+          getCourseChoiceCardConfiguration({
+            availableCourse,
+            currentCourseId,
+            handleCourseSelection,
+            setClickedDetails,
+          })
+        )}
+        usesPointsSummary={false}
+        mobileRows={2}
       />
       {clickedDetails && (
         <CreateAnimalModal

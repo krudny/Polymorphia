@@ -1,5 +1,4 @@
-import useNavigationContext from "@/hooks/contexts/useNavigationContext";
-import { RefObject, useLayoutEffect, useState } from "react";
+import { RefObject, useContext, useLayoutEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { GridParams } from "@/hooks/new-card/useNewCardGridParams/types";
 import { NewCardModes } from "@/components/new-card/types";
@@ -7,13 +6,18 @@ import { useDebouncedCallback } from "use-debounce";
 import { getCardMetrics } from "@/components/new-card/card/metrics";
 import { POINTS_SUMMARY_METRICS } from "@/components/new-card/grid/points-summary/metrics";
 import { areGridParamsEqual } from "@/hooks/new-card/useNewCardGridParams/utils/are-grid-params-equal";
+import { NavigationContext } from "@/providers/navigation";
 
 export default function useNewCardGridParams(
   containerRef: RefObject<HTMLDivElement | null>,
   cardStepCount: number,
-  usesPointsSummary: boolean
+  usesPointsSummary: boolean,
+  mobileRows: number = 5
 ): GridParams {
-  const { isSidebarLockedOpened, isSidebarExpanded } = useNavigationContext();
+  const { isSidebarLockedOpened, isSidebarExpanded } = useContext(
+    NavigationContext
+  ) ?? { isSidebarLockedOpened: false, isSidebarExpanded: false };
+
   const isDesktop = useMediaQuery({ minWidth: 1024 });
 
   const [gridParams, setGridParams] = useState<GridParams>({
@@ -66,7 +70,7 @@ export default function useNewCardGridParams(
             Math.floor((cardsAvailableHeight + gap) / (cardHeight + gap)),
             1
           )
-        : 5;
+        : mobileRows;
       const cols = Math.max(
         Math.floor((cardsAvailableWidth + gap) / (cardWidth + gap)),
         1
