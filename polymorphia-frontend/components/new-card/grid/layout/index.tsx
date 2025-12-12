@@ -83,7 +83,9 @@ export default function NewCardGridLayout({
 
   if (gridParams.isDesktop) {
     return (
-      <div className="flex flex-col w-full gap-5">
+      <div
+        className={clsx("flex flex-col gap-5", usesPointsSummary && "w-full")}
+      >
         <div className="flex w-full justify-between gap-5">
           <div className="flex-1">{cardsView}</div>
           {usesPointsSummary && (
