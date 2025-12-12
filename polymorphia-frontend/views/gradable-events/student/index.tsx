@@ -86,7 +86,7 @@ export default function StudentView() {
         rightComponent: () => (
           <div className="flex-centered">{gradableEvent.gainedXp}</div>
         ),
-        color: "silver",
+        color: gradableEvent.gainedXp != undefined ? "green" : "sky",
         onClick: () => handleClick(gradableEvent),
       }))}
       usesPointsSummary={true}

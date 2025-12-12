@@ -49,7 +49,7 @@ export default function NewCardGridLayout({
     >
       <div
         className={clsx(
-          "grid min-w-0 gap-5 transition-opacity custom-ease-with-duration",
+          "grid min-w-0 gap-5 transition-opacity custom-ease-with-duration px-3",
           gridParams.isReady ? "opacity-100" : "opacity-0",
           gridParams.isDesktop
             ? "h-full content-center justify-start"
@@ -82,7 +82,7 @@ export default function NewCardGridLayout({
 
   if (gridParams.isDesktop) {
     return (
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col w-full gap-5">
         <div className="flex w-full justify-between gap-5">
           <div className="flex-1">{cardsView}</div>
           {usesPointsSummary && (

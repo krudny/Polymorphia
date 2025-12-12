@@ -13,14 +13,12 @@ export const CARD_METRICS: Record<NewCardMode, BaseCardMetrics> = {
     baseMinWidth: 210,
     baseMaxWidth: 290,
     widthStep: 170,
-    textClassName: "text-4xl",
   },
   [NewCardModes.COMPACT]: {
     height: 100,
     baseMinWidth: 140,
     baseMaxWidth: 260,
     widthStep: 100,
-    textClassName: "text-2xl",
   },
 };
 
@@ -36,7 +34,6 @@ export function getCardMetrics({
     maxWidth:
       CARD_METRICS[mode].baseMaxWidth +
       stepCount * CARD_METRICS[mode].widthStep,
-    textClassName: CARD_METRICS[mode].textClassName,
   };
 }
 
@@ -53,5 +50,5 @@ export function getCardStepCount({
 }
 
 export function getCardClassName({ cardMetrics }: GetCardClassNameProps) {
-  return `${cardMetrics.textClassName} h-[${cardMetrics.height}px] min-w-0 max-w-[${cardMetrics.maxWidth}px]`;
+  return `h-[${cardMetrics.height}px] min-w-0 max-w-[${cardMetrics.maxWidth}px]`;
 }

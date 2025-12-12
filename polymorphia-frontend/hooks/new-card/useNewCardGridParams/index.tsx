@@ -29,6 +29,7 @@ export default function useNewCardGridParams(
     isDesktop && !isSidebarLockedOpened && isSidebarExpanded ? 288 - 96 : 0;
   const paginationHeight = 48;
   const gap = 20;
+  const cardsHorizontalPadding = 12;
 
   const calculate = useDebouncedCallback(() => {
     if (!containerRef.current) {
@@ -37,8 +38,8 @@ export default function useNewCardGridParams(
 
     const rawWidth = containerRef.current.offsetWidth;
     const rawHeight = containerRef.current.offsetHeight;
-    const width = rawWidth + sidebarCorrection;
-    const height = rawHeight - paginationHeight;
+    const width = rawWidth + sidebarCorrection - 2 * cardsHorizontalPadding;
+    const height = rawHeight - paginationHeight - gap;
 
     const stats = Object.values(NewCardModes).map((cardMode) => {
       const cardMetrics = getCardMetrics({

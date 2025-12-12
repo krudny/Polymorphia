@@ -11,4 +11,5 @@ export interface NewCardProps {
   onClick?: () => void;
   color: XPCardColor;
   sizeBonus?: number;
+  isLocked?: boolean;
 }

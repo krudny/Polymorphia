@@ -6,6 +6,8 @@ import {
   getCardMetrics,
   getCardStepCount,
 } from "@/components/new-card/card/metrics";
+import { NewCardModes } from "../types";
+import "./index.css";
 
 export const colorVariants = tv({
   slots: {
@@ -65,11 +67,14 @@ export default function NewCard({
   rightComponent,
   color,
   sizeBonus,
+  onClick,
+  isLocked,
 }: NewCardProps) {
   return (
     <div
+      onClick={!isLocked ? onClick : undefined}
       className={clsx(
-        "w-full flex flex-row bg-amber-100",
+        "relative w-full flex box-content drop-shadow-sm transition-all overflow-hidden bg-neutral-50 dark:bg-primary-dark",
         getCardClassName({
           cardMetrics: getCardMetrics({
             mode,
@@ -80,21 +85,54 @@ export default function NewCard({
             }),
           }),
         }),
-        colorVariants({ color }).borderPrimary()
+        !isLocked
+          ? colorVariants({ color }).borderPrimary()
+          : colorVariants({ color: "gray" }).borderPrimary(),
+        onClick && !isLocked
+          ? "cursor-pointer hover:drop-shadow-xl"
+          : "select-none",
+        mode === NewCardModes.NORMAL ? "rounded-xl" : "rounded-lg",
+        mode === NewCardModes.NORMAL
+          ? "[&_h1]:text-4xl [&_h2]:text-2xl"
+          : "[&_h1]:text-2xl [&_h2]:text-lg"
       )}
     >
-      {leftComponent && (
-        <div className="aspect-square flex-centered h-full shrink-0 bg-green-200">
-          {leftComponent(mode, color)}
+      <div
+        className={clsx(
+          "flex flex-1 flex-row w-full",
+          isLocked && "grayscale filter"
+        )}
+      >
+        {leftComponent && (
+          <div className="aspect-square flex-centered h-full shrink-0 bg-green-200">
+            {leftComponent(mode, color)}
+          </div>
+        )}
+        <div
+          className={clsx(
+            "flex flex-col justify-center h-full px-5 min-w-0 flex-1",
+            mode === NewCardModes.NORMAL ? "gap-3" : "gap-1"
+          )}
+        >
+          <h1 className="truncate">{title}</h1>
+          {subtitle && <h2 className="truncate">{subtitle}</h2>}
         </div>
-      )}
-      <div className="flex flex-col justify-center h-full px-5 min-w-0 flex-1">
-        <h1 className="truncate">{title}</h1>
-        {subtitle && <h2 className="truncate">{subtitle}</h2>}
+        {rightComponent && (
+          <div className="aspect-square flex-centered h-full shrink-0 bg-green-200">
+            {rightComponent(mode, color)}
+          </div>
+        )}
       </div>
-      {rightComponent && (
-        <div className="aspect-square flex-centered h-full shrink-0 bg-green-200">
-          {rightComponent(mode, color)}
+      {isLocked && (
+        <div className="absolute inset-0 z-10 bg-secondary-gray/70 dark:bg-primary-dark/80 flex-col-centered">
+          <span
+            className={clsx(
+              "material-symbols text-primary-dark",
+              mode === NewCardModes.NORMAL ? "text-6xl" : "text-5xl"
+            )}
+          >
+            lock
+          </span>
         </div>
       )}
     </div>

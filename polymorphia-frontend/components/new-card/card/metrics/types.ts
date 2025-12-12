@@ -5,14 +5,12 @@ export interface BaseCardMetrics {
   baseMinWidth: number;
   baseMaxWidth: number;
   widthStep: number;
-  textClassName: string;
 }
 
 export interface EvaluatedCardMetrics {
   height: number;
   minWidth: number;
   maxWidth: number;
-  textClassName: string;
 }
 
 export interface GetCardMetricsProps {
