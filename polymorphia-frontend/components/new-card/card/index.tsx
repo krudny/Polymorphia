@@ -83,7 +83,7 @@ export default function NewCard({
           : "select-none",
         mode === NewCardModes.NORMAL ? "rounded-xl" : "rounded-lg",
         mode === NewCardModes.NORMAL
-          ? "[&_h1]:text-4xl [&_h2]:text-2xl"
+          ? "[&_h1]:text-[2.5rem] [&_h2]:text-[1.5rem]"
           : "[&_h1]:text-2xl [&_h2]:text-lg"
       )}
       style={getCardStyles({
@@ -110,8 +110,7 @@ export default function NewCard({
         )}
         <div
           className={clsx(
-            "flex flex-col justify-center h-full px-5 min-w-0 flex-1",
-            mode === NewCardModes.NORMAL ? "gap-3" : "gap-1"
+            "flex flex-col justify-center h-full px-5 min-w-0 flex-1"
           )}
         >
           <h1 className="truncate">{title}</h1>

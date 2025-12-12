@@ -20,8 +20,7 @@ export default function NewCardPointsAccessory({
       className={clsx(
         "w-full h-full flex-col-centered relative",
         colorVariants({ color: backgroundColor }).backgroundSecondary(),
-        backgroundColor !== "gray" && "text-primary-dark",
-        mode === NewCardModes.NORMAL ? "gap-3" : "gap-1"
+        backgroundColor !== "gray" && "text-primary-dark"
       )}
     >
       <h1>
