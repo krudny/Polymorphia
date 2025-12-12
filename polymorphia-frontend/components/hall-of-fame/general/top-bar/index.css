@@ -1,10 +1,10 @@
 @import "tailwindcss";
 @import "../../../../styles/globals.css";
 
-.top-bar {
+.hof-top-bar {
   @apply flex w-full gap-x-2 justify-between overflow-x-hidden;
 }
 
-.top-bar-buttons {
+.hof-top-bar-buttons {
   @apply flex gap-x-2 lg:gap-x-4;
 }

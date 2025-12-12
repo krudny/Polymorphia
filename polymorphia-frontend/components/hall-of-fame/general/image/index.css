@@ -1,14 +1,14 @@
 @import "tailwindcss";
 @import "../../../../styles/globals.css";
 
-.image-wrapper {
+.hof-image-wrapper {
   @apply h-full relative aspect-square;
 }
 
-.image-img {
+.hof-image-img {
   @apply object-cover rounded-xl lg:rounded-bl-xl lg:rounded-tr-none lg:rounded-br-none;
 }
 
-.image-badge {
+.hof-image-badge {
   @apply rounded-tl-xl rounded-br-xl w-5 text-base lg:text-2xl lg:min-w-8 lg:rounded-br-none;
 }

@@ -10,16 +10,16 @@ export default function HallOfFameDesktop() {
   const wrapperRef = useScaleShow();
 
   return (
-    <div ref={wrapperRef} className="main-desktop">
-      <div className="main-desktop-wrapper">
-        <div className="main-desktop-podium-wrapper">
-          <div className="main-desktop-podium-text">
+    <div ref={wrapperRef} className="hof-main-desktop">
+      <div className="hof-main-desktop-wrapper">
+        <div className="hof-main-desktop-podium-wrapper">
+          <div className="hof-main-desktop-podium-text">
             <h2>Podium</h2>
           </div>
           <HallOfFamePodium />
         </div>
-        <div className="main-desktop-content-wrapper">
-          <div className="main-desktop-search-wrapper">
+        <div className="hof-main-desktop-content-wrapper">
+          <div className="hof-main-desktop-search-wrapper">
             <HallOfFameTopBar />
           </div>
           <HallOfFameList />

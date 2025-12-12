@@ -24,15 +24,15 @@ export default forwardRef<HTMLDivElement, HallOfFameRecordDTO>(
     );
 
     return (
-      <div className="card-desktop-record-wrapper" ref={ref}>
-        <div className="card-desktop-record-user-data-wrapper">
+      <div className="hof-card-desktop-record-wrapper" ref={ref}>
+        <div className="hof-card-desktop-record-user-data-wrapper">
           <HallOfFameImage
             position={userDetails.position}
             imageUrl={userDetails.imageUrl}
           />
           <HallOfFameUserData {...userDetails} />
         </div>
-        <div className="card-desktop-record-user-points-wrapper">
+        <div className="hof-card-desktop-record-user-points-wrapper">
           <UserPoints
             titleSize="sm"
             xpSize="md"

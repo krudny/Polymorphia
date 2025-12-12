@@ -1,22 +1,22 @@
 @import "tailwindcss";
 @import "../../../../styles/globals.css";
 
-.main-desktop {
+.hof-main-desktop {
   @apply w-full h-[calc(100dvh-5rem)] mx-auto flex flex-col flex-1 opacity-0 overflow-y-hidden;
   @apply lg:px-8 lg:max-w-[1300px];
   @apply 2xl:py-4 2xl:max-w-[1650px] 2xl:px-6 3xl:min-h-[54rem] 3xl:max-h-[54rem];
 }
 
-.main-desktop-wrapper {
+.hof-main-desktop-wrapper {
   @apply flex flex-col flex-1 min-h-0 px-4 2xl:flex-row overflow-hidden;
 }
 
-.main-desktop-podium-wrapper {
+.hof-main-desktop-podium-wrapper {
   @apply w-full flex flex-col;
   @apply 2xl:w-[30%] 2xl:min-h-full;
 }
 
-.main-desktop-podium-text {
+.hof-main-desktop-podium-text {
   @apply w-full h-14 flex-centered mb-3 hidden 2xl:flex;
 
   h2 {
@@ -24,11 +24,11 @@
   }
 }
 
-.main-desktop-content-wrapper {
+.hof-main-desktop-content-wrapper {
   @apply w-full flex-col-centered flex-1 min-h-0 2xl:w-[70%];
 }
 
-.main-desktop-search-wrapper {
+.hof-main-desktop-search-wrapper {
   @apply hall-of-fame-search-wrapper h-14 mt-0 custom-scrollbar;
   scrollbar-gutter: stable;
   overflow: hidden;

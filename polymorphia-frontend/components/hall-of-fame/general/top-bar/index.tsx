@@ -22,13 +22,13 @@ export default function HallOfFameTopBar() {
   const { userRole } = useUserContext();
 
   return (
-    <div className="top-bar">
+    <div className="hof-top-bar">
       <Search
         search={search}
         setSearch={setSearch}
         placeholder="Znajdź zwierzaka..."
       />
-      <div className="top-bar-buttons">
+      <div className="hof-top-bar-buttons">
         {userRole === Roles.STUDENT ? (
           <ButtonWithBorder
             text="Znajdź mnie"

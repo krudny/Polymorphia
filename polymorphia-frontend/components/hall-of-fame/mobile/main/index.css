@@ -1,11 +1,11 @@
 @import "tailwindcss";
 @import "../../../../styles/globals.css";
 
-.main-mobile {
+.hof-main-mobile {
   @apply w-full px-2 opacity-0 flex flex-col h-full;
 }
 
-.main-mobile-search-wrapper {
+.hof-main-mobile-search-wrapper {
   @apply hall-of-fame-search-wrapper min-h-10;
   scrollbar-gutter: stable both-edges;
   overflow-y: hidden;

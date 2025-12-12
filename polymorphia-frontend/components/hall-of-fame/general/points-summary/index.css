@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @import "../../../../styles/globals.css";
 
-.points-summary {
+.hof-points-summary {
   @apply w-24 h-full flex flex-col-reverse items-end justify-center;
   @apply lg:items-center lg:flex-col;
   @apply lg:bg-[#d4d4d4] lg:dark:bg-secondary-dark lg:rounded-tr-xl lg:rounded-br-xl;

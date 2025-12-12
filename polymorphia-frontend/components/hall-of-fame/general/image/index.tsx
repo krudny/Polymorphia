@@ -11,17 +11,17 @@ export default function HallOfFameImage({
   imageUrl: string;
 }) {
   return (
-    <div className="image-wrapper">
+    <div className="hof-image-wrapper">
       <Image
         src={`${API_STATIC_URL}/${imageUrl}`}
         alt="User profile"
         fill
-        className="image-img"
+        className="hof-image-img"
         priority
       />
       <ImageBadge
         text={position < 10 ? "0" + position : position.toString()}
-        className={"image-badge"}
+        className={"hof-image-badge"}
       />
     </div>
   );

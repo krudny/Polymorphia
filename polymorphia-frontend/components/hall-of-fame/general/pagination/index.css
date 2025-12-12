@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "../../../../styles/globals.css";
 
-.pagination-wrapper {
+.hof-pagination-wrapper {
   @apply hall-of-fame-pagination-wrapper;
 }

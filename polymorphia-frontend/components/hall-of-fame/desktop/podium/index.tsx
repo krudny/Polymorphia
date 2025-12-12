@@ -16,14 +16,14 @@ export default function HallOfFamePodium() {
 
   if (isLoading || !podium) {
     return (
-      <div className="hall-of-fame-loading-wrapper">
+      <div className="hof-loading-wrapper">
         <Loading />
       </div>
     );
   }
 
   return (
-    <div className="podium-desktop" ref={wrapperRef}>
+    <div className="hof-podium-desktop" ref={wrapperRef}>
       {podium.map((student, index) => {
         const { evolutionStage, position } = student.userDetails;
 
@@ -34,7 +34,7 @@ export default function HallOfFamePodium() {
         );
 
         return (
-          <div className="podium-item" key={index}>
+          <div className="hof-podium-item" key={index}>
             <XPCard
               title={displayName}
               subtitle={evolutionStage}

@@ -37,14 +37,14 @@ export default function HallOfFameList() {
 
   if (isLoading || !hallOfFame || isFiltersLoading || isFiltersError) {
     return (
-      <div className="hall-of-fame-loading-wrapper">
+      <div className="hof-loading-wrapper">
         <Loading />
       </div>
     );
   }
 
   const desktopComponent = (
-    <div className="list-desktop-rank-wrapper" ref={wrapperRef}>
+    <div className="hof-list-desktop-rank-wrapper" ref={wrapperRef}>
       {hallOfFame.content.length === 0 ? (
         <HallOfFameError />
       ) : (
@@ -61,7 +61,7 @@ export default function HallOfFameList() {
   );
 
   const mobileComponent = (
-    <div className="list-mobile-rank-wrapper" ref={wrapperRef}>
+    <div className="hof-list-mobile-rank-wrapper" ref={wrapperRef}>
       {hallOfFame.content.length === 0 ? (
         <HallOfFameError />
       ) : (

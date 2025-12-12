@@ -25,7 +25,7 @@ export default forwardRef<HTMLDivElement, HallOfFameRecordDTO>(
     );
 
     return (
-      <div className={`card-mobile-record-wrapper ${border}`} ref={ref}>
+      <div className={`hof-card-mobile-record-wrapper ${border}`} ref={ref}>
         <div>
           <HallOfFameImage position={position} imageUrl={imageUrl} />
           <HallOfFameUserData {...userDetails} />
