@@ -7,6 +7,7 @@ import NewPointsSummary from "./NewPointsSummary";
 import clsx from "clsx";
 import SlideAnimationWrapper from "./SlideAnimationWrapper";
 import { usePageTransition } from "./UsePageTransition";
+import { useMemo } from "react";
 
 export interface NewXPCardGridProps {
   gridParams: GridParams;
@@ -28,20 +29,25 @@ export default function NewXPCardGrid({
   const pageSize = gridParams.rows * gridParams.cols;
   const pageCount = Math.ceil(cardConfigurations.length / pageSize);
 
-  const cardConfigurationsForPage = cardConfigurations.slice(
-    currentPage * pageSize,
-    currentPage * pageSize + pageSize
-  );
+  const cardConfigurationsForPage = useMemo(() => {
+    return cardConfigurations.slice(
+      currentPage * pageSize,
+      currentPage * pageSize + pageSize
+    );
+  }, [cardConfigurations, currentPage, pageSize]);
 
-  const pagination = (
-    <Pagination
-      pageCount={pageCount}
-      onPageChange={handlePageChange}
-      forcePage={pageCount > 0 ? currentPage : undefined}
-      pageRangeDisplayed={2}
-      marginPagesDisplayed={1}
-      containerClassName={gridParams.isDesktop ? "ml-3" : ""}
-    />
+  const pagination = useMemo(
+    () => (
+      <Pagination
+        pageCount={pageCount}
+        onPageChange={handlePageChange}
+        forcePage={pageCount > 0 ? currentPage : undefined}
+        pageRangeDisplayed={2}
+        marginPagesDisplayed={1}
+        containerClassName={gridParams.isDesktop ? "ml-3" : ""}
+      />
+    ),
+    [pageCount, handlePageChange, currentPage, gridParams.isDesktop]
   );
 
   const cardsView = (

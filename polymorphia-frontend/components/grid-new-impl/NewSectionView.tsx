@@ -24,6 +24,17 @@ export interface GridParams {
   isReady: boolean;
 }
 
+function areGridParamsEqual(prev: GridParams, next: GridParams): boolean {
+  return (
+    prev.cols === next.cols &&
+    prev.rows === next.rows &&
+    prev.mode === next.mode &&
+    prev.isDesktop === next.isDesktop &&
+    prev.isReady === next.isReady &&
+    prev.cardMaxWidth === prev.cardMaxWidth
+  );
+}
+
 function useXPCardGridParams(
   containerRef: RefObject<HTMLDivElement | null>,
   cardStepCount: number,
@@ -53,7 +64,7 @@ function useXPCardGridParams(
 
     const rawWidth = containerRef.current.offsetWidth;
     const rawHeight = containerRef.current.offsetHeight;
-    const width = rawWidth - sidebarCorrection;
+    const width = rawWidth + sidebarCorrection;
     const height = rawHeight - paginationHeight;
 
     console.log("dimensions", rawWidth, rawHeight, width, height);
@@ -111,10 +122,18 @@ function useXPCardGridParams(
 
     console.log("best", bestLayout);
 
-    setGridParams({
+    const nextParams: GridParams = {
       ...bestLayout,
       isDesktop,
       isReady: true,
+    };
+
+    setGridParams((prevParams) => {
+      // Avoid re-renders (by using same reference) if evaluated params are the same
+      if (areGridParamsEqual(prevParams, nextParams)) {
+        return prevParams;
+      }
+      return nextParams;
     });
   }, 100);
 
