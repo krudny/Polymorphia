@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+// components/NewXPCardGrid.tsx
 import { GridParams } from "./NewSectionView";
 import NewCard, { NewCardProps } from "./NewCard";
 import { PointsSummaryResponseDTO } from "@/interfaces/api/points-summary";
 import Pagination from "../pagination/Pagination";
 import NewPointsSummary from "./NewPointsSummary";
 import clsx from "clsx";
+import SlideAnimationWrapper from "./SlideAnimationWrapper";
+import { usePageTransition } from "./UsePageTransition";
 
 export interface NewXPCardGridProps {
   gridParams: GridParams;
@@ -19,14 +21,13 @@ export default function NewXPCardGrid({
   pointsSummaryConfiguration,
   usesPointsSummary,
 }: NewXPCardGridProps) {
-  const [currentPage, setCurrentPage] = useState(0);
-
-  useEffect(() => {
-    setCurrentPage(0);
-  }, [gridParams]);
+  const { currentPage, direction, handlePageChange } = usePageTransition({
+    resetDependency: gridParams, // Reset page when gridParams change
+  });
 
   const pageSize = gridParams.rows * gridParams.cols;
   const pageCount = Math.ceil(cardConfigurations.length / pageSize);
+
   const cardConfigurationsForPage = cardConfigurations.slice(
     currentPage * pageSize,
     currentPage * pageSize + pageSize
@@ -35,9 +36,7 @@ export default function NewXPCardGrid({
   const pagination = (
     <Pagination
       pageCount={pageCount}
-      onPageChange={(selected: { selected: number }) =>
-        setCurrentPage(selected.selected)
-      }
+      onPageChange={handlePageChange}
       forcePage={pageCount > 0 ? currentPage : undefined}
       pageRangeDisplayed={2}
       marginPagesDisplayed={1}
@@ -46,30 +45,42 @@ export default function NewXPCardGrid({
   );
 
   const cardsView = (
-    <div
-      className={clsx(
-        "grid min-w-0 gap-5 transition-opacity custom-ease-with-duration",
-        gridParams.isReady ? "opacity-100" : "opacity-0",
-        gridParams.isDesktop
-          ? "h-full content-center justify-start"
-          : "h-auto content-start w-full justify-center"
-      )}
-      style={{
-        gridTemplateColumns: `repeat(${gridParams.cols}, minmax(0, ${gridParams.cardMaxWidth}px))`,
-        gridTemplateRows: `repeat(${gridParams.rows}, 1fr)`,
-      }}
+    <SlideAnimationWrapper
+      triggerKey={currentPage}
+      direction={direction}
+      className={clsx(gridParams.isDesktop ? "h-full w-fit" : "h-auto w-full")}
     >
-      {cardConfigurationsForPage.map((cardConfig, index) => (
-        <NewCard key={index} {...cardConfig} mode={gridParams.mode} />
-      ))}
-    </div>
+      <div
+        className={clsx(
+          "grid min-w-0 gap-5 transition-opacity custom-ease-with-duration",
+          gridParams.isReady ? "opacity-100" : "opacity-0",
+          gridParams.isDesktop
+            ? "h-full content-center justify-start"
+            : "h-auto content-start w-full justify-center"
+        )}
+        style={{
+          gridTemplateColumns: `repeat(${gridParams.cols}, minmax(0, ${gridParams.cardMaxWidth}px))`,
+          gridTemplateRows: `repeat(${gridParams.rows}, 1fr)`,
+        }}
+      >
+        {cardConfigurationsForPage.map((cardConfig, index) => (
+          <NewCard
+            key={`${currentPage}-${index}`}
+            {...cardConfig}
+            mode={gridParams.mode}
+          />
+        ))}
+      </div>
+    </SlideAnimationWrapper>
   );
+
   const pointsSummaryView = (
     <NewPointsSummary
       pointsSummary={pointsSummaryConfiguration}
       mode={gridParams.mode}
     />
   );
+
   // todo handle no cards
 
   if (gridParams.isDesktop) {
