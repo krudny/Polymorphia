@@ -79,8 +79,6 @@ export default function NewCardGridLayout({
     />
   );
 
-  // todo handle no cards
-
   if (gridParams.isDesktop) {
     return (
       <div

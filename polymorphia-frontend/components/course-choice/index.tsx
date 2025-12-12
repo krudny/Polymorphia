@@ -9,6 +9,7 @@ import CreateAnimalModal from "@/components/course-choice/modal/createAnimal";
 import React, { useState } from "react";
 import NewCardGridView from "../new-card/grid";
 import getCourseChoiceCardConfiguration from "./get-course-choice-card-configuration";
+import ErrorComponent from "../error";
 
 export default function CourseChoiceGrid({
   courses,
@@ -25,19 +26,26 @@ export default function CourseChoiceGrid({
 
   return (
     <>
-      <NewCardGridView
-        ref={containerRef}
-        cardConfigurations={courses.map((availableCourse) =>
-          getCourseChoiceCardConfiguration({
-            availableCourse,
-            currentCourseId,
-            handleCourseSelection,
-            setClickedDetails,
-          })
-        )}
-        usesPointsSummary={false}
-        mobileRows={2}
-      />
+      {courses.length > 0 ? (
+        <NewCardGridView
+          ref={containerRef}
+          cardConfigurations={courses.map((availableCourse) =>
+            getCourseChoiceCardConfiguration({
+              availableCourse,
+              currentCourseId,
+              handleCourseSelection,
+              setClickedDetails,
+            })
+          )}
+          usesPointsSummary={false}
+          mobileRows={2}
+        />
+      ) : (
+        <ErrorComponent
+          title="Brak kursów"
+          message="Nie jesteś przypisany do żadnego kursu."
+        />
+      )}
       {clickedDetails && (
         <CreateAnimalModal
           clickedDetails={clickedDetails}
