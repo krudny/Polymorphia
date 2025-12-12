@@ -1,8 +1,8 @@
 import { useMediaQuery } from "react-responsive";
 import { useQueryClient } from "@tanstack/react-query";
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
-import HallOfFameDesktop from "@/views/hall-of-fame/desktop/main";
-import HallOfFameMobile from "@/views/hall-of-fame/mobile/main";
+import HallOfFameDesktop from "@/components/hall-of-fame/desktop/main";
+import HallOfFameMobile from "@/components/hall-of-fame/mobile/main";
 import FiltersModal from "@/components/filters-modals/FiltersModal";
 import { HallOfFameFilterId } from "@/providers/hall-of-fame/types";
 import "./index.css";

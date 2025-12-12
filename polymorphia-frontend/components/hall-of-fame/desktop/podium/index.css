@@ -1,0 +1,11 @@
+@import "tailwindcss";
+@import "../../../../styles/globals.css";
+
+.podium-desktop {
+  @apply w-full h-fit py-3 grid grid-cols-3 gap-x-3;
+  @apply 2xl:flex 2xl:flex-col 2xl:justify-between 2xl:flex-1 2xl:px-5 2xl:py-0;
+}
+
+.podium-item {
+  @apply w-full h-full max-h-36 pb-2 rounded-xl 2xl:max-h-52 2xl:h-[calc(33.333%-1rem)];
+}

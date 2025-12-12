@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@import "../../../../styles/globals.css";
+
+.error-no-data-wrapper {
+  @apply m-auto;
+
+  h1 {
+    @apply text-3xl text-center lg:text-4xl;
+  }
+}

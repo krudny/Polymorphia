@@ -1,0 +1,15 @@
+@import "tailwindcss";
+@import "../../../../styles/globals.css";
+
+.card-desktop-record-wrapper {
+  @apply hall-of-fame-record-wrapper h-28 flex justify-between items-center;
+  @apply min-[1400px]:h-36 2xl:min-h-[calc(25%-0.75rem)];
+}
+
+.card-desktop-record-user-data-wrapper {
+  @apply flex h-full truncate w-2/5 2xl:w-fit;
+}
+
+.card-desktop-record-user-points-wrapper {
+  @apply w-full min-w-[350px] lg:max-w-[450px] 2xl:max-w-[380px];
+}
