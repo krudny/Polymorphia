@@ -55,8 +55,7 @@ export default function NewXPCardGrid({
           : "h-auto content-start w-full justify-center"
       )}
       style={{
-        gridTemplateColumns: `repeat(${gridParams.cols}, minmax(0, ${gridParams.cardWidth.max}px))`,
-
+        gridTemplateColumns: `repeat(${gridParams.cols}, minmax(0, ${gridParams.cardMaxWidth}px))`,
         gridTemplateRows: `repeat(${gridParams.rows}, 1fr)`,
       }}
     >

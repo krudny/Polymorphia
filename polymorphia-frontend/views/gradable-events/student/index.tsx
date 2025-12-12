@@ -1,11 +1,8 @@
 "use client";
 
-import SectionView from "@/components/section-view/SectionView";
 import { useScaleShow } from "@/animations/ScaleShow";
 import { useEffect, useRef, useState } from "react";
 import "./index.css";
-import PointsSummary from "@/components/course/event-section/points-summary/PointsSummary";
-import XPCardGrid from "@/components/xp-card/XPCardGrid";
 import Loading from "@/components/loading";
 import { useRouter } from "next/navigation";
 import StudentGradableEventCard from "@/views/gradable-events/student/StudentGradableEventCard";
@@ -13,13 +10,10 @@ import { useEventParams } from "@/hooks/general/useEventParams";
 import useStudentsGradableEvents from "@/hooks/course/useStudentsGradableEvents";
 import { EventTypes, Sizes } from "@/interfaces/general";
 import usePointsSummary from "@/hooks/course/usePointsSummary";
-import GradeModal from "@/components/speed-dial/modals/grade";
 import ErrorComponent from "@/components/error";
 import { GradableEventDTO } from "@/interfaces/api/gradable_event/types";
 import { useMediaQuery } from "react-responsive";
 import NewSectionView from "@/components/grid-new-impl/NewSectionView";
-import NewCard from "@/components/grid-new-impl/NewCard";
-import NewPointsSummary from "@/components/grid-new-impl/NewPointsSummary";
 
 export default function StudentView() {
   const { eventType, eventSectionId } = useEventParams();
@@ -123,7 +117,7 @@ export default function StudentView() {
           <div className="flex-centered">{gradableEvent.gainedXp}</div>
         ),
         color: "silver",
-        // wide: true,
+        // sizeBonus: 2,
       }))}
       usesPointsSummary={true}
       pointsSummaryConfiguration={pointsSummary}

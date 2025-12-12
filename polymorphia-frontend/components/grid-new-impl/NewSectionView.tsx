@@ -5,30 +5,28 @@ import { RefObject, useLayoutEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useDebouncedCallback } from "use-debounce";
 import {
+  getCardMetrics,
+  getCardStepCount,
   NewCardMode,
   NewCardModes,
   NewCardProps,
-  newCardSizes,
 } from "./NewCard";
-import { pointsSummarySizes } from "./NewPointsSummary";
 import { PointsSummaryResponseDTO } from "@/interfaces/api/points-summary";
 import NewXPCardGrid from "./NewXPCardGrid";
+import { POINTS_SUMMARY_METRICS } from "./NewPointsSummary";
 
 export interface GridParams {
   cols: number;
   rows: number;
   mode: NewCardMode;
-  cardWidth: {
-    min: number;
-    max: number;
-  };
+  cardMaxWidth: number;
   isDesktop: boolean;
   isReady: boolean;
 }
 
 function useXPCardGridParams(
   containerRef: RefObject<HTMLDivElement | null>,
-  cardAccessoriesNumber: 0 | 1 | 2,
+  cardStepCount: number,
   usesPointsSummary: boolean
 ) {
   const { isSidebarLockedOpened, isSidebarExpanded } = useNavigationContext();
@@ -39,10 +37,7 @@ function useXPCardGridParams(
     rows: 3,
     mode: NewCardModes.NORMAL,
     isDesktop: true,
-    cardWidth: {
-      min: 0,
-      max: 400,
-    },
+    cardMaxWidth: 400,
     isReady: false,
   });
 
@@ -56,8 +51,6 @@ function useXPCardGridParams(
       return;
     }
 
-    // const { width: rawWidth, height: rawHeight } =
-    //   containerRef.current.getBoundingClientRect();
     const rawWidth = containerRef.current.offsetWidth;
     const rawHeight = containerRef.current.offsetHeight;
     const width = rawWidth - sidebarCorrection;
@@ -66,19 +59,23 @@ function useXPCardGridParams(
     console.log("dimensions", rawWidth, rawHeight, width, height);
 
     const stats = Object.values(NewCardModes).map((cardMode) => {
-      const cardWidth = newCardSizes[cardMode].width[cardAccessoriesNumber].min;
-      const cardHeight = newCardSizes[cardMode].height.value;
+      const cardMetrics = getCardMetrics({
+        mode: cardMode,
+        stepCount: cardStepCount,
+      });
+      const cardWidth = cardMetrics.minWidth;
+      const cardHeight = cardMetrics.height;
 
       const pointsSummaryImpactsWidth = usesPointsSummary && isDesktop;
 
       const cardsWidth =
         width -
         (pointsSummaryImpactsWidth
-          ? pointsSummarySizes[cardMode].width.value + gap
+          ? POINTS_SUMMARY_METRICS[cardMode].width + gap
           : 0);
       const cardsHeight = Math.min(
         height,
-        pointsSummarySizes[cardMode].height.max
+        POINTS_SUMMARY_METRICS[cardMode].maxHeight
       );
 
       const rows = isDesktop
@@ -105,7 +102,7 @@ function useXPCardGridParams(
         mode: cardMode,
         rows: rows,
         cols: cols,
-        cardWidth: newCardSizes[cardMode].width[cardAccessoriesNumber],
+        cardMaxWidth: cardMetrics.maxWidth,
       };
     });
 
@@ -157,21 +154,11 @@ export default function NewSectionView({
   pointsSummaryConfiguration,
   ref,
 }: NewSectionViewProps) {
-  const cardAccessoriesNumber = Math.max(
-    ...cardConfigurations.map((cardConfig) =>
-      Math.min(
-        (cardConfig.leftComponent !== undefined ? 1 : 0) +
-          (cardConfig.rightComponent !== undefined ? 1 : 0) +
-          (cardConfig.wide !== undefined ? 1 : 0),
-        2
-      )
-    )
-  ) as 0 | 1 | 2;
-  const gridParams = useXPCardGridParams(
-    ref,
-    cardAccessoriesNumber,
-    usesPointsSummary
+  const cardStepCount = Math.max(
+    ...cardConfigurations.map((cardConfig) => getCardStepCount(cardConfig))
   );
+
+  const gridParams = useXPCardGridParams(ref, cardStepCount, usesPointsSummary);
   return (
     <div className="w-full p-3 flex flex-col flex-1 mx-auto overflow-y-scroll custom-scrollbar lg:h-full lg:justify-center lg:overflow-hidden 3xl:extra-large-center bg-blue-500">
       <div

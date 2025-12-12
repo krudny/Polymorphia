@@ -2,8 +2,8 @@ import {
   PointsSummaryDetailsResponseDTO,
   PointsSummaryResponseDTO,
 } from "@/interfaces/api/points-summary";
-import { RefObject, useState } from "react";
-import { NewCardMode } from "./NewCard";
+import { useState } from "react";
+import { NewCardMode, NewCardModes } from "./NewCard";
 import clsx from "clsx";
 import ErrorComponent from "../error";
 
@@ -12,30 +12,33 @@ export interface NewPointsSummaryProps {
   mode: NewCardMode;
 }
 
-export const pointsSummarySizes = {
-  NORMAL: {
-    width: {
-      value: 280,
-      className: "w-[280px]",
+interface PointsSummaryMetrics {
+  width: number;
+  minHeight: number;
+  maxHeight: number;
+}
+
+export const POINTS_SUMMARY_METRICS: Record<NewCardMode, PointsSummaryMetrics> =
+  {
+    [NewCardModes.NORMAL]: {
+      width: 280,
+      minHeight: 525,
+      maxHeight: 720,
     },
-    height: {
-      min: 525,
-      max: 720,
-      className: "max-h-[720px]",
+    [NewCardModes.COMPACT]: {
+      width: 240,
+      minHeight: 425,
+      maxHeight: 620,
     },
-  },
-  COMPACT: {
-    height: {
-      min: 425,
-      max: 620,
-      className: "max-h-[620px]",
-    },
-    width: {
-      value: 240,
-      className: "w-[240px]",
-    },
-  },
-};
+  };
+
+interface GetPointsSummaryClassNameProps {
+  mode: NewCardMode;
+}
+
+function getPointsSummaryClassName({ mode }: GetPointsSummaryClassNameProps) {
+  return `w-[${POINTS_SUMMARY_METRICS[mode].width}px] max-h-[${POINTS_SUMMARY_METRICS[mode].maxHeight}px]`;
+}
 
 export default function NewPointsSummary({
   mode,
@@ -57,8 +60,7 @@ export default function NewPointsSummary({
     <div
       className={clsx(
         "h-full flex flex-col justify-between",
-        pointsSummarySizes[mode].width.className,
-        pointsSummarySizes[mode].height.className
+        getPointsSummaryClassName({ mode })
       )}
     >
       {pointsSummary !== undefined ? (
