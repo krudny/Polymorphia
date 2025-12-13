@@ -1,8 +1,8 @@
 import Modal from "@/components/modal";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import { SubmissionsModalContentProps } from "@/components/speed-dial/modals/submission/types";
-import useSubmissionRequirements from "@/hooks/course/useSubmissionRequirements";
-import useSubmissionDetails from "@/hooks/course/useSubmissionDetails";
+import useSubmissionRequirements from "@/hooks/course/submission/useSubmissionRequirements";
+import useSubmissionDetails from "@/hooks/course/submission/useSubmissionDetails";
 import useUserContext, {
   useUserDetails,
 } from "@/hooks/contexts/useUserContext";
@@ -15,7 +15,7 @@ import { Accordion } from "@/components/accordion/Accordion";
 import AccordionSection from "@/components/accordion/AccordionSection";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { ChangeEventHandler, useState } from "react";
-import useSubmissionsUpdate from "@/hooks/course/useSubmissionsUpdate";
+import useSubmissionsUpdate from "@/hooks/course/submission/useSubmissionsUpdate";
 import useModalContext from "@/hooks/contexts/useModalContext";
 import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";

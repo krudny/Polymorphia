@@ -7,7 +7,7 @@ import { useFadeInAnimate } from "@/animations/FadeIn";
 import useMarkdownContext from "@/hooks/contexts/useMarkdownContext";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
-import { useMarkdown } from "@/hooks/course/useMarkdown";
+import { useMarkdown } from "@/hooks/course/markdown/useMarkdown";
 import ErrorComponent from "@/components/error";
 
 export default function MarkdownViewer() {

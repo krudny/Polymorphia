@@ -3,8 +3,8 @@ import { Roles, RoleTextMap } from "@/interfaces/api/user";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import { RenderCardProps } from "@/components/course-choice/types";
 import { ReactNode } from "react";
-import useHasValidAnimalInCourse from "@/hooks/course/useHasValidAnimalInCourse";
-import useCourseGroup from "@/hooks/course/useCourseGroup";
+import useHasValidAnimalInCourse from "@/hooks/course/animal/useHasValidAnimalInCourse";
+import useCourseGroup from "@/hooks/course/course-group/useCourseGroup";
 import toast from "react-hot-toast";
 
 export default function CourseChoiceCard({

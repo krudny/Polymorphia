@@ -1,0 +1,60 @@
+import { useEventParams } from "@/hooks/app/params/useEventParams";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import {
+  UseSubmissionsUpdate,
+  UseSubmissionsUpdateProps,
+} from "@/hooks/course/submission/useSubmissionsUpdate/types";
+import { ApiError } from "@/services/api/error";
+import { TargetTypes } from "@/interfaces/api/target";
+import { SubmissionService } from "@/services/submission";
+import { SubmissionDetails } from "@/interfaces/api/grade/submission";
+import { Roles } from "@/interfaces/api/user";
+import useUserContext from "@/hooks/contexts/useUserContext";
+import { EventTypes } from "@/interfaces/general";
+
+export default function useSubmissionsUpdate({
+  target,
+}: UseSubmissionsUpdateProps): UseSubmissionsUpdate {
+  const queryClient = useQueryClient();
+  const { gradableEventId, eventType } = useEventParams();
+  const { userRole } = useUserContext();
+
+  return useMutation({
+    mutationFn: (submissionDetails: SubmissionDetails) => {
+      if (!target || eventType === EventTypes.TEST) {
+        throw new ApiError(
+          "Wystąpił błąd podczas aktualizacji oddanych zadań."
+        );
+      }
+
+      return toast.promise(
+        SubmissionService.submitSubmissions(gradableEventId, {
+          target,
+          details: submissionDetails,
+        }),
+        userRole === Roles.STUDENT
+          ? {
+              loading: "Zapisywanie zmian...",
+              success: "Pomyślnie zapisano oddane zadania!",
+            }
+          : {
+              loading: "Zapisywanie zmian...",
+              success: "Pomyślnie zmieniono status blokady zadania!",
+            }
+      );
+    },
+    onSuccess: () => {
+      if (target) {
+        queryClient.invalidateQueries({
+          queryKey: [
+            "submissionDetails",
+            gradableEventId,
+            target.type,
+            target.type === TargetTypes.STUDENT ? target.id : target.groupId,
+          ],
+        });
+      }
+    },
+  });
+}

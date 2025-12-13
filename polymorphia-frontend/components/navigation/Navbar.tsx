@@ -5,14 +5,14 @@ import Line from "@/components/navigation/Line";
 import { animateNavbar } from "@/animations/Navigation";
 import "./index.css";
 import { updateMenuItems } from "@/components/course/event-section/EventSectionUtils";
-import useEventSections from "@/hooks/course/useEventSections";
+import useEventSections from "@/hooks/course/event-section/useEventSections";
 import useNavigationContext from "@/hooks/contexts/useNavigationContext";
 import {
   useBottomMenuItems,
   useMainMenuItems,
-} from "@/hooks/general/useMenuOptions";
+} from "@/hooks/app/navigation/useMenuOptions";
 import useUserContext from "@/hooks/contexts/useUserContext";
-import { useTitle } from "@/hooks/general/useTitle";
+import { useTitle } from "@/hooks/app/title/useTitle";
 import useNotificationContext from "@/hooks/contexts/useNotificationsContext";
 
 export default function Navbar() {

@@ -13,13 +13,13 @@ import {
   HallOfFameContextInterface,
   HallOfFameFilterId,
 } from "@/providers/hall-of-fame/types";
-import { useFilters } from "@/hooks/course/useFilters";
-import { useHallOfFameFilterConfigs } from "@/hooks/course/useHallOfFameFilterConfigs";
-import useHallOfFame from "@/hooks/course/useHallOfFame";
+import { useFilters } from "@/hooks/course/filters/useFilters";
+import { useHallOfFameFilterConfigs } from "@/hooks/course/filters/useHallOfFameFilterConfigs";
+import useHallOfFame from "@/hooks/course/hall-of-fame/useHallOfFame";
 import useUserContext, {
   useUserDetails,
 } from "@/hooks/contexts/useUserContext";
-import { useFindMeScroll } from "@/hooks/general/useFindMeScroll";
+import { useFindMeScroll } from "@/hooks/course/hall-of-fame/useFindMeScroll";
 import { Roles } from "@/interfaces/api/user";
 import ErrorComponent from "@/components/error";
 import {

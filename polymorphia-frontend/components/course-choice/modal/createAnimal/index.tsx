@@ -5,7 +5,7 @@ import React, { FormEvent } from "react";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { useForm } from "@tanstack/react-form";
 import { createAnimalSchema } from "@/components/form/schema";
-import useCreateAnimal from "@/hooks/course/useCreateAnimal";
+import useCreateAnimal from "@/hooks/course/animal/useCreateAnimal";
 import { CreateAnimalModalProps } from "@/components/course-choice/modal/createAnimal/types";
 import { FieldErrorMessage } from "@/components/form/FieldErrorMessage";
 

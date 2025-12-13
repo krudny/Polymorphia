@@ -2,7 +2,7 @@ import { useMediaQuery } from "react-responsive";
 import { SpeedDial } from "@/components/speed-dial";
 import ColumnSchema from "@/components/column-schema";
 import { SpeedDialKeys } from "@/components/speed-dial/types";
-import { useCourseGroupsStrategy } from "@/hooks/strategy/useCourseGroupsStrategy";
+import { useCourseGroupsStrategy } from "@/hooks/app/strategy/useCourseGroupsStrategy";
 import { CourseGroupsFilterId } from "@/providers/course-groups/types";
 import FiltersModal from "@/components/filters-modals/FiltersModal";
 import useTargetContext from "@/hooks/contexts/useTargetContext";

@@ -1,7 +1,7 @@
 "use client";
 import Slider from "@/components/slider/Slider";
 import Loading from "@/components/loading";
-import useChests from "@/hooks/course/useChests";
+import useChests from "@/hooks/course/knowledge-base/useChests";
 import { useSearchParams } from "next/navigation";
 import ErrorComponent from "@/components/error";
 

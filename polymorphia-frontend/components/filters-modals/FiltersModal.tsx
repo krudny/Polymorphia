@@ -4,7 +4,10 @@ import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import Loading from "@/components/loading";
 import Modal from "@/components/modal";
 import { AccordionRef } from "@/providers/accordion/types";
-import { FilterActions, FilterOption } from "@/hooks/course/useFilters/types";
+import {
+  FilterActions,
+  FilterOption,
+} from "@/hooks/course/filters/useFilters/types";
 import { useRef } from "react";
 import toast from "react-hot-toast";
 import "./index.css";

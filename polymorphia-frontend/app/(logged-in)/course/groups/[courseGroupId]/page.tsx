@@ -7,7 +7,7 @@ import EquipmentModals from "@/components/equipment/modals";
 import GradeModal from "@/components/speed-dial/modals/grade";
 import useCourseGroupsContext from "@/hooks/contexts/useCourseGroupsContext";
 import { TargetProvider } from "@/providers/target";
-import useCourseGroupTargets from "@/hooks/course/useCourseGroupTargets";
+import useCourseGroupTargets from "@/hooks/course/course-group/useCourseGroupTargets";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
 
 function CourseGroupViewContent() {

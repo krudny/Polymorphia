@@ -1,7 +1,7 @@
 import { createContext, ReactNode } from "react";
 import Loading from "@/components/loading";
 import { UserDetailsDTO } from "@/interfaces/api/user";
-import useCurrentUser from "@/hooks/course/useCurrentUser";
+import useCurrentUser from "@/hooks/course/user/useCurrentUser";
 import NotFound from "@/components/home/not-found";
 
 export const UserContext = createContext<UserDetailsDTO | undefined>(undefined);

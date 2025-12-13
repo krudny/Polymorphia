@@ -3,7 +3,7 @@ import "./index.css";
 import Loading from "@/components/loading";
 import XPCardPoints from "@/components/xp-card/components/XPCardPoints";
 import { useScaleShow } from "@/animations/ScaleShow";
-import useHallOfFamePodium from "@/hooks/course/useHallOfFamePodium";
+import useHallOfFamePodium from "@/hooks/course/hall-of-fame/useHallOfFamePodium";
 import useUserContext from "@/hooks/contexts/useUserContext";
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
 import { getDisplayName } from "@/views/hall-of-fame/util/displayName";
