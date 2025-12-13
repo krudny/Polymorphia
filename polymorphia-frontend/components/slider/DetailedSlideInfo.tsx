@@ -7,7 +7,7 @@ import { API_STATIC_URL } from "@/services/api";
 import "./index.css";
 import {
   DetailedSlideInfoProps,
-  KnowledgeBaseTypes,
+  KnowledgeBaseSlideTypes,
 } from "@/components/slider/types";
 import { ReactNode } from "react";
 
@@ -31,7 +31,7 @@ export default function DetailedSlideInfo({
   if (!relatedRewards) {
     return (
       <SlideDetailsErrorMessage
-        message={`Błąd ładowania ${type === KnowledgeBaseTypes.ITEM ? "skrzynek" : "przedmiotów"}`}
+        message={`Błąd ładowania ${type === KnowledgeBaseSlideTypes.ITEM ? "skrzynek" : "przedmiotów"}`}
       />
     );
   }
@@ -40,7 +40,7 @@ export default function DetailedSlideInfo({
     return (
       <SlideDetailsErrorMessage
         message={
-          type === KnowledgeBaseTypes.ITEM
+          type === KnowledgeBaseSlideTypes.ITEM
             ? "Ten przedmiot nie występuje w żadnej ze skrzynek"
             : "W tej skrzynce nie znajdują się żadne przedmioty"
         }
