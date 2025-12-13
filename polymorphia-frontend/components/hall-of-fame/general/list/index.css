@@ -2,7 +2,7 @@
 @import "../../../../styles/globals.css";
 
 .hof-list-desktop-rank-wrapper {
-  @apply hall-of-fame-rank-wrapper flex flex-col flex-1 min-h-0 overflow-y-auto gap-y-2 2xl:gap-y-4;
+  @apply w-full custom-scrollbar flex flex-col flex-1 min-h-0 overflow-y-auto gap-y-2 2xl:gap-y-4;
 }
 
 .hof-list-mobile-rank-wrapper {

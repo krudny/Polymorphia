@@ -67,10 +67,6 @@
   @apply duration-400 ease-[cubic-bezier(0.34,1,0.2,1)];
 }
 
-@utility hall-of-fame-rank-wrapper {
-  @apply w-full overflow-y-scroll custom-scrollbar;
-}
-
 @utility hall-of-fame-record-wrapper {
   @apply w-full rounded-xl shadow-lg bg-primary-light dark:bg-primary-dark;
 }
