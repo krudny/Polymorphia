@@ -4,6 +4,7 @@ import useUserContext from "@/hooks/contexts/useUserContext";
 import { Roles } from "@/interfaces/api/user";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { useMediaQuery } from "react-responsive";
+import "./index.css";
 
 export default function HallOfFameTopBar() {
   const isMd = useMediaQuery({ minWidth: 768 });
@@ -21,13 +22,13 @@ export default function HallOfFameTopBar() {
   const { userRole } = useUserContext();
 
   return (
-    <div className="hall-of-fame-top-bar">
+    <div className="hof-top-bar">
       <Search
         search={search}
         setSearch={setSearch}
         placeholder="Znajdź zwierzaka..."
       />
-      <div className="hall-of-fame-search-buttons">
+      <div className="hof-top-bar-buttons">
         {userRole === Roles.STUDENT ? (
           <ButtonWithBorder
             text="Znajdź mnie"

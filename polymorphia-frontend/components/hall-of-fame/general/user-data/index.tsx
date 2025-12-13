@@ -2,7 +2,7 @@ import "./index.css";
 import { HallOfFameUserDTO } from "@/interfaces/api/user";
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
 import useUserContext from "@/hooks/contexts/useUserContext";
-import { getDisplayName } from "@/views/hall-of-fame/util/displayName";
+import { getDisplayName } from "@/components/hall-of-fame/util/displayName";
 
 export default function HallOfFameUserData(studentDetails: HallOfFameUserDTO) {
   const { areAnimalNamesVisible } = useHallOfFameContext();
@@ -15,7 +15,7 @@ export default function HallOfFameUserData(studentDetails: HallOfFameUserDTO) {
   );
 
   return (
-    <div className="hall-of-fame-user-data">
+    <div className="hof-user-data">
       <h1>{displayName}</h1>
       <h2>
         {studentDetails.group} | {studentDetails.evolutionStage}

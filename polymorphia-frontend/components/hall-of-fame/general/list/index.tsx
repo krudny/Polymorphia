@@ -1,12 +1,13 @@
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
 import { HallOfFameRecordDTO } from "@/interfaces/api/hall-of-fame";
-import HallOfFameCardDesktop from "@/views/hall-of-fame/desktop/HallOfFameCardDesktop";
+import HallOfFameCardDesktop from "@/components/hall-of-fame/desktop/card";
 import Loading from "@/components/loading";
 import { useScaleShow } from "@/animations/ScaleShow";
 import { useMediaQuery } from "react-responsive";
-import HallOfFameError from "@/views/hall-of-fame/general/HallOfFameError";
+import HallOfFameError from "@/components/hall-of-fame/general/error";
 import { useLayoutEffect } from "react";
-import HallOfFameCardMobile from "@/views/hall-of-fame/mobile/HallOfFameCardMobile";
+import HallOfFameCardMobile from "@/components/hall-of-fame/mobile/card";
+import "./index.css";
 
 export default function HallOfFameList() {
   const {
@@ -36,14 +37,14 @@ export default function HallOfFameList() {
 
   if (isLoading || !hallOfFame || isFiltersLoading || isFiltersError) {
     return (
-      <div className="hall-of-fame-loading-wrapper">
+      <div className="hof-loading-wrapper">
         <Loading />
       </div>
     );
   }
 
   const desktopComponent = (
-    <div className="hall-of-fame-desktop-rank-wrapper" ref={wrapperRef}>
+    <div className="hof-list-desktop-rank-wrapper" ref={wrapperRef}>
       {hallOfFame.content.length === 0 ? (
         <HallOfFameError />
       ) : (
@@ -60,7 +61,7 @@ export default function HallOfFameList() {
   );
 
   const mobileComponent = (
-    <div className="hall-of-fame-mobile-rank-wrapper" ref={wrapperRef}>
+    <div className="hof-list-mobile-rank-wrapper" ref={wrapperRef}>
       {hallOfFame.content.length === 0 ? (
         <HallOfFameError />
       ) : (

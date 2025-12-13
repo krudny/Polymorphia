@@ -54,7 +54,11 @@ export default function MenuSection({ options }: MenuSectionProps) {
           <div key={option.text}>
             <div className="menu-option-row-wrapper">
               {option.link && (
-                <Link href={`/${option.link}`} key={option.text}>
+                <Link
+                  href={`/${option.link}`}
+                  key={option.text}
+                  onClick={() => setIsNavbarExpanded(false)}
+                >
                   {content}
                 </Link>
               )}
@@ -66,6 +70,7 @@ export default function MenuSection({ options }: MenuSectionProps) {
                     if (option.onClick) {
                       option.onClick();
                     }
+                    setIsNavbarExpanded(false);
                   }}
                 >
                   {content}
