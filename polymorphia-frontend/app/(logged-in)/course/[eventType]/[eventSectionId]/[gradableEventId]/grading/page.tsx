@@ -1,10 +1,10 @@
 "use client";
 import { TargetProvider } from "@/providers/target";
 import { GradingProvider } from "@/providers/grading";
-import Grading from "@/views/grading";
 import useGradingTargets from "@/hooks/course/grading/useGradingTargets";
+import GradingView from "@/views/grading";
 
-export default function GradingView() {
+export default function Grading() {
   return (
     <TargetProvider
       useTargets={useGradingTargets}
@@ -15,7 +15,7 @@ export default function GradingView() {
       }}
     >
       <GradingProvider>
-        <Grading />
+        <GradingView />
       </GradingProvider>
     </TargetProvider>
   );

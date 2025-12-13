@@ -6,7 +6,7 @@ import useUserContext from "@/hooks/contexts/useUserContext";
 import { Roles } from "@/interfaces/api/user";
 import ErrorComponent from "@/components/error";
 
-export default function GradableEventsView() {
+export default function GradableEvents() {
   const { userRole } = useUserContext();
 
   switch (userRole) {
