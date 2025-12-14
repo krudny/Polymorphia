@@ -4,7 +4,7 @@ import EquipmentContent from "@/views/equipment";
 export default function Equipment() {
   return (
     <EquipmentProvider>
-      <EquipmentContent />
+      <EquipmentView />
     </EquipmentProvider>
   );
 }
