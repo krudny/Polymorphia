@@ -9,7 +9,7 @@ import TargetListTopBar from "@/components/column-schema/column-component/shared
 import Loading from "@/components/loading";
 import ColumnComponent from "@/components/column-schema/column-component";
 import { isTargetSelected } from "@/providers/target/utils/is-selected";
-import { useEventParams } from "@/hooks/general/useEventParams";
+import { useEventParams } from "@/hooks/app/params/useEventParams";
 import { getTargetListErrorComponent } from "@/components/column-schema/column-component/shared/target-list/utils/get-target-list-error-component";
 
 export default function TargetList() {

@@ -1,4 +1,4 @@
-import { useGradingStrategy } from "@/hooks/strategy/useGradingStrategy";
+import { useGradingStrategy } from "@/hooks/app/strategy/useGradingStrategy";
 import { GradingFilterId } from "@/providers/grading/types";
 import FiltersModal from "@/components/filters-modals/FiltersModal";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
@@ -6,7 +6,7 @@ import { useMediaQuery } from "react-responsive";
 import { ViewTypes } from "@/interfaces/general";
 import { getSpeedDialKey } from "@/components/speed-dial/util";
 import { SpeedDial } from "@/components/speed-dial";
-import { useEventParams } from "@/hooks/general/useEventParams";
+import { useEventParams } from "@/hooks/app/params/useEventParams";
 import ColumnSchema from "@/components/column-schema";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
 import useUserContext from "@/hooks/contexts/useUserContext";

@@ -4,7 +4,7 @@ import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import "./index.css";
 import useMarkdownContext from "@/hooks/contexts/useMarkdownContext";
 import useModalContext from "@/hooks/contexts/useModalContext";
-import useMarkdownSource from "@/hooks/course/useMarkdownSource";
+import useMarkdownSource from "@/hooks/course/markdown/useMarkdownSource";
 
 function ResetMarkdownModalContent() {
   const { resetMarkdown, markdownType } = useMarkdownContext();

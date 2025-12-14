@@ -4,11 +4,11 @@ import {
   CourseGroupsContextInterface,
   CourseGroupsFilterId,
 } from "@/providers/course-groups/types";
-import { useFilters } from "@/hooks/course/useFilters";
-import useCourseGroupsFilterConfigs from "@/hooks/course/useCourseGroupsFilterConfigs";
-import useStudentSummary from "@/hooks/course/useStudentSummary";
+import { useFilters } from "@/hooks/course/filters/useFilters";
+import useCourseGroupsFilterConfigs from "@/hooks/course/filters/useCourseGroupsFilterConfigs";
+import useStudentSummary from "@/hooks/course/course-group/useStudentSummary";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
-import useStudentLastActivity from "@/hooks/course/useStudentLastActivity";
+import useStudentLastActivity from "@/hooks/course/course-group/useStudentLastActivity";
 import {
   DEFAULT_SEARCH_BY,
   DEFAULT_SORT_BY_TOTAL,

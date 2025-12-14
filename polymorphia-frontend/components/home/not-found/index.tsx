@@ -3,7 +3,7 @@
 import OwlImage from "@/components/home/owl-image";
 import NotFoundContent from "@/components/home/not-found-content";
 import { NotFoundContentProps } from "@/components/home/not-found-content/types";
-import { useHeroAnimation } from "@/hooks/general/useHeroAnimation";
+import { useHeroAnimation } from "@/hooks/app/animation/useHeroAnimation";
 
 export type NotFoundProps = Omit<NotFoundContentProps, "titleRef">;
 

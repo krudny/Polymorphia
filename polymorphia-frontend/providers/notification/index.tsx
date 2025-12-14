@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useState } from "react";
 import { NotificationContextInterface } from "@/providers/notification/types";
-import { useNotificationCount } from "@/hooks/notification/useNotificationCount";
-import { useNotifications } from "@/hooks/notification/useNotifications";
+import { useNotificationCount } from "@/hooks/course/notification/useNotificationCount";
+import { useNotifications } from "@/hooks/course/notification/useNotifications";
 import NotificationModal from "@/components/notification-modal";
 
 export const NotificationContext = createContext<

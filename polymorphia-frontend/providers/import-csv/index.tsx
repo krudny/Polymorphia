@@ -3,9 +3,9 @@ import {
   ImportCSVContextInterface,
   ImportCSVProviderProps,
 } from "@/providers/import-csv/types";
-import useCSVHeadersUpdate from "@/hooks/general/CSV/useCSVHeadersUpdate";
-import useCSVPreviewUpdate from "@/hooks/general/CSV/useCSVPreviewUpdate";
-import useCSVProcessUpdate from "@/hooks/general/CSV/useCSVProcessUpdate";
+import useCSVHeadersUpdate from "@/hooks/app/csv/useCSVHeadersUpdate";
+import useCSVPreviewUpdate from "@/hooks/app/csv/useCSVPreviewUpdate";
+import useCSVProcessUpdate from "@/hooks/app/csv/useCSVProcessUpdate";
 
 export const ImportCSVContext = createContext<
   ImportCSVContextInterface | undefined

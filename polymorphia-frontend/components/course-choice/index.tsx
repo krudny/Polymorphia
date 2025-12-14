@@ -5,7 +5,7 @@ import {
   CourseChoiceClickedDetails,
   CourseChoiceProps,
 } from "@/components/course-choice/types";
-import usePreferredCourseUpdate from "@/hooks/course/usePreferredCourseUpdate";
+import usePreferredCourseUpdate from "@/hooks/course/course-choice/usePreferredCourseUpdate";
 import CourseChoiceCard from "@/components/course-choice/CourseChoiceCard";
 import CreateAnimalModal from "@/components/course-choice/modal/createAnimal";
 import React, { useState } from "react";

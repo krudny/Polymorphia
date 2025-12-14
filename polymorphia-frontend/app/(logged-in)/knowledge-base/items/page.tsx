@@ -3,7 +3,7 @@
 import Slider from "@/components/slider/Slider";
 import { useSearchParams } from "next/navigation";
 import Loading from "@/components/loading";
-import useItems from "@/hooks/course/useItems";
+import useItems from "@/hooks/course/knowledge-base/useItems";
 import ErrorComponent from "@/components/error";
 
 export default function Items() {

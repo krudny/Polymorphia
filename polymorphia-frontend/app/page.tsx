@@ -3,8 +3,8 @@
 import "./index.css";
 import HomeContent from "@/components/home";
 import OwlImage from "@/components/home/owl-image";
-import { useHeroAnimation } from "@/hooks/general/useHeroAnimation";
-import { useToken } from "@/hooks/general/useToken";
+import { useHeroAnimation } from "@/hooks/app/animation/useHeroAnimation";
+import { useToken } from "@/hooks/course/invitation/useToken";
 
 export default function Home() {
   const { owlBackgroundRef, owlRef, titleRef, hasMountedRef } =

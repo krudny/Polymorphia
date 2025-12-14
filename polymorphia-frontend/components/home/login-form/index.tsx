@@ -8,7 +8,7 @@ import { LoginDTO } from "@/interfaces/api/login";
 import { FieldErrorMessage } from "@/components/form/FieldErrorMessage";
 import { loginSchema } from "@/components/form/schema";
 import "./index.css";
-import useLogin from "@/hooks/course/useLogin";
+import useLogin from "@/hooks/course/auth/useLogin";
 import LoginFormProps from "@/components/home/login-form/types";
 import ForgotPasswordModal from "@/components/home/modals/forgot-password";
 

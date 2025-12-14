@@ -2,7 +2,7 @@
 import { TargetProvider } from "@/providers/target";
 import { GradingProvider } from "@/providers/grading";
 import Grading from "@/views/grading";
-import useGradingTargets from "@/hooks/course/useGradingTargets";
+import useGradingTargets from "@/hooks/course/grading/useGradingTargets";
 
 export default function GradingView() {
   return (

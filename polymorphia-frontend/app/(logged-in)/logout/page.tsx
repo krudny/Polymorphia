@@ -1,6 +1,6 @@
 "use client";
 
-import useLogout from "@/hooks/course/useLogout";
+import useLogout from "@/hooks/course/auth/useLogout";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 

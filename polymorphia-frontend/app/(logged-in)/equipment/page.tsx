@@ -3,7 +3,7 @@ import "./index.css";
 import Loading from "@/components/loading";
 import EquipmentSectionWrapper from "@/components/equipment/EquipmentSectionWrapper";
 import { EquipmentProvider } from "@/providers/equipment";
-import useEquipment from "@/hooks/course/useEquipment";
+import useEquipment from "@/hooks/course/equipment/useEquipment";
 import ErrorComponent from "@/components/error";
 import EquipmentModals from "@/components/equipment/modals";
 

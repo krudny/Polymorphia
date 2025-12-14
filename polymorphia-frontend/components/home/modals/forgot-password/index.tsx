@@ -4,7 +4,7 @@ import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { useForm } from "@tanstack/react-form";
 import { forgotPasswordSchema } from "@/components/form/schema";
 import { ForgotPasswordRequestDTO } from "@/interfaces/api/password";
-import useForgotPassword from "@/hooks/general/useForgotPassword";
+import useForgotPassword from "@/hooks/course/auth/useForgotPassword";
 import { FieldErrorMessage } from "@/components/form/FieldErrorMessage";
 import "./index.css";
 import useModalContext from "@/hooks/contexts/useModalContext";
