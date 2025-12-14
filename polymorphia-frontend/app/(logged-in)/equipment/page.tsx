@@ -1,5 +1,5 @@
 import { EquipmentProvider } from "@/providers/equipment";
-import EquipmentContent from "@/views/equipment";
+import EquipmentView from "@/views/equipment";
 
 export default function Equipment() {
   return (
