@@ -3,20 +3,11 @@ import { UserPointsProps } from "@/views/profile/types";
 
 export function getUserPointsProps(
   isMd: boolean,
-  isXl: boolean,
-  is2Xl: boolean
+  isXl: boolean
 ): UserPointsProps {
-  if (is2Xl) {
-    return {
-      className: "profile-user-points-2xl",
-      titleSize: Sizes.MD,
-      xpSize: Sizes.LG,
-    };
-  }
-
   if (isXl) {
     return {
-      className: "profile-user-points-2xl",
+      className: "profile-user-points-xl",
       titleSize: Sizes.MD,
       xpSize: Sizes.LG,
     };

@@ -35,8 +35,7 @@ export default function ProfileView() {
   const wrapperRef = useScaleShow(!isLoading);
   const isMd = useMediaQuery({ minWidth: 768 });
   const isXl = useMediaQuery({ minWidth: 1280 });
-  const is2Xl = useMediaQuery({ minWidth: 1536 });
-  const userPointsProps = getUserPointsProps(isMd, isXl, is2Xl);
+  const userPointsProps = getUserPointsProps(isMd, isXl);
 
   if (isLoading || !userContext.userRole) {
     return <Loading />;
