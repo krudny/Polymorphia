@@ -6,7 +6,7 @@ import { useScaleShow } from "@/animations/ScaleShow";
 import useHallOfFamePodium from "@/hooks/course/hall-of-fame/useHallOfFamePodium";
 import useUserContext from "@/hooks/contexts/useUserContext";
 import useHallOfFameContext from "@/hooks/contexts/useHallOfFameContext";
-import { getDisplayName } from "@/views/hall-of-fame/util/displayName";
+import { getDisplayName } from "@/components/hall-of-fame/util/displayName";
 
 export default function HallOfFamePodium() {
   const { data: podium, isLoading } = useHallOfFamePodium();
@@ -16,14 +16,14 @@ export default function HallOfFamePodium() {
 
   if (isLoading || !podium) {
     return (
-      <div className="hall-of-fame-loading-wrapper">
+      <div className="hof-loading-wrapper">
         <Loading />
       </div>
     );
   }
 
   return (
-    <div className="hall-of-fame-desktop-podium" ref={wrapperRef}>
+    <div className="hof-podium-desktop" ref={wrapperRef}>
       {podium.map((student, index) => {
         const { evolutionStage, position } = student.userDetails;
 
@@ -34,7 +34,7 @@ export default function HallOfFamePodium() {
         );
 
         return (
-          <div className="hall-of-fame-podium" key={index}>
+          <div className="hof-podium-item" key={index}>
             <XPCard
               title={displayName}
               subtitle={evolutionStage}

@@ -1,6 +1,6 @@
-import HallOfFameImage from "@/views/hall-of-fame/general/HallOfFameImage";
-import HallOfFamePointsSummary from "@/views/hall-of-fame/general/HallOfFamePointsSummary";
-import HallOfFameUserData from "@/views/hall-of-fame/general/HallOfFameUserData";
+import HallOfFameImage from "@/components/hall-of-fame/general/image";
+import HallOfFamePointsSummary from "@/components/hall-of-fame/general/points-summary";
+import HallOfFameUserData from "@/components/hall-of-fame/general/user-data";
 import UserPoints from "@/components/user-points/UserPoints";
 import "./index.css";
 import { HallOfFameRecordDTO } from "@/interfaces/api/hall-of-fame";
@@ -24,15 +24,15 @@ export default forwardRef<HTMLDivElement, HallOfFameRecordDTO>(
     );
 
     return (
-      <div className="hall-of-fame-desktop-record-wrapper" ref={ref}>
-        <div className="hall-of-fame-desktop-record-user-data-wrapper">
+      <div className="hof-card-desktop-record-wrapper" ref={ref}>
+        <div className="hof-card-desktop-record-user-data-wrapper">
           <HallOfFameImage
             position={userDetails.position}
             imageUrl={userDetails.imageUrl}
           />
           <HallOfFameUserData {...userDetails} />
         </div>
-        <div className="hall-of-fame-desktop-record-user-points-wrapper">
+        <div className="hof-card-desktop-record-user-points-wrapper">
           <UserPoints
             titleSize="sm"
             xpSize="md"
