@@ -1,7 +1,7 @@
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import { useRouter } from "next/navigation";
-import { NotFoundContentProps } from "@/components/home/not-found-content/types";
-import "../index.css";
+import { NotFoundContentProps } from "@/components/home/not-found/content/types";
+import "../../index.css";
 
 export default function NotFoundContent({
   titleRef,

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import Search from "@/components/search";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import { useMediaQuery } from "react-responsive";
 import "./index.css";
 import useTargetContext from "@/hooks/contexts/useTargetContext";

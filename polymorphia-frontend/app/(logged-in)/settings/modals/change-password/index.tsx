@@ -2,7 +2,7 @@ import Modal from "@/components/modal";
 import { ChangePasswordModalProps } from "@/app/(logged-in)/settings/modals/change-password/types";
 import React, { FormEvent } from "react";
 import { FieldErrorMessage } from "@/components/form/FieldErrorMessage";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import { changePasswordSchema } from "@/components/form/schema";
 import { ChangePasswordDTO } from "@/interfaces/api/password";
 import useChangePassword from "@/hooks/course/auth/useChangePassword";

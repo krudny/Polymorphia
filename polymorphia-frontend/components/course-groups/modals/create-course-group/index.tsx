@@ -10,7 +10,7 @@ import useTeachingRole from "@/hooks/course/course-group/useTeachingRole";
 import React, { useState } from "react";
 import { FieldErrorMessage } from "@/components/form/FieldErrorMessage";
 import Selector from "@/components/selector";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import Loading from "@/components/loading";
 import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";

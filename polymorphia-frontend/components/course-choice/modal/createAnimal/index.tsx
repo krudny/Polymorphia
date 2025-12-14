@@ -2,7 +2,7 @@ import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import Modal from "@/components/modal";
 import "./index.css";
 import React, { FormEvent } from "react";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import { useForm } from "@tanstack/react-form";
 import { createAnimalSchema } from "@/components/form/schema";
 import useCreateAnimal from "@/hooks/course/animal/useCreateAnimal";

@@ -1,6 +1,6 @@
 import { Accordion } from "@/components/accordion/Accordion";
 import AccordionSection from "@/components/accordion/AccordionSection";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import Loading from "@/components/loading";
 import Modal from "@/components/modal";
 import { AccordionRef } from "@/providers/accordion/types";

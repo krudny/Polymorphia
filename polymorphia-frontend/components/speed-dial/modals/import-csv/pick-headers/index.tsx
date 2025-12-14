@@ -1,4 +1,4 @@
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import useImportCSVContext from "@/hooks/contexts/useImportCSVContext";
 import toast from "react-hot-toast";
 import "./index.css";

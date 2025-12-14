@@ -9,7 +9,7 @@ import {
   InviteSpecificTypes,
   InviteTypes,
 } from "@/interfaces/general";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import "./index.css";
 import InviteUserToCourseModal from "@/components/speed-dial/modals/invite-user/invite-to-course";
 import Modal from "@/components/modal";

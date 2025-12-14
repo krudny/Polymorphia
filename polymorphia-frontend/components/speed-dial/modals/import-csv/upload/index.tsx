@@ -1,6 +1,6 @@
 "use client";
 
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import { ReactNode, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import useImportCSVContext from "@/hooks/contexts/useImportCSVContext";

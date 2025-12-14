@@ -7,7 +7,7 @@ import {
   AssignRewardModalProps,
 } from "@/views/grading/modals/assign-reward/types";
 import { ChestResponseDTO, ItemResponseDTO } from "@/interfaces/api/reward";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import "./index.css";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import { useEffect, useState } from "react";

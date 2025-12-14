@@ -5,7 +5,7 @@ import "./index.css";
 import useAvailableCourses from "@/hooks/course/course-choice/useAvailableCourses";
 import Loading from "@/components/loading";
 import { useFadeInAnimate } from "@/animations/FadeIn";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import useLogout from "@/hooks/course/auth/useLogout";
 
 export default function CourseChoice() {

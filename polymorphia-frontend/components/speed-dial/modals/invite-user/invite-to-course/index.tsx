@@ -2,7 +2,7 @@ import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import Modal from "@/components/modal";
 import "./index.css";
 import React, { FormEvent, useState } from "react";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import { useForm } from "@tanstack/react-form";
 import { inviteSchema } from "@/components/form/schema";
 import {
