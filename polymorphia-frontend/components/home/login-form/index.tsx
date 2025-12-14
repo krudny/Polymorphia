@@ -2,7 +2,7 @@
 
 import React, { FormEvent, useState } from "react";
 import { useForm } from "@tanstack/react-form";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import NavigationArrow from "@/components/slider/NavigationArrow";
 import { LoginDTO } from "@/interfaces/api/login";
 import { FieldErrorMessage } from "@/components/form/FieldErrorMessage";
@@ -89,6 +89,7 @@ export default function LoginForm({ onBackAction }: LoginFormProps) {
                 <>
                   <ButtonWithBorder
                     text={login.isPending ? "Logowanie..." : "Zaloguj się"}
+                    type="submit"
                     className="mt-12"
                     isActive={!isPristine && canSubmit && !login.isPending}
                   />

@@ -1,5 +1,5 @@
 import React, { FormEvent } from "react";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import { useForm } from "@tanstack/react-form";
 import { resetPasswordSchema } from "@/components/form/schema";
 import "./index.css";
@@ -84,6 +84,7 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
                   text={
                     resetPassword.isPending ? "Zmiana hasła..." : "Zmień hasło"
                   }
+                  type="submit"
                   className="mt-12"
                   isActive={
                     !isPristine && canSubmit && !resetPassword.isPending

@@ -1,4 +1,4 @@
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import "./index.css";
 import { BaseItem, ChestBehaviors } from "@/interfaces/api/reward";
 import useModalContext from "@/hooks/contexts/useModalContext";

@@ -1,6 +1,6 @@
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import Modal from "@/components/modal";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
 import Selector from "@/components/selector";

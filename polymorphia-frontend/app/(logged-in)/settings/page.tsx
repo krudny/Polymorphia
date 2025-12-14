@@ -1,6 +1,6 @@
 "use client";
 
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import { useRef, useState } from "react";
 import { useScaleShow } from "@/animations/ScaleShow";
 import toast from "react-hot-toast";

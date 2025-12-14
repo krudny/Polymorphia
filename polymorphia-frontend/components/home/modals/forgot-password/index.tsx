@@ -1,6 +1,6 @@
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import React, { FormEvent } from "react";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import { useForm } from "@tanstack/react-form";
 import { forgotPasswordSchema } from "@/components/form/schema";
 import { ForgotPasswordRequestDTO } from "@/interfaces/api/password";
@@ -60,6 +60,7 @@ function ForgotPasswordModalContent() {
           {([canSubmit, isPristine]) => (
             <ButtonWithBorder
               text={mutation.isPending ? "Wysyłanie..." : "Potwierdź"}
+              type="submit"
               className="!mx-0 !py-1 !w-full !mt-2"
               isActive={!isPristine && canSubmit && !mutation.isPending}
             />

@@ -36,7 +36,7 @@ export default function ButtonWithBorder({
   isActive = true,
   forceDark,
   icon,
-  type = "submit",
+  type = "button",
 }: ButtonWithBorderProps & VariantProps) {
   return (
     <button

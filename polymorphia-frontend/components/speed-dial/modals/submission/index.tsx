@@ -13,7 +13,7 @@ import "./index.css";
 import { useMediaQuery } from "react-responsive";
 import { Accordion } from "@/components/accordion/Accordion";
 import AccordionSection from "@/components/accordion/AccordionSection";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import { ChangeEventHandler, useState } from "react";
 import useSubmissionsUpdate from "@/hooks/course/submission/useSubmissionsUpdate";
 import useModalContext from "@/hooks/contexts/useModalContext";

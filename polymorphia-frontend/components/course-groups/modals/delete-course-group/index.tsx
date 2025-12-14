@@ -1,6 +1,6 @@
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import Modal from "@/components/modal";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import "../index.css";
 import useModalContext from "@/hooks/contexts/useModalContext";
 import useDeleteCourseGroup from "@/hooks/course/course-group/useDeleteCourseGroup";

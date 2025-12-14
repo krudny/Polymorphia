@@ -8,9 +8,7 @@ export function useEnterListener(onEnter: () => void, enabled = true): void {
 
     const handleKeyDown = (event: KeyboardEvent) => {
       const activeElement = event.target as HTMLElement;
-      if (
-        ["INPUT", "TEXTAREA", "SELECT"].includes(activeElement?.nodeName || "")
-      ) {
+      if (["TEXTAREA"].includes(activeElement?.nodeName || "")) {
         return;
       }
 

@@ -5,7 +5,7 @@ import { animateLoginFormVisibility } from "@/animations/Home";
 import { HomeContentProps } from "@/components/home/types";
 import RegisterForm from "@/components/home/register-form";
 import LoginForm from "@/components/home/login-form";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import "./index.css";
 import { useLoginFormAnimation } from "@/hooks/app/animation/useLoginFormAnimation";
 import { useToken } from "@/hooks/course/invitation/useToken";
