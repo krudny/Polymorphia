@@ -6,7 +6,7 @@ import { MarkdownTypes, ViewTypes } from "@/interfaces/general";
 import { useEventParams } from "@/hooks/app/params/useEventParams";
 import { getSpeedDialKey } from "@/components/speed-dial/util";
 
-export default function GradableEventMarkdownView() {
+export default function GradableEventMarkdown() {
   const { eventType } = useEventParams();
   const speedDialKey = getSpeedDialKey(eventType, ViewTypes.MARKDOWN);
 
