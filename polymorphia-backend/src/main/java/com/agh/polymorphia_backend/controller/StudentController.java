@@ -4,7 +4,6 @@ import com.agh.polymorphia_backend.dto.request.student.CreateAnimalRequestDto;
 import com.agh.polymorphia_backend.dto.response.profile.BaseProfileResponseDto;
 import com.agh.polymorphia_backend.dto.response.user.StudentActivityResponseDto;
 import com.agh.polymorphia_backend.model.course.StudentCourseGroupAssignmentId;
-import com.agh.polymorphia_backend.service.grade.GradeService;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.student.ProfileService;
 import com.agh.polymorphia_backend.service.student.StudentService;
@@ -59,6 +58,13 @@ public class StudentController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Void> createAnimal(@RequestBody @Valid CreateAnimalRequestDto requestDTO) {
         animalService.createAnimal(requestDTO);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{animalId}")
+    @PreAuthorize("hasAnyAuthority('COORDINATOR', 'INSTRUCTOR')")
+    public ResponseEntity<Void> deleteAnimal(@PathVariable Long animalId) {
+        animalService.deleteAnimal(animalId);
         return ResponseEntity.noContent().build();
     }
 }

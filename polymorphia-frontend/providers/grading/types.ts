@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import { useFilters } from "@/hooks/course/useFilters";
+import { useFilters } from "@/hooks/course/filters/useFilters";
 import {
   GradingReducerActionType,
   GradingReducerState,

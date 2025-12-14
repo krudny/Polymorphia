@@ -63,7 +63,7 @@ public class InvitationService {
     private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
-    public void inviteUserToCourse(CourseInvitationRequestDto inviteDTO) {
+    public Long inviteUserToCourse(CourseInvitationRequestDto inviteDTO) {
         try {
             Course course = courseService.getCourseById(inviteDTO.getCourseId());
             accessAuthorizer.authorizeCourseAccess(course);
@@ -74,6 +74,8 @@ public class InvitationService {
             createAndSaveUserCourseRole(roleUser.getUser(), course, inviteDTO.getRole());
 
             eventPublisher.publishEvent(new CourseInvitationEvent(inviteDTO, token));
+
+            return roleUser.getUserId();
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FAILED_TO_INVITE);
         }

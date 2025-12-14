@@ -4,7 +4,7 @@ import { useForm } from "@tanstack/react-form";
 import { resetPasswordSchema } from "@/components/form/schema";
 import "./index.css";
 import { FieldErrorMessage } from "@/components/form/FieldErrorMessage";
-import useResetPassword from "@/hooks/general/useResetPassword";
+import useResetPassword from "@/hooks/course/auth/useResetPassword";
 import { ResetPasswordFormProps } from "@/components/home/reset-password-form/types";
 
 export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {

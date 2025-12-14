@@ -1,10 +1,8 @@
 package com.agh.polymorphia_backend.dto.response.profile;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
 @EqualsAndHashCode(callSuper = true)

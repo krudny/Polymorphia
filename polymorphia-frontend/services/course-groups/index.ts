@@ -4,7 +4,12 @@ import {
   CourseGroupTypes,
 } from "@/services/course-groups/types";
 import { ApiClient } from "@/services/api/client";
-import { StudentLastActivityDTO } from "@/interfaces/api/course-groups";
+import {
+  ChangeStudentCourseGroupRequestDTO,
+  CreateCourseGroupRequestDTO,
+  StudentLastActivityDTO,
+  UpdateCourseGroupRequestDTO,
+} from "@/interfaces/api/course-groups";
 import {
   EquipmentChestResponseDTO,
   EquipmentItemResponseDTO,
@@ -65,6 +70,29 @@ const CourseGroupsService = {
     return await ApiClient.get<StudentSummaryResponseDTO>(
       `/students/${userId}/profile?courseId=${courseId}`
     );
+  },
+
+  createCourseGroup: async (
+    body: CreateCourseGroupRequestDTO
+  ): Promise<void> => {
+    await ApiClient.post(`/course-groups`, body);
+  },
+
+  deleteCourseGroup: async (courseGroupId: number): Promise<void> => {
+    await ApiClient.delete(`/course-groups/${courseGroupId}`);
+  },
+
+  updateCourseGroup: async (
+    courseGroupId: number,
+    body: UpdateCourseGroupRequestDTO
+  ): Promise<void> => {
+    await ApiClient.put(`/course-groups/${courseGroupId}`, body);
+  },
+
+  changeStudentCourseGroup: async (
+    body: ChangeStudentCourseGroupRequestDTO
+  ): Promise<void> => {
+    await ApiClient.put(`/course-groups/change-student-group`, body);
   },
 };
 

@@ -1,0 +1,15 @@
+import { useQuery } from "@tanstack/react-query";
+import KnowledgeBaseService from "@/services/knowledge-base";
+import { UseEvolutionStages } from "@/hooks/course/knowledge-base/useEvolutionStages/types";
+import { useUserDetails } from "@/hooks/contexts/useUserContext";
+
+export default function useEvolutionStages(): UseEvolutionStages {
+  const { courseId } = useUserDetails();
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["evolutionStages", courseId],
+    queryFn: () => KnowledgeBaseService.getEvolutionStages(courseId),
+    refetchOnWindowFocus: false,
+  });
+
+  return { data, isLoading, isError };
+}

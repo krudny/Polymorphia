@@ -1,0 +1,17 @@
+import { useQuery } from "@tanstack/react-query";
+import { UseCourseGroup } from "@/hooks/course/course-group/useCourseGroup/types";
+import UserService from "@/services/user";
+
+export default function useCourseGroup(
+  courseId: number,
+  isStudent: boolean = true
+): UseCourseGroup {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["courseGroup", courseId],
+    queryFn: () => UserService.getCourseGroup(courseId),
+    refetchOnMount: isStudent,
+    enabled: isStudent,
+  });
+
+  return { data, isLoading, isError };
+}

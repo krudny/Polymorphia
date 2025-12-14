@@ -3,7 +3,7 @@ import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import ErrorComponent from "@/components/error";
 import "./index.css";
-import { useProjectGroup } from "@/hooks/course/useProjectGroup";
+import { useProjectGroup } from "@/hooks/course/projects/useProjectGroup";
 
 export default function StudentInfo() {
   const { data, isLoading, isError } = useProjectGroup();

@@ -12,12 +12,12 @@ import org.springframework.transaction.event.TransactionalEventListener;
 public class EmailEventListener {
     private final EmailService emailService;
 
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
     public void handleForgotPassword(ForgotPasswordEvent event) {
         emailService.sendForgotPasswordEmail(event.getRequestDTO(), event.getToken());
     }
 
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
     public void handleCourseInvitation(CourseInvitationEvent event) {
         emailService.sendInvitationEmail(event.getInviteDTO(), event.getToken());
     }

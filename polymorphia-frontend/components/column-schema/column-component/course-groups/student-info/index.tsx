@@ -10,8 +10,8 @@ import ChestSummary from "@/components/column-schema/column-component/course-gro
 import StudentSummary from "@/components/column-schema/column-component/course-groups/student-info/student-summary";
 import useCourseGroupsContext from "@/hooks/contexts/useCourseGroupsContext";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
-import useStudentItems from "@/hooks/course/useStudentItems";
-import useStudentChests from "@/hooks/course/useStudentChests";
+import useStudentItems from "@/hooks/course/course-group/useStudentItems";
+import useStudentChests from "@/hooks/course/course-group/useStudentChests";
 import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
 import ColumnSwappableComponent from "@/components/column-schema/column-component/shared/column-swappable-component";

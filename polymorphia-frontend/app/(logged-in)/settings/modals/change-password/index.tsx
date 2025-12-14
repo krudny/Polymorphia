@@ -1,11 +1,11 @@
-import Modal from "@/components/modal/Modal";
+import Modal from "@/components/modal";
 import { ChangePasswordModalProps } from "@/app/(logged-in)/settings/modals/change-password/types";
 import React, { FormEvent } from "react";
 import { FieldErrorMessage } from "@/components/form/FieldErrorMessage";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { changePasswordSchema } from "@/components/form/schema";
 import { ChangePasswordDTO } from "@/interfaces/api/password";
-import useChangePassword from "@/hooks/course/useChangePassword";
+import useChangePassword from "@/hooks/course/auth/useChangePassword";
 import "./index.css";
 import { useForm } from "@tanstack/react-form";
 import useModalContext from "@/hooks/contexts/useModalContext";

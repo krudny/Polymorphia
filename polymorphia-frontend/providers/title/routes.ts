@@ -1,7 +1,7 @@
-import useEventSectionTitle from "@/hooks/title/useEventSectionTitle";
+import useEventSectionTitle from "@/hooks/app/title/useEventSectionTitle";
 import { TitleRule } from "@/providers/title/types";
-import useCourseGroupTitle from "@/hooks/title/useCourseGroupTitle";
-import useGradableEventTitle from "@/hooks/title/useGradableEventTitle";
+import useCourseGroupTitle from "@/hooks/app/title/useCourseGroupTitle";
+import useGradableEventTitle from "@/hooks/app/title/useGradableEventTitle";
 
 export const GENERAL_APPLICATION_ROUTES: TitleRule[] = [
   { pattern: /^\/$/, useTitleHook: () => "" },

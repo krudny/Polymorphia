@@ -4,7 +4,7 @@ import { useForm } from "@tanstack/react-form";
 import { registerSchema } from "@/components/form/schema";
 import "./index.css";
 import { RegisterFormProps } from "@/components/home/register-form/types";
-import useRegister from "@/hooks/general/useRegister";
+import useRegister from "@/hooks/course/invitation/useRegister";
 import { FieldErrorMessage } from "@/components/form/FieldErrorMessage";
 
 export default function RegisterForm({ token }: RegisterFormProps) {

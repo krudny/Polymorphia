@@ -1,5 +1,5 @@
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
-import Modal from "@/components/modal/Modal";
+import Modal from "@/components/modal";
 import "./index.css";
 import React, { FormEvent, useState } from "react";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
@@ -11,13 +11,16 @@ import {
   Roles,
   RoleTextMap,
 } from "@/interfaces/api/user";
-import useInviteUser from "@/hooks/course/useInviteStudent";
+import useInviteUser from "@/hooks/course/invitation/useInviteStudent";
 import Selector from "@/components/selector";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { isValidRole } from "@/shared/is-valid-role";
 import { FieldErrorMessage } from "@/components/form/FieldErrorMessage";
+import { InviteUserToCourseModalProps } from "@/components/speed-dial/modals/invite-user/invite-to-course/types";
 
-function InviteUserToCourseModalContent() {
+function InviteUserToCourseModalContent({
+  onEntityCreated,
+}: InviteUserToCourseModalProps) {
   const { mutation } = useInviteUser();
   const { courseId } = useUserDetails();
   const [selectedRole, setSelectedRole] = useState<Role | null>(null);
@@ -35,7 +38,12 @@ function InviteUserToCourseModalContent() {
       onSubmit: inviteSchema,
     },
     onSubmit: async ({ value }) => {
-      mutation.mutate({ ...value });
+      try {
+        const createdUserId = await mutation.mutateAsync({ ...value });
+        onEntityCreated?.(createdUserId);
+      } catch (error) {
+        // pass
+      }
     },
   });
 
@@ -186,7 +194,8 @@ function InviteUserToCourseModalContent() {
 
 export default function InviteUserToCourseModal({
   onClosedAction,
-}: SpeedDialModalProps) {
+  onEntityCreated,
+}: SpeedDialModalProps & InviteUserToCourseModalProps) {
   return (
     <Modal
       isDataPresented={true}
@@ -194,7 +203,7 @@ export default function InviteUserToCourseModal({
       title="Zaproś użytkownika do kursu"
       subtitle="Uzupełnij wszystkie dane:"
     >
-      <InviteUserToCourseModalContent />
+      <InviteUserToCourseModalContent onEntityCreated={onEntityCreated} />
     </Modal>
   );
 }

@@ -1,14 +1,14 @@
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
-import Modal from "@/components/modal/Modal";
 import React, { FormEvent } from "react";
 import ButtonWithBorder from "@/components/button/ButtonWithBorder";
 import { useForm } from "@tanstack/react-form";
 import { forgotPasswordSchema } from "@/components/form/schema";
 import { ForgotPasswordRequestDTO } from "@/interfaces/api/password";
-import useForgotPassword from "@/hooks/general/useForgotPassword";
+import useForgotPassword from "@/hooks/course/auth/useForgotPassword";
 import { FieldErrorMessage } from "@/components/form/FieldErrorMessage";
 import "./index.css";
 import useModalContext from "@/hooks/contexts/useModalContext";
+import Modal from "@/components/modal";
 
 function ForgotPasswordModalContent() {
   const { mutation } = useForgotPassword();

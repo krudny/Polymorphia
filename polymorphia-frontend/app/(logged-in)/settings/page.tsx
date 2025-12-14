@@ -8,9 +8,9 @@ import { useTheme } from "next-themes";
 import useNavigationContext from "@/hooks/contexts/useNavigationContext";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import "./index.css";
-import useAvailableCourses from "@/hooks/course/useAvailableCourses";
+import useAvailableCourses from "@/hooks/course/course-choice/useAvailableCourses";
 import Loading from "@/components/loading";
-import usePreferredCourseUpdate from "@/hooks/course/usePreferredCourseUpdate";
+import usePreferredCourseUpdate from "@/hooks/course/course-choice/usePreferredCourseUpdate";
 import Selector from "@/components/selector";
 import ChangePasswordModal from "@/app/(logged-in)/settings/modals/change-password";
 

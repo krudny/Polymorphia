@@ -1,6 +1,6 @@
 "use client";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
-import Modal from "@/components/modal/Modal";
+import Modal from "@/components/modal";
 import "./index.css";
 import { ReactNode } from "react";
 import { ImportCSVProvider } from "@/providers/import-csv";

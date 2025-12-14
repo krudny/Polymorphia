@@ -2,6 +2,8 @@ package com.agh.polymorphia_backend.service.grade;
 
 import com.agh.polymorphia_backend.dto.request.grade.CriterionGradeRequestDto;
 import com.agh.polymorphia_backend.dto.request.grade.GradeRequestDto;
+import com.agh.polymorphia_backend.dto.request.notification.GradeNotificationRequest;
+import com.agh.polymorphia_backend.dto.request.notification.RewardNotificationRequest;
 import com.agh.polymorphia_backend.dto.request.reward.ShortAssignedRewardRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.StudentGroupTargetRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.StudentTargetRequestDto;
@@ -10,6 +12,7 @@ import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.grade.Grade;
+import com.agh.polymorphia_backend.model.notification.NotificationType;
 import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.reward.RewardType;
 import com.agh.polymorphia_backend.model.reward.assigned.AssignedChest;
@@ -19,6 +22,7 @@ import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.model.user.student.Student;
 import com.agh.polymorphia_backend.service.criteria.CriterionGradeService;
 import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
+import com.agh.polymorphia_backend.service.notification.NotificationDispatcher;
 import com.agh.polymorphia_backend.service.project.ProjectGroupService;
 import com.agh.polymorphia_backend.service.reward.AssignedRewardService;
 import com.agh.polymorphia_backend.service.reward.BonusXpCalculator;
@@ -46,6 +50,7 @@ public class GradingService {
     private final GradeService gradeService;
     private final ProjectGroupService projectGroupService;
     private final CriterionGradeService criterionGradeService;
+    private final NotificationDispatcher notificationDispatcher;
 
     @Transactional
     public void submitGrade(GradeRequestDto request) {
@@ -112,15 +117,23 @@ public class GradingService {
 
         gradeService.saveGrade(grade);
         criterionGradeService.saveAll(criteriaGrades);
-        createAndSaveAssignedRewards(criteriaGrades, request.getCriteria());
+        createAndSaveAssignedRewards(criteriaGrades, request.getCriteria(), target.id());
 
         bonusXpCalculator.updateAnimalFlatBonusXp(animal.getId());
         bonusXpCalculator.updateAnimalPercentageBonusXp(animal.getId());
 
+        GradeNotificationRequest notificationRequest = GradeNotificationRequest.builder()
+                .userId(target.id())
+                .notificationType(NotificationType.NEW_GRADE)
+                .gradableEvent(gradableEventService.getGradableEventById(grade.getGradableEvent().getId()))
+                .build();
+
+        notificationDispatcher.dispatch(notificationRequest);
+
         return grade;
     }
 
-    private void createAndSaveAssignedRewards(List<CriterionGrade> criteriaGrades, Map<Long, CriterionGradeRequestDto> criteria) {
+    private void createAndSaveAssignedRewards(List<CriterionGrade> criteriaGrades, Map<Long, CriterionGradeRequestDto> criteria, Long targetId) {
         List<AssignedReward> assignedRewards = new ArrayList<>();
 
         for (CriterionGrade criterionGrade : criteriaGrades) {
@@ -155,6 +168,16 @@ public class GradingService {
         assignedRewardService.saveAssignedChest(assignedChests);
         assignedRewardService.saveAssignedItems(assignedItems);
         criterionGradeService.saveAll(criteriaGrades);
+
+        for(AssignedReward reward : assignedRewards) {
+            RewardNotificationRequest notificationRequest = RewardNotificationRequest.builder()
+                    .userId(targetId)
+                    .notificationType(NotificationType.NEW_REWARD)
+                    .reward(reward.getReward())
+                    .build();
+
+            notificationDispatcher.dispatch(notificationRequest);
+        }
     }
 
     private GradeRequestDto getStudentGradeRequest(GradeRequestDto request, Long studentId) {

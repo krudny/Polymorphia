@@ -1,9 +1,6 @@
 package com.agh.polymorphia_backend.service.user;
 
-import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
-import com.agh.polymorphia_backend.model.user.User;
-import com.agh.polymorphia_backend.model.user.UserCourseRole;
-import com.agh.polymorphia_backend.model.user.UserType;
+import com.agh.polymorphia_backend.model.user.*;
 import com.agh.polymorphia_backend.model.user.student.Student;
 import com.agh.polymorphia_backend.model.user.undefined.UndefinedUser;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
@@ -110,6 +107,18 @@ public class UserService implements UserDetailsService {
     public Student getStudentByIndexNumber(Integer indexNumber) {
         return studentRepository.findByIndexNumber(indexNumber)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono użytkownika o podanym numerze indeksu"));
+    }
+
+    public TeachingRoleUser getTeachingRoleUser(Long userId, Long courseId) {
+        UserType role = getAnyUserRoleInCourse(courseId, userId);
+
+        return switch (role) {
+            case INSTRUCTOR -> instructorRepository.findById(userId)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, USER_NOT_FOUND));
+            case COORDINATOR -> coordinatorRepository.findById(userId)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, USER_NOT_FOUND));
+            default -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INVALID_ROLE);
+        };
     }
 
     private UserDetails buildUndefinedUser(String email) {

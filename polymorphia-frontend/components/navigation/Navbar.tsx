@@ -5,14 +5,15 @@ import Line from "@/components/navigation/Line";
 import { animateNavbar } from "@/animations/Navigation";
 import "./index.css";
 import { updateMenuItems } from "@/components/course/event-section/EventSectionUtils";
-import useEventSections from "@/hooks/course/useEventSections";
+import useEventSections from "@/hooks/course/event-section/useEventSections";
 import useNavigationContext from "@/hooks/contexts/useNavigationContext";
 import {
   useBottomMenuItems,
   useMainMenuItems,
-} from "@/hooks/general/useMenuOptions";
+} from "@/hooks/app/navigation/useMenuOptions";
 import useUserContext from "@/hooks/contexts/useUserContext";
-import { useTitle } from "@/hooks/general/useTitle";
+import { useTitle } from "@/hooks/app/title/useTitle";
+import useNotificationContext from "@/hooks/contexts/useNotificationsContext";
 
 export default function Navbar() {
   const { isNavbarExpanded, setIsNavbarExpanded } = useNavigationContext();
@@ -20,6 +21,8 @@ export default function Navbar() {
   const { data: eventSections } = useEventSections();
   const { title } = useTitle();
   const { userRole } = useUserContext();
+  const { notificationCount, setIsNotificationModalOpen } =
+    useNotificationContext();
 
   useEffect(() => {
     const drawer = drawerRef.current;
@@ -55,8 +58,15 @@ export default function Navbar() {
           className="cursor-pointer"
         />
         <h1>{title}</h1>
-        {/* TODO: notifications */}
-        <span className="opacity-0 cursor-default!">notifications</span>
+        <div
+          className="navbar-visible-notifications"
+          onClick={() => setIsNotificationModalOpen(true)}
+        >
+          <span>notifications</span>
+          {notificationCount > 0 && (
+            <span className="navbar-notification-badge" />
+          )}
+        </div>
       </div>
       <div ref={drawerRef} className="navbar-drawer">
         <div className="flex-1">
