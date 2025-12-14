@@ -1,15 +1,15 @@
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import Modal from "@/components/modal";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
 import Selector from "@/components/selector";
 import Loading from "@/components/loading";
 import "../index.css";
 import useModalContext from "@/hooks/contexts/useModalContext";
-import useChangeStudentCourseGroup from "@/hooks/course/useChangeStudentCourseGroup";
+import useChangeStudentCourseGroup from "@/hooks/course/course-group/useChangeStudentCourseGroup";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
-import useCourseGroups from "@/hooks/course/useCourseGroups";
+import useCourseGroups from "@/hooks/course/course-group/useCourseGroups";
 import { TargetTypes } from "@/interfaces/api/target";
 import { CourseGroupTypes } from "@/services/course-groups/types";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";

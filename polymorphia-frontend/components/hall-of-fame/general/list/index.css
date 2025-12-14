@@ -1,0 +1,11 @@
+@import "tailwindcss";
+@import "../../../../styles/globals.css";
+
+.hof-list-desktop-rank-wrapper {
+  @apply w-full custom-scrollbar flex flex-col flex-1 min-h-0 overflow-y-auto gap-y-2 2xl:gap-y-4;
+}
+
+.hof-list-mobile-rank-wrapper {
+  @apply w-full my-auto grid grid-cols-1 gap-3 min-[650px]:grid-cols-2 overflow-y-auto custom-scrollbar;
+  scrollbar-gutter: stable both-edges;
+}

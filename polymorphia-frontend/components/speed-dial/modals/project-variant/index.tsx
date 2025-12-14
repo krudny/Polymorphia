@@ -3,7 +3,7 @@ import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import ProjectVariantInfo from "@/shared/project-variant-info";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { TargetTypes } from "@/interfaces/api/target";
-import useProjectVariant from "@/hooks/course/useProjectVariant";
+import useProjectVariant from "@/hooks/course/projects/useProjectVariant";
 import {
   errorComponent,
   noProjectVariantsErrorComponent,

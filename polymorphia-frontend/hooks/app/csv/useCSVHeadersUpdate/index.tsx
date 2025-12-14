@@ -1,0 +1,19 @@
+import {
+  UseCSVHeadersUpdate,
+  UseCSVHeadersUpdateParams,
+} from "@/hooks/app/csv/useCSVHeadersUpdate/types";
+import CSVService from "@/services/csv";
+import { useMutation } from "@tanstack/react-query";
+import { CSVHeadersResponseDTO } from "@/interfaces/api/CSV";
+
+export default function useCSVHeadersUpdate(): UseCSVHeadersUpdate {
+  const mutation = useMutation<
+    CSVHeadersResponseDTO,
+    Error,
+    UseCSVHeadersUpdateParams
+  >({
+    mutationFn: ({ file, type }) => CSVService.getCSVHeaders(file, type),
+  });
+
+  return { mutation };
+}

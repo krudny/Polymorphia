@@ -1,6 +1,6 @@
 import { Dispatch, RefObject, SetStateAction } from "react";
 import { AvailableCoursesDTO } from "@/interfaces/api/user-context";
-import { UsePreferredCourseUpdate } from "@/hooks/course/usePreferredCourseUpdate/types";
+import { UsePreferredCourseUpdate } from "@/hooks/course/course-choice/usePreferredCourseUpdate/types";
 
 export interface CourseChoiceProps {
   courses: AvailableCoursesDTO[];

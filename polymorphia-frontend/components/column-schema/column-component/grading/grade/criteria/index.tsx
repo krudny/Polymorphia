@@ -1,6 +1,6 @@
 import { useFadeInAnimate } from "@/animations/FadeIn";
 import AccordionSection from "@/components/accordion/AccordionSection";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
 import { AccordionRef } from "@/providers/accordion/types";
 import { Fragment, useRef } from "react";

@@ -1,0 +1,20 @@
+import CSVService from "@/services/csv";
+import { useMutation } from "@tanstack/react-query";
+import {
+  UseCSVPreviewUpdate,
+  UseCSVPreviewUpdateParams,
+} from "@/hooks/app/csv/useCSVPreviewUpdate/types";
+import { CSVPreviewResponseDTO } from "@/interfaces/api/CSV";
+
+export default function useCSVPreviewUpdate(): UseCSVPreviewUpdate {
+  const mutation = useMutation<
+    CSVPreviewResponseDTO,
+    Error,
+    UseCSVPreviewUpdateParams
+  >({
+    mutationFn: ({ file, csvHeaders }) =>
+      CSVService.getCSVPreview(file, csvHeaders),
+  });
+
+  return { mutation };
+}
