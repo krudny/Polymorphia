@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "../../../styles/globals.css";
+@import "../../styles/globals.css";
 
 .profile {
   @apply flex-1 w-full opacity-0 flex-col-centered extra-large-center my-auto max-h-[50rem] h-[calc(100dvh-6rem)] 3xl:flex-none;
@@ -29,32 +29,32 @@
   @apply flex-col-centered gap-y-3;
 
   h1 {
-    @apply text-6xl 2xl:text-7xl;
+    @apply text-6xl xl:text-7xl;
   }
 
   h2 {
-    @apply text-4xl md:text-5xl 2xl:text-6xl;
+    @apply text-4xl md:text-5xl xl:text-6xl;
   }
 
   h3 {
-    @apply text-3xl 2xl:text-5xl;
+    @apply text-3xl xl:text-5xl;
   }
 
   h4 {
-    @apply text-2xl 2xl:text-4xl;
+    @apply text-2xl xl:text-4xl;
   }
 }
 
 .profile-user-points-xs {
-  @apply w-full md:hidden mt-6;
+  @apply w-full mt-6;
 }
 
 .profile-user-points-md {
-  @apply hidden md:block 2xl:hidden w-4/5 max-w-xl mt-6;
+  @apply w-4/5 max-w-xl mt-6;
 }
 
 .profile-user-points-2xl {
-  @apply hidden 2xl:block w-4/5 mt-10;
+  @apply w-4/5 mt-10;
 }
 
 .profile-points {
@@ -62,9 +62,9 @@
 }
 
 .profile-progress-bar-mobile {
-  @apply md:hidden w-full px-12 h-fit mt-6;
+  @apply lg:hidden w-full px-12 h-fit mt-6;
 }
 
 .profile-progress-bar-desktop {
-  @apply hidden md:block w-full h-fit pb-5 px-10 mt-4 lg:mt-0;
+  @apply hidden lg:block w-full h-fit pb-5 px-10 mt-4 lg:mt-0;
 }
