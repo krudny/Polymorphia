@@ -33,7 +33,6 @@ import com.agh.polymorphia_backend.repository.course.CourseGroupRepository;
 import com.agh.polymorphia_backend.repository.project.ProjectRepository;
 import com.agh.polymorphia_backend.repository.project.ProjectVariantRepository;
 import com.agh.polymorphia_backend.repository.project.SuggestedVariant;
-import com.agh.polymorphia_backend.service.hall_of_fame.HallOfFameService;
 import com.agh.polymorphia_backend.service.mapper.ProjectMapper;
 import com.agh.polymorphia_backend.service.mapper.UserMapper;
 import com.agh.polymorphia_backend.service.student.AnimalService;
@@ -45,7 +44,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -61,7 +63,6 @@ public class ProjectService {
     private final ProjectVariantRepository projectVariantRepository;
     private final AccessAuthorizer accessAuthorizer;
     private final AnimalService animalService;
-    private final HallOfFameService hallOfFameService;
     private final UserService userService;
     private final ProjectMapper projectMapper;
     private final UserMapper userMapper;
@@ -78,7 +79,7 @@ public class ProjectService {
 
     public Map<Long, Long> getSuggestedProjectVariants(Optional<TargetRequestDto> target, Long projectId) {
         Project project = getProjectGradableEvent(projectId);
-        Optional<ProjectGroup> projectGroup = getProjectGroupForTargetAndAuthorize(project, project.getEventSection().getCourse(),target);
+        Optional<ProjectGroup> projectGroup = getProjectGroupForTargetAndAuthorize(project, project.getEventSection().getCourse(), target);
         Long groupId = projectGroup.map(ProjectGroup::getId).orElse(null);
 
         List<SuggestedVariant> suggestedVariants = projectRepository.suggestVariantsForNewGroup(projectId, groupId, PER_CATEGORY_LIMIT);
@@ -115,10 +116,7 @@ public class ProjectService {
 
     public ProjectGroupConfigurationResponseDto getProjectGroupConfiguration(TargetRequestDto targetRequestDto, Long projectId) {
         ProjectGroup projectGroup = getProjectGroupForTargetAndAuthorize(getProjectGradableEvent(projectId), targetRequestDto);
-
-        List<Long> studentIds = projectGroup.getAnimals().stream()
-                .map(animal -> animalService.getStudentIdForAnimalId(animal.getId()))
-                .toList();
+        List<Long> studentIds = projectGroupService.getStudentIdsFromProjectGroup(projectGroup);
 
         Map<Long, Long> selectedVariants = projectGroup.getProjectVariants().stream()
                 .collect(toMap(
@@ -132,6 +130,7 @@ public class ProjectService {
                 .build();
     }
 
+    @Transactional
     public void deleteProjectGroup(TargetRequestDto targetRequestDto, Long projectId) {
         Project project = getProjectGradableEvent(projectId);
         ProjectGroup projectGroup = getProjectGroupForTargetAndAuthorize(project, targetRequestDto);
@@ -155,27 +154,21 @@ public class ProjectService {
         projectGroup.setProjectVariants(projectVariants);
         projectGroup.setAnimals(animals);
         projectGroupService.save(projectGroup);
-        var tmp = 3;
-        tmp = 4;
     }
 
     private List<Animal> getAndValidateAnimals(List<Long> studentIds, Course course, boolean allowCrossCourseGroupProjectGroups) {
-        List<Animal> animals = studentIds.stream()
-                .map(id -> animalService.getAnimal(id, course.getId())).collect(Collectors.toList());
-        if (allowCrossCourseGroupProjectGroups) {
-            Long courseGroupsNumber = animalService.countAnimalCourseGroups(animals);
-            if (courseGroupsNumber > 1) {
+        List<Animal> animals = animalService.getAnimals(studentIds, course.getId());
+        if (!allowCrossCourseGroupProjectGroups) {
+            if (animalService.countAnimalCourseGroups(animals) > 1) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Przypisanie studentów z różnych grup zajęciowych do jednej grupy projektowej jest niemożliwe.");
             }
-        } else {
             studentIds.forEach(studentId -> accessAuthorizer.authorizeStudentDataAccess(course, studentId));
         }
         return animals;
     }
 
 
-    public List<ProjectVariant> getAndValidateSelectedVariants(Project project,
-                                                               Map<Long, Long> selectedVariants) {
+    private List<ProjectVariant> getAndValidateSelectedVariants(Project project, Map<Long, Long> selectedVariants) {
         Set<Long> requiredCategoriesIds = project.getVariantCategories().stream()
                 .map(ProjectVariantCategory::getId).collect(Collectors.toSet());
 
@@ -204,55 +197,48 @@ public class ProjectService {
     public ProjectGroupConfigurationFiltersResponseDto getProjectGroupConfigurationFilters(Optional<TargetRequestDto> targetRequestDto, Long projectId) {
         Project project = getProjectGradableEvent(projectId);
         Course course = project.getEventSection().getCourse();
-        Long userId = userService.getCurrentUser().getUser().getId();
         getProjectGroupForTargetAndAuthorize(project, course, targetRequestDto);
 
+        Long teachingRoleUserId = project.isAllowCrossCourseGroupProjectGroups() ? null : userService.getCurrentUser().getUser().getId();
         List<FilterOptionResponseDto> options = courseGroupRepository
-                .findShortCourseGroups(course.getId(), null, userId)
+                .findShortCourseGroups(course.getId(), null, teachingRoleUserId)
                 .stream()
                 .map(courseGroup -> FilterOptionResponseDto.builder()
                         .value(courseGroup.getName())
                         .build())
                 .collect(Collectors.toList());
 
-        long max;
-        List<String> defaultValues;
-        if (projectRepository.findAllowCrossCourseGroupProjectGroups(projectId)) {
-            max = options.size();
+        ProjectGroupConfigurationFiltersResponseDto.ProjectGroupConfigurationFiltersResponseDtoBuilder builder = ProjectGroupConfigurationFiltersResponseDto.builder();
+        if (project.isAllowCrossCourseGroupProjectGroups()) {
             options.add(FilterOptionResponseDto.builder()
                     .value("all")
                     .label("Wszystkie")
-                    .specialBehaviour("EXCLUSIVE")
+                    .specialBehavior("EXCLUSIVE")
                     .build());
-            defaultValues = List.of("all");
+            builder.max((long) options.size() - 1)
+                    .options(options)
+                    .defaultValues(List.of("all"));
         } else {
-            max = 1L;
-            defaultValues = List.of(options.getFirst().getValue());
+            builder.max(1L)
+                    .options(options)
+                    .defaultValues(List.of(options.getFirst().getValue()));
         }
 
-        return ProjectGroupConfigurationFiltersResponseDto.builder()
-                .options(options)
-                .defaultValues(defaultValues)
-                .max(max)
-                .build();
+        return builder.build();
     }
 
     public List<ProjectGroupPickStudentsResponseDto> getProjectGroupConfigurationGroupPickStudents(ProjectGroupPickStudentsRequestDto requestDto, Long projectId) {
-        boolean includeAllGroups = requestDto.getGroups().isEmpty() ||
-                (requestDto.getGroups().size() == 1 && requestDto.getGroups().getFirst().equals("all"));
+        boolean includeAllGroups = requestDto.getGroups().size() == 1 && requestDto.getGroups().getFirst().equals("all");
 
         Project project = getProjectGradableEvent(projectId);
         Course course = project.getEventSection().getCourse();
         Long userId = userService.getCurrentUser().getUser().getId();
         List<ProjectGroupPickStudentsResponseDto> students = projectRepository
-                .getProjectGroupConfigurationGroupPickStudents(course.getId(), projectId, userId, requestDto.getGroups(), includeAllGroups);
+                .getProjectGroupConfigurationGroupPickStudents(course.getId(), project, userId, requestDto.getGroups(), includeAllGroups);
 
         getProjectGroupForTargetAndAuthorize(project, course, Optional.ofNullable(requestDto.getTarget()))
-                .ifPresent(projectGroup -> projectGroup.getAnimals().forEach(animal -> {
-                    Long studentId = animalService.getStudentIdForAnimalId(animal.getId());
-                    HallOfFameEntry hofe = hallOfFameService.getStudentHallOfFame(studentId, course.getId());
-                    students.add(projectMapper.toProjectGroupPickStudentsResponseDto(hofe));
-                }));
+                .ifPresent(projectGroup ->
+                        students.addAll(projectRepository.getProjectGroupConfigurationGroupPickStudents(projectGroup)));
         return students;
     }
 
@@ -306,7 +292,7 @@ public class ProjectService {
                 .build();
     }
 
-    public Project getProjectGradableEvent(Long projectId) {
+    private Project getProjectGradableEvent(Long projectId) {
         return projectRepository.findById(projectId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Projekt nie został znaleziony."));
     }

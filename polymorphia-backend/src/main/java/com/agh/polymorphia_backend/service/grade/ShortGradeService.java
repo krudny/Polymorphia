@@ -12,11 +12,14 @@ import com.agh.polymorphia_backend.dto.response.user_context.UserDetailsResponse
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.grade.Grade;
+import com.agh.polymorphia_backend.model.project.Project;
+import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.service.criteria.CriterionGradeService;
 import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
 import com.agh.polymorphia_backend.service.project.ProjectService;
 import com.agh.polymorphia_backend.service.student.AnimalService;
+import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -38,6 +41,7 @@ public class ShortGradeService {
     private final GradeService gradeService;
     private final AnimalService animalService;
     private final ProjectService projectService;
+    private final UserService userService;
 
     public ShortGradeResponseDtoWithType getShortGrade(Long gradableEventId, TargetRequestDto targetRequestDto) {
         GradableEvent gradableEvent = gradableEventService.getGradableEventById(gradableEventId);
@@ -56,7 +60,13 @@ public class ShortGradeService {
 
     private StudentShortGradeResponseDto getShortGradeStudent(GradableEvent gradableEvent, Long studentId) {
         Course course = gradableEvent.getEventSection().getCourse();
-        accessAuthorizer.authorizeStudentDataAccess(course, studentId);
+        if (!userService.getCurrentUserRole().equals(UserType.STUDENT)
+                && gradableEvent instanceof Project
+                && ((Project) gradableEvent).isAllowCrossCourseGroupProjectGroups()) {
+            accessAuthorizer.authorizeCourseAccess(course);
+        } else {
+            accessAuthorizer.authorizeStudentDataAccess(course, studentId);
+        }
         return getShortGradeWithoutAuthorization(gradableEvent, studentId, course.getId());
     }
 

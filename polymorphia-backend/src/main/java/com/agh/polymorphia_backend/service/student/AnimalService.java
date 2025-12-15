@@ -35,6 +35,14 @@ public class AnimalService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Zwierzak nie został znaleziony."));
     }
 
+    public List<Animal> getAnimals(List<Long> studentIds, Long courseId) {
+        List<Animal> animals = animalRepository.findByCourseIdAndStudentIds(courseId, studentIds);
+        if(animals.size() != studentIds.size()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nie wszystkie zwierzaki zostały znalezione.");
+        }
+        return animals;
+    }
+
     public Long getAnimalIdForCurrentUser(Long courseId) {
         AbstractRoleUser student = userService.getCurrentUser();
         return getAnimal(student.getUserId(), courseId).getId();

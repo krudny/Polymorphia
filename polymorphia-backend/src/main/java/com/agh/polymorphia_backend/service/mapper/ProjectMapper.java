@@ -1,10 +1,8 @@
 package com.agh.polymorphia_backend.service.mapper;
 
 import com.agh.polymorphia_backend.dto.response.project.ProjectCategoryWithVariantsResponseDto;
-import com.agh.polymorphia_backend.dto.response.project.ProjectGroupPickStudentsResponseDto;
 import com.agh.polymorphia_backend.dto.response.project.ProjectVariantResponseDto;
 import com.agh.polymorphia_backend.dto.response.project.ProjectVariantWithCategoryNameResponseDto;
-import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry;
 import com.agh.polymorphia_backend.model.project.ProjectVariant;
 import com.agh.polymorphia_backend.model.project.ProjectVariantCategory;
 import lombok.AllArgsConstructor;
@@ -36,19 +34,6 @@ public class ProjectMapper {
                 .name(projectVariant.getName())
                 .imageUrl(projectVariant.getImageUrl())
                 .shortCode(projectVariant.getShortCode())
-                .build();
-
-    }
-
-    public ProjectGroupPickStudentsResponseDto toProjectGroupPickStudentsResponseDto(HallOfFameEntry hallOfFameEntry) {
-        return ProjectGroupPickStudentsResponseDto.builder()
-                .id(hallOfFameEntry.getStudentId())
-                .fullName(hallOfFameEntry.getStudentName())
-                .animalName(hallOfFameEntry.getAnimalName())
-                .group(hallOfFameEntry.getGroupName())
-                .position(hallOfFameEntry.getPosition())
-                .imageUrl(hallOfFameEntry.getImageUrl())
-                .evolutionStage(hallOfFameEntry.getEvolutionStage())
                 .build();
     }
 }

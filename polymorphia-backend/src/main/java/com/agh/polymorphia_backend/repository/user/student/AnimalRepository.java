@@ -16,6 +16,10 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
             "where cga.student.user.id=:studentId AND c.course.id=:courseId")
     Optional<Animal> findByCourseIdAndStudentId(Long courseId, Long studentId);
 
+    @Query("select a from Animal a join a.studentCourseGroupAssignment cga  join cga.courseGroup c " +
+            "where cga.student.user.id in :studentIds AND c.course.id=:courseId")
+    List<Animal> findByCourseIdAndStudentIds(Long courseId, List<Long> studentIds);
+
 
     @Query("""
                 select a from Animal a
@@ -34,10 +38,10 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
     Long findByAssignedChestId(Long assignedChestId);
 
     @Query(value = """
-                select count(cg.id) from Animal a
+                select count(distinct cg.id) from Animal a
                     join a.studentCourseGroupAssignment scga
                     join scga.courseGroup cg
-                    where a.id in :animals
+                    where a in :animals
     """)
     Long countAnimalCourseGroups(List<Animal> animals);
 

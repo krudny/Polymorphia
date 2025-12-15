@@ -21,6 +21,7 @@ import com.agh.polymorphia_backend.model.user.coordinator.Coordinator;
 import com.agh.polymorphia_backend.model.user.instructor.Instructor;
 import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.model.user.student.Student;
+import com.agh.polymorphia_backend.repository.grade.GradeRepository;
 import com.agh.polymorphia_backend.repository.project.ProjectGroupRepository;
 import com.agh.polymorphia_backend.repository.submission.SubmissionRepository;
 import com.agh.polymorphia_backend.repository.submission.SubmissionRequirementRepository;
@@ -65,8 +66,11 @@ class SubmissionServiceTest extends BaseTest {
     @Mock
     private ProjectGroupRepository projectGroupRepository;
 
+    @Mock
+    private GradeRepository gradeRepository;
+
     @Spy
-    private ProjectGroupService projectGroupService = new ProjectGroupService(projectGroupRepository);
+    private ProjectGroupService projectGroupService = new ProjectGroupService(projectGroupRepository, gradeRepository);
 
     @Mock
     private UserService userService;

@@ -13,5 +13,5 @@ public class FilterOptionResponseDto {
     private String value;
 
     private String label;
-    private String specialBehaviour;
+    private String specialBehavior;
 }

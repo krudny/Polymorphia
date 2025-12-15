@@ -83,4 +83,11 @@ public interface ProjectGroupRepository extends JpaRepository<ProjectGroup, Long
             
             """)
     List<ProjectTargetDataView> getProjectTargetsData(Long projectId, Long teachingRoleUserId, Boolean showAllProjectGroupsInCourse);
+
+    @Query("""
+            select scga.student.userId from ProjectGroup pg
+                join pg.animals a
+                join a.studentCourseGroupAssignment scga
+    """)
+    List<Long> getStudentIdsByProjectGroup(ProjectGroup projectGroup);
 }

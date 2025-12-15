@@ -32,7 +32,7 @@ public class ProjectController {
 
     @PostMapping("/variants/suggestions")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'COORDINATOR')")
-    public ResponseEntity<Map<Long, Long>> getProjectVariants(@RequestBody Optional<TargetRequestDto> target, @RequestParam Long projectId) {
+    public ResponseEntity<Map<Long, Long>> getSuggestedProjectVariants(@RequestBody Optional<TargetRequestDto> target, @RequestParam Long projectId) {
         return ResponseEntity.ok(projectService.getSuggestedProjectVariants(target, projectId));
     }
 

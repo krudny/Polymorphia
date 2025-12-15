@@ -1,6 +1,7 @@
 package com.agh.polymorphia_backend.repository.project;
 
 import com.agh.polymorphia_backend.dto.response.project.ProjectGroupPickStudentsResponseDto;
+import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.project.ProjectVariantCategory;
 import com.agh.polymorphia_backend.model.gradable_event.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,10 +23,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
   """)
     List<ProjectVariantCategory> findCategoriesWithVariants(Long projectId);
 
-    @Query("select p.allowCrossCourseGroupProjectGroups from Project p where p.id = :projectId")
-    boolean findAllowCrossCourseGroupProjectGroups(Long projectId);
-
-
     @Query("""
             select hofe.studentId      as id,
                    hofe.studentName    as fullName,
@@ -36,7 +33,8 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
                    hofe.position       as position
             from HallOfFameEntry hofe
                      join StudentCourseGroupAssignment scga on scga.animal.id = hofe.animalId
-            where (scga.courseGroup.teachingRoleUser.userId = :teachingRoleUserId or
+            where (:#{#project.isAllowCrossCourseGroupProjectGroups()} = true or
+                   scga.courseGroup.teachingRoleUser.userId = :teachingRoleUserId or
                    scga.courseGroup.course.coordinator.userId = :teachingRoleUserId)
               and (:includeAllGroups = true or hofe.groupName in :groups)
               and hofe.courseId = :courseId
@@ -46,16 +44,37 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
                               join pg.animals a
                               join pg.project p
                          where a.id = hofe.animalId
-                           and p.id = :gradableEventId
+                           and p.id = :#{#project.id}
                    )
             order by hofe.studentName
             """)
     List<ProjectGroupPickStudentsResponseDto> getProjectGroupConfigurationGroupPickStudents(
             @Param("courseId") Long courseId,
-            @Param("gradableEventId") Long gradableEventId,
+            @Param("project") Project project,
             @Param("teachingRoleUserId") Long teachingRoleUserId,
             @Param("groups") List<String> groups,
             @Param("includeAllGroups") Boolean includeAllGroups
+    );
+
+    @Query("""
+            select hofe.studentId      as id,
+                   hofe.studentName    as fullName,
+                   hofe.animalName     as animalName,
+                   hofe.evolutionStage as evolutionStage,
+                   hofe.groupName      as group,
+                   hofe.imageUrl       as imageUrl,
+                   hofe.position       as position
+            from HallOfFameEntry hofe
+            where hofe.animalId in (
+                         select a.id
+                         from ProjectGroup pg
+                              join pg.animals a
+                         where pg = :projectGroup
+                   )
+            order by hofe.studentName
+            """)
+    List<ProjectGroupPickStudentsResponseDto> getProjectGroupConfigurationGroupPickStudents(
+            @Param("projectGroup") ProjectGroup projectGroup
     );
 
     @Query(value = """
