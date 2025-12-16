@@ -8,42 +8,51 @@ import { useProjectGroup } from "@/hooks/course/projects/useProjectGroup";
 export default function StudentInfo() {
   const { data, isLoading, isError } = useProjectGroup();
 
+  if (isLoading) {
+    return (
+      <div className="gradable-event-section h-50 relative">
+        <Loading />
+      </div>
+    );
+  }
+  if (isError || data === undefined) {
+    return (
+      <div className="gradable-event-section text-xl 2xl:text-2xl">
+        <ErrorComponent message="Nie udało się załadować informacji o składzie grupy." />
+      </div>
+    );
+  }
+
+  if (data.length === 0) {
+    return (
+      <div className="gradable-event-section text-xl 2xl:text-2xl">
+        <ErrorComponent message="Nie należysz do żadnej grupy." />
+      </div>
+    );
+  }
+
   return (
-    <>
-      {isError && (
-        <div className="gradable-event-section text-xl 2xl:text-2xl">
-          <ErrorComponent message="Nie udało się załadować informacji o studentach." />
-        </div>
-      )}
-      {isLoading && (
-        <div className="gradable-event-section h-50 relative">
-          <Loading />
-        </div>
-      )}
-      {data && !isLoading && (
-        <div className="flex flex-col gap-2 min-w-80">
-          {data?.map((student) => {
-            const { animalName, fullName, evolutionStage, imageUrl } =
-              student.userDetails;
+    <div className="flex flex-col gap-2 min-w-80">
+      {data?.map((student) => {
+        const { animalName, fullName, evolutionStage, imageUrl } =
+          student.userDetails;
 
-            if (!fullName) {
-              throw new Error("No userName defined!");
+        if (!fullName) {
+          throw new Error("No userName defined!");
+        }
+
+        return (
+          <XPCard
+            key={animalName}
+            title={fullName}
+            subtitle={evolutionStage}
+            leftComponent={
+              <XPCardImage imageUrl={imageUrl} alt={evolutionStage} />
             }
-
-            return (
-              <XPCard
-                key={animalName}
-                title={fullName}
-                subtitle={evolutionStage}
-                leftComponent={
-                  <XPCardImage imageUrl={imageUrl} alt={evolutionStage} />
-                }
-                size="xs"
-              />
-            );
-          })}
-        </div>
-      )}
-    </>
+            size="xs"
+          />
+        );
+      })}
+    </div>
   );
 }

@@ -5,8 +5,8 @@ import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { TargetTypes } from "@/interfaces/api/target";
 import useProjectVariant from "@/hooks/course/projects/useProjectVariant";
 import {
-  errorComponent,
-  noProjectVariantsErrorComponent,
+  errorComponentStudent,
+  noProjectVariantsErrorComponentStudent,
 } from "@/components/speed-dial/modals/project-variant/project-variant-info/errors";
 import ColumnSwappableComponent from "@/components/column-schema/column-component/shared/column-swappable-component";
 import { ProjectVariantWithCategoryNameResponseDTO } from "@/interfaces/api/project";
@@ -41,8 +41,10 @@ export default function ProjectVariantModal({
             size={isSm ? "sm" : "xs"}
           />
         )}
-        renderDataErrorComponent={() => errorComponent}
-        renderEmptyDataErrorComponent={() => noProjectVariantsErrorComponent}
+        renderDataErrorComponent={() => errorComponentStudent}
+        renderEmptyDataErrorComponent={() =>
+          noProjectVariantsErrorComponentStudent
+        }
         minHeightClassName="min-[26rem]:min-h-[210px] sm:min-h-[260px] "
         className="min-[26rem]:w-96 sm:w-[430px]"
         selectedTarget={target}
