@@ -63,7 +63,7 @@ public class DbInit {
 
                 courseImportService.importCourseForUser(courseConfig, user);
             } catch (IOException e) {
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Błąd tworzenia kursu");
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Błąd tworzenia kursu.");
             }
         }
     }

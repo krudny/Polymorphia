@@ -199,10 +199,41 @@ public class CourseImportService {
                 .map(GradableEventDetailsRequestDto::getKey)
                 .toList());
 
+        keys.addAll(request.getEventSections().stream()
+                .flatMap(section -> section.getGradableEvents().stream())
+                .flatMap(gradableEvent -> gradableEvent.getCriteria().stream())
+                .map(CriterionDetailsRequestDto::getKey)
+                .toList());
+
+        keys.addAll(request.getEventSections().stream()
+                .flatMap(eventSection -> eventSection.getGradableEvents().stream())
+                .filter(gradableEvent -> gradableEvent.getType().equals(EventSectionType.PROJECT))
+                .flatMap(gradableEvent -> ((ProjectDetailsRequestDto) gradableEvent).getVariantCategories().stream())
+                .map(VariantCategoryDetailsRequestDto::getKey)
+                .toList());
+
+        keys.addAll(request.getEventSections().stream()
+                .flatMap(eventSection -> eventSection.getGradableEvents().stream())
+                .filter(gradableEvent -> gradableEvent.getType().equals(EventSectionType.PROJECT))
+                .flatMap(gradableEvent -> ((ProjectDetailsRequestDto) gradableEvent).getVariantCategories().stream())
+                .flatMap(projectVariantCategory -> projectVariantCategory.getVariants().stream())
+                .map(VariantDetailsRequestDto::getKey)
+                .toList());
+
+        keys.addAll(request.getEventSections().stream()
+                .flatMap(eventSection -> eventSection.getGradableEvents().stream())
+                .filter(gradableEvent ->
+                        gradableEvent.getType().equals(EventSectionType.PROJECT)
+                                || gradableEvent.getType().equals(EventSectionType.ASSIGNMENT)
+                )
+                .flatMap(gradableEvent -> ((ProjectDetailsRequestDto) gradableEvent).getSubmissionRequirements().stream())
+                .map(SubmissionRequirementDetailsRequestDto::getKey)
+                .toList());
+
         Set<String> uniqueKeys = new HashSet<>(keys);
 
         if (uniqueKeys.size() != keys.size()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Klucze muszą być unikalne w obrębie kursu");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Klucze muszą być unikalne w obrębie kursu.");
         }
     }
 
