@@ -545,38 +545,38 @@ WHERE NOT EXISTS (
 
 INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
                             order_index, is_hidden)
-VALUES (4, '4', 'Git', FALSE, FALSE, 1, 0, FALSE);
+VALUES (4, 'event_sections4', 'Git', FALSE, FALSE, 1, 0, FALSE);
 INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
                             order_index, is_hidden)
-VALUES (6, '6', 'Laboratorium', TRUE, FALSE, 2, 2, FALSE);
+VALUES (6, 'event_sections6', 'Laboratorium', TRUE, FALSE, 2, 2, FALSE);
 INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
                             order_index, is_hidden)
-VALUES (7, '7', 'Projekt 1', TRUE, FALSE, 2, 4, FALSE);
+VALUES (7, 'event_sections7', 'Projekt 1', TRUE, FALSE, 2, 4, FALSE);
 INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
                             order_index, is_hidden)
-VALUES (8, '8', 'Kartkówka', TRUE, FALSE, 2, 1, FALSE);
+VALUES (8, 'event_sections8', 'Kartkówka', TRUE, FALSE, 2, 1, FALSE);
 INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
                             order_index, is_hidden)
-VALUES (9, '9', 'Git', FALSE, FALSE, 2, 0, FALSE);
+VALUES (9, 'event_sections9', 'Git', FALSE, FALSE, 2, 0, FALSE);
 INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
                             order_index, is_hidden)
-VALUES (10, '10', 'Specjalny lab', TRUE, FALSE, 2, 3, FALSE);
+VALUES (10, 'event_sections10', 'Specjalny lab', TRUE, FALSE, 2, 3, FALSE);
 INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
                             order_index, is_hidden)
-VALUES (2, '2', 'Laboratorium', TRUE, FALSE, 1, 2, FALSE);
+VALUES (2, 'event_sections2', 'Laboratorium', TRUE, FALSE, 1, 2, FALSE);
 INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
                             order_index, is_hidden)
-VALUES (3, '3', 'Projekt 1', TRUE, FALSE, 1, 4, FALSE);
+VALUES (3, 'event_sections3', 'Projekt 1', TRUE, FALSE, 1, 4, FALSE);
 INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
                             order_index, is_hidden)
-VALUES (1, '1', 'Kartkówka', TRUE, FALSE, 1, 1, FALSE);
+VALUES (1, 'event_sections1', 'Kartkówka', TRUE, FALSE, 1, 1, FALSE);
 INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
                             order_index, is_hidden)
-VALUES (5, '5', 'Specjalny lab', TRUE, FALSE, 1, 3, FALSE);
+VALUES (5, 'event_sections5', 'Specjalny lab', TRUE, FALSE, 1, 3, FALSE);
 INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
                             order_index, is_hidden)
-VALUES (11, '11', 'Projekt 2', TRUE, FALSE, 1, 5, FALSE),
-       (12, '12', 'Projekt 2', TRUE, FALSE, 2, 5, FALSE);
+VALUES (11, 'event_sections11', 'Projekt 2', TRUE, FALSE, 1, 5, FALSE),
+       (12, 'event_sections12', 'Projekt 2', TRUE, FALSE, 2, 5, FALSE);
 INSERT INTO
     test_sections (id)
 VALUES
@@ -809,7 +809,7 @@ values (1, 1, 'Bieguny', 'A', 'bieguny zdefiniowane są na dolnej i ' ||
        (2, 1, 'Pożary', 'B',
         'co jakąś (zadaną w konfiguracji) liczbę tur na mapie pojawia się pożar. Pożar zaczyna się na jednym polu z rośliną i w każdej turze rozprzestrzenia się na wszystkie przylegające do niej rośliny (ale nie po skosie). Pożar na każdym polu trwa stałą zadaną (konfigurowalną) liczbę tur i po jego zakończeniu roślina na tym polu znika. Jeśli zwierzak wejdzie na pole z ogniem, umiera.',
         'images/evolution-stages/5.webp', 'project_variants2'),
-       (3, 2, 'Lekka korekta', 'project_variants1',
+       (3, 2, 'Lekka korekta', '1',
         'mutacja zmienia gen o 1 w górę lub w dół (np. gen 3 może zostać zamieniony na 2 lub 4, a gen 0 na 1 lub 7)',
         'images/evolution-stages/6.webp', 'project_variants3'),
        (4, 2, 'Podmianka', '2', 'mutacja może też skutkować tym, że dwa geny zamienią się miejscami',
