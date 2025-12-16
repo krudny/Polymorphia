@@ -1,9 +1,9 @@
-import { FilterConfig } from "@/hooks/course/useFilters/types";
+import { FilterConfig } from "@/hooks/course/filters/useFilters/types";
 import { useQuery } from "@tanstack/react-query";
 import { TargetRequestDTO, TargetTypes } from "@/interfaces/api/target";
 import { ProjectService } from "@/services/project";
 import { ProjectGroupConfigurationFilterId } from "@/providers/project-group-configuration/types";
-import { useEventParams } from "@/hooks/general/useEventParams";
+import { useEventParams } from "@/hooks/app/params/useEventParams";
 
 export function useProjectGroupConfigurationFilterConfigs(
   target: TargetRequestDTO | null

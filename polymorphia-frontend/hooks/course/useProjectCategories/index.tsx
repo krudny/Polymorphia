@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEventParams } from "@/hooks/general/useEventParams";
+import { useEventParams } from "@/hooks/app/params/useEventParams";
 import { EventTypes } from "@/interfaces/general";
 import { ProjectService } from "@/services/project";
 import { UseProjectCategories } from "@/hooks/course/useProjectCategories/types";
