@@ -9,7 +9,7 @@ import {
 import { useProjectGroupConfiguration } from "@/hooks/course/useProjectGroupConfiguration";
 import { ProjectGroupConfigurationResponseDTO } from "@/interfaces/api/project";
 import { useProjectGroupConfigurationFilterConfigs } from "@/hooks/course/useProjectGroupConfigurationFilterConfigs";
-import { useFilters } from "@/hooks/course/useFilters";
+import { useFilters } from "@/hooks/course/filters/useFilters";
 
 export const ProjectGroupConfigurationContext = createContext<
   ProjectGroupConfigurationContextInterface | undefined

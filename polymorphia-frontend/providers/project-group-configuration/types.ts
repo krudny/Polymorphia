@@ -1,5 +1,5 @@
-import { useFilters } from "@/hooks/course/useFilters";
-import { FilterOption } from "@/hooks/course/useFilters/types";
+import { useFilters } from "@/hooks/course/filters/useFilters";
+import { FilterOption } from "@/hooks/course/filters/useFilters/types";
 import { ProjectGroupConfigurationResponseDTO } from "@/interfaces/api/project";
 import { TargetRequestDTO } from "@/interfaces/api/target";
 import { Dispatch, ReactNode, SetStateAction } from "react";

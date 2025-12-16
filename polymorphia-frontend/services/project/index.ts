@@ -10,8 +10,8 @@ import {
 } from "@/interfaces/api/user";
 import { TargetRequestDTO } from "@/interfaces/api/target";
 import UserService from "@/services/user";
-import { SpecialBehaviors } from "@/hooks/course/useFilters/types";
 import { ProjectGroupConfigurationPartialFilterConfig } from "@/providers/project-group-configuration/types";
+import { SpecialBehaviors } from "@/hooks/course/filters/useFilters/types";
 
 export const ProjectService = {
   getProjectVariant: async (
