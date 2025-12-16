@@ -27,7 +27,7 @@ public class DbInit {
     private final CourseImportService courseImportService;
     private final ObjectMapper objectMapper;
     private final CoordinatorRepository coordinatorRepository;
-    @Value("${initial.course.config}")
+    @Value("${initial.course.config:}")
     private Resource initialCourseConfig;
 
     @PostConstruct

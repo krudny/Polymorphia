@@ -27,10 +27,6 @@ public class ProjectVariant {
     private ProjectVariantCategory category;
 
     @NotEmpty
-    @Column(length = 64)
-    private String key;
-
-    @NotEmpty
     private String name;
 
     @NotEmpty
