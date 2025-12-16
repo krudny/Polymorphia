@@ -5,7 +5,7 @@ import Loading from "@/components/loading";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCard from "@/components/xp-card/XPCard";
 import useProjectGroupConfigurationContext from "@/hooks/contexts/useProjectGroupConfigurationContext";
-import { useProjectGroupConfigurationGroupPickStudents } from "@/hooks/course/useProjectGroupConfigurationGroupPickStudents";
+import { useProjectGroupConfigurationGroupPickStudents } from "@/hooks/course/projects/useProjectGroupConfigurationGroupPickStudents";
 import { ProjectGroupConfigurationSteps } from "@/providers/project-group-configuration/types";
 import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "use-debounce";

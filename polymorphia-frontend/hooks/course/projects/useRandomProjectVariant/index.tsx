@@ -5,7 +5,7 @@ import { ProjectService } from "@/services/project";
 import {
   UseRandomProjectVariant,
   UseRandomProjectVariantParams,
-} from "@/hooks/course/useRandomProjectVariant/types";
+} from "@/hooks/course/projects/useRandomProjectVariant/types";
 
 export default function useRandomProjectVariant(): UseRandomProjectVariant {
   const { gradableEventId } = useEventParams();

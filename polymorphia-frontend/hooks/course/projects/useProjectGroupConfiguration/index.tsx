@@ -5,7 +5,7 @@ import { ProjectService } from "@/services/project";
 import {
   UseProjectGroupConfiguration,
   UseProjectGroupConfigurationProps,
-} from "@/hooks/course/useProjectGroupConfiguration/types";
+} from "@/hooks/course/projects/useProjectGroupConfiguration/types";
 import { TargetTypes } from "@/interfaces/api/target";
 
 export function useProjectGroupConfiguration({

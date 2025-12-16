@@ -6,9 +6,9 @@ import {
   ProjectGroupConfigurationStep,
   ProjectGroupConfigurationSteps,
 } from "@/providers/project-group-configuration/types";
-import { useProjectGroupConfiguration } from "@/hooks/course/useProjectGroupConfiguration";
+import { useProjectGroupConfiguration } from "@/hooks/course/projects/useProjectGroupConfiguration";
 import { ProjectGroupConfigurationResponseDTO } from "@/interfaces/api/project";
-import { useProjectGroupConfigurationFilterConfigs } from "@/hooks/course/useProjectGroupConfigurationFilterConfigs";
+import { useProjectGroupConfigurationFilterConfigs } from "@/hooks/course/projects/useProjectGroupConfigurationFilterConfigs";
 import { useFilters } from "@/hooks/course/filters/useFilters";
 
 export const ProjectGroupConfigurationContext = createContext<

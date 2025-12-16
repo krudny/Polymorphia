@@ -2,36 +2,22 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useEventParams } from "@/hooks/app/params/useEventParams";
 import {
-  UseProjectGroupConfigurationUpdate,
-  UseProjectGroupConfigurationUpdateParams,
-} from "@/hooks/course/useProjectGroupUpdate/types";
+  UseProjectGroupDelete,
+  UseProjectGroupDeleteParams,
+} from "@/hooks/course/projects/useProjectGroupDelete/types";
 import { ProjectService } from "@/services/project";
 
-export default function useProjectGroupUpdate(): UseProjectGroupConfigurationUpdate {
+export default function useProjectGroupDelete(): UseProjectGroupDelete {
   const { gradableEventId } = useEventParams();
   const queryClient = useQueryClient();
 
-  const mutation = useMutation<
-    void,
-    Error,
-    UseProjectGroupConfigurationUpdateParams
-  >({
-    mutationFn: async ({ target, configuration }) => {
+  const mutation = useMutation<void, Error, UseProjectGroupDeleteParams>({
+    mutationFn: async ({ target }) => {
       return toast.promise(
-        ProjectService.submitProjectGroupConfiguration(
-          target,
-          gradableEventId,
-          configuration
-        ),
+        ProjectService.deleteProjectGroup(target, gradableEventId),
         {
-          loading:
-            "Trwa " +
-            (target !== null ? "aktualizowanie" : "tworzenie") +
-            " grupy projektowej...",
-          success:
-            "Pomyślnie " +
-            (target !== null ? "zaktualizowano" : "utworzono") +
-            " grupę projektową.",
+          loading: "Trwa usuwanie grupy projektowej...",
+          success: "Pomyślnie usunięto grupę projektową.",
         }
       );
     },

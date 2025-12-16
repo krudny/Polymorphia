@@ -29,8 +29,8 @@ import DeleteAnimalModal from "@/components/course-groups/modals/delete-animal";
 import MoveAnimalModal from "@/components/course-groups/modals/move-animal";
 import EditCourseGroupModal from "@/components/course-groups/modals/edit-course-group";
 import ProjectGroupConfigurationModal from "@/components/speed-dial/modals/project-group-configuration";
-import { useEditProjectGroupConfigurationModalSpeedDialDynamicBehavior } from "@/hooks/speed-dial-dynamic-behavior/project-group-configuration";
-import { useDeleteProjectGroupModalSpeedDialDynamicBehavior } from "@/hooks/speed-dial-dynamic-behavior/project-group-deletion";
+import { useEditProjectGroupConfigurationModalSpeedDialDynamicBehavior } from "@/hooks/app/speed-dial-dynamic-behavior/projects/project-group-configuration";
+import { useDeleteProjectGroupModalSpeedDialDynamicBehavior } from "@/hooks/app/speed-dial-dynamic-behavior/projects/project-group-deletion";
 
 export abstract class BaseSpeedDialStrategy {
   abstract getItems(role: Role): SpeedDialItem[];

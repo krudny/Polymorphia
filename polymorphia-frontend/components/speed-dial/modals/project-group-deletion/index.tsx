@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import Modal from "@/components/modal";
 import ButtonWithBorder from "@/components/button";
 import useModalContext from "@/hooks/contexts/useModalContext";
-import useProjectGroupDelete from "@/hooks/course/useProjectGroupDelete";
+import useProjectGroupDelete from "@/hooks/course/projects/useProjectGroupDelete";
 import { ProjectGroupDeletionModalContentProps } from "@/components/speed-dial/modals/project-group-deletion/types";
 import "./index.css";
 

@@ -5,16 +5,16 @@ import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
 import Loading from "@/components/loading";
 import useProjectGroupConfigurationContext from "@/hooks/contexts/useProjectGroupConfigurationContext";
-import { useProjectCategories } from "@/hooks/course/useProjectCategories";
+import { useProjectCategories } from "@/hooks/course/projects/useProjectCategories";
 import { ProjectGroupConfigurationSteps } from "@/providers/project-group-configuration/types";
 import "./index.css";
 import XPCardProjectVariant from "@/components/xp-card/components/XPCardProjectVariant";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCard from "@/components/xp-card/XPCard";
 import clsx from "clsx";
-import useProjectGroupUpdate from "@/hooks/course/useProjectGroupUpdate";
+import useProjectGroupUpdate from "@/hooks/course/projects/useProjectGroupUpdate";
 import useModalContext from "@/hooks/contexts/useModalContext";
-import useRandomProjectVariant from "@/hooks/course/useRandomProjectVariant";
+import useRandomProjectVariant from "@/hooks/course/projects/useRandomProjectVariant";
 
 export default function ProjectVariantPick() {
   const {
