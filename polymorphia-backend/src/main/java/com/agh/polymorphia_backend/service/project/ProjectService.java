@@ -217,11 +217,13 @@ public class ProjectService {
                     .build());
             builder.max((long) options.size() - 1)
                     .options(options)
-                    .defaultValues(List.of("all"));
+                    .defaultValues(List.of("all"))
+                    .additionalInfo("Grupy projektowe mogą obejmować studentów z różnych grup zajęciowych.");
         } else {
             builder.max(1L)
                     .options(options)
-                    .defaultValues(List.of(options.getFirst().getValue()));
+                    .defaultValues(List.of(options.getFirst().getValue()))
+                    .additionalInfo("Grupy projektowe są ograniczone do studentów z jednej grupy zajęciowej.");
         }
 
         return builder.build();

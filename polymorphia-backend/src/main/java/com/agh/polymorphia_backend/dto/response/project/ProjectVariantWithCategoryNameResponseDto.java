@@ -1,8 +1,6 @@
 package com.agh.polymorphia_backend.dto.response.project;
 
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 

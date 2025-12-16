@@ -17,4 +17,7 @@ public class ProjectGroupConfigurationFiltersResponseDto {
 
     @NotNull
     private List<String> defaultValues;
+
+    @NotNull
+    private String additionalInfo;
 }
