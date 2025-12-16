@@ -74,6 +74,12 @@ public class CourseImportService {
     @Transactional
     public void importCourse(CourseDetailsRequestDto request) {
         User currentUser = userService.getCurrentUser().getUser();
+        importCourseForUser(request, currentUser);
+    }
+
+    @Transactional
+    public void importCourseForUser(CourseDetailsRequestDto request, User currentUser) {
+        validateUniqueKeys(request);
         Coordinator coordinator = getOrCreateCoordinator(currentUser);
 
         Course course = Course.builder()
@@ -98,6 +104,7 @@ public class CourseImportService {
     @Transactional
     public void updateCourse(CourseDetailsRequestDto request, Long courseId) {
         CourseDetailsRequestDto currentConfig = courseDetailsService.getCourseDetails(courseId);
+        validateUniqueKeys(request);
 
         if (!request.equals(currentConfig)) {
             Course course = courseService.getCourseById(courseId);
@@ -167,6 +174,38 @@ public class CourseImportService {
                             "do kategorii widocznych w roadmapie i nic ponadto.");
         }
     }
+
+    private void validateUniqueKeys(CourseDetailsRequestDto request) {
+        List<String> keys = new ArrayList<>();
+
+        keys.addAll(request.getEvolutionStages().stream()
+                .map(EvolutionStageDetailsRequestDto::getKey)
+                .toList());
+
+        keys.addAll(request.getEventSections().stream()
+                .map(EventSectionDetailsRequestDto::getKey)
+                .toList());
+
+        keys.addAll(request.getItems().stream()
+                .map(ItemDetailsRequestDto::getKey)
+                .toList());
+
+        keys.addAll(request.getChests().stream()
+                .map(ChestDetailsRequestDto::getKey)
+                .toList());
+
+        keys.addAll(request.getEventSections().stream()
+                .flatMap(section -> section.getGradableEvents().stream())
+                .map(GradableEventDetailsRequestDto::getKey)
+                .toList());
+
+        Set<String> uniqueKeys = new HashSet<>(keys);
+
+        if (uniqueKeys.size() != keys.size()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Klucze muszą być unikalne w obrębie kursu");
+        }
+    }
+
 
     private void updateCourseDetails(CourseDetailsRequestDto request, Course course) {
         course.setName(request.getName());

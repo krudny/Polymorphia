@@ -1,19 +1,17 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CourseService } from "@/services/course";
 import toast from "react-hot-toast";
-import { UseCourseCreate } from "@/hooks/course/useCourseCreate/types";
-import { UpdateCourseConfigVariables } from "@/hooks/course/useCourseUpdate/types";
+import { UseCourseCreate } from "@/hooks/course/config/useCourseCreate/types";
+import { UpdateCourseConfigVariables } from "@/hooks/course/config/useCourseUpdate/types";
 
 export default function useCourseCreate(): UseCourseCreate {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async ({ file }: UpdateCourseConfigVariables) => {
-      const promise = CourseService.createCourse(file);
-
-      return toast.promise(promise, {
+      return toast.promise(CourseService.createCourse(file), {
         loading: "Tworzenie kursu...",
-        success: "Kurs utworzony pomyślnie",
+        success: "Kurs utworzony pomyślnie!",
       });
     },
     onSuccess: () => {

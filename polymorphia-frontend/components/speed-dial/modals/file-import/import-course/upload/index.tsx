@@ -1,15 +1,15 @@
 "use client";
 
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import { ReactNode, useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import "../../import-csv/upload/index.css";
 import "../../import-csv/index.css";
 import Loading from "@/components/loading";
 import { fileImportError } from "@/components/speed-dial/modals/file-import/import-csv/upload/fileImportError";
-import useCourseUpdate from "@/hooks/course/useCourseUpdate";
+import useCourseUpdate from "@/hooks/course/config/useCourseUpdate";
 import useModalContext from "@/hooks/contexts/useModalContext";
-import useCourseCreate from "@/hooks/course/useCourseCreate";
+import useCourseCreate from "@/hooks/course/config/useCourseCreate";
 import {
   CourseFileActions,
   UseCourseUploadProps,
@@ -54,13 +54,26 @@ export default function UploadCourseConfig({
     if (selectedFile) {
       switch (courseFileAction) {
         case CourseFileActions.UPDATE:
-          courseUpdateMutation.mutate({ file: selectedFile });
+          courseUpdateMutation.mutate(
+            { file: selectedFile },
+            {
+              onSuccess: () => {
+                closeModal();
+              },
+            }
+          );
           break;
         case CourseFileActions.CREATE:
-          courseCreateMutation.mutate({ file: selectedFile });
+          courseCreateMutation.mutate(
+            { file: selectedFile },
+            {
+              onSuccess: () => {
+                closeModal();
+              },
+            }
+          );
           break;
       }
-      closeModal();
     }
   };
 
