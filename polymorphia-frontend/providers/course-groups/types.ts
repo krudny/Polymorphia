@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { useFilters } from "@/hooks/course/useFilters";
+import { useFilters } from "@/hooks/course/filters/useFilters";
 import { StudentSummaryResponseDTO } from "@/interfaces/api/student";
 import { StudentLastActivityDTO } from "@/interfaces/api/course-groups";
 

@@ -5,12 +5,13 @@ import { animateLoginFormVisibility } from "@/animations/Home";
 import { HomeContentProps } from "@/components/home/types";
 import RegisterForm from "@/components/home/register-form";
 import LoginForm from "@/components/home/login-form";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import "./index.css";
-import { useLoginFormAnimation } from "@/hooks/general/useLoginFormAnimation";
-import { useToken } from "@/hooks/general/useToken";
+import { useLoginFormAnimation } from "@/hooks/app/animation/useLoginFormAnimation";
+import { useToken } from "@/hooks/course/invitation/useToken";
 import { TokenTypes } from "@/interfaces/api/token";
 import ResetPasswordForm from "@/components/home/reset-password-form";
+import { useEnterListener } from "@/hooks/general/useEnterListener";
 
 export default function HomeContent({
   titleRef,
@@ -26,6 +27,8 @@ export default function HomeContent({
 
   const openLoginForm = () => setIsLoginFormVisible(true);
   const closeLoginForm = () => setIsLoginFormVisible(false);
+
+  useEnterListener(openLoginForm);
 
   useLayoutEffect(() => {
     if (!hasMountedRef.current || !loginFormRef.current || !titleRef.current) {

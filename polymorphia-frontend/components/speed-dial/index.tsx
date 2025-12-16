@@ -2,7 +2,7 @@
 
 import { ReactNode, useState } from "react";
 import { createPortal } from "react-dom";
-import { useSpeedDialFactory } from "@/hooks/strategy/useSpeedDialStrategy";
+import { useSpeedDialFactory } from "@/hooks/app/strategy/useSpeedDialStrategy";
 import Loading from "@/components/loading";
 import { SpeedDial as SpeedDialMui } from "@mui/material";
 import { SpeedDialProps } from "@/components/speed-dial/types";

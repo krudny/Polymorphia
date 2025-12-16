@@ -2,11 +2,11 @@
 import { Roles, StudentDetailsDTOWithName } from "@/interfaces/api/user";
 import Modal from "@/components/modal";
 import { ChangeEvent, useEffect, useState } from "react";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import { useDebounce } from "use-debounce";
 import XPCard from "@/components/xp-card/XPCard";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
-import useRandomUsers from "@/hooks/course/useRandomUsers";
+import useRandomUsers from "@/hooks/course/user/useRandomUsers";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import useModalContext from "@/hooks/contexts/useModalContext";
 import useUserContext from "@/hooks/contexts/useUserContext";

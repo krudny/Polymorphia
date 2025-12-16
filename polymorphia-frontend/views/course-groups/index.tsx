@@ -2,17 +2,21 @@ import { useMediaQuery } from "react-responsive";
 import { SpeedDial } from "@/components/speed-dial";
 import ColumnSchema from "@/components/column-schema";
 import { SpeedDialKeys } from "@/components/speed-dial/types";
-import { useCourseGroupsStrategy } from "@/hooks/strategy/useCourseGroupsStrategy";
+import { useCourseGroupsStrategy } from "@/hooks/app/strategy/useCourseGroupsStrategy";
 import { CourseGroupsFilterId } from "@/providers/course-groups/types";
 import FiltersModal from "@/components/filters-modals/FiltersModal";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
 import useCourseGroupsContext from "@/hooks/contexts/useCourseGroupsContext";
+import EquipmentModals from "@/components/equipment/modals";
+import GradeModal from "@/components/speed-dial/modals/grade";
 
-export default function CourseGroups() {
+export default function CourseGroupsView() {
   const isXL = useMediaQuery({ minWidth: "1280px" });
   const isMd = useMediaQuery({ minWidth: "768px" });
   const components = useCourseGroupsStrategy();
   const { filters } = useCourseGroupsContext();
+  const { gradableEventId, setGradableEventId } = useCourseGroupsContext();
+  const { targetId } = useTargetContext();
   const { areFiltersOpen, setAreFiltersOpen, handleApplyFilters } =
     useTargetContext();
 
@@ -30,6 +34,14 @@ export default function CourseGroups() {
         setIsModalOpen={setAreFiltersOpen}
         onFiltersApplied={() => handleApplyFilters()}
       />
+      <EquipmentModals targetStudentIdOverride={targetId} />
+      {gradableEventId && (
+        <GradeModal
+          gradableEventIdProp={gradableEventId}
+          onClosedAction={() => setGradableEventId(null)}
+          targetStudentIdOverride={targetId}
+        />
+      )}
     </div>
   );
 }

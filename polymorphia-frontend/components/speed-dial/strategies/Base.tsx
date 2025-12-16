@@ -14,14 +14,14 @@ import {
   useRejectMarkdownSpeedDialDynamicBehavior,
   useResetMarkdownSpeedDialDynamicBehavior,
   useSaveMarkdownSpeedDialDynamicBehavior,
-} from "@/hooks/speed-dial-dynamic-behavior/markdown";
+} from "@/hooks/app/speed-dial-dynamic-behavior/markdown";
 import {
   useAppendToPathSpeedDialDynamicBehavior,
   useGoBackSpeedDialDynamicBehavior,
   useNavigateToParentUrlSpeedDialDynamicBehavior,
-} from "@/hooks/speed-dial-dynamic-behavior/navigation";
+} from "@/hooks/app/speed-dial-dynamic-behavior/navigation";
 import { Role } from "@/interfaces/api/user";
-import { useProfileFiltersModalSpeedDialDynamicBehavior } from "@/hooks/speed-dial-dynamic-behavior/profile";
+import { useProfileFiltersModalSpeedDialDynamicBehavior } from "@/hooks/app/speed-dial-dynamic-behavior/profile";
 import InviteUserModal from "@/components/speed-dial/modals/invite-user";
 import SubmissionsModal from "@/components/speed-dial/modals/submission";
 import CreateCourseGroupModal from "@/components/course-groups/modals/create-course-group";

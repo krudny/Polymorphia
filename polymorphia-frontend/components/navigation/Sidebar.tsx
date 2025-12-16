@@ -11,7 +11,7 @@ import useNavigationContext from "@/hooks/contexts/useNavigationContext";
 import {
   useBottomDesktopMenuItems,
   useMainMenuItems,
-} from "@/hooks/general/useMenuOptions";
+} from "@/hooks/app/navigation/useMenuOptions";
 
 export default function Sidebar() {
   const {

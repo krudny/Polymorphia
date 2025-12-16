@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import useCourseGroups from "@/hooks/course/useCourseGroups";
+import useCourseGroups from "@/hooks/course/course-group/useCourseGroups";
 import Loading from "@/components/loading";
 import XPCardGrid from "@/components/xp-card/XPCardGrid";
 import SectionView from "@/components/section-view/SectionView";

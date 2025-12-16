@@ -119,13 +119,14 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
     );
 
     @Query("""
-            select hofe.studentId      as studentId,
+            select hofe.studentId      as id,
                    hofe.studentName    as fullName,
                    hofe.animalName     as animalName,
                    hofe.evolutionStage as evolutionStage,
                    hofe.groupName      as group,
                    hofe.imageUrl       as imageUrl,
-                   sum(cg.xp)          as gainedXp
+                   sum(cg.xp)          as gainedXp,
+                   hofe.animalId       as animalId
             from HallOfFameEntry hofe
                      left join Grade g on g.animal.id = hofe.animalId and g.gradableEvent.id = :gradableEventId
                      left join g.criteriaGrades cg
@@ -141,7 +142,7 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
                    (:gradeStatus = 'UNGRADED' and g.id is null))
               and hofe.courseId = :courseId
             group by hofe.studentId, hofe.studentName, hofe.animalName, hofe.evolutionStage, hofe.groupName,
-                     hofe.imageUrl
+                     hofe.imageUrl, hofe.animalId
             order by case
                          when :sortBy = 'gainedXp' and :sortOrder = 'ASC' then COALESCE(sum(cg.xp), -1) end asc,
                      case

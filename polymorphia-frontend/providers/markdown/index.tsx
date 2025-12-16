@@ -4,11 +4,11 @@ import {
   MarkdownProviderProps,
 } from "@/providers/markdown/types";
 import toast from "react-hot-toast";
-import useMarkdownReset from "@/hooks/course/useMarkdownReset";
-import { useMarkdown } from "@/hooks/course/useMarkdown";
-import useMarkdownUpdate from "@/hooks/course/useMarkdownUpdate";
+import useMarkdownReset from "@/hooks/course/markdown/useMarkdownReset";
+import { useMarkdown } from "@/hooks/course/markdown/useMarkdown";
+import useMarkdownUpdate from "@/hooks/course/markdown/useMarkdownUpdate";
 import { MarkdownTypes } from "@/interfaces/general";
-import { useEventParams } from "@/hooks/general/useEventParams";
+import { useEventParams } from "@/hooks/app/params/useEventParams";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 
 export const MarkdownContext = createContext<

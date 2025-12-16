@@ -1,0 +1,15 @@
+@import "tailwindcss";
+@import "../../../../styles/globals.css";
+
+.hof-user-data {
+  @apply w-full h-full flex-col-centered ml-3 overflow-hidden;
+  @apply lg:w-64 lg:mx-auto lg:px-4 2xl:ml-10 2xl:w-64;
+
+  h1 {
+    @apply w-full text-3xl truncate lg:text-4xl;
+  }
+
+  h2 {
+    @apply w-full text-xl truncate lg:text-2xl 2xl:mt-2;
+  }
+}
