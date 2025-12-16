@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.model.project;
 
+import com.agh.polymorphia_backend.model.gradable_event.Project;
 import com.agh.polymorphia_backend.model.user.TeachingRoleUser;
 import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.fasterxml.jackson.annotation.JsonIgnore;
