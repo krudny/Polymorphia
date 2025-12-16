@@ -133,40 +133,42 @@ export default function ProjectGroupPick() {
 
   return (
     <div className="group-pick">
-      <div onSubmit={(event) => event.preventDefault()}>
-        <div className="group-pick-wrapper">
+      <div
+        className="group-pick-body"
+        onSubmit={(event) => event.preventDefault()}
+      >
+        <div className="group-pick-header">
           <Search
             search={search}
             setSearch={setSearch}
             placeholder="Znajdź studenta..."
           />
-          <div className="group-pick-filters-button">
-            <ButtonWithBorder
-              text="Filtry"
-              className="!mx-0 !py-0 !border-0 !border-b-2 !rounded-none"
-              size={buttonVariant}
-              onClick={() => setAreFiltersOpen(true)}
-            />
-          </div>
+          <ButtonWithBorder
+            text="Filtry"
+            className="group-pick-filter-btn"
+            size={buttonVariant}
+            onClick={() => setAreFiltersOpen(true)}
+          />
         </div>
-        <div className="group-pick-search">
+
+        <div className="group-pick-list">
           {selectableStudents.length > 0 ? (
-            selectableStudents.map((student, index) => {
-              const { id, fullName, evolutionStage, group, imageUrl } = student;
-              return (
-                <div key={index} className="group-pick-card">
-                  <XPCard
-                    title={fullName}
-                    subtitle={group + " | " + evolutionStage}
-                    leftComponent={
-                      <XPCardImage imageUrl={imageUrl} alt={evolutionStage} />
-                    }
-                    size="xs"
-                    onClick={() => handleStudentSelection(id)}
-                  />
-                </div>
-              );
-            })
+            selectableStudents.map((student) => (
+              <div key={student.id} className="group-pick-card-wrapper">
+                <XPCard
+                  title={student.fullName}
+                  subtitle={`${student.group} | ${student.evolutionStage}`}
+                  leftComponent={
+                    <XPCardImage
+                      imageUrl={student.imageUrl}
+                      alt={student.evolutionStage}
+                    />
+                  }
+                  size="xs"
+                  onClick={() => handleStudentSelection(student.id)}
+                />
+              </div>
+            ))
           ) : (
             <ErrorComponent
               title="Brak studentów"
@@ -175,36 +177,38 @@ export default function ProjectGroupPick() {
             />
           )}
         </div>
-      </div>
-      <h3 className="group-pick-text">Skład grupy</h3>
-      <div className="group-pick-group">
-        {selectedStudents.length > 0 ? (
-          selectedStudents.map((student, index) => {
-            const { id, fullName, evolutionStage, group, imageUrl } = student;
 
-            return (
-              <div key={index} className="group-pick-card">
+        <h3 className="group-pick-title">Skład grupy</h3>
+
+        <div className="group-pick-list">
+          {selectedStudents.length > 0 ? (
+            selectedStudents.map((student) => (
+              <div key={student.id} className="group-pick-card-wrapper">
                 <XPCard
-                  title={fullName}
-                  subtitle={group + " | " + evolutionStage}
+                  title={student.fullName}
+                  subtitle={`${student.group} | ${student.evolutionStage}`}
                   leftComponent={
-                    <XPCardImage imageUrl={imageUrl} alt={evolutionStage} />
+                    <XPCardImage
+                      imageUrl={student.imageUrl}
+                      alt={student.evolutionStage}
+                    />
                   }
                   size="xs"
-                  onClick={() => handleStudentDeselection(id)}
+                  onClick={() => handleStudentDeselection(student.id)}
                 />
               </div>
-            );
-          })
-        ) : (
-          <ErrorComponent
-            title="Brak studentów"
-            message="Brak studentów przypisanych do grupy."
-            size={ErrorComponentSizes.COMPACT}
-          />
-        )}
+            ))
+          ) : (
+            <ErrorComponent
+              title="Pusta grupa"
+              message="Nie wybrano jeszcze żadnych studentów."
+              size={ErrorComponentSizes.COMPACT}
+            />
+          )}
+        </div>
       </div>
-      <div className="group-pick-button">
+
+      <div className="group-pick-footer">
         <ButtonWithBorder
           text="Dalej"
           className="!mx-0 !py-0 !w-full"

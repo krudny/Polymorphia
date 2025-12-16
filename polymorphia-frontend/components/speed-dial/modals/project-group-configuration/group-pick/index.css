@@ -2,35 +2,36 @@
 @import "../../../../../styles/globals.css";
 
 .group-pick {
-  @apply flex-col w-full;
+  @apply flex flex-col h-full w-full overflow-hidden;
 }
 
-.group-pick-wrapper {
-  @apply flex w-full gap-x-2 justify-between overflow-x-hidden;
+.group-pick-body {
+  @apply flex-1 flex flex-col gap-y-2 overflow-y-auto min-h-0 pr-1 custom-scrollbar;
 }
 
-.group-pick-text {
-  @apply text-3xl my-4;
+.group-pick-header {
+  @apply flex w-full gap-x-2 justify-between items-center shrink-0 pt-1;
 }
 
-.group-pick-search {
-  @apply w-full h-fit max-h-[250px] mt-2 overflow-y-auto flex flex-col gap-y-1 z-[999] custom-scrollbar;
+.group-pick-filter-btn {
+  @apply !mx-0 !py-0 !border-0 !border-b-2 !rounded-none shrink-0;
 }
 
-.group-pick-card {
-  @apply min-h-fit;
+.group-pick-list {
+  @apply w-full flex flex-col gap-y-1 overflow-y-auto custom-scrollbar;
+  @apply max-h-[250px] min-h-[120px] shrink;
 }
 
-.group-pick-group {
-  @apply w-full max-h-[250px]　overflow-y-auto custom-scrollbar flex flex-col gap-y-1 z-[999];
+.group-pick-card-wrapper {
+  @apply shrink-0;
 }
 
-.group-pick-filters-button {
-  @apply flex gap-x-2 lg:gap-x-4;
+.group-pick-title {
+  @apply text-3xl mt-2 shrink-0;
 }
 
-.group-pick-button {
-  @apply w-full mt-4;
+.group-pick-footer {
+  @apply shrink-0 w-full mt-4 z-10;
 }
 
 .group-pick-loading {

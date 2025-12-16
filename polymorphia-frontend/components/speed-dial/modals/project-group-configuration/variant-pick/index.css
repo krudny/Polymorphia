@@ -16,7 +16,7 @@
 }
 
 .variant-pick {
-  @apply max-w-full w-full;
+  @apply max-w-full w-full overflow-y-auto custom-scrollbar;
 }
 
 .variant-pick-accordion-override {
