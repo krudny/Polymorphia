@@ -168,6 +168,8 @@ export const ProjectService = {
       ],
       max: 2,
       defaultValues: ["all"],
+      additionalInfo:
+        "Tutaj należy zwrócić informację jakie grupy można wybrać w zależności od wartości allowCrossCourseGroupProjectGroups.",
     };
   },
 

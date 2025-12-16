@@ -36,6 +36,7 @@ export interface ProjectGroupConfigurationPartialFilterConfig {
   options: FilterOption[];
   max: number;
   defaultValues: string[];
+  additionalInfo: string;
 }
 
 export interface ProjectGroupConfigurationProviderProps {
