@@ -1,7 +1,10 @@
-import { FileRejection } from "react-dropzone";
 import toast from "react-hot-toast";
+import { UseFileImportError } from "@/components/speed-dial/modals/file-import/import-csv/upload/types";
 
-export function importCSVError(rejectedFiles: FileRejection[]) {
+export function fileImportError({
+  rejectedFiles,
+  expectedFileType,
+}: UseFileImportError) {
   rejectedFiles.forEach((rejectedFile) => {
     const { file, errors } = rejectedFile;
 
@@ -15,7 +18,9 @@ export function importCSVError(rejectedFiles: FileRejection[]) {
           break;
 
         case "file-invalid-type":
-          toast.error(`Plik "${file.name}" nie jest w formacie CSV.`);
+          toast.error(
+            `Plik "${file.name}" nie jest w formacie ${expectedFileType}.`
+          );
           break;
 
         case "too-many-files":

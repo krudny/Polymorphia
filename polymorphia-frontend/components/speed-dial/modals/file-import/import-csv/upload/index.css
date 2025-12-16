@@ -1,7 +1,7 @@
 @import "tailwindcss";
-@import "../../../../../styles/globals.css";
+@import "../../../../../../styles/globals.css";
 
-.import-csv-upload-wrapper {
+.file-import-upload-wrapper {
   @apply w-full min-h-44 border-2 border-primary-dark border-dashed flex-col-centered gap-y-2;
   @apply rounded hover:border-solid hover:bg-primary-dark hover:text-secondary-gray;
   @apply transition-colors custom-ease-with-duration hover:cursor-pointer;
@@ -11,14 +11,14 @@
   @apply bg-primary-dark text-secondary-gray transition-colors custom-ease-with-duration;
 }
 
-.import-csv-loading {
+.file-import-loading {
   @apply relative;
 }
 
-.import-csv-upload-icon {
+.file-import-upload-icon {
   @apply text-7xl material-symbols;
 }
 
-.import-csv-text {
+.file-import-text {
   @apply w-88 text-3xl break-words text-center;
 }
