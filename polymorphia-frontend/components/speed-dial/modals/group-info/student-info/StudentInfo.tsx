@@ -16,7 +16,7 @@ export default function StudentInfo() {
         </div>
       )}
       {isLoading && (
-        <div className="gradable-event-section h-50">
+        <div className="gradable-event-section h-50 relative">
           <Loading />
         </div>
       )}

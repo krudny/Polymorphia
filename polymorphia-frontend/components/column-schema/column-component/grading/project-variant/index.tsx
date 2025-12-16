@@ -5,8 +5,8 @@ import useGradingContext from "@/hooks/contexts/useGradingContext";
 import ColumnSwappableComponent from "@/components/column-schema/column-component/shared/column-swappable-component";
 import { ProjectVariantWithCategoryNameResponseDTO } from "@/interfaces/api/project";
 import {
-  errorComponent,
-  noProjectVariantsErrorComponent,
+  errorComponentCompact,
+  noProjectVariantsErrorComponentCompact,
 } from "@/components/speed-dial/modals/project-variant/project-variant-info/errors";
 
 export function ProjectVariant() {
@@ -29,8 +29,10 @@ export function ProjectVariant() {
           color="gray"
         />
       )}
-      renderDataErrorComponent={() => errorComponent}
-      renderEmptyDataErrorComponent={() => noProjectVariantsErrorComponent}
+      renderDataErrorComponent={() => errorComponentCompact}
+      renderEmptyDataErrorComponent={() =>
+        noProjectVariantsErrorComponentCompact
+      }
       minHeightClassName="min-h-[250px]"
       selectedTarget={targetState.selectedTarget}
     />
