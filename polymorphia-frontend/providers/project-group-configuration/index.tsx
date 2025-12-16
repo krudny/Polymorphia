@@ -42,16 +42,16 @@ export function ProjectGroupConfigurationProvider({
   );
 
   const {
-    data: initialProjectGroupConfiugation,
+    data: initialProjectGroupConfiguration,
     isLoading: isInitialProjectGroupConfigurationLoading,
     isError: isInitialProjectGroupConfigurationError,
   } = useProjectGroupConfiguration({ target: initialTarget });
 
   useEffect(() => {
-    if (initialProjectGroupConfiugation) {
-      setCurrentProjectGroupConfiguration(initialProjectGroupConfiugation);
+    if (initialProjectGroupConfiguration) {
+      setCurrentProjectGroupConfiguration(initialProjectGroupConfiguration);
     }
-  }, [initialProjectGroupConfiugation]);
+  }, [initialProjectGroupConfiguration]);
 
   return (
     <ProjectGroupConfigurationContext.Provider
