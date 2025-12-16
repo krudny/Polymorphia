@@ -26,7 +26,7 @@ import {
   DEFAULT_SORT_BY_TOTAL,
   DEFAULT_SORT_ORDER_DESC,
   DEFAULT_GROUPS,
-} from "@/shared/filter-defaults";
+} from "@/hooks/course/filters/useFilters/utils/filterDefaults";
 
 export const HallOfFameContext = createContext<
   HallOfFameContextInterface | undefined

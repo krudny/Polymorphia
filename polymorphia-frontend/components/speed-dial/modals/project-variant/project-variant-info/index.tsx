@@ -1,7 +1,7 @@
 import XPCard from "@/components/xp-card/XPCard";
 import XPCardImage from "@/components/xp-card/components/XPCardImage";
 import XPCardProjectVariant from "@/components/xp-card/components/XPCardProjectVariant";
-import { ProjectVariantInfoProps } from "@/shared/project-variant-info/types";
+import { ProjectVariantInfoProps } from "@/components/speed-dial/modals/project-variant/project-variant-info/types";
 import "./index.css";
 
 export default function ProjectVariantInfo({

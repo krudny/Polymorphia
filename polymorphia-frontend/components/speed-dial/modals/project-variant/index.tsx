@@ -1,13 +1,13 @@
 import Modal from "@/components/modal";
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
-import ProjectVariantInfo from "@/shared/project-variant-info";
+import ProjectVariantInfo from "@/components/speed-dial/modals/project-variant/project-variant-info";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
 import { TargetTypes } from "@/interfaces/api/target";
 import useProjectVariant from "@/hooks/course/projects/useProjectVariant";
 import {
   errorComponent,
   noProjectVariantsErrorComponent,
-} from "@/shared/project-variant-info/errors";
+} from "@/components/speed-dial/modals/project-variant/project-variant-info/errors";
 import ColumnSwappableComponent from "@/components/column-schema/column-component/shared/column-swappable-component";
 import { ProjectVariantWithCategoryNameResponseDTO } from "@/interfaces/api/project";
 import { useMediaQuery } from "react-responsive";

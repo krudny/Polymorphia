@@ -1,4 +1,4 @@
-import ProjectVariantInfo from "@/shared/project-variant-info";
+import ProjectVariantInfo from "@/components/speed-dial/modals/project-variant/project-variant-info";
 import ColumnComponent from "@/components/column-schema/column-component";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
 import useGradingContext from "@/hooks/contexts/useGradingContext";
@@ -7,7 +7,7 @@ import { ProjectVariantWithCategoryNameResponseDTO } from "@/interfaces/api/proj
 import {
   errorComponent,
   noProjectVariantsErrorComponent,
-} from "@/shared/project-variant-info/errors";
+} from "@/components/speed-dial/modals/project-variant/project-variant-info/errors";
 
 export function ProjectVariant() {
   const { projectVariants, isSpecificDataLoading, isSpecificDataError } =

@@ -13,7 +13,7 @@ import {
   DEFAULT_SEARCH_BY,
   DEFAULT_SORT_BY_TOTAL,
   DEFAULT_SORT_ORDER_ASC,
-} from "@/shared/filter-defaults";
+} from "@/hooks/course/filters/useFilters/utils/filterDefaults";
 
 export const CourseGroupsContext = createContext<
   CourseGroupsContextInterface | undefined
