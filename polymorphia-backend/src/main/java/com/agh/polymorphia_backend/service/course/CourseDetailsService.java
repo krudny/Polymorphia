@@ -23,6 +23,7 @@ import com.agh.polymorphia_backend.repository.reward.projection.ChestDetailsDeta
 import com.agh.polymorphia_backend.repository.reward.projection.ItemDetailsDetailsProjection;
 import com.agh.polymorphia_backend.repository.submission.SubmissionRequirementRepository;
 import com.agh.polymorphia_backend.repository.submission.projection.SubmissionRequirementDetailsProjection;
+import com.agh.polymorphia_backend.service.event_section.EventSectionService;
 import com.agh.polymorphia_backend.service.mapper.CourseDetailsMapper;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
@@ -53,6 +54,7 @@ public class CourseDetailsService {
     private final GradableEventRepository gradableEventRepository;
     private final ProjectVariantCategoryRepository projectVariantCategoryRepository;
     private final ProjectVariantRepository projectVariantRepository;
+    private final EventSectionService eventSectionService;
 
     @Transactional(readOnly = true)
     public CourseDetailsRequestDto getCourseDetails(Long courseId) {
@@ -84,6 +86,7 @@ public class CourseDetailsService {
 
     private List<String> getRoadmapOrder(List<GradableEventDetailsProjection> gradableEvents) {
         return gradableEvents.stream()
+                .filter(gradableEvent-> eventSectionService.getEventSection(gradableEvent.getEventSectionId()).isShownInRoadMap())
                 .sorted(Comparator.comparing(GradableEventDetailsProjection::getRoadmapOrderIndex))
                 .map(GradableEventDetailsProjection::getKey)
                 .toList();
