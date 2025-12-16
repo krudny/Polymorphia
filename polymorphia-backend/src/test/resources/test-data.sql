@@ -49,7 +49,7 @@ VALUES (1, 'Programowanie Obiektowe', 3, '/coord_url', '/instr_url', 'img_url', 
 insert into users(id, first_name, last_name, email, password, preferred_course_id)
 values (12, 'Sample', 'User', 'sampleuser@test.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O',
         4),
-        (13, 'Sample', 'Instructor', 'sampleinstructor@test.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', 4);
+       (13, 'Sample', 'Instructor', 'sampleinstructor@test.com', '$2a$10$k/sZH/gK6qzlLpHw1MqEFOpPXTBi17gdlIs84q2MmevjqsoHWNF4O', 4);
 -- Students
 INSERT INTO students(user_id, index_number)
 VALUES (2, 123456),
@@ -252,13 +252,13 @@ VALUES (1, 1, 'uzyskane punkty', 20.0, 'criteria1'),
 
 -- Submission Requirements
 INSERT INTO public.submission_requirements (id, gradable_event_id, name, is_mandatory, order_index, key)
-VALUES (1, 2, 'Wykonanie zadania', TRUE, 1, '1'),
-       (2, 4, 'Wykonanie zadania 1', TRUE, 1, '2'),
-       (3, 4, 'Wykonanie zadania 2', TRUE, 2, '3'),
-       (4, 4, 'Zadanie dodatkowe 1', FALSE, 3, '4'),
-       (5, 4, 'Zadanie dodatkowe 2', FALSE, 4, '5'),
-       (6, 7, 'Repozytorium projektu', TRUE, 1, '6'),
-       (7, 7, 'Slodki kotek', FALSE, 2, '7');
+VALUES (1, 2, 'Wykonanie zadania', TRUE, 1, 'submission_requirements1'),
+       (2, 4, 'Wykonanie zadania 1', TRUE, 1, 'submission_requirements2'),
+       (3, 4, 'Wykonanie zadania 2', TRUE, 2, 'submission_requirements3'),
+       (4, 4, 'Zadanie dodatkowe 1', FALSE, 3, 'submission_requirements4'),
+       (5, 4, 'Zadanie dodatkowe 2', FALSE, 4, 'submission_requirements5'),
+       (6, 7, 'Repozytorium projektu', TRUE, 1, 'submission_requirements6'),
+       (7, 7, 'Slodki kotek', FALSE, 2, 'submission_requirements7');
 
 -- Submissions
 INSERT INTO public.submissions (id, submission_requirement_id, animal_id, url, is_locked, created_date, modified_date)

@@ -26,251 +26,251 @@ TRUNCATE TABLE submission_requirements cascade;
 TRUNCATE TABLE submissions cascade;
 TRUNCATE TABLE teaching_role_users cascade;
 INSERT INTO
-  users (id, first_name, last_name, email, password, preferred_course_id)
+    users (id, first_name, last_name, email, password, preferred_course_id)
 VALUES
-  (1, 'Jan', 'Kowalski', 'jk@gmail.com', '$2a$10$cEcxQ77CzxCh.tNVQH.1r.PXgag9XZj2/glpX2DrnSVdNR3eeZ0yC', NULL);
+    (1, 'Jan', 'Kowalski', 'jk@gmail.com', '$2a$10$cEcxQ77CzxCh.tNVQH.1r.PXgag9XZj2/glpX2DrnSVdNR3eeZ0yC', NULL);
 INSERT INTO
-  users (id, first_name, last_name, email, password, preferred_course_id)
+    users (id, first_name, last_name, email, password, preferred_course_id)
 VALUES
-  (4, 'Gall', 'Anonim', 'thismail@doesnot.exist', '$2a$10$1XxOuzwCaQjasNLI.uvCKu6FkNtKYBtnOGzLq73RjBKNpezUil3tK', NULL);
+    (4, 'Gall', 'Anonim', 'thismail@doesnot.exist', '$2a$10$1XxOuzwCaQjasNLI.uvCKu6FkNtKYBtnOGzLq73RjBKNpezUil3tK', NULL);
 INSERT INTO
-  users (id, first_name, last_name, email, password, preferred_course_id)
+    users (id, first_name, last_name, email, password, preferred_course_id)
 VALUES
-  (5, 'Michał', 'Idzik', 'michal.idzik@test.com', '$2a$10$ARcCwjJnygHJw/3hDe2BZO/FHvPXBI.CSs.sjjRW16zkc6oH3TzrC', NULL);
+    (5, 'Michał', 'Idzik', 'michal.idzik@test.com', '$2a$10$ARcCwjJnygHJw/3hDe2BZO/FHvPXBI.CSs.sjjRW16zkc6oH3TzrC', NULL);
 INSERT INTO
-  users (id, first_name, last_name, email, password, preferred_course_id)
+    users (id, first_name, last_name, email, password, preferred_course_id)
 VALUES
-  (2, 'admin', 'admin', 'admin@admin.com', '$2a$10$8RfsPIB.mYhx2Qc4HhJKseGDlRJlfgyFktkKWWxCrU6xh5bIvf0Ji', NULL);
+    (2, 'admin', 'admin', 'admin@admin.com', '$2a$10$8RfsPIB.mYhx2Qc4HhJKseGDlRJlfgyFktkKWWxCrU6xh5bIvf0Ji', NULL);
 INSERT INTO
-  users (id, first_name, last_name, email, password, preferred_course_id)
+    users (id, first_name, last_name, email, password, preferred_course_id)
 VALUES
-  (3, 'Kamil', 'Ślimak', 'kamil@snail.com', '$2a$10$V01hVaU8SX30lb083e1UYeH79PkKJg1HC71/WUM1YsUmFHVOKh85e', NULL);
+    (3, 'Kamil', 'Ślimak', 'kamil@snail.com', '$2a$10$V01hVaU8SX30lb083e1UYeH79PkKJg1HC71/WUM1YsUmFHVOKh85e', NULL);
 INSERT INTO
-  users (id, first_name, last_name, email, password, preferred_course_id)
+    users (id, first_name, last_name, email, password, preferred_course_id)
 VALUES
-  (7, 'Sample', 'User', 'sampleuser@test.com', '$2y$10$PnLQWAxCL4VYV6PCkYADeO6EF448OySkzLriI4/SDRShZZBXrvZTm', NULL);
+    (7, 'Sample', 'User', 'sampleuser@test.com', '$2y$10$PnLQWAxCL4VYV6PCkYADeO6EF448OySkzLriI4/SDRShZZBXrvZTm', NULL);
 INSERT INTO
     teaching_role_users (user_id)
 VALUES
     (4);
 INSERT INTO
-  instructors (user_id)
+    instructors (user_id)
 VALUES
-  (4);
+    (4);
 INSERT INTO
-  users (id, first_name, last_name, email, password, preferred_course_id)
+    users (id, first_name, last_name, email, password, preferred_course_id)
 VALUES
-  (8, 'Jan', 'Kowalski', 'jan.kowalski1@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (9, 'Anna', 'Nowak', 'anna.nowak2@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (10, 'Piotr', 'Wiśniewski', 'piotr.wisniewski3@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (11, 'Maria', 'Wójcik', 'maria.wojcik4@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (12, 'Krzysztof', 'Kamiński', 'krzysztof.kaminski5@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (13, 'Katarzyna', 'Lewandowska', 'katarzyna.lewandowska6@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (14, 'Tomasz', 'Zieliński', 'tomasz.zielinski7@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (15, 'Małgorzata', 'Szymańska', 'malgorzata.szymanska8@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (16, 'Andrzej', 'Woźniak', 'andrzej.wozniak9@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (17, 'Agnieszka', 'Dąbrowska', 'agnieszka.dabrowska10@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (18, 'Marcin', 'Kozłowski', 'marcin.kozlowski11@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (19, 'Joanna', 'Jankowska', 'joanna.jankowska12@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (20, 'Paweł', 'Mazur', 'pawel.mazur13@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (21, 'Ewa', 'Krawczyk', 'ewa.krawczyk14@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (22, 'Michał', 'Piotrowski', 'michal.piotrowski15@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (23, 'Magdalena', 'Grabowska', 'magdalena.grabowska16@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (24, 'Jakub', 'Pawłowski', 'jakub.pawlowski17@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (25, 'Barbara', 'Michalska', 'barbara.michalska18@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (26, 'Łukasz', 'Król', 'lukasz.krol19@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (27, 'Monika', 'Wieczorek', 'monika.wieczorek20@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (28, 'Grzegorz', 'Jabłoński', 'grzegorz.jablonski21@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (29, 'Aleksandra', 'Nowakowska', 'aleksandra.nowakowska22@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (30, 'Robert', 'Majewski', 'robert.majewski23@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (31, 'Dorota', 'Olszewska', 'dorota.olszewska24@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (32, 'Rafał', 'Stępień', 'rafal.stepien25@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (33, 'Justyna', 'Jaworska', 'justyna.jaworska26@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (34, 'Dariusz', 'Adamczyk', 'dariusz.adamczyk27@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (35, 'Iwona', 'Dudek', 'iwona.dudek28@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (36, 'Mariusz', 'Górski', 'mariusz.gorski29@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (37, 'Renata', 'Witkowska', 'renata.witkowska30@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (38, 'Zbigniew', 'Walczak', 'zbigniew.walczak31@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (39, 'Beata', 'Rutkowska', 'beata.rutkowska32@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (40, 'Wojciech', 'Sikora', 'wojciech.sikora33@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (41, 'Elżbieta', 'Baran', 'elzbieta.baran34@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (42, 'Marek', 'Duda', 'marek.duda35@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (43, 'Halina', 'Kołodziej', 'halina.kolodziej36@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (44, 'Adam', 'Czarnecki', 'adam.czarnecki37@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (45, 'Zofia', 'Tomaszewska', 'zofia.tomaszewska38@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (46, 'Stanisław', 'Sobczak', 'stanislaw.sobczak39@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (47, 'Grażyna', 'Czerwińska', 'grazyna.czerwinska40@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (48, 'Jerzy', 'Sawicki', 'jerzy.sawicki41@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (49, 'Danuta', 'Borkowska', 'danuta.borkowska42@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (50, 'Tadeusz', 'Sokołowski', 'tadeusz.sokolowski43@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (51, 'Teresa', 'Urbańska', 'teresa.urbanska44@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (52, 'Henryk', 'Laskowski', 'henryk.laskowski45@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (53, 'Jadwiga', 'Zakrzewska', 'jadwiga.zakrzewska46@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (54, 'Ryszard', 'Włodarczyk', 'ryszard.wlodarczyk47@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (55, 'Krystyna', 'Maciejewska', 'krystyna.maciejewska48@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (56, 'Kazimierz', 'Chmielewski', 'kazimierz.chmielewski49@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (57, 'Mirosława', 'Kowalczyk', 'miroslawa.kowalczyk50@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (58, 'Wiesław', 'Szczepański', 'wieslaw.szczepanski51@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (59, 'Bożena', 'Sadowska', 'bozena.sadowska52@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (60, 'Leszek', 'Wilk', 'leszek.wilk53@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (61, 'Urszula', 'Szewczyk', 'urszula.szewczyk54@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (62, 'Zdzisław', 'Głowacki', 'zdzislaw.glowacki55@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (63, 'Janina', 'Lis', 'janina.lis56@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (64, 'Bogdan', 'Wysocki', 'bogdan.wysocki57@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (65, 'Irena', 'Baranowska', 'irena.baranowska58@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (66, 'Eugeniusz', 'Adamski', 'eugeniusz.adamski59@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (67, 'Wanda', 'Marciniak', 'wanda.marciniak60@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (68, 'Bogusław', 'Kubiak', 'boguslaw.kubiak61@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (69, 'Jolanta', 'Pietrzak', 'jolanta.pietrzak62@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (70, 'Sławomir', 'Zając', 'slawomir.zajac63@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (71, 'Lidia', 'Kaczmarek', 'lidia.kaczmarek64@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (72, 'Jarosław', 'Zalewski', 'jaroslaw.zalewski65@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (73, 'Marzena', 'Pawlak', 'marzena.pawlak66@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (74, 'Artur', 'Michalak', 'artur.michalak67@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (75, 'Sylwia', 'Król', 'sylwia.krol68@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (76, 'Sebastian', 'Wróbel', 'sebastian.wrobel69@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (77, 'Aneta', 'Błaszczyk', 'aneta.blaszczyk70@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (78, 'Radosław', 'Kucharski', 'radoslaw.kucharski71@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (79, 'Kamila', 'Mazurek', 'kamila.mazurek72@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (80, 'Przemysław', 'Wyszyński', 'przemyslaw.wyszynski73@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (81, 'Edyta', 'Ostrowski', 'edyta.ostrowski74@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (82, 'Damian', 'Adamczyk', 'damian.adamczyk75@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (83, 'Iwona', 'Czerwińska', 'iwona.czerwinska76@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (84, 'Filip', 'Jasiński', 'filip.jasinski77@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (85, 'Natalia', 'Kalinowski', 'natalia.kalinowski78@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (86, 'Mateusz', 'Urbański', 'mateusz.urbanski79@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (87, 'Paulina', 'Borowski', 'paulina.borowski80@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (88, 'Dawid', 'Kasprzak', 'dawid.kasprzak81@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (89, 'Patrycja', 'Laskowska', 'patrycja.laskowska82@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (90, 'Bartosz', 'Mazurek', 'bartosz.mazurek83@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (91, 'Weronika', 'Szymczak', 'weronika.szymczak84@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (92, 'Karol', 'Krawczyk', 'karol.krawczyk85@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (93, 'Julia', 'Rutkowski', 'julia.rutkowski86@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (94, 'Kacper', 'Baranowski', 'kacper.baranowski87@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (95, 'Martyna', 'Stefański', 'martyna.stefanski88@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (96, 'Adrian', 'Sikora', 'adrian.sikora89@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (97, 'Oliwia', 'Witkowski', 'oliwia.witkowski90@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (98, 'Dominik', 'Głowacki', 'dominik.glowacki91@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (99, 'Nikola', 'Marciniak', 'nikola.marciniak92@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (100, 'Oskar', 'Zakrzewski', 'oskar.zakrzewski93@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (101, 'Amelia', 'Czarnecki', 'amelia.czarnecki94@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (102, 'Szymon', 'Sobczak', 'szymon.sobczak95@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (103, 'Maja', 'Lis', 'maja.lis96@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (104, 'Igor', 'Dudek', 'igor.dudek97@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (105, 'Zuzanna', 'Walczak', 'zuzanna.walczak98@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (106, 'Nikodem', 'Baran', 'nikodem.baran99@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
-  (107, 'Lena', 'Maciejewski', 'lena.maciejewski100@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL);
+    (8, 'Jan', 'Kowalski', 'jan.kowalski1@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (9, 'Anna', 'Nowak', 'anna.nowak2@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (10, 'Piotr', 'Wiśniewski', 'piotr.wisniewski3@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (11, 'Maria', 'Wójcik', 'maria.wojcik4@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (12, 'Krzysztof', 'Kamiński', 'krzysztof.kaminski5@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (13, 'Katarzyna', 'Lewandowska', 'katarzyna.lewandowska6@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (14, 'Tomasz', 'Zieliński', 'tomasz.zielinski7@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (15, 'Małgorzata', 'Szymańska', 'malgorzata.szymanska8@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (16, 'Andrzej', 'Woźniak', 'andrzej.wozniak9@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (17, 'Agnieszka', 'Dąbrowska', 'agnieszka.dabrowska10@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (18, 'Marcin', 'Kozłowski', 'marcin.kozlowski11@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (19, 'Joanna', 'Jankowska', 'joanna.jankowska12@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (20, 'Paweł', 'Mazur', 'pawel.mazur13@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (21, 'Ewa', 'Krawczyk', 'ewa.krawczyk14@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (22, 'Michał', 'Piotrowski', 'michal.piotrowski15@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (23, 'Magdalena', 'Grabowska', 'magdalena.grabowska16@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (24, 'Jakub', 'Pawłowski', 'jakub.pawlowski17@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (25, 'Barbara', 'Michalska', 'barbara.michalska18@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (26, 'Łukasz', 'Król', 'lukasz.krol19@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (27, 'Monika', 'Wieczorek', 'monika.wieczorek20@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (28, 'Grzegorz', 'Jabłoński', 'grzegorz.jablonski21@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (29, 'Aleksandra', 'Nowakowska', 'aleksandra.nowakowska22@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (30, 'Robert', 'Majewski', 'robert.majewski23@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (31, 'Dorota', 'Olszewska', 'dorota.olszewska24@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (32, 'Rafał', 'Stępień', 'rafal.stepien25@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (33, 'Justyna', 'Jaworska', 'justyna.jaworska26@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (34, 'Dariusz', 'Adamczyk', 'dariusz.adamczyk27@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (35, 'Iwona', 'Dudek', 'iwona.dudek28@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (36, 'Mariusz', 'Górski', 'mariusz.gorski29@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (37, 'Renata', 'Witkowska', 'renata.witkowska30@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (38, 'Zbigniew', 'Walczak', 'zbigniew.walczak31@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (39, 'Beata', 'Rutkowska', 'beata.rutkowska32@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (40, 'Wojciech', 'Sikora', 'wojciech.sikora33@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (41, 'Elżbieta', 'Baran', 'elzbieta.baran34@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (42, 'Marek', 'Duda', 'marek.duda35@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (43, 'Halina', 'Kołodziej', 'halina.kolodziej36@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (44, 'Adam', 'Czarnecki', 'adam.czarnecki37@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (45, 'Zofia', 'Tomaszewska', 'zofia.tomaszewska38@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (46, 'Stanisław', 'Sobczak', 'stanislaw.sobczak39@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (47, 'Grażyna', 'Czerwińska', 'grazyna.czerwinska40@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (48, 'Jerzy', 'Sawicki', 'jerzy.sawicki41@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (49, 'Danuta', 'Borkowska', 'danuta.borkowska42@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (50, 'Tadeusz', 'Sokołowski', 'tadeusz.sokolowski43@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (51, 'Teresa', 'Urbańska', 'teresa.urbanska44@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (52, 'Henryk', 'Laskowski', 'henryk.laskowski45@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (53, 'Jadwiga', 'Zakrzewska', 'jadwiga.zakrzewska46@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (54, 'Ryszard', 'Włodarczyk', 'ryszard.wlodarczyk47@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (55, 'Krystyna', 'Maciejewska', 'krystyna.maciejewska48@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (56, 'Kazimierz', 'Chmielewski', 'kazimierz.chmielewski49@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (57, 'Mirosława', 'Kowalczyk', 'miroslawa.kowalczyk50@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (58, 'Wiesław', 'Szczepański', 'wieslaw.szczepanski51@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (59, 'Bożena', 'Sadowska', 'bozena.sadowska52@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (60, 'Leszek', 'Wilk', 'leszek.wilk53@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (61, 'Urszula', 'Szewczyk', 'urszula.szewczyk54@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (62, 'Zdzisław', 'Głowacki', 'zdzislaw.glowacki55@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (63, 'Janina', 'Lis', 'janina.lis56@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (64, 'Bogdan', 'Wysocki', 'bogdan.wysocki57@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (65, 'Irena', 'Baranowska', 'irena.baranowska58@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (66, 'Eugeniusz', 'Adamski', 'eugeniusz.adamski59@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (67, 'Wanda', 'Marciniak', 'wanda.marciniak60@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (68, 'Bogusław', 'Kubiak', 'boguslaw.kubiak61@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (69, 'Jolanta', 'Pietrzak', 'jolanta.pietrzak62@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (70, 'Sławomir', 'Zając', 'slawomir.zajac63@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (71, 'Lidia', 'Kaczmarek', 'lidia.kaczmarek64@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (72, 'Jarosław', 'Zalewski', 'jaroslaw.zalewski65@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (73, 'Marzena', 'Pawlak', 'marzena.pawlak66@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (74, 'Artur', 'Michalak', 'artur.michalak67@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (75, 'Sylwia', 'Król', 'sylwia.krol68@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (76, 'Sebastian', 'Wróbel', 'sebastian.wrobel69@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (77, 'Aneta', 'Błaszczyk', 'aneta.blaszczyk70@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (78, 'Radosław', 'Kucharski', 'radoslaw.kucharski71@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (79, 'Kamila', 'Mazurek', 'kamila.mazurek72@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (80, 'Przemysław', 'Wyszyński', 'przemyslaw.wyszynski73@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (81, 'Edyta', 'Ostrowski', 'edyta.ostrowski74@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (82, 'Damian', 'Adamczyk', 'damian.adamczyk75@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (83, 'Iwona', 'Czerwińska', 'iwona.czerwinska76@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (84, 'Filip', 'Jasiński', 'filip.jasinski77@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (85, 'Natalia', 'Kalinowski', 'natalia.kalinowski78@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (86, 'Mateusz', 'Urbański', 'mateusz.urbanski79@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (87, 'Paulina', 'Borowski', 'paulina.borowski80@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (88, 'Dawid', 'Kasprzak', 'dawid.kasprzak81@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (89, 'Patrycja', 'Laskowska', 'patrycja.laskowska82@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (90, 'Bartosz', 'Mazurek', 'bartosz.mazurek83@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (91, 'Weronika', 'Szymczak', 'weronika.szymczak84@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (92, 'Karol', 'Krawczyk', 'karol.krawczyk85@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (93, 'Julia', 'Rutkowski', 'julia.rutkowski86@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (94, 'Kacper', 'Baranowski', 'kacper.baranowski87@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (95, 'Martyna', 'Stefański', 'martyna.stefanski88@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (96, 'Adrian', 'Sikora', 'adrian.sikora89@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (97, 'Oliwia', 'Witkowski', 'oliwia.witkowski90@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (98, 'Dominik', 'Głowacki', 'dominik.glowacki91@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (99, 'Nikola', 'Marciniak', 'nikola.marciniak92@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (100, 'Oskar', 'Zakrzewski', 'oskar.zakrzewski93@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (101, 'Amelia', 'Czarnecki', 'amelia.czarnecki94@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (102, 'Szymon', 'Sobczak', 'szymon.sobczak95@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (103, 'Maja', 'Lis', 'maja.lis96@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (104, 'Igor', 'Dudek', 'igor.dudek97@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (105, 'Zuzanna', 'Walczak', 'zuzanna.walczak98@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (106, 'Nikodem', 'Baran', 'nikodem.baran99@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL),
+    (107, 'Lena', 'Maciejewski', 'lena.maciejewski100@example.com', '$2a$12$e/0L6Ob8F5bQK/P4d8lmCuqp6OqPTC4OdOxUPPB6TRhlZcd1fehLy', NULL);
 INSERT INTO
-  students (user_id, index_number)
+    students (user_id, index_number)
 VALUES
-  (3, 123654);
+    (3, 123654);
 INSERT INTO
-  students (user_id, index_number)
+    students (user_id, index_number)
 VALUES
-  (7, 1233333);
+    (7, 1233333);
 INSERT INTO
-  students (user_id, index_number)
+    students (user_id, index_number)
 VALUES
-  (8, 100001),
-  (9, 100002),
-  (10, 100003),
-  (11, 100004),
-  (12, 100005),
-  (13, 100006),
-  (14, 100007),
-  (15, 100008),
-  (16, 100009),
-  (17, 100010),
-  (18, 100011),
-  (19, 100012),
-  (20, 100013),
-  (21, 100014),
-  (22, 100015),
-  (23, 100016),
-  (24, 100017),
-  (25, 100018),
-  (26, 100019),
-  (27, 100020),
-  (28, 100021),
-  (29, 100022),
-  (30, 100023),
-  (31, 100024),
-  (32, 100025),
-  (33, 100026),
-  (34, 100027),
-  (35, 100028),
-  (36, 100029),
-  (37, 100030),
-  (38, 100031),
-  (39, 100032),
-  (40, 100033),
-  (41, 100034),
-  (42, 100035),
-  (43, 100036),
-  (44, 100037),
-  (45, 100038),
-  (46, 100039),
-  (47, 100040),
-  (48, 100041),
-  (49, 100042),
-  (50, 100043),
-  (51, 100044),
-  (52, 100045),
-  (53, 100046),
-  (54, 100047),
-  (55, 100048),
-  (56, 100049),
-  (57, 100050),
-  (58, 100051),
-  (59, 100052),
-  (60, 100053),
-  (61, 100054),
-  (62, 100055),
-  (63, 100056),
-  (64, 100057),
-  (65, 100058),
-  (66, 100059),
-  (67, 100060),
-  (68, 100061),
-  (69, 100062),
-  (70, 100063),
-  (71, 100064),
-  (72, 100065),
-  (73, 100066),
-  (74, 100067),
-  (75, 100068),
-  (76, 100069),
-  (77, 100070),
-  (78, 100071),
-  (79, 100072),
-  (80, 100073),
-  (81, 100074),
-  (82, 100075),
-  (83, 100076),
-  (84, 100077),
-  (85, 100078),
-  (86, 100079),
-  (87, 100080),
-  (88, 100081),
-  (89, 100082),
-  (90, 100083),
-  (91, 100084),
-  (92, 100085),
-  (93, 100086),
-  (94, 100087),
-  (95, 100088),
-  (96, 100089),
-  (97, 100090),
-  (98, 100091),
-  (99, 100092),
-  (100, 100093),
-  (101, 100094),
-  (102, 100095),
-  (103, 100096),
-  (104, 100097),
-  (105, 100098),
-  (106, 100099),
-  (107, 100100);
+    (8, 100001),
+    (9, 100002),
+    (10, 100003),
+    (11, 100004),
+    (12, 100005),
+    (13, 100006),
+    (14, 100007),
+    (15, 100008),
+    (16, 100009),
+    (17, 100010),
+    (18, 100011),
+    (19, 100012),
+    (20, 100013),
+    (21, 100014),
+    (22, 100015),
+    (23, 100016),
+    (24, 100017),
+    (25, 100018),
+    (26, 100019),
+    (27, 100020),
+    (28, 100021),
+    (29, 100022),
+    (30, 100023),
+    (31, 100024),
+    (32, 100025),
+    (33, 100026),
+    (34, 100027),
+    (35, 100028),
+    (36, 100029),
+    (37, 100030),
+    (38, 100031),
+    (39, 100032),
+    (40, 100033),
+    (41, 100034),
+    (42, 100035),
+    (43, 100036),
+    (44, 100037),
+    (45, 100038),
+    (46, 100039),
+    (47, 100040),
+    (48, 100041),
+    (49, 100042),
+    (50, 100043),
+    (51, 100044),
+    (52, 100045),
+    (53, 100046),
+    (54, 100047),
+    (55, 100048),
+    (56, 100049),
+    (57, 100050),
+    (58, 100051),
+    (59, 100052),
+    (60, 100053),
+    (61, 100054),
+    (62, 100055),
+    (63, 100056),
+    (64, 100057),
+    (65, 100058),
+    (66, 100059),
+    (67, 100060),
+    (68, 100061),
+    (69, 100062),
+    (70, 100063),
+    (71, 100064),
+    (72, 100065),
+    (73, 100066),
+    (74, 100067),
+    (75, 100068),
+    (76, 100069),
+    (77, 100070),
+    (78, 100071),
+    (79, 100072),
+    (80, 100073),
+    (81, 100074),
+    (82, 100075),
+    (83, 100076),
+    (84, 100077),
+    (85, 100078),
+    (86, 100079),
+    (87, 100080),
+    (88, 100081),
+    (89, 100082),
+    (90, 100083),
+    (91, 100084),
+    (92, 100085),
+    (93, 100086),
+    (94, 100087),
+    (95, 100088),
+    (96, 100089),
+    (97, 100090),
+    (98, 100091),
+    (99, 100092),
+    (100, 100093),
+    (101, 100094),
+    (102, 100095),
+    (103, 100096),
+    (104, 100097),
+    (105, 100098),
+    (106, 100099),
+    (107, 100100);
 INSERT INTO
     teaching_role_users (user_id)
 VALUES
@@ -278,254 +278,254 @@ VALUES
     (2),
     (5);
 INSERT INTO
-  coordinators (user_id)
+    coordinators (user_id)
 VALUES
-  (1),
-  (2),
-  (5);
+    (1),
+    (2),
+    (5);
 INSERT INTO
-  courses (id, name, markdown_source_url, coordinator_id, coordinator_image_url, image_url, instructor_image_url)
+    courses (id, name, markdown_source_url, coordinator_id, coordinator_image_url, image_url, instructor_image_url)
 VALUES
-  (2, 'Programowanie Obiektowe 2023/24', 'https://github.com/Soamid/obiektowe-lab', 5, 'images/evolution-stages/4.webp', 'images/evolution-stages/3.webp', 'images/evolution-stages/1.webp');
+    (2, 'Programowanie Obiektowe 2023/24', 'https://github.com/Soamid/obiektowe-lab', 5, 'images/evolution-stages/4.webp', 'images/evolution-stages/3.webp', 'images/evolution-stages/1.webp');
 INSERT INTO
-  courses (id, name, markdown_source_url, coordinator_id, coordinator_image_url, image_url, instructor_image_url)
+    courses (id, name, markdown_source_url, coordinator_id, coordinator_image_url, image_url, instructor_image_url)
 VALUES
-  (1, 'Programowanie obiektowe 2024/25', 'google.com', 5, 'images/evolution-stages/7.webp', 'images/evolution-stages/1.webp', 'images/evolution-stages/7.webp');
+    (1, 'Programowanie obiektowe 2024/25', 'google.com', 5, 'images/evolution-stages/7.webp', 'images/evolution-stages/1.webp', 'images/evolution-stages/7.webp');
 INSERT INTO
-  course_groups (id, name, room, course_id, teaching_role_user_id)
+    course_groups (id, name, room, course_id, teaching_role_user_id)
 VALUES
-  (1, 'sp-pn-1315', '3.27', 1, 4);
+    (1, 'sp-pn-1315', '3.27', 1, 4);
 INSERT INTO
-  course_groups (id, name, room, course_id, teaching_role_user_id)
+    course_groups (id, name, room, course_id, teaching_role_user_id)
 VALUES
-  (2, 'mi-13-00', '3.28', 2, 4);
+    (2, 'mi-13-00', '3.28', 2, 4);
 INSERT INTO
-  course_groups (id, name, room, course_id, teaching_role_user_id)
+    course_groups (id, name, room, course_id, teaching_role_user_id)
 VALUES
-  (3, 'SP-pn-1500', '1.37', 1, 4),
-  (4, 'mi-wt-1145', '4.27', 1, 4);
+    (3, 'SP-pn-1500', '1.37', 1, 4),
+    (4, 'mi-wt-1145', '4.27', 1, 4);
 
 INSERT INTO
-  user_course_roles (role, user_id, course_id)
+    user_course_roles (role, user_id, course_id)
 VALUES
-  ('COORDINATOR', 5, 1);
+    ('COORDINATOR', 5, 1);
 INSERT INTO
-  user_course_roles (role, user_id, course_id)
+    user_course_roles (role, user_id, course_id)
 VALUES
-  ('INSTRUCTOR', 4, 1),
-  ('INSTRUCTOR', 4, 2);
+    ('INSTRUCTOR', 4, 1),
+    ('INSTRUCTOR', 4, 2);
 INSERT INTO
-  animals (id, name)
+    animals (id, name)
 VALUES
-  (5, 'Surykatka'),
-  (6, 'Jeż'),
-  (7, 'Chomik'),
-  (8, 'Kret'),
-  (9, 'Wydra'),
-  (10, 'Bóbr'),
-  (11, 'Wiewiórka'),
-  (12, 'Nietoperz'),
-  (13, 'Szop'),
-  (14, 'Lis'),
-  (15, 'Borsuk'),
-  (16, 'Łoś'),
-  (17, 'Sarna'),
-  (18, 'Dzik'),
-  (19, 'Jenot'),
-  (20, 'Zając'),
-  (21, 'Królik'),
-  (22, 'Norka'),
-  (23, 'Tchórz'),
-  (24, 'Gronostaj'),
-  (25, 'Łasica'),
-  (26, 'Kuna'),
-  (27, 'Ryś'),
-  (28, 'Wilk'),
-  (29, 'Niedźwiadek'),
-  (30, 'Panda'),
-  (31, 'Żubr'),
-  (32, 'Alpaka'),
-  (33, 'Lama'),
-  (34, 'Koala'),
-  (35, 'Kangur'),
-  (36, 'Opos'),
-  (37, 'Foka'),
-  (38, 'Mors'),
-  (39, 'Manul'),
-  (40, 'Fennek'),
-  (41, 'Karakal'),
-  (42, 'Serwał'),
-  (43, 'Pancernik'),
-  (44, 'Leniwiec'),
-  (45, 'Mrówkojad'),
-  (46, 'Tapir'),
-  (47, 'Kapibara'),
-  (48, 'Świnka'),
-  (49, 'Szynszyla'),
-  (50, 'Aguti'),
-  (51, 'Lemur'),
-  (52, 'Loris'),
-  (53, 'Wombat'),
-  (54, 'Numbat'),
-  (55, 'Kuskus'),
-  (56, 'Waran'),
-  (57, 'Legwan'),
-  (58, 'Gekon'),
-  (59, 'Kameleon'),
-  (60, 'Żółwik'),
-  (61, 'Agama'),
-  (62, 'Salamandra'),
-  (63, 'Traszka'),
-  (64, 'Ropucha'),
-  (65, 'Kumak'),
-  (66, 'Żabka'),
-  (67, 'Rzekotka'),
-  (68, 'Aksolotl'),
-  (69, 'Kaczka'),
-  (70, 'Gęś'),
-  (71, 'Łabędź'),
-  (72, 'Pelikan'),
-  (73, 'Flaming'),
-  (74, 'Czapla'),
-  (75, 'Bocian'),
-  (76, 'Żuraw'),
-  (77, 'Drop'),
-  (78, 'Sowa'),
-  (79, 'Puchacz'),
-  (80, 'Sokół'),
-  (81, 'Jastrząb'),
-  (82, 'Orzeł'),
-  (83, 'Myszołów'),
-  (84, 'Kruk'),
-  (85, 'Sroka'),
-  (86, 'Wrona'),
-  (87, 'Kawka'),
-  (88, 'Sójka'),
-  (89, 'Dzięcioł'),
-  (90, 'Sikora'),
-  (91, 'Wróbel'),
-  (92, 'Jaskółka'),
-  (93, 'Szpak'),
-  (94, 'Kos'),
-  (95, 'Rudzik'),
-  (96, 'Słowik'),
-  (97, 'Kowalik'),
-  (98, 'Zimorodek'),
-  (99, 'Dudek'),
-  (100, 'Pingwin'),
-  (101, 'Struś'),
-  (102, 'Emu'),
-  (103, 'Kazuar'),
-  (104, 'Kiwi'),
-  (1, 'Dzwiedziosow'),
-  (2, 'Sowoniedźwiedź'),
-  (4, 'Żółw');
+    (5, 'Surykatka'),
+    (6, 'Jeż'),
+    (7, 'Chomik'),
+    (8, 'Kret'),
+    (9, 'Wydra'),
+    (10, 'Bóbr'),
+    (11, 'Wiewiórka'),
+    (12, 'Nietoperz'),
+    (13, 'Szop'),
+    (14, 'Lis'),
+    (15, 'Borsuk'),
+    (16, 'Łoś'),
+    (17, 'Sarna'),
+    (18, 'Dzik'),
+    (19, 'Jenot'),
+    (20, 'Zając'),
+    (21, 'Królik'),
+    (22, 'Norka'),
+    (23, 'Tchórz'),
+    (24, 'Gronostaj'),
+    (25, 'Łasica'),
+    (26, 'Kuna'),
+    (27, 'Ryś'),
+    (28, 'Wilk'),
+    (29, 'Niedźwiadek'),
+    (30, 'Panda'),
+    (31, 'Żubr'),
+    (32, 'Alpaka'),
+    (33, 'Lama'),
+    (34, 'Koala'),
+    (35, 'Kangur'),
+    (36, 'Opos'),
+    (37, 'Foka'),
+    (38, 'Mors'),
+    (39, 'Manul'),
+    (40, 'Fennek'),
+    (41, 'Karakal'),
+    (42, 'Serwał'),
+    (43, 'Pancernik'),
+    (44, 'Leniwiec'),
+    (45, 'Mrówkojad'),
+    (46, 'Tapir'),
+    (47, 'Kapibara'),
+    (48, 'Świnka'),
+    (49, 'Szynszyla'),
+    (50, 'Aguti'),
+    (51, 'Lemur'),
+    (52, 'Loris'),
+    (53, 'Wombat'),
+    (54, 'Numbat'),
+    (55, 'Kuskus'),
+    (56, 'Waran'),
+    (57, 'Legwan'),
+    (58, 'Gekon'),
+    (59, 'Kameleon'),
+    (60, 'Żółwik'),
+    (61, 'Agama'),
+    (62, 'Salamandra'),
+    (63, 'Traszka'),
+    (64, 'Ropucha'),
+    (65, 'Kumak'),
+    (66, 'Żabka'),
+    (67, 'Rzekotka'),
+    (68, 'Aksolotl'),
+    (69, 'Kaczka'),
+    (70, 'Gęś'),
+    (71, 'Łabędź'),
+    (72, 'Pelikan'),
+    (73, 'Flaming'),
+    (74, 'Czapla'),
+    (75, 'Bocian'),
+    (76, 'Żuraw'),
+    (77, 'Drop'),
+    (78, 'Sowa'),
+    (79, 'Puchacz'),
+    (80, 'Sokół'),
+    (81, 'Jastrząb'),
+    (82, 'Orzeł'),
+    (83, 'Myszołów'),
+    (84, 'Kruk'),
+    (85, 'Sroka'),
+    (86, 'Wrona'),
+    (87, 'Kawka'),
+    (88, 'Sójka'),
+    (89, 'Dzięcioł'),
+    (90, 'Sikora'),
+    (91, 'Wróbel'),
+    (92, 'Jaskółka'),
+    (93, 'Szpak'),
+    (94, 'Kos'),
+    (95, 'Rudzik'),
+    (96, 'Słowik'),
+    (97, 'Kowalik'),
+    (98, 'Zimorodek'),
+    (99, 'Dudek'),
+    (100, 'Pingwin'),
+    (101, 'Struś'),
+    (102, 'Emu'),
+    (103, 'Kazuar'),
+    (104, 'Kiwi'),
+    (1, 'Dzwiedziosow'),
+    (2, 'Sowoniedźwiedź'),
+    (4, 'Żółw');
 INSERT INTO
-  students_course_groups (student_id, course_group_id, animal_id)
+    students_course_groups (student_id, course_group_id, animal_id)
 VALUES
-  (8, 3, 5),
-  (9, 1, 6),
-  (10, 4, 7),
-  (11, 2, 8),
-  (12, 3, 9),
-  (13, 1, 10),
-  (14, 4, 11),
-  (15, 2, 12),
-  (16, 3, 13),
-  (17, 1, 14),
-  (18, 4, 15),
-  (19, 2, 16),
-  (20, 3, 17),
-  (21, 1, 18),
-  (22, 4, 19),
-  (23, 2, 20),
-  (24, 3, 21),
-  (25, 1, 22),
-  (26, 4, 23),
-  (27, 2, 24),
-  (28, 3, 25),
-  (29, 1, 26),
-  (30, 4, 27),
-  (31, 2, 28),
-  (32, 3, 29),
-  (33, 1, 30),
-  (34, 4, 31),
-  (35, 2, 32),
-  (36, 3, 33),
-  (37, 1, 34),
-  (38, 4, 35),
-  (39, 2, 36),
-  (40, 3, 37),
-  (41, 1, 38),
-  (42, 4, 39),
-  (43, 2, 40),
-  (44, 3, 41),
-  (45, 1, 42),
-  (46, 4, 43),
-  (47, 2, 44),
-  (48, 3, 45),
-  (49, 1, 46),
-  (50, 4, 47),
-  (51, 2, 48),
-  (52, 3, 49),
-  (53, 1, 50),
-  (54, 4, 51),
-  (55, 2, 52),
-  (56, 3, 53),
-  (57, 1, 54),
-  (58, 4, 55),
-  (59, 2, 56),
-  (60, 3, 57),
-  (61, 1, 58),
-  (62, 4, 59),
-  (63, 2, 60),
-  (64, 3, 61),
-  (65, 1, 62),
-  (66, 4, 63),
-  (67, 2, 64),
-  (68, 3, 65),
-  (69, 1, 66),
-  (70, 4, 67),
-  (71, 2, 68),
-  (72, 3, 69),
-  (73, 1, 70),
-  (74, 4, 71),
-  (75, 2, 72),
-  (76, 3, 73),
-  (77, 1, 74),
-  (78, 4, 75),
-  (79, 2, 76),
-  (80, 3, 77),
-  (81, 1, 78),
-  (82, 4, 79),
-  (83, 2, 80),
-  (84, 3, 81),
-  (85, 1, 82),
-  (86, 4, 83),
-  (87, 2, 84),
-  (88, 3, 85),
-  (89, 1, 86),
-  (90, 4, 87),
-  (91, 2, 88),
-  (92, 3, 89),
-  (93, 1, 90),
-  (94, 4, 91),
-  (95, 2, 92),
-  (96, 3, 93),
-  (97, 1, 94),
-  (98, 4, 95),
-  (99, 2, 96),
-  (100, 3, 97),
-  (101, 1, 98),
-  (102, 4, 99),
-  (103, 2, 100),
-  (104, 3, 101),
-  (105, 1, 102),
-  (106, 4, 103),
-  (107, 2, 104),
-  (3, 1, 1),
-  (7, 2, 4),
-  (7, 1, 2);
+    (8, 3, 5),
+    (9, 1, 6),
+    (10, 4, 7),
+    (11, 2, 8),
+    (12, 3, 9),
+    (13, 1, 10),
+    (14, 4, 11),
+    (15, 2, 12),
+    (16, 3, 13),
+    (17, 1, 14),
+    (18, 4, 15),
+    (19, 2, 16),
+    (20, 3, 17),
+    (21, 1, 18),
+    (22, 4, 19),
+    (23, 2, 20),
+    (24, 3, 21),
+    (25, 1, 22),
+    (26, 4, 23),
+    (27, 2, 24),
+    (28, 3, 25),
+    (29, 1, 26),
+    (30, 4, 27),
+    (31, 2, 28),
+    (32, 3, 29),
+    (33, 1, 30),
+    (34, 4, 31),
+    (35, 2, 32),
+    (36, 3, 33),
+    (37, 1, 34),
+    (38, 4, 35),
+    (39, 2, 36),
+    (40, 3, 37),
+    (41, 1, 38),
+    (42, 4, 39),
+    (43, 2, 40),
+    (44, 3, 41),
+    (45, 1, 42),
+    (46, 4, 43),
+    (47, 2, 44),
+    (48, 3, 45),
+    (49, 1, 46),
+    (50, 4, 47),
+    (51, 2, 48),
+    (52, 3, 49),
+    (53, 1, 50),
+    (54, 4, 51),
+    (55, 2, 52),
+    (56, 3, 53),
+    (57, 1, 54),
+    (58, 4, 55),
+    (59, 2, 56),
+    (60, 3, 57),
+    (61, 1, 58),
+    (62, 4, 59),
+    (63, 2, 60),
+    (64, 3, 61),
+    (65, 1, 62),
+    (66, 4, 63),
+    (67, 2, 64),
+    (68, 3, 65),
+    (69, 1, 66),
+    (70, 4, 67),
+    (71, 2, 68),
+    (72, 3, 69),
+    (73, 1, 70),
+    (74, 4, 71),
+    (75, 2, 72),
+    (76, 3, 73),
+    (77, 1, 74),
+    (78, 4, 75),
+    (79, 2, 76),
+    (80, 3, 77),
+    (81, 1, 78),
+    (82, 4, 79),
+    (83, 2, 80),
+    (84, 3, 81),
+    (85, 1, 82),
+    (86, 4, 83),
+    (87, 2, 84),
+    (88, 3, 85),
+    (89, 1, 86),
+    (90, 4, 87),
+    (91, 2, 88),
+    (92, 3, 89),
+    (93, 1, 90),
+    (94, 4, 91),
+    (95, 2, 92),
+    (96, 3, 93),
+    (97, 1, 94),
+    (98, 4, 95),
+    (99, 2, 96),
+    (100, 3, 97),
+    (101, 1, 98),
+    (102, 4, 99),
+    (103, 2, 100),
+    (104, 3, 101),
+    (105, 1, 102),
+    (106, 4, 103),
+    (107, 2, 104),
+    (3, 1, 1),
+    (7, 2, 4),
+    (7, 1, 2);
 
 INSERT INTO user_course_roles (role, user_id, course_id)
 SELECT
@@ -545,59 +545,59 @@ WHERE NOT EXISTS (
 
 INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
                             order_index, is_hidden)
-VALUES (4, '4', 'Git', FALSE, FALSE, 1, 0, FALSE);
+VALUES (4, 'event_sections4', 'Git', FALSE, FALSE, 1, 0, FALSE);
 INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
                             order_index, is_hidden)
-VALUES (6, '6', 'Laboratorium', TRUE, FALSE, 2, 2, FALSE);
+VALUES (6, 'event_sections6', 'Laboratorium', TRUE, FALSE, 2, 2, FALSE);
 INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
                             order_index, is_hidden)
-VALUES (7, '7', 'Projekt 1', TRUE, FALSE, 2, 4, FALSE);
+VALUES (7, 'event_sections7', 'Projekt 1', TRUE, FALSE, 2, 4, FALSE);
 INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
                             order_index, is_hidden)
-VALUES (8, '8', 'Kartkówka', TRUE, FALSE, 2, 1, FALSE);
+VALUES (8, 'event_sections8', 'Kartkówka', TRUE, FALSE, 2, 1, FALSE);
 INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
                             order_index, is_hidden)
-VALUES (9, '9', 'Git', FALSE, FALSE, 2, 0, FALSE);
+VALUES (9, 'event_sections9', 'Git', FALSE, FALSE, 2, 0, FALSE);
 INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
                             order_index, is_hidden)
-VALUES (10, '10', 'Specjalny lab', TRUE, FALSE, 2, 3, FALSE);
+VALUES (10, 'event_sections10', 'Specjalny lab', TRUE, FALSE, 2, 3, FALSE);
 INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
                             order_index, is_hidden)
-VALUES (2, '2', 'Laboratorium', TRUE, FALSE, 1, 2, FALSE);
+VALUES (2, 'event_sections2', 'Laboratorium', TRUE, FALSE, 1, 2, FALSE);
 INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
                             order_index, is_hidden)
-VALUES (3, '3', 'Projekt 1', TRUE, FALSE, 1, 4, FALSE);
+VALUES (3, 'event_sections3', 'Projekt 1', TRUE, FALSE, 1, 4, FALSE);
 INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
                             order_index, is_hidden)
-VALUES (1, '1', 'Kartkówka', TRUE, FALSE, 1, 1, FALSE);
+VALUES (1, 'event_sections1', 'Kartkówka', TRUE, FALSE, 1, 1, FALSE);
 INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
                             order_index, is_hidden)
-VALUES (5, '5', 'Specjalny lab', TRUE, FALSE, 1, 3, FALSE);
+VALUES (5, 'event_sections5', 'Specjalny lab', TRUE, FALSE, 1, 3, FALSE);
 INSERT INTO event_sections (id, key, name, is_shown_in_road_map, has_gradable_events_with_topics, course_id,
                             order_index, is_hidden)
-VALUES (11, '11', 'Projekt 2', TRUE, FALSE, 1, 5, FALSE),
-       (12, '12', 'Projekt 2', TRUE, FALSE, 2, 5, FALSE);
+VALUES (11, 'event_sections11', 'Projekt 2', TRUE, FALSE, 1, 5, FALSE),
+       (12, 'event_sections12', 'Projekt 2', TRUE, FALSE, 2, 5, FALSE);
 INSERT INTO
-  test_sections (id)
+    test_sections (id)
 VALUES
-  (1),
-  (8);
+    (1),
+    (8);
 INSERT INTO
-  project_sections (id)
+    project_sections (id)
 VALUES
-  (3),
-  (7),
-  (10),
-  (5),
-  (11),
-  (12);
+    (3),
+    (7),
+    (10),
+    (5),
+    (11),
+    (12);
 INSERT INTO
-  assignment_sections (id)
+    assignment_sections (id)
 VALUES
-  (2),
-  (4),
-  (6),
-  (9);
+    (2),
+    (4),
+    (6),
+    (9);
 INSERT INTO evolution_stages (id, name, description, min_xp, order_index, grade, image_url, course_id, key)
 VALUES (6, 'Nieopierzony Odkrywca',
         'Nieopierzony Odkrywca z zapałem przemierza nieznane tereny Polymorphii. Mimo braku doświadczenia, jego ciekawość i odwaga nie znają granic. Czasem popełnia błędy, ale każdy z nich uczy go czegoś nowego. To podróżnik, który wierzy, że każde potknięcie przybliża go do celu. Pragnie zostać Samodzielnym Zwierzakiem, zdobywając mądrość przez przygody. Jego pióra, choć jeszcze niekompletne, nabierają kolorów odzwierciedlających przeżyte doświadczenia. W jego spojrzeniu widać determinację i głód wiedzy, który pcha go naprzód nawet wtedy, gdy droga staje się trudna. Nieopierzony Odkrywca buduje własną tożsamość, łącząc fragmenty zdobytej wiedzy w spójną całość.',
@@ -724,7 +724,7 @@ VALUES (12, 2, 'Laboratorium 4', NULL, 11, 11,
 INSERT INTO gradable_events (id, event_section_id, name, topic, order_index, road_map_order_index, markdown_source_url,
                              markdown, is_hidden, is_locked, key)
 VALUES
-  (9, 2, 'Laboratorium 1', NULL, 8, 8, 'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab1/Readme.md', '# Lab 1: Instrukcje sterujące w Javie
+    (9, 2, 'Laboratorium 1', NULL, 8, 8, 'https://raw.githubusercontent.com/Soamid/obiektowe-lab/refs/heads/master/lab1/Readme.md', '# Lab 1: Instrukcje sterujące w Javie
 
 Celem laboratorium jest zapoznanie się z podstawowymi pojęciami oraz instrukcjami sterującymi w Javie.
 
@@ -780,7 +780,7 @@ values (34, false),
        (42, false);
 insert into assignments(id)
 values (9),(10),(11),(12),(13),(14),(15),(16),
-    (25),(26),(27),(28),(29),(30),(31),(32),(33), (35), (36), (37);
+       (25),(26),(27),(28),(29),(30),(31),(32),(33), (35), (36), (37);
 
 insert into tests(id)
 values (1),(2),(3),(4),(5),(6),(7),(8),(17),
@@ -809,7 +809,7 @@ values (1, 1, 'Bieguny', 'A', 'bieguny zdefiniowane są na dolnej i ' ||
        (2, 1, 'Pożary', 'B',
         'co jakąś (zadaną w konfiguracji) liczbę tur na mapie pojawia się pożar. Pożar zaczyna się na jednym polu z rośliną i w każdej turze rozprzestrzenia się na wszystkie przylegające do niej rośliny (ale nie po skosie). Pożar na każdym polu trwa stałą zadaną (konfigurowalną) liczbę tur i po jego zakończeniu roślina na tym polu znika. Jeśli zwierzak wejdzie na pole z ogniem, umiera.',
         'images/evolution-stages/5.webp', 'project_variants2'),
-       (3, 2, 'Lekka korekta', 'project_variants1',
+       (3, 2, 'Lekka korekta', '1',
         'mutacja zmienia gen o 1 w górę lub w dół (np. gen 3 może zostać zamieniony na 2 lub 4, a gen 0 na 1 lub 7)',
         'images/evolution-stages/6.webp', 'project_variants3'),
        (4, 2, 'Podmianka', '2', 'mutacja może też skutkować tym, że dwa geny zamienią się miejscami',
@@ -884,97 +884,97 @@ VALUES (104, 'Złota Skrzynia',
         'Złota Skrzynia symbolizuje szczyt wartości i nieokiełznany przepych. Jej olśniewający blask wprost zdradza, jakie skarby kryją się w środku. Posiada moc, której jej srebrna siostra może tylko pozazdrościć, a jej wnętrze wypełnia czyste, bezkompromisowe bogactwo i splendor. Otwarcie Złotej Skrzyni to brama do świata absolutnego luksusu, ostateczna nagroda zarezerwowana dla tych, którzy mają śmiałość sięgnąć po największe bogactwa w swoich poszukiwaniach.',
         'images/chests/s2.webp', 1, 2, 'rewards104');
 INSERT INTO
-  items (reward_id, "limit", event_section_id)
+    items (reward_id, "limit", event_section_id)
 VALUES
-  (3, 2, 3);
+    (3, 2, 3);
 INSERT INTO
-  items (reward_id, "limit", event_section_id)
+    items (reward_id, "limit", event_section_id)
 VALUES
-  (2, 1, 2);
+    (2, 1, 2);
 INSERT INTO
-  items (reward_id, "limit", event_section_id)
+    items (reward_id, "limit", event_section_id)
 VALUES
-  (1, 1, 1);
+    (1, 1, 1);
 INSERT INTO
-  items (reward_id, "limit", event_section_id)
+    items (reward_id, "limit", event_section_id)
 VALUES
-  (4, 5, 8);
+    (4, 5, 8);
 INSERT INTO
-  items (reward_id, "limit", event_section_id)
+    items (reward_id, "limit", event_section_id)
 VALUES
-  (5, 5, 7);
+    (5, 5, 7);
 INSERT INTO
-  flat_bonus_items (item_id, xp_bonus, behavior)
+    flat_bonus_items (item_id, xp_bonus, behavior)
 VALUES
-  (2, 5.0, 'ONE_EVENT');
+    (2, 5.0, 'ONE_EVENT');
 INSERT INTO
-  flat_bonus_items (item_id, xp_bonus, behavior)
+    flat_bonus_items (item_id, xp_bonus, behavior)
 VALUES
-  (3, 4.0, 'MULTIPLE_EVENTS');
+    (3, 4.0, 'MULTIPLE_EVENTS');
 INSERT INTO
-  flat_bonus_items (item_id, xp_bonus, behavior)
+    flat_bonus_items (item_id, xp_bonus, behavior)
 VALUES
-  (4, 5.0, 'ONE_EVENT');
+    (4, 5.0, 'ONE_EVENT');
 INSERT INTO
-  percentage_bonus_items (item_id, percentage_bonus)
+    percentage_bonus_items (item_id, percentage_bonus)
 VALUES
-  (1, 5);
+    (1, 5);
 INSERT INTO
-  percentage_bonus_items (item_id, percentage_bonus)
+    percentage_bonus_items (item_id, percentage_bonus)
 VALUES
-  (5, 10);
+    (5, 10);
 INSERT INTO
-  chests (reward_id, behavior)
+    chests (reward_id, behavior)
 VALUES
-  (101, 'ALL');
+    (101, 'ALL');
 INSERT INTO
-  chests (reward_id, behavior)
+    chests (reward_id, behavior)
 VALUES
-  (102, 'ONE_OF_MANY');
+    (102, 'ONE_OF_MANY');
 INSERT INTO
-  chests (reward_id, behavior)
+    chests (reward_id, behavior)
 VALUES
-  (103, 'ONE_OF_MANY');
+    (103, 'ONE_OF_MANY');
 INSERT INTO
-  chests (reward_id, behavior)
+    chests (reward_id, behavior)
 VALUES
-  (104, 'ALL');
+    (104, 'ALL');
 INSERT INTO
-  chests_items (chest_id, item_id)
+    chests_items (chest_id, item_id)
 VALUES
-  (101, 1);
+    (101, 1);
 INSERT INTO
-  chests_items (chest_id, item_id)
+    chests_items (chest_id, item_id)
 VALUES
-  (101, 2);
+    (101, 2);
 INSERT INTO
-  chests_items (chest_id, item_id)
+    chests_items (chest_id, item_id)
 VALUES
-  (101, 2);
+    (101, 2);
 INSERT INTO
-  chests_items (chest_id, item_id)
+    chests_items (chest_id, item_id)
 VALUES
-  (102, 1);
+    (102, 1);
 INSERT INTO
-  chests_items (chest_id, item_id)
+    chests_items (chest_id, item_id)
 VALUES
-  (102, 2);
+    (102, 2);
 INSERT INTO
-  chests_items (chest_id, item_id)
+    chests_items (chest_id, item_id)
 VALUES
-  (102, 3);
+    (102, 3);
 INSERT INTO
-  chests_items (chest_id, item_id)
+    chests_items (chest_id, item_id)
 VALUES
-  (103, 3);
+    (103, 3);
 INSERT INTO
-  chests_items (chest_id, item_id)
+    chests_items (chest_id, item_id)
 VALUES
-  (104, 4);
+    (104, 4);
 INSERT INTO
-  chests_items (chest_id, item_id)
+    chests_items (chest_id, item_id)
 VALUES
-  (104, 5);
+    (104, 5);
 INSERT INTO criteria (id, gradable_event_id, name, max_xp, key)
 VALUES (1, 1, 'Kartkówka', 2.0, 'criteria1');
 INSERT INTO criteria (id, gradable_event_id, name, max_xp, key)
@@ -1038,75 +1038,75 @@ VALUES (1, 9, 'Wykonanie zadania', TRUE, 1, 'submission_requirements1'),
        (16, 42, 'Link do repozytorium', TRUE, 1, 'submission_requirements16');
 
 INSERT INTO
-  submissions (id, submission_requirement_id, animal_id, url, is_locked, created_date, modified_date)
+    submissions (id, submission_requirement_id, animal_id, url, is_locked, created_date, modified_date)
 VALUES
-  (1, 1, 1, 'https://github.com/example/repo1', FALSE, NOW(), NOW()),
-  (2, 1, 6, 'https://github.com/example/repo1', TRUE, NOW(), NOW()),
-  (3, 13, 1, 'https://github.com/example/group1-repo', FALSE, NOW(), NOW()),
-  (4, 13, 6, 'https://github.com/example/group1-repo', FALSE, NOW(), NOW()),
-  (5, 2, 10, 'https://github.com/example/repo3', FALSE, NOW(), NOW()),
-  (6, 4, 4, 'https://github.com/example/repo4', FALSE, NOW(), NOW()),
-  (7, 5, 4, 'https://github.com/example/repo5', FALSE, NOW(), NOW());
+    (1, 1, 1, 'https://github.com/example/repo1', FALSE, NOW(), NOW()),
+    (2, 1, 6, 'https://github.com/example/repo1', TRUE, NOW(), NOW()),
+    (3, 13, 1, 'https://github.com/example/group1-repo', FALSE, NOW(), NOW()),
+    (4, 13, 6, 'https://github.com/example/group1-repo', FALSE, NOW(), NOW()),
+    (5, 2, 10, 'https://github.com/example/repo3', FALSE, NOW(), NOW()),
+    (6, 4, 4, 'https://github.com/example/repo4', FALSE, NOW(), NOW()),
+    (7, 5, 4, 'https://github.com/example/repo5', FALSE, NOW(), NOW());
 SELECT
-  setval('submission_requirements_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
+    setval('submission_requirements_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
 FROM
-  submission_requirements;
+    submission_requirements;
 SELECT
-  setval('project_groups_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
+    setval('project_groups_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
 FROM
-  project_groups;
+    project_groups;
 SELECT
-  setval('submissions_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
+    setval('submissions_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
 FROM
-  submissions;
+    submissions;
 SELECT
-  setval('animals_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
+    setval('animals_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
 FROM
-  animals;
+    animals;
 SELECT
-  setval('assigned_rewards_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
+    setval('assigned_rewards_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
 FROM
-  assigned_rewards;
+    assigned_rewards;
 SELECT
-  setval('course_groups_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
+    setval('course_groups_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
 FROM
-  course_groups;
+    course_groups;
 SELECT
-  setval('courses_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
+    setval('courses_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
 FROM
-  courses;
+    courses;
 SELECT
-  setval('criteria_grades_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
+    setval('criteria_grades_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
 FROM
-  criteria_grades;
+    criteria_grades;
 SELECT
-  setval('criteria_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
+    setval('criteria_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
 FROM
-  criteria;
+    criteria;
 SELECT
-  setval('event_sections_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
+    setval('event_sections_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
 FROM
-  event_sections;
+    event_sections;
 SELECT
-  setval('evolution_stages_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
+    setval('evolution_stages_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
 FROM
-  evolution_stages;
+    evolution_stages;
 SELECT
-  setval('gradable_events_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
+    setval('gradable_events_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
 FROM
-  gradable_events;
+    gradable_events;
 SELECT
-  setval('grades_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
+    setval('grades_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
 FROM
-  grades;
+    grades;
 SELECT
-  setval('rewards_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
+    setval('rewards_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
 FROM
-  rewards;
+    rewards;
 SELECT
-  setval('users_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
+    setval('users_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
 FROM
-  users;
+    users;
 SELECT setval('project_variants_id_seq', COALESCE(MAX(id), 0) + 1, FALSE)
 FROM project_variants;
 
