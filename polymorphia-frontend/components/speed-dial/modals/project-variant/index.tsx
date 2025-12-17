@@ -10,7 +10,6 @@ import {
 } from "@/components/speed-dial/modals/project-variant/project-variant-info/errors";
 import ColumnSwappableComponent from "@/components/column-schema/column-component/shared/column-swappable-component";
 import { ProjectVariantWithCategoryNameResponseDTO } from "@/interfaces/api/project";
-import { useMediaQuery } from "react-responsive";
 
 export default function ProjectVariantModal({
   onClosedAction,
@@ -21,7 +20,6 @@ export default function ProjectVariantModal({
     id: userDetails.id,
   };
   const { data, isLoading, isError } = useProjectVariant({ target });
-  const isSm = useMediaQuery({ minWidth: 640 });
 
   return (
     <Modal
@@ -35,11 +33,7 @@ export default function ProjectVariantModal({
         isDataLoading={isLoading}
         isDataError={isError}
         renderComponent={(data, key) => (
-          <ProjectVariantInfo
-            key={key}
-            projectVariants={data}
-            size={isSm ? "sm" : "xs"}
-          />
+          <ProjectVariantInfo key={key} projectVariants={data} size="xs" />
         )}
         renderDataErrorComponent={() => errorComponentStudent}
         renderEmptyDataErrorComponent={() =>
