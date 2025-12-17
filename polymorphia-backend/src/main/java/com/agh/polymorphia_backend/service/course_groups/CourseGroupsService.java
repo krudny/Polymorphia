@@ -5,12 +5,10 @@ import com.agh.polymorphia_backend.dto.request.course_group.CreateCourseGroupReq
 import com.agh.polymorphia_backend.dto.request.course_group.UpdateCourseGroupRequestDto;
 import com.agh.polymorphia_backend.dto.response.course_groups.CourseGroupsResponseDto;
 import com.agh.polymorphia_backend.dto.response.course_groups.CourseGroupsShortResponseDto;
-import com.agh.polymorphia_backend.dto.response.user.TeachingRoleUserResponseDto;
 import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.course.CourseGroup;
 import com.agh.polymorphia_backend.model.course.StudentCourseGroupAssignment;
 import com.agh.polymorphia_backend.model.user.TeachingRoleUser;
-import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.repository.course.CourseGroupRepository;
@@ -102,10 +100,10 @@ public class CourseGroupsService {
     @Transactional
     public void updateCourseGroup(Long courseGroupId, UpdateCourseGroupRequestDto requestDto) {
         CourseGroup courseGroup = getCourseGroupById(courseGroupId);
+        Long courseId = courseGroup.getCourse().getId();
+        accessAuthorizer.authorizeCourseAccess(courseId);
 
-        accessAuthorizer.authorizeCourseAccess(courseGroup.getCourse());
-
-        TeachingRoleUser teachingRoleUser = userService.getTeachingRoleUser(requestDto.getTeachingRoleId(), courseGroup.getCourse().getId());
+        TeachingRoleUser teachingRoleUser = userService.getTeachingRoleUser(requestDto.getTeachingRoleId(), courseId);
 
         courseGroup.setName(requestDto.getName());
         courseGroup.setRoom(requestDto.getRoom());

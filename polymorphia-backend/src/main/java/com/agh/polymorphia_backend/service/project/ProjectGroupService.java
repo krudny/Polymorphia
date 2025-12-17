@@ -1,6 +1,8 @@
 package com.agh.polymorphia_backend.service.project;
 
+import com.agh.polymorphia_backend.dto.response.user_context.UserDetailsResponseDto;
 import com.agh.polymorphia_backend.model.project.ProjectGroup;
+import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.model.user.student.Student;
 import com.agh.polymorphia_backend.repository.grade.GradeRepository;
 import com.agh.polymorphia_backend.repository.project.ProjectGroupRepository;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -43,5 +46,18 @@ public class ProjectGroupService {
 
     public List<Long> getStudentIdsFromProjectGroup(ProjectGroup projectGroup) {
         return projectGroupRepository.getStudentIdsByProjectGroup(projectGroup);
+    }
+
+    public Optional<ProjectGroup> findByProjectIdAndStudentId(Long projectId, Long studentId) {
+        return projectGroupRepository.getProjectGroupByProjectIdAndStudentId(projectId, studentId);
+    }
+
+    public List<UserDetailsResponseDto> getUserDetailsResponseByProjectGroup(ProjectGroup projectGroup) {
+        return projectGroupRepository.getUserDetailsResponseByProjectGroup(projectGroup).stream()
+                .map(userDetails -> UserDetailsResponseDto.builder()
+                        .userRole(UserType.STUDENT)
+                        .userDetails(userDetails)
+                        .build())
+                .toList();
     }
 }

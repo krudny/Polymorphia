@@ -77,6 +77,13 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
             @Param("projectGroup") ProjectGroup projectGroup
     );
 
+    @Query("""
+        select p.eventSection.course.id
+        from Project p
+        where p.id = :projectId
+    """)
+    Long getCourseIdByProjectId(Long projectId);
+
     @Query(value = """
         WITH RECURSIVE
         groups AS (

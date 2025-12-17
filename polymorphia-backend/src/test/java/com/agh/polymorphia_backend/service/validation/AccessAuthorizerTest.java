@@ -9,6 +9,7 @@ import com.agh.polymorphia_backend.model.user.coordinator.Coordinator;
 import com.agh.polymorphia_backend.model.user.instructor.Instructor;
 import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.model.user.student.Student;
+import com.agh.polymorphia_backend.repository.course.CourseRepository;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
 import com.agh.polymorphia_backend.repository.user.role.InstructorRepository;
 import com.agh.polymorphia_backend.repository.user.role.StudentRepository;
@@ -48,6 +49,9 @@ class AccessAuthorizerTest {
 
     @Mock
     private InstructorRepository instructorRepository;
+
+    @Mock
+    private CourseRepository courseRepository;
 
     @Mock
     private UserCourseRoleRepository userCourseRoleRepository;
@@ -103,12 +107,12 @@ class AccessAuthorizerTest {
             case INSTRUCTOR -> doReturn(Optional.empty())
                     .when(instructorRepository)
                     .findByUserIdAndCourseId(scenario.id, 10L);
-            case COORDINATOR -> doReturn(Coordinator.builder().user(new User()).build())
-                    .when(course).getCoordinator();
+            case COORDINATOR -> doReturn(11L)
+                    .when(courseRepository).findCoordinatorIdByCourseId(10L);
         }
 
         ResponseStatusException ex = assertThrows(ResponseStatusException.class, () ->
-                accessAuthorizer.authorizeCourseAccess(course));
+                accessAuthorizer.authorizeCourseAccess(course.getId()));
 
         assertEquals(404, ex.getStatusCode().value());
         assertEquals(COURSE_NOT_FOUND, ex.getReason());
@@ -127,11 +131,10 @@ class AccessAuthorizerTest {
             case INSTRUCTOR -> doReturn(Optional.of(new Instructor()))
                     .when(instructorRepository)
                     .findByUserIdAndCourseId(scenario.id, 10L);
-            case COORDINATOR -> doReturn(scenario.user)
-                    .when(course).getCoordinator();
+            case COORDINATOR -> doReturn(scenario.id).when(courseRepository).findCoordinatorIdByCourseId(10L);
         }
 
-        assertDoesNotThrow(() -> accessAuthorizer.authorizeCourseAccess(course));
+        assertDoesNotThrow(() -> accessAuthorizer.authorizeCourseAccess(course.getId()));
     }
 
     @ParameterizedTest

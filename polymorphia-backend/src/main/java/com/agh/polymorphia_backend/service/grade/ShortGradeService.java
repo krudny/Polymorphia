@@ -9,7 +9,6 @@ import com.agh.polymorphia_backend.dto.response.grade.ShortGradeResponseDtoWithT
 import com.agh.polymorphia_backend.dto.response.grade.StudentGroupShortGradeResponseDto;
 import com.agh.polymorphia_backend.dto.response.grade.StudentShortGradeResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.UserDetailsResponseDto;
-import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.grade.Grade;
 import com.agh.polymorphia_backend.model.gradable_event.Project;
@@ -59,15 +58,15 @@ public class ShortGradeService {
     }
 
     private StudentShortGradeResponseDto getShortGradeStudent(GradableEvent gradableEvent, Long studentId) {
-        Course course = gradableEvent.getEventSection().getCourse();
+        Long courseId = gradableEventService.getCourseIdByGradableEventId(gradableEvent.getId());
         if (!userService.getCurrentUserRole().equals(UserType.STUDENT)
                 && gradableEvent instanceof Project
                 && ((Project) gradableEvent).isAllowCrossCourseGroupProjectGroups()) {
-            accessAuthorizer.authorizeCourseAccess(course);
+            accessAuthorizer.authorizeCourseAccess(courseId);
         } else {
-            accessAuthorizer.authorizeStudentDataAccess(course, studentId);
+            accessAuthorizer.authorizeStudentDataAccess(courseId, studentId);
         }
-        return getShortGradeWithoutAuthorization(gradableEvent, studentId, course.getId());
+        return getShortGradeWithoutAuthorization(gradableEvent, studentId, courseId);
     }
 
     public StudentShortGradeResponseDto getShortGradeWithoutAuthorization(GradableEvent gradableEvent, Long studentId, Long courseId) {
@@ -91,7 +90,7 @@ public class ShortGradeService {
     }
 
     private StudentGroupShortGradeResponseDto getShortGroupGrade(GradableEvent gradableEvent, Long groupId) {
-        List<UserDetailsResponseDto> projectGroupStudents = projectService.getProjectGroup(groupId, gradableEvent.getId());
+        List<UserDetailsResponseDto> projectGroupStudents = projectService.getProjectGroup(groupId);
         List<StudentShortGradeResponseDto> shortGrades = projectGroupStudents.stream()
                 .map(student -> getShortGradeStudent(gradableEvent, student.getUserDetails().getId()))
                 .toList();

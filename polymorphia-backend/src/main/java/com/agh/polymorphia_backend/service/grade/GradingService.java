@@ -8,7 +8,6 @@ import com.agh.polymorphia_backend.dto.request.reward.ShortAssignedRewardRequest
 import com.agh.polymorphia_backend.dto.request.target.StudentGroupTargetRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.StudentTargetRequestDto;
 import com.agh.polymorphia_backend.dto.request.target.TargetRequestDto;
-import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.grade.Grade;
@@ -55,20 +54,20 @@ public class GradingService {
     @Transactional
     public void submitGrade(GradeRequestDto request) {
         GradableEvent gradableEvent = gradableEventService.getGradableEventById(request.getGradableEventId());
-        Course course = gradableEvent.getEventSection().getCourse();
+        Long courseId = gradableEventService.getCourseIdByGradableEventId(request.getGradableEventId());
 
-        accessAuthorizer.authorizeCourseAccess(course);
+        accessAuthorizer.authorizeCourseAccess(courseId);
         gradableEventService.validateTargetGradableEventAccess(request.getTarget(), gradableEvent);
 
         TargetRequestDto target = request.getTarget();
         switch (target.type()) {
-            case STUDENT -> validateAndGetStudentGrade(request, gradableEvent, course);
-            case STUDENT_GROUP -> validateAndGetGroupGrades(request, gradableEvent, course);
+            case STUDENT -> validateAndGetStudentGrade(request, gradableEvent, courseId);
+            case STUDENT_GROUP -> validateAndGetGroupGrades(request, gradableEvent, courseId);
         }
 
     }
 
-    private List<Grade> validateAndGetGroupGrades(GradeRequestDto request, GradableEvent gradableEvent, Course course) {
+    private List<Grade> validateAndGetGroupGrades(GradeRequestDto request, GradableEvent gradableEvent, Long courseId) {
         Long groupId = ((StudentGroupTargetRequestDto) request.getTarget()).groupId();
         ProjectGroup projectGroup = projectGroupService.findById(groupId);
         List<Student> students = projectGroupService.getStudentsFromProjectGroup(projectGroup);
@@ -78,21 +77,20 @@ public class GradingService {
 
         return students.stream()
                 .map(student -> getStudentGrade(
-                        getStudentGradeRequest(request, student.getUserId()), gradableEvent, course)
+                        getStudentGradeRequest(request, student.getUserId()), gradableEvent, courseId)
                 )
                 .toList();
     }
 
-    private Grade validateAndGetStudentGrade(GradeRequestDto request, GradableEvent gradableEvent, Course course) {
-        accessAuthorizer.authorizeStudentDataAccess(gradableEvent.getEventSection().getCourse(), ((StudentTargetRequestDto) request.getTarget()).id());
+    private Grade validateAndGetStudentGrade(GradeRequestDto request, GradableEvent gradableEvent, Long courseId) {
+        accessAuthorizer.authorizeStudentDataAccess(courseId, ((StudentTargetRequestDto) request.getTarget()).id());
         gradingValidator.validate(request, gradableEvent);
-
-        return getStudentGrade(request, gradableEvent, course);
+        return getStudentGrade(request, gradableEvent, courseId);
     }
 
-    private Grade getStudentGrade(GradeRequestDto request, GradableEvent gradableEvent, Course course) {
+    private Grade getStudentGrade(GradeRequestDto request, GradableEvent gradableEvent, Long courseId) {
         StudentTargetRequestDto target = (StudentTargetRequestDto) request.getTarget();
-        Animal animal = animalService.getAnimal(target.id(), course.getId());
+        Animal animal = animalService.getAnimal(target.id(), courseId);
         Grade grade = gradeService.getOrCreateGrade(animal, gradableEvent, request.getComment());
 
         List<CriterionGrade> criteriaGrades = gradableEvent.getCriteria().stream()

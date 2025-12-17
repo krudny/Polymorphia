@@ -23,6 +23,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.agh.polymorphia_backend.service.course.CourseService.COURSE_NOT_FOUND;
 import static com.agh.polymorphia_backend.service.user.UserService.INVALID_ROLE;
 
 @Service
@@ -70,7 +71,7 @@ public class GradableEventService {
             case EVENT_SECTION -> courseService.getCourseByEventSectionId(relatedId);
         };
 
-        accessAuthorizer.authorizeCourseAccess(course);
+        accessAuthorizer.authorizeCourseAccess(course.getId());
         UserType userRole = userService.getUserRoleInCourse(course.getId());
 
         return switch (userRole) {
@@ -81,6 +82,11 @@ public class GradableEventService {
                     INVALID_ROLE
             );
         };
+    }
+
+    public Long getCourseIdByGradableEventId(Long gradableEventId) {
+        return gradableEventRepository.getCourseIdByGradableEventId(gradableEventId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, COURSE_NOT_FOUND));
     }
 
     private List<BaseGradableEventResponseDto> getStudentGradableEvents(
