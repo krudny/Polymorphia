@@ -3,6 +3,8 @@ package com.agh.polymorphia_backend.dto.request.course_import;
 import com.agh.polymorphia_backend.dto.request.course_import.event_section.EventSectionDetailsRequestDto;
 import com.agh.polymorphia_backend.dto.request.course_import.reward.ChestDetailsRequestDto;
 import com.agh.polymorphia_backend.dto.request.course_import.reward.ItemDetailsRequestDto;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -53,5 +55,6 @@ public class CourseDetailsRequestDto {
 
     @NotNull
     @Builder.Default
+    @JsonSetter(contentNulls = Nulls.SKIP)
     private List<String> roadmapOrderKeys = new ArrayList<>();
 }
