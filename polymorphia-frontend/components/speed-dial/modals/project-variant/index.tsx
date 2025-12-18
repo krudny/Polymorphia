@@ -39,7 +39,7 @@ export default function ProjectVariantModal({
         renderEmptyDataErrorComponent={() =>
           noProjectVariantsErrorComponentStudent
         }
-        minHeightClassName="min-[26rem]:min-h-[210px] sm:min-h-[260px] "
+        minHeightClassName="min-[26rem]:min-h-[210px] sm:min-h-[200px]"
         className="min-[26rem]:w-96 sm:w-[430px]"
         selectedTarget={target}
       />
