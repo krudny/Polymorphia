@@ -56,6 +56,16 @@ public class ProjectService {
     private final ProjectGroupService projectGroupService;
 
     public List<ProjectVariantResponseDto> getProjectVariants(TargetRequestDto target, Long projectId) {
+        if (userService.getCurrentUserRole().equals(UserType.STUDENT)){
+            return projectGroupService.findByProjectIdAndStudentId(projectId, ((StudentTargetRequestDto)target).id())
+                    .map(projectGroup -> {
+                        accessAuthorizer.authorizeProjectGroupDetailsAccess(projectGroup);
+                        return projectGroup.getProjectVariants();
+                    })
+                    .orElseGet(Collections::emptyList).stream()
+                    .map(projectMapper::toProjectVariantResponseDto)
+                    .toList();
+        }
         return getProjectGroupForTargetAndAuthorize(projectId, target).getProjectVariants().stream()
                 .map(projectMapper::toProjectVariantResponseDto)
                 .toList();
