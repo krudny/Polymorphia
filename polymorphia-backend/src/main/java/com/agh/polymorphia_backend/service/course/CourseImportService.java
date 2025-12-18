@@ -222,11 +222,15 @@ public class CourseImportService {
 
         keys.addAll(request.getEventSections().stream()
                 .flatMap(eventSection -> eventSection.getGradableEvents().stream())
-                .filter(gradableEvent ->
-                        gradableEvent.getType().equals(EventSectionType.PROJECT)
-                                || gradableEvent.getType().equals(EventSectionType.ASSIGNMENT)
-                )
+                .filter(gradableEvent -> gradableEvent.getType().equals(EventSectionType.PROJECT))
                 .flatMap(gradableEvent -> ((ProjectDetailsRequestDto) gradableEvent).getSubmissionRequirements().stream())
+                .map(SubmissionRequirementDetailsRequestDto::getKey)
+                .toList());
+
+        keys.addAll(request.getEventSections().stream()
+                .flatMap(eventSection -> eventSection.getGradableEvents().stream())
+                .filter(gradableEvent -> gradableEvent.getType().equals(EventSectionType.ASSIGNMENT))
+                .flatMap(gradableEvent -> ((AssignmentDetailsRequestDto) gradableEvent).getSubmissionRequirements().stream())
                 .map(SubmissionRequirementDetailsRequestDto::getKey)
                 .toList());
 
