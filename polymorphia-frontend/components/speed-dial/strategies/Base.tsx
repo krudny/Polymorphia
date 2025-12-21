@@ -1,6 +1,5 @@
 import { SpeedDialItem } from "@/components/speed-dial/types";
 import GradeModal from "@/components/speed-dial/modals/grade";
-import ProjectVariantModal from "@/components/speed-dial/modals/project-variant";
 import GroupModal from "@/components/speed-dial/modals/group-info";
 import ImportCSVModal from "@/components/speed-dial/modals/import-csv";
 import {
@@ -31,6 +30,9 @@ import EditCourseGroupModal from "@/components/course-groups/modals/edit-course-
 import ProjectGroupConfigurationModal from "@/components/speed-dial/modals/project-group-configuration";
 import { useEditProjectGroupConfigurationModalSpeedDialDynamicBehavior } from "@/hooks/app/speed-dial-dynamic-behavior/projects/project-group-configuration";
 import { useDeleteProjectGroupModalSpeedDialDynamicBehavior } from "@/hooks/app/speed-dial-dynamic-behavior/projects/project-group-deletion";
+import { useProjectVariantModalSpeedDialDynamicBehavior } from "@/hooks/app/speed-dial-dynamic-behavior/projects/project-variant";
+import { useProjectGroupModalSpeedDialDynamicBehavior } from "@/hooks/app/speed-dial-dynamic-behavior/projects/project-group";
+import { useProjectSubmissionModalSpeedDialDynamicBehavior } from "@/hooks/app/speed-dial-dynamic-behavior/projects/project-submission";
 
 export abstract class BaseSpeedDialStrategy {
   abstract getItems(role: Role): SpeedDialItem[];
@@ -84,9 +86,7 @@ export abstract class BaseSpeedDialStrategy {
       orderIndex: 2,
       label: "Wariant",
       icon: "arrow_split",
-      useDynamicBehavior: () => ({
-        modal: (onClose) => <ProjectVariantModal onClosedAction={onClose} />,
-      }),
+      useDynamicBehavior: useProjectVariantModalSpeedDialDynamicBehavior,
     };
   }
 
@@ -96,9 +96,7 @@ export abstract class BaseSpeedDialStrategy {
       orderIndex: 3,
       label: "Grupa",
       icon: "person",
-      useDynamicBehavior: () => ({
-        modal: (onClose) => <GroupModal onClosedAction={onClose} />,
-      }),
+      useDynamicBehavior: useProjectGroupModalSpeedDialDynamicBehavior,
     };
   }
 
@@ -211,15 +209,17 @@ export abstract class BaseSpeedDialStrategy {
     };
   }
 
-  protected createSubmissions(): SpeedDialItem {
+  protected createSubmissions(isProject: boolean = false): SpeedDialItem {
     return {
       id: 13,
       orderIndex: 1,
       label: "Oddawanie zadania",
       icon: "upload_file",
-      useDynamicBehavior: () => ({
-        modal: (onClose) => <SubmissionsModal onClosedAction={onClose} />,
-      }),
+      useDynamicBehavior: isProject
+        ? useProjectSubmissionModalSpeedDialDynamicBehavior
+        : () => ({
+            modal: (onClose) => <SubmissionsModal onClosedAction={onClose} />,
+          }),
     };
   }
 

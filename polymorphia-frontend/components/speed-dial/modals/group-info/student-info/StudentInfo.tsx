@@ -17,18 +17,12 @@ export default function StudentInfo() {
   }
   if (isError || data === undefined) {
     return (
-      <div className="gradable-event-section text-xl 2xl:text-2xl">
-        <ErrorComponent message="Nie udało się załadować informacji o składzie grupy." />
-      </div>
+      <ErrorComponent message="Nie udało się załadować informacji o składzie grupy." />
     );
   }
 
   if (data.length === 0) {
-    return (
-      <div className="gradable-event-section text-xl 2xl:text-2xl">
-        <ErrorComponent message="Nie należysz do żadnej grupy." />
-      </div>
-    );
+    return <ErrorComponent message="Nie należysz do żadnej grupy." />;
   }
 
   return (
