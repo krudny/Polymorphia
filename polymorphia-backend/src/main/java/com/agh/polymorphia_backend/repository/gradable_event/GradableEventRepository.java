@@ -34,15 +34,18 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
            CASE WHEN COUNT(DISTINCT g.id) > 0 THEN true ELSE false END as isGraded,
            CASE WHEN COUNT(DISTINCT g.id) > 0 AND COUNT(DISTINCT ar.id) > 0 THEN true ELSE false END as isRewardAssigned
     FROM GradableEvent ge
+    JOIN EventSection es on ge.eventSection.id = es.id
     LEFT JOIN Grade g ON g.gradableEvent.id = ge.id AND g.animal.id = :animalId
     LEFT JOIN Criterion c ON c.gradableEvent.id = ge.id
     LEFT JOIN CriterionGrade cg ON cg.grade.id = g.id AND cg.criterion.id = c.id
     LEFT JOIN CriterionReward cr ON cr.criterion.id = c.id
     LEFT JOIN AssignedReward ar ON ar.criterionGrade.id = cg.id
-    WHERE ((:scope = 'COURSE' AND ge.eventSection.course.id = :idValue)
-       OR (:scope = 'EVENT_SECTION' AND ge.eventSection.id = :idValue))
+    WHERE ((:scope = 'COURSE' AND es.course.id = :idValue)
+       OR (:scope = 'EVENT_SECTION' AND es.id = :idValue))
       AND ge.isHidden = false
-    GROUP BY ge.id, ge.name, ge.orderIndex, ge.roadMapOrderIndex, ge.isHidden, ge.isLocked, ge.topic, ge.eventSection.id
+      AND es.isHidden = false
+      AND (:isRoadmap = false or es.isShownInRoadMap = true)
+    GROUP BY ge.id, ge.name, ge.orderIndex, ge.roadMapOrderIndex, ge.isHidden, ge.isLocked, ge.topic, es.id
     ORDER BY
         CASE WHEN :sortBy = 'ORDER_INDEX' THEN ge.orderIndex END,
         CASE WHEN :sortBy = 'ROADMAP_ORDER_INDEX' THEN ge.roadMapOrderIndex END
@@ -51,7 +54,8 @@ public interface GradableEventRepository extends JpaRepository<GradableEvent, Lo
             @Param("idValue") Long idValue,
             @Param("animalId") Long animalId,
             @Param("scope") String scope,
-            @Param("sortBy") String sortBy
+            @Param("sortBy") String sortBy,
+            @Param("isRoadmap") Boolean isRoadmap
     );
 
     @Query(value = """

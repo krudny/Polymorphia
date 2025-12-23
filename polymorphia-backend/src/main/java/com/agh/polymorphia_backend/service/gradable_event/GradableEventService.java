@@ -64,7 +64,7 @@ public class GradableEventService {
         }
     }
 
-    public List<BaseGradableEventResponseDto> getGradableEvents(Long relatedId, GradableEventScope scope, GradableEventSortBy sortBy) {
+    public List<BaseGradableEventResponseDto> getGradableEvents(Long relatedId, GradableEventScope scope, GradableEventSortBy sortBy, Boolean isRoadmap) {
         Course course = switch (scope) {
             case COURSE -> courseService.getCourseById(relatedId);
             case EVENT_SECTION -> courseService.getCourseByEventSectionId(relatedId);
@@ -74,7 +74,7 @@ public class GradableEventService {
         UserType userRole = userService.getUserRoleInCourse(course.getId());
 
         return switch (userRole) {
-            case STUDENT -> getStudentGradableEvents(relatedId, course, scope, sortBy);
+            case STUDENT -> getStudentGradableEvents(relatedId, course, scope, sortBy, isRoadmap);
             case INSTRUCTOR, COORDINATOR  -> getTeachingRoleGradableEvents(relatedId, scope, sortBy);
             case UNDEFINED -> throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
@@ -87,13 +87,14 @@ public class GradableEventService {
             Long relatedId,
             Course course,
             GradableEventScope scope,
-            GradableEventSortBy sortBy
+            GradableEventSortBy sortBy,
+            Boolean isRoadmap
     ) {
         Long userId = userService.getCurrentUser().getUserId();
         Long animalId = animalService.getAnimal(userId, course.getId()).getId();
 
         return gradableEventRepository
-                .findStudentGradableEventsWithDetails(relatedId, animalId, scope.getValue(), sortBy.getValue())
+                .findStudentGradableEventsWithDetails(relatedId, animalId, scope.getValue(), sortBy.getValue(), isRoadmap)
                 .stream()
                 .map(gradableEventMapper::toStudentGradableEventResponseDto)
                 .collect(Collectors.toList());
