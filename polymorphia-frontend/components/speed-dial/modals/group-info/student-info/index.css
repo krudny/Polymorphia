@@ -2,7 +2,7 @@
 @import "../../../../../styles/globals.css";
 
 .gradable-event-section {
-  @apply flex flex-col gap-2 min-w-72;
+  @apply flex flex-col gap-2 min-w-80;
 
   h1 {
     @apply text-5xl;
