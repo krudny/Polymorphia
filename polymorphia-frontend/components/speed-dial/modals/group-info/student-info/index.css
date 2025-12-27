@@ -12,3 +12,7 @@
     @apply text-3xl;
   }
 }
+
+.student-info-scrollable {
+  @apply overflow-y-auto custom-scrollbar;
+}

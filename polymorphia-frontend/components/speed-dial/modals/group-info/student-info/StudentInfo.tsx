@@ -26,27 +26,29 @@ export default function StudentInfo() {
   }
 
   return (
-    <div className="gradable-event-section">
-      {projectGroupStudents.map((student) => {
-        const { animalName, fullName, evolutionStage, imageUrl } =
-          student.userDetails;
+    <div className="student-info-scrollable">
+      <div className="gradable-event-section">
+        {projectGroupStudents.map((student) => {
+          const { animalName, fullName, evolutionStage, imageUrl } =
+            student.userDetails;
 
-        if (!fullName) {
-          throw new Error("No userName defined!");
-        }
+          if (!fullName) {
+            throw new Error("No userName defined!");
+          }
 
-        return (
-          <XPCard
-            key={animalName}
-            title={fullName}
-            subtitle={evolutionStage}
-            leftComponent={
-              <XPCardImage imageUrl={imageUrl} alt={evolutionStage} />
-            }
-            size="xs"
-          />
-        );
-      })}
+          return (
+            <XPCard
+              key={animalName}
+              title={fullName}
+              subtitle={evolutionStage}
+              leftComponent={
+                <XPCardImage imageUrl={imageUrl} alt={evolutionStage} />
+              }
+              size="xs"
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }
