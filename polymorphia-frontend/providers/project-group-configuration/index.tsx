@@ -38,7 +38,8 @@ export function ProjectGroupConfigurationProvider({
   } = useProjectGroupConfigurationFilterConfigs(initialTarget);
 
   const filters = useFilters<ProjectGroupConfigurationFilterId>(
-    filterConfigs ?? []
+    filterConfigs ?? [],
+    "projectGroupConfiguration"
   );
 
   const {
