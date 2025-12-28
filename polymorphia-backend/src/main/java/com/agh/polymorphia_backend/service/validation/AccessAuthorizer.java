@@ -1,12 +1,9 @@
 package com.agh.polymorphia_backend.service.validation;
 
-import com.agh.polymorphia_backend.model.course.Course;
-import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.User;
 import com.agh.polymorphia_backend.model.user.UserCourseRole;
 import com.agh.polymorphia_backend.model.user.UserType;
-import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.repository.course.CourseRepository;
 import com.agh.polymorphia_backend.repository.project.ProjectGroupRepository;
 import com.agh.polymorphia_backend.repository.user.UserCourseRoleRepository;
@@ -20,11 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 import static com.agh.polymorphia_backend.service.course.CourseService.COURSE_NOT_FOUND;
 
-// TODO: to change to look up in user course role table
 @Service
 @AllArgsConstructor
 public class AccessAuthorizer {
@@ -36,7 +31,7 @@ public class AccessAuthorizer {
     private final CourseRepository courseRepository;
     private final ProjectGroupRepository projectGroupRepository;
 
-    public void authorizeCourseAccess(Long courseId) {
+    public void authorizeCurrentUserCourseAccess(Long courseId) {
         AbstractRoleUser user = userService.getCurrentUser();
 
         if (!isCourseAccessAuthorized(user, courseId)) {
@@ -45,12 +40,12 @@ public class AccessAuthorizer {
     }
 
     public void authorizeStudentDataAccess(Long courseId, Long studentId) {
-        authorizeCourseAccess(courseId);
+        authorizeCurrentUserCourseAccess(courseId);
         Long userId = userService.getCurrentUser().getUser().getId();
 
         boolean authorized = switch (userService.getCurrentUserRole()) {
             case STUDENT -> userId.equals(studentId);
-            case INSTRUCTOR -> hasInstructorAccessToUserInCourse(userId, courseId, studentId);
+            case INSTRUCTOR -> instructorRepository.hasAccessToStudentInCourse(userId, courseId, studentId);
             case COORDINATOR -> isCourseAccessAuthorizedCoordinator(userId, courseId);
             case UNDEFINED -> false;
         };
@@ -60,14 +55,14 @@ public class AccessAuthorizer {
         }
     }
 
-    public void authorizeProjectGroupDetailsAccess(ProjectGroup projectGroup) {
+    public void authorizeProjectGroupDetailsAccess(Long groupId) {
         AbstractRoleUser user = userService.getCurrentUser();
         Long userId = user.getUser().getId();
 
         boolean authorized = switch (userService.getUserRole(user)) {
-            case STUDENT -> projectGroupRepository.isStudentInProjectGroup(projectGroup, userId);
-            case INSTRUCTOR -> projectGroup.getTeachingRoleUser().getUserId().equals(userId);
-            case COORDINATOR -> isCourseAccessAuthorizedCoordinator(userId, projectGroupRepository.getCourseIdByProjectGroup(projectGroup));
+            case STUDENT -> projectGroupRepository.isStudentInProjectGroup(groupId, userId);
+            case INSTRUCTOR -> projectGroupRepository.isTeachingRoleUserInProjectGroup(groupId, userId);
+            case COORDINATOR -> isCourseAccessAuthorizedCoordinator(userId, projectGroupRepository.getCourseIdByProjectGroupId(groupId));
             case UNDEFINED -> false;
         };
 
@@ -76,16 +71,15 @@ public class AccessAuthorizer {
         }
     }
 
-    public boolean authorizePreferredCourseSwitch(Course course) {
+    public boolean authorizePreferredCourseSwitch(Long courseId) {
         User user = userService.getCurrentUser().getUser();
 
         UserCourseRole userCourseRole = userCourseRoleRepository
-                .findByUserIdAndCourseId(user.getId(), course.getId())
+                .findByUserIdAndCourseId(user.getId(), courseId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono roli użytkownika w kursie."));
 
         if (userCourseRole.getRole() == UserType.STUDENT) {
-            Optional<Animal> animal = animalRepository.findByCourseIdAndStudentId(course.getId(), user.getId());
-            return animal.isPresent();
+            return animalRepository.existsByCourseIdAndStudentId(courseId, user.getId());
         }
 
         return true;
@@ -106,12 +100,12 @@ public class AccessAuthorizer {
         };
     }
 
-    public void authorizeProjectGroupGrading(ProjectGroup projectGroup) {
+    public void authorizeProjectGroupGrading(Long groupId) {
         Long userId = userService.getCurrentUser().getUser().getId();
 
         boolean authorized = switch (userService.getCurrentUserRole()) {
-            case INSTRUCTOR -> projectGroup.getTeachingRoleUser().getUserId().equals(userId);
-            case COORDINATOR -> isCourseAccessAuthorizedCoordinator(userId, projectGroupRepository.getCourseIdByProjectGroup(projectGroup));
+            case INSTRUCTOR -> projectGroupRepository.isTeachingRoleUserInProjectGroup(groupId, userId);
+            case COORDINATOR -> isCourseAccessAuthorizedCoordinator(userId, projectGroupRepository.getCourseIdByProjectGroupId(groupId));
             default -> false;
         };
 
@@ -120,20 +114,16 @@ public class AccessAuthorizer {
         }
     }
 
-    private boolean hasInstructorAccessToUserInCourse(Long userId, Long courseId, Long studentId) {
-        return instructorRepository.hasAccessToStudentInCourse(userId, courseId, studentId);
-    }
-
     private boolean isCourseAccessAuthorizedCoordinator(Long userId, Long courseId) {
-        return userId.equals(courseRepository.findCoordinatorIdByCourseId(courseId));
+        return courseRepository.isUserCoordinatorOfCourse(userId, courseId);
     }
 
     private boolean isCourseAccessAuthorizedInstructor(Long userId, Long courseId) {
-        return instructorRepository.findByUserIdAndCourseId(userId, courseId).isPresent();
+        return instructorRepository.isUserTeachingRoleUserInCourse(userId, courseId);
     }
 
     private boolean isCourseAccessAuthorizedStudent(Long userId, Long courseId) {
-        return studentRepository.findByUserIdAndCourseIdAndAssignedToCourseGroup(userId, courseId).isPresent();
+        return studentRepository.isUserStudentAssignedToCourseGroup(userId, courseId);
     }
 
     private boolean isCourseAccessAuthorizedUndefined(Long userId, Long courseId) {

@@ -2,6 +2,7 @@ package com.agh.polymorphia_backend.repository.project;
 
 import com.agh.polymorphia_backend.dto.response.user_context.StudentDetailsResponseDto;
 import com.agh.polymorphia_backend.model.project.ProjectGroup;
+import com.agh.polymorphia_backend.model.user.student.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -97,9 +98,17 @@ public interface ProjectGroupRepository extends JpaRepository<ProjectGroup, Long
             select scga.student.userId from ProjectGroup pg
             join pg.animals a
             join a.studentCourseGroupAssignment scga
+            where pg.id = :projectGroupId
+    """)
+    List<Long> getStudentIdsByProjectGroupId(Long projectGroupId);
+
+    @Query("""
+            select scga.student from ProjectGroup pg
+            join pg.animals a
+            join a.studentCourseGroupAssignment scga
             where pg = :projectGroup
     """)
-    List<Long> getStudentIdsByProjectGroup(ProjectGroup projectGroup);
+    List<Student> getStudentsByProjectGroup(ProjectGroup projectGroup);
 
     @Query("""
         select new com.agh.polymorphia_backend.dto.response.user_context.StudentDetailsResponseDto(
@@ -117,24 +126,32 @@ public interface ProjectGroupRepository extends JpaRepository<ProjectGroup, Long
                 select a.id
                 from ProjectGroup pg
                 join pg.animals a
-                where pg = :projectGroup
+                where pg.id = :projectGroupId
             )
     """)
-    List<StudentDetailsResponseDto> getUserDetailsResponseByProjectGroup(ProjectGroup projectGroup);
+    List<StudentDetailsResponseDto> getUserDetailsResponseByProjectGroupId(Long projectGroupId);
 
     @Query("""
         select c.id
         from ProjectGroup pg
         join pg.project.eventSection.course c
-        where pg = :projectGroup
+        where pg.id = :projectGroupId
     """)
-    Long getCourseIdByProjectGroup(ProjectGroup projectGroup);
+    Long getCourseIdByProjectGroupId(Long projectGroupId);
 
     @Query("""
-        select (count(a) > 0)
+        select count(a) > 0
         from ProjectGroup pg
         join pg.animals a
-        where pg = :projectGroup and a.studentCourseGroupAssignment.student.userId = :studentId
+        where pg.id = :projectGroupId and a.studentCourseGroupAssignment.student.userId = :studentId
     """)
-    boolean isStudentInProjectGroup(ProjectGroup projectGroup, Long studentId);
+    boolean isStudentInProjectGroup(Long projectGroupId, Long studentId);
+
+    @Query("""
+        select count(pg) > 0
+        from ProjectGroup pg
+        where pg.id = :projectGroupId and pg.teachingRoleUser.userId = :userId
+    """)
+    boolean isTeachingRoleUserInProjectGroup(Long projectGroupId, Long userId);
+
 }

@@ -59,7 +59,7 @@ public class ProjectService {
         if (userService.getCurrentUserRole().equals(UserType.STUDENT)){
             return projectGroupService.findByProjectIdAndStudentId(projectId, ((StudentTargetRequestDto)target).id())
                     .map(projectGroup -> {
-                        accessAuthorizer.authorizeProjectGroupDetailsAccess(projectGroup);
+                        accessAuthorizer.authorizeProjectGroupDetailsAccess(projectGroup.getId());
                         return projectGroup.getProjectVariants();
                     })
                     .orElseGet(Collections::emptyList).stream()
@@ -89,16 +89,15 @@ public class ProjectService {
     }
 
     public List<UserDetailsResponseDto> getProjectGroup(Long projectGroupId) {
-        ProjectGroup projectGroup = projectGroupService.findById(projectGroupId);
-        accessAuthorizer.authorizeProjectGroupDetailsAccess(projectGroup);
-        return projectGroupService.getUserDetailsResponseByProjectGroup(projectGroup);
+        accessAuthorizer.authorizeProjectGroupDetailsAccess(projectGroupId);
+        return projectGroupService.getUserDetailsResponseByProjectGroup(projectGroupId);
     }
 
     public List<UserDetailsResponseDto> getAnimalProjectGroup(Long userId, Long projectId) {
         return projectGroupService.findByProjectIdAndStudentId(projectId, userId)
                 .map(projectGroup -> {
-                    accessAuthorizer.authorizeProjectGroupDetailsAccess(projectGroup);
-                    return projectGroupService.getUserDetailsResponseByProjectGroup(projectGroup);
+                    accessAuthorizer.authorizeProjectGroupDetailsAccess(projectGroup.getId());
+                    return projectGroupService.getUserDetailsResponseByProjectGroup(projectGroup.getId());
                 })
                 .orElseGet(() -> {
                     if (userService.getCurrentUserRole().equals(UserType.STUDENT)) {
@@ -110,7 +109,7 @@ public class ProjectService {
 
     public ProjectGroupConfigurationResponseDto getProjectGroupConfiguration(TargetRequestDto targetRequestDto, Long projectId) {
         ProjectGroup projectGroup = getProjectGroupForTargetAndAuthorize(projectId, targetRequestDto);
-        List<Long> studentIds = projectGroupService.getStudentIdsFromProjectGroup(projectGroup);
+        List<Long> studentIds = projectGroupService.getStudentIdsFromProjectGroup(projectGroup.getId());
 
         Map<Long, Long> selectedVariants = projectGroup.getProjectVariants().stream()
                 .collect(toMap(
@@ -236,7 +235,7 @@ public class ProjectService {
     }
 
     public List<ProjectCategoryWithVariantsResponseDto> getProjectCategoryWithVariants(Long projectId) {
-        accessAuthorizer.authorizeCourseAccess(projectRepository.getCourseIdByProjectId(projectId));
+        accessAuthorizer.authorizeCurrentUserCourseAccess(projectRepository.getCourseIdByProjectId(projectId));
 
         return projectRepository.findCategoriesWithVariants(projectId)
                 .stream()
@@ -249,7 +248,7 @@ public class ProjectService {
                 projectGroupService.findByProjectIdAndStudentId(projectId, ((StudentTargetRequestDto) target).id())
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, ANIMAL_IF_NOT_ASSIGNED_TO_ANY_PROJECT_GROUP)) :
                 projectGroupService.findById(((StudentGroupTargetRequestDto) target).groupId());
-        accessAuthorizer.authorizeProjectGroupDetailsAccess(projectGroup);
+        accessAuthorizer.authorizeProjectGroupDetailsAccess(projectGroup.getId());
         return projectGroup;
     }
 
@@ -257,7 +256,7 @@ public class ProjectService {
         if (target.isPresent()) {
             return Optional.of(getProjectGroupForTargetAndAuthorize(projectId, target.get()));
         } else {
-            accessAuthorizer.authorizeCourseAccess(courseId);
+            accessAuthorizer.authorizeCurrentUserCourseAccess(courseId);
             return Optional.empty();
         }
     }

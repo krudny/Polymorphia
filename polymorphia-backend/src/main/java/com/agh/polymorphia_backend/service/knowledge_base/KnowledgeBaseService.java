@@ -55,7 +55,7 @@ public class KnowledgeBaseService {
             Function<Long, List<T>> repositoryFetcher,
             Function<T, KnowledgeBaseResponseDto> mapper
     ) {
-        accessAuthorizer.authorizeCourseAccess(courseId);
+        accessAuthorizer.authorizeCurrentUserCourseAccess(courseId);
 
         return repositoryFetcher.apply(courseId)
                 .stream()

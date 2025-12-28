@@ -20,7 +20,7 @@ public class CriteriaService {
 
     public List<CriterionResponseDto> getCriteria(Long gradableEventId) {
         GradableEvent gradableEvent = gradableEventService.getGradableEventById(gradableEventId);
-        accessAuthorizer.authorizeCourseAccess(gradableEventService.getCourseIdByGradableEventId(gradableEventId));
+        accessAuthorizer.authorizeCurrentUserCourseAccess(gradableEventService.getCourseIdByGradableEventId(gradableEventId));
 
         return gradableEvent.getCriteria().stream()
                 .map(criterionMapper::toCriterionResponseDto)

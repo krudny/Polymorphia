@@ -16,6 +16,17 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
             "where cga.student.user.id=:studentId AND c.course.id=:courseId")
     Optional<Animal> findByCourseIdAndStudentId(Long courseId, Long studentId);
 
+    @Query("select a.id from Animal a join a.studentCourseGroupAssignment cga  join cga.courseGroup c " +
+            "where cga.student.user.id=:studentId AND c.course.id=:courseId")
+    Optional<Long> findIdByCourseIdAndStudentId(Long courseId, Long studentId);
+
+    @Query("""
+            select count(scga) > 0
+            from StudentCourseGroupAssignment scga
+            where scga.student.userId = :studentId AND scga.courseGroup.course.id = :courseId
+            """)
+    boolean existsByCourseIdAndStudentId(Long courseId, Long studentId);
+
     @Query("select a from Animal a join a.studentCourseGroupAssignment cga  join cga.courseGroup c " +
             "where cga.student.user.id in :studentIds AND c.course.id=:courseId")
     List<Animal> findByCourseIdAndStudentIds(Long courseId, List<Long> studentIds);

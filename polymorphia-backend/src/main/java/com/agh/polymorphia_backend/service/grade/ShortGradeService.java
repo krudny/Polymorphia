@@ -62,7 +62,7 @@ public class ShortGradeService {
         if (!userService.getCurrentUserRole().equals(UserType.STUDENT)
                 && gradableEvent instanceof Project
                 && ((Project) gradableEvent).isAllowCrossCourseGroupProjectGroups()) {
-            accessAuthorizer.authorizeCourseAccess(courseId);
+            accessAuthorizer.authorizeCurrentUserCourseAccess(courseId);
         } else {
             accessAuthorizer.authorizeStudentDataAccess(courseId, studentId);
         }

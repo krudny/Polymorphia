@@ -158,7 +158,7 @@ public class AssignedRewardService {
         if (userRole.equals(UserType.COORDINATOR) || userRole.equals(UserType.INSTRUCTOR)) {
             return false;
         }
-        Long animalId = animalService.getAnimal(studentId, item.getCourse().getId()).getId();
+        Long animalId = animalService.getAnimalId(studentId, item.getCourse().getId());
         return (getCurrentItemCount(animalId, item, Optional.of(criterionIdToIgnore)) + newItemsQuantity) > item.getLimit();
     }
 

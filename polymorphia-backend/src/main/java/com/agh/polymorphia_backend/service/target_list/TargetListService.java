@@ -68,7 +68,7 @@ public class TargetListService {
             // Course access authorization is performed inside findAllCourseGroupNames
             case ASSIGNMENT, TEST -> courseGroupsService.findAllCourseGroupNames(courseId);
             case PROJECT -> {
-                accessAuthorizer.authorizeCourseAccess(courseId);
+                accessAuthorizer.authorizeCurrentUserCourseAccess(courseId);
                 if (userService.getCurrentUserRole() == UserType.COORDINATOR) {
                     yield List.of("assigned");
                 } else {
@@ -81,7 +81,7 @@ public class TargetListService {
     public List<? extends TargetResponseDto> getTargetListForGrading(GradingTargetListRequestDto requestDto) {
         GradableEvent gradableEvent = gradableEventService.getGradableEventById(requestDto.getGradableEventId());
         Long courseId = gradableEventService.getCourseIdByGradableEventId(requestDto.getGradableEventId());
-        accessAuthorizer.authorizeCourseAccess(courseId);
+        accessAuthorizer.authorizeCurrentUserCourseAccess(courseId);
 
         return switch (gradableEvent.getEventSection().getEventSectionType()) {
             case ASSIGNMENT, TEST -> getTargetListForGradingAssignmentOrTest(requestDto, courseId);

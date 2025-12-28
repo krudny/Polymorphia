@@ -43,17 +43,17 @@ public class CourseGroupsService {
     private final StudentCourseGroupRepository studentCourseGroupRepository;
 
     public List<String> findAllCourseGroupNames(Long courseId) {
-        accessAuthorizer.authorizeCourseAccess(courseId);
+        accessAuthorizer.authorizeCurrentUserCourseAccess(courseId);
         return courseGroupRepository.findNamesByCourseId(courseId);
     }
 
     public List<CourseGroupsResponseDto> getAllCourseGroups(Long courseId) {
-        accessAuthorizer.authorizeCourseAccess(courseId);
+        accessAuthorizer.authorizeCurrentUserCourseAccess(courseId);
         return findCourseGroups(courseId, null, null);
     }
 
     public List<CourseGroupsShortResponseDto> getAllShortCourseGroups(Long courseId) {
-        accessAuthorizer.authorizeCourseAccess(courseId);
+        accessAuthorizer.authorizeCurrentUserCourseAccess(courseId);
         return findShortCourseGroups(courseId, null, null);
     }
 
@@ -76,7 +76,7 @@ public class CourseGroupsService {
 
     @Transactional
     public void createCourseGroup(CreateCourseGroupRequestDto requestDto) {
-        accessAuthorizer.authorizeCourseAccess(requestDto.getCourseId());
+        accessAuthorizer.authorizeCurrentUserCourseAccess(requestDto.getCourseId());
 
         Course course = courseService.getCourseById(requestDto.getCourseId());
         TeachingRoleUser teachingRoleUser = userService.getTeachingRoleUser(requestDto.getTeachingRoleId(), requestDto.getCourseId());
@@ -101,7 +101,7 @@ public class CourseGroupsService {
     public void updateCourseGroup(Long courseGroupId, UpdateCourseGroupRequestDto requestDto) {
         CourseGroup courseGroup = getCourseGroupById(courseGroupId);
         Long courseId = courseGroup.getCourse().getId();
-        accessAuthorizer.authorizeCourseAccess(courseId);
+        accessAuthorizer.authorizeCurrentUserCourseAccess(courseId);
 
         TeachingRoleUser teachingRoleUser = userService.getTeachingRoleUser(requestDto.getTeachingRoleId(), courseId);
 
@@ -146,7 +146,7 @@ public class CourseGroupsService {
     }
 
     private List<CourseGroupsResponseDto> getCourseGroups(Long courseId) {
-        accessAuthorizer.authorizeCourseAccess(courseId);
+        accessAuthorizer.authorizeCurrentUserCourseAccess(courseId);
         Long userId = userService.getCurrentUser().getUser().getId();
         UserType userRole = userService.getCurrentUserRole();
 
@@ -158,7 +158,7 @@ public class CourseGroupsService {
     }
 
     private List<CourseGroupsShortResponseDto> getShortCourseGroups(Long courseId) {
-        accessAuthorizer.authorizeCourseAccess(courseId);
+        accessAuthorizer.authorizeCurrentUserCourseAccess(courseId);
         Long userId = userService.getCurrentUser().getUser().getId();
         UserType userRole = userService.getCurrentUserRole();
 

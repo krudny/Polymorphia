@@ -7,10 +7,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Long> {
-
     @Query("""
-        select c.coordinator.userId from Course c
-            where c.id = :courseId
+        select count(c) > 0
+        from Course c
+        where c.id = :courseId and c.coordinator.userId = :userId
     """)
-    Long findCoordinatorIdByCourseId(Long courseId);
+    boolean isUserCoordinatorOfCourse(Long userId, Long courseId);
 }

@@ -34,7 +34,7 @@ public class PointsSummaryService {
         EventSection eventSection = eventSectionService.getEventSection(eventSectionId);
 
         Long courseId = eventSection.getCourse().getId();
-        accessAuthorizer.authorizeCourseAccess(courseId);
+        accessAuthorizer.authorizeCurrentUserCourseAccess(courseId);
 
         Long userId = userService.getCurrentUser().getUserId();
         Animal animal = animalService.getAnimal(userId, courseId);

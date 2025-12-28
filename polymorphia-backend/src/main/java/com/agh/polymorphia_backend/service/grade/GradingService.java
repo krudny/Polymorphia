@@ -12,13 +12,11 @@ import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.grade.Grade;
 import com.agh.polymorphia_backend.model.notification.NotificationType;
-import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.reward.RewardType;
 import com.agh.polymorphia_backend.model.reward.assigned.AssignedChest;
 import com.agh.polymorphia_backend.model.reward.assigned.AssignedItem;
 import com.agh.polymorphia_backend.model.reward.assigned.AssignedReward;
 import com.agh.polymorphia_backend.model.user.student.Animal;
-import com.agh.polymorphia_backend.model.user.student.Student;
 import com.agh.polymorphia_backend.service.criteria.CriterionGradeService;
 import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
 import com.agh.polymorphia_backend.service.notification.NotificationDispatcher;
@@ -56,7 +54,7 @@ public class GradingService {
         GradableEvent gradableEvent = gradableEventService.getGradableEventById(request.getGradableEventId());
         Long courseId = gradableEventService.getCourseIdByGradableEventId(request.getGradableEventId());
 
-        accessAuthorizer.authorizeCourseAccess(courseId);
+        accessAuthorizer.authorizeCurrentUserCourseAccess(courseId);
         gradableEventService.validateTargetGradableEventAccess(request.getTarget(), gradableEvent);
 
         TargetRequestDto target = request.getTarget();
@@ -64,31 +62,27 @@ public class GradingService {
             case STUDENT -> validateAndGetStudentGrade(request, gradableEvent, courseId);
             case STUDENT_GROUP -> validateAndGetGroupGrades(request, gradableEvent, courseId);
         }
-
     }
 
-    private List<Grade> validateAndGetGroupGrades(GradeRequestDto request, GradableEvent gradableEvent, Long courseId) {
+    private void validateAndGetGroupGrades(GradeRequestDto request, GradableEvent gradableEvent, Long courseId) {
         Long groupId = ((StudentGroupTargetRequestDto) request.getTarget()).groupId();
-        ProjectGroup projectGroup = projectGroupService.findById(groupId);
-        List<Student> students = projectGroupService.getStudentsFromProjectGroup(projectGroup);
+        List<Long> studentIds = projectGroupService.getStudentIdsFromProjectGroup(groupId);
 
-        accessAuthorizer.authorizeProjectGroupGrading(projectGroup);
+        accessAuthorizer.authorizeProjectGroupGrading(groupId);
         gradingValidator.validate(request, gradableEvent);
 
-        return students.stream()
-                .map(student -> getStudentGrade(
-                        getStudentGradeRequest(request, student.getUserId()), gradableEvent, courseId)
-                )
-                .toList();
+        studentIds.forEach(studentId -> updateStudentGrade(
+                        getStudentGradeRequest(request, studentId), gradableEvent, courseId)
+                );
     }
 
-    private Grade validateAndGetStudentGrade(GradeRequestDto request, GradableEvent gradableEvent, Long courseId) {
+    private void validateAndGetStudentGrade(GradeRequestDto request, GradableEvent gradableEvent, Long courseId) {
         accessAuthorizer.authorizeStudentDataAccess(courseId, ((StudentTargetRequestDto) request.getTarget()).id());
         gradingValidator.validate(request, gradableEvent);
-        return getStudentGrade(request, gradableEvent, courseId);
+        updateStudentGrade(request, gradableEvent, courseId);
     }
 
-    private Grade getStudentGrade(GradeRequestDto request, GradableEvent gradableEvent, Long courseId) {
+    private void updateStudentGrade(GradeRequestDto request, GradableEvent gradableEvent, Long courseId) {
         StudentTargetRequestDto target = (StudentTargetRequestDto) request.getTarget();
         Animal animal = animalService.getAnimal(target.id(), courseId);
         Grade grade = gradeService.getOrCreateGrade(animal, gradableEvent, request.getComment());
@@ -127,8 +121,6 @@ public class GradingService {
                 .build();
 
         notificationDispatcher.dispatch(notificationRequest);
-
-        return grade;
     }
 
     private void createAndSaveAssignedRewards(List<CriterionGrade> criteriaGrades, Map<Long, CriterionGradeRequestDto> criteria, Long targetId) {
