@@ -59,10 +59,6 @@ export const TargetProvider = ({
   });
 
   useEffect(() => {
-    if (isTargetsLoading) {
-      return;
-    }
-
     if (!targets || targets.length < 1) {
       if (selectedTarget !== null) {
         dispatch({

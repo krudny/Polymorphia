@@ -50,7 +50,7 @@ export const ProjectService = {
   },
 
   getProjectGroupConfigurationFilterConfigs: async (
-    target: TargetRequestDTO | null,
+    target: TargetRequestDTO | undefined,
     gradableEventId: number
   ): Promise<ProjectGroupConfigurationPartialFilterConfig> => {
     return await ApiClient.post<ProjectGroupConfigurationPartialFilterConfig>(
@@ -98,7 +98,7 @@ export const ProjectService = {
   },
 
   getRandomProjectVariant: async (
-    target: TargetRequestDTO | null,
+    target: TargetRequestDTO | undefined,
     gradableEventId: number
   ): Promise<Record<number, number>> => {
     return await ApiClient.post<Record<number, number>>(

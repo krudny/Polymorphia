@@ -21,7 +21,7 @@ export function useProjectGroupConfigurationFilterConfigs(
     queryFn: async () => {
       const groups =
         await ProjectService.getProjectGroupConfigurationFilterConfigs(
-          target,
+          target !== null ? target : undefined,
           gradableEventId
         );
 

@@ -85,37 +85,25 @@ async function request<TResponse>({
   }
 }
 
-function get<TResponse>(path: string, headers?: HeadersInit) {
-  return request<TResponse>({ path, method: HttpMethods.GET, headers });
-}
-
-function post<TResponse = void>(
-  path: string,
-  body?: ApiBody,
-  headers?: HeadersInit
-) {
-  return request<TResponse>({ path, method: HttpMethods.POST, body, headers });
-}
-
-function put<TResponse = void>(
-  path: string,
-  body?: ApiBody,
-  headers?: HeadersInit
-) {
-  return request<TResponse>({ path, method: HttpMethods.PUT, body, headers });
-}
-
-function del(
-  path: string,
-  body?: ApiBody,
-  headers?: HeadersInit
-): Promise<void> {
-  return request({ path, method: HttpMethods.DELETE, body, headers });
-}
-
 export const ApiClient = {
-  get,
-  post,
-  put,
-  delete: del,
+  get<TResponse>(path: string, headers?: HeadersInit) {
+    return request<TResponse>({ path, method: HttpMethods.GET, headers });
+  },
+
+  post<TResponse = void>(path: string, body?: ApiBody, headers?: HeadersInit) {
+    return request<TResponse>({
+      path,
+      method: HttpMethods.POST,
+      body,
+      headers,
+    });
+  },
+
+  put<TResponse = void>(path: string, body?: ApiBody, headers?: HeadersInit) {
+    return request<TResponse>({ path, method: HttpMethods.PUT, body, headers });
+  },
+
+  delete(path: string, body?: ApiBody, headers?: HeadersInit): Promise<void> {
+    return request({ path, method: HttpMethods.DELETE, body, headers });
+  },
 };

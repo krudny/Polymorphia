@@ -17,7 +17,10 @@ export default function useRandomProjectVariant(): UseRandomProjectVariant {
   >({
     mutationFn: async ({ target }) => {
       return toast.promise(
-        ProjectService.getRandomProjectVariant(target, gradableEventId),
+        ProjectService.getRandomProjectVariant(
+          target !== null ? target : undefined,
+          gradableEventId
+        ),
         {
           loading: "Trwa losowanie wariantu projektu...",
           success: "Pomyślnie wylosowano wariant projektu.",
