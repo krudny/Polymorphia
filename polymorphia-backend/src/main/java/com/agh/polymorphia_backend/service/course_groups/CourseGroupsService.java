@@ -13,7 +13,7 @@ import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.repository.course.CourseGroupRepository;
 import com.agh.polymorphia_backend.repository.course.StudentCourseGroupRepository;
-import com.agh.polymorphia_backend.repository.user.UserRepository;
+import com.agh.polymorphia_backend.repository.project.ProjectGroupRepository;
 import com.agh.polymorphia_backend.repository.user.student.AnimalRepository;
 import com.agh.polymorphia_backend.service.course.CourseService;
 import com.agh.polymorphia_backend.service.mapper.CourseGroupsMapper;
@@ -38,9 +38,9 @@ public class CourseGroupsService {
     private final AccessAuthorizer accessAuthorizer;
     private final CourseGroupsMapper courseGroupsMapper;
     private final CourseService courseService;
-    private final UserRepository userRepository;
     private final AnimalRepository animalRepository;
     private final StudentCourseGroupRepository studentCourseGroupRepository;
+    private final ProjectGroupRepository projectGroupRepository;
 
     public List<String> findAllCourseGroupNames(Long courseId) {
         accessAuthorizer.authorizeCurrentUserCourseAccess(courseId);
@@ -141,6 +141,7 @@ public class CourseGroupsService {
 
     @Transactional
     public void deleteCourseGroup(Long courseGroupId) {
+        projectGroupRepository.deleteProjectGroupsByCourseGroupId(courseGroupId);
         animalRepository.deleteAnimalsByCourseGroupId(courseGroupId);
         courseGroupRepository.deleteById(courseGroupId);
     }

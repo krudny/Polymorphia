@@ -4,6 +4,7 @@ import com.agh.polymorphia_backend.dto.response.user_context.StudentDetailsRespo
 import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.user.student.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -154,4 +155,15 @@ public interface ProjectGroupRepository extends JpaRepository<ProjectGroup, Long
     """)
     boolean isTeachingRoleUserInProjectGroup(Long projectGroupId, Long userId);
 
+
+    @Modifying
+    @Query(value = """
+        delete from project_groups pg
+        where pg.id in (
+            select distinct pga.project_group_id from project_groups_animals pga
+            join students_course_groups scg on scg.animal_id = pga.animal_id
+            where scg.course_group_id = :courseGroupId
+        )
+    """, nativeQuery = true)
+    void deleteProjectGroupsByCourseGroupId(Long courseGroupId);
 }
