@@ -1,7 +1,5 @@
 import { SpeedDialItem } from "@/components/speed-dial/types";
 import GradeModal from "@/components/speed-dial/modals/grade";
-import GroupModal from "@/components/speed-dial/modals/group-info";
-import ImportCSVModal from "@/components/speed-dial/modals/import-csv";
 import {
   ImportCSVType,
   ImportCSVTypes,
@@ -33,6 +31,7 @@ import { useDeleteProjectGroupModalSpeedDialDynamicBehavior } from "@/hooks/app/
 import { useProjectVariantModalSpeedDialDynamicBehavior } from "@/hooks/app/speed-dial-dynamic-behavior/projects/project-variant";
 import { useProjectGroupModalSpeedDialDynamicBehavior } from "@/hooks/app/speed-dial-dynamic-behavior/projects/project-group";
 import { useProjectSubmissionModalSpeedDialDynamicBehavior } from "@/hooks/app/speed-dial-dynamic-behavior/projects/project-submission";
+import ImportCSVModal from "@/components/speed-dial/modals/file-import/import-csv";
 
 export abstract class BaseSpeedDialStrategy {
   abstract getItems(role: Role): SpeedDialItem[];

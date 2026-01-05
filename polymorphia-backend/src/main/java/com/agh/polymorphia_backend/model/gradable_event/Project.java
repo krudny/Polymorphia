@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,10 +29,12 @@ public class Project extends GradableEvent {
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
     @ToString.Exclude
     @JsonIgnore
-    private List<ProjectGroup> projectGroups;
+    @Builder.Default
+    private List<ProjectGroup> projectGroups = new ArrayList<>();
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
     @ToString.Exclude
     @JsonIgnore
-    private List<ProjectVariantCategory> variantCategories;
+    @Builder.Default
+    private List<ProjectVariantCategory> variantCategories = new ArrayList<>();
 }

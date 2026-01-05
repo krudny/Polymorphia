@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -41,7 +42,8 @@ public class GradableEvent {
     @OneToMany(mappedBy = "gradableEvent", fetch = FetchType.LAZY)
     @ToString.Exclude
     @JsonIgnore
-    private List<Criterion> criteria;
+    @Builder.Default
+    private List<Criterion> criteria = new ArrayList<>();
 
     @NotNull
     @Column(length = 64)
