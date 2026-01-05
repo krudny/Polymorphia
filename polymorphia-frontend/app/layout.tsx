@@ -5,7 +5,7 @@ import localFont from "next/font/local";
 import { League_Gothic } from "next/font/google";
 import { QueryClient, QueryCache, MutationCache } from "@tanstack/query-core";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { ReactNode, useState } from "react";
+import { ReactNode, useRef } from "react";
 import { Toaster } from "react-hot-toast";
 import toast from "react-hot-toast";
 import { ThemeProvider } from "next-themes";
@@ -38,10 +38,34 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   const router = useRouter();
+  const queryClientRef = useRef<QueryClient | null>(null);
 
-  const handleApiError = (error: Error) => {
+  if (!queryClientRef.current) {
+    queryClientRef.current = new QueryClient({
+      queryCache: new QueryCache({
+        onError: (error) => {
+          void handleApiError(error);
+        },
+      }),
+      mutationCache: new MutationCache({
+        onError: (error) => {
+          void handleApiError(error);
+        },
+      }),
+    });
+  }
+
+  const queryClient = queryClientRef.current;
+
+  const handleApiError = async (error: Error) => {
     if (!(error instanceof ApiError)) {
       return;
+    }
+
+    const currentQueryClient = queryClientRef.current;
+    if (currentQueryClient && (error.status === 401 || error.status === 503)) {
+      await currentQueryClient.cancelQueries({ predicate: () => true });
+      await currentQueryClient.resetQueries({ predicate: () => true });
     }
 
     if (error.status === 401) {
@@ -69,22 +93,6 @@ export default function RootLayout({
       id: "api-error-toast",
     });
   };
-
-  const [queryClient] = useState(
-    () =>
-      new QueryClient({
-        queryCache: new QueryCache({
-          onError: (error) => {
-            handleApiError(error);
-          },
-        }),
-        mutationCache: new MutationCache({
-          onError: (error) => {
-            handleApiError(error);
-          },
-        }),
-      })
-  );
 
   return (
     <html lang="pl" className="overflow-hidden" suppressHydrationWarning>

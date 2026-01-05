@@ -21,7 +21,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     isLoading: isFiltersLoading,
     isError: isFiltersError,
   } = useProfileFilterConfigs();
-  const filters = useFilters<ProfileFilterId>(filterConfigs ?? []);
+  const filters = useFilters<ProfileFilterId>(filterConfigs ?? [], "profile");
   const lastEvolutionStageId = profile
     ? profile.evolutionStageThresholds.length - 1
     : 0;
