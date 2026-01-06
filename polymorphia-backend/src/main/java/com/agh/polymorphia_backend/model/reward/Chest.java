@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,7 +20,8 @@ import java.util.List;
 @ToString(exclude = {"items"})
 public class Chest extends Reward {
     @ManyToMany(mappedBy = "chests", fetch = FetchType.LAZY)
-    private List<Item> items;
+    @Builder.Default
+    private List<Item> items = new ArrayList<>();
     @NotNull
     @Enumerated(EnumType.STRING)
     private ChestBehavior behavior;

@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -35,12 +36,13 @@ public class Criterion {
     @JsonIgnore
     private GradableEvent gradableEvent;
 
-    @OneToMany(mappedBy = "criterion", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "criterion", fetch = FetchType.LAZY, orphanRemoval = true)
     @ToString.Exclude
     @JsonIgnore
-    private List<CriterionReward> assignableRewards;
+    @Builder.Default
+    private List<CriterionReward> assignableRewards = new ArrayList<>();
 
-    @NotNull
+    @NotEmpty
     @Column(length = 64)
     private String name;
 

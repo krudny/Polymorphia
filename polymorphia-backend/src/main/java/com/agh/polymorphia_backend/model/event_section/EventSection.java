@@ -10,6 +10,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -49,10 +50,11 @@ public abstract class EventSection {
     @PositiveOrZero
     private Long orderIndex;
 
-    @OneToMany(mappedBy = "eventSection", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "eventSection", fetch = FetchType.LAZY, orphanRemoval = true)
     @ToString.Exclude
     @JsonIgnore
-    private List<GradableEvent> gradableEvents;
+    @Builder.Default
+    private List<GradableEvent> gradableEvents = new ArrayList<>();
 
     @NotNull
     private Boolean isHidden = false;
