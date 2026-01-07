@@ -196,7 +196,9 @@ export default function ProjectVariantPick() {
             icon="ifl"
             className="!mx-0 !py-0 !w-full"
             onClick={handleRandom}
-            isActive={!randomVariantMutation.isPending}
+            isActive={
+              projectCategories.length !== 0 && !randomVariantMutation.isPending
+            }
           />
         </div>
         <div className="variant-pick-buttons-row">

@@ -60,7 +60,7 @@ public class CourseDetailsService {
     public CourseDetailsRequestDto getCourseDetails(Long courseId) {
         Course course = courseService.getCourseById(courseId);
         AbstractRoleUser user = userService.getCurrentUser();
-        accessAuthorizer.isCourseAccessAuthorized(user, course);
+        accessAuthorizer.isCourseAccessAuthorized(user, courseId);
         List<ItemDetailsDetailsProjection> items = itemRepository.findAllItemDetailsByCourseId(courseId);
         List<ChestDetailsDetailsProjection> chests = chestRepository.findAllChestDetailsByCourseId(courseId);
         List<EvolutionStage> evolutionStages = evolutionStagesRepository.findAllByCourseId(courseId);

@@ -147,7 +147,7 @@ INSERT INTO public.event_sections (id, name, is_shown_in_road_map, has_gradable_
 VALUES (1, 'Git', true, false, 1, 0, false, 'es1'),
        (2, 'Kartkówki', false, true, 1, 1, false, 'es2'),
        (3, 'Laboratoria', true, true, 1, 2, false, 'es3'),
-       (4, 'Projekt', true, false, 1, 3, true, 'es4');
+       (4, 'Projekt', true, false, 1, 3, false, 'es4');
 INSERT INTO public.gradable_events (id, event_section_id, name, topic, order_index,
                                     road_map_order_index, markdown_source_url, markdown, is_hidden,
                                     is_locked, key)

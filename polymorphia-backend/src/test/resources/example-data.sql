@@ -1011,7 +1011,11 @@ VALUES (2, 2, 'Kartkówka', 2.0, 'criteria2'),
        (32, 32, 'Laboratorium', 4.0, 'criteria32'),
        (33, 33, 'Git', 10.0, 'criteria33'),
        (34, 38, 'Kod', 5.0, 'criteria34'),
-       (35, 38, 'Wzorce projektowe', 5.0, 'criteria35');
+       (35, 38, 'Wzorce projektowe', 5.0, 'criteria35'),
+       (36, 39, 'Kod', 5.0, 'criteria36'),
+       (37, 40, 'Kod', 5.0, 'criteria37'),
+       (38, 41, 'Kod', 5.0, 'criteria38'),
+       (39, 42, 'Kod', 5.0, 'criteria39');
 
 
 insert into criteria_rewards(criterion_id, reward_id, max_amount)

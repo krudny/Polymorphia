@@ -1,6 +1,5 @@
 package com.agh.polymorphia_backend.repository.event_section;
 
-import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.event_section.EventSection;
 import com.agh.polymorphia_backend.repository.event_section.projection.EventSectionDetailsProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,8 +22,8 @@ public interface EventSectionRepository extends JpaRepository<EventSection, Long
 
     boolean existsByCourseIdAndName(Long courseId, String name);
 
-    @Query("SELECT es.course FROM EventSection es WHERE es.id = :eventSectionId")
-    Optional<Course> findCourseById(@Param("eventSectionId") Long eventSectionId);
+    @Query("SELECT es.course.id FROM EventSection es WHERE es.id = :eventSectionId")
+    Optional<Long> findCourseIdById(@Param("eventSectionId") Long eventSectionId);
 
     @Query("""
         SELECT es FROM EventSection es

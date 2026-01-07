@@ -25,21 +25,6 @@ export default function useProjectGroupDelete(): UseProjectGroupDelete {
       queryClient.invalidateQueries({
         queryKey: ["gradingTargets"],
       });
-      queryClient.invalidateQueries({
-        queryKey: ["grade"],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["submissionDetails"],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["projectVariant"],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["projectGroupConfigurationStudents"],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["projectGroupConfiguration"],
-      });
     },
   });
 
