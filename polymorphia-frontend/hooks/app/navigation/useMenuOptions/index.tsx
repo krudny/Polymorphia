@@ -97,7 +97,7 @@ export function useMainMenuItems(): MenuOption[] {
       { icon: MilestoneIcon, text: "Roadmapa", link: "roadmap" }
     );
 
-    if (eventSections) {
+    if (eventSections && eventSections.length > 0) {
       return updateMenuItems(items, eventSections, courseOptionText);
     }
 
