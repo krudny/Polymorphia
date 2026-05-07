@@ -115,7 +115,6 @@ jobs:
 
             elapsed=0
 
-            echo "Checking: $HEALTH_URL"
             echo "Max wait: ${MAX_WAIT}s (retry every ${INTERVAL}s)"
 
             while [ "$elapsed" -lt "$MAX_WAIT" ]; do
