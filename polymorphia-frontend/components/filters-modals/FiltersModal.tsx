@@ -1,10 +1,13 @@
 import { Accordion } from "@/components/accordion/Accordion";
 import AccordionSection from "@/components/accordion/AccordionSection";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import Loading from "@/components/loading";
 import Modal from "@/components/modal";
 import { AccordionRef } from "@/providers/accordion/types";
-import { FilterActions, FilterOption } from "@/hooks/course/useFilters/types";
+import {
+  FilterActions,
+  FilterOption,
+} from "@/hooks/course/filters/useFilters/types";
 import { useRef } from "react";
 import toast from "react-hot-toast";
 import "./index.css";
@@ -81,22 +84,29 @@ export default function FiltersModal<FilterIdType extends string>({
               id={filterConfig.id}
               title={filterConfig.title}
             >
-              <div className="filters-modal-filter-grid">
-                {filterConfig.options.map((option) => (
-                  <div
-                    key={option.value}
-                    onClick={() => handleSelect(filterConfig.id, option)}
-                    className={`filters-modal-filter-option ${
-                      (getFilterValues(filterConfig.id) ?? []).includes(
-                        option.value
-                      )
-                        ? "filters-modal-filter-option-selected"
-                        : "filters-modal-filter-option-unselected"
-                    }`}
-                  >
-                    {option.label ?? option.value}
-                  </div>
-                ))}
+              <div>
+                <div className="filters-modal-filter-grid">
+                  {filterConfig.options.map((option) => (
+                    <div
+                      key={option.value}
+                      onClick={() => handleSelect(filterConfig.id, option)}
+                      className={`filters-modal-filter-option ${
+                        (getFilterValues(filterConfig.id) ?? []).includes(
+                          option.value
+                        )
+                          ? "filters-modal-filter-option-selected"
+                          : "filters-modal-filter-option-unselected"
+                      }`}
+                    >
+                      {option.label ?? option.value}
+                    </div>
+                  ))}
+                </div>
+                {filterConfig.additionalInfo && (
+                  <h3 className="filters-modal-filter-additional-info">
+                    {filterConfig.additionalInfo}
+                  </h3>
+                )}
               </div>
             </AccordionSection>
           ))}

@@ -1,0 +1,42 @@
+name: Run Tests
+
+on: 
+  workflow_call:
+    inputs:
+      working-directory: 
+        type: string
+        description: 'Working backend directory'
+        required: false
+        default: './polymorphia-backend'
+      spring-profile:
+        type: string
+        description: 'Spring profile to use'
+        required: false
+        default: 'test'
+    outputs:
+      test-result:
+        description: 'Test execution result'
+        value: ${{ jobs.aggregate-results.outputs.result }}
+
+jobs: 
+  test-backend: 
+    name: "Test Backend"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+
+    steps: 
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # 6.0.2
+
+      - name: Setup Java with Maven
+        uses: ./.github/actions/ci_setup_java
+        with:
+          working-directory: ${{ inputs.working-directory }}
+
+      - name: Run Tests
+        id: test-backend
+        working-directory: ${{ inputs.working-directory }}
+        run: |
+          mvn clean test -Dspring.profiles.active=${{ inputs.spring-profile }} -B -V

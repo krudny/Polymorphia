@@ -32,3 +32,7 @@
 .filters-modal-button-wrapper {
   @apply w-full mt-5;
 }
+
+.filters-modal-filter-additional-info {
+  @apply text-xl mt-3;
+}

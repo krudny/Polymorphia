@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import { InviteUserModalProps } from "@/components/speed-dial/modals/invite-user/types";
-import ImportCSVModal from "@/components/speed-dial/modals//import-csv";
+import ImportCSVModal from "@/components/speed-dial/modals/file-import/import-csv";
 import {
   ImportCSVTypes,
   InviteSpecificType,
   InviteSpecificTypes,
   InviteTypes,
 } from "@/interfaces/general";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import "./index.css";
 import InviteUserToCourseModal from "@/components/speed-dial/modals/invite-user/invite-to-course";
 import Modal from "@/components/modal";

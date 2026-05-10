@@ -6,7 +6,6 @@ import com.agh.polymorphia_backend.dto.request.target_list.GradeStatus;
 import com.agh.polymorphia_backend.dto.request.target_list.GradingTargetListRequestDto;
 import com.agh.polymorphia_backend.dto.response.grade.StudentShortGradeResponseDto;
 import com.agh.polymorphia_backend.dto.response.target_list.*;
-import com.agh.polymorphia_backend.model.course.Course;
 import com.agh.polymorphia_backend.model.course.CourseGroup;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.hall_of_fame.HallOfFameEntry;
@@ -63,13 +62,13 @@ public class TargetListService {
 
     public List<String> getGroupsForGradingTargetListFilters(Long gradableEventId) {
         GradableEvent gradableEvent = gradableEventService.getGradableEventById(gradableEventId);
-        Course course = gradableEvent.getEventSection().getCourse();
+        Long courseId = gradableEventService.getCourseIdByGradableEventId(gradableEventId);
 
         return switch (gradableEvent.getEventSection().getEventSectionType()) {
             // Course access authorization is performed inside findAllCourseGroupNames
-            case ASSIGNMENT, TEST -> courseGroupsService.findAllCourseGroupNames(course.getId());
+            case ASSIGNMENT, TEST -> courseGroupsService.findAllCourseGroupNames(courseId);
             case PROJECT -> {
-                accessAuthorizer.authorizeCourseAccess(course);
+                accessAuthorizer.authorizeCurrentUserCourseAccess(courseId);
                 if (userService.getCurrentUserRole() == UserType.COORDINATOR) {
                     yield List.of("assigned");
                 } else {
@@ -81,24 +80,24 @@ public class TargetListService {
 
     public List<? extends TargetResponseDto> getTargetListForGrading(GradingTargetListRequestDto requestDto) {
         GradableEvent gradableEvent = gradableEventService.getGradableEventById(requestDto.getGradableEventId());
-        Course course = gradableEvent.getEventSection().getCourse();
-        accessAuthorizer.authorizeCourseAccess(course);
+        Long courseId = gradableEventService.getCourseIdByGradableEventId(requestDto.getGradableEventId());
+        accessAuthorizer.authorizeCurrentUserCourseAccess(courseId);
 
         return switch (gradableEvent.getEventSection().getEventSectionType()) {
-            case ASSIGNMENT, TEST -> getTargetListForGradingAssignmentOrTest(requestDto, course);
-            case PROJECT -> getTargetListForGradingProject(requestDto, gradableEvent, course);
+            case ASSIGNMENT, TEST -> getTargetListForGradingAssignmentOrTest(requestDto, courseId);
+            case PROJECT -> getTargetListForGradingProject(requestDto, gradableEvent, courseId);
         };
     }
 
     private List<StudentTargetResponseDto> getTargetListForGradingAssignmentOrTest(
-            GradingTargetListRequestDto requestDto, Course course) {
+            GradingTargetListRequestDto requestDto, Long courseId) {
         Long currentUserId = userService.getCurrentUser().getUserId();
-        return getStudentTargets(currentUserId, requestDto, course.getId()).stream()
+        return getStudentTargets(currentUserId, requestDto, courseId).stream()
                 .map(targetListMapper::toStudentTargetResponseDto).toList();
     }
 
     private List<StudentGroupTargetResponseDto> getTargetListForGradingProject(GradingTargetListRequestDto requestDto,
-                                                                               GradableEvent gradableEvent, Course course) {
+                                                                               GradableEvent gradableEvent, Long courseId) {
         Long currentUserId = userService.getCurrentUser().getUserId();
         boolean showAllProjectGroupsForCoordinator = requestDto.getGroups().stream().findFirst()
                 .filter(group -> group.equals("assigned")).isEmpty();
@@ -120,7 +119,7 @@ public class TargetListService {
             List<StudentTargetDataResponseDto> members = entry.getValue().stream()
                     .map(targetListMapper::toStudentTargetDataResponseDto).sorted(memberComparator).toList();
             List<StudentShortGradeResponseDto> membersShortGrades = members.stream()
-                .map(member -> shortGradeService.getShortGradeWithoutAuthorization(gradableEvent, member.id(), course.getId()))
+                .map(member -> shortGradeService.getShortGradeWithoutAuthorization(gradableEvent, member.id(), courseId))
                 .toList();
 
             return StudentGroupTargetResponseDto.builder()

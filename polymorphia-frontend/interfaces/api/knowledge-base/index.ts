@@ -1,8 +1,8 @@
 import { BaseReward } from "@/interfaces/api/reward";
-import { KnowledgeBaseType } from "@/components/slider/types";
+import { KnowledgeBaseSlideType } from "@/components/slider/types";
 
 export interface KnowledgeBaseResponseDTO {
-  type: KnowledgeBaseType;
+  type: KnowledgeBaseSlideType;
   id: number;
   orderIndex: number;
   name: string;

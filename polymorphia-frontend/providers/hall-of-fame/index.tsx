@@ -13,20 +13,20 @@ import {
   HallOfFameContextInterface,
   HallOfFameFilterId,
 } from "@/providers/hall-of-fame/types";
-import { useFilters } from "@/hooks/course/useFilters";
-import { useHallOfFameFilterConfigs } from "@/hooks/course/useHallOfFameFilterConfigs";
-import useHallOfFame from "@/hooks/course/useHallOfFame";
+import { useFilters } from "@/hooks/course/filters/useFilters";
+import { useHallOfFameFilterConfigs } from "@/hooks/course/filters/useHallOfFameFilterConfigs";
+import useHallOfFame from "@/hooks/course/hall-of-fame/useHallOfFame";
 import useUserContext, {
   useUserDetails,
 } from "@/hooks/contexts/useUserContext";
-import { useFindMeScroll } from "@/hooks/general/useFindMeScroll";
+import { useFindMeScroll } from "@/hooks/course/hall-of-fame/useFindMeScroll";
 import { Roles } from "@/interfaces/api/user";
 import ErrorComponent from "@/components/error";
 import {
   DEFAULT_SORT_BY_TOTAL,
   DEFAULT_SORT_ORDER_DESC,
   DEFAULT_GROUPS,
-} from "@/shared/filter-defaults";
+} from "@/hooks/course/filters/useFilters/utils/filterDefaults";
 
 export const HallOfFameContext = createContext<
   HallOfFameContextInterface | undefined
@@ -51,7 +51,10 @@ export const HallOfFameProvider = ({ children }: { children: ReactNode }) => {
     isLoading: isFiltersLoading,
     isError: isFiltersError,
   } = useHallOfFameFilterConfigs(courseId);
-  const filters = useFilters<HallOfFameFilterId>(filterConfigs ?? []);
+  const filters = useFilters<HallOfFameFilterId>(
+    filterConfigs ?? [],
+    "hallOfFame"
+  );
 
   const sortByFilterValues = useMemo(
     () => filters.getAppliedFilterValues("sortBy") ?? DEFAULT_SORT_BY_TOTAL,

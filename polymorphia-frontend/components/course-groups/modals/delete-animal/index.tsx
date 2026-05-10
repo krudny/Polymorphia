@@ -1,11 +1,11 @@
 import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import Modal from "@/components/modal";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import ErrorComponent from "@/components/error";
 import { ErrorComponentSizes } from "@/components/error/types";
 import "../index.css";
 import useModalContext from "@/hooks/contexts/useModalContext";
-import useDeleteAnimal from "@/hooks/course/useDeleteAnimal";
+import useDeleteAnimal from "@/hooks/course/animal/useDeleteAnimal";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
 import { TargetTypes } from "@/interfaces/api/target";
 

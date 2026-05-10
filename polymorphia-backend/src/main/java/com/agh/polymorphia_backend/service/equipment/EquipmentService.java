@@ -94,7 +94,7 @@ public class EquipmentService {
             return animalService.validateAndGetAnimalId(courseId);
         } else if (studentId.isPresent() && !UserType.STUDENT.equals(userType)) {
             accessAuthorizer.authorizeStudentDataAccess(courseId, studentId.get());
-            return animalService.getAnimal(studentId.get(), courseId).getId();
+            return animalService.getAnimalId(studentId.get(), courseId);
         }
         throw new ResponseStatusException(HttpStatus.FORBIDDEN, INVALID_ROLE);
     }

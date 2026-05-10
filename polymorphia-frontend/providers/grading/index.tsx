@@ -6,32 +6,33 @@ import {
   useMemo,
   useReducer,
 } from "react";
-import { useEventParams } from "@/hooks/general/useEventParams";
-import useGradeUpdate from "@/hooks/course/useGradeUpdate";
+import { useEventParams } from "@/hooks/app/params/useEventParams";
+import useGradeUpdate from "@/hooks/course/grading/useGradeUpdate";
 import {
   GradingContextInterface,
   GradingFilterId,
 } from "@/providers/grading/types";
-import { useFilters } from "@/hooks/course/useFilters";
-import { useGradingFilterConfigs } from "@/hooks/course/useGradingFilterConfigs";
+import { useFilters } from "@/hooks/course/filters/useFilters";
+import { useGradingFilterConfigs } from "@/hooks/course/grading/useGradingFilterConfigs";
 import { GradingReducerActions } from "@/providers/grading/reducer/types";
 import { GradingReducer, initialState } from "@/providers/grading/reducer";
-import useShortGrade from "@/hooks/course/useShortGrade";
+import useShortGrade from "@/hooks/course/grading/useShortGrade";
 import { getRequestTargetFromResponseTarget } from "@/providers/grading/utils/getRequestTargetFromResponseTarget";
-import useSubmissionDetails from "@/hooks/course/useSubmissionDetails";
+import useSubmissionDetails from "@/hooks/course/submission/useSubmissionDetails";
 import { SubmissionDetails } from "@/interfaces/api/grade/submission";
-import useSubmissionsUpdate from "@/hooks/course/useSubmissionsUpdate";
-import useSubmissionRequirements from "@/hooks/course/useSubmissionRequirements";
-import useCriteria from "@/hooks/course/useCriteria";
+import useSubmissionsUpdate from "@/hooks/course/submission/useSubmissionsUpdate";
+import useSubmissionRequirements from "@/hooks/course/submission/useSubmissionRequirements";
+import useCriteria from "@/hooks/course/grading/useCriteria";
 import useTargetContext from "@/hooks/contexts/useTargetContext";
 import {
-  DEFAULT_SEARCH_BY,
-  DEFAULT_SORT_ORDER_ASC,
-  DEFAULT_GROUPS,
   DEFAULT_GRADE_STATUS,
+  DEFAULT_GROUPS,
+  DEFAULT_SEARCH_BY,
   DEFAULT_SORT_BY_NAME,
-} from "@/shared/filter-defaults";
-import useProjectVariant from "@/hooks/course/useProjectVariant";
+  DEFAULT_SORT_ORDER_ASC,
+} from "@/hooks/course/filters/useFilters/utils/filterDefaults";
+import useProjectVariant from "@/hooks/course/projects/useProjectVariant";
+import toast from "react-hot-toast";
 
 export const GradingContext = createContext<
   GradingContextInterface | undefined
@@ -47,7 +48,7 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
     isError: isFiltersError,
   } = useGradingFilterConfigs(gradableEventId);
 
-  const filters = useFilters<GradingFilterId>(filterConfigs ?? []);
+  const filters = useFilters<GradingFilterId>(filterConfigs ?? [], "grading");
   const searchBy = useMemo(
     () => filters.getAppliedFilterValues("searchBy") ?? DEFAULT_SEARCH_BY,
     [filters]
@@ -151,6 +152,18 @@ export const GradingProvider = ({ children }: { children: ReactNode }) => {
 
   const submitGrade = () => {
     if (!targetState.selectedTarget) {
+      return;
+    }
+
+    const allCriteriaEmpty =
+      Object.values(state.criteria).every(
+        (criterion) =>
+          (!criterion.gainedXp || String(criterion.gainedXp).trim() === "") &&
+          (!criterion.assignedRewards || criterion.assignedRewards.length === 0)
+      ) && !state.comment?.trim();
+
+    if (allCriteriaEmpty) {
+      toast.error("Nie możesz zapisać pustej oceny.");
       return;
     }
 

@@ -1,3 +1,4 @@
+"use client";
 import { createContext, ReactNode, useReducer } from "react";
 import { EquipmentContextInterface } from "@/providers/equipment/types";
 import {

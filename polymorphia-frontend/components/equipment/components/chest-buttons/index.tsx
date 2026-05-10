@@ -1,5 +1,5 @@
 import useEquipmentContext from "@/hooks/contexts/useEquipmentContext";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import "./index.css";
 import { OpenedChestButtonsProps } from "@/components/equipment/components/chest-buttons/types";
 import { EquipmentActions } from "@/providers/equipment/reducer/types";

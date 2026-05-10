@@ -2,7 +2,7 @@ import { SpeedDialModalProps } from "@/components/speed-dial/modals/types";
 import Modal from "@/components/modal";
 import "./index.css";
 import React, { FormEvent, useState } from "react";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import { useForm } from "@tanstack/react-form";
 import { inviteSchema } from "@/components/form/schema";
 import {
@@ -11,10 +11,10 @@ import {
   Roles,
   RoleTextMap,
 } from "@/interfaces/api/user";
-import useInviteUser from "@/hooks/course/useInviteStudent";
+import useInviteUser from "@/hooks/course/invitation/useInviteStudent";
 import Selector from "@/components/selector";
 import { useUserDetails } from "@/hooks/contexts/useUserContext";
-import { isValidRole } from "@/shared/is-valid-role";
+import { isValidRole } from "@/components/speed-dial/modals/invite-user/invite-to-course/utils/isValidRole";
 import { FieldErrorMessage } from "@/components/form/FieldErrorMessage";
 import { InviteUserToCourseModalProps } from "@/components/speed-dial/modals/invite-user/invite-to-course/types";
 

@@ -1,10 +1,10 @@
 import React, { FormEvent } from "react";
-import ButtonWithBorder from "@/components/button/ButtonWithBorder";
+import ButtonWithBorder from "@/components/button";
 import { useForm } from "@tanstack/react-form";
 import { registerSchema } from "@/components/form/schema";
 import "./index.css";
 import { RegisterFormProps } from "@/components/home/register-form/types";
-import useRegister from "@/hooks/general/useRegister";
+import useRegister from "@/hooks/course/invitation/useRegister";
 import { FieldErrorMessage } from "@/components/form/FieldErrorMessage";
 
 export default function RegisterForm({ token }: RegisterFormProps) {
@@ -61,6 +61,7 @@ export default function RegisterForm({ token }: RegisterFormProps) {
               <>
                 <ButtonWithBorder
                   text={register.isPending ? "Rejestracja..." : "Utwórz konto"}
+                  type="submit"
                   className="mt-12"
                   isActive={!isPristine && canSubmit && !register.isPending}
                 />
