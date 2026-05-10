@@ -70,38 +70,39 @@ export default function Roadmap() {
 
   return (
     <>
-      <div ref={wrapperRef} style={{ height: totalHeight }} className="roadmap">
-        {roadmap.length > 0 && (
-          <ProgressBar
-            minXP={0}
-            currentXP={27}
-            maxXP={100}
-            numSquares={cards?.length ?? 0}
-            segmentSizes={Array.from(
-              { length: cards.length * 2 - 1 },
-              (_, i) => (i % 2 === 0 ? 0 : 100 / (cards.length - 1))
-            )}
-            isHorizontal={false}
-            upperElement={
+      <div
+        ref={wrapperRef}
+        style={{ minHeight: totalHeight }}
+        className="roadmap"
+      >
+        <ProgressBar
+          minXP={0}
+          currentXP={27}
+          maxXP={100}
+          numSquares={cards?.length ?? 0}
+          segmentSizes={Array.from({ length: cards.length * 2 - 1 }, (_, i) =>
+            i % 2 === 0 ? 0 : 100 / (cards.length - 1)
+          )}
+          isHorizontal={false}
+          upperElement={
+            <ProgressBarElement
+              elements={cards ?? []}
+              alternate={isMd}
+              isUpper={true}
+              isHorizontal={false}
+            />
+          }
+          lowerElement={
+            isMd && (
               <ProgressBarElement
                 elements={cards ?? []}
                 alternate={isMd}
-                isUpper={true}
+                isUpper={false}
                 isHorizontal={false}
               />
-            }
-            lowerElement={
-              isMd && (
-                <ProgressBarElement
-                  elements={cards ?? []}
-                  alternate={isMd}
-                  isUpper={false}
-                  isHorizontal={false}
-                />
-              )
-            }
-          />
-        )}
+            )
+          }
+        />
       </div>
       {selectedEventId && (
         <GradeModal
