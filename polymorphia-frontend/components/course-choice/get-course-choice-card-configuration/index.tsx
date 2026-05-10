@@ -1,7 +1,7 @@
 import { GetCourseChoiceCardConfigurationProps } from "@/components/course-choice/get-course-choice-card-configuration/types";
 import { NewCardProps } from "@/components/new-card/card/types";
-import useHasValidAnimalInCourse from "@/hooks/course/useHasValidAnimalInCourse";
-import useCourseGroup from "@/hooks/course/useCourseGroup";
+import useHasValidAnimalInCourse from "@/hooks/course/animal/useHasValidAnimalInCourse";
+import useCourseGroup from "@/hooks/course/course-group/useCourseGroup";
 import { Roles, RoleTextMap } from "@/interfaces/api/user";
 import toast from "react-hot-toast";
 import NewCardImageAccessory from "@/components/new-card/card/accessory/image";

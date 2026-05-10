@@ -4,7 +4,7 @@ import {
   CourseChoiceClickedDetails,
   CourseChoiceProps,
 } from "@/components/course-choice/types";
-import usePreferredCourseUpdate from "@/hooks/course/usePreferredCourseUpdate";
+import usePreferredCourseUpdate from "@/hooks/course/course-choice/usePreferredCourseUpdate";
 import CreateAnimalModal from "@/components/course-choice/modal/createAnimal";
 import React, { useState } from "react";
 import NewCardGridView from "@/components/new-card/grid";

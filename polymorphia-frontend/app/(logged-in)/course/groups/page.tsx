@@ -1,6 +1,6 @@
 "use client";
 
-import useCourseGroups from "@/hooks/course/useCourseGroups";
+import useCourseGroups from "@/hooks/course/course-group/useCourseGroups";
 import Loading from "@/components/loading";
 import "./index.css";
 import { useScaleShow } from "@/animations/ScaleShow";

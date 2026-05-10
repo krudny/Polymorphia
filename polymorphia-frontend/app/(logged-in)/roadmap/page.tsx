@@ -7,7 +7,7 @@ import ProgressBarElement from "@/components/progressbar/ProgressBarElement";
 import Loading from "@/components/loading";
 import { useMediaQuery } from "react-responsive";
 import "./styles.css";
-import { useRoadmap } from "@/hooks/course/useRoadmap";
+import { useRoadmap } from "@/hooks/course/roadmap/useRoadmap";
 import GradeModal from "@/components/speed-dial/modals/grade";
 import ErrorComponent from "@/components/error";
 import useUserContext from "@/hooks/contexts/useUserContext";
