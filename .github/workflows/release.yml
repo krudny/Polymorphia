@@ -24,6 +24,14 @@ jobs:
       version: ${{ steps.validate.outputs.version }}
       develop_sha: ${{ steps.check-branches.outputs.develop_sha }}
     steps:
+      - name: Check workflow branch
+        run: |
+          BRANCH="${{ github.ref_name }}"
+          if [ "${BRANCH}" != "develop" ]; then
+            echo "::error::This workflow can only be run from branch develop."
+            exit 1
+          fi
+
       - name: Check authorized user
         env:
           ACTOR: ${{ github.actor }}
