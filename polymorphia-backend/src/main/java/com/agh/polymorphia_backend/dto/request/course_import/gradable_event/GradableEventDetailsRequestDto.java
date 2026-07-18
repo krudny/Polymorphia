@@ -24,7 +24,8 @@ import java.util.List;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = AssignmentDetailsRequestDto.class, name = "assignment"),
         @JsonSubTypes.Type(value = TestDetailsRequestDto.class, name = "test"),
-        @JsonSubTypes.Type(value = ProjectDetailsRequestDto.class, name = "project")
+        @JsonSubTypes.Type(value = ProjectDetailsRequestDto.class, name = "project"),
+        @JsonSubTypes.Type(value = TaskDetailsRequestDto.class, name = "task")
 })
 @Getter
 @SuperBuilder
