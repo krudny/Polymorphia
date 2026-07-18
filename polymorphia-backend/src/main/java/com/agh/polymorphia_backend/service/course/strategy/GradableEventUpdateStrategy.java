@@ -3,10 +3,7 @@ package com.agh.polymorphia_backend.service.course.strategy;
 import com.agh.polymorphia_backend.dto.request.course_import.gradable_event.GradableEventDetailsRequestDto;
 import com.agh.polymorphia_backend.dto.request.course_import.gradable_event.ProjectDetailsRequestDto;
 import com.agh.polymorphia_backend.model.event_section.EventSectionType;
-import com.agh.polymorphia_backend.model.gradable_event.Assignment;
-import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
-import com.agh.polymorphia_backend.model.gradable_event.Project;
-import com.agh.polymorphia_backend.model.gradable_event.Test;
+import com.agh.polymorphia_backend.model.gradable_event.*;
 import com.agh.polymorphia_backend.repository.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.repository.gradable_event.GradableEventRepository;
 import lombok.AllArgsConstructor;
@@ -52,12 +49,10 @@ public class GradableEventUpdateStrategy implements EntityUpdateStrategy<Gradabl
     @Override
     public GradableEvent createNewEntity(GradableEventDetailsRequestDto dto) {
         return switch (dto.getType()) {
-            case ASSIGNMENT:
-                yield new Assignment();
-            case TEST:
-                yield new Test();
-            case PROJECT:
-                yield new Project();
+            case ASSIGNMENT -> new Assignment();
+            case TEST -> new Test();
+            case PROJECT -> new Project();
+            case TASK -> new Task();
         };
     }
 

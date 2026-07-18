@@ -1,10 +1,7 @@
 package com.agh.polymorphia_backend.service.course.strategy;
 
 import com.agh.polymorphia_backend.dto.request.course_import.event_section.EventSectionDetailsRequestDto;
-import com.agh.polymorphia_backend.model.event_section.AssignmentSection;
-import com.agh.polymorphia_backend.model.event_section.EventSection;
-import com.agh.polymorphia_backend.model.event_section.ProjectSection;
-import com.agh.polymorphia_backend.model.event_section.TestSection;
+import com.agh.polymorphia_backend.model.event_section.*;
 import com.agh.polymorphia_backend.repository.course.CourseRepository;
 import com.agh.polymorphia_backend.repository.event_section.EventSectionRepository;
 import lombok.AllArgsConstructor;
@@ -50,12 +47,10 @@ public class EventSectionUpdateStrategy implements EntityUpdateStrategy<EventSec
     @Override
     public EventSection createNewEntity(EventSectionDetailsRequestDto dto) {
         return switch (dto.getType()) {
-            case ASSIGNMENT:
-                yield new AssignmentSection();
-            case TEST:
-                yield new TestSection();
-            case PROJECT:
-                yield new ProjectSection();
+            case ASSIGNMENT -> new AssignmentSection();
+            case TEST -> new TestSection();
+            case PROJECT -> new ProjectSection();
+            case TASK -> new TaskSection();
         };
     }
 
