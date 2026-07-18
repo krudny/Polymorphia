@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@import "../../styles/globals.css";
+
+.monaco-editor .margin {
+  border-right: 1px solid rgba(250, 250, 250, 0.1);
+}

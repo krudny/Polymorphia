@@ -13,6 +13,7 @@ module.exports = {
     ];
   },
   images: {
+    dangerouslyAllowLocalIP: true,
     remotePatterns: [
       API_STATIC_HOST_PATTERN,
       {

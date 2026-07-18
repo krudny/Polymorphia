@@ -2,6 +2,7 @@ import { MenuOption } from "@/components/navigation/types";
 import {
   BadgeHelpIcon,
   BellIcon,
+  CodeXmlIcon,
   GraduationCapIcon,
   LogOutIcon,
   MedalIcon,
@@ -94,7 +95,8 @@ export function useMainMenuItems(): MenuOption[] {
 
     items.push(
       { icon: MedalIcon, text: "Hall of Fame", link: "hall-of-fame" },
-      { icon: MilestoneIcon, text: "Roadmapa", link: "roadmap" }
+      { icon: MilestoneIcon, text: "Roadmapa", link: "roadmap" },
+      { icon: CodeXmlIcon, text: "Zadania", link: "tasks" }
     );
 
     if (eventSections && eventSections.length > 0) {
