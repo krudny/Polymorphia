@@ -4,6 +4,10 @@ import com.agh.polymorphia_backend.dto.request.course_import.gradable_event.Grad
 import com.agh.polymorphia_backend.dto.request.course_import.gradable_event.ProjectDetailsRequestDto;
 import com.agh.polymorphia_backend.model.event_section.EventSectionType;
 import com.agh.polymorphia_backend.model.gradable_event.*;
+import com.agh.polymorphia_backend.model.gradable_event.subtypes.assignment.Assignment;
+import com.agh.polymorphia_backend.model.gradable_event.subtypes.project.Project;
+import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.Task;
+import com.agh.polymorphia_backend.model.gradable_event.subtypes.test.Test;
 import com.agh.polymorphia_backend.repository.event_section.EventSectionRepository;
 import com.agh.polymorphia_backend.repository.gradable_event.GradableEventRepository;
 import lombok.AllArgsConstructor;
