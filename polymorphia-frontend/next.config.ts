@@ -3,6 +3,7 @@ import path from "node:path";
 
 /** @type {import("next").NextConfig} */
 module.exports = {
+  reactStrictMode: false,
   async redirects() {
     return [
       {

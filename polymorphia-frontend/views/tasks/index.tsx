@@ -1,10 +1,11 @@
 import "./index.css";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Group, Panel, Separator } from "react-resizable-panels";
-import { Editor, type BeforeMount, type OnMount } from "@monaco-editor/react";
 import ButtonWithBorder from "@/components/button";
+import { type BeforeMount, Editor, type OnMount } from "@monaco-editor/react";
 import { SupportedLanguage } from "@/interfaces/api/tasks/types";
 import useSubmitTask from "@/hooks/course/tasks/useSubmitTask";
+import MarkdownViewer from "@/components/markdown/markdown-viewer";
 
 type MonacoEditor = Parameters<OnMount>[0];
 
@@ -83,7 +84,11 @@ export default function TasksView() {
     <div className="h-full w-full overflow-hidden p-6">
       <Group orientation="horizontal" className="h-full w-full">
         <Panel defaultSize="40%" minSize="20%" className="min-w-0">
-          <div className={`${panel} p-6 overflow-y-auto`}>Treść zadania</div>
+          <div
+            className={`${panel} p-6 overflow-y-auto dark:text-secondary-gray relative`}
+          >
+            <MarkdownViewer />
+          </div>
         </Panel>
         <Separator className="w-1 m-1 rounded-full hover:bg-primary-dark/80 transition-colors ease-in" />
         <Panel defaultSize="60%" minSize="30%" className="min-w-0">
