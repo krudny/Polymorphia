@@ -1,6 +1,5 @@
 package com.agh.polymorphia_backend.model.gradable_event.subtypes.task;
 
 public enum TaskOutputMatch {
-    EXACT,
-    IGNORE_TRAILING_SPACES
+    EXACT
 }
