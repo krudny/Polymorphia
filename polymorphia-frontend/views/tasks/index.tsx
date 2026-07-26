@@ -1,8 +1,13 @@
 import "./index.css";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Group, Panel, Separator } from "react-resizable-panels";
 import ButtonWithBorder from "@/components/button";
-import { type BeforeMount, Editor, type OnMount } from "@monaco-editor/react";
+import {
+  type BeforeMount,
+  Editor,
+  Monaco,
+  type OnMount,
+} from "@monaco-editor/react";
 import { SupportedLanguage } from "@/interfaces/api/tasks/types";
 import useSubmitTask from "@/hooks/course/tasks/useSubmitTask";
 import MarkdownViewer from "@/components/markdown/markdown-viewer";
@@ -60,10 +65,16 @@ export default function TasksView() {
     SupportedLanguage.JAVASCRIPT
   );
   const [output, setOutput] = useState<string>("");
+  const [monacoInstance, setMonacoInstance] = useState<Monaco | null>(null);
 
   const editorRef = useRef<MonacoEditor | null>(null);
 
   const { mutate, isPending } = useSubmitTask({ setOutput });
+
+  const handleBeforeMount: BeforeMount = (monaco) => {
+    defineGlassTheme(monaco);
+    setMonacoInstance(monaco);
+  };
 
   const handleMount: OnMount = (editor) => {
     editorRef.current = editor;
@@ -77,7 +88,7 @@ export default function TasksView() {
     }
 
     setOutput("Uruchamianie...");
-    mutate({ language, code });
+    mutate({ taskLanguage: language, sourceCode: code });
   };
 
   return (
@@ -120,8 +131,8 @@ export default function TasksView() {
                     theme="glass-dark"
                     language={MONACO_LANG[language]}
                     defaultValue={DEFAULT_CODE[language]}
+                    beforeMount={handleBeforeMount}
                     onMount={handleMount}
-                    beforeMount={defineGlassTheme}
                     options={{
                       automaticLayout: true,
                       minimap: { enabled: false },

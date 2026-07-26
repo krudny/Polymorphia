@@ -4,7 +4,7 @@ import {
   UseSubmitTask,
   UseSubmitTaskProps,
 } from "@/hooks/course/tasks/useSubmitTask/types";
-import { TaskService } from "@/services/tasks";
+import TaskService from "@/services/tasks";
 
 //TODO: to refactor
 function formatOutput(res: ExecuteResponseDTO): string {
@@ -27,7 +27,7 @@ export default function useSubmitTask(
   request: UseSubmitTaskProps
 ): UseSubmitTask {
   const { mutate, isPending } = useMutation({
-    mutationFn: TaskService.executeCode,
+    mutationFn: TaskService.runTask,
     onSuccess: (response) => {
       request.setOutput(formatOutput(response));
     },

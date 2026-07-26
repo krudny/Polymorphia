@@ -5,8 +5,8 @@ export enum SupportedLanguage {
 }
 
 export interface ExecuteRequestDTO {
-  language: SupportedLanguage;
-  code: string;
+  taskLanguage: SupportedLanguage;
+  sourceCode: string;
 }
 
 export interface ExecuteResponseDTO {
