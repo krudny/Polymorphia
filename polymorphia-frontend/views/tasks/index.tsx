@@ -69,7 +69,7 @@ export default function TasksView() {
 
   const editorRef = useRef<MonacoEditor | null>(null);
 
-  const { mutate, isPending } = useSubmitTask({ setOutput });
+  const { mutate, isPending } = useSubmitTask({ setOutput }, 20);
 
   const handleBeforeMount: BeforeMount = (monaco) => {
     defineGlassTheme(monaco);

@@ -14,3 +14,21 @@ export interface ExecuteResponseDTO {
   stdout: string;
   stderr: string;
 }
+
+export interface TaskDetailsResponseDTO {
+  allowedLanguages: TaskAllowedLanguageDTO[];
+  testCases: TaskTestCaseDTO[];
+}
+
+export interface TaskAllowedLanguageDTO {
+  taskLanguage: SupportedLanguage;
+  isDefault: boolean;
+  sampleCode: string;
+}
+
+export interface TaskTestCaseDTO {
+  name: string;
+  orderIndex: number;
+  input: string;
+  expectedOutput: string;
+}

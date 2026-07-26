@@ -4,14 +4,21 @@ import { ApiClient } from "@/services/api/client";
 import {
   ExecuteRequestDTO,
   ExecuteResponseDTO,
+  TaskDetailsResponseDTO,
 } from "@/interfaces/api/tasks/types";
 
 const TaskService = {
+  getTaskDetails: async (
+    taskId: number
+  ): Promise<TaskDetailsResponseDTO> => {
+    return ApiClient.get(`/tasks/${taskId}`);
+  },
+
   runTask: async (
-    // taskId: number,
+    taskId: number,
     payload: ExecuteRequestDTO
   ): Promise<ExecuteResponseDTO> => {
-    return ApiClient.post(`/tasks/20/run`, payload);
+    return ApiClient.post(`/tasks/${taskId}/run`, payload);
   },
   // submitTask: async (
   //     taskId: number,
@@ -30,3 +37,4 @@ const TaskService = {
 };
 
 export default TaskService;
+
