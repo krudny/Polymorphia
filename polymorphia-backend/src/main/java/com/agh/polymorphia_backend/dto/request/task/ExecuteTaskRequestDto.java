@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ExecuteTaskRequestDto {
     @NotNull
-    private TaskSupportedLanguage language;
+    private TaskSupportedLanguage taskLanguage;
 
     @NotBlank
     private String sourceCode;

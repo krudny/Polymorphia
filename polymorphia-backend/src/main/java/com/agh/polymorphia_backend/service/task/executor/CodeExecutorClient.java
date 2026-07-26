@@ -18,7 +18,8 @@ public class CodeExecutorClient {
         try {
             return codeExecutorRestClient
                     .post()
-                    .uri("/execute")
+                    .uri("/executions/sync")
+                    .body(request)
                     .retrieve()
                     .body(RemoteExecutionResponseDto.class);
         } catch (RestClientException exception) {
