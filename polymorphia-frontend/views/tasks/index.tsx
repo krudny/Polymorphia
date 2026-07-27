@@ -1,18 +1,27 @@
 import "./index.css";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Group, Panel, Separator } from "react-resizable-panels";
 import ButtonWithBorder from "@/components/button";
-import {
-  type BeforeMount,
-  Editor,
-  Monaco,
-  type OnMount,
-} from "@monaco-editor/react";
-import { SupportedLanguage } from "@/interfaces/api/tasks/types";
-import useSubmitTask from "@/hooks/course/tasks/useSubmitTask";
 import MarkdownViewer from "@/components/markdown/markdown-viewer";
+import Selector from "@/components/selector";
+import { useTaskContext } from "@/hooks/contexts/useTaskContext";
+import { TaskProvider } from "@/providers/task";
+import { useEventParams } from "@/hooks/app/params/useEventParams";
+import Loading from "@/components/loading";
+import dynamic from "next/dynamic";
+import type { BeforeMount, OnMount } from "@monaco-editor/react";
+import type { editor } from "monaco-editor";
 
-type MonacoEditor = Parameters<OnMount>[0];
+const Editor = dynamic(() => import("@monaco-editor/react"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-full items-center justify-center text-slate-400 font-mono text-sm">
+      Ładowanie edytora...
+    </div>
+  ),
+});
+
+type MonacoEditor = editor.IStandaloneCodeEditor;
 
 const defineGlassTheme: BeforeMount = (monaco) => {
   monaco.editor.defineTheme("glass-dark", {
@@ -40,40 +49,43 @@ const defineGlassTheme: BeforeMount = (monaco) => {
   });
 };
 
-const DEFAULT_CODE: Record<SupportedLanguage, string> = {
-  [SupportedLanguage.JAVASCRIPT]: `console.log("Hello World");`,
-  [SupportedLanguage.PYTHON]: `print("Hello World")`,
-  [SupportedLanguage.JAVA]: `public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello World");
-    }
-}`,
-};
-
-const MONACO_LANG: Record<SupportedLanguage, string> = {
-  [SupportedLanguage.JAVASCRIPT]: "javascript",
-  [SupportedLanguage.PYTHON]: "python",
-  [SupportedLanguage.JAVA]: "java",
+const mapBackendToMonacoLanguage = (backendLanguage: string): string => {
+  if (!backendLanguage) return "plaintext";
+  const normalized = backendLanguage.toUpperCase();
+  if (normalized === "JAVASCRIPT" || normalized === "JS") return "javascript";
+  if (normalized === "PYTHON" || normalized === "PY") return "python";
+  if (normalized === "JAVA") return "java";
+  if (normalized === "CPP" || normalized === "C++") return "cpp";
+  if (normalized === "C") return "c";
+  if (
+    normalized === "CSHARP" ||
+    normalized === "C_SHARP" ||
+    normalized === "C#"
+  )
+    return "csharp";
+  return backendLanguage.toLowerCase();
 };
 
 const panel =
   "h-full min-h-0 min-w-0 overflow-hidden rounded-2xl " +
   "shadow-2xl bg-primary-dark";
 
-export default function TasksView() {
-  const [language, setLanguage] = useState<SupportedLanguage>(
-    SupportedLanguage.JAVASCRIPT
-  );
-  const [output, setOutput] = useState<string>("");
-  const [monacoInstance, setMonacoInstance] = useState<Monaco | null>(null);
+function TasksViewContent() {
+  const {
+    language,
+    setLanguage,
+    sampleCode,
+    isLoading,
+    output,
+    allowedLanguages,
+    handleSubmitTask,
+    isPending,
+  } = useTaskContext();
 
   const editorRef = useRef<MonacoEditor | null>(null);
 
-  const { mutate, isPending } = useSubmitTask({ setOutput }, 20);
-
   const handleBeforeMount: BeforeMount = (monaco) => {
     defineGlassTheme(monaco);
-    setMonacoInstance(monaco);
   };
 
   const handleMount: OnMount = (editor) => {
@@ -82,14 +94,12 @@ export default function TasksView() {
 
   const handleRun = () => {
     const code = editorRef.current?.getValue() ?? "";
-
-    if (!code) {
-      return;
-    }
-
-    setOutput("Uruchamianie...");
-    mutate({ taskLanguage: language, sourceCode: code });
+    handleSubmitTask(code);
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="h-full w-full overflow-hidden p-6">
@@ -110,27 +120,24 @@ export default function TasksView() {
                 style={{ backgroundColor: "#262626" }}
               >
                 <div className="flex items-center gap-2 p-2 shrink-0">
-                  <select
-                    value={language}
-                    onChange={(event) =>
-                      setLanguage(event.target.value as SupportedLanguage)
-                    }
-                    className="rounded bg-primary-dark text-slate-100 border border-white/10 px-2 py-1"
-                  >
-                    <option value={SupportedLanguage.JAVASCRIPT}>
-                      JavaScript
-                    </option>
-                    <option value={SupportedLanguage.PYTHON}>Python</option>
-                    <option value={SupportedLanguage.JAVA}>Java</option>
-                  </select>
+                  <div className="w-32">
+                    <Selector
+                      options={allowedLanguages}
+                      value={language}
+                      onChange={setLanguage}
+                      size="md"
+                      padding="sm"
+                      className="rounded-lg!"
+                    />
+                  </div>
                 </div>
                 <div className="flex-1 min-h-0">
                   <Editor
                     key={language}
                     height="100%"
                     theme="glass-dark"
-                    language={MONACO_LANG[language]}
-                    defaultValue={DEFAULT_CODE[language]}
+                    language={mapBackendToMonacoLanguage(language)}
+                    defaultValue={sampleCode}
                     beforeMount={handleBeforeMount}
                     onMount={handleMount}
                     options={{
@@ -154,13 +161,24 @@ export default function TasksView() {
                 </div>
                 <div className="flex items-center justify-between p-3 border-t border-t-primary-light/10 shrink-0">
                   <h3 className="text-2xl text-secondary-gray px-1">Konsola</h3>
-                  <ButtonWithBorder
-                    text={isPending ? "Uruchamianie..." : "Uruchom"}
-                    size="sm"
-                    className="mx-0! rounded-lg!"
-                    forceLight={true}
-                    onClick={handleRun}
-                  />
+                  <div className="flex items-center gap-2">
+                    <ButtonWithBorder
+                      text={isPending ? "Uruchamianie..." : "Uruchom"}
+                      size="sm"
+                      className="mx-0! rounded-lg!"
+                      forceLight={true}
+                      onClick={handleRun}
+                      isActive={!isPending}
+                    />
+                    <ButtonWithBorder
+                      text={isPending ? "Wysyłanie..." : "Prześlij"}
+                      size="sm"
+                      className="mx-0! rounded-lg!"
+                      forceLight={true}
+                      onClick={handleRun}
+                      isActive={!isPending}
+                    />
+                  </div>
                 </div>
               </div>
             </Panel>
@@ -168,5 +186,16 @@ export default function TasksView() {
         </Panel>
       </Group>
     </div>
+  );
+}
+
+export default function TasksView() {
+  const { gradableEventId } = useEventParams();
+  const taskId = Number(gradableEventId);
+
+  return (
+    <TaskProvider taskId={taskId}>
+      <TasksViewContent />
+    </TaskProvider>
   );
 }
