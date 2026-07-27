@@ -1,11 +1,5 @@
-export enum SupportedLanguage {
-  JAVASCRIPT = "JAVASCRIPT",
-  PYTHON = "PYTHON",
-  JAVA = "JAVA",
-}
-
 export interface ExecuteRequestDTO {
-  taskLanguage: SupportedLanguage;
+  taskLanguage: string;
   sourceCode: string;
 }
 
@@ -21,7 +15,7 @@ export interface TaskDetailsResponseDTO {
 }
 
 export interface TaskAllowedLanguageDTO {
-  taskLanguage: SupportedLanguage;
+  taskLanguage: string;
   isDefault: boolean;
   sampleCode: string;
 }
