@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TaskSubmissionRepository extends JpaRepository<TaskSubmission, Long> {
+    Integer countByTaskIdAndAnimalId(Long taskId, Long animalId);
 }

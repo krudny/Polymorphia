@@ -8,17 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Set;
 
 public interface TaskAllowedLanguageRepository extends JpaRepository<TaskAllowedLanguage, Long> {
-
-    @Query("""
-            SELECT language
-            FROM TaskAllowedLanguage
-            WHERE task.id = :taskId
-            """)
-    Set<TaskSupportedLanguage> findLanguagesByTaskId(@Param("taskId") Long taskId);
-
     @Query("""
             SELECT
                 taskAllowedLanguage.language AS language,
@@ -30,5 +21,7 @@ public interface TaskAllowedLanguageRepository extends JpaRepository<TaskAllowed
             WHERE taskAllowedLanguage.task.id = :taskId
             """)
     List<TaskAllowedLanguageProjection> findAllowedLanguagesWithDetailsByTaskId(@Param("taskId") Long taskId);
+
+    boolean existsByTaskIdAndLanguage(@Param("taskId") Long taskId, @Param("language") TaskSupportedLanguage supportedLanguage);
 }
 

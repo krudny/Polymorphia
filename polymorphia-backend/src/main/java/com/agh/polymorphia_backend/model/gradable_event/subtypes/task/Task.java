@@ -41,5 +41,5 @@ public class Task extends GradableEvent {
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "output_match", length = 32)
-    private TaskOutputMatch outputMatch;
+    private TaskOutputMatchMode outputMatchMode;
 }

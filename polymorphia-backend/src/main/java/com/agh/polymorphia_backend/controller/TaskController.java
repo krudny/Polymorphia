@@ -28,31 +28,31 @@ public class TaskController {
     private final TaskService taskService;
     private final TaskSubmissionService taskSubmissionService;
 
-    @GetMapping("/{id}")
+    @GetMapping("/{taskId}")
     @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
-    public TaskDetailsResponseDto getTaskDetails(@PathVariable Long id) {
-        return taskService.getTaskDetails(id);
+    public TaskDetailsResponseDto getTaskDetails(@PathVariable Long taskId) {
+        return taskService.getTaskDetails(taskId);
     }
 
-    @PostMapping("/{id}/run")
+    @PostMapping("/{taskId}/run")
     @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
-    public ExecuteTaskResponseDto runCode(@PathVariable Long id,
+    public ExecuteTaskResponseDto runCode(@PathVariable Long taskId,
                                           @Valid @RequestBody ExecuteTaskRequestDto request) {
-        return taskSubmissionService.runTask(id, request);
+        return taskSubmissionService.runTask(taskId, request);
     }
 
-    @PostMapping("/{id}/submissions")
+    @PostMapping("/{taskId}/submissions")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
-    public SubmitTaskResponseDto submit(@PathVariable Long id,
+    @PreAuthorize("hasAnyAuthority('STUDENT')")
+    public SubmitTaskResponseDto submit(@PathVariable Long taskId,
                                         @Valid @RequestBody ExecuteTaskRequestDto request) {
-        return taskSubmissionService.submitTask(id, request);
+        return taskSubmissionService.submitTask(taskId, request);
     }
 
-    @GetMapping("/{id}/submissions/{submissionId}")
+    @GetMapping("/{taskId}/submissions/{submissionId}")
     @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
-    public TaskSubmissionStatusResponseDto getSubmissionStatus(@PathVariable Long id,
+    public TaskSubmissionStatusResponseDto getSubmissionStatus(@PathVariable Long taskId,
                                                                @PathVariable Long submissionId) {
-        return taskSubmissionService.getTaskStatus(id, submissionId);
+        return taskSubmissionService.getTaskStatus(taskId, submissionId);
     }
 }
