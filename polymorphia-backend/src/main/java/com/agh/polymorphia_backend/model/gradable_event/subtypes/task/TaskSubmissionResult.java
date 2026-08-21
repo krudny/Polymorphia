@@ -25,7 +25,7 @@ import lombok.ToString;
 @Table(
         name = "task_submission_results",
         uniqueConstraints = @UniqueConstraint(
-                name = "uq_submission_result_submission_test_case",
+                name = "uc_task_submission_results_submission_test_case",
                 columnNames = {"submission_id", "test_case_id"}
         )
 )
@@ -58,9 +58,6 @@ public class TaskSubmissionResult {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 16, nullable = false)
     private TaskTestCaseStatus status;
-
-    @Column(name = "actual_output", columnDefinition = "TEXT")
-    private String actualOutput;
 
     @Column(name = "stdout", columnDefinition = "TEXT")
     private String stdout;

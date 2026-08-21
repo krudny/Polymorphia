@@ -13,6 +13,7 @@ import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -97,8 +98,9 @@ public class TaskSubmission {
 
     @NotNull
     @ColumnDefault("0")
-    @Column(name = "attempt", nullable = false)
-    private Integer attempt;
+    @Column(name = "user_attempt", nullable = false)
+    @Builder.Default
+    private Integer userAttempt = 0;
 
     @CreationTimestamp
     @Column(name = "created_date", nullable = false, updatable = false)
@@ -113,4 +115,26 @@ public class TaskSubmission {
 
     @Column(name = "finished_at")
     private Instant finishedAt;
+
+    @Column(name = "locked_until")
+    private Instant lockedUntil;
+
+    @NotNull
+    @ColumnDefault("0")
+    @Column(name = "processing_attempts", nullable = false)
+    @Builder.Default
+    private Integer processingAttempts = 0;
+
+    @NotNull
+    @ColumnDefault("false")
+    @Column(name = "is_graded", nullable = false)
+    @Builder.Default
+    private Boolean isGraded = false;
+
+    @Version
+    @NotNull
+    @ColumnDefault("0")
+    @Column(name = "version", nullable = false)
+    @Builder.Default
+    private Long version = 0L;
 }
