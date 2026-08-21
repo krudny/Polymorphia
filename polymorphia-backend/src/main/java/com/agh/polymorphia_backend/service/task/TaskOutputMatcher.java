@@ -1,18 +1,26 @@
 package com.agh.polymorphia_backend.service.task;
 
-import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskOutputMatch;
+import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskOutputMatchMode;
 import org.springframework.stereotype.Component;
 
 
 @Component
 public class TaskOutputMatcher {
 
-    public boolean matches(TaskOutputMatch outputMatch, String expected, String actual) {
+    public boolean matches(TaskOutputMatchMode outputMatchMode, String expected, String actual) {
+        if (outputMatchMode == null) {
+            throw new IllegalArgumentException("Metoda oceny nie została zdefiniowana.");
+        }
+
         if (expected == null || actual == null) {
             return false;
         }
-        return switch (outputMatch) {
-            case EXACT -> expected.equals(actual);
+
+        String normalizedExpected = expected.replace("\r\n", "\n").strip();
+        String normalizedActual = actual.replace("\r\n", "\n").strip();
+
+        return switch (outputMatchMode) {
+            case EXACT -> normalizedExpected.equals(normalizedActual);
         };
     }
 }

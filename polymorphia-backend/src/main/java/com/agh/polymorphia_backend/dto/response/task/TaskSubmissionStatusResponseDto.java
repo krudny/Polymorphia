@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.List;
 
 @Getter
@@ -20,6 +21,10 @@ public class TaskSubmissionStatusResponseDto {
     private final Integer passedCount;
 
     private final Integer totalCount;
+
+    private final Integer totalExecutionTimeMs;
+
+    private final Instant createdDate;
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final List<TestCaseResultDto> visibleResults;
