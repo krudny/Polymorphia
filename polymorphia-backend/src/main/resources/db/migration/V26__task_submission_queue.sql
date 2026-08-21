@@ -5,7 +5,7 @@ ALTER TABLE task_submissions
     ADD COLUMN locked_until TIMESTAMPTZ,
     ADD COLUMN processing_attempts INTEGER NOT NULL DEFAULT 0,
     ADD COLUMN is_graded BOOLEAN NOT NULL DEFAULT FALSE,
-    ADD COLUMN version BIGINT NOT NULL DEFAULT 0,
+    ADD COLUMN version BIGINT NOT NULL DEFAULT 0;
 
 CREATE INDEX IF NOT EXISTS idx_task_submissions_status_created_date
     ON task_submissions (status, created_date);
