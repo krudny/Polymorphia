@@ -13,6 +13,7 @@ import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -33,10 +34,16 @@ import java.time.Instant;
 @Table(
         name = "task_submissions",
         indexes = {
-                @Index(name = "ix_task_submissions_status_created",
+                @Index(name = "idx_task_submissions_status_created_date",
                         columnList = "status, created_date"),
                 @Index(name = "ix_task_submissions_task_animal_created",
                         columnList = "task_id, animal_id, created_date DESC")
+        },
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "uc_task_submissions_task_animal_attempt",
+                        columnNames = {"task_id", "animal_id", "user_attempt"}
+                )
         }
 )
 @Getter
