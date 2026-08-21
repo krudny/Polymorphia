@@ -52,7 +52,7 @@ public class TaskController {
     @GetMapping("/{taskId}/submissions/{submissionId}")
     @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
     public TaskSubmissionStatusResponseDto getSubmissionStatus(@PathVariable Long taskId,
-                                                               @PathVariable Long submissionId) {
-        return taskSubmissionService.getTaskStatus(taskId, submissionId);
+                                                               @PathVariable("submissionId") Long taskSubmissionId) {
+        return taskSubmissionService.getTaskStatus(taskId, taskSubmissionId);
     }
 }
