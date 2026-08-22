@@ -2,26 +2,41 @@ package com.agh.polymorphia_backend.service.task;
 
 import com.agh.polymorphia_backend.dto.request.task.ExecuteTaskRequestDto;
 import com.agh.polymorphia_backend.dto.request.task.RemoteExecutionRequestDto;
-import com.agh.polymorphia_backend.dto.response.task.*;
-import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.*;
+import com.agh.polymorphia_backend.dto.response.task.ExecuteTaskResponseDto;
+import com.agh.polymorphia_backend.dto.response.task.RemoteExecutionResponseDto;
+import com.agh.polymorphia_backend.dto.response.task.SubmitTaskResponseDto;
+import com.agh.polymorphia_backend.dto.response.task.TaskSubmissionStatusResponseDto;
+import com.agh.polymorphia_backend.dto.response.task.TestCaseResultDto;
+import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.Task;
+import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskSubmission;
+import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskSubmissionResult;
+import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskSubmissionStatus;
+import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskSupportedLanguage;
+import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskTestCase;
+import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskTestCaseStatus;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.student.Animal;
-import com.agh.polymorphia_backend.repository.task.*;
+import com.agh.polymorphia_backend.repository.task.TaskAllowedLanguageRepository;
+import com.agh.polymorphia_backend.repository.task.TaskRepository;
+import com.agh.polymorphia_backend.repository.task.TaskSubmissionRepository;
+import com.agh.polymorphia_backend.repository.task.TaskSubmissionResultRepository;
+import com.agh.polymorphia_backend.repository.task.TaskTestCaseRepository;
 import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
+import com.agh.polymorphia_backend.service.mapper.TaskSubmissionResultMapper;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.task.executor.CodeExecutorClient;
 import com.agh.polymorphia_backend.service.user.UserService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class TaskSubmissionService {
 
     private final TaskRepository taskRepository;
@@ -30,20 +45,21 @@ public class TaskSubmissionService {
     private final TaskSubmissionRepository taskSubmissionRepository;
     private final TaskSubmissionResultRepository taskSubmissionResultRepository;
     private final CodeExecutorClient codeExecutorClient;
-    private final TaskOutputMatcher taskOutputMatcher;
+    private final TaskTestCaseEvaluator taskTestCaseEvaluator;
+    private final TaskOutputTruncator taskOutputTruncator;
+    private final TaskSubmissionResultMapper taskSubmissionResultMapper;
+    private final TaskAccessGuard taskAccessGuard;
     private final UserService userService;
     private final AnimalService animalService;
     private final GradableEventService gradableEventService;
-    private final TaskSubmissionProcessor taskSubmissionProcessor;
 
-    @Transactional(readOnly = true)
-    public ExecuteTaskResponseDto runTask(Long id, ExecuteTaskRequestDto request) {
-        Task task = findTaskById(id);
+    public ExecuteTaskResponseDto runTask(Long taskId, ExecuteTaskRequestDto request) {
+        taskAccessGuard.checkTaskAccess(taskId);
+        Task task = findTaskById(taskId);
+        validateTaskLanguage(taskId, request.getTaskLanguage());
 
-        validateTaskLanguage(id, request.getTaskLanguage());
-
-        List<TestCaseResultDto> results = taskTestCaseRepository.findVisibleByTaskId(id)
-                .stream()
+        List<TaskTestCase> visibleTestCases = taskTestCaseRepository.findVisibleByTaskId(taskId);
+        List<TestCaseResultDto> results = visibleTestCases.stream()
                 .map(testCase -> runSingleTestCase(task, request, testCase))
                 .toList();
 
@@ -53,81 +69,76 @@ public class TaskSubmissionService {
     }
 
     @Transactional
-    public SubmitTaskResponseDto submitTask(Long id, ExecuteTaskRequestDto request) {
-        Task task = findTaskById(id);
+    public SubmitTaskResponseDto submitTask(Long taskId, ExecuteTaskRequestDto request) {
+        taskAccessGuard.checkTaskAccess(taskId);
+        Task task = findTaskById(taskId);
+        validateTaskLanguage(taskId, request.getTaskLanguage());
 
-        validateTaskLanguage(id, request.getTaskLanguage());
-
-        Long courseId = gradableEventService.getCourseIdByGradableEventId(id);
+        Long courseId = gradableEventService.getCourseIdByGradableEventId(taskId);
         AbstractRoleUser currentUser = userService.getCurrentUser();
         Animal animal = animalService.getAnimal(currentUser.getUserId(), courseId);
 
-        int attempt = taskSubmissionRepository.countByTaskIdAndAnimalId(id, animal.getId()) + 1;
+        int userAttempt = taskSubmissionRepository.countByTaskIdAndAnimalId(taskId, animal.getId()) + 1;
 
-        TaskSubmission submission = TaskSubmission.builder()
+        TaskSubmission taskSubmission = TaskSubmission.builder()
                 .task(task)
                 .animal(animal)
                 .language(request.getTaskLanguage())
                 .sourceCode(request.getSourceCode())
                 .status(TaskSubmissionStatus.QUEUED)
-                .attempt(attempt)
+                .userAttempt(userAttempt)
                 .build();
 
-        TaskSubmission savedSubmission = taskSubmissionRepository.save(submission);
-        taskSubmissionProcessor.processSubmissionAsync(savedSubmission.getId());
+        TaskSubmission savedTaskSubmission;
+        try {
+            savedTaskSubmission = taskSubmissionRepository.save(taskSubmission);
+            taskSubmissionRepository.flush();
+        } catch (DataIntegrityViolationException exception) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Zgłoszenie jest już przetwarzane. Spróbuj ponownie.");
+        }
 
         return SubmitTaskResponseDto.builder()
-                .submissionId(savedSubmission.getId())
-                .status(savedSubmission.getStatus())
+                .submissionId(savedTaskSubmission.getId())
+                .status(savedTaskSubmission.getStatus())
                 .build();
     }
 
     @Transactional(readOnly = true)
-    public TaskSubmissionStatusResponseDto getTaskStatus(Long id, Long submissionId) {
-        TaskSubmission submission = taskSubmissionRepository.findById(submissionId)
+    public TaskSubmissionStatusResponseDto getTaskStatus(Long taskId, Long taskSubmissionId) {
+        TaskSubmission taskSubmission = taskSubmissionRepository.findById(taskSubmissionId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono zgłoszenia."));
 
-        if (!submission.getTask().getId().equals(id)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Zgłoszenie nie należy do tego zadania.");
+        if (!taskSubmission.getTask().getId().equals(taskId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono zgłoszenia.");
         }
 
-        List<TaskSubmissionResult> visibleResults = taskSubmissionResultRepository.findVisibleResultsBySubmissionId(submissionId);
-        List<TestCaseResultDto> visibleResultDtos = visibleResults.stream()
-                .map(result -> TestCaseResultDto.builder()
-                        .testCaseId(result.getTestCase().getId())
-                        .orderIndex(result.getTestCase().getOrderIndex())
-                        .name(result.getTestCase().getName())
-                        .input(result.getTestCase().getInput())
-                        .expectedOutput(result.getTestCase().getExpectedOutput())
-                        .actualOutput(result.getActualOutput())
-                        .passed(result.getStatus() == TaskTestCaseStatus.PASSED)
-                        .stderr(result.getStderr())
-                        .exitCode(result.getExitCode())
-                        .executionTimeMs(result.getExecutionTimeMs())
-                        .build())
+        taskAccessGuard.checkTaskSubmissionAccess(taskSubmission);
+
+        List<TaskSubmissionResult> visibleResults =
+                taskSubmissionResultRepository.findVisibleResultsBySubmissionId(taskSubmissionId);
+        List<TestCaseResultDto> visibleResult = visibleResults.stream()
+                .map(taskSubmissionResultMapper::toDto)
                 .toList();
 
-        int totalExecutionTimeMs = visibleResults.stream()
-                .filter(result -> result.getExecutionTimeMs() != null)
-                .mapToInt(TaskSubmissionResult::getExecutionTimeMs)
-                .sum();
+        Integer totalExecutionTimeMs =
+                taskSubmissionResultRepository.sumExecutionTimeMsBySubmissionId(taskSubmissionId);
 
         return TaskSubmissionStatusResponseDto.builder()
-                .submissionId(submission.getId())
-                .status(submission.getStatus())
-                .score(submission.getScore())
-                .passedCount(submission.getPassedCount())
-                .totalCount(submission.getTotalCount())
+                .submissionId(taskSubmission.getId())
+                .status(taskSubmission.getStatus())
+                .score(taskSubmission.getScore())
+                .passedCount(taskSubmission.getPassedCount())
+                .totalCount(taskSubmission.getTotalCount())
                 .totalExecutionTimeMs(totalExecutionTimeMs)
-                .createdDate(submission.getCreatedDate())
-                .visibleResults(visibleResultDtos)
-                .errorMessage(submission.getErrorMessage())
+                .createdDate(taskSubmission.getCreatedDate())
+                .visibleResults(visibleResult)
+                .errorMessage(taskSubmission.getErrorMessage())
                 .build();
     }
 
-    private Task findTaskById(Long id) {
-        return taskRepository.findById(id)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono zadania."));
+    private Task findTaskById(Long taskId) {
+        return taskRepository.findById(taskId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono zadania."));
     }
 
     private void validateTaskLanguage(Long taskId, TaskSupportedLanguage language) {
@@ -139,53 +150,37 @@ public class TaskSubmissionService {
     }
 
     private TestCaseResultDto runSingleTestCase(Task task, ExecuteTaskRequestDto request, TaskTestCase testCase) {
-        RemoteExecutionRequestDto remoteRequest = RemoteExecutionRequestDto.builder()
-                .language(request.getTaskLanguage())
-                .sourceCode(request.getSourceCode())
-                .stdin(testCase.getInput())
-                .cpuTimeLimitMs(resolveCpuLimit(task, testCase))
-                .wallTimeLimitMs(task.getWallTimeLimitMs())
-                .memoryLimitMb(task.getMemoryLimitMb())
-                .build();
+        TaskTestCaseSpec testCaseSpec = TaskTestCaseSpec.of(task, testCase);
 
-        RemoteExecutionResponseDto executionResponse = codeExecutorClient.executeSync(remoteRequest);
+        RemoteExecutionRequestDto remoteRequest = RemoteExecutionRequestDto
+            .of(testCaseSpec, request.getTaskLanguage(), request.getSourceCode());
 
-        boolean passed = isPassed(task, testCase, executionResponse);
-
-        return TestCaseResultDto.builder()
-                .testCaseId(testCase.getId())
-                .orderIndex(testCase.getOrderIndex())
-                .name(testCase.getName())
-                .input(testCase.getInput())
-                .expectedOutput(testCase.getExpectedOutput())
-                .actualOutput(executionResponse.getStdout())
-                .passed(passed)
-                .stderr(executionResponse.getStderr())
-                .exitCode(executionResponse.getExitCode())
-                .executionTimeMs(executionResponse.getDurationMs())
-                .build();
-    }
-
-    private boolean isPassed(Task task, TaskTestCase testCase, RemoteExecutionResponseDto executionResponse) {
-        if (Boolean.TRUE.equals(executionResponse.getTimedOut())) {
-            return false;
-        }
-        if (executionResponse.getExitCode() == null || executionResponse.getExitCode() != 0) {
-            return false;
-        }
-
+        RemoteExecutionResponseDto executionResponse;
         try {
-            return taskOutputMatcher.matches(task.getOutputMatchMode(),
-                testCase.getExpectedOutput(),
-                executionResponse.getStdout());
-        } catch (IllegalArgumentException exception) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage());
+            executionResponse = codeExecutorClient.executeSync(remoteRequest);
+        } catch (Exception exception) {
+            throw new ResponseStatusException(
+                    HttpStatus.SERVICE_UNAVAILABLE,
+                    "Usługa wykonywania kodu jest chwilowo niedostępna."
+            );
         }
-    }
 
-    private Integer resolveCpuLimit(Task task, TaskTestCase testCase) {
-        return testCase.getTimeLimitOverrideMs() != null
-                ? testCase.getTimeLimitOverrideMs()
-                : task.getCpuTimeLimitMs();
+        TaskTestCaseStatus status = taskTestCaseEvaluator.evaluate(
+                task.getOutputMatchMode(),
+                testCase.getExpectedOutput(),
+                executionResponse
+        );
+
+        String truncatedStdout = taskOutputTruncator.truncate(executionResponse.getStdout());
+        String truncatedStderr = taskOutputTruncator.truncate(executionResponse.getStderr());
+
+        return taskSubmissionResultMapper.toDto(
+                testCase,
+                status,
+                truncatedStdout,
+                truncatedStderr,
+                executionResponse.getExitCode(),
+                executionResponse.getDurationMs()
+        );
     }
 }

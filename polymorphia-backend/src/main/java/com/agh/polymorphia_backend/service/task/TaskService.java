@@ -22,9 +22,12 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final TaskAllowedLanguageRepository taskAllowedLanguageRepository;
     private final TaskTestCaseRepository taskTestCaseRepository;
+    private final TaskAccessGuard taskAccessGuard;
 
     @Transactional(readOnly = true)
     public TaskDetailsResponseDto getTaskDetails(Long taskId) {
+        taskAccessGuard.checkTaskAccess(taskId);
+
         taskRepository.findById(taskId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono zadania."));
 
