@@ -2,7 +2,7 @@ package com.agh.polymorphia_backend.service.task.executor;
 
 import com.agh.polymorphia_backend.dto.request.task.RemoteExecutionRequestDto;
 import com.agh.polymorphia_backend.dto.response.task.RemoteExecutionResponseDto;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
@@ -10,7 +10,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.server.ResponseStatusException;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CodeExecutorClient {
     private final RestClient codeExecutorRestClient;
 

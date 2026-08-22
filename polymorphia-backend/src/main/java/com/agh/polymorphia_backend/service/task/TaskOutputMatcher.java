@@ -8,10 +8,6 @@ import org.springframework.stereotype.Component;
 public class TaskOutputMatcher {
 
     public boolean matches(TaskOutputMatchMode outputMatchMode, String expected, String actual) {
-        if (outputMatchMode == null) {
-            throw new IllegalArgumentException("Metoda oceny nie została zdefiniowana.");
-        }
-
         if (expected == null || actual == null) {
             return false;
         }
