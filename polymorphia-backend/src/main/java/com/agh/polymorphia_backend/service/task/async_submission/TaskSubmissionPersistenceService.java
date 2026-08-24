@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.service.task;
+package com.agh.polymorphia_backend.service.task.async_submission;
 
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskSubmission;
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskSubmissionResult;
@@ -8,8 +8,12 @@ import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskTestCa
 import com.agh.polymorphia_backend.repository.task.TaskSubmissionRepository;
 import com.agh.polymorphia_backend.repository.task.TaskSubmissionResultRepository;
 import com.agh.polymorphia_backend.repository.task.TaskTestCaseRepository;
+import com.agh.polymorphia_backend.service.task.dto.TaskSubmissionContext;
+import com.agh.polymorphia_backend.service.task.dto.TaskTestCaseOutcome;
+import com.agh.polymorphia_backend.service.task.dto.TaskTestCaseSpec;
+import com.agh.polymorphia_backend.service.task.async_submission.config.TaskSubmissionProperties;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +23,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TaskSubmissionPersistenceService {
@@ -27,12 +32,7 @@ public class TaskSubmissionPersistenceService {
     private final TaskSubmissionResultRepository taskSubmissionResultRepository;
     private final TaskTestCaseRepository taskTestCaseRepository;
     private final TaskSubmissionScoreCalculator taskSubmissionScoreCalculator;
-
-    @Value("${task.submission.lease-duration-seconds:60}")
-    private int leaseDurationSeconds;
-
-    @Value("${task.submission.max-processing-attempts:3}")
-    private int maxProcessingAttempts;
+    private final TaskSubmissionProperties taskSubmissionProperties;
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public List<TaskSubmissionContext> claimNextTaskSubmissions(int batchSize) {
@@ -40,7 +40,7 @@ public class TaskSubmissionPersistenceService {
                 taskSubmissionRepository.findNextQueuedTaskSubmissionsWithLock(batchSize);
 
         Instant now = Instant.now();
-        Instant lockedUntil = now.plusSeconds(leaseDurationSeconds);
+        Instant lockedUntil = now.plusSeconds(taskSubmissionProperties.leaseDurationSeconds());
 
         List<TaskSubmissionContext> contexts = new ArrayList<>();
 
@@ -54,13 +54,7 @@ public class TaskSubmissionPersistenceService {
                     taskTestCaseRepository.findByTaskId(taskSubmission.getTask().getId());
 
             List<TaskTestCaseSpec> testCaseSpecs = testCases.stream()
-                    .map(testCase -> new TaskTestCaseSpec(
-                            testCase.getId(),
-                            testCase.getInput(),
-                            testCase.getExpectedOutput(),
-                            testCase.getWeight() != null ? testCase.getWeight() : BigDecimal.ONE,
-                            TaskLimits.of(taskSubmission.getTask(), testCase)
-                    ))
+                    .map(testCase -> TaskTestCaseSpec.of(taskSubmission.getTask(), testCase))
                     .toList();
 
             TaskSubmissionContext taskSubmissionContext = new TaskSubmissionContext(
@@ -147,11 +141,11 @@ public class TaskSubmissionPersistenceService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void markFailed(Long taskSubmissionId, String userMessage) {
+    public void markFailed(Long taskSubmissionId) {
         TaskSubmission taskSubmission = taskSubmissionRepository.findById(taskSubmissionId).orElse(null);
         if (taskSubmission != null) {
             taskSubmission.setStatus(TaskSubmissionStatus.INTERNAL_ERROR);
-            taskSubmission.setErrorMessage(userMessage);
+            taskSubmission.setErrorMessage("Wystąpił błąd podczas sprawdzania rozwiązania.");
             taskSubmission.setFinishedAt(Instant.now());
             taskSubmission.setLockedUntil(null);
             taskSubmissionRepository.save(taskSubmission);
@@ -170,21 +164,22 @@ public class TaskSubmissionPersistenceService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void requeueExpired() {
         Instant now = Instant.now();
+        log.warn("REAPER");
         List<TaskSubmission> expiredSubmissions =
                 taskSubmissionRepository.findExpiredRunningTaskSubmissions(TaskSubmissionStatus.RUNNING, now);
 
         for (TaskSubmission taskSubmission : expiredSubmissions) {
-            if (taskSubmission.getProcessingAttempts() < maxProcessingAttempts) {
+            if (taskSubmission.getProcessingAttempts() < taskSubmissionProperties.maxProcessingAttempts()) {
                 taskSubmission.setStatus(TaskSubmissionStatus.QUEUED);
-                taskSubmission.setLockedUntil(null);
             } else {
                 taskSubmission.setStatus(TaskSubmissionStatus.INTERNAL_ERROR);
                 taskSubmission.setErrorMessage("Nie udało się sprawdzić rozwiązania. Skontaktuj się z prowadzącym.");
                 taskSubmission.setFinishedAt(now);
-                taskSubmission.setLockedUntil(null);
             }
-            taskSubmissionRepository.save(taskSubmission);
+            taskSubmission.setLockedUntil(null);
         }
+
+        taskSubmissionRepository.saveAll(expiredSubmissions);
     }
 
     @Transactional(readOnly = true)

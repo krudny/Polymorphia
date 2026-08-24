@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.service.task;
+package com.agh.polymorphia_backend.service.task.dto;
 
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.Task;
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskTestCase;

@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.service.task;
+package com.agh.polymorphia_backend.service.task.async_submission;
 
 import com.agh.polymorphia_backend.model.criterion.CriterionGrade;
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.Task;
@@ -31,6 +31,7 @@ public class TaskSubmissionGradingService {
     @Transactional
     public void applyGrade(Long taskSubmissionId) {
         TaskSubmission taskSubmission = taskSubmissionRepository.findById(taskSubmissionId).orElse(null);
+
         if (taskSubmission == null) {
             return;
         }
@@ -45,9 +46,10 @@ public class TaskSubmissionGradingService {
     private void assignGradeToAnimal(Animal animal, Task task, BigDecimal scorePercentage) {
         BigDecimal scoreRatio = scorePercentage.divide(BigDecimal.valueOf(100), 4, RoundingMode.HALF_UP);
 
-        Optional<Grade> existingGradeOpt = gradeService.getGradeByAnimalIdAndGradableEventId(animal.getId(), task.getId());
-        if (existingGradeOpt.isPresent()) {
-            Grade existingGrade = existingGradeOpt.get();
+        Optional<Grade> existingGradeOptional = gradeService.getGradeByAnimalIdAndGradableEventId(animal.getId(), task.getId());
+
+        if (existingGradeOptional.isPresent()) {
+            Grade existingGrade = existingGradeOptional.get();
             BigDecimal existingTotalXp = existingGrade.getCriteriaGrades().stream()
                     .map(CriterionGrade::getXp)
                     .reduce(BigDecimal.ZERO, BigDecimal::add);

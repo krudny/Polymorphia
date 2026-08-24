@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.service.task.executor;
+package com.agh.polymorphia_backend.service.task.remote_client;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

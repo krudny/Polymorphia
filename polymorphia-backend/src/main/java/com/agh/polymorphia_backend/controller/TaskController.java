@@ -11,7 +11,6 @@ import com.agh.polymorphia_backend.service.task.TaskSubmissionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,13 +28,13 @@ public class TaskController {
     private final TaskSubmissionService taskSubmissionService;
 
     @GetMapping("/{taskId}")
-    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
+//    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
     public TaskDetailsResponseDto getTaskDetails(@PathVariable Long taskId) {
         return taskService.getTaskDetails(taskId);
     }
 
     @PostMapping("/{taskId}/run")
-    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
+//    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
     public ExecuteTaskResponseDto runCode(@PathVariable Long taskId,
                                           @Valid @RequestBody ExecuteTaskRequestDto request) {
         return taskSubmissionService.runTask(taskId, request);
@@ -43,14 +42,14 @@ public class TaskController {
 
     @PostMapping("/{taskId}/submissions")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @PreAuthorize("hasAnyAuthority('STUDENT')")
+//    @PreAuthorize("hasAnyAuthority('STUDENT')")
     public SubmitTaskResponseDto submit(@PathVariable Long taskId,
                                         @Valid @RequestBody ExecuteTaskRequestDto request) {
         return taskSubmissionService.submitTask(taskId, request);
     }
 
     @GetMapping("/{taskId}/submissions/{submissionId}")
-    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
+//    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
     public TaskSubmissionStatusResponseDto getSubmissionStatus(@PathVariable Long taskId,
                                                                @PathVariable("submissionId") Long taskSubmissionId) {
         return taskSubmissionService.getTaskStatus(taskId, taskSubmissionId);
