@@ -3,9 +3,11 @@ package com.agh.polymorphia_backend.service.task;
 import com.agh.polymorphia_backend.dto.response.task.TaskAllowedLanguageDto;
 import com.agh.polymorphia_backend.dto.response.task.TaskDetailsResponseDto;
 import com.agh.polymorphia_backend.dto.response.task.TaskTestCaseDto;
+import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.Task;
 import com.agh.polymorphia_backend.repository.task.TaskAllowedLanguageRepository;
 import com.agh.polymorphia_backend.repository.task.TaskRepository;
 import com.agh.polymorphia_backend.repository.task.TaskTestCaseRepository;
+import com.agh.polymorphia_backend.service.validation.TaskAuthorizer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -22,14 +24,19 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final TaskAllowedLanguageRepository taskAllowedLanguageRepository;
     private final TaskTestCaseRepository taskTestCaseRepository;
-    private final TaskAccessGuard taskAccessGuard;
+    private final TaskAuthorizer taskAuthorizer;
+
+    @Transactional(readOnly = true)
+    public Task getTask(Long taskId) {
+        return taskRepository.findById(taskId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono zadania."));
+    }
 
     @Transactional(readOnly = true)
     public TaskDetailsResponseDto getTaskDetails(Long taskId) {
-        taskAccessGuard.checkTaskAccess(taskId);
+        taskAuthorizer.checkTaskAccess(taskId);
 
-        taskRepository.findById(taskId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono zadania."));
+        getTask(taskId);
 
         List<TaskAllowedLanguageDto> allowedLanguages =
                 taskAllowedLanguageRepository.findAllowedLanguagesWithDetailsByTaskId(taskId).stream()
@@ -47,7 +54,7 @@ public class TaskService {
                         .input(testCase.getInput())
                         .expectedOutput(testCase.getExpectedOutput())
                         .build())
-                .collect(Collectors.toList());
+                        .collect(Collectors.toList());
 
         return TaskDetailsResponseDto.builder()
                 .allowedLanguages(allowedLanguages)

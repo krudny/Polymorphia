@@ -17,15 +17,16 @@ import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskTestCa
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.repository.task.TaskAllowedLanguageRepository;
-import com.agh.polymorphia_backend.repository.task.TaskRepository;
 import com.agh.polymorphia_backend.repository.task.TaskSubmissionRepository;
 import com.agh.polymorphia_backend.repository.task.TaskSubmissionResultRepository;
 import com.agh.polymorphia_backend.repository.task.TaskTestCaseRepository;
 import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
 import com.agh.polymorphia_backend.service.mapper.TaskSubmissionResultMapper;
 import com.agh.polymorphia_backend.service.student.AnimalService;
-import com.agh.polymorphia_backend.service.task.executor.CodeExecutorClient;
+import com.agh.polymorphia_backend.service.task.dto.TaskTestCaseSpec;
+import com.agh.polymorphia_backend.service.task.remote_client.CodeExecutorClient;
 import com.agh.polymorphia_backend.service.user.UserService;
+import com.agh.polymorphia_backend.service.validation.TaskAuthorizer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TaskSubmissionService {
 
-    private final TaskRepository taskRepository;
+    private final TaskService taskService;
     private final TaskAllowedLanguageRepository taskAllowedLanguageRepository;
     private final TaskTestCaseRepository taskTestCaseRepository;
     private final TaskSubmissionRepository taskSubmissionRepository;
@@ -48,14 +49,14 @@ public class TaskSubmissionService {
     private final TaskTestCaseEvaluator taskTestCaseEvaluator;
     private final TaskOutputTruncator taskOutputTruncator;
     private final TaskSubmissionResultMapper taskSubmissionResultMapper;
-    private final TaskAccessGuard taskAccessGuard;
+    private final TaskAuthorizer taskAuthorizer;
     private final UserService userService;
     private final AnimalService animalService;
     private final GradableEventService gradableEventService;
 
     public ExecuteTaskResponseDto runTask(Long taskId, ExecuteTaskRequestDto request) {
-        taskAccessGuard.checkTaskAccess(taskId);
-        Task task = findTaskById(taskId);
+        taskAuthorizer.checkTaskAccess(taskId);
+        Task task = taskService.getTask(taskId);
         validateTaskLanguage(taskId, request.getTaskLanguage());
 
         List<TaskTestCase> visibleTestCases = taskTestCaseRepository.findVisibleByTaskId(taskId);
@@ -70,15 +71,12 @@ public class TaskSubmissionService {
 
     @Transactional
     public SubmitTaskResponseDto submitTask(Long taskId, ExecuteTaskRequestDto request) {
-        taskAccessGuard.checkTaskAccess(taskId);
-        Task task = findTaskById(taskId);
+        taskAuthorizer.checkTaskAccess(taskId);
+        Task task = taskService.getTask(taskId);
         validateTaskLanguage(taskId, request.getTaskLanguage());
 
-        Long courseId = gradableEventService.getCourseIdByGradableEventId(taskId);
-        AbstractRoleUser currentUser = userService.getCurrentUser();
-        Animal animal = animalService.getAnimal(currentUser.getUserId(), courseId);
-
-        int userAttempt = taskSubmissionRepository.countByTaskIdAndAnimalId(taskId, animal.getId()) + 1;
+        Animal animal = resolveCurrentUserAnimal(taskId);
+        int userAttempt = resolveNextUserAttempt(taskId, animal.getId());
 
         TaskSubmission taskSubmission = TaskSubmission.builder()
                 .task(task)
@@ -112,7 +110,7 @@ public class TaskSubmissionService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono zgłoszenia.");
         }
 
-        taskAccessGuard.checkTaskSubmissionAccess(taskSubmission);
+        taskAuthorizer.checkTaskSubmissionAccess(taskSubmission);
 
         List<TaskSubmissionResult> visibleResults =
                 taskSubmissionResultRepository.findVisibleResultsBySubmissionId(taskSubmissionId);
@@ -136,9 +134,14 @@ public class TaskSubmissionService {
                 .build();
     }
 
-    private Task findTaskById(Long taskId) {
-        return taskRepository.findById(taskId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie znaleziono zadania."));
+    private Animal resolveCurrentUserAnimal(Long taskId) {
+        Long courseId = gradableEventService.getCourseIdByGradableEventId(taskId);
+        AbstractRoleUser currentUser = userService.getCurrentUser();
+        return animalService.getAnimal(currentUser.getUserId(), courseId);
+    }
+
+    private int resolveNextUserAttempt(Long taskId, Long animalId) {
+        return taskSubmissionRepository.countByTaskIdAndAnimalId(taskId, animalId) + 1;
     }
 
     private void validateTaskLanguage(Long taskId, TaskSupportedLanguage language) {
@@ -153,7 +156,7 @@ public class TaskSubmissionService {
         TaskTestCaseSpec testCaseSpec = TaskTestCaseSpec.of(task, testCase);
 
         RemoteExecutionRequestDto remoteRequest = RemoteExecutionRequestDto
-            .of(testCaseSpec, request.getTaskLanguage(), request.getSourceCode());
+                .of(testCaseSpec, request.getTaskLanguage(), request.getSourceCode());
 
         RemoteExecutionResponseDto executionResponse;
         try {

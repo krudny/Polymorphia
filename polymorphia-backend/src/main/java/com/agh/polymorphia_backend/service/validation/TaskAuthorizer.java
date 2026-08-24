@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.service.task;
+package com.agh.polymorphia_backend.service.validation;
 
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskSubmission;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
@@ -6,15 +6,14 @@ import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.user.UserService;
-import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-@Component
+@Service
 @RequiredArgsConstructor
-public class TaskAccessGuard {
+public class TaskAuthorizer {
 
     private final UserService userService;
     private final AccessAuthorizer accessAuthorizer;

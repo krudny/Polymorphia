@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.service.task.executor;
+package com.agh.polymorphia_backend.service.task.remote_client;
 
 import com.agh.polymorphia_backend.dto.request.task.RemoteExecutionRequestDto;
 import com.agh.polymorphia_backend.dto.response.task.RemoteExecutionResponseDto;
