@@ -1,9 +1,14 @@
-package com.agh.polymorphia_backend.service.task;
+package com.agh.polymorphia_backend.service.task.async_submission;
 
 import com.agh.polymorphia_backend.dto.request.task.RemoteExecutionRequestDto;
 import com.agh.polymorphia_backend.dto.response.task.RemoteExecutionResponseDto;
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskTestCaseStatus;
-import com.agh.polymorphia_backend.service.task.executor.CodeExecutorClient;
+import com.agh.polymorphia_backend.service.task.TaskOutputTruncator;
+import com.agh.polymorphia_backend.service.task.TaskTestCaseEvaluator;
+import com.agh.polymorphia_backend.service.task.dto.TaskSubmissionContext;
+import com.agh.polymorphia_backend.service.task.dto.TaskTestCaseOutcome;
+import com.agh.polymorphia_backend.service.task.dto.TaskTestCaseSpec;
+import com.agh.polymorphia_backend.service.task.remote_client.CodeExecutorClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +28,7 @@ public class TaskSubmissionExecutionService {
 
         for (TaskTestCaseSpec testCaseSpec : taskSubmissionContext.testCases()) {
             RemoteExecutionRequestDto remoteRequest = RemoteExecutionRequestDto
-                .of(testCaseSpec, taskSubmissionContext.language(), taskSubmissionContext.sourceCode());
+                    .of(testCaseSpec, taskSubmissionContext.language(), taskSubmissionContext.sourceCode());
 
             RemoteExecutionResponseDto executionResponse = codeExecutorClient.executeSync(remoteRequest);
 
@@ -36,14 +41,12 @@ public class TaskSubmissionExecutionService {
             String truncatedStdout = taskOutputTruncator.truncate(executionResponse.getStdout());
             String truncatedStderr = taskOutputTruncator.truncate(executionResponse.getStderr());
 
-            TaskTestCaseOutcome outcome = new TaskTestCaseOutcome(
-                    testCaseSpec.testCaseId(),
+            TaskTestCaseOutcome outcome = TaskTestCaseOutcome.of(
+                    testCaseSpec,
                     status,
                     truncatedStdout,
                     truncatedStderr,
-                    executionResponse.getExitCode(),
-                    executionResponse.getDurationMs(),
-                    testCaseSpec.weight()
+                    executionResponse
             );
 
             outcomes.add(outcome);

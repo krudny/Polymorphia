@@ -1,4 +1,4 @@
-package com.agh.polymorphia_backend.service.task;
+package com.agh.polymorphia_backend.service.task.async_submission;
 
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskGradingStrategy;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,7 @@ import java.math.RoundingMode;
 public class TaskSubmissionScoreCalculator {
 
     public BigDecimal calculateScorePercentage(
-            TaskGradingStrategy strategy,
+            TaskGradingStrategy taskGradingStrategy,
             int passedCount,
             int totalCount,
             BigDecimal passedWeight,
@@ -20,7 +20,7 @@ public class TaskSubmissionScoreCalculator {
             return BigDecimal.ZERO;
         }
 
-        if (strategy == TaskGradingStrategy.ALL_OR_NONE) {
+        if (taskGradingStrategy == TaskGradingStrategy.ALL_OR_NONE) {
             return passedCount == totalCount ? BigDecimal.valueOf(100) : BigDecimal.ZERO;
         }
 
