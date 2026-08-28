@@ -1,11 +1,11 @@
-import { ExecuteRequestDTO } from "@/interfaces/api/tasks/types";
-import { Dispatch, SetStateAction } from "react";
+import {
+  ExecuteRequestDTO,
+  SubmitTaskResponseDTO,
+} from "@/interfaces/api/tasks/types";
 
 export interface UseSubmitTask {
-  mutate: (payload: ExecuteRequestDTO) => void;
+  mutateAsync: (payload: ExecuteRequestDTO) => Promise<SubmitTaskResponseDTO>;
   isPending: boolean;
-}
-
-export interface UseSubmitTaskProps {
-  setOutput: Dispatch<SetStateAction<string>>;
+  isError: boolean;
+  data: SubmitTaskResponseDTO | undefined;
 }
