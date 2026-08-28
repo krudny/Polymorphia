@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TaskAllowedLanguageDto {
     private TaskSupportedLanguage taskLanguage;
+
     private Boolean isDefault;
+
     private String sampleCode;
 }

@@ -16,12 +16,16 @@ public class TaskSubmissionStatusResponseDto {
 
     private final TaskSubmissionStatus status;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private final BigDecimal score;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private final Integer passedCount;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private final Integer totalCount;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private final Integer totalExecutionTimeMs;
 
     private final Instant createdDate;
