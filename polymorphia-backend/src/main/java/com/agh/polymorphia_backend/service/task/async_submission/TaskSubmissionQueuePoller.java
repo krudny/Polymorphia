@@ -24,7 +24,6 @@ public class TaskSubmissionQueuePoller {
 
     @Scheduled(fixedDelayString = "${task.submission.poll-interval-ms:1000}")
     public void pollQueue() {
-        log.info("START POLLER");
         int availableSlots = availableSlots();
 
         if (availableSlots <= 0) {
@@ -39,8 +38,6 @@ public class TaskSubmissionQueuePoller {
         for (TaskSubmissionContext taskSubmissionContext : claimedTaskSubmissions) {
             submitForProcessing(taskSubmissionContext);
         }
-
-        log.info("END POLLER");
     }
 
     private void submitForProcessing(TaskSubmissionContext taskSubmissionContext) {

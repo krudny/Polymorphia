@@ -172,7 +172,6 @@ public class TaskSubmissionPersistenceService {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void requeueExpired() {
-        log.info("Require expired");
         Instant now = Instant.now();
         int maxProcessingAttempts = taskSubmissionProperties.maxProcessingAttempts();
 
