@@ -6,6 +6,7 @@ import com.agh.polymorphia_backend.dto.response.task.ExecuteTaskResponseDto;
 import com.agh.polymorphia_backend.dto.response.task.SubmitTaskResponseDto;
 import com.agh.polymorphia_backend.dto.response.task.TaskDetailsResponseDto;
 import com.agh.polymorphia_backend.dto.response.task.TaskSubmissionStatusResponseDto;
+import com.agh.polymorphia_backend.service.task.TaskRunService;
 import com.agh.polymorphia_backend.service.task.TaskService;
 import com.agh.polymorphia_backend.service.task.TaskSubmissionService;
 import jakarta.validation.Valid;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TaskController {
 
     private final TaskService taskService;
+    private final TaskRunService taskRunService;
     private final TaskSubmissionService taskSubmissionService;
 
     @GetMapping("/{taskId}")
@@ -37,7 +39,7 @@ public class TaskController {
 //    @PreAuthorize("hasAnyAuthority('STUDENT', 'INSTRUCTOR', 'COORDINATOR')")
     public ExecuteTaskResponseDto runCode(@PathVariable Long taskId,
                                           @Valid @RequestBody ExecuteTaskRequestDto request) {
-        return taskSubmissionService.runTask(taskId, request);
+        return taskRunService.runTask(taskId, request);
     }
 
     @PostMapping("/{taskId}/submissions")

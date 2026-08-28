@@ -15,7 +15,7 @@ public record TaskTestCaseOutcome(
     BigDecimal weight
 ) {
 
-    public static TaskTestCaseOutcome of(
+    public static TaskTestCaseOutcome from(
             Long testCaseId,
             TaskTestCaseStatus status,
             String stdout,
@@ -35,7 +35,7 @@ public record TaskTestCaseOutcome(
         );
     }
 
-    public static TaskTestCaseOutcome of(
+    public static TaskTestCaseOutcome from(
             TaskTestCaseSpec testCaseSpec,
             TaskTestCaseStatus status,
             String stdout,

@@ -13,13 +13,13 @@ public record TaskTestCaseSpec(
     TaskLimits limits
 ) {
 
-    public static TaskTestCaseSpec of(Task task, TaskTestCase taskTestCase) {
+    public static TaskTestCaseSpec from(Task task, TaskTestCase taskTestCase) {
         return new TaskTestCaseSpec(
             taskTestCase.getId(),
             taskTestCase.getInput(),
             taskTestCase.getExpectedOutput(),
             taskTestCase.getWeight() != null ? taskTestCase.getWeight() : BigDecimal.ONE,
-            TaskLimits.of(task, taskTestCase)
+            TaskLimits.from(task, taskTestCase)
         );
     }
 }

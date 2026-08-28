@@ -1,9 +1,6 @@
 package com.agh.polymorphia_backend.service.task;
 
 import com.agh.polymorphia_backend.dto.request.task.ExecuteTaskRequestDto;
-import com.agh.polymorphia_backend.dto.request.task.RemoteExecutionRequestDto;
-import com.agh.polymorphia_backend.dto.response.task.ExecuteTaskResponseDto;
-import com.agh.polymorphia_backend.dto.response.task.RemoteExecutionResponseDto;
 import com.agh.polymorphia_backend.dto.response.task.SubmitTaskResponseDto;
 import com.agh.polymorphia_backend.dto.response.task.TaskSubmissionStatusResponseDto;
 import com.agh.polymorphia_backend.dto.response.task.TestCaseResultDto;
@@ -11,20 +8,13 @@ import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.Task;
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskSubmission;
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskSubmissionResult;
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskSubmissionStatus;
-import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskSupportedLanguage;
-import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskTestCase;
-import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskTestCaseStatus;
 import com.agh.polymorphia_backend.model.user.AbstractRoleUser;
 import com.agh.polymorphia_backend.model.user.student.Animal;
-import com.agh.polymorphia_backend.repository.task.TaskAllowedLanguageRepository;
 import com.agh.polymorphia_backend.repository.task.TaskSubmissionRepository;
 import com.agh.polymorphia_backend.repository.task.TaskSubmissionResultRepository;
-import com.agh.polymorphia_backend.repository.task.TaskTestCaseRepository;
 import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
 import com.agh.polymorphia_backend.service.mapper.TaskSubmissionResultMapper;
 import com.agh.polymorphia_backend.service.student.AnimalService;
-import com.agh.polymorphia_backend.service.task.dto.TaskTestCaseSpec;
-import com.agh.polymorphia_backend.service.task.remote_client.CodeExecutorClient;
 import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.TaskAuthorizer;
 import lombok.RequiredArgsConstructor;
@@ -41,39 +31,19 @@ import java.util.List;
 public class TaskSubmissionService {
 
     private final TaskService taskService;
-    private final TaskAllowedLanguageRepository taskAllowedLanguageRepository;
-    private final TaskTestCaseRepository taskTestCaseRepository;
     private final TaskSubmissionRepository taskSubmissionRepository;
     private final TaskSubmissionResultRepository taskSubmissionResultRepository;
-    private final CodeExecutorClient codeExecutorClient;
-    private final TaskTestCaseEvaluator taskTestCaseEvaluator;
-    private final TaskOutputTruncator taskOutputTruncator;
     private final TaskSubmissionResultMapper taskSubmissionResultMapper;
     private final TaskAuthorizer taskAuthorizer;
     private final UserService userService;
     private final AnimalService animalService;
     private final GradableEventService gradableEventService;
 
-    public ExecuteTaskResponseDto runTask(Long taskId, ExecuteTaskRequestDto request) {
-        taskAuthorizer.checkTaskAccess(taskId);
-        Task task = taskService.getTask(taskId);
-        validateTaskLanguage(taskId, request.getTaskLanguage());
-
-        List<TaskTestCase> visibleTestCases = taskTestCaseRepository.findVisibleByTaskId(taskId);
-        List<TestCaseResultDto> results = visibleTestCases.stream()
-                .map(testCase -> runSingleTestCase(task, request, testCase))
-                .toList();
-
-        return ExecuteTaskResponseDto.builder()
-                .results(results)
-                .build();
-    }
-
     @Transactional
     public SubmitTaskResponseDto submitTask(Long taskId, ExecuteTaskRequestDto request) {
         taskAuthorizer.checkTaskAccess(taskId);
         Task task = taskService.getTask(taskId);
-        validateTaskLanguage(taskId, request.getTaskLanguage());
+        taskService.validateTaskLanguage(taskId, request.getTaskLanguage());
 
         Animal animal = resolveCurrentUserAnimal(taskId);
         int userAttempt = resolveNextUserAttempt(taskId, animal.getId());
@@ -142,48 +112,5 @@ public class TaskSubmissionService {
 
     private int resolveNextUserAttempt(Long taskId, Long animalId) {
         return taskSubmissionRepository.countByTaskIdAndAnimalId(taskId, animalId) + 1;
-    }
-
-    private void validateTaskLanguage(Long taskId, TaskSupportedLanguage language) {
-        boolean languageAllowed = taskAllowedLanguageRepository.existsByTaskIdAndLanguage(taskId, language);
-
-        if (!languageAllowed) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Zadanie nie może być uruchomione w tym języku.");
-        }
-    }
-
-    private TestCaseResultDto runSingleTestCase(Task task, ExecuteTaskRequestDto request, TaskTestCase testCase) {
-        TaskTestCaseSpec testCaseSpec = TaskTestCaseSpec.of(task, testCase);
-
-        RemoteExecutionRequestDto remoteRequest = RemoteExecutionRequestDto
-                .of(testCaseSpec, request.getTaskLanguage(), request.getSourceCode());
-
-        RemoteExecutionResponseDto executionResponse;
-        try {
-            executionResponse = codeExecutorClient.executeSync(remoteRequest);
-        } catch (Exception exception) {
-            throw new ResponseStatusException(
-                    HttpStatus.SERVICE_UNAVAILABLE,
-                    "Usługa wykonywania kodu jest chwilowo niedostępna."
-            );
-        }
-
-        TaskTestCaseStatus status = taskTestCaseEvaluator.evaluate(
-                task.getOutputMatchMode(),
-                testCase.getExpectedOutput(),
-                executionResponse
-        );
-
-        String truncatedStdout = taskOutputTruncator.truncate(executionResponse.getStdout());
-        String truncatedStderr = taskOutputTruncator.truncate(executionResponse.getStderr());
-
-        return taskSubmissionResultMapper.toDto(
-                testCase,
-                status,
-                truncatedStdout,
-                truncatedStderr,
-                executionResponse.getExitCode(),
-                executionResponse.getDurationMs()
-        );
     }
 }

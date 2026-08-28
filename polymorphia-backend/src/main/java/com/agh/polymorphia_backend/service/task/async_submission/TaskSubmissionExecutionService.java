@@ -28,7 +28,7 @@ public class TaskSubmissionExecutionService {
 
         for (TaskTestCaseSpec testCaseSpec : taskSubmissionContext.testCases()) {
             RemoteExecutionRequestDto remoteRequest = RemoteExecutionRequestDto
-                    .of(testCaseSpec, taskSubmissionContext.language(), taskSubmissionContext.sourceCode());
+                    .from(testCaseSpec, taskSubmissionContext.language(), taskSubmissionContext.sourceCode());
 
             RemoteExecutionResponseDto executionResponse = codeExecutorClient.executeSync(remoteRequest);
 
@@ -41,7 +41,7 @@ public class TaskSubmissionExecutionService {
             String truncatedStdout = taskOutputTruncator.truncate(executionResponse.getStdout());
             String truncatedStderr = taskOutputTruncator.truncate(executionResponse.getStderr());
 
-            TaskTestCaseOutcome outcome = TaskTestCaseOutcome.of(
+            TaskTestCaseOutcome outcome = TaskTestCaseOutcome.from(
                     testCaseSpec,
                     status,
                     truncatedStdout,

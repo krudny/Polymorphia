@@ -24,4 +24,12 @@ public interface TaskTestCaseRepository extends JpaRepository<TaskTestCase, Long
             ORDER BY tc.orderIndex ASC
             """)
     List<TaskTestCase> findVisibleByTaskId(@Param("taskId") Long taskId);
+
+    @Query("""
+            SELECT tc
+            FROM TaskTestCase tc
+            WHERE tc.task.id IN :taskIds
+            ORDER BY tc.orderIndex ASC
+            """)
+    List<TaskTestCase> findByTaskIdIn(@Param("taskIds") List<Long> taskIds);
 }
