@@ -16,7 +16,7 @@ class DockerConfig {
         val httpClient = ApacheDockerHttpClient.Builder()
             .dockerHost(config.dockerHost)
             .sslConfig(config.sslConfig)
-            .maxConnections(1)
+            .maxConnections(100)
             .connectionTimeout(Duration.ofSeconds(30))
             .responseTimeout(Duration.ofSeconds(45))
             .build();
