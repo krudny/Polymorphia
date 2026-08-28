@@ -16,7 +16,7 @@ public class TaskSubmissionExecutorConfig {
         taskSubmissionExecutor.setMaxPoolSize(taskSubmissionProperties.workerThreads());
         taskSubmissionExecutor.setQueueCapacity(0);
         taskSubmissionExecutor.setThreadNamePrefix("task-submission-");
-        taskSubmissionExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        taskSubmissionExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
         return taskSubmissionExecutor;
     }
 }

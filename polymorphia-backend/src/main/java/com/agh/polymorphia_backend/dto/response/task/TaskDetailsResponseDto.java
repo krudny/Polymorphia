@@ -13,5 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 public class TaskDetailsResponseDto {
     private List<TaskAllowedLanguageDto> allowedLanguages;
+
     private List<TaskTestCaseDto> testCases;
 }

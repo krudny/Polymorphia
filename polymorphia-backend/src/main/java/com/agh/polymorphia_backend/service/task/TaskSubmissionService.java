@@ -97,7 +97,7 @@ public class TaskSubmissionService {
                 .score(taskSubmission.getScore())
                 .passedCount(taskSubmission.getPassedCount())
                 .totalCount(taskSubmission.getTotalCount())
-                .totalExecutionTimeMs(totalExecutionTimeMs)
+                .totalExecutionTimeMs(totalExecutionTimeMs > 0 ? totalExecutionTimeMs : null)
                 .createdDate(taskSubmission.getCreatedDate())
                 .visibleResults(visibleResult)
                 .errorMessage(taskSubmission.getErrorMessage())
