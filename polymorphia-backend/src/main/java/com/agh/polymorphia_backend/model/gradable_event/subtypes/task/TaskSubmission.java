@@ -29,6 +29,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.UUID;
 
 @Entity
 @Table(
@@ -137,6 +138,9 @@ public class TaskSubmission {
     @Column(name = "is_graded", nullable = false)
     @Builder.Default
     private Boolean isGraded = false;
+
+    @Column(name = "lease_token")
+    private UUID leaseToken;
 
     @Version
     @NotNull

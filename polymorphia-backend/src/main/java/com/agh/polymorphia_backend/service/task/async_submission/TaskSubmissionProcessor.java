@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Component
@@ -42,7 +43,7 @@ public class TaskSubmissionProcessor {
       return true;
     } catch (Exception exception) {
       log.error("Failed to run task submission {}", taskSubmissionContext.taskSubmissionId(), exception);
-      taskSubmissionPersistenceService.markFailed(taskSubmissionContext.taskSubmissionId());
+      taskSubmissionPersistenceService.markFailed(taskSubmissionContext.taskSubmissionId(), taskSubmissionContext.leaseToken());
       return false;
     }
   }

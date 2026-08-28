@@ -9,7 +9,7 @@ public record TaskLimits(
     Integer memoryLimitMb
 ) {
 
-    public static TaskLimits of(Task task, TaskTestCase taskTestCase) {
+    public static TaskLimits from(Task task, TaskTestCase taskTestCase) {
         Integer cpuTimeLimitMs = taskTestCase.getTimeLimitOverrideMs() != null
             ? taskTestCase.getTimeLimitOverrideMs()
             : task.getCpuTimeLimitMs();

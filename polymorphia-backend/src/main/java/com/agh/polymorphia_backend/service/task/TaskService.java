@@ -4,6 +4,7 @@ import com.agh.polymorphia_backend.dto.response.task.TaskAllowedLanguageDto;
 import com.agh.polymorphia_backend.dto.response.task.TaskDetailsResponseDto;
 import com.agh.polymorphia_backend.dto.response.task.TaskTestCaseDto;
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.Task;
+import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskSupportedLanguage;
 import com.agh.polymorphia_backend.repository.task.TaskAllowedLanguageRepository;
 import com.agh.polymorphia_backend.repository.task.TaskRepository;
 import com.agh.polymorphia_backend.repository.task.TaskTestCaseRepository;
@@ -60,5 +61,13 @@ public class TaskService {
                 .allowedLanguages(allowedLanguages)
                 .testCases(testCases)
                 .build();
+    }
+
+    public void validateTaskLanguage(Long taskId, TaskSupportedLanguage language) {
+        boolean languageAllowed = taskAllowedLanguageRepository.existsByTaskIdAndLanguage(taskId, language);
+
+        if (!languageAllowed) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Zadanie nie może być uruchomione w tym języku.");
+        }
     }
 }

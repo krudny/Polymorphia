@@ -18,7 +18,7 @@ public class RemoteExecutionRequestDto {
     private final Integer memoryLimitMb;
     private final String callbackUrl;
 
-    public static RemoteExecutionRequestDto of(
+    public static RemoteExecutionRequestDto from(
         TaskTestCaseSpec testCaseSpec,
         TaskSupportedLanguage language,
         String sourceCode
