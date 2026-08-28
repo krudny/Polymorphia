@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @Component
@@ -19,7 +18,6 @@ public class TaskSubmissionProcessor {
   private final TaskSubmissionGradingService taskSubmissionGradingService;
 
   public void process(TaskSubmissionContext taskSubmissionContext) {
-      log.info("[PROCESSOR] started processing {}", Thread.currentThread().getName());
       boolean processedSuccessfully = executeAndSave(taskSubmissionContext);
 
       if (processedSuccessfully) {
