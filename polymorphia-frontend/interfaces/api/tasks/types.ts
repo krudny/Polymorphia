@@ -1,10 +1,23 @@
+export const SupportedLanguages = {
+  JAVASCRIPT: "JAVASCRIPT",
+  PYTHON: "PYTHON",
+  JAVA: "JAVA",
+  CPP: "CPP",
+  C: "C",
+  CSHARP: "CSHARP",
+  PLAINTEXT: "PLAINTEXT",
+} as const;
+
+export type SupportedLanguage =
+  (typeof SupportedLanguages)[keyof typeof SupportedLanguages];
+
 export interface TaskDetailsResponseDTO {
   allowedLanguages: TaskAllowedLanguageDTO[];
   testCases: TaskTestCaseDTO[];
 }
 
 export interface TaskAllowedLanguageDTO {
-  taskLanguage: string;
+  taskLanguage: SupportedLanguage;
   isDefault: boolean;
   sampleCode: string;
 }
@@ -17,7 +30,7 @@ export interface TaskTestCaseDTO {
 }
 
 export interface ExecuteRequestDTO {
-  taskLanguage: string;
+  taskLanguage: SupportedLanguage;
   sourceCode: string;
 }
 

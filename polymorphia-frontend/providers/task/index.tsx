@@ -1,26 +1,35 @@
-import { createContext, useState, useEffect } from "react";
-import {
+import { createContext, useState, useEffect, useRef } from "react";
+import type {
   TaskContextInterface,
   TaskProviderProps,
-  TaskTab,
+  MonacoEditor,
 } from "@/providers/task/types";
+import { TaskTab } from "@/providers/task/types";
 import useTaskDetails from "@/hooks/course/tasks/useTaskDetails";
 import useRunTask from "@/hooks/course/tasks/useRunTask";
 import useSubmitTask from "@/hooks/course/tasks/useSubmitTask";
 import useTaskStatus from "@/hooks/course/tasks/useTaskStatus";
-import { TaskSubmissionStatus } from "@/interfaces/api/tasks/types";
+import {
+  SupportedLanguages,
+  type SupportedLanguage,
+  TaskSubmissionStatus,
+} from "@/interfaces/api/tasks/types";
 
 export const TaskContext = createContext<TaskContextInterface | undefined>(
   undefined
 );
 
 export const TaskProvider = ({ children, taskId }: TaskProviderProps) => {
-  const [language, setLanguage] = useState<string>("");
+  const [language, setLanguage] = useState<SupportedLanguage>(
+    SupportedLanguages.PLAINTEXT
+  );
   const [activeTestCaseIndex, setActiveTestCaseIndex] = useState<number>(0);
   const [activeTab, setActiveTab] = useState<TaskTab>(TaskTab.TESTCASES);
   const [activeSubmissionId, setActiveSubmissionId] = useState<number | null>(
     null
   );
+
+  const editorRef = useRef<MonacoEditor | null>(null);
 
   const { data, isLoading: isDetailsLoading } = useTaskDetails(taskId);
   const { mutate, isPending, isError, data: runResponse } = useRunTask(taskId);
@@ -35,9 +44,9 @@ export const TaskProvider = ({ children, taskId }: TaskProviderProps) => {
       const defaultLanguage = data.allowedLanguages.find(
         (allowedLanguage) => allowedLanguage.isDefault
       )?.taskLanguage;
-      if (defaultLanguage && !language) {
+      if (defaultLanguage && language === SupportedLanguages.PLAINTEXT) {
         setLanguage(defaultLanguage);
-      } else if (!language) {
+      } else if (language === SupportedLanguages.PLAINTEXT) {
         setLanguage(data.allowedLanguages[0].taskLanguage);
       }
     }
@@ -85,7 +94,8 @@ export const TaskProvider = ({ children, taskId }: TaskProviderProps) => {
     submissionStatus?.status === TaskSubmissionStatus.QUEUED ||
     submissionStatus?.status === TaskSubmissionStatus.RUNNING;
 
-  const handleRunTask = (code: string) => {
+  const handleRunTask = (codeProp?: string) => {
+    const code = codeProp ?? editorRef.current?.getValue() ?? "";
     if (!code) {
       return;
     }
@@ -93,7 +103,8 @@ export const TaskProvider = ({ children, taskId }: TaskProviderProps) => {
     mutate({ taskLanguage: language, sourceCode: code });
   };
 
-  const handleSubmitTask = async (code: string) => {
+  const handleSubmitTask = async (codeProp?: string) => {
+    const code = codeProp ?? editorRef.current?.getValue() ?? "";
     if (!code) {
       return;
     }
@@ -103,9 +114,7 @@ export const TaskProvider = ({ children, taskId }: TaskProviderProps) => {
         sourceCode: code,
       });
       setActiveSubmissionId(response.submissionId);
-    } catch {
-      // błąd obsługiwany przez isSubmissionError z useTaskStatus
-    }
+    } catch {}
   };
 
   const isLoading = isDetailsLoading;
@@ -113,6 +122,7 @@ export const TaskProvider = ({ children, taskId }: TaskProviderProps) => {
   return (
     <TaskContext.Provider
       value={{
+        editorRef,
         language,
         setLanguage,
         sampleCode,
