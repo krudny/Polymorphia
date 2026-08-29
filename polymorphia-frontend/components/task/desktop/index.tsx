@@ -5,13 +5,16 @@ import { Group, Panel, Separator } from "react-resizable-panels";
 import MarkdownViewer from "@/components/markdown/markdown-viewer";
 import TaskEditor from "@/components/task/general/task-editor";
 import TaskResult from "@/components/task/general/task-result";
+import { useTheme } from "next-themes";
 
 export default function TaskDesktop() {
+  const { resolvedTheme } = useTheme();
+
   return (
     <Group orientation="horizontal" className="task-desktop-group">
       <Panel defaultSize="40%" minSize="20%" className="min-w-0">
         <div className="task-desktop-description-panel">
-          <MarkdownViewer />
+          <MarkdownViewer forceLight={resolvedTheme === "light"} />
         </div>
       </Panel>
       <Separator className="task-desktop-separator-horizontal" />

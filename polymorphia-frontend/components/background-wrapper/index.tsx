@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import "./index.css";
-import { BackgroundWrapperProps } from "@/components/background-wrapper/types";
+import type { BackgroundWrapperProps } from "@/components/background-wrapper/types";
 
 export default function BackgroundWrapper({
   children,

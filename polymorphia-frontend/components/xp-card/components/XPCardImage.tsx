@@ -13,6 +13,7 @@ export default function XPCardImage({ imageUrl, alt }: XPCardImageProps) {
         priority
         fetchPriority="high"
         className="object-cover"
+        sizes="200px"
       />
     </div>
   );
