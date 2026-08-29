@@ -1,0 +1,31 @@
+import { useQuery } from "@tanstack/react-query";
+import { TaskSubmissionStatus } from "@/interfaces/api/tasks/types";
+import { UseTaskStatus } from "@/hooks/course/tasks/useTaskStatus/types";
+import TaskService from "@/services/tasks";
+
+export default function useTaskStatus(
+  taskId: number,
+  activeSubmissionId: number | null
+): UseTaskStatus {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["taskStatus", taskId, activeSubmissionId],
+    queryFn: () => TaskService.getSubmissionStatus(taskId, activeSubmissionId!),
+    enabled: activeSubmissionId !== null,
+    refetchInterval(query) {
+      const status = query.state.data?.status;
+      if (
+        status === TaskSubmissionStatus.QUEUED ||
+        status === TaskSubmissionStatus.RUNNING
+      ) {
+        return 2000;
+      }
+      return false;
+    },
+  });
+
+  return {
+    submissionStatus: data,
+    isSubmissionLoading: isLoading,
+    isSubmissionError: isError,
+  };
+}

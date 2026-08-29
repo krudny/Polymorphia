@@ -25,9 +25,22 @@ export interface ExecuteTaskResponseDTO {
   results: TestCaseResultDTO[];
 }
 
+export const TaskSubmissionStatus = {
+  QUEUED: "QUEUED",
+  RUNNING: "RUNNING",
+  COMPLETED: "COMPLETED",
+  COMPILE_ERROR: "COMPILE_ERROR",
+  RUNTIME_ERROR: "RUNTIME_ERROR",
+  TIMEOUT: "TIMEOUT",
+  INTERNAL_ERROR: "INTERNAL_ERROR",
+} as const;
+
+export type TaskSubmissionStatus =
+  (typeof TaskSubmissionStatus)[keyof typeof TaskSubmissionStatus];
+
 export interface TaskSubmissionStatusResponseDTO {
   submissionId: number;
-  status: string;
+  status: TaskSubmissionStatus;
   score?: number;
   passedCount?: number;
   totalCount?: number;

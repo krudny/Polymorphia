@@ -6,6 +6,13 @@ import {
 } from "@/interfaces/api/tasks/types";
 import { SelectorOption } from "@/components/selector/types";
 
+export const TaskTab = {
+  TESTCASES: "testcases",
+  SUBMISSION_RESULT: "submissionResult",
+} as const;
+
+export type TaskTab = (typeof TaskTab)[keyof typeof TaskTab];
+
 export interface TaskContextInterface {
   language: string;
   setLanguage: Dispatch<SetStateAction<string>>;
@@ -21,9 +28,9 @@ export interface TaskContextInterface {
   handleRunTask: (code: string) => void;
   isPending: boolean;
   isError: boolean;
-  activeTab: "testcases" | "submissionResult";
-  setActiveTab: Dispatch<SetStateAction<"testcases" | "submissionResult">>;
-  submissionStatus: TaskSubmissionStatusResponseDTO | null;
+  activeTab: TaskTab;
+  setActiveTab: Dispatch<SetStateAction<TaskTab>>;
+  submissionStatus: TaskSubmissionStatusResponseDTO | undefined;
   isSubmitting: boolean;
   handleSubmitTask: (code: string) => void;
 }
