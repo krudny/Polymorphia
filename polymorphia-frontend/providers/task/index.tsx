@@ -2,35 +2,33 @@ import { createContext, useState, useEffect } from "react";
 import {
   TaskContextInterface,
   TaskProviderProps,
+  TaskTab,
 } from "@/providers/task/types";
 import useTaskDetails from "@/hooks/course/tasks/useTaskDetails";
 import useRunTask from "@/hooks/course/tasks/useRunTask";
-import TaskService from "@/services/tasks";
-import { TaskSubmissionStatusResponseDTO } from "@/interfaces/api/tasks/types";
+import useSubmitTask from "@/hooks/course/tasks/useSubmitTask";
+import useTaskStatus from "@/hooks/course/tasks/useTaskStatus";
+import { TaskSubmissionStatus } from "@/interfaces/api/tasks/types";
 
 export const TaskContext = createContext<TaskContextInterface | undefined>(
   undefined
 );
 
-import useSubmitTask from "@/hooks/course/tasks/useSubmitTask";
-
 export const TaskProvider = ({ children, taskId }: TaskProviderProps) => {
   const [language, setLanguage] = useState<string>("");
   const [activeTestCaseIndex, setActiveTestCaseIndex] = useState<number>(0);
-  const [activeTab, setActiveTab] = useState<"testcases" | "submissionResult">(
-    "testcases"
-  );
-  const [submissionStatus, setSubmissionStatus] =
-    useState<TaskSubmissionStatusResponseDTO | null>(null);
+  const [activeTab, setActiveTab] = useState<TaskTab>(TaskTab.TESTCASES);
   const [activeSubmissionId, setActiveSubmissionId] = useState<number | null>(
     null
   );
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const { data, isLoading: isDetailsLoading } = useTaskDetails(taskId);
   const { mutate, isPending, isError, data: runResponse } = useRunTask(taskId);
+  const { mutateAsync: submitTaskMutate, isPending: submitIsPending } =
+    useSubmitTask(taskId);
+  const { submissionStatus } = useTaskStatus(taskId, activeSubmissionId);
+
   const runResults = runResponse?.results || null;
-  const { mutateAsync: submitTaskMutate } = useSubmitTask(taskId);
 
   useEffect(() => {
     if (data && data.allowedLanguages && data.allowedLanguages.length > 0) {
@@ -46,37 +44,17 @@ export const TaskProvider = ({ children, taskId }: TaskProviderProps) => {
   }, [data, language]);
 
   useEffect(() => {
-    if (!activeSubmissionId) {
+    if (!submissionStatus) {
       return;
     }
-
-    const isPendingStatus =
-      !submissionStatus ||
-      submissionStatus.status === "QUEUED" ||
-      submissionStatus.status === "RUNNING";
-
-    if (!isPendingStatus) {
-      setIsSubmitting(false);
-      return;
+    const status = submissionStatus.status;
+    if (
+      status !== TaskSubmissionStatus.QUEUED &&
+      status !== TaskSubmissionStatus.RUNNING
+    ) {
+      setActiveTab(TaskTab.SUBMISSION_RESULT);
     }
-
-    const intervalId = setInterval(async () => {
-      try {
-        const response = await TaskService.getSubmissionStatus(
-          taskId,
-          activeSubmissionId
-        );
-        setSubmissionStatus(response);
-        if (response.status !== "QUEUED" && response.status !== "RUNNING") {
-          setIsSubmitting(false);
-        }
-      } catch (error) {
-        setIsSubmitting(false);
-      }
-    }, 2000);
-
-    return () => clearInterval(intervalId);
-  }, [activeSubmissionId, submissionStatus, taskId]);
+  }, [submissionStatus?.status]);
 
   const currentLanguageData = data?.allowedLanguages
     ? data.allowedLanguages.find(
@@ -102,11 +80,16 @@ export const TaskProvider = ({ children, taskId }: TaskProviderProps) => {
       ) || runResults[activeTestCaseIndex]
     : undefined;
 
+  const isSubmitting =
+    submitIsPending ||
+    submissionStatus?.status === TaskSubmissionStatus.QUEUED ||
+    submissionStatus?.status === TaskSubmissionStatus.RUNNING;
+
   const handleRunTask = (code: string) => {
     if (!code) {
       return;
     }
-    setActiveTab("testcases");
+    setActiveTab(TaskTab.TESTCASES);
     mutate({ taskLanguage: language, sourceCode: code });
   };
 
@@ -114,25 +97,14 @@ export const TaskProvider = ({ children, taskId }: TaskProviderProps) => {
     if (!code) {
       return;
     }
-    setIsSubmitting(true);
-    setActiveTab("submissionResult");
     try {
       const response = await submitTaskMutate({
         taskLanguage: language,
         sourceCode: code,
       });
       setActiveSubmissionId(response.submissionId);
-      setSubmissionStatus({
-        submissionId: response.submissionId,
-        status: response.status,
-        score: null,
-        passedCount: null,
-        totalCount: null,
-        totalExecutionTimeMs: null,
-        createdDate: null,
-      });
-    } catch (error) {
-      setIsSubmitting(false);
+    } catch {
+      // błąd obsługiwany przez isSubmissionError z useTaskStatus
     }
   };
 
