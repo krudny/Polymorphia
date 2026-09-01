@@ -42,7 +42,6 @@ export default function EquipmentChest({
         alt={chestData.base.name}
         fill
         className="equipment-image"
-        priority
         sizes="(max-width: 600px) 50vw, (max-width: 1024px) 25vw, 228px"
       />
       {showBadge && chestData.details.id && (

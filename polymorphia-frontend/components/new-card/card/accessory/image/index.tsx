@@ -13,8 +13,6 @@ export default function NewCardImageAccessory({
         src={`${API_STATIC_URL}/${imageUrl}`}
         alt={alt}
         fill
-        priority
-        fetchPriority="high"
         className="object-cover"
         sizes="(min-width: 1024px) 25vw, 50vw"
       />

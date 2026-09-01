@@ -14,8 +14,6 @@ export default function XPCardImageWithLock({
         src={`${API_STATIC_URL}/${imageUrl}`}
         alt={alt}
         fill
-        priority
-        fetchPriority="high"
         sizes="(max-width: 1920px) 96px, 200px"
       />
       {isLocked && (

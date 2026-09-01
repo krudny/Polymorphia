@@ -33,8 +33,6 @@ export default function EquipmentItem({ itemData, size }: EquipmentItemProps) {
         alt={name}
         fill
         className="equipment-image"
-        priority
-        fetchPriority="high"
         sizes="(max-width: 600px) 50vw, (max-width: 1024px) 25vw, 228px"
       />
       {quantity > 0 ? (
