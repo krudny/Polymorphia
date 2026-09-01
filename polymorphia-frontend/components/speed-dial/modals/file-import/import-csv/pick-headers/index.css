@@ -1,5 +1,4 @@
-@import "tailwindcss";
-@import "../../../../../../styles/globals.css";
+@reference "../../../../../../styles/globals.css";
 
 .csv-header-mapping {
   @apply w-full flex items-center justify-between my-2 gap-x-4;

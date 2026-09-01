@@ -1,5 +1,4 @@
-@import "tailwindcss";
-@import "../../../styles/globals.css";
+@reference "../../../styles/globals.css";
 
 .course-choice-wrapper {
   @apply w-full h-full flex flex-col items-center overflow-hidden pb-12;

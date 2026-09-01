@@ -31,13 +31,13 @@ export const TaskProvider = ({ children, taskId }: TaskProviderProps) => {
 
   const editorRef = useRef<MonacoEditor | null>(null);
 
-  const { data, isLoading: isDetailsLoading } = useTaskDetails(taskId);
+  const { data, isLoading: isDetailsLoading } = useTaskDetails(taskId); // task details, isError
   const { mutate, isPending, isError, data: runResponse } = useRunTask(taskId);
   const { mutateAsync: submitTaskMutate, isPending: submitIsPending } =
-    useSubmitTask(taskId);
-  const { submissionStatus } = useTaskStatus(taskId, activeSubmissionId);
+    useSubmitTask(taskId); // isError
+  const { submissionStatus } = useTaskStatus(taskId, activeSubmissionId); // isError
 
-  const runResults = runResponse?.results || null;
+  const runResults = runResponse?.results || null; // no ?, we always have to know data is loaded
 
   useEffect(() => {
     if (data && data.allowedLanguages && data.allowedLanguages.length > 0) {
@@ -50,7 +50,7 @@ export const TaskProvider = ({ children, taskId }: TaskProviderProps) => {
         setLanguage(data.allowedLanguages[0].taskLanguage);
       }
     }
-  }, [data, language]);
+  }, [data, language]); // this is crap
 
   useEffect(() => {
     if (!submissionStatus) {
@@ -63,23 +63,23 @@ export const TaskProvider = ({ children, taskId }: TaskProviderProps) => {
     ) {
       setActiveTab(TaskTab.SUBMISSION_RESULT);
     }
-  }, [submissionStatus?.status]);
+  }, [submissionStatus?.status]); // no ?
 
   const currentLanguageData = data?.allowedLanguages
     ? data.allowedLanguages.find(
         (allowedLanguage) => allowedLanguage.taskLanguage === language
       )
-    : undefined;
+    : undefined; // what is that crap?
   const sampleCode = currentLanguageData ? currentLanguageData.sampleCode : "";
 
-  const allowedLanguages = data?.allowedLanguages
+  const allowedLanguages = data?.allowedLanguages // please no
     ? data.allowedLanguages.map((allowedLanguage) => ({
         value: allowedLanguage.taskLanguage,
         label: allowedLanguage.taskLanguage,
       }))
     : [];
 
-  const testCases = data?.testCases ? data.testCases : [];
+  const testCases = data?.testCases ? data.testCases : []; // i hate ?
   const activeTestCase = testCases[activeTestCaseIndex];
   const activeResult = runResults
     ? runResults.find(
@@ -91,10 +91,11 @@ export const TaskProvider = ({ children, taskId }: TaskProviderProps) => {
 
   const isSubmitting =
     submitIsPending ||
-    submissionStatus?.status === TaskSubmissionStatus.QUEUED ||
+    submissionStatus?.status === TaskSubmissionStatus.QUEUED || // when task is submitted, its not being submitted anymore
     submissionStatus?.status === TaskSubmissionStatus.RUNNING;
 
   const handleRunTask = (codeProp?: string) => {
+    // no ?, i dont know what codeProp is
     const code = codeProp ?? editorRef.current?.getValue() ?? "";
     if (!code) {
       return;
@@ -117,7 +118,7 @@ export const TaskProvider = ({ children, taskId }: TaskProviderProps) => {
     } catch {}
   };
 
-  const isLoading = isDetailsLoading;
+  const isLoading = isDetailsLoading; // this is so bad
 
   return (
     <TaskContext.Provider
@@ -136,7 +137,7 @@ export const TaskProvider = ({ children, taskId }: TaskProviderProps) => {
         testCases,
         handleRunTask,
         isPending,
-        isError,
+        isError, // i cant live with exporting just one isError and doing 4 fetches, same for isPending, is Submitting is crap
         activeTab,
         setActiveTab,
         submissionStatus,

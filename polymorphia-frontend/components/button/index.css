@@ -1,5 +1,4 @@
-@import "tailwindcss";
-@import "../../styles/globals.css";
+@reference "../../styles/globals.css";
 
 .button-with-border {
   @apply block mx-auto border-2 rounded;
