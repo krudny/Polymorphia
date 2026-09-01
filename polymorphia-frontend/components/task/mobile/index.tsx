@@ -2,7 +2,7 @@
 
 import "./index.css";
 import { Group, Panel, Separator } from "react-resizable-panels";
-import MarkdownViewer from "@/components/markdown/markdown-viewer";
+import { LazyMarkdownViewer } from "@/components/markdown/lazy";
 import TaskEditor from "@/components/task/general/task-editor";
 import TaskResult from "@/components/task/general/task-result";
 import useTaskCollapsiblePanel from "@/hooks/course/tasks/useTaskCollapsiblePanel";
@@ -52,7 +52,7 @@ export default function TaskMobile() {
             onToggle={descriptionPanel.toggle}
           />
           <div className="task-mobile-description-content">
-            <MarkdownViewer forceLight={resolvedTheme === "light"} />
+            <LazyMarkdownViewer forceLight={resolvedTheme === "light"} />
           </div>
         </div>
       </Panel>
