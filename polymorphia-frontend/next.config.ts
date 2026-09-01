@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
-    qualities: [75, 100],
+    qualities: [75],
     dangerouslyAllowLocalIP: true,
     remotePatterns: [
       API_STATIC_HOST_PATTERN as RemotePattern,
