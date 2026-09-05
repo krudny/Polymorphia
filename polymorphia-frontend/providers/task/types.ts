@@ -1,4 +1,4 @@
-import type { Dispatch, SetStateAction, ReactNode, RefObject } from "react";
+import type { Dispatch, ReactNode, RefObject } from "react";
 import type {
   TaskTestCaseDTO,
   TestCaseResultDTO,
@@ -7,6 +7,19 @@ import type {
 } from "@/interfaces/api/tasks/types";
 import type { SelectorOption } from "@/components/selector/types";
 import type { editor } from "monaco-editor";
+import type { TaskAction } from "@/providers/task/reducer/types";
+
+export interface LanguageInfo {
+  language: SupportedLanguage;
+  sampleCode: string;
+  isDefault: boolean;
+}
+
+export interface TaskDetailsView {
+  testCases: TaskTestCaseDTO[];
+  languages: ReadonlyMap<SupportedLanguage, LanguageInfo>;
+  defaultLanguage: SupportedLanguage;
+}
 
 export type MonacoEditor = editor.IStandaloneCodeEditor;
 
@@ -20,23 +33,25 @@ export type TaskTab = (typeof TaskTab)[keyof typeof TaskTab];
 export interface TaskContextInterface {
   editorRef: RefObject<MonacoEditor | null>;
   language: SupportedLanguage;
-  setLanguage: Dispatch<SetStateAction<SupportedLanguage>>;
   sampleCode: string;
-  isLoading: boolean;
   runResults: TestCaseResultDTO[] | null;
   activeTestCaseIndex: number;
-  setActiveTestCaseIndex: Dispatch<SetStateAction<number>>;
   activeTestCase: TaskTestCaseDTO | undefined;
   activeResult: TestCaseResultDTO | undefined;
+  resultsByOrderIndex: ReadonlyMap<number, TestCaseResultDTO>;
   allowedLanguages: SelectorOption[];
   testCases: TaskTestCaseDTO[];
   handleRunTask: (code?: string) => void;
-  isPending: boolean;
-  isError: boolean;
   activeTab: TaskTab;
-  setActiveTab: Dispatch<SetStateAction<TaskTab>>;
-  submissionStatus: TaskSubmissionStatusResponseDTO | undefined;
+  dispatch: Dispatch<TaskAction>;
+  submissionStatus: TaskSubmissionStatusResponseDTO | null;
+  hasSubmission: boolean;
   isSubmitting: boolean;
+  isRunTaskPending: boolean;
+  isRunTaskError: boolean;
+  isSubmitTaskPending: boolean;
+  isSubmitTaskError: boolean;
+  isTaskStatusError: boolean;
   handleSubmitTask: (code?: string) => void;
 }
 

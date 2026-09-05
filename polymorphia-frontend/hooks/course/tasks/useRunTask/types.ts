@@ -1,11 +1,12 @@
-import {
+import type {
   ExecuteRequestDTO,
-  ExecuteTaskResponseDTO,
+  TestCaseResultDTO,
 } from "@/interfaces/api/tasks/types";
 
 export interface UseRunTask {
   mutate: (payload: ExecuteRequestDTO) => void;
   isPending: boolean;
   isError: boolean;
-  data: ExecuteTaskResponseDTO | undefined;
+  results: TestCaseResultDTO[] | null;
+  resultsByOrderIndex: ReadonlyMap<number, TestCaseResultDTO>;
 }

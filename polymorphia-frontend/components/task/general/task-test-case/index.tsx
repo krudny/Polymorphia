@@ -15,7 +15,6 @@ export default function TaskTestCase({ content }: TaskTestCaseProps) {
   return (
     <div className="task-test-case-container group">
       <pre className="task-test-case-content">{content || "\u00A0"}</pre>
-
       <button
         onClick={handleCopy}
         title="Copy"

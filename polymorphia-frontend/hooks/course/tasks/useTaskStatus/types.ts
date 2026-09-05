@@ -1,7 +1,8 @@
-import { TaskSubmissionStatusResponseDTO } from "@/interfaces/api/tasks/types";
+import type { TaskSubmissionStatusResponseDTO } from "@/interfaces/api/tasks/types";
+import type { UseQueryResult } from "@tanstack/react-query";
 
-export interface UseTaskStatus {
-  submissionStatus: TaskSubmissionStatusResponseDTO | undefined;
-  isSubmissionLoading: boolean;
-  isSubmissionError: boolean;
-}
+export type UseTaskStatus = UseQueryResult<TaskSubmissionStatusResponseDTO> & {
+  submissionStatus: TaskSubmissionStatusResponseDTO | null;
+  hasSubmission: boolean;
+  isSubmissionProcessing: boolean;
+};

@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { TaskSubmissionStatus } from "@/interfaces/api/tasks/types";
-import { UseTaskStatus } from "@/hooks/course/tasks/useTaskStatus/types";
+import type { UseTaskStatus } from "@/hooks/course/tasks/useTaskStatus/types";
 import TaskService from "@/services/tasks";
 
 export default function useTaskStatus(
   taskId: number,
   activeSubmissionId: number | null
 ): UseTaskStatus {
-  const { data, isLoading, isError } = useQuery({
+  const query = useQuery({
     queryKey: ["taskStatus", taskId, activeSubmissionId],
     queryFn: () => TaskService.getSubmissionStatus(taskId, activeSubmissionId!),
     enabled: activeSubmissionId !== null,
@@ -23,9 +23,14 @@ export default function useTaskStatus(
     },
   });
 
+  const submissionStatus = query.data ?? null;
+
   return {
-    submissionStatus: data,
-    isSubmissionLoading: isLoading,
-    isSubmissionError: isError,
+    ...query,
+    submissionStatus,
+    hasSubmission: submissionStatus !== null,
+    isSubmissionProcessing:
+      submissionStatus?.status === TaskSubmissionStatus.QUEUED ||
+      submissionStatus?.status === TaskSubmissionStatus.RUNNING,
   };
 }

@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, useRef } from "react";
+import { createContext, useReducer, useEffect, useRef } from "react";
 import type {
   TaskContextInterface,
   TaskProviderProps,
@@ -9,140 +9,139 @@ import useTaskDetails from "@/hooks/course/tasks/useTaskDetails";
 import useRunTask from "@/hooks/course/tasks/useRunTask";
 import useSubmitTask from "@/hooks/course/tasks/useSubmitTask";
 import useTaskStatus from "@/hooks/course/tasks/useTaskStatus";
-import {
-  SupportedLanguages,
-  type SupportedLanguage,
-  TaskSubmissionStatus,
-} from "@/interfaces/api/tasks/types";
+import type { SupportedLanguage } from "@/interfaces/api/tasks/types";
+import { taskReducer, initialTaskState } from "@/providers/task/reducer";
+import { TaskActions } from "@/providers/task/reducer/types";
+import Loading from "@/components/loading";
+import ErrorComponent from "@/components/error";
+import toast from "react-hot-toast";
 
 export const TaskContext = createContext<TaskContextInterface | undefined>(
   undefined
 );
 
 export const TaskProvider = ({ children, taskId }: TaskProviderProps) => {
-  const [language, setLanguage] = useState<SupportedLanguage>(
-    SupportedLanguages.PLAINTEXT
-  );
-  const [activeTestCaseIndex, setActiveTestCaseIndex] = useState<number>(0);
-  const [activeTab, setActiveTab] = useState<TaskTab>(TaskTab.TESTCASES);
-  const [activeSubmissionId, setActiveSubmissionId] = useState<number | null>(
-    null
-  );
-
+  const [state, dispatch] = useReducer(taskReducer, initialTaskState);
   const editorRef = useRef<MonacoEditor | null>(null);
 
-  const { data, isLoading: isDetailsLoading } = useTaskDetails(taskId); // task details, isError
-  const { mutate, isPending, isError, data: runResponse } = useRunTask(taskId);
-  const { mutateAsync: submitTaskMutate, isPending: submitIsPending } =
-    useSubmitTask(taskId); // isError
-  const { submissionStatus } = useTaskStatus(taskId, activeSubmissionId); // isError
+  const {
+    data: taskDetails,
+    isLoading: isTaskDetailsLoading,
+    isError: isTaskDetailsError,
+  } = useTaskDetails(taskId);
 
-  const runResults = runResponse?.results || null; // no ?, we always have to know data is loaded
+  const {
+    mutate: runTask,
+    results: runResults,
+    resultsByOrderIndex,
+    isPending: isRunTaskPending,
+    isError: isRunTaskError,
+  } = useRunTask(taskId);
+
+  const {
+    mutateAsync: submitTask,
+    isPending: isSubmitTaskPending,
+    isError: isSubmitTaskError,
+  } = useSubmitTask(taskId);
+
+  const {
+    submissionStatus,
+    hasSubmission,
+    isSubmissionProcessing,
+    isError: isTaskStatusError,
+  } = useTaskStatus(taskId, state.activeSubmissionId);
 
   useEffect(() => {
-    if (data && data.allowedLanguages && data.allowedLanguages.length > 0) {
-      const defaultLanguage = data.allowedLanguages.find(
-        (allowedLanguage) => allowedLanguage.isDefault
-      )?.taskLanguage;
-      if (defaultLanguage && language === SupportedLanguages.PLAINTEXT) {
-        setLanguage(defaultLanguage);
-      } else if (language === SupportedLanguages.PLAINTEXT) {
-        setLanguage(data.allowedLanguages[0].taskLanguage);
-      }
-    }
-  }, [data, language]); // this is crap
-
-  useEffect(() => {
-    if (!submissionStatus) {
+    if (!hasSubmission || isSubmissionProcessing) {
       return;
     }
-    const status = submissionStatus.status;
-    if (
-      status !== TaskSubmissionStatus.QUEUED &&
-      status !== TaskSubmissionStatus.RUNNING
-    ) {
-      setActiveTab(TaskTab.SUBMISSION_RESULT);
-    }
-  }, [submissionStatus?.status]); // no ?
 
-  const currentLanguageData = data?.allowedLanguages
-    ? data.allowedLanguages.find(
-        (allowedLanguage) => allowedLanguage.taskLanguage === language
-      )
-    : undefined; // what is that crap?
-  const sampleCode = currentLanguageData ? currentLanguageData.sampleCode : "";
+    dispatch({
+      type: TaskActions.SET_ACTIVE_TAB,
+      payload: TaskTab.SUBMISSION_RESULT,
+    });
+  }, [hasSubmission, isSubmissionProcessing]);
 
-  const allowedLanguages = data?.allowedLanguages // please no
-    ? data.allowedLanguages.map((allowedLanguage) => ({
-        value: allowedLanguage.taskLanguage,
-        label: allowedLanguage.taskLanguage,
-      }))
-    : [];
+  if (isTaskDetailsLoading) {
+    return <Loading />;
+  }
 
-  const testCases = data?.testCases ? data.testCases : []; // i hate ?
-  const activeTestCase = testCases[activeTestCaseIndex];
-  const activeResult = runResults
-    ? runResults.find(
-        (result) =>
-          result.orderIndex ===
-          (activeTestCase ? activeTestCase.orderIndex : -1)
-      ) || runResults[activeTestCaseIndex]
-    : undefined;
+  if (isTaskDetailsError || !taskDetails) {
+    return <ErrorComponent message="Nie udało się załadować zadania." />;
+  }
 
-  const isSubmitting =
-    submitIsPending ||
-    submissionStatus?.status === TaskSubmissionStatus.QUEUED || // when task is submitted, its not being submitted anymore
-    submissionStatus?.status === TaskSubmissionStatus.RUNNING;
+  const language: SupportedLanguage =
+    state.language ?? taskDetails.defaultLanguage;
+  const sampleCode = taskDetails.languages.get(language)?.sampleCode ?? "";
+  const allowedLanguages = Array.from(taskDetails.languages.keys()).map(
+    (languageOption) => ({
+      value: languageOption,
+      label: languageOption,
+    })
+  );
 
-  const handleRunTask = (codeProp?: string) => {
-    // no ?, i dont know what codeProp is
-    const code = codeProp ?? editorRef.current?.getValue() ?? "";
+  const testCases = taskDetails.testCases;
+  const activeTestCase = testCases[state.activeTestCaseIndex];
+  const activeResult = resultsByOrderIndex.get(
+    activeTestCase?.orderIndex ?? -1
+  );
+
+  const handleRunTask = () => {
+    const code = editorRef.current?.getValue() ?? "";
     if (!code) {
       return;
     }
-    setActiveTab(TaskTab.TESTCASES);
-    mutate({ taskLanguage: language, sourceCode: code });
+    dispatch({
+      type: TaskActions.SET_ACTIVE_TAB,
+      payload: TaskTab.TESTCASES,
+    });
+    runTask({ taskLanguage: language, sourceCode: code });
   };
 
-  const handleSubmitTask = async (codeProp?: string) => {
-    const code = codeProp ?? editorRef.current?.getValue() ?? "";
+  const handleSubmitTask = async () => {
+    const code = editorRef.current?.getValue() ?? "";
     if (!code) {
       return;
     }
     try {
-      const response = await submitTaskMutate({
+      const response = await submitTask({
         taskLanguage: language,
         sourceCode: code,
       });
-      setActiveSubmissionId(response.submissionId);
-    } catch {}
+      dispatch({
+        type: TaskActions.SET_ACTIVE_SUBMISSION_ID,
+        payload: response.submissionId,
+      });
+    } catch (error) {
+      toast.error("Nie udało się wysłać zgłoszenia");
+    }
   };
-
-  const isLoading = isDetailsLoading; // this is so bad
 
   return (
     <TaskContext.Provider
       value={{
         editorRef,
         language,
-        setLanguage,
         sampleCode,
-        isLoading,
         runResults,
-        activeTestCaseIndex,
-        setActiveTestCaseIndex,
+        activeTestCaseIndex: state.activeTestCaseIndex,
         activeTestCase,
         activeResult,
+        resultsByOrderIndex,
         allowedLanguages,
         testCases,
-        handleRunTask,
-        isPending,
-        isError, // i cant live with exporting just one isError and doing 4 fetches, same for isPending, is Submitting is crap
-        activeTab,
-        setActiveTab,
+        activeTab: state.activeTab,
+        dispatch,
         submissionStatus,
-        isSubmitting,
+        hasSubmission,
+        isSubmitting: isSubmitTaskPending || isSubmissionProcessing,
+        isRunTaskPending,
+        isRunTaskError,
+        isSubmitTaskPending,
+        isSubmitTaskError,
+        isTaskStatusError,
         handleSubmitTask,
+        handleRunTask,
       }}
     >
       {children}
