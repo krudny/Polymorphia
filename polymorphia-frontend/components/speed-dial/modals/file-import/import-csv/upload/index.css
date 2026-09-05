@@ -1,5 +1,4 @@
-@import "tailwindcss";
-@import "../../../../../../styles/globals.css";
+@reference "../../../../../../styles/globals.css";
 
 .file-import-upload-wrapper {
   @apply w-full min-h-44 border-2 border-primary-dark border-dashed flex-col-centered gap-y-2;

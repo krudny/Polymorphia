@@ -1,5 +1,4 @@
-@import "tailwindcss";
-@import "../../../../../styles/globals.css";
+@reference "../../../../../styles/globals.css";
 
 .new-card-points-summary-element {
   @apply w-full flex text-shadow-sm gap-1;
