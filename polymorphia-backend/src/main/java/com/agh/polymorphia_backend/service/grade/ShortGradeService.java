@@ -11,7 +11,7 @@ import com.agh.polymorphia_backend.dto.response.grade.StudentShortGradeResponseD
 import com.agh.polymorphia_backend.dto.response.user_context.UserDetailsResponseDto;
 import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.grade.Grade;
-import com.agh.polymorphia_backend.model.gradable_event.Project;
+import com.agh.polymorphia_backend.model.gradable_event.subtypes.project.Project;
 import com.agh.polymorphia_backend.model.user.UserType;
 import com.agh.polymorphia_backend.model.user.student.Animal;
 import com.agh.polymorphia_backend.service.criteria.CriterionGradeService;

@@ -14,7 +14,7 @@ import com.agh.polymorphia_backend.dto.response.project.ProjectVariantResponseDt
 import com.agh.polymorphia_backend.dto.response.project.filter.FilterOptionResponseDto;
 import com.agh.polymorphia_backend.dto.response.project.filter.ProjectGroupConfigurationFiltersResponseDto;
 import com.agh.polymorphia_backend.dto.response.user_context.UserDetailsResponseDto;
-import com.agh.polymorphia_backend.model.gradable_event.Project;
+import com.agh.polymorphia_backend.model.gradable_event.subtypes.project.Project;
 import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.project.ProjectVariant;
 import com.agh.polymorphia_backend.model.project.ProjectVariantCategory;

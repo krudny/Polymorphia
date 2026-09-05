@@ -3,7 +3,7 @@ package com.agh.polymorphia_backend.repository.project;
 import com.agh.polymorphia_backend.dto.response.project.ProjectGroupPickStudentsResponseDto;
 import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.project.ProjectVariantCategory;
-import com.agh.polymorphia_backend.model.gradable_event.Project;
+import com.agh.polymorphia_backend.model.gradable_event.subtypes.project.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

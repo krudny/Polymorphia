@@ -7,10 +7,12 @@ import com.agh.polymorphia_backend.dto.request.course_import.criterion.Criterion
 import com.agh.polymorphia_backend.dto.request.course_import.event_section.AssignmentSectionDetailsRequestDto;
 import com.agh.polymorphia_backend.dto.request.course_import.event_section.EventSectionDetailsRequestDto;
 import com.agh.polymorphia_backend.dto.request.course_import.event_section.ProjectSectionDetailsRequestDto;
+import com.agh.polymorphia_backend.dto.request.course_import.event_section.TaskSectionDetailsRequestDto;
 import com.agh.polymorphia_backend.dto.request.course_import.event_section.TestSectionDetailsRequestDto;
 import com.agh.polymorphia_backend.dto.request.course_import.gradable_event.AssignmentDetailsRequestDto;
 import com.agh.polymorphia_backend.dto.request.course_import.gradable_event.GradableEventDetailsRequestDto;
 import com.agh.polymorphia_backend.dto.request.course_import.gradable_event.ProjectDetailsRequestDto;
+import com.agh.polymorphia_backend.dto.request.course_import.gradable_event.TaskDetailsRequestDto;
 import com.agh.polymorphia_backend.dto.request.course_import.gradable_event.TestDetailsRequestDto;
 import com.agh.polymorphia_backend.dto.request.course_import.reward.ChestDetailsRequestDto;
 import com.agh.polymorphia_backend.dto.request.course_import.reward.FlatBonusItemDetailsRequestDto;
@@ -106,6 +108,12 @@ public class CourseDetailsMapper {
                     projectVariantCategoriesByProject,
                     projectVariantsByCategory
             );
+            case TASK -> toTaskSection(
+                    eventSection,
+                    gradableEvents,
+                    criteriaByEvent,
+                    rewardsByCriterion
+            );
         };
     }
 
@@ -144,6 +152,22 @@ public class CourseDetailsMapper {
 
         TestSectionDetailsRequestDto.TestSectionDetailsRequestDtoBuilder<?, ?> response = TestSectionDetailsRequestDto.builder()
                 .gradableEvents(tests);
+
+        return applyCommonEventSectionFields(response, section);
+    }
+
+    private EventSectionDetailsRequestDto toTaskSection(
+            EventSectionDetailsProjection section,
+            List<GradableEventDetailsProjection> gradableEvents,
+            Map<Long, List<CriterionDetailsProjection>> criteriaByGradableEvent,
+            Map<Long, List<CriterionRewardDetailsProjection>> rewardsByCriterion) {
+
+        List<TaskDetailsRequestDto> tasks = gradableEvents.stream()
+                .map(task -> toTaskDto(task, criteriaByGradableEvent.getOrDefault(task.getId(), Collections.emptyList()), rewardsByCriterion))
+                .toList();
+
+        TaskSectionDetailsRequestDto.TaskSectionDetailsRequestDtoBuilder<?, ?> response = TaskSectionDetailsRequestDto.builder()
+                .gradableEvents(tasks);
 
         return applyCommonEventSectionFields(response, section);
     }
@@ -246,6 +270,19 @@ public class CourseDetailsMapper {
     ) {
         return (TestDetailsRequestDto) applyCommonGradableEventFields(
                 TestDetailsRequestDto.builder(),
+                gradableEvent,
+                criteria,
+                rewardsByCriterion
+        );
+    }
+
+    private TaskDetailsRequestDto toTaskDto(
+            GradableEventDetailsProjection gradableEvent,
+            List<CriterionDetailsProjection> criteria,
+            Map<Long, List<CriterionRewardDetailsProjection>> rewardsByCriterion
+    ) {
+        return (TaskDetailsRequestDto) applyCommonGradableEventFields(
+                TaskDetailsRequestDto.builder(),
                 gradableEvent,
                 criteria,
                 rewardsByCriterion

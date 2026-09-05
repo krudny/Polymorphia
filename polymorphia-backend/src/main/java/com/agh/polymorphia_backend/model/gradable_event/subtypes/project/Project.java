@@ -1,5 +1,6 @@
-package com.agh.polymorphia_backend.model.gradable_event;
+package com.agh.polymorphia_backend.model.gradable_event.subtypes.project;
 
+import com.agh.polymorphia_backend.model.gradable_event.GradableEvent;
 import com.agh.polymorphia_backend.model.project.ProjectGroup;
 import com.agh.polymorphia_backend.model.project.ProjectVariantCategory;
 import com.fasterxml.jackson.annotation.JsonIgnore;

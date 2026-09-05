@@ -25,7 +25,9 @@ import com.agh.polymorphia_backend.service.user.UserService;
 import com.agh.polymorphia_backend.service.validation.AccessAuthorizer;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Comparator;
 import java.util.List;
@@ -75,6 +77,7 @@ public class TargetListService {
                     yield List.of();
                 }
             }
+            case TASK -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Zadania nie podlegają ocenianiu.");
         };
     }
 
@@ -86,6 +89,7 @@ public class TargetListService {
         return switch (gradableEvent.getEventSection().getEventSectionType()) {
             case ASSIGNMENT, TEST -> getTargetListForGradingAssignmentOrTest(requestDto, courseId);
             case PROJECT -> getTargetListForGradingProject(requestDto, gradableEvent, courseId);
+            case TASK -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Zadania nie podlegają ocenianiu.");
         };
     }
 
