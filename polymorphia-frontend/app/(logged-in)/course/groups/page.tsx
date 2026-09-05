@@ -12,7 +12,7 @@ import { CourseGroupTypes } from "@/services/course-groups/types";
 import ErrorComponent from "@/components/error";
 import { Roles } from "@/interfaces/api/user";
 import { SpeedDialKeys } from "@/components/speed-dial/types";
-import { SpeedDial } from "@/components/speed-dial";
+import { LazySpeedDial } from "@/components/speed-dial/lazy";
 import NewCardGridView from "@/components/new-card/grid";
 import NewCardTextAccessory from "@/components/new-card/card/accessory/text";
 
@@ -71,7 +71,7 @@ export default function CourseGroupsPage() {
       )}
       {userRole === Roles.COORDINATOR && (
         <div ref={speedDialRef}>
-          <SpeedDial speedDialKey={SpeedDialKeys.COURSE_GROUP_GRID} />
+          <LazySpeedDial speedDialKey={SpeedDialKeys.COURSE_GROUP_GRID} />
         </div>
       )}
     </>
