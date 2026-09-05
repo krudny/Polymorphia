@@ -6,6 +6,7 @@ import MarkdownViewer from "@/components/markdown/markdown-viewer";
 import TaskEditor from "@/components/task/general/task-editor";
 import TaskResult from "@/components/task/general/task-result";
 import useTaskCollapsiblePanel from "@/hooks/course/tasks/useTaskCollapsiblePanel";
+import { useTheme } from "next-themes";
 import type { TaskMobilePanelHeaderProps } from "./types";
 
 const COLLAPSED_SIZE = "56px";
@@ -26,6 +27,7 @@ function TaskMobilePanelHeader({
 }
 
 export default function TaskMobile() {
+  const { resolvedTheme } = useTheme();
   const descriptionPanel = useTaskCollapsiblePanel(false);
   const editorPanel = useTaskCollapsiblePanel(true);
   const resultPanel = useTaskCollapsiblePanel(true);
@@ -50,7 +52,7 @@ export default function TaskMobile() {
             onToggle={descriptionPanel.toggle}
           />
           <div className="task-mobile-description-content">
-            <MarkdownViewer />
+            <MarkdownViewer forceLight={resolvedTheme === "light"} />
           </div>
         </div>
       </Panel>
