@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { ExecuteResponseDTO } from "@/interfaces/api/tasks/types";
+import { ExecuteRequestDTO, ExecuteResponseDTO } from "@/interfaces/api/tasks/types";
 import {
   UseSubmitTask,
   UseSubmitTaskProps,
@@ -24,10 +24,12 @@ function formatOutput(res: ExecuteResponseDTO): string {
 }
 
 export default function useSubmitTask(
-  request: UseSubmitTaskProps
+  request: UseSubmitTaskProps,
+  taskId: number
 ): UseSubmitTask {
   const { mutate, isPending } = useMutation({
-    mutationFn: TaskService.runTask,
+    mutationFn: (payload: ExecuteRequestDTO) =>
+      TaskService.runTask(taskId, payload),
     onSuccess: (response) => {
       request.setOutput(formatOutput(response));
     },
