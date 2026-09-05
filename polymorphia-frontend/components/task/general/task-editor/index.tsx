@@ -6,9 +6,10 @@ import { BeforeMount, Editor, OnMount } from "@monaco-editor/react";
 import Selector from "@/components/selector";
 import { useTaskContext } from "@/hooks/contexts/useTaskContext";
 
-import type { SupportedLanguage } from "@/interfaces/api/tasks/types";
 import { mapSupportedLanguageToMonaco } from "./mapper";
 import { TaskEditorLazy } from "@/components/task/general/task-editor/lazy";
+import { TaskActions } from "@/providers/task/reducer/types";
+import type { SupportedLanguage } from "@/interfaces/api/tasks/types";
 
 const defineGlassTheme: BeforeMount = (monaco) => {
   monaco.editor.defineTheme("glass-dark", {
@@ -37,7 +38,7 @@ const defineGlassTheme: BeforeMount = (monaco) => {
 };
 
 export default function TaskEditor() {
-  const { editorRef, language, setLanguage, sampleCode, allowedLanguages } =
+  const { editorRef, language, dispatch, sampleCode, allowedLanguages } =
     useTaskContext();
 
   const handleBeforeMount: BeforeMount = (monaco) => {
@@ -55,7 +56,12 @@ export default function TaskEditor() {
           <Selector
             options={allowedLanguages}
             value={language}
-            onChange={(value) => setLanguage(value as SupportedLanguage)}
+            onChange={(value) =>
+              dispatch({
+                type: TaskActions.SET_LANGUAGE,
+                payload: value as SupportedLanguage,
+              })
+            }
             size="md"
             padding="sm"
             className="rounded-lg!"

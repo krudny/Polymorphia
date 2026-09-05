@@ -3,6 +3,7 @@ import {
   type SupportedLanguage,
   type TaskDetailsResponseDTO,
 } from "@/interfaces/api/tasks/types";
+import type { LanguageInfo, TaskDetailsView } from "@/providers/task/types";
 
 export const mapBackendToSupportedLanguage = (
   backendLanguage: string
@@ -39,3 +40,37 @@ export const mapTaskDetailsResponse = (
     taskLanguage: mapBackendToSupportedLanguage(allowedLanguage.taskLanguage),
   })),
 });
+
+export const toTaskDetailsView = (
+  dto: TaskDetailsResponseDTO
+): TaskDetailsView => {
+  const languages = new Map<SupportedLanguage, LanguageInfo>(
+    dto.allowedLanguages.map((allowedLanguage) => {
+      const normalizedLanguage = mapBackendToSupportedLanguage(
+        allowedLanguage.taskLanguage
+      );
+      return [
+        normalizedLanguage,
+        {
+          language: normalizedLanguage,
+          sampleCode: allowedLanguage.sampleCode,
+          isDefault: allowedLanguage.isDefault,
+        },
+      ];
+    })
+  );
+
+  const defaultAllowedLanguage =
+    dto.allowedLanguages.find((allowedLanguage) => allowedLanguage.isDefault) ??
+    dto.allowedLanguages[0];
+
+  const defaultLanguage = mapBackendToSupportedLanguage(
+    defaultAllowedLanguage.taskLanguage
+  );
+
+  return {
+    testCases: dto.testCases,
+    languages,
+    defaultLanguage,
+  };
+};

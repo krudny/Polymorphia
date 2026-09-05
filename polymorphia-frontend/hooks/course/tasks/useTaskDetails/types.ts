@@ -1,7 +1,7 @@
-import { TaskDetailsResponseDTO } from "@/interfaces/api/tasks/types";
+import type { TaskDetailsView } from "@/providers/task/types";
 
 export interface UseTaskDetails {
-  data: TaskDetailsResponseDTO | undefined;
+  data: TaskDetailsView | undefined;
   isLoading: boolean;
   isError: boolean;
   error: Error | null;
