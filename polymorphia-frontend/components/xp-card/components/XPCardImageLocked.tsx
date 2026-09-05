@@ -16,6 +16,7 @@ export default function XPCardImageWithLock({
         fill
         priority
         fetchPriority="high"
+        sizes="(max-width: 1920px) 96px, 200px"
       />
       {isLocked && (
         <div className="xp-card-locked-item">

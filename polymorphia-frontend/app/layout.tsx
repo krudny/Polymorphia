@@ -12,7 +12,7 @@ import { ThemeProvider } from "next-themes";
 import { ThemeProvider as ThemeProviderMui } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { themeConfig } from "@/components/speed-dial/config";
-import BackgroundWrapper from "@/components/background-wrapper/BackgroundWrapper";
+import BackgroundWrapper from "@/components/background-wrapper";
 import { TitleProvider } from "@/providers/title/TitleContext";
 import { GENERAL_APPLICATION_ROUTES } from "@/providers/title/routes";
 import { ApiError } from "@/services/api/error";
