@@ -1,5 +1,6 @@
 "use client";
 
+import "./index.css";
 import TaskTestCase from "@/components/task/general/task-test-case";
 import { useTaskContext } from "@/hooks/contexts/useTaskContext";
 import { TaskSubmissionStatus } from "@/interfaces/api/tasks/types";
@@ -35,7 +36,7 @@ export default function TaskSubmissionResultView() {
     <div className="task-result-submission-details">
       <div className="task-result-submission-header">
         <div className="task-result-submission-header-main">
-          <h3
+          <span
             className={
               isAccepted
                 ? "task-result-status-accepted"
@@ -43,7 +44,7 @@ export default function TaskSubmissionResultView() {
             }
           >
             {isAccepted ? "Zaakceptowano" : "Odrzucono"}
-          </h3>
+          </span>
           <span className="task-result-submission-passed-count">
             {submissionStatus.passedCount ?? 0} /{" "}
             {submissionStatus.totalCount ?? 0} przypadków testowych

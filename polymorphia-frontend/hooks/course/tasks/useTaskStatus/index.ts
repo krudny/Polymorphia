@@ -28,8 +28,9 @@ export default function useTaskStatus(
   return {
     ...query,
     submissionStatus,
-    hasSubmission: submissionStatus !== null,
+    hasSubmission: activeSubmissionId !== null,
     isSubmissionProcessing:
+      query.isLoading ||
       submissionStatus?.status === TaskSubmissionStatus.QUEUED ||
       submissionStatus?.status === TaskSubmissionStatus.RUNNING,
   };
