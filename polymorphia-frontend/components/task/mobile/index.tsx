@@ -7,24 +7,9 @@ import TaskEditor from "@/components/task/general/task-editor";
 import TaskResult from "@/components/task/general/task-result";
 import useTaskCollapsiblePanel from "@/hooks/course/tasks/useTaskCollapsiblePanel";
 import { useTheme } from "next-themes";
-import type { TaskMobilePanelHeaderProps } from "./types";
+import TaskMobilePanelHeader from "./panel-header";
 
 const COLLAPSED_SIZE = "56px";
-
-function TaskMobilePanelHeader({
-  title,
-  isCollapsed,
-  onToggle,
-}: TaskMobilePanelHeaderProps) {
-  return (
-    <button onClick={onToggle} className="task-mobile-header">
-      <span className="task-mobile-header-title">{title}</span>
-      <span className="task-mobile-header-chevron">
-        {isCollapsed ? "expand_more" : "expand_less"}
-      </span>
-    </button>
-  );
-}
 
 export default function TaskMobile() {
   const { resolvedTheme } = useTheme();

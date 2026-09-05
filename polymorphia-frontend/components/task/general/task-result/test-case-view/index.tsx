@@ -1,5 +1,6 @@
 "use client";
 
+import "./index.css";
 import TaskTestCase from "@/components/task/general/task-test-case";
 import { useTaskContext } from "@/hooks/contexts/useTaskContext";
 

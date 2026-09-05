@@ -1,5 +1,6 @@
 "use client";
 
+import "./index.css";
 import ButtonWithBorder from "@/components/button";
 import { useTaskContext } from "@/hooks/contexts/useTaskContext";
 import type { TestCaseResultDTO } from "@/interfaces/api/tasks/types";

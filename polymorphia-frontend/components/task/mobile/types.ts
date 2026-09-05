@@ -1,5 +1,1 @@
-export interface TaskMobilePanelHeaderProps {
-  title: string;
-  isCollapsed: boolean;
-  onToggle: () => void;
-}
+export type { TaskMobilePanelHeaderProps } from "./panel-header/types";
