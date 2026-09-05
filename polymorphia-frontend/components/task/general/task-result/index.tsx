@@ -48,14 +48,14 @@ export default function TaskResult() {
     submissionStatus?.passedCount != null &&
     submissionStatus?.totalCount != null &&
     submissionStatus.passedCount === submissionStatus.totalCount &&
-    submissionStatus.status === TaskSubmissionStatus.COMPLETED;
+    submissionStatus.status === TaskSubmissionStatus.COMPLETED; // oh my god
 
   const firstFailedResult = submissionStatus?.visibleResults?.find(
     (result) => !result.passed
-  );
+  ); // hate ?
 
-  const isResultTabVisible = isSubmitting || Boolean(submissionStatus);
-  const currentTab = isResultTabVisible ? activeTab : TaskTab.TESTCASES;
+  const isResultTabVisible = isSubmitting || Boolean(submissionStatus); // ???
+  const currentTab = isResultTabVisible ? activeTab : TaskTab.TESTCASES; // ???
 
   return (
     <div className="task-result-container">
@@ -72,12 +72,12 @@ export default function TaskResult() {
             let testCaseButtonColorClass = "";
             if (isSelected) {
               if (testCaseResult) {
-                testCaseButtonColorClass = testCaseResult.passed
+                testCaseButtonColorClass = testCaseResult.passed // to be fair those nested ifs logic is tragic
                   ? "bg-primary-success! text-primary-dark! border-primary-success!"
                   : "bg-primary-error! text-primary-dark! border-primary-error!";
               } else {
                 testCaseButtonColorClass =
-                  "bg-secondary-gray! text-primary-dark!";
+                  "bg-secondary-gray! text-primary-dark!"; // reassignment of variable?
               }
             } else {
               if (testCaseResult) {
@@ -110,7 +110,7 @@ export default function TaskResult() {
               className={`mx-0! rounded-lg! ${
                 currentTab === TaskTab.SUBMISSION_RESULT
                   ? "bg-secondary-gray! text-primary-dark!"
-                  : ""
+                  : "" // for what is this ternary?
               }`}
               onClick={() => setActiveTab(TaskTab.SUBMISSION_RESULT)}
             />
@@ -162,11 +162,11 @@ export default function TaskResult() {
           <>
             {isSubmitting ||
             submissionStatus?.status === TaskSubmissionStatus.QUEUED ||
-            submissionStatus?.status === TaskSubmissionStatus.RUNNING ? (
+            submissionStatus?.status === TaskSubmissionStatus.RUNNING ? ( // i cant live with such bad code
               <div className="task-result-submission-loading">
                 Przetwarzanie zgłoszenia...
               </div>
-            ) : !submissionStatus ? (
+            ) : !submissionStatus ? ( // this ternary is not bad, its tragic
               <div className="task-result-submission-empty">
                 Brak zgłoszenia.
               </div>
@@ -176,7 +176,7 @@ export default function TaskResult() {
                   <div className="task-result-submission-header-main">
                     <h3
                       className={
-                        isAccepted
+                        isAccepted // this code is rejected
                           ? "task-result-status-accepted"
                           : "task-result-status-rejected"
                       }

@@ -2,17 +2,13 @@
 
 import "./index.css";
 import dynamic from "next/dynamic";
-import type { BeforeMount, OnMount } from "@monaco-editor/react";
+import { BeforeMount, Editor, OnMount } from "@monaco-editor/react";
 import Selector from "@/components/selector";
 import { useTaskContext } from "@/hooks/contexts/useTaskContext";
 
 import type { SupportedLanguage } from "@/interfaces/api/tasks/types";
 import { mapSupportedLanguageToMonaco } from "./mapper";
-
-const Editor = dynamic(() => import("@monaco-editor/react"), {
-  ssr: false,
-  loading: () => <div className="task-editor-loading">Loading editor...</div>,
-});
+import { TaskEditorLazy } from "@/components/task/general/task-editor/lazy";
 
 const defineGlassTheme: BeforeMount = (monaco) => {
   monaco.editor.defineTheme("glass-dark", {
@@ -67,7 +63,7 @@ export default function TaskEditor() {
         </div>
       </div>
       <div className="task-editor-content">
-        <Editor
+        <TaskEditorLazy
           key={language}
           height="100%"
           theme="glass-dark"

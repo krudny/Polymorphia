@@ -1,5 +1,4 @@
-@import "tailwindcss";
-@import "../../../../styles/globals.css";
+@reference "../../../../styles/globals.css";
 
 .task-editor-container {
   @apply flex flex-col h-full;
