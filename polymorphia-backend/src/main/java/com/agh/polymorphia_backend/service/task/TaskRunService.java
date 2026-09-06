@@ -58,7 +58,7 @@ public class TaskRunService {
             executionResponse = codeExecutorClient.executeSync(remoteRequest);
         } catch (Exception exception) {
             throw new ResponseStatusException(
-                    HttpStatus.SERVICE_UNAVAILABLE,
+                    HttpStatus.BAD_GATEWAY,
                     "Usługa wykonywania kodu jest chwilowo niedostępna."
             );
         }
