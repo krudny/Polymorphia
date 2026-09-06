@@ -1,25 +1,37 @@
+import { ApiClient } from "@/services/api/client";
 import {
   ExecuteRequestDTO,
-  ExecuteResponseDTO,
+  ExecuteTaskResponseDTO,
+  SubmitTaskResponseDTO,
+  TaskDetailsResponseDTO,
+  TaskSubmissionStatusResponseDTO,
 } from "@/interfaces/api/tasks/types";
 
-const EXECUTE_URL = "http://localhost:8100/execute";
+const TaskService = {
+  getTaskDetails: async (taskId: number): Promise<TaskDetailsResponseDTO> => {
+    return ApiClient.get(`/tasks/${taskId}`);
+  },
 
-// TODO: to refactor
-export const TaskService = {
-  executeCode: async (
-    payload: ExecuteRequestDTO
-  ): Promise<ExecuteResponseDTO> => {
-    const res = await fetch(EXECUTE_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+  runTask: async (
+    taskId: number,
+    request: ExecuteRequestDTO
+  ): Promise<ExecuteTaskResponseDTO> => {
+    return ApiClient.post(`/tasks/${taskId}/run`, request);
+  },
 
-    if (!res.ok) {
-      throw new Error(`Execute failed: ${res.status} ${res.statusText}`);
-    }
+  submitTask: async (
+    taskId: number,
+    request: ExecuteRequestDTO
+  ): Promise<SubmitTaskResponseDTO> => {
+    return ApiClient.post(`/tasks/${taskId}/submissions`, request);
+  },
 
-    return (await res.json()) as ExecuteResponseDTO;
+  getSubmissionStatus: async (
+    taskId: number,
+    submissionId: number
+  ): Promise<TaskSubmissionStatusResponseDTO> => {
+    return ApiClient.get(`/tasks/${taskId}/submissions/${submissionId}`);
   },
 };
+
+export default TaskService;

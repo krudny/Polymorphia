@@ -29,8 +29,4 @@ export interface GradingContextInterface {
 }
 
 export type GradingFilterId =
-  | "searchBy"
-  | "sortOrder"
-  | "sortBy"
-  | "groups"
-  | "gradeStatus";
+  "searchBy" | "sortOrder" | "sortBy" | "groups" | "gradeStatus";
