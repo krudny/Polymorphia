@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "chests")
 @PrimaryKeyJoinColumn(name = "reward_id")
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-@ToString(exclude = {"items"})
+@ToString(callSuper = true, exclude = {"items"})
 public class Chest extends Reward {
     @ManyToMany(mappedBy = "chests", fetch = FetchType.LAZY)
     @Builder.Default

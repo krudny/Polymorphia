@@ -9,18 +9,18 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "rewards")
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public abstract class Reward {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
-    @EqualsAndHashCode.Include
     private Long id;
 
     @NotEmpty
@@ -47,4 +47,16 @@ public abstract class Reward {
     private Course course;
 
     public abstract RewardType getRewardType();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Reward other)) return false;
+        return getId() != null && getId().equals(other.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getId() != null ? getId().hashCode() : 0;
+    }
 }
