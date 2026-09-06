@@ -1,5 +1,4 @@
-@import "tailwindcss";
-@import "../../../styles/globals.css";
+@reference "../../../styles/globals.css";
 
 .new-card {
   @apply relative w-full flex drop-shadow-sm transition-all overflow-hidden bg-neutral-50 dark:bg-primary-dark;

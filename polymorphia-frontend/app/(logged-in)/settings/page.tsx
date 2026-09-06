@@ -14,14 +14,14 @@ import useAvailableCourses from "@/hooks/course/course-choice/useAvailableCourse
 import Loading from "@/components/loading";
 import usePreferredCourseUpdate from "@/hooks/course/course-choice/usePreferredCourseUpdate";
 import Selector from "@/components/selector";
-import ChangePasswordModal from "@/app/(logged-in)/settings/modals/change-password";
 import useDownloadCourseConfig from "@/hooks/course/config/useDownloadCourseConfig";
-import { UploadCourseModal } from "@/components/speed-dial/modals/file-import/import-course";
 import { Roles } from "@/interfaces/api/user";
 import {
   CourseFileAction,
   CourseFileActions,
 } from "@/components/speed-dial/modals/file-import/import-course/upload/types";
+import { LazyChangePasswordModal } from "@/app/(logged-in)/settings/modals/change-password/lazy";
+import { LazyUploadCourseModal } from "@/components/speed-dial/modals/lazy";
 
 export default function Settings() {
   const {
@@ -174,12 +174,12 @@ export default function Settings() {
           </div>
         ))}
       {changePasswordModalVisible && (
-        <ChangePasswordModal
+        <LazyChangePasswordModal
           onClosedAction={() => setChangePasswordModalVisible(false)}
         />
       )}
       {importCourseModalVisible && (
-        <UploadCourseModal
+        <LazyUploadCourseModal
           onClosedAction={() => setImportCourseModalVisible(false)}
           courseFileAction={courseFileAction}
         />

@@ -13,7 +13,7 @@ import ErrorComponent from "@/components/error";
 import { GradableEventDTO } from "@/interfaces/api/gradable_event/types";
 import NewCardGridView from "@/components/new-card/grid";
 import NewCardPointsAccessory from "@/components/new-card/card/accessory/points";
-import GradeModal from "@/components/speed-dial/modals/grade";
+import { LazyGradeModal } from "@/components/speed-dial/modals/lazy";
 
 export default function StudentView() {
   const { eventType, eventSectionId } = useEventParams();
@@ -111,7 +111,7 @@ export default function StudentView() {
         pointsSummaryConfiguration={pointsSummary}
       />
       {eventType === EventTypes.TEST && selectedEventId && (
-        <GradeModal
+        <LazyGradeModal
           onClosedAction={() => setSelectedEventId(null)}
           gradableEventIdProp={selectedEventId}
         />

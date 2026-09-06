@@ -1,5 +1,4 @@
-@import "tailwindcss";
-@import "../styles/globals.css";
+@reference "../styles/globals.css";
 
 .slide-animation-wrapper-container {
   @apply relative grid grid-cols-1 grid-rows-1 overflow-x-clip overflow-y-visible;

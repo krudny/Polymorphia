@@ -14,7 +14,7 @@ import ErrorComponent from "@/components/error";
 import { Roles } from "@/interfaces/api/user";
 import { Sizes } from "@/interfaces/general";
 import { SpeedDialKeys } from "@/components/speed-dial/types";
-import { SpeedDial } from "@/components/speed-dial";
+import { LazySpeedDial } from "@/components/speed-dial/lazy";
 import { getUserPointsProps } from "./util";
 import { ProfileFilterId } from "@/providers/profile/types";
 
@@ -48,7 +48,7 @@ export default function ProfileView() {
 
   return (
     <div ref={wrapperRef} className="profile">
-      <SpeedDial speedDialKey={SpeedDialKeys.PROFILE_STUDENT} />
+      <LazySpeedDial speedDialKey={SpeedDialKeys.PROFILE_STUDENT} />
       <div className="profile-wrapper">
         <div className="profile-content-wrapper">
           <div className="profile-image-wrapper">

@@ -1,5 +1,4 @@
-@import "tailwindcss";
-@import "../../../../styles/globals.css";
+@reference "../../../../styles/globals.css";
 
 .new-card-grid-layout-animation-desktop {
   @apply h-full w-fit;

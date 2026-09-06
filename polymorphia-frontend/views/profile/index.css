@@ -1,5 +1,4 @@
-@import "tailwindcss";
-@import "../../styles/globals.css";
+@reference "../../styles/globals.css";
 
 .profile {
   @apply flex-1 w-full opacity-0 flex-col-centered extra-large-center my-auto max-h-[50rem] h-[calc(100dvh-6rem)] 3xl:flex-none;
