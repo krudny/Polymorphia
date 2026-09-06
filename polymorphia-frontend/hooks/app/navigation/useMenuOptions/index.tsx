@@ -98,7 +98,7 @@ export function useMainMenuItems(): MenuOption[] {
     );
 
     if (eventSections && eventSections.length > 0) {
-      return updateMenuItems(items, eventSections, courseOptionText);
+      return updateMenuItems(items, eventSections, courseOptionText, userRole);
     }
 
     return items;
