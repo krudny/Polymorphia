@@ -1,4 +1,4 @@
-name: Build and Deploy Backend to Staging
+name: "Deploy | Backend to Staging"
 
 on:
   push:
@@ -18,23 +18,13 @@ concurrency:
 
 jobs:
   run-tests:
+    if: github.event_name != 'workflow_dispatch' || github.actor == 'krudny'
     name: Run Tests
     uses: ./.github/workflows/run_tests.yml
 
-  migrate:
-    name: Run Migrations
-    needs: [run-tests]
-    uses: ./.github/workflows/run_migrations.yml
-    secrets:
-      DB_HOST: ${{ secrets.STAGING_DB_HOST }}
-      DB_PORT: ${{ secrets.STAGING_DB_PORT }}
-      DB_NAME: ${{ secrets.STAGING_DB_NAME }}
-      DB_USER: ${{ secrets.STAGING_DB_USER }}
-      DB_PASSWORD: ${{ secrets.STAGING_DB_PASSWORD }}
-
   build-push:
     name: Build and Push
-    needs: [migrate]
+    needs: [run-tests]
     uses: ./.github/workflows/build_push.yml
     with:
       environment: staging
@@ -45,9 +35,22 @@ jobs:
       ARTIFACT_REGISTRY_NAME: ${{ secrets.ARTIFACT_REGISTRY_NAME }}
       IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
 
-  deploy:
-    name: Deploy
+  migrate:
+    name: Run Migrations
     needs: [build-push]
+    uses: ./.github/workflows/run_migrations.yml
+    secrets:
+      DB_HOST: ${{ secrets.STAGING_DB_HOST }}
+      DB_PORT: ${{ secrets.STAGING_DB_PORT }}
+      DB_NAME: ${{ secrets.STAGING_DB_NAME }}
+      DB_USER: ${{ secrets.STAGING_DB_USER }}
+      DB_PASSWORD: ${{ secrets.STAGING_DB_PASSWORD }}
+      VM_USER: ${{ secrets.STAGING_VM_USER }}
+      SSH_PRIVATE_KEY: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+
+  deploy:
+    name: Deploy Backend to Staging
+    needs: [migrate]
     uses: ./.github/workflows/deploy_to_env.yml
     with:
       environment: staging
@@ -64,3 +67,9 @@ jobs:
       IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
       HEALTH_ENDPOINT: ${{ secrets.HEALTH_ENDPOINT }}
       APP_DOMAIN: ${{ secrets.STAGING_APP_DOMAIN }}
+
+  deploy-executor:
+    if: github.event_name != 'workflow_dispatch' || github.actor == 'krudny'
+    name: Deploy Executor to Dev
+    uses: ./.github/workflows/deploy_executor_dev.yml
+    secrets: inherit

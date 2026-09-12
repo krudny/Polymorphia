@@ -1,4 +1,4 @@
-name: Deploy to Environment
+name: "Deploy | Backend to Environment"
 
 on:
   workflow_call:
@@ -82,10 +82,15 @@ jobs:
             docker update --restart=no "$CONTAINER" 2>/dev/null || true
             docker stop --timeout 30 "$CONTAINER" 2>/dev/null || true
             docker rm "$CONTAINER" 2>/dev/null || true
+            sudo mkdir -p /mnt/data/app-config-${{ inputs.environment }}
+            gcloud secrets versions access latest --secret=backend-properties-${{ inputs.environment }} | sudo tee /mnt/data/app-config-${{ inputs.environment }}/application.properties > /dev/null || true
+            sudo chmod 644 /mnt/data/app-config-${{ inputs.environment }}/application.properties || true
 
             docker run -d \
               --name "$CONTAINER" \
               --restart unless-stopped \
+              --log-opt max-size=30m \
+              --log-opt max-file=3 \
               -p ${{ inputs.container-port }}:${{ inputs.container-port }} \
               -v /mnt/data/app-config-${{ inputs.environment }}:/app/config:ro \
               -v /mnt/data/static:/app/static \
@@ -105,6 +110,7 @@ jobs:
           host: ${{ secrets.VM_IP }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          command_timeout: 15m
           script: |
             set -uo pipefail
 
@@ -118,9 +124,12 @@ jobs:
             echo "Max wait: ${MAX_WAIT}s (retry every ${INTERVAL}s)"
 
             while [ "$elapsed" -lt "$MAX_WAIT" ]; do
-              HTTP_CODE=$(curl -sSL -o /tmp/health_response.json -w "%{http_code}" "$HEALTH_URL" || echo "000")
+              rm -f /tmp/health_response.json
+              HTTP_CODE=$(curl -sSL -o /tmp/health_response.json -w "%{http_code}" "$HEALTH_URL" 2>/dev/null || echo "000")
+              HTTP_CODE=$(echo "$HTTP_CODE" | tr -d '\r\n' | grep -oE '[0-9]{3}' | tail -n 1)
+              [ -z "$HTTP_CODE" ] && HTTP_CODE="000"
               echo "[$elapsed/${MAX_WAIT}s] HTTP $HTTP_CODE"
-              cat /tmp/health_response.json || true
+              [ -f /tmp/health_response.json ] && cat /tmp/health_response.json || true
               echo ""
 
               if [ "$HTTP_CODE" = "200" ]; then
