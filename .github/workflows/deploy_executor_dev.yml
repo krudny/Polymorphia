@@ -2,7 +2,7 @@ name: "Deploy | Executor to Dev"
 
 on:
   pull_request:
-    types: [labeled, synchronize]
+    types: [labeled]
   workflow_dispatch:
 
 permissions:
@@ -15,11 +15,7 @@ concurrency:
 
 jobs:
   resolve-host:
-    if: |
-      (github.event_name == 'pull_request' && (
-        (github.event.action == 'labeled' && github.event.label.name == 'deploy-executor-dev') ||
-        (github.event.action == 'synchronize' && contains(github.event.pull_request.labels.*.name, 'deploy-executor-dev'))
-      )) || (github.event_name == 'workflow_dispatch' && github.actor == 'krudny')
+    if: (github.event_name == 'pull_request' && github.event.label.name == 'deploy-executor-dev') || (github.event_name == 'workflow_dispatch' && github.actor == 'krudny')
     name: Resolve Dev Executor Host
     runs-on: ubuntu-latest
     environment: dev-executor
