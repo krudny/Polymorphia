@@ -1,9 +1,19 @@
-name: "Deploy | Backend to Develop"
+name: "Deploy | Develop Environment"
 
 on:
   pull_request:
     types: [labeled]
   workflow_dispatch:
+    inputs:
+      target:
+        description: "Component to deploy (backend, executor, all)"
+        required: true
+        type: choice
+        options:
+          - backend
+          - executor
+          - all
+        default: all
 
 permissions:
   statuses: write
@@ -16,16 +26,20 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  run-tests:
-    if: (github.event_name == 'pull_request' && github.event.label.name == 'deploy-to-develop') || (github.event_name == 'workflow_dispatch' && github.actor == 'krudny')
-    name: Run Tests
+  # ==========================================
+  # BACKEND DEPLOYMENT PIPELINE
+  # ==========================================
+  backend-run-tests:
+    if: |
+      (github.event_name == 'pull_request' && (github.event.label.name == 'deploy-to-develop' || github.event.label.name == 'deploy-dev-all')) ||
+      (github.event_name == 'workflow_dispatch' && github.actor == 'krudny' && (inputs.target == 'backend' || inputs.target == 'all'))
+    name: Backend - Run Tests
     uses: ./.github/workflows/run_tests.yml
 
-  setup-environment:
-    name: Setup Environment
-    needs: [run-tests]
+  backend-setup-environment:
+    name: Backend - Setup Environment
+    needs: [backend-run-tests]
     runs-on: ubuntu-latest
-
     steps:
       - name: Verify authorized user for manual deploy
         if: github.event_name == 'workflow_dispatch'
@@ -51,9 +65,9 @@ jobs:
             pg_dump -h localhost -p ${{ secrets.STAGING_DB_PORT }} -U "${{ secrets.STAGING_DB_USER }}" --no-owner --no-privileges "${{ secrets.STAGING_DB_NAME }}" | \
               PGPASSWORD="${{ secrets.DEVELOP_DB_PASSWORD }}" psql -h localhost -p ${{ secrets.DEVELOP_DB_PORT }} -U "${{ secrets.DEVELOP_DB_USER }}" -d "${{ secrets.DEVELOP_DB_NAME }}" -v ON_ERROR_STOP=1
 
-  migrate:
-    name: Run Migrations
-    needs: [setup-environment]
+  backend-migrate:
+    name: Backend - Run Migrations
+    needs: [backend-setup-environment]
     uses: ./.github/workflows/run_migrations.yml
     secrets:
       DB_HOST: ${{ secrets.DEVELOP_VM_IP }}
@@ -64,9 +78,9 @@ jobs:
       VM_USER: ${{ secrets.DEVELOP_VM_USER }}
       SSH_PRIVATE_KEY: ${{ secrets.DEVELOP_SSH_PRIVATE_KEY }}
 
-  build-push:
-    name: Build and Push
-    needs: [setup-environment, migrate]
+  backend-build-push:
+    name: Backend - Build and Push
+    needs: [backend-setup-environment, backend-migrate]
     uses: ./.github/workflows/build_push.yml
     with:
       environment: develop
@@ -77,9 +91,9 @@ jobs:
       ARTIFACT_REGISTRY_NAME: ${{ secrets.ARTIFACT_REGISTRY_NAME }}
       IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
 
-  deploy:
-    name: Deploy
-    needs: [build-push]
+  backend-deploy:
+    name: Backend - Deploy
+    needs: [backend-build-push]
     uses: ./.github/workflows/deploy_to_env.yml
     with:
       environment: develop
@@ -96,3 +110,62 @@ jobs:
       IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
       HEALTH_ENDPOINT: ${{ secrets.HEALTH_ENDPOINT }}
       APP_DOMAIN: ${{ secrets.DEVELOP_APP_DOMAIN }}
+
+  # ==========================================
+  # EXECUTOR DEPLOYMENT PIPELINE
+  # ==========================================
+  executor-resolve-host:
+    if: |
+      (github.event_name == 'pull_request' && (github.event.label.name == 'deploy-executor-dev' || github.event.label.name == 'deploy-dev-all')) ||
+      (github.event_name == 'workflow_dispatch' && github.actor == 'krudny' && (inputs.target == 'executor' || inputs.target == 'all'))
+    name: Executor - Resolve Dev Host
+    runs-on: ubuntu-latest
+    environment: dev-executor
+    outputs:
+      vm_ip: ${{ steps.get-ip.outputs.vm_ip }}
+    steps:
+      - name: Verify authorized user
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          if [ "${{ github.actor }}" != "krudny" ]; then
+            echo "Error: User ${{ github.actor }} is not authorized to deploy executor."
+            exit 1
+          fi
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@aa5489c8933f4cc7a4f7d45035b3b1440c9c10db
+
+      - name: Get VM External IP
+        id: get-ip
+        run: |
+          VM_NAME="${{ secrets.DEV_EXECUTOR_VM_NAME || 'polymorphia-dev-executor-vm' }}"
+          ZONE="${{ secrets.GCP_ZONE || 'europe-west1-b' }}"
+
+          VM_IP=$(gcloud compute instances describe "$VM_NAME" --zone="$ZONE" --format="get(networkInterfaces[0].accessConfigs[0].natIP)" 2>/dev/null || true)
+
+          if [ -z "$VM_IP" ]; then
+            echo "Error: Could not obtain external IP for $VM_NAME in zone $ZONE."
+            exit 1
+          fi
+
+          echo "vm_ip=$VM_IP" >> "$GITHUB_OUTPUT"
+          echo "Resolved dynamic IP: $VM_IP"
+
+  executor-deploy:
+    needs: [executor-resolve-host]
+    name: Executor - Deploy to Dev
+    uses: ./.github/workflows/deploy_executor_to_env.yml
+    with:
+      environment: dev-executor
+      target-host: ${{ needs.executor-resolve-host.outputs.vm_ip }}
+      service-name: polymorphia-code-executor
+      service-port: 8100
+      target-dir: /opt/polymorphia-executor
+    secrets:
+      VM_USER: ${{ secrets.DEV_EXECUTOR_VM_USER || 'k_rudny1' }}
+      SSH_PRIVATE_KEY: ${{ secrets.DEV_EXECUTOR_SSH_PRIVATE_KEY }}
