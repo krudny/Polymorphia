@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   run-tests:
-    if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-develop')) || (github.event_name == 'workflow_dispatch' && github.actor == 'krudny')
+    if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-to-develop')) || (github.event_name == 'workflow_dispatch' && github.actor == 'krudny')
     name: Run Tests
     uses: ./.github/workflows/run_tests.yml
 

@@ -16,6 +16,7 @@ public class CodeExecutorConfig {
     @Bean
     public RestClient codeExecutorRestClient(
             @Value("${code-executor.base-url}") String baseUrl,
+            @Value("${code-executor.auth-secret:default-secret}") String authSecret,
             @Value("${code-executor.connect-timeout-seconds:2}") int connectTimeoutSeconds,
             @Value("${code-executor.read-timeout-seconds:15}") int readTimeoutSeconds
     ) {
@@ -25,6 +26,7 @@ public class CodeExecutorConfig {
 
         return RestClient.builder()
                 .baseUrl(baseUrl)
+                .defaultHeader("X-Executor-Secret", authSecret)
                 .requestFactory(requestFactory)
                 .build();
     }
