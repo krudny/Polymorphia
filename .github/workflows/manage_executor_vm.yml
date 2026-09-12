@@ -1,0 +1,53 @@
+name: "Util | Manage Executor VM"
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Action to perform (start | stop)"
+        required: true
+        default: "start"
+        type: choice
+        options:
+          - start
+          - stop
+
+permissions:
+  contents: read
+
+concurrency:
+  group: manage-dev-executor-vm
+  cancel-in-progress: false
+
+jobs:
+  manage:
+    if: github.actor == 'krudny'
+    name: Manage VM Power State
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify authorized user
+        run: |
+          if [ "${{ github.actor }}" != "krudny" ]; then
+            echo "Error: User ${{ github.actor }} is not authorized to manage executor VM."
+            exit 1
+          fi
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@aa5489c8933f4cc7a4f7d45035b3b1440c9c10db
+
+      - name: Execute action
+        run: |
+          ACTION="${{ github.event.inputs.action }}"
+          VM_NAME="${{ secrets.DEV_EXECUTOR_VM_NAME }}"
+          ZONE="${{ secrets.GCP_ZONE }}"
+
+          if [ "$ACTION" = "start" ]; then
+            gcloud compute instances start "$VM_NAME" --zone="$ZONE"
+          elif [ "$ACTION" = "stop" ]; then
+            gcloud compute instances stop "$VM_NAME" --zone="$ZONE"
+          fi

@@ -1,0 +1,113 @@
+name: "Deploy | Executor to Environment"
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        required: true
+        description: "Target environment: dev-executor | production"
+      service-name:
+        type: string
+        required: false
+        default: "polymorphia-code-executor"
+        description: "Systemd service name"
+      service-port:
+        type: number
+        required: false
+        default: 8100
+        description: "HTTP service port for health check"
+      target-dir:
+        type: string
+        required: false
+        default: "/mnt/data/executor"
+        description: "Installation directory on target host"
+      target-host:
+        type: string
+        required: false
+        default: ""
+        description: "Target host IP or domain (overrides secrets.VM_IP if provided)"
+    secrets:
+      VM_IP:
+        required: false
+      VM_USER:
+        required: true
+      SSH_PRIVATE_KEY:
+        required: true
+
+jobs:
+  deploy:
+    name: "Deploy Executor to ${{ inputs.environment }}"
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Setup Java 25
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6
+        with:
+          distribution: "temurin"
+          java-version: "25"
+          cache: "gradle"
+
+      - name: Build JAR with Gradle
+        working-directory: ./polymorphia-code-executor
+        run: |
+          ./gradlew clean bootJar
+          mkdir -p build/artifacts
+          cp $(ls build/libs/*.jar | grep -v 'plain' | head -n 1) build/artifacts/executor.jar
+
+      - name: Copy JAR to target host
+        uses: appleboy/scp-action@ff85246acaad7bdce478db94a363cd2bf7c90345
+        with:
+          host: ${{ inputs.target-host || secrets.VM_IP }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "polymorphia-code-executor/build/artifacts/executor.jar"
+          target: "/tmp/"
+          strip_components: 3
+
+      - name: Update service and verify health
+        uses: appleboy/ssh-action@0ff4204d59e8e51228ff73bce53f80d53301dee2
+        with:
+          host: ${{ inputs.target-host || secrets.VM_IP }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          command_timeout: 10m
+          script: |
+            set -euo pipefail
+            sudo mkdir -p "${{ inputs.target-dir }}"
+            if [ -f /tmp/executor.jar ]; then
+              sudo mv /tmp/executor.jar "${{ inputs.target-dir }}/executor.jar"
+            elif [ -f /tmp/artifacts/executor.jar ]; then
+              sudo mv /tmp/artifacts/executor.jar "${{ inputs.target-dir }}/executor.jar"
+            else
+              JAR_FILE=$(sudo find /tmp -maxdepth 3 -name "executor.jar" | head -n 1)
+              if [ -n "$JAR_FILE" ]; then
+                sudo mv "$JAR_FILE" "${{ inputs.target-dir }}/executor.jar"
+              else
+                echo "Error: executor.jar not found in /tmp"
+                exit 1
+              fi
+            fi
+            sudo mkdir -p /opt/polymorphia-executor/config /mnt/data/executor/config 2>/dev/null || true
+            sudo touch /opt/polymorphia-executor/config/application.properties /mnt/data/executor/config/application.properties 2>/dev/null || true
+            sudo cp -f "${{ inputs.target-dir }}/executor.jar" /opt/polymorphia-executor/executor.jar 2>/dev/null || true
+            sudo cp -f "${{ inputs.target-dir }}/executor.jar" /mnt/data/executor/executor.jar 2>/dev/null || true
+            sudo chmod 755 /opt/polymorphia-executor/executor.jar /mnt/data/executor/executor.jar "${{ inputs.target-dir }}/executor.jar" 2>/dev/null || true
+            sudo systemctl daemon-reload
+            sudo systemctl enable "${{ inputs.service-name }}"
+            sudo systemctl restart "${{ inputs.service-name }}"
+
+            for i in {1..45}; do
+              if curl -sf "http://localhost:${{ inputs.service-port }}/actuator/health" >/dev/null 2>&1; then
+                echo "Service ${{ inputs.service-name }} is healthy on port ${{ inputs.service-port }}."
+                exit 0
+              fi
+              sleep 2
+            done
+
+            echo "Error: Service ${{ inputs.service-name }} failed health check."
+            sudo journalctl -u "${{ inputs.service-name }}" -n 50 --no-pager
+            exit 1
