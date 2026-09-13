@@ -156,7 +156,7 @@
             "behavior": "ONE_EVENT"
           },
           "details": {
-            "id": 14,
+            "id": 13,
             "receivedDate": "26.10.2025",
             "usedDate": null,
             "isUsed": false,
@@ -179,7 +179,7 @@
             "behavior": "MULTIPLE_EVENTS"
           },
           "details": {
-            "id": 13,
+            "id": 14,
             "receivedDate": "26.10.2025",
             "usedDate": null,
             "isUsed": false,

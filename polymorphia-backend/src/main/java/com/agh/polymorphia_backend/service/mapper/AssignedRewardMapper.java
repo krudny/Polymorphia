@@ -77,7 +77,8 @@ public class AssignedRewardMapper {
 
         List<ItemAssignmentDetailsResponseDto> details = assignedItems.stream()
                 .map(this::getItemDetailsDto)
-                .sorted(Comparator.comparing(BaseRewardAssignmentDetailsResponseDto::getReceivedDate))
+                .sorted(Comparator.comparing(BaseRewardAssignmentDetailsResponseDto::getReceivedDate)
+                        .thenComparing(BaseRewardAssignmentDetailsResponseDto::getId))
                 .toList();
 
         return EquipmentItemResponseDto.builder()
@@ -108,7 +109,9 @@ public class AssignedRewardMapper {
     private ChestAssignmentDetailsResponseDto getChestDetailsDto(AssignedChest assignedChest, Long animalId) {
         List<AssignedRewardResponseDto> receivedItems = assignedChest.getAssignedItems().stream()
                 .map(assignedItem -> itemToAssignedRewardDtoWithType(assignedItem, animalId))
-                .sorted(Comparator.comparing(response -> response.base().getOrderIndex()))
+                .sorted(Comparator.comparing((AssignedRewardResponseDto response) -> response.base().getOrderIndex())
+                        .thenComparing(response -> response.base().getId())
+                        .thenComparing(response -> response.details().getId()))
                 .toList();
 
         return ChestAssignmentDetailsResponseDto.builder()
