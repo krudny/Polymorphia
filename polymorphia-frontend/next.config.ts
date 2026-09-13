@@ -3,12 +3,8 @@ import withBundleAnalyzer from "@next/bundle-analyzer";
 import type { NextConfig } from "next";
 import type { RemotePattern } from "next/dist/shared/lib/image-config";
 
-const backendUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-if (!backendUrl) {
-  throw new Error(
-    "Missing required environment variable: NEXT_PUBLIC_API_BASE_URL"
-  );
-}
+const backendUrl =
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8101";
 
 const parsedUrl = new URL(backendUrl);
 const remotePatterns: RemotePattern[] = [
@@ -47,7 +43,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: `${backendUrl}/:path*`,
+        destination: `${backendUrl.replace(/\/$/, "")}/:path*`,
       },
     ];
   },
