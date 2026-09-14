@@ -219,6 +219,7 @@ public class EquipmentService {
         return chest
                 .getItems().stream()
                 .map(i -> (Item) Hibernate.unproxy(i))
+                .sorted(Comparator.comparing(Item::getOrderIndex).thenComparing(Item::getId))
                 .filter(i -> !assignedRewardService.isLimitReached(i, animalId))
                 .map(item -> assignedRewardService.createAssignedItem(Optional.of(assignedChest), assignedChest.getCriterionGrade(), item, openDate))
                 .collect(Collectors.toList());
