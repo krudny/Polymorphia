@@ -17,8 +17,6 @@ class ExecutorApiKeyFilter(
     private val expectedSecret: String
 ) : OncePerRequestFilter() {
 
-    private val log = LoggerFactory.getLogger(ExecutorApiKeyFilter::class.java)
-
     @PostConstruct
     fun validateConfiguration() {
         if (expectedSecret.isBlank()) {

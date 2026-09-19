@@ -3,11 +3,11 @@ package com.polymorphia.codeexecutor
 import org.springframework.stereotype.Service
 
 @Service
-class ExecutionService(private val executor: DockerExecutor) {
+class ExecutionService(private val executorsRegistry: ExecutorRegistry) {
 
-    fun run(request: ExecuteRequest): ExecuteResponse {
-        val result = executor.execute(request)
-        return ExecuteResponse(
+    fun run(request: ExecutionRequest): ExecutionResponse {
+        val result = executorsRegistry.resolve(request.strategy).execute(request);
+        return ExecutionResponse(
             stdout = result.stdout,
             stderr = result.stderr,
             exitCode = result.exitCode,
