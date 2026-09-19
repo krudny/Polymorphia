@@ -17,6 +17,7 @@ public class RemoteExecutionRequestDto {
     private final Integer wallTimeLimitMs;
     private final Integer memoryLimitMb;
     private final String callbackUrl;
+    private final String strategy;
 
     public static RemoteExecutionRequestDto from(
         TaskTestCaseSpec testCaseSpec,
@@ -30,6 +31,7 @@ public class RemoteExecutionRequestDto {
             .cpuTimeLimitMs(testCaseSpec.limits().cpuTimeLimitMs())
             .wallTimeLimitMs(testCaseSpec.limits().wallTimeLimitMs())
             .memoryLimitMb(testCaseSpec.limits().memoryLimitMb())
+            .strategy("DOCKER")
             .build();
     }
 }
