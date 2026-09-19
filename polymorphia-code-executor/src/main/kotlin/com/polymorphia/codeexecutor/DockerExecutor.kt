@@ -29,7 +29,8 @@ private const val MAX_OPEN_FILES = 64L
 private const val MAX_FILE_SIZE_BYTES = 10L * 1024 * 1024
 
 @Component
-class DockerExecutor(private val docker: DockerClient) {
+class DockerExecutor(private val docker: DockerClient) : CodeExecutor {
+    override val strategy: ExecutionStrategy = ExecutionStrategy.DOCKER;
 
     private val presentImages = ConcurrentHashMap.newKeySet<String>()
 
@@ -37,7 +38,7 @@ class DockerExecutor(private val docker: DockerClient) {
         images.forEach(::ensureImage)
     }
 
-    fun execute(request: ExecuteRequest): ExecutionResult {
+    override fun execute(request: ExecutionRequest): ExecutionResult {
         val language = request.language
         ensureImage(language.image)
 
@@ -72,10 +73,6 @@ class DockerExecutor(private val docker: DockerClient) {
     }
 
     private fun buildHostConfig(memoryLimitMb: Int, cpuTimeLimitMs: Int?): HostConfig {
-        // readonlyRootfs+tmpfs was tried for /app but the tmpfs mount only exists once the
-        // container is started, while sources are copied in before start - docker cp then
-        // fails with "container rootfs is marked read-only". Left writable until the
-        // create->copy->start flow changes (see DESIGN.md D4/D5 pooled-exec strategies).
         val hostConfig = HostConfig.newHostConfig()
             .withMemory(memoryLimitMb * 1024L * 1024L)
             .withMemorySwap(memoryLimitMb * 1024L * 1024L)
@@ -97,7 +94,7 @@ class DockerExecutor(private val docker: DockerClient) {
         return hostConfig
     }
 
-    private fun copySources(containerId: String, language: SupportedLanguage, request: ExecuteRequest) {
+    private fun copySources(containerId: String, language: SupportedLanguage, request: ExecutionRequest) {
         val files = buildMap {
             put(language.fileName, request.sourceCode.toByteArray())
             request.stdin?.let { put(STDIN_FILE, it.toByteArray()) }
