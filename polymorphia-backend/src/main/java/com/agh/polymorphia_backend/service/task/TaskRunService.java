@@ -38,8 +38,9 @@ public class TaskRunService {
         taskService.validateTaskLanguage(taskId, request.getTaskLanguage());
 
         List<TaskTestCase> visibleTestCases = taskTestCaseRepository.findVisibleByTaskId(taskId);
+        String strategy = request.getExecutionMode().resolveStrategy();
         List<TestCaseResultDto> results = visibleTestCases.stream()
-                .map(testCase -> runSingleTestCase(task, request, testCase))
+                .map(testCase -> runSingleTestCase(task, request, testCase, strategy))
                 .toList();
 
         return ExecuteTaskResponseDto.builder()
@@ -47,11 +48,11 @@ public class TaskRunService {
                 .build();
     }
 
-    private TestCaseResultDto runSingleTestCase(Task task, ExecuteTaskRequestDto request, TaskTestCase testCase) {
+    private TestCaseResultDto runSingleTestCase(Task task, ExecuteTaskRequestDto request, TaskTestCase testCase, String strategy) {
         TaskTestCaseSpec testCaseSpec = TaskTestCaseSpec.from(task, testCase);
 
         RemoteExecutionRequestDto remoteRequest = RemoteExecutionRequestDto
-                .from(testCaseSpec, request.getTaskLanguage(), request.getSourceCode());
+                .from(testCaseSpec, request.getTaskLanguage(), request.getSourceCode(), strategy);
 
         RemoteExecutionResponseDto executionResponse;
         try {
