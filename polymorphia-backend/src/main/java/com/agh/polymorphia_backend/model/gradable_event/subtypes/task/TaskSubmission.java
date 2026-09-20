@@ -78,6 +78,11 @@ public class TaskSubmission {
     private TaskSupportedLanguage language;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "execution_mode", length = 32, nullable = false)
+    private TaskExecutionMode executionMode;
+
+    @NotNull
     @Column(name = "source_code", columnDefinition = "TEXT", nullable = false)
     private String sourceCode;
 

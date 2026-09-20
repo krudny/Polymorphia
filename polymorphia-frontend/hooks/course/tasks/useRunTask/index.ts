@@ -7,7 +7,7 @@ import type { UseRunTask } from "@/hooks/course/tasks/useRunTask/types";
 import TaskService from "@/services/tasks";
 
 export default function useRunTask(taskId: number): UseRunTask {
-  const { mutate, isPending, isError, data } = useMutation({
+  const { mutate, reset, isPending, isError, data } = useMutation({
     mutationFn: (payload: ExecuteRequestDTO) =>
       TaskService.runTask(taskId, payload),
   });
@@ -19,6 +19,7 @@ export default function useRunTask(taskId: number): UseRunTask {
 
   return {
     mutate,
+    reset,
     isPending,
     isError,
     results,
