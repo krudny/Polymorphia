@@ -4,6 +4,7 @@ import type {
   TestCaseResultDTO,
   TaskSubmissionStatusResponseDTO,
   SupportedLanguage,
+  ExecutionMode,
 } from "@/interfaces/api/tasks/types";
 import type { SelectorOption } from "@/components/selector/types";
 import type { editor } from "monaco-editor";
@@ -33,13 +34,15 @@ export type TaskTab = (typeof TaskTab)[keyof typeof TaskTab];
 export interface TaskContextInterface {
   editorRef: RefObject<MonacoEditor | null>;
   language: SupportedLanguage;
+  allowedLanguages: SelectorOption[];
+  selectedExecutionMode: ExecutionMode;
+  executionModes: SelectorOption[];
   sampleCode: string;
   runResults: TestCaseResultDTO[] | null;
   activeTestCaseIndex: number;
   activeTestCase: TaskTestCaseDTO | undefined;
   activeResult: TestCaseResultDTO | undefined;
   resultsByOrderIndex: ReadonlyMap<number, TestCaseResultDTO>;
-  allowedLanguages: SelectorOption[];
   testCases: TaskTestCaseDTO[];
   handleRunTask: (code?: string) => void;
   activeTab: TaskTab;
@@ -47,10 +50,10 @@ export interface TaskContextInterface {
   submissionStatus: TaskSubmissionStatusResponseDTO | null;
   hasSubmission: boolean;
   isSubmitting: boolean;
+  isSubmissionAccepted: boolean;
   isRunTaskPending: boolean;
   isRunTaskError: boolean;
   isSubmitTaskPending: boolean;
-  isSubmitTaskError: boolean;
   isTaskStatusError: boolean;
   handleSubmitTask: (code?: string) => void;
 }

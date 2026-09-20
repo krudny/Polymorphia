@@ -4,10 +4,10 @@ import { UseSubmitTask } from "@/hooks/course/tasks/useSubmitTask/types";
 import TaskService from "@/services/tasks";
 
 export default function useSubmitTask(taskId: number): UseSubmitTask {
-  const { mutateAsync, isPending, isError, data } = useMutation({
+  const { mutateAsync, reset, isPending, isError, data } = useMutation({
     mutationFn: (payload: ExecuteRequestDTO) =>
       TaskService.submitTask(taskId, payload),
   });
 
-  return { mutateAsync, isPending, isError, data };
+  return { mutateAsync, reset, isPending, isError, data };
 }

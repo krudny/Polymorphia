@@ -39,7 +39,17 @@ export default function TestCaseTabs() {
     activeTestCaseIndex,
     dispatch,
     hasSubmission,
+    submissionStatus,
+    isSubmitting,
+    isSubmissionAccepted,
   } = useTaskContext();
+
+  const getSubmissionTabOutcome = (): TabOutcome => {
+    if (isSubmitting || !submissionStatus) {
+      return TabOutcome.UNKNOWN;
+    }
+    return isSubmissionAccepted ? TabOutcome.PASSED : TabOutcome.FAILED;
+  };
 
   return (
     <div className="task-result-tabs">
@@ -71,24 +81,32 @@ export default function TestCaseTabs() {
         );
       })}
 
-      {hasSubmission && (
-        <ButtonWithBorder
-          text="Wynik"
-          size="sm"
-          forceLight={true}
-          className={`mx-0! rounded-lg! ${
-            activeTab === TaskTab.SUBMISSION_RESULT
-              ? "bg-secondary-gray! text-primary-dark!"
-              : ""
-          }`}
-          onClick={() =>
-            dispatch({
-              type: TaskActions.SET_ACTIVE_TAB,
-              payload: TaskTab.SUBMISSION_RESULT,
-            })
-          }
-        />
-      )}
+      {hasSubmission &&
+        (() => {
+          const outcome = getSubmissionTabOutcome();
+          const colorClass =
+            outcome === TabOutcome.UNKNOWN
+              ? getTabColorClass(
+                  outcome,
+                  activeTab === TaskTab.SUBMISSION_RESULT
+                )
+              : getTabColorClass(outcome, false);
+
+          return (
+            <ButtonWithBorder
+              text="Wynik"
+              size="sm"
+              forceLight={true}
+              className={`mx-0! rounded-lg! ${colorClass}`}
+              onClick={() =>
+                dispatch({
+                  type: TaskActions.SET_ACTIVE_TAB,
+                  payload: TaskTab.SUBMISSION_RESULT,
+                })
+              }
+            />
+          );
+        })()}
     </div>
   );
 }

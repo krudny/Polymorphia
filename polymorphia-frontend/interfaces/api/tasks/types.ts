@@ -29,9 +29,31 @@ export interface TaskTestCaseDTO {
   expectedOutput: string;
 }
 
+export const ExecutionModes = {
+  RANDOM: "RANDOM",
+  PLAIN_PROCESS: "PLAIN_PROCESS",
+  DOCKER: "DOCKER",
+} as const;
+
+export type ExecutionMode =
+  (typeof ExecutionModes)[keyof typeof ExecutionModes];
+
+export const ExecutionModeLabels: Record<ExecutionMode, string> = {
+  [ExecutionModes.RANDOM]: "LOSOWE",
+  [ExecutionModes.PLAIN_PROCESS]: "PROCES",
+  [ExecutionModes.DOCKER]: "DOCKER",
+};
+
+export const ExecutionModeResultLabels: Record<ExecutionMode, string> = {
+  [ExecutionModes.RANDOM]: "Losowe",
+  [ExecutionModes.PLAIN_PROCESS]: "Proces",
+  [ExecutionModes.DOCKER]: "Docker",
+};
+
 export interface ExecuteRequestDTO {
   taskLanguage: SupportedLanguage;
   sourceCode: string;
+  executionMode: ExecutionMode;
 }
 
 export interface ExecuteTaskResponseDTO {
@@ -54,6 +76,7 @@ export type TaskSubmissionStatus =
 export interface TaskSubmissionStatusResponseDTO {
   submissionId: number;
   status: TaskSubmissionStatus;
+  executionMode: ExecutionMode;
   score?: number;
   passedCount?: number;
   totalCount?: number;

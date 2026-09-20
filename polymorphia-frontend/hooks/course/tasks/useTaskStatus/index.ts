@@ -17,13 +17,19 @@ export default function useTaskStatus(
         status === TaskSubmissionStatus.QUEUED ||
         status === TaskSubmissionStatus.RUNNING
       ) {
-        return 2000;
+        return 1000;
       }
       return false;
     },
   });
 
   const submissionStatus = query.data ?? null;
+
+  const isSubmissionAccepted =
+    submissionStatus?.passedCount != null &&
+    submissionStatus?.totalCount != null &&
+    submissionStatus.passedCount === submissionStatus.totalCount &&
+    submissionStatus.status === TaskSubmissionStatus.COMPLETED;
 
   return {
     ...query,
@@ -33,5 +39,6 @@ export default function useTaskStatus(
       query.isLoading ||
       submissionStatus?.status === TaskSubmissionStatus.QUEUED ||
       submissionStatus?.status === TaskSubmissionStatus.RUNNING,
+    isSubmissionAccepted,
   };
 }

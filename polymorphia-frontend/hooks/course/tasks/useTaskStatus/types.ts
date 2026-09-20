@@ -5,4 +5,5 @@ export type UseTaskStatus = UseQueryResult<TaskSubmissionStatusResponseDTO> & {
   submissionStatus: TaskSubmissionStatusResponseDTO | null;
   hasSubmission: boolean;
   isSubmissionProcessing: boolean;
+  isSubmissionAccepted: boolean;
 };

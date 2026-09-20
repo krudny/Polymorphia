@@ -9,6 +9,7 @@ export default function useTaskDetails(taskId: number): UseTaskDetails {
     queryFn: () => TaskService.getTaskDetails(taskId),
     select: toTaskDetailsView,
     enabled: !!taskId,
+    staleTime: 1000 * 60 * 2,
   });
 
   return { data, isLoading, isError, error };

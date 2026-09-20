@@ -3,7 +3,10 @@
 import "./index.css";
 import TaskTestCase from "@/components/task/general/task-test-case";
 import { useTaskContext } from "@/hooks/contexts/useTaskContext";
-import { TaskSubmissionStatus } from "@/interfaces/api/tasks/types";
+import {
+  ExecutionModeResultLabels,
+  TaskSubmissionStatus,
+} from "@/interfaces/api/tasks/types";
 import ErrorComponent from "@/components/error";
 import { formatDate } from "@/utils/date";
 
@@ -60,6 +63,10 @@ export default function TaskSubmissionResultView() {
           <span>Czas: {submissionStatus.totalExecutionTimeMs ?? 0}ms</span>
           <span>•</span>
           <span>Wysłano: {formatDate(submissionStatus.createdDate)}</span>
+          <span>•</span>
+          <span>
+            Tryb: {ExecutionModeResultLabels[submissionStatus.executionMode]}
+          </span>
         </div>
       </div>
 

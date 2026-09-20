@@ -2,12 +2,17 @@ import { ApiClient } from "@/services/api/client";
 import {
   ExecuteRequestDTO,
   ExecuteTaskResponseDTO,
+  ExecutionMode,
   SubmitTaskResponseDTO,
   TaskDetailsResponseDTO,
   TaskSubmissionStatusResponseDTO,
 } from "@/interfaces/api/tasks/types";
 
 const TaskService = {
+  getExecutionModes: async (): Promise<ExecutionMode[]> => {
+    return ApiClient.get("/tasks/execution-modes");
+  },
+
   getTaskDetails: async (taskId: number): Promise<TaskDetailsResponseDTO> => {
     return ApiClient.get(`/tasks/${taskId}`);
   },

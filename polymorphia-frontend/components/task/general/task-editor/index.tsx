@@ -1,15 +1,17 @@
 "use client";
 
 import "./index.css";
-import dynamic from "next/dynamic";
-import { BeforeMount, Editor, OnMount } from "@monaco-editor/react";
+import { BeforeMount, OnMount } from "@monaco-editor/react";
 import Selector from "@/components/selector";
 import { useTaskContext } from "@/hooks/contexts/useTaskContext";
 
 import { mapSupportedLanguageToMonaco } from "./mapper";
 import { TaskEditorLazy } from "@/components/task/general/task-editor/lazy";
 import { TaskActions } from "@/providers/task/reducer/types";
-import type { SupportedLanguage } from "@/interfaces/api/tasks/types";
+import type {
+  ExecutionMode,
+  SupportedLanguage,
+} from "@/interfaces/api/tasks/types";
 
 const defineGlassTheme: BeforeMount = (monaco) => {
   monaco.editor.defineTheme("glass-dark", {
@@ -38,8 +40,15 @@ const defineGlassTheme: BeforeMount = (monaco) => {
 };
 
 export default function TaskEditor() {
-  const { editorRef, language, dispatch, sampleCode, allowedLanguages } =
-    useTaskContext();
+  const {
+    editorRef,
+    language,
+    selectedExecutionMode,
+    dispatch,
+    sampleCode,
+    allowedLanguages,
+    executionModes,
+  } = useTaskContext();
 
   const handleBeforeMount: BeforeMount = (monaco) => {
     defineGlassTheme(monaco);
@@ -60,6 +69,21 @@ export default function TaskEditor() {
               dispatch({
                 type: TaskActions.SET_LANGUAGE,
                 payload: value as SupportedLanguage,
+              })
+            }
+            size="md"
+            padding="sm"
+            className="rounded-lg!"
+          />
+        </div>
+        <div className="task-editor-selector">
+          <Selector
+            options={executionModes}
+            value={selectedExecutionMode}
+            onChange={(value) =>
+              dispatch({
+                type: TaskActions.SET_SELECTED_EXECUTION_MODE,
+                payload: value as ExecutionMode,
               })
             }
             size="md"

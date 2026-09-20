@@ -5,6 +5,7 @@ import type {
 
 export interface UseRunTask {
   mutate: (payload: ExecuteRequestDTO) => void;
+  reset: () => void;
   isPending: boolean;
   isError: boolean;
   results: TestCaseResultDTO[] | null;

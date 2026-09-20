@@ -4,12 +4,13 @@ import {
   TaskActions,
   TaskState,
 } from "@/providers/task/reducer/types";
+import { ExecutionModes } from "@/interfaces/api/tasks/types";
 
 export const initialTaskState: TaskState = {
   language: null,
+  selectedExecutionMode: ExecutionModes.RANDOM,
   activeTestCaseIndex: 0,
   activeTab: TaskTab.TESTCASES,
-  activeSubmissionId: null,
 };
 
 export const taskReducer = (
@@ -22,6 +23,11 @@ export const taskReducer = (
         ...state,
         language: action.payload,
       };
+    case TaskActions.SET_SELECTED_EXECUTION_MODE:
+      return {
+        ...state,
+        selectedExecutionMode: action.payload,
+      };
     case TaskActions.SET_ACTIVE_TEST_CASE_INDEX:
       return {
         ...state,
@@ -31,11 +37,6 @@ export const taskReducer = (
       return {
         ...state,
         activeTab: action.payload,
-      };
-    case TaskActions.SET_ACTIVE_SUBMISSION_ID:
-      return {
-        ...state,
-        activeSubmissionId: action.payload,
       };
     default:
       return state;
