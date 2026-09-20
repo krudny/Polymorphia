@@ -7,14 +7,33 @@
 .selector {
   @apply w-full border-2 text-center rounded-sm;
   @apply cursor-pointer flex items-center justify-between transition-all duration-200 focus:outline-none;
-  @apply border-primary-dark   dark:text-secondary-gray dark:border-secondary-gray;
+}
+
+.selector-dark {
+  @apply border-secondary-gray text-secondary-gray;
+}
+
+.selector-light {
+  @apply border-primary-dark text-primary-dark;
+}
+
+.selector-auto {
+  @apply border-primary-dark text-primary-dark dark:text-secondary-gray dark:border-secondary-gray;
 }
 
 .selector-disabled {
   @apply cursor-not-allowed opacity-60;
 }
 
-.selector-value {
+.selector-value-dark {
+  @apply text-secondary-gray;
+}
+
+.selector-value-light {
+  @apply text-primary-dark;
+}
+
+.selector-value-auto {
   @apply text-primary-dark dark:text-secondary-gray;
 }
 
@@ -23,7 +42,19 @@
 }
 
 .selector-arrow {
-  @apply w-5 h-5 transition-transform duration-200 flex-shrink-0 ml-2 stroke-primary-dark dark:stroke-secondary-gray;
+  @apply w-5 h-5 transition-transform duration-200 flex-shrink-0 ml-2;
+}
+
+.selector-arrow-dark {
+  @apply stroke-secondary-gray;
+}
+
+.selector-arrow-light {
+  @apply stroke-primary-dark;
+}
+
+.selector-arrow-auto {
+  @apply stroke-primary-dark dark:stroke-secondary-gray;
 }
 
 .selector-arrow-open {
@@ -31,18 +62,49 @@
 }
 
 .selector-dropdown {
-  @apply absolute z-50 w-full mt-1 border-2 border-primary-dark rounded-sm;
+  @apply absolute z-50 w-full mt-1 border-2 rounded-sm;
   @apply shadow-lg max-h-60 overflow-y-auto custom-scrollbar;
-  @apply dark:border-secondary-gray selector-background;
+  @apply selector-background;
+}
+
+.selector-dropdown-dark {
+  @apply border-secondary-gray;
+}
+
+.selector-dropdown-light {
+  @apply border-primary-dark;
+}
+
+.selector-dropdown-auto {
+  @apply border-primary-dark dark:border-secondary-gray;
 }
 
 .selector-option {
   @apply cursor-pointer transition-colors;
   @apply border-b-2 last:border-b-0;
+}
+
+.selector-option-dark {
+  @apply text-secondary-gray border-secondary-gray hover:backdrop-brightness-150;
+}
+
+.selector-option-light {
+  @apply text-primary-dark border-primary-dark hover:backdrop-brightness-90;
+}
+
+.selector-option-auto {
   @apply text-primary-dark border-primary-dark hover:backdrop-brightness-90 hover:dark:backdrop-brightness-150;
   @apply dark:text-secondary-gray dark:border-secondary-gray;
 }
 
-.selector-option-selected {
+.selector-option-selected-dark {
+  @apply bg-secondary-gray text-primary-dark hover:bg-secondary-gray;
+}
+
+.selector-option-selected-light {
+  @apply bg-primary-dark text-secondary-gray hover:bg-primary-dark;
+}
+
+.selector-option-selected-auto {
   @apply bg-primary-dark text-secondary-gray dark:bg-secondary-gray dark:text-primary-dark hover:bg-primary-dark hover:dark:bg-secondary-gray;
 }

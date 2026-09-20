@@ -4,11 +4,12 @@ export const selectorVariants = tv({
   slots: {
     container: "selector-container",
     button: "selector",
-    value: "selector-value",
+    value: "",
     placeholder: "selector-placeholder",
     arrow: "selector-arrow",
     dropdown: "selector-dropdown",
     option: "selector-option",
+    optionSelected: "",
   },
   variants: {
     size: {
@@ -98,9 +99,47 @@ export const selectorVariants = tv({
         option: "text-center",
       },
     },
+    forceDark: {
+      true: {
+        button: "selector-dark",
+        value: "selector-value-dark",
+        arrow: "selector-arrow-dark",
+        dropdown: "selector-dropdown-dark",
+        option: "selector-option-dark",
+        optionSelected: "selector-option-selected-dark",
+      },
+      false: {},
+    },
+    forceLight: {
+      true: {
+        button: "selector-light",
+        value: "selector-value-light",
+        arrow: "selector-arrow-light",
+        dropdown: "selector-dropdown-light",
+        option: "selector-option-light",
+        optionSelected: "selector-option-selected-light",
+      },
+      false: {},
+    },
   },
+  compoundVariants: [
+    {
+      forceDark: false,
+      forceLight: false,
+      class: {
+        button: "selector-auto",
+        value: "selector-value-auto",
+        arrow: "selector-arrow-auto",
+        dropdown: "selector-dropdown-auto",
+        option: "selector-option-auto",
+        optionSelected: "selector-option-selected-auto",
+      },
+    },
+  ],
   defaultVariants: {
     size: "md",
     padding: "md",
+    forceDark: false,
+    forceLight: false,
   },
 });

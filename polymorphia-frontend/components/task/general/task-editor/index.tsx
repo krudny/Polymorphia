@@ -74,6 +74,7 @@ export default function TaskEditor() {
             size="md"
             padding="sm"
             className="rounded-lg!"
+            forceDark={true}
           />
         </div>
         <div className="task-editor-selector">
@@ -89,6 +90,7 @@ export default function TaskEditor() {
             size="md"
             padding="sm"
             className="rounded-lg!"
+            forceDark={true}
           />
         </div>
       </div>
