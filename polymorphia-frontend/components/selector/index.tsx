@@ -18,12 +18,14 @@ export default function Selector({
   padding = "md",
   centeredPlaceholder = false,
   centeredOptions = false,
+  forceDark = false,
+  forceLight = false,
 }: SelectorProps) {
   const { resolvedTheme } = useTheme();
-  const background =
-    resolvedTheme === "dark"
-      ? "bg-[url(/background-dark.webp)]"
-      : "bg-[url(/background.webp)]";
+  const isDark = forceDark || (!forceLight && resolvedTheme === "dark");
+  const background = isDark
+    ? "bg-[url(/background-dark.webp)]"
+    : "bg-[url(/background.webp)]";
 
   const [isOpen, setIsOpen] = useState(false);
   const selectorRef = useRef<HTMLDivElement>(null);
@@ -33,6 +35,8 @@ export default function Selector({
     padding,
     centeredPlaceholder,
     centeredOptions,
+    forceDark,
+    forceLight,
   });
 
   useEffect(() => {
@@ -105,7 +109,7 @@ export default function Selector({
               onClick={() => handleSelect(option.value)}
               className={clsx(
                 styles.option(),
-                option.value === value && "selector-option-selected"
+                option.value === value && styles.optionSelected()
               )}
             >
               {option.label}

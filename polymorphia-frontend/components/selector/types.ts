@@ -9,6 +9,8 @@ export interface SelectorProps {
   padding?: "xs" | "sm" | "base" | "md" | "lg" | "xl" | "2xl";
   centeredPlaceholder?: boolean;
   centeredOptions?: boolean;
+  forceDark?: boolean;
+  forceLight?: boolean;
 }
 
 export interface SelectorOption {
