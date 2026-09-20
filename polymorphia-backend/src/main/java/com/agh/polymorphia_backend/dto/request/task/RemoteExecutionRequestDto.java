@@ -22,7 +22,8 @@ public class RemoteExecutionRequestDto {
     public static RemoteExecutionRequestDto from(
         TaskTestCaseSpec testCaseSpec,
         TaskSupportedLanguage language,
-        String sourceCode
+        String sourceCode,
+        String strategy
     ) {
         return RemoteExecutionRequestDto.builder()
             .language(language)
@@ -31,7 +32,7 @@ public class RemoteExecutionRequestDto {
             .cpuTimeLimitMs(testCaseSpec.limits().cpuTimeLimitMs())
             .wallTimeLimitMs(testCaseSpec.limits().wallTimeLimitMs())
             .memoryLimitMb(testCaseSpec.limits().memoryLimitMb())
-            .strategy("DOCKER")
+            .strategy(strategy)
             .build();
     }
 }

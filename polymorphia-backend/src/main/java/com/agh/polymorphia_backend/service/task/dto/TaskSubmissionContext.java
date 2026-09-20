@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.service.task.dto;
 
+import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskExecutionMode;
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskGradingStrategy;
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskOutputMatchMode;
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskSubmission;
@@ -14,6 +15,7 @@ public record TaskSubmissionContext(
     Long taskId,
     Long animalId,
     TaskSupportedLanguage language,
+    TaskExecutionMode executionMode,
     String sourceCode,
     TaskOutputMatchMode outputMatchMode,
     TaskGradingStrategy gradingStrategy,
@@ -31,6 +33,7 @@ public record TaskSubmissionContext(
                 taskSubmission.getTask().getId(),
                 taskSubmission.getAnimal().getId(),
                 taskSubmission.getLanguage(),
+                taskSubmission.getExecutionMode(),
                 taskSubmission.getSourceCode(),
                 taskSubmission.getTask().getOutputMatchMode(),
                 taskSubmission.getTask().getGradingStrategy(),

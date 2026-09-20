@@ -1,5 +1,6 @@
 package com.agh.polymorphia_backend.dto.response.task;
 
+import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskExecutionMode;
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskSubmissionStatus;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
@@ -15,6 +16,9 @@ public class TaskSubmissionStatusResponseDto {
     private final Long submissionId;
 
     private final TaskSubmissionStatus status;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private final TaskExecutionMode executionMode;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private final BigDecimal score;

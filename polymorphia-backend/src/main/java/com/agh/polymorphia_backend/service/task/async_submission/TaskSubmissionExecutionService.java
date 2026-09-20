@@ -25,10 +25,11 @@ public class TaskSubmissionExecutionService {
 
     public List<TaskTestCaseOutcome> run(TaskSubmissionContext taskSubmissionContext) {
         List<TaskTestCaseOutcome> outcomes = new ArrayList<>();
+        String strategy = taskSubmissionContext.executionMode().resolveStrategy();
 
         for (TaskTestCaseSpec testCaseSpec : taskSubmissionContext.testCases()) {
             RemoteExecutionRequestDto remoteRequest = RemoteExecutionRequestDto
-                    .from(testCaseSpec, taskSubmissionContext.language(), taskSubmissionContext.sourceCode());
+                    .from(testCaseSpec, taskSubmissionContext.language(), taskSubmissionContext.sourceCode(), strategy);
 
             RemoteExecutionResponseDto executionResponse = codeExecutorClient.executeSync(remoteRequest);
 
