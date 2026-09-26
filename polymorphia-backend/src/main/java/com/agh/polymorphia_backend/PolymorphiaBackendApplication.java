@@ -4,6 +4,7 @@ import com.agh.polymorphia_backend.config.CorsProperties;
 import com.agh.polymorphia_backend.config.InitialUserProperties;
 import com.agh.polymorphia_backend.config.StaticFileServerProperties;
 import com.agh.polymorphia_backend.service.task.async_submission.config.TaskSubmissionProperties;
+import com.agh.polymorphia_backend.config.UnsafeProcessProperties;
 import com.google.ortools.Loader;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,7 +15,13 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 import static org.springframework.data.web.config.EnableSpringDataWebSupport.PageSerializationMode.VIA_DTO;
 
-@EnableConfigurationProperties({StaticFileServerProperties.class, CorsProperties.class, InitialUserProperties.class, TaskSubmissionProperties.class})
+@EnableConfigurationProperties({
+        StaticFileServerProperties.class,
+        CorsProperties.class,
+        InitialUserProperties.class,
+        TaskSubmissionProperties.class,
+        UnsafeProcessProperties.class
+})
 @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO)
 @EnableScheduling
 @EnableAsync

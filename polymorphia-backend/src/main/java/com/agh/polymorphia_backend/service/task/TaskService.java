@@ -5,6 +5,7 @@ import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskExecut
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskSupportedLanguage;
 import com.agh.polymorphia_backend.repository.task.TaskAllowedLanguageRepository;
 import com.agh.polymorphia_backend.repository.task.TaskRepository;
+import com.agh.polymorphia_backend.service.validation.ExecutionStrategyAuthorizer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,9 +20,10 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final TaskAllowedLanguageRepository taskAllowedLanguageRepository;
+    private final ExecutionStrategyAuthorizer executionStrategyAuthorizer;
 
     public List<TaskExecutionMode> getExecutionModes() {
-        return List.of(TaskExecutionMode.values());
+        return executionStrategyAuthorizer.getAvailableModesForCurrentUser();
     }
 
     @Transactional(readOnly = true)

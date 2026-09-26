@@ -6,12 +6,14 @@ import com.agh.polymorphia_backend.dto.response.task.ExecuteTaskResponseDto;
 import com.agh.polymorphia_backend.dto.response.task.RemoteExecutionResponseDto;
 import com.agh.polymorphia_backend.dto.response.task.TestCaseResultDto;
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.Task;
+import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskExecutionMode;
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskTestCase;
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskTestCaseStatus;
 import com.agh.polymorphia_backend.repository.task.TaskTestCaseRepository;
 import com.agh.polymorphia_backend.service.mapper.TaskSubmissionResultMapper;
 import com.agh.polymorphia_backend.service.task.dto.TaskTestCaseSpec;
 import com.agh.polymorphia_backend.service.task.remote_client.CodeExecutorClient;
+import com.agh.polymorphia_backend.service.validation.ExecutionStrategyAuthorizer;
 import com.agh.polymorphia_backend.service.validation.TaskAuthorizer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,6 +33,7 @@ public class TaskRunService {
     private final TaskOutputTruncator taskOutputTruncator;
     private final TaskSubmissionResultMapper taskSubmissionResultMapper;
     private final TaskAuthorizer taskAuthorizer;
+    private final ExecutionStrategyAuthorizer executionStrategyAuthorizer;
 
     public ExecuteTaskResponseDto runTask(Long taskId, ExecuteTaskRequestDto request) {
         taskAuthorizer.checkTaskAccess(taskId);
@@ -38,9 +41,12 @@ public class TaskRunService {
         taskService.validateTaskLanguage(taskId, request.getTaskLanguage());
 
         List<TaskTestCase> visibleTestCases = taskTestCaseRepository.findVisibleByTaskId(taskId);
-        String strategy = request.getExecutionMode().resolveStrategy();
+        executionStrategyAuthorizer.authorize(request.getExecutionMode());
+        List<TaskExecutionMode> availableModes = executionStrategyAuthorizer.getAvailableModesForCurrentUser();
+        TaskExecutionMode resolvedMode = request.getExecutionMode().resolve(availableModes);
+
         List<TestCaseResultDto> results = visibleTestCases.stream()
-                .map(testCase -> runSingleTestCase(task, request, testCase, strategy))
+                .map(testCase -> runSingleTestCase(task, request, testCase, resolvedMode))
                 .toList();
 
         return ExecuteTaskResponseDto.builder()
@@ -48,11 +54,11 @@ public class TaskRunService {
                 .build();
     }
 
-    private TestCaseResultDto runSingleTestCase(Task task, ExecuteTaskRequestDto request, TaskTestCase testCase, String strategy) {
+    private TestCaseResultDto runSingleTestCase(Task task, ExecuteTaskRequestDto request, TaskTestCase testCase, TaskExecutionMode resolvedMode) {
         TaskTestCaseSpec testCaseSpec = TaskTestCaseSpec.from(task, testCase);
 
         RemoteExecutionRequestDto remoteRequest = RemoteExecutionRequestDto
-                .from(testCaseSpec, request.getTaskLanguage(), request.getSourceCode(), strategy);
+                .from(testCaseSpec, request.getTaskLanguage(), request.getSourceCode(), resolvedMode);
 
         RemoteExecutionResponseDto executionResponse;
         try {
