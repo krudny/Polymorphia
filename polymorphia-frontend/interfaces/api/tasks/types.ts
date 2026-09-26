@@ -31,7 +31,8 @@ export interface TaskTestCaseDTO {
 
 export const ExecutionModes = {
   RANDOM: "RANDOM",
-  PLAIN_PROCESS: "PLAIN_PROCESS",
+  UNSAFE_PROCESS: "UNSAFE_PROCESS",
+  SAFE_PROCESS: "SAFE_PROCESS",
   DOCKER: "DOCKER",
 } as const;
 
@@ -39,16 +40,13 @@ export type ExecutionMode =
   (typeof ExecutionModes)[keyof typeof ExecutionModes];
 
 export const ExecutionModeLabels: Record<ExecutionMode, string> = {
-  [ExecutionModes.RANDOM]: "LOSOWE",
-  [ExecutionModes.PLAIN_PROCESS]: "PROCES",
-  [ExecutionModes.DOCKER]: "DOCKER",
-};
-
-export const ExecutionModeResultLabels: Record<ExecutionMode, string> = {
   [ExecutionModes.RANDOM]: "Losowe",
-  [ExecutionModes.PLAIN_PROCESS]: "Proces",
+  [ExecutionModes.UNSAFE_PROCESS]: "Niebezpieczny proces",
+  [ExecutionModes.SAFE_PROCESS]: "Bezpieczny proces",
   [ExecutionModes.DOCKER]: "Docker",
 };
+
+export const ExecutionModeResultLabels = ExecutionModeLabels;
 
 export interface ExecuteRequestDTO {
   taskLanguage: SupportedLanguage;

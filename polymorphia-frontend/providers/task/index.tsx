@@ -92,7 +92,7 @@ export const TaskProvider = ({ children, taskId }: TaskProviderProps) => {
 
   const executionModes: SelectorOption[] = executionModesData.map((mode) => ({
     value: mode,
-    label: ExecutionModeLabels[mode] ?? mode,
+    label: (ExecutionModeLabels[mode] ?? mode).toUpperCase(),
   }));
 
   const testCases = taskDetails.testCases;
