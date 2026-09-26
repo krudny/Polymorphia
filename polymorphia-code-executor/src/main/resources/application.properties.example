@@ -1,2 +1,7 @@
 server.port=8100
 executor.auth-secret=
+
+polymorphia.code-executor.default-strategy=DOCKER
+polymorphia.code-executor.allowed-strategies=DOCKER
+polymorphia.code-executor.isolate.enabled=false
+polymorphia.code-executor.isolate.num-boxes=1
