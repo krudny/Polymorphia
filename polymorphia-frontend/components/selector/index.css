@@ -5,7 +5,7 @@
 }
 
 .selector {
-  @apply w-full border-2 text-center rounded-sm;
+  @apply w-full border-2 text-center rounded-sm whitespace-nowrap;
   @apply cursor-pointer flex items-center justify-between transition-all duration-200 focus:outline-none;
 }
 
@@ -62,7 +62,7 @@
 }
 
 .selector-dropdown {
-  @apply absolute z-50 w-full mt-1 border-2 rounded-sm;
+  @apply absolute z-50 min-w-full w-max mt-1 border-2 rounded-sm;
   @apply shadow-lg max-h-60 overflow-y-auto custom-scrollbar;
   @apply selector-background;
 }
@@ -80,7 +80,7 @@
 }
 
 .selector-option {
-  @apply cursor-pointer transition-colors;
+  @apply cursor-pointer transition-colors whitespace-nowrap;
   @apply border-b-2 last:border-b-0;
 }
 
