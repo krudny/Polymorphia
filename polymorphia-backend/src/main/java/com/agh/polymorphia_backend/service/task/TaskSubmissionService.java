@@ -5,6 +5,7 @@ import com.agh.polymorphia_backend.dto.response.task.SubmitTaskResponseDto;
 import com.agh.polymorphia_backend.dto.response.task.TaskSubmissionStatusResponseDto;
 import com.agh.polymorphia_backend.dto.response.task.TestCaseResultDto;
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.Task;
+import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskExecutionMode;
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskSubmission;
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskSubmissionResult;
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskSubmissionStatus;
@@ -16,6 +17,7 @@ import com.agh.polymorphia_backend.service.gradable_event.GradableEventService;
 import com.agh.polymorphia_backend.service.mapper.TaskSubmissionResultMapper;
 import com.agh.polymorphia_backend.service.student.AnimalService;
 import com.agh.polymorphia_backend.service.user.UserService;
+import com.agh.polymorphia_backend.service.validation.ExecutionStrategyAuthorizer;
 import com.agh.polymorphia_backend.service.validation.TaskAuthorizer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -35,6 +37,7 @@ public class TaskSubmissionService {
     private final TaskSubmissionResultRepository taskSubmissionResultRepository;
     private final TaskSubmissionResultMapper taskSubmissionResultMapper;
     private final TaskAuthorizer taskAuthorizer;
+    private final ExecutionStrategyAuthorizer executionStrategyAuthorizer;
     private final UserService userService;
     private final AnimalService animalService;
     private final GradableEventService gradableEventService;
@@ -48,11 +51,15 @@ public class TaskSubmissionService {
         Animal animal = resolveCurrentUserAnimal(taskId);
         int userAttempt = resolveNextUserAttempt(taskId, animal.getId());
 
+        executionStrategyAuthorizer.authorize(request.getExecutionMode());
+        List<TaskExecutionMode> availableModes = executionStrategyAuthorizer.getAvailableModesForCurrentUser();
+        TaskExecutionMode resolvedMode = request.getExecutionMode().resolve(availableModes);
+
         TaskSubmission taskSubmission = TaskSubmission.builder()
                 .task(task)
                 .animal(animal)
                 .language(request.getTaskLanguage())
-                .executionMode(request.getExecutionMode().resolve())
+                .executionMode(resolvedMode)
                 .sourceCode(request.getSourceCode())
                 .status(TaskSubmissionStatus.QUEUED)
                 .userAttempt(userAttempt)

@@ -15,4 +15,7 @@ class ExecutionService(private val executorsRegistry: ExecutorRegistry) {
             timedOut = result.timedOut,
         )
     }
+
+    fun getAvailableStrategies(): List<ExecutionStrategy> =
+        executorsRegistry.getAllowedStrategies()
 }

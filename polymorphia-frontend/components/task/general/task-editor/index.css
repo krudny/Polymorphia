@@ -9,7 +9,7 @@
 }
 
 .task-editor-selector {
-  @apply w-32;
+  @apply min-w-32 w-max;
 }
 
 .task-editor-content {

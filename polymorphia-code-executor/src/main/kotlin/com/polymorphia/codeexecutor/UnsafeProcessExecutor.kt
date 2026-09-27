@@ -12,10 +12,10 @@ private const val GRACEFUL_SHUTDOWN_GRACE_MS = 500L
 private const val STREAM_DRAIN_TIMEOUT_MS = 2_000L
 
 @Component
-class PlainProcessExecutor : CodeExecutor {
+class UnsafeProcessExecutor : CodeExecutor {
 
-    override val strategy = ExecutionStrategy.PLAIN_PROCESS
-    private val log = LoggerFactory.getLogger(PlainProcessExecutor::class.java)
+    override val strategy = ExecutionStrategy.UNSAFE_PROCESS
+    private val log = LoggerFactory.getLogger(UnsafeProcessExecutor::class.java)
 
 
     override fun execute(request: ExecutionRequest): ExecutionResult {

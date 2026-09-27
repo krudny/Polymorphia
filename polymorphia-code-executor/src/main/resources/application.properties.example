@@ -1,2 +1,7 @@
 server.port=8100
-executor.auth-secret=
+code-executor.auth-secret=
+
+code-executor.default-strategy=DOCKER
+code-executor.allowed-strategies=DOCKER
+code-executor.isolate.enabled=false
+code-executor.isolate.num-boxes=1

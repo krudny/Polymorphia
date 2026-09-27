@@ -1,26 +1,21 @@
 package com.agh.polymorphia_backend.model.gradable_event.subtypes.task;
 
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum TaskExecutionMode {
     RANDOM,
-    PLAIN_PROCESS,
+    UNSAFE_PROCESS,
+    SAFE_PROCESS,
     DOCKER;
 
-    private static final TaskExecutionMode[] CONCRETE_STRATEGIES = {
-            PLAIN_PROCESS,
-            DOCKER
-    };
-
-    public TaskExecutionMode resolve() {
-        if (this == RANDOM) {
-            int randomIndex = ThreadLocalRandom.current().nextInt(CONCRETE_STRATEGIES.length);
-            return CONCRETE_STRATEGIES[randomIndex];
+    public TaskExecutionMode resolve(List<TaskExecutionMode> allowedModes) {
+        if (this != RANDOM) {
+            return this;
         }
-        return this;
-    }
-
-    public String resolveStrategy() {
-        return resolve().name();
+        List<TaskExecutionMode> candidates = allowedModes.stream()
+                .filter(mode -> mode != RANDOM)
+                .toList();
+        return candidates.get(ThreadLocalRandom.current().nextInt(candidates.size()));
     }
 }

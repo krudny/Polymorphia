@@ -13,14 +13,14 @@ import java.security.MessageDigest
 
 @Component
 class ExecutorApiKeyFilter(
-    @Value("\${executor.auth-secret:}")
+    @Value("\${code-executor.auth-secret:}")
     private val expectedSecret: String
 ) : OncePerRequestFilter() {
 
     @PostConstruct
     fun validateConfiguration() {
         if (expectedSecret.isBlank()) {
-            throw IllegalStateException("executor.auth-secret must be set and not empty!")
+            throw IllegalStateException("code-executor.auth-secret must be set and not empty!")
         }
     }
 

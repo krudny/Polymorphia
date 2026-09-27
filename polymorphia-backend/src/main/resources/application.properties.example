@@ -55,3 +55,11 @@ spring.mail.properties.mail.smtp.connectiontimeout=5000
 spring.mail.properties.mail.smtp.timeout=5000
 spring.mail.properties.mail.smtp.writetimeout=5000
 invitation.allow-multiple-emails=false
+
+# Code executor
+code-executor.base-url=
+code-executor.connect-timeout-seconds=
+code-executor.read-timeout-seconds=
+code-executor.max-wall-time-limit-ms=
+code-executor.auth-secret=
+code-executor.plain-process.allowed-principals=
