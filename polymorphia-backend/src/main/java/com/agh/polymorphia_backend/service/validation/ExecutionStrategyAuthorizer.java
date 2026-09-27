@@ -1,6 +1,6 @@
 package com.agh.polymorphia_backend.service.validation;
 
-import com.agh.polymorphia_backend.config.UnsafeProcessProperties;
+import com.agh.polymorphia_backend.service.task.remote_client.UnsafeProcessConfig;
 import com.agh.polymorphia_backend.model.gradable_event.subtypes.task.TaskExecutionMode;
 import com.agh.polymorphia_backend.service.task.remote_client.CodeExecutorClient;
 import com.agh.polymorphia_backend.service.user.UserService;
@@ -20,7 +20,7 @@ public class ExecutionStrategyAuthorizer {
 
     private final UserService userService;
     private final CodeExecutorClient codeExecutorClient;
-    private final UnsafeProcessProperties unsafeProcessProperties;
+    private final UnsafeProcessConfig unsafeProcessConfig;
 
     public List<TaskExecutionMode> getAvailableModesForCurrentUser() {
         return filterForUser(codeExecutorClient.getAvailableStrategies());
@@ -43,7 +43,7 @@ public class ExecutionStrategyAuthorizer {
         if (email == null || email.isBlank()) {
             return false;
         }
-        return unsafeProcessProperties.allowedPrincipals().stream()
+        return unsafeProcessConfig.allowedPrincipals().stream()
             .anyMatch(allowedEmail -> allowedEmail.trim().equalsIgnoreCase(email.trim()));
     }
 
