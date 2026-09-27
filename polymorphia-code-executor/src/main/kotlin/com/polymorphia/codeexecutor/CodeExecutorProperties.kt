@@ -2,7 +2,7 @@ package com.polymorphia.codeexecutor
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 
-@ConfigurationProperties(prefix = "polymorphia.code-executor")
+@ConfigurationProperties(prefix = "code-executor")
 data class CodeExecutorProperties(
     var defaultStrategy: ExecutionStrategy = ExecutionStrategy.DOCKER,
     var allowedStrategies: List<ExecutionStrategy> = listOf(ExecutionStrategy.DOCKER),
