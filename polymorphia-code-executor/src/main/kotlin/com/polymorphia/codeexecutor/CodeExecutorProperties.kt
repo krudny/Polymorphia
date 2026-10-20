@@ -12,4 +12,5 @@ data class CodeExecutorProperties(
 data class IsolateProperties(
     var enabled: Boolean = false,
     var numBoxes: Int = 1,
+    var binaryPath: String = "/usr/local/bin/isolate",
 )
