@@ -82,7 +82,7 @@ class UnsafeProcessExecutor : CodeExecutor {
         (requested ?: DEFAULT_WALL_TIME_LIMIT_MS).coerceIn(1, MAX_WALL_TIME_LIMIT_MS)
 }
 
-private class StreamGobbler(private val stream: InputStream) : Thread("stream-gobbler") {
+internal class StreamGobbler(private val stream: InputStream) : Thread("stream-gobbler") {
     @Volatile private var content: String = ""
 
     init {
